@@ -1,0 +1,36 @@
+{
+  "zone_id": "maw.inner",
+  "system_id": "maw",
+  "boundary": {
+    "kind": "circle",
+    "center": {
+      "x": 180000.0,
+      "y": -50000.0
+    },
+    "radius_m": 30000.0,
+    "falloff_width_m": 12000.0
+  },
+  "layers": [
+    {
+      "layer_id": "maw_inner_backdrop",
+      "phase": "fullscreen_background",
+      "shader_asset_id": "space_background_nebula_wgsl",
+      "order": -195,
+      "parallax_factor": 0.1
+    },
+    {
+      "layer_id": "maw_inner_haze",
+      "phase": "fullscreen_foreground",
+      "order": 20,
+      "parallax_factor": 1.0
+    }
+  ],
+  "field": {
+    "generator": "asteroid_field",
+    "seed": 70077,
+    "count": 40
+  },
+  "display": {
+    "name": "The Inner Maw"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "placement_id": "maw.ember.1",
+  "blueprint_id": "planet.ember",
+  "system_id": "maw",
+  "position": {
+    "x": 18000.0,
+    "y": -3000.0
+  },
+  "source": "planet"
+}

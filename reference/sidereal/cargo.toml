@@ -1,0 +1,96 @@
+[workspace]
+resolver = "2"
+members = [
+  "crates/engine-observability",
+  "crates/engine-ui",
+  "crates/engine-audio",
+  "crates/engine-component-macros",
+  "crates/engine-core",
+  "crates/sidereal-net",
+  "crates/sidereal-game",
+  "crates/engine-persistence",
+  "crates/engine-persistence-protocol",
+  "crates/engine-ghost-lane",
+  "crates/engine-runtime-sync",
+  "crates/engine-content",
+  "crates/engine-asset-runtime",
+  "crates/sidereal-shader-preview",
+  "crates/engine-ecs",
+  "crates/engine-transport",
+  "crates/engine-script",
+  "crates/engine-spatial",
+  "crates/engine-physics",
+  "crates/engine-gameplay",
+  "crates/engine-render",
+  "bins/sidereal-replication",
+  "bins/sidereal-persistence-service",
+  "bins/sidereal-gateway",
+  "bins/sidereal-client",
+]
+
+[workspace.package]
+edition = "2024"
+version = "0.2.66"
+license = "MIT"
+authors = ["Sidereal Team"]
+
+[workspace.dependencies]
+inventory = "0.3"
+anyhow = "1.0"
+argon2 = "0.6"
+async-trait = "0.1"
+axum = { version = "0.8", default-features = false }
+avian2d = { version = "0.7", default-features = false, features = ["2d", "f64", "parry-f64", "parallel", "serialize", "xpbd_joints"] }
+base64 = "0.23"
+bevy = { version = "0.19", default-features = false }
+bevy_remote = { version = "0.19", default-features = false }
+chacha20poly1305 = "0.11"
+data-encoding = "2.6"
+hmac = "0.13"
+lightyear = { git = "https://github.com/Dastari/lightyear", rev = "1758f81a9fd52d4d84db84e0485dd64e9e8a0c6f", default-features = false, features = ["udp", "raw_connection", "input_native", "replication", "prediction", "interpolation", "frame_interpolation", "avian2d", "webtransport", "webtransport_self_signed"] }
+jsonwebtoken = { version = "11.0", default-features = false, features = ["rust_crypto"] }
+lettre = { version = "0.11", default-features = false }
+qrcode = "0.14"
+rand = "0.10"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0", features = ["float_roundtrip"] }
+sha2 = "0.11"
+sha1 = "0.11"
+thiserror = "2.0"
+tokio = "1.48"
+tokio-postgres = { version = "0.7", features = ["with-serde_json-1", "with-uuid-1"] }
+postgres = { version = "0.19", features = ["with-serde_json-1", "with-uuid-1"] }
+uuid = { version = "1.8", features = ["serde", "v4", "v5"] }
+tracing = "0.1"
+tracing-subscriber = "0.3"
+mlua = { version = "0.12", features = ["lua54", "vendored"] }
+metrics = "0.24"
+metrics-util = "0.20"
+unicode-segmentation = "1.12"
+sysinfo = "0.39"
+
+# Size-optimized profile for the published, downloadable native client binary
+# (DR-0042). ONLY the publish flow (`make publish-client-windows` /
+# `scripts/publish_client.py`) builds with `--profile dist`; the server, tests,
+# wasm, and ordinary `--release` builds are unaffected. Tuned for the smallest
+# possible Windows .exe at the cost of build time and some runtime perf — flip
+# opt-level to "s" or 3 if the size/perf trade-off hurts the game loop.
+[profile.dist]
+inherits = "release"
+opt-level = "z"     # optimize aggressively for size
+lto = "fat"         # whole-program link-time optimization across all crates
+codegen-units = 1   # one codegen unit: best optimization, slowest compile
+panic = "abort"     # drop unwinding tables / landing pads
+strip = true        # strip symbols + debuginfo from the final binary
+
+# Size-optimized profile for the production WASM client served by the dashboard
+# (dashboard `pnpm build` -> build:game-client-wasm:dist). Same size tricks as
+# `dist`, but NO `strip`: wasm-bindgen post-processes this output, and the build
+# script's `wasm-opt -Oz --strip-debug` pass does the stripping afterward. The
+# dashboard dev build keeps using `--release` for faster iteration.
+[profile.dist-wasm]
+inherits = "release"
+opt-level = "z"
+lto = "fat"
+codegen-units = 1
+panic = "abort"

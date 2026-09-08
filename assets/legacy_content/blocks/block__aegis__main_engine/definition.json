@@ -1,0 +1,83 @@
+{
+  "ordinal": 100,
+  "entry": {
+    "block_id": "block.aegis.main_engine",
+    "script": "",
+    "tags": [
+      "aegis",
+      "thruster"
+    ]
+  },
+  "definition": {
+    "block_id": "block.aegis.main_engine",
+    "display_name": "Aegis Naval / Main Engine",
+    "category": "thruster",
+    "layer": "equipment",
+    "footprint": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "mass_kg": 400,
+    "health": 400.0,
+    "collision_polygon": [],
+    "cost": {
+      "capacity": 1.0,
+      "credits": 800
+    },
+    "power": null,
+    "directional": true,
+    "placement": {
+      "attach_edges": [
+        "N"
+      ],
+      "requires_support": false,
+      "attach_to": [
+        "hull",
+        "armor"
+      ],
+      "min_attachments": 1,
+      "clearance": [
+        "S"
+      ],
+      "keep_clear": []
+    },
+    "visual": {
+      "tile_asset_id": "tile.aegis.rocket_pod_small",
+      "interior_asset_id": null,
+      "visible_in_cutaway": true,
+      "interior_overlays": []
+    },
+    "interior": null,
+    "components": [
+      {
+        "kind": "directional_thruster",
+        "properties": {
+          "force_axis": [
+            0,
+            1
+          ],
+          "max_force_n": 220000.0,
+          "burn_rate_kg_s": 0.12,
+          "enabled": true,
+          "nozzle_offset_m": [
+            0,
+            -1.88
+          ],
+          "plume_width_m": 0.9,
+          "plume_length_m": 7.0,
+          "plume_color_rgb": [
+            1.0,
+            0.34,
+            0.08
+          ]
+        }
+      }
+    ]
+  }
+}

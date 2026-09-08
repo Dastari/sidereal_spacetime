@@ -1,0 +1,8542 @@
+{
+  "tiles": [
+    {
+      "name": "floor_0",
+      "layer": "floor",
+      "walkable_preview": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        1.25,
+        -1.25
+      ],
+      "source_frame_px": [
+        16,
+        16,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "floor_1",
+      "layer": "floor",
+      "walkable_preview": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        3.75,
+        -1.25
+      ],
+      "source_frame_px": [
+        176,
+        16,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "floor_2",
+      "layer": "floor",
+      "walkable_preview": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        6.25,
+        -1.25
+      ],
+      "source_frame_px": [
+        336,
+        16,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "floor_3",
+      "layer": "floor",
+      "walkable_preview": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        8.75,
+        -1.25
+      ],
+      "source_frame_px": [
+        496,
+        16,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "floor_4",
+      "layer": "floor",
+      "walkable_preview": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        11.25,
+        -1.25
+      ],
+      "source_frame_px": [
+        656,
+        16,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "floor_5",
+      "layer": "floor",
+      "walkable_preview": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        13.75,
+        -1.25
+      ],
+      "source_frame_px": [
+        816,
+        16,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "floor_6",
+      "layer": "floor",
+      "walkable_preview": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        16.25,
+        -1.25
+      ],
+      "source_frame_px": [
+        976,
+        16,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "floor_7",
+      "layer": "floor",
+      "walkable_preview": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        18.75,
+        -1.25
+      ],
+      "source_frame_px": [
+        1136,
+        16,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "wall_0",
+      "layer": "wall",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        21.25,
+        -1.25
+      ],
+      "source_frame_px": [
+        1296,
+        16,
+        128,
+        128
+      ],
+      "adjacency_nesw": 0
+    },
+    {
+      "name": "wall_1",
+      "layer": "wall",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        23.75,
+        -1.25
+      ],
+      "source_frame_px": [
+        1456,
+        16,
+        128,
+        128
+      ],
+      "adjacency_nesw": 1
+    },
+    {
+      "name": "wall_2",
+      "layer": "wall",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        26.25,
+        -1.25
+      ],
+      "source_frame_px": [
+        1616,
+        16,
+        128,
+        128
+      ],
+      "adjacency_nesw": 2
+    },
+    {
+      "name": "wall_3",
+      "layer": "wall",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        28.75,
+        -1.25
+      ],
+      "source_frame_px": [
+        1776,
+        16,
+        128,
+        128
+      ],
+      "adjacency_nesw": 3
+    },
+    {
+      "name": "wall_4",
+      "layer": "wall",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        31.25,
+        -1.25
+      ],
+      "source_frame_px": [
+        1936,
+        16,
+        128,
+        128
+      ],
+      "adjacency_nesw": 4
+    },
+    {
+      "name": "wall_5",
+      "layer": "wall",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        33.75,
+        -1.25
+      ],
+      "source_frame_px": [
+        2096,
+        16,
+        128,
+        128
+      ],
+      "adjacency_nesw": 5
+    },
+    {
+      "name": "wall_6",
+      "layer": "wall",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        36.25,
+        -1.25
+      ],
+      "source_frame_px": [
+        2256,
+        16,
+        128,
+        128
+      ],
+      "adjacency_nesw": 6
+    },
+    {
+      "name": "wall_7",
+      "layer": "wall",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        38.75,
+        -1.25
+      ],
+      "source_frame_px": [
+        2416,
+        16,
+        128,
+        128
+      ],
+      "adjacency_nesw": 7
+    },
+    {
+      "name": "wall_8",
+      "layer": "wall",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        41.25,
+        -1.25
+      ],
+      "source_frame_px": [
+        2576,
+        16,
+        128,
+        128
+      ],
+      "adjacency_nesw": 8
+    },
+    {
+      "name": "wall_9",
+      "layer": "wall",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        43.75,
+        -1.25
+      ],
+      "source_frame_px": [
+        2736,
+        16,
+        128,
+        128
+      ],
+      "adjacency_nesw": 9
+    },
+    {
+      "name": "wall_10",
+      "layer": "wall",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        46.25,
+        -1.25
+      ],
+      "source_frame_px": [
+        2896,
+        16,
+        128,
+        128
+      ],
+      "adjacency_nesw": 10
+    },
+    {
+      "name": "wall_11",
+      "layer": "wall",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        1.25,
+        -3.75
+      ],
+      "source_frame_px": [
+        16,
+        176,
+        128,
+        128
+      ],
+      "adjacency_nesw": 11
+    },
+    {
+      "name": "wall_12",
+      "layer": "wall",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        3.75,
+        -3.75
+      ],
+      "source_frame_px": [
+        176,
+        176,
+        128,
+        128
+      ],
+      "adjacency_nesw": 12
+    },
+    {
+      "name": "wall_13",
+      "layer": "wall",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        6.25,
+        -3.75
+      ],
+      "source_frame_px": [
+        336,
+        176,
+        128,
+        128
+      ],
+      "adjacency_nesw": 13
+    },
+    {
+      "name": "wall_14",
+      "layer": "wall",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        8.75,
+        -3.75
+      ],
+      "source_frame_px": [
+        496,
+        176,
+        128,
+        128
+      ],
+      "adjacency_nesw": 14
+    },
+    {
+      "name": "wall_15",
+      "layer": "wall",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        11.25,
+        -3.75
+      ],
+      "source_frame_px": [
+        656,
+        176,
+        128,
+        128
+      ],
+      "adjacency_nesw": 15
+    },
+    {
+      "name": "hull_0",
+      "layer": "roof",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        13.75,
+        -3.75
+      ],
+      "source_frame_px": [
+        816,
+        176,
+        128,
+        128
+      ],
+      "adjacency_nesw": 0
+    },
+    {
+      "name": "hull_1",
+      "layer": "roof",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        16.25,
+        -3.75
+      ],
+      "source_frame_px": [
+        976,
+        176,
+        128,
+        128
+      ],
+      "adjacency_nesw": 1
+    },
+    {
+      "name": "hull_2",
+      "layer": "roof",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        18.75,
+        -3.75
+      ],
+      "source_frame_px": [
+        1136,
+        176,
+        128,
+        128
+      ],
+      "adjacency_nesw": 2
+    },
+    {
+      "name": "hull_3",
+      "layer": "roof",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        21.25,
+        -3.75
+      ],
+      "source_frame_px": [
+        1296,
+        176,
+        128,
+        128
+      ],
+      "adjacency_nesw": 3
+    },
+    {
+      "name": "hull_4",
+      "layer": "roof",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        23.75,
+        -3.75
+      ],
+      "source_frame_px": [
+        1456,
+        176,
+        128,
+        128
+      ],
+      "adjacency_nesw": 4
+    },
+    {
+      "name": "hull_5",
+      "layer": "roof",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        26.25,
+        -3.75
+      ],
+      "source_frame_px": [
+        1616,
+        176,
+        128,
+        128
+      ],
+      "adjacency_nesw": 5
+    },
+    {
+      "name": "hull_6",
+      "layer": "roof",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        28.75,
+        -3.75
+      ],
+      "source_frame_px": [
+        1776,
+        176,
+        128,
+        128
+      ],
+      "adjacency_nesw": 6
+    },
+    {
+      "name": "hull_7",
+      "layer": "roof",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        31.25,
+        -3.75
+      ],
+      "source_frame_px": [
+        1936,
+        176,
+        128,
+        128
+      ],
+      "adjacency_nesw": 7
+    },
+    {
+      "name": "hull_8",
+      "layer": "roof",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        33.75,
+        -3.75
+      ],
+      "source_frame_px": [
+        2096,
+        176,
+        128,
+        128
+      ],
+      "adjacency_nesw": 8
+    },
+    {
+      "name": "hull_9",
+      "layer": "roof",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        36.25,
+        -3.75
+      ],
+      "source_frame_px": [
+        2256,
+        176,
+        128,
+        128
+      ],
+      "adjacency_nesw": 9
+    },
+    {
+      "name": "hull_10",
+      "layer": "roof",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        38.75,
+        -3.75
+      ],
+      "source_frame_px": [
+        2416,
+        176,
+        128,
+        128
+      ],
+      "adjacency_nesw": 10
+    },
+    {
+      "name": "hull_11",
+      "layer": "roof",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        41.25,
+        -3.75
+      ],
+      "source_frame_px": [
+        2576,
+        176,
+        128,
+        128
+      ],
+      "adjacency_nesw": 11
+    },
+    {
+      "name": "hull_12",
+      "layer": "roof",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        43.75,
+        -3.75
+      ],
+      "source_frame_px": [
+        2736,
+        176,
+        128,
+        128
+      ],
+      "adjacency_nesw": 12
+    },
+    {
+      "name": "hull_13",
+      "layer": "roof",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        46.25,
+        -3.75
+      ],
+      "source_frame_px": [
+        2896,
+        176,
+        128,
+        128
+      ],
+      "adjacency_nesw": 13
+    },
+    {
+      "name": "hull_14",
+      "layer": "roof",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        1.25,
+        -6.25
+      ],
+      "source_frame_px": [
+        16,
+        336,
+        128,
+        128
+      ],
+      "adjacency_nesw": 14
+    },
+    {
+      "name": "hull_15",
+      "layer": "roof",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        3.75,
+        -6.25
+      ],
+      "source_frame_px": [
+        176,
+        336,
+        128,
+        128
+      ],
+      "adjacency_nesw": 15
+    },
+    {
+      "name": "cargo_amber",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        6.25,
+        -6.25
+      ],
+      "source_frame_px": [
+        336,
+        336,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "cargo_green",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        8.75,
+        -6.25
+      ],
+      "source_frame_px": [
+        496,
+        336,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "reactor",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        11.25,
+        -6.25
+      ],
+      "source_frame_px": [
+        656,
+        336,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "shield",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        13.75,
+        -6.25
+      ],
+      "source_frame_px": [
+        816,
+        336,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "scanner",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        16.25,
+        -6.25
+      ],
+      "source_frame_px": [
+        976,
+        336,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "tank",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        18.75,
+        -6.25
+      ],
+      "source_frame_px": [
+        1136,
+        336,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "console",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        21.25,
+        -6.25
+      ],
+      "source_frame_px": [
+        1296,
+        336,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "bridge",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        23.75,
+        -6.25
+      ],
+      "source_frame_px": [
+        1456,
+        336,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "medical",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        26.25,
+        -6.25
+      ],
+      "source_frame_px": [
+        1616,
+        336,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "thruster",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        28.75,
+        -6.25
+      ],
+      "source_frame_px": [
+        1776,
+        336,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "thruster_small",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        31.25,
+        -6.25
+      ],
+      "source_frame_px": [
+        1936,
+        336,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "mount",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        33.75,
+        -6.25
+      ],
+      "source_frame_px": [
+        2096,
+        336,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "turret",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        36.25,
+        -6.25
+      ],
+      "source_frame_px": [
+        2256,
+        336,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "battery",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        38.75,
+        -6.25
+      ],
+      "source_frame_px": [
+        2416,
+        336,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "fuel",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        41.25,
+        -6.25
+      ],
+      "source_frame_px": [
+        2576,
+        336,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "server",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        43.75,
+        -6.25
+      ],
+      "source_frame_px": [
+        2736,
+        336,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "vent",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        46.25,
+        -6.25
+      ],
+      "source_frame_px": [
+        2896,
+        336,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "solar",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        1.25,
+        -8.75
+      ],
+      "source_frame_px": [
+        16,
+        496,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "pipe",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        3.75,
+        -8.75
+      ],
+      "source_frame_px": [
+        176,
+        496,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "window",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        6.25,
+        -8.75
+      ],
+      "source_frame_px": [
+        336,
+        496,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "airlock",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        8.75,
+        -8.75
+      ],
+      "source_frame_px": [
+        496,
+        496,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "door_0",
+      "layer": "door",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        11.25,
+        -8.75
+      ],
+      "source_frame_px": [
+        656,
+        496,
+        128,
+        128
+      ],
+      "animation_frame": 0,
+      "duration_ms": 100
+    },
+    {
+      "name": "door_1",
+      "layer": "door",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        13.75,
+        -8.75
+      ],
+      "source_frame_px": [
+        816,
+        496,
+        128,
+        128
+      ],
+      "animation_frame": 1,
+      "duration_ms": 100
+    },
+    {
+      "name": "door_2",
+      "layer": "door",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        16.25,
+        -8.75
+      ],
+      "source_frame_px": [
+        976,
+        496,
+        128,
+        128
+      ],
+      "animation_frame": 2,
+      "duration_ms": 100
+    },
+    {
+      "name": "door_3",
+      "layer": "door",
+      "walkable_preview": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        18.75,
+        -8.75
+      ],
+      "source_frame_px": [
+        1136,
+        496,
+        128,
+        128
+      ],
+      "animation_frame": 3,
+      "duration_ms": 100
+    },
+    {
+      "name": "hull_damaged_3",
+      "layer": "damage",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        21.25,
+        -8.75
+      ],
+      "source_frame_px": [
+        1296,
+        496,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "hull_damaged_6",
+      "layer": "damage",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        23.75,
+        -8.75
+      ],
+      "source_frame_px": [
+        1456,
+        496,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "hull_damaged_12",
+      "layer": "damage",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        26.25,
+        -8.75
+      ],
+      "source_frame_px": [
+        1616,
+        496,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "hull_damaged_15",
+      "layer": "damage",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        28.75,
+        -8.75
+      ],
+      "source_frame_px": [
+        1776,
+        496,
+        128,
+        128
+      ]
+    },
+    {
+      "name": "crew_0",
+      "layer": "actor",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        31.25,
+        -8.75
+      ],
+      "source_frame_px": [
+        1936,
+        496,
+        128,
+        128
+      ],
+      "animation_frame": 0,
+      "duration_ms": 140
+    },
+    {
+      "name": "crew_1",
+      "layer": "actor",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        33.75,
+        -8.75
+      ],
+      "source_frame_px": [
+        2096,
+        496,
+        128,
+        128
+      ],
+      "animation_frame": 1,
+      "duration_ms": 140
+    },
+    {
+      "name": "crew_2",
+      "layer": "actor",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        36.25,
+        -8.75
+      ],
+      "source_frame_px": [
+        2256,
+        496,
+        128,
+        128
+      ],
+      "animation_frame": 2,
+      "duration_ms": 140
+    },
+    {
+      "name": "crew_3",
+      "layer": "actor",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        38.75,
+        -8.75
+      ],
+      "source_frame_px": [
+        2416,
+        496,
+        128,
+        128
+      ],
+      "animation_frame": 3,
+      "duration_ms": 140
+    },
+    {
+      "name": "armor_diagonal_45_N",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        41.25,
+        -8.75
+      ],
+      "source_frame_px": [
+        2576,
+        496,
+        128,
+        128
+      ],
+      "family": "angled_armor",
+      "orientation": "N",
+      "collision_polygon_local_m": [
+        [
+          -1.0,
+          -1.0
+        ],
+        [
+          1.0,
+          -1.0
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ],
+      "attach_edges": [
+        "S",
+        "W"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_diagonal_45_E",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        43.75,
+        -8.75
+      ],
+      "source_frame_px": [
+        2736,
+        496,
+        128,
+        128
+      ],
+      "family": "angled_armor",
+      "orientation": "E",
+      "collision_polygon_local_m": [
+        [
+          -1.0,
+          1.0
+        ],
+        [
+          -1.0,
+          -1.0
+        ],
+        [
+          1.0,
+          1.0
+        ]
+      ],
+      "attach_edges": [
+        "W",
+        "N"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_diagonal_45_S",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        46.25,
+        -8.75
+      ],
+      "source_frame_px": [
+        2896,
+        496,
+        128,
+        128
+      ],
+      "family": "angled_armor",
+      "orientation": "S",
+      "collision_polygon_local_m": [
+        [
+          1.0,
+          1.0
+        ],
+        [
+          -1.0,
+          1.0
+        ],
+        [
+          1.0,
+          -1.0
+        ]
+      ],
+      "attach_edges": [
+        "N",
+        "E"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_diagonal_45_W",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        1.25,
+        -11.25
+      ],
+      "source_frame_px": [
+        16,
+        656,
+        128,
+        128
+      ],
+      "family": "angled_armor",
+      "orientation": "W",
+      "collision_polygon_local_m": [
+        [
+          1.0,
+          -1.0
+        ],
+        [
+          1.0,
+          1.0
+        ],
+        [
+          -1.0,
+          -1.0
+        ]
+      ],
+      "attach_edges": [
+        "E",
+        "S"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_chamfer_45_N",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        3.75,
+        -11.25
+      ],
+      "source_frame_px": [
+        176,
+        656,
+        128,
+        128
+      ],
+      "family": "angled_armor",
+      "orientation": "N",
+      "collision_polygon_local_m": [
+        [
+          -1.0,
+          -1.0
+        ],
+        [
+          1.0,
+          -1.0
+        ],
+        [
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ],
+      "attach_edges": [
+        "S",
+        "W"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_chamfer_45_E",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        6.25,
+        -11.25
+      ],
+      "source_frame_px": [
+        336,
+        656,
+        128,
+        128
+      ],
+      "family": "angled_armor",
+      "orientation": "E",
+      "collision_polygon_local_m": [
+        [
+          -1.0,
+          1.0
+        ],
+        [
+          -1.0,
+          -1.0
+        ],
+        [
+          0.0,
+          -1.0
+        ],
+        [
+          1.0,
+          0.0
+        ],
+        [
+          1.0,
+          1.0
+        ]
+      ],
+      "attach_edges": [
+        "W",
+        "N"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_chamfer_45_S",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        8.75,
+        -11.25
+      ],
+      "source_frame_px": [
+        496,
+        656,
+        128,
+        128
+      ],
+      "family": "angled_armor",
+      "orientation": "S",
+      "collision_polygon_local_m": [
+        [
+          1.0,
+          1.0
+        ],
+        [
+          -1.0,
+          1.0
+        ],
+        [
+          -1.0,
+          -0.0
+        ],
+        [
+          0.0,
+          -1.0
+        ],
+        [
+          1.0,
+          -1.0
+        ]
+      ],
+      "attach_edges": [
+        "N",
+        "E"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_chamfer_45_W",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        11.25,
+        -11.25
+      ],
+      "source_frame_px": [
+        656,
+        656,
+        128,
+        128
+      ],
+      "family": "angled_armor",
+      "orientation": "W",
+      "collision_polygon_local_m": [
+        [
+          1.0,
+          -1.0
+        ],
+        [
+          1.0,
+          1.0
+        ],
+        [
+          -0.0,
+          1.0
+        ],
+        [
+          -1.0,
+          -0.0
+        ],
+        [
+          -1.0,
+          -1.0
+        ]
+      ],
+      "attach_edges": [
+        "E",
+        "S"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_slope_shallow_N",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "size_cells": [
+        2,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        14.75,
+        -11.25
+      ],
+      "source_frame_px": [
+        816,
+        656,
+        256,
+        128
+      ],
+      "family": "angled_armor",
+      "orientation": "N",
+      "collision_polygon_local_m": [
+        [
+          -2.0,
+          -1.0
+        ],
+        [
+          2.0,
+          -1.0
+        ],
+        [
+          -2.0,
+          1.0
+        ]
+      ],
+      "attach_edges": [
+        "S",
+        "W"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_slope_shallow_E",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "size_cells": [
+        1,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        18.25,
+        -12.25
+      ],
+      "source_frame_px": [
+        1104,
+        656,
+        128,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "E",
+      "collision_polygon_local_m": [
+        [
+          -1.0,
+          2.0
+        ],
+        [
+          -1.0,
+          -2.0
+        ],
+        [
+          1.0,
+          2.0
+        ]
+      ],
+      "attach_edges": [
+        "W",
+        "N"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_slope_shallow_S",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "size_cells": [
+        2,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        21.75,
+        -11.25
+      ],
+      "source_frame_px": [
+        1264,
+        656,
+        256,
+        128
+      ],
+      "family": "angled_armor",
+      "orientation": "S",
+      "collision_polygon_local_m": [
+        [
+          2.0,
+          1.0
+        ],
+        [
+          -2.0,
+          1.0
+        ],
+        [
+          2.0,
+          -1.0
+        ]
+      ],
+      "attach_edges": [
+        "N",
+        "E"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_slope_shallow_W",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "size_cells": [
+        1,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        25.25,
+        -12.25
+      ],
+      "source_frame_px": [
+        1552,
+        656,
+        128,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "W",
+      "collision_polygon_local_m": [
+        [
+          1.0,
+          -2.0
+        ],
+        [
+          1.0,
+          2.0
+        ],
+        [
+          -1.0,
+          -2.0
+        ]
+      ],
+      "attach_edges": [
+        "E",
+        "S"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_slope_steep_N",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "size_cells": [
+        1,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        27.75,
+        -12.25
+      ],
+      "source_frame_px": [
+        1712,
+        656,
+        128,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "N",
+      "collision_polygon_local_m": [
+        [
+          -1.0,
+          -2.0
+        ],
+        [
+          1.0,
+          -2.0
+        ],
+        [
+          -1.0,
+          2.0
+        ]
+      ],
+      "attach_edges": [
+        "S",
+        "W"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_slope_steep_E",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "size_cells": [
+        2,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        31.25,
+        -11.25
+      ],
+      "source_frame_px": [
+        1872,
+        656,
+        256,
+        128
+      ],
+      "family": "angled_armor",
+      "orientation": "E",
+      "collision_polygon_local_m": [
+        [
+          -2.0,
+          1.0
+        ],
+        [
+          -2.0,
+          -1.0
+        ],
+        [
+          2.0,
+          1.0
+        ]
+      ],
+      "attach_edges": [
+        "W",
+        "N"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_slope_steep_S",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "size_cells": [
+        1,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        34.75,
+        -12.25
+      ],
+      "source_frame_px": [
+        2160,
+        656,
+        128,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "S",
+      "collision_polygon_local_m": [
+        [
+          1.0,
+          2.0
+        ],
+        [
+          -1.0,
+          2.0
+        ],
+        [
+          1.0,
+          -2.0
+        ]
+      ],
+      "attach_edges": [
+        "N",
+        "E"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_slope_steep_W",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "size_cells": [
+        2,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        38.25,
+        -11.25
+      ],
+      "source_frame_px": [
+        2320,
+        656,
+        256,
+        128
+      ],
+      "family": "angled_armor",
+      "orientation": "W",
+      "collision_polygon_local_m": [
+        [
+          2.0,
+          -1.0
+        ],
+        [
+          2.0,
+          1.0
+        ],
+        [
+          -2.0,
+          -1.0
+        ]
+      ],
+      "attach_edges": [
+        "E",
+        "S"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_chamfer_large_N",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        42.75,
+        -12.25
+      ],
+      "source_frame_px": [
+        2608,
+        656,
+        256,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "N",
+      "collision_polygon_local_m": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          0.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "attach_edges": [
+        "S",
+        "W"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_chamfer_large_E",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        2.25,
+        -16.75
+      ],
+      "source_frame_px": [
+        16,
+        944,
+        256,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "E",
+      "collision_polygon_local_m": [
+        [
+          -2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          0.0,
+          -2.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          2.0
+        ]
+      ],
+      "attach_edges": [
+        "W",
+        "N"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_chamfer_large_S",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        6.75,
+        -16.75
+      ],
+      "source_frame_px": [
+        304,
+        944,
+        256,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "S",
+      "collision_polygon_local_m": [
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          -0.0
+        ],
+        [
+          0.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ]
+      ],
+      "attach_edges": [
+        "N",
+        "E"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_chamfer_large_W",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        11.25,
+        -16.75
+      ],
+      "source_frame_px": [
+        592,
+        944,
+        256,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "W",
+      "collision_polygon_local_m": [
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -0.0,
+          2.0
+        ],
+        [
+          -2.0,
+          -0.0
+        ],
+        [
+          -2.0,
+          -2.0
+        ]
+      ],
+      "attach_edges": [
+        "E",
+        "S"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_bow_point_N",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "size_cells": [
+        1,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        14.75,
+        -16.75
+      ],
+      "source_frame_px": [
+        880,
+        944,
+        128,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "N",
+      "collision_polygon_local_m": [
+        [
+          -1.0,
+          -2.0
+        ],
+        [
+          1.0,
+          -2.0
+        ],
+        [
+          0.8,
+          0.8
+        ],
+        [
+          0.0,
+          2.0
+        ],
+        [
+          -0.8,
+          0.8
+        ]
+      ],
+      "attach_edges": [
+        "S"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_bow_point_E",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "size_cells": [
+        2,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        18.25,
+        -15.75
+      ],
+      "source_frame_px": [
+        1040,
+        944,
+        256,
+        128
+      ],
+      "family": "angled_armor",
+      "orientation": "E",
+      "collision_polygon_local_m": [
+        [
+          -2.0,
+          1.0
+        ],
+        [
+          -2.0,
+          -1.0
+        ],
+        [
+          0.8,
+          -0.8
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          0.8,
+          0.8
+        ]
+      ],
+      "attach_edges": [
+        "W"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_bow_point_S",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "size_cells": [
+        1,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        21.75,
+        -16.75
+      ],
+      "source_frame_px": [
+        1328,
+        944,
+        128,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "S",
+      "collision_polygon_local_m": [
+        [
+          1.0,
+          2.0
+        ],
+        [
+          -1.0,
+          2.0
+        ],
+        [
+          -0.8,
+          -0.8
+        ],
+        [
+          0.0,
+          -2.0
+        ],
+        [
+          0.8,
+          -0.8
+        ]
+      ],
+      "attach_edges": [
+        "N"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_bow_point_W",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "size_cells": [
+        2,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        25.25,
+        -15.75
+      ],
+      "source_frame_px": [
+        1488,
+        944,
+        256,
+        128
+      ],
+      "family": "angled_armor",
+      "orientation": "W",
+      "collision_polygon_local_m": [
+        [
+          2.0,
+          -1.0
+        ],
+        [
+          2.0,
+          1.0
+        ],
+        [
+          -0.8,
+          0.8
+        ],
+        [
+          -2.0,
+          -0.0
+        ],
+        [
+          -0.8,
+          -0.8
+        ]
+      ],
+      "attach_edges": [
+        "E"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_bow_broad_N",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        29.75,
+        -16.75
+      ],
+      "source_frame_px": [
+        1776,
+        944,
+        256,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "N",
+      "collision_polygon_local_m": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          0.4
+        ],
+        [
+          0.75,
+          2.0
+        ],
+        [
+          -0.75,
+          2.0
+        ],
+        [
+          -2.0,
+          0.4
+        ]
+      ],
+      "attach_edges": [
+        "S"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_bow_broad_E",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        34.25,
+        -16.75
+      ],
+      "source_frame_px": [
+        2064,
+        944,
+        256,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "E",
+      "collision_polygon_local_m": [
+        [
+          -2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          0.4,
+          -2.0
+        ],
+        [
+          2.0,
+          -0.75
+        ],
+        [
+          2.0,
+          0.75
+        ],
+        [
+          0.4,
+          2.0
+        ]
+      ],
+      "attach_edges": [
+        "W"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_bow_broad_S",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        38.75,
+        -16.75
+      ],
+      "source_frame_px": [
+        2352,
+        944,
+        256,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "S",
+      "collision_polygon_local_m": [
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          -0.4
+        ],
+        [
+          -0.75,
+          -2.0
+        ],
+        [
+          0.75,
+          -2.0
+        ],
+        [
+          2.0,
+          -0.4
+        ]
+      ],
+      "attach_edges": [
+        "N"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_bow_broad_W",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        43.25,
+        -16.75
+      ],
+      "source_frame_px": [
+        2640,
+        944,
+        256,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "W",
+      "collision_polygon_local_m": [
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -0.4,
+          2.0
+        ],
+        [
+          -2.0,
+          0.75
+        ],
+        [
+          -2.0,
+          -0.75
+        ],
+        [
+          -0.4,
+          -2.0
+        ]
+      ],
+      "attach_edges": [
+        "E"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_wing_swept_N",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        2.25,
+        -21.25
+      ],
+      "source_frame_px": [
+        16,
+        1232,
+        256,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "N",
+      "collision_polygon_local_m": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          -0.8,
+          -2.0
+        ],
+        [
+          2.0,
+          1.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          0.4
+        ]
+      ],
+      "attach_edges": [
+        "W"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_wing_swept_E",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        6.75,
+        -21.25
+      ],
+      "source_frame_px": [
+        304,
+        1232,
+        256,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "E",
+      "collision_polygon_local_m": [
+        [
+          -2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          0.8
+        ],
+        [
+          1.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          0.4,
+          2.0
+        ]
+      ],
+      "attach_edges": [
+        "N"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_wing_swept_S",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        11.25,
+        -21.25
+      ],
+      "source_frame_px": [
+        592,
+        1232,
+        256,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "S",
+      "collision_polygon_local_m": [
+        [
+          2.0,
+          2.0
+        ],
+        [
+          0.8,
+          2.0
+        ],
+        [
+          -2.0,
+          -1.0
+        ],
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -0.4
+        ]
+      ],
+      "attach_edges": [
+        "E"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_wing_swept_W",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        15.75,
+        -21.25
+      ],
+      "source_frame_px": [
+        880,
+        1232,
+        256,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "W",
+      "collision_polygon_local_m": [
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -0.8
+        ],
+        [
+          -1.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ],
+        [
+          -0.4,
+          -2.0
+        ]
+      ],
+      "attach_edges": [
+        "S"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_notch_inner_N",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        20.25,
+        -21.25
+      ],
+      "source_frame_px": [
+        1168,
+        1232,
+        256,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "N",
+      "collision_polygon_local_m": [
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "attach_edges": [
+        "S",
+        "W"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_notch_inner_E",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        24.75,
+        -21.25
+      ],
+      "source_frame_px": [
+        1456,
+        1232,
+        256,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "E",
+      "collision_polygon_local_m": [
+        [
+          -2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          0.0,
+          -2.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          2.0
+        ]
+      ],
+      "attach_edges": [
+        "W",
+        "N"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_notch_inner_S",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        29.25,
+        -21.25
+      ],
+      "source_frame_px": [
+        1744,
+        1232,
+        256,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "S",
+      "collision_polygon_local_m": [
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          -0.0
+        ],
+        [
+          0.0,
+          -0.0
+        ],
+        [
+          0.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ]
+      ],
+      "attach_edges": [
+        "N",
+        "E"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_notch_inner_W",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        33.75,
+        -21.25
+      ],
+      "source_frame_px": [
+        2032,
+        1232,
+        256,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "W",
+      "collision_polygon_local_m": [
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          -0.0,
+          2.0
+        ],
+        [
+          -0.0,
+          0.0
+        ],
+        [
+          -2.0,
+          -0.0
+        ],
+        [
+          -2.0,
+          -2.0
+        ]
+      ],
+      "attach_edges": [
+        "E",
+        "S"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_nacelle_shoulder_N",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "size_cells": [
+        3,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        39.25,
+        -21.25
+      ],
+      "source_frame_px": [
+        2320,
+        1232,
+        384,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "N",
+      "collision_polygon_local_m": [
+        [
+          -3.0,
+          -2.0
+        ],
+        [
+          3.0,
+          -2.0
+        ],
+        [
+          3.0,
+          0.0
+        ],
+        [
+          1.0,
+          2.0
+        ],
+        [
+          -1.0,
+          2.0
+        ],
+        [
+          -3.0,
+          0.0
+        ]
+      ],
+      "attach_edges": [
+        "S"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_nacelle_shoulder_E",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "size_cells": [
+        2,
+        3
+      ],
+      "pivot_px": [
+        32,
+        160
+      ],
+      "source_origin_m": [
+        44.75,
+        -22.25
+      ],
+      "source_frame_px": [
+        2736,
+        1232,
+        256,
+        384
+      ],
+      "family": "angled_armor",
+      "orientation": "E",
+      "collision_polygon_local_m": [
+        [
+          -2.0,
+          3.0
+        ],
+        [
+          -2.0,
+          -3.0
+        ],
+        [
+          0.0,
+          -3.0
+        ],
+        [
+          2.0,
+          -1.0
+        ],
+        [
+          2.0,
+          1.0
+        ],
+        [
+          -0.0,
+          3.0
+        ]
+      ],
+      "attach_edges": [
+        "W"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_nacelle_shoulder_S",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "size_cells": [
+        3,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        3.25,
+        -27.75
+      ],
+      "source_frame_px": [
+        16,
+        1648,
+        384,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "S",
+      "collision_polygon_local_m": [
+        [
+          3.0,
+          2.0
+        ],
+        [
+          -3.0,
+          2.0
+        ],
+        [
+          -3.0,
+          -0.0
+        ],
+        [
+          -1.0,
+          -2.0
+        ],
+        [
+          1.0,
+          -2.0
+        ],
+        [
+          3.0,
+          0.0
+        ]
+      ],
+      "attach_edges": [
+        "N"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_nacelle_shoulder_W",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "size_cells": [
+        2,
+        3
+      ],
+      "pivot_px": [
+        32,
+        160
+      ],
+      "source_origin_m": [
+        8.75,
+        -28.75
+      ],
+      "source_frame_px": [
+        432,
+        1648,
+        256,
+        384
+      ],
+      "family": "angled_armor",
+      "orientation": "W",
+      "collision_polygon_local_m": [
+        [
+          2.0,
+          -3.0
+        ],
+        [
+          2.0,
+          3.0
+        ],
+        [
+          -0.0,
+          3.0
+        ],
+        [
+          -2.0,
+          1.0
+        ],
+        [
+          -2.0,
+          -1.0
+        ],
+        [
+          0.0,
+          -3.0
+        ]
+      ],
+      "attach_edges": [
+        "E"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_slope_shallow_mirrored_N",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "size_cells": [
+        2,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        13.25,
+        -26.75
+      ],
+      "source_frame_px": [
+        720,
+        1648,
+        256,
+        128
+      ],
+      "family": "angled_armor",
+      "orientation": "N",
+      "collision_polygon_local_m": [
+        [
+          2.0,
+          1.0
+        ],
+        [
+          -2.0,
+          -1.0
+        ],
+        [
+          2.0,
+          -1.0
+        ]
+      ],
+      "attach_edges": [
+        "S",
+        "E"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_slope_shallow_mirrored_E",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "size_cells": [
+        1,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        16.75,
+        -27.75
+      ],
+      "source_frame_px": [
+        1008,
+        1648,
+        128,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "E",
+      "collision_polygon_local_m": [
+        [
+          1.0,
+          -2.0
+        ],
+        [
+          -1.0,
+          2.0
+        ],
+        [
+          -1.0,
+          -2.0
+        ]
+      ],
+      "attach_edges": [
+        "W",
+        "S"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_slope_shallow_mirrored_S",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "size_cells": [
+        2,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        20.25,
+        -26.75
+      ],
+      "source_frame_px": [
+        1168,
+        1648,
+        256,
+        128
+      ],
+      "family": "angled_armor",
+      "orientation": "S",
+      "collision_polygon_local_m": [
+        [
+          -2.0,
+          -1.0
+        ],
+        [
+          2.0,
+          1.0
+        ],
+        [
+          -2.0,
+          1.0
+        ]
+      ],
+      "attach_edges": [
+        "N",
+        "W"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_slope_shallow_mirrored_W",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "size_cells": [
+        1,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        23.75,
+        -27.75
+      ],
+      "source_frame_px": [
+        1456,
+        1648,
+        128,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "W",
+      "collision_polygon_local_m": [
+        [
+          -1.0,
+          2.0
+        ],
+        [
+          1.0,
+          -2.0
+        ],
+        [
+          1.0,
+          2.0
+        ]
+      ],
+      "attach_edges": [
+        "E",
+        "N"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_slope_steep_mirrored_N",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "size_cells": [
+        1,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        26.25,
+        -27.75
+      ],
+      "source_frame_px": [
+        1616,
+        1648,
+        128,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "N",
+      "collision_polygon_local_m": [
+        [
+          1.0,
+          2.0
+        ],
+        [
+          -1.0,
+          -2.0
+        ],
+        [
+          1.0,
+          -2.0
+        ]
+      ],
+      "attach_edges": [
+        "S",
+        "E"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_slope_steep_mirrored_E",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "size_cells": [
+        2,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        29.75,
+        -26.75
+      ],
+      "source_frame_px": [
+        1776,
+        1648,
+        256,
+        128
+      ],
+      "family": "angled_armor",
+      "orientation": "E",
+      "collision_polygon_local_m": [
+        [
+          2.0,
+          -1.0
+        ],
+        [
+          -2.0,
+          1.0
+        ],
+        [
+          -2.0,
+          -1.0
+        ]
+      ],
+      "attach_edges": [
+        "W",
+        "S"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_slope_steep_mirrored_S",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "size_cells": [
+        1,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        33.25,
+        -27.75
+      ],
+      "source_frame_px": [
+        2064,
+        1648,
+        128,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "S",
+      "collision_polygon_local_m": [
+        [
+          -1.0,
+          -2.0
+        ],
+        [
+          1.0,
+          2.0
+        ],
+        [
+          -1.0,
+          2.0
+        ]
+      ],
+      "attach_edges": [
+        "N",
+        "W"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_slope_steep_mirrored_W",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "size_cells": [
+        2,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        36.75,
+        -26.75
+      ],
+      "source_frame_px": [
+        2224,
+        1648,
+        256,
+        128
+      ],
+      "family": "angled_armor",
+      "orientation": "W",
+      "collision_polygon_local_m": [
+        [
+          -2.0,
+          1.0
+        ],
+        [
+          2.0,
+          -1.0
+        ],
+        [
+          2.0,
+          1.0
+        ]
+      ],
+      "attach_edges": [
+        "E",
+        "N"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_wing_swept_mirrored_N",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        41.25,
+        -27.75
+      ],
+      "source_frame_px": [
+        2512,
+        1648,
+        256,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "N",
+      "collision_polygon_local_m": [
+        [
+          2.0,
+          0.4
+        ],
+        [
+          -2.0,
+          2.0
+        ],
+        [
+          -2.0,
+          1.0
+        ],
+        [
+          0.8,
+          -2.0
+        ],
+        [
+          2.0,
+          -2.0
+        ]
+      ],
+      "attach_edges": [
+        "E"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_wing_swept_mirrored_E",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        45.75,
+        -27.75
+      ],
+      "source_frame_px": [
+        2800,
+        1648,
+        256,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "E",
+      "collision_polygon_local_m": [
+        [
+          0.4,
+          -2.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          1.0,
+          2.0
+        ],
+        [
+          -2.0,
+          -0.8
+        ],
+        [
+          -2.0,
+          -2.0
+        ]
+      ],
+      "attach_edges": [
+        "S"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_wing_swept_mirrored_S",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        2.25,
+        -34.25
+      ],
+      "source_frame_px": [
+        16,
+        2064,
+        256,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "S",
+      "collision_polygon_local_m": [
+        [
+          -2.0,
+          -0.4
+        ],
+        [
+          2.0,
+          -2.0
+        ],
+        [
+          2.0,
+          -1.0
+        ],
+        [
+          -0.8,
+          2.0
+        ],
+        [
+          -2.0,
+          2.0
+        ]
+      ],
+      "attach_edges": [
+        "W"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "armor_wing_swept_mirrored_W",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        6.75,
+        -34.25
+      ],
+      "source_frame_px": [
+        304,
+        2064,
+        256,
+        256
+      ],
+      "family": "angled_armor",
+      "orientation": "W",
+      "collision_polygon_local_m": [
+        [
+          -0.4,
+          2.0
+        ],
+        [
+          -2.0,
+          -2.0
+        ],
+        [
+          -1.0,
+          -2.0
+        ],
+        [
+          2.0,
+          0.8
+        ],
+        [
+          2.0,
+          2.0
+        ]
+      ],
+      "attach_edges": [
+        "N"
+      ],
+      "construction_note": "Conservative cell footprint; polygon clips visual/physical outline; validate edge spans before gameplay publication"
+    },
+    {
+      "name": "generator_fission_small",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        10.25,
+        -33.25
+      ],
+      "source_frame_px": [
+        592,
+        2064,
+        128,
+        128
+      ],
+      "family": "power_and_shields"
+    },
+    {
+      "name": "generator_fusion_medium",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        13.75,
+        -34.25
+      ],
+      "source_frame_px": [
+        752,
+        2064,
+        256,
+        256
+      ],
+      "family": "power_and_shields"
+    },
+    {
+      "name": "generator_fusion_large",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "size_cells": [
+        2,
+        3
+      ],
+      "pivot_px": [
+        32,
+        160
+      ],
+      "source_origin_m": [
+        18.25,
+        -35.25
+      ],
+      "source_frame_px": [
+        1040,
+        2064,
+        256,
+        384
+      ],
+      "family": "power_and_shields"
+    },
+    {
+      "name": "generator_auxiliary",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "size_cells": [
+        1,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        21.75,
+        -34.25
+      ],
+      "source_frame_px": [
+        1328,
+        2064,
+        128,
+        256
+      ],
+      "family": "power_and_shields"
+    },
+    {
+      "name": "shield_generator_small",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        24.25,
+        -33.25
+      ],
+      "source_frame_px": [
+        1488,
+        2064,
+        128,
+        128
+      ],
+      "family": "power_and_shields"
+    },
+    {
+      "name": "shield_generator_medium",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        27.75,
+        -34.25
+      ],
+      "source_frame_px": [
+        1648,
+        2064,
+        256,
+        256
+      ],
+      "family": "power_and_shields"
+    },
+    {
+      "name": "shield_generator_large",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "size_cells": [
+        3,
+        3
+      ],
+      "pivot_px": [
+        32,
+        160
+      ],
+      "source_origin_m": [
+        33.25,
+        -35.25
+      ],
+      "source_frame_px": [
+        1936,
+        2064,
+        384,
+        384
+      ],
+      "family": "power_and_shields"
+    },
+    {
+      "name": "jump_core",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        38.75,
+        -34.25
+      ],
+      "source_frame_px": [
+        2352,
+        2064,
+        256,
+        256
+      ],
+      "family": "power_and_shields"
+    },
+    {
+      "name": "engine_chemical_small",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "size_cells": [
+        1,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        42.25,
+        -34.25
+      ],
+      "source_frame_px": [
+        2640,
+        2064,
+        128,
+        256
+      ],
+      "family": "engines",
+      "orientation": "N",
+      "attach_edges": [
+        "N"
+      ],
+      "exhaust_direction": "S",
+      "exhaust_socket_local_m": [
+        0,
+        -2,
+        0.4
+      ]
+    },
+    {
+      "name": "engine_chemical_medium",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        45.75,
+        -34.25
+      ],
+      "source_frame_px": [
+        2800,
+        2064,
+        256,
+        256
+      ],
+      "family": "engines",
+      "orientation": "N",
+      "attach_edges": [
+        "N"
+      ],
+      "exhaust_direction": "S",
+      "exhaust_socket_local_m": [
+        0,
+        -2,
+        0.4
+      ]
+    },
+    {
+      "name": "engine_chemical_large",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "size_cells": [
+        2,
+        3
+      ],
+      "pivot_px": [
+        32,
+        160
+      ],
+      "source_origin_m": [
+        2.25,
+        -41.75
+      ],
+      "source_frame_px": [
+        16,
+        2480,
+        256,
+        384
+      ],
+      "family": "engines",
+      "orientation": "N",
+      "attach_edges": [
+        "N"
+      ],
+      "exhaust_direction": "S",
+      "exhaust_socket_local_m": [
+        0,
+        -3,
+        0.4
+      ]
+    },
+    {
+      "name": "engine_ion",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "size_cells": [
+        1,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        5.75,
+        -40.75
+      ],
+      "source_frame_px": [
+        304,
+        2480,
+        128,
+        256
+      ],
+      "family": "engines",
+      "orientation": "N",
+      "attach_edges": [
+        "N"
+      ],
+      "exhaust_direction": "S",
+      "exhaust_socket_local_m": [
+        0,
+        -2,
+        0.4
+      ]
+    },
+    {
+      "name": "engine_plasma",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "size_cells": [
+        2,
+        3
+      ],
+      "pivot_px": [
+        32,
+        160
+      ],
+      "source_origin_m": [
+        9.25,
+        -41.75
+      ],
+      "source_frame_px": [
+        464,
+        2480,
+        256,
+        384
+      ],
+      "family": "engines",
+      "orientation": "N",
+      "attach_edges": [
+        "N"
+      ],
+      "exhaust_direction": "S",
+      "exhaust_socket_local_m": [
+        0,
+        -3,
+        0.4
+      ]
+    },
+    {
+      "name": "engine_maneuvering",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        12.75,
+        -39.75
+      ],
+      "source_frame_px": [
+        752,
+        2480,
+        128,
+        128
+      ],
+      "family": "engines",
+      "orientation": "N",
+      "attach_edges": [
+        "N"
+      ],
+      "exhaust_direction": "S",
+      "exhaust_socket_local_m": [
+        0,
+        -1,
+        0.4
+      ]
+    },
+    {
+      "name": "engine_vector",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        16.25,
+        -40.75
+      ],
+      "source_frame_px": [
+        912,
+        2480,
+        256,
+        256
+      ],
+      "family": "engines",
+      "orientation": "N",
+      "attach_edges": [
+        "N"
+      ],
+      "exhaust_direction": "S",
+      "exhaust_socket_local_m": [
+        0,
+        -2,
+        0.4
+      ]
+    },
+    {
+      "name": "engine_frigate_nacelle",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "size_cells": [
+        3,
+        3
+      ],
+      "pivot_px": [
+        32,
+        160
+      ],
+      "source_origin_m": [
+        21.75,
+        -41.75
+      ],
+      "source_frame_px": [
+        1200,
+        2480,
+        384,
+        384
+      ],
+      "family": "engines",
+      "orientation": "N",
+      "attach_edges": [
+        "N"
+      ],
+      "exhaust_direction": "S",
+      "exhaust_socket_local_m": [
+        0,
+        -3,
+        0.4
+      ]
+    },
+    {
+      "name": "rocket_pod_small",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "size_cells": [
+        1,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        26.25,
+        -40.75
+      ],
+      "source_frame_px": [
+        1616,
+        2480,
+        128,
+        256
+      ],
+      "family": "propulsion_pod",
+      "exhaust_face": "S"
+    },
+    {
+      "name": "rocket_pod_medium",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "size_cells": [
+        2,
+        3
+      ],
+      "pivot_px": [
+        32,
+        160
+      ],
+      "source_origin_m": [
+        29.75,
+        -41.75
+      ],
+      "source_frame_px": [
+        1776,
+        2480,
+        256,
+        384
+      ],
+      "family": "propulsion_pod",
+      "exhaust_face": "S"
+    },
+    {
+      "name": "rocket_pod_heavy",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          3
+        ]
+      ],
+      "size_cells": [
+        3,
+        4
+      ],
+      "pivot_px": [
+        32,
+        224
+      ],
+      "source_origin_m": [
+        35.25,
+        -42.75
+      ],
+      "source_frame_px": [
+        2064,
+        2480,
+        384,
+        512
+      ],
+      "family": "propulsion_pod",
+      "exhaust_face": "S"
+    },
+    {
+      "name": "fusion_drive_pod",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "size_cells": [
+        2,
+        3
+      ],
+      "pivot_px": [
+        32,
+        160
+      ],
+      "source_origin_m": [
+        40.75,
+        -41.75
+      ],
+      "source_frame_px": [
+        2480,
+        2480,
+        256,
+        384
+      ],
+      "family": "propulsion_pod",
+      "exhaust_face": "S"
+    },
+    {
+      "name": "ion_drive_pod",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "size_cells": [
+        1,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        44.25,
+        -40.75
+      ],
+      "source_frame_px": [
+        2768,
+        2480,
+        128,
+        256
+      ],
+      "family": "propulsion_pod",
+      "exhaust_face": "S"
+    },
+    {
+      "name": "thruster_side_micro",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        46.75,
+        -39.75
+      ],
+      "source_frame_px": [
+        2928,
+        2480,
+        128,
+        128
+      ],
+      "family": "propulsion"
+    },
+    {
+      "name": "crate_supplies_small",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        1.25,
+        -48.25
+      ],
+      "source_frame_px": [
+        16,
+        3024,
+        128,
+        128
+      ],
+      "family": "cargo_and_trade",
+      "contents_kind": "supplies"
+    },
+    {
+      "name": "crate_food",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        3.75,
+        -48.25
+      ],
+      "source_frame_px": [
+        176,
+        3024,
+        128,
+        128
+      ],
+      "family": "cargo_and_trade",
+      "contents_kind": "food"
+    },
+    {
+      "name": "crate_medical",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        6.25,
+        -48.25
+      ],
+      "source_frame_px": [
+        336,
+        3024,
+        128,
+        128
+      ],
+      "family": "cargo_and_trade",
+      "contents_kind": "medical"
+    },
+    {
+      "name": "crate_electronics",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        8.75,
+        -48.25
+      ],
+      "source_frame_px": [
+        496,
+        3024,
+        128,
+        128
+      ],
+      "family": "cargo_and_trade",
+      "contents_kind": "electronics"
+    },
+    {
+      "name": "crate_secure",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        11.25,
+        -48.25
+      ],
+      "source_frame_px": [
+        656,
+        3024,
+        128,
+        128
+      ],
+      "family": "cargo_and_trade",
+      "contents_kind": "secure"
+    },
+    {
+      "name": "crate_luxury",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        13.75,
+        -48.25
+      ],
+      "source_frame_px": [
+        816,
+        3024,
+        128,
+        128
+      ],
+      "family": "cargo_and_trade",
+      "contents_kind": "luxury"
+    },
+    {
+      "name": "crate_munitions",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        16.25,
+        -48.25
+      ],
+      "source_frame_px": [
+        976,
+        3024,
+        128,
+        128
+      ],
+      "family": "cargo_and_trade",
+      "contents_kind": "munitions"
+    },
+    {
+      "name": "cargo_bulk_medium",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        19.75,
+        -49.25
+      ],
+      "source_frame_px": [
+        1136,
+        3024,
+        256,
+        256
+      ],
+      "family": "cargo_and_trade",
+      "contents_kind": "bulk"
+    },
+    {
+      "name": "cargo_refrigerated",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "size_cells": [
+        1,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        23.25,
+        -49.25
+      ],
+      "source_frame_px": [
+        1424,
+        3024,
+        128,
+        256
+      ],
+      "family": "cargo_and_trade",
+      "contents_kind": "food"
+    },
+    {
+      "name": "cargo_freight_long",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "size_cells": [
+        1,
+        3
+      ],
+      "pivot_px": [
+        32,
+        160
+      ],
+      "source_origin_m": [
+        25.75,
+        -50.25
+      ],
+      "source_frame_px": [
+        1584,
+        3024,
+        128,
+        384
+      ],
+      "family": "cargo_and_trade",
+      "contents_kind": "freight"
+    },
+    {
+      "name": "cargo_freight_large",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "size_cells": [
+        2,
+        3
+      ],
+      "pivot_px": [
+        32,
+        160
+      ],
+      "source_origin_m": [
+        29.25,
+        -50.25
+      ],
+      "source_frame_px": [
+        1744,
+        3024,
+        256,
+        384
+      ],
+      "family": "cargo_and_trade",
+      "contents_kind": "freight"
+    },
+    {
+      "name": "cargo_secure_large",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        33.75,
+        -49.25
+      ],
+      "source_frame_px": [
+        2032,
+        3024,
+        256,
+        256
+      ],
+      "family": "cargo_and_trade",
+      "contents_kind": "secure"
+    },
+    {
+      "name": "fluid_drum_small",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        37.25,
+        -48.25
+      ],
+      "source_frame_px": [
+        2320,
+        3024,
+        128,
+        128
+      ],
+      "family": "fluids_and_fuel"
+    },
+    {
+      "name": "fluid_drum_pair",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        39.75,
+        -48.25
+      ],
+      "source_frame_px": [
+        2480,
+        3024,
+        128,
+        128
+      ],
+      "family": "fluids_and_fuel"
+    },
+    {
+      "name": "fluid_water_tank",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "size_cells": [
+        1,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        42.25,
+        -49.25
+      ],
+      "source_frame_px": [
+        2640,
+        3024,
+        128,
+        256
+      ],
+      "family": "fluids_and_fuel"
+    },
+    {
+      "name": "fluid_coolant_tank",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        45.75,
+        -49.25
+      ],
+      "source_frame_px": [
+        2800,
+        3024,
+        256,
+        256
+      ],
+      "family": "fluids_and_fuel"
+    },
+    {
+      "name": "fluid_chemical_tank",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "size_cells": [
+        2,
+        3
+      ],
+      "pivot_px": [
+        32,
+        160
+      ],
+      "source_origin_m": [
+        2.25,
+        -56.75
+      ],
+      "source_frame_px": [
+        16,
+        3440,
+        256,
+        384
+      ],
+      "family": "fluids_and_fuel"
+    },
+    {
+      "name": "fluid_pallet_three",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "size_cells": [
+        3,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        7.75,
+        -54.75
+      ],
+      "source_frame_px": [
+        304,
+        3440,
+        384,
+        128
+      ],
+      "family": "fluids_and_fuel"
+    },
+    {
+      "name": "fuel_pod_small",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        12.25,
+        -54.75
+      ],
+      "source_frame_px": [
+        720,
+        3440,
+        128,
+        128
+      ],
+      "family": "fluids_and_fuel"
+    },
+    {
+      "name": "fuel_pod_medium",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "size_cells": [
+        1,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        14.75,
+        -55.75
+      ],
+      "source_frame_px": [
+        880,
+        3440,
+        128,
+        256
+      ],
+      "family": "fluids_and_fuel"
+    },
+    {
+      "name": "fuel_pod_large",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "size_cells": [
+        2,
+        3
+      ],
+      "pivot_px": [
+        32,
+        160
+      ],
+      "source_origin_m": [
+        18.25,
+        -56.75
+      ],
+      "source_frame_px": [
+        1040,
+        3440,
+        256,
+        384
+      ],
+      "family": "fluids_and_fuel"
+    },
+    {
+      "name": "fuel_cryogenic",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        22.75,
+        -55.75
+      ],
+      "source_frame_px": [
+        1328,
+        3440,
+        256,
+        256
+      ],
+      "family": "fluids_and_fuel"
+    },
+    {
+      "name": "gas_canister_rack",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "size_cells": [
+        2,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        27.25,
+        -54.75
+      ],
+      "source_frame_px": [
+        1616,
+        3440,
+        256,
+        128
+      ],
+      "family": "fluids_and_fuel"
+    },
+    {
+      "name": "resource_iron",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        30.75,
+        -54.75
+      ],
+      "source_frame_px": [
+        1904,
+        3440,
+        128,
+        128
+      ],
+      "family": "resources"
+    },
+    {
+      "name": "resource_copper",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        33.25,
+        -54.75
+      ],
+      "source_frame_px": [
+        2064,
+        3440,
+        128,
+        128
+      ],
+      "family": "resources"
+    },
+    {
+      "name": "resource_crystal",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        35.75,
+        -54.75
+      ],
+      "source_frame_px": [
+        2224,
+        3440,
+        128,
+        128
+      ],
+      "family": "resources"
+    },
+    {
+      "name": "resource_ice",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        38.25,
+        -54.75
+      ],
+      "source_frame_px": [
+        2384,
+        3440,
+        128,
+        128
+      ],
+      "family": "resources"
+    },
+    {
+      "name": "resource_isotope",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        40.75,
+        -54.75
+      ],
+      "source_frame_px": [
+        2544,
+        3440,
+        128,
+        128
+      ],
+      "family": "resources"
+    },
+    {
+      "name": "resource_precious_metal",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        43.25,
+        -54.75
+      ],
+      "source_frame_px": [
+        2704,
+        3440,
+        128,
+        128
+      ],
+      "family": "resources"
+    },
+    {
+      "name": "airlock_single_0",
+      "layer": "door",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        45.75,
+        -54.75
+      ],
+      "source_frame_px": [
+        2864,
+        3440,
+        128,
+        128
+      ],
+      "family": "airlock_single",
+      "animation_frame": 0,
+      "duration_ms": 90,
+      "anchor_kind": "cell_edge",
+      "preview_passable": false
+    },
+    {
+      "name": "airlock_single_1",
+      "layer": "door",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        1.25,
+        -61.25
+      ],
+      "source_frame_px": [
+        16,
+        3856,
+        128,
+        128
+      ],
+      "family": "airlock_single",
+      "animation_frame": 1,
+      "duration_ms": 90,
+      "anchor_kind": "cell_edge",
+      "preview_passable": false
+    },
+    {
+      "name": "airlock_single_2",
+      "layer": "door",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        3.75,
+        -61.25
+      ],
+      "source_frame_px": [
+        176,
+        3856,
+        128,
+        128
+      ],
+      "family": "airlock_single",
+      "animation_frame": 2,
+      "duration_ms": 90,
+      "anchor_kind": "cell_edge",
+      "preview_passable": false
+    },
+    {
+      "name": "airlock_single_3",
+      "layer": "door",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        6.25,
+        -61.25
+      ],
+      "source_frame_px": [
+        336,
+        3856,
+        128,
+        128
+      ],
+      "family": "airlock_single",
+      "animation_frame": 3,
+      "duration_ms": 90,
+      "anchor_kind": "cell_edge",
+      "preview_passable": false
+    },
+    {
+      "name": "airlock_single_4",
+      "layer": "door",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        8.75,
+        -61.25
+      ],
+      "source_frame_px": [
+        496,
+        3856,
+        128,
+        128
+      ],
+      "family": "airlock_single",
+      "animation_frame": 4,
+      "duration_ms": 90,
+      "anchor_kind": "cell_edge",
+      "preview_passable": false
+    },
+    {
+      "name": "airlock_single_5",
+      "layer": "door",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        11.25,
+        -61.25
+      ],
+      "source_frame_px": [
+        656,
+        3856,
+        128,
+        128
+      ],
+      "family": "airlock_single",
+      "animation_frame": 5,
+      "duration_ms": 90,
+      "anchor_kind": "cell_edge",
+      "preview_passable": false
+    },
+    {
+      "name": "airlock_single_6",
+      "layer": "door",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        13.75,
+        -61.25
+      ],
+      "source_frame_px": [
+        816,
+        3856,
+        128,
+        128
+      ],
+      "family": "airlock_single",
+      "animation_frame": 6,
+      "duration_ms": 90,
+      "anchor_kind": "cell_edge",
+      "preview_passable": false
+    },
+    {
+      "name": "airlock_single_7",
+      "layer": "door",
+      "walkable_preview": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ]
+      ],
+      "size_cells": [
+        1,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        16.25,
+        -61.25
+      ],
+      "source_frame_px": [
+        976,
+        3856,
+        128,
+        128
+      ],
+      "family": "airlock_single",
+      "animation_frame": 7,
+      "duration_ms": 90,
+      "anchor_kind": "cell_edge",
+      "preview_passable": true
+    },
+    {
+      "name": "airlock_double_0",
+      "layer": "door",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "size_cells": [
+        2,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        19.75,
+        -61.25
+      ],
+      "source_frame_px": [
+        1136,
+        3856,
+        256,
+        128
+      ],
+      "family": "airlock_double",
+      "animation_frame": 0,
+      "duration_ms": 90,
+      "anchor_kind": "cell_edge",
+      "preview_passable": false
+    },
+    {
+      "name": "airlock_double_1",
+      "layer": "door",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "size_cells": [
+        2,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        24.25,
+        -61.25
+      ],
+      "source_frame_px": [
+        1424,
+        3856,
+        256,
+        128
+      ],
+      "family": "airlock_double",
+      "animation_frame": 1,
+      "duration_ms": 90,
+      "anchor_kind": "cell_edge",
+      "preview_passable": false
+    },
+    {
+      "name": "airlock_double_2",
+      "layer": "door",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "size_cells": [
+        2,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        28.75,
+        -61.25
+      ],
+      "source_frame_px": [
+        1712,
+        3856,
+        256,
+        128
+      ],
+      "family": "airlock_double",
+      "animation_frame": 2,
+      "duration_ms": 90,
+      "anchor_kind": "cell_edge",
+      "preview_passable": false
+    },
+    {
+      "name": "airlock_double_3",
+      "layer": "door",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "size_cells": [
+        2,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        33.25,
+        -61.25
+      ],
+      "source_frame_px": [
+        2000,
+        3856,
+        256,
+        128
+      ],
+      "family": "airlock_double",
+      "animation_frame": 3,
+      "duration_ms": 90,
+      "anchor_kind": "cell_edge",
+      "preview_passable": false
+    },
+    {
+      "name": "airlock_double_4",
+      "layer": "door",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "size_cells": [
+        2,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        37.75,
+        -61.25
+      ],
+      "source_frame_px": [
+        2288,
+        3856,
+        256,
+        128
+      ],
+      "family": "airlock_double",
+      "animation_frame": 4,
+      "duration_ms": 90,
+      "anchor_kind": "cell_edge",
+      "preview_passable": false
+    },
+    {
+      "name": "airlock_double_5",
+      "layer": "door",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "size_cells": [
+        2,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        42.25,
+        -61.25
+      ],
+      "source_frame_px": [
+        2576,
+        3856,
+        256,
+        128
+      ],
+      "family": "airlock_double",
+      "animation_frame": 5,
+      "duration_ms": 90,
+      "anchor_kind": "cell_edge",
+      "preview_passable": false
+    },
+    {
+      "name": "airlock_double_6",
+      "layer": "door",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "size_cells": [
+        2,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        2.25,
+        -63.75
+      ],
+      "source_frame_px": [
+        16,
+        4016,
+        256,
+        128
+      ],
+      "family": "airlock_double",
+      "animation_frame": 6,
+      "duration_ms": 90,
+      "anchor_kind": "cell_edge",
+      "preview_passable": false
+    },
+    {
+      "name": "airlock_double_7",
+      "layer": "door",
+      "walkable_preview": true,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "size_cells": [
+        2,
+        1
+      ],
+      "pivot_px": [
+        32,
+        32
+      ],
+      "source_origin_m": [
+        6.75,
+        -63.75
+      ],
+      "source_frame_px": [
+        304,
+        4016,
+        256,
+        128
+      ],
+      "family": "airlock_double",
+      "animation_frame": 7,
+      "duration_ms": 90,
+      "anchor_kind": "cell_edge",
+      "preview_passable": true
+    },
+    {
+      "name": "radiator",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "size_cells": [
+        1,
+        3
+      ],
+      "pivot_px": [
+        32,
+        160
+      ],
+      "source_origin_m": [
+        10.25,
+        -65.75
+      ],
+      "source_frame_px": [
+        592,
+        4016,
+        128,
+        384
+      ],
+      "family": "exterior_connectors",
+      "attach_edges": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ]
+    },
+    {
+      "name": "armor_plate_long",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "size_cells": [
+        1,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        12.75,
+        -64.75
+      ],
+      "source_frame_px": [
+        752,
+        4016,
+        128,
+        256
+      ],
+      "family": "exterior_connectors",
+      "attach_edges": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ]
+    },
+    {
+      "name": "armor_plate_heavy",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        16.25,
+        -64.75
+      ],
+      "source_frame_px": [
+        912,
+        4016,
+        256,
+        256
+      ],
+      "family": "exterior_connectors",
+      "attach_edges": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ]
+    },
+    {
+      "name": "spine_connector",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "size_cells": [
+        1,
+        3
+      ],
+      "pivot_px": [
+        32,
+        160
+      ],
+      "source_origin_m": [
+        19.75,
+        -65.75
+      ],
+      "source_frame_px": [
+        1200,
+        4016,
+        128,
+        384
+      ],
+      "family": "exterior_connectors",
+      "attach_edges": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ]
+    },
+    {
+      "name": "bridge_canopy",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "size_cells": [
+        2,
+        3
+      ],
+      "pivot_px": [
+        32,
+        160
+      ],
+      "source_origin_m": [
+        23.25,
+        -65.75
+      ],
+      "source_frame_px": [
+        1360,
+        4016,
+        256,
+        384
+      ],
+      "family": "command"
+    },
+    {
+      "name": "armor_backbone",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "size_cells": [
+        2,
+        3
+      ],
+      "pivot_px": [
+        32,
+        160
+      ],
+      "source_origin_m": [
+        27.75,
+        -65.75
+      ],
+      "source_frame_px": [
+        1648,
+        4016,
+        256,
+        384
+      ],
+      "family": "exterior_panels",
+      "attach_edges": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ]
+    },
+    {
+      "name": "armor_flank_port",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "size_cells": [
+        2,
+        3
+      ],
+      "pivot_px": [
+        32,
+        160
+      ],
+      "source_origin_m": [
+        32.25,
+        -65.75
+      ],
+      "source_frame_px": [
+        1936,
+        4016,
+        256,
+        384
+      ],
+      "family": "exterior_panels",
+      "attach_edges": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ]
+    },
+    {
+      "name": "armor_flank_starboard",
+      "layer": "exterior",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "size_cells": [
+        2,
+        3
+      ],
+      "pivot_px": [
+        32,
+        160
+      ],
+      "source_origin_m": [
+        36.75,
+        -65.75
+      ],
+      "source_frame_px": [
+        2224,
+        4016,
+        256,
+        384
+      ],
+      "family": "exterior_panels",
+      "attach_edges": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ]
+    },
+    {
+      "name": "turret_heavy",
+      "layer": "equipment",
+      "walkable_preview": false,
+      "footprint_cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "size_cells": [
+        2,
+        2
+      ],
+      "pivot_px": [
+        32,
+        96
+      ],
+      "source_origin_m": [
+        41.25,
+        -64.75
+      ],
+      "source_frame_px": [
+        2512,
+        4016,
+        256,
+        256
+      ],
+      "family": "mounts",
+      "orientation": "N",
+      "muzzle_sockets_local_m": [
+        [
+          -0.5,
+          1.85,
+          0.85
+        ],
+        [
+          0.5,
+          1.85,
+          0.85
+        ]
+      ]
+    }
+  ],
+  "columns": 10,
+  "rows": 21,
+  "cell_size_m": 2.0,
+  "pixels_per_cell": 64,
+  "source_atlas_px": [
+    3072,
+    4416
+  ],
+  "blender_version": "4.3.2"
+}

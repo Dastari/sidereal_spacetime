@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "package_id": "block__umbra__roof_turret_heavy",
+  "kind": "block",
+  "primary_blueprint": "block__umbra__roof_turret_heavy",
+  "files": [
+    "definition.json"
+  ],
+  "revision": 3
+}

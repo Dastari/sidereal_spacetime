@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "package_id": "block__corsair__deck_15_1",
+  "kind": "block",
+  "primary_blueprint": "block__corsair__deck_15_1",
+  "files": [
+    "definition.json"
+  ],
+  "revision": 4
+}

@@ -1,0 +1,9 @@
+{
+  "placement_id": "maw.player.1",
+  "blueprint_id": "spawn.player",
+  "system_id": "maw",
+  "position": {
+    "x": 162501.51153497375,
+    "y": -58401.63349997352
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "ordinal": 100,
+  "entry": {
+    "block_id": "block.umbra.armor_slope_steep_mirrored_E",
+    "script": "",
+    "tags": [
+      "umbra",
+      "armor"
+    ]
+  },
+  "definition": {
+    "block_id": "block.umbra.armor_slope_steep_mirrored_E",
+    "display_name": "Umbra Syndicate / Armor Slope Steep Mirrored E",
+    "category": "armor",
+    "layer": "structure",
+    "footprint": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "mass_kg": 280,
+    "health": 400.0,
+    "collision_polygon": [
+      [
+        1.5,
+        -0.5
+      ],
+      [
+        -0.5,
+        0.5
+      ],
+      [
+        -0.5,
+        -0.5
+      ]
+    ],
+    "cost": {
+      "capacity": 0.25,
+      "credits": 560
+    },
+    "power": null,
+    "directional": true,
+    "placement": {
+      "attach_edges": [
+        "W",
+        "S"
+      ],
+      "requires_support": false,
+      "attach_to": [
+        "hull",
+        "armor"
+      ],
+      "min_attachments": 1,
+      "clearance": [],
+      "keep_clear": []
+    },
+    "visual": {
+      "tile_asset_id": "tile.umbra.armor_slope_steep_mirrored_E",
+      "interior_asset_id": null,
+      "visible_in_cutaway": true,
+      "interior_overlays": []
+    },
+    "interior": null,
+    "components": []
+  }
+}

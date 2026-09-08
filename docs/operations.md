@@ -1,0 +1,61 @@
+# Same-box setup, lifecycle and recovery
+
+Status: Accepted direction; implementation staged
+Last updated: 2026-09-08
+Owners: Sidereal project
+
+## Preserved reference installation
+
+`/root/sidereal` source, data/content, Blender sources, original downloadable client and Docker volume remain available. Its managed services were stopped through `scripts/siderealctl down`; `docker compose stop` stopped its Postgres service. `cargo clean` removed only build outputs. A validated 1,149,265,346-byte custom-format database backup exists at `/root/sidereal-backups/pre-spacetime-pivot-2026-09-08.dump` with mode 0600. Backup listing was validated; a full restore of that large reference database was not performed. The backup and old volume are not imported into the new project.
+
+Do not start old and new stacks through each other's tooling. Restarting old Sidereal requires rebuilding its Cargo binaries first. The old HTTP public endpoints will remain unavailable while it is stopped. Public reverse proxies have not been redirected to this development scaffold.
+
+## New installation
+
+Requires Node 24+, npm, Python 3.11+ (tomllib), Linux process groups and, for art, Blender 4.3+, Python NumPy, Xvfb and Python venv. Installed versions are captured in the verification report. Node/package dependency versions are pinned by package-lock; SpacetimeDB CLI and server are isolated under `.tools/spacetime`, pinned to 2.10.0. The tool wrapper requires `--root-dir=<absolute-path>` with an equals sign; the project runner supplies it. It does not change shell PATH or select a global SpacetimeDB version.
+
+```sh
+cd ~/sidereal_spacetime
+npm ci
+npm run setup
+npm run art:setup       # optional to reinstall the local Blender MCP environment
+npm run art:export      # regenerate GLB from the preserved .blend collection instances
+npm run dev
+npm run status
+npm run stop
+```
+
+`npm run dev` starts the local durable database, waits for HTTP readiness, publishes the module with `--delete-data=never`, then starts both independent Vite applications and waits for readiness. It refuses occupied ports. PIDs and Linux start times are recorded privately, so stop cannot kill an unrelated reused PID. Logs are under `.runtime`. The server data is `.spacetime-data`; secrets/CLI keys are `.tools/spacetime/config`. Never commit either.
+
+Default browser: `http://localhost:5173`, LAN `http://10.0.1.200:5173`. The explicit Tailscale host allowed for this machine is in `dev.toml`. Browser WebSocket/API traffic uses the same origin `/v1` proxy; database port 3100 binds loopback. This is a local development identity service, not production account login. Use HTTPS and trusted issuer validation before public deployment. No original user token/account was copied; anonymous lab identities can only access their own test rows.
+
+## Build and test
+
+```sh
+npm run check
+npm run build
+npm run smoke
+npm run stop
+npm run dev
+npm run smoke:restart
+```
+
+`smoke` republishes/reset ONLY `<configured database>-smoke`, then tests two independent identities. The normal developer database is never reset by tests. Keep `.runtime/smoke-identity.json` private. Restart verification reconnects to the smoke identity and checks the same ship UUID, name and receipt. M9 adds abrupt termination/restore/fault injection. M0 does not claim production durability or load acceptance from a successful graceful restart.
+
+For scripts after source changes: `npm run world:publish` validates/publishes a non-destructive update; `npm run world:generate` refreshes bindings. Breaking schemas must use an explicit planned migration or an explicitly isolated reset, never automatic data deletion on ordinary startup. Matching client/CLI/module versions are essential.
+
+## Backup and restore
+
+Stop the new stack, then `python3 scripts/dev.py backup` produces a mode-0600 cold archive in `.runtime`. Copy it to private off-host storage through an operator-controlled workflow. A complete recovery set includes database data, the local server JWT keys/config (privately backed up separately), exact module artifact/source, package lock, asset manifests and content revisions. Protect credentials and encryption keys independently. Test recovery into a separate folder/port before replacing active data. Never restore over a running database, and never use the old AGE dump as a SpacetimeDB restore file.
+
+The M0 backup helper captures data only and is a development recovery aid. M9 must automate encrypted key/config backup and a complete validated restore before public release.
+
+## Publishing and long-running service plan
+
+Vite dev is the review server. Production will serve `apps/client/dist` and `apps/dashboard/dist` through a managed static server/reverse proxy with HTTPS, WebSocket upgrade, bounded payloads, trusted origins, safe caching and production OIDC. Pin assets by content hash and publish manifest atomically. Add systemd supervision/restart policy, disk/memory/tick alerts, log retention, scheduled backups, graceful draining and release rollback at M9. Do not treat a terminal-launched development process as a production service.
+
+## Independent application operations (2026-09-08)
+
+`npm run dev:client` starts only the game frontend (and its database if needed); `npm run dev:dashboard` starts only the dashboard review app. `npm run stop:client` and `npm run stop:dashboard` stop only that app; the world and sibling stay running. `npm run build:client` and `npm run build:dashboard` build only the selected package and write only its public preparation/output. `npm run build` explicitly builds all three projects. The shared workspace lockfile pins library versions but does not couple app runtime or deployment. Each app also has a standalone workspace `typecheck` command.
+
+Dashboard: http://10.0.1.200:5174 (localhost:5174). The root `dev.toml` configures both ports, peer links and trusted hostnames. Before a production app build, set `VITE_CLIENT_URL` / `VITE_DASHBOARD_URL` to the chosen exact external origins. No privileged browser secrets belong in Vite settings. The same [Keycloak provider](authentication.md) will serve separate PKCE app registrations at M1.

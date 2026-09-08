@@ -1,0 +1,10 @@
+{
+  "placement_id": "maw.cinder.1",
+  "blueprint_id": "planet.cinder",
+  "system_id": "maw",
+  "position": {
+    "x": 5930.613139602439,
+    "y": -1844.4908996966817
+  },
+  "source": "planet"
+}

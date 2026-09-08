@@ -1,0 +1,10 @@
+{
+  "placement_id": "maw.glacius.1",
+  "blueprint_id": "planet.glacius",
+  "system_id": "maw",
+  "position": {
+    "x": 1356.3377772835993,
+    "y": 4269.6395350859275
+  },
+  "source": "planet"
+}

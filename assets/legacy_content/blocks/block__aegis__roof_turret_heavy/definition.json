@@ -1,0 +1,116 @@
+{
+  "ordinal": 100,
+  "entry": {
+    "block_id": "block.aegis.roof_turret_heavy",
+    "script": "",
+    "tags": [
+      "aegis",
+      "mount",
+      "turret",
+      "roof"
+    ]
+  },
+  "definition": {
+    "block_id": "block.aegis.roof_turret_heavy",
+    "display_name": "Aegis Naval / Heavy roof turret",
+    "category": "mount",
+    "layer": "roof",
+    "footprint": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "mass_kg": 650,
+    "health": 800,
+    "collision_polygon": [],
+    "cost": {
+      "capacity": 4,
+      "credits": 6500
+    },
+    "power": null,
+    "directional": true,
+    "placement": {
+      "attach_edges": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ],
+      "requires_support": true,
+      "attach_to": [
+        "hull",
+        "armor"
+      ],
+      "min_attachments": 1,
+      "clearance": [],
+      "keep_clear": []
+    },
+    "visual": {
+      "tile_asset_id": "turret.aegis.heavy_preview",
+      "interior_asset_id": null,
+      "visible_in_cutaway": false,
+      "interior_overlays": []
+    },
+    "interior": null,
+    "components": [
+      {
+        "kind": "turret_drive",
+        "properties": {
+          "traverse_rate_deg_s": 45,
+          "arc_deg": 360,
+          "muzzle_offsets_m": [
+            [
+              0,
+              1.88
+            ]
+          ],
+          "firing_tolerance_deg": 3
+        }
+      },
+      {
+        "kind": "turret_visual",
+        "properties": {
+          "base_asset_id": "turret.aegis.heavy_base",
+          "barrel_asset_id": "turret.aegis.heavy_barrel",
+          "size_m": [
+            4,
+            4
+          ]
+        }
+      },
+      {
+        "kind": "ballistic_weapon",
+        "properties": {
+          "weapon_name": "Heavy roof turret",
+          "fire_audio_profile_id": "weapon.ballistic_gatling",
+          "rpm": 60,
+          "damage_per_shot": 75,
+          "max_range_m": 900,
+          "projectile_speed_mps": 300,
+          "spread_rad": 0,
+          "damage_type": "Ballistic"
+        }
+      },
+      {
+        "kind": "ammo_count",
+        "properties": {
+          "current": 150,
+          "capacity": 150
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "ordinal": 100,
+  "entry": {
+    "block_id": "block.aegis.armor_bow_point_N",
+    "script": "",
+    "tags": [
+      "aegis",
+      "armor"
+    ]
+  },
+  "definition": {
+    "block_id": "block.aegis.armor_bow_point_N",
+    "display_name": "Aegis Naval / Armor Bow Point N",
+    "category": "armor",
+    "layer": "structure",
+    "footprint": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "mass_kg": 280,
+    "health": 400.0,
+    "collision_polygon": [
+      [
+        -0.5,
+        -0.5
+      ],
+      [
+        0.5,
+        -0.5
+      ],
+      [
+        0.4,
+        0.9
+      ],
+      [
+        0.0,
+        1.5
+      ],
+      [
+        -0.4,
+        0.9
+      ]
+    ],
+    "cost": {
+      "capacity": 0.25,
+      "credits": 560
+    },
+    "power": null,
+    "directional": true,
+    "placement": {
+      "attach_edges": [
+        "S"
+      ],
+      "requires_support": false,
+      "attach_to": [
+        "hull",
+        "armor"
+      ],
+      "min_attachments": 1,
+      "clearance": [],
+      "keep_clear": []
+    },
+    "visual": {
+      "tile_asset_id": "tile.aegis.armor_bow_point_N",
+      "interior_asset_id": null,
+      "visible_in_cutaway": true,
+      "interior_overlays": []
+    },
+    "interior": null,
+    "components": []
+  }
+}

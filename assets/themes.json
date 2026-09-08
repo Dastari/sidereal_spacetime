@@ -1,0 +1,179 @@
+{
+  "schema": "sidereal.art.themes.v1",
+  "themes": [
+    {
+      "id": "industrial",
+      "name": "Frontier Industrial",
+      "description": "Blue-grey structural steel, copper safety bands and teal instruments. Utility hulls, cargo craft and stations.",
+      "shape_language": "Square plates, exposed braces, practical chamfers.",
+      "colors_srgb": {
+        "void": "#101921",
+        "seam": "#1b2b35",
+        "dark": "#314754",
+        "steel": "#526b78",
+        "panel": "#80979f",
+        "edge": "#b4c3bf",
+        "light": "#dde0c7",
+        "cyan": "#40e0da",
+        "screen": "#174955",
+        "amber": "#e38a2e",
+        "yellow": "#f7cc4b",
+        "red": "#b34d42",
+        "green": "#85b46a",
+        "blue": "#4b7eaf"
+      },
+      "semantic_roles": {
+        "cyan": "powered emission",
+        "amber": "faction/safety accent",
+        "panel": "main armour",
+        "edge": "structural trim",
+        "screen": "unlit display glass"
+      }
+    },
+    {
+      "id": "aegis",
+      "name": "Aegis Naval",
+      "description": "Navy armour, restrained gold identification and ice-blue instruments. Military and escort fleets.",
+      "shape_language": "Long spines, bilateral symmetry, layered angular armour.",
+      "colors_srgb": {
+        "void": "#0b1020",
+        "seam": "#1c2339",
+        "dark": "#2c3550",
+        "steel": "#414b69",
+        "panel": "#65708a",
+        "edge": "#9da7bd",
+        "light": "#dde1e8",
+        "cyan": "#83c6ff",
+        "screen": "#182d50",
+        "amber": "#c59c54",
+        "yellow": "#e4ca85",
+        "red": "#a65058",
+        "green": "#789686",
+        "blue": "#436295"
+      },
+      "semantic_roles": {
+        "cyan": "powered emission",
+        "amber": "faction/safety accent",
+        "panel": "main armour",
+        "edge": "structural trim",
+        "screen": "unlit display glass"
+      }
+    },
+    {
+      "id": "helix",
+      "name": "Helix Research",
+      "description": "Porcelain panels, dark teal joints and turquoise lights. Research, medical and exploration.",
+      "shape_language": "Broad clean bows, recessed equipment and orderly module spacing.",
+      "colors_srgb": {
+        "void": "#132128",
+        "seam": "#243840",
+        "dark": "#38575e",
+        "steel": "#7d9a9b",
+        "panel": "#bfcfca",
+        "edge": "#e7ece0",
+        "light": "#f9f5dc",
+        "cyan": "#38e5b9",
+        "screen": "#15554e",
+        "amber": "#e6a552",
+        "yellow": "#ebd287",
+        "red": "#ce5e69",
+        "green": "#91bb81",
+        "blue": "#729cbd"
+      },
+      "semantic_roles": {
+        "cyan": "powered emission",
+        "amber": "faction/safety accent",
+        "panel": "main armour",
+        "edge": "structural trim",
+        "screen": "unlit display glass"
+      }
+    },
+    {
+      "id": "corsair",
+      "name": "Corsair Salvage",
+      "description": "Oxide red, warm ivory patches, dark metal and hot amber signals. Salvage, pirates and heavy industry.",
+      "shape_language": "Asymmetric wings, patched plates, exposed tanks and clustered engines.",
+      "colors_srgb": {
+        "void": "#1c1214",
+        "seam": "#36272b",
+        "dark": "#594045",
+        "steel": "#845350",
+        "panel": "#ac7564",
+        "edge": "#d2aa86",
+        "light": "#e9d7ae",
+        "cyan": "#ffad47",
+        "screen": "#65361d",
+        "amber": "#c64e3e",
+        "yellow": "#f7cd62",
+        "red": "#d33838",
+        "green": "#86955b",
+        "blue": "#596f85"
+      },
+      "semantic_roles": {
+        "cyan": "powered emission",
+        "amber": "faction/safety accent",
+        "panel": "main armour",
+        "edge": "structural trim",
+        "screen": "unlit display glass"
+      }
+    },
+    {
+      "id": "verdant",
+      "name": "Verdant Logistics",
+      "description": "Olive ceramic armour, sand braces, safety yellow and pale-green instruments. Freight and agricultural fleets.",
+      "shape_language": "Broad cargo bodies, external pod racks, blunt armoured shoulders.",
+      "colors_srgb": {
+        "void": "#151c16",
+        "seam": "#28372c",
+        "dark": "#405245",
+        "steel": "#62725a",
+        "panel": "#8c9b78",
+        "edge": "#b9c4a0",
+        "light": "#e2ddbc",
+        "cyan": "#b9ed84",
+        "screen": "#365332",
+        "amber": "#d7aa45",
+        "yellow": "#ead36b",
+        "red": "#b96146",
+        "green": "#689952",
+        "blue": "#6598a0"
+      },
+      "semantic_roles": {
+        "cyan": "powered emission",
+        "amber": "faction/safety accent",
+        "panel": "main armour",
+        "edge": "structural trim",
+        "screen": "unlit display glass"
+      }
+    },
+    {
+      "id": "umbra",
+      "name": "Umbra Syndicate",
+      "description": "Charcoal-violet plating, silver edges, electric violet and cyan secondary accents. Covert and advanced fleets.",
+      "shape_language": "Swept asymmetric fins, notched hulls, needle bows and luminous cores.",
+      "colors_srgb": {
+        "void": "#100e1a",
+        "seam": "#242139",
+        "dark": "#39334e",
+        "steel": "#554b70",
+        "panel": "#7c6e97",
+        "edge": "#afa1c3",
+        "light": "#ddd3e6",
+        "cyan": "#b18aff",
+        "screen": "#362459",
+        "amber": "#47cbd4",
+        "yellow": "#96e5de",
+        "red": "#b24d81",
+        "green": "#77a9a2",
+        "blue": "#636fb7"
+      },
+      "semantic_roles": {
+        "cyan": "powered emission",
+        "amber": "faction/safety accent",
+        "panel": "main armour",
+        "edge": "structural trim",
+        "screen": "unlit display glass"
+      }
+    }
+  ]
+}

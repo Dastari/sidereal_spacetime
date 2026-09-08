@@ -1,0 +1,91 @@
+{
+  "definition": {
+    "block_id": "block.reactor.fission_mk1",
+    "category": "reactor",
+    "components": [
+      {
+        "kind": "power_generation",
+        "properties": {
+          "value": 1200
+        }
+      }
+    ],
+    "cost": {
+      "capacity": 4,
+      "credits": 600
+    },
+    "directional": false,
+    "display_name": "Fission Reactor Mk1",
+    "footprint": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        1
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        -1
+      ],
+      [
+        -1,
+        -1
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        -1
+      ]
+    ],
+    "health": 700,
+    "mass_kg": 900,
+    "power": {
+      "battery_capacity_kj": 0,
+      "draw_kw": 0,
+      "generation_kw": 1200
+    },
+    "visual": {
+      "tile_asset_id": null,
+      "interior_asset_id": null,
+      "visible_in_cutaway": false,
+      "interior_overlays": []
+    },
+    "layer": "structure",
+    "collision_polygon": [],
+    "placement": {
+      "attach_edges": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ],
+      "requires_support": false
+    }
+  },
+  "entry": {
+    "block_id": "block.reactor.fission_mk1",
+    "script": "",
+    "tags": [
+      "reactor",
+      "power"
+    ]
+  },
+  "ordinal": 1
+}

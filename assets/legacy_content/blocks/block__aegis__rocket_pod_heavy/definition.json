@@ -1,0 +1,123 @@
+{
+  "ordinal": 100,
+  "entry": {
+    "block_id": "block.aegis.rocket_pod_heavy",
+    "script": "",
+    "tags": [
+      "aegis",
+      "thruster"
+    ]
+  },
+  "definition": {
+    "block_id": "block.aegis.rocket_pod_heavy",
+    "display_name": "Aegis Naval / Rocket Pod Heavy",
+    "category": "thruster",
+    "layer": "equipment",
+    "footprint": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    "mass_kg": 2200,
+    "health": 400.0,
+    "collision_polygon": [],
+    "cost": {
+      "capacity": 1.0,
+      "credits": 4400
+    },
+    "power": null,
+    "directional": true,
+    "placement": {
+      "attach_edges": [
+        "N"
+      ],
+      "requires_support": false,
+      "attach_to": [
+        "hull",
+        "armor"
+      ],
+      "min_attachments": 1,
+      "clearance": [
+        "S"
+      ],
+      "keep_clear": []
+    },
+    "visual": {
+      "tile_asset_id": "tile.aegis.rocket_pod_heavy",
+      "interior_asset_id": null,
+      "visible_in_cutaway": true,
+      "interior_overlays": []
+    },
+    "interior": null,
+    "components": [
+      {
+        "kind": "directional_thruster",
+        "properties": {
+          "force_axis": [
+            0,
+            1
+          ],
+          "max_force_n": 1250000,
+          "burn_rate_kg_s": 0.7,
+          "enabled": true,
+          "nozzle_offset_m": [
+            0,
+            -3.76
+          ],
+          "plume_width_m": 2.7,
+          "plume_length_m": 14.0,
+          "plume_color_rgb": [
+            1,
+            0.34,
+            0.08
+          ]
+        }
+      }
+    ]
+  }
+}

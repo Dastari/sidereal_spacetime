@@ -1,0 +1,12 @@
+{
+  "placement_id": "maw.cyanos.1",
+  "blueprint_id": "planet.cyanos",
+  "system_id": "maw",
+  "position": {
+    "x": -164.2465417884423,
+    "y": -6629.484991297225
+  },
+  "source": "planet",
+  "rotation_rad": -4.498915616486388,
+  "scale": 0.9757404677180556
+}

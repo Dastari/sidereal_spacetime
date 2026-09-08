@@ -1,0 +1,90 @@
+{
+  "ordinal": 100,
+  "entry": {
+    "block_id": "block.aegis.armor_bow_broad_W",
+    "script": "",
+    "tags": [
+      "aegis",
+      "armor"
+    ]
+  },
+  "definition": {
+    "block_id": "block.aegis.armor_bow_broad_W",
+    "display_name": "Aegis Naval / Armor Bow Broad W",
+    "category": "armor",
+    "layer": "structure",
+    "footprint": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "mass_kg": 560,
+    "health": 400.0,
+    "collision_polygon": [
+      [
+        1.5,
+        -0.5
+      ],
+      [
+        1.5,
+        1.5
+      ],
+      [
+        0.3,
+        1.5
+      ],
+      [
+        -0.5,
+        0.875
+      ],
+      [
+        -0.5,
+        0.125
+      ],
+      [
+        0.3,
+        -0.5
+      ]
+    ],
+    "cost": {
+      "capacity": 0.25,
+      "credits": 1120
+    },
+    "power": null,
+    "directional": true,
+    "placement": {
+      "attach_edges": [
+        "E"
+      ],
+      "requires_support": false,
+      "attach_to": [
+        "hull",
+        "armor"
+      ],
+      "min_attachments": 1,
+      "clearance": [],
+      "keep_clear": []
+    },
+    "visual": {
+      "tile_asset_id": "tile.aegis.armor_bow_broad_W",
+      "interior_asset_id": null,
+      "visible_in_cutaway": true,
+      "interior_overlays": []
+    },
+    "interior": null,
+    "components": []
+  }
+}

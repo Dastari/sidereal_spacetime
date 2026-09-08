@@ -1,0 +1,24 @@
+[project]
+name = "sidereal-spacetime"
+database = "sidereal-spacetime-dev"
+spacetime_version = "2.10.0"
+[server]
+host = "127.0.0.1"
+port = 3100
+[client]
+host = "0.0.0.0"
+port = 5173
+allowed_hosts = ["sidereal.tail7a58a6.ts.net"]
+[dashboard]
+host = "0.0.0.0"
+port = 5174
+allowed_hosts = ["sidereal.tail7a58a6.ts.net"]
+[auth]
+mode = "development"
+issuer = "https://auth.orchard.dastari.net/realms/orchard"
+client_id = "sidereal-game"
+dashboard_client_id = "sidereal-dashboard"
+# Provider clients are prepared in ops/oidc; production integration is M1.
+[art]
+blender = "/usr/bin/blender"
+mcp_port = 9886

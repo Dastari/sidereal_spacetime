@@ -1,0 +1,104 @@
+{
+  "ordinal": 100,
+  "entry": {
+    "block_id": "block.industrial.roof_turret_light",
+    "script": "",
+    "tags": [
+      "industrial",
+      "mount",
+      "turret",
+      "roof"
+    ]
+  },
+  "definition": {
+    "block_id": "block.industrial.roof_turret_light",
+    "display_name": "Frontier Industrial / Light roof turret",
+    "category": "mount",
+    "layer": "roof",
+    "footprint": [
+      [
+        0,
+        0
+      ]
+    ],
+    "mass_kg": 100,
+    "health": 400,
+    "collision_polygon": [],
+    "cost": {
+      "capacity": 2,
+      "credits": 1000
+    },
+    "power": null,
+    "directional": true,
+    "placement": {
+      "attach_edges": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ],
+      "requires_support": true,
+      "attach_to": [
+        "hull",
+        "armor"
+      ],
+      "min_attachments": 1,
+      "clearance": [],
+      "keep_clear": []
+    },
+    "visual": {
+      "tile_asset_id": "turret.industrial.light_preview",
+      "interior_asset_id": null,
+      "visible_in_cutaway": false,
+      "interior_overlays": []
+    },
+    "interior": null,
+    "components": [
+      {
+        "kind": "turret_drive",
+        "properties": {
+          "traverse_rate_deg_s": 240,
+          "arc_deg": 360,
+          "muzzle_offsets_m": [
+            [
+              0,
+              0.94
+            ]
+          ],
+          "firing_tolerance_deg": 3
+        }
+      },
+      {
+        "kind": "turret_visual",
+        "properties": {
+          "base_asset_id": "turret.industrial.light_base",
+          "barrel_asset_id": "turret.industrial.light_barrel",
+          "size_m": [
+            2,
+            2
+          ]
+        }
+      },
+      {
+        "kind": "ballistic_weapon",
+        "properties": {
+          "weapon_name": "Light roof turret",
+          "fire_audio_profile_id": "weapon.ballistic_gatling",
+          "rpm": 240,
+          "damage_per_shot": 10,
+          "max_range_m": 600,
+          "projectile_speed_mps": 400,
+          "spread_rad": 0,
+          "damage_type": "Ballistic"
+        }
+      },
+      {
+        "kind": "ammo_count",
+        "properties": {
+          "current": 500,
+          "capacity": 500
+        }
+      }
+    ]
+  }
+}

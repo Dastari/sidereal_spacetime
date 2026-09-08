@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "package_id": "block__umbra__interior_turret",
+  "kind": "block",
+  "primary_blueprint": "block__umbra__interior_turret",
+  "files": [
+    "definition.json"
+  ],
+  "revision": 4
+}

@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "package_id": "block__industrial__armor_bow_broad_E",
+  "kind": "block",
+  "primary_blueprint": "block__industrial__armor_bow_broad_E",
+  "files": [
+    "definition.json"
+  ],
+  "revision": 1
+}

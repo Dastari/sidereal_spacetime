@@ -1,0 +1,83 @@
+{
+  "ordinal": 100,
+  "entry": {
+    "block_id": "block.verdant.ion_drive_pod",
+    "script": "",
+    "tags": [
+      "verdant",
+      "thruster"
+    ]
+  },
+  "definition": {
+    "block_id": "block.verdant.ion_drive_pod",
+    "display_name": "Verdant Logistics / Ion Drive Pod",
+    "category": "thruster",
+    "layer": "equipment",
+    "footprint": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "mass_kg": 300,
+    "health": 400.0,
+    "collision_polygon": [],
+    "cost": {
+      "capacity": 1.0,
+      "credits": 600
+    },
+    "power": null,
+    "directional": true,
+    "placement": {
+      "attach_edges": [
+        "N"
+      ],
+      "requires_support": false,
+      "attach_to": [
+        "hull",
+        "armor"
+      ],
+      "min_attachments": 1,
+      "clearance": [
+        "S"
+      ],
+      "keep_clear": []
+    },
+    "visual": {
+      "tile_asset_id": "tile.verdant.ion_drive_pod",
+      "interior_asset_id": null,
+      "visible_in_cutaway": true,
+      "interior_overlays": []
+    },
+    "interior": null,
+    "components": [
+      {
+        "kind": "directional_thruster",
+        "properties": {
+          "force_axis": [
+            0,
+            1
+          ],
+          "max_force_n": 95000,
+          "burn_rate_kg_s": 0.015,
+          "enabled": true,
+          "nozzle_offset_m": [
+            0,
+            -1.88
+          ],
+          "plume_width_m": 0.9,
+          "plume_length_m": 7.0,
+          "plume_color_rgb": [
+            0.15,
+            0.65,
+            1
+          ]
+        }
+      }
+    ]
+  }
+}

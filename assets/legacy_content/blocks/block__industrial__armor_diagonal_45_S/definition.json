@@ -1,0 +1,67 @@
+{
+  "ordinal": 100,
+  "entry": {
+    "block_id": "block.industrial.armor_diagonal_45_S",
+    "script": "",
+    "tags": [
+      "industrial",
+      "armor"
+    ]
+  },
+  "definition": {
+    "block_id": "block.industrial.armor_diagonal_45_S",
+    "display_name": "Frontier Industrial / Armor Diagonal 45 S",
+    "category": "armor",
+    "layer": "structure",
+    "footprint": [
+      [
+        0,
+        0
+      ]
+    ],
+    "mass_kg": 90,
+    "health": 400.0,
+    "collision_polygon": [
+      [
+        0.5,
+        0.5
+      ],
+      [
+        -0.5,
+        0.5
+      ],
+      [
+        0.5,
+        -0.5
+      ]
+    ],
+    "cost": {
+      "capacity": 0.25,
+      "credits": 180
+    },
+    "power": null,
+    "directional": true,
+    "placement": {
+      "attach_edges": [
+        "N",
+        "E"
+      ],
+      "requires_support": false,
+      "attach_to": [
+        "hull",
+        "armor"
+      ],
+      "min_attachments": 1,
+      "clearance": [],
+      "keep_clear": []
+    },
+    "visual": {
+      "tile_asset_id": "tile.industrial.armor_diagonal_45_S",
+      "interior_asset_id": null,
+      "visible_in_cutaway": true,
+      "interior_overlays": []
+    },
+    "interior": null,
+    "components": []
+  }
+}

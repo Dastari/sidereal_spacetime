@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "package_id": "block__aegis__armor_nacelle_shoulder_N",
+  "kind": "block",
+  "primary_blueprint": "block__aegis__armor_nacelle_shoulder_N",
+  "files": [
+    "definition.json"
+  ],
+  "revision": 1
+}

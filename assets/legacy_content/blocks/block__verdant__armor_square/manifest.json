@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "package_id": "block__verdant__armor_square",
+  "kind": "block",
+  "primary_blueprint": "block__verdant__armor_square",
+  "files": [
+    "definition.json"
+  ],
+  "revision": 1
+}

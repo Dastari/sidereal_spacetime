@@ -1,0 +1,10 @@
+{
+  "placement_id": "maw.ferros.1",
+  "blueprint_id": "planet.ferros",
+  "system_id": "maw",
+  "position": {
+    "x": -7112.865121267125,
+    "y": -1663.3314794068265
+  },
+  "source": "planet"
+}

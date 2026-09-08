@@ -1,0 +1,16 @@
+{
+  "zone_id": "maw.zone.2",
+  "system_id": "maw",
+  "boundary": {
+    "kind": "circle",
+    "center": {
+      "x": 31970.54241350612,
+      "y": 11998.186238260963
+    },
+    "radius_m": 8763.509367042445
+  },
+  "layers": [],
+  "display": {
+    "name": "Nyx System"
+  }
+}

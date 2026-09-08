@@ -1,0 +1,62 @@
+{
+  "ordinal": 100,
+  "entry": {
+    "block_id": "block.industrial.deck_14_0",
+    "script": "",
+    "tags": [
+      "industrial",
+      "hull"
+    ]
+  },
+  "definition": {
+    "block_id": "block.industrial.deck_14_0",
+    "display_name": "Frontier Industrial / Deck 14 0",
+    "category": "hull",
+    "layer": "structure",
+    "footprint": [
+      [
+        0,
+        0
+      ]
+    ],
+    "mass_kg": 160,
+    "health": 400.0,
+    "collision_polygon": [],
+    "cost": {
+      "capacity": 0.25,
+      "credits": 320
+    },
+    "power": null,
+    "directional": true,
+    "placement": {
+      "attach_edges": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ],
+      "requires_support": false,
+      "attach_to": [
+        "hull",
+        "armor"
+      ],
+      "min_attachments": 1,
+      "clearance": [],
+      "keep_clear": []
+    },
+    "visual": {
+      "tile_asset_id": "tile.industrial.hull_15",
+      "interior_asset_id": "tile.industrial.floor_0",
+      "visible_in_cutaway": false,
+      "interior_overlays": []
+    },
+    "interior": {
+      "walkable": true,
+      "obstacle_half_extents_cells": null,
+      "control_seat": false,
+      "wall_asset_prefix": "tile.industrial.wall_",
+      "airlock": null
+    },
+    "components": []
+  }
+}

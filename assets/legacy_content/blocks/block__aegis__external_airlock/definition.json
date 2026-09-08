@@ -1,0 +1,75 @@
+{
+  "ordinal": 100,
+  "entry": {
+    "block_id": "block.aegis.external_airlock",
+    "script": "",
+    "tags": [
+      "aegis",
+      "airlock"
+    ]
+  },
+  "definition": {
+    "block_id": "block.aegis.external_airlock",
+    "display_name": "Aegis Naval / External Airlock",
+    "category": "airlock",
+    "layer": "equipment",
+    "footprint": [
+      [
+        0,
+        0
+      ]
+    ],
+    "mass_kg": 140,
+    "health": 400.0,
+    "collision_polygon": [],
+    "cost": {
+      "capacity": 1.0,
+      "credits": 280
+    },
+    "power": null,
+    "directional": true,
+    "placement": {
+      "attach_edges": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ],
+      "requires_support": false,
+      "attach_to": [
+        "hull",
+        "armor"
+      ],
+      "min_attachments": 1,
+      "clearance": [],
+      "keep_clear": []
+    },
+    "visual": {
+      "tile_asset_id": "tile.aegis.airlock_single_0",
+      "interior_asset_id": "tile.aegis.floor_0",
+      "visible_in_cutaway": false,
+      "interior_overlays": []
+    },
+    "interior": {
+      "walkable": true,
+      "obstacle_half_extents_cells": null,
+      "control_seat": false,
+      "wall_asset_prefix": "tile.aegis.wall_",
+      "airlock": {
+        "frames": [
+          "tile.aegis.airlock_single_0",
+          "tile.aegis.airlock_single_1",
+          "tile.aegis.airlock_single_2",
+          "tile.aegis.airlock_single_3",
+          "tile.aegis.airlock_single_4",
+          "tile.aegis.airlock_single_5",
+          "tile.aegis.airlock_single_6",
+          "tile.aegis.airlock_single_7"
+        ],
+        "rotation_rad": 1.5707963267948966,
+        "travel_seconds": 0.63
+      }
+    },
+    "components": []
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "package_id": "block__aegis__roof_turret_twin",
+  "kind": "block",
+  "primary_blueprint": "block__aegis__roof_turret_twin",
+  "files": [
+    "definition.json"
+  ],
+  "revision": 3
+}

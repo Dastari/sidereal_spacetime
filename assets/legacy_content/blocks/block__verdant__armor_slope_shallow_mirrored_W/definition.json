@@ -1,0 +1,71 @@
+{
+  "ordinal": 100,
+  "entry": {
+    "block_id": "block.verdant.armor_slope_shallow_mirrored_W",
+    "script": "",
+    "tags": [
+      "verdant",
+      "armor"
+    ]
+  },
+  "definition": {
+    "block_id": "block.verdant.armor_slope_shallow_mirrored_W",
+    "display_name": "Verdant Logistics / Armor Slope Shallow Mirrored W",
+    "category": "armor",
+    "layer": "structure",
+    "footprint": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "mass_kg": 280,
+    "health": 400.0,
+    "collision_polygon": [
+      [
+        -0.5,
+        1.5
+      ],
+      [
+        0.5,
+        -0.5
+      ],
+      [
+        0.5,
+        1.5
+      ]
+    ],
+    "cost": {
+      "capacity": 0.25,
+      "credits": 560
+    },
+    "power": null,
+    "directional": true,
+    "placement": {
+      "attach_edges": [
+        "E",
+        "N"
+      ],
+      "requires_support": false,
+      "attach_to": [
+        "hull",
+        "armor"
+      ],
+      "min_attachments": 1,
+      "clearance": [],
+      "keep_clear": []
+    },
+    "visual": {
+      "tile_asset_id": "tile.verdant.armor_slope_shallow_mirrored_W",
+      "interior_asset_id": null,
+      "visible_in_cutaway": true,
+      "interior_overlays": []
+    },
+    "interior": null,
+    "components": []
+  }
+}

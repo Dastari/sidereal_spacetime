@@ -1,0 +1,22 @@
+{
+  "name": "@sidereal/client",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "lucide-react": "1.42.0",
+    "@fontsource/barlow": "5.3.0",
+    "@fontsource/barlow-condensed": "5.3.0",
+    "@sidereal/sim": "*",
+    "@sidereal/content": "*",
+    "@sidereal/net": "*",
+    "@sidereal/render": "*",
+    "@sidereal/ui": "*"
+  },
+  "scripts": {
+    "build": "python3 ../../scripts/prepare_app.py client && vite build",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}

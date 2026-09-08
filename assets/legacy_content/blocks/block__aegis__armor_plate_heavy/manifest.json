@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "package_id": "block__aegis__armor_plate_heavy",
+  "kind": "block",
+  "primary_blueprint": "block__aegis__armor_plate_heavy",
+  "files": [
+    "definition.json"
+  ],
+  "revision": 1
+}

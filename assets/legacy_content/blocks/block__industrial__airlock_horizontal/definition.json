@@ -1,0 +1,75 @@
+{
+  "ordinal": 100,
+  "entry": {
+    "block_id": "block.industrial.airlock_horizontal",
+    "script": "",
+    "tags": [
+      "industrial",
+      "airlock"
+    ]
+  },
+  "definition": {
+    "block_id": "block.industrial.airlock_horizontal",
+    "display_name": "Frontier Industrial / Airlock Horizontal",
+    "category": "airlock",
+    "layer": "equipment",
+    "footprint": [
+      [
+        0,
+        0
+      ]
+    ],
+    "mass_kg": 140,
+    "health": 400.0,
+    "collision_polygon": [],
+    "cost": {
+      "capacity": 1.0,
+      "credits": 280
+    },
+    "power": null,
+    "directional": true,
+    "placement": {
+      "attach_edges": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ],
+      "requires_support": false,
+      "attach_to": [
+        "hull",
+        "armor"
+      ],
+      "min_attachments": 1,
+      "clearance": [],
+      "keep_clear": []
+    },
+    "visual": {
+      "tile_asset_id": "tile.industrial.airlock_single_0",
+      "interior_asset_id": "tile.industrial.floor_0",
+      "visible_in_cutaway": false,
+      "interior_overlays": []
+    },
+    "interior": {
+      "walkable": true,
+      "obstacle_half_extents_cells": null,
+      "control_seat": false,
+      "wall_asset_prefix": "tile.industrial.wall_",
+      "airlock": {
+        "frames": [
+          "tile.industrial.airlock_single_0",
+          "tile.industrial.airlock_single_1",
+          "tile.industrial.airlock_single_2",
+          "tile.industrial.airlock_single_3",
+          "tile.industrial.airlock_single_4",
+          "tile.industrial.airlock_single_5",
+          "tile.industrial.airlock_single_6",
+          "tile.industrial.airlock_single_7"
+        ],
+        "rotation_rad": 0.0,
+        "travel_seconds": 0.63
+      }
+    },
+    "components": []
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "package_id": "block__aegis__armor_slope_steep_S",
+  "kind": "block",
+  "primary_blueprint": "block__aegis__armor_slope_steep_S",
+  "files": [
+    "definition.json"
+  ],
+  "revision": 1
+}

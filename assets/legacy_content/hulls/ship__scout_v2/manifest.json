@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "package_id": "ship__scout_v2",
+  "kind": "hull",
+  "primary_blueprint": "ship__scout_v2",
+  "files": [
+    "definition.json"
+  ],
+  "revision": 1
+}

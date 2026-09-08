@@ -1,0 +1,9 @@
+{
+  "source": "assets/source/blender/ship_3d_study.blend",
+  "source_sha256": "1c48e01b726a63e0409c1c5f47d98e710f8e93ace6ca3ad821b5bd1586652cdd",
+  "output": "assets/runtime/wayfarer.glb",
+  "sha256": "fcaf57678b8ea7bd87c04bf3287e96a26a02a5844b669d442b05794cb2fb982f",
+  "meshes": 887,
+  "blender": "4.3.2",
+  "status": "review model, not a compiled functional modular assembly"
+}

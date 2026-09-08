@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "package_id": "block__helix__rocket_pod_heavy",
+  "kind": "block",
+  "primary_blueprint": "block__helix__rocket_pod_heavy",
+  "files": [
+    "definition.json"
+  ],
+  "revision": 3
+}

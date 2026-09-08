@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "package_id": "block__umbra__armor_slope_shallow_mirrored_S",
+  "kind": "block",
+  "primary_blueprint": "block__umbra__armor_slope_shallow_mirrored_S",
+  "files": [
+    "definition.json"
+  ],
+  "revision": 1
+}

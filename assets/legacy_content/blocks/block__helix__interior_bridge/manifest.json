@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "package_id": "block__helix__interior_bridge",
+  "kind": "block",
+  "primary_blueprint": "block__helix__interior_bridge",
+  "files": [
+    "definition.json"
+  ],
+  "revision": 4
+}

@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "package_id": "block__corsair__armor_slope_shallow_E",
+  "kind": "block",
+  "primary_blueprint": "block__corsair__armor_slope_shallow_E",
+  "files": [
+    "definition.json"
+  ],
+  "revision": 1
+}

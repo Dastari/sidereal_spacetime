@@ -1,0 +1,17 @@
+node_modules/
+.tools/
+.runtime/
+.spacetime-data/
+.env
+.env.*
+!.env.example
+**/dist/
+output/
+*.log
+*.tsbuildinfo
+__pycache__/
+.playwright-cli/
+apps/*/public/assets/
+apps/*/public/docs/
+apps/*/public/reference/
+apps/*/public/PIVOT.md

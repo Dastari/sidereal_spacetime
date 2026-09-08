@@ -1,0 +1,10 @@
+{
+  "placement_id": "maw.nyx.1",
+  "blueprint_id": "planet.nyx",
+  "system_id": "maw",
+  "position": {
+    "x": 31840.2826902728,
+    "y": 12166.649557259932
+  },
+  "source": "planet"
+}

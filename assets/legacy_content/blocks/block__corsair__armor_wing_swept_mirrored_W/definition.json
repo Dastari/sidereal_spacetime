@@ -1,0 +1,86 @@
+{
+  "ordinal": 100,
+  "entry": {
+    "block_id": "block.corsair.armor_wing_swept_mirrored_W",
+    "script": "",
+    "tags": [
+      "corsair",
+      "armor"
+    ]
+  },
+  "definition": {
+    "block_id": "block.corsair.armor_wing_swept_mirrored_W",
+    "display_name": "Corsair Salvage / Armor Wing Swept Mirrored W",
+    "category": "armor",
+    "layer": "structure",
+    "footprint": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "mass_kg": 560,
+    "health": 400.0,
+    "collision_polygon": [
+      [
+        0.3,
+        1.5
+      ],
+      [
+        -0.5,
+        -0.5
+      ],
+      [
+        0.0,
+        -0.5
+      ],
+      [
+        1.5,
+        0.9
+      ],
+      [
+        1.5,
+        1.5
+      ]
+    ],
+    "cost": {
+      "capacity": 0.25,
+      "credits": 1120
+    },
+    "power": null,
+    "directional": true,
+    "placement": {
+      "attach_edges": [
+        "N"
+      ],
+      "requires_support": false,
+      "attach_to": [
+        "hull",
+        "armor"
+      ],
+      "min_attachments": 1,
+      "clearance": [],
+      "keep_clear": []
+    },
+    "visual": {
+      "tile_asset_id": "tile.corsair.armor_wing_swept_mirrored_W",
+      "interior_asset_id": null,
+      "visible_in_cutaway": true,
+      "interior_overlays": []
+    },
+    "interior": null,
+    "components": []
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "definition": {
+    "block_id": "block.cargo.bay_mk1",
+    "category": "cargo",
+    "components": [
+      {
+        "kind": "cargo_capacity",
+        "properties": {
+          "value": 50.0
+        }
+      }
+    ],
+    "cost": {
+      "capacity": 2.0,
+      "credits": 200.0
+    },
+    "directional": false,
+    "display_name": "Cargo Bay Mk1",
+    "footprint": [
+      [
+        0,
+        0
+      ]
+    ],
+    "health": 300.0,
+    "mass_kg": 200.0,
+    "layer": "structure",
+    "collision_polygon": [],
+    "placement": {
+      "attach_edges": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ],
+      "requires_support": false
+    },
+    "visual": {
+      "interior_asset_id": null,
+      "visible_in_cutaway": false,
+      "interior_overlays": []
+    }
+  },
+  "entry": {
+    "block_id": "block.cargo.bay_mk1",
+    "script": "",
+    "tags": [
+      "cargo"
+    ]
+  },
+  "ordinal": 4
+}

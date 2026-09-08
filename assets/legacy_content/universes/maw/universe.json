@@ -1,0 +1,656 @@
+{
+  "baseline_id": "maw",
+  "display_name": "The Maw",
+  "default_background": [
+    {
+      "layer_id": "bg_space_background_base",
+      "phase": "fullscreen_background",
+      "shader_asset_id": "space_background_base_wgsl",
+      "order": -200,
+      "parallax_factor": 1.0,
+      "shader_parameter_set": {
+        "schema_id": "space_background_base_wgsl",
+        "values": [
+          {
+            "name": "enable_nebula_layer",
+            "components": [
+              0.0
+            ]
+          },
+          {
+            "name": "enable_stars_layer",
+            "components": [
+              0.0
+            ]
+          },
+          {
+            "name": "enable_flares_layer",
+            "components": [
+              0.0
+            ]
+          },
+          {
+            "name": "enable_background_gradient",
+            "components": [
+              0.0
+            ]
+          },
+          {
+            "name": "intensity",
+            "components": [
+              0.75
+            ]
+          },
+          {
+            "name": "drift_scale",
+            "components": [
+              1.15
+            ]
+          },
+          {
+            "name": "velocity_glow",
+            "components": [
+              1.0
+            ]
+          },
+          {
+            "name": "nebula_strength",
+            "components": [
+              1.05
+            ]
+          },
+          {
+            "name": "tint_rgb",
+            "components": [
+              0.045,
+              0.12,
+              0.3
+            ]
+          },
+          {
+            "name": "seed",
+            "components": [
+              87.0
+            ]
+          },
+          {
+            "name": "background_rgb",
+            "components": [
+              0.003,
+              0.006,
+              0.022
+            ]
+          },
+          {
+            "name": "flare_enabled",
+            "components": [
+              0.0
+            ]
+          },
+          {
+            "name": "flare_intensity",
+            "components": [
+              0.35
+            ]
+          },
+          {
+            "name": "flare_density",
+            "components": [
+              0.54
+            ]
+          },
+          {
+            "name": "flare_size",
+            "components": [
+              2.29
+            ]
+          },
+          {
+            "name": "flare_tint_rgb",
+            "components": [
+              0.25,
+              0.85,
+              1.55
+            ]
+          },
+          {
+            "name": "render_mode",
+            "components": [
+              0.0
+            ]
+          },
+          {
+            "name": "blend_mode",
+            "components": [
+              0.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "layer_id": "bg_space_background_stars",
+      "phase": "fullscreen_background",
+      "shader_asset_id": "space_background_base_wgsl",
+      "order": -198,
+      "parallax_factor": 1.0,
+      "shader_parameter_set": {
+        "schema_id": "space_background_base_wgsl",
+        "values": [
+          {
+            "name": "render_mode",
+            "components": [
+              1.0
+            ]
+          },
+          {
+            "name": "blend_mode",
+            "components": [
+              1.0
+            ]
+          },
+          {
+            "name": "seed",
+            "components": [
+              87.0
+            ]
+          },
+          {
+            "name": "enable_background_gradient",
+            "components": [
+              0.0
+            ]
+          },
+          {
+            "name": "star_density",
+            "components": [
+              0.12
+            ]
+          },
+          {
+            "name": "star_size_min",
+            "components": [
+              0.11
+            ]
+          },
+          {
+            "name": "star_size_max",
+            "components": [
+              0.14
+            ]
+          },
+          {
+            "name": "star_opacity",
+            "components": [
+              1.0
+            ]
+          },
+          {
+            "name": "star_color_rgb",
+            "components": [
+              0.82,
+              0.86,
+              1.0
+            ]
+          },
+          {
+            "name": "pulsar_frequency",
+            "components": [
+              0.07
+            ]
+          },
+          {
+            "name": "pulsar_size",
+            "components": [
+              1.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "layer_id": "bg_space_background_nebula",
+      "phase": "fullscreen_background",
+      "shader_asset_id": "space_background_nebula_wgsl",
+      "order": -195,
+      "parallax_factor": 1.0,
+      "shader_parameter_set": {
+        "schema_id": "space_background_nebula_wgsl",
+        "values": [
+          {
+            "name": "blend_mode",
+            "components": [
+              1.0
+            ]
+          },
+          {
+            "name": "enable_nebula_layer",
+            "components": [
+              1.0
+            ]
+          },
+          {
+            "name": "enable_stars_layer",
+            "components": [
+              0.0
+            ]
+          },
+          {
+            "name": "enable_flares_layer",
+            "components": [
+              0.0
+            ]
+          },
+          {
+            "name": "enable_background_gradient",
+            "components": [
+              0.0
+            ]
+          },
+          {
+            "name": "intensity",
+            "components": [
+              0.92
+            ]
+          },
+          {
+            "name": "drift_scale",
+            "components": [
+              1.2
+            ]
+          },
+          {
+            "name": "velocity_glow",
+            "components": [
+              1.0
+            ]
+          },
+          {
+            "name": "nebula_strength",
+            "components": [
+              1.08
+            ]
+          },
+          {
+            "name": "tint_rgb",
+            "components": [
+              0.045,
+              0.12,
+              0.3
+            ]
+          },
+          {
+            "name": "seed",
+            "components": [
+              87.0
+            ]
+          },
+          {
+            "name": "nebula_noise_mode",
+            "components": [
+              0.0
+            ]
+          },
+          {
+            "name": "nebula_octaves",
+            "components": [
+              6.0
+            ]
+          },
+          {
+            "name": "nebula_gain",
+            "components": [
+              0.54
+            ]
+          },
+          {
+            "name": "nebula_lacunarity",
+            "components": [
+              2.05
+            ]
+          },
+          {
+            "name": "nebula_power",
+            "components": [
+              1.05
+            ]
+          },
+          {
+            "name": "nebula_shelf",
+            "components": [
+              0.54
+            ]
+          },
+          {
+            "name": "nebula_ridge_offset",
+            "components": [
+              0.95
+            ]
+          },
+          {
+            "name": "nebula_hue_drift",
+            "components": [
+              1.0
+            ]
+          },
+          {
+            "name": "nebula_color_primary_rgb",
+            "components": [
+              0.01,
+              0.04,
+              0.16
+            ]
+          },
+          {
+            "name": "nebula_color_secondary_rgb",
+            "components": [
+              0.015,
+              0.2,
+              0.36
+            ]
+          },
+          {
+            "name": "nebula_color_accent_rgb",
+            "components": [
+              0.08,
+              0.82,
+              0.95
+            ]
+          },
+          {
+            "name": "nebula_blend_mode",
+            "components": [
+              1.0
+            ]
+          },
+          {
+            "name": "nebula_opacity",
+            "components": [
+              0.86
+            ]
+          },
+          {
+            "name": "stars_blend_mode",
+            "components": [
+              2.0
+            ]
+          },
+          {
+            "name": "stars_opacity",
+            "components": [
+              1.0
+            ]
+          },
+          {
+            "name": "backlight_screen_x",
+            "components": [
+              -0.3
+            ]
+          },
+          {
+            "name": "backlight_screen_y",
+            "components": [
+              0.1
+            ]
+          },
+          {
+            "name": "backlight_intensity",
+            "components": [
+              2.2
+            ]
+          },
+          {
+            "name": "backlight_wrap",
+            "components": [
+              0.48
+            ]
+          },
+          {
+            "name": "backlight_edge_boost",
+            "components": [
+              1.4
+            ]
+          },
+          {
+            "name": "backlight_bloom_scale",
+            "components": [
+              0.75
+            ]
+          },
+          {
+            "name": "backlight_bloom_threshold",
+            "components": [
+              0.18
+            ]
+          },
+          {
+            "name": "shaft_quality",
+            "components": [
+              2.0
+            ]
+          },
+          {
+            "name": "enable_backlight",
+            "components": [
+              1.0
+            ]
+          },
+          {
+            "name": "enable_light_shafts",
+            "components": [
+              0.0
+            ]
+          },
+          {
+            "name": "shafts_debug_view",
+            "components": [
+              0.0
+            ]
+          },
+          {
+            "name": "shaft_blend_mode",
+            "components": [
+              0.0
+            ]
+          },
+          {
+            "name": "shaft_intensity",
+            "components": [
+              0.8
+            ]
+          },
+          {
+            "name": "shaft_length",
+            "components": [
+              0.48
+            ]
+          },
+          {
+            "name": "shaft_falloff",
+            "components": [
+              2.2
+            ]
+          },
+          {
+            "name": "shaft_samples",
+            "components": [
+              12.0
+            ]
+          },
+          {
+            "name": "shaft_color_rgb",
+            "components": [
+              0.25,
+              0.95,
+              1.55
+            ]
+          },
+          {
+            "name": "shaft_opacity",
+            "components": [
+              0.4
+            ]
+          },
+          {
+            "name": "backlight_color_rgb",
+            "components": [
+              0.3,
+              1.1,
+              1.55
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "layer_id": "bg_space_background_planets",
+      "phase": "fullscreen_background",
+      "shader_asset_id": "space_background_base_wgsl",
+      "order": -190,
+      "parallax_factor": 1.0,
+      "shader_parameter_set": {
+        "schema_id": "space_background_base_wgsl",
+        "values": [
+          {
+            "name": "render_mode",
+            "components": [
+              2.0
+            ]
+          },
+          {
+            "name": "blend_mode",
+            "components": [
+              1.0
+            ]
+          },
+          {
+            "name": "seed",
+            "components": [
+              87.0
+            ]
+          },
+          {
+            "name": "enable_background_gradient",
+            "components": [
+              0.0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "layer_id": "bg_starfield",
+      "phase": "fullscreen_foreground",
+      "shader_asset_id": "starfield_wgsl",
+      "order": 20,
+      "parallax_factor": 1.0,
+      "shader_parameter_set": {
+        "schema_id": "starfield_wgsl",
+        "values": [
+          {
+            "name": "density",
+            "components": [
+              0.4
+            ]
+          },
+          {
+            "name": "layer_count",
+            "components": [
+              2.0
+            ]
+          },
+          {
+            "name": "initial_z_offset",
+            "components": [
+              0.0
+            ]
+          },
+          {
+            "name": "intensity",
+            "components": [
+              1.6
+            ]
+          },
+          {
+            "name": "alpha",
+            "components": [
+              0.35
+            ]
+          },
+          {
+            "name": "field_tint_rgb",
+            "components": [
+              0.86,
+              0.92,
+              1.05
+            ]
+          },
+          {
+            "name": "star_size",
+            "components": [
+              0.7
+            ]
+          },
+          {
+            "name": "star_intensity",
+            "components": [
+              1.0
+            ]
+          },
+          {
+            "name": "star_alpha",
+            "components": [
+              1.0
+            ]
+          },
+          {
+            "name": "star_color_rgb",
+            "components": [
+              0.7,
+              0.82,
+              1.0
+            ]
+          },
+          {
+            "name": "layer_mode",
+            "components": [
+              1.0
+            ]
+          },
+          {
+            "name": "parallax_depth",
+            "components": [
+              1.55
+            ]
+          },
+          {
+            "name": "corona_size",
+            "components": [
+              1.0
+            ]
+          },
+          {
+            "name": "corona_intensity",
+            "components": [
+              0.0
+            ]
+          },
+          {
+            "name": "corona_alpha",
+            "components": [
+              0.0
+            ]
+          },
+          {
+            "name": "corona_color_rgb",
+            "components": [
+              0.2,
+              0.4,
+              0.9
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

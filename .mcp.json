@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "sidereal-blender": {
+      "command": "python3",
+      "args": [
+        "/root/sidereal_spacetime/scripts/dev.py",
+        "mcp"
+      ]
+    }
+  }
+}

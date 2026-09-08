@@ -1,0 +1,60 @@
+{
+  "ordinal": 100,
+  "entry": {
+    "block_id": "block.verdant.armor_plate_long",
+    "script": "",
+    "tags": [
+      "verdant",
+      "armor"
+    ]
+  },
+  "definition": {
+    "block_id": "block.verdant.armor_plate_long",
+    "display_name": "Verdant Logistics / Armor Plate Long",
+    "category": "armor",
+    "layer": "structure",
+    "footprint": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "mass_kg": 280,
+    "health": 400.0,
+    "collision_polygon": [],
+    "cost": {
+      "capacity": 0.25,
+      "credits": 560
+    },
+    "power": null,
+    "directional": true,
+    "placement": {
+      "attach_edges": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ],
+      "requires_support": false,
+      "attach_to": [
+        "hull",
+        "armor"
+      ],
+      "min_attachments": 1,
+      "clearance": [],
+      "keep_clear": []
+    },
+    "visual": {
+      "tile_asset_id": "tile.verdant.armor_plate_long",
+      "interior_asset_id": null,
+      "visible_in_cutaway": true,
+      "interior_overlays": []
+    },
+    "interior": null,
+    "components": []
+  }
+}

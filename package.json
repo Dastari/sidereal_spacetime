@@ -1,0 +1,51 @@
+{
+  "name": "sidereal-spacetime",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=24 <27"
+  },
+  "scripts": {
+    "setup": "python3 scripts/dev.py setup",
+    "dev": "python3 scripts/dev.py up",
+    "stop": "python3 scripts/dev.py down",
+    "status": "python3 scripts/dev.py status",
+    "build": "npm run world:build && npm run world:generate && npm run build:client && npm run build:dashboard",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "check": "npm run typecheck && npm test && python3 scripts/check_docs.py",
+    "world:build": "python3 scripts/dev.py build-world",
+    "world:generate": "python3 scripts/dev.py generate",
+    "world:publish": "python3 scripts/dev.py publish",
+    "smoke": "python3 scripts/dev.py smoke",
+    "art:export": "python3 scripts/dev.py export-art",
+    "art:setup": "python3 scripts/setup_art.py",
+    "art:mcp": "python3 scripts/dev.py mcp",
+    "format": "prettier --write apps/*/src apps/*/vite.config.ts packages/*/src/index.* packages/sim/src/sim.test.ts packages/scripting/src/lifecycle.test.ts scripts/*.ts",
+    "build:client": "npm run build --workspace @sidereal/client",
+    "build:dashboard": "npm run build --workspace @sidereal/dashboard",
+    "dev:client": "python3 scripts/dev.py up-client",
+    "dev:dashboard": "python3 scripts/dev.py up-dashboard",
+    "stop:client": "python3 scripts/dev.py stop-client",
+    "stop:dashboard": "python3 scripts/dev.py stop-dashboard",
+    "art:verify": ".tools/art/bin/python scripts/verify_mcp.py",
+    "verify:isolation": "python3 scripts/verify_isolation.py",
+    "smoke:restart": "python3 scripts/dev.py smoke-restart"
+  },
+  "devDependencies": {
+    "typescript": "6.0.3",
+    "vite": "8.2.2",
+    "@vitejs/plugin-react": "6.1.1",
+    "vitest": "4.1.11",
+    "tsx": "4.23.13",
+    "@types/node": "26.5.0",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.7",
+    "prettier": "3.9.6"
+  }
+}

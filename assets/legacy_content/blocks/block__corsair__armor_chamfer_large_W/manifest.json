@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "package_id": "block__corsair__armor_chamfer_large_W",
+  "kind": "block",
+  "primary_blueprint": "block__corsair__armor_chamfer_large_W",
+  "files": [
+    "definition.json"
+  ],
+  "revision": 1
+}

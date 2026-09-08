@@ -1,0 +1,25 @@
+{
+  "placement_id": "maw.helion.1",
+  "blueprint_id": "planet.helion",
+  "system_id": "maw",
+  "position": {
+    "x": 21.480828365284538,
+    "y": 34.6170952941514
+  },
+  "source": "planet",
+  "component_overrides": {
+    "stellar_light_source": {
+      "color_rgb": [
+        1.0,
+        0.97,
+        0.92
+      ],
+      "elevation": 0.36,
+      "enabled": true,
+      "inner_radius_m": 3500.0,
+      "intensity": 1.25,
+      "outer_radius_m": 18000.0,
+      "priority": 1.0
+    }
+  }
+}

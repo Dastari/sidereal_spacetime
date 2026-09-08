@@ -1,0 +1,23 @@
+{
+  "ordinal": 0,
+  "entry": { "hull_id": "ship.scout_v2", "bundle_id": "ship.scout_v2", "spawn_enabled": false, "tags": ["starter", "scout"] },
+  "definition": {
+    "hull_id": "ship.scout_v2",
+    "bundle_id": "ship.scout_v2",
+    "kind": "ship",
+    "class": "small",
+    "display_name": "Scout V2",
+    "grid": { "kind": "square", "cell_size_m": 2.0 },
+    "hull_size": { "width": 3, "length": 7 },
+    "visual": { "map_icon_asset_id": "map_icon_ship_svg" },
+    "components": [
+      { "block_id": "block.bridge.mk1", "cell": [0, 2], "facing": "N" },
+      { "block_id": "block.reactor.fission_mk1", "cell": [0, 0], "facing": "N" },
+      { "block_id": "block.cargo.bay_mk1", "cell": [0, -2], "facing": "N" },
+      { "block_id": "block.thruster.main_mk1", "cell": [0, -3], "facing": "S" },
+      { "block_id": "block.armor.plate_mk1", "cell": [-1, 2], "facing": "N" },
+      { "block_id": "block.armor.plate_mk1", "cell": [1, 2], "facing": "N" }
+    ],
+    "loadout": []
+  }
+}

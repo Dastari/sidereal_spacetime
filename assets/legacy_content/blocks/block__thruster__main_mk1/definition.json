@@ -1,0 +1,60 @@
+{
+  "definition": {
+    "block_id": "block.thruster.main_mk1",
+    "category": "thruster",
+    "components": [
+      {
+        "kind": "engine",
+        "properties": {
+          "max_thrust_n": 90000.0,
+          "thrust_face": "S",
+          "thruster_role": "main"
+        }
+      }
+    ],
+    "cost": {
+      "capacity": 3.0,
+      "credits": 400.0
+    },
+    "directional": true,
+    "display_name": "Main Thruster Mk1",
+    "footprint": [
+      [
+        0,
+        0
+      ]
+    ],
+    "health": 400.0,
+    "mass_kg": 600.0,
+    "power": {
+      "battery_capacity_kj": 0.0,
+      "draw_kw": 200.0,
+      "generation_kw": 0.0
+    },
+    "layer": "structure",
+    "collision_polygon": [],
+    "placement": {
+      "attach_edges": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ],
+      "requires_support": false
+    },
+    "visual": {
+      "interior_asset_id": null,
+      "visible_in_cutaway": false,
+      "interior_overlays": []
+    }
+  },
+  "entry": {
+    "block_id": "block.thruster.main_mk1",
+    "script": "",
+    "tags": [
+      "thruster",
+      "propulsion"
+    ]
+  },
+  "ordinal": 2
+}

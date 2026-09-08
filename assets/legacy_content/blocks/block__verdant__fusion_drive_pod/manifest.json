@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "package_id": "block__verdant__fusion_drive_pod",
+  "kind": "block",
+  "primary_blueprint": "block__verdant__fusion_drive_pod",
+  "files": [
+    "definition.json"
+  ],
+  "revision": 3
+}

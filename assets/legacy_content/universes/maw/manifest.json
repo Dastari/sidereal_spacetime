@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "baseline_id": "maw",
+  "kind": "universe",
+  "revision": 16,
+  "files": [
+    "universe.json",
+    "systems/maw.json",
+    "placements/maw.aurelia.demo.json",
+    "placements/maw.cache.alpha.json",
+    "placements/maw.cache.beta.json",
+    "placements/maw.cinder.1.json",
+    "placements/maw.cyanos.1.json",
+    "placements/maw.depot.salvage.json",
+    "placements/maw.ember.1.json",
+    "placements/maw.ferros.1.json",
+    "placements/maw.glacius.1.json",
+    "placements/maw.helion.1.json",
+    "placements/maw.nyx.1.json",
+    "placements/maw.player.1.json",
+    "zones/maw.inner.json",
+    "zones/maw.starter_field.json",
+    "zones/maw.test.json",
+    "zones/maw.zone.2.json"
+  ]
+}

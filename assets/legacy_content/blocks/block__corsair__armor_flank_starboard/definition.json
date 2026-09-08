@@ -1,0 +1,76 @@
+{
+  "ordinal": 100,
+  "entry": {
+    "block_id": "block.corsair.armor_flank_starboard",
+    "script": "",
+    "tags": [
+      "corsair",
+      "armor"
+    ]
+  },
+  "definition": {
+    "block_id": "block.corsair.armor_flank_starboard",
+    "display_name": "Corsair Salvage / Armor Flank Starboard",
+    "category": "armor",
+    "layer": "structure",
+    "footprint": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "mass_kg": 840,
+    "health": 400.0,
+    "collision_polygon": [],
+    "cost": {
+      "capacity": 0.25,
+      "credits": 1680
+    },
+    "power": null,
+    "directional": true,
+    "placement": {
+      "attach_edges": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ],
+      "requires_support": false,
+      "attach_to": [
+        "hull",
+        "armor"
+      ],
+      "min_attachments": 1,
+      "clearance": [],
+      "keep_clear": []
+    },
+    "visual": {
+      "tile_asset_id": "tile.corsair.armor_flank_starboard",
+      "interior_asset_id": null,
+      "visible_in_cutaway": true,
+      "interior_overlays": []
+    },
+    "interior": null,
+    "components": []
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "zone_id": "maw.starter_field",
+  "system_id": "maw",
+  "boundary": {
+    "kind": "circle",
+    "center": {
+      "x": 0.0,
+      "y": 0.0
+    },
+    "radius_m": 1450.0
+  },
+  "layers": [],
+  "field": {
+    "generator": "asteroid_field",
+    "seed": 424242,
+    "count": 150
+  },
+  "display": {
+    "name": "Starter Asteroid Field"
+  }
+}

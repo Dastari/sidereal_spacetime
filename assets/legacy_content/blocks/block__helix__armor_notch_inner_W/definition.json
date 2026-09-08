@@ -1,0 +1,62 @@
+{
+  "ordinal": 100,
+  "entry": {
+    "block_id": "block.helix.armor_notch_inner_W",
+    "script": "",
+    "tags": [
+      "helix",
+      "armor"
+    ]
+  },
+  "definition": {
+    "block_id": "block.helix.armor_notch_inner_W",
+    "display_name": "Helix Research / Armor Notch Inner W",
+    "category": "armor",
+    "layer": "structure",
+    "footprint": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "mass_kg": 420,
+    "health": 400.0,
+    "collision_polygon": [],
+    "cost": {
+      "capacity": 0.25,
+      "credits": 840
+    },
+    "power": null,
+    "directional": true,
+    "placement": {
+      "attach_edges": [
+        "E",
+        "S"
+      ],
+      "requires_support": false,
+      "attach_to": [
+        "hull",
+        "armor"
+      ],
+      "min_attachments": 1,
+      "clearance": [],
+      "keep_clear": []
+    },
+    "visual": {
+      "tile_asset_id": "tile.helix.armor_notch_inner_W",
+      "interior_asset_id": null,
+      "visible_in_cutaway": true,
+      "interior_overlays": []
+    },
+    "interior": null,
+    "components": []
+  }
+}

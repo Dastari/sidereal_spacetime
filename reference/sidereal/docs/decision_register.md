@@ -1,0 +1,1777 @@
+# Decision Register
+
+Status: Active
+Lifecycle: source-of-truth
+Category: decision
+Last updated: 2026-06-17
+Owners: architecture
+Scope: Decision Register.
+Source of truth: yes
+Supersedes: n/a
+Superseded by: n/a
+Primary references:
+- n/a
+
+Audience: engineering and design contributors
+Update note (2026-03-09):
+- Decision detail docs now live under `docs/decisions/`.
+- Plan docs now live under `docs/plans/`.
+- Broken DR-0014 links to missing 2D migration docs were removed; the decision now points at the active architecture/checklist docs.
+
+## Purpose
+
+This register captures project-wide architectural and gameplay-policy decisions that affect multiple systems.
+
+Use this file to:
+- make decisions explicit,
+- record tradeoffs and alternatives,
+- prevent accidental regressions in future refactors.
+
+When a decision needs a dedicated detail document, store it under `docs/decisions/` using:
+- `dr-XXXX_<slug>.md`
+
+Not every decision requires a dedicated detail doc (for example when an existing feature contract already fully covers it), but every decision must link either:
+- a dedicated decision doc, or
+- the existing feature contract or plan that is its source-of-truth.
+
+## Process
+
+For each decision:
+1. Add a new entry with a stable ID (`DR-XXXX`).
+2. Set `Status` (`Proposed`, `Accepted`, `Superseded`, `Deprecated`).
+3. Document rationale and alternatives.
+4. For in-depth decisions, create/update `docs/decisions/dr-XXXX_<slug>.md`.
+5. If a dedicated doc is not needed, link the existing source-of-truth feature contract under `docs/features/` or plan under `docs/plans/`.
+6. Link impacted docs/code/tests.
+7. If superseded, keep the old entry and reference the replacement.
+
+## Entry Template
+
+```md
+## DR-XXXX: <Title>
+- Status: Proposed | Accepted | Superseded | Deprecated
+- Date: YYYY-MM-DD
+- Owners: <names/role>
+- Context:
+  - <problem statement>
+- Decision:
+  - <what we decided>
+- Alternatives considered:
+  - <option A + why rejected>
+  - <option B + why rejected>
+- Consequences:
+  - Positive:
+    - <...>
+  - Negative:
+    - <...>
+- Follow-up:
+  - <required tasks/docs/tests>
+- Decision doc:
+  - `docs/decisions/dr-XXXX_<slug>.md` (preferred for in-depth decisions)
+  - or an existing source-of-truth `docs/features/<feature_doc>.md`
+  - or an existing source-of-truth `docs/plans/<plan_doc>.md`
+- References:
+  - <docs/code paths>
+```
+
+## Decisions
+
+## DR-0054: Universe Baseline vs. Evolved World Separation
+
+2026-09-05: Implemented authoring delivery, retained baseline reconciliation and persistence ordering are detailed in `docs/features/active/dashboard_game_authoring_runtime_contract.md`.
+- Status: Active
+- Date: 2026-06-17
+- Owners: content authoring + replication runtime + persistence + gateway + engine architecture
+- Context:
+  - World seeding runs a single hand-written `world_init.lua` once, gated by an opaque `script_world_init_state` `init_key` marker; reset clears it and re-applies; `pg-reset` wipes the volume. Fixed-identity GUIDs make authored static content idempotent, but generated members (asteroid fields) use random v4 and there is no static/dynamic or authored/evolved classification.
+  - A giant `world_init.lua` is the wrong long-term source of truth for a large authored universe: not diffable/dashboard-authorable, mixes data with code, opaque marker, no authored-vs-evolved distinction. The DB is the evolved world and must be resettable, so the authored initial universe must live on disk, durably (DR-0053).
+- Decision:
+  - Separate the **authored universe baseline** (a disk content package, durable source of truth, recipe + curated placements) from the **evolved graph DB world** (resettable, derived). Baseline = systems/regions + explicit placements (referencing `blueprint_id` + overrides) + deterministic generator specs + spawn tables + global seed/revision — never a dump of every procedural entity.
+  - Deterministic identity: placement → `uuid_v5(ns,"placement:<id>")`; generator member → `uuid_v5(ns,"gen:<gen_id>:<cell_key>:<local_member_key>")` — a stable spatial/sample key, never a global array index (which would churn on density/ordering changes) — replacing random v4 so materialization is idempotent and per-member deltas survive reset.
+  - Engine-generic `authored_baseline_source` provenance (baseline_id, revision, source_key, blueprint_id, baseline_content_hash) on seeded entities — persisted, server-side only, not client-replicated → drift detection + 3-way reconcile. Pre-WS7: define the stable member key, materialize the merge base (snapshots or per-entity hash), and the canonical drift hash (authoring-significant state only).
+  - Apply pipeline replaces giant-Lua-once: compile baseline → graph/generator records → persist → record applied baseline_id+revision+hash. Reconciliation is a 3-way merge (old applied baseline · new · live); conflict defaults dev = baseline wins, prod = keep live + flag. Static content is baseline-derivable; sparse/copy-on-write persistence is a later optimization the model enables.
+  - Lua stays for behavior/hooks + validated generators, not universe storage; `world_init.lua` becomes a generator runtime. Engine: format/pipeline/provenance/identity/materialization API; content: packages/system names/generator kinds. Multi-shard: baseline global, deltas region-owned.
+- Alternatives considered:
+  - Keep giant `world_init.lua` as SoT (doesn't scale, opaque); DB as baseline SoT (lost on wipe); full reset only (can't update prod without nuking progress); random generator identity + full materialization (no per-member deltas, doesn't scale); space-specific provenance (breaks deletion test); seed every procedural entity (millions of rows). All rejected.
+- Consequences:
+  - Positive: authored universe survives wipes, diffable/dashboard-authorable, cleanly separated from evolved state; deterministic identity makes a huge universe cheap to seed and lets deltas attach; provenance enables safe reconcile; reuses fixed identity + apply/reset shape + DR-0053 substrate.
+  - Negative: production reconcile is a real 3-way merge + conflict UI (phased after dev reset-to-baseline); generated entities move random→deterministic (one-time identity migration); two persistence regimes may coexist; provenance touches persistence registration.
+- Implementation status (2026-08-31): baseline packages, deterministic placement/member
+  identity, seed provenance, revision-driven scoped reseed, placement overrides, shaped
+  zones, and starter planet/field migration are implemented. U6 three-way reconcile,
+  full canonical-hash provenance, spatial cluster-key refinement, and the remaining
+  world-init global/scripted-actor migration are open.
+- Follow-up:
+  - Feature proposal (`docs/features/proposed/universe_baseline_seeding_proposal.md`) + composition plan WS7; deterministic generator identity migration; reconcile conflict-policy detail + diff UI; provenance replication/visibility (default server-side); copy-on-write persistence timing.
+- Decision doc:
+  - `docs/decisions/dr-0054_universe_baseline_vs_evolved_world_separation.md`
+- References:
+  - `docs/features/proposed/universe_baseline_seeding_proposal.md`, `docs/plans/proposed/content_authoring_composition_plan_2026-06-17.md`
+  - `docs/decisions/dr-0053_...`, `dr-0025_...`, `dr-0040_...`, `dr-0045_...`; `docs/features/active/world_bootstrap_fixed_entity_identity_contract.md`
+  - `bins/sidereal-replication/src/replication/{simulation_entities.rs,persistence.rs,admin.rs}`, `crates/engine-core/src/fixed_entity_guid.rs`, `data/scripts/world/world_init.lua`, `data/scripts/bundles/starter/asteroid_field.lua`
+
+## DR-0053: Disk-Authored Content Packages as Durable Source of Truth
+- Status: Proposed
+- Date: 2026-06-17
+- Owners: content authoring + gateway + replication runtime + persistence + engine architecture
+- Context:
+  - Dashboard/CLI/agent-authored content packages (entity blueprints + co-located manifest/hooks/shader/param/asset-ref files) must survive frequent database wipes (`pg-reset` destroys the whole Postgres volume shared by gateway catalog and world persistence).
+  - Today publishes land in PostgreSQL only (no disk write-back), and disk is seed-only, so dashboard-authored content does not survive a wipe. Asset bytes already persist to disk and do survive.
+  - DR-0025 made disk seed-only / DB-durable for the runtime *script* catalog. That is the wrong default for reset-surviving authored content packages; the conflict needs an explicit decision, not feature prose.
+- Decision:
+  - Authored content packages under `data/content/**` are **disk source of truth**; the catalog/persistence DB is a **derived cache** rebuilt from disk by the existing seed-from-disk path. Publish writes the package to disk atomically (the disk commit is the commit point); catalog refresh is downstream and retryable; on divergence, disk wins. Drafts may stay ephemeral in SQL.
+  - Scopes/amends DR-0025: DR-0025 still governs the standalone runtime script catalog (in-memory execution authority, DR-0026 SQL persistence); this DR governs authored content packages, and package-contained scripts (`hooks.lua`) are indexed/seeded from disk.
+- Alternatives considered:
+  - Keep DR-0025's DB-durable model for entities: rejected — would not survive `pg-reset`.
+  - Amend DR-0025 in place: rejected — packages are a distinct content class; a scoped new DR is clearer and avoids regressing the execution model.
+  - Dual-write (DB authoritative + disk mirror): rejected — needs a cross-store transaction; single disk commit + derived cache is simpler and matches asset bytes.
+  - Binary `.dat` package: rejected — kills diff/merge/review/AI authoring; delivery already solved by content-addressed assets.
+- Consequences:
+  - Positive: authored content survives wipes via seed-from-disk; text-on-disk is diffable/mergeable/AI-authorable; clean single-commit-point publish semantics; reuses existing machinery.
+  - Negative: gateway gains a privileged create-new-files disk-write surface needing hardening; two durability models coexist (DB-durable standalone scripts vs. disk-durable packages) and must be scoped; boot-time seed/index cost grows with package count.
+- Follow-up:
+  - Implement under composition plan WS2 (scoped disk-write, seed-from-disk for packages, manifest/`entity.json` validation, wipe-survival + disk-write-safety tests).
+  - Confirm `hooks.lua` reconciliation against DR-0025/DR-0026; decide interim vs. migrated path for existing per-type registries (composition plan WS4).
+- Decision doc:
+  - `docs/decisions/dr-0053_disk_authored_content_packages_durable_source_of_truth.md`
+- References:
+  - `docs/features/proposed/entity_authoring_system_proposal.md`, `docs/plans/proposed/content_authoring_composition_plan_2026-06-17.md`
+  - `docs/decisions/dr-0025_runtime_script_catalog_authority.md`, `dr-0026_sql_script_catalog_persistence.md`, `dr-0046_lua_asset_registry_gateway_http_delivery.md`, `dr-0049_dashboard_authoring_control_plane.md`
+  - `crates/engine-persistence/src/lib.rs`, `bins/sidereal-gateway/src/api.rs`, `bins/sidereal-gateway/src/auth/starter_world_scripts.rs`
+
+## DR-0052: Asteroid Destruction via Generic 2D Destructible Voxel Bodies
+- Status: Proposed
+- Date: 2026-06-16
+- Owners: gameplay simulation + engine architecture + client rendering + replication/persistence + content
+- Context:
+  - The shipped asteroid V2 destruction model (damage-driven 7-site latent Voronoi network + staged cell detachment) feels bad for architectural, not tunable, reasons. Confirmed in code: fragment colliders are Voronoi cells clipped to a bounding disc (`CELL_BOUND_RADIUS = 1.05`) so their AABB dwarfs the rendered chunk; fragments spawn at the cell centroid inside the body with that oversized collider and only `STAGED_DETACH_IMPULSE_MPS = 1.6`, so the solver punches the chunk through the parent; and `fracture_child_sprite()` re-rolls a smaller *whole* asteroid instead of a shard.
+  - Root pathology: v1 keeps three representations that must agree but cannot — shader silhouette (visual), Voronoi polygon (collider), re-rolled child sprite (fragments).
+  - The desired fantasy is arbitrary destruction (carve/explode/tunnel/split) with mining as literal carving. The asteroid field V2 authoring model (roots, members, deterministic keys, field-owned damage/resource/ambient state, server authority) is healthy and is kept.
+  - Owner decisions locked: coarse cells (~4–8 px), fully physical (navigable tunnels + split into rigid bodies), a generic engine crate, hybrid timed-heal persistence, and "carving = damage applied geometrically".
+- Decision:
+  - Replace the Voronoi fracture with arbitrary coarse-cell destruction: one occupancy grid is simultaneously the render mask, the marching-squares collider source, and the mass/fragment source (single source of truth, so the feel failures cannot exist).
+  - Build a project-agnostic engine crate `engine-voxel2d` (grid + carve-ops + integrity + collider regen + union-find split + bake) on the engine side of DR-0045; keep rock/ore/damage-type/yield/vulnerability semantics in content.
+  - Carving is damage applied through the existing `ShotImpactResolvedEvent` path: per-cell `erosion += raw_strength × vulnerability[material][damage_type]`, removed at `erosion ≥ hardness`; mining-laser efficiency and ore-vein toughness fall out of per-cell material.
+  - Replicate operations, not pixels: AOI-gated carve-delta message lane (like `tactical.rs`) + a rarely-changing baked baseline (chunk-encoded like `PlayerExploredCells`, public). Grid = `pristine(seed)` + replayed ops.
+  - Server-coarse / client-fine colliders (debounced regen); lazy promote on first carve / de-promote on full heal; server-authoritative per V2 §3.
+  - Hybrid timed heal via morphological dilation toward the seed-derived pristine mask; persist only the carved delta + `last_carve_tick`; latch completed splits.
+  - Mining is carving (removed cells → `AsteroidResourceProfile` yield); mass tracks removed cells.
+  - Migrate side-by-side then cut over (DR-0050 pattern); de-risk with a collider+split spike first.
+- Alternatives considered:
+  - Keep tuning the Voronoi fracture: rejected — failures are architectural (three divergent truths), not tunable.
+  - True per-pixel (Noita) fidelity: rejected — collider/state cost far higher for marginal gain; coarse cells make "fully physical" affordable.
+  - Dense/chunked grid replication as primary transport: rejected — op-log + baked baseline matches the deterministic-procedural philosophy and is far cheaper; reuse chunk encoding only for the baseline.
+  - Carve log inside a replicated component: rejected — generic components full-send on change; stream ops on a delta lane.
+  - Build the core in `sidereal-game` "for now": rejected — provably generic; engine-side from day one (deletion test), as in DR-0051.
+  - Client-side destruction authority/prediction: rejected — server-authoritative per V2 §3; destruction is latency-tolerant like existing combat.
+  - Durable-forever carved state: rejected — unbounded storage; hybrid heal + de-promotion self-bounds.
+- Consequences:
+  - Positive:
+    - The three confirmed feel failures (oversized AABB, punch-through, mini-asteroid children) are designed out; arbitrary destruction + a tactile carve-the-ore-out mining loop become possible.
+    - Generic destructible-body machinery lands on the correct boundary side (reusable for terrain/debris); bandwidth stays in the v1 league via op-log + baseline + AOI + lazy promotion.
+  - Negative:
+    - Avian compound-collider regen/broadphase churn is a new server cost center to prove (spike) and contain; splitting under bombardment and just-split prediction need caps/reconciliation.
+    - New engine crate + carve-delta lane is real surface area; carve math must be bit-identical Rust↔WGSL; cutover deletes a shipped subsystem and needs a world reset.
+- Follow-up:
+  - Accept and write the implementation plan under `docs/plans/proposed/` per proposal §15 (spike → engine core → replication → content → client render → cutover).
+  - Run the collider+split spike and record per-carve/per-split cost + broadphase churn before later phases. Resolved: only a single ballistic weapon exists today, which is v2's initial carve driver (discrete crater carves); beam/mining-laser dwell carving is deferred with the mining tool, and the carve model stays weapon-agnostic.
+- Decision doc:
+  - `docs/decisions/dr-0052_destructible_voxel_asteroid_bodies.md`
+- References:
+  - `docs/features/proposed/destructible_voxel_asteroids_proposal.md`
+  - `docs/features/active/asteroid_field_system_v2_contract.md`
+  - `docs/features/implemented/asteroid_damage_driven_fracture_implemented.md`
+  - `docs/decisions/dr-0045_engine_content_separation_achieved.md`
+  - `docs/decisions/dr-0050_block_based_ship_construction.md`
+
+## DR-0051: Gameplay Authoring Scripting Runtime
+- Status: Accepted
+- Date: 2026-06-15
+- Owners: scripting + gameplay simulation + replication + engine architecture
+- Context:
+  - The intent is to author most gameplay (entity definition, on-damage/on-destroy/on-hit reactions, spawn orchestration, proximity logic, entity queries) in Lua over the engine + `sidereal-game` backbone rather than in Rust.
+  - The target model (hybrid event-driven execution + read-only queries + intent-only writes) is already specified in `docs/features/reference/scripting_support_reference.md` and locked by accepted DR-0020/0021/0022/0024/0025. The combat→script bridge already emits `damage_applied`/`health_depleted`/`before_destroy`/`destroyed` etc., but notification-only, opt-in per entity, with no override/spawn/audio intents; runtime `ctx` exposes only `find_entity` + three intents + `script_state`-only component access.
+  - The reference design predates DR-0045 (engine/content separation): it names `crates/sidereal-scripting`, which was renamed to `engine-script` and split into 17 `engine-*` crates vs. content, so it misdirects placement.
+- Decision:
+  - Build the gameplay scripting runtime as a first-class feature (`system.gameplay_scripting_runtime.v1`): full Rust→Lua event bridge (reference Phase C), runtime read/query/spawn/component API and widened intent set (Phase D non-quest parts), AI intent surface (Phase E).
+  - Keep it strictly server-authoritative for V1 (no client scripting VM); Lua reads a per-tick snapshot and emits validated intents Rust applies (DR-0020/0024). Hooks are not client-predicted; client visuals/audio flow through replicated effect events.
+  - Place every new mechanism on the engine side (event bridge, world/query API, spatial layer, Reflect component bridge, intent applier, blueprint→spawn → `engine-script`/`engine-gameplay`/`engine-spatial`/`engine-ecs`) and keep named space concepts in content (`sidereal-game` + `data/scripts`), per DR-0045; generic event/intent kinds are content-registered, not hardcoded in engine.
+  - Treat the spatial partition plan as the dependency for efficient radius queries; ship `raycast` first and allow an interim Avian shape-query fallback behind the final Lua API.
+  - Make the typed event/intent registry + schema artifact + gateway `validate_script` endpoint + anti-drift CI the **foundation workstream (WS0)**, porting the current surface onto it first. Dashboard does schema/form/payload linting only; symbol-level Lua analysis runs server/CI-side (allowed; the WS1.5 guard forbids only *dashboard* Lua parsing) + generated LuaCATS.
+  - Answer DR-0040 distribution per new stateful surface (quest progression, active dialog, markers, spawned entities, trigger state): owner by entity-root/player-owning shard; state travels via snapshot→persistence→hydrate handoff; owner-only progression never ghosted; cross-shard script effects rejected in V1 like native combat.
+  - Gate script component access with `script_read`/`script_patch` metadata on `#[sidereal_component]` (default-deny, per-field; identity/session/auth/motion fields never exposed); `ctx.time` is simulation-tick (never wall-clock) and `ctx.rand` is seeded/persisted-scope; `ctx:emit_event` is a namespaced/deferred/budgeted local script bus outside the typed registry.
+  - IFCS stays Rust-owned (reaffirms DR-0034); the "GoHere" `set_navigation_target`→IFCS path is already live; engine surfaces use generic names (`get_controlled_entity`, `item_delivered`), space names are content aliases.
+- Alternatives considered:
+  - Client-side presentation scripting VM in V1: rejected (second runtime; replicated effect events already deliver client visuals).
+  - Symbol-level Lua linting in the dashboard frontend: rejected (WS1.5 guard) — server/CI `validate_script` + LuaCATS instead.
+  - Expose all reflected component fields / use wall-clock time / ambient RNG: rejected (leak risk; non-deterministic) — default-deny metadata + simulation-tick time + seeded RNG.
+  - Direct/live ECS access from Lua: rejected (breaks single-writer motion, rollback, sandbox).
+  - Re-implement defaults like asteroid fracture in Lua hooks: rejected (defaults stay data-driven in Rust; hooks are the exceptional path).
+  - Put the machinery in `sidereal-game` "for now": rejected (provably generic; build engine-side to keep the deletion test green).
+- Consequences:
+  - Positive: most gameplay becomes Lua-authorable over a stable Rust kernel; new machinery lands on the correct boundary side; reuses the existing catalog/sandbox substrate and already-emitted combat events.
+  - Negative: per-event dispatch cost must be contained (opt-in + budgets + aggregation); efficient radius queries gated on the spatial partition; `ScriptState` engine-promotion touches persistence/replication; the reference doc needs a correction pass.
+- Follow-up:
+  - Accept and write the workstream plan under `docs/plans/proposed/` following proposal §12 (WS0 schema foundation → WS7 AI intents); WS0/WS1 refresh the reference doc crate names/placement.
+  - Resolved: event/intent kinds = string-keyed registry of typed structs. Open: `ScriptState` promotion timing; `engine-quest` crate vs `engine-gameplay`; `script_read`/`script_patch` per-field vs per-kind; `ActiveDialog` carry-vs-cancel on handoff.
+- Decision doc:
+  - `docs/decisions/dr-0051_gameplay_authoring_scripting_runtime.md`
+- References:
+  - `docs/features/proposed/gameplay_scripting_runtime_proposal.md`
+  - `docs/features/reference/scripting_support_reference.md`
+  - `docs/decisions/dr-0045_engine_content_separation_achieved.md`
+  - `docs/decisions/dr-0040_distribution_and_persistence_authority_model.md`
+  - `docs/decisions/dr-0034_fly_by_wire_thrust_allocation_and_gnc_stack.md`
+  - `docs/decisions/dr-0025_runtime_script_catalog_authority.md`
+  - `docs/plans/proposed/spatial_partitioning_implementation_plan_2026-03-04.md`
+
+## DR-0050: Block-Based Ship & Station Construction Replaces Hardpoint Mounting
+
+2026-09-07: Phase 2 direction adds installed capability providers, explicit fuel/
+power routing, core-dependent fly-by-wire and AI-module owner remote control;
+implementation remains planned. See `docs/plans/proposed/building_blocks_phase_2_utilities_and_control_plan_2026-09-07.md`.
+- Status: Proposed
+- Date: 2026-06-13
+- Owners: architecture + gameplay simulation + content
+- Context:
+  - Ships are modelled by `system.modular_hierarchy.v1` (hull root + `Hardpoint` child entities + `MountedOn` module child entities); the hull silhouette/collision come from the texture and physics treats the hull as a uniform origin-centered rectangle. Module placement does not affect center of gravity or inertia.
+  - The intended fantasy (design document + fly-by-wire/IFCS direction) is a Cosmoteer / Starcom-style spacecraft built from blocks on a grid, where layout drives mass, balance, and thruster geometry. The IFCS plan's Phase 5 ("directional hardpoint allocation") already needs real thruster geometry the current magic-engine torque budget lacks.
+- Decision:
+  - Adopt a block (grid-tile) construction system for all ships and stations (Starcom: Nexus / Cosmoteer style): a Hull built around a single bridge core from cell-aligned blocks of varying size, where layout drives mass, CoG, handling, firepower coverage, power, and survivability. Blocks are the universal substrate (bridge, reactor, battery, thruster, mount, fuel, cargo, scanner, armor, hull, shield, jump drive; categories open-ended).
+  - The authored shape is `HullDefinition` = `HullSize` (grid bounds) + an array of `HullComponent`s (`{block_id, cell, facing}`) + root stats + default loadout. Eventually replaces the hardpoint/mounted-module system.
+  - Implement side-by-side, not in-place: a new `Hull` entity/component type with new systems gated on the `Hull` marker runs alongside the live hardpoint ships (untouched during development); cutover (re-author starter ships, flip spawns, reset world, delete the old path) is the last step. Grid behind a `GridKind` enum, shipping square in V1 with hex addable later.
+  - Mass, center of gravity, inertia (parallel-axis about CoG), and collision footprint are derived server-side from the block layout, not authored.
+  - No magic omnidirectional thruster: each thruster is a placed directional block applying force at its own position (`apply_force_at_point`); a deterministic bounded-NNLS thrust allocator over a per-layout actuation matrix picks per-thruster throttles to meet the flight computer's desired wrench. This is V1 and realises the directional allocator of DR-0034 / the IFCS plan; the magic engine is retired.
+  - Mounts (turrets, fixed hardpoints) are themselves hull blocks placed by construction; a separate loadout/fitting system/UI decides which weapon is fitted to each. Turret mounts aim within an authored arc (server-slewed `TurretState`); fixed hardpoints fire along the mount facing. This plan defines mounts + the merge-at-spawn seam + a blueprint default loadout; the fitting UI/inventory is separate.
+  - Sidereal-game content feature, not engine: the only engine change is the generic `engine-physics` mass seam honouring a content-supplied center-of-mass offset + explicit inertia (Avian `CenterOfMass`/`AngularInertia`); per-thruster application uses stock Avian `apply_force_at_point`; the DR-0045 deletion test stays green.
+  - V1 = exterior hull design (new side-by-side type) with block-derived mass/CoG/inertia/collision, real per-thruster IFCS thrust allocation, bridge-core requirement, turret + fixed mounts with the loadout merge seam + default loadout, the open block substrate, ship-class HullSize cap validation, and power data + build-time validation. Deferred: runtime power brown-out, per-block damage/destruction, the weapon loadout/fitting UI + inventory, tech unlocks + build cost, hex, interiors/crew. Stations supported structurally; station services out of scope.
+- Alternatives considered:
+  - Keep hardpoints + add a CoG field: rejected (placement still not source-of-truth; no path to grid building).
+  - In-place replacement of the hardpoint ships: rejected (pervasive, breaking, undevelopable on a running game) → build the new Hull type side-by-side, delete the old path at cutover.
+  - Pure hull data array vs entity-per-block: hybrid — functional blocks become child entities, structural/armor cells stay data in the `HullDefinition` array.
+  - Make blocks/grid/allocation an engine feature: rejected (space content; only the generic off-center-mass primitive is engine).
+  - Keep the magic aggregate thruster / defer real per-thruster physics: rejected per design intent (thrust is geometric; the allocator is V1 and realises the IFCS directional allocator from real geometry).
+  - Fixed-forward weapons as default / defer turrets: rejected (most ships use turrets; fixed mounts are the minority path).
+- Consequences:
+  - Positive: ship layout becomes meaningful (balance, mass, thruster strafe/yaw authority, turret coverage); one model + universal substrate for ships, stations, and future systems; collision matches the build; realises the directional thrust allocator for the fly-by-wire/IFCS stack.
+  - Negative: larger pervasive breaking change (real per-thruster physics + deterministic allocator + turrets in V1) across combat/flight/mass/visibility/persistence/replication/client, coupling to the IFCS plan; allocator must be deterministic + fit the 60 Hz budget; starter-world reset (no live migration); per-ship flight re-tuning + adequately-thrustered starter ships.
+- Follow-up:
+  - Accept and write the active feature contract (`ship_construction_blocks_contract.md`) in WS0; execute plan WS0–WS7.
+  - Sequel decisions when they land: per-engine geometric thrust allocation (with IFCS), per-block destruction, tractor pull gameplay, station services.
+- Decision doc:
+  - `docs/decisions/dr-0050_block_based_ship_construction.md`
+- References:
+  - `docs/features/active/ship_construction_blocks_contract.md`
+  - `docs/plans/proposed/ship_construction_blocks_system_v1_plan_2026-06-13.md`
+  - `docs/features/active/shipyard_ship_authoring_contract.md`
+  - `docs/decisions/dr-0034_fly_by_wire_thrust_allocation_and_gnc_stack.md`
+  - `docs/plans/active/ifcs_navigation_and_thrust_allocation_implementation_plan_2026-04-27.md`
+
+## DR-0045: Engine / Content Separation Achieved — The Deletion Test Passes
+- Status: Accepted
+- Date: 2026-06-03
+- Owners: architecture
+- Context:
+  - DR-0041 §2 set the north star: the backend must be reusable for non-space projects with no space code compiled in. The engine/content separation refactor (plan `engine_content_separation_refactor_plan_2026-06-02.md`) generalised that to the whole Rust workspace and defined a **deletion test** as the definition of done: delete `sidereal-game` + `data/` and the `engine-*` crates still compile and pass their tests, with no engine crate naming a space concept.
+- Decision:
+  - The boundary is **achieved and validated** (WI-13). 17 `engine-*` crates (`engine-ecs`/`gameplay`/`physics`/`render`/`spatial`/`script`/`transport`/`core`/`audio`/`observability`/`ui`/`ghost-lane`/`component-macros`/`persistence`/`persistence-protocol`/`asset-runtime`/`runtime-sync`) are project-agnostic; `sidereal-game`/`sidereal-net`/`data/` + the 4 bins are content/app. All four dependency violations V1–V4 are dead (WI-3/4/5/6/12/7).
+  - Deletion test run in a throwaway worktree (game+net+4 bins+`data/scripts`+`data/shaders` removed, `data/generated/` kept): `cargo check --workspace` green, **zero leaks**, boundary-guard clean, engine libs/unit tests pass. The only engine compile-time dependency on `data/generated/` is `engine-render`'s `include_str!` of `shader_parameter_layouts.json` (documented data input, not a leak).
+- Alternatives considered:
+  - Treat lighting / `PlanetBodyShaderSettings` / named-slot modules as engine: rejected — they are space content; the deletion test passes with them in game (D5 won't-do for lighting).
+  - Move the space message catalog out of `sidereal-net`: rejected (WI-6/D6 refinement) — `sidereal-net` is reframed as a `sidereal-`-prefixed content protocol crate; only generic transport went to `engine-transport`. Lower churn.
+- Consequences:
+  - Positive: the engine is provably reusable for any top-down grid/coordinate game with no space code compiled in; the compiler + `engine-boundary-guard` lint enforce the one-way boundary.
+  - Negative: a few integration tests are content-fixture-coupled by design (`engine-script` audio test reads `data/scripts`; `sidereal-shader-preview` test `include_str!`s a deleted space shader); these are not boundary violations.
+- Follow-up:
+  - Reconcile the pre-existing 87-vs-85 protocol-guard test drift (`sidereal-net/tests/lightyear_protocol.rs`) — unrelated to this refactor. (OPEN)
+  - `sidereal-shader-preview`: reclassified content-adjacent (embeds Sidereal shader default-value tables in `native.rs`), correctly keeps its `sidereal-` prefix; a fully-generic `engine-shader-preview` would inject those defaults from the schema — optional future work, not a gap. (RESOLVED via reclassification)
+  - Add the missing `uuid` dev-dependency to `engine-ghost-lane`. (RESOLVED 2026-06-03)
+- Decision doc:
+  - `docs/decisions/dr-0045_engine_content_separation_achieved.md`
+- References:
+  - `docs/plans/completed/engine_content_separation_refactor_plan_2026-06-02.md`
+  - `docs/decisions/dr-0041_generic_lua_authored_shader_parameter_schema.md`
+  - `crates/engine-render/src/shader_parameter_layout.rs`
+  - `scripts/check_engine_boundary.sh`
+
+## DR-0044: Agent Instruction Layering — Lean AGENTS.md Core + Auto-Trigger Rule Packs
+- Status: Accepted
+- Date: 2026-05-30
+- Owners: agent workflow + docs
+- Context:
+  - `AGENTS.md` had grown to one flat list of ~55 "non-negotiable" rules, most of which were domain-conditional ("when touching dashboard…", "new world-facing shaders…"). Every rule was paid as always-on context for every task, including unrelated ones.
+  - The `docs/` tree (150+ files, ~50k lines) cross-references heavily; an agent that follows AGENTS.md's doc pointers transitively can ingest enormous context before starting work.
+  - Verified that this harness auto-triggers project skills under `.claude/skills/` (the `.agents/skills/` external-sourced skills are not surfaced; they are used by explicit prompt file-path reference).
+- Decision:
+  - Split `AGENTS.md` into (a) a lean always-on core of genuine cross-cutting invariants (authority/identity, coordinates/motion, shared-code/schema, DR-0040 distribution, Lightyear-fork policy, workflow, quality gates, doc-maintenance), plus (b) a `## Domain Rule Packs` index.
+  - Move domain-conditional rule clusters into six auto-triggering rule packs under `.claude/skills/`: `sidereal-components`, `sidereal-visibility-replication`, `sidereal-client-wasm`, `sidereal-frontend`, `sidereal-shaders-assets`, `sidereal-observability-net`. Each is a lean `SKILL.md` (`user-invocable: false`) with a precise trigger description and the one authoritative doc for its domain.
+  - The AGENTS.md §4 index table is the authoritative fallback: the packs remain part of the contract even if auto-trigger is unavailable.
+  - Add a navigation rule: `docs/` is a reference map; read the specific section via targeted search, do not transitively read whole doc chains.
+- Alternatives considered:
+  - Keep one flat AGENTS.md: rejected (always-on cost; the original problem).
+  - Relocate clusters into existing feature contracts only (no skills): viable fallback, but skills add on-demand auto-loading at no extra cost.
+  - `.agents/skills/` for the packs: rejected (managed by `skills-lock.json` external sync; local files risk being clobbered, and they are not auto-surfaced by the harness).
+  - Hook-injected rule packs: deferred (auto-trigger skills proved sufficient; a `UserPromptSubmit` hook remains the fallback if auto-trigger regresses).
+- Consequences:
+  - Positive: ~28% lighter AGENTS.md (words); domain rules load only when the relevant code path is touched; no rule lost (each lives in exactly one place); transitive-read risk addressed by the navigation rule.
+  - Negative: rules now live in two surfaces (core + packs) and must be kept in sync; pack trigger descriptions must stay accurate to fire reliably.
+- Follow-up:
+  - When auto-trigger is unavailable, follow the §4 table.
+  - New enforceable area-specific rules go in the matching pack (and AGENTS.md §4 table if a new area is added), per AGENTS.md §8.3.
+- Decision doc:
+  - `docs/decisions/dr-0044_agent_instruction_layering_rule_packs.md`
+- References:
+  - `AGENTS.md`
+  - `.claude/skills/sidereal-components/SKILL.md`
+  - `.claude/skills/sidereal-visibility-replication/SKILL.md`
+  - `.claude/skills/sidereal-client-wasm/SKILL.md`
+  - `.claude/skills/sidereal-frontend/SKILL.md`
+  - `.claude/skills/sidereal-shaders-assets/SKILL.md`
+  - `.claude/skills/sidereal-observability-net/SKILL.md`
+
+## DR-0043: Local Dev Process Orchestration and Config Single Source of Truth
+- Status: Active
+- Date: 2026-05-30
+- Owners: dev tooling + backend runtime + agent workflow
+- Context:
+  - ~180 distinct environment variables are read across the four service binaries; the Makefile inlines/duplicates ~80 of them, copy-pasting the same client env block across four `run-client*` targets.
+  - There is no process tracking: nothing records what is running, in debug vs release, or who started it. The recurring failure is an agent killing a human's foreground server and relaunching it in the background, leaving the human blind.
+  - The Makefile conflates two jobs: process orchestration (`run-*`, `dev-stack-*`) and task running (`fmt`, `clippy`, `test`, `pg-*`, `clean-*`).
+  - The Makefile leaks four gateway secrets (`GATEWAY_AUTH_SECRET_KEY_B64`, `GATEWAY_BOOTSTRAP_TOKEN`, `GATEWAY_EMAIL_DELIVERY`, `GATEWAY_PUBLIC_BASE_URL`) to the gateway process only via a global `export` from `.env`; they appear in no recipe, so any non-Make launch silently loses them.
+- Decision:
+  - Adopt a single declarative source of truth for dev process env, `dev.toml`: `[vars]` scalars, `[service.*]` env (with `extends`/`env_remove`), and `[profile.*]` compositions with `mode` (debug/release) as a flag, not duplicated env.
+  - Split the Makefile's responsibilities: process orchestration moves to a `siderealctl` wrapper over `process-compose` (supervision, status, health, per-process restart, REST/socket API); task running moves to `just`. Retire the Makefile once both land.
+  - Use `process-compose` as the supervisor rather than a from-scratch Rust supervisor; `siderealctl` owns only the domain logic (cert generation, shard-route building, debug/release selection) and generates the `process-compose` spec.
+  - Both humans and agents go through the one arbiter; nobody uses raw `cargo run`/`pkill` of service binaries. Enforce with a Claude Code `PreToolUse` Bash hook (hard block), not convention alone.
+  - Declare ambient secrets explicitly per service via `dotenv_passthrough` instead of relying on global `export`.
+  - Agent interface starts as the `siderealctl` CLI; an MCP wrapper is added later only if the CLI proves insufficient, and only as a thin layer over the supervisor's API.
+- Alternatives considered:
+  - From-scratch Rust process supervisor: rejected for now (re-implements signal handling, log multiplexing, restart backoff that `process-compose` already provides); `siderealctl` generates a spec instead.
+  - Docker Compose for all services: rejected (bad fit for the native GPU client and fast Rust rebuild loops; kept for Postgres only).
+  - `.env`-per-profile files: rejected as the source of truth (cannot express dependency ordering or shard topology that `process-compose`/`siderealctl` need).
+  - MCP-first agent interface: deferred (interface, not solution; the arbiter + hook is what stops stomping).
+  - AGENTS.md convention without a hook: rejected (ignored under pressure).
+- Consequences:
+  - Positive:
+    - One answer to "what is running and how"; per-process restart; attachable logs; an API humans and agents share.
+    - Config sprawl and client-target copy-paste collapse to one file; debug/release stops duplicating env.
+    - The implicit gateway-secret coupling becomes explicit and launch-method-independent.
+  - Negative:
+    - Two new tools (`siderealctl`, `just`) plus `process-compose` as a dependency; a hook to maintain.
+    - `dev.toml` and the goldens must be kept in sync when intended env changes.
+- Follow-up:
+  - Phase 1 (done): `dev.toml` + `scripts/devenv.py` (expand/run/verify) reproduce every `run-*` target's env exactly, proven against committed golden snapshots; Makefile `run-*` recipes now delegate to `devenv.py run`.
+  - Phase 2: `siderealctl` + `process-compose` spec generation; retire `dev-stack*`.
+  - Phase 3: `just` for tasks; remove the Makefile.
+  - Phase 4: `PreToolUse` hook blocking raw `cargo run`/`pkill` of service binaries.
+- Decision doc:
+  - `docs/decisions/dr-0043_local_dev_orchestration_and_config_sot.md`
+- References:
+  - `dev.toml`
+  - `scripts/devenv.py`
+  - `scripts/devenv_golden/`
+  - `Makefile`
+  - `docs/decisions/dr-0040_distribution_and_persistence_authority_model.md`
+  - `docs/features/active/server_observability_metrics_contract.md`
+
+## DR-0039: Server Observability Metrics
+- Status: Proposed
+- Date: 2026-05-05
+- Owners: backend + replication + gateway + dashboard diagnostics
+- Context:
+  - Multiplayer/network investigations have relied on many env-gated console log paths and TUI-only snapshots.
+  - Agents and dashboard tools need structured, queryable diagnostic history instead of log-file scraping.
+- Decision:
+  - Adopt `sidereal-observability` as the shared backend metrics/event layer.
+  - Persist operational metrics to PostgreSQL relational tables.
+  - Use `SIDEREAL_DIAGNOSTICS` as the unified diagnostics configuration surface.
+  - Keep default console/file logs low-noise.
+  - Expose secured gateway metrics read/export/prune APIs guarded by admin/dev role, verified MFA, and metrics-specific scopes.
+- Alternatives considered:
+  - External Prometheus/OpenTelemetry first: deferred because the immediate need is repo-local gateway-secured diagnostics.
+  - Continue env-gated log summaries: rejected because they are hard to graph and hard for agents to query.
+- Consequences:
+  - Positive:
+    - Networking and server performance diagnostics become queryable and graphable.
+    - New backend metrics have a single API and schema.
+  - Negative:
+    - Metrics retention and label cardinality require ongoing discipline.
+- Follow-up:
+  - Add dashboard graph UI, client diagnostic upload, rollup workers, and retention jobs.
+- Decision doc:
+  - `docs/decisions/dr-0039_server_observability_metrics.md`
+- References:
+  - `docs/features/active/server_observability_metrics_contract.md`
+
+## DR-0037: Visibility Signal Detection and Stable Unknown Contacts
+- Status: Proposed
+- Date: 2026-04-27
+- Owners: replication + gameplay visibility + tactical UI + planet/content authoring
+- Context:
+  - Planets and other high-signal bodies can become visible too late through the current scanner/static-landmark path, producing visual snap-in near local delivery edges.
+  - Tactical contacts currently come from fully visible replicated entities, so the player cannot receive a redacted "unknown signal" contact with relative strength before full visibility.
+  - Rapid zoom-out can outrun tight server delivery and client local culling, especially around parallaxed planets.
+- Decision:
+  - Adopt Visibility System V2 as the direction for generic `SignalSignature`, observer `ContactResolutionM`, redacted unknown tactical contacts, signal-triggered static-landmark discovery, and zoom-safe delivery/client culling.
+  - Signal-only detection does not grant ordinary full entity replication.
+  - Unknown signal contacts carry relative strength and stable approximate position until full visibility or improved scanner resolution updates them.
+- Alternatives considered:
+  - Increase only planet `StaticLandmark.discovery_radius_m`: rejected because it does not generalize to unknown non-landmark signals.
+  - Make planets public visibility: rejected because it bypasses player-scoped discovery.
+  - Let signal grant full entity replication: rejected because unknown contacts must not leak identity or component payloads.
+- Consequences:
+  - Positive:
+    - High-signal entities become perceivable earlier without leaking full data.
+    - Planets can be discovered before they snap into the local bubble.
+    - Scanner quality can improve approximate contact accuracy later.
+  - Negative:
+    - Tactical contact schema and per-player tactical state must evolve.
+    - More redaction and stability tests are required.
+- Follow-up:
+  - Implement the V2 feature contract in phase order.
+  - Add a question-mark unknown contact icon asset and register it in the asset registry.
+- Decision doc:
+  - `docs/decisions/dr-0037_visibility_signal_detection_and_stable_unknown_contacts.md`
+- References:
+  - `docs/features/active/visibility_system_v2_signal_detection_contract.md`
+  - `docs/features/active/visibility_replication_contract.md`
+  - `docs/features/active/tactical_and_owner_lane_protocol_contract.md`
+  - `docs/systems/core_systems_catalog_v1.md`
+
+## DR-0036: Gateway Account Auth, Dashboard Sessions, and Character Creation
+- Status: Proposed
+- Date: 2026-04-26
+- Owners: Gateway + dashboard/frontend + client runtime + replication
+- Context:
+  - Dashboard admin access currently uses a separate password-backed session, while game users authenticate through the gateway.
+  - Registration currently creates a default character and starter-world state, but the intended UX requires explicit character creation/selection after account login.
+  - Gateway auth needs SMTP-backed password reset/email login, TOTP MFA, scoped tokens, JWKS, and rate limiting before dashboard/admin routes can rely on game-account authentication.
+  - 2026-04-26 update: the gateway has implemented account-only registration, explicit character creation, v1 email login code/magic-link verification, SMTP/log/noop delivery, no-token v1 password reset request responses, per-email delivery throttles, TOTP enrollment/QR/verification primitives, login-time TOTP challenges, and MFA session-context token claims.
+  - 2026-04-26 update: first-administrator OOBE is implemented through gateway `/auth/v1/bootstrap/status`, gateway `/auth/v1/bootstrap/admin`, `GATEWAY_BOOTSTRAP_TOKEN`, durable `auth_bootstrap_state`, and dashboard `/setup`.
+  - 2026-04-29 update: TOTP disable/reset is gateway-owned through `/auth/v1/accounts/{account_id}/mfa/totp`; self-disable requires the account session and verified MFA when TOTP is enabled, while admin reset of another account requires admin/dev/developer identity, verified MFA, and `admin:accounts:write`.
+- Decision:
+  - Gateway becomes the single account, session, token, email-auth, MFA, character ownership, and world-entry auth authority.
+  - Account registration creates only account/auth state.
+  - Character creation creates the player ECS entity ownership row and persisted starter-world graph records.
+  - First administrator setup is a one-time gateway bootstrap ceremony locked by database state.
+  - Dashboard admin routes require gateway account session, admin/dev role, route-specific scopes, and verified MFA.
+  - Email login supports both one-time codes and magic links through SMTP delivery.
+  - TOTP app-based MFA uses provisioning URI + QR generation.
+  - Replication validates character-scoped world tokens through asymmetric JWT/JWKS rather than a shared gateway secret.
+- Alternatives considered:
+  - Keep the dashboard admin password: rejected (separate auth authority, no account roles/scopes/MFA/audit context).
+  - Keep default character creation during registration: rejected (conflicts with explicit character creation and selection).
+  - Use in-memory rate limiting: rejected for target implementation (restartable and not multi-instance safe).
+- Consequences:
+  - Positive:
+    - One auth model covers public site, dashboard, game client, and replication bind.
+    - Account roles/scopes can grant backend administrator access.
+    - Multi-character account UX becomes first-class.
+  - Negative:
+    - Breaking auth schema update during early development.
+    - Gateway, dashboard, client, and replication must migrate together.
+- Follow-up:
+  - Implement the detailed plan in phase order.
+  - Update `AGENTS.md` when the new auth rules become implemented contributor requirements.
+- Decision doc:
+  - `docs/decisions/dr-0036_gateway_account_auth_dashboard_and_character_creation.md`
+- References:
+  - `docs/plans/superseded/gateway_dashboard_auth_character_flow_plan_2026-04-26.md`
+  - `docs/architecture/sidereal_design_document.md`
+  - `docs/guides/frontend_ui_styling_guide.md`
+  - `docs/guides/ui_design_guide.md`
+
+## DR-0035: f64 Authoritative World Coordinates
+- Status: Accepted
+- Date: 2026-04-24
+- Owners: gameplay simulation + replication + client runtime + dashboard
+- Context:
+  - Sidereal's planned continuous galaxy-scale world cannot rely on f32 absolute world coordinates for active physics, visibility, persistence, and dashboard editing.
+  - Bevy `Transform` remains f32, so authoritative precision and render projection must be separated.
+- Decision:
+  - Adopt f64 as the canonical authoritative world-coordinate precision.
+  - Use `avian2d` with `f64` / `parry-f64`.
+  - Keep Bevy `Transform` as f32 render/hierarchy/debug projection only.
+  - Use camera-relative f32 client transforms derived from f64 world coordinates.
+  - Use TypeScript `number` / JSON numbers for dashboard coordinate editing.
+  - Treat the migration as breaking for local/dev graph data; reset databases instead of adding legacy f32 shims.
+- Consequences:
+  - Positive:
+    - Stable authoritative physics and persistence at galaxy scale.
+    - Render precision remains stable through camera-relative projection.
+    - One coordinate contract across runtime, scripting, replication, and dashboard tooling.
+  - Negative:
+    - Larger network position payloads.
+    - Broad audit required for f32 world-space assumptions.
+- Follow-up:
+  - Implement the active migration plan and update feature contracts as code lands.
+- Decision doc:
+  - `docs/decisions/dr-0035_f64_world_coordinates.md`
+- References:
+  - `docs/plans/superseded/f64_world_precision_migration_plan_2026-04-24.md`
+  - `docs/features/proposed/galaxy_world_structure_proposal.md`
+  - `docs/features/active/visibility_replication_contract.md`
+  - `docs/features/active/tactical_and_owner_lane_protocol_contract.md`
+  - `docs/features/reference/scripting_support_reference.md`
+
+## DR-0034: Fly-By-Wire Thrust Allocation and GNC Stack
+- Status: Proposed
+- Date: 2026-03-13
+- Owners: gameplay / replication / client prediction / AI / scripting
+- Context:
+  - Current flight still aggregates engine capability into one idealized hull-level force/torque budget.
+  - Sidereal needs a shared player/AI/autopilot control stack that respects real mounted actuators and stays Avian-compatible.
+  - The flight-control Lua boundary also needs to be explicit so scripts author goals and profiles, not raw actuation or render ABI.
+- Decision:
+  - Adopt a fly-by-wire control stack where intent/guidance produce desired motion, flight control produces desired wrench, thrust allocation commands explicit actuators, and actuation applies Avian-compatible force/torque.
+  - Drive engine plume presentation from explicit engine actuator/effect components and command/state data.
+  - Keep allocator math, physics application, and render ABI Rust-owned; allow Lua to author validated actuator/profile/effect-reference data and emit high-level motion/navigation intents.
+- Consequences:
+  - Positive:
+    - One shared control stack can serve players, AI, autopilot, and degraded-engine scenarios.
+    - Flight behavior becomes consistent with mounted modules, fuel, and mass/inertia.
+  - Negative:
+    - Existing `FlightComputer` and `Engine` schemas will need to be reworked.
+    - Prediction, scripting, and plume systems must migrate together with the new control stack.
+- Follow-up:
+  - Use the new feature contract as the source-of-truth.
+  - Keep the older advanced fly-by-wire plan only as precursor planning material.
+- Decision doc:
+  - `docs/decisions/dr-0034_fly_by_wire_thrust_allocation_and_gnc_stack.md`
+- References:
+  - `docs/features/proposed/fly_by_wire_thrust_allocation_proposal.md`
+  - `docs/plans/superseded/advanced_fly_by_wire_and_thruster_allocation_plan_2026-03-03.md`
+  - `docs/plans/completed/thruster_plumes_afterburner_plan_2026-03-03.md`
+  - `docs/features/reference/scripting_support_reference.md`
+
+## DR-0033: Background World Simulation Tiering
+- Status: Proposed
+- Date: 2026-03-11
+- Owners: gameplay / replication / persistence / scripting
+- Context:
+  - Sidereal needs a world that remains economically and socially active outside visible/player-relevant runtime bubbles.
+  - Existing docs define persistence, scripting, visibility, and galaxy-scale travel, but not the contract for abstract offscreen actors and promotion back into full runtime.
+- Decision:
+  - Introduce a tiered background world simulation model with `FullRuntime`, `AbstractSimulation`, and `DerivedPressure`.
+  - Distinguish lightweight `Quanta` actors from persistent `HeroActor` NPCs.
+  - Derive dynamic traffic lanes and probability-volume-style pressure from recent activity to drive mission generation, piracy/security response, and encounter promotion.
+- Consequences:
+  - Positive:
+    - Shared economy/faction/mission pressures can drive both NPC and player-facing world behavior.
+    - World activity can continue without requiring full simulation everywhere.
+  - Negative:
+    - Promotion/demotion and abstract conflict resolution become new architecture surfaces that must stay persistence-safe and encounter-safe.
+- Follow-up:
+  - Use the new feature contract as the source-of-truth.
+  - Resolve exact resource depletion/regrowth and abstract conflict formulas before implementation hardens.
+- Decision doc:
+  - `docs/decisions/dr-0033_background_world_simulation_tiering.md`
+- References:
+  - `docs/features/proposed/background_world_simulation_proposal.md`
+  - `docs/features/reference/scripting_support_reference.md`
+  - `docs/features/proposed/galaxy_world_structure_proposal.md`
+  - `docs/features/active/visibility_replication_contract.md`
+
+## DR-0032: Discovered Static Landmark Visibility
+- Status: Accepted
+- Date: 2026-03-09
+- Owners: gameplay / replication / world-authoring
+- Context:
+  - Static celestial landmarks should remain visible after legitimate discovery, but ordinary scanner-range visibility was causing already-known planets and similar bodies to disappear.
+  - Discovery knowledge must remain server-authored and player-scoped without turning landmarks into globally public entities.
+- Decision:
+  - Add an explicit static-landmark classification lane and player-scoped discovered-landmark persistence.
+  - Authorize qualifying discovered landmarks independently of current scanner range, while still applying local delivery narrowing after authorization.
+  - Keep static world configuration entities such as environment lighting out of the discovered-landmark lane.
+- Consequences:
+  - Positive:
+    - Persistent landmark knowledge is explicit and debuggable on the player ECS entity.
+    - The visibility rule generalizes beyond planets to other immobile celestial landmarks.
+  - Negative:
+    - Landmark discovery/persistence becomes a separate replication contract to maintain.
+- Follow-up:
+  - Continue with projected render-bounds/client culling follow-up for parallaxed landmarks.
+  - Define the separate replication policy for static world-config entities where needed.
+- Decision doc:
+  - `docs/decisions/dr-0032_discovered_static_landmark_visibility.md`
+- References:
+  - `docs/features/active/visibility_replication_contract.md`
+
+## DR-0031: Lightyear Native Input Runtime Split Follow-Up
+- Status: Accepted
+- Date: 2026-03-08
+- Owners: networking / replication runtime
+- Context:
+  - Replication server still accumulates dormant-system warnings because upstream `lightyear_inputs_native::InputPlugin<A>` installs both client and server input plugins when both features are compiled.
+  - Replication also hit upstream Lightyear issue `#1200`, `Panic: subtract with overflow`, in the native server input receive path.
+  - Sidereal already has an authenticated authoritative server input lane through `ClientRealtimeInputMessage`, player/session binding, and server-side controlled-entity routing.
+- Decision:
+  - Keep Lightyear native input on the client only for predicted `ActionState<PlayerInput>` behavior.
+  - Keep native-input protocol registration on replication for wire compatibility with native clients, but do not run Lightyear's upstream native server receive/update systems.
+  - Keep authoritative server control on Sidereal's authenticated realtime input lane.
+  - Continue tracking the upstream Lightyear runtime split / overflow fix separately.
+- Consequences:
+  - Positive:
+    - Sidereal avoids the crashing upstream native server input path while preserving client prediction.
+    - The replication server keeps one authoritative input source instead of two parallel server input lanes.
+  - Negative:
+    - Sidereal still carries Lightyear native-input protocol registration on replication even though that path is not authoritative server input.
+- Follow-up:
+  - Track upstream Lightyear issue `#1200`.
+  - Reassess whether replication should ever re-enable native server input after upstream fixes land.
+- Implementation update 2026-04-26:
+  - Implemented in `bins/sidereal-replication`: server installs protocol-only native input registration for `NativeStateSequence<PlayerInput>` and no longer runs Lightyear's native server input receive path.
+  - Authoritative input remains Sidereal realtime input, with strict controlled-target matching after canonical self-control normalization.
+- Decision doc:
+  - `docs/decisions/dr-0031_lightyear_native_input_runtime_split_followup.md`
+
+## DR-0029: Runtime Shader Family Taxonomy and Lua Authoring Model
+- Status: Accepted
+- Date: 2026-03-07
+- Owners: client rendering + scripting + asset streaming
+- Context:
+  - Rendering was at risk of drifting into one Rust material type per effect, which conflicts with the longer-term Lua-authored/generic-engine direction.
+  - We need an explicit family taxonomy so future effects do not recreate bespoke client rendering paths.
+- Decision:
+  - Adopt a small fixed set of runtime shader/material families.
+  - Keep fullscreen background schemas (`StarfieldMaterial`, `SpaceBackgroundMaterial`, and provisionally `TacticalMapOverlayMaterial`) where justified.
+  - Collapse planet body/cloud/ring into one planet visual family.
+  - Define a generic effect family for thrusters, sparks, explosions, smoke, shockwaves, trails, shields, and similar world-space effects.
+  - Lua owns composition, passes, shader asset IDs, params, and textures; Rust owns family ABI and validation.
+- Alternatives considered:
+  - Keep adding one Rust material type per effect: rejected (does not scale and conflicts with the Lua-authored target).
+  - Force one universal shader/material for everything: rejected (too blunt and would create a worse ABI).
+- Consequences:
+  - Positive:
+    - Clear target for future rendering refactors.
+    - Better separation between engine ABI and Lua-authored content.
+  - Negative:
+    - Requires deliberate family-level ABI design before effect migration.
+- Follow-up:
+  - Collapse the planet trio first.
+  - Define and implement the generic effect-family ABI next.
+- Decision doc:
+  - `docs/decisions/dr-0029_runtime_shader_family_taxonomy_and_lua_authoring_model.md`
+- References:
+  - `docs/plans/proposed/dynamic_runtime_shader_material_plan_2026-03-05.md`
+  - `docs/decisions/dr-0027_lua_authored_render_layers_and_generic_shader_pipeline.md`
+
+## DR-0030: Non-Physics World Spatial Components
+- Status: Accepted
+- Date: 2026-03-07
+- Owners: client runtime + replication + persistence + scripting
+- Context:
+  - Static celestial/decorative world entities were being authored through Avian transform components even though they are not physics entities.
+  - That created the wrong coupling and contributed to static bodies collapsing to origin when only Avian spatial consumers were wired.
+- Decision:
+  - Canonical non-physics spatial components are:
+    - `WorldPosition`
+    - `WorldRotation`
+  - Static celestial/decorative world entities must use those components instead of Avian transform components unless they are truly simulated by physics.
+  - Client and replication spatial consumers must resolve world-space from Avian first, then the non-physics world-space lane.
+- Consequences:
+  - Positive:
+    - Removes static planets/stars from the physics loop.
+    - Preserves ordinary world-space rendering and culling semantics.
+    - Gives the engine a generic non-physics spatial lane for future landmarks/decorative bodies.
+  - Negative:
+    - Requires dual-lane spatial consumers until the migration is complete.
+- Decision doc:
+  - `docs/decisions/dr-0030_non_physics_world_spatial_components.md`
+
+## DR-0001: Account / Character / Session Terminology
+- Status: Accepted
+- Date: 2026-02-24
+- Owners: Core runtime team
+- Context:
+  - Ambiguous use of "player" caused identity confusion across auth, runtime, and persistence.
+- Decision:
+  - `Account` is the authenticated identity container (credentials/tokens).
+  - `Character` is the durable gameplay identity, represented by a persisted player ECS entity (`player_entity_id`).
+  - `Session` is the runtime transport binding between a connected client and one selected character.
+  - "Player" remains informal UX language only.
+- Alternatives considered:
+  - Keep "player" as technical type across all layers: rejected (ambiguous in multi-character scenarios).
+- Consequences:
+  - Positive:
+    - Clear identity boundaries.
+    - Multi-character support remains first-class.
+  - Negative:
+    - Requires ongoing naming discipline in code/docs/tests.
+- Follow-up:
+  - Prefer `Character`/`Session` naming in new test and protocol docs.
+- Decision doc:
+  - `docs/decisions/dr-0001_account_character_session_model.md`
+- References:
+  - `docs/architecture/sidereal_design_document.md`
+
+## DR-0002: Explicit World Entry Lifecycle
+- Status: Accepted
+- Date: 2026-02-24
+- Owners: Core runtime team
+- Context:
+  - Implicit world entry during register/login hid runtime state issues and made flow coupling brittle.
+- Decision:
+  - Register/login are auth-only.
+  - World entry is explicit via character selection + Enter World request.
+  - Gateway validates account ownership of selected `player_entity_id` before runtime bootstrap.
+- Alternatives considered:
+  - Auto-enter world on login/register: rejected (tight coupling, weaker observability/fail-fast behavior).
+- Consequences:
+  - Positive:
+    - Deterministic lifecycle: Auth -> Character Select -> Enter World -> In World.
+    - Better failure visibility and testability.
+  - Negative:
+    - Requires extra client state/UI handling.
+- Follow-up:
+  - Keep coverage for ownership validation and missing-entity rejection paths.
+- Decision doc:
+  - `docs/decisions/dr-0002_explicit_world_entry_flow.md`
+- References:
+  - `docs/architecture/sidereal_design_document.md`
+  - `bins/sidereal-gateway/src/api.rs`
+  - `bins/sidereal-client/src/native.rs`
+  - `bins/sidereal-replication/src/bootstrap.rs`
+
+## DR-0003: Logout Presence Policy (Open)
+- Status: Proposed
+- Date: 2026-02-24
+- Owners: Gameplay + runtime + economy design
+- Context:
+  - Logout behavior impacts combat logging, economy risk, AI crew design, and persistence load.
+  - Future idea: allow giving orders, then logout while AI crew continues.
+- Decision:
+  - Not yet finalized.
+  - Candidate baseline for v1 discussion: conditional persistence policy.
+- Alternatives considered:
+  - Despawn on logout (safe/simple, low simulation continuity).
+  - Always persist in-world while offline (high continuity, high complexity/risk).
+  - Conditional persist (for example docked safe, undocked AI/offline rules).
+- Consequences:
+  - Positive:
+    - Decision deferred intentionally with explicit tracking.
+  - Negative:
+    - Some systems must remain flexible until policy is accepted.
+- Follow-up:
+  - Accept a single logout presence policy before implementing offline AI control.
+  - Define exploit and abuse constraints (combat logging, dock abuse, reconnect reclaim).
+  - Add resilience tests once accepted.
+- Decision doc:
+  - `docs/decisions/dr-0003_logout_presence_policy.md`
+- References:
+  - `docs/architecture/sidereal_design_document.md`
+
+## DR-0004: Asset Catalog as Authoritative Source of Truth
+- Status: Accepted
+- Date: 2026-02-24
+- Owners: Runtime + content pipeline
+- Context:
+  - Current runtime still contains hardcoded/static asset source mappings for critical assets.
+  - We need a scalable registration flow that avoids manual per-asset server wiring and supports blob-backed delivery.
+- Decision:
+  - Adopt a generated `AssetCatalog` as the authoritative runtime master list.
+  - All runtime asset resolution uses logical `asset_id` + catalog metadata (version/hash/dependencies/storage location).
+  - Manual per-asset registration in runtime code is allowed only as temporary migration shims.
+- Alternatives considered:
+  - Keep static lists in code: rejected (not scalable, error-prone, hard to evolve).
+  - Infer assets by filesystem scan at runtime: rejected (non-deterministic and weak operational control).
+- Consequences:
+  - Positive:
+    - Deterministic, releaseable asset behavior.
+    - Supports automated publish tooling and compatibility checks.
+  - Negative:
+    - Requires build/publish pipeline investment and schema governance.
+- Follow-up:
+  - Implement first-party asset tooling (`init/validate/build/publish/activate`).
+  - Migrate hardcoded source lists to catalog-backed lookups.
+- Decision doc:
+  - `docs/features/active/asset_delivery_contract.md`
+- References:
+  - `docs/features/active/asset_delivery_contract.md`
+  - `crates/sidereal-asset-runtime/src/lib.rs`
+  - `bins/sidereal-replication/src/replication/assets.rs`
+
+## DR-0005: Blob Storage for Runtime Asset Payloads (Not Postgres Blobs)
+- Status: Accepted
+- Date: 2026-02-24
+- Owners: Runtime + infra
+- Context:
+  - We need MMO-style streamed asset payload delivery with cache reuse and patch-like updates.
+  - Question raised whether large asset blobs should live in Postgres.
+- Decision:
+  - Runtime asset payloads (`assets.pak`/chunks) are stored in blob/object storage.
+  - Postgres remains focused on gameplay ECS persistence and optional catalog metadata/release pointers.
+  - Asset payloads are not stored as heavy Postgres blob rows in baseline architecture.
+- Alternatives considered:
+  - Store all payloads in Postgres blobs: rejected (WAL/backup/ops burden and coupling risk).
+  - Keep only local disk files per server: rejected for multi-node operational consistency at scale.
+- Consequences:
+  - Positive:
+    - Better storage semantics for immutable binary payloads.
+    - Cleaner separation between world-state persistence and content delivery.
+  - Negative:
+    - Requires blob backend integration and release artifact management.
+- Follow-up:
+  - Add blob-backed publish and fetch adapters.
+  - Document environment-specific backend wiring (emulator/dev/prod).
+- Decision doc:
+  - `docs/features/active/asset_delivery_contract.md`
+- References:
+  - `docs/features/active/asset_delivery_contract.md`
+  - `docs/architecture/sidereal_design_document.md`
+
+## DR-0006: Immutable Asset Versioning with Optional Alias Mapping
+- Status: Accepted
+- Date: 2026-02-24
+- Owners: Runtime + content pipeline
+- Context:
+  - Asset update behavior must support deterministic cache invalidation and rollback-safe delivery.
+  - Need to avoid mutating payload semantics behind unchanged IDs.
+- Decision:
+  - Asset versions are immutable and content-derived (hash/version based).
+  - Content updates publish new immutable version IDs.
+  - Optional alias mapping is allowed for stable names that point to selected immutable versions.
+- Alternatives considered:
+  - Mutable `asset_id` in place: rejected (cache ambiguity, rollback risk).
+  - Always force versioned IDs everywhere without aliases: rejected for ergonomics in some pipelines.
+- Consequences:
+  - Positive:
+    - Deterministic cache behavior and validation.
+    - Cleaner patch/delta semantics.
+  - Negative:
+    - Requires alias governance and release promotion discipline.
+- Follow-up:
+  - Add alias schema/manifest support in tooling and catalog loader.
+  - Add tests for stale-cache invalidation and alias repoint behavior.
+- Decision doc:
+  - `docs/features/active/asset_delivery_contract.md`
+- References:
+  - `docs/features/active/asset_delivery_contract.md`
+  - `crates/sidereal-asset-runtime/src/lib.rs`
+
+## DR-0007: Generic Server-Authoritative Entity Variant Framework
+- Status: Proposed
+- Date: 2026-02-24
+- Owners: Gameplay + runtime
+- Context:
+  - Variant support is needed for ships and non-ship entities (missiles, stations, cargo containers, etc.).
+  - Ad-hoc per-archetype variant implementations would fragment behavior and increase drift.
+- Decision:
+  - Implement a generic variant framework with base archetype + variant overlay model.
+  - Variant selection is server-authoritative and deterministic (explicit or seeded weighted policy).
+  - Selected variant identity (`VariantId`) is persisted and hydrated roundtrip.
+  - Framework is entity-generic, not ship-specific.
+- Alternatives considered:
+  - New bundle per variant: rejected for maintenance and combinatorial growth.
+  - Client-side variant selection: rejected (authority/security mismatch).
+- Consequences:
+  - Positive:
+    - Reusable variant model across multiple entity families.
+    - Deterministic behavior under replication/hydration.
+  - Negative:
+    - Requires shared overlay engine and validation rules.
+- Follow-up:
+  - Implement generic variant components/registry and spawn integration.
+  - Promote to Accepted after first production use across at least 3 entity families.
+- Decision doc:
+  - `docs/decisions/dr-0007_entity_variant_framework.md`
+- References:
+  - `docs/decisions/dr-0007_entity_variant_framework.md`
+
+## DR-0017: Dual-Lane Replication and Owner Asset Manifest
+- Status: Proposed
+- Date: 2026-03-05
+- Owners: Replication + client runtime + gameplay UI
+- Context:
+  - Tactical zoom/map needs broad low-detail awareness while local in-world simulation needs high-detail local updates.
+  - Owned-asset UI currently depends on local bubble presence, causing owned entities to disappear from UI when out of scope.
+- Decision:
+  - Introduce three explicit server-authored delivery models:
+    - `LocalBubbleLane` for high-rate nearby simulation state.
+    - `TacticalLane` for lower-rate wide-area reduced contact state.
+    - `OwnerAssetManifestLane` for owner-only, relevance-independent asset list/state.
+  - Client stores owner-manifest data in a dedicated cache resource and UI reads from this cache (not world-entity presence).
+- Alternatives considered:
+  - Keep owned-asset UI bound to world entities: rejected (visibility-coupled disappearing UX).
+  - Expand one global relevance radius: rejected (bandwidth/scaling regressions).
+  - Client-side polling side channel: rejected (authority-flow and coupling violations).
+- Consequences:
+  - Positive:
+    - Tactical map and owned-asset UX become robust and mode-appropriate.
+    - Preserves server authority while reducing unnecessary high-frequency replication.
+  - Negative:
+    - Adds protocol/channel complexity and client cache maintenance.
+- Follow-up:
+  - Define message schemas and pacing for tactical and owner-manifest lanes.
+  - Add sequence/staleness telemetry and tests for lane behavior and ownership isolation.
+- Decision doc:
+  - `docs/decisions/dr-0017_dual_lane_replication_and_owner_asset_manifest.md`
+- References:
+  - `docs/features/active/visibility_replication_contract.md`
+  - `docs/plans/superseded/scan_intel_minimap_spatial_plan_2026-03-05.md`
+  - `docs/features/active/tactical_and_owner_lane_protocol_contract.md`
+  - `docs/architecture/sidereal_design_document.md`
+
+## DR-0018: Fog of War and Intel Memory Model
+- Status: Proposed
+- Date: 2026-03-05
+- Owners: Replication + gameplay visibility + tactical UI
+- Context:
+  - Tactical map needs persistent exploration and stale-vs-live intel behavior.
+  - Local bubble relevance cannot be the source-of-truth for long-term discovery memory.
+- Decision:
+  - Persist player-scoped explored coverage and intel memory on server/player data.
+  - Keep live scanner visibility runtime-derived per tick.
+  - Deliver fog/contact tactical products via lane payloads (snapshot+delta), with explicit live/stale state.
+- Alternatives considered:
+  - Infer all fog/intel client-side from live world entities: rejected (relevance-coupled and authority-weak).
+  - Store global per-shard discovery only: rejected (not player-specific).
+- Consequences:
+  - Positive:
+    - Correct MMO fog semantics with server authority.
+    - UI can render unexplored/explored-stale/live states deterministically.
+  - Negative:
+    - Adds persisted player data and tactical lane complexity.
+- Follow-up:
+  - Define message schemas + sequence semantics.
+  - Add tests for exploration growth, stale/live transitions, and disclosure safety.
+- Decision doc:
+  - `docs/decisions/dr-0018_fog_of_war_and_intel_memory_model.md`
+- References:
+  - `docs/features/active/visibility_replication_contract.md`
+  - `docs/decisions/dr-0017_dual_lane_replication_and_owner_asset_manifest.md`
+  - `docs/features/active/tactical_and_owner_lane_protocol_contract.md`
+  - `docs/architecture/sidereal_design_document.md`
+
+## DR-0019: Chunked Binary Storage for Player Fog Memory
+- Status: Accepted
+- Date: 2026-03-06
+- Owners: Replication + persistence + tactical UI
+- Context:
+  - Flat explored-cell JSON lists do not scale for long-lived player discovery history.
+  - Tactical fog memory should stay player-scoped ECS data while reducing storage/write amplification.
+- Decision:
+  - Keep `PlayerExploredCells` as canonical player component, but store explored coverage as chunked binary payloads.
+  - Use adaptive per-chunk encoding (`Bitset` / `SparseDeltaVarint`) with base64 transport inside component payload.
+  - Update tactical runtime to apply visibility-range coverage incrementally and emit only newly explored cells in deltas.
+  - Decouple tactical fog cell size (100m) from visibility/relevance spatial grid size.
+- Alternatives considered:
+  - Continue flat `Vec<{x,y}>` JSON payloads: rejected (storage/write cost).
+  - New external side table outside player ECS graph: rejected (breaks authoritative player-entity scoped state rule).
+- Consequences:
+  - Positive:
+    - Better storage density and lower persistence churn for large exploration histories.
+    - Keeps architecture-compliant player-entity component ownership.
+  - Negative:
+    - Schema reset required for local/dev persisted data.
+    - Full fog snapshot still materializes chunked memory when requested.
+- Decision doc:
+  - `docs/decisions/dr-0019_fog_memory_chunk_storage.md`
+- References:
+  - `docs/decisions/dr-0018_fog_of_war_and_intel_memory_model.md`
+  - `docs/features/active/tactical_and_owner_lane_protocol_contract.md`
+  - `docs/features/active/visibility_replication_contract.md`
+
+## DR-0008: Character Ownership Is Enforced at Every Runtime Boundary
+- Status: Accepted
+- Date: 2026-02-24
+- Owners: Core runtime team
+- Context:
+  - Multi-character support requires consistent ownership enforcement from auth through replication bind.
+  - Silent fallback or implicit rebind behavior creates authority and security ambiguity.
+- Decision:
+  - Character ownership validation is mandatory at both gateway world-entry and replication auth-bind boundaries.
+  - Requests/messages with mismatched account-to-character ownership are rejected explicitly.
+  - Runtime bootstrap remains idempotent per `player_entity_id` (character), not per account.
+- Alternatives considered:
+  - Validate only at gateway: rejected (replication boundary still vulnerable to stale/spoofed bind attempts).
+  - Auto-correct/fallback to default character: rejected (breaks explicit selection and hides errors).
+- Consequences:
+  - Positive:
+    - Stronger authority guarantees and cleaner diagnostics.
+    - Correct multi-character behavior under reconnect/switch flows.
+  - Negative:
+    - Requires test fixtures/tokens to include valid ownership shape.
+- Follow-up:
+  - Keep ownership rejection-path tests in gateway and replication suites.
+  - Keep auth token/test fixture generation aligned with current claims validation.
+- Decision doc:
+  - `docs/decisions/dr-0002_explicit_world_entry_flow.md`
+- References:
+  - `docs/decisions/dr-0002_explicit_world_entry_flow.md`
+  - `docs/decisions/dr-0001_account_character_session_model.md`
+  - `bins/sidereal-gateway/src/auth.rs`
+  - `bins/sidereal-replication/src/replication/auth.rs`
+  - `bins/sidereal-replication/src/bootstrap.rs`
+
+## DR-0009: Register Is Fail-Closed on Starter-World Persistence
+- Status: Superseded by `DR-0036`
+- Date: 2026-02-24
+- Owners: Gateway + persistence team
+- Context:
+  - Register now creates durable character identity and starter world state before world entry.
+  - Allowing auth success without durable starter world persistence would create broken accounts/characters.
+- Decision:
+  - Registration fails if starter world persistence fails.
+  - Production uses graph-backed starter-world persistence dependency; tests/in-memory paths may use noop persister.
+  - No automatic runtime bootstrap is performed during register/login.
+- Alternatives considered:
+  - Auth success with deferred async world creation: rejected (eventual-consistency race and poor failure visibility).
+  - Auto-bootstrap world entry during register/login: rejected (lifecycle coupling).
+- Consequences:
+  - Positive:
+    - New accounts are guaranteed to have durable starter state when registration reports success.
+    - Cleaner separation between identity creation and runtime world entry.
+  - Negative:
+    - Current implementation is non-atomic across auth DB and graph persistence, so failed persistence can still strand an account row.
+- Follow-up:
+  - Superseded target: move fail-closed starter-world persistence from registration to explicit character creation.
+  - Add compensation/transaction strategy so failed graph persistence does not leave listable active characters.
+  - Add explicit test coverage for partial-failure remediation in character creation.
+- Decision doc:
+  - `docs/decisions/dr-0002_explicit_world_entry_flow.md`
+- References:
+  - `docs/decisions/dr-0002_explicit_world_entry_flow.md`
+  - `bins/sidereal-gateway/src/auth.rs`
+  - `docs/architecture/sidereal_design_document.md`
+  - `docs/decisions/dr-0036_gateway_account_auth_dashboard_and_character_creation.md`
+
+## DR-0010: World Snapshot APIs Must Be Character-Scoped
+- Status: Proposed
+- Date: 2026-02-24
+- Owners: Gateway + gameplay runtime team
+- Context:
+  - With account->many-characters, account-scoped world snapshot resolution can return the wrong character-owned ship/state.
+  - Character-local state is a core model invariant.
+- Decision:
+  - Any future world snapshot/read APIs should resolve by selected/bound `player_entity_id`, not by account-wide ownership alone.
+  - Character-local camera/control/focus/selection and controlled-entity resolution remain tied to the selected character identity.
+- Alternatives considered:
+  - Keep account-scoped lookup and select first matching ship: rejected (non-deterministic for multi-character accounts).
+  - Keep deprecated single-character assumption in API layer: rejected (conflicts with accepted account/character/session model).
+- Consequences:
+  - Positive:
+    - Deterministic character-specific world hydration/snapshot behavior.
+    - Eliminates cross-character leakage risk in gateway world responses.
+  - Negative:
+    - Requires follow-up API contract and query updates when/if such endpoints are reintroduced.
+- Note:
+  - The gateway previously exposed `/world/me`; it was removed (unused by clients; world state and asset manifests are delivered via the replication stream). Any future world-read endpoint must follow character-scoped resolution per this decision.
+- Decision doc:
+  - `docs/decisions/dr-0001_account_character_session_model.md`
+- References:
+  - `docs/decisions/dr-0001_account_character_session_model.md`
+  - `docs/decisions/dr-0002_explicit_world_entry_flow.md`
+  - `docs/architecture/sidereal_design_document.md`
+
+## DR-0011: Headless Client/Test Runtime Must Preserve Core Bevy Resource Invariants
+- Status: Proposed
+- Date: 2026-02-24
+- Owners: Client + test infrastructure team
+- Context:
+  - Headless transport e2e runs currently exercise real runtime systems.
+  - Minimal plugin setups can omit required Bevy resources and trigger panics under transform/replication systems.
+- Decision:
+  - Headless client runtime used by transport/integration tests must include all required core Bevy resources/plugins for systems it executes.
+  - Test mode should not bypass ownership/auth bind invariants; fixtures must satisfy the same contracts as production flows.
+- Alternatives considered:
+  - Keep ultra-minimal headless app and ignore missing-resource panics: rejected (unstable test signal).
+  - Disable substantial runtime systems in tests: rejected (reduced coverage of actual integration behavior).
+- Consequences:
+  - Positive:
+    - More reliable e2e tests with production-like runtime invariants.
+    - Fewer false failures from environment setup drift.
+  - Negative:
+    - Slightly heavier headless runtime startup in tests.
+- Follow-up:
+  - Update headless bootstrap/plugin wiring to satisfy transform resource requirements.
+  - Update transport e2e token/fixture generation to satisfy current claims + ownership validation.
+- Decision doc:
+  - `docs/decision_register.md` (this entry)
+- References:
+  - `docs/decisions/dr-0002_explicit_world_entry_flow.md`
+  - `bins/sidereal-client/src/native.rs`
+  - `bins/sidereal-replication/tests/transport_lightyear_e2e.rs`
+
+## DR-0012: Visibility Pipeline Contract Uses Authorization-First Semantics with Safe Candidate Preselection
+- Status: Accepted
+- Date: 2026-02-24
+- Owners: Replication + gameplay security team
+- Context:
+  - Visibility implementation discussions used both "authorization-first" and "opt-in candidate-first" wording.
+  - Ambiguity risks security regressions and inconsistent implementation across replication, scan intel, and redaction.
+- Decision:
+  - Canonical visibility pipeline is:
+    1. Authorization scope (security entitlement),
+    2. Delivery/interest narrowing (performance),
+    3. Payload redaction (component/field disclosure gate).
+  - Spatial candidate preselection may run before full authorization as an optimization input only.
+  - Candidate preselection must not be treated as authorization and must not exclude policy-required exceptions (ownership/public/faction/grants).
+- Alternatives considered:
+  - Delivery-first contract as primary semantics: rejected (security ambiguity and easier misuse).
+  - Full-world scan only with no preselection: rejected (does not scale).
+- Consequences:
+  - Positive:
+    - Clear security/performance separation.
+    - Supports opt-in spatial performance techniques without weakening policy guarantees.
+  - Negative:
+    - Requires ongoing discipline to keep preselection logic fail-closed and exception-aware.
+- Follow-up:
+  - Keep visibility contracts and feature plans aligned to the same pipeline language.
+  - Add tests ensuring preselection cannot bypass authorization exceptions.
+- Decision doc:
+  - `docs/features/active/visibility_replication_contract.md`
+- References:
+  - `docs/architecture/sidereal_design_document.md`
+  - `docs/features/active/visibility_replication_contract.md`
+  - `docs/plans/superseded/scan_intel_minimap_spatial_plan_2026-03-05.md`
+
+## DR-0013: Component-Driven Action Acceptors and Control-Context Routing
+- Status: Proposed
+- Date: 2026-02-24
+- Owners: Gameplay runtime + replication + client input
+- Context:
+  - Input/action flow needs to support entity-generic gameplay (ships, characters, scanners, combat systems, and future entity families) without ship-only routing assumptions.
+  - Current runtime has intent actions and action queues, but server ingress remains flight-centric and control routing is not yet fully generalized.
+- Decision:
+  - Adopt a component-driven action acceptor model:
+    - entities receive high-level actions,
+    - components on that entity accept/handle specific actions,
+    - multiple components may accept the same action.
+  - Route actions by authoritative control context:
+    - movement/actions always route to `ControlledEntityGuid` target,
+    - free-roam uses self-control (`ControlledEntityGuid = player guid`).
+  - Add a configurable keybind/input-binding layer on client between physical input and actions.
+  - Keep server authority and authenticated routing invariants unchanged.
+- Alternatives considered:
+  - Keep flight-only routing and add ad-hoc side paths per feature: rejected (does not scale to multi-entity gameplay).
+  - Move action interpretation to client for flexibility: rejected (authority/security conflict).
+- Consequences:
+  - Positive:
+    - Generic action architecture across entity families.
+    - Cleaner separation of input intent vs component execution logic.
+    - Better extensibility for combat/scanner/utility systems.
+  - Negative:
+    - Requires multi-crate refactor (gameplay core, protocol, replication, client input/UI, tests).
+    - Prediction policy becomes more explicit/complex across action families.
+- Follow-up:
+  - Implement phased migration plan for contracts, routing, movement acceptor, keybinds, and prediction policy.
+  - Add control handoff and multi-acceptor determinism tests.
+  - Maintain native/WASM parity through each phase.
+- Decision doc:
+  - `docs/decisions/dr-0013_action_acceptor_control_routing.md`
+- References:
+  - `docs/decisions/dr-0013_action_acceptor_control_routing.md`
+  - `crates/sidereal-game/src/actions.rs`
+  - `crates/sidereal-game/src/flight.rs`
+  - `bins/sidereal-replication/src/replication/input.rs`
+  - `bins/sidereal-client/src/native.rs`
+
+## DR-0014: Project-Wide Migration to Server-Authoritative 2D Runtime (Avian2D + Sprites)
+- Status: Accepted
+- Date: 2026-02-25
+- Owners: Gameplay runtime + replication + client runtime + asset pipeline
+- Update note (2026-03-09):
+  - The old linked `2d_migration_plan` and dedicated DR doc are not present in the repo.
+  - The decision itself has effectively been absorbed into the active architecture baseline and implementation checklist.
+- Context:
+  - Current runtime assumptions are 3D-centric (Avian3D, 3D camera flow, GLTF runtime visuals).
+  - Project direction is top-down 2D gameplay with sprite-based rendering.
+  - Migration must preserve existing authority, identity, persistence, and native/WASM parity contracts.
+- Decision:
+  - Adopt a phased whole-project migration to a 2D runtime:
+    - Avian2D authoritative simulation/prediction,
+    - top-down orthographic gameplay camera,
+    - sprite-based visual pipeline with GLTF removed from runtime paths.
+  - Treat the active execution baseline as `docs/architecture/sidereal_design_document.md` plus `docs/architecture/implementation_checklist.md`.
+- Alternatives considered:
+  - Keep Avian3D and only render sprites in pseudo-2D: rejected (retains unnecessary 3D runtime complexity).
+  - Big-bang rewrite in one change: rejected (high regression risk and poor rollback safety).
+  - Maintain long-term dual 2D/3D runtime support: rejected (duplication and contract drift).
+- Consequences:
+  - Positive:
+    - Runtime architecture aligns with intended top-down 2D gameplay model.
+    - Visual/content runtime complexity reduced by removing GLTF runtime dependencies.
+  - Negative:
+    - Migration touches multiple crates/contracts and requires staged rollout discipline.
+    - Persistence/protocol compatibility must be managed carefully through transition.
+- Follow-up:
+  - Keep the architecture and checklist docs aligned with remaining 2D-runtime cleanup work.
+  - Update impacted source-of-truth docs/contracts in the same changes that alter behavior.
+  - Remove Avian3D/GLTF runtime paths only after replacement coverage is validated.
+- Decision doc:
+  - No dedicated detail doc retained in-tree; use the architecture and checklist docs as the active source of truth.
+- References:
+  - `docs/architecture/sidereal_design_document.md`
+  - `docs/architecture/implementation_checklist.md`
+  - `docs/features/active/asset_delivery_contract.md`
+  - `docs/features/active/visibility_replication_contract.md`
+
+---
+
+### DR-0015: Hierarchy via MountedOn, not replicated ChildOf
+
+- Date: 2026-02-28
+- Status: Accepted
+- Context:
+  - Bevy's `ChildOf`/`Children` relationship uses raw `Entity` references that are local to a single Bevy world.
+  - When Lightyear replicates `ChildOf`, it must map server entity IDs to client entity IDs. Entity mapping order is undefined — a child can arrive before its parent is mapped, producing `Entity::PLACEHOLDER` and a panic.
+  - The project already uses `MountedOn { parent_entity_id: Uuid, hardpoint_id: String }` to express module-to-parent relationships with UUID-based references that are safe across network boundaries.
+- Decision:
+  - `MountedOn` is the replicated/persisted source of truth for parent-child relationships.
+  - Bevy `ChildOf`/`Children` hierarchy is NEVER replicated through Lightyear.
+  - A shared system (`sync_mounted_hierarchy` in `sidereal-game`) reconstructs Bevy hierarchy locally on each world (server and client) from `MountedOn` + `EntityGuid` lookups.
+  - The system runs in `PostUpdate` before `TransformSystems::Propagate` so `GlobalTransform` is correct for all mounted entities.
+  - Hardpoint `offset_m` is applied as the child's `Transform` when a matching `Hardpoint` entity is found as a sibling under the same parent.
+- Alternatives considered:
+  - Replicate `ChildOf` directly: rejected (entity mapping order panics).
+  - Use Lightyear `ReplicationGroup` to guarantee atomic spawn: rejected (ties all modules to ship visibility granularity and increases bandwidth per-change).
+  - Manual world-position computation without Bevy hierarchy: rejected (loses Bevy transform propagation, gizmos, rendering integration).
+- Consequences:
+  - Positive:
+    - No entity mapping panics on the client.
+    - Bevy transform propagation works naturally via locally-reconstructed hierarchy.
+    - `GlobalTransform` is correct for all entities, enabling future hardpoint-relative rendering and spatial queries.
+  - Negative:
+    - One-frame delay before hierarchy is established (entities arrive, next frame the system parents them).
+    - Hardpoint offset resolution requires `Hardpoint` entities to already have `ChildOf` established (server: immediate via `with_children`; client: available after hardpoints themselves are parented).
+- References:
+  - `crates/sidereal-game/src/hierarchy.rs`
+  - `AGENTS.md` (non-negotiable: clients never authoritatively set world transforms)
+
+## DR-0016: Data-Driven Runtime Shader Bindings via Generic Material Types
+- Status: Proposed
+- Date: 2026-03-04
+- Owners: Scripting + replication + client rendering + asset streaming
+- Context:
+  - Content scripting needs to support large numbers of shader-driven 2D visuals (sprites/polygons) without adding Rust boilerplate per shader.
+  - Bevy can load/compile shader assets at runtime but cannot create/register brand-new Rust `Material2d` schemas from network/script payloads at runtime.
+  - Current startup material plugin registrations are type-level wiring; this does not scale as a per-shader authoring model.
+- Decision:
+  - Use a small fixed set of generic runtime 2D material schemas on the client, registered at startup.
+  - Drive per-entity shader selection and parameters through replicated gameplay components and script intent APIs.
+  - Stream shader assets through the existing asset-delivery contract and compile/swap at runtime with deterministic fallback on failure.
+- Alternatives considered:
+  - Add one Rust `Material2d` type per shader: rejected (high boilerplate and poor scaling).
+  - Runtime-generate new material schemas from Lua/network payloads: rejected (not compatible with Bevy material type model).
+  - Client-only unsanctioned shader mutation bypassing server policy: rejected (authority/security contract violation).
+- Consequences:
+  - Positive:
+    - Supports hundreds of shader assets without per-shader client type additions.
+    - Keeps scripting flexibility while preserving authority, persistence, and replication boundaries.
+    - Works with existing stream/cache invalidation model.
+  - Negative:
+    - Requires robust schema validation, fallback handling, and compile-thrash guardrails.
+    - Some advanced shader binding patterns may need planned extensions to generic material schemas.
+- Follow-up:
+  - Implement phased plan in `docs/plans/proposed/dynamic_runtime_shader_material_plan_2026-03-05.md`.
+  - Add tests for authorization, fallback behavior, cache invalidation, and native/WASM parity.
+  - Promote to Accepted after end-to-end runtime path is implemented and validated.
+- Decision doc:
+  - `docs/plans/proposed/dynamic_runtime_shader_material_plan_2026-03-05.md`
+- References:
+  - `docs/features/reference/scripting_support_reference.md`
+  - `docs/features/active/asset_delivery_contract.md`
+  - `docs/architecture/sidereal_design_document.md`
+  - `bins/sidereal-client/src/runtime/mod.rs`
+
+## DR-0046: Lua Asset Registry Authority and Gateway HTTP Asset Delivery
+- Status: Accepted
+- Date: 2026-03-06
+- Owners: Scripting + gateway + replication + client runtime
+- Context:
+  - Existing docs/runtime paths still centered on replication-streamed asset payloads and some hardcoded Rust asset naming.
+  - Project direction requires script-authored asset authority and gateway-served payload bytes.
+- Decision:
+  - Lua asset registry is the authoritative source of runtime asset definitions and bootstrap-required policy.
+  - Rust runtime code must not hardcode concrete gameplay asset IDs/filenames/shader/material/audio/sprite references.
+  - Server generates catalog metadata/checksums/immutable `asset_guid` values from Lua registry input.
+  - Asset payload downloads are authenticated gateway HTTP `GET /assets/<asset_guid>`, not replication chunk streaming.
+  - Client world entry includes `AssetLoading` state that validates/downloads required assets before `InWorld`.
+- Alternatives considered:
+  - Keep replication asset chunk streaming as primary path: rejected (conflicts with gateway route direction).
+  - Keep Rust-maintained critical asset lists: rejected (drift and poor scripting authority).
+- Consequences:
+  - Positive:
+    - Single source of truth for content assets in Lua.
+    - Cleaner gateway-observable delivery path and deterministic pre-world readiness.
+  - Negative:
+    - Requires migration across gateway/client/replication/runtime tests.
+- Follow-up:
+  - Implement phased plan and tests in updated asset delivery contract.
+  - Align scripting/runtime docs and AGENTS enforcement rules in same change.
+- Decision doc:
+  - `docs/decisions/dr-0046_lua_asset_registry_gateway_http_delivery.md`
+- References:
+  - `docs/decisions/dr-0046_lua_asset_registry_gateway_http_delivery.md`
+  - `docs/features/active/asset_delivery_contract.md`
+  - `docs/features/reference/scripting_support_reference.md`
+  - `docs/architecture/sidereal_design_document.md`
+
+## DR-0020: Server-Only Authoritative Quest/Mission Script Execution
+- Status: Accepted
+- Date: 2026-03-06
+- Owners: Gameplay + scripting + replication + client
+- Context:
+  - Quest/missions must be deterministic, cheat-resistant, and consistent across dedicated server, listen-host, and offline-authoritative modes.
+  - Client-side script execution for authoritative quest progression creates divergence and exploit risk.
+- Decision:
+  - Authoritative quest/mission scripting executes on the authoritative host only.
+  - Clients consume replicated quest state and UI metadata; clients do not authoritatively execute quest logic.
+  - Optional future client scripting is presentation-only and cannot mutate authoritative gameplay state.
+- Alternatives considered:
+  - Dual execution on server + client for quest progression: rejected (desync and exploit risk).
+  - Client-authoritative quest progression with server validation: rejected (complex and weaker trust boundary).
+- Consequences:
+  - Positive:
+    - Strong authority model and deterministic progression.
+    - Cleaner anti-cheat posture and easier persistence semantics.
+  - Negative:
+    - Requires robust replication/UI metadata for quest UX.
+- Follow-up:
+  - Implement quest state replication paths and owner-scoped UI data contract.
+  - Add determinism/restart/multi-player isolation tests for quest progression.
+- Decision doc:
+  - `docs/features/reference/scripting_support_reference.md` (Phase D1)
+- References:
+  - `docs/features/reference/scripting_support_reference.md`
+  - `docs/architecture/sidereal_design_document.md`
+
+## DR-0021: Quest Template/Instance Model with Player-Scoped Persistence
+- Status: Accepted
+- Date: 2026-03-06
+- Owners: Gameplay + scripting + persistence
+- Context:
+  - Multiple players need to run the same mission template concurrently without state contamination.
+  - Progression data must align with player-entity scoped persistence rules.
+- Decision:
+  - Use immutable script-authored quest templates plus runtime quest instances.
+  - By default, each player acceptance creates a separate quest instance.
+  - Quest journal/progression persists on player ECS entity components; party/shared modes are explicit opt-in mission semantics.
+- Alternatives considered:
+  - Global singleton quest instances keyed only by template: rejected (cross-player contamination).
+  - Account-table quest progression outside ECS: rejected (breaks player-entity-scoped runtime state rules).
+- Consequences:
+  - Positive:
+    - Safe concurrent quest participation for many players.
+    - Aligns with existing persistence architecture and hydration expectations.
+  - Negative:
+    - Requires generic quest components/resources and migration/testing work.
+- Follow-up:
+  - Add generic quest components, quest intent actions, and bridge events defined in scripting roadmap Phase D1.
+  - Add vertical-slice mission (`fly to X -> collect Y -> deliver to Z`) as first end-to-end validation.
+- Decision doc:
+  - `docs/features/reference/scripting_support_reference.md` (Phase D1)
+- References:
+  - `docs/features/reference/scripting_support_reference.md`
+  - `docs/architecture/sidereal_design_document.md`
+
+## DR-0022: Quest Progression and Inventory Mutation Through Script Hooks + Intent APIs
+- Status: Accepted
+- Date: 2026-03-06
+- Owners: Gameplay + scripting + replication + persistence
+- Context:
+  - Quest content requires step tracking, counters (for example `5/10 uranium`), completion gates, and inventory mutation on turn-in.
+  - Direct script-side component mutation would break authority and validation boundaries.
+- Decision:
+  - Quest logic uses script hooks (`on_accept`, `on_event`, `on_tick`, `can_complete`, `on_complete`, `on_fail`) and read helpers.
+  - All mutations (objective progress, quest state transitions, inventory consume/grant/transfer) are emitted as intents and validated in Rust.
+  - Scripts may inspect authoritative entity/component state broadly on server, but owner/context constraints are enforced in intent validation paths.
+- Alternatives considered:
+  - Let scripts directly mutate quest/inventory components: rejected (bypasses validation and authority pipeline).
+  - Hardcode quest objective evaluators entirely in Rust: rejected (too little content flexibility and poor genre-agnostic goals).
+- Consequences:
+  - Positive:
+    - Flexible quest authoring with robust authority guarantees.
+    - Clear path for multiplayer-safe objective counters and item turn-ins.
+  - Negative:
+    - Requires explicit intent and event surface expansion.
+    - Requires careful test coverage for race/replay/idempotency behavior.
+- Follow-up:
+  - Implement planned query helpers and intent actions in scripting support section 8.
+  - Add vertical-slice quest and restart/multi-player isolation tests.
+- Decision doc:
+  - `docs/features/reference/scripting_support_reference.md` (sections 8.2, 8.3, 8.6, Phase D1)
+- References:
+  - `docs/features/reference/scripting_support_reference.md`
+  - `docs/architecture/sidereal_design_document.md`
+
+## DR-0024: Privileged Scripted World Mutation via Validated Actions (No Raw ECS Writes)
+- Status: Accepted
+- Date: 2026-03-06
+- Owners: Scripting + replication + gameplay
+- Context:
+  - Content scripting needs high-power orchestration capabilities (teleports, scripted encounter positioning, batch movement, controlled component patching).
+  - Allowing Lua direct ECS mutation would undermine authority guardrails, single-writer motion rules, and auditability.
+- Decision:
+  - Scripts may request high-power world mutations through explicit privileged server-side actions.
+  - Lua does not receive direct mutable ECS handles or unrestricted component-write access.
+  - Privileged actions are validated, scheduled, and auditable through Rust authority systems.
+- Alternatives considered:
+  - Disallow all transform/motion mutation from scripts: rejected (insufficient for quest/cinematic/event orchestration).
+  - Permit unrestricted direct component writes from Lua: rejected (violates safety, determinism, and policy boundaries).
+- Consequences:
+  - Positive:
+    - Enables robust scripted gameplay/campaign systems.
+    - Preserves deterministic authority boundaries and operational observability.
+  - Negative:
+    - Requires a maintained action allowlist and validation layer.
+    - Adds implementation complexity for scheduling and conflict prevention.
+- Follow-up:
+  - Implement privileged actions catalog and validation rules in scripting roadmap.
+  - Add tests for invalid action rejection, audit log coverage, and Avian writer-conflict prevention.
+- Decision doc:
+  - `docs/features/reference/scripting_support_reference.md` (sections 2.1, 2.7.3, 8.3, 8.7)
+- References:
+  - `docs/features/reference/scripting_support_reference.md`
+  - `docs/architecture/sidereal_design_document.md`
+
+## DR-0025: Runtime Script Catalog Authority
+- Status: Accepted
+- Date: 2026-03-07
+- Owners: Runtime + scripting + dashboard/tooling
+- Context:
+  - Live dashboard/BRP script editing requires runtime script source to be authoritative in memory, not implicitly on disk.
+  - Replication now has BRP-visible script catalog and derived registry resources, but durable DB-backed script publication is still pending.
+- Decision:
+  - Runtime script execution should resolve source from Bevy-managed in-memory catalog resources.
+  - Filesystem `.lua` content is bootstrap seed input and explicit reload source only.
+  - Long term, persisted database-backed script content becomes the durable authoritative source, with disk remaining for seeding/defaults.
+- Alternatives considered:
+  - Keep filesystem as direct runtime authority: rejected (breaks live editing and explicit reload semantics).
+  - Mutate disk files directly from tooling: rejected (poor operational model and weak path to DB-backed publishing).
+  - Move immediately to DB-only scripts: rejected for now (seed/default authoring workflow still matters).
+- Consequences:
+  - Positive:
+    - Enables dashboard/BRP live editing.
+    - Makes runtime script resources authoritative instead of observational.
+    - Establishes a clean path to DB-backed script publishing.
+  - Negative:
+    - Requires explicit revisioning/invalidation rules.
+    - Requires family-specific lifecycle semantics (`world_init`, bundles, asset registry, runtime AI).
+- Follow-up:
+  - Add richer publish/draft/rollback flow on top of the active catalog.
+  - Add first-class dashboard/API write path for gateway-visible edits.
+- Decision doc:
+  - `docs/decisions/dr-0025_runtime_script_catalog_authority.md`
+- References:
+  - `docs/features/reference/scripting_support_reference.md`
+  - `docs/decisions/dr-0025_runtime_script_catalog_authority.md`
+  - `bins/sidereal-replication/src/replication/scripting.rs`
+
+## DR-0026: SQL Tables for Durable Script Catalog Persistence
+- Status: Accepted
+- Date: 2026-03-07
+- Owners: Runtime + scripting + persistence
+- Context:
+  - Runtime script catalogs are now authoritative in memory, but scripts still need durable storage across restart.
+  - Scripts are content records, not simulation entities, so graph persistence is the wrong shape.
+- Decision:
+  - Durable script persistence uses relational SQL tables, not graph records and not direct Bevy-resource persistence.
+  - Runtime execution still reads from the in-memory script catalog; SQL stores the active durable catalog and its revisions.
+  - Filesystem `.lua` content remains seed/default input and explicit reload source only.
+- Alternatives considered:
+  - Persist scripts in graph ECS records: rejected (wrong persistence shape for content records).
+  - Invent direct resource persistence: rejected (creates a second persistence model).
+  - Keep disk as the only durable source: rejected (breaks live editing/publish goals).
+- Consequences:
+  - Positive:
+    - One durable script authority shared by gateway and replication.
+    - Natural path for versioned publish semantics later.
+  - Negative:
+    - Adds SQL schema and synchronization responsibilities.
+    - Current workflow is still active-catalog replacement, not a full draft/publish pipeline.
+- Follow-up:
+  - Add dashboard/API write flows for script publishing.
+  - Extend active-version model into richer publish/rollback semantics if needed.
+- Decision doc:
+  - `docs/decisions/dr-0026_sql_script_catalog_persistence.md`
+- References:
+  - `docs/features/reference/scripting_support_reference.md`
+  - `docs/decisions/dr-0026_sql_script_catalog_persistence.md`
+  - `crates/sidereal-persistence/src/lib.rs`
+
+## DR-0027: Lua-Authored Render Layers and Generic Shader Pipeline
+- Status: Accepted direction; layer/rule/runtime groundwork implemented
+- Date: 2026-03-07
+- Owners: Client rendering + scripting + replication + asset streaming
+- Context:
+  - Current runtime still hardcodes game-specific fullscreen layer kinds, shader roles, material registrations, and some asset-ID-specific visual paths.
+  - Desired direction is a generic 2D render composition model where Lua authors layer definitions and assignment rules while Rust owns validation and execution.
+- Decision:
+  - Move toward Lua-authored render layer definitions, rule-based world-layer assignment, and camera-scoped post-process stacks executed through a small fixed set of generic Rust material schemas.
+  - Default non-fullscreen entity spawn paths target the main world layer unless rules or explicit overrides redirect them.
+  - Layer depth semantics for world-space layers are render-derived parallax/ordering only; they must not mutate authoritative simulation positions.
+- Alternatives considered:
+  - Keep fixed hard-coded layer kinds and content-specific material types as engine contract: rejected (not generic and does not scale).
+  - Require every spawn path to specify render layer explicitly: rejected (poor default ergonomics and leaks rendering concerns into generic gameplay spawn paths).
+  - Rewrite authoritative entity positions for background depth/parallax: rejected (breaks simulation and authority semantics).
+- Consequences:
+  - Positive:
+    - Cleaner engine/content separation.
+    - Better fit for arbitrary 2D games and script-authored visual composition.
+    - Preserves authoritative gameplay state while enabling rich render layering.
+  - Negative:
+    - Requires coordinated migration across client, replication, gateway bootstrap, catalog metadata, and content docs.
+    - Existing Sidereal-specific visual systems need staged migration or isolation.
+- Follow-up:
+  - Implement the phased plan and validation/model changes in the dedicated feature doc.
+  - Update shader/material, scripting, asset, and design docs to align with the new render-layer model.
+- Decision doc:
+  - `docs/decisions/dr-0027_lua_authored_render_layers_and_generic_shader_pipeline.md`
+- References:
+  - `docs/decisions/dr-0027_lua_authored_render_layers_and_generic_shader_pipeline.md`
+  - `docs/plans/proposed/dynamic_runtime_shader_material_plan_2026-03-05.md`
+  - `docs/features/reference/scripting_support_reference.md`
+  - `docs/features/active/asset_delivery_contract.md`
+  - `docs/architecture/sidereal_design_document.md`
+
+## DR-0028: Generic Visibility Range Components
+- Status: Accepted
+- Date: 2026-03-07
+- Owners: replication + gameplay visibility + scripting
+- Context:
+  - Visibility runtime still uses legacy scanner-oriented component names and one remaining ship-specific baseline behavior.
+  - The project rule is that visibility/range logic must stay generic over entities and not depend on ship-only assumptions.
+- Decision:
+  - Canonical generic components are:
+    - `VisibilityRangeM`
+    - `VisibilityRangeBuffM`
+  - `VisibilityRangeM` is the effective resolved range used by the visibility hot path.
+  - `VisibilityRangeBuffM` is the generic contributing modifier that may exist on roots, children, modules, or temporary effect entities.
+  - Root entities may validly carry both components.
+  - `ShipTag` must not grant implicit baseline visibility range.
+- Alternatives considered:
+  - Keep `ScannerRange*` as the engine-owned names: rejected (too domain-flavored for the generic runtime layer).
+  - Use `SensorRange*`: rejected (better for Lua/content naming than engine semantics).
+  - Call Lua during visibility checks: rejected (wrong hot-path boundary).
+- Consequences:
+  - Positive:
+    - Cleaner generic runtime vocabulary.
+    - Preserves genre-specific naming in Lua/content while keeping engine semantics generic.
+    - Supports temporary effects like `scanner_ping` without hidden ship rules.
+  - Negative:
+    - Required a deliberate runtime/doc/content migration away from the old scanner-oriented names.
+  - Follow-up:
+  - Migration implemented in runtime systems, Lua bundles, and docs.
+- Decision doc:
+  - `docs/decisions/dr-0028_generic_visibility_range_components.md`
+- References:
+  - `docs/decisions/dr-0028_generic_visibility_range_components.md`
+  - `docs/features/active/visibility_replication_contract.md`
+  - `AGENTS.md`
+
+## DR-0047: WebTransport-First Browser Runtime Transport
+- Status: Accepted
+- Date: 2026-03-08
+- Owners: client/runtime + networking + replication
+- Context:
+  - Active docs had drifted between WebRTC-first and WebTransport wording for the browser transport boundary.
+  - The wasm parity implementation now depends on one concrete browser transport contract plus a browser-safe runtime asset mounting contract.
+- Decision:
+  - Browser/WASM runtime transport is WebTransport-first.
+  - WebSocket is allowed only as an explicit fallback path and must not be the default browser transport.
+  - Gateway auth/bootstrap/asset delivery remain authenticated HTTP boundaries, not replication payload transport.
+  - Browser runtime asset mounting is byte-backed from validated cache or gateway payload bytes, not filesystem-style `AssetServer` paths.
+- Alternatives considered:
+  - Keep WebRTC-first wording: rejected (no longer matched active implementation direction).
+  - Default to WebSocket for browser runtime traffic: rejected (wrong latency/ordering default for the project).
+  - Leave the browser transport contract vague: rejected (too much implementation churn and doc drift).
+- Consequences:
+  - Positive:
+    - One canonical browser transport contract now exists across project docs.
+    - Client and replication browser transport work can continue without further contract churn.
+  - Negative:
+    - Browser deployment now depends on explicit WebTransport listener/certificate handling.
+- Follow-up:
+  - Keep wasm parity docs/checklists aligned with this decision.
+  - Add live browser validation coverage for login, world-entry, asset bootstrap, and in-world replication.
+- Decision doc:
+  - `docs/decisions/dr-0047_webtransport_first_browser_transport.md`
+- References:
+  - `docs/decisions/dr-0047_webtransport_first_browser_transport.md`
+  - `docs/plans/deferred/wasm_parity_implementation_plan_2026-03-07.md`
+  - `docs/features/active/asset_delivery_contract.md`
+  - `docs/architecture/sidereal_design_document.md`
+  - `AGENTS.md`
+
+## DR-0048: Client Telemetry Ingest Contract
+- Status: Accepted
+- Date: 2026-06-04
+- Owners: client runtime + gateway + observability + dashboard
+- Context:
+  - Client runtime behavior (prediction/rollback, frame pacing, input lane, interpolation, focus, asset churn) was only visible in the player-local F3 overlay and reached agents as lossy screenshots/log paste.
+  - The fix pipes client telemetry into the existing `engine-observability` store, but an untrusted, remote, possibly-WASM client cannot write Postgres directly; it must POST batches to a new gateway HTTP boundary that is accepted and persisted across the client→server trust boundary.
+- Decision:
+  - Client telemetry is a new source into the existing pipeline (same model/store/read API/dashboard), distinguished only by labels (`service="sidereal-client"`, per-process `instance_id`, `account_id`/`session_id`/`build_version`).
+  - `engine-observability` gates its Postgres backend behind a default-on `postgres-backend` feature so the pure-serde model compiles for `wasm32-unknown-unknown`; the client links it with `default-features = false`.
+  - Gateway exposes session-authenticated `POST /client/telemetry/v1/ingest` (validated like `client_release_manifest`, NOT an admin scope). It stamps trusted `source`/`account_id` (token `sub`)/`session_id` (token `jti`) labels over the batch, overwriting client claims; the client may assert only `build_version`/`platform`/`os`/`gpu`/`instance_id`.
+  - Per-account rate limit (≤ 2 batches/s), batch bounds (≤ 256 samples, ≤ 64 events), key length ≤ 96, label length ≤ 128, and a `metric_key` allowlist (the shared `client_metric_catalog()`); over-limit/invalid input is dropped + counted, never a 5xx. A dedicated client-ingest writer isolates client volume from gateway-metric writes. Telemetry never writes gameplay tables.
+  - A GIN index on `labels_json` and a per-`service` retention prune lane support client-row queries and shorter TTL. No Lightyear protocol bump (HTTP, not the realtime lane).
+- Alternatives considered:
+  - Bespoke client telemetry store/API/dashboard: rejected (duplicates the observability pipeline).
+  - Admin-scoped ingest or trusting client-claimed identity labels: rejected (clients are untrusted; identity must be server-derived).
+  - Unbounded ingest body / no allowlist: rejected (one client could degrade the shared store via cardinality/volume).
+- Consequences:
+  - Positive: client behavior is queryable and cross-build comparable through the same tools as server metrics; multi-client and multi-build are label-distinguished with zero schema change.
+  - Negative: the client gains a wasm-safe `engine-observability` model dependency + bounded flush path; the gateway carries a new authenticated route + per-account rate-limit state.
+- Follow-up:
+  - Wire remaining §4 metrics as their client sources stabilize; finalize client retention target; revisit anonymization if telemetry is exposed beyond admin-only viewing.
+- Decision doc:
+  - `docs/decisions/dr-0048_client_telemetry_ingest_contract.md`
+- References:
+  - `docs/decisions/dr-0048_client_telemetry_ingest_contract.md`
+  - `docs/plans/completed/client_telemetry_metrics_pipeline_plan_2026-06-04.md`
+  - `docs/features/active/server_observability_metrics_contract.md`
+
+## DR-0049: Dashboard Authoring Control-Plane (Authoritative Store, Not a Live Shard)
+
+2026-09-05: Implemented authoring delivery, retained baseline reconciliation and persistence ordering are detailed in `docs/features/active/dashboard_game_authoring_runtime_contract.md`.
+- Status: Accepted
+- Date: 2026-06-08
+- Owners: dashboard + gateway + replication runtime
+- Context:
+  - Replication is sharded by `ShardRegion`; each server owns a subset of sectors and filters its world to owned regions, dropping position-less config entities (e.g. backdrop render layers).
+  - The gateway proxies dashboard BRP to one configured `REPLICATION_BRP_URL` with no shard-aware routing, so reading world state from "the server" reads an arbitrary single shard's RAM.
+  - The shader workshop briefly read in-game backdrop values from that single live shard snapshot — correct only in single-shard dev, unsound under multi-shard.
+- Decision:
+  - Authoring tools READ from the gateway-fronted authoritative store (global graph DB `/api/graph`, or gateway content/registry endpoints) and WRITE via gateway publish; never depend on a single shard's live BRP for world state.
+  - Per-shard live BRP world reads (`snapshot=1`, `world.query`/`list_entities`/`get_entity`/`get_components`) are reserved for the explorer debug scope.
+  - Global resources identical on every shard (e.g. `GeneratedComponentRegistry` via `world.get_resources`) may be read from any one server.
+  - Live edits publish to the authoritative store; the fleet converges via the existing hot-reload poll (eventual; no instant push required).
+- Alternatives considered:
+  - Read from one live shard's BRP snapshot: rejected (shard-partitioned; drops config entities).
+  - Aggregate BRP across shards at the gateway: rejected (more infra than the already-authoritative persisted graph).
+  - Parse authored Lua directly in the dashboard: rejected (the persisted graph DB is the resolved structured registry).
+- Consequences:
+  - Positive: authoring reads are shard-independent and correct under multi-shard; one consistent read/write model across editors; a CI guard prevents regressions.
+  - Negative: editors reflect persisted/authored state, not a shard's live RAM; per-instance value edits must go through the publish path.
+- Follow-up:
+  - Phase 2 (hardening): dedicated gateway render-layer read endpoint; move the shader schema read off shard BRP onto a gateway content endpoint.
+  - Phase 3: shader-workshop draft→publish→reload lifecycle; edit per-instance backdrop values as authored content.
+- Decision doc:
+  - `docs/decisions/dr-0049_dashboard_authoring_control_plane.md`
+- References:
+  - `docs/decisions/dr-0049_dashboard_authoring_control_plane.md`
+  - `dashboard/src/lib/backdrop-render-layers.ts`
+  - `dashboard/scripts/check-authoring-reads.mjs`
+  - `bins/sidereal-replication/src/replication/simulation_entities.rs`
+
+## DR-0038: Lighting V2 Material Contract
+- Status: Accepted
+- Date: 2026-04-28
+- Owners: client rendering + gameplay runtime + asset/shader authoring
+- Context:
+  - Lighting V1 shares world lighting across several materials but still resolves one primary light and one dominant local light.
+  - Sidereal's continuous galaxy needs authored stellar falloff, a readable deep-space ambient floor, and dynamic local lights from bullets, impacts, thrusters, and explosions.
+- Decision:
+  - Lighting V2 uses top 2 stellar lights, top 8 local dynamic lights, authored smooth falloff, deep-space ambient from `EnvironmentLightingState`, and a shared `Material2d` uniform contract for world-facing shaders.
+  - Lighting remains client-derived presentation state and must not write authoritative simulation state.
+- Alternatives considered:
+  - Keep the V1 one-local-light path: rejected because overlapping stars and combat lighting need multiple contributors.
+  - Use physical inverse-square lighting: rejected because gameplay readability and authoring control are the priority.
+  - Use Bevy 3D PBR lights as the primary path: rejected because the world render stack is 2D material-driven and must stay native/WASM consistent.
+- Consequences:
+  - Positive: star influence fades cleanly, deep-space objects stay readable, bullets/impacts can light surfaces, and ships/generic sprites can join the same world-lighting model.
+  - Negative: shader ABI/cache parity and shader-loop cost require stricter validation.
+- Follow-up:
+  - Implement the phased plan and migrate world-facing materials.
+- Decision doc:
+  - `docs/decisions/dr-0038_lighting_v2_material_contract.md`
+- References:
+  - `docs/decisions/dr-0038_lighting_v2_material_contract.md`
+  - `docs/plans/superseded/lighting_v2_overhaul_plan_2026-04-29.md`
+  - `docs/plans/superseded/lighting_model_and_dynamic_space_events_plan_2026-03-06.md`
+  - `docs/systems/core_systems_catalog_v1.md`
+
+## DR-0040: Distribution and Persistence Authority Model
+
+2026-09-05: Implemented authoring delivery, retained baseline reconciliation and persistence ordering are detailed in `docs/features/active/dashboard_game_authoring_runtime_contract.md`.
+- Status: Active
+- Date: 2026-05-21
+- Owners: replication + persistence + gateway + client runtime
+- Context:
+  - Single `sidereal-replication` process today caps scale at ~200–500 active players; product target is thousands in a continuous galaxy.
+  - `bins/sidereal-shard`, `ShardAssignment(i32)`, and `source_shard_id: i32` are placeholders for a multi-shard future that has no committed shape.
+  - The MMO scaling foundation assessment surfaced the missing distribution decision as the top architectural gap.
+- Decision:
+  - Compute tier is multi-process: N `sidereal-replication` shards, each owning a partition of typed `ShardRegion` authority units.
+  - Persistence tier is a single logical `sidereal-persistence-service` authority for all durable graph DB writes; runtime shards stream dirty snapshots to it.
+  - Cross-shard visibility uses read-only ghost proxies between adjacent shards from V1 (not deferred), via shard-to-shard Lightyear connections.
+  - Handoff is hard/discrete but client-imperceptible: target ≤100 ms cutover hidden by client-side prediction plus ghost convergence.
+  - Gateway owns the `ShardRouteTable` and world-entry shard selection.
+  - Dynamic load response prefers migrate/split over cadence-reduce over admission-queue over degraded-mode; TiDi (global tick slowdown) is rejected.
+  - Visibility `Sector` (lifecycle/AOI unit, default 100_000 m) and compute `ShardRegion` (authority unit, default 8 visibility sectors / 800_000 m) are distinct concepts with distinct names.
+- Alternatives considered:
+  - Single process + TiDi: rejected (caps scale, complicates UX, requires authoritative-tick consistency analysis).
+  - Hard player-visible zone gates: rejected (incompatible with continuous-space product target).
+  - Cell-level authority (`Sector` = authority unit): rejected (too granular; handoff churn dominates).
+  - Distributed/per-shard persistence: rejected (split-brain risk, complex hydration, harder source-of-truth reasoning).
+  - Seamless multi-shard transport (client holds N connections): deferred to V2+.
+  - Defer ghost lane to V2 (multi-process without ghosts first): rejected (equivalent to hard gates, which were already rejected).
+- Consequences:
+  - Positive: horizontal compute scaling without sacrificing single source of truth; seamless border experience; reuses existing Lightyear fork capabilities.
+  - Negative: multi-process MVP must include ghost lane; centralized persistence will eventually need internal sharding; gateway scope expands.
+- Follow-up:
+  - Implementation plan in `docs/plans/completed/distribution_scaling_and_single_shard_hardening_plan_2026-05-21.md`.
+  - `AGENTS.md` three-question contributor rule for new replicated/gameplay state.
+  - `ShardAssignment(i32)` and `source_shard_id: i32` deprecation in Phase 2 of the plan.
+  - NPC simulation lifecycle (Hot/Warm/Cold) contract document in Phase 1.4 of the plan; standalone DR follows when implementation begins.
+  - Cross-shard fleet/party/chat protocol DR if surface is large.
+  - Multi-region (geographic) routing: future DR.
+- Decision doc:
+  - `docs/decisions/dr-0040_distribution_and_persistence_authority_model.md`
+- References:
+  - `docs/decisions/dr-0040_distribution_and_persistence_authority_model.md`
+  - `docs/plans/completed/distribution_scaling_and_single_shard_hardening_plan_2026-05-21.md`
+  - `docs/reports/investigations/mmo_scaling_foundation_investigation_2026-05-21.md`
+  - `docs/reports/audits/multiplayer_prediction_visibility_audit_2026-05-21.md`
+  - `docs/features/active/visibility_replication_contract.md`
+  - `docs/features/active/server_observability_metrics_contract.md`
+  - `docs/decisions/dr-0035_f64_world_coordinates.md`
+  - `docs/decisions/dr-0017_dual_lane_replication_and_owner_asset_manifest.md`
+  - `docs/decisions/dr-0033_background_world_simulation_tiering.md`
+  - `docs/decisions/dr-0039_server_observability_metrics.md`
+
+## DR-0042: Client Versioning and Native Distribution
+- Status: Proposed
+- Date: 2026-05-30
+- Owners: gateway + client runtime + release engineering
+- Context:
+  - No client release/versioning/distribution contract exists; the workspace `version` (`0.1.0`), the dashboard `VITE_APP_VERSION`, and the game build disagree about what "the client version" is.
+  - `LIGHTYEAR_PROTOCOL_VERSION = 13` exists and is reported back in `ServerSessionReadyMessage`, but `ClientAuthMessage` sends no client version, so a stale client connects and silently desyncs instead of being told to update.
+  - Product decision (2026-05-30): native desktop is the primary client form factor; WASM/dashboard is secondary. Development phase, no CDN — serve artifacts from the gateway.
+- Decision:
+  - Workspace `version` is the single canonical client release version; `LIGHTYEAR_PROTOCOL_VERSION` is the canonical compatibility key; dashboard version is display-only.
+  - Add `protocol_version` + `client_version` to `ClientAuthMessage` and gate at replication auth with a typed "update required" denial, closing the silent-desync gap.
+  - Native desktop is the shipped product; a thin `sidereal-launcher` owns updates (manifest check → versioned side-by-side download → sha256 verify → launch). Self-update-in-client and Electron rejected; Tauri only if a desktop chrome is later wanted.
+  - Gateway is the release origin (no CDN): build-generated `GET /client/manifest.json` + `ServeDir` artifacts under `SIDEREAL_CLIENT_RELEASE_DIR`; CDN promotion later is a URL swap.
+  - A single scripted publish task is the only writer of releases and the manifest; protocol version is bumped deliberately in `sidereal-net`, not auto-bumped.
+- Alternatives:
+  - Self-update inside the Bevy client: rejected (running-exe replace problem; bloats client).
+  - Electron launcher: rejected (second runtime/toolchain for a native-rendered client).
+  - Tauri wrapper around WASM as the desktop client: rejected as primary (defeats native perf).
+  - Serve artifacts from dashboard host/object store now: deferred (gateway is the trusted origin; swap is cheap).
+  - GitHub Releases as runtime origin: rejected (couples updates to GitHub; splits origin from the gate).
+  - Marketing semver as compatibility key: rejected (forces needless forced-update churn).
+- Consequences:
+  - Positive: single enforceable version/compatibility answer; native distribution + update without a CDN; update reliability isolated in a thin launcher; browser/native gate identically.
+  - Negative: new launcher crate, gateway manifest/`ServeDir`, publish task, and a cross-component connect-gate path; releases need per-platform builds + atomic manifest publish.
+- Implementation status (2026-08-31): the current wire compatibility key is
+  `LIGHTYEAR_PROTOCOL_VERSION = 17`; v17 adds shaped-zone `falloff_width_m` to the
+  replicated `ZoneBoundary` payload. Release semver remains independently managed by the
+  publish task.
+- Follow-up:
+  - Implementation plan under `docs/plans/` (connect gate, launcher, gateway manifest endpoint, publish task).
+  - `AGENTS.md` rule: wire/protocol changes must bump `LIGHTYEAR_PROTOCOL_VERSION`; workspace `version` is the client version of record; `manifest.json` is written only by the publish task.
+  - Update `docs/architecture/sidereal_design_document.md` with the versioning + native distribution model.
+  - Deferred: code signing/notarization, delta downloads, CDN promotion, launcher self-update.
+- Decision doc:
+  - `docs/decisions/dr-0042_client_versioning_and_native_distribution.md`
+- References:
+  - `docs/decisions/dr-0042_client_versioning_and_native_distribution.md`
+  - `docs/decisions/dr-0040_distribution_and_persistence_authority_model.md`
+  - `docs/decisions/dr-0047_webtransport_first_browser_transport.md`
+  - `crates/sidereal-net/src/lightyear_protocol/messages.rs`
+  - `bins/sidereal-client/Cargo.toml`
+  - `dashboard/scripts/build-game-client-wasm.mjs`

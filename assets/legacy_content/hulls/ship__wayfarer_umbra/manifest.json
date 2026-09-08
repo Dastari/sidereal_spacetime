@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "package_id": "ship__wayfarer_umbra",
+  "kind": "hull",
+  "primary_blueprint": "ship__wayfarer_umbra",
+  "files": [
+    "definition.json"
+  ],
+  "revision": 3
+}

@@ -1,0 +1,98 @@
+{
+  "ordinal": 100,
+  "entry": {
+    "block_id": "block.corsair.armor_nacelle_shoulder_N",
+    "script": "",
+    "tags": [
+      "corsair",
+      "armor"
+    ]
+  },
+  "definition": {
+    "block_id": "block.corsair.armor_nacelle_shoulder_N",
+    "display_name": "Corsair Salvage / Armor Nacelle Shoulder N",
+    "category": "armor",
+    "layer": "structure",
+    "footprint": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        1
+      ]
+    ],
+    "mass_kg": 840,
+    "health": 400.0,
+    "collision_polygon": [
+      [
+        -0.5,
+        -0.5
+      ],
+      [
+        2.5,
+        -0.5
+      ],
+      [
+        2.5,
+        0.5
+      ],
+      [
+        1.5,
+        1.5
+      ],
+      [
+        0.5,
+        1.5
+      ],
+      [
+        -0.5,
+        0.5
+      ]
+    ],
+    "cost": {
+      "capacity": 0.25,
+      "credits": 1680
+    },
+    "power": null,
+    "directional": true,
+    "placement": {
+      "attach_edges": [
+        "S"
+      ],
+      "requires_support": false,
+      "attach_to": [
+        "hull",
+        "armor"
+      ],
+      "min_attachments": 1,
+      "clearance": [],
+      "keep_clear": []
+    },
+    "visual": {
+      "tile_asset_id": "tile.corsair.armor_nacelle_shoulder_N",
+      "interior_asset_id": null,
+      "visible_in_cutaway": true,
+      "interior_overlays": []
+    },
+    "interior": null,
+    "components": []
+  }
+}

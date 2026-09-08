@@ -1,0 +1,37 @@
+{
+  "clientId": "sidereal-dashboard",
+  "name": "Sidereal Dashboard",
+  "protocol": "openid-connect",
+  "publicClient": true,
+  "standardFlowEnabled": true,
+  "implicitFlowEnabled": false,
+  "directAccessGrantsEnabled": false,
+  "serviceAccountsEnabled": false,
+  "redirectUris": [
+    "http://localhost:5174/"
+  ],
+  "webOrigins": [
+    "http://localhost:5174"
+  ],
+  "attributes": {
+    "pkce.code.challenge.method": "S256"
+  },
+  "defaultClientScopes": [
+    "web-origins",
+    "profile",
+    "email"
+  ],
+  "protocolMappers": [
+    {
+      "name": "sidereal-audience",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-audience-mapper",
+      "consentRequired": false,
+      "config": {
+        "included.client.audience": "sidereal-dashboard",
+        "id.token.claim": "true",
+        "access.token.claim": "true"
+      }
+    }
+  ]
+}

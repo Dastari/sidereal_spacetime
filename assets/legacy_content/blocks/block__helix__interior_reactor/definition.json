@@ -1,0 +1,69 @@
+{
+  "ordinal": 100,
+  "entry": {
+    "block_id": "block.helix.interior_reactor",
+    "script": "",
+    "tags": [
+      "helix",
+      "reactor"
+    ]
+  },
+  "definition": {
+    "block_id": "block.helix.interior_reactor",
+    "display_name": "Helix Research / Interior Reactor",
+    "category": "reactor",
+    "layer": "equipment",
+    "footprint": [
+      [
+        0,
+        0
+      ]
+    ],
+    "mass_kg": 350,
+    "health": 400.0,
+    "collision_polygon": [],
+    "cost": {
+      "capacity": 1.0,
+      "credits": 700
+    },
+    "power": {
+      "generation_kw": 800,
+      "draw_kw": 0,
+      "battery_capacity_kj": 0
+    },
+    "directional": true,
+    "placement": {
+      "attach_edges": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ],
+      "requires_support": true,
+      "attach_to": [
+        "hull",
+        "armor"
+      ],
+      "min_attachments": 1,
+      "clearance": [],
+      "keep_clear": []
+    },
+    "visual": {
+      "tile_asset_id": null,
+      "interior_asset_id": "tile.helix.reactor",
+      "visible_in_cutaway": false,
+      "interior_overlays": []
+    },
+    "interior": {
+      "walkable": false,
+      "obstacle_half_extents_cells": [
+        0.38,
+        0.38
+      ],
+      "control_seat": false,
+      "wall_asset_prefix": null,
+      "airlock": null
+    },
+    "components": []
+  }
+}

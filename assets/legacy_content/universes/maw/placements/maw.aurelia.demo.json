@@ -1,0 +1,10 @@
+{
+  "placement_id": "maw.aurelia.demo",
+  "blueprint_id": "planet.aurelia",
+  "system_id": "maw",
+  "position": {
+    "x": 200000.0,
+    "y": -50000.0
+  },
+  "source": "planet"
+}

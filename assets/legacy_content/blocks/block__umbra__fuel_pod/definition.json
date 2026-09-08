@@ -1,0 +1,72 @@
+{
+  "ordinal": 100,
+  "entry": {
+    "block_id": "block.umbra.fuel_pod",
+    "script": "",
+    "tags": [
+      "umbra",
+      "fuel"
+    ]
+  },
+  "definition": {
+    "block_id": "block.umbra.fuel_pod",
+    "display_name": "Umbra Syndicate / Fuel Pod",
+    "category": "fuel",
+    "layer": "equipment",
+    "footprint": [
+      [
+        0,
+        0
+      ]
+    ],
+    "mass_kg": 80,
+    "health": 400.0,
+    "collision_polygon": [],
+    "cost": {
+      "capacity": 1.0,
+      "credits": 160
+    },
+    "power": null,
+    "directional": true,
+    "placement": {
+      "attach_edges": [
+        "N",
+        "E",
+        "S",
+        "W"
+      ],
+      "requires_support": true,
+      "attach_to": [
+        "hull",
+        "armor"
+      ],
+      "min_attachments": 1,
+      "clearance": [],
+      "keep_clear": []
+    },
+    "visual": {
+      "tile_asset_id": null,
+      "interior_asset_id": "tile.umbra.fuel_pod_small",
+      "visible_in_cutaway": false,
+      "interior_overlays": []
+    },
+    "interior": {
+      "walkable": false,
+      "obstacle_half_extents_cells": [
+        0.38,
+        0.38
+      ],
+      "control_seat": false,
+      "wall_asset_prefix": null,
+      "airlock": null
+    },
+    "components": [
+      {
+        "kind": "fuel_tank",
+        "properties": {
+          "fuel_kg": 300.0
+        }
+      }
+    ]
+  }
+}
