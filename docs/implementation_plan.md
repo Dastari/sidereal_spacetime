@@ -6,7 +6,7 @@ Owners: Sidereal project
 
 ## Status discipline
 
-M0 is the verified current scaffold; see the dated [verification record](verification.md). The remaining rows are planned implementation, not delivered gameplay. Old implemented features are reference behavior to port and revalidate. Never mark a phase complete just because its navigation or schema exists.
+M0 is the original verified scaffold. The dated checkpoints below record later delivered slices; the milestone rows are full acceptance targets, not a claim that every feature remains unimplemented. See the [verification record](verification.md). Old implemented features are reference behavior to port and revalidate. Never mark a phase complete just because its navigation or schema exists.
 
 | Phase | Work and dependencies | Acceptance gate |
 | --- | --- | --- |
@@ -23,11 +23,11 @@ M0 is the verified current scaffold; see the dated [verification record](verific
 
 ## Concrete next work package
 
-M1 is next: extract identity/session domain from the fixture; connect a real trusted issuer; persist independent character IDs and active binding; replace owner-only private labs with authorized nearby exterior views and admitted interior/crew views. Keep base spatial tables private. Add bounded movement replay and shared frame presentation. Build a two-client scene with one pilot and one passenger before adding more ship content. Do not implement sharding.
+Current priority (2026-09-09): authenticated persistent accounts and the pose/Graphics functional checkpoint passed. Complete authored construction next: tileset interfaces, independent blueprint instances, walls/doors, operational deck transitions, pressure, cargo/services and damage, then the Wayfarer template. The first published two-deck document and native-floor walking instance are an intermediate checkpoint. Shared-world exterior/crew views, visible remote actors and network replay remain required M1 work; private per-account fixtures are not shared-world multiplayer. Keep base spatial tables private; no sharding.
 
 ## Launch policy decisions to settle before their dependent phase
 
-- Existing Orchard Keycloak issuer is selected; register the two Sidereal clients, exact HTTPS callbacks and transition of original accounts; never migrate credentials through browser assets. Preserve Toby's verified admin intent through explicit trusted operator account linking.
+- Dedicated Dastari Keycloak is installed at https://auth.dastari.net/realms/dastari; this supersedes the Orchard choice. Actual PKCE, explicit character transfer, reconnect, account persistence and separate authoring access were verified. Keep credentials out of browser assets and preserve scoped grants; provider login does not confer authoring rights.
 - Initial public/allowlisted player admission and concurrent-session policy (M1).
 - Room scale, deck/vertical/EVA physics and character rig direction (M2/M8).
 - Damage/death/recovery, safe zones, friendly fire and loot rights (M6).
@@ -41,3 +41,15 @@ These questions do not block M0. The preserved scope supplies the design constra
 ## Validation records
 
 `docs/verification.md` records actual commands and evidence from this scaffold. `scripts/smoke.ts` uses only an isolated database ending in `-smoke`. It tests real reducers/subscriptions with two identities, not mocked authorization. It retains a private token in `.runtime` solely for the restart proof. Source tests cover pure physics/input/geometry guards; browser review covers visuals/navigation. Add tests with each new feature rather than speculatively testing unimplemented systems.
+
+## 2026-09-08 owner-requested visual and simulation foundation work
+
+A visual proof extends M0 ahead of the larger network/gameplay milestones: original Blender GLB source review, one furnished voxel model in flight/cutaway, fixed-elevation orbit camera, smooth seat transition, screen-relative walking, server collision for the authored room fixture, four space vistas, voxel asteroid, and metal texture/reflection bake pipeline. Shared pure IFCS mass/controller/allocator/integration math and bounded voxel removal/meshing are implemented with tests. They are not connected as live installed-part flight or persistent damage yet. M1/M2/M4/M6 completion gates remain open. See [theme](visual_theme.md), [voxel contract](voxel_construction.md) and [IFCS integration](ifcs_integration.md).
+
+2026-09-08 continued proof: evaluated Blender solids now voxelize with PBR/emission identities, an independent part catalog feeds a local draft Shipyard, and a worker rebuilds removed-cell previews per placement. Private asteroids receive authoritative swept contacts and persistent motion. This is an owner-requested art/physics/editor proof ahead of M1, not completion of M2/M3/M6: no live modular refit, utility-driven ship, shared crew or authorized combat damage has been released.
+
+2026-09-08 Astra iteration: controller/allocator-driven authoritative fixture flight, private achieved-nozzle telemetry, source-preserving beveled geometry and hydroponics, bounded procedural planet recipes/Genesis, camera-aware dust, wider flight zoom and canvas destination observation extend the proof. The fixture computer/mass/actuator availability remain authored data; no persistent utility/refit milestone is marked complete. See [current iteration handoff](handoffs/2026-09-08_astra_visual_iteration.md) for validation and limits.
+
+2026-09-08 inventory extension: the owner requested playable carried equipment ahead of the larger milestones. Private item/container/hotbar authority now supports a one-time lab kit, multi-cell packing/rotation, stable backpack contents, equip swaps and nearby crate access with revision/retry guards; actual subscribed equipment drives character presentation. This is an M5 foundation slice, not completion: transfers between players, stacking, world drops, permissions beyond the private lab, fluid transfer/utilities, combat and live component mass integration remain open. See [inventory authority](inventory_authority.md) and [current handoff](handoffs/2026-09-08_astra_visual_iteration.md).
+
+2026-09-09 native integration checkpoint: R006 pilot hull, the r002 native floor review candidate and all 73 approved cargo appearances are installed in the local catalogs. Four original storage placements now use approved native pods with private container bindings; actual pointer store/retrieve, reload persistence and out-of-reach rejection passed without changing item/container identities. R006 collision revision 3 aligns walking clearance, the single doorway and forward ship contact capsule; focused tests, isolated smoke and normal-client walking/piloting checks passed. Native finish study04 and ice-r015 remain local visual candidates, not final art approval. The combined ship checkpoint passed 263 tests, typecheck, build, art and floor checks. This extends the M2/M5 foundation slices; multiplayer admission, general assembly-derived collision/refit, pressure zones and production release gates remain open. Exact revisions, evidence, installation and recovery are in [the release record](releases/native-ship-2026-09-08/README.md).

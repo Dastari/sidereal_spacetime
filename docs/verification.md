@@ -4,6 +4,16 @@ Status: M0 foundation verified; later gameplay phases remain open
 Last updated: 2026-09-08
 Owners: Sidereal project
 
+## Current checkpoint — 2026-09-09
+
+The sections below preserve the original M0 verification, including its 11-test count and then-planned Orchard registration. They are **historical**, not the current test total or authentication state.
+
+The construction walking checkpoint passed 415 tests in 94 files, typecheck, build, art validation and isolated authority smoke. Dedicated Dastari Keycloak login, identity transfer, inventory/appearance preservation, occupied-session renewal and managed database restart were tested. Character pose and Graphics/local-light controls passed functional browser review with documented art limitations.
+
+Actual Shipyard save/load/publication, two independently allocated instances and native-floor walking/collision/reload/return passed. Multi-deck document storage is implemented; operational inter-deck traversal, complete pressure/doors/services and the full Wayfarer rebuild remain incomplete. See [the exact construction checkpoint](releases/construction-walking-2026-09-09.json) and [current integration work](handoffs/integration_continuation_worklist.md). Later edits need fresh checks; these counts identify a dated snapshot.
+
+Visible shared-space multiplayer and production OIDC-only rollout are not claimed. Original installation, failure-recovery and capacity limitations below must be interpreted against their recorded date.
+
 ## Preserved installation and sources
 
 - Old managed Sidereal stack stopped through its canonical lifecycle tool; its Postgres container stopped with Compose. No unrelated host infrastructure was stopped.

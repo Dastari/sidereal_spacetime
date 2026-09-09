@@ -4,6 +4,8 @@ Status: Accepted direction; implementation staged
 Last updated: 2026-09-08
 Owners: Sidereal project
 
+Implementation distinction (2026-09-09): this document specifies target gameplay. E operates current supported seats/devices; operational doors/airlocks and full pressure/traversal are construction work in progress, not implied by the control description below. See [current verification](verification.md).
+
 ## Product and scope status
 
 A persistent multiplayer space RPG about inhabiting, building, operating and fighting with modular ships, exploring a galaxy, working industrial production chains and interacting with players, NPCs and factions. One authoritative server is the deployment target. The following is the retained destination scope; only the foundation listed in `implementation_plan.md` is scaffolded today.
