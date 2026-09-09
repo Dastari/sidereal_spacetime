@@ -127,11 +127,14 @@ export function constructionPilotRepository(
     hasCurrentAccess: (a, s) => {
       const row = actorRow(),
         instance = ctx.db.constructionInstance.id.find(s.shipId),
-        location = ctx.db.constructionLocation.characterId.find(a.id);
+        location = ctx.db.constructionLocation.characterId.find(a.id),
+        admission = ctx.db.worldAdmission.characterId.find(a.id);
       if (
         !row ||
         !instance ||
         !instance.owner.isEqual(row.owner) ||
+        !admission?.owner.isEqual(row.owner) ||
+        admission.shipId !== s.shipId ||
         a.ownerId !== principalId ||
         location?.instanceId !== instance.id ||
         location.deckId !== s.deckId ||

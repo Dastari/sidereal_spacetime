@@ -1,4 +1,5 @@
 {
+  "packages/world/src/shared-world-views.ts": "8e2dcb15f74f9efba54d3738a390c64c1df4bdf92bad18455ebaa5be3800378b",
   "packages/world/src/index.ts": "2cb77237a5364a9feba7a6a3949ee04e8bce6e68e3bbe812d1f6973e29016a80",
   "packages/world/src/shared-world-physics.ts": "43e195ef4fedcfc6bb271347e3f621e3f250344eb79a5b6359fb9aa5cb2f81b2",
   "packages/world/src/shared-world.ts": "aced8d59174c3bd9776598471cb0582f46dc089dc4c43a4c9fe3ea93bcc35b20",

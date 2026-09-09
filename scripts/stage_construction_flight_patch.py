@@ -11,12 +11,15 @@ def once(s,old,new):
 def index(s):
     s='''import { constructionFlightBinding, constructionFlightFitting, constructionFlightStation, constructionFlightReceipt } from "./construction-flight-tables";
 import { constructionPilotSeat } from "./construction-pilot-tables";
+import { constructionFlightReview } from "./construction-flight-review-tables";
+import { authoredFlightProjection, authoredFlightFittingProjection, ownAuthoredFlights as readAuthoredFlights, ownAuthoredFlightFittings as readAuthoredFlightFittings } from "./construction-flight-views";
+import { beginConstructionFlightReview, returnConstructionFlightReview } from "./construction-flight-review";
 import { installConstructionFlightAuthority } from "./construction-flight-authority";
 import { activateConstructionFlight } from "./construction-flight-activation";
 import { resolveShipFlightDefinition } from "./construction-flight-resolver";
 import { enterConstructionPilotAuthority, canConsumeConstructionPilot, recoverConstructionPilotAuthority, recoverPendingConstructionPilots } from "./construction-pilot-authority";
 '''+s
-    s=once(s,'const db = schema({','const db = schema({\n  constructionFlightBinding, constructionFlightFitting, constructionFlightStation, constructionFlightReceipt, constructionPilotSeat,')
+    s=once(s,'const db = schema({','const db = schema({\n  constructionFlightBinding, constructionFlightFitting, constructionFlightStation, constructionFlightReceipt, constructionPilotSeat, constructionFlightReview,')
     s=once(s,'    constructionInteractions.recoverConstructionSeats(ctx);','    constructionInteractions.recoverConstructionSeats(ctx);\n    recoverPendingConstructionPilots(ctx);')
     s=once(s,'stepSharedWorld(ctx);','''stepSharedWorld(ctx, undefined, {
       definitionForShip: shipId => resolveShipFlightDefinition({
@@ -37,6 +40,9 @@ import { enterConstructionPilotAuthority, canConsumeConstructionPilot, recoverCo
     throw new SenderError("Use the native construction pilot command");
 '''+s[at:]
     s+='''
+// Explicit owner review membership switch; ordinary login never invokes these.
+export const beginAuthoredFlightReview = db.reducer({expectedVisitId:t.string(),expectedVisitRevision:t.u64(),expectedAdmissionRevision:t.u64(),operationId:t.string()},auth.gameAction(beginConstructionFlightReview,true));
+export const returnAuthoredFlightReview = db.reducer({expectedVisitId:t.string(),expectedVisitRevision:t.u64(),expectedAdmissionRevision:t.u64(),operationId:t.string()},auth.gameAction(returnConstructionFlightReview,true));
 // Explicit additive installation/activation. Neither boards nor moves an actor.
 export const installAuthoredShipFlight = db.reducer({instanceId:t.string(), expectedInstanceRevision:t.u64(), operationId:t.string()}, auth.gameAction((ctx,args) => {
   installConstructionFlightAuthority(ctx,args,{reserveBerth: current => {
@@ -51,8 +57,8 @@ export const leaveAuthoredPilot = db.reducer(auth.gameAction(ctx => {
   if (!actor?.connected) throw new SenderError("Active character required");
   recoverConstructionPilotAuthority(ctx,actor.id,"stand");
 },true));
-const authoredFlightProjection=t.row("AuthoredFlightStatus",{shipId:t.string().primaryKey(),stationId:t.string(),deckId:t.string(),lifecycle:t.string(),revision:t.u64()});
-export const ownAuthoredFlights=db.view({name:"own_authored_flights",public:true},t.array(authoredFlightProjection),auth.gameView(ctx => [...ctx.db.constructionFlightBinding.by_owner.filter(ctx.sender)].map(({shipId,stationId,deckId,lifecycle,revision})=>({shipId,stationId,deckId,lifecycle,revision}))));
+export const ownAuthoredFlights=db.view({name:"own_authored_flights",public:true},t.array(authoredFlightProjection),auth.gameView(readAuthoredFlights));
+export const ownAuthoredFlightFittings=db.view({name:"own_authored_flight_fittings",public:true},t.array(authoredFlightFittingProjection),auth.gameView(readAuthoredFlightFittings));
 '''
     return s
 
@@ -85,8 +91,17 @@ def instances(s):
     marker='  // Returning must remain possible after a workspace grant expires.'
     return once(s,marker,'''  if(ctx.db.constructionPilotSeat.characterId.find(actor.id))
     throw new SenderError("Stand up before leaving construction review");
+  if(ctx.db.constructionFlightReview.characterId.find(actor.id))
+    throw new SenderError("Use the saved flight-review return transition");
 '''+marker)
 
+def shared_views(s):
+    s='import { hasAcceptedAuthoredFlight, type AcceptedFlightContext } from "./construction-flight-views";\n'+s
+    s=once(s,'db: SharedWorldReadDatabase & {','db: SharedWorldReadDatabase & AcceptedFlightContext["db"] & {')
+    s=once(s,'    ctx.db.constructionLocation.characterId.find(actor.id) ||','    (ctx.db.constructionLocation.characterId.find(actor.id) && !hasAcceptedAuthoredFlight(ctx,actor)) ||')
+    return s
+
+edit('packages/world/src/shared-world-views.ts',shared_views)
 edit('packages/world/src/index.ts',index)
 edit('packages/world/src/shared-world-physics.ts',physics)
 edit('packages/world/src/shared-world.ts',lambda s:once(s,'function reserveBerth(', 'export function reserveBerth('))
