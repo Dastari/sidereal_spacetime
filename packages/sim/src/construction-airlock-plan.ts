@@ -17,11 +17,18 @@ const hash = (bytes: Uint8Array) => bytesToHex(sha256(bytes));
 /** Exact new native composition proof. No old-room certification is inherited.
  * Caller is trusted compilation/installation code, never reducer arguments. */
 export function planNativeExternalAirlock(instanceId: string, auditBytes: Uint8Array, sources: Readonly<Record<string, Uint8Array>>) {
-  if (!instanceId || instanceId.length > 96) throw Error("Airlock plan: invalid instance identity");
+  const compile = createPublishedNativeExternalAirlockCompiler(auditBytes);
+  const audit = JSON.parse(new TextDecoder().decode(auditBytes)) as CompositeAudit;
+  for (const [name, pin] of Object.entries(audit.sourcePins)) if (!sources[name] || hash(sources[name]) !== pin.sha256) throw Error("Airlock plan: missing or changed native " + name);
+  return compile(instanceId);
+}
+/** Build-verified publication factory: no GLB source bytes in the world bundle. */
+export function createPublishedNativeExternalAirlockCompiler(auditBytes: Uint8Array) {
   if (hash(auditBytes) !== NATIVE_EXTERNAL_AIRLOCK_AUDIT_SHA256) throw Error("Airlock plan: exact composite audit required");
   const audit = JSON.parse(new TextDecoder().decode(auditBytes)) as CompositeAudit;
   if (!audit.pass || audit.schema !== "sidereal.native-external-airlock-composite-audit.v1" || audit.checks.some(c => !c.pass)) throw Error("Airlock plan: failed native qualification");
-  for (const [name, pin] of Object.entries(audit.sourcePins)) if (!sources[name] || hash(sources[name]) !== pin.sha256) throw Error("Airlock plan: missing or changed native " + name);
+  return (instanceId: string) => {
+  if (!instanceId || instanceId.length > 96) throw Error("Airlock plan: invalid instance identity");
   const installation = audit.placements.map((p, i): NativeRoomInstalledPart => ({ ...p, originM: [...p.originM], id: `${instanceId}:part:${i}`, sha256: audit.sourcePins[p.source].sha256 }));
   return {
     instanceId, auditSha256: NATIVE_EXTERNAL_AIRLOCK_AUDIT_SHA256,
@@ -36,6 +43,7 @@ export function planNativeExternalAirlock(instanceId: string, auditBytes: Uint8A
     qualification: "native-static-closure-open-portals-and-supported-route" as const,
     remaining: ["World binding and actual installed UUID/source comparison", "Two-door semantic opening/roof and private controller registration", "Accounted reservoir/vent ports and powered pump authority", "Vacuum survival and docking/EVA attachments", "Native renderer and browser acceptance; no whole-Wayfarer seal or final art approval"],
   };
+};
 }
 export type NativeExternalAirlockPlan = ReturnType<typeof planNativeExternalAirlock>;
 /** Require actual server-owned placed records, not a client asserted match. */

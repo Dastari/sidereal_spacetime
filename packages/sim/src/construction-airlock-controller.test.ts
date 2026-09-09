@@ -39,3 +39,9 @@ test("physical passage requires fully open accepted leaf and supported exposure-
  for(const k of Object.keys(gate))expect(nativeAirlockPassageAllowed(s,"outer",{...gate,[k]:false})).toBe(false);
  expect(()=>stepNativeAirlock({...s,inner:{...s.outer}},context(),.05)).toThrow("conflicting");
 });
+
+test('manual actuation scope cannot move a second paused mechanism',()=>{
+ const s:NativeAirlockState={inner:{hingeFraction:.4,sealRetraction:1,targetOpen:false,blocked:false},outer:{hingeFraction:.4,sealRetraction:1,targetOpen:false,blocked:false},pumpTarget:null};
+ const c:NativeAirlockContext={pressure:{innerPa:0,chamberPa:0,outerPa:0,maxOpeningDifferentialPa:1000},powered:true,actuatedSides:['inner'],chamberIntact:true,sealsQualified:{inner:true,outer:true},motion:{inner:{hingeSeconds:1,sealSeconds:.25,hingeObstructed:false,sealObstructed:false},outer:{hingeSeconds:1,sealSeconds:.25,hingeObstructed:false,sealObstructed:false}}};
+ const next=stepNativeAirlock(s,c,.05);expect(next.inner.hingeFraction).toBeLessThan(s.inner.hingeFraction);expect(next.outer).toEqual({...s.outer,blocked:true});
+});

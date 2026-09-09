@@ -71,8 +71,45 @@ export function readNativeAirlockDocument(raw:string):NativeAirlockDocument {
   for(const t of d.layout.tiles){const x=Math.min(...t.vertices.map(v=>v[0]))/32,y=Math.min(...t.vertices.map(v=>v[1]))/32;map[`floor-${x}-${y}`]=t.id;}
   for(const side of ["inner","outer"] as const){const opening=d.layout.openings.find(o=>o.id===d.airlockRoom[side==="inner"?"innerDoorId":"outerDoorId"]);if(!opening)throw Error("Airlock document: missing door");map[`${side}-door`]=opening.id;map[`${side}-partition`]=opening.partitionId;}
   for(const p of d.airlockRoom.parts)map[`native-airlock-part-${p.sourcePartIndex}`]=p.id;
-  const expected=remapNativeAirlockDocument(source,map);expected.layout.name=d.layout.name;expected.layout.decks[0].name=d.layout.decks[0].name;
+  const expected=remapNativeAirlockDocument(source,map);expected.layout.name=d.layout.name;expected.layout.decks[0].name=d.layout.decks[0].name;expected.layout.source=d.layout.source;
   if(canonical(d)!==canonical(expected))throw Error("Airlock document: changed native geometry, binding or roof/landing role");
   if(!compileLayout(d.layout).valid)throw Error("Airlock document: invalid semantic layout");
   return JSON.parse(JSON.stringify(d)) as NativeAirlockDocument;
 }
+
+/** Native structural cores plus accepted physical leaf bounds. The same bounded
+ * 0.3m-radius/1.8m-high body used by the native sweep audit is required. */
+export function nativeAirlockCollision(document:NativeAirlockDocument, plan:import('./construction-airlock-plan').NativeExternalAirlockPlan,
+  states:readonly {openingId:string;fraction:number;sealRetraction:number}[]) {
+  const d=readNativeAirlockDocument(JSON.stringify(document));
+  if(plan.auditSha256!==d.airlockRoom.pin.sha256)throw Error('Airlock collision proof mismatch');
+  const obstacles:DeckObstacle[]=plan.installation.filter(p=>p.source==='wall').flatMap(p=>{
+    const def=CONSTRUCTION_BOUNDARY_FAMILY_INTERFACES.parts.find(v=>v.native.nodePrefix===p.nodePrefix);
+    if(!def)throw Error('Missing native airlock wall collision');
+    return def.collision.convexPolygonsM.map((polygon,i)=>({id:`${p.id}:core:${i}`,definitionId:'native-boundary-r004-core',vertices:polygon.map(v=>{const q=transformPoint([v[0],v[1]],p.quarterTurns);return[q[0]+p.originM[0],q[1]+p.originM[1]] as Point;})}));
+  });
+  const base=compileDeckCollision(d.layout,d.airlockRoom.deckId,{shipId:plan.instanceId,perimeterHalfWidthM:0,partitionHalfWidthM:.0625,obstacles});
+  const frames=[{id:d.airlockRoom.innerDoorId,origin:[2,0] as Point,quarterTurns:1},{id:d.airlockRoom.outerDoorId,origin:[6,2] as Point,quarterTurns:3}];
+  if(states.some(s=>!frames.some(f=>f.id===s.openingId))||new Set(states.map(s=>s.openingId)).size!==states.length)throw Error('Unknown/duplicate airlock door state');
+  const physical=frames.map(frame=>{
+    const state=states.find(s=>s.openingId===frame.id),fraction=state?.fraction??0;
+    if(!Number.isFinite(fraction)||fraction<0||fraction>1)throw Error('Invalid accepted airlock leaf');
+    return{openingId:frame.id,passable:fraction===1&&state?.sealRetraction===1,obstacle:doorLeafObstacle(frame,fraction)};
+  });
+  const resolved=resolveDeckCollision(base,physical);
+  return{...resolved,obstacles:[...resolved.obstacles,...physical.map(p=>p.obstacle)],segments:[...resolved.segments,...physical.flatMap(({obstacle:o})=>o.vertices.map((a,i)=>({id:`${o.id}:${i}`,a,b:o.vertices[(i+1)%o.vertices.length],halfWidthM:0})))]};
+}
+import { CONSTRUCTION_BOUNDARY_FAMILY_INTERFACES } from '@sidereal/content/construction-boundary-family';
+import { transformPoint,type Point } from '@sidereal/content/ship-layout';
+import { compileDeckCollision,resolveDeckCollision,type DeckObstacle } from './construction-collision';
+import {doorLeafObstacle}from'./construction-door-motion';
+
+/** Bind the immutable native source to the exact independent instance placement IDs. */
+export function bindNativeAirlockPlan(document:NativeAirlockDocument,compile:(instanceId:string)=>import('./construction-airlock-plan').NativeExternalAirlockPlan,instanceId:string) {
+ const d=readNativeAirlockDocument(JSON.stringify(document)),plan=compile(instanceId),parts=new Map(d.airlockRoom.parts.map(p=>[p.sourcePartIndex,p.id]));
+ plan.installation=plan.installation.map((p,i)=>({...p,id:parts.get(i)!}));
+ plan.installationFingerprint=constructionHash(new TextEncoder().encode(JSON.stringify(plan.installation)));
+ plan.doors[0].id=d.airlockRoom.innerDoorId;plan.doors[1].id=d.airlockRoom.outerDoorId;
+ return plan;
+}
+import{constructionHash}from'./construction-transactions';

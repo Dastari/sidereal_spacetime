@@ -11,6 +11,8 @@ export interface NativeAirlockState {
 export interface NativeAirlockContext {
   pressure: AirlockPressure;
   powered: boolean;
+  /** Optional per-mechanism actuation scope (e.g. one manual service worker). */
+  actuatedSides?: readonly AirlockSide[];
   chamberIntact: boolean;
   sealsQualified: Record<AirlockSide, boolean>;
   motion: Record<AirlockSide, Omit<SealMotionPolicy, "actuationAllowed" | "deploymentAllowed">>;
@@ -59,7 +61,7 @@ export function stepNativeAirlock(state: NativeAirlockState, ctx: NativeAirlockC
     const door = state[side];
     const allowed = !door.targetOpen || transitionAirlock(mechanical({ ...state, pumpTarget: next.pumpTarget }, ctx), ctx.pressure, { kind: "open", side }).ok;
     next[side] = sealedDoorMotionStep(door, seconds, {
-      ...ctx.motion[side], actuationAllowed: ctx.powered && allowed,
+      ...ctx.motion[side], actuationAllowed: ctx.powered && allowed && (!ctx.actuatedSides || ctx.actuatedSides.includes(side)),
       deploymentAllowed: ctx.sealsQualified[side] && ctx.chamberIntact,
     });
   }

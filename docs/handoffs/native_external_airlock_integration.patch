@@ -1,0 +1,294 @@
+--- a/packages/content/src/construction.ts
++++ b/packages/content/src/construction.ts
+@@ -29,6 +29,15 @@
+ export interface ConstructionFloor extends InterfacePlacement {
+   deckId: string;
+ }
++export interface NativeAirlockBinding {
++  pin: { id: string; revision: string; sha256: string };
++  deckId: string;
++  innerDoorId: string;
++  outerDoorId: string;
++  parts: { id: string; sourcePartIndex: number }[];
++  roofTileIds: string[];
++  exteriorTileIds: string[];
++}
+ export interface NativeStairRoomBinding {
+   pin: { id: string; revision: string; sha256: string };
+   lowerDeckId: string;
+@@ -52,6 +61,8 @@
+   /** Exact bounded native enclosure review, not a generic pressure flag. */
+   /** Exact supported-walking native stair fixture; no pressure qualification. */
+   stairRoom?: NativeStairRoomBinding;
++  /** Exact two-door native composite, with separately accepted atmosphere and manual actuators. */
++  airlockRoom?: NativeAirlockBinding;
+   pressureRoom?: { id: string; revision: string; sha256: string };
+   /** Exact native two-deck manual traversal fixture; no pressure qualification. */
+   traversalRoom?: {
+--- a/packages/sim/src/construction-airlock-document.ts
++++ b/packages/sim/src/construction-airlock-document.ts
+@@ -7,15 +7,8 @@
+ 
+ /** Proposed additive discriminator. The shared construction parser deliberately
+  * does NOT accept it until authority/renderer registration lands together. */
+-export interface NativeAirlockBinding {
+-  pin: { id: string; revision: string; sha256: string };
+-  deckId: string;
+-  innerDoorId: string;
+-  outerDoorId: string;
+-  parts: { id: string; sourcePartIndex: number }[];
+-  roofTileIds: string[];
+-  exteriorTileIds: string[];
+-}
++export type { NativeAirlockBinding } from "@sidereal/content/construction";
++import type { NativeAirlockBinding } from "@sidereal/content/construction";
+ export type NativeAirlockDocument = ConstructionDocument & { airlockRoom: NativeAirlockBinding };
+ export function createNativeAirlockDocument(): NativeAirlockDocument {
+   const layout = emptyLayout("native-external-airlock-r000-a007", "airlock-deck");
+--- a/packages/content/package.json
++++ b/packages/content/package.json
+@@ -25,7 +25,8 @@
+     "./shared-system": "./src/shared-system.ts",
+     "./space": "./src/space.ts",
+     "./flight": "./src/flight.ts",
+-    "./wayfarer-starter": "./src/wayfarer-starter.ts"
++    "./wayfarer-starter": "./src/wayfarer-starter.ts",
++    "./construction-airlock-room": "./src/construction-airlock-room.ts"
+   },
+   "dependencies": {}
+ }
+--- a/packages/sim/package.json
++++ b/packages/sim/package.json
+@@ -37,7 +37,8 @@
+     "./construction-airlock-controller": "./src/construction-airlock-controller.ts",
+     "./construction-airlock-document": "./src/construction-airlock-document.ts",
+     "./wayfarer-starter": "./src/wayfarer-starter.ts",
+-    "./game-ship-access": "./src/game-ship-access.ts"
++    "./game-ship-access": "./src/game-ship-access.ts",
++    "./construction-airlock-published": "./src/construction-airlock-published.ts"
+   },
+   "dependencies": {
+     "@noble/hashes": "2.4.0",
+--- a/packages/sim/src/construction-airlock-published.ts
++++ b/packages/sim/src/construction-airlock-published.ts
+@@ -1,4 +1,4 @@
+-import { NATIVE_EXTERNAL_AIRLOCK_AUDIT_TEXT } from "../../content/src/construction-airlock-room";
++import { NATIVE_EXTERNAL_AIRLOCK_AUDIT_TEXT } from "@sidereal/content/construction-airlock-room";
+ import { createPublishedNativeExternalAirlockCompiler } from "./construction-airlock-plan";
+ export const compilePublishedNativeExternalAirlock =
+   createPublishedNativeExternalAirlockCompiler(
+--- a/packages/sim/src/construction-airlock-document.test.ts
++++ b/packages/sim/src/construction-airlock-document.test.ts
+@@ -5,8 +5,8 @@
+ import{readConstructionDraft}from"./construction-transactions";
+ test('two semantic doors anchor actual landing partition, roof keeps landing unroofed through explicit binding',()=>{
+  const d=createNativeAirlockDocument();expect(compileLayout(d.layout).valid).toBe(true);expect(readNativeAirlockDocument(JSON.stringify(d))).toEqual(d);expect(d.airlockRoom.roofTileIds).toHaveLength(12);expect(d.airlockRoom.exteriorTileIds).toHaveLength(4);
+- // Shared parser must reject until ALL matching authority/native adapters land.
+- expect(()=>readConstructionDraft(JSON.stringify(d))).toThrow('Unsupported');
++ // Shared parser accepts only the exact bound native fixture.
++ expect(JSON.parse(readConstructionDraft(JSON.stringify(d)).canonical).airlockRoom).toEqual(d.airlockRoom);
+ });
+ test('two template spawns and JSON reload preserve independent exhaustive UUID mappings',()=>{
+  const d=createNativeAirlockDocument(),ids=nativeAirlockDocumentIdentities(d),all:string[]=[];
+--- a/packages/sim/src/construction-transactions.ts
++++ b/packages/sim/src/construction-transactions.ts
+@@ -1,3 +1,4 @@
++import { readNativeAirlockDocument } from "./construction-airlock-document";
+ import { validateNativeStairRoomDocument } from "./construction-stairs-document";
+ import { validateNativeTraversalRoomDocument } from "./construction-traversal-document";
+ import { validateNativePressureRoomDocument } from "./construction-pressure-document";
+@@ -109,6 +110,7 @@
+           "pressureRoom",
+           "traversalRoom",
+           "stairRoom",
++          "airlockRoom",
+         ].includes(k),
+     )
+   )
+@@ -175,6 +177,12 @@
+   }
+   // JSON.parse above already owns this data; SpacetimeDB has no structuredClone global.
+   const normalized = input as unknown as ConstructionDocument;
++  if (input.airlockRoom !== undefined) {
++    readNativeAirlockDocument(JSON.stringify(normalized));
++    normalized.airlockRoom!.parts.sort((a,b)=>a.sourcePartIndex-b.sourcePartIndex);
++    normalized.airlockRoom!.roofTileIds.sort(compareText);
++    normalized.airlockRoom!.exteriorTileIds.sort(compareText);
++  }
+   if (input.stairRoom !== undefined) {
+     validateNativeStairRoomDocument(normalized);
+     for (const bindings of [
+--- a/packages/sim/src/construction-instance.ts
++++ b/packages/sim/src/construction-instance.ts
+@@ -1,3 +1,5 @@
++import { nativeAirlockCollision, readNativeAirlockDocument } from "./construction-airlock-document";
++import { compilePublishedNativeExternalAirlock } from "./construction-airlock-published";
+ import {
+   nativeStairRoomCollision,
+   remapNativeStairRoomBinding,
+@@ -220,7 +222,7 @@
+     "Selected deck has insufficient standing clearance above native floor top",
+   );
+   assert(
+-    !(source.traversalRoom || source.stairRoom) ||
++    !(source.traversalRoom || source.stairRoom || source.airlockRoom) ||
+       (request.bodyRadiusM === 0.3 && request.bodyHeightM === 1.8),
+     "Native traversal fixture requires its qualified standing body",
+   );
+@@ -281,7 +283,9 @@
+           vertices: obstacle.vertices,
+         });
+   }
+-  const collision = resolveDeckCollision(
++  const collision = source.airlockRoom
++    ? nativeAirlockCollision(readNativeAirlockDocument(verified.canonical), compilePublishedNativeExternalAirlock(source.layout.id), [])
++    : resolveDeckCollision(
+     compileDeckCollision(source.layout, request.sourceDeckId, {
+       shipId: "construction-spawn-validation",
+       perimeterHalfWidthM: request.perimeterHalfWidthM,
+@@ -331,6 +335,7 @@
+     layout.nodes,
+     layout.routes,
+     layout.decks.flatMap((d) => d.holes),
++    source.airlockRoom?.parts ?? [],
+     source.stairRoom
+       ? [
+           { id: source.stairRoom.stairId },
+@@ -414,7 +419,7 @@
+     ),
+     nativeParts: map(
+       "native-part",
+-      source.traversalRoom?.parts ?? source.stairRoom?.parts ?? [],
++      source.traversalRoom?.parts ?? source.stairRoom?.parts ?? source.airlockRoom?.parts ?? [],
+     ),
+     traversalApertures: map(
+       "traversal-aperture",
+@@ -475,6 +480,11 @@
+   for (const floor of spawned.floors) {
+     floor.id = mapped(floor.id);
+     floor.deckId = mapped(floor.deckId);
++  }
++  if (spawned.airlockRoom) {
++    const a=spawned.airlockRoom; a.deckId=mapped(a.deckId); a.innerDoorId=mapped(a.innerDoorId); a.outerDoorId=mapped(a.outerDoorId);
++    for(const p of a.parts)p.id=mapped(p.id);
++    a.roofTileIds=a.roofTileIds.map(mapped); a.exteriorTileIds=a.exteriorTileIds.map(mapped);
+   }
+   if (spawned.stairRoom)
+     spawned.stairRoom = remapNativeStairRoomBinding(spawned.stairRoom, all);
+--- a/packages/world/src/construction-instances.ts
++++ b/packages/world/src/construction-instances.ts
+@@ -1,3 +1,6 @@
++import { installNativeAirlock } from "./construction-airlock";
++import { bindNativeAirlockPlan, readNativeAirlockDocument } from "@sidereal/sim/construction-airlock-document";
++import { compilePublishedNativeExternalAirlock } from "@sidereal/sim/construction-airlock-published";
+ import { installQualifiedInstanceInteractions } from "./construction-interactions";
+ import {
+   qualifiedWayfarerWalkingBindings,
+@@ -124,6 +127,10 @@
+     });
+   }
+   installDoors(ctx, plan.instanceId, plan.document);
++  if(plan.document.airlockRoom) {
++    const native=bindNativeAirlockPlan(readNativeAirlockDocument(JSON.stringify(plan.document)),compilePublishedNativeExternalAirlock,plan.instanceId);
++    installNativeAirlock(ctx,plan.instanceId,native.installation,compilePublishedNativeExternalAirlock);
++  }
+   installQualifiedInstanceCargo(ctx, plan);
+   installQualifiedInstanceInteractions(ctx, plan);
+   if (plan.document.stairRoom) installConstructionStair(ctx, plan.instanceId);
+--- a/packages/world/src/construction-doors.ts
++++ b/packages/world/src/construction-doors.ts
+@@ -1,3 +1,5 @@
++import { requestNativeAirlockDoor, acceptedNativeAirlockCollision, ownNativeAirlocks } from "./construction-airlock";
++import { compilePublishedNativeExternalAirlock } from "@sidereal/sim/construction-airlock-published";
+ import { qualifiedWayfarerInstanceObstacles, QUALIFIED_WAYFARER_SHA256 } from "../../sim/src/wayfarer-walking-bindings";
+ import { nativeStairRoomCollision } from "@sidereal/sim/construction-stairs-document";
+ import {
+@@ -42,6 +44,7 @@
+   instanceId: string,
+   document: ConstructionDocument,
+ ) {
++  if (document.airlockRoom) return; // Exact two-door installation owns both frames.
+   if (document.pressureRoom) {
+     // Publication already validates the exact native room document. Its source
+     // door is a full 2m module at this frame, not the narrower semantic aperture.
+@@ -88,6 +91,8 @@
+   instance: { id: string; revision: bigint; documentJson: string },
+   deckId: string,
+ ) {
++  if ((JSON.parse(instance.documentJson) as ConstructionDocument).airlockRoom)
++    return acceptedNativeAirlockCollision(ctx,instance,deckId,compilePublishedNativeExternalAirlock);
+   const key = instance.id + ":" + instance.revision + ":" + deckId;
+   let base = baseCache.get(key);
+   if (!base) {
+@@ -155,6 +160,7 @@
+     operationId: string;
+   },
+ ) {
++  if(requestNativeAirlockDoor(ctx,args,compilePublishedNativeExternalAirlock))return;
+   const actor = [...ctx.db.character.by_owner.filter(ctx.sender)][0],
+     visit = actor && ctx.db.constructionLocation.characterId.find(actor.id),
+     door = ctx.db.constructionDoor.id.find(args.openingId);
+@@ -232,6 +238,7 @@
+ }
+ export function stepDoors(ctx: Context) {
+   for (const door of ctx.db.constructionDoor.by_moving.filter(true)) {
++    if(ctx.db.constructionAirlock.id.find(door.instanceId))continue;
+     // This controller cannot move a native pressure leaf through a deployed gasket.
+     if (
+       ctx.db.constructionNativePressure.id.find(door.instanceId)?.doorId ===
+@@ -280,7 +287,8 @@
+   revision: t.u64(),
+ });
+ export function ownDoors(ctx: ReadContext) {
+-  return [...ctx.db.constructionInstance.by_owner.filter(ctx.sender)].flatMap(
++  const acceptedAirlocks=new Set(ownNativeAirlocks(ctx).map(a=>a.id));
++  return [...ctx.db.constructionInstance.by_owner.filter(ctx.sender)].filter(i=>!ctx.db.constructionAirlock.id.find(i.id)||acceptedAirlocks.has(i.id)).flatMap(
+     (i) =>
+       [...ctx.db.constructionDoor.by_instance.filter(i.id)].map(
+         ({
+--- a/packages/world/src/construction-native-pressure.ts
++++ b/packages/world/src/construction-native-pressure.ts
+@@ -1,3 +1,4 @@
++import { scopedAtmosphereTable } from "./construction-atmosphere-scope";
+ import { validateNativePressureRoomDocument } from "@sidereal/sim/construction-pressure-document";
+ import type { ConstructionDocument } from "@sidereal/content/construction";
+ import {
+@@ -441,7 +442,7 @@
+     }
+   }
+   const gasChanges = stepAtmosphere(
+-    ctx.db.constructionAtmosphere,
++    scopedAtmosphereTable(ctx.db.constructionAtmosphere, installations.map(i=>i.id)),
+     tick,
+     STEP_SECONDS,
+   );
+--- a/packages/world/src/index.ts
++++ b/packages/world/src/index.ts
+@@ -1,3 +1,5 @@
++import * as nativeAirlock from "./construction-airlock";
++import { compilePublishedNativeExternalAirlock } from "@sidereal/sim/construction-airlock-published";
+ import {
+   constructionFlightBinding,
+   constructionFlightFitting,
+@@ -272,6 +274,7 @@
+   inventoryItemMembership,
+   instanceInventoryBinding,
+   scopedInventoryReceipt,
++  constructionAirlock: nativeAirlock.constructionAirlock,
+   constructionInteractionBinding:
+     constructionInteractions.constructionInteractionBinding,
+   character,
+@@ -645,6 +648,7 @@
+     recoverPendingConstructionPilots(ctx);
+     constructionDoors.stepDoors(ctx);
+     nativePressure.stepNativePressure(ctx, compilePublishedNativePressureRoom);
++    nativeAirlock.stepNativeAirlocks(ctx, compilePublishedNativeExternalAirlock);
+     traversal.stepConstructionTraversals(ctx, nativeTraversalRegistry);
+     stairs.stepConstructionStairs(ctx, createConstructionStairWorldHooks(ctx));
+     combat.stepCombat(ctx);
+@@ -1282,3 +1286,5 @@
+   t.array(authoredFlightFittingProjection),
+   auth.gameView(readAuthoredFlightFittings),
+ );
++
++export const ownNativeAirlocks = db.view({name:"own_native_airlocks",public:true},t.array(nativeAirlock.nativeAirlockProjection),auth.gameView(nativeAirlock.ownNativeAirlocks));

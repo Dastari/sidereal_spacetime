@@ -1,0 +1,50 @@
+{
+  "packages/content/src/construction.ts": {
+    "beforeSha256": "4edac09bc9458bbbf2c0d413ac0e33d5441676fadd830680a7b96ce06177367d",
+    "afterSha256": "a6762c0ef53a75032029f971f228d1e728e3fa4a98d8ecd4b7cee354921b3d25"
+  },
+  "packages/sim/src/construction-airlock-document.ts": {
+    "beforeSha256": "ab39b0fca16c55ad354550ecf8314d8e75d622f12f7483789931b7e3e5b3fa20",
+    "afterSha256": "ee7918de0364073240ef31b769ae7ea92ff0bcd76c1683f4027d22ecf591609d"
+  },
+  "packages/content/package.json": {
+    "beforeSha256": "79f17ef326ccade0c59fe929dc87ef2c06e7ff2b53e60a5eca2bdf96afc553aa",
+    "afterSha256": "8548ea867575a52528c9f8791415033c1c7ab2e530b30631019e6e02b5d873cc"
+  },
+  "packages/sim/package.json": {
+    "beforeSha256": "f97d06d52011a70d25d1cb73e2a77cb2080d2a7358f450ea17b95a61a4a693fc",
+    "afterSha256": "20d6601b52428b981ddb11153d765cd9dcf209efdbcad69d1033f606e7f479a4"
+  },
+  "packages/sim/src/construction-airlock-published.ts": {
+    "beforeSha256": "a47be9c931986bf4cda465cc9696e74496edb531d799c3c7e6d135677ad4c19d",
+    "afterSha256": "9b4192378026e32b0f81c41727d86016b787862cee4856268040c702a7c48b20"
+  },
+  "packages/sim/src/construction-airlock-document.test.ts": {
+    "beforeSha256": "a068a4816943e72c1af74cd40e167feb7e7d4f59c0da590d0bc866b61dc7b051",
+    "afterSha256": "3ca749ace746b2ae575b1babff38b6ec1b3c0fa9964efe9439d2e4b699e4456f"
+  },
+  "packages/sim/src/construction-transactions.ts": {
+    "beforeSha256": "b24566bddcdb4fa7a84549d7ef95ef0bd7ba1488729341ba5353796a057b253f",
+    "afterSha256": "2e5d0f8273a3be15156ae11b123f37e3da0fc643ce5fcc6fe9b99ddc1192b495"
+  },
+  "packages/sim/src/construction-instance.ts": {
+    "beforeSha256": "af75ec7b0a03817125d429fafa90991e08646094f67a43e580578cb66f75af80",
+    "afterSha256": "e1e6a66d0fecca4d5a7553196e0ac9f66c313a6622957c42ed3a99aeff8215c7"
+  },
+  "packages/world/src/construction-instances.ts": {
+    "beforeSha256": "1368d1eb33178e639aef094ec39d2bc09e93128c9f56cf54bd5bd0daa71db423",
+    "afterSha256": "bc558a5d7a1e60cf4b2fa55f027e9fa1fd009f7e25d11f0d488a2ce3fcfa9b98"
+  },
+  "packages/world/src/construction-doors.ts": {
+    "beforeSha256": "cc9f7480e4632ca937c7bce3aaf0850952b45d6fe8569a435946be31b8da25e0",
+    "afterSha256": "54b0bfb9faa7d0849f18afefd31c606a54fe587774fdb7db54a5cc8a8839f5de"
+  },
+  "packages/world/src/construction-native-pressure.ts": {
+    "beforeSha256": "046815463e8e5980dac8a0780bd9d5ff745ea4cf6d847dd3eedaa89cc3889a7c",
+    "afterSha256": "e5bf2615eab2fbeb3bac2a8e80395dd49dd4d4d359fb7c391da5b7f4af627208"
+  },
+  "packages/world/src/index.ts": {
+    "beforeSha256": "ac61f2ad5fa6f9f683fe66c4be5622e00f777aed09f827818ced73fb764ee01a",
+    "afterSha256": "96caad3d65bd2f919bf88647f2db9c6304e7b46f5d87b202353545e408e11aca"
+  }
+}
