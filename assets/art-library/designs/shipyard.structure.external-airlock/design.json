@@ -1,0 +1,116 @@
+{
+  "schema": "sidereal.art-library.v1",
+  "id": "shipyard.structure.external-airlock",
+  "asset_uuid": "1032ceae-4e31-5139-b69d-d71bf0923258",
+  "reference_ids": [],
+  "inspiration_reference_ids": [],
+  "mapping_status": "Functional composite from owner external-airlock requirement; reuses exact native boundary/floor/roof sources, no invented reference likeness.",
+  "current_revision": 0,
+  "state": "in-progress",
+  "owner_final_signoff": null,
+  "priority": 10,
+  "profile": "native-two-door-external-airlock-composite",
+  "assigned_to": "stair_document",
+  "blocker": "Native a007 geometry26checks and pure10tests passed; world/schema/renderer/pump gas authority and browser review pending.",
+  "feedback": [
+    {
+      "source": "native CSG",
+      "recorded_at": "2026-09-09T19:05:07.956030+00:00",
+      "notes": "a001 outward-facing exterior seal lacked floor support; a002 reversed intact source parts. a003 enlarged chamber for safe waiting. a004 checked actual GLB morph/hinges; a005 added exterior landing; a006 proves continuous supported corridor sweep."
+    }
+  ],
+  "approvals": [],
+  "revisions": [
+    {
+      "revision": 0,
+      "created_at": "2026-09-09T19:05:07.956031+00:00",
+      "stage": "in-progress",
+      "change": "Compose qualified native inner room,4m chamber and2m unroofed exterior landing with two independent doors.",
+      "hypothesis": "Inward-facing existing gasket contacts and a larger chamber permit exact closure plus safe standing clear of both hinge envelopes.",
+      "covered_reference_ids": [],
+      "evidence": [
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.external-airlock/revisions/r000/audit-a001.json",
+          "sha256": "209085b2e11637cc4ac164a265b31441183522b3055bf8f8f474bff505c128fb",
+          "bytes": 14251,
+          "notes": "Native assembly qualification; no source mesh changes, no final art approval.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T19:05:07.955805+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.external-airlock/revisions/r000/audit-a002.json",
+          "sha256": "b64120e2bf79c0f50a0d3b31982037d08b2e6e8f8f474d01fc79ccc77c5015bd",
+          "bytes": 14405,
+          "notes": "Native assembly qualification; no source mesh changes, no final art approval.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T19:05:07.955857+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.external-airlock/revisions/r000/audit-a003.json",
+          "sha256": "9d5b27f413abd97b912d9ab4b1e1a9dc2634198fc119b22cdc6b5c2450dbb1a2",
+          "bytes": 18689,
+          "notes": "Native assembly qualification; no source mesh changes, no final art approval.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T19:05:07.955890+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.external-airlock/revisions/r000/audit-a004.json",
+          "sha256": "043cbdb331a7204afbfa7618d3f4526ea692ffc581b99888af81b4f1222c3800",
+          "bytes": 19570,
+          "notes": "Native assembly qualification; no source mesh changes, no final art approval.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T19:05:07.955921+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.external-airlock/revisions/r000/audit-a005.json",
+          "sha256": "aca2e41d3c4108bc6dd549f64efa5ae41cda3537a1985c2a29afd6b9038833f3",
+          "bytes": 21949,
+          "notes": "Native assembly qualification; no source mesh changes, no final art approval.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T19:05:07.955952+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.external-airlock/revisions/r000/audit-a006.json",
+          "sha256": "b59e01c5ee00f98b7855fc20950bbf6b69ae50ec8a023f2d6ecd478b0a80466f",
+          "bytes": 22407,
+          "notes": "Native assembly qualification; no source mesh changes, no final art approval.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T19:05:07.955982+00:00"
+        },
+        {
+          "role": "generator",
+          "path": "designs/shipyard.structure.external-airlock/revisions/r000/qualify.py",
+          "sha256": "db2a9c48140443b3fed9aee4a2ef47c8d84df9b76deba8afa851a425497d8b1f",
+          "bytes": 9758,
+          "notes": "Native assembly qualification; no source mesh changes, no final art approval.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T19:05:07.956006+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.external-airlock/revisions/r000/audit-a007.json",
+          "sha256": "eb7eab8523d68906a302a84cf06a5b2a507229d15e89fb96f66d1ade8b6e0aa6",
+          "bytes": 23263,
+          "notes": "Includes continuous actor capsule route with only inner or only outer leaf open; no new source meshes.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T19:10:46.936976+00:00"
+        },
+        {
+          "role": "generator",
+          "path": "designs/shipyard.structure.external-airlock/revisions/r000/qualify-a007.py",
+          "sha256": "c986ce5d5271c0dd9910cc0f0eb152f94575aed112419821d04dd8703bd074a2",
+          "bytes": 9857,
+          "notes": "Includes continuous actor capsule route with only inner or only outer leaf open; no new source meshes.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T19:10:46.937037+00:00"
+        }
+      ]
+    }
+  ]
+}
