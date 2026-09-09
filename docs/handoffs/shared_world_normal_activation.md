@@ -1,6 +1,6 @@
 # Normal shared-world activation — 2026-09-10
 
-Status: installed in the public game after the normal-HUD isolated browser acceptance. Public existing-account join, fresh-account creation and two-account native exterior review passed; the final same-account reload evidence is being recorded. The server new-character branch, normal transport/presentation path, native canvas navigation action and durable account-scoped join controller are now connected. The exact installed world/client hashes and preserved state are recorded below. The owner's blanket deployment authorization is recorded; final browser acceptance and artifact pinning are coordination gates, not a request for new permission.
+Status: installed in the public game after the normal-HUD isolated browser acceptance. Public existing-account join/reload, fresh-account creation and two-account native exterior review passed. Named browser sessions were cleaned afterward. The server new-character branch, normal transport/presentation path, native canvas navigation action and durable account-scoped join controller are now connected. The exact installed world/client hashes and preserved state are recorded below. The owner's blanket deployment authorization is recorded; final browser acceptance and artifact pinning are coordination gates, not a request for new permission.
 
 ## Existing characters: explicit relocation only
 
@@ -106,7 +106,7 @@ After the normal Map → Join → reload browser flow passed on the isolated upg
 
 The isolated HUD action retained all 99 authoritative inventory items and 18 containers unchanged, with the same actor/ship/station IDs; only the connected flag and expected ship revision changed. Its appearance table was empty before/after, so this fixture does not prove custom-appearance preservation. Root's isolated browser captured `private-map-ready.png` and `accepted.png`, then an ordinary no-query reload retained the accepted admission and all seven visible item rows.
 
-After public publication, all 25 characters, 25 stations, 603 inventory items, 165 containers, 17 inventory states, 85 hotbar rows, three actual appearance rows and six weapon-energy rows matched the post-backup authoritative baseline exactly. All 25 ship identities/static columns remained unchanged; only x/y/heading/tick changed for the previously moving ships across timed observations. This public publication has not automatically relocated existing private ships. Final parent public-browser acceptance is still a separate check, not inferred from HTTP or SQL success.
+After public publication, all 25 characters, 25 stations, 603 inventory items, 165 containers, 17 inventory states, 85 hotbar rows, three actual appearance rows and six weapon-energy rows matched the post-backup authoritative baseline exactly. All 25 ship identities/static columns remained unchanged; only x/y/heading/tick changed for the previously moving ships across timed observations. This public publication has not automatically relocated existing private ships. At this publication checkpoint the final parent public-browser check was separate from HTTP/SQL success; its subsequent acceptance is recorded below.
 
 
 ### Public browser acceptance
