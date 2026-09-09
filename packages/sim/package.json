@@ -24,7 +24,10 @@
     "./construction-pressure-document": "./src/construction-pressure-document.ts",
     "./construction-traversal": "./src/construction-traversal.ts",
     "./construction-traversal-document": "./src/construction-traversal-document.ts",
-    "./construction-stairs": "./src/construction-stairs.ts"
+    "./construction-stairs": "./src/construction-stairs.ts",
+    "./spatial-cells": "./src/spatial-cells.ts",
+    "./system-space": "./src/system-space.ts",
+    "./collision": "./src/collision.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",

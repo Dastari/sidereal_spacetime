@@ -1,5 +1,5 @@
 /** Planar rigid capsule/circle contacts. All positions and impulse math stay f64.
- * One capsule per lab (the ship); circles for movable asteroids. No render mesh
+ * Multiple capsules (ships) and circles (movable asteroids). No render mesh
  * participates in authority. Conservative advancement handles fast translation
  * and rotating hulls without stepping through a collider.
  */
@@ -19,12 +19,107 @@ export interface RigidBody {
   longitudinalOffset?: number;
 }
 const EPS = 1e-5;
+/** Closest points of two finite planar capsule spines. Parallel overlapping
+ * spines use the overlap midpoint, avoiding arbitrary endpoint torque. */
+function capsuleContact(a: RigidBody, b: RigidBody) {
+  const spine = (body: RigidBody) => {
+    const ux = -Math.sin(body.heading),
+      uy = Math.cos(body.heading);
+    const offset = body.longitudinalOffset ?? 0;
+    return {
+      x: body.x + ux * (offset - body.halfLength),
+      y: body.y + uy * (offset - body.halfLength),
+      dx: ux * 2 * body.halfLength,
+      dy: uy * 2 * body.halfLength,
+    };
+  };
+  const A = spine(a),
+    B = spine(b);
+  const aa = A.dx ** 2 + A.dy ** 2,
+    bb = B.dx ** 2 + B.dy ** 2;
+  const dot = A.dx * B.dx + A.dy * B.dy;
+  const rx = B.x - A.x,
+    ry = B.y - A.y;
+  const cross = A.dx * B.dy - A.dy * B.dx;
+  const clamp = (value: number) => Math.max(0, Math.min(1, value));
+  let s = 0,
+    t = 0;
+  if (Math.abs(cross) <= 1e-12 * Math.sqrt(aa * bb)) {
+    const start = (rx * A.dx + ry * A.dy) / aa,
+      end = start + dot / aa;
+    const lo = Math.max(0, Math.min(start, end)),
+      hi = Math.min(1, Math.max(start, end));
+    if (lo <= hi) {
+      s = (lo + hi) / 2;
+      t = clamp(
+        ((A.x + s * A.dx - B.x) * B.dx + (A.y + s * A.dy - B.y) * B.dy) / bb,
+      );
+    } else {
+      s = clamp((start + end) / 2);
+      t = clamp(
+        ((A.x + s * A.dx - B.x) * B.dx + (A.y + s * A.dy - B.y) * B.dy) / bb,
+      );
+    }
+  } else {
+    const intersectionS = (rx * B.dy - ry * B.dx) / cross;
+    const intersectionT = (rx * A.dy - ry * A.dx) / cross;
+    if (
+      intersectionS >= 0 &&
+      intersectionS <= 1 &&
+      intersectionT >= 0 &&
+      intersectionT <= 1
+    ) {
+      s = intersectionS;
+      t = intersectionT;
+    } else {
+      const candidates = [
+        [0, clamp((-rx * B.dx - ry * B.dy) / bb)],
+        [1, clamp(((A.dx - rx) * B.dx + (A.dy - ry) * B.dy) / bb)],
+        [clamp((rx * A.dx + ry * A.dy) / aa), 0],
+        [clamp(((rx + B.dx) * A.dx + (ry + B.dy) * A.dy) / aa), 1],
+      ];
+      let best = Infinity;
+      for (const [cs, ct] of candidates) {
+        const distance =
+          (A.x + cs * A.dx - B.x - ct * B.dx) ** 2 +
+          (A.y + cs * A.dy - B.y - ct * B.dy) ** 2;
+        if (distance < best) {
+          best = distance;
+          s = cs;
+          t = ct;
+        }
+      }
+    }
+  }
+  const ax = A.x + s * A.dx,
+    ay = A.y + s * A.dy;
+  const bx = B.x + t * B.dx,
+    by = B.y + t * B.dy;
+  const dx = bx - ax,
+    dy = by - ay,
+    distance = Math.hypot(dx, dy);
+  let nx = distance > EPS ? dx / distance : Math.cos(a.heading);
+  let ny = distance > EPS ? dy / distance : Math.sin(a.heading);
+  if (distance <= EPS) {
+    const side = (b.x - a.x) * nx + (b.y - a.y) * ny;
+    const approach = (a.vx - b.vx) * nx + (a.vy - b.vy) * ny;
+    if (side < -EPS || (Math.abs(side) <= EPS && approach < 0)) {
+      nx = -nx;
+      ny = -ny;
+    }
+  }
+  return {
+    distance: distance - a.radius - b.radius,
+    nx,
+    ny,
+    px: ax + nx * a.radius,
+    py: ay + ny * a.radius,
+  };
+}
+
 function contact(a: RigidBody, b: RigidBody) {
   if (b.halfLength > 0) {
-    if (a.halfLength > 0)
-      throw new Error(
-        "Capsule/capsule requires the shared-world collision phase",
-      );
+    if (a.halfLength > 0) return capsuleContact(a, b);
     const c = contact(b, { ...a, halfLength: 0 }) as {
       distance: number;
       nx: number;
