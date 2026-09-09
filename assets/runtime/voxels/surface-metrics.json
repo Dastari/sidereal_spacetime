@@ -1,0 +1,163 @@
+[
+  {
+    "name": "GEO-deck",
+    "triangles": 624,
+    "beveledEdges": 68,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-walls",
+    "triangles": 11954,
+    "beveledEdges": 1090,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-cutaway-port",
+    "triangles": 10184,
+    "beveledEdges": 904,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-cutaway-starboard",
+    "triangles": 9794,
+    "beveledEdges": 878,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-cutaway-aft",
+    "triangles": 654,
+    "beveledEdges": 82,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-cutaway-bow",
+    "triangles": 0,
+    "beveledEdges": 0,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-armor",
+    "triangles": 1984,
+    "beveledEdges": 215,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-partitions",
+    "triangles": 13902,
+    "beveledEdges": 1379,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-room-storage-container-2.15-0.25",
+    "triangles": 492,
+    "beveledEdges": 56,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-room-storage-container-2.15-1",
+    "triangles": 492,
+    "beveledEdges": 56,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-room-storage-container-3.5-0.25",
+    "triangles": 480,
+    "beveledEdges": 53,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-room-storage-container-3.5-1",
+    "triangles": 480,
+    "beveledEdges": 53,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-roof",
+    "triangles": 0,
+    "beveledEdges": 0,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-markings",
+    "triangles": 0,
+    "beveledEdges": 0,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-drives-main--3.6",
+    "triangles": 24364,
+    "beveledEdges": 1121,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-drives-main-3.6",
+    "triangles": 24454,
+    "beveledEdges": 1122,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-drives-main-0",
+    "triangles": 11484,
+    "beveledEdges": 529,
+    "nonmanifoldEdges": 2,
+    "evaluatedNonmanifoldEdges": 2
+  },
+  {
+    "name": "GEO-drives-maneuver--1--6.5",
+    "triangles": 816,
+    "beveledEdges": 79,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-drives-maneuver--1-6.5",
+    "triangles": 816,
+    "beveledEdges": 79,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-drives-maneuver-1--6.5",
+    "triangles": 818,
+    "beveledEdges": 79,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-drives-maneuver-1-6.5",
+    "triangles": 818,
+    "beveledEdges": 79,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-drives-retro--1",
+    "triangles": 1006,
+    "beveledEdges": 90,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-drives-retro-1",
+    "triangles": 1006,
+    "beveledEdges": 90,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  }
+]

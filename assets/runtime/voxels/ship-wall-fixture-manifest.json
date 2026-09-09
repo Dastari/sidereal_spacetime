@@ -1,0 +1,15 @@
+{
+  "schema": "sidereal.ship-fixture-source.v1",
+  "cellMeters": 0.0625,
+  "occupied": 424,
+  "status": "Blender solid sampled and stamped into Wayfarer cutaway layers",
+  "outputs": {
+    "assets/source/ship_wall_fixture.blend": "2682d6ae5d05549fc0449780d2cb68dd8efbcd24e235d114b3c0d3291bb59759",
+    "assets/runtime/voxels/ship-wall-fixture.voxels.json": "686e8b31adefa5e092161dab7d8210b800984b05f931e62c577b50ff26c3fa78",
+    "assets/runtime/voxels/ship-wall-fixture-original.glb": "2a8c69d1b680a876cab0b2ad68959035c77c592af650772a643ee6cf2f5345e0"
+  },
+  "tools": {
+    "scripts/build_ship_fixture_source.py": "31b54b510d865f69b6580db6be678d625e1a9297d0f44b1f4a7d54c47a7d1b1c",
+    "scripts/voxelize_blender.py": "e487508fddd3d9e482ed3daf4cb49f7272ec74223ea7453ef3d21a4e09a8e26f"
+  }
+}

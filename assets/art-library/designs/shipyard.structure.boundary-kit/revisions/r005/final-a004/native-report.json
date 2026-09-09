@@ -1,0 +1,112 @@
+{
+  "base-5c44702128b939ad": {
+    "triangles": 280,
+    "vertices": 220,
+    "patchSolids": 40
+  },
+  "base-5105a9e117a14a08": {
+    "triangles": 280,
+    "vertices": 220,
+    "patchSolids": 40
+  },
+  "base-1721621a1efaf31e": {
+    "triangles": 280,
+    "vertices": 220,
+    "patchSolids": 40
+  },
+  "base-751a27b8eef382a8": {
+    "triangles": 280,
+    "vertices": 220,
+    "patchSolids": 40
+  },
+  "base-778a913ba6bd4861": {
+    "triangles": 214,
+    "vertices": 167,
+    "patchSolids": 30
+  },
+  "base-edeb20d844afc37f": {
+    "triangles": 214,
+    "vertices": 167,
+    "patchSolids": 30
+  },
+  "base-8fa3ceb73648f1b1": {
+    "triangles": 214,
+    "vertices": 167,
+    "patchSolids": 30
+  },
+  "base-79d03a8564bd3284": {
+    "triangles": 270,
+    "vertices": 211,
+    "patchSolids": 38
+  },
+  "base-344925e0d658e538": {
+    "triangles": 270,
+    "vertices": 211,
+    "patchSolids": 38
+  },
+  "base-500994d2fdb6f234": {
+    "triangles": 350,
+    "vertices": 275,
+    "patchSolids": 50
+  },
+  "base-79a931b0a4024f86": {
+    "triangles": 284,
+    "vertices": 222,
+    "patchSolids": 40
+  },
+  "base-daaa1deefdcc725b": {
+    "triangles": 214,
+    "vertices": 167,
+    "patchSolids": 30
+  },
+  "base-0a60fc5795340e2d": {
+    "triangles": 396,
+    "vertices": 310,
+    "patchSolids": 56
+  },
+  "base-84db6b95287bbbad": {
+    "triangles": 338,
+    "vertices": 265,
+    "patchSolids": 48
+  },
+  "base-d98033303b004cd5": {
+    "triangles": 338,
+    "vertices": 265,
+    "patchSolids": 48
+  },
+  "base-fa6166b9bd761866": {
+    "triangles": 338,
+    "vertices": 265,
+    "patchSolids": 48
+  },
+  "base-e31456f30d08d683": {
+    "triangles": 270,
+    "vertices": 211,
+    "patchSolids": 38
+  },
+  "base-f79837a2384d6a95": {
+    "triangles": 338,
+    "vertices": 265,
+    "patchSolids": 48
+  },
+  "base-548e33c75c9600c6": {
+    "triangles": 268,
+    "vertices": 210,
+    "patchSolids": 38
+  },
+  "base-f77e2e79aa988ef8": {
+    "triangles": 268,
+    "vertices": 210,
+    "patchSolids": 38
+  },
+  "base-6f4e90afc9658454": {
+    "triangles": 268,
+    "vertices": 210,
+    "patchSolids": 38
+  },
+  "base-746876da6e77a233": {
+    "triangles": 268,
+    "vertices": 210,
+    "patchSolids": 38
+  }
+}

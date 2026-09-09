@@ -1,0 +1,14 @@
+{
+  "schema": "sidereal.interior-prop-source.v1",
+  "cellMeters": 0.0625,
+  "occupied": 2351,
+  "outputs": {
+    "assets/source/interior_hydroponics.blend": "26bc8b4d4eddc3e24ff43057a1150e6df870a254b0d19cfb5980072bde39d8d3",
+    "assets/runtime/voxels/interior-props.voxels.json": "85982d6140dab17b046d3762f81f17226d0285f8c3b64367924a330ebb7c823f",
+    "assets/runtime/voxels/interior-hydroponics-original.glb": "f560d5a715e4df7da3b6abee7c4c62a8d2f46bfb34c009f587fccd5e23b46666"
+  },
+  "tools": {
+    "scripts/build_interior_prop_source.py": "932d8de18997128403cd0bdd427dd10af1f8fb6b39d6d9dd4cc743972d24f2dd",
+    "scripts/voxelize_blender.py": "e487508fddd3d9e482ed3daf4cb49f7272ec74223ea7453ef3d21a4e09a8e26f"
+  }
+}

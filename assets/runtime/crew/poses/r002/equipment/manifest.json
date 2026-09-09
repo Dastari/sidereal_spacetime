@@ -1,0 +1,208 @@
+{
+  "schema": 1,
+  "status": "Unapproved r002 review; presentation only",
+  "entries": [
+    {
+      "id": "carbine",
+      "file": "carbine.glb",
+      "attachmentOrigin": [
+        0,
+        0,
+        0
+      ],
+      "forward": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "anchors": {
+        "muzzle": [
+          0,
+          0.13,
+          -0.78
+        ],
+        "supportPalm": [
+          -0.065,
+          0.045,
+          -0.12
+        ]
+      }
+    },
+    {
+      "id": "long-rifle",
+      "file": "long-rifle.glb",
+      "attachmentOrigin": [
+        0,
+        0.03,
+        0.055
+      ],
+      "forward": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "anchors": {
+        "muzzle": [
+          0,
+          0.13,
+          -1.12
+        ],
+        "supportPalm": [
+          -0.065,
+          0.045,
+          -0.2
+        ]
+      }
+    },
+    {
+      "id": "compact-pistol",
+      "file": "compact-pistol.glb",
+      "attachmentOrigin": [
+        0,
+        0,
+        0
+      ],
+      "forward": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "anchors": {
+        "muzzle": [
+          0,
+          0.13,
+          -0.39
+        ],
+        "supportPalm": [
+          -0.065,
+          -0.012,
+          0.015
+        ]
+      }
+    },
+    {
+      "id": "heavy-handgun",
+      "file": "heavy-handgun.glb",
+      "attachmentOrigin": [
+        0,
+        0,
+        0
+      ],
+      "forward": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "anchors": {
+        "muzzle": [
+          0,
+          0.13,
+          -0.49
+        ],
+        "supportPalm": [
+          -0.065,
+          -0.012,
+          0.015
+        ]
+      }
+    },
+    {
+      "id": "plasma-cutter",
+      "file": "plasma-cutter.glb",
+      "attachmentOrigin": [
+        0,
+        0,
+        0
+      ],
+      "forward": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "anchors": {
+        "muzzle": [
+          0,
+          0.13,
+          -0.5
+        ]
+      }
+    },
+    {
+      "id": "sample-scanner",
+      "file": "sample-scanner.glb",
+      "attachmentOrigin": [
+        0,
+        0,
+        0
+      ],
+      "forward": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "anchors": {
+        "muzzle": [
+          0.085,
+          0.35,
+          -0.19
+        ]
+      }
+    },
+    {
+      "id": "flashlight",
+      "file": "flashlight.glb",
+      "attachmentOrigin": [
+        0,
+        0,
+        0
+      ],
+      "forward": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "anchors": {
+        "muzzle": [
+          0,
+          0.06,
+          -0.31
+        ]
+      }
+    }
+  ]
+}

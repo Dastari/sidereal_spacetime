@@ -1,0 +1,19 @@
+{
+  "renderer": "Blender Cycles CPU",
+  "samples": 80,
+  "threads": 4,
+  "viewTransform": "AgX",
+  "runtimeBrowser": false,
+  "views": [
+    "closed-front.png",
+    "closed-back.png",
+    "closed-contact-detail.png",
+    "retracted-front.png",
+    "open-front.png",
+    "open-back.png",
+    "seal-and-seat-cutout.png"
+  ],
+  "actualSourceGeometry": true,
+  "inspectedAllViews": true,
+  "scope": "Source-native contact study, not game publication or pressure/actuator certification"
+}

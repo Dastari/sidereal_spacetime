@@ -1,0 +1,184 @@
+{
+  "schema": "sidereal.native-planet-runtime-manifest.v1",
+  "id": "environment.planet.volcanic",
+  "revision": "volcanic-r018",
+  "status": "root-approved-local-review-candidate; owner-final-art-unapproved",
+  "appearance": "volcanic",
+  "destination": "/assets/planets/volcanic-r018/",
+  "files": [
+    {
+      "path": "kit.json",
+      "sha256": "287d0cb10c2bca4d21e6b9eb1eaf5877b854bd86464c24041fc4082dc0c16b65",
+      "bytes": 155233,
+      "runtimeRole": "native-compiled-form-stream"
+    },
+    {
+      "path": "form-0.glb",
+      "sha256": "83609473ef0477e8042bc5ae4d0d3c3e6b82d11b62d88f3f2bc3a783ea34fdc8",
+      "bytes": 12980,
+      "runtimeRole": "validated-native-GLB-source-equivalent"
+    },
+    {
+      "path": "form-1.glb",
+      "sha256": "ffa1ed23c5bdd951424e87d6c03e1c1c77bf71aa7ab475ce81b229bb23c9acc0",
+      "bytes": 12828,
+      "runtimeRole": "validated-native-GLB-source-equivalent"
+    },
+    {
+      "path": "form-10.glb",
+      "sha256": "f5bbcef311c27b4342706c10fe083ee23a3bc10836eacc218c67217e500a8e2a",
+      "bytes": 37732,
+      "runtimeRole": "validated-native-GLB-source-equivalent"
+    },
+    {
+      "path": "form-2.glb",
+      "sha256": "aac466ab32211b8fadefec836109f98386c9d9f713f59e736ef4f12d43c3c842",
+      "bytes": 12984,
+      "runtimeRole": "validated-native-GLB-source-equivalent"
+    },
+    {
+      "path": "form-3.glb",
+      "sha256": "63e5f9eacf639b10727542577cf39929fa384454d8cead2875b8616f3fabc164",
+      "bytes": 7188,
+      "runtimeRole": "validated-native-GLB-source-equivalent"
+    },
+    {
+      "path": "form-4.glb",
+      "sha256": "db784df6586baf80b00cfbd333d4e14a80c588e8717a80758dccd7db232ce228",
+      "bytes": 22464,
+      "runtimeRole": "validated-native-GLB-source-equivalent"
+    },
+    {
+      "path": "form-5.glb",
+      "sha256": "8e1b2a87ccedb1a54f1e05d18892debca1108493efec29b83e9cd93ffe7d0923",
+      "bytes": 131972,
+      "runtimeRole": "validated-native-GLB-source-equivalent"
+    },
+    {
+      "path": "form-6.glb",
+      "sha256": "60cbb9058e9f590b5bc3256af6f668148baaf7e72bf9bbae53452d5806d9ac2b",
+      "bytes": 9392,
+      "runtimeRole": "validated-native-GLB-source-equivalent"
+    },
+    {
+      "path": "form-7.glb",
+      "sha256": "cecb66a4b87ec8dddb2f99458369fa4c24485813e3b1c609bdf6b129fa0b2c43",
+      "bytes": 7948,
+      "runtimeRole": "validated-native-GLB-source-equivalent"
+    },
+    {
+      "path": "form-8.glb",
+      "sha256": "75c7020cd8d6ce68ffef2cafc90c2df4acdc58f405fc42aceb69e1aab968fcf4",
+      "bytes": 12984,
+      "runtimeRole": "validated-native-GLB-source-equivalent"
+    },
+    {
+      "path": "form-9.glb",
+      "sha256": "0390a6c3c668306235fa40f89ccd9967bb469df97f2a4a907f4a7d2c9b3121ae",
+      "bytes": 12828,
+      "runtimeRole": "validated-native-GLB-source-equivalent"
+    }
+  ],
+  "sources": [
+    {
+      "path": ".runtime/art-library/planets/volcanic-r018/kit.blend",
+      "sha256": "fec48a0a2c9c38820b4bcdfc11f06c8730637254299b7ffb47bb320caab71ec9",
+      "bytes": 906256
+    },
+    {
+      "path": ".runtime/art-library/planets/volcanic-r018/source/build_volcanic_geology_kit.py",
+      "sha256": "a3a66e68787115447ae6951af9dafe5a281fa3b059ac110d2509543f401cf4e2",
+      "bytes": 7190
+    },
+    {
+      "path": ".runtime/art-library/planets/volcanic-r018/source/native-volcanic-composition.ts",
+      "sha256": "2768707b6fe35258b624e715e5b41cf8f622a09277e597c5b2d05b2aa499c22e",
+      "bytes": 7983
+    },
+    {
+      "path": ".runtime/art-library/planets/volcanic-r018/source/native-volcanic-field.test.ts",
+      "sha256": "44d1b1544d02923d7fc12df4b74ddb722b6ad5f229fb3562d47089c32d81567a",
+      "bytes": 1683
+    },
+    {
+      "path": ".runtime/art-library/planets/volcanic-r018/source/native-volcanic-field.ts",
+      "sha256": "5d1723e38132d2c9d611a6072451a18622d473f9fa854c2a4d5580cfc2da2667",
+      "bytes": 3674
+    },
+    {
+      "path": ".runtime/art-library/planets/volcanic-r018/source/native-volcanic-material.ts",
+      "sha256": "7f8c51e610c09d40d5d2b0a9b6d9e786e06339278d56b2564bdc4c04f5e73995",
+      "bytes": 1988
+    },
+    {
+      "path": ".runtime/art-library/planets/volcanic-r018/source/native-volcanic-planet.ts",
+      "sha256": "789209b86d2ce433714f223e45041ab115f491ebbcc8d806e69b0d65aa8828e1",
+      "bytes": 5685
+    },
+    {
+      "path": ".runtime/art-library/planets/volcanic-r018/source/native-volcanic-runtime.test.ts",
+      "sha256": "db76cc72c7bad2a8c7bc4b44a801bbb3fc8ae40b56983d344d2da5eed904a311",
+      "bytes": 4444
+    },
+    {
+      "path": "assets/art-library/planet-geology-studies/basalt-forms-lod-01/study.json",
+      "sha256": "763ddd2831d6be3b6f634baa2d72b415055af8bff55b22d5c255f5d4a18bfa39",
+      "bytes": 2110
+    },
+    {
+      "path": ".runtime/art-library/planets/volcanic-r018/source/planet-smoke.ts",
+      "sha256": "37b78c4f1be1121eec5875a7a0ca92b011c521515eeb3323aecbd26e1ee8100c",
+      "bytes": 1724
+    },
+    {
+      "path": ".runtime/art-library/planets/volcanic-r018/source/planet-clouds.ts",
+      "sha256": "63da1493cadb0513cf1587e2cf4fa8413aa2820c7367e4c8236130ce9c460e95",
+      "bytes": 8638
+    },
+    {
+      "path": ".runtime/art-library/planets/volcanic-r018/source/planet-atmosphere.ts",
+      "sha256": "d0eb9de57429995a94e9ca612aad24db3267501512e79b241d1dfb9048e1ac2b",
+      "bytes": 1258
+    },
+    {
+      "path": ".runtime/art-library/planets/volcanic-r018/source/planet-shadows.ts",
+      "sha256": "d1bfdf1a14d03a5765d65302f15a813c9b2b57edf21a4123c465f30a0339a57c",
+      "bytes": 3895
+    },
+    {
+      "path": ".runtime/art-library/planets/volcanic-r018/source/native-volcanic-runtime.ts",
+      "sha256": "f8ff25b7acb113e03384ee004f96fcf677ff979ad62f0d72725811e74c82980a",
+      "bytes": 3923
+    },
+    {
+      "path": ".runtime/art-library/planets/volcanic-r018/source/environment-index.ts",
+      "sha256": "784ab0383985ca2cc4e55cda78b30bf76c8a000603ea745495ed158b85179089",
+      "bytes": 26291
+    }
+  ],
+  "geometrySource": "Editable Blender native study surfaces and compiled equivalent streams. No legacy voxel solids as replacement art.",
+  "lodCellsPerFace": [
+    12,
+    10,
+    8
+  ],
+  "cpuCacheEntries": 6,
+  "seed89NativeTriangles": 131840,
+  "seed89ExistingSmokeTriangles": 33440,
+  "seed89TotalPlanetTriangles": 165282,
+  "nativeTriangleBudget": 150000,
+  "smokeBudget": "existing separately bounded weather geometry; near/medium only",
+  "sharedRendering": [
+    "primary-sun",
+    "hero-shadows",
+    "existing-smoke",
+    "atmosphere-rim",
+    "axial-rotation",
+    "Observe-camera",
+    "opaque-glow-occluders"
+  ],
+  "fallback": "Unloaded kit or unsupported mixed effects/custom palette retains existing full renderer.",
+  "workingReview": "Root accepted actual r018 working-candidate gate for local integration; significant fine-ledge/smooth-river/smoke gaps remain. output/playwright/native-volcanic-r018-threeway-seed89.png",
+  "publication": "Coordinated local review candidate copied to assets/runtime/planets/volcanic-r018 and both independent app public asset directories; no database changes.",
+  "reflectionProof": "output/playwright/native-volcanic-r018-spill-proof.json"
+}

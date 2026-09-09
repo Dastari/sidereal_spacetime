@@ -1,0 +1,838 @@
+{
+  "scope": "isolated native geometry; no runtime, pressure rating or damage certification",
+  "checks": [
+    {
+      "name": "glTF2 binary version",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-square-2m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-square-2m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-square-2m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-square-2m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-square-2m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-square-2m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-square-2m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-half-2x1-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-half-2x1-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-half-2x1-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-half-2x1-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-half-2x1-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-half-2x1-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-half-2x1-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-quarter-1m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-quarter-1m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-quarter-1m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-quarter-1m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-quarter-1m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-quarter-1m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-quarter-1m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-strip-4x1-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-strip-4x1-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-strip-4x1-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-strip-4x1-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-strip-4x1-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-strip-4x1-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-strip-4x1-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-45-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-45-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-45-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-45-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-45-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-45-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-45-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-long-left-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-long-left-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-long-left-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-long-left-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-long-left-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-long-left-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-long-left-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-long-right-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-long-right-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-long-right-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-long-right-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-long-right-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-long-right-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-long-right-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-slim-left-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-slim-left-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-slim-left-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-slim-left-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-slim-left-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-slim-left-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-slim-left-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-slim-right-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-slim-right-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-slim-right-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-slim-right-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-slim-right-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-slim-right-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-slim-right-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-corner-clipped-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-corner-clipped-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-corner-clipped-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-corner-clipped-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-corner-clipped-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-corner-clipped-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-corner-clipped-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-taper-4m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-taper-4m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-taper-4m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-taper-4m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-taper-4m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-taper-4m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-taper-4m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-1m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-1m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-1m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-1m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-1m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-1m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-triangle-1m-continuous-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "nondegenerate triangles",
+      "pass": true,
+      "details": {
+        "triangles": 25740,
+        "degenerate": 0
+      }
+    },
+    {
+      "name": "finite orthogonal normal/tangent frames",
+      "pass": true,
+      "details": 0
+    },
+    {
+      "name": "twelve exact independent selectors",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "all material roles single sided",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "no exported cameras or lights",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "normal textures embedded",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "square-2m identity source transform",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "square-2m exact nominal envelope",
+      "pass": true,
+      "details": {
+        "outside": [],
+        "badHeightVertices": 0
+      }
+    },
+    {
+      "name": "square-2m continuous underside area",
+      "pass": true,
+      "details": {
+        "expectedM2": 4.0,
+        "actualM2": 4.0
+      }
+    },
+    {
+      "name": "square-2m complete butt contact faces",
+      "pass": true,
+      "details": [
+        0.25,
+        0.25,
+        0.25,
+        0.25
+      ]
+    },
+    {
+      "name": "half-2x1 identity source transform",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "half-2x1 exact nominal envelope",
+      "pass": true,
+      "details": {
+        "outside": [],
+        "badHeightVertices": 0
+      }
+    },
+    {
+      "name": "half-2x1 continuous underside area",
+      "pass": true,
+      "details": {
+        "expectedM2": 2.0,
+        "actualM2": 2.0
+      }
+    },
+    {
+      "name": "half-2x1 complete butt contact faces",
+      "pass": true,
+      "details": [
+        0.25,
+        0.125,
+        0.25,
+        0.125
+      ]
+    },
+    {
+      "name": "quarter-1m identity source transform",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "quarter-1m exact nominal envelope",
+      "pass": true,
+      "details": {
+        "outside": [],
+        "badHeightVertices": 0
+      }
+    },
+    {
+      "name": "quarter-1m continuous underside area",
+      "pass": true,
+      "details": {
+        "expectedM2": 1.0,
+        "actualM2": 1.0
+      }
+    },
+    {
+      "name": "quarter-1m complete butt contact faces",
+      "pass": true,
+      "details": [
+        0.125,
+        0.125,
+        0.125,
+        0.125
+      ]
+    },
+    {
+      "name": "strip-4x1 identity source transform",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "strip-4x1 exact nominal envelope",
+      "pass": true,
+      "details": {
+        "outside": [],
+        "badHeightVertices": 0
+      }
+    },
+    {
+      "name": "strip-4x1 continuous underside area",
+      "pass": true,
+      "details": {
+        "expectedM2": 4.0,
+        "actualM2": 4.0
+      }
+    },
+    {
+      "name": "strip-4x1 complete butt contact faces",
+      "pass": true,
+      "details": [
+        0.5,
+        0.125,
+        0.5,
+        0.125
+      ]
+    },
+    {
+      "name": "triangle-45 identity source transform",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "triangle-45 exact nominal envelope",
+      "pass": true,
+      "details": {
+        "outside": [],
+        "badHeightVertices": 0
+      }
+    },
+    {
+      "name": "triangle-45 continuous underside area",
+      "pass": true,
+      "details": {
+        "expectedM2": 2.0,
+        "actualM2": 2.0
+      }
+    },
+    {
+      "name": "triangle-45 complete butt contact faces",
+      "pass": true,
+      "details": [
+        0.25,
+        0.3535533905932738,
+        0.25
+      ]
+    },
+    {
+      "name": "triangle-long-left identity source transform",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "triangle-long-left exact nominal envelope",
+      "pass": true,
+      "details": {
+        "outside": [],
+        "badHeightVertices": 0
+      }
+    },
+    {
+      "name": "triangle-long-left continuous underside area",
+      "pass": true,
+      "details": {
+        "expectedM2": 4.0,
+        "actualM2": 4.0
+      }
+    },
+    {
+      "name": "triangle-long-left complete butt contact faces",
+      "pass": true,
+      "details": [
+        0.5,
+        0.5590169943749475,
+        0.25
+      ]
+    },
+    {
+      "name": "triangle-long-right identity source transform",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "triangle-long-right exact nominal envelope",
+      "pass": true,
+      "details": {
+        "outside": [],
+        "badHeightVertices": 0
+      }
+    },
+    {
+      "name": "triangle-long-right continuous underside area",
+      "pass": true,
+      "details": {
+        "expectedM2": 4.0,
+        "actualM2": 4.0
+      }
+    },
+    {
+      "name": "triangle-long-right complete butt contact faces",
+      "pass": true,
+      "details": [
+        0.5,
+        0.25,
+        0.5590169943749475
+      ]
+    },
+    {
+      "name": "triangle-slim-left identity source transform",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "triangle-slim-left exact nominal envelope",
+      "pass": true,
+      "details": {
+        "outside": [],
+        "badHeightVertices": 0
+      }
+    },
+    {
+      "name": "triangle-slim-left continuous underside area",
+      "pass": true,
+      "details": {
+        "expectedM2": 2.0,
+        "actualM2": 2.0
+      }
+    },
+    {
+      "name": "triangle-slim-left complete butt contact faces",
+      "pass": true,
+      "details": [
+        0.5,
+        0.5153882032022076,
+        0.125
+      ]
+    },
+    {
+      "name": "triangle-slim-right identity source transform",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "triangle-slim-right exact nominal envelope",
+      "pass": true,
+      "details": {
+        "outside": [],
+        "badHeightVertices": 0
+      }
+    },
+    {
+      "name": "triangle-slim-right continuous underside area",
+      "pass": true,
+      "details": {
+        "expectedM2": 2.0,
+        "actualM2": 2.0
+      }
+    },
+    {
+      "name": "triangle-slim-right complete butt contact faces",
+      "pass": true,
+      "details": [
+        0.5,
+        0.125,
+        0.5153882032022076
+      ]
+    },
+    {
+      "name": "corner-clipped identity source transform",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "corner-clipped exact nominal envelope",
+      "pass": true,
+      "details": {
+        "outside": [],
+        "badHeightVertices": 0
+      }
+    },
+    {
+      "name": "corner-clipped continuous underside area",
+      "pass": true,
+      "details": {
+        "expectedM2": 3.5,
+        "actualM2": 3.5
+      }
+    },
+    {
+      "name": "corner-clipped complete butt contact faces",
+      "pass": true,
+      "details": [
+        0.25,
+        0.125,
+        0.1767766952966369,
+        0.125,
+        0.25
+      ]
+    },
+    {
+      "name": "taper-4m identity source transform",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "taper-4m exact nominal envelope",
+      "pass": true,
+      "details": {
+        "outside": [],
+        "badHeightVertices": 0
+      }
+    },
+    {
+      "name": "taper-4m continuous underside area",
+      "pass": true,
+      "details": {
+        "expectedM2": 6.0,
+        "actualM2": 6.0
+      }
+    },
+    {
+      "name": "taper-4m complete butt contact faces",
+      "pass": true,
+      "details": [
+        0.25,
+        0.5038911092686593,
+        0.125,
+        0.5038911092686593
+      ]
+    },
+    {
+      "name": "triangle-1m identity source transform",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "triangle-1m exact nominal envelope",
+      "pass": true,
+      "details": {
+        "outside": [],
+        "badHeightVertices": 0
+      }
+    },
+    {
+      "name": "triangle-1m continuous underside area",
+      "pass": true,
+      "details": {
+        "expectedM2": 0.5,
+        "actualM2": 0.5
+      }
+    },
+    {
+      "name": "triangle-1m complete butt contact faces",
+      "pass": true,
+      "details": [
+        0.125,
+        0.1767766952966369,
+        0.125
+      ]
+    }
+  ],
+  "failures": [],
+  "limits": [
+    "Exact visual footprint and candidate contact geometry only, no pressure/material/voxel damage certification.",
+    "No roof traversal apertures, utility penetrations or service capacity inferred.",
+    "CPU source stills, not installed client browser evidence."
+  ],
+  "kitSha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+  "pass": true
+}

@@ -1,0 +1,218 @@
+{
+  "square-2m": {
+    "nodePrefix": "GEO-roof-square-2m--surface",
+    "triangles": 2172,
+    "vertices": 1128,
+    "materialSlots": 7,
+    "bounds": {
+      "min": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        2.0,
+        0.1875
+      ]
+    }
+  },
+  "half-2x1": {
+    "nodePrefix": "GEO-roof-half-2x1--surface",
+    "triangles": 1740,
+    "vertices": 904,
+    "materialSlots": 7,
+    "bounds": {
+      "min": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        1.0,
+        0.1875
+      ]
+    }
+  },
+  "quarter-1m": {
+    "nodePrefix": "GEO-roof-quarter-1m--surface",
+    "triangles": 1416,
+    "vertices": 736,
+    "materialSlots": 7,
+    "bounds": {
+      "min": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max": [
+        1.0,
+        1.0,
+        0.1875
+      ]
+    }
+  },
+  "strip-4x1": {
+    "nodePrefix": "GEO-roof-strip-4x1--surface",
+    "triangles": 2388,
+    "vertices": 1240,
+    "materialSlots": 7,
+    "bounds": {
+      "min": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max": [
+        4.0,
+        1.0,
+        0.1875
+      ]
+    }
+  },
+  "triangle-45": {
+    "nodePrefix": "GEO-roof-triangle-45--surface",
+    "triangles": 1952,
+    "vertices": 1014,
+    "materialSlots": 7,
+    "bounds": {
+      "min": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        2.0,
+        0.1875
+      ]
+    }
+  },
+  "triangle-long-left": {
+    "nodePrefix": "GEO-roof-triangle-long-left--surface",
+    "triangles": 2420,
+    "vertices": 1258,
+    "materialSlots": 7,
+    "bounds": {
+      "min": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max": [
+        4.0,
+        2.0,
+        0.1875
+      ]
+    }
+  },
+  "triangle-long-right": {
+    "nodePrefix": "GEO-roof-triangle-long-right--surface",
+    "triangles": 2420,
+    "vertices": 1258,
+    "materialSlots": 7,
+    "bounds": {
+      "min": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max": [
+        4.0,
+        2.0,
+        0.1875
+      ]
+    }
+  },
+  "triangle-slim-left": {
+    "nodePrefix": "GEO-roof-triangle-slim-left--surface",
+    "triangles": 2212,
+    "vertices": 1150,
+    "materialSlots": 7,
+    "bounds": {
+      "min": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max": [
+        4.0,
+        1.0,
+        0.1875
+      ]
+    }
+  },
+  "triangle-slim-right": {
+    "nodePrefix": "GEO-roof-triangle-slim-right--surface",
+    "triangles": 2212,
+    "vertices": 1150,
+    "materialSlots": 7,
+    "bounds": {
+      "min": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max": [
+        4.0,
+        1.0,
+        0.1875
+      ]
+    }
+  },
+  "corner-clipped": {
+    "nodePrefix": "GEO-roof-corner-clipped--surface",
+    "triangles": 2224,
+    "vertices": 1154,
+    "materialSlots": 7,
+    "bounds": {
+      "min": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        2.0,
+        0.1875
+      ]
+    }
+  },
+  "taper-4m": {
+    "nodePrefix": "GEO-roof-taper-4m--surface",
+    "triangles": 3144,
+    "vertices": 1632,
+    "materialSlots": 7,
+    "bounds": {
+      "min": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        4.0,
+        0.1875
+      ]
+    }
+  },
+  "triangle-1m": {
+    "nodePrefix": "GEO-roof-triangle-1m--surface",
+    "triangles": 1440,
+    "vertices": 748,
+    "materialSlots": 7,
+    "bounds": {
+      "min": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max": [
+        1.0,
+        1.0,
+        0.1875
+      ]
+    }
+  }
+}

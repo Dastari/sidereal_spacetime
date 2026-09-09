@@ -1,0 +1,3002 @@
+[
+  {
+    "x": 0.2,
+    "y": 1,
+    "z": -0.32,
+    "roll": -0.6,
+    "primary": 0,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.2,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": -0.6,
+    "primary": 0,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.2,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": -0.3,
+    "primary": 0,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.2,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": -0.6,
+    "primary": 0,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.3,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": -0.6,
+    "primary": 0,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.3,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": -0.6,
+    "primary": 0,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.25,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": -0.6,
+    "primary": 1.4901161193847656e-8,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.25,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": -0.6,
+    "primary": 2.9802322387695312e-8,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.2,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": -0.3,
+    "primary": 3.332000937312528e-8,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.2,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": -0.6,
+    "primary": 3.332000937312528e-8,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.25,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": -0.6,
+    "primary": 6.143906154658885e-8,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.2,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": 0,
+    "primary": 1.0745380149674383e-7,
+    "arm": 0,
+    "body": 0,
+    "status": "fallback"
+  },
+  {
+    "x": 0.2,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": 0.3,
+    "primary": 1.0745380149674383e-7,
+    "arm": 0,
+    "body": 0,
+    "status": "fallback"
+  },
+  {
+    "x": 0.2,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": 0.6,
+    "primary": 1.0745380149674383e-7,
+    "arm": 0,
+    "body": 0,
+    "status": "fallback"
+  },
+  {
+    "x": 0.2,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": 0.3,
+    "primary": 1.0745380149674383e-7,
+    "arm": 0,
+    "body": 0,
+    "status": "fallback"
+  },
+  {
+    "x": 0.2,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": 0.6,
+    "primary": 1.0745380149674383e-7,
+    "arm": 0,
+    "body": 0,
+    "status": "fallback"
+  },
+  {
+    "x": 0.25,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": 0,
+    "primary": 1.0745380149674383e-7,
+    "arm": 0,
+    "body": 0,
+    "status": "fallback"
+  },
+  {
+    "x": 0.25,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": 0.3,
+    "primary": 1.0745380149674383e-7,
+    "arm": 0,
+    "body": 0,
+    "status": "fallback"
+  },
+  {
+    "x": 0.25,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": 0.6,
+    "primary": 1.0745380149674383e-7,
+    "arm": 0,
+    "body": 0,
+    "status": "fallback"
+  },
+  {
+    "x": 0.25,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": 0.3,
+    "primary": 1.0745380149674383e-7,
+    "arm": 0,
+    "body": 0,
+    "status": "fallback"
+  },
+  {
+    "x": 0.25,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": 0.6,
+    "primary": 1.0745380149674383e-7,
+    "arm": 0,
+    "body": 0,
+    "status": "fallback"
+  },
+  {
+    "x": 0.3,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": 0.3,
+    "primary": 1.0745380149674383e-7,
+    "arm": 0,
+    "body": 0,
+    "status": "fallback"
+  },
+  {
+    "x": 0.3,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": 0.6,
+    "primary": 1.0745380149674383e-7,
+    "arm": 0,
+    "body": 0,
+    "status": "fallback"
+  },
+  {
+    "x": 0.2,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": -0.6,
+    "primary": 1.2013700229374393e-7,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.3,
+    "y": 1,
+    "z": -0.37,
+    "roll": -0.6,
+    "primary": 0.0019885541844167944,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.35,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": -0.6,
+    "primary": 0.0020211480684641414,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.25,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": -0.6,
+    "primary": 0.002539586704302319,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.25,
+    "y": 1,
+    "z": -0.37,
+    "roll": -0.6,
+    "primary": 0.00501734505144277,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.35,
+    "y": 1,
+    "z": -0.37,
+    "roll": -0.6,
+    "primary": 0.005232684915028557,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.3,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": -0.6,
+    "primary": 0.00824717915161169,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.35,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": -0.6,
+    "primary": 0.010870810865793556,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.4,
+    "y": 1,
+    "z": -0.32,
+    "roll": -0.6,
+    "primary": 0.012998185624552886,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.2,
+    "y": 1,
+    "z": -0.37,
+    "roll": -0.3,
+    "primary": 0.014261359558599904,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.2,
+    "y": 1,
+    "z": -0.37,
+    "roll": -0.6,
+    "primary": 0.014261359558599904,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.4,
+    "y": 1,
+    "z": -0.37,
+    "roll": -0.6,
+    "primary": 0.014536118817034132,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.25,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": -0.3,
+    "primary": 0.016954656241676767,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.3,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": -0.6,
+    "primary": 0.01699469716669368,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.35,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": -0.6,
+    "primary": 0.01986174660184278,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.4,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": -0.6,
+    "primary": 0.019964447946175048,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.4,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": -0.3,
+    "primary": 0.019964510120442504,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.3,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": -0.3,
+    "primary": 0.02230834128959959,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.3,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": -0.6,
+    "primary": 0.02230834128959959,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.4,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": -0.6,
+    "primary": 0.024451202755031917,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.25,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": -0.3,
+    "primary": 0.02513920452772616,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.25,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": -0.6,
+    "primary": 0.02513920452772616,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.35,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": -0.6,
+    "primary": 0.025578991753134023,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.35,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": -0.6,
+    "primary": 0.025587607306100997,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.25,
+    "y": 1,
+    "z": -0.32,
+    "roll": -0.6,
+    "primary": 0.02634946035965219,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.25,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": 0,
+    "primary": 0.026410888787495604,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.25,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": -0.3,
+    "primary": 0.026410888787495604,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.2,
+    "y": 1,
+    "z": -0.32,
+    "roll": -0.3,
+    "primary": 0.026973433705100646,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.3,
+    "y": 1,
+    "z": -0.32,
+    "roll": -0.6,
+    "primary": 0.03158351447419377,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.3,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": -0.3,
+    "primary": 0.03401717151365005,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.3,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": -0.6,
+    "primary": 0.03401717151365005,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.2,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": 0,
+    "primary": 0.034056294734374416,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.2,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": -0.3,
+    "primary": 0.034056294734374416,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.2,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": -0.6,
+    "primary": 0.034056294734374416,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.25,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": -0.3,
+    "primary": 0.03452456276744498,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.4,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": -0.6,
+    "primary": 0.03471569072105982,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.35,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": 0,
+    "primary": 0.03639122593910038,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.35,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": 0.3,
+    "primary": 0.03639122593910038,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.35,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": -0.3,
+    "primary": 0.03639122593910038,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.4,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": 0,
+    "primary": 0.03687606699236284,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.4,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": -0.3,
+    "primary": 0.03687606699236284,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.4,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": -0.6,
+    "primary": 0.03687606699236284,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.25,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": -0.3,
+    "primary": 0.03688520833160382,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.25,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": -0.6,
+    "primary": 0.03688521710318501,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.35,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": -0.3,
+    "primary": 0.037037088448329966,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.35,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": -0.6,
+    "primary": 0.037037088448329966,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.2,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": -0.3,
+    "primary": 0.037063281868591307,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.25,
+    "y": 1,
+    "z": -0.37,
+    "roll": -0.3,
+    "primary": 0.03730615592728359,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.4,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": -0.3,
+    "primary": 0.03850884793929652,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.4,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": -0.6,
+    "primary": 0.03850884793929652,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.3,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": 0,
+    "primary": 0.03964957588884933,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.3,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": -0.3,
+    "primary": 0.03964957588884933,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.3,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": -0.3,
+    "primary": 0.03985743001254675,
+    "arm": 0,
+    "body": 0,
+    "status": "solved"
+  },
+  {
+    "x": 0.35,
+    "y": 1,
+    "z": -0.32,
+    "roll": 0,
+    "primary": 0.042425672839001276,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1,
+    "z": -0.32,
+    "roll": -0.3,
+    "primary": 0.042425672839001276,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1,
+    "z": -0.32,
+    "roll": -0.6,
+    "primary": 0.042425672839001276,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": 0,
+    "primary": 0.0456055576406307,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": -0.3,
+    "primary": 0.0456055576406307,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": -0.6,
+    "primary": 0.0456055576406307,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": -0.3,
+    "primary": 0.045752361601817636,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": -0.6,
+    "primary": 0.045752361601817636,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1,
+    "z": -0.32,
+    "roll": 0,
+    "primary": 0.04695864343906009,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": -0.3,
+    "primary": 0.05075302216570109,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1,
+    "z": -0.42,
+    "roll": -0.3,
+    "primary": 0.05080753366209314,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1,
+    "z": -0.42,
+    "roll": -0.6,
+    "primary": 0.05080753366209314,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": -0.3,
+    "primary": 0.05257847740927385,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1,
+    "z": -0.42,
+    "roll": -0.3,
+    "primary": 0.0535786459510665,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1,
+    "z": -0.42,
+    "roll": -0.6,
+    "primary": 0.0535786459510665,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1,
+    "z": -0.42,
+    "roll": 0,
+    "primary": 0.05366903456064496,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1,
+    "z": -0.42,
+    "roll": -0.3,
+    "primary": 0.05366903456064496,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1,
+    "z": -0.42,
+    "roll": -0.6,
+    "primary": 0.05366903456064496,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": 0,
+    "primary": 0.05389724456729628,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1,
+    "z": -0.32,
+    "roll": 0,
+    "primary": 0.05404146811919281,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1,
+    "z": -0.32,
+    "roll": -0.3,
+    "primary": 0.05404146811919281,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": -0.3,
+    "primary": 0.05623559797374949,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1,
+    "z": -0.37,
+    "roll": 0,
+    "primary": 0.05745069285764757,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1,
+    "z": -0.37,
+    "roll": 0.3,
+    "primary": 0.05745069285764757,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1,
+    "z": -0.37,
+    "roll": -0.3,
+    "primary": 0.05745069285764757,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": 0,
+    "primary": 0.05793755935426031,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": -0.3,
+    "primary": 0.05793755935426031,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1,
+    "z": -0.32,
+    "roll": 0,
+    "primary": 0.05845195047891348,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1,
+    "z": -0.32,
+    "roll": -0.3,
+    "primary": 0.05845195047891348,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": -0.3,
+    "primary": 0.05975271360927884,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": 0,
+    "primary": 0.060351944630069695,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": 0.3,
+    "primary": 0.060351944630069695,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1,
+    "z": -0.32,
+    "roll": 0.3,
+    "primary": 0.05845195047891348,
+    "arm": 0.0003237809150340998,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": -0.3,
+    "primary": 0.061812786247861295,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1,
+    "z": -0.42,
+    "roll": -0.3,
+    "primary": 0.06182697563704889,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1,
+    "z": -0.42,
+    "roll": -0.6,
+    "primary": 0.06182697563704889,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1,
+    "z": -0.42,
+    "roll": 0,
+    "primary": 0.06211701098916877,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1,
+    "z": -0.42,
+    "roll": -0.3,
+    "primary": 0.06211701098916877,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1,
+    "z": -0.42,
+    "roll": -0.6,
+    "primary": 0.06211701098916877,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": 0,
+    "primary": 0.0628376711057287,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": 0,
+    "primary": 0.0644220286148131,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": 0.3,
+    "primary": 0.0644220286148131,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1,
+    "z": -0.32,
+    "roll": 0,
+    "primary": 0.0663733031778134,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1,
+    "z": -0.32,
+    "roll": -0.3,
+    "primary": 0.06637333475632327,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": -0.3,
+    "primary": 0.0665913763816945,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": 0,
+    "primary": 0.06677287563403876,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": -0.3,
+    "primary": 0.06677287563403876,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": 0,
+    "primary": 0.06703429367099592,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": 0,
+    "primary": 0.06727657141514215,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": 0,
+    "primary": 0.06831028195765906,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": 0.3,
+    "primary": 0.05793755935426031,
+    "arm": 0.0012013448275833283,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": 0.3,
+    "primary": 0.07130479800321689,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": 0,
+    "primary": 0.07130481757584219,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": 0,
+    "primary": 0.07215422745348556,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": -0.3,
+    "primary": 0.07215422745348556,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1,
+    "z": -0.37,
+    "roll": 0,
+    "primary": 0.0724841473905001,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1,
+    "z": -0.37,
+    "roll": 0.3,
+    "primary": 0.0724841473905001,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1,
+    "z": -0.37,
+    "roll": 0.6,
+    "primary": 0.0724841473905001,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1,
+    "z": -0.37,
+    "roll": 0,
+    "primary": 0.07315758684389483,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1,
+    "z": -0.37,
+    "roll": 0.3,
+    "primary": 0.07315758684389483,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1,
+    "z": -0.37,
+    "roll": 0.6,
+    "primary": 0.07315758684389483,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": 0,
+    "primary": 0.0737124437553505,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": 0.3,
+    "primary": 0.0737124437553505,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": 0.6,
+    "primary": 0.0737124437553505,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": 0,
+    "primary": 0.07381258214567407,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": -0.3,
+    "primary": 0.07381258214567407,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": 0,
+    "primary": 0.0753771323903638,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": -0.3,
+    "primary": 0.0753771323903638,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": -0.6,
+    "primary": 0.0753771323903638,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1,
+    "z": -0.37,
+    "roll": 0,
+    "primary": 0.07713426115608042,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1,
+    "z": -0.37,
+    "roll": 0.3,
+    "primary": 0.07713426115608042,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1,
+    "z": -0.37,
+    "roll": -0.3,
+    "primary": 0.07713426115608042,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": 0,
+    "primary": 0.07806958558446965,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": -0.3,
+    "primary": 0.07806958558446965,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": -0.6,
+    "primary": 0.07806958558446965,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": 0,
+    "primary": 0.07812135776924257,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": -0.3,
+    "primary": 0.07812135776924257,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": -0.6,
+    "primary": 0.07812135776924257,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": 0,
+    "primary": 0.08037886388244933,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": 0.3,
+    "primary": 0.08037888894886214,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": 0.3,
+    "primary": 0.08069191836066152,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": 0,
+    "primary": 0.08192992296689981,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": 0.3,
+    "primary": 0.08192992296689981,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": 0.6,
+    "primary": 0.08192992296689981,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": 0,
+    "primary": 0.08328903136750848,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": 0.3,
+    "primary": 0.08328903136750848,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1,
+    "z": -0.42,
+    "roll": 0.3,
+    "primary": 0.08531242600360625,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": 0,
+    "primary": 0.08544582024529021,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": -0.3,
+    "primary": 0.08544582024529021,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": -0.6,
+    "primary": 0.08544582024529021,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": 0,
+    "primary": 0.08603719887817723,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": -0.3,
+    "primary": 0.08603719887817723,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": -0.6,
+    "primary": 0.08603719887817723,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1,
+    "z": -0.42,
+    "roll": 0,
+    "primary": 0.08621303062092245,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": 0,
+    "primary": 0.0862598350190443,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": 0,
+    "primary": 0.08627999128315819,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": 0.3,
+    "primary": 0.08627999128315819,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": -0.3,
+    "primary": 0.08627999128315819,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": -0.6,
+    "primary": 0.08627999128315819,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": 0.3,
+    "primary": 0.0864556332931862,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1,
+    "z": -0.37,
+    "roll": 0,
+    "primary": 0.08691876764503499,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1,
+    "z": -0.37,
+    "roll": 0.3,
+    "primary": 0.08691876764503499,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1,
+    "z": -0.37,
+    "roll": -0.3,
+    "primary": 0.08691876764503499,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": 0,
+    "primary": 0.08798639321182067,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": -0.3,
+    "primary": 0.08798639321182067,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": -0.6,
+    "primary": 0.08798639321182067,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": 0,
+    "primary": 0.08818844080607803,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": 0.3,
+    "primary": 0.08818844080607803,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": -0.3,
+    "primary": 0.08818844080607803,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": -0.6,
+    "primary": 0.08818844080607803,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1,
+    "z": -0.42,
+    "roll": 0.3,
+    "primary": 0.08964924706054639,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": 0,
+    "primary": 0.09045668973225689,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1,
+    "z": -0.42,
+    "roll": 0.3,
+    "primary": 0.09227953438624482,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1,
+    "z": -0.42,
+    "roll": 0.6,
+    "primary": 0.09227953438624482,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1,
+    "z": -0.42,
+    "roll": 0,
+    "primary": 0.09227956644923774,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1,
+    "z": -0.32,
+    "roll": 0.3,
+    "primary": 0.042425672839001276,
+    "arm": 0.005141866895925107,
+    "body": 0,
+    "status": "clearance-failed"
+  },
+  {
+    "x": 0.4,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": 0,
+    "primary": 0.09567406741834297,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": -0.3,
+    "primary": 0.09567406741834297,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": -0.6,
+    "primary": 0.09567406741834297,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": 0,
+    "primary": 0.09618110247071608,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": 0.3,
+    "primary": 0.09618110247071608,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": -0.3,
+    "primary": 0.09618110247071608,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": -0.6,
+    "primary": 0.09618110247071608,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": 0,
+    "primary": 0.09998528040168148,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": 0.3,
+    "primary": 0.09998530453672351,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": 0,
+    "primary": 0.1001315178965571,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1,
+    "z": -0.47,
+    "roll": 0,
+    "primary": 0.10025711094413157,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1,
+    "z": -0.47,
+    "roll": 0.3,
+    "primary": 0.10025711094413157,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1,
+    "z": -0.47,
+    "roll": -0.3,
+    "primary": 0.10025711094413157,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1,
+    "z": -0.47,
+    "roll": -0.6,
+    "primary": 0.10025711094413157,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": 0.3,
+    "primary": 0.10127515579165376,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": 0.3,
+    "primary": 0.10226174934810409,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": 0.6,
+    "primary": 0.10226174934810409,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1,
+    "z": -0.47,
+    "roll": 0,
+    "primary": 0.10263477045359828,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1,
+    "z": -0.47,
+    "roll": -0.3,
+    "primary": 0.10263477045359828,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1,
+    "z": -0.47,
+    "roll": -0.6,
+    "primary": 0.10263477045359828,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1,
+    "z": -0.47,
+    "roll": 0,
+    "primary": 0.10297455222412585,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1,
+    "z": -0.47,
+    "roll": 0.3,
+    "primary": 0.10297455222412585,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1,
+    "z": -0.47,
+    "roll": -0.3,
+    "primary": 0.10297455222412585,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1,
+    "z": -0.47,
+    "roll": -0.6,
+    "primary": 0.10297455222412585,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1,
+    "z": -0.42,
+    "roll": 0,
+    "primary": 0.10328891721970924,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1,
+    "z": -0.42,
+    "roll": 0.6,
+    "primary": 0.10328891721970924,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1,
+    "z": -0.42,
+    "roll": 0.3,
+    "primary": 0.10328893509630661,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1,
+    "z": -0.37,
+    "roll": 0.6,
+    "primary": 0.07713426115608042,
+    "arm": 0.00263854679390807,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": 0.3,
+    "primary": 0.1061641199391033,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": 0.3,
+    "primary": 0.10704132246316654,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": 0,
+    "primary": 0.10813419267737512,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": 0.3,
+    "primary": 0.10980933354565947,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": 0.6,
+    "primary": 0.10980933354565947,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1,
+    "z": -0.47,
+    "roll": 0,
+    "primary": 0.10999457744901892,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1,
+    "z": -0.47,
+    "roll": -0.3,
+    "primary": 0.10999457744901892,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1,
+    "z": -0.47,
+    "roll": -0.6,
+    "primary": 0.10999457744901892,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1,
+    "z": -0.47,
+    "roll": 0,
+    "primary": 0.11074807803289922,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1,
+    "z": -0.47,
+    "roll": 0.3,
+    "primary": 0.11074807803289922,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1,
+    "z": -0.47,
+    "roll": -0.3,
+    "primary": 0.11074807803289922,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1,
+    "z": -0.47,
+    "roll": 0.6,
+    "primary": 0.11074807803289922,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1,
+    "z": -0.47,
+    "roll": -0.6,
+    "primary": 0.11074807803289922,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": 0.6,
+    "primary": 0.11127060820036862,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": 0.3,
+    "primary": 0.03964957588884933,
+    "arm": 0.007271813254564774,
+    "body": 0,
+    "status": "clearance-failed"
+  },
+  {
+    "x": 0.35,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": 0,
+    "primary": 0.11428203827535141,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": 0.3,
+    "primary": 0.11428203827535141,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": 0.6,
+    "primary": 0.11428203827535141,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": 0.3,
+    "primary": 0.11452934325862724,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": 0.6,
+    "primary": 0.11452934325862724,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": 0.3,
+    "primary": 0.11745753171784241,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": 0.6,
+    "primary": 0.11745753171784241,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": 0.3,
+    "primary": 0.11868402056466303,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": 0.3,
+    "primary": 0.11930748451656906,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": 0.6,
+    "primary": 0.11930748451656906,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1,
+    "z": -0.42,
+    "roll": 0.6,
+    "primary": 0.11966508062481261,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": 0.3,
+    "primary": 0.12037795582708682,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1,
+    "z": -0.42,
+    "roll": 0.6,
+    "primary": 0.12037909755780853,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": 0.6,
+    "primary": 0.12204015253811107,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": 0.3,
+    "primary": 0.12363382873700793,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1,
+    "z": -0.42,
+    "roll": 0.3,
+    "primary": 0.12381358380361056,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1,
+    "z": -0.42,
+    "roll": 0.6,
+    "primary": 0.12381358380361056,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": 0.3,
+    "primary": 0.12436331905397677,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": 0.3,
+    "primary": 0.12574211434646132,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": 0.6,
+    "primary": 0.12574211434646132,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": 0.3,
+    "primary": 0.1281790484395929,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": 0.6,
+    "primary": 0.1281790484395929,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": 0.3,
+    "primary": 0.12834708837482584,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.05,
+    "z": -0.42,
+    "roll": 0.6,
+    "primary": 0.12834708837482584,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.1,
+    "z": -0.37,
+    "roll": 0.6,
+    "primary": 0.08037888894886214,
+    "arm": 0.004920691688108214,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": 0.6,
+    "primary": 0.0644220286148131,
+    "arm": 0.006858880791463184,
+    "body": 0,
+    "status": "clearance-failed"
+  },
+  {
+    "x": 0.25,
+    "y": 1,
+    "z": -0.47,
+    "roll": 0.6,
+    "primary": 0.13399594579383484,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1,
+    "z": -0.47,
+    "roll": 0.6,
+    "primary": 0.13470919956795588,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": 0.3,
+    "primary": 0.13473184714645678,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": 0.6,
+    "primary": 0.13473184714645678,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": 0.6,
+    "primary": 0.13719117375909598,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": 0.6,
+    "primary": 0.13789979046854545,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1,
+    "z": -0.37,
+    "roll": 0.6,
+    "primary": 0.08691876011955224,
+    "arm": 0.005116996662090645,
+    "body": 0,
+    "status": "clearance-failed"
+  },
+  {
+    "x": 0.35,
+    "y": 1,
+    "z": -0.47,
+    "roll": 0.3,
+    "primary": 0.14014202588981606,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1,
+    "z": -0.47,
+    "roll": 0.6,
+    "primary": 0.14014202588981606,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": 0.3,
+    "primary": 0.026410888787495604,
+    "arm": 0.011464832395822327,
+    "body": 0,
+    "status": "clearance-failed"
+  },
+  {
+    "x": 0.3,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": 0.6,
+    "primary": 0.14124042637638712,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": 0.3,
+    "primary": 0.14990287112224734,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1,
+    "z": -0.47,
+    "roll": 0.3,
+    "primary": 0.15012481196383554,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1,
+    "z": -0.47,
+    "roll": 0.6,
+    "primary": 0.15012481196383554,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": 0.6,
+    "primary": 0.15035029252139284,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.2,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": 0.6,
+    "primary": 0.15135763683571932,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": 0.6,
+    "primary": 0.15424358064215876,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.25,
+    "y": 1.1,
+    "z": -0.42,
+    "roll": 0.6,
+    "primary": 0.1570700823103011,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": 0.6,
+    "primary": 0.09998530453672351,
+    "arm": 0.005899908479336968,
+    "body": 0,
+    "status": "clearance-failed"
+  },
+  {
+    "x": 0.35,
+    "y": 1.05,
+    "z": -0.47,
+    "roll": 0.6,
+    "primary": 0.16263170505612048,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.4,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": 0.6,
+    "primary": 0.1629312047602214,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.35,
+    "y": 1.1,
+    "z": -0.47,
+    "roll": 0.6,
+    "primary": 0.17211537432600627,
+    "arm": 0,
+    "body": 0,
+    "status": "unreachable"
+  },
+  {
+    "x": 0.3,
+    "y": 1,
+    "z": -0.32,
+    "roll": 0.3,
+    "primary": 0.06637335735682216,
+    "arm": 0.011018620671685964,
+    "body": 0,
+    "status": "clearance-failed"
+  },
+  {
+    "x": 0.25,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": 0.6,
+    "primary": 0.07130481757584219,
+    "arm": 0.011195000084403606,
+    "body": 0,
+    "status": "clearance-failed"
+  },
+  {
+    "x": 0.25,
+    "y": 1,
+    "z": -0.32,
+    "roll": 0.3,
+    "primary": 0.05404146811919281,
+    "arm": 0.014773829698436214,
+    "body": 0,
+    "status": "clearance-failed"
+  },
+  {
+    "x": 0.3,
+    "y": 1.05,
+    "z": -0.37,
+    "roll": 0.6,
+    "primary": 0.08328903136750848,
+    "arm": 0.011920599178050273,
+    "body": 0,
+    "status": "clearance-failed"
+  },
+  {
+    "x": 0.2,
+    "y": 1,
+    "z": -0.32,
+    "roll": 0.3,
+    "primary": 0.04695864343906009,
+    "arm": 0.015578931826918274,
+    "body": 0,
+    "status": "clearance-failed"
+  },
+  {
+    "x": 0.4,
+    "y": 1,
+    "z": -0.37,
+    "roll": 0.6,
+    "primary": 0.05745069285764757,
+    "arm": 0.020519204569998784,
+    "body": 0,
+    "status": "clearance-failed"
+  },
+  {
+    "x": 0.4,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": 0.6,
+    "primary": 0.060351944630069695,
+    "arm": 0.026418132572782027,
+    "body": 0,
+    "status": "clearance-failed"
+  },
+  {
+    "x": 0.35,
+    "y": 1.1,
+    "z": -0.32,
+    "roll": 0.6,
+    "primary": 0.03639122593910038,
+    "arm": 0.034042431466922846,
+    "body": 0,
+    "status": "clearance-failed"
+  },
+  {
+    "x": 0.4,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": 0.6,
+    "primary": 0.08069191836066152,
+    "arm": 0.030520369381400098,
+    "body": 0,
+    "status": "clearance-failed"
+  },
+  {
+    "x": 0.4,
+    "y": 1,
+    "z": -0.32,
+    "roll": 0.6,
+    "primary": 0.05845195047891348,
+    "arm": 0.03754955150822137,
+    "body": 0,
+    "status": "clearance-failed"
+  },
+  {
+    "x": 0.35,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": 0.6,
+    "primary": 0.05793755935426031,
+    "arm": 0.038796100831529734,
+    "body": 0,
+    "status": "clearance-failed"
+  },
+  {
+    "x": 0.35,
+    "y": 1,
+    "z": -0.32,
+    "roll": 0.6,
+    "primary": 0.042425672839001276,
+    "arm": 0.04084818686616254,
+    "body": 0,
+    "status": "clearance-failed"
+  },
+  {
+    "x": 0.3,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": 0.6,
+    "primary": 0.03964957588884933,
+    "arm": 0.04494962046857243,
+    "body": 0,
+    "status": "clearance-failed"
+  },
+  {
+    "x": 0.25,
+    "y": 1.05,
+    "z": -0.32,
+    "roll": 0.6,
+    "primary": 0.026410888787495604,
+    "arm": 0.04918172396414694,
+    "body": 0,
+    "status": "clearance-failed"
+  },
+  {
+    "x": 0.2,
+    "y": 1,
+    "z": -0.32,
+    "roll": 0.6,
+    "primary": 0.04695864343906009,
+    "arm": 0.04773138840758823,
+    "body": 0,
+    "status": "clearance-failed"
+  },
+  {
+    "x": 0.3,
+    "y": 1,
+    "z": -0.32,
+    "roll": 0.6,
+    "primary": 0.0663733031778134,
+    "arm": 0.04873275657187881,
+    "body": 0,
+    "status": "clearance-failed"
+  },
+  {
+    "x": 0.25,
+    "y": 1,
+    "z": -0.32,
+    "roll": 0.6,
+    "primary": 0.05404146811919281,
+    "arm": 0.050129829729676834,
+    "body": 0,
+    "status": "clearance-failed"
+  }
+]

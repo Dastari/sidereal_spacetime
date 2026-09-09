@@ -1,0 +1,178 @@
+{
+  "schema": "sidereal.native-roof-delivery.v1",
+  "revision": "r001",
+  "ownerArtApproval": null,
+  "installed": false,
+  "parts": 12,
+  "triangles": 25740,
+  "sharedMaterials": 7,
+  "materialPrimitives": 84,
+  "sourceInterface": "76f3f46c8e479106059945be0bfe23000d235d7c1731ad3d91524c3d894e1d16",
+  "files": [
+    {
+      "path": "all-shapes-oblique.png",
+      "sha256": "c3f40a52ed9c7e3337c2c5714d076dbca2cf6d11f9c053a9eb62b385f4318181",
+      "bytes": 1129817
+    },
+    {
+      "path": "all-shapes-top.png",
+      "sha256": "936708176a096eecaaaffba995c2725b6d0d1ca6cbdec3d6bd58a1b667446cd1",
+      "bytes": 1208234
+    },
+    {
+      "path": "author_roof.py",
+      "sha256": "cd44e0fc7f297741ccdcbbb22606b0f0b1eb77b2b21ce5d37a5cf8b94852037e",
+      "bytes": 12967
+    },
+    {
+      "path": "build.log",
+      "sha256": "569cb031cbff097176dd353299f69c27af3d6fd3138912d3ee1bfc833ebb0d76",
+      "bytes": 190270
+    },
+    {
+      "path": "capture-record.json",
+      "sha256": "c3261a2127319cf6e40820279a5db33acaf15d9a8e05ba716a8c481a873f2506",
+      "bytes": 657
+    },
+    {
+      "path": "ceiling-basecolor.png",
+      "sha256": "286accb200e98e7fdcc2fcd6ebcee3fca538cd56d47fbef02d041fdceb112884",
+      "bytes": 70047
+    },
+    {
+      "path": "ceiling-normal.png",
+      "sha256": "4a7974d9a99a03d9013a85417ad8e11422cdf609c4299f88e468e29fd09b99c8",
+      "bytes": 2777
+    },
+    {
+      "path": "ceiling-roughness.png",
+      "sha256": "c47cc26c0e86d634c7bc37c69332eb3a515a0e51c5cd3e4c1514a56776f70e4d",
+      "bytes": 2387
+    },
+    {
+      "path": "enamel-normal.png",
+      "sha256": "f18eef215a60928ee4ba98fbc98fae0c0c42dfdc26a69674dbdc8d7ace8e7508",
+      "bytes": 25244
+    },
+    {
+      "path": "geometry-report.json",
+      "sha256": "a6d7102f77e9e1ef9aba8fa09a9c734f672863b68ccce1b69c7a97fbdaf9acdb",
+      "bytes": 3547
+    },
+    {
+      "path": "interfaces.json",
+      "sha256": "ffa320a5edc5b99a45ff50a4d33f94c0346fe87972358a73a4fee8375de68a57",
+      "bytes": 38333
+    },
+    {
+      "path": "kit.glb",
+      "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+      "bytes": 3580236
+    },
+    {
+      "path": "reference-core-construction-blocks--exploded-roof-cap.png",
+      "sha256": "ab6e0eb07c9ed0dbcd434f840ea8ca301c548dc2c2dc0fe267b24787520a1c9d",
+      "bytes": 54716
+    },
+    {
+      "path": "reference-evidence.json",
+      "sha256": "45e82d40d29221ca65d94a6c667f83d0a763432ee873fb50ab6df661a9e0fa48",
+      "bytes": 1401
+    },
+    {
+      "path": "reference-faction-ship-1--roof-module-2.png",
+      "sha256": "be1756475cbbb0619668c6d16f78d650d74e7938fb6450ad3a8549c9c30f9a5c",
+      "bytes": 12098
+    },
+    {
+      "path": "reference-roof-r004-runtime.png",
+      "sha256": "adf5d0f9b7cd1fc3b20ba8c050b6fe2db8c1e5e0f36e6a1e522f9e62dc65248d",
+      "bytes": 618399
+    },
+    {
+      "path": "roof-kit.blend",
+      "sha256": "e3ff6410c70fcef0dc2015beff2dda942c24ead86b09c19e41d342f75adeba7c",
+      "bytes": 2238616
+    },
+    {
+      "path": "square-close.png",
+      "sha256": "53019f035721eed3a1daed3730ab96be08bf2f90a2e4f2867da0e0bbd59d5cf1",
+      "bytes": 617830
+    },
+    {
+      "path": "underside-close.png",
+      "sha256": "86a9ea79499af1bc0af7e77ad45513d8b3c416c289f863a416cc8b54d7bb6f09",
+      "bytes": 707865
+    },
+    {
+      "path": "validate_roof.py",
+      "sha256": "367640cc40bc18d7bb9889f813ea658bbdc62e56d0fe2acbb77ad6f00f684d7d",
+      "bytes": 5007
+    },
+    {
+      "path": "validation.json",
+      "sha256": "ac6166516378f4bd6ac5740dc628aa77db502706936635a042065823e5770ba4",
+      "bytes": 21303
+    },
+    {
+      "path": "variant-corner-clipped.png",
+      "sha256": "e847a27b3c0eb5ef426d74dd43d0c8739c8dbc0d63493475d1cde3ae2be9415e",
+      "bytes": 555656
+    },
+    {
+      "path": "variant-half-2x1.png",
+      "sha256": "48bfb697fdfdffe4cb331b99d6a529f4c07bb92ceecddbff6c4d499f0add97f3",
+      "bytes": 457107
+    },
+    {
+      "path": "variant-quarter-1m.png",
+      "sha256": "42dc1962209b67bb34d3b551f609b3cd98b195cf97284666417beed37c65db22",
+      "bytes": 614101
+    },
+    {
+      "path": "variant-square-2m.png",
+      "sha256": "8dd0d21ad4d8339b2bb2ddc2c5bc7c57a09ce960f53758426d1d10bbd81996e7",
+      "bytes": 584253
+    },
+    {
+      "path": "variant-strip-4x1.png",
+      "sha256": "b501c345df708d036282a84e448fa780691438f29e691f6f1889e2284d744037",
+      "bytes": 387834
+    },
+    {
+      "path": "variant-taper-4m.png",
+      "sha256": "462ebf8928ac7ee109e8eaa03fcee6f4ef4a0a167b505e4c109b70651796505b",
+      "bytes": 431289
+    },
+    {
+      "path": "variant-triangle-1m.png",
+      "sha256": "a0cb08421db208040a85c87a60b54cc60ab40397daa5e43c7599ffdb30787c00",
+      "bytes": 506674
+    },
+    {
+      "path": "variant-triangle-45.png",
+      "sha256": "d530bb4235f5719b753e27a40931507255743917cfce73ad45a3da690b14f25b",
+      "bytes": 483627
+    },
+    {
+      "path": "variant-triangle-long-left.png",
+      "sha256": "e577678f96f18e722400e3ffd2e13e5f19e7056954e45e5129cd72fb02a1e33b",
+      "bytes": 396074
+    },
+    {
+      "path": "variant-triangle-long-right.png",
+      "sha256": "6aa16977d844936e39e97476d0cee20e8e251ce6cbeeaaf7e01e4a1acf17cd7a",
+      "bytes": 380952
+    },
+    {
+      "path": "variant-triangle-slim-left.png",
+      "sha256": "312b706a45070a23d6e50ca8aac0385588a40c2e5fa59a2c095db914198c6059",
+      "bytes": 355271
+    },
+    {
+      "path": "variant-triangle-slim-right.png",
+      "sha256": "6fa8b0f15c17cf6ab8731a7898415daff5e270a763c9783f27f208e4f27e28b0",
+      "bytes": 348818
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "renderer": "Blender Cycles CPU",
+  "samples": 48,
+  "threads": 4,
+  "viewTransform": "AgX",
+  "runtimeBrowser": false,
+  "reviewed": [
+    "all-shapes-top.png",
+    "all-shapes-oblique.png",
+    "square-close.png",
+    "underside-close.png"
+  ],
+  "perShapeCutouts": "variant-*.png",
+  "sourceGeometry": "Actual authored source mesh with evaluated modifiers; GLB cleanup removes tiny degenerate triangles without changing declared contact polygons.",
+  "limitations": [
+    "No gameplay-browser proof or final art approval",
+    "No bloom postprocess in CPU stills",
+    "Underside panel relief is texture/normal detail on an unperforated plane"
+  ]
+}

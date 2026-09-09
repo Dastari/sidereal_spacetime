@@ -1,0 +1,532 @@
+{
+  "schema": "sidereal.construction-native-gasket-candidate.v1",
+  "id": "shipyard.structure.boundary-kit",
+  "revision": "r002",
+  "scope": "Additive gasket/seat subfamily only; preserves rigid native r001 dependency, not a complete replacement kit",
+  "latticePerMeter": 32,
+  "datumsUnits": {
+    "floorTop": 6,
+    "wallTop": 96,
+    "roofUnderside": 96
+  },
+  "dependency": {
+    "revision": "r001",
+    "glbSha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+    "interfaceSha256": "33347b32b1675fee00d36046a05de37013fa32eca6e2a4d671464da3499972d9",
+    "sourceSha256": "f20cc7da6fbf8e2165805e04a81f00feafd96e3cc2b5d7200e4188de785e3491",
+    "requiredParts": [
+      "door-frame-2m",
+      "door-leaf"
+    ],
+    "partBindings": [
+      {
+        "id": "door-frame-2m",
+        "assetUuid": "7277440c-89b5-57a5-bc99-42df8db2d919",
+        "native": {
+          "kit": "kit.glb",
+          "sha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+          "nodePrefix": "GEO-door-frame-2m--surface",
+          "preserveNodeTransform": true,
+          "blenderRootTranslationM": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "visual": {
+          "triangles": 2412,
+          "vertices": 1256,
+          "materialSlots": 5,
+          "localBounds": {
+            "min": [
+              0.0625,
+              -0.06187500059604645,
+              0.1875
+            ],
+            "max": [
+              1.9375,
+              0.06187500059604645,
+              3.0
+            ]
+          },
+          "translation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "nodePrefix": "GEO-door-frame-2m--surface"
+        },
+        "damageMode": "voxel",
+        "damageAdapter": null,
+        "structuralDefinitionId": null,
+        "ratings": null,
+        "role": "door-frame",
+        "nominalEndpointSpanUnits": [
+          [
+            0,
+            0
+          ],
+          [
+            64,
+            0
+          ]
+        ],
+        "nominalFootprintUnits": [
+          [
+            0,
+            -2
+          ],
+          [
+            64,
+            -2
+          ],
+          [
+            64,
+            2
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "bodyFootprintUnits": [
+          [
+            2,
+            -2
+          ],
+          [
+            62,
+            -2
+          ],
+          [
+            62,
+            2
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "bottomUnits": 6,
+        "topUnits": 96,
+        "connectionPortsUnits": [
+          {
+            "position": [
+              2,
+              0
+            ],
+            "direction": [
+              -1,
+              0
+            ]
+          },
+          {
+            "position": [
+              62,
+              0
+            ],
+            "direction": [
+              1,
+              0
+            ]
+          }
+        ],
+        "potentialContactFacesM": {
+          "bottomZ": 0.1875,
+          "topZ": 3,
+          "leftX": 0.0625,
+          "rightX": 1.9375,
+          "backingHalfThickness": 0.046875,
+          "sealApproval": null
+        },
+        "requiredEndpointClosures": true
+      },
+      {
+        "id": "door-leaf",
+        "assetUuid": "0c012dbe-989b-5177-a4f6-91e6ca679dd0",
+        "native": {
+          "kit": "kit.glb",
+          "sha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+          "nodePrefix": "GEO-door-leaf--surface",
+          "preserveNodeTransform": true,
+          "blenderRootTranslationM": [
+            0.3125,
+            -0.0625,
+            0.0
+          ]
+        },
+        "visual": {
+          "triangles": 1356,
+          "vertices": 712,
+          "materialSlots": 5,
+          "localBounds": {
+            "min": [
+              0.0,
+              0.0,
+              0.18950000405311584
+            ],
+            "max": [
+              1.3105000257492065,
+              0.0625,
+              2.435499906539917
+            ]
+          },
+          "translation": [
+            0.3125,
+            -0.0625,
+            0.0
+          ],
+          "nodePrefix": "GEO-door-leaf--surface"
+        },
+        "damageMode": "voxel",
+        "damageAdapter": null,
+        "structuralDefinitionId": null,
+        "ratings": null,
+        "role": "moving-door-leaf",
+        "parentFrame": "door-frame-2m",
+        "physicalRigidFit": "See door metadata; plate inset2mm per aperture edge."
+      }
+    ]
+  },
+  "parts": [
+    {
+      "id": "door-perimeter-seal",
+      "assetUuid": "f654edfd-747e-582e-a8ec-b981f68a4371",
+      "native": {
+        "sha256": "c65a2c6273e8773956e555ea26879b8b4d0d58d483e42eef94b55c8052e75092",
+        "nodePrefix": "GEO-door-perimeter-seal--surface"
+      },
+      "bindTranslationBlenderM": [
+        0.3125,
+        -0.0625,
+        0
+      ],
+      "bindTranslationGlbM": [
+        0.3125,
+        0,
+        0.0625
+      ],
+      "parentPose": "same hinge pose as the original r001 rigid leaf; preserve bind offset exactly once",
+      "morph": {
+        "name": "SealRetracted",
+        "index": 0,
+        "minimum": 0,
+        "maximum": 1,
+        "zero": "deployed contact contour; legal only at hinge0",
+        "one": "retracted contour, required throughout hinge travel",
+        "exportDefault": 0,
+        "runtimeInitialization": "set from accepted authoritative seal state before displaying; absent/unresolved state must not imply sealed"
+      }
+    },
+    {
+      "id": "door-frame-seal-seat",
+      "assetUuid": "c764ada9-697a-563e-9391-dd4054da60fa",
+      "native": {
+        "sha256": "c65a2c6273e8773956e555ea26879b8b4d0d58d483e42eef94b55c8052e75092",
+        "nodePrefix": "GEO-door-frame-seal-seat--surface"
+      },
+      "bindTranslationBlenderM": [
+        0,
+        0,
+        0
+      ],
+      "bindTranslationGlbM": [
+        0,
+        0,
+        0
+      ],
+      "parentPose": "fixed to doorway frame"
+    }
+  ],
+  "geometry": {
+    "coordinateSpace": "Blender local metres; ring bind X.3125 Y-.0625 Z0",
+    "deployedOuterXZ": [
+      [
+        0.0525,
+        0.1875
+      ],
+      [
+        1.3225,
+        0.1875
+      ],
+      [
+        1.3225,
+        2.4475
+      ],
+      [
+        0.0525,
+        2.4475
+      ]
+    ],
+    "innerXZ": [
+      [
+        0.0775,
+        0.2135
+      ],
+      [
+        1.2975,
+        0.2135
+      ],
+      [
+        1.2975,
+        2.4215
+      ],
+      [
+        0.0775,
+        2.4215
+      ]
+    ],
+    "retractedOuterXZ": [
+      [
+        0.0685,
+        0.1955
+      ],
+      [
+        1.3065,
+        0.1955
+      ],
+      [
+        1.3065,
+        2.4295
+      ],
+      [
+        0.0685,
+        2.4295
+      ]
+    ],
+    "deployedFrontY": -0.009,
+    "retractedFrontY": -0.022,
+    "backY": 0,
+    "fixedSeatBoxes": [
+      {
+        "id": "left",
+        "min": [
+          0.345,
+          -0.0625,
+          0.1875
+        ],
+        "max": [
+          0.375,
+          -0.045,
+          2.4675
+        ]
+      },
+      {
+        "id": "right",
+        "min": [
+          1.625,
+          -0.0625,
+          0.1875
+        ],
+        "max": [
+          1.655,
+          -0.045,
+          2.4675
+        ]
+      },
+      {
+        "id": "top",
+        "min": [
+          0.375,
+          -0.0625,
+          2.4375
+        ],
+        "max": [
+          1.625,
+          -0.045,
+          2.4675
+        ]
+      }
+    ],
+    "dependencyGlbSha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+    "rigidLeafUnchanged": true
+  },
+  "motion": {
+    "hingeBlenderZDegrees": [
+      0,
+      -90
+    ],
+    "hingeGlbYDegrees": [
+      0,
+      -90
+    ],
+    "sequence": [
+      "hold hinge0; retract seal weight0to1",
+      "hold seal weight1; rotate hinge0to-90",
+      "hold seal weight1; return hinge-90to0",
+      "only after closed/unobstructed authority result, extend seal weight1to0"
+    ],
+    "disallowed": "Do not extend the seal at nonzero hinge angle; do not rotate an extended seal",
+    "rates": null,
+    "powerDefinition": null,
+    "actuatorDefinition": null,
+    "conservativeRetractedSwingRadiusM": 1.3119895197752154,
+    "additionalFrontEnvelopeBlenderY": [
+      -0.0845,
+      -0.0625
+    ]
+  },
+  "opening": {
+    "minBlenderM": [
+      0.375,
+      -0.046875,
+      0.1875
+    ],
+    "maxBlenderM": [
+      1.625,
+      0.046875,
+      2.4375
+    ],
+    "widthM": 1.25,
+    "heightM": 2.25,
+    "rigidLeafWidthM": 1.246,
+    "rigidLeafHeightM": 2.246
+  },
+  "contactPatches": [
+    {
+      "id": "left-frame-contact",
+      "plane": {
+        "axis": "y",
+        "valueM": -0.0625
+      },
+      "polygonBlenderM": [
+        [
+          0.365,
+          -0.0625,
+          0.1875
+        ],
+        [
+          0.375,
+          -0.0625,
+          0.1875
+        ],
+        [
+          0.375,
+          -0.0625,
+          2.4475
+        ],
+        [
+          0.365,
+          -0.0625,
+          2.4475
+        ]
+      ],
+      "nominalContactAreaM2": 0.0226
+    },
+    {
+      "id": "right-frame-contact",
+      "plane": {
+        "axis": "y",
+        "valueM": -0.0625
+      },
+      "polygonBlenderM": [
+        [
+          1.625,
+          -0.0625,
+          0.1875
+        ],
+        [
+          1.635,
+          -0.0625,
+          0.1875
+        ],
+        [
+          1.635,
+          -0.0625,
+          2.4475
+        ],
+        [
+          1.625,
+          -0.0625,
+          2.4475
+        ]
+      ],
+      "nominalContactAreaM2": 0.0226
+    },
+    {
+      "id": "top-frame-contact",
+      "plane": {
+        "axis": "y",
+        "valueM": -0.0625
+      },
+      "polygonBlenderM": [
+        [
+          0.375,
+          -0.0625,
+          2.4375
+        ],
+        [
+          1.625,
+          -0.0625,
+          2.4375
+        ],
+        [
+          1.625,
+          -0.0625,
+          2.4475
+        ],
+        [
+          0.375,
+          -0.0625,
+          2.4475
+        ]
+      ],
+      "nominalContactAreaM2": 0.0125
+    },
+    {
+      "id": "floor-contact",
+      "plane": {
+        "axis": "z",
+        "valueM": 0.1875
+      },
+      "polygonBlenderM": [
+        [
+          0.365,
+          -0.0715,
+          0.1875
+        ],
+        [
+          1.635,
+          -0.0715,
+          0.1875
+        ],
+        [
+          1.635,
+          -0.0625,
+          0.1875
+        ],
+        [
+          0.365,
+          -0.0625,
+          0.1875
+        ]
+      ],
+      "nominalContactAreaM2": 0.01143
+    }
+  ],
+  "leafContact": {
+    "planeLocalY": 0,
+    "mountAreaUnionM2": 0.10715594242417535,
+    "method": "exact union of ring/rigid-leaf front-face contact rectangles; overlap counted once"
+  },
+  "acceptance": {
+    "geometricContactValidated": true,
+    "pressureApproved": false,
+    "damageApproved": false,
+    "actuatorApproved": false,
+    "ownerArtApproved": false
+  },
+  "damageMode": "voxel",
+  "damageAdapter": null,
+  "structuralDefinitionId": null,
+  "diagonalFamilies": {
+    "state": "not-delivered",
+    "requiredRatios": [
+      "1:1",
+      "2:1",
+      "4:1",
+      "8:1"
+    ],
+    "notes": "Separate native angled spans, convex/concave node closures and floor/roof contact adapters remain required; this revision deliberately stages only door seal interfaces."
+  }
+}

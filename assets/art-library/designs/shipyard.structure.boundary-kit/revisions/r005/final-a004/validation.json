@@ -1,0 +1,1274 @@
+{
+  "pass": true,
+  "checks": [
+    {
+      "name": "base-5c44702128b939ad exact top footprint and unchanged walking datum",
+      "pass": true,
+      "details": 0.0
+    },
+    {
+      "name": "base-5c44702128b939ad native closed wedge volume",
+      "pass": true,
+      "details": {
+        "actualM3": 3.7417110127982205e-05,
+        "expectedM3": 3.741711012803415e-05
+      }
+    },
+    {
+      "name": "base-5c44702128b939ad native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "base-5c44702128b939ad closed oriented native compound solids",
+      "pass": true,
+      "details": {
+        "badEdges": 0,
+        "sharedInternalContactFaces": "retained; disjoint wedge interiors, no positive volume overlap"
+      }
+    },
+    {
+      "name": "base-5c44702128b939ad bottom lies on actual native floor triangles",
+      "pass": true,
+      "details": {
+        "bad": 0,
+        "maxPlaneDistanceM": 2.168404344971009e-19
+      }
+    },
+    {
+      "name": "base-5105a9e117a14a08 exact top footprint and unchanged walking datum",
+      "pass": true,
+      "details": 0.0
+    },
+    {
+      "name": "base-5105a9e117a14a08 native closed wedge volume",
+      "pass": true,
+      "details": {
+        "actualM3": 2.804430123003997e-05,
+        "expectedM3": 2.804430123005195e-05
+      }
+    },
+    {
+      "name": "base-5105a9e117a14a08 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "base-5105a9e117a14a08 closed oriented native compound solids",
+      "pass": true,
+      "details": {
+        "badEdges": 0,
+        "sharedInternalContactFaces": "retained; disjoint wedge interiors, no positive volume overlap"
+      }
+    },
+    {
+      "name": "base-5105a9e117a14a08 bottom lies on actual native floor triangles",
+      "pass": true,
+      "details": {
+        "bad": 0,
+        "maxPlaneDistanceM": 2.168404344971009e-19
+      }
+    },
+    {
+      "name": "base-1721621a1efaf31e exact top footprint and unchanged walking datum",
+      "pass": true,
+      "details": 0.0
+    },
+    {
+      "name": "base-1721621a1efaf31e native closed wedge volume",
+      "pass": true,
+      "details": {
+        "actualM3": 1.8671660918103284e-05,
+        "expectedM3": 1.8671660918112063e-05
+      }
+    },
+    {
+      "name": "base-1721621a1efaf31e native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "base-1721621a1efaf31e closed oriented native compound solids",
+      "pass": true,
+      "details": {
+        "badEdges": 0,
+        "sharedInternalContactFaces": "retained; disjoint wedge interiors, no positive volume overlap"
+      }
+    },
+    {
+      "name": "base-1721621a1efaf31e bottom lies on actual native floor triangles",
+      "pass": true,
+      "details": {
+        "bad": 0,
+        "maxPlaneDistanceM": 2.168404344971009e-19
+      }
+    },
+    {
+      "name": "base-751a27b8eef382a8 exact top footprint and unchanged walking datum",
+      "pass": true,
+      "details": 0.0
+    },
+    {
+      "name": "base-751a27b8eef382a8 native closed wedge volume",
+      "pass": true,
+      "details": {
+        "actualM3": 4.678894190864209e-05,
+        "expectedM3": 4.678894190855461e-05
+      }
+    },
+    {
+      "name": "base-751a27b8eef382a8 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "base-751a27b8eef382a8 closed oriented native compound solids",
+      "pass": true,
+      "details": {
+        "badEdges": 0,
+        "sharedInternalContactFaces": "retained; disjoint wedge interiors, no positive volume overlap"
+      }
+    },
+    {
+      "name": "base-751a27b8eef382a8 bottom lies on actual native floor triangles",
+      "pass": true,
+      "details": {
+        "bad": 0,
+        "maxPlaneDistanceM": 2.168404344971009e-19
+      }
+    },
+    {
+      "name": "base-778a913ba6bd4861 exact top footprint and unchanged walking datum",
+      "pass": true,
+      "details": 0.0
+    },
+    {
+      "name": "base-778a913ba6bd4861 native closed wedge volume",
+      "pass": true,
+      "details": {
+        "actualM3": 3.1928417486808365e-05,
+        "expectedM3": 3.192841748677901e-05
+      }
+    },
+    {
+      "name": "base-778a913ba6bd4861 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "base-778a913ba6bd4861 closed oriented native compound solids",
+      "pass": true,
+      "details": {
+        "badEdges": 0,
+        "sharedInternalContactFaces": "retained; disjoint wedge interiors, no positive volume overlap"
+      }
+    },
+    {
+      "name": "base-778a913ba6bd4861 bottom lies on actual native floor triangles",
+      "pass": true,
+      "details": {
+        "bad": 0,
+        "maxPlaneDistanceM": 2.220446049250313e-16
+      }
+    },
+    {
+      "name": "base-edeb20d844afc37f exact top footprint and unchanged walking datum",
+      "pass": true,
+      "details": 0.0
+    },
+    {
+      "name": "base-edeb20d844afc37f native closed wedge volume",
+      "pass": true,
+      "details": {
+        "actualM3": 4.952938188501737e-05,
+        "expectedM3": 4.9529381885014035e-05
+      }
+    },
+    {
+      "name": "base-edeb20d844afc37f native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "base-edeb20d844afc37f closed oriented native compound solids",
+      "pass": true,
+      "details": {
+        "badEdges": 0,
+        "sharedInternalContactFaces": "retained; disjoint wedge interiors, no positive volume overlap"
+      }
+    },
+    {
+      "name": "base-edeb20d844afc37f bottom lies on actual native floor triangles",
+      "pass": true,
+      "details": {
+        "bad": 0,
+        "maxPlaneDistanceM": 1.0885389811754465e-16
+      }
+    },
+    {
+      "name": "base-8fa3ceb73648f1b1 exact top footprint and unchanged walking datum",
+      "pass": true,
+      "details": 0.0
+    },
+    {
+      "name": "base-8fa3ceb73648f1b1 native closed wedge volume",
+      "pass": true,
+      "details": {
+        "actualM3": 4.952784532609531e-05,
+        "expectedM3": 4.9527845326201455e-05
+      }
+    },
+    {
+      "name": "base-8fa3ceb73648f1b1 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "base-8fa3ceb73648f1b1 closed oriented native compound solids",
+      "pass": true,
+      "details": {
+        "badEdges": 0,
+        "sharedInternalContactFaces": "retained; disjoint wedge interiors, no positive volume overlap"
+      }
+    },
+    {
+      "name": "base-8fa3ceb73648f1b1 bottom lies on actual native floor triangles",
+      "pass": true,
+      "details": {
+        "bad": 0,
+        "maxPlaneDistanceM": 2.5717275531356165e-16
+      }
+    },
+    {
+      "name": "base-79d03a8564bd3284 exact top footprint and unchanged walking datum",
+      "pass": true,
+      "details": 4.223485809100258e-08
+    },
+    {
+      "name": "base-79d03a8564bd3284 native closed wedge volume",
+      "pass": true,
+      "details": {
+        "actualM3": 4.2755336345163174e-05,
+        "expectedM3": 4.2755249672100295e-05
+      }
+    },
+    {
+      "name": "base-79d03a8564bd3284 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "base-79d03a8564bd3284 closed oriented native compound solids",
+      "pass": true,
+      "details": {
+        "badEdges": 0,
+        "sharedInternalContactFaces": "retained; disjoint wedge interiors, no positive volume overlap"
+      }
+    },
+    {
+      "name": "base-79d03a8564bd3284 bottom lies on actual native floor triangles",
+      "pass": true,
+      "details": {
+        "bad": 0,
+        "maxPlaneDistanceM": 2.4352846562066053e-08
+      }
+    },
+    {
+      "name": "base-344925e0d658e538 exact top footprint and unchanged walking datum",
+      "pass": true,
+      "details": 2.626534271317523e-09
+    },
+    {
+      "name": "base-344925e0d658e538 native closed wedge volume",
+      "pass": true,
+      "details": {
+        "actualM3": 4.275440829643271e-05,
+        "expectedM3": 4.2754466817841914e-05
+      }
+    },
+    {
+      "name": "base-344925e0d658e538 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "base-344925e0d658e538 closed oriented native compound solids",
+      "pass": true,
+      "details": {
+        "badEdges": 0,
+        "sharedInternalContactFaces": "retained; disjoint wedge interiors, no positive volume overlap"
+      }
+    },
+    {
+      "name": "base-344925e0d658e538 bottom lies on actual native floor triangles",
+      "pass": true,
+      "details": {
+        "bad": 0,
+        "maxPlaneDistanceM": 2.121743447602853e-08
+      }
+    },
+    {
+      "name": "base-500994d2fdb6f234 exact top footprint and unchanged walking datum",
+      "pass": true,
+      "details": 0.0
+    },
+    {
+      "name": "base-500994d2fdb6f234 native closed wedge volume",
+      "pass": true,
+      "details": {
+        "actualM3": 3.466864463838766e-05,
+        "expectedM3": 3.4668644638379936e-05
+      }
+    },
+    {
+      "name": "base-500994d2fdb6f234 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "base-500994d2fdb6f234 closed oriented native compound solids",
+      "pass": true,
+      "details": {
+        "badEdges": 0,
+        "sharedInternalContactFaces": "retained; disjoint wedge interiors, no positive volume overlap"
+      }
+    },
+    {
+      "name": "base-500994d2fdb6f234 bottom lies on actual native floor triangles",
+      "pass": true,
+      "details": {
+        "bad": 0,
+        "maxPlaneDistanceM": 5.637851296924623e-17
+      }
+    },
+    {
+      "name": "base-79a931b0a4024f86 exact top footprint and unchanged walking datum",
+      "pass": true,
+      "details": 0.0
+    },
+    {
+      "name": "base-79a931b0a4024f86 native closed wedge volume",
+      "pass": true,
+      "details": {
+        "actualM3": 5.191014647763087e-05,
+        "expectedM3": 5.191014647763893e-05
+      }
+    },
+    {
+      "name": "base-79a931b0a4024f86 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "base-79a931b0a4024f86 closed oriented native compound solids",
+      "pass": true,
+      "details": {
+        "badEdges": 0,
+        "sharedInternalContactFaces": "retained; disjoint wedge interiors, no positive volume overlap"
+      }
+    },
+    {
+      "name": "base-79a931b0a4024f86 bottom lies on actual native floor triangles",
+      "pass": true,
+      "details": {
+        "bad": 0,
+        "maxPlaneDistanceM": 5.551115123125783e-17
+      }
+    },
+    {
+      "name": "base-daaa1deefdcc725b exact top footprint and unchanged walking datum",
+      "pass": true,
+      "details": 0.0
+    },
+    {
+      "name": "base-daaa1deefdcc725b native closed wedge volume",
+      "pass": true,
+      "details": {
+        "actualM3": 1.5928030597343358e-05,
+        "expectedM3": 1.592803059733626e-05
+      }
+    },
+    {
+      "name": "base-daaa1deefdcc725b native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "base-daaa1deefdcc725b closed oriented native compound solids",
+      "pass": true,
+      "details": {
+        "badEdges": 0,
+        "sharedInternalContactFaces": "retained; disjoint wedge interiors, no positive volume overlap"
+      }
+    },
+    {
+      "name": "base-daaa1deefdcc725b bottom lies on actual native floor triangles",
+      "pass": true,
+      "details": {
+        "bad": 0,
+        "maxPlaneDistanceM": 7.827939685345342e-17
+      }
+    },
+    {
+      "name": "base-0a60fc5795340e2d exact top footprint and unchanged walking datum",
+      "pass": true,
+      "details": 0.0
+    },
+    {
+      "name": "base-0a60fc5795340e2d native closed wedge volume",
+      "pass": true,
+      "details": {
+        "actualM3": 1.9550509626963836e-05,
+        "expectedM3": 1.9550509626963057e-05
+      }
+    },
+    {
+      "name": "base-0a60fc5795340e2d native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "base-0a60fc5795340e2d closed oriented native compound solids",
+      "pass": true,
+      "details": {
+        "badEdges": 0,
+        "sharedInternalContactFaces": "retained; disjoint wedge interiors, no positive volume overlap"
+      }
+    },
+    {
+      "name": "base-0a60fc5795340e2d bottom lies on actual native floor triangles",
+      "pass": true,
+      "details": {
+        "bad": 0,
+        "maxPlaneDistanceM": 5.3701756817011587e-08
+      }
+    },
+    {
+      "name": "base-84db6b95287bbbad exact top footprint and unchanged walking datum",
+      "pass": true,
+      "details": 0.0
+    },
+    {
+      "name": "base-84db6b95287bbbad native closed wedge volume",
+      "pass": true,
+      "details": {
+        "actualM3": 2.8483813408055475e-05,
+        "expectedM3": 2.848381340748243e-05
+      }
+    },
+    {
+      "name": "base-84db6b95287bbbad native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "base-84db6b95287bbbad closed oriented native compound solids",
+      "pass": true,
+      "details": {
+        "badEdges": 0,
+        "sharedInternalContactFaces": "retained; disjoint wedge interiors, no positive volume overlap"
+      }
+    },
+    {
+      "name": "base-84db6b95287bbbad bottom lies on actual native floor triangles",
+      "pass": true,
+      "details": {
+        "bad": 0,
+        "maxPlaneDistanceM": 3.7151312219738802e-09
+      }
+    },
+    {
+      "name": "base-d98033303b004cd5 exact top footprint and unchanged walking datum",
+      "pass": true,
+      "details": 0.0
+    },
+    {
+      "name": "base-d98033303b004cd5 native closed wedge volume",
+      "pass": true,
+      "details": {
+        "actualM3": 2.8483813411254305e-05,
+        "expectedM3": 2.8483813407482508e-05
+      }
+    },
+    {
+      "name": "base-d98033303b004cd5 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "base-d98033303b004cd5 closed oriented native compound solids",
+      "pass": true,
+      "details": {
+        "badEdges": 0,
+        "sharedInternalContactFaces": "retained; disjoint wedge interiors, no positive volume overlap"
+      }
+    },
+    {
+      "name": "base-d98033303b004cd5 bottom lies on actual native floor triangles",
+      "pass": true,
+      "details": {
+        "bad": 0,
+        "maxPlaneDistanceM": 3.759681953757017e-09
+      }
+    },
+    {
+      "name": "base-fa6166b9bd761866 exact top footprint and unchanged walking datum",
+      "pass": true,
+      "details": 1.9080016963538823e-10
+    },
+    {
+      "name": "base-fa6166b9bd761866 native closed wedge volume",
+      "pass": true,
+      "details": {
+        "actualM3": 2.8569842570969294e-05,
+        "expectedM3": 2.856984641252237e-05
+      }
+    },
+    {
+      "name": "base-fa6166b9bd761866 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "base-fa6166b9bd761866 closed oriented native compound solids",
+      "pass": true,
+      "details": {
+        "badEdges": 0,
+        "sharedInternalContactFaces": "retained; disjoint wedge interiors, no positive volume overlap"
+      }
+    },
+    {
+      "name": "base-fa6166b9bd761866 bottom lies on actual native floor triangles",
+      "pass": true,
+      "details": {
+        "bad": 0,
+        "maxPlaneDistanceM": 5.3701756816794746e-08
+      }
+    },
+    {
+      "name": "base-e31456f30d08d683 exact top footprint and unchanged walking datum",
+      "pass": true,
+      "details": 8.313913414050419e-11
+    },
+    {
+      "name": "base-e31456f30d08d683 native closed wedge volume",
+      "pass": true,
+      "details": {
+        "actualM3": 2.3091065792435705e-05,
+        "expectedM3": 2.3091065678766092e-05
+      }
+    },
+    {
+      "name": "base-e31456f30d08d683 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "base-e31456f30d08d683 closed oriented native compound solids",
+      "pass": true,
+      "details": {
+        "badEdges": 0,
+        "sharedInternalContactFaces": "retained; disjoint wedge interiors, no positive volume overlap"
+      }
+    },
+    {
+      "name": "base-e31456f30d08d683 bottom lies on actual native floor triangles",
+      "pass": true,
+      "details": {
+        "bad": 0,
+        "maxPlaneDistanceM": 5.046679297584253e-09
+      }
+    },
+    {
+      "name": "base-f79837a2384d6a95 exact top footprint and unchanged walking datum",
+      "pass": true,
+      "details": 0.0
+    },
+    {
+      "name": "base-f79837a2384d6a95 native closed wedge volume",
+      "pass": true,
+      "details": {
+        "actualM3": 2.84838098774734e-05,
+        "expectedM3": 2.8483809877498752e-05
+      }
+    },
+    {
+      "name": "base-f79837a2384d6a95 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "base-f79837a2384d6a95 closed oriented native compound solids",
+      "pass": true,
+      "details": {
+        "badEdges": 0,
+        "sharedInternalContactFaces": "retained; disjoint wedge interiors, no positive volume overlap"
+      }
+    },
+    {
+      "name": "base-f79837a2384d6a95 bottom lies on actual native floor triangles",
+      "pass": true,
+      "details": {
+        "bad": 0,
+        "maxPlaneDistanceM": 5.370175681697432e-08
+      }
+    },
+    {
+      "name": "base-548e33c75c9600c6 exact top footprint and unchanged walking datum",
+      "pass": true,
+      "details": 0.0
+    },
+    {
+      "name": "base-548e33c75c9600c6 native closed wedge volume",
+      "pass": true,
+      "details": {
+        "actualM3": 9.756882066964392e-06,
+        "expectedM3": 9.7568841131127e-06
+      }
+    },
+    {
+      "name": "base-548e33c75c9600c6 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "base-548e33c75c9600c6 closed oriented native compound solids",
+      "pass": true,
+      "details": {
+        "badEdges": 0,
+        "sharedInternalContactFaces": "retained; disjoint wedge interiors, no positive volume overlap"
+      }
+    },
+    {
+      "name": "base-548e33c75c9600c6 bottom lies on actual native floor triangles",
+      "pass": true,
+      "details": {
+        "bad": 0,
+        "maxPlaneDistanceM": 2.603236311108162e-08
+      }
+    },
+    {
+      "name": "base-f77e2e79aa988ef8 exact top footprint and unchanged walking datum",
+      "pass": true,
+      "details": 0.0
+    },
+    {
+      "name": "base-f77e2e79aa988ef8 native closed wedge volume",
+      "pass": true,
+      "details": {
+        "actualM3": 9.75680711087811e-06,
+        "expectedM3": 9.756805916583886e-06
+      }
+    },
+    {
+      "name": "base-f77e2e79aa988ef8 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "base-f77e2e79aa988ef8 closed oriented native compound solids",
+      "pass": true,
+      "details": {
+        "badEdges": 0,
+        "sharedInternalContactFaces": "retained; disjoint wedge interiors, no positive volume overlap"
+      }
+    },
+    {
+      "name": "base-f77e2e79aa988ef8 bottom lies on actual native floor triangles",
+      "pass": true,
+      "details": {
+        "bad": 0,
+        "maxPlaneDistanceM": 2.6032363111122277e-08
+      }
+    },
+    {
+      "name": "base-6f4e90afc9658454 exact top footprint and unchanged walking datum",
+      "pass": true,
+      "details": 0.0
+    },
+    {
+      "name": "base-6f4e90afc9658454 native closed wedge volume",
+      "pass": true,
+      "details": {
+        "actualM3": 9.756807108359761e-06,
+        "expectedM3": 9.756805914056003e-06
+      }
+    },
+    {
+      "name": "base-6f4e90afc9658454 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "base-6f4e90afc9658454 closed oriented native compound solids",
+      "pass": true,
+      "details": {
+        "badEdges": 0,
+        "sharedInternalContactFaces": "retained; disjoint wedge interiors, no positive volume overlap"
+      }
+    },
+    {
+      "name": "base-6f4e90afc9658454 bottom lies on actual native floor triangles",
+      "pass": true,
+      "details": {
+        "bad": 0,
+        "maxPlaneDistanceM": 2.6032363111122277e-08
+      }
+    },
+    {
+      "name": "base-746876da6e77a233 exact top footprint and unchanged walking datum",
+      "pass": true,
+      "details": 0.0
+    },
+    {
+      "name": "base-746876da6e77a233 native closed wedge volume",
+      "pass": true,
+      "details": {
+        "actualM3": 9.756727377122019e-06,
+        "expectedM3": 9.756727717528574e-06
+      }
+    },
+    {
+      "name": "base-746876da6e77a233 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "base-746876da6e77a233 closed oriented native compound solids",
+      "pass": true,
+      "details": {
+        "badEdges": 0,
+        "sharedInternalContactFaces": "retained; disjoint wedge interiors, no positive volume overlap"
+      }
+    },
+    {
+      "name": "base-746876da6e77a233 bottom lies on actual native floor triangles",
+      "pass": true,
+      "details": {
+        "bad": 0,
+        "maxPlaneDistanceM": 2.6093433453441145e-09
+      }
+    },
+    {
+      "name": "single-square-2m no remaining under-wall vacuum or cross-room path",
+      "pass": true,
+      "details": {
+        "beforePaths": 0,
+        "afterPaths": []
+      }
+    },
+    {
+      "name": "single-half-2x1 no remaining under-wall vacuum or cross-room path",
+      "pass": true,
+      "details": {
+        "beforePaths": 0,
+        "afterPaths": []
+      }
+    },
+    {
+      "name": "single-quarter-1m no remaining under-wall vacuum or cross-room path",
+      "pass": true,
+      "details": {
+        "beforePaths": 0,
+        "afterPaths": []
+      }
+    },
+    {
+      "name": "single-strip-4x1 no remaining under-wall vacuum or cross-room path",
+      "pass": true,
+      "details": {
+        "beforePaths": 0,
+        "afterPaths": []
+      }
+    },
+    {
+      "name": "single-triangle-45 no remaining under-wall vacuum or cross-room path",
+      "pass": true,
+      "details": {
+        "beforePaths": 0,
+        "afterPaths": []
+      }
+    },
+    {
+      "name": "single-triangle-long-left no remaining under-wall vacuum or cross-room path",
+      "pass": true,
+      "details": {
+        "beforePaths": 0,
+        "afterPaths": []
+      }
+    },
+    {
+      "name": "single-triangle-long-right no remaining under-wall vacuum or cross-room path",
+      "pass": true,
+      "details": {
+        "beforePaths": 0,
+        "afterPaths": []
+      }
+    },
+    {
+      "name": "single-triangle-slim-left no remaining under-wall vacuum or cross-room path",
+      "pass": true,
+      "details": {
+        "beforePaths": 0,
+        "afterPaths": []
+      }
+    },
+    {
+      "name": "single-triangle-slim-right no remaining under-wall vacuum or cross-room path",
+      "pass": true,
+      "details": {
+        "beforePaths": 0,
+        "afterPaths": []
+      }
+    },
+    {
+      "name": "single-corner-clipped no remaining under-wall vacuum or cross-room path",
+      "pass": true,
+      "details": {
+        "beforePaths": 0,
+        "afterPaths": []
+      }
+    },
+    {
+      "name": "single-taper-4m no remaining under-wall vacuum or cross-room path",
+      "pass": true,
+      "details": {
+        "beforePaths": 0,
+        "afterPaths": []
+      }
+    },
+    {
+      "name": "single-triangle-1m no remaining under-wall vacuum or cross-room path",
+      "pass": true,
+      "details": {
+        "beforePaths": 0,
+        "afterPaths": []
+      }
+    },
+    {
+      "name": "mixed-reentrant-L no remaining under-wall vacuum or cross-room path",
+      "pass": true,
+      "details": {
+        "beforePaths": 1,
+        "afterPaths": []
+      }
+    },
+    {
+      "name": "mixed-square-triangle no remaining under-wall vacuum or cross-room path",
+      "pass": true,
+      "details": {
+        "beforePaths": 1,
+        "afterPaths": []
+      }
+    },
+    {
+      "name": "mixed-orthogonal-T no remaining under-wall vacuum or cross-room path",
+      "pass": true,
+      "details": {
+        "beforePaths": 0,
+        "afterPaths": []
+      }
+    },
+    {
+      "name": "mixed-collinear-module-joins no remaining under-wall vacuum or cross-room path",
+      "pass": true,
+      "details": {
+        "beforePaths": 1,
+        "afterPaths": []
+      }
+    },
+    {
+      "name": "audit-square-four-quarter-seams no remaining under-wall vacuum or cross-room path",
+      "pass": true,
+      "details": {
+        "beforePaths": 1,
+        "afterPaths": []
+      }
+    },
+    {
+      "name": "audit-T-eight-quarter-seams no remaining under-wall vacuum or cross-room path",
+      "pass": true,
+      "details": {
+        "beforePaths": 1,
+        "afterPaths": []
+      }
+    },
+    {
+      "name": "exact library mesh count",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "no added lights/cameras",
+      "pass": true,
+      "details": null
+    }
+  ],
+  "parts": [
+    {
+      "partId": "base-5c44702128b939ad",
+      "triangles": 280,
+      "topAreaM2": 0.03191705041602999,
+      "topMismatchM2": 0.0,
+      "volumeM3": 3.7417110127982205e-05,
+      "bottomContactMaxPlaneDistanceM": 2.168404344971009e-19
+    },
+    {
+      "partId": "base-5105a9e117a14a08",
+      "triangles": 280,
+      "topAreaM2": 0.023917220625494284,
+      "topMismatchM2": 0.0,
+      "volumeM3": 2.804430123003997e-05,
+      "bottomContactMaxPlaneDistanceM": 2.168404344971009e-19
+    },
+    {
+      "partId": "base-1721621a1efaf31e",
+      "triangles": 280,
+      "topAreaM2": 0.015917271625669138,
+      "topMismatchM2": 0.0,
+      "volumeM3": 1.8671660918103284e-05,
+      "bottomContactMaxPlaneDistanceM": 2.168404344971009e-19
+    },
+    {
+      "partId": "base-751a27b8eef382a8",
+      "triangles": 280,
+      "topAreaM2": 0.039917238171612635,
+      "topMismatchM2": 0.0,
+      "volumeM3": 4.678894190864209e-05,
+      "bottomContactMaxPlaneDistanceM": 2.168404344971009e-19
+    },
+    {
+      "partId": "base-778a913ba6bd4861",
+      "triangles": 214,
+      "topAreaM2": 0.027209166471145796,
+      "topMismatchM2": 0.0,
+      "volumeM3": 3.1928417486808365e-05,
+      "bottomContactMaxPlaneDistanceM": 2.220446049250313e-16
+    },
+    {
+      "partId": "base-edeb20d844afc37f",
+      "triangles": 214,
+      "topAreaM2": 0.041768103074651286,
+      "topMismatchM2": 0.0,
+      "volumeM3": 4.952938188501737e-05,
+      "bottomContactMaxPlaneDistanceM": 1.0885389811754465e-16
+    },
+    {
+      "partId": "base-8fa3ceb73648f1b1",
+      "triangles": 214,
+      "topAreaM2": 0.04176791565442706,
+      "topMismatchM2": 0.0,
+      "volumeM3": 4.952784532609531e-05,
+      "bottomContactMaxPlaneDistanceM": 2.5717275531356165e-16
+    },
+    {
+      "partId": "base-79d03a8564bd3284",
+      "triangles": 270,
+      "topAreaM2": 0.03631569264401979,
+      "topMismatchM2": 4.223485809100258e-08,
+      "volumeM3": 4.2755336345163174e-05,
+      "bottomContactMaxPlaneDistanceM": 2.4352846562066053e-08
+    },
+    {
+      "partId": "base-344925e0d658e538",
+      "triangles": 270,
+      "topAreaM2": 0.03631573468282223,
+      "topMismatchM2": 2.626534271317523e-09,
+      "volumeM3": 4.275440829643271e-05,
+      "bottomContactMaxPlaneDistanceM": 2.121743447602853e-08
+    },
+    {
+      "partId": "base-500994d2fdb6f234",
+      "triangles": 350,
+      "topAreaM2": 0.029574854375402193,
+      "topMismatchM2": 0.0,
+      "volumeM3": 3.466864463838766e-05,
+      "bottomContactMaxPlaneDistanceM": 5.637851296924623e-17
+    },
+    {
+      "partId": "base-79a931b0a4024f86",
+      "triangles": 284,
+      "topAreaM2": 0.044165967293143815,
+      "topMismatchM2": 0.0,
+      "volumeM3": 5.191014647763087e-05,
+      "bottomContactMaxPlaneDistanceM": 5.551115123125783e-17
+    },
+    {
+      "partId": "base-daaa1deefdcc725b",
+      "triangles": 214,
+      "topAreaM2": 0.013552284374959866,
+      "topMismatchM2": 0.0,
+      "volumeM3": 1.5928030597343358e-05,
+      "bottomContactMaxPlaneDistanceM": 7.827939685345342e-17
+    },
+    {
+      "partId": "base-0a60fc5795340e2d",
+      "triangles": 396,
+      "topAreaM2": 0.016667246753730276,
+      "topMismatchM2": 0.0,
+      "volumeM3": 1.9550509626963836e-05,
+      "bottomContactMaxPlaneDistanceM": 5.3701756817011587e-08
+    },
+    {
+      "partId": "base-84db6b95287bbbad",
+      "triangles": 338,
+      "topAreaM2": 0.024292050053861796,
+      "topMismatchM2": 0.0,
+      "volumeM3": 2.8483813408055475e-05,
+      "bottomContactMaxPlaneDistanceM": 3.7151312219738802e-09
+    },
+    {
+      "partId": "base-d98033303b004cd5",
+      "triangles": 338,
+      "topAreaM2": 0.02429205005386198,
+      "topMismatchM2": 0.0,
+      "volumeM3": 2.8483813411254305e-05,
+      "bottomContactMaxPlaneDistanceM": 3.759681953757017e-09
+    },
+    {
+      "partId": "base-fa6166b9bd761866",
+      "triangles": 338,
+      "topAreaM2": 0.024361812643110832,
+      "topMismatchM2": 1.9080016963538823e-10,
+      "volumeM3": 2.8569842570969294e-05,
+      "bottomContactMaxPlaneDistanceM": 5.3701756816794746e-08
+    },
+    {
+      "partId": "base-e31456f30d08d683",
+      "triangles": 270,
+      "topAreaM2": 0.019669831163526164,
+      "topMismatchM2": 8.313913414050419e-11,
+      "volumeM3": 2.3091065792435705e-05,
+      "bottomContactMaxPlaneDistanceM": 5.046679297584253e-09
+    },
+    {
+      "partId": "base-f79837a2384d6a95",
+      "triangles": 338,
+      "topAreaM2": 0.02429214858488033,
+      "topMismatchM2": 0.0,
+      "volumeM3": 2.84838098774734e-05,
+      "bottomContactMaxPlaneDistanceM": 5.370175681697432e-08
+    },
+    {
+      "partId": "base-548e33c75c9600c6",
+      "triangles": 268,
+      "topAreaM2": 0.008312942364683757,
+      "topMismatchM2": 0.0,
+      "volumeM3": 9.756882066964392e-06,
+      "bottomContactMaxPlaneDistanceM": 2.603236311108162e-08
+    },
+    {
+      "partId": "base-f77e2e79aa988ef8",
+      "triangles": 268,
+      "topAreaM2": 0.008312949960628554,
+      "topMismatchM2": 0.0,
+      "volumeM3": 9.75680711087811e-06,
+      "bottomContactMaxPlaneDistanceM": 2.6032363111122277e-08
+    },
+    {
+      "partId": "base-6f4e90afc9658454",
+      "triangles": 268,
+      "topAreaM2": 0.008312949959424505,
+      "topMismatchM2": 0.0,
+      "volumeM3": 9.756807108359761e-06,
+      "bottomContactMaxPlaneDistanceM": 2.6032363111122277e-08
+    },
+    {
+      "partId": "base-746876da6e77a233",
+      "triangles": 268,
+      "topAreaM2": 0.008312957555368969,
+      "topMismatchM2": 0.0,
+      "volumeM3": 9.756727377122019e-06,
+      "bottomContactMaxPlaneDistanceM": 2.6093433453441145e-09
+    }
+  ],
+  "fixtures": [
+    {
+      "fixture": "single-square-2m",
+      "before": [],
+      "after": [],
+      "insertTopAreaM2": 0.03191705041602999
+    },
+    {
+      "fixture": "single-half-2x1",
+      "before": [],
+      "after": [],
+      "insertTopAreaM2": 0.023917220625494284
+    },
+    {
+      "fixture": "single-quarter-1m",
+      "before": [],
+      "after": [],
+      "insertTopAreaM2": 0.015917271625669138
+    },
+    {
+      "fixture": "single-strip-4x1",
+      "before": [],
+      "after": [],
+      "insertTopAreaM2": 0.039917238171612635
+    },
+    {
+      "fixture": "single-triangle-45",
+      "before": [],
+      "after": [],
+      "insertTopAreaM2": 0.027209166471145796
+    },
+    {
+      "fixture": "single-triangle-long-left",
+      "before": [],
+      "after": [],
+      "insertTopAreaM2": 0.041768103074651286
+    },
+    {
+      "fixture": "single-triangle-long-right",
+      "before": [],
+      "after": [],
+      "insertTopAreaM2": 0.04176791565442706
+    },
+    {
+      "fixture": "single-triangle-slim-left",
+      "before": [],
+      "after": [],
+      "insertTopAreaM2": 0.03631569264401979
+    },
+    {
+      "fixture": "single-triangle-slim-right",
+      "before": [],
+      "after": [],
+      "insertTopAreaM2": 0.03631573468282223
+    },
+    {
+      "fixture": "single-corner-clipped",
+      "before": [],
+      "after": [],
+      "insertTopAreaM2": 0.029574854375402193
+    },
+    {
+      "fixture": "single-taper-4m",
+      "before": [],
+      "after": [],
+      "insertTopAreaM2": 0.044165967293143815
+    },
+    {
+      "fixture": "single-triangle-1m",
+      "before": [],
+      "after": [],
+      "insertTopAreaM2": 0.013552284374959866
+    },
+    {
+      "fixture": "mixed-reentrant-L",
+      "before": [
+        {
+          "rooms": [
+            0
+          ],
+          "vacuum": true,
+          "boundsM": [
+            -0.046875,
+            -0.046875,
+            4.046875,
+            4.046875
+          ],
+          "areaM2": 0.8240966448750839
+        }
+      ],
+      "after": [],
+      "insertTopAreaM2": 0.06525134686145861
+    },
+    {
+      "fixture": "mixed-square-triangle",
+      "before": [
+        {
+          "rooms": [
+            0
+          ],
+          "vacuum": true,
+          "boundsM": [
+            -0.046875,
+            -0.046875,
+            4.113166257739067,
+            2.046875
+          ],
+          "areaM2": 0.5622535914233779
+        }
+      ],
+      "after": [],
+      "insertTopAreaM2": 0.04403164380663771
+    },
+    {
+      "fixture": "mixed-orthogonal-T",
+      "before": [],
+      "after": [],
+      "insertTopAreaM2": 0.0638341008320622
+    },
+    {
+      "fixture": "mixed-collinear-module-joins",
+      "before": [
+        {
+          "rooms": [
+            0
+          ],
+          "vacuum": true,
+          "boundsM": [
+            -0.046875,
+            -0.046875,
+            4.046875,
+            2.046875
+          ],
+          "areaM2": 0.619910751481159
+        }
+      ],
+      "after": [],
+      "insertTopAreaM2": 0.04858419863874186
+    },
+    {
+      "fixture": "audit-square-four-quarter-seams",
+      "before": [
+        {
+          "rooms": [
+            0
+          ],
+          "vacuum": true,
+          "boundsM": [
+            -0.046875,
+            -0.046875,
+            2.046875,
+            2.046875
+          ],
+          "areaM2": 0.4170970968422085
+        }
+      ],
+      "after": [],
+      "insertTopAreaM2": 0.03325179984010651
+    },
+    {
+      "fixture": "audit-T-eight-quarter-seams",
+      "before": [
+        {
+          "rooms": [
+            0,
+            1
+          ],
+          "vacuum": true,
+          "boundsM": [
+            -0.046875,
+            -0.046875,
+            4.046875,
+            2.046875
+          ],
+          "areaM2": 0.6379051311844175
+        }
+      ],
+      "after": [],
+      "insertTopAreaM2": 0.06650359968020991
+    }
+  ],
+  "glbSha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+  "floorSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+  "wallSha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+  "limits": [
+    "Native geometric contact proof only; parent supplies explicit game flow/seal definitions.",
+    "Interface exact signatures must be matched; unknown floors/core masks remain unsupported.",
+    "Roof material/butt seam definitions remain separate."
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "date": "2026-09-08",
+  "blender": "4.3.2",
+  "recipe_sha256": "5ba07ad44731658b8ac2faa683063483ae13197b7ea3c69dbdbb08c9f1f68088",
+  "provenance": "Original procedural Blender bake and reflection rig",
+  "outputs": {
+    "brushed-normal.png": "5118a67c47d06446ff0b47f231569f3b65d8979d1b88722f69c8dd8b2414d9e4",
+    "brushed-roughness.png": "6213cd62eb5d5928d6b912f67d83ba6273415ba6775222bcf8815794ec88c601",
+    "frontier-workshop.hdr": "11f358cce19278c6115633430d1b1d5c7fc2dc35a16f73468b46dcf6724a4364"
+  }
+}

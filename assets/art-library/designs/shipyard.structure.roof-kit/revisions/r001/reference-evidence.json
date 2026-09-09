@@ -1,0 +1,21 @@
+[
+  {
+    "referenceId": "core-construction-blocks--exploded-roof-cap",
+    "original": "assets/art-library/assets/core-construction-blocks--exploded-roof-cap/revisions/r000/reference.png",
+    "exactCopy": "reference-core-construction-blocks--exploded-roof-cap.png",
+    "sha256": "ab6e0eb07c9ed0dbcd434f840ea8ca301c548dc2c2dc0fe267b24787520a1c9d",
+    "observation": "Exact crop and full original opened. Pale segmented top panels, dark inset service bays and stepped trim supply visual direction. Proposed stats in reference brief are not adopted."
+  },
+  {
+    "referenceId": "faction-ship-1--roof-module-2",
+    "original": "assets/art-library/assets/faction-ship-1--roof-module-2/revisions/r000/reference.png",
+    "exactCopy": "reference-faction-ship-1--roof-module-2.png",
+    "sha256": "be1756475cbbb0619668c6d16f78d650d74e7938fb6450ad3a8549c9c30f9a5c",
+    "observation": "Exact crop and full original opened. Pale segmented top panels, dark inset service bays and stepped trim supply visual direction. Proposed stats in reference brief are not adopted."
+  },
+  {
+    "source": "assets/art-library/shipyard-roof/review-r004/runtime-lit-detail.png",
+    "sha256": "adf5d0f9b7cd1fc3b20ba8c050b6fe2db8c1e5e0f36e6a1e522f9e62dc65248d",
+    "observation": "Existing actual installed roof r004 visual roles inspected; fresh flat inter-deck companion, no source model mutation or stretching."
+  }
+]

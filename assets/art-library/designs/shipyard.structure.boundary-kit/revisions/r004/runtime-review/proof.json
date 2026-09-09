@@ -1,0 +1,215 @@
+{
+  "schema": "sidereal.actual-game-proof.v1",
+  "date": "2026-09-09",
+  "database": "sidereal-spacetime-dev-review-boundaries-20260909",
+  "candidate": "boundary-r004",
+  "scope": "actual editor and game; manually stepped software GPU; no full rebuild or art approval",
+  "editor": {
+    "reloadRestoredFamily": true,
+    "reloadRestoredRoof": true,
+    "savedRevision": "2",
+    "publishedAfterReload": true
+  },
+  "walking": {
+    "start": {
+      "x": 10,
+      "y": 1
+    },
+    "diagonal": {
+      "x": 9.852187744360902,
+      "y": 1.653124929289322
+    },
+    "north": {
+      "x": 9.3468751,
+      "y": 1.6531249565034467
+    },
+    "westSouth": {
+      "x": 9.346875043496553,
+      "y": 0.3468751
+    },
+    "eastSouth": {
+      "x": 10.6531249,
+      "y": 0.3468750434965534
+    },
+    "keyboardWalking": true
+  },
+  "visibilityAndReload": {
+    "interior": {
+      "beta": 0.9553166181245089,
+      "radius": 11.064746388851034,
+      "boundaries": [
+        {
+          "id": "construction:10636b309a6a09c3e4dd730a33fb2a7a",
+          "revision": "r004",
+          "enabled": false,
+          "meshes": 2
+        },
+        {
+          "id": "construction:9e5b2b94d572c905f00fe280b5a766ec",
+          "revision": "r004",
+          "enabled": false,
+          "meshes": 2
+        },
+        {
+          "id": "construction:8dcc9fa0fdf2f09ee5d8d1dfdfc78c9d",
+          "revision": "r004",
+          "enabled": false,
+          "meshes": 2
+        },
+        {
+          "id": "construction:900ee982cec252d8ca6b9f816aac1d0e",
+          "revision": "r004",
+          "enabled": true,
+          "meshes": 2
+        },
+        {
+          "id": "construction:51fc9d19d702308fcf0d7360f1ffa40a",
+          "revision": "r004",
+          "enabled": true,
+          "meshes": 2
+        },
+        {
+          "id": "construction:ddf73c21f0f4155bb80478012b927e52",
+          "revision": "r004",
+          "enabled": false,
+          "meshes": 6
+        },
+        {
+          "id": "construction:105da272dd62b841a0e84796a1d9f09d",
+          "revision": "r004",
+          "enabled": true,
+          "meshes": 6
+        },
+        {
+          "id": "construction:e0894cf0beb8ae2616b1e47a3fa6e648",
+          "revision": "r004",
+          "enabled": false,
+          "meshes": 6
+        },
+        {
+          "id": "construction:6e509f1c27a903676b8459c65587c029",
+          "revision": "r004",
+          "enabled": true,
+          "meshes": 6
+        },
+        {
+          "id": "construction:8690a72de7633f1a6010946585693eb7",
+          "revision": "r004",
+          "enabled": true,
+          "meshes": 6
+        }
+      ],
+      "roofs": [
+        {
+          "id": "construction:85028f56210594e8b0391ab7e22c4df9",
+          "enabled": false,
+          "meshes": 7
+        }
+      ]
+    },
+    "flight": {
+      "beta": 0.015000016146885849,
+      "radius": 15.665269379584709,
+      "boundaries": [
+        {
+          "id": "construction:10636b309a6a09c3e4dd730a33fb2a7a",
+          "revision": "r004",
+          "enabled": true,
+          "meshes": 2
+        },
+        {
+          "id": "construction:9e5b2b94d572c905f00fe280b5a766ec",
+          "revision": "r004",
+          "enabled": true,
+          "meshes": 2
+        },
+        {
+          "id": "construction:8dcc9fa0fdf2f09ee5d8d1dfdfc78c9d",
+          "revision": "r004",
+          "enabled": true,
+          "meshes": 2
+        },
+        {
+          "id": "construction:900ee982cec252d8ca6b9f816aac1d0e",
+          "revision": "r004",
+          "enabled": true,
+          "meshes": 2
+        },
+        {
+          "id": "construction:51fc9d19d702308fcf0d7360f1ffa40a",
+          "revision": "r004",
+          "enabled": true,
+          "meshes": 2
+        },
+        {
+          "id": "construction:ddf73c21f0f4155bb80478012b927e52",
+          "revision": "r004",
+          "enabled": true,
+          "meshes": 6
+        },
+        {
+          "id": "construction:105da272dd62b841a0e84796a1d9f09d",
+          "revision": "r004",
+          "enabled": true,
+          "meshes": 6
+        },
+        {
+          "id": "construction:e0894cf0beb8ae2616b1e47a3fa6e648",
+          "revision": "r004",
+          "enabled": true,
+          "meshes": 6
+        },
+        {
+          "id": "construction:6e509f1c27a903676b8459c65587c029",
+          "revision": "r004",
+          "enabled": true,
+          "meshes": 6
+        },
+        {
+          "id": "construction:8690a72de7633f1a6010946585693eb7",
+          "revision": "r004",
+          "enabled": true,
+          "meshes": 6
+        }
+      ],
+      "roofs": [
+        {
+          "id": "construction:85028f56210594e8b0391ab7e22c4df9",
+          "enabled": true,
+          "meshes": 7
+        }
+      ]
+    },
+    "reloadRowsUnchanged": true
+  },
+  "return": {
+    "itemsUnchanged": true,
+    "containersUnchanged": true,
+    "appearanceUnchanged": true,
+    "doorsUnchanged": true,
+    "visits": 0,
+    "instances": 4,
+    "actor": [
+      {
+        "id": "da72244c-a83a-40fc-b2a9-9e819f8be624",
+        "shipId": "2d04ef7a-137c-47c1-acd3-3c1ecb0466cb",
+        "x": 0,
+        "y": 10.25
+      }
+    ]
+  },
+  "screenshots": [
+    {
+      "path": "output/playwright/construction-boundary-r004-shipyard.png",
+      "sha256": "509294ec313666270f6d6568b7d9aafeeeb8eede9f8ecbc8683591086d63481e"
+    },
+    {
+      "path": "output/playwright/construction-boundary-r004-interior.png",
+      "sha256": "3b16d730b9f7e486b91cb14ec3c49b03274d784e0dfedc9cca84e30e71353f5e"
+    },
+    {
+      "path": "output/playwright/construction-boundary-r004-flight.png",
+      "sha256": "93c1448e38bb425022ed77ad57f35421e45f0262567c05eca74cfd140d5d61ba"
+    }
+  ]
+}

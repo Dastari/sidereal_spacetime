@@ -1,0 +1,28 @@
+[
+  {
+    "referenceId": "internal-components-2--straight-wall",
+    "source": "assets/art-library/assets/internal-components-2--straight-wall/revisions/r000/reference.png",
+    "copiedEvidence": "assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r001/reference-evidence/internal-components-2--straight-wall.png",
+    "sha256": "e93a27230558bcac82e475c0904eb477dcc49c8e08fee066997a6a0930e71d59",
+    "purpose": "Non-exclusive style inspiration; does not reassign canonical crop ownership."
+  },
+  {
+    "referenceId": "internal-components-2--reinforced-wall",
+    "source": "assets/art-library/assets/internal-components-2--reinforced-wall/revisions/r000/reference.png",
+    "copiedEvidence": "assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r001/reference-evidence/internal-components-2--reinforced-wall.png",
+    "sha256": "b4d433a442f4b9dcbc647a016d6c3ccfd1ceea94198f3e77fad537872bebe412",
+    "purpose": "Non-exclusive style inspiration; does not reassign canonical crop ownership."
+  },
+  {
+    "referenceId": "modular-spaceship-design--wall-tile",
+    "source": "assets/art-library/assets/modular-spaceship-design--wall-tile/revisions/r000/reference.png",
+    "copiedEvidence": "assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r001/reference-evidence/modular-spaceship-design--wall-tile.png",
+    "sha256": "3c94ae2ce2ad0c6baab349699cb2c4be199f845909a117e1ccacceaf09145882",
+    "purpose": "Non-exclusive style inspiration; does not reassign canonical crop ownership."
+  },
+  {
+    "source": "reference/art/editor-mockup-3.png",
+    "sha256": "035b5b0c28a7fe3d9d81a15017e0c7746474f9f9bb41c30577dd878bc9de2b66",
+    "purpose": "Room palette/assembly composition inspected directly; unchanged source."
+  }
+]

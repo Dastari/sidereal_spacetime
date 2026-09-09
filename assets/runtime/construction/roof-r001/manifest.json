@@ -1,0 +1,12 @@
+{
+  "schema": "sidereal.construction-roof-runtime.v1",
+  "designId": "shipyard.structure.roof-kit",
+  "revision": "r001",
+  "pins": {
+    "kit.glb": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+    "interfaces.json": "ffa320a5edc5b99a45ff50a4d33f94c0346fe87972358a73a4fee8375de68a57",
+    "roof-kit.blend": "e3ff6410c70fcef0dc2015beff2dda942c24ead86b09c19e41d342f75adeba7c"
+  },
+  "status": "working candidate; no final art, seal or damage approval",
+  "scope": "explicit construction roofKit only; no Wayfarer replacement"
+}

@@ -1,0 +1,186 @@
+{
+  "wall-2m": {
+    "triangles": 3684,
+    "vertices": 1912,
+    "materialSlots": 6,
+    "localBounds": {
+      "min": [
+        0.0625,
+        -0.06187500059604645,
+        0.1875
+      ],
+      "max": [
+        1.9375,
+        0.06187500059604645,
+        3.0
+      ]
+    },
+    "translation": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "nodePrefix": "GEO-wall-2m--surface"
+  },
+  "wall-1m": {
+    "triangles": 2388,
+    "vertices": 1240,
+    "materialSlots": 6,
+    "localBounds": {
+      "min": [
+        0.0625,
+        -0.06187500059604645,
+        0.1875
+      ],
+      "max": [
+        0.9375,
+        0.06187500059604645,
+        3.0
+      ]
+    },
+    "translation": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "nodePrefix": "GEO-wall-1m--surface"
+  },
+  "join-straight": {
+    "triangles": 12,
+    "vertices": 8,
+    "materialSlots": 3,
+    "localBounds": {
+      "min": [
+        -0.0625,
+        -0.0625,
+        0.1875
+      ],
+      "max": [
+        0.0625,
+        0.0625,
+        3.0
+      ]
+    },
+    "translation": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "nodePrefix": "GEO-join-straight--surface"
+  },
+  "closure-end": {
+    "triangles": 12,
+    "vertices": 8,
+    "materialSlots": 3,
+    "localBounds": {
+      "min": [
+        -0.0625,
+        -0.0625,
+        0.1875
+      ],
+      "max": [
+        0.0625,
+        0.0625,
+        3.0
+      ]
+    },
+    "translation": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "nodePrefix": "GEO-closure-end--surface"
+  },
+  "closure-corner": {
+    "triangles": 12,
+    "vertices": 8,
+    "materialSlots": 3,
+    "localBounds": {
+      "min": [
+        -0.0625,
+        -0.0625,
+        0.1875
+      ],
+      "max": [
+        0.0625,
+        0.0625,
+        3.0
+      ]
+    },
+    "translation": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "nodePrefix": "GEO-closure-corner--surface"
+  },
+  "closure-t": {
+    "triangles": 12,
+    "vertices": 8,
+    "materialSlots": 3,
+    "localBounds": {
+      "min": [
+        -0.0625,
+        -0.0625,
+        0.1875
+      ],
+      "max": [
+        0.0625,
+        0.0625,
+        3.0
+      ]
+    },
+    "translation": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "nodePrefix": "GEO-closure-t--surface"
+  },
+  "door-frame-2m": {
+    "triangles": 2412,
+    "vertices": 1256,
+    "materialSlots": 5,
+    "localBounds": {
+      "min": [
+        0.0625,
+        -0.06187500059604645,
+        0.1875
+      ],
+      "max": [
+        1.9375,
+        0.06187500059604645,
+        3.0
+      ]
+    },
+    "translation": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "nodePrefix": "GEO-door-frame-2m--surface"
+  },
+  "door-leaf": {
+    "triangles": 1356,
+    "vertices": 712,
+    "materialSlots": 5,
+    "localBounds": {
+      "min": [
+        0.0,
+        0.0,
+        0.18950000405311584
+      ],
+      "max": [
+        1.3105000257492065,
+        0.0625,
+        2.435499906539917
+      ]
+    },
+    "translation": [
+      0.3125,
+      -0.0625,
+      0.0
+    ],
+    "nodePrefix": "GEO-door-leaf--surface"
+  }
+}

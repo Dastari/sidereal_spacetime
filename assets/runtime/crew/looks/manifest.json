@@ -1,0 +1,168 @@
+{
+  "schema": 1,
+  "source": "assets/source/crew-astra.blend",
+  "palette": "packages/content/src/crew-looks.json",
+  "renderer": "Blender CPU Cycles24",
+  "entries": [
+    {
+      "id": "captain",
+      "name": "Captain",
+      "file": "looks/captain.png",
+      "visibleSolids": 97,
+      "palette": {
+        "suit": "#263651",
+        "accent": "#293D60",
+        "trim": "#DCE3EB",
+        "insignia": "#F5BB42",
+        "hair": "#302329",
+        "skin": "#C98F76",
+        "visor": "#102441",
+        "light": "#50D7F0"
+      }
+    },
+    {
+      "id": "engineer",
+      "name": "Engineer",
+      "file": "looks/engineer.png",
+      "visibleSolids": 92,
+      "palette": {
+        "suit": "#C96D22",
+        "accent": "#EEA63C",
+        "trim": "#C8D0D9",
+        "insignia": "#F4C33C",
+        "hair": "#49312A",
+        "skin": "#C58B70",
+        "visor": "#123148",
+        "light": "#39D7F6"
+      }
+    },
+    {
+      "id": "medic",
+      "name": "Medic",
+      "file": "looks/medic.png",
+      "visibleSolids": 108,
+      "palette": {
+        "suit": "#D6DCE7",
+        "accent": "#CE3356",
+        "trim": "#E9EDF3",
+        "insignia": "#E12A51",
+        "hair": "#443335",
+        "skin": "#BE8C76",
+        "visor": "#071A3D",
+        "light": "#41DBF4"
+      }
+    },
+    {
+      "id": "pilot",
+      "name": "Pilot",
+      "file": "looks/pilot.png",
+      "visibleSolids": 114,
+      "palette": {
+        "suit": "#CFD6E1",
+        "accent": "#233D70",
+        "trim": "#E4E9F0",
+        "insignia": "#F39632",
+        "hair": "#342B31",
+        "skin": "#C58F75",
+        "visor": "#071A3D",
+        "light": "#48D5F3"
+      }
+    },
+    {
+      "id": "security",
+      "name": "Security officer",
+      "file": "looks/security.png",
+      "visibleSolids": 93,
+      "palette": {
+        "suit": "#283B65",
+        "accent": "#3E4D91",
+        "trim": "#CCD6E1",
+        "insignia": "#EDB443",
+        "hair": "#2D2532",
+        "skin": "#BB8064",
+        "visor": "#0B1C35",
+        "light": "#5ACFED"
+      }
+    },
+    {
+      "id": "marine",
+      "name": "Heavy marine",
+      "file": "looks/marine.png",
+      "visibleSolids": 124,
+      "palette": {
+        "suit": "#8C2F47",
+        "accent": "#D74765",
+        "trim": "#AEB7C5",
+        "insignia": "#ED6779",
+        "hair": "#362D32",
+        "skin": "#B48772",
+        "visor": "#131C2C",
+        "light": "#E44761"
+      }
+    },
+    {
+      "id": "salvage",
+      "name": "Salvage tech",
+      "file": "looks/salvage.png",
+      "visibleSolids": 112,
+      "palette": {
+        "suit": "#C99830",
+        "accent": "#EBA734",
+        "trim": "#D4D9E0",
+        "insignia": "#F2BC42",
+        "hair": "#4B3225",
+        "skin": "#C29476",
+        "visor": "#252337",
+        "light": "#F0B23C"
+      }
+    },
+    {
+      "id": "recon",
+      "name": "Recon scout",
+      "file": "looks/recon.png",
+      "visibleSolids": 104,
+      "palette": {
+        "suit": "#53604C",
+        "accent": "#788858",
+        "trim": "#AAB6AE",
+        "insignia": "#72E659",
+        "hair": "#282F26",
+        "skin": "#BC9078",
+        "visor": "#082721",
+        "light": "#68F259"
+      }
+    },
+    {
+      "id": "scientist",
+      "name": "Scientist",
+      "file": "looks/scientist.png",
+      "visibleSolids": 102,
+      "palette": {
+        "suit": "#D7DFE9",
+        "accent": "#BCCBD9",
+        "trim": "#EEF0F5",
+        "insignia": "#E8A940",
+        "hair": "#743AD2",
+        "skin": "#CF9782",
+        "visor": "#172842",
+        "light": "#53DFFD"
+      }
+    },
+    {
+      "id": "mechanic",
+      "name": "Mechanic",
+      "file": "looks/mechanic.png",
+      "visibleSolids": 99,
+      "palette": {
+        "suit": "#273C58",
+        "accent": "#D98736",
+        "trim": "#C2CCD7",
+        "insignia": "#F5B847",
+        "hair": "#362E31",
+        "skin": "#BD8265",
+        "visor": "#102944",
+        "light": "#54BFF1"
+      }
+    }
+  ]
+}

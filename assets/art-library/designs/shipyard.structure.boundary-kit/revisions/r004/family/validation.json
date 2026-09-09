@@ -1,0 +1,2789 @@
+{
+  "pass": true,
+  "checks": [
+    {
+      "name": "all exact named part mesh groups",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "single sided materials without cameras/lights",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-ee493bf1352e native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-ee493bf1352e native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-ee493bf1352e closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-ee493bf1352e exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-086cc581b11f native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-086cc581b11f native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-086cc581b11f native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-086cc581b11f native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-086cc581b11f native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-086cc581b11f native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-086cc581b11f closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-086cc581b11f exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-b3f0724acb39 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-b3f0724acb39 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-b3f0724acb39 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-b3f0724acb39 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-b3f0724acb39 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-b3f0724acb39 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-b3f0724acb39 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-b3f0724acb39 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-0cdd4c8ec952 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-0cdd4c8ec952 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-0cdd4c8ec952 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-0cdd4c8ec952 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-0cdd4c8ec952 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-0cdd4c8ec952 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-0cdd4c8ec952 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-0cdd4c8ec952 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-8ace9108954c native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-8ace9108954c native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-8ace9108954c closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-8ace9108954c exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-4cf5a3e80bfc native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-4cf5a3e80bfc native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-4cf5a3e80bfc closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-4cf5a3e80bfc exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-94768f04e98a native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-94768f04e98a native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-94768f04e98a native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-94768f04e98a native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-94768f04e98a native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-94768f04e98a native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-94768f04e98a closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-94768f04e98a exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-0314fecad407 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-0314fecad407 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-0314fecad407 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-0314fecad407 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-0314fecad407 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-0314fecad407 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-0314fecad407 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-0314fecad407 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-808c0ebd2217 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-808c0ebd2217 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-808c0ebd2217 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-808c0ebd2217 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-808c0ebd2217 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-808c0ebd2217 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-808c0ebd2217 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-808c0ebd2217 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-600f98889a3d native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-600f98889a3d native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-600f98889a3d closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-600f98889a3d exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-5ef3fc8bee96 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-5ef3fc8bee96 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-5ef3fc8bee96 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-5ef3fc8bee96 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-e1ee17a40bd0 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-e1ee17a40bd0 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-e1ee17a40bd0 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-e1ee17a40bd0 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-e1ee17a40bd0 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-e1ee17a40bd0 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-e1ee17a40bd0 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-e1ee17a40bd0 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-6ec4ef6b98b1 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-6ec4ef6b98b1 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-6ec4ef6b98b1 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-6ec4ef6b98b1 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-6ec4ef6b98b1 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-6ec4ef6b98b1 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-6ec4ef6b98b1 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-6ec4ef6b98b1 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-2558d18d8aea native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-2558d18d8aea native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-2558d18d8aea native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-2558d18d8aea native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-2558d18d8aea native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-2558d18d8aea native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-2558d18d8aea closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-2558d18d8aea exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-8b91be106a9b native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-8b91be106a9b native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-8b91be106a9b closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-8b91be106a9b exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-9c2c257cf6fe native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-9c2c257cf6fe native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-9c2c257cf6fe closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-9c2c257cf6fe exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-08fd6477c200 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-08fd6477c200 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-08fd6477c200 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-08fd6477c200 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-08fd6477c200 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-08fd6477c200 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-08fd6477c200 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-08fd6477c200 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-808e279e3305 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-808e279e3305 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-808e279e3305 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-808e279e3305 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-808e279e3305 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-808e279e3305 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-808e279e3305 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-808e279e3305 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-be8caa482150 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-be8caa482150 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-be8caa482150 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-be8caa482150 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-be8caa482150 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-be8caa482150 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-be8caa482150 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-be8caa482150 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-74c0b4ffc689 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-74c0b4ffc689 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-74c0b4ffc689 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-74c0b4ffc689 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-b3757ae7933a native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-b3757ae7933a native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-b3757ae7933a closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-b3757ae7933a exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-d47d3475d32a native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-d47d3475d32a native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-d47d3475d32a native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-d47d3475d32a native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-d47d3475d32a native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-d47d3475d32a native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-d47d3475d32a closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-d47d3475d32a exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ac212cda6bdf native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ac212cda6bdf native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ac212cda6bdf native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ac212cda6bdf native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ac212cda6bdf native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ac212cda6bdf native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ac212cda6bdf closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ac212cda6bdf exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-618a6deb050d native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-618a6deb050d native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-618a6deb050d native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-618a6deb050d native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-618a6deb050d native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-618a6deb050d native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-618a6deb050d closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-618a6deb050d exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-ac322cc2ef83 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-ac322cc2ef83 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-ac322cc2ef83 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-ac322cc2ef83 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-dd5634ec14cc native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-dd5634ec14cc native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-dd5634ec14cc closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-dd5634ec14cc exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-1fccd896f86f native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-1fccd896f86f native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-1fccd896f86f native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-1fccd896f86f native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-1fccd896f86f native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-1fccd896f86f native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-1fccd896f86f closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-1fccd896f86f exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-f6f884420a9f native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-f6f884420a9f native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-f6f884420a9f native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-f6f884420a9f native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-f6f884420a9f native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-f6f884420a9f native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-f6f884420a9f closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-f6f884420a9f exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-135ed5730033 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-135ed5730033 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-135ed5730033 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-135ed5730033 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-135ed5730033 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-135ed5730033 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-135ed5730033 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-135ed5730033 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-722dea1af576 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-722dea1af576 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-722dea1af576 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-722dea1af576 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-9f376826b3e4 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-9f376826b3e4 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-9f376826b3e4 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-9f376826b3e4 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-a3fe624b4c51 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-a3fe624b4c51 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-a3fe624b4c51 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-a3fe624b4c51 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-a3fe624b4c51 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-a3fe624b4c51 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-a3fe624b4c51 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-a3fe624b4c51 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-028c6d82a9cd native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-028c6d82a9cd native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-028c6d82a9cd closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-028c6d82a9cd exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-fa76146eb8d8 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-fa76146eb8d8 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-fa76146eb8d8 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-fa76146eb8d8 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-3b50213b5a7b native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-3b50213b5a7b native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-3b50213b5a7b closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-3b50213b5a7b exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-521432080d97 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-521432080d97 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-521432080d97 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-521432080d97 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-2072e1ebfaf9 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-2072e1ebfaf9 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-2072e1ebfaf9 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-2072e1ebfaf9 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-2072e1ebfaf9 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-2072e1ebfaf9 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-2072e1ebfaf9 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-2072e1ebfaf9 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-56b00de0648a native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-56b00de0648a native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-56b00de0648a native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-56b00de0648a native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-56b00de0648a native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-56b00de0648a native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-56b00de0648a closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-56b00de0648a exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-e15d62f9fc09 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-e15d62f9fc09 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-e15d62f9fc09 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-e15d62f9fc09 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-e15d62f9fc09 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-e15d62f9fc09 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-e15d62f9fc09 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-e15d62f9fc09 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ae8b5f8aa228 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ae8b5f8aa228 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ae8b5f8aa228 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ae8b5f8aa228 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ae8b5f8aa228 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ae8b5f8aa228 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ae8b5f8aa228 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ae8b5f8aa228 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ab0d57a0fb09 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ab0d57a0fb09 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ab0d57a0fb09 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ab0d57a0fb09 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ab0d57a0fb09 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ab0d57a0fb09 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ab0d57a0fb09 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-ab0d57a0fb09 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-76cad9647098 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-76cad9647098 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-76cad9647098 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-76cad9647098 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-76cad9647098 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-76cad9647098 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-76cad9647098 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-76cad9647098 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-b3230e7b8584 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-b3230e7b8584 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-b3230e7b8584 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-b3230e7b8584 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-b3230e7b8584 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-b3230e7b8584 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-b3230e7b8584 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-b3230e7b8584 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-a2d8e928c4dc native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-a2d8e928c4dc native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-a2d8e928c4dc native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-a2d8e928c4dc native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-a2d8e928c4dc native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-a2d8e928c4dc native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-a2d8e928c4dc closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "span-a2d8e928c4dc exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-b4c788600641 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-b4c788600641 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-b4c788600641 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-b4c788600641 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-a8148ac9f645 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-a8148ac9f645 native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-a8148ac9f645 closed native core manifold",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "node-a8148ac9f645 exact vertical datums",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "all native exported contact planes retain full declared area",
+      "pass": true,
+      "details": {
+        "ports": 93,
+        "failed": []
+      }
+    },
+    {
+      "name": "all native triangles nondegenerate",
+      "pass": true,
+      "details": 0
+    },
+    {
+      "name": "all normal/tangent frames finite orthogonal",
+      "pass": true,
+      "details": 0
+    },
+    {
+      "name": "single-square-2m actual exported closed loop and no cross-part overlap",
+      "pass": true,
+      "details": {
+        "coreMismatchM2": 0.0,
+        "coreOverlapM2": 0.0,
+        "visualOverlapM2": 2.220446049250313e-16
+      }
+    },
+    {
+      "name": "single-half-2x1 actual exported closed loop and no cross-part overlap",
+      "pass": true,
+      "details": {
+        "coreMismatchM2": 0.0,
+        "coreOverlapM2": 0.0,
+        "visualOverlapM2": -2.220446049250313e-16
+      }
+    },
+    {
+      "name": "single-quarter-1m actual exported closed loop and no cross-part overlap",
+      "pass": true,
+      "details": {
+        "coreMismatchM2": 0.0,
+        "coreOverlapM2": 0.0,
+        "visualOverlapM2": -3.3306690738754696e-16
+      }
+    },
+    {
+      "name": "single-strip-4x1 actual exported closed loop and no cross-part overlap",
+      "pass": true,
+      "details": {
+        "coreMismatchM2": 0.0,
+        "coreOverlapM2": 0.0,
+        "visualOverlapM2": -8.881784197001252e-16
+      }
+    },
+    {
+      "name": "single-triangle-45 actual exported closed loop and no cross-part overlap",
+      "pass": true,
+      "details": {
+        "coreMismatchM2": 1.238273514507219e-07,
+        "coreOverlapM2": 1.1102230246251565e-16,
+        "visualOverlapM2": -1.1102230246251565e-16
+      }
+    },
+    {
+      "name": "single-triangle-long-left actual exported closed loop and no cross-part overlap",
+      "pass": true,
+      "details": {
+        "coreMismatchM2": 6.786066390124569e-08,
+        "coreOverlapM2": 1.0756017188029432e-09,
+        "visualOverlapM2": 1.0756029400482703e-09
+      }
+    },
+    {
+      "name": "single-triangle-long-right actual exported closed loop and no cross-part overlap",
+      "pass": true,
+      "details": {
+        "coreMismatchM2": 5.6574215407389026e-08,
+        "coreOverlapM2": 6.4036890234930866e-09,
+        "visualOverlapM2": 6.403689356559994e-09
+      }
+    },
+    {
+      "name": "single-triangle-slim-left actual exported closed loop and no cross-part overlap",
+      "pass": true,
+      "details": {
+        "coreMismatchM2": 2.3934488860499505e-07,
+        "coreOverlapM2": 4.440892098500626e-16,
+        "visualOverlapM2": 4.440892098500626e-16
+      }
+    },
+    {
+      "name": "single-triangle-slim-right actual exported closed loop and no cross-part overlap",
+      "pass": true,
+      "details": {
+        "coreMismatchM2": 1.0860132793215947e-07,
+        "coreOverlapM2": 5.251683199425372e-09,
+        "visualOverlapM2": 5.251681978180045e-09
+      }
+    },
+    {
+      "name": "single-corner-clipped actual exported closed loop and no cross-part overlap",
+      "pass": true,
+      "details": {
+        "coreMismatchM2": 1.4859939957405045e-08,
+        "coreOverlapM2": 2.220446049250313e-16,
+        "visualOverlapM2": -7.771561172376096e-16
+      }
+    },
+    {
+      "name": "single-taper-4m actual exported closed loop and no cross-part overlap",
+      "pass": true,
+      "details": {
+        "coreMismatchM2": 1.1427137669081786e-07,
+        "coreOverlapM2": 6.109636574436195e-09,
+        "visualOverlapM2": 6.1096370185254045e-09
+      }
+    },
+    {
+      "name": "single-triangle-1m actual exported closed loop and no cross-part overlap",
+      "pass": true,
+      "details": {
+        "coreMismatchM2": 9.020509367207324e-09,
+        "coreOverlapM2": 9.878167728238907e-10,
+        "visualOverlapM2": 9.878166618015882e-10
+      }
+    },
+    {
+      "name": "mixed-reentrant-L actual exported closed loop and no cross-part overlap",
+      "pass": true,
+      "details": {
+        "coreMismatchM2": 0.0,
+        "coreOverlapM2": 0.0,
+        "visualOverlapM2": 1.3322676295501878e-15
+      }
+    },
+    {
+      "name": "mixed-square-triangle actual exported closed loop and no cross-part overlap",
+      "pass": true,
+      "details": {
+        "coreMismatchM2": 9.333372051162119e-08,
+        "coreOverlapM2": 1.6669410296543674e-09,
+        "visualOverlapM2": 1.666939253297528e-09
+      }
+    },
+    {
+      "name": "mixed-orthogonal-T actual exported closed loop and no cross-part overlap",
+      "pass": true,
+      "details": {
+        "coreMismatchM2": 0.0,
+        "coreOverlapM2": 0.0,
+        "visualOverlapM2": 2.220446049250313e-15
+      }
+    },
+    {
+      "name": "mixed-collinear-module-joins actual exported closed loop and no cross-part overlap",
+      "pass": true,
+      "details": {
+        "coreMismatchM2": 0.0,
+        "coreOverlapM2": 0.0,
+        "visualOverlapM2": 2.220446049250313e-15
+      }
+    }
+  ],
+  "parts": 46,
+  "triangles": 86244,
+  "nativeContactPlanes": [
+    {
+      "partId": "node-ee493bf1352e",
+      "positionM": [
+        -0.0625,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-ee493bf1352e",
+      "positionM": [
+        0.0,
+        -0.0625
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-086cc581b11f",
+      "positionM": [
+        0.0625,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-086cc581b11f",
+      "positionM": [
+        1.9375,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-b3f0724acb39",
+      "positionM": [
+        0.0625,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-b3f0724acb39",
+      "positionM": [
+        0.9375,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-0cdd4c8ec952",
+      "positionM": [
+        0.0625,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-0cdd4c8ec952",
+      "positionM": [
+        3.9375,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-8ace9108954c",
+      "positionM": [
+        -0.13258252147247765,
+        -0.13258252147247765
+      ],
+      "nativeTriangleContactAreaM2": 0.26367186307882234,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-8ace9108954c",
+      "positionM": [
+        -0.1875,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-4cf5a3e80bfc",
+      "positionM": [
+        -0.13258252147247765,
+        -0.13258252147247765
+      ],
+      "nativeTriangleContactAreaM2": 0.26367186307882234,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-4cf5a3e80bfc",
+      "positionM": [
+        0.0,
+        -0.1875
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-94768f04e98a",
+      "positionM": [
+        0.0625,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-94768f04e98a",
+      "positionM": [
+        1.8125,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-0314fecad407",
+      "positionM": [
+        0.13258252147247765,
+        0.13258252147247765
+      ],
+      "nativeTriangleContactAreaM2": 0.26367186307882234,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-0314fecad407",
+      "positionM": [
+        1.8674174785275224,
+        1.8674174785275224
+      ],
+      "nativeTriangleContactAreaM2": 0.26367215942385097,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-808c0ebd2217",
+      "positionM": [
+        0.1875,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-808c0ebd2217",
+      "positionM": [
+        1.9375,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-600f98889a3d",
+      "positionM": [
+        -0.11180339887498948,
+        0.05590169943749474
+      ],
+      "nativeTriangleContactAreaM2": 0.263671855443154,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-600f98889a3d",
+      "positionM": [
+        0.0,
+        0.125
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-5ef3fc8bee96",
+      "positionM": [
+        -0.25155764746872633,
+        0.12577882373436317
+      ],
+      "nativeTriangleContactAreaM2": 0.26367186950003363,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-5ef3fc8bee96",
+      "positionM": [
+        -0.28125,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-e1ee17a40bd0",
+      "positionM": [
+        0.0625,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-e1ee17a40bd0",
+      "positionM": [
+        3.71875,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-6ec4ef6b98b1",
+      "positionM": [
+        0.12577882373436317,
+        0.25155764746872633
+      ],
+      "nativeTriangleContactAreaM2": 0.26367186950003363,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-6ec4ef6b98b1",
+      "positionM": [
+        1.9440983005625052,
+        3.8881966011250104
+      ],
+      "nativeTriangleContactAreaM2": 0.2636719632129422,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-2558d18d8aea",
+      "positionM": [
+        0.125,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-2558d18d8aea",
+      "positionM": [
+        1.9375,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-8b91be106a9b",
+      "positionM": [
+        -0.25155764746872633,
+        -0.12577882373436317
+      ],
+      "nativeTriangleContactAreaM2": 0.26367186950003363,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-8b91be106a9b",
+      "positionM": [
+        -0.28125,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-9c2c257cf6fe",
+      "positionM": [
+        -0.11180339887498948,
+        -0.05590169943749474
+      ],
+      "nativeTriangleContactAreaM2": 0.263671855443154,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-9c2c257cf6fe",
+      "positionM": [
+        0.0,
+        -0.125
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-08fd6477c200",
+      "positionM": [
+        0.28125,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-08fd6477c200",
+      "positionM": [
+        3.9375,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-808e279e3305",
+      "positionM": [
+        0.0625,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-808e279e3305",
+      "positionM": [
+        1.875,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-be8caa482150",
+      "positionM": [
+        0.11180339887498948,
+        0.05590169943749474
+      ],
+      "nativeTriangleContactAreaM2": 0.263671855443154,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-be8caa482150",
+      "positionM": [
+        3.748442352531274,
+        1.874221176265637
+      ],
+      "nativeTriangleContactAreaM2": 0.263671963212729,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-74c0b4ffc689",
+      "positionM": [
+        -0.12126781251816648,
+        0.03031695312954162
+      ],
+      "nativeTriangleContactAreaM2": 0.26367186354530386,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-74c0b4ffc689",
+      "positionM": [
+        0.0,
+        0.125
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-b3757ae7933a",
+      "positionM": [
+        -0.5153882032022076,
+        0.1288470508005519
+      ],
+      "nativeTriangleContactAreaM2": 0.26367189912124056,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-b3757ae7933a",
+      "positionM": [
+        -0.53125,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-d47d3475d32a",
+      "positionM": [
+        0.0625,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-d47d3475d32a",
+      "positionM": [
+        3.46875,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-ac212cda6bdf",
+      "positionM": [
+        0.1288470508005519,
+        0.5153882032022076
+      ],
+      "nativeTriangleContactAreaM2": 0.26367189912124056,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-ac212cda6bdf",
+      "positionM": [
+        0.9696830468704584,
+        3.8787321874818335
+      ],
+      "nativeTriangleContactAreaM2": 0.2636720210958416,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-618a6deb050d",
+      "positionM": [
+        0.125,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-618a6deb050d",
+      "positionM": [
+        0.9375,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-ac322cc2ef83",
+      "positionM": [
+        -0.5153882032022076,
+        -0.1288470508005519
+      ],
+      "nativeTriangleContactAreaM2": 0.26367189912124056,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-ac322cc2ef83",
+      "positionM": [
+        -0.53125,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-dd5634ec14cc",
+      "positionM": [
+        -0.12126781251816648,
+        -0.03031695312954162
+      ],
+      "nativeTriangleContactAreaM2": 0.26367186354530386,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-dd5634ec14cc",
+      "positionM": [
+        0.0,
+        -0.125
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-1fccd896f86f",
+      "positionM": [
+        0.53125,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-1fccd896f86f",
+      "positionM": [
+        3.9375,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-f6f884420a9f",
+      "positionM": [
+        0.0625,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-f6f884420a9f",
+      "positionM": [
+        0.875,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-135ed5730033",
+      "positionM": [
+        0.12126781251816648,
+        0.03031695312954162
+      ],
+      "nativeTriangleContactAreaM2": 0.26367186354530386,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-135ed5730033",
+      "positionM": [
+        3.4846117967977923,
+        0.8711529491994481
+      ],
+      "nativeTriangleContactAreaM2": 0.26367185846304103,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-722dea1af576",
+      "positionM": [
+        -0.044194173824159216,
+        -0.044194173824159216
+      ],
+      "nativeTriangleContactAreaM2": 0.2636718816003866,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-722dea1af576",
+      "positionM": [
+        0.0,
+        0.0625
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-9f376826b3e4",
+      "positionM": [
+        -0.044194173824159216,
+        -0.044194173824159216
+      ],
+      "nativeTriangleContactAreaM2": 0.2636718816003866,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-9f376826b3e4",
+      "positionM": [
+        0.0625,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-a3fe624b4c51",
+      "positionM": [
+        0.044194173824159216,
+        0.044194173824159216
+      ],
+      "nativeTriangleContactAreaM2": 0.2636718816003866,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-a3fe624b4c51",
+      "positionM": [
+        0.9558058261758408,
+        0.9558058261758408
+      ],
+      "nativeTriangleContactAreaM2": 0.26367192234782805,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-028c6d82a9cd",
+      "positionM": [
+        -0.09302605094190636,
+        0.011628256367738295
+      ],
+      "nativeTriangleContactAreaM2": 0.2636718808008183,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-028c6d82a9cd",
+      "positionM": [
+        0.0,
+        0.09375
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-fa76146eb8d8",
+      "positionM": [
+        -0.062017367294604234,
+        0.007752170911825529
+      ],
+      "nativeTriangleContactAreaM2": 0.2636718808008183,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-fa76146eb8d8",
+      "positionM": [
+        0.0,
+        -0.0625
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-3b50213b5a7b",
+      "positionM": [
+        -0.062017367294604234,
+        -0.007752170911825529
+      ],
+      "nativeTriangleContactAreaM2": 0.2636718808008183,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-3b50213b5a7b",
+      "positionM": [
+        0.0,
+        0.0625
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-521432080d97",
+      "positionM": [
+        -0.09302605094190636,
+        -0.011628256367738295
+      ],
+      "nativeTriangleContactAreaM2": 0.2636718808008183,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-521432080d97",
+      "positionM": [
+        0.0,
+        -0.09375
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-2072e1ebfaf9",
+      "positionM": [
+        0.09375,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-2072e1ebfaf9",
+      "positionM": [
+        1.90625,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-56b00de0648a",
+      "positionM": [
+        0.09302605094190636,
+        0.011628256367738295
+      ],
+      "nativeTriangleContactAreaM2": 0.2636718808008183,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-56b00de0648a",
+      "positionM": [
+        3.937982632705396,
+        0.4922478290881745
+      ],
+      "nativeTriangleContactAreaM2": 0.2636718963957909,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-e15d62f9fc09",
+      "positionM": [
+        0.007752170911825529,
+        0.062017367294604234
+      ],
+      "nativeTriangleContactAreaM2": 0.2636718808008183,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-e15d62f9fc09",
+      "positionM": [
+        0.4883717436322617,
+        3.9069739490580937
+      ],
+      "nativeTriangleContactAreaM2": 0.2636718963957909,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-ae8b5f8aa228",
+      "positionM": [
+        0.0625,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-ae8b5f8aa228",
+      "positionM": [
+        0.8125,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-ab0d57a0fb09",
+      "positionM": [
+        0.13258252147247765,
+        0.13258252147247765
+      ],
+      "nativeTriangleContactAreaM2": 0.26367186307882234,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-ab0d57a0fb09",
+      "positionM": [
+        0.8674174785275224,
+        0.8674174785275224
+      ],
+      "nativeTriangleContactAreaM2": 0.26367192234782805,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-76cad9647098",
+      "positionM": [
+        0.1875,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-76cad9647098",
+      "positionM": [
+        0.9375,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-b3230e7b8584",
+      "positionM": [
+        0.0625,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-b3230e7b8584",
+      "positionM": [
+        3.8125,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-a2d8e928c4dc",
+      "positionM": [
+        0.13258252147247765,
+        0.13258252147247765
+      ],
+      "nativeTriangleContactAreaM2": 0.26367186307882234,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "span-a2d8e928c4dc",
+      "positionM": [
+        1.9558058261758409,
+        1.9558058261758409
+      ],
+      "nativeTriangleContactAreaM2": 0.2636716852718052,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-b4c788600641",
+      "positionM": [
+        -0.0625,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-b4c788600641",
+      "positionM": [
+        0.0,
+        -0.0625
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-b4c788600641",
+      "positionM": [
+        0.0,
+        0.0625
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-a8148ac9f645",
+      "positionM": [
+        -0.0625,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    },
+    {
+      "partId": "node-a8148ac9f645",
+      "positionM": [
+        0.0625,
+        0.0
+      ],
+      "nativeTriangleContactAreaM2": 0.263671875,
+      "nominalM2": 0.263671875,
+      "triangleCount": 2,
+      "pass": true
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "single-square-2m",
+      "coreMismatchM2": 0.0,
+      "coreOverlapM2": 0.0,
+      "visualOverlapM2": 2.220446049250313e-16,
+      "pass": true
+    },
+    {
+      "id": "single-half-2x1",
+      "coreMismatchM2": 0.0,
+      "coreOverlapM2": 0.0,
+      "visualOverlapM2": -2.220446049250313e-16,
+      "pass": true
+    },
+    {
+      "id": "single-quarter-1m",
+      "coreMismatchM2": 0.0,
+      "coreOverlapM2": 0.0,
+      "visualOverlapM2": -3.3306690738754696e-16,
+      "pass": true
+    },
+    {
+      "id": "single-strip-4x1",
+      "coreMismatchM2": 0.0,
+      "coreOverlapM2": 0.0,
+      "visualOverlapM2": -8.881784197001252e-16,
+      "pass": true
+    },
+    {
+      "id": "single-triangle-45",
+      "coreMismatchM2": 1.238273514507219e-07,
+      "coreOverlapM2": 1.1102230246251565e-16,
+      "visualOverlapM2": -1.1102230246251565e-16,
+      "pass": true
+    },
+    {
+      "id": "single-triangle-long-left",
+      "coreMismatchM2": 6.786066390124569e-08,
+      "coreOverlapM2": 1.0756017188029432e-09,
+      "visualOverlapM2": 1.0756029400482703e-09,
+      "pass": true
+    },
+    {
+      "id": "single-triangle-long-right",
+      "coreMismatchM2": 5.6574215407389026e-08,
+      "coreOverlapM2": 6.4036890234930866e-09,
+      "visualOverlapM2": 6.403689356559994e-09,
+      "pass": true
+    },
+    {
+      "id": "single-triangle-slim-left",
+      "coreMismatchM2": 2.3934488860499505e-07,
+      "coreOverlapM2": 4.440892098500626e-16,
+      "visualOverlapM2": 4.440892098500626e-16,
+      "pass": true
+    },
+    {
+      "id": "single-triangle-slim-right",
+      "coreMismatchM2": 1.0860132793215947e-07,
+      "coreOverlapM2": 5.251683199425372e-09,
+      "visualOverlapM2": 5.251681978180045e-09,
+      "pass": true
+    },
+    {
+      "id": "single-corner-clipped",
+      "coreMismatchM2": 1.4859939957405045e-08,
+      "coreOverlapM2": 2.220446049250313e-16,
+      "visualOverlapM2": -7.771561172376096e-16,
+      "pass": true
+    },
+    {
+      "id": "single-taper-4m",
+      "coreMismatchM2": 1.1427137669081786e-07,
+      "coreOverlapM2": 6.109636574436195e-09,
+      "visualOverlapM2": 6.1096370185254045e-09,
+      "pass": true
+    },
+    {
+      "id": "single-triangle-1m",
+      "coreMismatchM2": 9.020509367207324e-09,
+      "coreOverlapM2": 9.878167728238907e-10,
+      "visualOverlapM2": 9.878166618015882e-10,
+      "pass": true
+    },
+    {
+      "id": "mixed-reentrant-L",
+      "coreMismatchM2": 0.0,
+      "coreOverlapM2": 0.0,
+      "visualOverlapM2": 1.3322676295501878e-15,
+      "pass": true
+    },
+    {
+      "id": "mixed-square-triangle",
+      "coreMismatchM2": 9.333372051162119e-08,
+      "coreOverlapM2": 1.6669410296543674e-09,
+      "visualOverlapM2": 1.666939253297528e-09,
+      "pass": true
+    },
+    {
+      "id": "mixed-orthogonal-T",
+      "coreMismatchM2": 0.0,
+      "coreOverlapM2": 0.0,
+      "visualOverlapM2": 2.220446049250313e-15,
+      "pass": true
+    },
+    {
+      "id": "mixed-collinear-module-joins",
+      "coreMismatchM2": 0.0,
+      "coreOverlapM2": 0.0,
+      "visualOverlapM2": 2.220446049250313e-15,
+      "pass": true
+    }
+  ],
+  "kitSha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+  "tolerances": {
+    "nativeContactPlaneDistanceM": 1e-06,
+    "nativeContactAreaM2": 3e-06,
+    "fixtureAreaM2": 1e-05
+  },
+  "limits": [
+    "Native core/visual planar joining only; no material capacity, floor/roof sealing certification, damage clipping or owner art acceptance.",
+    "Supported node and span signatures are explicit finite grammar; unlisted signatures reject.",
+    "No implied body collision or pressure/world authority integration."
+  ]
+}

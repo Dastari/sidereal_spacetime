@@ -1,0 +1,61 @@
+{
+  "floorGlb": "assets/runtime/assembly/floor/r002/kit.glb",
+  "floorSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+  "method": "Coplanar native triangle clipping against full gasket bottom polygon; upper-envelope cross-section from exported positive-Z triangles, not AABB or ideal plane.",
+  "patchM": [
+    [
+      0.365,
+      -0.0715
+    ],
+    [
+      1.635,
+      -0.0715
+    ],
+    [
+      1.635,
+      -0.0625
+    ],
+    [
+      0.365,
+      -0.0625
+    ]
+  ],
+  "patchAreaM2": 0.011429999999999996,
+  "fixtures": {
+    "single-square": {
+      "contactAreaM2": 0.011429999999999784,
+      "uncoveredAreaM2": 2.1163626406917047e-16
+    },
+    "split-quarter-seam": {
+      "contactAreaM2": 0.011357999925334079,
+      "uncoveredAreaM2": 7.20000746659167e-05
+    }
+  },
+  "derivedSeamProfileXZ": [
+    [
+      0.99599999189,
+      0.1875000000015609
+    ],
+    [
+      0.99882847071,
+      0.1863284111010273
+    ],
+    [
+      1.0,
+      0.1835000067949295
+    ],
+    [
+      1.00117157283,
+      0.18632841110130463
+    ],
+    [
+      1.00400000019,
+      0.18750000000000422
+    ]
+  ],
+  "maxGapM": 0.003999993205070496,
+  "limits": [
+    "Transverse orthogonal seam away from corner bevels; diagonal/corner intersections require independent profile adapters.",
+    "No material strength or pressure rating."
+  ]
+}

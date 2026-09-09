@@ -1,0 +1,179 @@
+{
+  "schema": 1,
+  "source": "assets/source/equipment-kit.blend",
+  "sourceSha256": "4325ff3c9a6b7ea833a758bc1a0119972ec474d7b76a782dec20ee6def79a9bf",
+  "generator": "scripts/build_inventory_icons.py",
+  "generatorSha256": "1ff8444c682ff6da1d486d8e30b2837fddd2375be42b58bda78c5417eb57ed13",
+  "camera": "orthographic broad-side three-quarter, 20 percent fit margin",
+  "lighting": "neutral CPU Cycles48 samples, shared original PBR materials, transparent film",
+  "iconBytes": 573459,
+  "entries": [
+    {
+      "assetId": "compact-pistol",
+      "file": "compact-pistol.png",
+      "width": 256,
+      "height": 256,
+      "rgba": true,
+      "boundsPixels": [
+        39,
+        70,
+        223,
+        222
+      ],
+      "bytes": 52521,
+      "sha256": "0f043387eda646ddbffe0f5291fb487cb072785f5636f4444784c2a369fa80f0"
+    },
+    {
+      "assetId": "heavy-handgun",
+      "file": "heavy-handgun.png",
+      "width": 256,
+      "height": 256,
+      "rgba": true,
+      "boundsPixels": [
+        36,
+        84,
+        222,
+        212
+      ],
+      "bytes": 48467,
+      "sha256": "762db4a0dc14c32f6855746fad53d112832b7fde245dabe08caa034a5eaafeed"
+    },
+    {
+      "assetId": "carbine",
+      "file": "carbine.png",
+      "width": 256,
+      "height": 256,
+      "rgba": true,
+      "boundsPixels": [
+        28,
+        85,
+        229,
+        187
+      ],
+      "bytes": 40968,
+      "sha256": "24af6df7150cc98a3957a93f381e484668c4628b554ac3783a19ae66efc4b81b"
+    },
+    {
+      "assetId": "long-rifle",
+      "file": "long-rifle.png",
+      "width": 256,
+      "height": 256,
+      "rgba": true,
+      "boundsPixels": [
+        27,
+        93,
+        229,
+        177
+      ],
+      "bytes": 38299,
+      "sha256": "aeedfacd45578be8406291d0a8ecb9733e65e25cc43699375e7c3daa3ec5fe68"
+    },
+    {
+      "assetId": "sample-scanner",
+      "file": "sample-scanner.png",
+      "width": 256,
+      "height": 256,
+      "rgba": true,
+      "boundsPixels": [
+        77,
+        57,
+        183,
+        187
+      ],
+      "bytes": 37845,
+      "sha256": "4d0e6db6667bdd39b0669499ea0bd45d9b1f51a904df68af4ceb26941192fac5"
+    },
+    {
+      "assetId": "medkit",
+      "file": "medkit.png",
+      "width": 256,
+      "height": 256,
+      "rgba": true,
+      "boundsPixels": [
+        42,
+        30,
+        214,
+        201
+      ],
+      "bytes": 58851,
+      "sha256": "bb56e3c845b9776e2590242b2a8252547981befbd6542ac50d1409d811d71048"
+    },
+    {
+      "assetId": "power-cell",
+      "file": "power-cell.png",
+      "width": 256,
+      "height": 256,
+      "rgba": true,
+      "boundsPixels": [
+        67,
+        24,
+        189,
+        224
+      ],
+      "bytes": 53465,
+      "sha256": "be1807415ae25a65d68ec26595cb5b95c4f9702d52c04f13dfc49cec72be8d66"
+    },
+    {
+      "assetId": "utility-backpack",
+      "file": "utility-backpack.png",
+      "width": 256,
+      "height": 256,
+      "rgba": true,
+      "boundsPixels": [
+        48,
+        26,
+        203,
+        221
+      ],
+      "bytes": 66202,
+      "sha256": "063f2aad0bc2e8acac591911730bb43a98ee45a649bfa914097fefa5064a7b8f"
+    },
+    {
+      "assetId": "resource-canister",
+      "file": "resource-canister.png",
+      "width": 256,
+      "height": 256,
+      "rgba": true,
+      "boundsPixels": [
+        54,
+        24,
+        200,
+        216
+      ],
+      "bytes": 58942,
+      "sha256": "dc098019696a861b1670f77f3438b4b54c6548a5f7ce723e22fd8dcbb8ddf66e"
+    },
+    {
+      "assetId": "plasma-cutter",
+      "file": "plasma-cutter.png",
+      "width": 256,
+      "height": 256,
+      "rgba": true,
+      "boundsPixels": [
+        35,
+        87,
+        225,
+        215
+      ],
+      "bytes": 52252,
+      "sha256": "f2e00c71265675f0a859b855a718fb30a622062cb8d7a092130320c470c5b06d"
+    },
+    {
+      "assetId": "supply-crate",
+      "file": "supply-crate.png",
+      "width": 256,
+      "height": 256,
+      "rgba": true,
+      "boundsPixels": [
+        29,
+        31,
+        226,
+        216
+      ],
+      "bytes": 65647,
+      "sha256": "dc28ae75eb093edec0c10df2b079576b8a61994fbbe587f88887e8582075828a"
+    }
+  ],
+  "contactSheet": "contact-sheet.png",
+  "contactSheetSha256": "f0bc03d965b731f1d739f7d5716c26cdedd99d45488ded630ba33ab4163ee2a8"
+}

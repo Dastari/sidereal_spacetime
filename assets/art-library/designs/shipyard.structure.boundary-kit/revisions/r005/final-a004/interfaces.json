@@ -1,0 +1,4404 @@
+{
+  "schema": "sidereal.native-floor-wall-contact-kit.v1",
+  "revision": "r005",
+  "latticePerMeter": 32,
+  "floorTopUnits": 6,
+  "native": {
+    "glb": "kit.glb",
+    "glbSha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+    "source": "boundary-kit.blend",
+    "sourceSha256": "ec0417de1046ac4b79d40c48d9b627b97c32e1b3d0dd5b54c420513d175ffbbe",
+    "coordinateSystem": "BlenderXY metres Zheight; standard GLB axis conversion exported already"
+  },
+  "dependencies": {
+    "floorGlbSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+    "boundaryInterfacesSha256": "136afd89f22c1cbea3ba590fca4ebc4cd81f82615f71fcadcedc2d041b73544b"
+  },
+  "parts": [
+    {
+      "id": "base-5c44702128b939ad",
+      "assetUuid": "a426aa63-00a9-5120-950e-1226aeaa55e5",
+      "floorPartId": "square-2m",
+      "native": {
+        "nodePrefix": "GEO-boundary-r005-base-5c44702128b939ad--surface",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "bottomMinM": 0.1834999918937683,
+      "topM": 0.1875,
+      "planAreaM2": 0.03191705041602999,
+      "solidVolumeM3": 3.7417110127982205e-05,
+      "triangles": 280,
+      "contactPlanPartId": "base-5c44702128b939ad",
+      "topContactRole": "wall structural core atfloorTop6",
+      "bottomContactRole": "explicit actual native floor bevel triangle patches",
+      "gameStats": null
+    },
+    {
+      "id": "base-5105a9e117a14a08",
+      "assetUuid": "f8a1ef38-46d0-59bf-b4b2-49b08fb077f9",
+      "floorPartId": "half-2x1",
+      "native": {
+        "nodePrefix": "GEO-boundary-r005-base-5105a9e117a14a08--surface",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "bottomMinM": 0.18349999189376742,
+      "topM": 0.1875,
+      "planAreaM2": 0.023917220625494284,
+      "solidVolumeM3": 2.804430123003997e-05,
+      "triangles": 280,
+      "contactPlanPartId": "base-5105a9e117a14a08",
+      "topContactRole": "wall structural core atfloorTop6",
+      "bottomContactRole": "explicit actual native floor bevel triangle patches",
+      "gameStats": null
+    },
+    {
+      "id": "base-1721621a1efaf31e",
+      "assetUuid": "35418088-d55a-5706-befd-7eb40d02009b",
+      "floorPartId": "quarter-1m",
+      "native": {
+        "nodePrefix": "GEO-boundary-r005-base-1721621a1efaf31e--surface",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "bottomMinM": 0.1834999918937683,
+      "topM": 0.1875,
+      "planAreaM2": 0.015917271625669138,
+      "solidVolumeM3": 1.8671660918103284e-05,
+      "triangles": 280,
+      "contactPlanPartId": "base-1721621a1efaf31e",
+      "topContactRole": "wall structural core atfloorTop6",
+      "bottomContactRole": "explicit actual native floor bevel triangle patches",
+      "gameStats": null
+    },
+    {
+      "id": "base-751a27b8eef382a8",
+      "assetUuid": "f7a66548-f2de-53fb-9764-48e81b2d111f",
+      "floorPartId": "strip-4x1",
+      "native": {
+        "nodePrefix": "GEO-boundary-r005-base-751a27b8eef382a8--surface",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "bottomMinM": 0.18349999189376653,
+      "topM": 0.1875,
+      "planAreaM2": 0.039917238171612635,
+      "solidVolumeM3": 4.678894190864209e-05,
+      "triangles": 280,
+      "contactPlanPartId": "base-751a27b8eef382a8",
+      "topContactRole": "wall structural core atfloorTop6",
+      "bottomContactRole": "explicit actual native floor bevel triangle patches",
+      "gameStats": null
+    },
+    {
+      "id": "base-778a913ba6bd4861",
+      "assetUuid": "d4d9eaad-57e6-56b7-9a3d-4ac766fa0e3d",
+      "floorPartId": "triangle-45",
+      "native": {
+        "nodePrefix": "GEO-boundary-r005-base-778a913ba6bd4861--surface",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "bottomMinM": 0.1834999918937683,
+      "topM": 0.1875,
+      "planAreaM2": 0.027209166471145796,
+      "solidVolumeM3": 3.1928417486808365e-05,
+      "triangles": 214,
+      "contactPlanPartId": "base-778a913ba6bd4861",
+      "topContactRole": "wall structural core atfloorTop6",
+      "bottomContactRole": "explicit actual native floor bevel triangle patches",
+      "gameStats": null
+    },
+    {
+      "id": "base-edeb20d844afc37f",
+      "assetUuid": "f2941090-004c-50c2-9617-69b50f29eb5d",
+      "floorPartId": "triangle-long-left",
+      "native": {
+        "nodePrefix": "GEO-boundary-r005-base-edeb20d844afc37f--surface",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "bottomMinM": 0.1834999918937683,
+      "topM": 0.1875,
+      "planAreaM2": 0.041768103074651286,
+      "solidVolumeM3": 4.952938188501737e-05,
+      "triangles": 214,
+      "contactPlanPartId": "base-edeb20d844afc37f",
+      "topContactRole": "wall structural core atfloorTop6",
+      "bottomContactRole": "explicit actual native floor bevel triangle patches",
+      "gameStats": null
+    },
+    {
+      "id": "base-8fa3ceb73648f1b1",
+      "assetUuid": "cbda7e41-f6f4-5131-94bd-b72eaa7f19f5",
+      "floorPartId": "triangle-long-right",
+      "native": {
+        "nodePrefix": "GEO-boundary-r005-base-8fa3ceb73648f1b1--surface",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "bottomMinM": 0.18349999189376653,
+      "topM": 0.1875,
+      "planAreaM2": 0.04176791565442706,
+      "solidVolumeM3": 4.952784532609531e-05,
+      "triangles": 214,
+      "contactPlanPartId": "base-8fa3ceb73648f1b1",
+      "topContactRole": "wall structural core atfloorTop6",
+      "bottomContactRole": "explicit actual native floor bevel triangle patches",
+      "gameStats": null
+    },
+    {
+      "id": "base-79d03a8564bd3284",
+      "assetUuid": "394279a3-0813-5ed0-b751-7867b4f8e520",
+      "floorPartId": "triangle-slim-left",
+      "native": {
+        "nodePrefix": "GEO-boundary-r005-base-79d03a8564bd3284--surface",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "bottomMinM": 0.1834999918937683,
+      "topM": 0.1875,
+      "planAreaM2": 0.03631569264401979,
+      "solidVolumeM3": 4.2755336345163174e-05,
+      "triangles": 270,
+      "contactPlanPartId": "base-79d03a8564bd3284",
+      "topContactRole": "wall structural core atfloorTop6",
+      "bottomContactRole": "explicit actual native floor bevel triangle patches",
+      "gameStats": null
+    },
+    {
+      "id": "base-344925e0d658e538",
+      "assetUuid": "d401eed1-11b7-5301-9885-4c9578300d36",
+      "floorPartId": "triangle-slim-right",
+      "native": {
+        "nodePrefix": "GEO-boundary-r005-base-344925e0d658e538--surface",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "bottomMinM": 0.18349999189376653,
+      "topM": 0.1875,
+      "planAreaM2": 0.03631573468282223,
+      "solidVolumeM3": 4.275440829643271e-05,
+      "triangles": 270,
+      "contactPlanPartId": "base-344925e0d658e538",
+      "topContactRole": "wall structural core atfloorTop6",
+      "bottomContactRole": "explicit actual native floor bevel triangle patches",
+      "gameStats": null
+    },
+    {
+      "id": "base-500994d2fdb6f234",
+      "assetUuid": "0009bb7f-7eeb-5ab5-9e9a-389d66342bba",
+      "floorPartId": "corner-clipped",
+      "native": {
+        "nodePrefix": "GEO-boundary-r005-base-500994d2fdb6f234--surface",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "bottomMinM": 0.1834999918937683,
+      "topM": 0.1875,
+      "planAreaM2": 0.029574854375402193,
+      "solidVolumeM3": 3.466864463838766e-05,
+      "triangles": 350,
+      "contactPlanPartId": "base-500994d2fdb6f234",
+      "topContactRole": "wall structural core atfloorTop6",
+      "bottomContactRole": "explicit actual native floor bevel triangle patches",
+      "gameStats": null
+    },
+    {
+      "id": "base-79a931b0a4024f86",
+      "assetUuid": "315aa4ba-a5bc-53ed-9d3b-f0735a236402",
+      "floorPartId": "taper-4m",
+      "native": {
+        "nodePrefix": "GEO-boundary-r005-base-79a931b0a4024f86--surface",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "bottomMinM": 0.18349999189376742,
+      "topM": 0.1875,
+      "planAreaM2": 0.044165967293143815,
+      "solidVolumeM3": 5.191014647763087e-05,
+      "triangles": 284,
+      "contactPlanPartId": "base-79a931b0a4024f86",
+      "topContactRole": "wall structural core atfloorTop6",
+      "bottomContactRole": "explicit actual native floor bevel triangle patches",
+      "gameStats": null
+    },
+    {
+      "id": "base-daaa1deefdcc725b",
+      "assetUuid": "a5eff357-868d-5ef2-8697-c5a49fae5546",
+      "floorPartId": "triangle-1m",
+      "native": {
+        "nodePrefix": "GEO-boundary-r005-base-daaa1deefdcc725b--surface",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "bottomMinM": 0.1834999918937683,
+      "topM": 0.1875,
+      "planAreaM2": 0.013552284374959866,
+      "solidVolumeM3": 1.5928030597343358e-05,
+      "triangles": 214,
+      "contactPlanPartId": "base-daaa1deefdcc725b",
+      "topContactRole": "wall structural core atfloorTop6",
+      "bottomContactRole": "explicit actual native floor bevel triangle patches",
+      "gameStats": null
+    },
+    {
+      "id": "base-0a60fc5795340e2d",
+      "assetUuid": "69e23379-66eb-55af-a4f5-7e9e785c0ab5",
+      "floorPartId": "square-2m",
+      "native": {
+        "nodePrefix": "GEO-boundary-r005-base-0a60fc5795340e2d--surface",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "bottomMinM": 0.1834999918937683,
+      "topM": 0.1875,
+      "planAreaM2": 0.016667246753730276,
+      "solidVolumeM3": 1.9550509626963836e-05,
+      "triangles": 396,
+      "contactPlanPartId": "base-0a60fc5795340e2d",
+      "topContactRole": "wall structural core atfloorTop6",
+      "bottomContactRole": "explicit actual native floor bevel triangle patches",
+      "gameStats": null
+    },
+    {
+      "id": "base-84db6b95287bbbad",
+      "assetUuid": "905e3ed7-1f4a-5dba-a2aa-7337ce94926c",
+      "floorPartId": "square-2m",
+      "native": {
+        "nodePrefix": "GEO-boundary-r005-base-84db6b95287bbbad--surface",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "bottomMinM": 0.1834999918937683,
+      "topM": 0.1875,
+      "planAreaM2": 0.024292050053861796,
+      "solidVolumeM3": 2.8483813408055475e-05,
+      "triangles": 338,
+      "contactPlanPartId": "base-84db6b95287bbbad",
+      "topContactRole": "wall structural core atfloorTop6",
+      "bottomContactRole": "explicit actual native floor bevel triangle patches",
+      "gameStats": null
+    },
+    {
+      "id": "base-d98033303b004cd5",
+      "assetUuid": "78092903-6fa2-5e72-a789-096c5ff4408d",
+      "floorPartId": "square-2m",
+      "native": {
+        "nodePrefix": "GEO-boundary-r005-base-d98033303b004cd5--surface",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "bottomMinM": 0.1834999918937683,
+      "topM": 0.1875,
+      "planAreaM2": 0.02429205005386198,
+      "solidVolumeM3": 2.8483813411254305e-05,
+      "triangles": 338,
+      "contactPlanPartId": "base-d98033303b004cd5",
+      "topContactRole": "wall structural core atfloorTop6",
+      "bottomContactRole": "explicit actual native floor bevel triangle patches",
+      "gameStats": null
+    },
+    {
+      "id": "base-fa6166b9bd761866",
+      "assetUuid": "53fce309-ba18-53d6-bd0a-9dcde15de884",
+      "floorPartId": "square-2m",
+      "native": {
+        "nodePrefix": "GEO-boundary-r005-base-fa6166b9bd761866--surface",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "bottomMinM": 0.1834999918937683,
+      "topM": 0.1875,
+      "planAreaM2": 0.024361812643110832,
+      "solidVolumeM3": 2.8569842570969294e-05,
+      "triangles": 338,
+      "contactPlanPartId": "base-fa6166b9bd761866",
+      "topContactRole": "wall structural core atfloorTop6",
+      "bottomContactRole": "explicit actual native floor bevel triangle patches",
+      "gameStats": null
+    },
+    {
+      "id": "base-e31456f30d08d683",
+      "assetUuid": "788cc073-1281-5bbe-a163-cb9e005e0b00",
+      "floorPartId": "triangle-45",
+      "native": {
+        "nodePrefix": "GEO-boundary-r005-base-e31456f30d08d683--surface",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "bottomMinM": 0.1834999918937683,
+      "topM": 0.1875,
+      "planAreaM2": 0.019669831163526164,
+      "solidVolumeM3": 2.3091065792435705e-05,
+      "triangles": 270,
+      "contactPlanPartId": "base-e31456f30d08d683",
+      "topContactRole": "wall structural core atfloorTop6",
+      "bottomContactRole": "explicit actual native floor bevel triangle patches",
+      "gameStats": null
+    },
+    {
+      "id": "base-f79837a2384d6a95",
+      "assetUuid": "54d61381-77e6-5ec4-9e22-99b8269023b2",
+      "floorPartId": "square-2m",
+      "native": {
+        "nodePrefix": "GEO-boundary-r005-base-f79837a2384d6a95--surface",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "bottomMinM": 0.1834999918937683,
+      "topM": 0.1875,
+      "planAreaM2": 0.02429214858488033,
+      "solidVolumeM3": 2.84838098774734e-05,
+      "triangles": 338,
+      "contactPlanPartId": "base-f79837a2384d6a95",
+      "topContactRole": "wall structural core atfloorTop6",
+      "bottomContactRole": "explicit actual native floor bevel triangle patches",
+      "gameStats": null
+    },
+    {
+      "id": "base-548e33c75c9600c6",
+      "assetUuid": "9fcebeb4-4b46-53c0-93ad-c0f52188fb41",
+      "floorPartId": "quarter-1m",
+      "native": {
+        "nodePrefix": "GEO-boundary-r005-base-548e33c75c9600c6--surface",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "bottomMinM": 0.1834999918937683,
+      "topM": 0.1875,
+      "planAreaM2": 0.008312942364683757,
+      "solidVolumeM3": 9.756882066964392e-06,
+      "triangles": 268,
+      "contactPlanPartId": "base-548e33c75c9600c6",
+      "topContactRole": "wall structural core atfloorTop6",
+      "bottomContactRole": "explicit actual native floor bevel triangle patches",
+      "gameStats": null
+    },
+    {
+      "id": "base-f77e2e79aa988ef8",
+      "assetUuid": "5aef69e1-5f22-5a8c-b0b8-c601991cab16",
+      "floorPartId": "quarter-1m",
+      "native": {
+        "nodePrefix": "GEO-boundary-r005-base-f77e2e79aa988ef8--surface",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "bottomMinM": 0.1834999918937683,
+      "topM": 0.1875,
+      "planAreaM2": 0.008312949960628554,
+      "solidVolumeM3": 9.75680711087811e-06,
+      "triangles": 268,
+      "contactPlanPartId": "base-f77e2e79aa988ef8",
+      "topContactRole": "wall structural core atfloorTop6",
+      "bottomContactRole": "explicit actual native floor bevel triangle patches",
+      "gameStats": null
+    },
+    {
+      "id": "base-6f4e90afc9658454",
+      "assetUuid": "d2d49dd3-40bd-5f43-ac31-a9f88988d680",
+      "floorPartId": "quarter-1m",
+      "native": {
+        "nodePrefix": "GEO-boundary-r005-base-6f4e90afc9658454--surface",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "bottomMinM": 0.1834999918937683,
+      "topM": 0.1875,
+      "planAreaM2": 0.008312949959424505,
+      "solidVolumeM3": 9.756807108359761e-06,
+      "triangles": 268,
+      "contactPlanPartId": "base-6f4e90afc9658454",
+      "topContactRole": "wall structural core atfloorTop6",
+      "bottomContactRole": "explicit actual native floor bevel triangle patches",
+      "gameStats": null
+    },
+    {
+      "id": "base-746876da6e77a233",
+      "assetUuid": "867ed970-645a-5840-be1d-6e2b6f291198",
+      "floorPartId": "quarter-1m",
+      "native": {
+        "nodePrefix": "GEO-boundary-r005-base-746876da6e77a233--surface",
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "bottomMinM": 0.1834999918937683,
+      "topM": 0.1875,
+      "planAreaM2": 0.008312957555368969,
+      "solidVolumeM3": 9.756727377122019e-06,
+      "triangles": 268,
+      "contactPlanPartId": "base-746876da6e77a233",
+      "topContactRole": "wall structural core atfloorTop6",
+      "bottomContactRole": "explicit actual native floor bevel triangle patches",
+      "gameStats": null
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "single-square-2m",
+      "nativeFloors": [
+        {
+          "partId": "square-2m",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-a3f5c1c3caa171a94d6c",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "nativeWalls": [
+        {
+          "key": "single-square-2m:node:0,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 2,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-square-2m:node:0,64",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            64
+          ],
+          "quarterTurns": 1,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-square-2m:node:64,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 3,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-square-2m:node:64,64",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            64,
+            64
+          ],
+          "quarterTurns": 0,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-square-2m:span:0",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            0
+          ],
+          "bUnits": [
+            64,
+            0
+          ],
+          "startNodeKey": "single-square-2m:node:0,0",
+          "endNodeKey": "single-square-2m:node:64,0"
+        },
+        {
+          "key": "single-square-2m:span:1",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 1,
+          "role": "perimeter-span",
+          "aUnits": [
+            64,
+            0
+          ],
+          "bUnits": [
+            64,
+            64
+          ],
+          "startNodeKey": "single-square-2m:node:64,0",
+          "endNodeKey": "single-square-2m:node:64,64"
+        },
+        {
+          "key": "single-square-2m:span:2",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            64,
+            64
+          ],
+          "quarterTurns": 2,
+          "role": "perimeter-span",
+          "aUnits": [
+            64,
+            64
+          ],
+          "bUnits": [
+            0,
+            64
+          ],
+          "startNodeKey": "single-square-2m:node:64,64",
+          "endNodeKey": "single-square-2m:node:0,64"
+        },
+        {
+          "key": "single-square-2m:span:3",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            0,
+            64
+          ],
+          "quarterTurns": 3,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            64
+          ],
+          "bUnits": [
+            0,
+            0
+          ],
+          "startNodeKey": "single-square-2m:node:0,64",
+          "endNodeKey": "single-square-2m:node:0,0"
+        }
+      ],
+      "nominalPolygonUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          64,
+          64
+        ],
+        [
+          0,
+          64
+        ]
+      ],
+      "placements": [
+        {
+          "key": "single-square-2m/floor-base/0",
+          "partId": "base-5c44702128b939ad",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 0
+        }
+      ]
+    },
+    {
+      "id": "single-half-2x1",
+      "nativeFloors": [
+        {
+          "partId": "half-2x1",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-926a2afada18f96d51a3",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-926a2afada18f96d51a3--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "nativeWalls": [
+        {
+          "key": "single-half-2x1:node:0,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 2,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-half-2x1:node:0,32",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            32
+          ],
+          "quarterTurns": 1,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-half-2x1:node:64,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 3,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-half-2x1:node:64,32",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            64,
+            32
+          ],
+          "quarterTurns": 0,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-half-2x1:span:0",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            0
+          ],
+          "bUnits": [
+            64,
+            0
+          ],
+          "startNodeKey": "single-half-2x1:node:0,0",
+          "endNodeKey": "single-half-2x1:node:64,0"
+        },
+        {
+          "key": "single-half-2x1:span:1",
+          "partId": "span-b3f0724acb39",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 1,
+          "role": "perimeter-span",
+          "aUnits": [
+            64,
+            0
+          ],
+          "bUnits": [
+            64,
+            32
+          ],
+          "startNodeKey": "single-half-2x1:node:64,0",
+          "endNodeKey": "single-half-2x1:node:64,32"
+        },
+        {
+          "key": "single-half-2x1:span:2",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            64,
+            32
+          ],
+          "quarterTurns": 2,
+          "role": "perimeter-span",
+          "aUnits": [
+            64,
+            32
+          ],
+          "bUnits": [
+            0,
+            32
+          ],
+          "startNodeKey": "single-half-2x1:node:64,32",
+          "endNodeKey": "single-half-2x1:node:0,32"
+        },
+        {
+          "key": "single-half-2x1:span:3",
+          "partId": "span-b3f0724acb39",
+          "originUnits": [
+            0,
+            32
+          ],
+          "quarterTurns": 3,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            32
+          ],
+          "bUnits": [
+            0,
+            0
+          ],
+          "startNodeKey": "single-half-2x1:node:0,32",
+          "endNodeKey": "single-half-2x1:node:0,0"
+        }
+      ],
+      "nominalPolygonUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          64,
+          32
+        ],
+        [
+          0,
+          32
+        ]
+      ],
+      "placements": [
+        {
+          "key": "single-half-2x1/floor-base/0",
+          "partId": "base-5105a9e117a14a08",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 0
+        }
+      ]
+    },
+    {
+      "id": "single-quarter-1m",
+      "nativeFloors": [
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "nativeWalls": [
+        {
+          "key": "single-quarter-1m:node:0,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 2,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-quarter-1m:node:0,32",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            32
+          ],
+          "quarterTurns": 1,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-quarter-1m:node:32,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            32,
+            0
+          ],
+          "quarterTurns": 3,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-quarter-1m:node:32,32",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            32,
+            32
+          ],
+          "quarterTurns": 0,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-quarter-1m:span:0",
+          "partId": "span-b3f0724acb39",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            0
+          ],
+          "bUnits": [
+            32,
+            0
+          ],
+          "startNodeKey": "single-quarter-1m:node:0,0",
+          "endNodeKey": "single-quarter-1m:node:32,0"
+        },
+        {
+          "key": "single-quarter-1m:span:1",
+          "partId": "span-b3f0724acb39",
+          "originUnits": [
+            32,
+            0
+          ],
+          "quarterTurns": 1,
+          "role": "perimeter-span",
+          "aUnits": [
+            32,
+            0
+          ],
+          "bUnits": [
+            32,
+            32
+          ],
+          "startNodeKey": "single-quarter-1m:node:32,0",
+          "endNodeKey": "single-quarter-1m:node:32,32"
+        },
+        {
+          "key": "single-quarter-1m:span:2",
+          "partId": "span-b3f0724acb39",
+          "originUnits": [
+            32,
+            32
+          ],
+          "quarterTurns": 2,
+          "role": "perimeter-span",
+          "aUnits": [
+            32,
+            32
+          ],
+          "bUnits": [
+            0,
+            32
+          ],
+          "startNodeKey": "single-quarter-1m:node:32,32",
+          "endNodeKey": "single-quarter-1m:node:0,32"
+        },
+        {
+          "key": "single-quarter-1m:span:3",
+          "partId": "span-b3f0724acb39",
+          "originUnits": [
+            0,
+            32
+          ],
+          "quarterTurns": 3,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            32
+          ],
+          "bUnits": [
+            0,
+            0
+          ],
+          "startNodeKey": "single-quarter-1m:node:0,32",
+          "endNodeKey": "single-quarter-1m:node:0,0"
+        }
+      ],
+      "nominalPolygonUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          32,
+          0
+        ],
+        [
+          32,
+          32
+        ],
+        [
+          0,
+          32
+        ]
+      ],
+      "placements": [
+        {
+          "key": "single-quarter-1m/floor-base/0",
+          "partId": "base-1721621a1efaf31e",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 0
+        }
+      ]
+    },
+    {
+      "id": "single-strip-4x1",
+      "nativeFloors": [
+        {
+          "partId": "strip-4x1",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-baa2e4a6cbe886a5c292",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-baa2e4a6cbe886a5c292--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "nativeWalls": [
+        {
+          "key": "single-strip-4x1:node:0,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 2,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-strip-4x1:node:0,32",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            32
+          ],
+          "quarterTurns": 1,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-strip-4x1:node:128,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            128,
+            0
+          ],
+          "quarterTurns": 3,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-strip-4x1:node:128,32",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            128,
+            32
+          ],
+          "quarterTurns": 0,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-strip-4x1:span:0",
+          "partId": "span-0cdd4c8ec952",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            0
+          ],
+          "bUnits": [
+            128,
+            0
+          ],
+          "startNodeKey": "single-strip-4x1:node:0,0",
+          "endNodeKey": "single-strip-4x1:node:128,0"
+        },
+        {
+          "key": "single-strip-4x1:span:1",
+          "partId": "span-b3f0724acb39",
+          "originUnits": [
+            128,
+            0
+          ],
+          "quarterTurns": 1,
+          "role": "perimeter-span",
+          "aUnits": [
+            128,
+            0
+          ],
+          "bUnits": [
+            128,
+            32
+          ],
+          "startNodeKey": "single-strip-4x1:node:128,0",
+          "endNodeKey": "single-strip-4x1:node:128,32"
+        },
+        {
+          "key": "single-strip-4x1:span:2",
+          "partId": "span-0cdd4c8ec952",
+          "originUnits": [
+            128,
+            32
+          ],
+          "quarterTurns": 2,
+          "role": "perimeter-span",
+          "aUnits": [
+            128,
+            32
+          ],
+          "bUnits": [
+            0,
+            32
+          ],
+          "startNodeKey": "single-strip-4x1:node:128,32",
+          "endNodeKey": "single-strip-4x1:node:0,32"
+        },
+        {
+          "key": "single-strip-4x1:span:3",
+          "partId": "span-b3f0724acb39",
+          "originUnits": [
+            0,
+            32
+          ],
+          "quarterTurns": 3,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            32
+          ],
+          "bUnits": [
+            0,
+            0
+          ],
+          "startNodeKey": "single-strip-4x1:node:0,32",
+          "endNodeKey": "single-strip-4x1:node:0,0"
+        }
+      ],
+      "nominalPolygonUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          128,
+          32
+        ],
+        [
+          0,
+          32
+        ]
+      ],
+      "placements": [
+        {
+          "key": "single-strip-4x1/floor-base/0",
+          "partId": "base-751a27b8eef382a8",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 0
+        }
+      ]
+    },
+    {
+      "id": "single-triangle-45",
+      "nativeFloors": [
+        {
+          "partId": "triangle-45",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-771cc318e835d7a08abd",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-771cc318e835d7a08abd--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "nativeWalls": [
+        {
+          "key": "single-triangle-45:node:0,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 2,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-triangle-45:node:0,64",
+          "partId": "node-8ace9108954c",
+          "originUnits": [
+            0,
+            64
+          ],
+          "quarterTurns": 1,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-triangle-45:node:64,0",
+          "partId": "node-4cf5a3e80bfc",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 3,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-triangle-45:span:0",
+          "partId": "span-94768f04e98a",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            0
+          ],
+          "bUnits": [
+            64,
+            0
+          ],
+          "startNodeKey": "single-triangle-45:node:0,0",
+          "endNodeKey": "single-triangle-45:node:64,0"
+        },
+        {
+          "key": "single-triangle-45:span:1",
+          "partId": "span-0314fecad407",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 1,
+          "role": "perimeter-span",
+          "aUnits": [
+            64,
+            0
+          ],
+          "bUnits": [
+            0,
+            64
+          ],
+          "startNodeKey": "single-triangle-45:node:64,0",
+          "endNodeKey": "single-triangle-45:node:0,64"
+        },
+        {
+          "key": "single-triangle-45:span:2",
+          "partId": "span-808c0ebd2217",
+          "originUnits": [
+            0,
+            64
+          ],
+          "quarterTurns": 3,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            64
+          ],
+          "bUnits": [
+            0,
+            0
+          ],
+          "startNodeKey": "single-triangle-45:node:0,64",
+          "endNodeKey": "single-triangle-45:node:0,0"
+        }
+      ],
+      "nominalPolygonUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          0,
+          64
+        ]
+      ],
+      "placements": [
+        {
+          "key": "single-triangle-45/floor-base/0",
+          "partId": "base-778a913ba6bd4861",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 0
+        }
+      ]
+    },
+    {
+      "id": "single-triangle-long-left",
+      "nativeFloors": [
+        {
+          "partId": "triangle-long-left",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-79328356071c674a2c8b",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-79328356071c674a2c8b--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "nativeWalls": [
+        {
+          "key": "single-triangle-long-left:node:0,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 2,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-triangle-long-left:node:0,64",
+          "partId": "node-600f98889a3d",
+          "originUnits": [
+            0,
+            64
+          ],
+          "quarterTurns": 2,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-triangle-long-left:node:128,0",
+          "partId": "node-5ef3fc8bee96",
+          "originUnits": [
+            128,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-triangle-long-left:span:0",
+          "partId": "span-e1ee17a40bd0",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            0
+          ],
+          "bUnits": [
+            128,
+            0
+          ],
+          "startNodeKey": "single-triangle-long-left:node:0,0",
+          "endNodeKey": "single-triangle-long-left:node:128,0"
+        },
+        {
+          "key": "single-triangle-long-left:span:1",
+          "partId": "span-6ec4ef6b98b1",
+          "originUnits": [
+            128,
+            0
+          ],
+          "quarterTurns": 1,
+          "role": "perimeter-span",
+          "aUnits": [
+            128,
+            0
+          ],
+          "bUnits": [
+            0,
+            64
+          ],
+          "startNodeKey": "single-triangle-long-left:node:128,0",
+          "endNodeKey": "single-triangle-long-left:node:0,64"
+        },
+        {
+          "key": "single-triangle-long-left:span:2",
+          "partId": "span-2558d18d8aea",
+          "originUnits": [
+            0,
+            64
+          ],
+          "quarterTurns": 3,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            64
+          ],
+          "bUnits": [
+            0,
+            0
+          ],
+          "startNodeKey": "single-triangle-long-left:node:0,64",
+          "endNodeKey": "single-triangle-long-left:node:0,0"
+        }
+      ],
+      "nominalPolygonUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          0,
+          64
+        ]
+      ],
+      "placements": [
+        {
+          "key": "single-triangle-long-left/floor-base/0",
+          "partId": "base-edeb20d844afc37f",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 0
+        }
+      ]
+    },
+    {
+      "id": "single-triangle-long-right",
+      "nativeFloors": [
+        {
+          "partId": "triangle-long-right",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-e0dde5e97e9bed05b4b6",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-e0dde5e97e9bed05b4b6--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "nativeWalls": [
+        {
+          "key": "single-triangle-long-right:node:0,0",
+          "partId": "node-8b91be106a9b",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 2,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-triangle-long-right:node:128,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            128,
+            0
+          ],
+          "quarterTurns": 3,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-triangle-long-right:node:128,64",
+          "partId": "node-9c2c257cf6fe",
+          "originUnits": [
+            128,
+            64
+          ],
+          "quarterTurns": 0,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-triangle-long-right:span:0",
+          "partId": "span-08fd6477c200",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            0
+          ],
+          "bUnits": [
+            128,
+            0
+          ],
+          "startNodeKey": "single-triangle-long-right:node:0,0",
+          "endNodeKey": "single-triangle-long-right:node:128,0"
+        },
+        {
+          "key": "single-triangle-long-right:span:1",
+          "partId": "span-808e279e3305",
+          "originUnits": [
+            128,
+            0
+          ],
+          "quarterTurns": 1,
+          "role": "perimeter-span",
+          "aUnits": [
+            128,
+            0
+          ],
+          "bUnits": [
+            128,
+            64
+          ],
+          "startNodeKey": "single-triangle-long-right:node:128,0",
+          "endNodeKey": "single-triangle-long-right:node:128,64"
+        },
+        {
+          "key": "single-triangle-long-right:span:2",
+          "partId": "span-be8caa482150",
+          "originUnits": [
+            128,
+            64
+          ],
+          "quarterTurns": 2,
+          "role": "perimeter-span",
+          "aUnits": [
+            128,
+            64
+          ],
+          "bUnits": [
+            0,
+            0
+          ],
+          "startNodeKey": "single-triangle-long-right:node:128,64",
+          "endNodeKey": "single-triangle-long-right:node:0,0"
+        }
+      ],
+      "nominalPolygonUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          128,
+          64
+        ]
+      ],
+      "placements": [
+        {
+          "key": "single-triangle-long-right/floor-base/0",
+          "partId": "base-8fa3ceb73648f1b1",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 0
+        }
+      ]
+    },
+    {
+      "id": "single-triangle-slim-left",
+      "nativeFloors": [
+        {
+          "partId": "triangle-slim-left",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-cf72797120e52d05662c",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-cf72797120e52d05662c--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "nativeWalls": [
+        {
+          "key": "single-triangle-slim-left:node:0,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 2,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-triangle-slim-left:node:0,32",
+          "partId": "node-74c0b4ffc689",
+          "originUnits": [
+            0,
+            32
+          ],
+          "quarterTurns": 2,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-triangle-slim-left:node:128,0",
+          "partId": "node-b3757ae7933a",
+          "originUnits": [
+            128,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-triangle-slim-left:span:0",
+          "partId": "span-d47d3475d32a",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            0
+          ],
+          "bUnits": [
+            128,
+            0
+          ],
+          "startNodeKey": "single-triangle-slim-left:node:0,0",
+          "endNodeKey": "single-triangle-slim-left:node:128,0"
+        },
+        {
+          "key": "single-triangle-slim-left:span:1",
+          "partId": "span-ac212cda6bdf",
+          "originUnits": [
+            128,
+            0
+          ],
+          "quarterTurns": 1,
+          "role": "perimeter-span",
+          "aUnits": [
+            128,
+            0
+          ],
+          "bUnits": [
+            0,
+            32
+          ],
+          "startNodeKey": "single-triangle-slim-left:node:128,0",
+          "endNodeKey": "single-triangle-slim-left:node:0,32"
+        },
+        {
+          "key": "single-triangle-slim-left:span:2",
+          "partId": "span-618a6deb050d",
+          "originUnits": [
+            0,
+            32
+          ],
+          "quarterTurns": 3,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            32
+          ],
+          "bUnits": [
+            0,
+            0
+          ],
+          "startNodeKey": "single-triangle-slim-left:node:0,32",
+          "endNodeKey": "single-triangle-slim-left:node:0,0"
+        }
+      ],
+      "nominalPolygonUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          0,
+          32
+        ]
+      ],
+      "placements": [
+        {
+          "key": "single-triangle-slim-left/floor-base/0",
+          "partId": "base-79d03a8564bd3284",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 0
+        }
+      ]
+    },
+    {
+      "id": "single-triangle-slim-right",
+      "nativeFloors": [
+        {
+          "partId": "triangle-slim-right",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-e315cf681838afff216e",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-e315cf681838afff216e--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "nativeWalls": [
+        {
+          "key": "single-triangle-slim-right:node:0,0",
+          "partId": "node-ac322cc2ef83",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 2,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-triangle-slim-right:node:128,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            128,
+            0
+          ],
+          "quarterTurns": 3,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-triangle-slim-right:node:128,32",
+          "partId": "node-dd5634ec14cc",
+          "originUnits": [
+            128,
+            32
+          ],
+          "quarterTurns": 0,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-triangle-slim-right:span:0",
+          "partId": "span-1fccd896f86f",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            0
+          ],
+          "bUnits": [
+            128,
+            0
+          ],
+          "startNodeKey": "single-triangle-slim-right:node:0,0",
+          "endNodeKey": "single-triangle-slim-right:node:128,0"
+        },
+        {
+          "key": "single-triangle-slim-right:span:1",
+          "partId": "span-f6f884420a9f",
+          "originUnits": [
+            128,
+            0
+          ],
+          "quarterTurns": 1,
+          "role": "perimeter-span",
+          "aUnits": [
+            128,
+            0
+          ],
+          "bUnits": [
+            128,
+            32
+          ],
+          "startNodeKey": "single-triangle-slim-right:node:128,0",
+          "endNodeKey": "single-triangle-slim-right:node:128,32"
+        },
+        {
+          "key": "single-triangle-slim-right:span:2",
+          "partId": "span-135ed5730033",
+          "originUnits": [
+            128,
+            32
+          ],
+          "quarterTurns": 2,
+          "role": "perimeter-span",
+          "aUnits": [
+            128,
+            32
+          ],
+          "bUnits": [
+            0,
+            0
+          ],
+          "startNodeKey": "single-triangle-slim-right:node:128,32",
+          "endNodeKey": "single-triangle-slim-right:node:0,0"
+        }
+      ],
+      "nominalPolygonUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          128,
+          32
+        ]
+      ],
+      "placements": [
+        {
+          "key": "single-triangle-slim-right/floor-base/0",
+          "partId": "base-344925e0d658e538",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 0
+        }
+      ]
+    },
+    {
+      "id": "single-corner-clipped",
+      "nativeFloors": [
+        {
+          "partId": "corner-clipped",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-94474fb38b16d77e6429",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-94474fb38b16d77e6429--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "nativeWalls": [
+        {
+          "key": "single-corner-clipped:node:0,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 2,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-corner-clipped:node:0,64",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            64
+          ],
+          "quarterTurns": 1,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-corner-clipped:node:32,64",
+          "partId": "node-722dea1af576",
+          "originUnits": [
+            32,
+            64
+          ],
+          "quarterTurns": 1,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-corner-clipped:node:64,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 3,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-corner-clipped:node:64,32",
+          "partId": "node-9f376826b3e4",
+          "originUnits": [
+            64,
+            32
+          ],
+          "quarterTurns": 3,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-corner-clipped:span:0",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            0
+          ],
+          "bUnits": [
+            64,
+            0
+          ],
+          "startNodeKey": "single-corner-clipped:node:0,0",
+          "endNodeKey": "single-corner-clipped:node:64,0"
+        },
+        {
+          "key": "single-corner-clipped:span:1",
+          "partId": "span-b3f0724acb39",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 1,
+          "role": "perimeter-span",
+          "aUnits": [
+            64,
+            0
+          ],
+          "bUnits": [
+            64,
+            32
+          ],
+          "startNodeKey": "single-corner-clipped:node:64,0",
+          "endNodeKey": "single-corner-clipped:node:64,32"
+        },
+        {
+          "key": "single-corner-clipped:span:2",
+          "partId": "span-a3fe624b4c51",
+          "originUnits": [
+            64,
+            32
+          ],
+          "quarterTurns": 1,
+          "role": "perimeter-span",
+          "aUnits": [
+            64,
+            32
+          ],
+          "bUnits": [
+            32,
+            64
+          ],
+          "startNodeKey": "single-corner-clipped:node:64,32",
+          "endNodeKey": "single-corner-clipped:node:32,64"
+        },
+        {
+          "key": "single-corner-clipped:span:3",
+          "partId": "span-b3f0724acb39",
+          "originUnits": [
+            32,
+            64
+          ],
+          "quarterTurns": 2,
+          "role": "perimeter-span",
+          "aUnits": [
+            32,
+            64
+          ],
+          "bUnits": [
+            0,
+            64
+          ],
+          "startNodeKey": "single-corner-clipped:node:32,64",
+          "endNodeKey": "single-corner-clipped:node:0,64"
+        },
+        {
+          "key": "single-corner-clipped:span:4",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            0,
+            64
+          ],
+          "quarterTurns": 3,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            64
+          ],
+          "bUnits": [
+            0,
+            0
+          ],
+          "startNodeKey": "single-corner-clipped:node:0,64",
+          "endNodeKey": "single-corner-clipped:node:0,0"
+        }
+      ],
+      "nominalPolygonUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          64,
+          32
+        ],
+        [
+          32,
+          64
+        ],
+        [
+          0,
+          64
+        ]
+      ],
+      "placements": [
+        {
+          "key": "single-corner-clipped/floor-base/0",
+          "partId": "base-500994d2fdb6f234",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 0
+        }
+      ]
+    },
+    {
+      "id": "single-taper-4m",
+      "nativeFloors": [
+        {
+          "partId": "taper-4m",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-73f48194371a682af29c",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-73f48194371a682af29c--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "nativeWalls": [
+        {
+          "key": "single-taper-4m:node:0,0",
+          "partId": "node-028c6d82a9cd",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 3,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-taper-4m:node:16,128",
+          "partId": "node-fa76146eb8d8",
+          "originUnits": [
+            16,
+            128
+          ],
+          "quarterTurns": 1,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-taper-4m:node:48,128",
+          "partId": "node-3b50213b5a7b",
+          "originUnits": [
+            48,
+            128
+          ],
+          "quarterTurns": 1,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-taper-4m:node:64,0",
+          "partId": "node-521432080d97",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 3,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-taper-4m:span:0",
+          "partId": "span-2072e1ebfaf9",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            0
+          ],
+          "bUnits": [
+            64,
+            0
+          ],
+          "startNodeKey": "single-taper-4m:node:0,0",
+          "endNodeKey": "single-taper-4m:node:64,0"
+        },
+        {
+          "key": "single-taper-4m:span:1",
+          "partId": "span-56b00de0648a",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 1,
+          "role": "perimeter-span",
+          "aUnits": [
+            64,
+            0
+          ],
+          "bUnits": [
+            48,
+            128
+          ],
+          "startNodeKey": "single-taper-4m:node:64,0",
+          "endNodeKey": "single-taper-4m:node:48,128"
+        },
+        {
+          "key": "single-taper-4m:span:2",
+          "partId": "span-b3f0724acb39",
+          "originUnits": [
+            48,
+            128
+          ],
+          "quarterTurns": 2,
+          "role": "perimeter-span",
+          "aUnits": [
+            48,
+            128
+          ],
+          "bUnits": [
+            16,
+            128
+          ],
+          "startNodeKey": "single-taper-4m:node:48,128",
+          "endNodeKey": "single-taper-4m:node:16,128"
+        },
+        {
+          "key": "single-taper-4m:span:3",
+          "partId": "span-e15d62f9fc09",
+          "originUnits": [
+            16,
+            128
+          ],
+          "quarterTurns": 2,
+          "role": "perimeter-span",
+          "aUnits": [
+            16,
+            128
+          ],
+          "bUnits": [
+            0,
+            0
+          ],
+          "startNodeKey": "single-taper-4m:node:16,128",
+          "endNodeKey": "single-taper-4m:node:0,0"
+        }
+      ],
+      "nominalPolygonUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          48,
+          128
+        ],
+        [
+          16,
+          128
+        ]
+      ],
+      "placements": [
+        {
+          "key": "single-taper-4m/floor-base/0",
+          "partId": "base-79a931b0a4024f86",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 0
+        }
+      ]
+    },
+    {
+      "id": "single-triangle-1m",
+      "nativeFloors": [
+        {
+          "partId": "triangle-1m",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-7902f7617fb23eb8abe3",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-7902f7617fb23eb8abe3--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "nativeWalls": [
+        {
+          "key": "single-triangle-1m:node:0,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 2,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-triangle-1m:node:0,32",
+          "partId": "node-8ace9108954c",
+          "originUnits": [
+            0,
+            32
+          ],
+          "quarterTurns": 1,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-triangle-1m:node:32,0",
+          "partId": "node-4cf5a3e80bfc",
+          "originUnits": [
+            32,
+            0
+          ],
+          "quarterTurns": 3,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-triangle-1m:span:0",
+          "partId": "span-ae8b5f8aa228",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            0
+          ],
+          "bUnits": [
+            32,
+            0
+          ],
+          "startNodeKey": "single-triangle-1m:node:0,0",
+          "endNodeKey": "single-triangle-1m:node:32,0"
+        },
+        {
+          "key": "single-triangle-1m:span:1",
+          "partId": "span-ab0d57a0fb09",
+          "originUnits": [
+            32,
+            0
+          ],
+          "quarterTurns": 1,
+          "role": "perimeter-span",
+          "aUnits": [
+            32,
+            0
+          ],
+          "bUnits": [
+            0,
+            32
+          ],
+          "startNodeKey": "single-triangle-1m:node:32,0",
+          "endNodeKey": "single-triangle-1m:node:0,32"
+        },
+        {
+          "key": "single-triangle-1m:span:2",
+          "partId": "span-76cad9647098",
+          "originUnits": [
+            0,
+            32
+          ],
+          "quarterTurns": 3,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            32
+          ],
+          "bUnits": [
+            0,
+            0
+          ],
+          "startNodeKey": "single-triangle-1m:node:0,32",
+          "endNodeKey": "single-triangle-1m:node:0,0"
+        }
+      ],
+      "nominalPolygonUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          32,
+          0
+        ],
+        [
+          0,
+          32
+        ]
+      ],
+      "placements": [
+        {
+          "key": "single-triangle-1m/floor-base/0",
+          "partId": "base-daaa1deefdcc725b",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 0
+        }
+      ]
+    },
+    {
+      "id": "mixed-reentrant-L",
+      "nativeFloors": [
+        {
+          "partId": "square-2m",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-a3f5c1c3caa171a94d6c",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "square-2m",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-a3f5c1c3caa171a94d6c",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "square-2m",
+          "originUnits": [
+            0,
+            64
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-a3f5c1c3caa171a94d6c",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "nativeWalls": [
+        {
+          "key": "mixed-reentrant-L:node:0,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 2,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-reentrant-L:node:0,128",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            128
+          ],
+          "quarterTurns": 1,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-reentrant-L:node:64,64",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            64,
+            64
+          ],
+          "quarterTurns": 2,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-reentrant-L:node:64,128",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            64,
+            128
+          ],
+          "quarterTurns": 0,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-reentrant-L:node:128,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            128,
+            0
+          ],
+          "quarterTurns": 3,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-reentrant-L:node:128,64",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            128,
+            64
+          ],
+          "quarterTurns": 0,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-reentrant-L:span:0",
+          "partId": "span-0cdd4c8ec952",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            0
+          ],
+          "bUnits": [
+            128,
+            0
+          ],
+          "startNodeKey": "mixed-reentrant-L:node:0,0",
+          "endNodeKey": "mixed-reentrant-L:node:128,0"
+        },
+        {
+          "key": "mixed-reentrant-L:span:1",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            128,
+            0
+          ],
+          "quarterTurns": 1,
+          "role": "perimeter-span",
+          "aUnits": [
+            128,
+            0
+          ],
+          "bUnits": [
+            128,
+            64
+          ],
+          "startNodeKey": "mixed-reentrant-L:node:128,0",
+          "endNodeKey": "mixed-reentrant-L:node:128,64"
+        },
+        {
+          "key": "mixed-reentrant-L:span:2",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            128,
+            64
+          ],
+          "quarterTurns": 2,
+          "role": "perimeter-span",
+          "aUnits": [
+            128,
+            64
+          ],
+          "bUnits": [
+            64,
+            64
+          ],
+          "startNodeKey": "mixed-reentrant-L:node:128,64",
+          "endNodeKey": "mixed-reentrant-L:node:64,64"
+        },
+        {
+          "key": "mixed-reentrant-L:span:3",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            64,
+            64
+          ],
+          "quarterTurns": 1,
+          "role": "perimeter-span",
+          "aUnits": [
+            64,
+            64
+          ],
+          "bUnits": [
+            64,
+            128
+          ],
+          "startNodeKey": "mixed-reentrant-L:node:64,64",
+          "endNodeKey": "mixed-reentrant-L:node:64,128"
+        },
+        {
+          "key": "mixed-reentrant-L:span:4",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            64,
+            128
+          ],
+          "quarterTurns": 2,
+          "role": "perimeter-span",
+          "aUnits": [
+            64,
+            128
+          ],
+          "bUnits": [
+            0,
+            128
+          ],
+          "startNodeKey": "mixed-reentrant-L:node:64,128",
+          "endNodeKey": "mixed-reentrant-L:node:0,128"
+        },
+        {
+          "key": "mixed-reentrant-L:span:5",
+          "partId": "span-0cdd4c8ec952",
+          "originUnits": [
+            0,
+            128
+          ],
+          "quarterTurns": 3,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            128
+          ],
+          "bUnits": [
+            0,
+            0
+          ],
+          "startNodeKey": "mixed-reentrant-L:node:0,128",
+          "endNodeKey": "mixed-reentrant-L:node:0,0"
+        }
+      ],
+      "nominalPolygonUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          128,
+          64
+        ],
+        [
+          64,
+          64
+        ],
+        [
+          64,
+          128
+        ],
+        [
+          0,
+          128
+        ]
+      ],
+      "placements": [
+        {
+          "key": "mixed-reentrant-L/floor-base/0",
+          "partId": "base-0a60fc5795340e2d",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 0
+        },
+        {
+          "key": "mixed-reentrant-L/floor-base/1",
+          "partId": "base-84db6b95287bbbad",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 1
+        },
+        {
+          "key": "mixed-reentrant-L/floor-base/2",
+          "partId": "base-d98033303b004cd5",
+          "originUnits": [
+            0,
+            64
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 2
+        }
+      ]
+    },
+    {
+      "id": "mixed-square-triangle",
+      "nativeFloors": [
+        {
+          "partId": "square-2m",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-a3f5c1c3caa171a94d6c",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "triangle-45",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-771cc318e835d7a08abd",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-771cc318e835d7a08abd--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "nativeWalls": [
+        {
+          "key": "mixed-square-triangle:node:0,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 2,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-square-triangle:node:0,64",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            64
+          ],
+          "quarterTurns": 1,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-square-triangle:node:64,64",
+          "partId": "node-722dea1af576",
+          "originUnits": [
+            64,
+            64
+          ],
+          "quarterTurns": 1,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-square-triangle:node:128,0",
+          "partId": "node-4cf5a3e80bfc",
+          "originUnits": [
+            128,
+            0
+          ],
+          "quarterTurns": 3,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-square-triangle:span:0",
+          "partId": "span-b3230e7b8584",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            0
+          ],
+          "bUnits": [
+            128,
+            0
+          ],
+          "startNodeKey": "mixed-square-triangle:node:0,0",
+          "endNodeKey": "mixed-square-triangle:node:128,0"
+        },
+        {
+          "key": "mixed-square-triangle:span:1",
+          "partId": "span-a2d8e928c4dc",
+          "originUnits": [
+            128,
+            0
+          ],
+          "quarterTurns": 1,
+          "role": "perimeter-span",
+          "aUnits": [
+            128,
+            0
+          ],
+          "bUnits": [
+            64,
+            64
+          ],
+          "startNodeKey": "mixed-square-triangle:node:128,0",
+          "endNodeKey": "mixed-square-triangle:node:64,64"
+        },
+        {
+          "key": "mixed-square-triangle:span:2",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            64,
+            64
+          ],
+          "quarterTurns": 2,
+          "role": "perimeter-span",
+          "aUnits": [
+            64,
+            64
+          ],
+          "bUnits": [
+            0,
+            64
+          ],
+          "startNodeKey": "mixed-square-triangle:node:64,64",
+          "endNodeKey": "mixed-square-triangle:node:0,64"
+        },
+        {
+          "key": "mixed-square-triangle:span:3",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            0,
+            64
+          ],
+          "quarterTurns": 3,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            64
+          ],
+          "bUnits": [
+            0,
+            0
+          ],
+          "startNodeKey": "mixed-square-triangle:node:0,64",
+          "endNodeKey": "mixed-square-triangle:node:0,0"
+        }
+      ],
+      "nominalPolygonUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          64,
+          64
+        ],
+        [
+          0,
+          64
+        ]
+      ],
+      "placements": [
+        {
+          "key": "mixed-square-triangle/floor-base/0",
+          "partId": "base-fa6166b9bd761866",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 0
+        },
+        {
+          "key": "mixed-square-triangle/floor-base/1",
+          "partId": "base-e31456f30d08d683",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 1
+        }
+      ]
+    },
+    {
+      "id": "mixed-orthogonal-T",
+      "nativeFloors": [
+        {
+          "partId": "square-2m",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-a3f5c1c3caa171a94d6c",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "square-2m",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-a3f5c1c3caa171a94d6c",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "nativeWalls": [
+        {
+          "key": "mixed-orthogonal-T:node:0,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 2,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-orthogonal-T:node:0,64",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            64
+          ],
+          "quarterTurns": 1,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-orthogonal-T:node:64,0",
+          "partId": "node-b4c788600641",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 3,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-orthogonal-T:node:64,64",
+          "partId": "node-b4c788600641",
+          "originUnits": [
+            64,
+            64
+          ],
+          "quarterTurns": 1,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-orthogonal-T:node:128,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            128,
+            0
+          ],
+          "quarterTurns": 3,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-orthogonal-T:node:128,64",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            128,
+            64
+          ],
+          "quarterTurns": 0,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-orthogonal-T:span:0",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            0
+          ],
+          "bUnits": [
+            64,
+            0
+          ],
+          "startNodeKey": "mixed-orthogonal-T:node:0,0",
+          "endNodeKey": "mixed-orthogonal-T:node:64,0"
+        },
+        {
+          "key": "mixed-orthogonal-T:span:1",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "perimeter-span",
+          "aUnits": [
+            64,
+            0
+          ],
+          "bUnits": [
+            128,
+            0
+          ],
+          "startNodeKey": "mixed-orthogonal-T:node:64,0",
+          "endNodeKey": "mixed-orthogonal-T:node:128,0"
+        },
+        {
+          "key": "mixed-orthogonal-T:span:2",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            128,
+            0
+          ],
+          "quarterTurns": 1,
+          "role": "perimeter-span",
+          "aUnits": [
+            128,
+            0
+          ],
+          "bUnits": [
+            128,
+            64
+          ],
+          "startNodeKey": "mixed-orthogonal-T:node:128,0",
+          "endNodeKey": "mixed-orthogonal-T:node:128,64"
+        },
+        {
+          "key": "mixed-orthogonal-T:span:3",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            128,
+            64
+          ],
+          "quarterTurns": 2,
+          "role": "perimeter-span",
+          "aUnits": [
+            128,
+            64
+          ],
+          "bUnits": [
+            64,
+            64
+          ],
+          "startNodeKey": "mixed-orthogonal-T:node:128,64",
+          "endNodeKey": "mixed-orthogonal-T:node:64,64"
+        },
+        {
+          "key": "mixed-orthogonal-T:span:4",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            64,
+            64
+          ],
+          "quarterTurns": 2,
+          "role": "perimeter-span",
+          "aUnits": [
+            64,
+            64
+          ],
+          "bUnits": [
+            0,
+            64
+          ],
+          "startNodeKey": "mixed-orthogonal-T:node:64,64",
+          "endNodeKey": "mixed-orthogonal-T:node:0,64"
+        },
+        {
+          "key": "mixed-orthogonal-T:span:5",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            0,
+            64
+          ],
+          "quarterTurns": 3,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            64
+          ],
+          "bUnits": [
+            0,
+            0
+          ],
+          "startNodeKey": "mixed-orthogonal-T:node:0,64",
+          "endNodeKey": "mixed-orthogonal-T:node:0,0"
+        },
+        {
+          "key": "mixed-orthogonal-T:span:6",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 1,
+          "role": "partition-span",
+          "aUnits": [
+            64,
+            0
+          ],
+          "bUnits": [
+            64,
+            64
+          ],
+          "startNodeKey": "mixed-orthogonal-T:node:64,0",
+          "endNodeKey": "mixed-orthogonal-T:node:64,64"
+        }
+      ],
+      "nominalPolygonUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          128,
+          64
+        ],
+        [
+          64,
+          64
+        ],
+        [
+          0,
+          64
+        ]
+      ],
+      "placements": [
+        {
+          "key": "mixed-orthogonal-T/floor-base/0",
+          "partId": "base-5c44702128b939ad",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 0
+        },
+        {
+          "key": "mixed-orthogonal-T/floor-base/1",
+          "partId": "base-5c44702128b939ad",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 1
+        }
+      ]
+    },
+    {
+      "id": "mixed-collinear-module-joins",
+      "nativeFloors": [
+        {
+          "partId": "square-2m",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-a3f5c1c3caa171a94d6c",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "square-2m",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-a3f5c1c3caa171a94d6c",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "nativeWalls": [
+        {
+          "key": "mixed-collinear-module-joins:node:0,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 2,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-collinear-module-joins:node:0,64",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            64
+          ],
+          "quarterTurns": 1,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-collinear-module-joins:node:64,0",
+          "partId": "node-a8148ac9f645",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-collinear-module-joins:node:64,64",
+          "partId": "node-a8148ac9f645",
+          "originUnits": [
+            64,
+            64
+          ],
+          "quarterTurns": 0,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-collinear-module-joins:node:128,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            128,
+            0
+          ],
+          "quarterTurns": 3,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-collinear-module-joins:node:128,64",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            128,
+            64
+          ],
+          "quarterTurns": 0,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-collinear-module-joins:span:0",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            0
+          ],
+          "bUnits": [
+            64,
+            0
+          ],
+          "startNodeKey": "mixed-collinear-module-joins:node:0,0",
+          "endNodeKey": "mixed-collinear-module-joins:node:64,0"
+        },
+        {
+          "key": "mixed-collinear-module-joins:span:1",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "perimeter-span",
+          "aUnits": [
+            64,
+            0
+          ],
+          "bUnits": [
+            128,
+            0
+          ],
+          "startNodeKey": "mixed-collinear-module-joins:node:64,0",
+          "endNodeKey": "mixed-collinear-module-joins:node:128,0"
+        },
+        {
+          "key": "mixed-collinear-module-joins:span:2",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            128,
+            0
+          ],
+          "quarterTurns": 1,
+          "role": "perimeter-span",
+          "aUnits": [
+            128,
+            0
+          ],
+          "bUnits": [
+            128,
+            64
+          ],
+          "startNodeKey": "mixed-collinear-module-joins:node:128,0",
+          "endNodeKey": "mixed-collinear-module-joins:node:128,64"
+        },
+        {
+          "key": "mixed-collinear-module-joins:span:3",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            128,
+            64
+          ],
+          "quarterTurns": 2,
+          "role": "perimeter-span",
+          "aUnits": [
+            128,
+            64
+          ],
+          "bUnits": [
+            64,
+            64
+          ],
+          "startNodeKey": "mixed-collinear-module-joins:node:128,64",
+          "endNodeKey": "mixed-collinear-module-joins:node:64,64"
+        },
+        {
+          "key": "mixed-collinear-module-joins:span:4",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            64,
+            64
+          ],
+          "quarterTurns": 2,
+          "role": "perimeter-span",
+          "aUnits": [
+            64,
+            64
+          ],
+          "bUnits": [
+            0,
+            64
+          ],
+          "startNodeKey": "mixed-collinear-module-joins:node:64,64",
+          "endNodeKey": "mixed-collinear-module-joins:node:0,64"
+        },
+        {
+          "key": "mixed-collinear-module-joins:span:5",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            0,
+            64
+          ],
+          "quarterTurns": 3,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            64
+          ],
+          "bUnits": [
+            0,
+            0
+          ],
+          "startNodeKey": "mixed-collinear-module-joins:node:0,64",
+          "endNodeKey": "mixed-collinear-module-joins:node:0,0"
+        }
+      ],
+      "nominalPolygonUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          128,
+          64
+        ],
+        [
+          64,
+          64
+        ],
+        [
+          0,
+          64
+        ]
+      ],
+      "placements": [
+        {
+          "key": "mixed-collinear-module-joins/floor-base/0",
+          "partId": "base-f79837a2384d6a95",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 0
+        },
+        {
+          "key": "mixed-collinear-module-joins/floor-base/1",
+          "partId": "base-84db6b95287bbbad",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 1
+        }
+      ]
+    },
+    {
+      "id": "audit-square-four-quarter-seams",
+      "nativeFloors": [
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            0,
+            32
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            32,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            32,
+            32
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "nativeWalls": [
+        {
+          "key": "single-square-2m:node:0,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 2,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-square-2m:node:0,64",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            64
+          ],
+          "quarterTurns": 1,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-square-2m:node:64,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 3,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-square-2m:node:64,64",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            64,
+            64
+          ],
+          "quarterTurns": 0,
+          "role": "boundary-node"
+        },
+        {
+          "key": "single-square-2m:span:0",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            0
+          ],
+          "bUnits": [
+            64,
+            0
+          ],
+          "startNodeKey": "single-square-2m:node:0,0",
+          "endNodeKey": "single-square-2m:node:64,0"
+        },
+        {
+          "key": "single-square-2m:span:1",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 1,
+          "role": "perimeter-span",
+          "aUnits": [
+            64,
+            0
+          ],
+          "bUnits": [
+            64,
+            64
+          ],
+          "startNodeKey": "single-square-2m:node:64,0",
+          "endNodeKey": "single-square-2m:node:64,64"
+        },
+        {
+          "key": "single-square-2m:span:2",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            64,
+            64
+          ],
+          "quarterTurns": 2,
+          "role": "perimeter-span",
+          "aUnits": [
+            64,
+            64
+          ],
+          "bUnits": [
+            0,
+            64
+          ],
+          "startNodeKey": "single-square-2m:node:64,64",
+          "endNodeKey": "single-square-2m:node:0,64"
+        },
+        {
+          "key": "single-square-2m:span:3",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            0,
+            64
+          ],
+          "quarterTurns": 3,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            64
+          ],
+          "bUnits": [
+            0,
+            0
+          ],
+          "startNodeKey": "single-square-2m:node:0,64",
+          "endNodeKey": "single-square-2m:node:0,0"
+        }
+      ],
+      "nominalPolygonUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          64,
+          64
+        ],
+        [
+          0,
+          64
+        ]
+      ],
+      "placements": [
+        {
+          "key": "audit-square-four-quarter-seams/floor-base/0",
+          "partId": "base-548e33c75c9600c6",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 0
+        },
+        {
+          "key": "audit-square-four-quarter-seams/floor-base/1",
+          "partId": "base-f77e2e79aa988ef8",
+          "originUnits": [
+            0,
+            32
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 1
+        },
+        {
+          "key": "audit-square-four-quarter-seams/floor-base/2",
+          "partId": "base-6f4e90afc9658454",
+          "originUnits": [
+            32,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 2
+        },
+        {
+          "key": "audit-square-four-quarter-seams/floor-base/3",
+          "partId": "base-746876da6e77a233",
+          "originUnits": [
+            32,
+            32
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 3
+        }
+      ]
+    },
+    {
+      "id": "audit-T-eight-quarter-seams",
+      "nativeFloors": [
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            0,
+            32
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            32,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            32,
+            32
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            64,
+            32
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            96,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            96,
+            32
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "nativeWalls": [
+        {
+          "key": "mixed-orthogonal-T:node:0,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 2,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-orthogonal-T:node:0,64",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            0,
+            64
+          ],
+          "quarterTurns": 1,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-orthogonal-T:node:64,0",
+          "partId": "node-b4c788600641",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 3,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-orthogonal-T:node:64,64",
+          "partId": "node-b4c788600641",
+          "originUnits": [
+            64,
+            64
+          ],
+          "quarterTurns": 1,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-orthogonal-T:node:128,0",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            128,
+            0
+          ],
+          "quarterTurns": 3,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-orthogonal-T:node:128,64",
+          "partId": "node-ee493bf1352e",
+          "originUnits": [
+            128,
+            64
+          ],
+          "quarterTurns": 0,
+          "role": "boundary-node"
+        },
+        {
+          "key": "mixed-orthogonal-T:span:0",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            0
+          ],
+          "bUnits": [
+            64,
+            0
+          ],
+          "startNodeKey": "mixed-orthogonal-T:node:0,0",
+          "endNodeKey": "mixed-orthogonal-T:node:64,0"
+        },
+        {
+          "key": "mixed-orthogonal-T:span:1",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 0,
+          "role": "perimeter-span",
+          "aUnits": [
+            64,
+            0
+          ],
+          "bUnits": [
+            128,
+            0
+          ],
+          "startNodeKey": "mixed-orthogonal-T:node:64,0",
+          "endNodeKey": "mixed-orthogonal-T:node:128,0"
+        },
+        {
+          "key": "mixed-orthogonal-T:span:2",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            128,
+            0
+          ],
+          "quarterTurns": 1,
+          "role": "perimeter-span",
+          "aUnits": [
+            128,
+            0
+          ],
+          "bUnits": [
+            128,
+            64
+          ],
+          "startNodeKey": "mixed-orthogonal-T:node:128,0",
+          "endNodeKey": "mixed-orthogonal-T:node:128,64"
+        },
+        {
+          "key": "mixed-orthogonal-T:span:3",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            128,
+            64
+          ],
+          "quarterTurns": 2,
+          "role": "perimeter-span",
+          "aUnits": [
+            128,
+            64
+          ],
+          "bUnits": [
+            64,
+            64
+          ],
+          "startNodeKey": "mixed-orthogonal-T:node:128,64",
+          "endNodeKey": "mixed-orthogonal-T:node:64,64"
+        },
+        {
+          "key": "mixed-orthogonal-T:span:4",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            64,
+            64
+          ],
+          "quarterTurns": 2,
+          "role": "perimeter-span",
+          "aUnits": [
+            64,
+            64
+          ],
+          "bUnits": [
+            0,
+            64
+          ],
+          "startNodeKey": "mixed-orthogonal-T:node:64,64",
+          "endNodeKey": "mixed-orthogonal-T:node:0,64"
+        },
+        {
+          "key": "mixed-orthogonal-T:span:5",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            0,
+            64
+          ],
+          "quarterTurns": 3,
+          "role": "perimeter-span",
+          "aUnits": [
+            0,
+            64
+          ],
+          "bUnits": [
+            0,
+            0
+          ],
+          "startNodeKey": "mixed-orthogonal-T:node:0,64",
+          "endNodeKey": "mixed-orthogonal-T:node:0,0"
+        },
+        {
+          "key": "mixed-orthogonal-T:span:6",
+          "partId": "span-086cc581b11f",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 1,
+          "role": "partition-span",
+          "aUnits": [
+            64,
+            0
+          ],
+          "bUnits": [
+            64,
+            64
+          ],
+          "startNodeKey": "mixed-orthogonal-T:node:64,0",
+          "endNodeKey": "mixed-orthogonal-T:node:64,64"
+        }
+      ],
+      "nominalPolygonUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          128,
+          64
+        ],
+        [
+          64,
+          64
+        ],
+        [
+          0,
+          64
+        ]
+      ],
+      "placements": [
+        {
+          "key": "audit-T-eight-quarter-seams/floor-base/0",
+          "partId": "base-548e33c75c9600c6",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 0
+        },
+        {
+          "key": "audit-T-eight-quarter-seams/floor-base/1",
+          "partId": "base-f77e2e79aa988ef8",
+          "originUnits": [
+            0,
+            32
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 1
+        },
+        {
+          "key": "audit-T-eight-quarter-seams/floor-base/2",
+          "partId": "base-6f4e90afc9658454",
+          "originUnits": [
+            32,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 2
+        },
+        {
+          "key": "audit-T-eight-quarter-seams/floor-base/3",
+          "partId": "base-746876da6e77a233",
+          "originUnits": [
+            32,
+            32
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 3
+        },
+        {
+          "key": "audit-T-eight-quarter-seams/floor-base/4",
+          "partId": "base-548e33c75c9600c6",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 4
+        },
+        {
+          "key": "audit-T-eight-quarter-seams/floor-base/5",
+          "partId": "base-f77e2e79aa988ef8",
+          "originUnits": [
+            64,
+            32
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 5
+        },
+        {
+          "key": "audit-T-eight-quarter-seams/floor-base/6",
+          "partId": "base-6f4e90afc9658454",
+          "originUnits": [
+            96,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 6
+        },
+        {
+          "key": "audit-T-eight-quarter-seams/floor-base/7",
+          "partId": "base-746876da6e77a233",
+          "originUnits": [
+            96,
+            32
+          ],
+          "quarterTurns": 0,
+          "sourceFloorIndex": 7
+        }
+      ]
+    }
+  ],
+  "matching": {
+    "type": "exact native floor ID + union of wall structural-core mask in floor-local coordinates",
+    "sourceSignatures": "contact-plan.json stores actual clipped native triangle contact geometry and full local wall mask WKT for each part. Exact key match only; no scale/reflection.",
+    "algorithm": "Transform structural core footprint union into source-floor local XY, clip against actual pinned floor upper bevel triangles; choose an authored family member whose contact-patch union and bottom profile match within1micrometre. Alternatively exact fixture maps provide validated placements. Unknown masks reject, never silently substitute a perimeter ring.",
+    "instanceIdentity": "Part ID/asset UUID is reusable. Parent assigns distinct stable placed IDs from floor identity + mask key; preserve floor/object identities."
+  },
+  "proof": {
+    "validation": "validation.json",
+    "sha256": "7b22c389c3d225bfcecfc0c0cef9ebead494070b4925bbd697d5713b0c0cd841",
+    "checks": 130,
+    "geometricContactReady": true,
+    "gameSealAndFlowDefinitions": "explicit parent authority input required; no real-world pressure or art-derived capabilities"
+  },
+  "limits": [
+    "Only the22 authored signatures and18 tested no-opening configurations are covered.",
+    "Door frame/gasket/threshold sequence remains separately pinned r001/r002/r003 work; do not overlay blindly or claim door seals from this kit.",
+    "Contact inserts are actual shallow solids, not replacement floor visual or a logical airtight patch.",
+    "All wedge interiors are disjoint; internal contact faces remain in native compound meshes.",
+    "Roof butt contacts and material game definitions remain separate.",
+    "No pressure capacity, mass, HP, power, initial gas or runtime damage inferred.",
+    "No publication/final art approval."
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "dependencyRevision": "r001",
+  "dependencyGlbSha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+  "selector": "GEO-door-frame-2m--surface",
+  "nominalSpanUnits": [
+    64,
+    0
+  ],
+  "requiredStartNodeCutbackM": 0.0625,
+  "requiredEndNodeCutbackM": 0.0625,
+  "nativePortChecks": [
+    {
+      "planeX": 0.0625,
+      "normal": [
+        -1,
+        0,
+        0
+      ],
+      "actualTriangleAreaM2": 0.263671875,
+      "expectedM2": 0.263671875,
+      "pass": true,
+      "triangleCount": 2
+    },
+    {
+      "planeX": 1.9375,
+      "normal": [
+        1,
+        0,
+        0
+      ],
+      "actualTriangleAreaM2": 0.263671875,
+      "expectedM2": 0.263671875,
+      "pass": true,
+      "triangleCount": 2
+    }
+  ],
+  "pass": true,
+  "limits": [
+    "Only compatible with r004 node ports at exact .0625m cutbacks and .09375m core width, floor6/ceiling96.",
+    "Opening reservation remains exact40units wide, centered in64unit native frame, authored direction and swing rules unchanged.",
+    "Frame/leaf/gasket runtime and pressure acceptance remain independently required."
+  ]
+}

@@ -1,0 +1,4 @@
+import bpy,json
+from pathlib import Path
+from mathutils import Vector
+P=Path('.runtime/construction-boundary-kit/r005/candidate-a003');bpy.ops.wm.open_mainfile(filepath=str(P/'boundary-kit.blend'));S=bpy.context.scene;c=S.camera;c.location=(6,-7,8);c.rotation_euler=(Vector((2,1,1.2))-c.location).to_track_quat('-Z','Y').to_euler();c.data.ortho_scale=7.8;S.render.resolution_x=1400;S.render.resolution_y=1000;S.render.image_settings.color_mode='RGB';S.render.filepath=str(P/'T-wall-base-installed.png');bpy.ops.render.render(write_still=True);bpy.ops.wm.save_as_mainfile(filepath=str(P/'boundary-kit.blend'));d=json.load(open(P/'capture-record.json'));r=next(r for r in d['images']if r['path']=='T-wall-base-installed.png');r.update(camera=[6,-7,8],target=[2,1,1.2],orthoScaleM=7.8);(P/'capture-record.json').write_text(json.dumps(d,indent=2)+'\n')

@@ -1,0 +1,35 @@
+{
+  "profileXZLocalM": [
+    [
+      -0.0040000081100000084,
+      0.1875
+    ],
+    [
+      -0.001171529289999973,
+      0.1863284111010273
+    ],
+    [
+      0.0,
+      0.1835000067949295
+    ],
+    [
+      0.0011715728299999117,
+      0.18632841110130463
+    ],
+    [
+      0.004000000190000019,
+      0.1875
+    ]
+  ],
+  "extrusionYM": [
+    -0.09,
+    -0.045
+  ],
+  "fixtureTranslationM": [
+    1,
+    0,
+    0
+  ],
+  "sourceFloorSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+  "authoring": "Native Blender mesh from exact exported floor triangle cross-section, UVs/tangents/material retained; source floor unmodified"
+}

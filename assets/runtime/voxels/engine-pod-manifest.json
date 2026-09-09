@@ -1,0 +1,18 @@
+{
+  "schema": "sidereal.mesh-to-voxel.v1",
+  "blender": "4.3.2",
+  "cellMeters": 0.0625,
+  "outputs": {
+    "assets/source/engine_pod_voxel.blend": "784a5919681edba20c020cf6d00abe6c85ad2b85c073e0d74fb26e6ff572b40d",
+    "assets/runtime/voxels/engine-pod.glb": "3e6170b3d71c33e22b366f68a433bfc62a5403246ec4beddadbcbb4de5e5ffc7",
+    "assets/source/engine_pod.blend": "48dfcf0d5cc0039f1a3c0fdbd474d97c34d9d3a927d2f5781526794046acba3a",
+    "assets/runtime/voxels/engine-pod-original.glb": "d6f94c9e093f7a12ab29cc2b88d8ca8fe7d372a0c0e43e5ba1eeb9fbfc5e3ce6",
+    "assets/runtime/voxels/engine-pod.voxels.json": "e86f9ebd3dd6f6454476bd361a001ddaa96ad0ca0c329775c7534ac0a62e92cf"
+  },
+  "tools": {
+    "scripts/voxelize_blender.py": "e487508fddd3d9e482ed3daf4cb49f7272ec74223ea7453ef3d21a4e09a8e26f",
+    "scripts/build_engine_source.py": "d9b97c40ec7b7a1e92a2d626575ee04370a56348fbe3b6fad9ff10a20715f3cc",
+    "scripts/mesh_sampled_asset.ts": "08f6a8d6a60ff28a4c00b3ccd6c2f63d130cf7f3119372ac85f50c73d0921c78",
+    "scripts/export_sampled_asset.py": "3ffb5a138a73201ef3c56761d70364b391c16bf7df5e7f6d0733e9d94269a859"
+  }
+}

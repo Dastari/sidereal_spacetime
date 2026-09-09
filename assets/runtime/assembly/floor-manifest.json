@@ -1,0 +1,3633 @@
+{
+  "schema": "sidereal.installed-floor.v1",
+  "revision": 2,
+  "approval": "Local candidate integration authorized; final art sign-off absent",
+  "entries": [
+    {
+      "asset": {
+        "id": "part-a3f5c1c3caa171a94d6c",
+        "label": "Square / 2 \u00d7 2 m / r002 review candidate",
+        "category": "floor",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max": [
+            2.0,
+            2.0,
+            0.1875
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/floor/r002/square-2m/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/floor/r002/kit.glb",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "designId": "shipyard.floor.mapped-deck-kit",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max": [
+              2.0,
+              2.0,
+              0.1875
+            ]
+          },
+          "damagePreview": "unsupported",
+          "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor"
+        }
+      },
+      "placements": [
+        {
+          "id": "floor--2--4",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -5.0,
+            -9.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-13b30dda6355f0ff17b3",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor--1--4",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -3.0,
+            -9.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-ca866457d5caccb943a9",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-0--4",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -1.0,
+            -9.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-ce04d53853da84dd9d81",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-1--4",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            1.0,
+            -9.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-b02132179cb305a21417",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-2--4",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            3.0,
+            -9.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-15bc4d24f27173de47ce",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor--2--3",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -5.0,
+            -7.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-7b265b4d073afc9bf127",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor--1--3",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -3.0,
+            -7.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-ffc5518d9892477ad05b",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-0--3",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -1.0,
+            -7.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-7ceebee6336152691b53",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-1--3",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            1.0,
+            -7.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-c5fa343376505f993a45",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-2--3",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            3.0,
+            -7.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-a735909957b9e773f219",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor--2--2",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -5.0,
+            -5.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-749baebbcaac89945d5c",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor--1--2",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -3.0,
+            -5.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-395319254b5dd541b5c9",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-0--2",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -1.0,
+            -5.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-ce04d53853da84dd9d81",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-1--2",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            1.0,
+            -5.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-67c91d419e31812795c4",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-2--2",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            3.0,
+            -5.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-b90945c434415efcef4d",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor--2--1",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -5.0,
+            -3.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-a561ef19a47095f7af9b",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor--1--1",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -3.0,
+            -3.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-79da3bdf7a767bb89c8b",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-0--1",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -1.0,
+            -3.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-1a05e8da6e2c1ec33a1c",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-1--1",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            1.0,
+            -3.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-f720d0e3287882975690",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-2--1",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            3.0,
+            -3.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-2ae59f43b3e997e6ee94",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor--2-0",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -5.0,
+            -1.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-df324c9b4e916c78412f",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor--1-0",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -3.0,
+            -1.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-f75dd89e6deed9eefdb9",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-0-0",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -1.0,
+            -1.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-ce04d53853da84dd9d81",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-1-0",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            1.0,
+            -1.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-1f69531882e3417aadf4",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-2-0",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            3.0,
+            -1.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-27d644c2d1643c69a713",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor--2-1",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -5.0,
+            1.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-d5094b4fbaf77ad6ebeb",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor--1-1",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -3.0,
+            1.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-add5f7040084fbad8df6",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-0-1",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -1.0,
+            1.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-7ec54250fbcf112c0861",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-1-1",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            1.0,
+            1.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-1a7d03bf8c7aabde4976",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-2-1",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            3.0,
+            1.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-8d853ce060a72d6e1e39",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor--2-2",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -5.0,
+            3.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-7b265b4d073afc9bf127",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor--1-2",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -3.0,
+            3.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-152849dcee209e8ef9ac",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-0-2",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -1.0,
+            3.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-2ecd61f4910b8988dd2c",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-1-2",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            1.0,
+            3.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-0f1f4618418c21228e80",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-2-2",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            3.0,
+            3.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-c2db52503da57679ba31",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor--2-3",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -5.0,
+            5.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-ce04d53853da84dd9d81",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor--1-3",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -3.0,
+            5.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-ce04d53853da84dd9d81",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-0-3",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -1.0,
+            5.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-ce04d53853da84dd9d81",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-1-3",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            1.0,
+            5.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-ce04d53853da84dd9d81",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-2-3",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            3.0,
+            5.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-ce04d53853da84dd9d81",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor--2-4",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -5.0,
+            7.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-ce04d53853da84dd9d81",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor--1-4",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -3.0,
+            7.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-ce04d53853da84dd9d81",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-1-4",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            1.0,
+            7.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-ce04d53853da84dd9d81",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "floor-2-4",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            3.0,
+            7.0,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-ce04d53853da84dd9d81",
+            "offset": [
+              1.0,
+              1.0,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        },
+        {
+          "id": "pilot-r004-floor-square-00",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -3,
+            9,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-7a1a34a2a908f8ff455b",
+            "offset": [
+              0.0,
+              0.0,
+              0
+            ],
+            "maxZ": 0.1875
+          }
+        },
+        {
+          "id": "pilot-r004-floor-square-01",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -1,
+            9,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-7a1a34a2a908f8ff455b",
+            "offset": [
+              0.0,
+              0.0,
+              0
+            ],
+            "maxZ": 0.1875
+          }
+        },
+        {
+          "id": "pilot-r004-floor-square-02",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            1,
+            9,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-7a1a34a2a908f8ff455b",
+            "offset": [
+              0.0,
+              0.0,
+              0
+            ],
+            "maxZ": 0.1875
+          }
+        },
+        {
+          "id": "pilot-r004-floor-square-03",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -1,
+            11,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-7a1a34a2a908f8ff455b",
+            "offset": [
+              0.0,
+              0.0,
+              0
+            ],
+            "maxZ": 0.1875
+          }
+        },
+        {
+          "id": "pilot-r004-floor-square-04",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -1,
+            7,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-7a1a34a2a908f8ff455b",
+            "offset": [
+              0.0,
+              0.0,
+              0
+            ],
+            "maxZ": 0.1875
+          }
+        }
+      ],
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ]
+    },
+    {
+      "asset": {
+        "id": "part-926a2afada18f96d51a3",
+        "label": "Half / 2 \u00d7 1 m / r002 review candidate",
+        "category": "floor",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max": [
+            2.0,
+            1.0,
+            0.1875
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/floor/r002/half-2x1/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/floor/r002/kit.glb",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "designId": "shipyard.floor.mapped-deck-kit",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max": [
+              2.0,
+              1.0,
+              0.1875
+            ]
+          },
+          "damagePreview": "unsupported",
+          "nodePrefix": "GEO-part-926a2afada18f96d51a3--floor"
+        }
+      },
+      "placements": [],
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "asset": {
+        "id": "part-0b833a4f3016609e9b96",
+        "label": "Quarter / 1 \u00d7 1 m / r002 review candidate",
+        "category": "floor",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max": [
+            1.0,
+            1.0,
+            0.1875
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/floor/r002/quarter-1m/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/floor/r002/kit.glb",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "designId": "shipyard.floor.mapped-deck-kit",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max": [
+              1.0,
+              1.0,
+              0.1875
+            ]
+          },
+          "damagePreview": "unsupported",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor"
+        }
+      },
+      "placements": [],
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "asset": {
+        "id": "part-baa2e4a6cbe886a5c292",
+        "label": "Long strip / 4 \u00d7 1 m / r002 review candidate",
+        "category": "floor",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max": [
+            4.0,
+            1.0,
+            0.1875
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/floor/r002/strip-4x1/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/floor/r002/kit.glb",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "designId": "shipyard.floor.mapped-deck-kit",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max": [
+              4.0,
+              1.0,
+              0.1875
+            ]
+          },
+          "damagePreview": "unsupported",
+          "nodePrefix": "GEO-part-baa2e4a6cbe886a5c292--floor"
+        }
+      },
+      "placements": [],
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "asset": {
+        "id": "part-771cc318e835d7a08abd",
+        "label": "Triangle / 2 \u00d7 2 m / 45\u00b0 / r002 review candidate",
+        "category": "floor",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max": [
+            1.998000144958496,
+            1.998000144958496,
+            0.1875
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/floor/r002/triangle-45/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/floor/r002/kit.glb",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "designId": "shipyard.floor.mapped-deck-kit",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max": [
+              1.998000144958496,
+              1.998000144958496,
+              0.1875
+            ]
+          },
+          "damagePreview": "unsupported",
+          "nodePrefix": "GEO-part-771cc318e835d7a08abd--floor"
+        }
+      },
+      "placements": [
+        {
+          "id": "pilot-r004-floor-corner45-05",
+          "assetId": "part-771cc318e835d7a08abd",
+          "position": [
+            1,
+            11,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-04c2fbf8cdd53d6bf70f",
+            "offset": [
+              0.0,
+              0.0,
+              0
+            ],
+            "maxZ": 0.1875
+          }
+        },
+        {
+          "id": "pilot-r004-floor-corner45-06",
+          "assetId": "part-771cc318e835d7a08abd",
+          "position": [
+            -1,
+            11,
+            0
+          ],
+          "rotation": 1.5707963267948966,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-04c2fbf8cdd53d6bf70f",
+            "offset": [
+              0.0,
+              0.0,
+              0
+            ],
+            "maxZ": 0.1875
+          }
+        }
+      ],
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          2
+        ]
+      ]
+    },
+    {
+      "asset": {
+        "id": "part-79328356071c674a2c8b",
+        "label": "Long triangle left / 4 \u00d7 2 m / r002 review candidate",
+        "category": "floor",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max": [
+            3.9977800846099854,
+            1.998445987701416,
+            0.1875
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/floor/r002/triangle-long-left/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/floor/r002/kit.glb",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "designId": "shipyard.floor.mapped-deck-kit",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max": [
+              3.9977800846099854,
+              1.998445987701416,
+              0.1875
+            ]
+          },
+          "damagePreview": "unsupported",
+          "nodePrefix": "GEO-part-79328356071c674a2c8b--floor"
+        }
+      },
+      "placements": [],
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          2
+        ]
+      ]
+    },
+    {
+      "asset": {
+        "id": "part-e0dde5e97e9bed05b4b6",
+        "label": "Long triangle right / 4 \u00d7 2 m / r002 review candidate",
+        "category": "floor",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            0.0022194599732756615,
+            0.0,
+            0.0
+          ],
+          "max": [
+            4.0,
+            1.9984462261199951,
+            0.1875
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/floor/r002/triangle-long-right/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/floor/r002/kit.glb",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "designId": "shipyard.floor.mapped-deck-kit",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              0.0022194599732756615,
+              0.0,
+              0.0
+            ],
+            "max": [
+              4.0,
+              1.9984462261199951,
+              0.1875
+            ]
+          },
+          "damagePreview": "unsupported",
+          "nodePrefix": "GEO-part-e0dde5e97e9bed05b4b6--floor"
+        }
+      },
+      "placements": [],
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          2
+        ]
+      ]
+    },
+    {
+      "asset": {
+        "id": "part-cf72797120e52d05662c",
+        "label": "Slender triangle left / 4 \u00d7 1 m / r002 review candidate",
+        "category": "floor",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max": [
+            3.997692108154297,
+            0.9990298748016357,
+            0.1875
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/floor/r002/triangle-slim-left/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/floor/r002/kit.glb",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "designId": "shipyard.floor.mapped-deck-kit",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max": [
+              3.997692108154297,
+              0.9990298748016357,
+              0.1875
+            ]
+          },
+          "damagePreview": "unsupported",
+          "nodePrefix": "GEO-part-cf72797120e52d05662c--floor"
+        }
+      },
+      "placements": [],
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    {
+      "asset": {
+        "id": "part-e315cf681838afff216e",
+        "label": "Slender triangle right / 4 \u00d7 1 m / r002 review candidate",
+        "category": "floor",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            0.002308165654540062,
+            0.0,
+            0.0
+          ],
+          "max": [
+            4.0,
+            0.9990298748016357,
+            0.1875
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/floor/r002/triangle-slim-right/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/floor/r002/kit.glb",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "designId": "shipyard.floor.mapped-deck-kit",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              0.002308165654540062,
+              0.0,
+              0.0
+            ],
+            "max": [
+              4.0,
+              0.9990298748016357,
+              0.1875
+            ]
+          },
+          "damagePreview": "unsupported",
+          "nodePrefix": "GEO-part-e315cf681838afff216e--floor"
+        }
+      },
+      "placements": [],
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          1
+        ]
+      ]
+    },
+    {
+      "asset": {
+        "id": "part-94474fb38b16d77e6429",
+        "label": "Clipped corner / 2 \u00d7 2 m / r002 review candidate",
+        "category": "floor",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max": [
+            2.0,
+            2.0,
+            0.1875
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/floor/r002/corner-clipped/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/floor/r002/kit.glb",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "designId": "shipyard.floor.mapped-deck-kit",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max": [
+              2.0,
+              2.0,
+              0.1875
+            ]
+          },
+          "damagePreview": "unsupported",
+          "nodePrefix": "GEO-part-94474fb38b16d77e6429--floor"
+        }
+      },
+      "placements": [],
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ]
+    },
+    {
+      "asset": {
+        "id": "part-73f48194371a682af29c",
+        "label": "Taper / 4 m / 2 to 1 m / r002 review candidate",
+        "category": "floor",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            0.0004961389931850135,
+            0.0,
+            0.0
+          ],
+          "max": [
+            1.9995038509368896,
+            4.0,
+            0.1875
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/floor/r002/taper-4m/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/floor/r002/kit.glb",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "designId": "shipyard.floor.mapped-deck-kit",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              0.0004961389931850135,
+              0.0,
+              0.0
+            ],
+            "max": [
+              1.9995038509368896,
+              4.0,
+              0.1875
+            ]
+          },
+          "damagePreview": "unsupported",
+          "nodePrefix": "GEO-part-73f48194371a682af29c--floor"
+        }
+      },
+      "placements": [],
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          1.5,
+          4
+        ],
+        [
+          0.5,
+          4
+        ]
+      ]
+    },
+    {
+      "asset": {
+        "id": "part-7902f7617fb23eb8abe3",
+        "label": "Small triangle / 1 \u00d7 1 m / 45\u00b0 / r002 review candidate",
+        "category": "floor",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max": [
+            0.9980000257492065,
+            0.9980000257492065,
+            0.1875
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/floor/r002/triangle-1m/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/floor/r002/kit.glb",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "designId": "shipyard.floor.mapped-deck-kit",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max": [
+              0.9980000257492065,
+              0.9980000257492065,
+              0.1875
+            ]
+          },
+          "damagePreview": "unsupported",
+          "nodePrefix": "GEO-part-7902f7617fb23eb8abe3--floor"
+        }
+      },
+      "placements": [],
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    }
+  ],
+  "placement_migrations": [
+    {
+      "before": {
+        "id": "floor--2--4",
+        "assetId": "part-13b30dda6355f0ff17b3",
+        "position": [
+          -4,
+          -8,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor--2--4",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -5.0,
+          -9.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-13b30dda6355f0ff17b3",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor--1--4",
+        "assetId": "part-ca866457d5caccb943a9",
+        "position": [
+          -2,
+          -8,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor--1--4",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -3.0,
+          -9.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-ca866457d5caccb943a9",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-0--4",
+        "assetId": "part-ce04d53853da84dd9d81",
+        "position": [
+          0,
+          -8,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-0--4",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -1.0,
+          -9.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-ce04d53853da84dd9d81",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-1--4",
+        "assetId": "part-b02132179cb305a21417",
+        "position": [
+          2,
+          -8,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-1--4",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          1.0,
+          -9.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-b02132179cb305a21417",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-2--4",
+        "assetId": "part-15bc4d24f27173de47ce",
+        "position": [
+          4,
+          -8,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-2--4",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          3.0,
+          -9.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-15bc4d24f27173de47ce",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor--2--3",
+        "assetId": "part-7b265b4d073afc9bf127",
+        "position": [
+          -4,
+          -6,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor--2--3",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -5.0,
+          -7.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-7b265b4d073afc9bf127",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor--1--3",
+        "assetId": "part-ffc5518d9892477ad05b",
+        "position": [
+          -2,
+          -6,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor--1--3",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -3.0,
+          -7.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-ffc5518d9892477ad05b",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-0--3",
+        "assetId": "part-7ceebee6336152691b53",
+        "position": [
+          0,
+          -6,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-0--3",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -1.0,
+          -7.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-7ceebee6336152691b53",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-1--3",
+        "assetId": "part-c5fa343376505f993a45",
+        "position": [
+          2,
+          -6,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-1--3",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          1.0,
+          -7.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-c5fa343376505f993a45",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-2--3",
+        "assetId": "part-a735909957b9e773f219",
+        "position": [
+          4,
+          -6,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-2--3",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          3.0,
+          -7.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-a735909957b9e773f219",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor--2--2",
+        "assetId": "part-749baebbcaac89945d5c",
+        "position": [
+          -4,
+          -4,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor--2--2",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -5.0,
+          -5.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-749baebbcaac89945d5c",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor--1--2",
+        "assetId": "part-395319254b5dd541b5c9",
+        "position": [
+          -2,
+          -4,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor--1--2",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -3.0,
+          -5.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-395319254b5dd541b5c9",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-0--2",
+        "assetId": "part-ce04d53853da84dd9d81",
+        "position": [
+          0,
+          -4,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-0--2",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -1.0,
+          -5.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-ce04d53853da84dd9d81",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-1--2",
+        "assetId": "part-67c91d419e31812795c4",
+        "position": [
+          2,
+          -4,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-1--2",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          1.0,
+          -5.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-67c91d419e31812795c4",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-2--2",
+        "assetId": "part-b90945c434415efcef4d",
+        "position": [
+          4,
+          -4,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-2--2",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          3.0,
+          -5.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-b90945c434415efcef4d",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor--2--1",
+        "assetId": "part-a561ef19a47095f7af9b",
+        "position": [
+          -4,
+          -2,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor--2--1",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -5.0,
+          -3.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-a561ef19a47095f7af9b",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor--1--1",
+        "assetId": "part-79da3bdf7a767bb89c8b",
+        "position": [
+          -2,
+          -2,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor--1--1",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -3.0,
+          -3.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-79da3bdf7a767bb89c8b",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-0--1",
+        "assetId": "part-1a05e8da6e2c1ec33a1c",
+        "position": [
+          0,
+          -2,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-0--1",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -1.0,
+          -3.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-1a05e8da6e2c1ec33a1c",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-1--1",
+        "assetId": "part-f720d0e3287882975690",
+        "position": [
+          2,
+          -2,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-1--1",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          1.0,
+          -3.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-f720d0e3287882975690",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-2--1",
+        "assetId": "part-2ae59f43b3e997e6ee94",
+        "position": [
+          4,
+          -2,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-2--1",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          3.0,
+          -3.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-2ae59f43b3e997e6ee94",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor--2-0",
+        "assetId": "part-df324c9b4e916c78412f",
+        "position": [
+          -4,
+          0,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor--2-0",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -5.0,
+          -1.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-df324c9b4e916c78412f",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor--1-0",
+        "assetId": "part-f75dd89e6deed9eefdb9",
+        "position": [
+          -2,
+          0,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor--1-0",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -3.0,
+          -1.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-f75dd89e6deed9eefdb9",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-0-0",
+        "assetId": "part-ce04d53853da84dd9d81",
+        "position": [
+          0,
+          0,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-0-0",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -1.0,
+          -1.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-ce04d53853da84dd9d81",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-1-0",
+        "assetId": "part-1f69531882e3417aadf4",
+        "position": [
+          2,
+          0,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-1-0",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          1.0,
+          -1.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-1f69531882e3417aadf4",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-2-0",
+        "assetId": "part-27d644c2d1643c69a713",
+        "position": [
+          4,
+          0,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-2-0",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          3.0,
+          -1.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-27d644c2d1643c69a713",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor--2-1",
+        "assetId": "part-d5094b4fbaf77ad6ebeb",
+        "position": [
+          -4,
+          2,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor--2-1",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -5.0,
+          1.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-d5094b4fbaf77ad6ebeb",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor--1-1",
+        "assetId": "part-add5f7040084fbad8df6",
+        "position": [
+          -2,
+          2,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor--1-1",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -3.0,
+          1.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-add5f7040084fbad8df6",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-0-1",
+        "assetId": "part-7ec54250fbcf112c0861",
+        "position": [
+          0,
+          2,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-0-1",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -1.0,
+          1.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-7ec54250fbcf112c0861",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-1-1",
+        "assetId": "part-1a7d03bf8c7aabde4976",
+        "position": [
+          2,
+          2,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-1-1",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          1.0,
+          1.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-1a7d03bf8c7aabde4976",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-2-1",
+        "assetId": "part-8d853ce060a72d6e1e39",
+        "position": [
+          4,
+          2,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-2-1",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          3.0,
+          1.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-8d853ce060a72d6e1e39",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor--2-2",
+        "assetId": "part-7b265b4d073afc9bf127",
+        "position": [
+          -4,
+          4,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor--2-2",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -5.0,
+          3.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-7b265b4d073afc9bf127",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor--1-2",
+        "assetId": "part-152849dcee209e8ef9ac",
+        "position": [
+          -2,
+          4,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor--1-2",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -3.0,
+          3.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-152849dcee209e8ef9ac",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-0-2",
+        "assetId": "part-2ecd61f4910b8988dd2c",
+        "position": [
+          0,
+          4,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-0-2",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -1.0,
+          3.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-2ecd61f4910b8988dd2c",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-1-2",
+        "assetId": "part-0f1f4618418c21228e80",
+        "position": [
+          2,
+          4,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-1-2",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          1.0,
+          3.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-0f1f4618418c21228e80",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-2-2",
+        "assetId": "part-c2db52503da57679ba31",
+        "position": [
+          4,
+          4,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-2-2",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          3.0,
+          3.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-c2db52503da57679ba31",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor--2-3",
+        "assetId": "part-ce04d53853da84dd9d81",
+        "position": [
+          -4,
+          6,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor--2-3",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -5.0,
+          5.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-ce04d53853da84dd9d81",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor--1-3",
+        "assetId": "part-ce04d53853da84dd9d81",
+        "position": [
+          -2,
+          6,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor--1-3",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -3.0,
+          5.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-ce04d53853da84dd9d81",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-0-3",
+        "assetId": "part-ce04d53853da84dd9d81",
+        "position": [
+          0,
+          6,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-0-3",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -1.0,
+          5.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-ce04d53853da84dd9d81",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-1-3",
+        "assetId": "part-ce04d53853da84dd9d81",
+        "position": [
+          2,
+          6,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-1-3",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          1.0,
+          5.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-ce04d53853da84dd9d81",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-2-3",
+        "assetId": "part-ce04d53853da84dd9d81",
+        "position": [
+          4,
+          6,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-2-3",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          3.0,
+          5.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-ce04d53853da84dd9d81",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor--2-4",
+        "assetId": "part-ce04d53853da84dd9d81",
+        "position": [
+          -4,
+          8,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor--2-4",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -5.0,
+          7.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-ce04d53853da84dd9d81",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor--1-4",
+        "assetId": "part-ce04d53853da84dd9d81",
+        "position": [
+          -2,
+          8,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor--1-4",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -3.0,
+          7.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-ce04d53853da84dd9d81",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-1-4",
+        "assetId": "part-ce04d53853da84dd9d81",
+        "position": [
+          2,
+          8,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-1-4",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          1.0,
+          7.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-ce04d53853da84dd9d81",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "floor-2-4",
+        "assetId": "part-ce04d53853da84dd9d81",
+        "position": [
+          4,
+          8,
+          -0.375
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "floor-2-4",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          3.0,
+          7.0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-ce04d53853da84dd9d81",
+          "offset": [
+            1.0,
+            1.0,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "pilot-r004-floor-square-00",
+        "assetId": "part-7a1a34a2a908f8ff455b",
+        "position": [
+          -3,
+          9,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "pilot-r004-floor-square-00",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -3,
+          9,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-7a1a34a2a908f8ff455b",
+          "offset": [
+            0.0,
+            0.0,
+            0
+          ],
+          "maxZ": 0.1875
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "pilot-r004-floor-square-01",
+        "assetId": "part-7a1a34a2a908f8ff455b",
+        "position": [
+          -1,
+          9,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "pilot-r004-floor-square-01",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -1,
+          9,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-7a1a34a2a908f8ff455b",
+          "offset": [
+            0.0,
+            0.0,
+            0
+          ],
+          "maxZ": 0.1875
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "pilot-r004-floor-square-02",
+        "assetId": "part-7a1a34a2a908f8ff455b",
+        "position": [
+          1,
+          9,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "pilot-r004-floor-square-02",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          1,
+          9,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-7a1a34a2a908f8ff455b",
+          "offset": [
+            0.0,
+            0.0,
+            0
+          ],
+          "maxZ": 0.1875
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "pilot-r004-floor-square-03",
+        "assetId": "part-7a1a34a2a908f8ff455b",
+        "position": [
+          -1,
+          11,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "pilot-r004-floor-square-03",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -1,
+          11,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-7a1a34a2a908f8ff455b",
+          "offset": [
+            0.0,
+            0.0,
+            0
+          ],
+          "maxZ": 0.1875
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "pilot-r004-floor-square-04",
+        "assetId": "part-7a1a34a2a908f8ff455b",
+        "position": [
+          -1,
+          7,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "pilot-r004-floor-square-04",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -1,
+          7,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-7a1a34a2a908f8ff455b",
+          "offset": [
+            0.0,
+            0.0,
+            0
+          ],
+          "maxZ": 0.1875
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "pilot-r004-floor-corner45-05",
+        "assetId": "part-04c2fbf8cdd53d6bf70f",
+        "position": [
+          1,
+          11,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "pilot-r004-floor-corner45-05",
+        "assetId": "part-771cc318e835d7a08abd",
+        "position": [
+          1,
+          11,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-04c2fbf8cdd53d6bf70f",
+          "offset": [
+            0.0,
+            0.0,
+            0
+          ],
+          "maxZ": 0.1875
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    },
+    {
+      "before": {
+        "id": "pilot-r004-floor-corner45-06",
+        "assetId": "part-04c2fbf8cdd53d6bf70f",
+        "position": [
+          -1,
+          11,
+          0
+        ],
+        "rotation": 1.5707963267948966,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "pilot-r004-floor-corner45-06",
+        "assetId": "part-771cc318e835d7a08abd",
+        "position": [
+          -1,
+          11,
+          0
+        ],
+        "rotation": 1.5707963267948966,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-04c2fbf8cdd53d6bf70f",
+          "offset": [
+            0.0,
+            0.0,
+            0
+          ],
+          "maxZ": 0.1875
+        }
+      },
+      "proxy": "Original immutable fitting volume retained below native deck-top .1875m, with explicit local origin offset; no authority change"
+    }
+  ],
+  "source_sha256": "f1369b9ba39b1cf8ac0c68c0a7bd8397954e12a2afb5370a3272276fc716fee7",
+  "backing": "Original legacy deck voxels below z=0 retained; upper visible surface replaced with native kit",
+  "gameplay": "No authoritative collision, pressure or load-rating changes"
+}

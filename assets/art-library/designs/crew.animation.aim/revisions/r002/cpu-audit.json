@@ -1,0 +1,59 @@
+{
+  "scope": "Actual 1/16/32 instantiated GLB characters; animation-observer and solver CPU in Babylon NullEngine. Excludes GPU, scene render and normal animation evaluation; not a game frame-rate claim.",
+  "results": [
+    {
+      "count": 1,
+      "hidden": false,
+      "medianTotalMs": 0.8068670000000111,
+      "p95TotalMs": 1.1431779999999208,
+      "medianPerCharacterMs": 0.8068670000000111,
+      "meshCount": 142,
+      "materialCount": 16
+    },
+    {
+      "count": 1,
+      "hidden": true,
+      "medianTotalMs": 0.0007909999999355932,
+      "p95TotalMs": 0.0010620000000471919,
+      "medianPerCharacterMs": 0.0007909999999355932,
+      "meshCount": 142,
+      "materialCount": 16
+    },
+    {
+      "count": 16,
+      "hidden": false,
+      "medianTotalMs": 10.03694100000007,
+      "p95TotalMs": 12.530628000000206,
+      "medianPerCharacterMs": 0.6273088125000044,
+      "meshCount": 2272,
+      "materialCount": 256
+    },
+    {
+      "count": 16,
+      "hidden": true,
+      "medianTotalMs": 0.007023000000117463,
+      "p95TotalMs": 0.008005000000139262,
+      "medianPerCharacterMs": 0.00043893750000734144,
+      "meshCount": 2272,
+      "materialCount": 256
+    },
+    {
+      "count": 32,
+      "hidden": false,
+      "medianTotalMs": 20.018408999999338,
+      "p95TotalMs": 24.280037000000448,
+      "medianPerCharacterMs": 0.6255752812499793,
+      "meshCount": 4544,
+      "materialCount": 512
+    },
+    {
+      "count": 32,
+      "hidden": true,
+      "medianTotalMs": 0.010811000000103377,
+      "p95TotalMs": 0.011661999999887485,
+      "medianPerCharacterMs": 0.0003378437500032305,
+      "meshCount": 4544,
+      "materialCount": 512
+    }
+  ]
+}

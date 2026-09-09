@@ -1,0 +1,39 @@
+{
+  "renderer": "Blender Cycles CPU",
+  "threads": 4,
+  "samples": 128,
+  "denoising": false,
+  "reason": "Installed Blender has no OpenImageDenoise support; failed attempta001 preserved.",
+  "colorManagement": "AgX",
+  "runtimeBrowser": false,
+  "published": false,
+  "sourceAttempt": ".runtime/construction-boundary-kit/r001/attempts/a005",
+  "images": {
+    "review-closed.png": [
+      1600,
+      900
+    ],
+    "review-open.png": [
+      1600,
+      900
+    ],
+    "door-close.png": [
+      900,
+      1000
+    ],
+    "room-junctions-native-floor.png": [
+      1200,
+      1000
+    ],
+    "cutout.png": [
+      800,
+      1000
+    ]
+  },
+  "contextFloor": {
+    "source": "assets/art-library/shipyard-floor/r002/variants/square-2m/model.glb",
+    "sha256": "f3bda9a7b1e6fbaa27ae631e98be7839be44c20d48d05507b945bde2359d9d62",
+    "use": "Read-only imported native floor in isolated room render; not part of exported boundary kit."
+  },
+  "review": "Every selected PNG opened and inspected; initial coplanar trim/hinge clearance defects fixed in retained attempts before selection."
+}

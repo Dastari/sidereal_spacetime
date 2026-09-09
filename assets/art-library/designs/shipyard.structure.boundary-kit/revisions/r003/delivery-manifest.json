@@ -1,0 +1,97 @@
+{
+  "revision": "r003",
+  "published": false,
+  "ownerApproval": null,
+  "files": [
+    {
+      "path": "audit_contact.py",
+      "sha256": "1cf5774531f448faed4ef8e55fdf8071b3a1c3cf4d61e5281be378c98ae47693",
+      "bytes": 3152
+    },
+    {
+      "path": "author_threshold.py",
+      "sha256": "fd1240855e57ba8a4509e0a74218bca44722accef428407431fa8e9cb3430ad2",
+      "bytes": 5987
+    },
+    {
+      "path": "boundary-kit.blend",
+      "sha256": "60541e29284aaf29673bcdc0663660958f8a06844899162f9b7234b032acb815",
+      "bytes": 1605350
+    },
+    {
+      "path": "capture-record.json",
+      "sha256": "377510549bd3d5909dc9230df8f8f58fb2ffcdad0f82160cb70e1a3e3874221c",
+      "bytes": 575
+    },
+    {
+      "path": "closed-lip-contact.png",
+      "sha256": "bb3a65cd083a8e2e2ef106a00b6d2de53459f17c5adeec0d8d648beba9c19e73",
+      "bytes": 1433988
+    },
+    {
+      "path": "closed-native-floor.png",
+      "sha256": "9468011b6cd5081e11f4952a783ae29b60f876b21403103074af55008f82a673",
+      "bytes": 1002655
+    },
+    {
+      "path": "floor-contact-audit.json",
+      "sha256": "2327225f495b4695517c956b23a03b68834dc0f1f4ae07aeb7bb289e69b6af84",
+      "bytes": 1356
+    },
+    {
+      "path": "floor-native-triangles.json",
+      "sha256": "df231e0cfbad42905dc4d99f51c9d24624e172ecae5fa36f6bbab94a89df1b50",
+      "bytes": 208788
+    },
+    {
+      "path": "geometry.json",
+      "sha256": "afe973fa205bd679c5869b4386f748e4ffd0a0fb19c39b76820df84cab7ac05b",
+      "bytes": 657
+    },
+    {
+      "path": "inspect_floor.py",
+      "sha256": "5f0ddb4a970578ac513f87e1b8c4c5d0c82ffed5161f2e5a6ddc719acb4290f5",
+      "bytes": 997
+    },
+    {
+      "path": "interfaces.json",
+      "sha256": "a91f61c7137fc7c13455617f1be6ea97e55d44259848efde56ec2cf740349213",
+      "bytes": 3943
+    },
+    {
+      "path": "kit.glb",
+      "sha256": "c77ebd056fa9fe5509b7e60598b68e9ab5858579542ffdf48cec7bfa785b3c0d",
+      "bytes": 3052
+    },
+    {
+      "path": "native-seam-after.png",
+      "sha256": "98199831be07aeef8fc39d18a2a1a1fe4ce29e2efc04f58c99ea65304099980a",
+      "bytes": 1323977
+    },
+    {
+      "path": "native-seam-before.png",
+      "sha256": "706e3fee1e5e6de82363d82d4a56ad31ad1a379cd118a96648112bed5287ac31",
+      "bytes": 1331494
+    },
+    {
+      "path": "open-native-floor.png",
+      "sha256": "ea7c66c9dd92dd80a42a5f3434354f5fb70c7027a3f5495109601284324874f4",
+      "bytes": 894039
+    },
+    {
+      "path": "threshold-cutout.png",
+      "sha256": "1b8f0560182dd35c61c57f832b8b3dcc492f9d9608b3fbd78fe5b1cc1865c869",
+      "bytes": 480579
+    },
+    {
+      "path": "validate_threshold.py",
+      "sha256": "d87dc99ab8b92e125d4cc6e788e480d5ec8b056aa3fe73be86524538f9226830",
+      "bytes": 6576
+    },
+    {
+      "path": "validation.json",
+      "sha256": "418a7d29c8d01af79e24ccc0decd13f13e689c0a72d4a69cf06d9c5814e8c375",
+      "bytes": 6030
+    }
+  ]
+}

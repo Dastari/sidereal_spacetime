@@ -1,0 +1,436 @@
+{
+  "schema": 1,
+  "status": "original visual preview; inventory/combat authority not implemented",
+  "units": "meters",
+  "source": "assets/source/equipment-kit.blend",
+  "sourceSha256": "4325ff3c9a6b7ea833a758bc1a0119972ec474d7b76a782dec20ee6def79a9bf",
+  "blender": "4.3.2",
+  "materialPolicy": "8 shared PBR materials, merged mesh per unique asset; no per-brick draw calls; opaque and emissive only",
+  "attachmentConvention": "glTF right-handed +Y up / -Z forward; palm or mounting plane at origin; Babylon scene must honor glTF handedness conversion",
+  "entries": [
+    {
+      "id": "equipment.compact-pistol",
+      "name": "Kestrel compact pistol",
+      "file": "compact-pistol.glb",
+      "role": "one-handed weapon preview",
+      "socket": "handR",
+      "attachmentOrigin": [
+        0,
+        0,
+        0
+      ],
+      "forward": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "dimensionsM": [
+        0.187,
+        0.3695,
+        0.4652
+      ],
+      "anchors": {
+        "muzzle": [
+          0,
+          0.13,
+          -0.39
+        ]
+      },
+      "triangles": 1332,
+      "materialPrimitives": 7,
+      "bytes": 105192,
+      "sha256": "5a6516f85126486d37ffb0ecf9d12bfeac25f28a0b35976d7d7128aa98b4bbbb"
+    },
+    {
+      "id": "equipment.heavy-handgun",
+      "name": "Bulwark heavy handgun",
+      "file": "heavy-handgun.glb",
+      "role": "one-handed weapon preview",
+      "socket": "handR",
+      "attachmentOrigin": [
+        0,
+        0,
+        0
+      ],
+      "forward": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "dimensionsM": [
+        0.274,
+        0.3695,
+        0.5612
+      ],
+      "anchors": {
+        "muzzle": [
+          0,
+          0.13,
+          -0.49
+        ]
+      },
+      "triangles": 1528,
+      "materialPrimitives": 7,
+      "bytes": 119440,
+      "sha256": "329cd64ccbdeba1e12e6df85c8ecd331c3e8b3781e95a3cb434f5b61834e36e9"
+    },
+    {
+      "id": "equipment.carbine",
+      "name": "Courier carbine",
+      "file": "carbine.glb",
+      "role": "two-handed weapon preview",
+      "socket": "handR",
+      "attachmentOrigin": [
+        0,
+        0,
+        0
+      ],
+      "forward": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "dimensionsM": [
+        0.275,
+        0.457,
+        1.2145
+      ],
+      "anchors": {
+        "supportPalm": [
+          0,
+          0,
+          -0.23
+        ],
+        "muzzle": [
+          0,
+          0.13,
+          -0.78
+        ]
+      },
+      "triangles": 2864,
+      "materialPrimitives": 7,
+      "bytes": 216992,
+      "sha256": "a90ac753332e0bc079844717204c0d4f141ffb389d02e4811953100244d5d29e"
+    },
+    {
+      "id": "equipment.long-rifle",
+      "name": "Longwatch rifle",
+      "file": "long-rifle.glb",
+      "role": "two-handed weapon preview",
+      "socket": "handR",
+      "attachmentOrigin": [
+        0,
+        0,
+        0
+      ],
+      "forward": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "dimensionsM": [
+        0.275,
+        0.541,
+        1.5545
+      ],
+      "anchors": {
+        "supportPalm": [
+          0,
+          0,
+          -0.23
+        ],
+        "muzzle": [
+          0,
+          0.13,
+          -1.12
+        ]
+      },
+      "triangles": 3060,
+      "materialPrimitives": 7,
+      "bytes": 232168,
+      "sha256": "648b8094408b3b5b071b925739b50b34284601314e68b8b23d0add5471a414d3"
+    },
+    {
+      "id": "equipment.plasma-cutter",
+      "name": "Arc fork cutter",
+      "file": "plasma-cutter.glb",
+      "role": "repair tool preview",
+      "socket": "handR",
+      "attachmentOrigin": [
+        0,
+        0,
+        0
+      ],
+      "forward": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "dimensionsM": [
+        0.302,
+        0.3595,
+        0.555
+      ],
+      "anchors": {
+        "effect": [
+          0,
+          0.13,
+          -0.5
+        ]
+      },
+      "triangles": 1008,
+      "materialPrimitives": 7,
+      "bytes": 81744,
+      "sha256": "1fdc536778e0726a88ca1eb0d569524c8de0176607d9d31ee993e9df1e4f0371"
+    },
+    {
+      "id": "equipment.sample-scanner",
+      "name": "Field sample scanner",
+      "file": "sample-scanner.glb",
+      "role": "science tool preview",
+      "socket": "handR",
+      "attachmentOrigin": [
+        0,
+        0,
+        0
+      ],
+      "forward": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "dimensionsM": [
+        0.22,
+        0.517,
+        0.314
+      ],
+      "anchors": {},
+      "triangles": 896,
+      "materialPrimitives": 6,
+      "bytes": 72052,
+      "sha256": "8e1a9a64f22f41bc9e171dbe63c93b9605dbc9582f5987029741c6cd586fee74"
+    },
+    {
+      "id": "equipment.medkit",
+      "name": "Trauma field case",
+      "file": "medkit.glb",
+      "role": "medical item preview",
+      "socket": "handR",
+      "attachmentOrigin": [
+        0,
+        0,
+        0
+      ],
+      "forward": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "dimensionsM": [
+        0.37,
+        0.3425,
+        0.261
+      ],
+      "anchors": {},
+      "triangles": 680,
+      "materialPrimitives": 6,
+      "bytes": 55772,
+      "sha256": "e61d31bb9693f472c72ae673f58caaa9247fce65eeb5dbf876c537cc72f3c244"
+    },
+    {
+      "id": "equipment.resource-canister",
+      "name": "Sealed sample canister",
+      "file": "resource-canister.glb",
+      "role": "resource container preview",
+      "socket": "handR",
+      "attachmentOrigin": [
+        0,
+        0,
+        0
+      ],
+      "forward": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "dimensionsM": [
+        0.285,
+        0.417,
+        0.2825
+      ],
+      "anchors": {},
+      "triangles": 720,
+      "materialPrimitives": 5,
+      "bytes": 57752,
+      "sha256": "5b9f321e9487e92cd1696ebcdc3d9dd35f181434e73aaf10bb538a51185c594a"
+    },
+    {
+      "id": "equipment.power-cell",
+      "name": "Ceramic power cell",
+      "file": "power-cell.glb",
+      "role": "consumable preview",
+      "socket": "handR",
+      "attachmentOrigin": [
+        0,
+        0,
+        0
+      ],
+      "forward": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "dimensionsM": [
+        0.176,
+        0.316,
+        0.16
+      ],
+      "anchors": {},
+      "triangles": 328,
+      "materialPrimitives": 4,
+      "bytes": 28060,
+      "sha256": "89fd64a871b35afc7c8d02849b70e45392a09f06c5e2ee90a2000467b4658b1e"
+    },
+    {
+      "id": "equipment.supply-crate",
+      "name": "Expedition supply crate",
+      "file": "supply-crate.glb",
+      "role": "placed cargo preview",
+      "socket": "ground",
+      "attachmentOrigin": [
+        0,
+        0,
+        0
+      ],
+      "forward": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "dimensionsM": [
+        0.713,
+        0.506,
+        0.521
+      ],
+      "anchors": {},
+      "triangles": 3032,
+      "materialPrimitives": 8,
+      "bytes": 228876,
+      "sha256": "8d7e16695d1e442f6939fa6d1b5883661e13476af3b754f8b064439738e1415e"
+    },
+    {
+      "id": "equipment.utility-backpack",
+      "name": "Engineer utility pack",
+      "file": "utility-backpack.glb",
+      "role": "back attachment preview",
+      "socket": "back",
+      "attachmentOrigin": [
+        0,
+        0,
+        0
+      ],
+      "forward": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "dimensionsM": [
+        0.405,
+        0.447,
+        0.3205
+      ],
+      "anchors": {},
+      "triangles": 1000,
+      "materialPrimitives": 6,
+      "bytes": 78420,
+      "sha256": "731a82e586735f5cad6aa17fdaead689189e823ca91db943d18b64e58f103fbf"
+    },
+    {
+      "id": "equipment.shield-backpack",
+      "name": "Aegis shield pack",
+      "file": "shield-backpack.glb",
+      "role": "back attachment preview",
+      "socket": "back",
+      "attachmentOrigin": [
+        0,
+        0,
+        0
+      ],
+      "forward": [
+        0,
+        0,
+        -1
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "dimensionsM": [
+        0.405,
+        0.447,
+        0.3205
+      ],
+      "anchors": {},
+      "triangles": 912,
+      "materialPrimitives": 7,
+      "bytes": 71276,
+      "sha256": "408109f44b2117400c24e9a0fc9579e24b966ff664874cdf688e081742986322"
+    }
+  ]
+}

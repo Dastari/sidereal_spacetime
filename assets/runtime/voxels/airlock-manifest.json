@@ -1,0 +1,18 @@
+{
+  "schema": "sidereal.mesh-to-voxel.v1",
+  "blender": "4.3.2",
+  "cellMeters": 0.03125,
+  "outputs": {
+    "assets/source/airlock_voxel.blend": "415e44fc3d35e70cfc90bd8b693744d9f3c8f1d452edb1db92dd8da3ab9973d7",
+    "assets/runtime/voxels/airlock.glb": "8851790b4cd8f8e3049d8b70a656eef70913720bdd4bd5359270e0c02c417a73",
+    "assets/source/airlock.blend": "b7ae741f61f288d6350b2df886a6f94f31b75d0aeadd38f41b68ac790b855476",
+    "assets/runtime/voxels/airlock-original.glb": "f5d268a01fa518a22d8c638adda8d84e85d780b16a6420e121921cf3c78d124f",
+    "assets/runtime/voxels/airlock.voxels.json": "3cf18c7d6f20ae497fc62b221855b7c2861021934fa43885af939c619dbc198f"
+  },
+  "tools": {
+    "scripts/voxelize_blender.py": "e487508fddd3d9e482ed3daf4cb49f7272ec74223ea7453ef3d21a4e09a8e26f",
+    "scripts/build_bulkhead_source.py": "8190a13aaae90c134abe8e0186436bfe3c01ac9cee8182c090607b65fc1d9ff6",
+    "scripts/mesh_sampled_asset.ts": "08f6a8d6a60ff28a4c00b3ccd6c2f63d130cf7f3119372ac85f50c73d0921c78",
+    "scripts/export_sampled_asset.py": "3ffb5a138a73201ef3c56761d70364b391c16bf7df5e7f6d0733e9d94269a859"
+  }
+}

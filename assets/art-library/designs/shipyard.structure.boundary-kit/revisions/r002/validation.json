@@ -1,0 +1,148 @@
+{
+  "scope": "isolated native geometry; no runtime, pressure rating or damage certification",
+  "checks": [
+    {
+      "name": "glTF2 binary version",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "GEO-door-perimeter-seal--surface-mesh carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "GEO-door-frame-seal-seat--surface-mesh carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "nondegenerate triangles",
+      "pass": true,
+      "details": {
+        "triangles": 68,
+        "degenerate": 0
+      }
+    },
+    {
+      "name": "finite orthogonal normal/tangent frames",
+      "pass": true,
+      "details": 0
+    },
+    {
+      "name": "r001 dependency hash unchanged",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "only two additive mesh selectors",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "inherited leaf bind preserved",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "named0to1 morph target retained",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "deployed export contact envelope",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "morph positions exported, not baked away",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "retracted contour lies inside rigid leaf XZ silhouette",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "all materials single sided",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "101 seal poses and 361 hinge states avoid fixed frame/floor penetration",
+      "pass": true,
+      "details": []
+    },
+    {
+      "name": "gasket never retracts into rigid backing",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "open gasket preserves full 1.25m clear aperture",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "fixed seats remain outside clear aperture",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "closed left/right/top frame contact patches have positive area",
+      "pass": true,
+      "details": {
+        "left": 0.02260000000000002,
+        "right": 0.02260000000000002,
+        "top": 0.012499999999999735
+      }
+    },
+    {
+      "name": "closed gasket has rigid leaf attachment contact area",
+      "pass": true,
+      "details": {
+        "m2": 0.10715594242417535
+      }
+    },
+    {
+      "name": "closed bottom lip reaches floor datum exactly",
+      "pass": true,
+      "details": {
+        "bottomPatchAreaM2": 0.01143
+      }
+    },
+    {
+      "name": "closed projected aperture fully covered by native leaf and gasket",
+      "pass": true,
+      "details": {
+        "intervalCells": 228,
+        "holes": []
+      }
+    },
+    {
+      "name": "no exported cameras/lights",
+      "pass": true,
+      "details": null
+    }
+  ],
+  "failures": [],
+  "contactAreasM2": {
+    "frame": {
+      "left": 0.02260000000000002,
+      "right": 0.02260000000000002,
+      "top": 0.012499999999999735
+    },
+    "leaf": 0.10715594242417535,
+    "floor": 0.01143
+  },
+  "limits": [
+    "Geometric contact only; no pressure/strength/material/actuator rating or owner art approval.",
+    "Shape key must be retracted before hinge motion; no seal deployment at a nonzero hinge angle.",
+    "Sampled rigid-envelope clearance is not an authoritative continuous sweep adapter.",
+    "Elastomer fold is a kinematic candidate, not a calibrated elastic/thermal/pressure deformation model.",
+    "Diagonal wall/node subfamilies remain separate required follow-up."
+  ],
+  "kitSha256": "c65a2c6273e8773956e555ea26879b8b4d0d58d483e42eef94b55c8052e75092",
+  "pass": true
+}

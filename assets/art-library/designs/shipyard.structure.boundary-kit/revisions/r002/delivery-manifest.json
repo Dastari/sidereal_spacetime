@@ -1,0 +1,108 @@
+{
+  "schema": "sidereal.native-boundary-additive-delivery.v1",
+  "revision": "r002",
+  "scope": "gasket/seat only",
+  "dependencyGlbSha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+  "triangles": 68,
+  "meshNodes": 2,
+  "morphTargets": 1,
+  "ownerApproval": null,
+  "published": false,
+  "files": [
+    {
+      "path": "author_gasket.py",
+      "sha256": "3e46613f73de789a5e9c7fe7df6ed475e0bd5c0d381f326780f0d716c24d3ab9",
+      "bytes": 7330
+    },
+    {
+      "path": "boundary-kit.blend",
+      "sha256": "4aae7f00f96c5837d009ddd8760dc523998033a4817e4e25cfb2c08d90b64f8e",
+      "bytes": 1269560
+    },
+    {
+      "path": "build.log",
+      "sha256": "fe5904e2d2450eee0ae84496d7323eea79133a616a89f4bd0ebb4582f1df1668",
+      "bytes": 66419
+    },
+    {
+      "path": "capture-record.json",
+      "sha256": "b169e432eeabd7142cc11199ece5972929d72775d3b5a40250ae212184eeae0f",
+      "bytes": 484
+    },
+    {
+      "path": "closed-back.png",
+      "sha256": "f9124045dfedcce4ea3ce87bad60ca2e5dbfa3fbe1146efd111c2e295bbb471c",
+      "bytes": 1102383
+    },
+    {
+      "path": "closed-contact-detail.png",
+      "sha256": "99a28b2e125fe2b34ee44e39896767a21019c935668effda50d9c25344f2ca61",
+      "bytes": 1410776
+    },
+    {
+      "path": "closed-front.png",
+      "sha256": "a8ce26027f3661c07ae569e7164e39b6328aa3ae2f90983605a5435e80848b3c",
+      "bytes": 1211702
+    },
+    {
+      "path": "geometry.json",
+      "sha256": "3eeade520de018a31735c7f148b9eeb645fb4ede0c53fee49fe5e61bc753c0db",
+      "bytes": 1370
+    },
+    {
+      "path": "interfaces.json",
+      "sha256": "2e9f23466bc82b8b52f242eac92ae2f857deaab2ef8db73db71e67934ca59209",
+      "bytes": 11338
+    },
+    {
+      "path": "kit.glb",
+      "sha256": "c65a2c6273e8773956e555ea26879b8b4d0d58d483e42eef94b55c8052e75092",
+      "bytes": 10340
+    },
+    {
+      "path": "open-back.png",
+      "sha256": "a86b184e5470123f078b231d7d591f01352f04c48ca5f21d558464243c35c2a9",
+      "bytes": 973259
+    },
+    {
+      "path": "open-front.png",
+      "sha256": "b772d2849e902135b650d876cc801ef46d9fca6b0a3c2c6ca1ddc5b29c983228",
+      "bytes": 1027702
+    },
+    {
+      "path": "reference-evidence.json",
+      "sha256": "8c68a99f523f5193cd56831a7166c1ff75c1afd7121c8422e9bad65ff2a55625",
+      "bytes": 649
+    },
+    {
+      "path": "reference-r001-door-close.png",
+      "sha256": "b68345e14f8e4a9d964236422fbf1a5a8ee73989a8ff6bb89ca9d7c3c6eb5a5e",
+      "bytes": 1000562
+    },
+    {
+      "path": "reference-r001-review-closed.png",
+      "sha256": "080c25a7815b81f519fcf5b9e83c9f05859c472e53c0de38b83abc51531cb3c3",
+      "bytes": 1480685
+    },
+    {
+      "path": "retracted-front.png",
+      "sha256": "b013c9cb6899f656d633d12b13cc0bb5bb030ee206900c993f1818b81bfe6804",
+      "bytes": 1222327
+    },
+    {
+      "path": "seal-and-seat-cutout.png",
+      "sha256": "7cfacae6efa20fe239b0b4ece4eb6a9aac2e5324403d824dc12485c928c48a05",
+      "bytes": 628119
+    },
+    {
+      "path": "validate_gasket.py",
+      "sha256": "0ac4dcd90a8ce871baded4bc1b00542efbc6a1ddf6cf01d7570e17292de11e21",
+      "bytes": 8938
+    },
+    {
+      "path": "validation.json",
+      "sha256": "af67afb96762cf4049c7d2611aad701cb306cd675b3bab33def28dad90aba56e",
+      "bytes": 3786
+    }
+  ]
+}

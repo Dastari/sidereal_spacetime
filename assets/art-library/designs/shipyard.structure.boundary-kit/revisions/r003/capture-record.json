@@ -1,0 +1,21 @@
+{
+  "renderer": "Blender4.3.2 Cycles CPU",
+  "samples": 48,
+  "threads": 4,
+  "viewTransform": "AgX",
+  "resolution": [
+    1000,
+    900
+  ],
+  "actualNativeFloorGlbSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+  "browser": false,
+  "reviewedImages": [
+    "closed-native-floor.png",
+    "open-native-floor.png",
+    "native-seam-before.png",
+    "native-seam-after.png",
+    "closed-lip-contact.png",
+    "threshold-cutout.png"
+  ],
+  "attemptHistory": "a001 retained in isolated runtime; a002 widens context camera to preserve whole door"
+}

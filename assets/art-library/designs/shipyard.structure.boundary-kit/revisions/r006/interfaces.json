@@ -1,0 +1,98 @@
+{
+  "schema": "sidereal.native-floor-junction.v1",
+  "revision": 6,
+  "status": "staged-not-installed",
+  "parts": [
+    {
+      "id": "interior-four-quarter",
+      "assetUuid": "b3959b53-770c-5137-8c87-7a11fb095659",
+      "nodePrefix": "GEO-floor-junction-interior-four-quarter--surface",
+      "revision": "r006-final-a006",
+      "sourceOrigin": "floor junction in Blender metres; Z0 is deck origin",
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "partition-four-quarter",
+      "assetUuid": "45255cba-6630-5a74-b722-58f2e1c71dec",
+      "nodePrefix": "GEO-floor-junction-partition-four-quarter--surface",
+      "revision": "r006-final-a006",
+      "sourceOrigin": "floor junction in Blender metres; Z0 is deck origin",
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "door-strip-reserved",
+      "assetUuid": "11f3aff5-ebba-5df6-bbe8-f68a272901cc",
+      "nodePrefix": "GEO-floor-junction-door-strip-reserved--surface",
+      "revision": "r006-final-a006",
+      "sourceOrigin": "floor junction in Blender metres; Z0 is deck origin",
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "dependencies": {
+    "wall": {
+      "path": "assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r004/family/kit.glb",
+      "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db"
+    },
+    "floor": {
+      "path": "assets/runtime/assembly/floor/r002/kit.glb",
+      "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585"
+    },
+    "roof": {
+      "path": "assets/art-library/designs/shipyard.structure.roof-kit/revisions/r001/kit.glb",
+      "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711"
+    },
+    "contact": {
+      "path": "assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r005/final-a004/kit.glb",
+      "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60"
+    },
+    "door": {
+      "path": "assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r001/kit.glb",
+      "sha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426"
+    },
+    "gasket": {
+      "path": "assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r002/kit.glb",
+      "sha256": "c65a2c6273e8773956e555ea26879b8b4d0d58d483e42eef94b55c8052e75092"
+    },
+    "strip": {
+      "path": "assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r003/kit.glb",
+      "sha256": "c77ebd056fa9fe5509b7e60598b68e9ab5858579542ffdf48cec7bfa785b3c0d"
+    },
+    "junction": {
+      "path": "/root/sidereal_spacetime/assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r006/final-a006/kit.glb",
+      "sha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69"
+    },
+    "authoredSolids": {
+      "path": "/root/sidereal_spacetime/assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r006/native-authored-solids.json",
+      "sha256": "fe45ae18d410f4258c38d0bd8578d058aaac0d11971b5505b3fa3a2f71be2de4"
+    },
+    "contactPlan": {
+      "path": "assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r005/final-a004/contact-plan.json",
+      "sha256": "2d94b1365fa0be3770b46b6d9bdd35a275fc7a5de14b9cd4fbb8bbc3641259ba"
+    }
+  },
+  "constraints": [
+    "Only the exact four-by-two metre test fixture is room-qualified.",
+    "Use interior parts at (1,1) and (3,1), partition part at (2,1), reserved door strip at (2,1) quarter-turn1.",
+    "Native Z already includes floor-top0.1875m; add deck elevation only.",
+    "Original r003 strip must not coexist with the reserved variant.",
+    "Static seal qualification a007 applies only to exact installed native parts at accepted hinge0 and SealRetracted0; other states have explicit finite flow."
+  ],
+  "glbSha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+  "finalOwnerApproval": null,
+  "qualifiedAudit": {
+    "path": "qualification-a007/native-room-validation.json",
+    "sha256": "f347642d4ae424e63fa5abe0326f2e6cf0d82a5f168f0191c878f327056eec4e"
+  }
+}

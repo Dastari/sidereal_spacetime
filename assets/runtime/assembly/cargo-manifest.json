@@ -1,0 +1,4819 @@
+{
+  "schema": "sidereal.installed-cargo.v1",
+  "approval": {
+    "owner_quote": "They look really good. Give me an implenetation prompt for the main agent to add them to ghe game. I approve.",
+    "message_reference": "Owner message in this cargo collection conversation, immediately following the completed 26-design/47-appearance review; exact quote retained in cargo-collection/approval/owner-approval.json. No platform message ID was supplied.",
+    "recorded_at": "2026-09-08T12:32:27.775648+00:00",
+    "manifest_sha256": "512ea3056138b3da315bb92e681c01ba5d758d54928f74d986b58bd9b001e4dd",
+    "canonical_designs": 26,
+    "additional_appearances": 47,
+    "reference_appearances": 77,
+    "approved_revisions": {
+      "cargo.fluid-chemical.medium": 1,
+      "cargo.fluid-cryo.medium": 1,
+      "cargo.fluid-fuel.medium": 1,
+      "cargo.fluid-gas.medium": 1,
+      "cargo.fluid-water.medium": 1,
+      "cargo.fluid.large": 2,
+      "cargo.fluid.medium": 2,
+      "cargo.high-value.medium": 3,
+      "cargo.high-value.small": 3,
+      "cargo.medical.medium": 3,
+      "cargo.medical.small": 3,
+      "cargo.refrigerated.large": 2,
+      "cargo.refrigerated.medium": 2,
+      "cargo.reinforced.large": 2,
+      "cargo.reinforced.medium": 3,
+      "cargo.reinforced.oversized": 2,
+      "cargo.salvage.large": 2,
+      "cargo.salvage.oversized": 2,
+      "cargo.standard.large": 2,
+      "cargo.standard.medium": 3,
+      "cargo.standard.narrow": 1,
+      "cargo.standard.oversized": 2,
+      "cargo.standard.small": 3,
+      "cargo.standard.tiny": 1,
+      "cargo.vacuum.large": 2,
+      "cargo.vacuum.medium": 2
+    },
+    "scope": "Exact reviewed visual designs and evidence. Proposed capacity, empty mass, payload and operating stats are not automatically implemented or engineering-certified.",
+    "implementation_request": "Owner requested a prompt for the main agent to add the approved assets to the game; no integration performed by this approval-recording step.",
+    "production_publication": false
+  },
+  "entries": [
+    {
+      "asset": {
+        "id": "part-c06e4f5f6f6dace38e41",
+        "label": "Standard Small",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.3305000066757202,
+            -0.28049999475479126,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.20500001311302185,
+            0.5114999413490295
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-c06e4f5f6f6dace38e41/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-c06e4f5f6f6dace38e41/glb.glb",
+          "sha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+          "designId": "cargo.standard.small",
+          "revision": 3,
+          "bounds": {
+            "min": [
+              -0.3305000066757202,
+              -0.28049999475479126,
+              0.0
+            ],
+            "max": [
+              0.3305000066757202,
+              0.20500001311302185,
+              0.5114999413490295
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [
+        {
+          "id": "room-storage-container-2.15-0.25",
+          "assetId": "part-c06e4f5f6f6dace38e41",
+          "position": [
+            -4.0625,
+            2.0625,
+            0.1875
+          ],
+          "rotation": 1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "room-storage-container-3.5-0.25",
+          "assetId": "part-c06e4f5f6f6dace38e41",
+          "position": [
+            -4.0625,
+            3.4375,
+            0.1875
+          ],
+          "rotation": 1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        }
+      ],
+      "canonical_uuid": "6bec75f4-4bed-54f6-af19-e5143fd4d668",
+      "appearance": "standard-small",
+      "revision": 3,
+      "source": "assets/source/approved-cargo/part-c06e4f5f6f6dace38e41/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.standard.small/revisions/r003",
+      "source_sha256": "5cf90a4af3373549cbc97701b32754bfa6eef63dc996dcfc4b74af17c2215493",
+      "thumbnail_sha256": "0e56aa3e3bc22896f03dfb8a33cfc565ce60954a7fe30f79287409e22c4544a8",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_LID",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-abb5fe4af40225b7eae4",
+        "label": "Standard Medium",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.5304999947547913,
+            -0.4505000114440918,
+            0.0
+          ],
+          "max": [
+            0.5304999947547913,
+            0.34584999084472656,
+            0.9514999985694885
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-abb5fe4af40225b7eae4/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-abb5fe4af40225b7eae4/glb.glb",
+          "sha256": "b206e9ca51fff669848037ab6288882df033293d535c4f31e96034e1bde7db2c",
+          "designId": "cargo.standard.medium",
+          "revision": 3,
+          "bounds": {
+            "min": [
+              -0.5304999947547913,
+              -0.4505000114440918,
+              0.0
+            ],
+            "max": [
+              0.5304999947547913,
+              0.34584999084472656,
+              0.9514999985694885
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "9f056fa2-d517-5cf8-a817-59e5f7ce727e",
+      "appearance": "standard-medium",
+      "revision": 3,
+      "source": "assets/source/approved-cargo/part-abb5fe4af40225b7eae4/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.standard.medium/revisions/r003",
+      "source_sha256": "645ed047c59cdd8a296a9e75c06a729d564256706c4cb4c85e492234452f00bc",
+      "thumbnail_sha256": "f08e7ab0b45ea38331dab88d4a4f8a45c7ae72df943d31d1b521a9234423ca76",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_LID",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-f12452ef26700fa33271",
+        "label": "Standard Large",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.9704999923706055,
+            -0.7270000576972961,
+            0.0
+          ],
+          "max": [
+            0.9704999923706055,
+            0.5891000032424927,
+            1.7200000286102295
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-f12452ef26700fa33271/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-f12452ef26700fa33271/glb.glb",
+          "sha256": "c5327211a125e711f907a41691a5bacf5253f9dc9398ed1484891f947691ced8",
+          "designId": "cargo.standard.large",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.9704999923706055,
+              -0.7270000576972961,
+              0.0
+            ],
+            "max": [
+              0.9704999923706055,
+              0.5891000032424927,
+              1.7200000286102295
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "6794e121-a748-5945-b817-7a3ebe6c5af3",
+      "appearance": "standard-large",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-f12452ef26700fa33271/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.standard.large/revisions/r002",
+      "source_sha256": "77214bcfdd20ceb52aa7f84bd5915ddb3e5377316a6e83fe40e4544c8101afce",
+      "thumbnail_sha256": "aef73fb43bacc38d38d1b08bb1b16881cacef5620a253b215e5763d998aad50c",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_DOOR_-1",
+        "PIVOT_DOOR_1",
+        "SOCK_HAND_L_-0.32480000000000003",
+        "SOCK_HAND_R_-0.32480000000000003",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-b3ba935a9fdc172d4b05",
+        "label": "Standard Oversized",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.9704999923706055,
+            -2.0269999504089355,
+            0.0
+          ],
+          "max": [
+            0.9704999923706055,
+            1.8890999555587769,
+            1.9199999570846558
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-b3ba935a9fdc172d4b05/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-b3ba935a9fdc172d4b05/glb.glb",
+          "sha256": "cabf3570fc40613b8476ade9627f78033963e691ddd385a996bcf548ce7a5985",
+          "designId": "cargo.standard.oversized",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.9704999923706055,
+              -2.0269999504089355,
+              0.0
+            ],
+            "max": [
+              0.9704999923706055,
+              1.8890999555587769,
+              1.9199999570846558
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "60101dc0-b44c-5e32-a98e-5ea8da3fd374",
+      "appearance": "standard-oversized",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-b3ba935a9fdc172d4b05/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.standard.oversized/revisions/r002",
+      "source_sha256": "43ffef9453511923460fb69a1c7a9144899a16c6a081567fe87a1342f4caf367",
+      "thumbnail_sha256": "6ddc8ffc424cb0ff861af848fc8c5fc25bcf74179c62d76b91f3fbf09068978a",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_DOOR_-1",
+        "PIVOT_DOOR_1",
+        "SOCK_HAND_L_-1.0528",
+        "SOCK_HAND_R_-1.0528",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-7b3c579c1281fc95571e",
+        "label": "Reinforced Medium",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.5304999947547913,
+            -0.46299999952316284,
+            0.0
+          ],
+          "max": [
+            0.5304999947547913,
+            0.34584999084472656,
+            0.9514999985694885
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-7b3c579c1281fc95571e/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-7b3c579c1281fc95571e/glb.glb",
+          "sha256": "d0c38b77acee4430c023a003a1e8bc536d39a401064724fd586f9499c2fe5bb6",
+          "designId": "cargo.reinforced.medium",
+          "revision": 3,
+          "bounds": {
+            "min": [
+              -0.5304999947547913,
+              -0.46299999952316284,
+              0.0
+            ],
+            "max": [
+              0.5304999947547913,
+              0.34584999084472656,
+              0.9514999985694885
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "9945ce9c-e4d9-50f6-a5cd-a023a5ea779e",
+      "appearance": "reinforced-medium",
+      "revision": 3,
+      "source": "assets/source/approved-cargo/part-7b3c579c1281fc95571e/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.reinforced.medium/revisions/r003",
+      "source_sha256": "86d58cae92f9eecd5ad7398fd1e7b32b382731d62a468748ab7acaa40198ab3f",
+      "thumbnail_sha256": "f9b24282447cfb920a4d518e88ebd8c2b5f46339be30ff4d2aeeb839884391ad",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_LID",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-7c2f338895b10331d945",
+        "label": "Reinforced Large",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.9704999923706055,
+            -0.8220000267028809,
+            0.0
+          ],
+          "max": [
+            0.9704999923706055,
+            0.5891000032424927,
+            1.7200000286102295
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-7c2f338895b10331d945/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-7c2f338895b10331d945/glb.glb",
+          "sha256": "662494d06bd0bb22b221f171e5c154808fdcf2e7198aea086b234755fc833188",
+          "designId": "cargo.reinforced.large",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.9704999923706055,
+              -0.8220000267028809,
+              0.0
+            ],
+            "max": [
+              0.9704999923706055,
+              0.5891000032424927,
+              1.7200000286102295
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "e7f12617-5b71-5741-bbee-61593143e7ab",
+      "appearance": "reinforced-large",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-7c2f338895b10331d945/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.reinforced.large/revisions/r002",
+      "source_sha256": "b9d28e31d1e952b5aa13f3b5dd12ab742c42b2dd8014e87f9ae5af2be55cad71",
+      "thumbnail_sha256": "524fd43b9691350b26785d161d721e3f90f61e19d2376280a818c16afca68f31",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_DOOR_-1",
+        "PIVOT_DOOR_1",
+        "SOCK_HAND_L_-0.32480000000000003",
+        "SOCK_HAND_R_-0.32480000000000003",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-988451da35483981368a",
+        "label": "Reinforced Oversized",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.9704999923706055,
+            -2.122000217437744,
+            0.0
+          ],
+          "max": [
+            0.9704999923706055,
+            1.8890999555587769,
+            1.9199999570846558
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-988451da35483981368a/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-988451da35483981368a/glb.glb",
+          "sha256": "f1120e09b195eae7c347c77c529c53dd2df448431c79cd8e50640e62f02e79ae",
+          "designId": "cargo.reinforced.oversized",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.9704999923706055,
+              -2.122000217437744,
+              0.0
+            ],
+            "max": [
+              0.9704999923706055,
+              1.8890999555587769,
+              1.9199999570846558
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "4d51ef4b-e6fb-51ec-9987-544a109c3da8",
+      "appearance": "reinforced-oversized",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-988451da35483981368a/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.reinforced.oversized/revisions/r002",
+      "source_sha256": "ad014ef3faab889b9582f9c883a04ca384acc1218d902e50c5db056d5fabaa12",
+      "thumbnail_sha256": "ad7e38f6bbb9110a85e897f78c02653796e1f59bc4e2900161fd5cd1b3c23cb6",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_DOOR_-1",
+        "PIVOT_DOOR_1",
+        "SOCK_HAND_L_-1.0528",
+        "SOCK_HAND_R_-1.0528",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-ba8af622916752a9337b",
+        "label": "Refrigerated Medium",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.4580000042915344,
+            -0.7324999570846558,
+            0.0
+          ],
+          "max": [
+            0.4580000042915344,
+            0.6000000238418579,
+            0.6800000071525574
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-ba8af622916752a9337b/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-ba8af622916752a9337b/glb.glb",
+          "sha256": "0119364ddd193ae12fa5288498d3dadbc34809d63ff0bf5d1f6062e82e94e886",
+          "designId": "cargo.refrigerated.medium",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.4580000042915344,
+              -0.7324999570846558,
+              0.0
+            ],
+            "max": [
+              0.4580000042915344,
+              0.6000000238418579,
+              0.6800000071525574
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "ef6003b5-cb11-5c8c-bd29-a42e0ea0b0f1",
+      "appearance": "refrigerated-medium",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-ba8af622916752a9337b/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.refrigerated.medium/revisions/r002",
+      "source_sha256": "04c8189fd16c30fd40b11545a528d7482a602e95bf849d3d604bf454c52dcd9b",
+      "thumbnail_sha256": "69199f4c2f128c1f97831b39e8bbd71922181bc1c2f7071ac9a0de44c12870ff",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_END_HATCH",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_POWER",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-a35ecc5e892707a10931",
+        "label": "Refrigerated Large",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.6980000138282776,
+            -1.0325000286102295,
+            0.0
+          ],
+          "max": [
+            0.6980000138282776,
+            0.8999999761581421,
+            1.159999966621399
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-a35ecc5e892707a10931/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-a35ecc5e892707a10931/glb.glb",
+          "sha256": "1abde7fc69cb70837bcbfa31a3c92e76020bc2d545739ddf10ea88455c37afe6",
+          "designId": "cargo.refrigerated.large",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.6980000138282776,
+              -1.0325000286102295,
+              0.0
+            ],
+            "max": [
+              0.6980000138282776,
+              0.8999999761581421,
+              1.159999966621399
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "85b4624e-4325-55d1-aa58-e3363de17877",
+      "appearance": "refrigerated-large",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-a35ecc5e892707a10931/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.refrigerated.large/revisions/r002",
+      "source_sha256": "cfeef967b116f920956d21f9aae6d302e0a7c17da06800b357addd30556da10b",
+      "thumbnail_sha256": "d69876909b65589f6edb9f7d4bd7b0c019de077507edc4229b212da34b3c5e59",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_END_HATCH",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_POWER",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-3e4990bfd3cff3c322a6",
+        "label": "Vacuum Medium",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.43050000071525574,
+            -0.7639999985694885,
+            0.0
+          ],
+          "max": [
+            0.43050000071525574,
+            0.6000000238418579,
+            0.6800000071525574
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-3e4990bfd3cff3c322a6/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-3e4990bfd3cff3c322a6/glb.glb",
+          "sha256": "c8fc1355219f88600dd3391a2b805ae25100d4bdf08f2f09b3b4fdda4949bb2f",
+          "designId": "cargo.vacuum.medium",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.43050000071525574,
+              -0.7639999985694885,
+              0.0
+            ],
+            "max": [
+              0.43050000071525574,
+              0.6000000238418579,
+              0.6800000071525574
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "97b25cae-6e8d-512f-886d-1c838f3c6c58",
+      "appearance": "vacuum-medium",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-3e4990bfd3cff3c322a6/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.vacuum.medium/revisions/r002",
+      "source_sha256": "1d36122e65102d47c67ff42c132c8cafc6c0f43a5fa1738f12c895993bf396ff",
+      "thumbnail_sha256": "d51e58d364315af8991deb79ce45a158af7476cc218d7520bc678cc15c1b1285",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_END_HATCH",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-78c27f9eba15730f6e16",
+        "label": "Vacuum Large",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.6704999804496765,
+            -1.063999891281128,
+            0.0
+          ],
+          "max": [
+            0.6704999804496765,
+            0.8999999761581421,
+            1.159999966621399
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-78c27f9eba15730f6e16/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-78c27f9eba15730f6e16/glb.glb",
+          "sha256": "978718994a5323bb1b794065029bf2f9f6b50a9a50534bc8502a7acf3e85a4c3",
+          "designId": "cargo.vacuum.large",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.6704999804496765,
+              -1.063999891281128,
+              0.0
+            ],
+            "max": [
+              0.6704999804496765,
+              0.8999999761581421,
+              1.159999966621399
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "9e4fdef6-42a8-50bd-a2b5-1e8a17c8cb3a",
+      "appearance": "vacuum-large",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-78c27f9eba15730f6e16/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.vacuum.large/revisions/r002",
+      "source_sha256": "201c07f9749d5423283c1e77b28c340d3e1c5ac1082745451509dc81126e1c6d",
+      "thumbnail_sha256": "a7f0f9779d0654e206e492b8aa45a14f307354866e5754e2717cc2eb04513c26",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_END_HATCH",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-b9296fc370e00c573edb",
+        "label": "Salvage Large",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.6704999804496765,
+            -1.0325000286102295,
+            0.0
+          ],
+          "max": [
+            0.6704999804496765,
+            0.8999999761581421,
+            1.2540000677108765
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-b9296fc370e00c573edb/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-b9296fc370e00c573edb/glb.glb",
+          "sha256": "bc35466888b7ef8fbd077aeb4656ee9591aba7c5bfffae40f258582ff3d443f1",
+          "designId": "cargo.salvage.large",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.6704999804496765,
+              -1.0325000286102295,
+              0.0
+            ],
+            "max": [
+              0.6704999804496765,
+              0.8999999761581421,
+              1.2540000677108765
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "e2e8a99a-cbc8-5c01-98a7-2aa0d609bb5e",
+      "appearance": "salvage-large",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-b9296fc370e00c573edb/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.salvage.large/revisions/r002",
+      "source_sha256": "0821e500f0d57f37f00a6373546c53b74726f4ef7b53714d0ec0a7274bfd4586",
+      "thumbnail_sha256": "76ba9858aa70044c818693c2e71a6cf216af994cd746df2dfc53e1cfd7059aab",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_END_HATCH",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_TOW",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-6bb94c053cd8cf77c986",
+        "label": "Salvage Oversized",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.9704999923706055,
+            -2.0325000286102295,
+            0.0
+          ],
+          "max": [
+            0.9704999923706055,
+            1.9000000953674316,
+            1.8540000915527344
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-6bb94c053cd8cf77c986/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-6bb94c053cd8cf77c986/glb.glb",
+          "sha256": "034bc87366c86c39589d5a05754205c5c44b17164849572fe7c54b9c1fd90238",
+          "designId": "cargo.salvage.oversized",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.9704999923706055,
+              -2.0325000286102295,
+              0.0
+            ],
+            "max": [
+              0.9704999923706055,
+              1.9000000953674316,
+              1.8540000915527344
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "0b81f592-7753-5a45-8715-4b8e3d92619c",
+      "appearance": "salvage-oversized",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-6bb94c053cd8cf77c986/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.salvage.oversized/revisions/r002",
+      "source_sha256": "b9d69b0416626c54d6432ed8332f80e62ea3e6c89f9331dbd4a91c5e30bedd5a",
+      "thumbnail_sha256": "4843b505a8a0ddb58570e7e7448ea4f542ed3b4687dd21deb3f800ed9e3b8d8a",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_END_HATCH",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_TOW",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-91ea0f7d9a898641e10a",
+        "label": "Medical Small",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.3305000066757202,
+            -0.28049999475479126,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.20500001311302185,
+            0.3915000259876251
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-91ea0f7d9a898641e10a/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-91ea0f7d9a898641e10a/glb.glb",
+          "sha256": "98a665e309e5b136f7658b0a7588b15971f94f9d82af85075f50d8253eeb5998",
+          "designId": "cargo.medical.small",
+          "revision": 3,
+          "bounds": {
+            "min": [
+              -0.3305000066757202,
+              -0.28049999475479126,
+              0.0
+            ],
+            "max": [
+              0.3305000066757202,
+              0.20500001311302185,
+              0.3915000259876251
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "cdf9b1f7-18c1-5af8-bd71-98993649a7c6",
+      "appearance": "medical-small",
+      "revision": 3,
+      "source": "assets/source/approved-cargo/part-91ea0f7d9a898641e10a/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.medical.small/revisions/r003",
+      "source_sha256": "c5ec606f05e5593a0273aa105e3f7a8e00a34e0614402126526fd045a412b190",
+      "thumbnail_sha256": "29650169067b0febdf8179d5b6ba2f7866a29220c2c83672f08bf6f5556d05ad",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_LID",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-30f4da34f1916e0c5c3f",
+        "label": "Medical Medium",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.5304999947547913,
+            -0.4505000114440918,
+            0.0
+          ],
+          "max": [
+            0.5304999947547913,
+            0.34584999084472656,
+            0.6315000057220459
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-30f4da34f1916e0c5c3f/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-30f4da34f1916e0c5c3f/glb.glb",
+          "sha256": "e73ec71e8699877088c1ee182106e1738d737159f97a960650b2cdf7c032be5e",
+          "designId": "cargo.medical.medium",
+          "revision": 3,
+          "bounds": {
+            "min": [
+              -0.5304999947547913,
+              -0.4505000114440918,
+              0.0
+            ],
+            "max": [
+              0.5304999947547913,
+              0.34584999084472656,
+              0.6315000057220459
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "880548f2-030d-522d-a634-27dc13627286",
+      "appearance": "medical-medium",
+      "revision": 3,
+      "source": "assets/source/approved-cargo/part-30f4da34f1916e0c5c3f/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.medical.medium/revisions/r003",
+      "source_sha256": "be88f2fd2521b646334806f9c2f790e458b0a56f2c08431a9986369918800fb6",
+      "thumbnail_sha256": "01777b05252d150b891c312db689525df9ee6e7ffcf88f0417aa782991af2c73",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_LID",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-a4d1c1ae60720fcbe403",
+        "label": "High Value Small",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.3305000066757202,
+            -0.4104999899864197,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.24500000476837158,
+            0.4714999794960022
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-a4d1c1ae60720fcbe403/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-a4d1c1ae60720fcbe403/glb.glb",
+          "sha256": "91962c400f4cfd41907a0b8702f772d394e976b4f5f7cbc0a50b3759e4a03c89",
+          "designId": "cargo.high-value.small",
+          "revision": 3,
+          "bounds": {
+            "min": [
+              -0.3305000066757202,
+              -0.4104999899864197,
+              0.0
+            ],
+            "max": [
+              0.3305000066757202,
+              0.24500000476837158,
+              0.4714999794960022
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "dd842373-9e34-50ee-b49e-a1485e14594f",
+      "appearance": "high-value-small",
+      "revision": 3,
+      "source": "assets/source/approved-cargo/part-a4d1c1ae60720fcbe403/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.high-value.small/revisions/r003",
+      "source_sha256": "335f395e1ac5c92956e36c7602e2848adee92f2c2980f290b16f5db69df02649",
+      "thumbnail_sha256": "b9c0d6d2dca972edd1b952853c7eb6a333a0bf62c3165ac0b4bdd6df8fb578ac",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_LID",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-73d0f3a802c4cb9166c1",
+        "label": "High Value Medium",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.5304999947547913,
+            -0.640500009059906,
+            0.0
+          ],
+          "max": [
+            0.5304999947547913,
+            0.4458500146865845,
+            0.7914999723434448
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-73d0f3a802c4cb9166c1/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-73d0f3a802c4cb9166c1/glb.glb",
+          "sha256": "35a4471f701d9882797a53c43efa9ab1a46dce8fca2c0d45da640184517b92d0",
+          "designId": "cargo.high-value.medium",
+          "revision": 3,
+          "bounds": {
+            "min": [
+              -0.5304999947547913,
+              -0.640500009059906,
+              0.0
+            ],
+            "max": [
+              0.5304999947547913,
+              0.4458500146865845,
+              0.7914999723434448
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "4057cd98-a24f-531a-b1d7-5bc2e1bb8795",
+      "appearance": "high-value-medium",
+      "revision": 3,
+      "source": "assets/source/approved-cargo/part-73d0f3a802c4cb9166c1/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.high-value.medium/revisions/r003",
+      "source_sha256": "1006809489076ccec8ac8ce8bea251ae52e2dba1e05c3c3c8314bfb4e4ce8181",
+      "thumbnail_sha256": "2f8136ac39bf4b1039f7c7d19201d0e128b0e3e2122275dd72e8bb971567a495",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_LID",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-3b7ca37c50e723c351a6",
+        "label": "Fluid Medium",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.43050000071525574,
+            -0.5800000429153442,
+            0.0
+          ],
+          "max": [
+            0.43050000071525574,
+            0.5800000429153442,
+            0.6800000071525574
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-3b7ca37c50e723c351a6/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-3b7ca37c50e723c351a6/glb.glb",
+          "sha256": "93def67d6bdde3e7c7062995a8086063b26eb9c42a44c74b6692c2bb9bb97b35",
+          "designId": "cargo.fluid.medium",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.43050000071525574,
+              -0.5800000429153442,
+              0.0
+            ],
+            "max": [
+              0.43050000071525574,
+              0.5800000429153442,
+              0.6800000071525574
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "04e1e6e3-5352-5d33-9fb7-cc2c285b4414",
+      "appearance": "fluid-medium",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-3b7ca37c50e723c351a6/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid.medium/revisions/r002",
+      "source_sha256": "924d5c93e48e74e798ee86d3e9f32db12e921a0177deb0d2d4fb11b943417db7",
+      "thumbnail_sha256": "eed1a65bc789ede08c0f04df334126eab7fa31fe7dd7404585edc38a5ad1a4d9",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "SOCK_HAND_L_-0.39440000000000003",
+        "SOCK_HAND_R_-0.39440000000000003",
+        "SOCK_FLUID_OUT",
+        "SOCK_FLUID_IN",
+        "SOCK_VENT",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-e925d94b0d7fa47fbedb",
+        "label": "Fluid Large",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.6704999804496765,
+            -0.8799999952316284,
+            0.0
+          ],
+          "max": [
+            0.6704999804496765,
+            0.8799999952316284,
+            1.159999966621399
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-e925d94b0d7fa47fbedb/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-e925d94b0d7fa47fbedb/glb.glb",
+          "sha256": "3a27abd17b594b46f58c68d5b983a35974dcbb088090785677b7589e545e1f40",
+          "designId": "cargo.fluid.large",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.6704999804496765,
+              -0.8799999952316284,
+              0.0
+            ],
+            "max": [
+              0.6704999804496765,
+              0.8799999952316284,
+              1.159999966621399
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "7826ffa0-208e-5eb8-9839-b814d22df897",
+      "appearance": "fluid-large",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-e925d94b0d7fa47fbedb/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid.large/revisions/r002",
+      "source_sha256": "eb31d1298d4e6cf77fef6b1f0a081cf2b3b04315d660ffcc929444f2c5253c98",
+      "thumbnail_sha256": "9837640358da86b66346b09477a36ed2b289f641dbd32e7b80f65ea36b61c562",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "SOCK_HAND_L_-0.5984",
+        "SOCK_HAND_R_-0.5984",
+        "SOCK_FLUID_OUT",
+        "SOCK_FLUID_IN",
+        "SOCK_VENT",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-fbd7255612b311847eb2",
+        "label": "Cryo",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.3400000035762787,
+            -0.3400000035762787,
+            0.0
+          ],
+          "max": [
+            0.3400000035762787,
+            0.3400000035762787,
+            1.3600000143051147
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-fbd7255612b311847eb2/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-fbd7255612b311847eb2/glb.glb",
+          "sha256": "c63384726bd7b7891283bc72fbfab66de94e803618bd6d0a9ef9b8d093d51c66",
+          "designId": "cargo.fluid-cryo.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.3400000035762787,
+              -0.3400000035762787,
+              0.0
+            ],
+            "max": [
+              0.3400000035762787,
+              0.3400000035762787,
+              1.3600000143051147
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "d55ec51d-01cf-5c13-b432-03c24774e940",
+      "appearance": "cryo",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-fbd7255612b311847eb2/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-cryo.medium/revisions/r001/appearances/cryo",
+      "source_sha256": "94cba39bd64adc59c743198c4173bcc3b1ab6d8171754539cadb02ce98653684",
+      "thumbnail_sha256": "61a548578836111b505c72e9753379685b664b97835f8fd4003d0efeaed476c5",
+      "sockets": [
+        "SOCK_RESTRAINT_0",
+        "SOCK_RESTRAINT_1",
+        "SOCK_RESTRAINT_2",
+        "SOCK_RESTRAINT_3",
+        "SOCK_FLUID_IN",
+        "SOCK_RELIEF_OUT"
+      ],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-81d226967abf2efefc20",
+        "label": "Fuel",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.2760000228881836,
+            -0.27399998903274536,
+            0.0
+          ],
+          "max": [
+            0.2760000228881836,
+            0.27399998903274536,
+            0.8639999628067017
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-81d226967abf2efefc20/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-81d226967abf2efefc20/glb.glb",
+          "sha256": "a2f9fca902c7df08f3e8bad348d09034df8f26d9c248d0d912558886aa2eecf6",
+          "designId": "cargo.fluid-fuel.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.2760000228881836,
+              -0.27399998903274536,
+              0.0
+            ],
+            "max": [
+              0.2760000228881836,
+              0.27399998903274536,
+              0.8639999628067017
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "828f8d8f-d2d4-55ed-bfc7-536b921aece2",
+      "appearance": "fuel",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-81d226967abf2efefc20/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-fuel.medium/revisions/r001/appearances/fuel",
+      "source_sha256": "cc5750b992d736e2a72c23bc07c02c3ac05d8dd3f79ecb2decd5cc10a6f03268",
+      "thumbnail_sha256": "b69006cc6a5e65ab1758a26cc9bea9466e73d1455368ed7c2260bc3be43313d8",
+      "sockets": [
+        "SOCK_FLUID_IN",
+        "SOCK_BOND",
+        "SOCK_RESTRAINT_-0.18",
+        "SOCK_RESTRAINT_0.18"
+      ],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-392d51c57ab75c82dc9c",
+        "label": "Chemical",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.27399998903274536,
+            -0.27399998903274536,
+            0.0
+          ],
+          "max": [
+            0.27399998903274536,
+            0.27399998903274536,
+            0.8639999628067017
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-392d51c57ab75c82dc9c/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-392d51c57ab75c82dc9c/glb.glb",
+          "sha256": "23d36657b742c2148682a6fd15e7e76e31434f997f1c7d51881b98fc0d579357",
+          "designId": "cargo.fluid-chemical.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.27399998903274536,
+              -0.27399998903274536,
+              0.0
+            ],
+            "max": [
+              0.27399998903274536,
+              0.27399998903274536,
+              0.8639999628067017
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "caf39d7e-ae06-5a23-a7ab-512243799f99",
+      "appearance": "chemical",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-392d51c57ab75c82dc9c/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-chemical.medium/revisions/r001/appearances/chemical",
+      "source_sha256": "e2b3a2acb6f62b5c9d397d0c09085a03c669c7a40021d8939a51978df602aa6a",
+      "thumbnail_sha256": "b293547522637e044cd22fc30f42ea77e7f3b9a515fb90680a3ecda6e42deb6a",
+      "sockets": [
+        "SOCK_FLUID_IN",
+        "SOCK_RESTRAINT_-0.18",
+        "SOCK_RESTRAINT_0.18"
+      ],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-9e3dbcbc867202b08b48",
+        "label": "Gas",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.4399999976158142,
+            -0.3400000035762787,
+            0.0
+          ],
+          "max": [
+            0.4399999976158142,
+            0.3400000035762787,
+            0.8999999761581421
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-9e3dbcbc867202b08b48/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-9e3dbcbc867202b08b48/glb.glb",
+          "sha256": "c3752988956571beaba2e3ee3e520c823bb040e5923a6c103191a33fc75eb484",
+          "designId": "cargo.fluid-gas.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.4399999976158142,
+              -0.3400000035762787,
+              0.0
+            ],
+            "max": [
+              0.4399999976158142,
+              0.3400000035762787,
+              0.8999999761581421
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "8626983a-889f-5b84-946c-591e4187ea03",
+      "appearance": "gas",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-9e3dbcbc867202b08b48/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-gas.medium/revisions/r001/appearances/gas",
+      "source_sha256": "60961860b0aebdd02ad1838ac58e125575bf0a92840381666200b12c37bb744e",
+      "thumbnail_sha256": "83ebb41066bccd1df77c46c51404e8b39d4fc50f3d4074e30942ba6a63639c8e",
+      "sockets": [
+        "SOCK_RESTRAINT_0",
+        "SOCK_RESTRAINT_1",
+        "SOCK_RESTRAINT_2",
+        "SOCK_RESTRAINT_3",
+        "SOCK_GAS_OUT"
+      ],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-66a83f73eef38512fd34",
+        "label": "Water",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.4399999976158142,
+            -0.3490000069141388,
+            0.0
+          ],
+          "max": [
+            0.4399999976158142,
+            0.3400000035762787,
+            0.9070000052452087
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-66a83f73eef38512fd34/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-66a83f73eef38512fd34/glb.glb",
+          "sha256": "5dcd32b998180c78bb842c5e68e7bdb24a23a0f97dbab95de1e4e4be4db7b8f5",
+          "designId": "cargo.fluid-water.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.4399999976158142,
+              -0.3490000069141388,
+              0.0
+            ],
+            "max": [
+              0.4399999976158142,
+              0.3400000035762787,
+              0.9070000052452087
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "0a84c04e-69bb-50e6-a2cb-c818f4134b19",
+      "appearance": "water",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-66a83f73eef38512fd34/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-water.medium/revisions/r001/appearances/water",
+      "source_sha256": "f3cc44cfca8cfc80e0bd360f2650bdab51dc960b838bed053da622af34fda16c",
+      "thumbnail_sha256": "d0efcf7e8e70ed75d31c6d2c0c112da9ac6c9d692775cf1298baa9a899feccba",
+      "sockets": [
+        "SOCK_RESTRAINT_0",
+        "SOCK_RESTRAINT_1",
+        "SOCK_RESTRAINT_2",
+        "SOCK_RESTRAINT_3",
+        "SOCK_FLUID_IN",
+        "SOCK_FLUID_OUT",
+        "SOCK_VENT"
+      ],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-bcd15c0ae99c611cd840",
+        "label": "Narrow Blue",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.12099999934434891,
+            -0.12399999797344208,
+            0.0
+          ],
+          "max": [
+            0.12099999934434891,
+            0.12700000405311584,
+            0.44200000166893005
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-bcd15c0ae99c611cd840/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-bcd15c0ae99c611cd840/glb.glb",
+          "sha256": "b7706350f40b5da148da8bf14cc3d5b11066bdabc930ceb879f4ae5e2990e5c7",
+          "designId": "cargo.standard.narrow",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.12099999934434891,
+              -0.12399999797344208,
+              0.0
+            ],
+            "max": [
+              0.12099999934434891,
+              0.12700000405311584,
+              0.44200000166893005
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "d91f3db4-d743-521b-8ae6-3a82764fc3f7",
+      "appearance": "narrow-blue",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-bcd15c0ae99c611cd840/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.standard.narrow/revisions/r001/appearances/narrow-blue",
+      "source_sha256": "644b85de43276691aec6247d1adf8271a67a89665164355aafcc6f55c4565f6c",
+      "thumbnail_sha256": "840c64b787d71a8e5cdbaec8e73dd91fa14c6500cc40f88cad9383c428766aca",
+      "sockets": [],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-ddbf6661871ea40b586b",
+        "label": "Tiny Magenta",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.09099999815225601,
+            -0.10799999535083771,
+            0.0
+          ],
+          "max": [
+            0.10099999606609344,
+            0.11100000143051147,
+            0.17100000381469727
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-ddbf6661871ea40b586b/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-ddbf6661871ea40b586b/glb.glb",
+          "sha256": "37765969cf2ac4d760dd189f718dc794ce923ecbeea0adac4a2914f2b3be6a2f",
+          "designId": "cargo.standard.tiny",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.09099999815225601,
+              -0.10799999535083771,
+              0.0
+            ],
+            "max": [
+              0.10099999606609344,
+              0.11100000143051147,
+              0.17100000381469727
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "136cd818-2f09-54e3-8bc3-6189bb6cb86c",
+      "appearance": "tiny-magenta",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-ddbf6661871ea40b586b/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.standard.tiny/revisions/r001/appearances/tiny-magenta",
+      "source_sha256": "7bd69b7162b53168a3bb1344393fa3d9c5d52baada96b1ded71000e3903c04fe",
+      "thumbnail_sha256": "debf190d3af09bd6958e7218b081486cc1680eb3dd29c4244fb01a384046b005",
+      "sockets": [],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-a0cc41ad3cc80d2c07a4",
+        "label": "Standard Oversized Pale",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.9704999923706055,
+            -2.0269999504089355,
+            0.0
+          ],
+          "max": [
+            0.9704999923706055,
+            1.8890999555587769,
+            1.9199999570846558
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-a0cc41ad3cc80d2c07a4/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-a0cc41ad3cc80d2c07a4/glb.glb",
+          "sha256": "ab75deb1463f719934339f6029fb1b4260d54e26719ced47d1ab9937ed81280d",
+          "designId": "cargo.standard.oversized",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.9704999923706055,
+              -2.0269999504089355,
+              0.0
+            ],
+            "max": [
+              0.9704999923706055,
+              1.8890999555587769,
+              1.9199999570846558
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "60101dc0-b44c-5e32-a98e-5ea8da3fd374",
+      "appearance": "standard-oversized-pale",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-a0cc41ad3cc80d2c07a4/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.standard.oversized/revisions/r002/appearances/standard-oversized-pale",
+      "source_sha256": "840ab4da8185351b01551915bf55b474a74447c463fa69b987fd3e4f07b6530f",
+      "thumbnail_sha256": "4183cff0379c72a7aa97d1710281e8fd0b621b4536cd09c6de3fe6c2ecc0402c",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_DOOR_-1",
+        "PIVOT_DOOR_1",
+        "SOCK_HAND_L_-1.0528",
+        "SOCK_HAND_R_-1.0528",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-e7e053b614f1a2ab5ef1",
+        "label": "Standard Oversized Amber",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.9704999923706055,
+            -2.0269999504089355,
+            0.0
+          ],
+          "max": [
+            0.9704999923706055,
+            1.8890999555587769,
+            1.9199999570846558
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-e7e053b614f1a2ab5ef1/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-e7e053b614f1a2ab5ef1/glb.glb",
+          "sha256": "11d154af0b54789610d2f1b4be5dce3331c2e89bbf7e8995c4a0ba40575a7674",
+          "designId": "cargo.standard.oversized",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.9704999923706055,
+              -2.0269999504089355,
+              0.0
+            ],
+            "max": [
+              0.9704999923706055,
+              1.8890999555587769,
+              1.9199999570846558
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "60101dc0-b44c-5e32-a98e-5ea8da3fd374",
+      "appearance": "standard-oversized-amber",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-e7e053b614f1a2ab5ef1/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.standard.oversized/revisions/r002/appearances/standard-oversized-amber",
+      "source_sha256": "e7f750df06e45a5c167aad3e7d46fe4cf3084b4e445ec9e8cee1203d38326c03",
+      "thumbnail_sha256": "c91856273edabbbff9555bf1df748552b695de121157f631787c9fbcdef1d32b",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_DOOR_-1",
+        "PIVOT_DOOR_1",
+        "SOCK_HAND_L_-1.0528",
+        "SOCK_HAND_R_-1.0528",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-41d3f8bf61743df8e351",
+        "label": "Standard Oversized Blue",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.9704999923706055,
+            -2.0269999504089355,
+            0.0
+          ],
+          "max": [
+            0.9704999923706055,
+            1.8890999555587769,
+            1.9199999570846558
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-41d3f8bf61743df8e351/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-41d3f8bf61743df8e351/glb.glb",
+          "sha256": "2850e09c7d07c04ac7ba2d0c2f5ac6c1932704e20928278810c6ecbbf51fa3c1",
+          "designId": "cargo.standard.oversized",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.9704999923706055,
+              -2.0269999504089355,
+              0.0
+            ],
+            "max": [
+              0.9704999923706055,
+              1.8890999555587769,
+              1.9199999570846558
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "60101dc0-b44c-5e32-a98e-5ea8da3fd374",
+      "appearance": "standard-oversized-blue",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-41d3f8bf61743df8e351/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.standard.oversized/revisions/r002/appearances/standard-oversized-blue",
+      "source_sha256": "90dbeedc283cde5080eed8665fb6cbadb228fe85de4b61501c0e5a0c1127872f",
+      "thumbnail_sha256": "d8fe96eef0b5155116a7e26cc15f9eed63a64af6882e900a911ee1c5502bf222",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_DOOR_-1",
+        "PIVOT_DOOR_1",
+        "SOCK_HAND_L_-1.0528",
+        "SOCK_HAND_R_-1.0528",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-f897d81e4c69384df03b",
+        "label": "Standard Oversized Red",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.9704999923706055,
+            -2.0269999504089355,
+            0.0
+          ],
+          "max": [
+            0.9704999923706055,
+            1.8890999555587769,
+            1.9199999570846558
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-f897d81e4c69384df03b/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-f897d81e4c69384df03b/glb.glb",
+          "sha256": "e601361679b0fe9deafe4caa0a863c53fceb9ce53840430a48106777789191df",
+          "designId": "cargo.standard.oversized",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.9704999923706055,
+              -2.0269999504089355,
+              0.0
+            ],
+            "max": [
+              0.9704999923706055,
+              1.8890999555587769,
+              1.9199999570846558
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "60101dc0-b44c-5e32-a98e-5ea8da3fd374",
+      "appearance": "standard-oversized-red",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-f897d81e4c69384df03b/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.standard.oversized/revisions/r002/appearances/standard-oversized-red",
+      "source_sha256": "ffec0d2526b8da8e3e0e06db1bd72e10a1242c24ed5d0e1c491d0bc338152a36",
+      "thumbnail_sha256": "cfe1dc142c4c08f7b44e0333364f5b87036b0ad94f697da81269702fe4ba98f3",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_DOOR_-1",
+        "PIVOT_DOOR_1",
+        "SOCK_HAND_L_-1.0528",
+        "SOCK_HAND_R_-1.0528",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-12743466dc1eeca3e482",
+        "label": "Reinforced Large Blue",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.9704999923706055,
+            -0.8220000267028809,
+            0.0
+          ],
+          "max": [
+            0.9704999923706055,
+            0.5891000032424927,
+            1.7200000286102295
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-12743466dc1eeca3e482/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-12743466dc1eeca3e482/glb.glb",
+          "sha256": "ae395110aef810c6c0119aa7c149f8055cd35112178fdec1ad98a18c581cde75",
+          "designId": "cargo.reinforced.large",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.9704999923706055,
+              -0.8220000267028809,
+              0.0
+            ],
+            "max": [
+              0.9704999923706055,
+              0.5891000032424927,
+              1.7200000286102295
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "e7f12617-5b71-5741-bbee-61593143e7ab",
+      "appearance": "reinforced-large-blue",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-12743466dc1eeca3e482/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.reinforced.large/revisions/r002/appearances/reinforced-large-blue",
+      "source_sha256": "c2113ef0d01e398ff145196f072f72e596b80ae7e1564b2711f6d89411395624",
+      "thumbnail_sha256": "cee49ea530d0066e9727707e817d4b8ea6d7e74f78cd174e89f2929030704d74",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_DOOR_-1",
+        "PIVOT_DOOR_1",
+        "SOCK_HAND_L_-0.32480000000000003",
+        "SOCK_HAND_R_-0.32480000000000003",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-6c94a694e1a91110e76f",
+        "label": "Reinforced Large Red",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.9704999923706055,
+            -0.8220000267028809,
+            0.0
+          ],
+          "max": [
+            0.9704999923706055,
+            0.5891000032424927,
+            1.7200000286102295
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-6c94a694e1a91110e76f/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-6c94a694e1a91110e76f/glb.glb",
+          "sha256": "5fb50d1445e011342f8ef5fe994f8f27c7e8bf01518b902e65b1a56111fd74df",
+          "designId": "cargo.reinforced.large",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.9704999923706055,
+              -0.8220000267028809,
+              0.0
+            ],
+            "max": [
+              0.9704999923706055,
+              0.5891000032424927,
+              1.7200000286102295
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "e7f12617-5b71-5741-bbee-61593143e7ab",
+      "appearance": "reinforced-large-red",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-6c94a694e1a91110e76f/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.reinforced.large/revisions/r002/appearances/reinforced-large-red",
+      "source_sha256": "c9bf2e394281da4708301b54696f8dfd34125078e5075379e1c860e509336eef",
+      "thumbnail_sha256": "42d0f99600644d92710d142d84463a31f52b803131148a0b83eacc8c7d472ed9",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_DOOR_-1",
+        "PIVOT_DOOR_1",
+        "SOCK_HAND_L_-0.32480000000000003",
+        "SOCK_HAND_R_-0.32480000000000003",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-a82fc07c0f2cf57ffef8",
+        "label": "Refrigerated Medium Green",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.4580000042915344,
+            -0.7324999570846558,
+            0.0
+          ],
+          "max": [
+            0.4580000042915344,
+            0.6000000238418579,
+            0.6800000071525574
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-a82fc07c0f2cf57ffef8/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-a82fc07c0f2cf57ffef8/glb.glb",
+          "sha256": "b9bced5b170f7035d0efc2fb50af90e4935c328e8aac2065978d9c034e330746",
+          "designId": "cargo.refrigerated.medium",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.4580000042915344,
+              -0.7324999570846558,
+              0.0
+            ],
+            "max": [
+              0.4580000042915344,
+              0.6000000238418579,
+              0.6800000071525574
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "ef6003b5-cb11-5c8c-bd29-a42e0ea0b0f1",
+      "appearance": "refrigerated-medium-green",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-a82fc07c0f2cf57ffef8/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.refrigerated.medium/revisions/r002/appearances/refrigerated-medium-green",
+      "source_sha256": "395ba9658d8aff10b8fac9f556ca4f3de33f1cfc68ffa2b89fab29a82e04dbc9",
+      "thumbnail_sha256": "80441edf6bf53cfd9bd525235c3fc700f239edb3c7403e2a3b126f54cf67745d",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_END_HATCH",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_POWER",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-be4057636f5003ee5fed",
+        "label": "Refrigerated Medium Pale",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.4580000042915344,
+            -0.7324999570846558,
+            0.0
+          ],
+          "max": [
+            0.4580000042915344,
+            0.6000000238418579,
+            0.6800000071525574
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-be4057636f5003ee5fed/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-be4057636f5003ee5fed/glb.glb",
+          "sha256": "a0b28cf785212fb719ea3eee2e388b516804299c84374c9f069be4ab3501174e",
+          "designId": "cargo.refrigerated.medium",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.4580000042915344,
+              -0.7324999570846558,
+              0.0
+            ],
+            "max": [
+              0.4580000042915344,
+              0.6000000238418579,
+              0.6800000071525574
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "ef6003b5-cb11-5c8c-bd29-a42e0ea0b0f1",
+      "appearance": "refrigerated-medium-pale",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-be4057636f5003ee5fed/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.refrigerated.medium/revisions/r002/appearances/refrigerated-medium-pale",
+      "source_sha256": "3a2f5f8a31628d28a7725d1a76675849e8bf68a279df414ccc30a8d8b9e25c0f",
+      "thumbnail_sha256": "3edb4161ef0a1169baf575fe77da9674fe91f4c5d228db021b9ef42d9b7d747b",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_END_HATCH",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_POWER",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-45eba046115a3166e3e6",
+        "label": "Refrigerated Medium Red",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.4580000042915344,
+            -0.7324999570846558,
+            0.0
+          ],
+          "max": [
+            0.4580000042915344,
+            0.6000000238418579,
+            0.6800000071525574
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-45eba046115a3166e3e6/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-45eba046115a3166e3e6/glb.glb",
+          "sha256": "6729889a462e3a276c9975ade4c80769c2aa3fab43b76b0f8d2f0f5545453ef0",
+          "designId": "cargo.refrigerated.medium",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.4580000042915344,
+              -0.7324999570846558,
+              0.0
+            ],
+            "max": [
+              0.4580000042915344,
+              0.6000000238418579,
+              0.6800000071525574
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "ef6003b5-cb11-5c8c-bd29-a42e0ea0b0f1",
+      "appearance": "refrigerated-medium-red",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-45eba046115a3166e3e6/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.refrigerated.medium/revisions/r002/appearances/refrigerated-medium-red",
+      "source_sha256": "7731f6d6a7f2690b7b7c4163d60c92ed59d0426177a3d2272ebe48c2f35d59c5",
+      "thumbnail_sha256": "beadeacb1e2526d051df2f24501789dfdcca6a91a010d03926fdce0fce38f3d4",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_END_HATCH",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_POWER",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-648c1308e0a5ccd4c749",
+        "label": "Vacuum Medium Pale",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.43050000071525574,
+            -0.7639999985694885,
+            0.0
+          ],
+          "max": [
+            0.43050000071525574,
+            0.6000000238418579,
+            0.6800000071525574
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-648c1308e0a5ccd4c749/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-648c1308e0a5ccd4c749/glb.glb",
+          "sha256": "afe864ebafda474e0ffedeb3c58e3aba426661ef467fcf7c779cf47a911f0195",
+          "designId": "cargo.vacuum.medium",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.43050000071525574,
+              -0.7639999985694885,
+              0.0
+            ],
+            "max": [
+              0.43050000071525574,
+              0.6000000238418579,
+              0.6800000071525574
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "97b25cae-6e8d-512f-886d-1c838f3c6c58",
+      "appearance": "vacuum-medium-pale",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-648c1308e0a5ccd4c749/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.vacuum.medium/revisions/r002/appearances/vacuum-medium-pale",
+      "source_sha256": "6ff9f2bdab965993de352d1247f4da9b0b9577d778817ccaae7283349d9a4eb2",
+      "thumbnail_sha256": "6d14ccd2fff56c4e11eabab9f97028156537c01f5fa39b6e42db3e30269d3a9d",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_END_HATCH",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-f54c717c38a363f7e658",
+        "label": "Vacuum Medium Dark",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.43050000071525574,
+            -0.7639999985694885,
+            0.0
+          ],
+          "max": [
+            0.43050000071525574,
+            0.6000000238418579,
+            0.6800000071525574
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-f54c717c38a363f7e658/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-f54c717c38a363f7e658/glb.glb",
+          "sha256": "9a3450840436ff9f70c3844973e41cf9924dbd175b5f59b5a8cb780b963a1867",
+          "designId": "cargo.vacuum.medium",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.43050000071525574,
+              -0.7639999985694885,
+              0.0
+            ],
+            "max": [
+              0.43050000071525574,
+              0.6000000238418579,
+              0.6800000071525574
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "97b25cae-6e8d-512f-886d-1c838f3c6c58",
+      "appearance": "vacuum-medium-dark",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-f54c717c38a363f7e658/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.vacuum.medium/revisions/r002/appearances/vacuum-medium-dark",
+      "source_sha256": "41936b6d9f7b7f34729a36efb9ecf984bd49ff1cfa5e5c4cc232c475f892fcf8",
+      "thumbnail_sha256": "7913382f198ec2554330bc7301464d70379622d8f7dc590d4984ebab09cc4e14",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_END_HATCH",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-c1ebb67dff29784e301a",
+        "label": "Vacuum Medium Amber",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.43050000071525574,
+            -0.7639999985694885,
+            0.0
+          ],
+          "max": [
+            0.43050000071525574,
+            0.6000000238418579,
+            0.6800000071525574
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-c1ebb67dff29784e301a/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-c1ebb67dff29784e301a/glb.glb",
+          "sha256": "0ae108878ae42ad84468a0552acd2c5569f8932f4230e7154dae8b2aa8a0b9bc",
+          "designId": "cargo.vacuum.medium",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.43050000071525574,
+              -0.7639999985694885,
+              0.0
+            ],
+            "max": [
+              0.43050000071525574,
+              0.6000000238418579,
+              0.6800000071525574
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "97b25cae-6e8d-512f-886d-1c838f3c6c58",
+      "appearance": "vacuum-medium-amber",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-c1ebb67dff29784e301a/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.vacuum.medium/revisions/r002/appearances/vacuum-medium-amber",
+      "source_sha256": "c357c36af280c0142520c1593308f4229b07c8ac473889cf0ddada1f5c46f7cc",
+      "thumbnail_sha256": "49cb0e8fe6e90ba088298fc40d14482470636a718f6b0ffe937a4b7ade48cfbf",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_END_HATCH",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-a09eeadccb5c9982cac6",
+        "label": "Salvage Large Red",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.6704999804496765,
+            -1.0325000286102295,
+            0.0
+          ],
+          "max": [
+            0.6704999804496765,
+            0.8999999761581421,
+            1.2540000677108765
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-a09eeadccb5c9982cac6/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-a09eeadccb5c9982cac6/glb.glb",
+          "sha256": "5d8c3aab6482782cbfbac5cf0cc6f5d11fd2946e89613f5afc2d7d37e6c98bf1",
+          "designId": "cargo.salvage.large",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.6704999804496765,
+              -1.0325000286102295,
+              0.0
+            ],
+            "max": [
+              0.6704999804496765,
+              0.8999999761581421,
+              1.2540000677108765
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "e2e8a99a-cbc8-5c01-98a7-2aa0d609bb5e",
+      "appearance": "salvage-large-red",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-a09eeadccb5c9982cac6/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.salvage.large/revisions/r002/appearances/salvage-large-red",
+      "source_sha256": "2d0c06599b8bb7678cf594692b0e15ba4cf1e92a3e37c29cdc326736d9661a2a",
+      "thumbnail_sha256": "bed3212badedabd68d2f499bb5a07a28f9609fd681425e48d5934e2e955fc9e1",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_END_HATCH",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_TOW",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-b2141c33d215edfc9f69",
+        "label": "Salvage Large Pale",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.6704999804496765,
+            -1.0325000286102295,
+            0.0
+          ],
+          "max": [
+            0.6704999804496765,
+            0.8999999761581421,
+            1.2540000677108765
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-b2141c33d215edfc9f69/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-b2141c33d215edfc9f69/glb.glb",
+          "sha256": "df714234a94dd90e898e2568289f8d254f79d1eb8384cadc66f0c494a10c6891",
+          "designId": "cargo.salvage.large",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.6704999804496765,
+              -1.0325000286102295,
+              0.0
+            ],
+            "max": [
+              0.6704999804496765,
+              0.8999999761581421,
+              1.2540000677108765
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "e2e8a99a-cbc8-5c01-98a7-2aa0d609bb5e",
+      "appearance": "salvage-large-pale",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-b2141c33d215edfc9f69/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.salvage.large/revisions/r002/appearances/salvage-large-pale",
+      "source_sha256": "7fd62afd52a026733b027c453dc0274ebf5b38a033ba7517554ff67670bc594c",
+      "thumbnail_sha256": "49b11082704572375d576793b7661950a2430d076b2fa5d94896bbd09e4151a0",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_END_HATCH",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_TOW",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-5ec11cd63618cfba9ee6",
+        "label": "Salvage Large Amber",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.6704999804496765,
+            -1.0325000286102295,
+            0.0
+          ],
+          "max": [
+            0.6704999804496765,
+            0.8999999761581421,
+            1.2540000677108765
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-5ec11cd63618cfba9ee6/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-5ec11cd63618cfba9ee6/glb.glb",
+          "sha256": "ea53a010cc578989dd6f6e7a274cc3a928116eaa9f842ff706770f52fb92f090",
+          "designId": "cargo.salvage.large",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.6704999804496765,
+              -1.0325000286102295,
+              0.0
+            ],
+            "max": [
+              0.6704999804496765,
+              0.8999999761581421,
+              1.2540000677108765
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "e2e8a99a-cbc8-5c01-98a7-2aa0d609bb5e",
+      "appearance": "salvage-large-amber",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-5ec11cd63618cfba9ee6/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.salvage.large/revisions/r002/appearances/salvage-large-amber",
+      "source_sha256": "736468d4b20605855a6a0c478188dc07b7f01bca4b63bfaddb87d7508ce5dbaa",
+      "thumbnail_sha256": "adc86bb4750513866760656fb85a0365fc2042d5fc16a4db42b1a13838488d20",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_END_HATCH",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_TOW",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-0c13b0afa67118c11465",
+        "label": "Medical Small Red",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.3305000066757202,
+            -0.28049999475479126,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.20500001311302185,
+            0.3915000259876251
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-0c13b0afa67118c11465/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-0c13b0afa67118c11465/glb.glb",
+          "sha256": "30adaac760feaf192873f432b87ffe7655565947d35e0858d257a8fbe537dbc7",
+          "designId": "cargo.medical.small",
+          "revision": 3,
+          "bounds": {
+            "min": [
+              -0.3305000066757202,
+              -0.28049999475479126,
+              0.0
+            ],
+            "max": [
+              0.3305000066757202,
+              0.20500001311302185,
+              0.3915000259876251
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "cdf9b1f7-18c1-5af8-bd71-98993649a7c6",
+      "appearance": "medical-small-red",
+      "revision": 3,
+      "source": "assets/source/approved-cargo/part-0c13b0afa67118c11465/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.medical.small/revisions/r003/appearances/medical-small-red",
+      "source_sha256": "21d0d461a43cef646d32457c0ac0bb4a37114b4dceda957fcf91b0bd7ff4c3a0",
+      "thumbnail_sha256": "a2b5eb4dc1088b37a801ef9c165900101fdf1b77706e21c070a9a042fb191f4f",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_LID",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-75a256627549b94938af",
+        "label": "Medical Small Green",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.3305000066757202,
+            -0.28049999475479126,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.20500001311302185,
+            0.3915000259876251
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-75a256627549b94938af/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-75a256627549b94938af/glb.glb",
+          "sha256": "313c58343a48b364378fc40fa89f87db0f012ab194ee9b24f19949290a4a8bc1",
+          "designId": "cargo.medical.small",
+          "revision": 3,
+          "bounds": {
+            "min": [
+              -0.3305000066757202,
+              -0.28049999475479126,
+              0.0
+            ],
+            "max": [
+              0.3305000066757202,
+              0.20500001311302185,
+              0.3915000259876251
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "cdf9b1f7-18c1-5af8-bd71-98993649a7c6",
+      "appearance": "medical-small-green",
+      "revision": 3,
+      "source": "assets/source/approved-cargo/part-75a256627549b94938af/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.medical.small/revisions/r003/appearances/medical-small-green",
+      "source_sha256": "70819206938754c152370f8c75597b33eb4fc3c7aeeced9716a892f2fb9e69a2",
+      "thumbnail_sha256": "7e7520dbe85efebb72a4782bbeba2a2a4478154ce56cd558227b98430638e408",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_LID",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-70124a17eeed22f9fdf8",
+        "label": "Medical Small Blue",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.3305000066757202,
+            -0.28049999475479126,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.20500001311302185,
+            0.3915000259876251
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-70124a17eeed22f9fdf8/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-70124a17eeed22f9fdf8/glb.glb",
+          "sha256": "597dd4786249d9c853901d07791e9525c6fc8bc7106b57573a2f4b6582411211",
+          "designId": "cargo.medical.small",
+          "revision": 3,
+          "bounds": {
+            "min": [
+              -0.3305000066757202,
+              -0.28049999475479126,
+              0.0
+            ],
+            "max": [
+              0.3305000066757202,
+              0.20500001311302185,
+              0.3915000259876251
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "cdf9b1f7-18c1-5af8-bd71-98993649a7c6",
+      "appearance": "medical-small-blue",
+      "revision": 3,
+      "source": "assets/source/approved-cargo/part-70124a17eeed22f9fdf8/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.medical.small/revisions/r003/appearances/medical-small-blue",
+      "source_sha256": "f45319a1c9e4752f27551a7425b00b30066cae245e3669c029c6752253c812f4",
+      "thumbnail_sha256": "8308eb97b08250cabbcc6cb625f429192fbc1cfcee1e9ff0085d98253f336323",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_LID",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-41d39cecfe513b1a0885",
+        "label": "High Value Small Amber",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.3305000066757202,
+            -0.4104999899864197,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.24500000476837158,
+            0.4714999794960022
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-41d39cecfe513b1a0885/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-41d39cecfe513b1a0885/glb.glb",
+          "sha256": "153c745e10390599a7bbd372bca850e466a3524bc4b0056083bc487e22fcced9",
+          "designId": "cargo.high-value.small",
+          "revision": 3,
+          "bounds": {
+            "min": [
+              -0.3305000066757202,
+              -0.4104999899864197,
+              0.0
+            ],
+            "max": [
+              0.3305000066757202,
+              0.24500000476837158,
+              0.4714999794960022
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "dd842373-9e34-50ee-b49e-a1485e14594f",
+      "appearance": "high-value-small-amber",
+      "revision": 3,
+      "source": "assets/source/approved-cargo/part-41d39cecfe513b1a0885/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.high-value.small/revisions/r003/appearances/high-value-small-amber",
+      "source_sha256": "9e5a2fcd724a40efa9f4fea6007a0fd02cbe27f7324c88feea818d288da2fe15",
+      "thumbnail_sha256": "e9ae6fd37b392fd108b7a11708495a15fc6c0fccab94fdc41b24bd7f6f9d0590",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_LID",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-47640f88de2e1065b623",
+        "label": "High Value Small Red",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.3305000066757202,
+            -0.4104999899864197,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.24500000476837158,
+            0.4714999794960022
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-47640f88de2e1065b623/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-47640f88de2e1065b623/glb.glb",
+          "sha256": "bd671de55b8c0b1e97012cbd53996388cef0b5d49a522896f3613c5c2ab7a879",
+          "designId": "cargo.high-value.small",
+          "revision": 3,
+          "bounds": {
+            "min": [
+              -0.3305000066757202,
+              -0.4104999899864197,
+              0.0
+            ],
+            "max": [
+              0.3305000066757202,
+              0.24500000476837158,
+              0.4714999794960022
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "dd842373-9e34-50ee-b49e-a1485e14594f",
+      "appearance": "high-value-small-red",
+      "revision": 3,
+      "source": "assets/source/approved-cargo/part-47640f88de2e1065b623/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.high-value.small/revisions/r003/appearances/high-value-small-red",
+      "source_sha256": "c33a19cd4e85027496a8dc9a7b794f4a3410335700471ccdf67dd71645b11c7f",
+      "thumbnail_sha256": "013155a8e522a683c5f9ddad5a07a1596961c86cbe21b49ffd066d3344d5f6f6",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_LID",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-0fbeb32a435ded59a627",
+        "label": "High Value Small Blue",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.3305000066757202,
+            -0.4104999899864197,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.24500000476837158,
+            0.4714999794960022
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-0fbeb32a435ded59a627/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-0fbeb32a435ded59a627/glb.glb",
+          "sha256": "8fe6602f055114b8c30c36672c9e1e7807b3aec96f2d694b98b7cedc62ad6547",
+          "designId": "cargo.high-value.small",
+          "revision": 3,
+          "bounds": {
+            "min": [
+              -0.3305000066757202,
+              -0.4104999899864197,
+              0.0
+            ],
+            "max": [
+              0.3305000066757202,
+              0.24500000476837158,
+              0.4714999794960022
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "dd842373-9e34-50ee-b49e-a1485e14594f",
+      "appearance": "high-value-small-blue",
+      "revision": 3,
+      "source": "assets/source/approved-cargo/part-0fbeb32a435ded59a627/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.high-value.small/revisions/r003/appearances/high-value-small-blue",
+      "source_sha256": "655c926bdc20bb57ac920f1a43b6fe9101c3fc6c94df8a36a4f5de326656b8f5",
+      "thumbnail_sha256": "92bd5a7e874aa0fd404385d02cf71df60b8841c6d1246574a2f59988ea34d869",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_LID",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-b447c4118a56a63180a8",
+        "label": "Fluid Medium Covered",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.43050000071525574,
+            -0.5800000429153442,
+            0.0
+          ],
+          "max": [
+            0.43050000071525574,
+            0.5800000429153442,
+            0.6800000071525574
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-b447c4118a56a63180a8/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-b447c4118a56a63180a8/glb.glb",
+          "sha256": "9491b1f773ae848b2c5d3f434ae4da4d56f2a627bc739350070493e8a5e91646",
+          "designId": "cargo.fluid.medium",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.43050000071525574,
+              -0.5800000429153442,
+              0.0
+            ],
+            "max": [
+              0.43050000071525574,
+              0.5800000429153442,
+              0.6800000071525574
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "04e1e6e3-5352-5d33-9fb7-cc2c285b4414",
+      "appearance": "fluid-medium-covered",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-b447c4118a56a63180a8/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid.medium/revisions/r002/appearances/fluid-medium-covered",
+      "source_sha256": "02b2f1b2e527ab261de82a4716c23a7aad283c6aacb33e5e279c0dc52e21bfda",
+      "thumbnail_sha256": "298f4cac9129bee0bfdf80e5910b3d738d208f8d634383814e76dba41ffc2aeb",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "SOCK_HAND_L_-0.39440000000000003",
+        "SOCK_HAND_R_-0.39440000000000003",
+        "SOCK_FLUID_OUT",
+        "SOCK_FLUID_IN",
+        "SOCK_VENT",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-e9c7d5963786d1fec3e3",
+        "label": "Fluid Medium Amber",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.43050000071525574,
+            -0.5800000429153442,
+            0.0
+          ],
+          "max": [
+            0.43050000071525574,
+            0.5800000429153442,
+            0.6800000071525574
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-e9c7d5963786d1fec3e3/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-e9c7d5963786d1fec3e3/glb.glb",
+          "sha256": "87c6c3b90dc447e6fd0bf18d6fc346bd6f15a334e80100364253bd97f5cbdf14",
+          "designId": "cargo.fluid.medium",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.43050000071525574,
+              -0.5800000429153442,
+              0.0
+            ],
+            "max": [
+              0.43050000071525574,
+              0.5800000429153442,
+              0.6800000071525574
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "04e1e6e3-5352-5d33-9fb7-cc2c285b4414",
+      "appearance": "fluid-medium-amber",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-e9c7d5963786d1fec3e3/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid.medium/revisions/r002/appearances/fluid-medium-amber",
+      "source_sha256": "90f8a4fb2165dc1a44f274865ac22ab167ee58179a711acaa90fb8bc1fd69a2a",
+      "thumbnail_sha256": "ee91510832ac8169c603da7a7f5b8b08deb273f1999e79a1f566462c684ebe28",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "SOCK_HAND_L_-0.39440000000000003",
+        "SOCK_HAND_R_-0.39440000000000003",
+        "SOCK_FLUID_OUT",
+        "SOCK_FLUID_IN",
+        "SOCK_VENT",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-d0db8fa035dfee89aab0",
+        "label": "Fluid Medium Glass Gauge",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.4490000009536743,
+            -0.5800000429153442,
+            0.0
+          ],
+          "max": [
+            0.4490000009536743,
+            0.5800000429153442,
+            0.6800000071525574
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-d0db8fa035dfee89aab0/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-d0db8fa035dfee89aab0/glb.glb",
+          "sha256": "186d101731c12f314cd7f5fbc324ba59519272fea1cd74a2073a7133c817f00b",
+          "designId": "cargo.fluid.medium",
+          "revision": 2,
+          "bounds": {
+            "min": [
+              -0.4490000009536743,
+              -0.5800000429153442,
+              0.0
+            ],
+            "max": [
+              0.4490000009536743,
+              0.5800000429153442,
+              0.6800000071525574
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "04e1e6e3-5352-5d33-9fb7-cc2c285b4414",
+      "appearance": "fluid-medium-glass-gauge",
+      "revision": 2,
+      "source": "assets/source/approved-cargo/part-d0db8fa035dfee89aab0/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid.medium/revisions/r002/appearances/fluid-medium-glass-gauge",
+      "source_sha256": "21f63f462fba82223ea03e3c8374f8511b742fce957a7d7cadfd49c5404f5e1a",
+      "thumbnail_sha256": "da61929f877cb93ebf940b886f61b61852232631ac11b26ca10e79b36ebfcc19",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "SOCK_HAND_L_-0.39440000000000003",
+        "SOCK_HAND_R_-0.39440000000000003",
+        "SOCK_FLUID_OUT",
+        "SOCK_FLUID_IN",
+        "SOCK_VENT",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-5382f8dbbeb54e663d33",
+        "label": "Standard Small Red",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.3305000066757202,
+            -0.28049999475479126,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.20500001311302185,
+            0.5114999413490295
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-5382f8dbbeb54e663d33/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-5382f8dbbeb54e663d33/glb.glb",
+          "sha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+          "designId": "cargo.standard.small",
+          "revision": 3,
+          "bounds": {
+            "min": [
+              -0.3305000066757202,
+              -0.28049999475479126,
+              0.0
+            ],
+            "max": [
+              0.3305000066757202,
+              0.20500001311302185,
+              0.5114999413490295
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [
+        {
+          "id": "room-storage-container-2.15-1",
+          "assetId": "part-5382f8dbbeb54e663d33",
+          "position": [
+            -3.3125,
+            2.0625,
+            0.1875
+          ],
+          "rotation": 1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "room-storage-container-3.5-1",
+          "assetId": "part-5382f8dbbeb54e663d33",
+          "position": [
+            -3.3125,
+            3.4375,
+            0.1875
+          ],
+          "rotation": 1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        }
+      ],
+      "canonical_uuid": "6bec75f4-4bed-54f6-af19-e5143fd4d668",
+      "appearance": "standard-small-red",
+      "revision": 3,
+      "source": "assets/source/approved-cargo/part-5382f8dbbeb54e663d33/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.standard.small/revisions/r003/appearances/standard-small-red",
+      "source_sha256": "7c8541b2de044bebcc6206e56594be0f0ea8dae03944e4bebff5843862c0f1ce",
+      "thumbnail_sha256": "958734c31d34925c5a2d46011dc1a91888b3121f8e2c3fb0fdbf332845b0e2a6",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_LID",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-0e982ae6b34746506f67",
+        "label": "Standard Medium Blue",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.5304999947547913,
+            -0.4505000114440918,
+            0.0
+          ],
+          "max": [
+            0.5304999947547913,
+            0.34584999084472656,
+            0.9514999985694885
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-0e982ae6b34746506f67/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-0e982ae6b34746506f67/glb.glb",
+          "sha256": "2219fbab29ca11caeda8036cdf4727af9bc072db6c9071a633de2682cdaaf010",
+          "designId": "cargo.standard.medium",
+          "revision": 3,
+          "bounds": {
+            "min": [
+              -0.5304999947547913,
+              -0.4505000114440918,
+              0.0
+            ],
+            "max": [
+              0.5304999947547913,
+              0.34584999084472656,
+              0.9514999985694885
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "9f056fa2-d517-5cf8-a817-59e5f7ce727e",
+      "appearance": "standard-medium-blue",
+      "revision": 3,
+      "source": "assets/source/approved-cargo/part-0e982ae6b34746506f67/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.standard.medium/revisions/r003/appearances/standard-medium-blue",
+      "source_sha256": "3e0be0f70438ab4ad2fbf93e74016fac9dd1af37259ba0f99ea7ffb977f2ad40",
+      "thumbnail_sha256": "860369abc44679e78fb57173af7021b1c91831f08bc40ba94ab9b6ec8fdcfd90",
+      "sockets": [
+        "SOCK_MOUNT_0",
+        "SOCK_STACK_0",
+        "SOCK_MOUNT_1",
+        "SOCK_STACK_1",
+        "SOCK_MOUNT_2",
+        "SOCK_STACK_2",
+        "SOCK_MOUNT_3",
+        "SOCK_STACK_3",
+        "PIVOT_LID",
+        "SOCK_HAND_L_0",
+        "SOCK_HAND_R_0",
+        "SOCK_INTERACT",
+        "FX_TRACTOR_TARGET"
+      ],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-5d5d4a34049e170b1040",
+        "label": "Cargo.Fluid Cryo.Medium.Appearance 1",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.3400000035762787,
+            -0.3400000035762787,
+            0.0
+          ],
+          "max": [
+            0.3400000035762787,
+            0.3400000035762787,
+            1.3600000143051147
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-5d5d4a34049e170b1040/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-5d5d4a34049e170b1040/glb.glb",
+          "sha256": "cd894cff32132f45da2073749af3f79dab0d285ef5eb05567aa751b24711e611",
+          "designId": "cargo.fluid-cryo.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.3400000035762787,
+              -0.3400000035762787,
+              0.0
+            ],
+            "max": [
+              0.3400000035762787,
+              0.3400000035762787,
+              1.3600000143051147
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "d55ec51d-01cf-5c13-b432-03c24774e940",
+      "appearance": "cargo.fluid-cryo.medium.appearance-1",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-5d5d4a34049e170b1040/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-cryo.medium/revisions/r001/appearances/cargo-fluid-cryo-medium-appearance-1",
+      "source_sha256": "e5b396c021541894d8940a3c23ba84d9a9e073640bd02ff9a150f9d51b2f0712",
+      "thumbnail_sha256": "ef54d1276443c42d3ae28027707f1ef270e58202863aace8a4eac07c5a7579ef",
+      "sockets": [],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-5d103ad6aa3172180976",
+        "label": "Cargo.Fluid Cryo.Medium.Appearance 2",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.3400000035762787,
+            -0.3400000035762787,
+            0.0
+          ],
+          "max": [
+            0.3400000035762787,
+            0.3400000035762787,
+            1.3600000143051147
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-5d103ad6aa3172180976/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-5d103ad6aa3172180976/glb.glb",
+          "sha256": "1b19771dd577a05f23ff65f1feca4f39946e8ad0cf4c42b35b51d7320f6dd435",
+          "designId": "cargo.fluid-cryo.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.3400000035762787,
+              -0.3400000035762787,
+              0.0
+            ],
+            "max": [
+              0.3400000035762787,
+              0.3400000035762787,
+              1.3600000143051147
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "d55ec51d-01cf-5c13-b432-03c24774e940",
+      "appearance": "cargo.fluid-cryo.medium.appearance-2",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-5d103ad6aa3172180976/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-cryo.medium/revisions/r001/appearances/cargo-fluid-cryo-medium-appearance-2",
+      "source_sha256": "d8ceacc25df5fb992c5238455909cb3d1fe030cbb8c82344cdc13a68e3518c81",
+      "thumbnail_sha256": "4f870b689d3babd40233ba590367a1b102bf5d7f28ecfdbca63dd58d9c68c3e8",
+      "sockets": [],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-8f848965775db332ad3b",
+        "label": "Cargo.Fluid Cryo.Medium.Appearance 3",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.3400000035762787,
+            -0.3400000035762787,
+            0.0
+          ],
+          "max": [
+            0.3400000035762787,
+            0.3400000035762787,
+            1.3600000143051147
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-8f848965775db332ad3b/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-8f848965775db332ad3b/glb.glb",
+          "sha256": "77e593e7453f0b0c16d3b61c6cbcdd6c7be53fb86fef0fe04a88ba8110033c47",
+          "designId": "cargo.fluid-cryo.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.3400000035762787,
+              -0.3400000035762787,
+              0.0
+            ],
+            "max": [
+              0.3400000035762787,
+              0.3400000035762787,
+              1.3600000143051147
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "d55ec51d-01cf-5c13-b432-03c24774e940",
+      "appearance": "cargo.fluid-cryo.medium.appearance-3",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-8f848965775db332ad3b/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-cryo.medium/revisions/r001/appearances/cargo-fluid-cryo-medium-appearance-3",
+      "source_sha256": "3637d134caee1923ad311190764d61269518948681417b1875cf9e83182412ee",
+      "thumbnail_sha256": "3c86971034bfe9afc7ebd87aebc53e20debccf39c72536a05c0d0aceaa283333",
+      "sockets": [],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-e8b348082816c379c3ad",
+        "label": "Cargo.Fluid Cryo.Medium.Appearance 4",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.3400000035762787,
+            -0.3400000035762787,
+            0.0
+          ],
+          "max": [
+            0.3400000035762787,
+            0.3400000035762787,
+            1.3600000143051147
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-e8b348082816c379c3ad/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-e8b348082816c379c3ad/glb.glb",
+          "sha256": "583a056b96b1459e3861eba33f46c52327a1ac5eb127ec80a5aa754598bf1db5",
+          "designId": "cargo.fluid-cryo.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.3400000035762787,
+              -0.3400000035762787,
+              0.0
+            ],
+            "max": [
+              0.3400000035762787,
+              0.3400000035762787,
+              1.3600000143051147
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "d55ec51d-01cf-5c13-b432-03c24774e940",
+      "appearance": "cargo.fluid-cryo.medium.appearance-4",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-e8b348082816c379c3ad/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-cryo.medium/revisions/r001/appearances/cargo-fluid-cryo-medium-appearance-4",
+      "source_sha256": "b0f16a32f576bfb6b9b2c8c0b5e9ef03bacd8e954b69c0320359add64975bd98",
+      "thumbnail_sha256": "533d17eca4c13fd49ab8bf62574b952f62e394e1020d14c379dbad8fc96df24c",
+      "sockets": [],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-3cc2aaa47b61c3695a01",
+        "label": "Cargo.Fluid Fuel.Medium.Appearance 1",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.2760000228881836,
+            -0.27399998903274536,
+            0.0
+          ],
+          "max": [
+            0.2760000228881836,
+            0.27399998903274536,
+            0.8639999628067017
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-3cc2aaa47b61c3695a01/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-3cc2aaa47b61c3695a01/glb.glb",
+          "sha256": "88b545da34d02be1a0697e4a61949e4ab073191eeb2bd599425c5a98549dae64",
+          "designId": "cargo.fluid-fuel.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.2760000228881836,
+              -0.27399998903274536,
+              0.0
+            ],
+            "max": [
+              0.2760000228881836,
+              0.27399998903274536,
+              0.8639999628067017
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "828f8d8f-d2d4-55ed-bfc7-536b921aece2",
+      "appearance": "cargo.fluid-fuel.medium.appearance-1",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-3cc2aaa47b61c3695a01/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-fuel.medium/revisions/r001/appearances/cargo-fluid-fuel-medium-appearance-1",
+      "source_sha256": "82eca1ebbc5ff796bafea2f771a631f27a5cd53abafecdc336bee06d65a51a4f",
+      "thumbnail_sha256": "41f33341a1302621397c1d2390f103889fe8aed7778dcb7236e7b9f4604388ed",
+      "sockets": [],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-ff4c81d16308982b5556",
+        "label": "Cargo.Fluid Fuel.Medium.Appearance 2",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.2760000228881836,
+            -0.27399998903274536,
+            0.0
+          ],
+          "max": [
+            0.2760000228881836,
+            0.27399998903274536,
+            0.8639999628067017
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-ff4c81d16308982b5556/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-ff4c81d16308982b5556/glb.glb",
+          "sha256": "b08fd66f120a2bca68053a75cc4f295e2513ca0ad8bbfde41fd8a4e16926c0a2",
+          "designId": "cargo.fluid-fuel.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.2760000228881836,
+              -0.27399998903274536,
+              0.0
+            ],
+            "max": [
+              0.2760000228881836,
+              0.27399998903274536,
+              0.8639999628067017
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "828f8d8f-d2d4-55ed-bfc7-536b921aece2",
+      "appearance": "cargo.fluid-fuel.medium.appearance-2",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-ff4c81d16308982b5556/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-fuel.medium/revisions/r001/appearances/cargo-fluid-fuel-medium-appearance-2",
+      "source_sha256": "ccc4f2687b641fb06e7a51caa018be569e5adc4ce63c8850ffdf6df15923eb8e",
+      "thumbnail_sha256": "a28161e2652de58815c3523aa183f628435ff1885da03623a0054d43a30dbf28",
+      "sockets": [],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-8963649e2154815c6e0a",
+        "label": "Cargo.Fluid Fuel.Medium.Appearance 3",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.2760000228881836,
+            -0.27399998903274536,
+            0.0
+          ],
+          "max": [
+            0.2760000228881836,
+            0.27399998903274536,
+            0.8639999628067017
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-8963649e2154815c6e0a/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-8963649e2154815c6e0a/glb.glb",
+          "sha256": "60bacc18625011c465412692f01611064dd79e413a2224ea78b20548048779cf",
+          "designId": "cargo.fluid-fuel.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.2760000228881836,
+              -0.27399998903274536,
+              0.0
+            ],
+            "max": [
+              0.2760000228881836,
+              0.27399998903274536,
+              0.8639999628067017
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "828f8d8f-d2d4-55ed-bfc7-536b921aece2",
+      "appearance": "cargo.fluid-fuel.medium.appearance-3",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-8963649e2154815c6e0a/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-fuel.medium/revisions/r001/appearances/cargo-fluid-fuel-medium-appearance-3",
+      "source_sha256": "652a6d66677e889fef4ce93bfda8a73847bf3e012f19f8282292b548ada16116",
+      "thumbnail_sha256": "396a7c46dd45d401ad46536f8e7013f96c9344eef04d8c1cc5a2f6b3a3a401ef",
+      "sockets": [],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-355fd132ec5fadfb1f66",
+        "label": "Cargo.Fluid Fuel.Medium.Appearance 4",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.2760000228881836,
+            -0.27399998903274536,
+            0.0
+          ],
+          "max": [
+            0.2760000228881836,
+            0.27399998903274536,
+            0.8639999628067017
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-355fd132ec5fadfb1f66/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-355fd132ec5fadfb1f66/glb.glb",
+          "sha256": "6323a87028232d82ee01a7f350ba478659794024d4149f76a1d3ff9c168a095d",
+          "designId": "cargo.fluid-fuel.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.2760000228881836,
+              -0.27399998903274536,
+              0.0
+            ],
+            "max": [
+              0.2760000228881836,
+              0.27399998903274536,
+              0.8639999628067017
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "828f8d8f-d2d4-55ed-bfc7-536b921aece2",
+      "appearance": "cargo.fluid-fuel.medium.appearance-4",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-355fd132ec5fadfb1f66/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-fuel.medium/revisions/r001/appearances/cargo-fluid-fuel-medium-appearance-4",
+      "source_sha256": "59bb45b7de7314a5f2e05521a8856aaa56be8d9ecc3e2095d8f388b304d35139",
+      "thumbnail_sha256": "ba1f84b79820fe1941adb4fd6bdce08186790c8a55bc7dc1d83202f47eadff39",
+      "sockets": [],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-0f76eb112155db5b4e8b",
+        "label": "Cargo.Fluid Chemical.Medium.Appearance 1",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.27399998903274536,
+            -0.27399998903274536,
+            0.0
+          ],
+          "max": [
+            0.27399998903274536,
+            0.27399998903274536,
+            0.8639999628067017
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-0f76eb112155db5b4e8b/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-0f76eb112155db5b4e8b/glb.glb",
+          "sha256": "eb59a94d0bd940d80736d002acd896c4653514c625032c93fe4f68cf7a400e0d",
+          "designId": "cargo.fluid-chemical.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.27399998903274536,
+              -0.27399998903274536,
+              0.0
+            ],
+            "max": [
+              0.27399998903274536,
+              0.27399998903274536,
+              0.8639999628067017
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "caf39d7e-ae06-5a23-a7ab-512243799f99",
+      "appearance": "cargo.fluid-chemical.medium.appearance-1",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-0f76eb112155db5b4e8b/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-chemical.medium/revisions/r001/appearances/cargo-fluid-chemical-medium-appearance-1",
+      "source_sha256": "0662e6465cec9f8bdb919340290ef28cd588534b10d873082815dec09a7e3c6d",
+      "thumbnail_sha256": "5b5194c9f514dad0f8ec1cc97ca036b0dbc9a4dec11e0939af36ad40bf3caf34",
+      "sockets": [],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-84891c854514b15139aa",
+        "label": "Cargo.Fluid Chemical.Medium.Appearance 2",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.27399998903274536,
+            -0.27399998903274536,
+            0.0
+          ],
+          "max": [
+            0.27399998903274536,
+            0.27399998903274536,
+            0.8639999628067017
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-84891c854514b15139aa/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-84891c854514b15139aa/glb.glb",
+          "sha256": "73c3930e2deda3541bcc5046c760ba0729cbca998a27eb5784a0aceed16fc05f",
+          "designId": "cargo.fluid-chemical.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.27399998903274536,
+              -0.27399998903274536,
+              0.0
+            ],
+            "max": [
+              0.27399998903274536,
+              0.27399998903274536,
+              0.8639999628067017
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "caf39d7e-ae06-5a23-a7ab-512243799f99",
+      "appearance": "cargo.fluid-chemical.medium.appearance-2",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-84891c854514b15139aa/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-chemical.medium/revisions/r001/appearances/cargo-fluid-chemical-medium-appearance-2",
+      "source_sha256": "47cff10f854cfe3c249c0bf38436cd2e9621f4ceb1d5ac5a526fc5e385c268db",
+      "thumbnail_sha256": "1551b99b6471e0ddcdb29cbf5412d74adec430569f96bdbc8749e2d247d469e7",
+      "sockets": [],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-b215126fd8b9f5447d00",
+        "label": "Cargo.Fluid Chemical.Medium.Appearance 3",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.27399998903274536,
+            -0.27399998903274536,
+            0.0
+          ],
+          "max": [
+            0.27399998903274536,
+            0.27399998903274536,
+            0.8639999628067017
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-b215126fd8b9f5447d00/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-b215126fd8b9f5447d00/glb.glb",
+          "sha256": "edcab4ad0d252c3f05823cab7489c3c6b0ac0fa38b4539e06009a4f1a5f3f7f1",
+          "designId": "cargo.fluid-chemical.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.27399998903274536,
+              -0.27399998903274536,
+              0.0
+            ],
+            "max": [
+              0.27399998903274536,
+              0.27399998903274536,
+              0.8639999628067017
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "caf39d7e-ae06-5a23-a7ab-512243799f99",
+      "appearance": "cargo.fluid-chemical.medium.appearance-3",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-b215126fd8b9f5447d00/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-chemical.medium/revisions/r001/appearances/cargo-fluid-chemical-medium-appearance-3",
+      "source_sha256": "4bf4162661937883219f22674011e1af329ea1ae7897588c4e885352d70a8b8c",
+      "thumbnail_sha256": "4cc540392612478730577d5977668460daf294129bf1aab9c6a9de0d2e5fe480",
+      "sockets": [],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-5377949ed91bc9fc3973",
+        "label": "Cargo.Fluid Chemical.Medium.Appearance 4",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.27399998903274536,
+            -0.27399998903274536,
+            0.0
+          ],
+          "max": [
+            0.27399998903274536,
+            0.27399998903274536,
+            0.8639999628067017
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-5377949ed91bc9fc3973/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-5377949ed91bc9fc3973/glb.glb",
+          "sha256": "152c548e2fcefc35a11fe7dc99ebb9405014c986ef90635cd835717fade2bf25",
+          "designId": "cargo.fluid-chemical.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.27399998903274536,
+              -0.27399998903274536,
+              0.0
+            ],
+            "max": [
+              0.27399998903274536,
+              0.27399998903274536,
+              0.8639999628067017
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "caf39d7e-ae06-5a23-a7ab-512243799f99",
+      "appearance": "cargo.fluid-chemical.medium.appearance-4",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-5377949ed91bc9fc3973/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-chemical.medium/revisions/r001/appearances/cargo-fluid-chemical-medium-appearance-4",
+      "source_sha256": "07fafe1a7b3379543c2734681138836239854951bfda825447d25fc175256e6a",
+      "thumbnail_sha256": "42feabe51cf965e08c0fb7165633e3f4b3f676612b040d9d5a2ecb40b9620939",
+      "sockets": [],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-8bcf56f5a154cbb954de",
+        "label": "Cargo.Fluid Gas.Medium.Appearance 1",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.4399999976158142,
+            -0.3400000035762787,
+            0.0
+          ],
+          "max": [
+            0.4399999976158142,
+            0.3400000035762787,
+            0.8999999761581421
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-8bcf56f5a154cbb954de/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-8bcf56f5a154cbb954de/glb.glb",
+          "sha256": "3a00c3838ead1c808c70e4fb1b1832bfc8945ae18ce7588a402866f70f6dad13",
+          "designId": "cargo.fluid-gas.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.4399999976158142,
+              -0.3400000035762787,
+              0.0
+            ],
+            "max": [
+              0.4399999976158142,
+              0.3400000035762787,
+              0.8999999761581421
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "8626983a-889f-5b84-946c-591e4187ea03",
+      "appearance": "cargo.fluid-gas.medium.appearance-1",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-8bcf56f5a154cbb954de/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-gas.medium/revisions/r001/appearances/cargo-fluid-gas-medium-appearance-1",
+      "source_sha256": "9d4c988b8cba97857b769210461f024fcc46359979fdcbd34c0ec5c59beda3a3",
+      "thumbnail_sha256": "de933a4f377d23feac14d2f8de5f2ffc923c1455d3bed343bdabb416dd972dca",
+      "sockets": [],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-74fd36d0f31a11c97535",
+        "label": "Cargo.Fluid Gas.Medium.Appearance 2",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.4399999976158142,
+            -0.3400000035762787,
+            0.0
+          ],
+          "max": [
+            0.4399999976158142,
+            0.3400000035762787,
+            0.8999999761581421
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-74fd36d0f31a11c97535/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-74fd36d0f31a11c97535/glb.glb",
+          "sha256": "bd4daafa7b5a43ac052a526f9efdf14453c895bb8692e47fd31585a0eb4a98a3",
+          "designId": "cargo.fluid-gas.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.4399999976158142,
+              -0.3400000035762787,
+              0.0
+            ],
+            "max": [
+              0.4399999976158142,
+              0.3400000035762787,
+              0.8999999761581421
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "8626983a-889f-5b84-946c-591e4187ea03",
+      "appearance": "cargo.fluid-gas.medium.appearance-2",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-74fd36d0f31a11c97535/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-gas.medium/revisions/r001/appearances/cargo-fluid-gas-medium-appearance-2",
+      "source_sha256": "611bfb2d7dbb6b19ad71d8723631674b812bd9076cdb18b41129d3df758a5a7b",
+      "thumbnail_sha256": "20f8d3524a5bf8091272cefcc38003b33aebb67f964c2c1dd843967ca609608c",
+      "sockets": [],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-96aa76d51e89c5278c25",
+        "label": "Cargo.Fluid Gas.Medium.Appearance 3",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.4399999976158142,
+            -0.3400000035762787,
+            0.0
+          ],
+          "max": [
+            0.4399999976158142,
+            0.3400000035762787,
+            0.8999999761581421
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-96aa76d51e89c5278c25/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-96aa76d51e89c5278c25/glb.glb",
+          "sha256": "8a0a7f8a075c2aabfc2dd8c01786afb88ac314ecb3bcc28ed569c3ee787bc677",
+          "designId": "cargo.fluid-gas.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.4399999976158142,
+              -0.3400000035762787,
+              0.0
+            ],
+            "max": [
+              0.4399999976158142,
+              0.3400000035762787,
+              0.8999999761581421
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "8626983a-889f-5b84-946c-591e4187ea03",
+      "appearance": "cargo.fluid-gas.medium.appearance-3",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-96aa76d51e89c5278c25/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-gas.medium/revisions/r001/appearances/cargo-fluid-gas-medium-appearance-3",
+      "source_sha256": "6ebd0e29df7f1087052fa587cf8508165de2bf56e37c60262979303d8de04774",
+      "thumbnail_sha256": "553f1869454e35f65a60bf72796137ff5c25387565fe71ffa26a0e5957727622",
+      "sockets": [],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-a8c9ac9eb43a547c76a7",
+        "label": "Cargo.Fluid Gas.Medium.Appearance 4",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.4399999976158142,
+            -0.3400000035762787,
+            0.0
+          ],
+          "max": [
+            0.4399999976158142,
+            0.3400000035762787,
+            0.8999999761581421
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-a8c9ac9eb43a547c76a7/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-a8c9ac9eb43a547c76a7/glb.glb",
+          "sha256": "40042759b8028894914c0edb6c30ad2d68e01e208da6c02b6a3a55bc41257ea0",
+          "designId": "cargo.fluid-gas.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.4399999976158142,
+              -0.3400000035762787,
+              0.0
+            ],
+            "max": [
+              0.4399999976158142,
+              0.3400000035762787,
+              0.8999999761581421
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "8626983a-889f-5b84-946c-591e4187ea03",
+      "appearance": "cargo.fluid-gas.medium.appearance-4",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-a8c9ac9eb43a547c76a7/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-gas.medium/revisions/r001/appearances/cargo-fluid-gas-medium-appearance-4",
+      "source_sha256": "d8e427f9f4618025f108bf4e74f2b1c93bfd9073513f96d7842ebb3e9d84d02d",
+      "thumbnail_sha256": "552449acc3795f991a5082bd87e2856a12a725f3bbde21944d130502ab7d3d19",
+      "sockets": [],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-38b95e9ee2941d12d072",
+        "label": "Cargo.Fluid Water.Medium.Appearance 1",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.4399999976158142,
+            -0.3490000069141388,
+            0.0
+          ],
+          "max": [
+            0.4399999976158142,
+            0.3400000035762787,
+            0.9070000052452087
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-38b95e9ee2941d12d072/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-38b95e9ee2941d12d072/glb.glb",
+          "sha256": "3c64e8b882606fa0131f0da467a0cdcf44af0f299262805a2bed5fc9fac877ca",
+          "designId": "cargo.fluid-water.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.4399999976158142,
+              -0.3490000069141388,
+              0.0
+            ],
+            "max": [
+              0.4399999976158142,
+              0.3400000035762787,
+              0.9070000052452087
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "0a84c04e-69bb-50e6-a2cb-c818f4134b19",
+      "appearance": "cargo.fluid-water.medium.appearance-1",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-38b95e9ee2941d12d072/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-water.medium/revisions/r001/appearances/cargo-fluid-water-medium-appearance-1",
+      "source_sha256": "74625e4a4ce7a7fde50d759c7a056ed0583a839043e4d7fc0a4250451a31b58c",
+      "thumbnail_sha256": "7174aaba057f881495a08b146a788c15f5f366b222ee7ca719d29438037d9ddb",
+      "sockets": [],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-2b4c94f694595ac8fd1d",
+        "label": "Cargo.Fluid Water.Medium.Appearance 2",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.4399999976158142,
+            -0.3490000069141388,
+            0.0
+          ],
+          "max": [
+            0.4399999976158142,
+            0.3400000035762787,
+            0.9070000052452087
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-2b4c94f694595ac8fd1d/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-2b4c94f694595ac8fd1d/glb.glb",
+          "sha256": "5deea8cf44e1a75776dc388207f034fbbd61fe6fe4eb7b73f8ea888b476484bb",
+          "designId": "cargo.fluid-water.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.4399999976158142,
+              -0.3490000069141388,
+              0.0
+            ],
+            "max": [
+              0.4399999976158142,
+              0.3400000035762787,
+              0.9070000052452087
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "0a84c04e-69bb-50e6-a2cb-c818f4134b19",
+      "appearance": "cargo.fluid-water.medium.appearance-2",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-2b4c94f694595ac8fd1d/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-water.medium/revisions/r001/appearances/cargo-fluid-water-medium-appearance-2",
+      "source_sha256": "9cc8f3e7ac569e414432558948349142acc649e6c0d79c43de0af0b823c28459",
+      "thumbnail_sha256": "d2396c62e5390ae758ae2752c7a3aa820595805b0e8a6f831e167046e96b090b",
+      "sockets": [],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-7858296690991b13320c",
+        "label": "Cargo.Fluid Water.Medium.Appearance 3",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.4399999976158142,
+            -0.3490000069141388,
+            0.0
+          ],
+          "max": [
+            0.4399999976158142,
+            0.3400000035762787,
+            0.9070000052452087
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-7858296690991b13320c/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-7858296690991b13320c/glb.glb",
+          "sha256": "6b3c29b0472a072325cf72a1c138e6585b7b287cff1df124a5adbcb887b2571b",
+          "designId": "cargo.fluid-water.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.4399999976158142,
+              -0.3490000069141388,
+              0.0
+            ],
+            "max": [
+              0.4399999976158142,
+              0.3400000035762787,
+              0.9070000052452087
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "0a84c04e-69bb-50e6-a2cb-c818f4134b19",
+      "appearance": "cargo.fluid-water.medium.appearance-3",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-7858296690991b13320c/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-water.medium/revisions/r001/appearances/cargo-fluid-water-medium-appearance-3",
+      "source_sha256": "4af47283d9d3f0ba0593450f74fd1e8760ca1914cfe7f4e678abeefec993ae17",
+      "thumbnail_sha256": "d8aad9fd121449980b5f1310aa277b3b508bd617d8c2ddd4c1e4daed242a853e",
+      "sockets": [],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-9d84eacfac58c57c012b",
+        "label": "Cargo.Fluid Water.Medium.Appearance 4",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.4399999976158142,
+            -0.3490000069141388,
+            0.0
+          ],
+          "max": [
+            0.4399999976158142,
+            0.3400000035762787,
+            0.9070000052452087
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-9d84eacfac58c57c012b/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-9d84eacfac58c57c012b/glb.glb",
+          "sha256": "a95d0bcdb784c857be886a9437c788c5d4785179eb8de6733c041b9cc25f2d09",
+          "designId": "cargo.fluid-water.medium",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.4399999976158142,
+              -0.3490000069141388,
+              0.0
+            ],
+            "max": [
+              0.4399999976158142,
+              0.3400000035762787,
+              0.9070000052452087
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "0a84c04e-69bb-50e6-a2cb-c818f4134b19",
+      "appearance": "cargo.fluid-water.medium.appearance-4",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-9d84eacfac58c57c012b/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.fluid-water.medium/revisions/r001/appearances/cargo-fluid-water-medium-appearance-4",
+      "source_sha256": "9244ff2aa3b6c883f35b09197908db1f50c2da67c91c3327518ea2c8f8a53889",
+      "thumbnail_sha256": "e4354e4bae517e9d62fa3ba09d60890a237665c74a590a0fc5f31ede5ccbaec3",
+      "sockets": [],
+      "inventory_kind": "liquid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    },
+    {
+      "asset": {
+        "id": "part-091a05481726fc7ccac0",
+        "label": "Narrow Red",
+        "category": "cargo",
+        "nodes": [],
+        "bounds": {
+          "min": [
+            -0.12099999934434891,
+            -0.12399999797344208,
+            0.0
+          ],
+          "max": [
+            0.12099999934434891,
+            0.12700000405311584,
+            0.44200000166893005
+          ]
+        },
+        "lights": [],
+        "thumbnail": "/assets/assembly/cargo/part-091a05481726fc7ccac0/cutout.png",
+        "visual": {
+          "url": "/assets/assembly/cargo/part-091a05481726fc7ccac0/glb.glb",
+          "sha256": "7a7ba27e84e4895e4b801c5fc578a1936620bfd14533fe4195218b76d016578c",
+          "designId": "cargo.standard.narrow",
+          "revision": 1,
+          "bounds": {
+            "min": [
+              -0.12099999934434891,
+              -0.12399999797344208,
+              0.0
+            ],
+            "max": [
+              0.12099999934434891,
+              0.12700000405311584,
+              0.44200000166893005
+            ]
+          },
+          "damagePreview": "unsupported"
+        }
+      },
+      "placements": [],
+      "canonical_uuid": "d91f3db4-d743-521b-8ae6-3a82764fc3f7",
+      "appearance": "narrow-red",
+      "revision": 1,
+      "source": "assets/source/approved-cargo/part-091a05481726fc7ccac0/source.blend",
+      "approved_source": "assets/art-library/designs/cargo.standard.narrow/revisions/r001/appearances/narrow-red",
+      "source_sha256": "25ea08bc5c026da5b6376fc4f7c7a857391c2684292078df41649425e15e0e33",
+      "thumbnail_sha256": "1e5097b0c1b871edbc3e08bc2b11a2f886dfe1eb2bf3f4e41e31307465f76771",
+      "sockets": [],
+      "inventory_kind": "grid",
+      "gameplay": "Existing installed storage limits only; design capacity/mass/operating values remain proposals.",
+      "proxy_basis": "Conservative neutral visual bounds for local fitting only; not authority collision, contents, clearance sweep or damage"
+    }
+  ],
+  "placement_mapping": {
+    "room-storage-container-2.15-0.25": {
+      "appearance": "standard-small",
+      "before": {
+        "id": "room-storage-container-2.15-0.25",
+        "assetId": "part-827961a32d599c00edef",
+        "position": [
+          -3.6875,
+          2.0625,
+          0.25
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "room-storage-container-2.15-0.25",
+        "assetId": "part-c06e4f5f6f6dace38e41",
+        "position": [
+          -4.0625,
+          2.0625,
+          0.1875
+        ],
+        "rotation": 1.5707963267948966,
+        "flipped": false,
+        "removedCells": []
+      },
+      "pre_floor_layout": {
+        "id": "room-storage-container-2.15-0.25",
+        "assetId": "part-c06e4f5f6f6dace38e41",
+        "position": [
+          -3.6875,
+          2.0625,
+          0.25
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    "room-storage-container-2.15-1": {
+      "appearance": "standard-small-red",
+      "before": {
+        "id": "room-storage-container-2.15-1",
+        "assetId": "part-827961a32d599c00edef",
+        "position": [
+          -3.6875,
+          2.0625,
+          1
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "room-storage-container-2.15-1",
+        "assetId": "part-5382f8dbbeb54e663d33",
+        "position": [
+          -3.3125,
+          2.0625,
+          0.1875
+        ],
+        "rotation": 1.5707963267948966,
+        "flipped": false,
+        "removedCells": []
+      },
+      "pre_floor_layout": {
+        "id": "room-storage-container-2.15-1",
+        "assetId": "part-5382f8dbbeb54e663d33",
+        "position": [
+          -3.6875,
+          2.0625,
+          1
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    "room-storage-container-3.5-0.25": {
+      "appearance": "standard-small",
+      "before": {
+        "id": "room-storage-container-3.5-0.25",
+        "assetId": "part-56f197cde09c88860e9c",
+        "position": [
+          -3.6875,
+          3.4375,
+          0.25
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "room-storage-container-3.5-0.25",
+        "assetId": "part-c06e4f5f6f6dace38e41",
+        "position": [
+          -4.0625,
+          3.4375,
+          0.1875
+        ],
+        "rotation": 1.5707963267948966,
+        "flipped": false,
+        "removedCells": []
+      },
+      "pre_floor_layout": {
+        "id": "room-storage-container-3.5-0.25",
+        "assetId": "part-c06e4f5f6f6dace38e41",
+        "position": [
+          -3.6875,
+          3.4375,
+          0.25
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    "room-storage-container-3.5-1": {
+      "appearance": "standard-small-red",
+      "before": {
+        "id": "room-storage-container-3.5-1",
+        "assetId": "part-56f197cde09c88860e9c",
+        "position": [
+          -3.6875,
+          3.4375,
+          1
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "room-storage-container-3.5-1",
+        "assetId": "part-5382f8dbbeb54e663d33",
+        "position": [
+          -3.3125,
+          3.4375,
+          0.1875
+        ],
+        "rotation": 1.5707963267948966,
+        "flipped": false,
+        "removedCells": []
+      },
+      "pre_floor_layout": {
+        "id": "room-storage-container-3.5-1",
+        "assetId": "part-5382f8dbbeb54e663d33",
+        "position": [
+          -3.6875,
+          3.4375,
+          1
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    }
+  },
+  "storage_layout": {
+    "revision": 2,
+    "authority": "packages/content/src/storage-fixtures.ts",
+    "arrangement": "Four floor-standing pods; closed inventory access; no filled stacking or lid sweep claim",
+    "deck_top_m": 0.1875,
+    "rotation_radians": 1.5707963267948966
+  }
+}

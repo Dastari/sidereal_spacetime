@@ -1,0 +1,4134 @@
+[
+  {
+    "id": "single-square-2m",
+    "nominalPolygonUnits": [
+      [
+        0,
+        0
+      ],
+      [
+        64,
+        0
+      ],
+      [
+        64,
+        64
+      ],
+      [
+        0,
+        64
+      ]
+    ],
+    "partitionsUnits": [],
+    "nativeFloors": [
+      {
+        "partId": "square-2m",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "native": {
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "revision": "r002",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+          "sourceToNominal": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "quarterTurns": 0,
+            "reflected": false
+          }
+        }
+      }
+    ],
+    "placements": [
+      {
+        "key": "single-square-2m:node:0,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 2,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-square-2m:node:0,64",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          0,
+          64
+        ],
+        "quarterTurns": 1,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-square-2m:node:64,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          64,
+          0
+        ],
+        "quarterTurns": 3,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-square-2m:node:64,64",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          64,
+          64
+        ],
+        "quarterTurns": 0,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-square-2m:span:0",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          0
+        ],
+        "bUnits": [
+          64,
+          0
+        ],
+        "startNodeKey": "single-square-2m:node:0,0",
+        "endNodeKey": "single-square-2m:node:64,0"
+      },
+      {
+        "key": "single-square-2m:span:1",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          64,
+          0
+        ],
+        "quarterTurns": 1,
+        "role": "perimeter-span",
+        "aUnits": [
+          64,
+          0
+        ],
+        "bUnits": [
+          64,
+          64
+        ],
+        "startNodeKey": "single-square-2m:node:64,0",
+        "endNodeKey": "single-square-2m:node:64,64"
+      },
+      {
+        "key": "single-square-2m:span:2",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          64,
+          64
+        ],
+        "quarterTurns": 2,
+        "role": "perimeter-span",
+        "aUnits": [
+          64,
+          64
+        ],
+        "bUnits": [
+          0,
+          64
+        ],
+        "startNodeKey": "single-square-2m:node:64,64",
+        "endNodeKey": "single-square-2m:node:0,64"
+      },
+      {
+        "key": "single-square-2m:span:3",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          0,
+          64
+        ],
+        "quarterTurns": 3,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          64
+        ],
+        "bUnits": [
+          0,
+          0
+        ],
+        "startNodeKey": "single-square-2m:node:0,64",
+        "endNodeKey": "single-square-2m:node:0,0"
+      }
+    ],
+    "validation": {
+      "coreOverlapAreaM2": 0.0,
+      "coreSymmetricDifferenceFromExactMiterRingM2": 0.0,
+      "nominalPortContacts": [
+        {
+          "spanKey": "single-square-2m:span:0",
+          "nodeKey": "single-square-2m:node:0,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-square-2m:span:0",
+          "nodeKey": "single-square-2m:node:64,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-square-2m:span:1",
+          "nodeKey": "single-square-2m:node:64,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-square-2m:span:1",
+          "nodeKey": "single-square-2m:node:64,64",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-square-2m:span:2",
+          "nodeKey": "single-square-2m:node:64,64",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-square-2m:span:2",
+          "nodeKey": "single-square-2m:node:0,64",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-square-2m:span:3",
+          "nodeKey": "single-square-2m:node:0,64",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-square-2m:span:3",
+          "nodeKey": "single-square-2m:node:0,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        }
+      ],
+      "corePlanarGeometryPass": true
+    },
+    "pressureAcceptance": false,
+    "reviewOffsetM": [
+      0,
+      0
+    ]
+  },
+  {
+    "id": "single-half-2x1",
+    "nominalPolygonUnits": [
+      [
+        0,
+        0
+      ],
+      [
+        64,
+        0
+      ],
+      [
+        64,
+        32
+      ],
+      [
+        0,
+        32
+      ]
+    ],
+    "partitionsUnits": [],
+    "nativeFloors": [
+      {
+        "partId": "half-2x1",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "native": {
+          "assetId": "part-926a2afada18f96d51a3",
+          "revision": "r002",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-926a2afada18f96d51a3--floor",
+          "sourceToNominal": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "quarterTurns": 0,
+            "reflected": false
+          }
+        }
+      }
+    ],
+    "placements": [
+      {
+        "key": "single-half-2x1:node:0,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 2,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-half-2x1:node:0,32",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          0,
+          32
+        ],
+        "quarterTurns": 1,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-half-2x1:node:64,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          64,
+          0
+        ],
+        "quarterTurns": 3,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-half-2x1:node:64,32",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          64,
+          32
+        ],
+        "quarterTurns": 0,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-half-2x1:span:0",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          0
+        ],
+        "bUnits": [
+          64,
+          0
+        ],
+        "startNodeKey": "single-half-2x1:node:0,0",
+        "endNodeKey": "single-half-2x1:node:64,0"
+      },
+      {
+        "key": "single-half-2x1:span:1",
+        "partId": "span-b3f0724acb39",
+        "originUnits": [
+          64,
+          0
+        ],
+        "quarterTurns": 1,
+        "role": "perimeter-span",
+        "aUnits": [
+          64,
+          0
+        ],
+        "bUnits": [
+          64,
+          32
+        ],
+        "startNodeKey": "single-half-2x1:node:64,0",
+        "endNodeKey": "single-half-2x1:node:64,32"
+      },
+      {
+        "key": "single-half-2x1:span:2",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          64,
+          32
+        ],
+        "quarterTurns": 2,
+        "role": "perimeter-span",
+        "aUnits": [
+          64,
+          32
+        ],
+        "bUnits": [
+          0,
+          32
+        ],
+        "startNodeKey": "single-half-2x1:node:64,32",
+        "endNodeKey": "single-half-2x1:node:0,32"
+      },
+      {
+        "key": "single-half-2x1:span:3",
+        "partId": "span-b3f0724acb39",
+        "originUnits": [
+          0,
+          32
+        ],
+        "quarterTurns": 3,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          32
+        ],
+        "bUnits": [
+          0,
+          0
+        ],
+        "startNodeKey": "single-half-2x1:node:0,32",
+        "endNodeKey": "single-half-2x1:node:0,0"
+      }
+    ],
+    "validation": {
+      "coreOverlapAreaM2": 0.0,
+      "coreSymmetricDifferenceFromExactMiterRingM2": 0.0,
+      "nominalPortContacts": [
+        {
+          "spanKey": "single-half-2x1:span:0",
+          "nodeKey": "single-half-2x1:node:0,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-half-2x1:span:0",
+          "nodeKey": "single-half-2x1:node:64,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-half-2x1:span:1",
+          "nodeKey": "single-half-2x1:node:64,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-half-2x1:span:1",
+          "nodeKey": "single-half-2x1:node:64,32",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-half-2x1:span:2",
+          "nodeKey": "single-half-2x1:node:64,32",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-half-2x1:span:2",
+          "nodeKey": "single-half-2x1:node:0,32",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-half-2x1:span:3",
+          "nodeKey": "single-half-2x1:node:0,32",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-half-2x1:span:3",
+          "nodeKey": "single-half-2x1:node:0,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        }
+      ],
+      "corePlanarGeometryPass": true
+    },
+    "pressureAcceptance": false,
+    "reviewOffsetM": [
+      6,
+      0
+    ]
+  },
+  {
+    "id": "single-quarter-1m",
+    "nominalPolygonUnits": [
+      [
+        0,
+        0
+      ],
+      [
+        32,
+        0
+      ],
+      [
+        32,
+        32
+      ],
+      [
+        0,
+        32
+      ]
+    ],
+    "partitionsUnits": [],
+    "nativeFloors": [
+      {
+        "partId": "quarter-1m",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "native": {
+          "assetId": "part-0b833a4f3016609e9b96",
+          "revision": "r002",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "sourceToNominal": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "quarterTurns": 0,
+            "reflected": false
+          }
+        }
+      }
+    ],
+    "placements": [
+      {
+        "key": "single-quarter-1m:node:0,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 2,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-quarter-1m:node:0,32",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          0,
+          32
+        ],
+        "quarterTurns": 1,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-quarter-1m:node:32,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          32,
+          0
+        ],
+        "quarterTurns": 3,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-quarter-1m:node:32,32",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          32,
+          32
+        ],
+        "quarterTurns": 0,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-quarter-1m:span:0",
+        "partId": "span-b3f0724acb39",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          0
+        ],
+        "bUnits": [
+          32,
+          0
+        ],
+        "startNodeKey": "single-quarter-1m:node:0,0",
+        "endNodeKey": "single-quarter-1m:node:32,0"
+      },
+      {
+        "key": "single-quarter-1m:span:1",
+        "partId": "span-b3f0724acb39",
+        "originUnits": [
+          32,
+          0
+        ],
+        "quarterTurns": 1,
+        "role": "perimeter-span",
+        "aUnits": [
+          32,
+          0
+        ],
+        "bUnits": [
+          32,
+          32
+        ],
+        "startNodeKey": "single-quarter-1m:node:32,0",
+        "endNodeKey": "single-quarter-1m:node:32,32"
+      },
+      {
+        "key": "single-quarter-1m:span:2",
+        "partId": "span-b3f0724acb39",
+        "originUnits": [
+          32,
+          32
+        ],
+        "quarterTurns": 2,
+        "role": "perimeter-span",
+        "aUnits": [
+          32,
+          32
+        ],
+        "bUnits": [
+          0,
+          32
+        ],
+        "startNodeKey": "single-quarter-1m:node:32,32",
+        "endNodeKey": "single-quarter-1m:node:0,32"
+      },
+      {
+        "key": "single-quarter-1m:span:3",
+        "partId": "span-b3f0724acb39",
+        "originUnits": [
+          0,
+          32
+        ],
+        "quarterTurns": 3,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          32
+        ],
+        "bUnits": [
+          0,
+          0
+        ],
+        "startNodeKey": "single-quarter-1m:node:0,32",
+        "endNodeKey": "single-quarter-1m:node:0,0"
+      }
+    ],
+    "validation": {
+      "coreOverlapAreaM2": 0.0,
+      "coreSymmetricDifferenceFromExactMiterRingM2": 0.0,
+      "nominalPortContacts": [
+        {
+          "spanKey": "single-quarter-1m:span:0",
+          "nodeKey": "single-quarter-1m:node:0,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-quarter-1m:span:0",
+          "nodeKey": "single-quarter-1m:node:32,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-quarter-1m:span:1",
+          "nodeKey": "single-quarter-1m:node:32,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-quarter-1m:span:1",
+          "nodeKey": "single-quarter-1m:node:32,32",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-quarter-1m:span:2",
+          "nodeKey": "single-quarter-1m:node:32,32",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-quarter-1m:span:2",
+          "nodeKey": "single-quarter-1m:node:0,32",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-quarter-1m:span:3",
+          "nodeKey": "single-quarter-1m:node:0,32",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-quarter-1m:span:3",
+          "nodeKey": "single-quarter-1m:node:0,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        }
+      ],
+      "corePlanarGeometryPass": true
+    },
+    "pressureAcceptance": false,
+    "reviewOffsetM": [
+      12,
+      0
+    ]
+  },
+  {
+    "id": "single-strip-4x1",
+    "nominalPolygonUnits": [
+      [
+        0,
+        0
+      ],
+      [
+        128,
+        0
+      ],
+      [
+        128,
+        32
+      ],
+      [
+        0,
+        32
+      ]
+    ],
+    "partitionsUnits": [],
+    "nativeFloors": [
+      {
+        "partId": "strip-4x1",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "native": {
+          "assetId": "part-baa2e4a6cbe886a5c292",
+          "revision": "r002",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-baa2e4a6cbe886a5c292--floor",
+          "sourceToNominal": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "quarterTurns": 0,
+            "reflected": false
+          }
+        }
+      }
+    ],
+    "placements": [
+      {
+        "key": "single-strip-4x1:node:0,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 2,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-strip-4x1:node:0,32",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          0,
+          32
+        ],
+        "quarterTurns": 1,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-strip-4x1:node:128,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          128,
+          0
+        ],
+        "quarterTurns": 3,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-strip-4x1:node:128,32",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          128,
+          32
+        ],
+        "quarterTurns": 0,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-strip-4x1:span:0",
+        "partId": "span-0cdd4c8ec952",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          0
+        ],
+        "bUnits": [
+          128,
+          0
+        ],
+        "startNodeKey": "single-strip-4x1:node:0,0",
+        "endNodeKey": "single-strip-4x1:node:128,0"
+      },
+      {
+        "key": "single-strip-4x1:span:1",
+        "partId": "span-b3f0724acb39",
+        "originUnits": [
+          128,
+          0
+        ],
+        "quarterTurns": 1,
+        "role": "perimeter-span",
+        "aUnits": [
+          128,
+          0
+        ],
+        "bUnits": [
+          128,
+          32
+        ],
+        "startNodeKey": "single-strip-4x1:node:128,0",
+        "endNodeKey": "single-strip-4x1:node:128,32"
+      },
+      {
+        "key": "single-strip-4x1:span:2",
+        "partId": "span-0cdd4c8ec952",
+        "originUnits": [
+          128,
+          32
+        ],
+        "quarterTurns": 2,
+        "role": "perimeter-span",
+        "aUnits": [
+          128,
+          32
+        ],
+        "bUnits": [
+          0,
+          32
+        ],
+        "startNodeKey": "single-strip-4x1:node:128,32",
+        "endNodeKey": "single-strip-4x1:node:0,32"
+      },
+      {
+        "key": "single-strip-4x1:span:3",
+        "partId": "span-b3f0724acb39",
+        "originUnits": [
+          0,
+          32
+        ],
+        "quarterTurns": 3,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          32
+        ],
+        "bUnits": [
+          0,
+          0
+        ],
+        "startNodeKey": "single-strip-4x1:node:0,32",
+        "endNodeKey": "single-strip-4x1:node:0,0"
+      }
+    ],
+    "validation": {
+      "coreOverlapAreaM2": 0.0,
+      "coreSymmetricDifferenceFromExactMiterRingM2": 0.0,
+      "nominalPortContacts": [
+        {
+          "spanKey": "single-strip-4x1:span:0",
+          "nodeKey": "single-strip-4x1:node:0,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-strip-4x1:span:0",
+          "nodeKey": "single-strip-4x1:node:128,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-strip-4x1:span:1",
+          "nodeKey": "single-strip-4x1:node:128,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-strip-4x1:span:1",
+          "nodeKey": "single-strip-4x1:node:128,32",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-strip-4x1:span:2",
+          "nodeKey": "single-strip-4x1:node:128,32",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-strip-4x1:span:2",
+          "nodeKey": "single-strip-4x1:node:0,32",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-strip-4x1:span:3",
+          "nodeKey": "single-strip-4x1:node:0,32",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-strip-4x1:span:3",
+          "nodeKey": "single-strip-4x1:node:0,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        }
+      ],
+      "corePlanarGeometryPass": true
+    },
+    "pressureAcceptance": false,
+    "reviewOffsetM": [
+      18,
+      0
+    ]
+  },
+  {
+    "id": "single-triangle-45",
+    "nominalPolygonUnits": [
+      [
+        0,
+        0
+      ],
+      [
+        64,
+        0
+      ],
+      [
+        0,
+        64
+      ]
+    ],
+    "partitionsUnits": [],
+    "nativeFloors": [
+      {
+        "partId": "triangle-45",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "native": {
+          "assetId": "part-771cc318e835d7a08abd",
+          "revision": "r002",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-771cc318e835d7a08abd--floor",
+          "sourceToNominal": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "quarterTurns": 0,
+            "reflected": false
+          }
+        }
+      }
+    ],
+    "placements": [
+      {
+        "key": "single-triangle-45:node:0,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 2,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-triangle-45:node:0,64",
+        "partId": "node-8ace9108954c",
+        "originUnits": [
+          0,
+          64
+        ],
+        "quarterTurns": 1,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-triangle-45:node:64,0",
+        "partId": "node-4cf5a3e80bfc",
+        "originUnits": [
+          64,
+          0
+        ],
+        "quarterTurns": 3,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-triangle-45:span:0",
+        "partId": "span-94768f04e98a",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          0
+        ],
+        "bUnits": [
+          64,
+          0
+        ],
+        "startNodeKey": "single-triangle-45:node:0,0",
+        "endNodeKey": "single-triangle-45:node:64,0"
+      },
+      {
+        "key": "single-triangle-45:span:1",
+        "partId": "span-0314fecad407",
+        "originUnits": [
+          64,
+          0
+        ],
+        "quarterTurns": 1,
+        "role": "perimeter-span",
+        "aUnits": [
+          64,
+          0
+        ],
+        "bUnits": [
+          0,
+          64
+        ],
+        "startNodeKey": "single-triangle-45:node:64,0",
+        "endNodeKey": "single-triangle-45:node:0,64"
+      },
+      {
+        "key": "single-triangle-45:span:2",
+        "partId": "span-808c0ebd2217",
+        "originUnits": [
+          0,
+          64
+        ],
+        "quarterTurns": 3,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          64
+        ],
+        "bUnits": [
+          0,
+          0
+        ],
+        "startNodeKey": "single-triangle-45:node:0,64",
+        "endNodeKey": "single-triangle-45:node:0,0"
+      }
+    ],
+    "validation": {
+      "coreOverlapAreaM2": 7.771561172376096e-16,
+      "coreSymmetricDifferenceFromExactMiterRingM2": 1.524150278446781e-15,
+      "nominalPortContacts": [
+        {
+          "spanKey": "single-triangle-45:span:0",
+          "nodeKey": "single-triangle-45:node:0,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-45:span:0",
+          "nodeKey": "single-triangle-45:node:64,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-45:span:1",
+          "nodeKey": "single-triangle-45:node:64,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.0,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-45:span:1",
+          "nodeKey": "single-triangle-45:node:0,64",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.0,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-45:span:2",
+          "nodeKey": "single-triangle-45:node:0,64",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-45:span:2",
+          "nodeKey": "single-triangle-45:node:0,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        }
+      ],
+      "corePlanarGeometryPass": true
+    },
+    "pressureAcceptance": false,
+    "reviewOffsetM": [
+      0,
+      6
+    ]
+  },
+  {
+    "id": "single-triangle-long-left",
+    "nominalPolygonUnits": [
+      [
+        0,
+        0
+      ],
+      [
+        128,
+        0
+      ],
+      [
+        0,
+        64
+      ]
+    ],
+    "partitionsUnits": [],
+    "nativeFloors": [
+      {
+        "partId": "triangle-long-left",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "native": {
+          "assetId": "part-79328356071c674a2c8b",
+          "revision": "r002",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-79328356071c674a2c8b--floor",
+          "sourceToNominal": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "quarterTurns": 0,
+            "reflected": false
+          }
+        }
+      }
+    ],
+    "placements": [
+      {
+        "key": "single-triangle-long-left:node:0,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 2,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-triangle-long-left:node:0,64",
+        "partId": "node-600f98889a3d",
+        "originUnits": [
+          0,
+          64
+        ],
+        "quarterTurns": 2,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-triangle-long-left:node:128,0",
+        "partId": "node-5ef3fc8bee96",
+        "originUnits": [
+          128,
+          0
+        ],
+        "quarterTurns": 0,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-triangle-long-left:span:0",
+        "partId": "span-e1ee17a40bd0",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          0
+        ],
+        "bUnits": [
+          128,
+          0
+        ],
+        "startNodeKey": "single-triangle-long-left:node:0,0",
+        "endNodeKey": "single-triangle-long-left:node:128,0"
+      },
+      {
+        "key": "single-triangle-long-left:span:1",
+        "partId": "span-6ec4ef6b98b1",
+        "originUnits": [
+          128,
+          0
+        ],
+        "quarterTurns": 1,
+        "role": "perimeter-span",
+        "aUnits": [
+          128,
+          0
+        ],
+        "bUnits": [
+          0,
+          64
+        ],
+        "startNodeKey": "single-triangle-long-left:node:128,0",
+        "endNodeKey": "single-triangle-long-left:node:0,64"
+      },
+      {
+        "key": "single-triangle-long-left:span:2",
+        "partId": "span-2558d18d8aea",
+        "originUnits": [
+          0,
+          64
+        ],
+        "quarterTurns": 3,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          64
+        ],
+        "bUnits": [
+          0,
+          0
+        ],
+        "startNodeKey": "single-triangle-long-left:node:0,64",
+        "endNodeKey": "single-triangle-long-left:node:0,0"
+      }
+    ],
+    "validation": {
+      "coreOverlapAreaM2": -3.3306690738754696e-16,
+      "coreSymmetricDifferenceFromExactMiterRingM2": 2.246267645866009e-15,
+      "nominalPortContacts": [
+        {
+          "spanKey": "single-triangle-long-left:span:0",
+          "nodeKey": "single-triangle-long-left:node:0,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-long-left:span:0",
+          "nodeKey": "single-triangle-long-left:node:128,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-long-left:span:1",
+          "nodeKey": "single-triangle-long-left:node:128,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.0,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-long-left:span:1",
+          "nodeKey": "single-triangle-long-left:node:0,64",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.0,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-long-left:span:2",
+          "nodeKey": "single-triangle-long-left:node:0,64",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-long-left:span:2",
+          "nodeKey": "single-triangle-long-left:node:0,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        }
+      ],
+      "corePlanarGeometryPass": true
+    },
+    "pressureAcceptance": false,
+    "reviewOffsetM": [
+      6,
+      6
+    ]
+  },
+  {
+    "id": "single-triangle-long-right",
+    "nominalPolygonUnits": [
+      [
+        0,
+        0
+      ],
+      [
+        128,
+        0
+      ],
+      [
+        128,
+        64
+      ]
+    ],
+    "partitionsUnits": [],
+    "nativeFloors": [
+      {
+        "partId": "triangle-long-right",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "native": {
+          "assetId": "part-e0dde5e97e9bed05b4b6",
+          "revision": "r002",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-e0dde5e97e9bed05b4b6--floor",
+          "sourceToNominal": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "quarterTurns": 0,
+            "reflected": false
+          }
+        }
+      }
+    ],
+    "placements": [
+      {
+        "key": "single-triangle-long-right:node:0,0",
+        "partId": "node-8b91be106a9b",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 2,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-triangle-long-right:node:128,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          128,
+          0
+        ],
+        "quarterTurns": 3,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-triangle-long-right:node:128,64",
+        "partId": "node-9c2c257cf6fe",
+        "originUnits": [
+          128,
+          64
+        ],
+        "quarterTurns": 0,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-triangle-long-right:span:0",
+        "partId": "span-08fd6477c200",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          0
+        ],
+        "bUnits": [
+          128,
+          0
+        ],
+        "startNodeKey": "single-triangle-long-right:node:0,0",
+        "endNodeKey": "single-triangle-long-right:node:128,0"
+      },
+      {
+        "key": "single-triangle-long-right:span:1",
+        "partId": "span-808e279e3305",
+        "originUnits": [
+          128,
+          0
+        ],
+        "quarterTurns": 1,
+        "role": "perimeter-span",
+        "aUnits": [
+          128,
+          0
+        ],
+        "bUnits": [
+          128,
+          64
+        ],
+        "startNodeKey": "single-triangle-long-right:node:128,0",
+        "endNodeKey": "single-triangle-long-right:node:128,64"
+      },
+      {
+        "key": "single-triangle-long-right:span:2",
+        "partId": "span-be8caa482150",
+        "originUnits": [
+          128,
+          64
+        ],
+        "quarterTurns": 2,
+        "role": "perimeter-span",
+        "aUnits": [
+          128,
+          64
+        ],
+        "bUnits": [
+          0,
+          0
+        ],
+        "startNodeKey": "single-triangle-long-right:node:128,64",
+        "endNodeKey": "single-triangle-long-right:node:0,0"
+      }
+    ],
+    "validation": {
+      "coreOverlapAreaM2": 2.220446049250313e-16,
+      "coreSymmetricDifferenceFromExactMiterRingM2": 2.852257430199085e-15,
+      "nominalPortContacts": [
+        {
+          "spanKey": "single-triangle-long-right:span:0",
+          "nodeKey": "single-triangle-long-right:node:0,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-long-right:span:0",
+          "nodeKey": "single-triangle-long-right:node:128,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-long-right:span:1",
+          "nodeKey": "single-triangle-long-right:node:128,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-long-right:span:1",
+          "nodeKey": "single-triangle-long-right:node:128,64",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-long-right:span:2",
+          "nodeKey": "single-triangle-long-right:node:128,64",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.0,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-long-right:span:2",
+          "nodeKey": "single-triangle-long-right:node:0,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.0,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        }
+      ],
+      "corePlanarGeometryPass": true
+    },
+    "pressureAcceptance": false,
+    "reviewOffsetM": [
+      12,
+      6
+    ]
+  },
+  {
+    "id": "single-triangle-slim-left",
+    "nominalPolygonUnits": [
+      [
+        0,
+        0
+      ],
+      [
+        128,
+        0
+      ],
+      [
+        0,
+        32
+      ]
+    ],
+    "partitionsUnits": [],
+    "nativeFloors": [
+      {
+        "partId": "triangle-slim-left",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "native": {
+          "assetId": "part-cf72797120e52d05662c",
+          "revision": "r002",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-cf72797120e52d05662c--floor",
+          "sourceToNominal": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "quarterTurns": 0,
+            "reflected": false
+          }
+        }
+      }
+    ],
+    "placements": [
+      {
+        "key": "single-triangle-slim-left:node:0,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 2,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-triangle-slim-left:node:0,32",
+        "partId": "node-74c0b4ffc689",
+        "originUnits": [
+          0,
+          32
+        ],
+        "quarterTurns": 2,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-triangle-slim-left:node:128,0",
+        "partId": "node-b3757ae7933a",
+        "originUnits": [
+          128,
+          0
+        ],
+        "quarterTurns": 0,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-triangle-slim-left:span:0",
+        "partId": "span-d47d3475d32a",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          0
+        ],
+        "bUnits": [
+          128,
+          0
+        ],
+        "startNodeKey": "single-triangle-slim-left:node:0,0",
+        "endNodeKey": "single-triangle-slim-left:node:128,0"
+      },
+      {
+        "key": "single-triangle-slim-left:span:1",
+        "partId": "span-ac212cda6bdf",
+        "originUnits": [
+          128,
+          0
+        ],
+        "quarterTurns": 1,
+        "role": "perimeter-span",
+        "aUnits": [
+          128,
+          0
+        ],
+        "bUnits": [
+          0,
+          32
+        ],
+        "startNodeKey": "single-triangle-slim-left:node:128,0",
+        "endNodeKey": "single-triangle-slim-left:node:0,32"
+      },
+      {
+        "key": "single-triangle-slim-left:span:2",
+        "partId": "span-618a6deb050d",
+        "originUnits": [
+          0,
+          32
+        ],
+        "quarterTurns": 3,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          32
+        ],
+        "bUnits": [
+          0,
+          0
+        ],
+        "startNodeKey": "single-triangle-slim-left:node:0,32",
+        "endNodeKey": "single-triangle-slim-left:node:0,0"
+      }
+    ],
+    "validation": {
+      "coreOverlapAreaM2": 2.220446049250313e-16,
+      "coreSymmetricDifferenceFromExactMiterRingM2": 3.2407175180401117e-15,
+      "nominalPortContacts": [
+        {
+          "spanKey": "single-triangle-slim-left:span:0",
+          "nodeKey": "single-triangle-slim-left:node:0,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-slim-left:span:0",
+          "nodeKey": "single-triangle-slim-left:node:128,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-slim-left:span:1",
+          "nodeKey": "single-triangle-slim-left:node:128,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.0,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-slim-left:span:1",
+          "nodeKey": "single-triangle-slim-left:node:0,32",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.0,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-slim-left:span:2",
+          "nodeKey": "single-triangle-slim-left:node:0,32",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-slim-left:span:2",
+          "nodeKey": "single-triangle-slim-left:node:0,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        }
+      ],
+      "corePlanarGeometryPass": true
+    },
+    "pressureAcceptance": false,
+    "reviewOffsetM": [
+      18,
+      6
+    ]
+  },
+  {
+    "id": "single-triangle-slim-right",
+    "nominalPolygonUnits": [
+      [
+        0,
+        0
+      ],
+      [
+        128,
+        0
+      ],
+      [
+        128,
+        32
+      ]
+    ],
+    "partitionsUnits": [],
+    "nativeFloors": [
+      {
+        "partId": "triangle-slim-right",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "native": {
+          "assetId": "part-e315cf681838afff216e",
+          "revision": "r002",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-e315cf681838afff216e--floor",
+          "sourceToNominal": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "quarterTurns": 0,
+            "reflected": false
+          }
+        }
+      }
+    ],
+    "placements": [
+      {
+        "key": "single-triangle-slim-right:node:0,0",
+        "partId": "node-ac322cc2ef83",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 2,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-triangle-slim-right:node:128,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          128,
+          0
+        ],
+        "quarterTurns": 3,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-triangle-slim-right:node:128,32",
+        "partId": "node-dd5634ec14cc",
+        "originUnits": [
+          128,
+          32
+        ],
+        "quarterTurns": 0,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-triangle-slim-right:span:0",
+        "partId": "span-1fccd896f86f",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          0
+        ],
+        "bUnits": [
+          128,
+          0
+        ],
+        "startNodeKey": "single-triangle-slim-right:node:0,0",
+        "endNodeKey": "single-triangle-slim-right:node:128,0"
+      },
+      {
+        "key": "single-triangle-slim-right:span:1",
+        "partId": "span-f6f884420a9f",
+        "originUnits": [
+          128,
+          0
+        ],
+        "quarterTurns": 1,
+        "role": "perimeter-span",
+        "aUnits": [
+          128,
+          0
+        ],
+        "bUnits": [
+          128,
+          32
+        ],
+        "startNodeKey": "single-triangle-slim-right:node:128,0",
+        "endNodeKey": "single-triangle-slim-right:node:128,32"
+      },
+      {
+        "key": "single-triangle-slim-right:span:2",
+        "partId": "span-135ed5730033",
+        "originUnits": [
+          128,
+          32
+        ],
+        "quarterTurns": 2,
+        "role": "perimeter-span",
+        "aUnits": [
+          128,
+          32
+        ],
+        "bUnits": [
+          0,
+          0
+        ],
+        "startNodeKey": "single-triangle-slim-right:node:128,32",
+        "endNodeKey": "single-triangle-slim-right:node:0,0"
+      }
+    ],
+    "validation": {
+      "coreOverlapAreaM2": 3.3306690738754696e-16,
+      "coreSymmetricDifferenceFromExactMiterRingM2": 2.7108293659418932e-15,
+      "nominalPortContacts": [
+        {
+          "spanKey": "single-triangle-slim-right:span:0",
+          "nodeKey": "single-triangle-slim-right:node:0,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-slim-right:span:0",
+          "nodeKey": "single-triangle-slim-right:node:128,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-slim-right:span:1",
+          "nodeKey": "single-triangle-slim-right:node:128,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-slim-right:span:1",
+          "nodeKey": "single-triangle-slim-right:node:128,32",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-slim-right:span:2",
+          "nodeKey": "single-triangle-slim-right:node:128,32",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.0,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-slim-right:span:2",
+          "nodeKey": "single-triangle-slim-right:node:0,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.0,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        }
+      ],
+      "corePlanarGeometryPass": true
+    },
+    "pressureAcceptance": false,
+    "reviewOffsetM": [
+      0,
+      12
+    ]
+  },
+  {
+    "id": "single-corner-clipped",
+    "nominalPolygonUnits": [
+      [
+        0,
+        0
+      ],
+      [
+        64,
+        0
+      ],
+      [
+        64,
+        32
+      ],
+      [
+        32,
+        64
+      ],
+      [
+        0,
+        64
+      ]
+    ],
+    "partitionsUnits": [],
+    "nativeFloors": [
+      {
+        "partId": "corner-clipped",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "native": {
+          "assetId": "part-94474fb38b16d77e6429",
+          "revision": "r002",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-94474fb38b16d77e6429--floor",
+          "sourceToNominal": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "quarterTurns": 0,
+            "reflected": false
+          }
+        }
+      }
+    ],
+    "placements": [
+      {
+        "key": "single-corner-clipped:node:0,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 2,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-corner-clipped:node:0,64",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          0,
+          64
+        ],
+        "quarterTurns": 1,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-corner-clipped:node:32,64",
+        "partId": "node-722dea1af576",
+        "originUnits": [
+          32,
+          64
+        ],
+        "quarterTurns": 1,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-corner-clipped:node:64,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          64,
+          0
+        ],
+        "quarterTurns": 3,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-corner-clipped:node:64,32",
+        "partId": "node-9f376826b3e4",
+        "originUnits": [
+          64,
+          32
+        ],
+        "quarterTurns": 3,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-corner-clipped:span:0",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          0
+        ],
+        "bUnits": [
+          64,
+          0
+        ],
+        "startNodeKey": "single-corner-clipped:node:0,0",
+        "endNodeKey": "single-corner-clipped:node:64,0"
+      },
+      {
+        "key": "single-corner-clipped:span:1",
+        "partId": "span-b3f0724acb39",
+        "originUnits": [
+          64,
+          0
+        ],
+        "quarterTurns": 1,
+        "role": "perimeter-span",
+        "aUnits": [
+          64,
+          0
+        ],
+        "bUnits": [
+          64,
+          32
+        ],
+        "startNodeKey": "single-corner-clipped:node:64,0",
+        "endNodeKey": "single-corner-clipped:node:64,32"
+      },
+      {
+        "key": "single-corner-clipped:span:2",
+        "partId": "span-a3fe624b4c51",
+        "originUnits": [
+          64,
+          32
+        ],
+        "quarterTurns": 1,
+        "role": "perimeter-span",
+        "aUnits": [
+          64,
+          32
+        ],
+        "bUnits": [
+          32,
+          64
+        ],
+        "startNodeKey": "single-corner-clipped:node:64,32",
+        "endNodeKey": "single-corner-clipped:node:32,64"
+      },
+      {
+        "key": "single-corner-clipped:span:3",
+        "partId": "span-b3f0724acb39",
+        "originUnits": [
+          32,
+          64
+        ],
+        "quarterTurns": 2,
+        "role": "perimeter-span",
+        "aUnits": [
+          32,
+          64
+        ],
+        "bUnits": [
+          0,
+          64
+        ],
+        "startNodeKey": "single-corner-clipped:node:32,64",
+        "endNodeKey": "single-corner-clipped:node:0,64"
+      },
+      {
+        "key": "single-corner-clipped:span:4",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          0,
+          64
+        ],
+        "quarterTurns": 3,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          64
+        ],
+        "bUnits": [
+          0,
+          0
+        ],
+        "startNodeKey": "single-corner-clipped:node:0,64",
+        "endNodeKey": "single-corner-clipped:node:0,0"
+      }
+    ],
+    "validation": {
+      "coreOverlapAreaM2": 2.220446049250313e-16,
+      "coreSymmetricDifferenceFromExactMiterRingM2": 4.3402842382251975e-16,
+      "nominalPortContacts": [
+        {
+          "spanKey": "single-corner-clipped:span:0",
+          "nodeKey": "single-corner-clipped:node:0,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-corner-clipped:span:0",
+          "nodeKey": "single-corner-clipped:node:64,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-corner-clipped:span:1",
+          "nodeKey": "single-corner-clipped:node:64,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-corner-clipped:span:1",
+          "nodeKey": "single-corner-clipped:node:64,32",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-corner-clipped:span:2",
+          "nodeKey": "single-corner-clipped:node:64,32",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.0,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-corner-clipped:span:2",
+          "nodeKey": "single-corner-clipped:node:32,64",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.0,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-corner-clipped:span:3",
+          "nodeKey": "single-corner-clipped:node:32,64",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-corner-clipped:span:3",
+          "nodeKey": "single-corner-clipped:node:0,64",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-corner-clipped:span:4",
+          "nodeKey": "single-corner-clipped:node:0,64",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-corner-clipped:span:4",
+          "nodeKey": "single-corner-clipped:node:0,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        }
+      ],
+      "corePlanarGeometryPass": true
+    },
+    "pressureAcceptance": false,
+    "reviewOffsetM": [
+      6,
+      12
+    ]
+  },
+  {
+    "id": "single-taper-4m",
+    "nominalPolygonUnits": [
+      [
+        0,
+        0
+      ],
+      [
+        64,
+        0
+      ],
+      [
+        48,
+        128
+      ],
+      [
+        16,
+        128
+      ]
+    ],
+    "partitionsUnits": [],
+    "nativeFloors": [
+      {
+        "partId": "taper-4m",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "native": {
+          "assetId": "part-73f48194371a682af29c",
+          "revision": "r002",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-73f48194371a682af29c--floor",
+          "sourceToNominal": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "quarterTurns": 0,
+            "reflected": false
+          }
+        }
+      }
+    ],
+    "placements": [
+      {
+        "key": "single-taper-4m:node:0,0",
+        "partId": "node-028c6d82a9cd",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 3,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-taper-4m:node:16,128",
+        "partId": "node-fa76146eb8d8",
+        "originUnits": [
+          16,
+          128
+        ],
+        "quarterTurns": 1,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-taper-4m:node:48,128",
+        "partId": "node-3b50213b5a7b",
+        "originUnits": [
+          48,
+          128
+        ],
+        "quarterTurns": 1,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-taper-4m:node:64,0",
+        "partId": "node-521432080d97",
+        "originUnits": [
+          64,
+          0
+        ],
+        "quarterTurns": 3,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-taper-4m:span:0",
+        "partId": "span-2072e1ebfaf9",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          0
+        ],
+        "bUnits": [
+          64,
+          0
+        ],
+        "startNodeKey": "single-taper-4m:node:0,0",
+        "endNodeKey": "single-taper-4m:node:64,0"
+      },
+      {
+        "key": "single-taper-4m:span:1",
+        "partId": "span-56b00de0648a",
+        "originUnits": [
+          64,
+          0
+        ],
+        "quarterTurns": 1,
+        "role": "perimeter-span",
+        "aUnits": [
+          64,
+          0
+        ],
+        "bUnits": [
+          48,
+          128
+        ],
+        "startNodeKey": "single-taper-4m:node:64,0",
+        "endNodeKey": "single-taper-4m:node:48,128"
+      },
+      {
+        "key": "single-taper-4m:span:2",
+        "partId": "span-b3f0724acb39",
+        "originUnits": [
+          48,
+          128
+        ],
+        "quarterTurns": 2,
+        "role": "perimeter-span",
+        "aUnits": [
+          48,
+          128
+        ],
+        "bUnits": [
+          16,
+          128
+        ],
+        "startNodeKey": "single-taper-4m:node:48,128",
+        "endNodeKey": "single-taper-4m:node:16,128"
+      },
+      {
+        "key": "single-taper-4m:span:3",
+        "partId": "span-e15d62f9fc09",
+        "originUnits": [
+          16,
+          128
+        ],
+        "quarterTurns": 2,
+        "role": "perimeter-span",
+        "aUnits": [
+          16,
+          128
+        ],
+        "bUnits": [
+          0,
+          0
+        ],
+        "startNodeKey": "single-taper-4m:node:16,128",
+        "endNodeKey": "single-taper-4m:node:0,0"
+      }
+    ],
+    "validation": {
+      "coreOverlapAreaM2": 1.1102230246251565e-15,
+      "coreSymmetricDifferenceFromExactMiterRingM2": 0.0,
+      "nominalPortContacts": [
+        {
+          "spanKey": "single-taper-4m:span:0",
+          "nodeKey": "single-taper-4m:node:0,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-taper-4m:span:0",
+          "nodeKey": "single-taper-4m:node:64,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-taper-4m:span:1",
+          "nodeKey": "single-taper-4m:node:64,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.0,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-taper-4m:span:1",
+          "nodeKey": "single-taper-4m:node:48,128",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.0,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-taper-4m:span:2",
+          "nodeKey": "single-taper-4m:node:48,128",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-taper-4m:span:2",
+          "nodeKey": "single-taper-4m:node:16,128",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-taper-4m:span:3",
+          "nodeKey": "single-taper-4m:node:16,128",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.0,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-taper-4m:span:3",
+          "nodeKey": "single-taper-4m:node:0,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.0,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        }
+      ],
+      "corePlanarGeometryPass": true
+    },
+    "pressureAcceptance": false,
+    "reviewOffsetM": [
+      12,
+      12
+    ]
+  },
+  {
+    "id": "single-triangle-1m",
+    "nominalPolygonUnits": [
+      [
+        0,
+        0
+      ],
+      [
+        32,
+        0
+      ],
+      [
+        0,
+        32
+      ]
+    ],
+    "partitionsUnits": [],
+    "nativeFloors": [
+      {
+        "partId": "triangle-1m",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "native": {
+          "assetId": "part-7902f7617fb23eb8abe3",
+          "revision": "r002",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-7902f7617fb23eb8abe3--floor",
+          "sourceToNominal": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "quarterTurns": 0,
+            "reflected": false
+          }
+        }
+      }
+    ],
+    "placements": [
+      {
+        "key": "single-triangle-1m:node:0,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 2,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-triangle-1m:node:0,32",
+        "partId": "node-8ace9108954c",
+        "originUnits": [
+          0,
+          32
+        ],
+        "quarterTurns": 1,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-triangle-1m:node:32,0",
+        "partId": "node-4cf5a3e80bfc",
+        "originUnits": [
+          32,
+          0
+        ],
+        "quarterTurns": 3,
+        "role": "boundary-node"
+      },
+      {
+        "key": "single-triangle-1m:span:0",
+        "partId": "span-ae8b5f8aa228",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          0
+        ],
+        "bUnits": [
+          32,
+          0
+        ],
+        "startNodeKey": "single-triangle-1m:node:0,0",
+        "endNodeKey": "single-triangle-1m:node:32,0"
+      },
+      {
+        "key": "single-triangle-1m:span:1",
+        "partId": "span-ab0d57a0fb09",
+        "originUnits": [
+          32,
+          0
+        ],
+        "quarterTurns": 1,
+        "role": "perimeter-span",
+        "aUnits": [
+          32,
+          0
+        ],
+        "bUnits": [
+          0,
+          32
+        ],
+        "startNodeKey": "single-triangle-1m:node:32,0",
+        "endNodeKey": "single-triangle-1m:node:0,32"
+      },
+      {
+        "key": "single-triangle-1m:span:2",
+        "partId": "span-76cad9647098",
+        "originUnits": [
+          0,
+          32
+        ],
+        "quarterTurns": 3,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          32
+        ],
+        "bUnits": [
+          0,
+          0
+        ],
+        "startNodeKey": "single-triangle-1m:node:0,32",
+        "endNodeKey": "single-triangle-1m:node:0,0"
+      }
+    ],
+    "validation": {
+      "coreOverlapAreaM2": 6.661338147750939e-16,
+      "coreSymmetricDifferenceFromExactMiterRingM2": 6.923454934466862e-16,
+      "nominalPortContacts": [
+        {
+          "spanKey": "single-triangle-1m:span:0",
+          "nodeKey": "single-triangle-1m:node:0,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-1m:span:0",
+          "nodeKey": "single-triangle-1m:node:32,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-1m:span:1",
+          "nodeKey": "single-triangle-1m:node:32,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.0,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-1m:span:1",
+          "nodeKey": "single-triangle-1m:node:0,32",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.0,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-1m:span:2",
+          "nodeKey": "single-triangle-1m:node:0,32",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "single-triangle-1m:span:2",
+          "nodeKey": "single-triangle-1m:node:0,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        }
+      ],
+      "corePlanarGeometryPass": true
+    },
+    "pressureAcceptance": false,
+    "reviewOffsetM": [
+      18,
+      12
+    ]
+  },
+  {
+    "id": "mixed-reentrant-L",
+    "nominalPolygonUnits": [
+      [
+        0,
+        0
+      ],
+      [
+        128,
+        0
+      ],
+      [
+        128,
+        64
+      ],
+      [
+        64,
+        64
+      ],
+      [
+        64,
+        128
+      ],
+      [
+        0,
+        128
+      ]
+    ],
+    "partitionsUnits": [],
+    "nativeFloors": [
+      {
+        "partId": "square-2m",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "native": {
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "revision": "r002",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+          "sourceToNominal": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "quarterTurns": 0,
+            "reflected": false
+          }
+        }
+      },
+      {
+        "partId": "square-2m",
+        "originUnits": [
+          64,
+          0
+        ],
+        "quarterTurns": 0,
+        "native": {
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "revision": "r002",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+          "sourceToNominal": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "quarterTurns": 0,
+            "reflected": false
+          }
+        }
+      },
+      {
+        "partId": "square-2m",
+        "originUnits": [
+          0,
+          64
+        ],
+        "quarterTurns": 0,
+        "native": {
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "revision": "r002",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+          "sourceToNominal": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "quarterTurns": 0,
+            "reflected": false
+          }
+        }
+      }
+    ],
+    "placements": [
+      {
+        "key": "mixed-reentrant-L:node:0,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 2,
+        "role": "boundary-node"
+      },
+      {
+        "key": "mixed-reentrant-L:node:0,128",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          0,
+          128
+        ],
+        "quarterTurns": 1,
+        "role": "boundary-node"
+      },
+      {
+        "key": "mixed-reentrant-L:node:64,64",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          64,
+          64
+        ],
+        "quarterTurns": 2,
+        "role": "boundary-node"
+      },
+      {
+        "key": "mixed-reentrant-L:node:64,128",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          64,
+          128
+        ],
+        "quarterTurns": 0,
+        "role": "boundary-node"
+      },
+      {
+        "key": "mixed-reentrant-L:node:128,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          128,
+          0
+        ],
+        "quarterTurns": 3,
+        "role": "boundary-node"
+      },
+      {
+        "key": "mixed-reentrant-L:node:128,64",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          128,
+          64
+        ],
+        "quarterTurns": 0,
+        "role": "boundary-node"
+      },
+      {
+        "key": "mixed-reentrant-L:span:0",
+        "partId": "span-0cdd4c8ec952",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          0
+        ],
+        "bUnits": [
+          128,
+          0
+        ],
+        "startNodeKey": "mixed-reentrant-L:node:0,0",
+        "endNodeKey": "mixed-reentrant-L:node:128,0"
+      },
+      {
+        "key": "mixed-reentrant-L:span:1",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          128,
+          0
+        ],
+        "quarterTurns": 1,
+        "role": "perimeter-span",
+        "aUnits": [
+          128,
+          0
+        ],
+        "bUnits": [
+          128,
+          64
+        ],
+        "startNodeKey": "mixed-reentrant-L:node:128,0",
+        "endNodeKey": "mixed-reentrant-L:node:128,64"
+      },
+      {
+        "key": "mixed-reentrant-L:span:2",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          128,
+          64
+        ],
+        "quarterTurns": 2,
+        "role": "perimeter-span",
+        "aUnits": [
+          128,
+          64
+        ],
+        "bUnits": [
+          64,
+          64
+        ],
+        "startNodeKey": "mixed-reentrant-L:node:128,64",
+        "endNodeKey": "mixed-reentrant-L:node:64,64"
+      },
+      {
+        "key": "mixed-reentrant-L:span:3",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          64,
+          64
+        ],
+        "quarterTurns": 1,
+        "role": "perimeter-span",
+        "aUnits": [
+          64,
+          64
+        ],
+        "bUnits": [
+          64,
+          128
+        ],
+        "startNodeKey": "mixed-reentrant-L:node:64,64",
+        "endNodeKey": "mixed-reentrant-L:node:64,128"
+      },
+      {
+        "key": "mixed-reentrant-L:span:4",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          64,
+          128
+        ],
+        "quarterTurns": 2,
+        "role": "perimeter-span",
+        "aUnits": [
+          64,
+          128
+        ],
+        "bUnits": [
+          0,
+          128
+        ],
+        "startNodeKey": "mixed-reentrant-L:node:64,128",
+        "endNodeKey": "mixed-reentrant-L:node:0,128"
+      },
+      {
+        "key": "mixed-reentrant-L:span:5",
+        "partId": "span-0cdd4c8ec952",
+        "originUnits": [
+          0,
+          128
+        ],
+        "quarterTurns": 3,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          128
+        ],
+        "bUnits": [
+          0,
+          0
+        ],
+        "startNodeKey": "mixed-reentrant-L:node:0,128",
+        "endNodeKey": "mixed-reentrant-L:node:0,0"
+      }
+    ],
+    "validation": {
+      "coreOverlapAreaM2": 0.0,
+      "coreSymmetricDifferenceFromExactMiterRingM2": 0.0,
+      "nominalPortContacts": [
+        {
+          "spanKey": "mixed-reentrant-L:span:0",
+          "nodeKey": "mixed-reentrant-L:node:0,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-reentrant-L:span:0",
+          "nodeKey": "mixed-reentrant-L:node:128,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-reentrant-L:span:1",
+          "nodeKey": "mixed-reentrant-L:node:128,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-reentrant-L:span:1",
+          "nodeKey": "mixed-reentrant-L:node:128,64",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-reentrant-L:span:2",
+          "nodeKey": "mixed-reentrant-L:node:128,64",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-reentrant-L:span:2",
+          "nodeKey": "mixed-reentrant-L:node:64,64",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-reentrant-L:span:3",
+          "nodeKey": "mixed-reentrant-L:node:64,64",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-reentrant-L:span:3",
+          "nodeKey": "mixed-reentrant-L:node:64,128",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-reentrant-L:span:4",
+          "nodeKey": "mixed-reentrant-L:node:64,128",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-reentrant-L:span:4",
+          "nodeKey": "mixed-reentrant-L:node:0,128",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-reentrant-L:span:5",
+          "nodeKey": "mixed-reentrant-L:node:0,128",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-reentrant-L:span:5",
+          "nodeKey": "mixed-reentrant-L:node:0,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        }
+      ],
+      "corePlanarGeometryPass": true
+    },
+    "pressureAcceptance": false,
+    "reviewOffsetM": [
+      0,
+      18
+    ]
+  },
+  {
+    "id": "mixed-square-triangle",
+    "nominalPolygonUnits": [
+      [
+        0,
+        0
+      ],
+      [
+        128,
+        0
+      ],
+      [
+        64,
+        64
+      ],
+      [
+        0,
+        64
+      ]
+    ],
+    "partitionsUnits": [],
+    "nativeFloors": [
+      {
+        "partId": "square-2m",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "native": {
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "revision": "r002",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+          "sourceToNominal": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "quarterTurns": 0,
+            "reflected": false
+          }
+        }
+      },
+      {
+        "partId": "triangle-45",
+        "originUnits": [
+          64,
+          0
+        ],
+        "quarterTurns": 0,
+        "native": {
+          "assetId": "part-771cc318e835d7a08abd",
+          "revision": "r002",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-771cc318e835d7a08abd--floor",
+          "sourceToNominal": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "quarterTurns": 0,
+            "reflected": false
+          }
+        }
+      }
+    ],
+    "placements": [
+      {
+        "key": "mixed-square-triangle:node:0,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 2,
+        "role": "boundary-node"
+      },
+      {
+        "key": "mixed-square-triangle:node:0,64",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          0,
+          64
+        ],
+        "quarterTurns": 1,
+        "role": "boundary-node"
+      },
+      {
+        "key": "mixed-square-triangle:node:64,64",
+        "partId": "node-722dea1af576",
+        "originUnits": [
+          64,
+          64
+        ],
+        "quarterTurns": 1,
+        "role": "boundary-node"
+      },
+      {
+        "key": "mixed-square-triangle:node:128,0",
+        "partId": "node-4cf5a3e80bfc",
+        "originUnits": [
+          128,
+          0
+        ],
+        "quarterTurns": 3,
+        "role": "boundary-node"
+      },
+      {
+        "key": "mixed-square-triangle:span:0",
+        "partId": "span-b3230e7b8584",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          0
+        ],
+        "bUnits": [
+          128,
+          0
+        ],
+        "startNodeKey": "mixed-square-triangle:node:0,0",
+        "endNodeKey": "mixed-square-triangle:node:128,0"
+      },
+      {
+        "key": "mixed-square-triangle:span:1",
+        "partId": "span-a2d8e928c4dc",
+        "originUnits": [
+          128,
+          0
+        ],
+        "quarterTurns": 1,
+        "role": "perimeter-span",
+        "aUnits": [
+          128,
+          0
+        ],
+        "bUnits": [
+          64,
+          64
+        ],
+        "startNodeKey": "mixed-square-triangle:node:128,0",
+        "endNodeKey": "mixed-square-triangle:node:64,64"
+      },
+      {
+        "key": "mixed-square-triangle:span:2",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          64,
+          64
+        ],
+        "quarterTurns": 2,
+        "role": "perimeter-span",
+        "aUnits": [
+          64,
+          64
+        ],
+        "bUnits": [
+          0,
+          64
+        ],
+        "startNodeKey": "mixed-square-triangle:node:64,64",
+        "endNodeKey": "mixed-square-triangle:node:0,64"
+      },
+      {
+        "key": "mixed-square-triangle:span:3",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          0,
+          64
+        ],
+        "quarterTurns": 3,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          64
+        ],
+        "bUnits": [
+          0,
+          0
+        ],
+        "startNodeKey": "mixed-square-triangle:node:0,64",
+        "endNodeKey": "mixed-square-triangle:node:0,0"
+      }
+    ],
+    "validation": {
+      "coreOverlapAreaM2": 1.3322676295501878e-15,
+      "coreSymmetricDifferenceFromExactMiterRingM2": 1.0102172694653525e-15,
+      "nominalPortContacts": [
+        {
+          "spanKey": "mixed-square-triangle:span:0",
+          "nodeKey": "mixed-square-triangle:node:0,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-square-triangle:span:0",
+          "nodeKey": "mixed-square-triangle:node:128,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-square-triangle:span:1",
+          "nodeKey": "mixed-square-triangle:node:128,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.0,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-square-triangle:span:1",
+          "nodeKey": "mixed-square-triangle:node:64,64",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.0,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-square-triangle:span:2",
+          "nodeKey": "mixed-square-triangle:node:64,64",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-square-triangle:span:2",
+          "nodeKey": "mixed-square-triangle:node:0,64",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-square-triangle:span:3",
+          "nodeKey": "mixed-square-triangle:node:0,64",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-square-triangle:span:3",
+          "nodeKey": "mixed-square-triangle:node:0,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        }
+      ],
+      "corePlanarGeometryPass": true
+    },
+    "pressureAcceptance": false,
+    "reviewOffsetM": [
+      6,
+      18
+    ]
+  },
+  {
+    "id": "mixed-orthogonal-T",
+    "nominalPolygonUnits": [
+      [
+        0,
+        0
+      ],
+      [
+        64,
+        0
+      ],
+      [
+        128,
+        0
+      ],
+      [
+        128,
+        64
+      ],
+      [
+        64,
+        64
+      ],
+      [
+        0,
+        64
+      ]
+    ],
+    "partitionsUnits": [
+      [
+        [
+          64,
+          0
+        ],
+        [
+          64,
+          64
+        ]
+      ]
+    ],
+    "nativeFloors": [
+      {
+        "partId": "square-2m",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "native": {
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "revision": "r002",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+          "sourceToNominal": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "quarterTurns": 0,
+            "reflected": false
+          }
+        }
+      },
+      {
+        "partId": "square-2m",
+        "originUnits": [
+          64,
+          0
+        ],
+        "quarterTurns": 0,
+        "native": {
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "revision": "r002",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+          "sourceToNominal": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "quarterTurns": 0,
+            "reflected": false
+          }
+        }
+      }
+    ],
+    "placements": [
+      {
+        "key": "mixed-orthogonal-T:node:0,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 2,
+        "role": "boundary-node"
+      },
+      {
+        "key": "mixed-orthogonal-T:node:0,64",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          0,
+          64
+        ],
+        "quarterTurns": 1,
+        "role": "boundary-node"
+      },
+      {
+        "key": "mixed-orthogonal-T:node:64,0",
+        "partId": "node-b4c788600641",
+        "originUnits": [
+          64,
+          0
+        ],
+        "quarterTurns": 3,
+        "role": "boundary-node"
+      },
+      {
+        "key": "mixed-orthogonal-T:node:64,64",
+        "partId": "node-b4c788600641",
+        "originUnits": [
+          64,
+          64
+        ],
+        "quarterTurns": 1,
+        "role": "boundary-node"
+      },
+      {
+        "key": "mixed-orthogonal-T:node:128,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          128,
+          0
+        ],
+        "quarterTurns": 3,
+        "role": "boundary-node"
+      },
+      {
+        "key": "mixed-orthogonal-T:node:128,64",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          128,
+          64
+        ],
+        "quarterTurns": 0,
+        "role": "boundary-node"
+      },
+      {
+        "key": "mixed-orthogonal-T:span:0",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          0
+        ],
+        "bUnits": [
+          64,
+          0
+        ],
+        "startNodeKey": "mixed-orthogonal-T:node:0,0",
+        "endNodeKey": "mixed-orthogonal-T:node:64,0"
+      },
+      {
+        "key": "mixed-orthogonal-T:span:1",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          64,
+          0
+        ],
+        "quarterTurns": 0,
+        "role": "perimeter-span",
+        "aUnits": [
+          64,
+          0
+        ],
+        "bUnits": [
+          128,
+          0
+        ],
+        "startNodeKey": "mixed-orthogonal-T:node:64,0",
+        "endNodeKey": "mixed-orthogonal-T:node:128,0"
+      },
+      {
+        "key": "mixed-orthogonal-T:span:2",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          128,
+          0
+        ],
+        "quarterTurns": 1,
+        "role": "perimeter-span",
+        "aUnits": [
+          128,
+          0
+        ],
+        "bUnits": [
+          128,
+          64
+        ],
+        "startNodeKey": "mixed-orthogonal-T:node:128,0",
+        "endNodeKey": "mixed-orthogonal-T:node:128,64"
+      },
+      {
+        "key": "mixed-orthogonal-T:span:3",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          128,
+          64
+        ],
+        "quarterTurns": 2,
+        "role": "perimeter-span",
+        "aUnits": [
+          128,
+          64
+        ],
+        "bUnits": [
+          64,
+          64
+        ],
+        "startNodeKey": "mixed-orthogonal-T:node:128,64",
+        "endNodeKey": "mixed-orthogonal-T:node:64,64"
+      },
+      {
+        "key": "mixed-orthogonal-T:span:4",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          64,
+          64
+        ],
+        "quarterTurns": 2,
+        "role": "perimeter-span",
+        "aUnits": [
+          64,
+          64
+        ],
+        "bUnits": [
+          0,
+          64
+        ],
+        "startNodeKey": "mixed-orthogonal-T:node:64,64",
+        "endNodeKey": "mixed-orthogonal-T:node:0,64"
+      },
+      {
+        "key": "mixed-orthogonal-T:span:5",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          0,
+          64
+        ],
+        "quarterTurns": 3,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          64
+        ],
+        "bUnits": [
+          0,
+          0
+        ],
+        "startNodeKey": "mixed-orthogonal-T:node:0,64",
+        "endNodeKey": "mixed-orthogonal-T:node:0,0"
+      },
+      {
+        "key": "mixed-orthogonal-T:span:6",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          64,
+          0
+        ],
+        "quarterTurns": 1,
+        "role": "partition-span",
+        "aUnits": [
+          64,
+          0
+        ],
+        "bUnits": [
+          64,
+          64
+        ],
+        "startNodeKey": "mixed-orthogonal-T:node:64,0",
+        "endNodeKey": "mixed-orthogonal-T:node:64,64"
+      }
+    ],
+    "validation": {
+      "coreOverlapAreaM2": 0.0,
+      "coreSymmetricDifferenceFromExactMiterRingM2": 0.0,
+      "nominalPortContacts": [
+        {
+          "spanKey": "mixed-orthogonal-T:span:0",
+          "nodeKey": "mixed-orthogonal-T:node:0,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-orthogonal-T:span:0",
+          "nodeKey": "mixed-orthogonal-T:node:64,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-orthogonal-T:span:1",
+          "nodeKey": "mixed-orthogonal-T:node:64,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-orthogonal-T:span:1",
+          "nodeKey": "mixed-orthogonal-T:node:128,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-orthogonal-T:span:2",
+          "nodeKey": "mixed-orthogonal-T:node:128,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-orthogonal-T:span:2",
+          "nodeKey": "mixed-orthogonal-T:node:128,64",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-orthogonal-T:span:3",
+          "nodeKey": "mixed-orthogonal-T:node:128,64",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-orthogonal-T:span:3",
+          "nodeKey": "mixed-orthogonal-T:node:64,64",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-orthogonal-T:span:4",
+          "nodeKey": "mixed-orthogonal-T:node:64,64",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-orthogonal-T:span:4",
+          "nodeKey": "mixed-orthogonal-T:node:0,64",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-orthogonal-T:span:5",
+          "nodeKey": "mixed-orthogonal-T:node:0,64",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-orthogonal-T:span:5",
+          "nodeKey": "mixed-orthogonal-T:node:0,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-orthogonal-T:span:6",
+          "nodeKey": "mixed-orthogonal-T:node:64,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-orthogonal-T:span:6",
+          "nodeKey": "mixed-orthogonal-T:node:64,64",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        }
+      ],
+      "corePlanarGeometryPass": true
+    },
+    "pressureAcceptance": false,
+    "reviewOffsetM": [
+      12,
+      18
+    ]
+  },
+  {
+    "id": "mixed-collinear-module-joins",
+    "nominalPolygonUnits": [
+      [
+        0,
+        0
+      ],
+      [
+        64,
+        0
+      ],
+      [
+        128,
+        0
+      ],
+      [
+        128,
+        64
+      ],
+      [
+        64,
+        64
+      ],
+      [
+        0,
+        64
+      ]
+    ],
+    "partitionsUnits": [],
+    "nativeFloors": [
+      {
+        "partId": "square-2m",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "native": {
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "revision": "r002",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+          "sourceToNominal": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "quarterTurns": 0,
+            "reflected": false
+          }
+        }
+      },
+      {
+        "partId": "square-2m",
+        "originUnits": [
+          64,
+          0
+        ],
+        "quarterTurns": 0,
+        "native": {
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "revision": "r002",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+          "sourceToNominal": {
+            "translation": [
+              0,
+              0,
+              0
+            ],
+            "quarterTurns": 0,
+            "reflected": false
+          }
+        }
+      }
+    ],
+    "placements": [
+      {
+        "key": "mixed-collinear-module-joins:node:0,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 2,
+        "role": "boundary-node"
+      },
+      {
+        "key": "mixed-collinear-module-joins:node:0,64",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          0,
+          64
+        ],
+        "quarterTurns": 1,
+        "role": "boundary-node"
+      },
+      {
+        "key": "mixed-collinear-module-joins:node:64,0",
+        "partId": "node-a8148ac9f645",
+        "originUnits": [
+          64,
+          0
+        ],
+        "quarterTurns": 0,
+        "role": "boundary-node"
+      },
+      {
+        "key": "mixed-collinear-module-joins:node:64,64",
+        "partId": "node-a8148ac9f645",
+        "originUnits": [
+          64,
+          64
+        ],
+        "quarterTurns": 0,
+        "role": "boundary-node"
+      },
+      {
+        "key": "mixed-collinear-module-joins:node:128,0",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          128,
+          0
+        ],
+        "quarterTurns": 3,
+        "role": "boundary-node"
+      },
+      {
+        "key": "mixed-collinear-module-joins:node:128,64",
+        "partId": "node-ee493bf1352e",
+        "originUnits": [
+          128,
+          64
+        ],
+        "quarterTurns": 0,
+        "role": "boundary-node"
+      },
+      {
+        "key": "mixed-collinear-module-joins:span:0",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          0
+        ],
+        "bUnits": [
+          64,
+          0
+        ],
+        "startNodeKey": "mixed-collinear-module-joins:node:0,0",
+        "endNodeKey": "mixed-collinear-module-joins:node:64,0"
+      },
+      {
+        "key": "mixed-collinear-module-joins:span:1",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          64,
+          0
+        ],
+        "quarterTurns": 0,
+        "role": "perimeter-span",
+        "aUnits": [
+          64,
+          0
+        ],
+        "bUnits": [
+          128,
+          0
+        ],
+        "startNodeKey": "mixed-collinear-module-joins:node:64,0",
+        "endNodeKey": "mixed-collinear-module-joins:node:128,0"
+      },
+      {
+        "key": "mixed-collinear-module-joins:span:2",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          128,
+          0
+        ],
+        "quarterTurns": 1,
+        "role": "perimeter-span",
+        "aUnits": [
+          128,
+          0
+        ],
+        "bUnits": [
+          128,
+          64
+        ],
+        "startNodeKey": "mixed-collinear-module-joins:node:128,0",
+        "endNodeKey": "mixed-collinear-module-joins:node:128,64"
+      },
+      {
+        "key": "mixed-collinear-module-joins:span:3",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          128,
+          64
+        ],
+        "quarterTurns": 2,
+        "role": "perimeter-span",
+        "aUnits": [
+          128,
+          64
+        ],
+        "bUnits": [
+          64,
+          64
+        ],
+        "startNodeKey": "mixed-collinear-module-joins:node:128,64",
+        "endNodeKey": "mixed-collinear-module-joins:node:64,64"
+      },
+      {
+        "key": "mixed-collinear-module-joins:span:4",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          64,
+          64
+        ],
+        "quarterTurns": 2,
+        "role": "perimeter-span",
+        "aUnits": [
+          64,
+          64
+        ],
+        "bUnits": [
+          0,
+          64
+        ],
+        "startNodeKey": "mixed-collinear-module-joins:node:64,64",
+        "endNodeKey": "mixed-collinear-module-joins:node:0,64"
+      },
+      {
+        "key": "mixed-collinear-module-joins:span:5",
+        "partId": "span-086cc581b11f",
+        "originUnits": [
+          0,
+          64
+        ],
+        "quarterTurns": 3,
+        "role": "perimeter-span",
+        "aUnits": [
+          0,
+          64
+        ],
+        "bUnits": [
+          0,
+          0
+        ],
+        "startNodeKey": "mixed-collinear-module-joins:node:0,64",
+        "endNodeKey": "mixed-collinear-module-joins:node:0,0"
+      }
+    ],
+    "validation": {
+      "coreOverlapAreaM2": 0.0,
+      "coreSymmetricDifferenceFromExactMiterRingM2": 0.0,
+      "nominalPortContacts": [
+        {
+          "spanKey": "mixed-collinear-module-joins:span:0",
+          "nodeKey": "mixed-collinear-module-joins:node:0,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-collinear-module-joins:span:0",
+          "nodeKey": "mixed-collinear-module-joins:node:64,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-collinear-module-joins:span:1",
+          "nodeKey": "mixed-collinear-module-joins:node:64,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-collinear-module-joins:span:1",
+          "nodeKey": "mixed-collinear-module-joins:node:128,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-collinear-module-joins:span:2",
+          "nodeKey": "mixed-collinear-module-joins:node:128,0",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-collinear-module-joins:span:2",
+          "nodeKey": "mixed-collinear-module-joins:node:128,64",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-collinear-module-joins:span:3",
+          "nodeKey": "mixed-collinear-module-joins:node:128,64",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-collinear-module-joins:span:3",
+          "nodeKey": "mixed-collinear-module-joins:node:64,64",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-collinear-module-joins:span:4",
+          "nodeKey": "mixed-collinear-module-joins:node:64,64",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-collinear-module-joins:span:4",
+          "nodeKey": "mixed-collinear-module-joins:node:0,64",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-collinear-module-joins:span:5",
+          "nodeKey": "mixed-collinear-module-joins:node:0,64",
+          "side": "start",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        },
+        {
+          "spanKey": "mixed-collinear-module-joins:span:5",
+          "nodeKey": "mixed-collinear-module-joins:node:0,0",
+          "side": "end",
+          "measuredBoundaryIntersectionM": 0.09375,
+          "distanceM": 0.0,
+          "requiredPortWidthM": 0.09375
+        }
+      ],
+      "corePlanarGeometryPass": true
+    },
+    "pressureAcceptance": false,
+    "reviewOffsetM": [
+      18,
+      18
+    ]
+  }
+]

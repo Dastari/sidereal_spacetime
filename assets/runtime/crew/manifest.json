@@ -1,0 +1,142 @@
+{
+  "generator": "scripts/build_crew_source.py",
+  "original": true,
+  "referenceUse": "Visual proportion, studless construction and customization direction only; no third-party pixels or meshes reused.",
+  "bones": 16,
+  "sourceParts": 550,
+  "weightedMeshes": 37,
+  "drawPrimitives": 133,
+  "animations": [
+    {
+      "name": "Idle",
+      "channels": 48
+    },
+    {
+      "name": "Walk",
+      "channels": 48
+    },
+    {
+      "name": "Sprint",
+      "channels": 48
+    },
+    {
+      "name": "Seated",
+      "channels": 48
+    },
+    {
+      "name": "Idle-Pistol",
+      "channels": 48
+    },
+    {
+      "name": "Walk-Pistol",
+      "channels": 48
+    },
+    {
+      "name": "Sprint-Pistol",
+      "channels": 48
+    },
+    {
+      "name": "Seated-Pistol",
+      "channels": 48
+    },
+    {
+      "name": "Idle-Rifle",
+      "channels": 48
+    },
+    {
+      "name": "Walk-Rifle",
+      "channels": 48
+    },
+    {
+      "name": "Sprint-Rifle",
+      "channels": 48
+    },
+    {
+      "name": "Seated-Rifle",
+      "channels": 48
+    }
+  ],
+  "materialRoles": [
+    "suit",
+    "accent",
+    "skin",
+    "hair",
+    "trim",
+    "rubber",
+    "visor",
+    "light",
+    "insignia"
+  ],
+  "attachments": [
+    "armor-expedition",
+    "armor-heavy",
+    "armor-utility",
+    "backpack-field",
+    "backpack-oxygen",
+    "backpack-utility",
+    "body",
+    "body-flight-suit",
+    "body-jacket",
+    "body-lab-coat",
+    "body-uniform",
+    "hair-crest",
+    "hair-cropped",
+    "hair-scientist",
+    "hair-swept",
+    "helmet-captain",
+    "helmet-engineer",
+    "helmet-explorer",
+    "helmet-marine",
+    "helmet-mechanic",
+    "helmet-medic",
+    "helmet-pilot",
+    "helmet-recon",
+    "helmet-salvage",
+    "helmet-security",
+    "helmet-standard",
+    "look-captain",
+    "look-mechanic",
+    "look-medic",
+    "look-pilot",
+    "look-recon",
+    "look-salvage",
+    "look-scientist",
+    "look-security",
+    "visor-standard",
+    "weapon-pistol",
+    "weapon-rifle"
+  ],
+  "outfits": [
+    "captain",
+    "engineer",
+    "medic",
+    "pilot",
+    "security",
+    "marine",
+    "salvage",
+    "recon",
+    "scientist",
+    "mechanic"
+  ],
+  "source": "assets/source/crew-astra.blend",
+  "paletteSource": "packages/content/src/crew-looks.json",
+  "opticalVisors": [
+    "GEO-standard-curved-visor",
+    "GEO-marine-curved-visor",
+    "GEO-explorer-curved-visor",
+    "GEO-medic-visor",
+    "GEO-pilot-visor",
+    "GEO-salvage-visor"
+  ],
+  "weapons": "Original nonfunctional pistol/rifle pose fixtures, not combat items",
+  "tallestVariantHeightMeters": 2.04722,
+  "headSurfaceScale": [
+    1.22,
+    1.18,
+    1.16
+  ],
+  "sourceSha256": "28ef2737ea6cbb53e1e45e8c00634459f9f4f008752f4d21bbe7776e9e69d440",
+  "runtimeSha256": "b857fae93c31dc992b0a1b4dfdd893a06b27221f23ee9af7475bc481417063ce",
+  "forward": "Blender -Y; glTF/Babylon +Z after standard Y-up export; runtime rotates visual by pi to local -Z",
+  "scope": "Ten original presentation looks; authoritative inventory still owns equipped hand/back; no role or combat grants from appearance."
+}

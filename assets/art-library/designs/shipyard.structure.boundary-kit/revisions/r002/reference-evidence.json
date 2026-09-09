@@ -1,0 +1,14 @@
+[
+  {
+    "source": "assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r001/door-close.png",
+    "exactCopy": "reference-r001-door-close.png",
+    "sha256": "b68345e14f8e4a9d964236422fbf1a5a8ee73989a8ff6bb89ca9d7c3c6eb5a5e",
+    "role": "existing actual native source baseline, visually inspected"
+  },
+  {
+    "source": "assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r001/review-closed.png",
+    "exactCopy": "reference-r001-review-closed.png",
+    "sha256": "080c25a7815b81f519fcf5b9e83c9f05859c472e53c0de38b83abc51531cb3c3",
+    "role": "existing actual native source baseline, visually inspected"
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "status": "staged-static-contact-qualified-not-installed",
+  "nativeAudit": {
+    "path": "qualification-a007/native-room-validation.json",
+    "checks": 22,
+    "pass": true
+  },
+  "nativeCompilerTests": 7,
+  "aggregateCheck": {
+    "tests": 546,
+    "files": 119,
+    "documents": 75,
+    "log": ".runtime/construction-enclosure-audit/qualified-check.log",
+    "pass": true
+  },
+  "build": {
+    "log": ".runtime/construction-enclosure-audit/qualified-build.log",
+    "pass": true
+  },
+  "installedArtCheck": {
+    "pass": true,
+    "scope": "Existing installed artifacts; r006 is separately audited and not installed"
+  },
+  "libraryCheck": {
+    "pass": false,
+    "reason": "Stale shared generated index/status after new r006 ledger; integration owner must regenerate",
+    "log": ".runtime/construction-enclosure-audit/qualified-art-library-check.log"
+  },
+  "authoritySmoke": "Not run: no world schema/reducer/runtime registration changed",
+  "browser": "Not run: no new runtime installation; Cycles CPU before/after/cutout evidence supplied",
+  "publication": false,
+  "ownerFinalArtApproval": null
+}

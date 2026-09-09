@@ -1,0 +1,10 @@
+{
+  "removedDuplicateCells": 0,
+  "occupied": 1795030,
+  "chunks": 551,
+  "quads": 22203,
+  "triangles": 44406,
+  "batches": 23,
+  "cellMeters": 0.0625,
+  "naiveCubeTriangles": 21540360
+}

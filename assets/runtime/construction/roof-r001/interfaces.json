@@ -1,0 +1,1707 @@
+{
+  "schema": "sidereal.construction-native-roof-candidate.v1",
+  "id": "shipyard.structure.roof-kit",
+  "revision": "r001",
+  "status": "working-candidate-not-approved",
+  "latticePerMeter": 32,
+  "moduleUnits": 64,
+  "sourceCoordinates": "Blender XY deck plane, Z up; GLB X/Y/-Z mapping preserves identity source placement",
+  "datumsUnits": {
+    "floorTop": 6,
+    "roofUnderside": 96,
+    "backingTop": 100,
+    "visualEnvelopeTop": 102,
+    "standingClearance": 90,
+    "upperDeckMinimumOriginBeforeExplicitServiceAllowance": 102,
+    "serviceClearance": null
+  },
+  "floorInterfaceSha256": "76f3f46c8e479106059945be0bfe23000d235d7c1731ad3d91524c3d894e1d16",
+  "parts": [
+    {
+      "id": "square-2m",
+      "role": "roof",
+      "assetUuid": "d92d241b-ada0-5ead-80ae-17ddd66d3ca5",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          64,
+          64
+        ],
+        [
+          0,
+          64
+        ]
+      ],
+      "sourceBottomUnits": 0,
+      "sourceBackingTopUnits": 4,
+      "sourceVisualTopUnits": 6,
+      "placementHeightUnits": 96,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "sourceToNominal": {
+        "translationUnits": [
+          0,
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "reflected": false
+      },
+      "native": {
+        "revision": "r001",
+        "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+        "nodePrefix": "GEO-roof-square-2m--surface"
+      },
+      "floorPair": {
+        "id": "square-2m",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor"
+      },
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            64,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            64,
+            0
+          ],
+          "b": [
+            64,
+            64
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            64,
+            64
+          ],
+          "b": [
+            0,
+            64
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-3",
+          "a": [
+            0,
+            64
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        }
+      ],
+      "underside": {
+        "planeUnits": 0,
+        "coveragePolygonUnits": [
+          [
+            0,
+            0
+          ],
+          [
+            64,
+            0
+          ],
+          [
+            64,
+            64
+          ],
+          [
+            0,
+            64
+          ]
+        ],
+        "minimumFlatPerimeterStripUnits": 2,
+        "materialNormalDetailDoesNotAlterContact": true,
+        "pressureApproved": false
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null,
+      "ports": [],
+      "traversalApertures": []
+    },
+    {
+      "id": "half-2x1",
+      "role": "roof",
+      "assetUuid": "2a2777c5-732f-5c28-86b0-4e53a1152f45",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          64,
+          32
+        ],
+        [
+          0,
+          32
+        ]
+      ],
+      "sourceBottomUnits": 0,
+      "sourceBackingTopUnits": 4,
+      "sourceVisualTopUnits": 6,
+      "placementHeightUnits": 96,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "sourceToNominal": {
+        "translationUnits": [
+          0,
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "reflected": false
+      },
+      "native": {
+        "revision": "r001",
+        "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+        "nodePrefix": "GEO-roof-half-2x1--surface"
+      },
+      "floorPair": {
+        "id": "half-2x1",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "assetId": "part-926a2afada18f96d51a3",
+        "nodePrefix": "GEO-part-926a2afada18f96d51a3--floor"
+      },
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            64,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            64,
+            0
+          ],
+          "b": [
+            64,
+            32
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            64,
+            32
+          ],
+          "b": [
+            0,
+            32
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-3",
+          "a": [
+            0,
+            32
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        }
+      ],
+      "underside": {
+        "planeUnits": 0,
+        "coveragePolygonUnits": [
+          [
+            0,
+            0
+          ],
+          [
+            64,
+            0
+          ],
+          [
+            64,
+            32
+          ],
+          [
+            0,
+            32
+          ]
+        ],
+        "minimumFlatPerimeterStripUnits": 2,
+        "materialNormalDetailDoesNotAlterContact": true,
+        "pressureApproved": false
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null,
+      "ports": [],
+      "traversalApertures": []
+    },
+    {
+      "id": "quarter-1m",
+      "role": "roof",
+      "assetUuid": "f6293545-ffe9-5c20-945f-353a4c614a86",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          32,
+          0
+        ],
+        [
+          32,
+          32
+        ],
+        [
+          0,
+          32
+        ]
+      ],
+      "sourceBottomUnits": 0,
+      "sourceBackingTopUnits": 4,
+      "sourceVisualTopUnits": 6,
+      "placementHeightUnits": 96,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "sourceToNominal": {
+        "translationUnits": [
+          0,
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "reflected": false
+      },
+      "native": {
+        "revision": "r001",
+        "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+        "nodePrefix": "GEO-roof-quarter-1m--surface"
+      },
+      "floorPair": {
+        "id": "quarter-1m",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "assetId": "part-0b833a4f3016609e9b96",
+        "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor"
+      },
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            32,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            32,
+            0
+          ],
+          "b": [
+            32,
+            32
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            32,
+            32
+          ],
+          "b": [
+            0,
+            32
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-3",
+          "a": [
+            0,
+            32
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        }
+      ],
+      "underside": {
+        "planeUnits": 0,
+        "coveragePolygonUnits": [
+          [
+            0,
+            0
+          ],
+          [
+            32,
+            0
+          ],
+          [
+            32,
+            32
+          ],
+          [
+            0,
+            32
+          ]
+        ],
+        "minimumFlatPerimeterStripUnits": 2,
+        "materialNormalDetailDoesNotAlterContact": true,
+        "pressureApproved": false
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null,
+      "ports": [],
+      "traversalApertures": []
+    },
+    {
+      "id": "strip-4x1",
+      "role": "roof",
+      "assetUuid": "797554d6-a3fb-5a68-b711-6acead7a6357",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          128,
+          32
+        ],
+        [
+          0,
+          32
+        ]
+      ],
+      "sourceBottomUnits": 0,
+      "sourceBackingTopUnits": 4,
+      "sourceVisualTopUnits": 6,
+      "placementHeightUnits": 96,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "sourceToNominal": {
+        "translationUnits": [
+          0,
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "reflected": false
+      },
+      "native": {
+        "revision": "r001",
+        "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+        "nodePrefix": "GEO-roof-strip-4x1--surface"
+      },
+      "floorPair": {
+        "id": "strip-4x1",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "assetId": "part-baa2e4a6cbe886a5c292",
+        "nodePrefix": "GEO-part-baa2e4a6cbe886a5c292--floor"
+      },
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            128,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            128,
+            0
+          ],
+          "b": [
+            128,
+            32
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            128,
+            32
+          ],
+          "b": [
+            0,
+            32
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-3",
+          "a": [
+            0,
+            32
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        }
+      ],
+      "underside": {
+        "planeUnits": 0,
+        "coveragePolygonUnits": [
+          [
+            0,
+            0
+          ],
+          [
+            128,
+            0
+          ],
+          [
+            128,
+            32
+          ],
+          [
+            0,
+            32
+          ]
+        ],
+        "minimumFlatPerimeterStripUnits": 2,
+        "materialNormalDetailDoesNotAlterContact": true,
+        "pressureApproved": false
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null,
+      "ports": [],
+      "traversalApertures": []
+    },
+    {
+      "id": "triangle-45",
+      "role": "roof",
+      "assetUuid": "e9bb7240-8152-57f2-a323-f17618ccf85b",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          0,
+          64
+        ]
+      ],
+      "sourceBottomUnits": 0,
+      "sourceBackingTopUnits": 4,
+      "sourceVisualTopUnits": 6,
+      "placementHeightUnits": 96,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "sourceToNominal": {
+        "translationUnits": [
+          0,
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "reflected": false
+      },
+      "native": {
+        "revision": "r001",
+        "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+        "nodePrefix": "GEO-roof-triangle-45--surface"
+      },
+      "floorPair": {
+        "id": "triangle-45",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "assetId": "part-771cc318e835d7a08abd",
+        "nodePrefix": "GEO-part-771cc318e835d7a08abd--floor"
+      },
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            64,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            64,
+            0
+          ],
+          "b": [
+            0,
+            64
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            0,
+            64
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        }
+      ],
+      "underside": {
+        "planeUnits": 0,
+        "coveragePolygonUnits": [
+          [
+            0,
+            0
+          ],
+          [
+            64,
+            0
+          ],
+          [
+            0,
+            64
+          ]
+        ],
+        "minimumFlatPerimeterStripUnits": 2,
+        "materialNormalDetailDoesNotAlterContact": true,
+        "pressureApproved": false
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null,
+      "ports": [],
+      "traversalApertures": []
+    },
+    {
+      "id": "triangle-long-left",
+      "role": "roof",
+      "assetUuid": "fb60138a-f7c6-5a38-b7ad-6894918664e9",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          0,
+          64
+        ]
+      ],
+      "sourceBottomUnits": 0,
+      "sourceBackingTopUnits": 4,
+      "sourceVisualTopUnits": 6,
+      "placementHeightUnits": 96,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "sourceToNominal": {
+        "translationUnits": [
+          0,
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "reflected": false
+      },
+      "native": {
+        "revision": "r001",
+        "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+        "nodePrefix": "GEO-roof-triangle-long-left--surface"
+      },
+      "floorPair": {
+        "id": "triangle-long-left",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "assetId": "part-79328356071c674a2c8b",
+        "nodePrefix": "GEO-part-79328356071c674a2c8b--floor"
+      },
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            128,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            128,
+            0
+          ],
+          "b": [
+            0,
+            64
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            0,
+            64
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        }
+      ],
+      "underside": {
+        "planeUnits": 0,
+        "coveragePolygonUnits": [
+          [
+            0,
+            0
+          ],
+          [
+            128,
+            0
+          ],
+          [
+            0,
+            64
+          ]
+        ],
+        "minimumFlatPerimeterStripUnits": 2,
+        "materialNormalDetailDoesNotAlterContact": true,
+        "pressureApproved": false
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null,
+      "ports": [],
+      "traversalApertures": []
+    },
+    {
+      "id": "triangle-long-right",
+      "role": "roof",
+      "assetUuid": "87383411-2e37-598d-9964-9755ac02ac47",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          128,
+          64
+        ]
+      ],
+      "sourceBottomUnits": 0,
+      "sourceBackingTopUnits": 4,
+      "sourceVisualTopUnits": 6,
+      "placementHeightUnits": 96,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "sourceToNominal": {
+        "translationUnits": [
+          0,
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "reflected": false
+      },
+      "native": {
+        "revision": "r001",
+        "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+        "nodePrefix": "GEO-roof-triangle-long-right--surface"
+      },
+      "floorPair": {
+        "id": "triangle-long-right",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "assetId": "part-e0dde5e97e9bed05b4b6",
+        "nodePrefix": "GEO-part-e0dde5e97e9bed05b4b6--floor"
+      },
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            128,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            128,
+            0
+          ],
+          "b": [
+            128,
+            64
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            128,
+            64
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        }
+      ],
+      "underside": {
+        "planeUnits": 0,
+        "coveragePolygonUnits": [
+          [
+            0,
+            0
+          ],
+          [
+            128,
+            0
+          ],
+          [
+            128,
+            64
+          ]
+        ],
+        "minimumFlatPerimeterStripUnits": 2,
+        "materialNormalDetailDoesNotAlterContact": true,
+        "pressureApproved": false
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null,
+      "ports": [],
+      "traversalApertures": []
+    },
+    {
+      "id": "triangle-slim-left",
+      "role": "roof",
+      "assetUuid": "e097d62f-6901-588e-9ca2-235dce88bb9a",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          0,
+          32
+        ]
+      ],
+      "sourceBottomUnits": 0,
+      "sourceBackingTopUnits": 4,
+      "sourceVisualTopUnits": 6,
+      "placementHeightUnits": 96,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "sourceToNominal": {
+        "translationUnits": [
+          0,
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "reflected": false
+      },
+      "native": {
+        "revision": "r001",
+        "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+        "nodePrefix": "GEO-roof-triangle-slim-left--surface"
+      },
+      "floorPair": {
+        "id": "triangle-slim-left",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "assetId": "part-cf72797120e52d05662c",
+        "nodePrefix": "GEO-part-cf72797120e52d05662c--floor"
+      },
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            128,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            128,
+            0
+          ],
+          "b": [
+            0,
+            32
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            0,
+            32
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        }
+      ],
+      "underside": {
+        "planeUnits": 0,
+        "coveragePolygonUnits": [
+          [
+            0,
+            0
+          ],
+          [
+            128,
+            0
+          ],
+          [
+            0,
+            32
+          ]
+        ],
+        "minimumFlatPerimeterStripUnits": 2,
+        "materialNormalDetailDoesNotAlterContact": true,
+        "pressureApproved": false
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null,
+      "ports": [],
+      "traversalApertures": []
+    },
+    {
+      "id": "triangle-slim-right",
+      "role": "roof",
+      "assetUuid": "894745b6-46b0-54ba-9328-4999ad5db7b9",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          128,
+          32
+        ]
+      ],
+      "sourceBottomUnits": 0,
+      "sourceBackingTopUnits": 4,
+      "sourceVisualTopUnits": 6,
+      "placementHeightUnits": 96,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "sourceToNominal": {
+        "translationUnits": [
+          0,
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "reflected": false
+      },
+      "native": {
+        "revision": "r001",
+        "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+        "nodePrefix": "GEO-roof-triangle-slim-right--surface"
+      },
+      "floorPair": {
+        "id": "triangle-slim-right",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "assetId": "part-e315cf681838afff216e",
+        "nodePrefix": "GEO-part-e315cf681838afff216e--floor"
+      },
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            128,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            128,
+            0
+          ],
+          "b": [
+            128,
+            32
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            128,
+            32
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        }
+      ],
+      "underside": {
+        "planeUnits": 0,
+        "coveragePolygonUnits": [
+          [
+            0,
+            0
+          ],
+          [
+            128,
+            0
+          ],
+          [
+            128,
+            32
+          ]
+        ],
+        "minimumFlatPerimeterStripUnits": 2,
+        "materialNormalDetailDoesNotAlterContact": true,
+        "pressureApproved": false
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null,
+      "ports": [],
+      "traversalApertures": []
+    },
+    {
+      "id": "corner-clipped",
+      "role": "roof",
+      "assetUuid": "5ba0839b-9237-5f2c-9d53-376077772470",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          64,
+          32
+        ],
+        [
+          32,
+          64
+        ],
+        [
+          0,
+          64
+        ]
+      ],
+      "sourceBottomUnits": 0,
+      "sourceBackingTopUnits": 4,
+      "sourceVisualTopUnits": 6,
+      "placementHeightUnits": 96,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "sourceToNominal": {
+        "translationUnits": [
+          0,
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "reflected": false
+      },
+      "native": {
+        "revision": "r001",
+        "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+        "nodePrefix": "GEO-roof-corner-clipped--surface"
+      },
+      "floorPair": {
+        "id": "corner-clipped",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "assetId": "part-94474fb38b16d77e6429",
+        "nodePrefix": "GEO-part-94474fb38b16d77e6429--floor"
+      },
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            64,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            64,
+            0
+          ],
+          "b": [
+            64,
+            32
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            64,
+            32
+          ],
+          "b": [
+            32,
+            64
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-3",
+          "a": [
+            32,
+            64
+          ],
+          "b": [
+            0,
+            64
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-4",
+          "a": [
+            0,
+            64
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        }
+      ],
+      "underside": {
+        "planeUnits": 0,
+        "coveragePolygonUnits": [
+          [
+            0,
+            0
+          ],
+          [
+            64,
+            0
+          ],
+          [
+            64,
+            32
+          ],
+          [
+            32,
+            64
+          ],
+          [
+            0,
+            64
+          ]
+        ],
+        "minimumFlatPerimeterStripUnits": 2,
+        "materialNormalDetailDoesNotAlterContact": true,
+        "pressureApproved": false
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null,
+      "ports": [],
+      "traversalApertures": []
+    },
+    {
+      "id": "taper-4m",
+      "role": "roof",
+      "assetUuid": "b8772cdc-2920-5be4-9021-3ed7267f87a6",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          48,
+          128
+        ],
+        [
+          16,
+          128
+        ]
+      ],
+      "sourceBottomUnits": 0,
+      "sourceBackingTopUnits": 4,
+      "sourceVisualTopUnits": 6,
+      "placementHeightUnits": 96,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "sourceToNominal": {
+        "translationUnits": [
+          0,
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "reflected": false
+      },
+      "native": {
+        "revision": "r001",
+        "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+        "nodePrefix": "GEO-roof-taper-4m--surface"
+      },
+      "floorPair": {
+        "id": "taper-4m",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "assetId": "part-73f48194371a682af29c",
+        "nodePrefix": "GEO-part-73f48194371a682af29c--floor"
+      },
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            64,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            64,
+            0
+          ],
+          "b": [
+            48,
+            128
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            48,
+            128
+          ],
+          "b": [
+            16,
+            128
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-3",
+          "a": [
+            16,
+            128
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        }
+      ],
+      "underside": {
+        "planeUnits": 0,
+        "coveragePolygonUnits": [
+          [
+            0,
+            0
+          ],
+          [
+            64,
+            0
+          ],
+          [
+            48,
+            128
+          ],
+          [
+            16,
+            128
+          ]
+        ],
+        "minimumFlatPerimeterStripUnits": 2,
+        "materialNormalDetailDoesNotAlterContact": true,
+        "pressureApproved": false
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null,
+      "ports": [],
+      "traversalApertures": []
+    },
+    {
+      "id": "triangle-1m",
+      "role": "roof",
+      "assetUuid": "a295698e-efa7-5a73-8f69-c8eab80b2faa",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          32,
+          0
+        ],
+        [
+          0,
+          32
+        ]
+      ],
+      "sourceBottomUnits": 0,
+      "sourceBackingTopUnits": 4,
+      "sourceVisualTopUnits": 6,
+      "placementHeightUnits": 96,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "sourceToNominal": {
+        "translationUnits": [
+          0,
+          0,
+          0
+        ],
+        "quarterTurns": 0,
+        "reflected": false
+      },
+      "native": {
+        "revision": "r001",
+        "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+        "nodePrefix": "GEO-roof-triangle-1m--surface"
+      },
+      "floorPair": {
+        "id": "triangle-1m",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "assetId": "part-7902f7617fb23eb8abe3",
+        "nodePrefix": "GEO-part-7902f7617fb23eb8abe3--floor"
+      },
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            32,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            32,
+            0
+          ],
+          "b": [
+            0,
+            32
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            0,
+            32
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "roof-core-flat-4",
+          "bottomUnits": 0,
+          "topUnits": 4,
+          "contactKind": "closed coplanar butt-contact candidate",
+          "pressureApproved": false
+        }
+      ],
+      "underside": {
+        "planeUnits": 0,
+        "coveragePolygonUnits": [
+          [
+            0,
+            0
+          ],
+          [
+            32,
+            0
+          ],
+          [
+            0,
+            32
+          ]
+        ],
+        "minimumFlatPerimeterStripUnits": 2,
+        "materialNormalDetailDoesNotAlterContact": true,
+        "pressureApproved": false
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null,
+      "ports": [],
+      "traversalApertures": []
+    }
+  ],
+  "acceptance": {
+    "nativeGeometryValidated": true,
+    "pressureApproved": false,
+    "damageApproved": false,
+    "ownerArtApproved": false
+  }
+}

@@ -1,0 +1,855 @@
+{
+  "schema": "sidereal.construction-boundary-candidate.v1",
+  "designId": "shipyard.structure.boundary-kit",
+  "revision": "r001",
+  "status": "working candidate; NOT approved seal/damage/collision or published gameplay",
+  "latticePerMetre": 32,
+  "coordinateMapping": "Blender(x,y,z) -> glTF/renderer(x,z,-y)",
+  "datumsUnits": {
+    "floorBottom": 0,
+    "floorTop": 6,
+    "wallBottom": 6,
+    "ceilingPlane": 96,
+    "wallTop": 96,
+    "roofBottom": null,
+    "roofTop": null,
+    "wallHalfThickness": 2,
+    "junctionHalfWidth": 2
+  },
+  "standingClearanceM": 2.8125,
+  "parts": [
+    {
+      "id": "wall-2m",
+      "assetUuid": "2588fa67-a5eb-53df-a50b-da3f6a92f26c",
+      "native": {
+        "kit": "kit.glb",
+        "sha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+        "nodePrefix": "GEO-wall-2m--surface",
+        "preserveNodeTransform": true,
+        "blenderRootTranslationM": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visual": {
+        "triangles": 3684,
+        "vertices": 1912,
+        "materialSlots": 6,
+        "localBounds": {
+          "min": [
+            0.0625,
+            -0.06187500059604645,
+            0.1875
+          ],
+          "max": [
+            1.9375,
+            0.06187500059604645,
+            3.0
+          ]
+        },
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "nodePrefix": "GEO-wall-2m--surface"
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null,
+      "ratings": null,
+      "role": "wall",
+      "nominalEndpointSpanUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ]
+      ],
+      "nominalFootprintUnits": [
+        [
+          0,
+          -2
+        ],
+        [
+          64,
+          -2
+        ],
+        [
+          64,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "bodyFootprintUnits": [
+        [
+          2,
+          -2
+        ],
+        [
+          62,
+          -2
+        ],
+        [
+          62,
+          2
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "bottomUnits": 6,
+      "topUnits": 96,
+      "connectionPortsUnits": [
+        {
+          "position": [
+            2,
+            0
+          ],
+          "direction": [
+            -1,
+            0
+          ]
+        },
+        {
+          "position": [
+            62,
+            0
+          ],
+          "direction": [
+            1,
+            0
+          ]
+        }
+      ],
+      "potentialContactFacesM": {
+        "bottomZ": 0.1875,
+        "topZ": 3,
+        "leftX": 0.0625,
+        "rightX": 1.9375,
+        "backingHalfThickness": 0.046875,
+        "sealApproval": null
+      },
+      "requiredEndpointClosures": true
+    },
+    {
+      "id": "wall-1m",
+      "assetUuid": "150eaccf-c0e7-5203-bc3e-7482df83ab9b",
+      "native": {
+        "kit": "kit.glb",
+        "sha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+        "nodePrefix": "GEO-wall-1m--surface",
+        "preserveNodeTransform": true,
+        "blenderRootTranslationM": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visual": {
+        "triangles": 2388,
+        "vertices": 1240,
+        "materialSlots": 6,
+        "localBounds": {
+          "min": [
+            0.0625,
+            -0.06187500059604645,
+            0.1875
+          ],
+          "max": [
+            0.9375,
+            0.06187500059604645,
+            3.0
+          ]
+        },
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "nodePrefix": "GEO-wall-1m--surface"
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null,
+      "ratings": null,
+      "role": "wall",
+      "nominalEndpointSpanUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          32,
+          0
+        ]
+      ],
+      "nominalFootprintUnits": [
+        [
+          0,
+          -2
+        ],
+        [
+          32,
+          -2
+        ],
+        [
+          32,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "bodyFootprintUnits": [
+        [
+          2,
+          -2
+        ],
+        [
+          30,
+          -2
+        ],
+        [
+          30,
+          2
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "bottomUnits": 6,
+      "topUnits": 96,
+      "connectionPortsUnits": [
+        {
+          "position": [
+            2,
+            0
+          ],
+          "direction": [
+            -1,
+            0
+          ]
+        },
+        {
+          "position": [
+            30,
+            0
+          ],
+          "direction": [
+            1,
+            0
+          ]
+        }
+      ],
+      "potentialContactFacesM": {
+        "bottomZ": 0.1875,
+        "topZ": 3,
+        "leftX": 0.0625,
+        "rightX": 0.9375,
+        "backingHalfThickness": 0.046875,
+        "sealApproval": null
+      },
+      "requiredEndpointClosures": true
+    },
+    {
+      "id": "join-straight",
+      "assetUuid": "ffe53d95-7bb3-564f-9054-80c89b0deca4",
+      "native": {
+        "kit": "kit.glb",
+        "sha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+        "nodePrefix": "GEO-join-straight--surface",
+        "preserveNodeTransform": true,
+        "blenderRootTranslationM": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visual": {
+        "triangles": 12,
+        "vertices": 8,
+        "materialSlots": 3,
+        "localBounds": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            0.1875
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            3.0
+          ]
+        },
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "nodePrefix": "GEO-join-straight--surface"
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null,
+      "ratings": null,
+      "role": "junction",
+      "nominalFootprintUnits": [
+        [
+          -2,
+          -2
+        ],
+        [
+          2,
+          -2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          -2,
+          2
+        ]
+      ],
+      "bottomUnits": 6,
+      "topUnits": 96,
+      "ports": [
+        "-x",
+        "+x"
+      ],
+      "potentialContactFacesM": {
+        "planeXOrY": [
+          -0.0625,
+          0.0625
+        ],
+        "bottomZ": 0.1875,
+        "topZ": 3,
+        "sealApproval": null
+      }
+    },
+    {
+      "id": "closure-end",
+      "assetUuid": "d420fb8b-42c0-571d-9e19-b0cc7496c9ff",
+      "native": {
+        "kit": "kit.glb",
+        "sha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+        "nodePrefix": "GEO-closure-end--surface",
+        "preserveNodeTransform": true,
+        "blenderRootTranslationM": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visual": {
+        "triangles": 12,
+        "vertices": 8,
+        "materialSlots": 3,
+        "localBounds": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            0.1875
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            3.0
+          ]
+        },
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "nodePrefix": "GEO-closure-end--surface"
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null,
+      "ratings": null,
+      "role": "junction",
+      "nominalFootprintUnits": [
+        [
+          -2,
+          -2
+        ],
+        [
+          2,
+          -2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          -2,
+          2
+        ]
+      ],
+      "bottomUnits": 6,
+      "topUnits": 96,
+      "ports": [
+        "+x"
+      ],
+      "potentialContactFacesM": {
+        "planeXOrY": [
+          -0.0625,
+          0.0625
+        ],
+        "bottomZ": 0.1875,
+        "topZ": 3,
+        "sealApproval": null
+      }
+    },
+    {
+      "id": "closure-corner",
+      "assetUuid": "1bbdc491-d292-50c1-931d-a483dfa702ff",
+      "native": {
+        "kit": "kit.glb",
+        "sha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+        "nodePrefix": "GEO-closure-corner--surface",
+        "preserveNodeTransform": true,
+        "blenderRootTranslationM": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visual": {
+        "triangles": 12,
+        "vertices": 8,
+        "materialSlots": 3,
+        "localBounds": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            0.1875
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            3.0
+          ]
+        },
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "nodePrefix": "GEO-closure-corner--surface"
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null,
+      "ratings": null,
+      "role": "junction",
+      "nominalFootprintUnits": [
+        [
+          -2,
+          -2
+        ],
+        [
+          2,
+          -2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          -2,
+          2
+        ]
+      ],
+      "bottomUnits": 6,
+      "topUnits": 96,
+      "ports": [
+        "+x",
+        "+y"
+      ],
+      "potentialContactFacesM": {
+        "planeXOrY": [
+          -0.0625,
+          0.0625
+        ],
+        "bottomZ": 0.1875,
+        "topZ": 3,
+        "sealApproval": null
+      }
+    },
+    {
+      "id": "closure-t",
+      "assetUuid": "695670ad-3e62-5bce-be9c-78695f4ec9a0",
+      "native": {
+        "kit": "kit.glb",
+        "sha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+        "nodePrefix": "GEO-closure-t--surface",
+        "preserveNodeTransform": true,
+        "blenderRootTranslationM": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visual": {
+        "triangles": 12,
+        "vertices": 8,
+        "materialSlots": 3,
+        "localBounds": {
+          "min": [
+            -0.0625,
+            -0.0625,
+            0.1875
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            3.0
+          ]
+        },
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "nodePrefix": "GEO-closure-t--surface"
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null,
+      "ratings": null,
+      "role": "junction",
+      "nominalFootprintUnits": [
+        [
+          -2,
+          -2
+        ],
+        [
+          2,
+          -2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          -2,
+          2
+        ]
+      ],
+      "bottomUnits": 6,
+      "topUnits": 96,
+      "ports": [
+        "-x",
+        "+x",
+        "+y"
+      ],
+      "potentialContactFacesM": {
+        "planeXOrY": [
+          -0.0625,
+          0.0625
+        ],
+        "bottomZ": 0.1875,
+        "topZ": 3,
+        "sealApproval": null
+      }
+    },
+    {
+      "id": "door-frame-2m",
+      "assetUuid": "7277440c-89b5-57a5-bc99-42df8db2d919",
+      "native": {
+        "kit": "kit.glb",
+        "sha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+        "nodePrefix": "GEO-door-frame-2m--surface",
+        "preserveNodeTransform": true,
+        "blenderRootTranslationM": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visual": {
+        "triangles": 2412,
+        "vertices": 1256,
+        "materialSlots": 5,
+        "localBounds": {
+          "min": [
+            0.0625,
+            -0.06187500059604645,
+            0.1875
+          ],
+          "max": [
+            1.9375,
+            0.06187500059604645,
+            3.0
+          ]
+        },
+        "translation": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "nodePrefix": "GEO-door-frame-2m--surface"
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null,
+      "ratings": null,
+      "role": "door-frame",
+      "nominalEndpointSpanUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ]
+      ],
+      "nominalFootprintUnits": [
+        [
+          0,
+          -2
+        ],
+        [
+          64,
+          -2
+        ],
+        [
+          64,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "bodyFootprintUnits": [
+        [
+          2,
+          -2
+        ],
+        [
+          62,
+          -2
+        ],
+        [
+          62,
+          2
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "bottomUnits": 6,
+      "topUnits": 96,
+      "connectionPortsUnits": [
+        {
+          "position": [
+            2,
+            0
+          ],
+          "direction": [
+            -1,
+            0
+          ]
+        },
+        {
+          "position": [
+            62,
+            0
+          ],
+          "direction": [
+            1,
+            0
+          ]
+        }
+      ],
+      "potentialContactFacesM": {
+        "bottomZ": 0.1875,
+        "topZ": 3,
+        "leftX": 0.0625,
+        "rightX": 1.9375,
+        "backingHalfThickness": 0.046875,
+        "sealApproval": null
+      },
+      "requiredEndpointClosures": true
+    },
+    {
+      "id": "door-leaf",
+      "assetUuid": "0c012dbe-989b-5177-a4f6-91e6ca679dd0",
+      "native": {
+        "kit": "kit.glb",
+        "sha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+        "nodePrefix": "GEO-door-leaf--surface",
+        "preserveNodeTransform": true,
+        "blenderRootTranslationM": [
+          0.3125,
+          -0.0625,
+          0.0
+        ]
+      },
+      "visual": {
+        "triangles": 1356,
+        "vertices": 712,
+        "materialSlots": 5,
+        "localBounds": {
+          "min": [
+            0.0,
+            0.0,
+            0.18950000405311584
+          ],
+          "max": [
+            1.3105000257492065,
+            0.0625,
+            2.435499906539917
+          ]
+        },
+        "translation": [
+          0.3125,
+          -0.0625,
+          0.0
+        ],
+        "nodePrefix": "GEO-door-leaf--surface"
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null,
+      "ratings": null,
+      "role": "moving-door-leaf",
+      "parentFrame": "door-frame-2m",
+      "physicalRigidFit": "See door metadata; plate inset2mm per aperture edge."
+    }
+  ],
+  "door": {
+    "frame": "door-frame-2m",
+    "leaf": "door-leaf",
+    "nominalOpeningPolygonXZUnits": [
+      [
+        12,
+        6
+      ],
+      [
+        52,
+        6
+      ],
+      [
+        52,
+        78
+      ],
+      [
+        12,
+        78
+      ]
+    ],
+    "clearOpeningM": [
+      1.25,
+      2.25
+    ],
+    "physicalRigidSlabM": [
+      1.246,
+      0.0625,
+      2.246
+    ],
+    "rigidFitClearancePerEdgeM": 0.002,
+    "closedSlabBlenderM": {
+      "min": [
+        0.377,
+        -0.0625,
+        0.1895
+      ],
+      "max": [
+        1.623,
+        0,
+        2.4355
+      ]
+    },
+    "hingeAxis": "Blender +Z / glTF +Y",
+    "leafBindTranslationBlenderM": [
+      0.3125,
+      -0.0625,
+      0
+    ],
+    "leafBindTranslationGltfM": [
+      0.3125,
+      0,
+      0.0625
+    ],
+    "socketBlenderM": [
+      0.3125,
+      -0.0625,
+      0.1875
+    ],
+    "socketGltfM": [
+      0.3125,
+      0.1875,
+      0.0625
+    ],
+    "closedAngleDegrees": 0,
+    "openAngleDegrees": -90,
+    "angleAxisGltf": [
+      0,
+      1,
+      0
+    ],
+    "swingLocalHalfSpace": "Blender negativeY; rotate complete doorway to choose inside-room swing",
+    "conservativeSwingRadiusM": 1.3119895197752154,
+    "conservativeSweepAabbBlenderM": {
+      "min": [
+        0.3125,
+        -1.3744895197752154,
+        0.1895
+      ],
+      "max": [
+        1.6244895197752154,
+        0,
+        2.4355
+      ]
+    },
+    "potentialGasketContact": {
+      "planeBlenderY": 0,
+      "nominalPerimeterXZUnits": [
+        [
+          12,
+          6
+        ],
+        [
+          52,
+          6
+        ],
+        [
+          52,
+          78
+        ],
+        [
+          12,
+          78
+        ]
+      ],
+      "physicalGasketGeometry": null,
+      "approvedRating": null,
+      "authorityAdapter": null,
+      "note": "Rigid slab has2mm perimeter gaps. Gasket compression/contact remains explicitly unimplemented."
+    },
+    "note": "Preserve existing GLB bind translation. Do not add socket height again. Rotate mesh localY or compensate reparent transforms. Left-hinged only; no implicit reflection."
+  },
+  "limits": [
+    "One node closure per endpoint, including collinear joins. Wall body excludes endpoint node zones.",
+    "Only1m/2m orthogonal runs and quarter-turn placement rotations; diagonal/arbitrary partial spans unsupported.",
+    "No ratings, approved structure or native voxel clipping/damage adapter.",
+    "Door gaps require a gasket interface before claiming pressure closure. Sampled source-box swing checks are not continuous authority proof."
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "designId": "shipyard.structure.boundary-kit",
+  "revision": "r001",
+  "state": "working-candidate",
+  "ownerApproved": false,
+  "published": false,
+  "kitSha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+  "sourceSha256": "f20cc7da6fbf8e2165805e04a81f00feafd96e3cc2b5d7200e4188de785e3491",
+  "interfacesSha256": "33347b32b1675fee00d36046a05de37013fa32eca6e2a4d671464da3499972d9",
+  "files": {
+    "review-open.png": {
+      "sha256": "3f0768a80301e5a1e1a8ab149b7b31ef2190afc4e6911592cec2c47782c5ac48",
+      "bytes": 1481372
+    },
+    "review-closed.png": {
+      "sha256": "080c25a7815b81f519fcf5b9e83c9f05859c472e53c0de38b83abc51531cb3c3",
+      "bytes": 1480685
+    },
+    "geometry-report.json": {
+      "sha256": "3a11f6fd288037188e3e3a152cac3eb509623039be07a1ac329087684c0545d2",
+      "bytes": 3012
+    },
+    "cutout.png": {
+      "sha256": "65df8f5d9c09f9a9aac15fff54249d0b0da792fddeb5b2f399ee4e00f7dc3da4",
+      "bytes": 813554
+    },
+    "kit.glb": {
+      "sha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+      "bytes": 1302468
+    },
+    "room-junctions-native-floor.png": {
+      "sha256": "444ef26531b1ef24849b106905cf74332b0315c0cafea41158f8a51ea688614c",
+      "bytes": 1358631
+    },
+    "door-close.png": {
+      "sha256": "b68345e14f8e4a9d964236422fbf1a5a8ee73989a8ff6bb89ca9d7c3c6eb5a5e",
+      "bytes": 1000562
+    },
+    "author_boundary.py": {
+      "sha256": "deeec1bc6da60fdba0a8e68061f9d8fb141dae0b2019894b248e561a788ff06f",
+      "bytes": 15080
+    },
+    "interfaces.json": {
+      "sha256": "33347b32b1675fee00d36046a05de37013fa32eca6e2a4d671464da3499972d9",
+      "bytes": 17276
+    },
+    "validation.json": {
+      "sha256": "6b77e24fba95a4b245563584e12176154a11a8eb890f371332d5025a3c5d7aae",
+      "bytes": 8293
+    },
+    "validate_boundary.py": {
+      "sha256": "4e9b8d6e45861bd25f42c340e6957c8d82ee4a6037abb920febf94e337be3b19",
+      "bytes": 5591
+    },
+    "reference-evidence.json": {
+      "sha256": "8a8ed8bc01070e607e34e59f04c9a6dcb548d3ac5174f955b8c2194f02c54718",
+      "bytes": 1773
+    },
+    "capture-record.json": {
+      "sha256": "6b78d18833742465bc8f7b40f07756f37a26967091dabeb5cb9edbe8e3be7de0",
+      "bytes": 1089
+    },
+    "draft-occupancy-boxes.json": {
+      "sha256": "b0543f9c472f71d1f676669d65c66c39db95b99d068febdb02f3b29238ca5ac0",
+      "bytes": 34565
+    },
+    "build.log": {
+      "sha256": "2084223fdf54c6a38be0bad70e116755633327682730cdb4cccb7b82f027b2e6",
+      "bytes": 101145
+    },
+    "boundary-kit.blend": {
+      "sha256": "f20cc7da6fbf8e2165805e04a81f00feafd96e3cc2b5d7200e4188de785e3491",
+      "bytes": 1235756
+    }
+  }
+}

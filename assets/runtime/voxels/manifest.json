@@ -1,0 +1,30 @@
+{
+  "schema": "sidereal.voxel-asset.v1",
+  "blender": "4.3.2",
+  "date": "2026-09-08",
+  "status": "visual and meshing study; damage authority pending",
+  "sources": [
+    "packages/content/src/voxel-wayfarer.ts",
+    "packages/content/src/voxel-wayfarer-shell.ts",
+    "packages/content/src/voxel-wayfarer-interior.ts",
+    "assets/source/ship_wall_fixture.blend",
+    "scripts/build_ship_fixture_source.py",
+    "scripts/voxelize_blender.py",
+    "packages/sim/src/voxels.ts",
+    "scripts/build_voxel.ts",
+    "scripts/build_metal_materials.py",
+    "scripts/export_voxel_blender.py",
+    "scripts/ship_materials.py",
+    "scripts/voxel_visual_surface.py",
+    "packages/content/src/voxel-ownership.ts",
+    "packages/content/src/voxel-wayfarer-props.ts",
+    "scripts/build_interior_prop_source.py",
+    "assets/source/interior_hydroponics.blend"
+  ],
+  "outputs": {
+    "assets/source/voxel_wayfarer.blend": "2fe0e2259ac2f98b984b026386666f6f3568551ebf677316e62dca64005e1f68",
+    "assets/runtime/voxels/wayfarer.glb": "aa27de4fd09db67428659af8e16479217dd7bebd1f764c13744f62b2d621a6db",
+    "assets/runtime/voxels/wayfarer.voxels.json": "f7f1f827e327308e640a1b38c767f65adfe24c5868115deab32a2b22c118bc4d",
+    "assets/runtime/voxels/surface-metrics.json": "28905a9cebfc73e743592ddfec2f3b8bcbaa7b1248cf727fa76be5e9ea19cc52"
+  }
+}

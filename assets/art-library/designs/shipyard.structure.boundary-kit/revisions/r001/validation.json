@@ -1,0 +1,309 @@
+{
+  "scope": "isolated native geometry; no runtime, pressure rating or damage certification",
+  "checks": [
+    {
+      "name": "glTF2 binary version",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-wall-2m-pressure-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-wall-2m-pressure-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-wall-2m-pressure-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-wall-2m-pressure-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-wall-2m-pressure-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-wall-2m-pressure-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-wall-1m-pressure-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-wall-1m-pressure-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-wall-1m-pressure-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-wall-1m-pressure-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-wall-1m-pressure-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-wall-1m-pressure-backing.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-join-straight-node-pressure-core.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-join-straight-node-pressure-core.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-join-straight-node-pressure-core.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-closure-end-node-pressure-core.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-closure-end-node-pressure-core.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-closure-end-node-pressure-core.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-closure-corner-node-pressure-core.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-closure-corner-node-pressure-core.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-closure-corner-node-pressure-core.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-closure-t-node-pressure-core.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-closure-t-node-pressure-core.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-closure-t-node-pressure-core.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-door-frame-2m-left-pressure-jamb.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-door-frame-2m-left-pressure-jamb.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-door-frame-2m-left-pressure-jamb.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-door-frame-2m-left-pressure-jamb.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-door-frame-2m-left-pressure-jamb.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-door-leaf-solid-door-leaf.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-door-leaf-solid-door-leaf.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-door-leaf-solid-door-leaf.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-door-leaf-solid-door-leaf.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "mesh-door-leaf-solid-door-leaf.001 carries position/normal/UV/tangent",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "nondegenerate triangles",
+      "pass": true,
+      "details": {
+        "triangles": 9888,
+        "degenerate": 0
+      }
+    },
+    {
+      "name": "finite orthogonal normal/tangent frames",
+      "pass": true,
+      "details": 0
+    },
+    {
+      "name": "eight unique native part selectors",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "shared seven PBR material roles",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "no exported lights or camera",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "native emission strength retained",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "GLB hinge pivot translation uses X/Z/-Y",
+      "pass": true,
+      "details": {
+        "mesh": 7,
+        "name": "GEO-door-leaf--surface",
+        "translation": [
+          0.3125,
+          0,
+          0.0625
+        ]
+      }
+    },
+    {
+      "name": "361 sampled swing states avoid frame authoring boxes",
+      "pass": true,
+      "details": {
+        "testedAngles": 361,
+        "firstCollisions": []
+      }
+    },
+    {
+      "name": "physical rigid leaf fit tolerances",
+      "pass": true,
+      "details": {
+        "localMin": [
+          0.06449999660253525,
+          0.0,
+          0.18950000405311584
+        ],
+        "localMax": [
+          1.3105000257492065,
+          0.0625,
+          2.435499906539917
+        ],
+        "opening": [
+          1.25,
+          2.25
+        ],
+        "sideGapM": 0.002
+      }
+    },
+    {
+      "name": "full1.25m aperture clear at90deg",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "wall-2m exact full-height closed backing",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "wall-2m contacts shared node on exact end faces",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "wall-1m exact full-height closed backing",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "wall-1m contacts shared node on exact end faces",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "closure-end exact node volume",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "closure-corner exact node volume",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "closure-t exact node volume",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "join-straight exact node volume",
+      "pass": true,
+      "details": null
+    }
+  ],
+  "failures": [],
+  "limits": [
+    "Swing validation samples0.25-degree states against conservative source boxes; authority needs continuous collision/sweep and obstruction checks.",
+    "2mm rigid leaf fit gap needs a separately specified seal/gasket mechanism. No pressure seal certification.",
+    "No native clipping/voxel damage adapter, new roof adapters, diagonal closure families or airlock simulation.",
+    "Normals/UVs and scalar PBR materials only; no baked detail maps or runtime browser fidelity/performance evidence."
+  ],
+  "kitSha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+  "pass": true
+}

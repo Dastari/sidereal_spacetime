@@ -1,0 +1,9 @@
+{
+  "schema": "sidereal.generated-art.v1",
+  "date": "2026-09-08",
+  "tool": "image_gen.imagegen",
+  "asset": "veil-nebula-v1.png",
+  "purpose": "Original atmospheric background plate; no gameplay information or light source",
+  "prompt": "Use case: stylized-concept. Asset type: original high-resolution wide 3:2 deep-space nebula and distant galactic dust background plate for Sidereal, a grounded top-down 3D space exploration and shipbuilding RPG. This is an actual game environment texture, no UI or text.\nArt direction: immense quiet industrial frontier, restrained cinematic astrophotography with subtle painterly material detail. Near-black blue ink space #030711, smoky desaturated teal and deep petroleum blue interstellar wisps, a few muted oxidized-copper/russet dust edges, tiny icy starlight glints. An oblique broken galactic dust ribbon sweeps from lower left towards upper right through far space, fine layered filament detail and dense distant star granularity INSIDE the ribbon. Vast dark negative space across central area where gameplay ships must remain readable. Luminous gas stays concentrated in a few wisps with physically suggestive depth, no dominant bright core, no giant bright bloom. Lower contrast overall, rich tonal detail, cinematic naturalistic 3D game setting, no vibrant rainbow colors or overexposed yellow, no purple wallpaper.\nOnly distant gas and dust, with extremely subtle embedded stars. No planets, suns, ships, station, people, borders, captions, logos, interface, lens flares or diffraction crosses. Do not vignette or make a rectangular frame. Make all image edges very dark and quiet so this can be placed behind a procedural star field. Produce a beautifully finished landscape background asset, 1536x1024 or greater.",
+  "edits": "None. Original generated image copied without raster processing."
+}

@@ -1,0 +1,34 @@
+{
+  "parts": [
+    {
+      "name": "GEO-floor-junction-interior-four-quarter--surface",
+      "vertices": 88,
+      "polygons": 172
+    },
+    {
+      "name": "GEO-floor-junction-partition-four-quarter--surface",
+      "vertices": 63,
+      "polygons": 122
+    },
+    {
+      "name": "GEO-floor-junction-door-strip-reserved--surface",
+      "vertices": 11,
+      "polygons": 18
+    }
+  ],
+  "scope": "Four r002 quarter tiles only; interior and r005 eight-quarter-T partition context variants",
+  "status": "Candidate pending actual GLB contact and room audit",
+  "floorTopM": 0.1875,
+  "profileEnvelopeM": [
+    [
+      -0.006,
+      -0.006,
+      0
+    ],
+    [
+      0.006,
+      0.006,
+      0.1875
+    ]
+  ]
+}

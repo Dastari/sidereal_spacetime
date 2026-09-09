@@ -1,0 +1,1423 @@
+{
+  "schema": "sidereal.native-boundary-contact-audit.v1",
+  "kitSha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+  "floorSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+  "roofSha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+  "method": "Actual GLB horizontal triangle unions at floorZ.1875 and roof undersideZ0, placed at wall top3; intersect actual exported wall face polygons. Nominal room regions from structural footprints, not room labels. Unsupported-region connectivity flags conservative potential paths; no flow/pressure rating.",
+  "exportToleranceM": 1e-06,
+  "fixtures": [
+    {
+      "fixture": "single-square-2m",
+      "floorPlacements": [
+        {
+          "partId": "square-2m",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-a3f5c1c3caa171a94d6c",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "floorWallBottom": {
+        "fullWallFaceAreaM2": 0.75,
+        "nativeCoplanarContactAreaM2": 0.334275141912761,
+        "unsupportedFaceAreaM2": 0.415724858087239,
+        "contactFraction": 0.44570018921701465,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "roofWallTop": {
+        "fullWallFaceAreaM2": 0.75,
+        "nativeCoplanarContactAreaM2": 0.3662109375,
+        "unsupportedFaceAreaM2": 0.3837890625,
+        "contactFraction": 0.48828125,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "interiorRegions": 1,
+      "wallCoreFootprintAreaM2": 0.75
+    },
+    {
+      "fixture": "single-half-2x1",
+      "floorPlacements": [
+        {
+          "partId": "half-2x1",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-926a2afada18f96d51a3",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-926a2afada18f96d51a3--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "floorWallBottom": {
+        "fullWallFaceAreaM2": 0.5625,
+        "nativeCoplanarContactAreaM2": 0.24852497187188227,
+        "unsupportedFaceAreaM2": 0.31397502812811773,
+        "contactFraction": 0.4418221722166796,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "roofWallTop": {
+        "fullWallFaceAreaM2": 0.5625,
+        "nativeCoplanarContactAreaM2": 0.2724609375,
+        "unsupportedFaceAreaM2": 0.2900390625,
+        "contactFraction": 0.484375,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "interiorRegions": 1,
+      "wallCoreFootprintAreaM2": 0.5625
+    },
+    {
+      "fixture": "single-quarter-1m",
+      "floorPlacements": [
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "floorWallBottom": {
+        "fullWallFaceAreaM2": 0.375,
+        "nativeCoplanarContactAreaM2": 0.16277492104029667,
+        "unsupportedFaceAreaM2": 0.21222507895970333,
+        "contactFraction": 0.4340664561074578,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "roofWallTop": {
+        "fullWallFaceAreaM2": 0.375,
+        "nativeCoplanarContactAreaM2": 0.1787109375,
+        "unsupportedFaceAreaM2": 0.1962890625,
+        "contactFraction": 0.4765625,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "interiorRegions": 1,
+      "wallCoreFootprintAreaM2": 0.375
+    },
+    {
+      "fixture": "single-strip-4x1",
+      "floorPlacements": [
+        {
+          "partId": "strip-4x1",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-baa2e4a6cbe886a5c292",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-baa2e4a6cbe886a5c292--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "floorWallBottom": {
+        "fullWallFaceAreaM2": 0.9375,
+        "nativeCoplanarContactAreaM2": 0.4200249552794393,
+        "unsupportedFaceAreaM2": 0.5174750447205607,
+        "contactFraction": 0.4480266189647352,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "roofWallTop": {
+        "fullWallFaceAreaM2": 0.9375,
+        "nativeCoplanarContactAreaM2": 0.4599609375,
+        "unsupportedFaceAreaM2": 0.4775390625,
+        "contactFraction": 0.490625,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "interiorRegions": 1,
+      "wallCoreFootprintAreaM2": 0.9375
+    },
+    {
+      "fixture": "single-triangle-45",
+      "floorPlacements": [
+        {
+          "partId": "triangle-45",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-771cc318e835d7a08abd",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-771cc318e835d7a08abd--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "floorWallBottom": {
+        "fullWallFaceAreaM2": 0.6401651572480929,
+        "nativeCoplanarContactAreaM2": 0.28005541957038627,
+        "unsupportedFaceAreaM2": 0.36010973767770693,
+        "contactFraction": 0.4374736994032497,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "roofWallTop": {
+        "fullWallFaceAreaM2": 0.6401651572480929,
+        "nativeCoplanarContactAreaM2": 0.3072759765346954,
+        "unsupportedFaceAreaM2": 0.3328891807133978,
+        "contactFraction": 0.4799948467292357,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "interiorRegions": 1,
+      "wallCoreFootprintAreaM2": 0.6401651572480929
+    },
+    {
+      "fixture": "single-triangle-long-left",
+      "floorPlacements": [
+        {
+          "partId": "triangle-long-left",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-79328356071c674a2c8b",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-79328356071c674a2c8b--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "floorWallBottom": {
+        "fullWallFaceAreaM2": 0.9817628038629569,
+        "nativeCoplanarContactAreaM2": 0.4340423835071713,
+        "unsupportedFaceAreaM2": 0.5477204203557844,
+        "contactFraction": 0.4421051416893553,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "roofWallTop": {
+        "fullWallFaceAreaM2": 0.9817628038629569,
+        "nativeCoplanarContactAreaM2": 0.4758211106537159,
+        "unsupportedFaceAreaM2": 0.5059416932092375,
+        "contactFraction": 0.48465994920717653,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "interiorRegions": 1,
+      "wallCoreFootprintAreaM2": 0.9817628038629569
+    },
+    {
+      "fixture": "single-triangle-long-right",
+      "floorPlacements": [
+        {
+          "partId": "triangle-long-right",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-e0dde5e97e9bed05b4b6",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-e0dde5e97e9bed05b4b6--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "floorWallBottom": {
+        "fullWallFaceAreaM2": 0.9817627963788302,
+        "nativeCoplanarContactAreaM2": 0.43404257454449846,
+        "unsupportedFaceAreaM2": 0.5477202218343309,
+        "contactFraction": 0.4421053396456221,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "roofWallTop": {
+        "fullWallFaceAreaM2": 0.9817627963788302,
+        "nativeCoplanarContactAreaM2": 0.4758211132405732,
+        "unsupportedFaceAreaM2": 0.5059416831382562,
+        "contactFraction": 0.4846599555367235,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "interiorRegions": 1,
+      "wallCoreFootprintAreaM2": 0.9817627963788302
+    },
+    {
+      "fixture": "single-triangle-slim-left",
+      "floorPlacements": [
+        {
+          "partId": "triangle-slim-left",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-cf72797120e52d05662c",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-cf72797120e52d05662c--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "floorWallBottom": {
+        "fullWallFaceAreaM2": 0.8552912519182856,
+        "nativeCoplanarContactAreaM2": 0.3684595230066634,
+        "unsupportedFaceAreaM2": 0.48683172891162224,
+        "contactFraction": 0.4308000604241723,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "roofWallTop": {
+        "fullWallFaceAreaM2": 0.8552912519182856,
+        "nativeCoplanarContactAreaM2": 0.40478541884236563,
+        "unsupportedFaceAreaM2": 0.4505058330759204,
+        "contactFraction": 0.4732720204193539,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "interiorRegions": 1,
+      "wallCoreFootprintAreaM2": 0.8552912519182856
+    },
+    {
+      "fixture": "single-triangle-slim-right",
+      "floorPlacements": [
+        {
+          "partId": "triangle-slim-right",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-e315cf681838afff216e",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-e315cf681838afff216e--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "floorWallBottom": {
+        "fullWallFaceAreaM2": 0.8552911385020678,
+        "nativeCoplanarContactAreaM2": 0.3684594213790602,
+        "unsupportedFaceAreaM2": 0.48683171712300766,
+        "contactFraction": 0.4307999987283504,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "roofWallTop": {
+        "fullWallFaceAreaM2": 0.8552911385020678,
+        "nativeCoplanarContactAreaM2": 0.4047854230193595,
+        "unsupportedFaceAreaM2": 0.45050571548270835,
+        "contactFraction": 0.47327208806148624,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "interiorRegions": 1,
+      "wallCoreFootprintAreaM2": 0.8552911385020678
+    },
+    {
+      "fixture": "single-corner-clipped",
+      "floorPlacements": [
+        {
+          "partId": "corner-clipped",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-94474fb38b16d77e6429",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-94474fb38b16d77e6429--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "floorWallBottom": {
+        "fullWallFaceAreaM2": 0.6950825317637648,
+        "nativeCoplanarContactAreaM2": 0.3095336531996691,
+        "unsupportedFaceAreaM2": 0.38554887856409614,
+        "contactFraction": 0.4453192808834235,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "roofWallTop": {
+        "fullWallFaceAreaM2": 0.6950825317637648,
+        "nativeCoplanarContactAreaM2": 0.3391291945300801,
+        "unsupportedFaceAreaM2": 0.35595333723368405,
+        "contactFraction": 0.4878977373658683,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "interiorRegions": 1,
+      "wallCoreFootprintAreaM2": 0.6950825317637648
+    },
+    {
+      "fixture": "single-taper-4m",
+      "floorPlacements": [
+        {
+          "partId": "taper-4m",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-73f48194371a682af29c",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-73f48194371a682af29c--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "floorWallBottom": {
+        "fullWallFaceAreaM2": 1.0370867001120754,
+        "nativeCoplanarContactAreaM2": 0.465501406035953,
+        "unsupportedFaceAreaM2": 0.5715852940761224,
+        "contactFraction": 0.4488548604332188,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "roofWallTop": {
+        "fullWallFaceAreaM2": 1.0370867001120754,
+        "nativeCoplanarContactAreaM2": 0.509685891478127,
+        "unsupportedFaceAreaM2": 0.5274008086339483,
+        "contactFraction": 0.4914592882379521,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "interiorRegions": 1,
+      "wallCoreFootprintAreaM2": 1.0370867001120754
+    },
+    {
+      "fixture": "single-triangle-1m",
+      "floorPlacements": [
+        {
+          "partId": "triangle-1m",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-7902f7617fb23eb8abe3",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-7902f7617fb23eb8abe3--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "floorWallBottom": {
+        "fullWallFaceAreaM2": 0.3200825264280283,
+        "nativeCoplanarContactAreaM2": 0.13367106914246318,
+        "unsupportedFaceAreaM2": 0.18641145728556513,
+        "contactFraction": 0.41761439037041465,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "roofWallTop": {
+        "fullWallFaceAreaM2": 0.3200825264280283,
+        "nativeCoplanarContactAreaM2": 0.14723466112466294,
+        "unsupportedFaceAreaM2": 0.17284786530336538,
+        "contactFraction": 0.45998968693397,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "interiorRegions": 1,
+      "wallCoreFootprintAreaM2": 0.3200825264280283
+    },
+    {
+      "fixture": "mixed-reentrant-L",
+      "floorPlacements": [
+        {
+          "partId": "square-2m",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-a3f5c1c3caa171a94d6c",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "square-2m",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-a3f5c1c3caa171a94d6c",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "square-2m",
+          "originUnits": [
+            0,
+            64
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-a3f5c1c3caa171a94d6c",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "floorWallBottom": {
+        "fullWallFaceAreaM2": 1.5,
+        "nativeCoplanarContactAreaM2": 0.6759033551249191,
+        "unsupportedFaceAreaM2": 0.8240966448750839,
+        "contactFraction": 0.45060223674994604,
+        "roomVoidComponents": [
+          {
+            "unsupportedPlanAreaM2": 0.8240966448750839,
+            "roomContacts": [
+              {
+                "roomIndex": 0,
+                "accessibleBoundaryLengthM": 0.03200779476630711
+              }
+            ],
+            "connectsOutsideNominalFloor": true,
+            "potentialCrossRoomPath": false,
+            "potentialVacuumPath": true,
+            "boundsM": [
+              -0.046875,
+              -0.046875,
+              4.046875,
+              4.046875
+            ]
+          }
+        ],
+        "potentialRoomToVacuumPaths": 1,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "roofWallTop": {
+        "fullWallFaceAreaM2": 1.5,
+        "nativeCoplanarContactAreaM2": 0.7412109375,
+        "unsupportedFaceAreaM2": 0.7587890625,
+        "contactFraction": 0.494140625,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "interiorRegions": 1,
+      "wallCoreFootprintAreaM2": 1.5
+    },
+    {
+      "fixture": "mixed-square-triangle",
+      "floorPlacements": [
+        {
+          "partId": "square-2m",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-a3f5c1c3caa171a94d6c",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "triangle-45",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-771cc318e835d7a08abd",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-771cc318e835d7a08abd--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "floorWallBottom": {
+        "fullWallFaceAreaM2": 1.0151649498222657,
+        "nativeCoplanarContactAreaM2": 0.45291135839888724,
+        "unsupportedFaceAreaM2": 0.5622535914233779,
+        "contactFraction": 0.44614558301897894,
+        "roomVoidComponents": [
+          {
+            "unsupportedPlanAreaM2": 0.5622535914233779,
+            "roomContacts": [
+              {
+                "roomIndex": 0,
+                "accessibleBoundaryLengthM": 0.01931799981393111
+              }
+            ],
+            "connectsOutsideNominalFloor": true,
+            "potentialCrossRoomPath": false,
+            "potentialVacuumPath": true,
+            "boundsM": [
+              -0.046875,
+              -0.046875,
+              4.113166257739067,
+              2.046875
+            ]
+          }
+        ],
+        "potentialRoomToVacuumPaths": 1,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "roofWallTop": {
+        "fullWallFaceAreaM2": 1.0151649498222657,
+        "nativeCoplanarContactAreaM2": 0.49697313819055644,
+        "unsupportedFaceAreaM2": 0.5181918116317092,
+        "contactFraction": 0.48954914989683807,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "interiorRegions": 1,
+      "wallCoreFootprintAreaM2": 1.0151649498222657
+    },
+    {
+      "fixture": "mixed-orthogonal-T",
+      "floorPlacements": [
+        {
+          "partId": "square-2m",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-a3f5c1c3caa171a94d6c",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "square-2m",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-a3f5c1c3caa171a94d6c",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "floorWallBottom": {
+        "fullWallFaceAreaM2": 1.3037109375,
+        "nativeCoplanarContactAreaM2": 0.668550283825522,
+        "unsupportedFaceAreaM2": 0.6351606536744785,
+        "contactFraction": 0.5128056109642954,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "roofWallTop": {
+        "fullWallFaceAreaM2": 1.3037109375,
+        "nativeCoplanarContactAreaM2": 0.732421875,
+        "unsupportedFaceAreaM2": 0.5712890625,
+        "contactFraction": 0.5617977528089888,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "interiorRegions": 2,
+      "wallCoreFootprintAreaM2": 1.3037109375
+    },
+    {
+      "fixture": "mixed-collinear-module-joins",
+      "floorPlacements": [
+        {
+          "partId": "square-2m",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-a3f5c1c3caa171a94d6c",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "square-2m",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-a3f5c1c3caa171a94d6c",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "floorWallBottom": {
+        "fullWallFaceAreaM2": 1.125,
+        "nativeCoplanarContactAreaM2": 0.5050892485188403,
+        "unsupportedFaceAreaM2": 0.619910751481159,
+        "contactFraction": 0.4489682209056358,
+        "roomVoidComponents": [
+          {
+            "unsupportedPlanAreaM2": 0.619910751481159,
+            "roomContacts": [
+              {
+                "roomIndex": 0,
+                "accessibleBoundaryLengthM": 0.016003897383153554
+              }
+            ],
+            "connectsOutsideNominalFloor": true,
+            "potentialCrossRoomPath": false,
+            "potentialVacuumPath": true,
+            "boundsM": [
+              -0.046875,
+              -0.046875,
+              4.046875,
+              2.046875
+            ]
+          }
+        ],
+        "potentialRoomToVacuumPaths": 1,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "roofWallTop": {
+        "fullWallFaceAreaM2": 1.125,
+        "nativeCoplanarContactAreaM2": 0.5537109375,
+        "unsupportedFaceAreaM2": 0.5712890625,
+        "contactFraction": 0.4921875,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "interiorRegions": 1,
+      "wallCoreFootprintAreaM2": 1.125
+    },
+    {
+      "fixture": "audit-square-four-quarter-seams",
+      "floorPlacements": [
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            0,
+            32
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            32,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            32,
+            32
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "floorWallBottom": {
+        "fullWallFaceAreaM2": 0.75,
+        "nativeCoplanarContactAreaM2": 0.3329029031577913,
+        "unsupportedFaceAreaM2": 0.4170970968422085,
+        "contactFraction": 0.44387053754372174,
+        "roomVoidComponents": [
+          {
+            "unsupportedPlanAreaM2": 0.4170970968422085,
+            "roomContacts": [
+              {
+                "roomIndex": 0,
+                "accessibleBoundaryLengthM": 0.032008033184885765
+              }
+            ],
+            "connectsOutsideNominalFloor": true,
+            "potentialCrossRoomPath": false,
+            "potentialVacuumPath": true,
+            "boundsM": [
+              -0.046875,
+              -0.046875,
+              2.046875,
+              2.046875
+            ]
+          }
+        ],
+        "potentialRoomToVacuumPaths": 1,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "roofWallTop": {
+        "fullWallFaceAreaM2": 0.75,
+        "nativeCoplanarContactAreaM2": 0.3662109375,
+        "unsupportedFaceAreaM2": 0.3837890625,
+        "contactFraction": 0.48828125,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "interiorRegions": 1,
+      "wallCoreFootprintAreaM2": 0.75
+    },
+    {
+      "fixture": "audit-T-eight-quarter-seams",
+      "floorPlacements": [
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            0,
+            32
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            32,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            32,
+            32
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            64,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            64,
+            32
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            96,
+            0
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        },
+        {
+          "partId": "quarter-1m",
+          "originUnits": [
+            96,
+            32
+          ],
+          "quarterTurns": 0,
+          "native": {
+            "assetId": "part-0b833a4f3016609e9b96",
+            "revision": "r002",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+            "sourceToNominal": {
+              "translation": [
+                0,
+                0,
+                0
+              ],
+              "quarterTurns": 0,
+              "reflected": false
+            }
+          }
+        }
+      ],
+      "floorWallBottom": {
+        "fullWallFaceAreaM2": 1.3037109375,
+        "nativeCoplanarContactAreaM2": 0.6658058063155826,
+        "unsupportedFaceAreaM2": 0.6379051311844175,
+        "contactFraction": 0.5107004836458102,
+        "roomVoidComponents": [
+          {
+            "unsupportedPlanAreaM2": 0.6379051311844175,
+            "roomContacts": [
+              {
+                "roomIndex": 0,
+                "accessibleBoundaryLengthM": 0.032008033184885765
+              },
+              {
+                "roomIndex": 1,
+                "accessibleBoundaryLengthM": 0.03200803318488643
+              }
+            ],
+            "connectsOutsideNominalFloor": true,
+            "potentialCrossRoomPath": true,
+            "potentialVacuumPath": true,
+            "boundsM": [
+              -0.046875,
+              -0.046875,
+              4.046875,
+              2.046875
+            ]
+          }
+        ],
+        "potentialRoomToVacuumPaths": 1,
+        "potentialCrossRoomPaths": 1,
+        "certifiedSeal": false
+      },
+      "roofWallTop": {
+        "fullWallFaceAreaM2": 1.3037109375,
+        "nativeCoplanarContactAreaM2": 0.732421875,
+        "unsupportedFaceAreaM2": 0.5712890625,
+        "contactFraction": 0.5617977528089888,
+        "roomVoidComponents": [],
+        "potentialRoomToVacuumPaths": 0,
+        "potentialCrossRoomPaths": 0,
+        "certifiedSeal": false
+      },
+      "interiorRegions": 2,
+      "wallCoreFootprintAreaM2": 1.3037109375
+    }
+  ],
+  "floorBevelDepths": {
+    "square-2m": {
+      "highestSurfaceM": 0.1875,
+      "lowestUpwardBevelVertexM": 0.003999999724328518,
+      "maximumUpwardBevelDropM": 0.18350000027567148
+    },
+    "half-2x1": {
+      "highestSurfaceM": 0.1875,
+      "lowestUpwardBevelVertexM": 0.003999999724328518,
+      "maximumUpwardBevelDropM": 0.18350000027567148
+    },
+    "quarter-1m": {
+      "highestSurfaceM": 0.1875,
+      "lowestUpwardBevelVertexM": 0.003999999724328518,
+      "maximumUpwardBevelDropM": 0.18350000027567148
+    },
+    "strip-4x1": {
+      "highestSurfaceM": 0.1875,
+      "lowestUpwardBevelVertexM": 0.003999999724328518,
+      "maximumUpwardBevelDropM": 0.18350000027567148
+    },
+    "triangle-45": {
+      "highestSurfaceM": 0.1875,
+      "lowestUpwardBevelVertexM": 0.003999999724328518,
+      "maximumUpwardBevelDropM": 0.18350000027567148
+    },
+    "triangle-long-left": {
+      "highestSurfaceM": 0.1875,
+      "lowestUpwardBevelVertexM": 0.1834999918937683,
+      "maximumUpwardBevelDropM": 0.0040000081062316895
+    },
+    "triangle-long-right": {
+      "highestSurfaceM": 0.1875,
+      "lowestUpwardBevelVertexM": 0.003999999724328518,
+      "maximumUpwardBevelDropM": 0.18350000027567148
+    },
+    "triangle-slim-left": {
+      "highestSurfaceM": 0.1875,
+      "lowestUpwardBevelVertexM": 0.003999999724328518,
+      "maximumUpwardBevelDropM": 0.18350000027567148
+    },
+    "triangle-slim-right": {
+      "highestSurfaceM": 0.1875,
+      "lowestUpwardBevelVertexM": 0.003999999724328518,
+      "maximumUpwardBevelDropM": 0.18350000027567148
+    },
+    "corner-clipped": {
+      "highestSurfaceM": 0.1875,
+      "lowestUpwardBevelVertexM": 0.003999999724328518,
+      "maximumUpwardBevelDropM": 0.18350000027567148
+    },
+    "taper-4m": {
+      "highestSurfaceM": 0.1875,
+      "lowestUpwardBevelVertexM": 0.004000000189989805,
+      "maximumUpwardBevelDropM": 0.1834999998100102
+    },
+    "triangle-1m": {
+      "highestSurfaceM": 0.1875,
+      "lowestUpwardBevelVertexM": 0.003999999724328518,
+      "maximumUpwardBevelDropM": 0.18350000027567148
+    }
+  },
+  "interpretation": [
+    "Partial full-face support alone does not prove a leak: centered perimeter walls extend outside the nominal floor. A continuous interior contact strip may still enclose a single tile; contact geometry and seam permeability require separate functional validation.",
+    "Multi-tile transverse bevel troughs can connect room space under perimeter/partition walls despite perfect planar wall joins. Positive path flags require a continuous native contact/base adapter, not a generic sealed=true flag.",
+    "Roof underside is flat over each exact footprint; outboard half of centered wall top is not covered by these roofs. Butt seam and continuous interior strip verification still require explicit approved contact definitions.",
+    "r003 door-strip insert is local and does not resolve arbitrary wall-base crossings.",
+    "No geometry-derived pressure strength, conductance, initial gas or material approval."
+  ]
+}

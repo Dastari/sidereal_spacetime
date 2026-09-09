@@ -1,0 +1,138 @@
+{
+  "schema": "sidereal.construction-native-flush-contact-candidate.v1",
+  "id": "shipyard.structure.boundary-kit",
+  "revision": "r003",
+  "scope": "additive door contact-strip insert for verified transverse orthogonal native floor seams; not full boundary replacement",
+  "latticePerMeter": 32,
+  "datumsUnits": {
+    "floorTop": 6,
+    "wallTop": 96
+  },
+  "dependencies": [
+    {
+      "revision": "r001",
+      "glbSha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+      "interfacesSha256": "33347b32b1675fee00d36046a05de37013fa32eca6e2a4d671464da3499972d9"
+    },
+    {
+      "revision": "r002",
+      "glbSha256": "c65a2c6273e8773956e555ea26879b8b4d0d58d483e42eef94b55c8052e75092",
+      "interfacesSha256": "2e9f23466bc82b8b52f242eac92ae2f857deaab2ef8db73db71e67934ca59209"
+    }
+  ],
+  "floorDependency": {
+    "id": "shipyard.floor.mapped-deck-kit",
+    "revision": "r002",
+    "glbSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585"
+  },
+  "parts": [
+    {
+      "id": "door-flush-seam-contact",
+      "assetUuid": "68829603-be68-52f9-8ac5-a8014c458b1f",
+      "native": {
+        "sha256": "c77ebd056fa9fe5509b7e60598b68e9ab5858579542ffdf48cec7bfa785b3c0d",
+        "nodePrefix": "GEO-door-flush-seam-contact--surface",
+        "identityNodeTransform": true
+      },
+      "profileXZLocalM": [
+        [
+          -0.0040000081100000084,
+          0.1875
+        ],
+        [
+          -0.001171529289999973,
+          0.1863284111010273
+        ],
+        [
+          0.0,
+          0.1835000067949295
+        ],
+        [
+          0.0011715728299999117,
+          0.18632841110130463
+        ],
+        [
+          0.004000000190000019,
+          0.1875
+        ]
+      ],
+      "extrusionYM": [
+        -0.09,
+        -0.045
+      ],
+      "sourceToOpening": "translate X to each verified floor seam crossing in the opening module frame, rotate entire module with doorway; never scale or reflect mesh",
+      "fixtureTranslationBlenderM": [
+        1,
+        0,
+        0
+      ],
+      "topPlaneM": 0.1875,
+      "widthM": 0.008000008300000028,
+      "depthM": 0.045,
+      "maximumDepthBelowFloorM": 0.003999993205070496,
+      "structuralDefinitionId": null,
+      "damageAdapter": null,
+      "ratings": null
+    }
+  ],
+  "supportedContact": {
+    "exactFixture": "two quarter-1m native tiles, X offsets0/1, Yoffset-1, opening module origin0",
+    "gasketPatchM": [
+      [
+        0.365,
+        -0.0715
+      ],
+      [
+        1.635,
+        -0.0715
+      ],
+      [
+        1.635,
+        -0.0625
+      ],
+      [
+        0.365,
+        -0.0625
+      ]
+    ],
+    "contactAreaM2": 0.011429999999999996,
+    "method": "native triangle projection/intersection and affine height equality, not AABB",
+    "exactFixtureToleranceM": 1e-07,
+    "nominalFamilyToleranceM": 1e-06,
+    "nominalFamilies": [
+      "square-2m",
+      "half-2x1",
+      "quarter-1m",
+      "strip-4x1"
+    ],
+    "maximumObservedOtherFamilyDeviationM": 4.3170760224975346e-07,
+    "rejectedUntilValidated": [
+      "diagonal seams",
+      "tile vertices/corner bevels in contact strip",
+      "different geometry revision",
+      "missing floor on either side",
+      "arbitrary mesh scale/reflection",
+      "unsupported rotated source seam profiles"
+    ]
+  },
+  "walking": {
+    "maximumHeightM": 0.1875,
+    "raisedThreshold": false,
+    "clearApertureWidthM": 1.25,
+    "clearApertureHeightM": 2.25,
+    "nativeClearanceOnly": true,
+    "actualAuthorityAdapterValidated": false
+  },
+  "acceptance": {
+    "geometricFixtureContact": true,
+    "allLayoutsCertified": false,
+    "pressureApproved": false,
+    "ownerArtApproved": false,
+    "published": false
+  },
+  "remaining": [
+    "Runtime installation and layout-specific floor contact verification",
+    "Parent-owned physical seal/hinge sequencing, obstruction and leakage",
+    "Diagonal wall/node families not delivered in r003"
+  ]
+}

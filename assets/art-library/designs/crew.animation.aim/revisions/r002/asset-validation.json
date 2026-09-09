@@ -1,0 +1,57 @@
+{
+  "status": "pass",
+  "deformationBones": 16,
+  "meshSlots": 37,
+  "materialPrimitives": 133,
+  "clips": 75,
+  "unchangedOriginalClips": 12,
+  "maxOriginalClipDelta": 0,
+  "materialsUnchanged": true,
+  "finiteAccessors": true,
+  "files": {
+    "assets/art-library/designs/crew.animation.aim/revisions/r002/blender-source.blend": {
+      "sha256": "750487414860372dd6e1a6648050fa87c1c1935955766f59318a776b19e5741a",
+      "bytes": 11780456
+    },
+    "assets/art-library/designs/crew.animation.aim/revisions/r002/crew-poses.glb": {
+      "sha256": "44af8cbc0bb6f08aa558b9ac2f30359c832e8b52f5a45a3f351ff2a8e25ae00c",
+      "bytes": 5836284
+    },
+    "assets/art-library/designs/crew.animation.aim/revisions/r002/runtime-aim-space.json": {
+      "sha256": "ec269e27b11673dc9080da6114d51ddfdfff26f8acad773c4e0951c4168e1885",
+      "bytes": 66599
+    },
+    "assets/art-library/designs/crew.animation.aim/revisions/r002/equipment/handheld-source.blend": {
+      "sha256": "f25ff514cb2ecb07a1bc5a20ec40603f644d8fb362a583080cfb259c62fc47d6",
+      "bytes": 1659344
+    },
+    "assets/art-library/designs/crew.animation.aim/revisions/r002/equipment/carbine.glb": {
+      "sha256": "aba632e370f18a0be48e8f082c425e0da7f9978e3700ac7211ae1b11efa8e118",
+      "bytes": 216996
+    },
+    "assets/art-library/designs/crew.animation.aim/revisions/r002/equipment/compact-pistol.glb": {
+      "sha256": "5a6516f85126486d37ffb0ecf9d12bfeac25f28a0b35976d7d7128aa98b4bbbb",
+      "bytes": 105192
+    },
+    "assets/art-library/designs/crew.animation.aim/revisions/r002/equipment/flashlight.glb": {
+      "sha256": "6ebe55855b087ca2b983c0856a440d4d984d26d390ae88ec076183e3fdf46643",
+      "bytes": 32696
+    },
+    "assets/art-library/designs/crew.animation.aim/revisions/r002/equipment/heavy-handgun.glb": {
+      "sha256": "329cd64ccbdeba1e12e6df85c8ecd331c3e8b3781e95a3cb434f5b61834e36e9",
+      "bytes": 119440
+    },
+    "assets/art-library/designs/crew.animation.aim/revisions/r002/equipment/long-rifle.glb": {
+      "sha256": "57457e19003fcb6bbe6543dfef3fa2ee317ae9029dad88cbbe19d42889080039",
+      "bytes": 232172
+    },
+    "assets/art-library/designs/crew.animation.aim/revisions/r002/equipment/plasma-cutter.glb": {
+      "sha256": "1fdc536778e0726a88ca1eb0d569524c8de0176607d9d31ee993e9df1e4f0371",
+      "bytes": 81744
+    },
+    "assets/art-library/designs/crew.animation.aim/revisions/r002/equipment/sample-scanner.glb": {
+      "sha256": "8e1a9a64f22f41bc9e171dbe63c93b9605dbc9582f5987029741c6cd586fee74",
+      "bytes": 72052
+    }
+  }
+}

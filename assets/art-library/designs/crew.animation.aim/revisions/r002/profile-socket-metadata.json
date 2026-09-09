@@ -1,0 +1,915 @@
+{
+  "version": 1,
+  "units": "metres/radians",
+  "space": "authored glTF +Y up/-Z forward; shoulder offsets in spine local frame",
+  "profiles": {
+    "RIFLE": {
+      "version": 1,
+      "primaryHand": "R",
+      "deviceMode": "DIRECTED_DEVICE",
+      "maxUpperBodyYaw": 0.7853981633974483,
+      "maxUpperBodyPitch": 1.0471975511965976,
+      "torsoAimContribution": 0.55,
+      "hipAimContribution": 0.65,
+      "turnStart": 0.6108652381980153,
+      "turnFull": 1.1344640137963142,
+      "rootRate": 2.792526803190927,
+      "aimRate": 3.3161255787892263,
+      "acquireSeconds": 0.24,
+      "releaseSeconds": 0.22,
+      "recoilRadians": 0.05235987755982988,
+      "recoilMeters": 0.018,
+      "supportExtension": 0,
+      "freeArmOffset": [
+        -0.3,
+        1.04,
+        -0.18
+      ],
+      "clearanceMargin": 0.012,
+      "maxShoulderSeparation": 0.13,
+      "maxCorrections": 12,
+      "locomotionPoseSet": [
+        "Idle-Rifle",
+        "Walk-Rifle",
+        "Sprint-Rifle",
+        "Seated-Rifle"
+      ],
+      "type": "RIFLE",
+      "secondaryHandMode": "foregrip",
+      "aimPivot": "shoulder",
+      "requiresShoulderContact": true,
+      "requiresEyeAlignment": false,
+      "maxStockContactCompressionM": 0.008,
+      "maxShoulderGirdleM": 0.045,
+      "elbowBendLimits": [
+        0.08,
+        2.85
+      ],
+      "screenGripOffset": [
+        0.27,
+        0.96,
+        -0.36
+      ],
+      "screenRoll": 0,
+      "stanceYaw": 1.3,
+      "shoulderPocketOffset": [
+        0.06,
+        -0.08,
+        0.28
+      ],
+      "gripOffset": [
+        0.25,
+        1.21,
+        -0.18
+      ],
+      "basePose": "RIFLE.Aim.0.0",
+      "aimPoseSet": "RIFLE.Aim"
+    },
+    "LONG_RIFLE": {
+      "version": 1,
+      "primaryHand": "R",
+      "deviceMode": "DIRECTED_DEVICE",
+      "maxUpperBodyYaw": 0.7853981633974483,
+      "maxUpperBodyPitch": 1.0471975511965976,
+      "torsoAimContribution": 0.65,
+      "hipAimContribution": 0.65,
+      "turnStart": 0.6108652381980153,
+      "turnFull": 1.1344640137963142,
+      "rootRate": 2.792526803190927,
+      "aimRate": 3.3161255787892263,
+      "acquireSeconds": 0.24,
+      "releaseSeconds": 0.22,
+      "recoilRadians": 0.05235987755982988,
+      "recoilMeters": 0.018,
+      "supportExtension": 0.07,
+      "freeArmOffset": [
+        -0.3,
+        1.04,
+        -0.18
+      ],
+      "clearanceMargin": 0.012,
+      "maxShoulderSeparation": 0.13,
+      "maxCorrections": 12,
+      "locomotionPoseSet": [
+        "Idle-Rifle",
+        "Walk-Rifle",
+        "Sprint-Rifle",
+        "Seated-Rifle"
+      ],
+      "type": "LONG_RIFLE",
+      "secondaryHandMode": "foregrip",
+      "aimPivot": "shoulder",
+      "requiresShoulderContact": true,
+      "requiresEyeAlignment": true,
+      "maxStockContactCompressionM": 0.008,
+      "maxShoulderGirdleM": 0.045,
+      "elbowBendLimits": [
+        0.08,
+        2.85
+      ],
+      "screenGripOffset": [
+        0.27,
+        0.96,
+        -0.36
+      ],
+      "screenRoll": 0,
+      "stanceYaw": 1.3,
+      "shoulderPocketOffset": [
+        0.06,
+        -0.08,
+        0.28
+      ],
+      "gripOffset": [
+        0.25,
+        1.24,
+        -0.19
+      ],
+      "basePose": "LONG_RIFLE.Aim.0.0",
+      "aimPoseSet": "LONG_RIFLE.Aim"
+    },
+    "PISTOL_TWO_HAND": {
+      "version": 1,
+      "primaryHand": "R",
+      "deviceMode": "DIRECTED_DEVICE",
+      "maxUpperBodyYaw": 0.7853981633974483,
+      "maxUpperBodyPitch": 1.0471975511965976,
+      "torsoAimContribution": 0.55,
+      "hipAimContribution": 0.18,
+      "turnStart": 0.6108652381980153,
+      "turnFull": 1.1344640137963142,
+      "rootRate": 2.792526803190927,
+      "aimRate": 3.3161255787892263,
+      "acquireSeconds": 0.24,
+      "releaseSeconds": 0.22,
+      "recoilRadians": 0.05235987755982988,
+      "recoilMeters": 0.018,
+      "supportExtension": 0,
+      "freeArmOffset": [
+        -0.3,
+        1.04,
+        -0.18
+      ],
+      "clearanceMargin": 0.012,
+      "maxShoulderSeparation": 0.13,
+      "maxCorrections": 12,
+      "locomotionPoseSet": [
+        "Idle-Pistol",
+        "Walk-Pistol",
+        "Sprint-Pistol",
+        "Seated-Pistol"
+      ],
+      "type": "PISTOL_TWO_HAND",
+      "secondaryHandMode": "primary-hand",
+      "aimPivot": "primary-grip",
+      "requiresShoulderContact": false,
+      "requiresEyeAlignment": false,
+      "maxStockContactCompressionM": 0.008,
+      "maxShoulderGirdleM": 0.045,
+      "elbowBendLimits": [
+        0.08,
+        2.85
+      ],
+      "screenGripOffset": [
+        0.27,
+        0.96,
+        -0.36
+      ],
+      "screenRoll": 0,
+      "stanceYaw": 0.08,
+      "shoulderPocketOffset": [
+        0.065,
+        -0.01,
+        -0.12
+      ],
+      "gripOffset": [
+        0,
+        1.18,
+        -0.41
+      ],
+      "basePose": "PISTOL_TWO_HAND.Aim.0.0",
+      "aimPoseSet": "PISTOL_TWO_HAND.Aim"
+    },
+    "PISTOL_ONE_HAND": {
+      "version": 1,
+      "primaryHand": "R",
+      "deviceMode": "DIRECTED_DEVICE",
+      "maxUpperBodyYaw": 0.7853981633974483,
+      "maxUpperBodyPitch": 1.0471975511965976,
+      "torsoAimContribution": 0.55,
+      "hipAimContribution": 0.18,
+      "turnStart": 0.6108652381980153,
+      "turnFull": 1.1344640137963142,
+      "rootRate": 2.792526803190927,
+      "aimRate": 3.3161255787892263,
+      "acquireSeconds": 0.24,
+      "releaseSeconds": 0.22,
+      "recoilRadians": 0.05235987755982988,
+      "recoilMeters": 0.018,
+      "supportExtension": 0,
+      "freeArmOffset": [
+        -0.3,
+        1.04,
+        -0.18
+      ],
+      "clearanceMargin": 0.012,
+      "maxShoulderSeparation": 0.13,
+      "maxCorrections": 12,
+      "locomotionPoseSet": [
+        "Idle-Pistol",
+        "Walk-Pistol",
+        "Sprint-Pistol",
+        "Seated-Pistol"
+      ],
+      "type": "PISTOL_ONE_HAND",
+      "secondaryHandMode": "free",
+      "aimPivot": "primary-grip",
+      "requiresShoulderContact": false,
+      "requiresEyeAlignment": false,
+      "maxStockContactCompressionM": 0.008,
+      "maxShoulderGirdleM": 0.045,
+      "elbowBendLimits": [
+        0.08,
+        2.85
+      ],
+      "screenGripOffset": [
+        0.27,
+        0.96,
+        -0.36
+      ],
+      "screenRoll": 0,
+      "stanceYaw": 0.08,
+      "shoulderPocketOffset": [
+        0.065,
+        -0.01,
+        -0.12
+      ],
+      "gripOffset": [
+        0.29,
+        1.23,
+        -0.42
+      ],
+      "basePose": "PISTOL_ONE_HAND.Aim.0.0",
+      "aimPoseSet": "PISTOL_ONE_HAND.Aim"
+    },
+    "FLASHLIGHT": {
+      "version": 1,
+      "primaryHand": "R",
+      "deviceMode": "DIRECTED_DEVICE",
+      "maxUpperBodyYaw": 0.7853981633974483,
+      "maxUpperBodyPitch": 1.0471975511965976,
+      "torsoAimContribution": 0.55,
+      "hipAimContribution": 0.18,
+      "turnStart": 0.6108652381980153,
+      "turnFull": 1.1344640137963142,
+      "rootRate": 2.792526803190927,
+      "aimRate": 3.3161255787892263,
+      "acquireSeconds": 0.24,
+      "releaseSeconds": 0.22,
+      "recoilRadians": 0,
+      "recoilMeters": 0,
+      "supportExtension": 0,
+      "freeArmOffset": [
+        -0.3,
+        1.04,
+        -0.18
+      ],
+      "clearanceMargin": 0.012,
+      "maxShoulderSeparation": 0.13,
+      "maxCorrections": 12,
+      "locomotionPoseSet": [
+        "Idle-Pistol",
+        "Walk-Pistol",
+        "Sprint-Pistol",
+        "Seated-Pistol"
+      ],
+      "type": "FLASHLIGHT",
+      "secondaryHandMode": "free",
+      "aimPivot": "primary-grip",
+      "requiresShoulderContact": false,
+      "requiresEyeAlignment": false,
+      "maxStockContactCompressionM": 0.008,
+      "maxShoulderGirdleM": 0.045,
+      "elbowBendLimits": [
+        0.08,
+        2.85
+      ],
+      "screenGripOffset": [
+        0.27,
+        0.96,
+        -0.36
+      ],
+      "screenRoll": 0,
+      "stanceYaw": 0.08,
+      "shoulderPocketOffset": [
+        0.065,
+        -0.01,
+        -0.12
+      ],
+      "gripOffset": [
+        0.3,
+        1.16,
+        -0.3
+      ],
+      "basePose": "FLASHLIGHT.Aim.0.0",
+      "aimPoseSet": "FLASHLIGHT.Aim"
+    },
+    "HANDHELD_DEVICE": {
+      "version": 1,
+      "primaryHand": "R",
+      "deviceMode": "DIRECTED_DEVICE",
+      "maxUpperBodyYaw": 0.7853981633974483,
+      "maxUpperBodyPitch": 1.0471975511965976,
+      "torsoAimContribution": 0.55,
+      "hipAimContribution": 0.18,
+      "turnStart": 0.6108652381980153,
+      "turnFull": 1.1344640137963142,
+      "rootRate": 2.792526803190927,
+      "aimRate": 3.3161255787892263,
+      "acquireSeconds": 0.24,
+      "releaseSeconds": 0.22,
+      "recoilRadians": 0,
+      "recoilMeters": 0,
+      "supportExtension": 0,
+      "freeArmOffset": [
+        -0.3,
+        1.04,
+        -0.18
+      ],
+      "clearanceMargin": 0.012,
+      "maxShoulderSeparation": 0.13,
+      "maxCorrections": 12,
+      "locomotionPoseSet": [
+        "Idle-Pistol",
+        "Walk-Pistol",
+        "Sprint-Pistol",
+        "Seated-Pistol"
+      ],
+      "type": "HANDHELD_DEVICE",
+      "secondaryHandMode": "free",
+      "aimPivot": "primary-grip",
+      "requiresShoulderContact": false,
+      "requiresEyeAlignment": false,
+      "maxStockContactCompressionM": 0.008,
+      "maxShoulderGirdleM": 0.045,
+      "elbowBendLimits": [
+        0.08,
+        2.85
+      ],
+      "screenGripOffset": [
+        0.2,
+        1.05,
+        -0.32
+      ],
+      "screenRoll": -0.6,
+      "stanceYaw": 0.08,
+      "shoulderPocketOffset": [
+        0.065,
+        -0.01,
+        -0.12
+      ],
+      "gripOffset": [
+        0.22,
+        1.12,
+        -0.32
+      ],
+      "basePose": "HANDHELD_DEVICE.Aim.0.0",
+      "aimPoseSet": "HANDHELD_DEVICE.Aim"
+    },
+    "TOOL": {
+      "version": 1,
+      "primaryHand": "R",
+      "deviceMode": "DIRECTED_DEVICE",
+      "maxUpperBodyYaw": 0.7853981633974483,
+      "maxUpperBodyPitch": 1.0471975511965976,
+      "torsoAimContribution": 0.55,
+      "hipAimContribution": 0.18,
+      "turnStart": 0.6108652381980153,
+      "turnFull": 1.1344640137963142,
+      "rootRate": 2.792526803190927,
+      "aimRate": 3.3161255787892263,
+      "acquireSeconds": 0.24,
+      "releaseSeconds": 0.22,
+      "recoilRadians": 0,
+      "recoilMeters": 0,
+      "supportExtension": 0,
+      "freeArmOffset": [
+        -0.3,
+        1.04,
+        -0.18
+      ],
+      "clearanceMargin": 0.012,
+      "maxShoulderSeparation": 0.13,
+      "maxCorrections": 12,
+      "locomotionPoseSet": [
+        "Idle-Pistol",
+        "Walk-Pistol",
+        "Sprint-Pistol",
+        "Seated-Pistol"
+      ],
+      "type": "TOOL",
+      "secondaryHandMode": "free",
+      "aimPivot": "primary-grip",
+      "requiresShoulderContact": false,
+      "requiresEyeAlignment": false,
+      "maxStockContactCompressionM": 0.008,
+      "maxShoulderGirdleM": 0.045,
+      "elbowBendLimits": [
+        0.08,
+        2.85
+      ],
+      "screenGripOffset": [
+        0.27,
+        0.96,
+        -0.36
+      ],
+      "screenRoll": 0,
+      "stanceYaw": 0.08,
+      "shoulderPocketOffset": [
+        0.065,
+        -0.01,
+        -0.12
+      ],
+      "gripOffset": [
+        0.28,
+        1.1,
+        -0.34
+      ],
+      "basePose": "TOOL.Aim.0.0",
+      "aimPoseSet": "TOOL.Aim"
+    }
+  },
+  "items": {
+    "carbine": {
+      "version": 1,
+      "assetId": "carbine",
+      "profile": "RIFLE",
+      "sockets": {
+        "Grip.Primary": [
+          0,
+          0,
+          0
+        ],
+        "Grip.Secondary": [
+          -0.065,
+          0.045,
+          -0.12
+        ],
+        "Contact.Shoulder": [
+          0,
+          0.075,
+          0.18
+        ],
+        "Aim.Muzzle": [
+          0,
+          0.13,
+          -0.78
+        ],
+        "Sight.Primary": [
+          0,
+          0.25,
+          0.045
+        ]
+      },
+      "clearance": [
+        {
+          "name": "receiver",
+          "center": [
+            0,
+            0.105,
+            -0.13
+          ],
+          "half": [
+            0.096,
+            0.08,
+            0.2166
+          ]
+        },
+        {
+          "name": "slide",
+          "center": [
+            0,
+            0.2,
+            -0.1976
+          ],
+          "half": [
+            0.06,
+            0.033,
+            0.2736
+          ]
+        },
+        {
+          "name": "charging-handle",
+          "center": [
+            0.105,
+            0.19,
+            -0.08
+          ],
+          "half": [
+            0.045,
+            0.018,
+            0.025
+          ]
+        },
+        {
+          "name": "grip",
+          "center": [
+            0,
+            -0.01,
+            0
+          ],
+          "half": [
+            0.044,
+            0.094,
+            0.055
+          ]
+        },
+        {
+          "name": "stock",
+          "center": [
+            0,
+            0.075,
+            0.15
+          ],
+          "half": [
+            0.073,
+            0.11,
+            0.03
+          ]
+        },
+        {
+          "name": "barrel",
+          "center": [
+            0,
+            0.13,
+            -0.5319999999999999
+          ],
+          "half": [
+            0.085,
+            0.07,
+            0.19
+          ]
+        }
+      ]
+    },
+    "long-rifle": {
+      "version": 1,
+      "assetId": "long-rifle",
+      "profile": "LONG_RIFLE",
+      "sockets": {
+        "Grip.Primary": [
+          0,
+          0.03,
+          0.055
+        ],
+        "Grip.Secondary": [
+          -0.065,
+          0.045,
+          -0.2
+        ],
+        "Contact.Shoulder": [
+          0,
+          0.075,
+          0.18
+        ],
+        "Aim.Muzzle": [
+          0,
+          0.13,
+          -1.12
+        ],
+        "Sight.Primary": [
+          0,
+          0.309,
+          -0.06
+        ],
+        "Sight.EyeReference": [
+          0,
+          0.309,
+          0.04
+        ]
+      },
+      "clearance": [
+        {
+          "name": "receiver",
+          "center": [
+            0,
+            0.105,
+            -0.13
+          ],
+          "half": [
+            0.096,
+            0.08,
+            0.3135
+          ]
+        },
+        {
+          "name": "slide",
+          "center": [
+            0,
+            0.2,
+            -0.28600000000000003
+          ],
+          "half": [
+            0.06,
+            0.033,
+            0.396
+          ]
+        },
+        {
+          "name": "charging-handle",
+          "center": [
+            0.105,
+            0.19,
+            -0.08
+          ],
+          "half": [
+            0.045,
+            0.018,
+            0.025
+          ]
+        },
+        {
+          "name": "grip",
+          "center": [
+            0,
+            -0.01,
+            0
+          ],
+          "half": [
+            0.044,
+            0.094,
+            0.055
+          ]
+        },
+        {
+          "name": "stock",
+          "center": [
+            0,
+            0.075,
+            0.15
+          ],
+          "half": [
+            0.073,
+            0.11,
+            0.03
+          ]
+        },
+        {
+          "name": "barrel",
+          "center": [
+            0,
+            0.13,
+            -0.77
+          ],
+          "half": [
+            0.085,
+            0.07,
+            0.275
+          ]
+        },
+        {
+          "name": "optic",
+          "center": [
+            0,
+            0.309,
+            -0.18
+          ],
+          "half": [
+            0.044,
+            0.043,
+            0.12
+          ]
+        }
+      ]
+    },
+    "compact-pistol": {
+      "version": 1,
+      "assetId": "compact-pistol",
+      "profile": "PISTOL_ONE_HAND",
+      "sockets": {
+        "Grip.Primary": [
+          0,
+          0,
+          0
+        ],
+        "SupportHandContact": [
+          -0.065,
+          -0.012,
+          0.015
+        ],
+        "Aim.Muzzle": [
+          0,
+          0.13,
+          -0.39
+        ],
+        "Sight.Primary": [
+          0,
+          0.25,
+          0.045
+        ]
+      },
+      "clearance": [
+        {
+          "name": "receiver",
+          "center": [
+            0,
+            0.12,
+            -0.14
+          ],
+          "half": [
+            0.14,
+            0.15,
+            0.185
+          ]
+        }
+      ]
+    },
+    "heavy-handgun": {
+      "version": 1,
+      "assetId": "heavy-handgun",
+      "profile": "PISTOL_TWO_HAND",
+      "sockets": {
+        "Grip.Primary": [
+          0,
+          0,
+          0
+        ],
+        "SupportHandContact": [
+          -0.065,
+          -0.012,
+          0.015
+        ],
+        "Aim.Muzzle": [
+          0,
+          0.13,
+          -0.49
+        ],
+        "Sight.Primary": [
+          0,
+          0.25,
+          0.045
+        ]
+      },
+      "clearance": [
+        {
+          "name": "receiver",
+          "center": [
+            0,
+            0.12,
+            -0.14
+          ],
+          "half": [
+            0.14,
+            0.15,
+            0.235
+          ]
+        }
+      ]
+    },
+    "plasma-cutter": {
+      "version": 1,
+      "assetId": "plasma-cutter",
+      "profile": "TOOL",
+      "sockets": {
+        "Grip.Primary": [
+          0,
+          0,
+          0
+        ],
+        "Aim.Direction": [
+          0,
+          0.13,
+          -0.5
+        ],
+        "Interaction.Contact": [
+          0,
+          0.13,
+          -0.5
+        ]
+      },
+      "clearance": [
+        {
+          "name": "device-body",
+          "center": [
+            0,
+            0.12,
+            -0.13
+          ],
+          "half": [
+            0.151,
+            0.14,
+            0.17
+          ]
+        },
+        {
+          "name": "forks",
+          "center": [
+            0,
+            0.13,
+            -0.38
+          ],
+          "half": [
+            0.105,
+            0.045,
+            0.12
+          ]
+        }
+      ]
+    },
+    "sample-scanner": {
+      "version": 1,
+      "assetId": "sample-scanner",
+      "profile": "HANDHELD_DEVICE",
+      "deviceMode": "VIEW_SCREEN_DEVICE",
+      "sockets": {
+        "Grip.Primary": [
+          0,
+          0,
+          0
+        ],
+        "Aim.Direction": [
+          0.085,
+          0.35,
+          -0.19
+        ],
+        "Display.Reference": [
+          0,
+          0.19,
+          -0.251
+        ]
+      },
+      "clearance": [
+        {
+          "name": "device-body",
+          "center": [
+            0,
+            0.12,
+            -0.055
+          ],
+          "half": [
+            0.1,
+            0.085,
+            0.085
+          ]
+        },
+        {
+          "name": "display",
+          "center": [
+            0,
+            0.19,
+            -0.19
+          ],
+          "half": [
+            0.11,
+            0.125,
+            0.065
+          ]
+        },
+        {
+          "name": "antenna",
+          "center": [
+            0.085,
+            0.35,
+            -0.19
+          ],
+          "half": [
+            0.015,
+            0.065,
+            0.02
+          ]
+        }
+      ]
+    },
+    "flashlight": {
+      "version": 1,
+      "assetId": "flashlight",
+      "profile": "FLASHLIGHT",
+      "sockets": {
+        "Grip.Primary": [
+          0,
+          0,
+          0
+        ],
+        "Aim.Direction": [
+          0,
+          0.06,
+          -0.31
+        ]
+      },
+      "clearance": [
+        {
+          "name": "device-body",
+          "center": [
+            0,
+            0.05,
+            -0.15
+          ],
+          "half": [
+            0.08,
+            0.09,
+            0.16
+          ]
+        }
+      ]
+    }
+  }
+}

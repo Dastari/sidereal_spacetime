@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "usage": "opaque rigid helmet frame occupancy study; optical visors explicitly excluded; not active damage or skinned body geometry",
+  "cellMeters": 0.00625,
+  "occupiedCells": 768138,
+  "sourceSolids": 29,
+  "excludedOpticalSurfaces": [
+    "GEO-standard-curved-visor",
+    "GEO-marine-curved-visor",
+    "GEO-explorer-curved-visor",
+    "GEO-medic-visor",
+    "GEO-pilot-visor",
+    "GEO-salvage-visor"
+  ],
+  "palette": [
+    null,
+    {
+      "name": "crew.trim",
+      "voxelMaterialId": 0,
+      "color": [
+        0.6899999976158142,
+        0.7699999809265137,
+        0.8299999833106995
+      ],
+      "metallic": 0.05000000074505806,
+      "roughness": 0.36000001430511475,
+      "emission": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0
+    },
+    {
+      "name": "crew.accent",
+      "voxelMaterialId": 0,
+      "color": [
+        0.949999988079071,
+        0.4300000071525574,
+        0.11999999731779099
+      ],
+      "metallic": 0.0,
+      "roughness": 0.36000001430511475,
+      "emission": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0
+    },
+    {
+      "name": "crew.rubber",
+      "voxelMaterialId": 0,
+      "color": [
+        0.02500000037252903,
+        0.03999999910593033,
+        0.06499999761581421
+      ],
+      "metallic": 0.0,
+      "roughness": 0.6499999761581421,
+      "emission": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "emissionStrength": 0.0
+    }
+  ],
+  "sourceGenerator": "scripts/build_crew_source.py",
+  "samplerSha256": "e487508fddd3d9e482ed3daf4cb49f7272ec74223ea7453ef3d21a4e09a8e26f",
+  "compressedSha256": "f0e709b536baedbfbadb256440b3fbcbe5364d2aa893a9cc49a401d0f1d57b13",
+  "uncompressedSha256": "eee93fae454dc6f3308fd68ef40858593984a1e313527410e5052add4710883d",
+  "compressedBytes": 1812225,
+  "uncompressedBytes": 11207645
+}

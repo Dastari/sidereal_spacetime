@@ -1,0 +1,2074 @@
+[
+  {
+    "name": "GEO-part-13b30dda6355f0ff17b3--deck",
+    "triangles": 620,
+    "beveledEdges": 76,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-ca866457d5caccb943a9--deck",
+    "triangles": 620,
+    "beveledEdges": 76,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-ce04d53853da84dd9d81--deck",
+    "triangles": 322,
+    "beveledEdges": 40,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-b02132179cb305a21417--deck",
+    "triangles": 620,
+    "beveledEdges": 76,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-15bc4d24f27173de47ce--deck",
+    "triangles": 620,
+    "beveledEdges": 76,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-7b265b4d073afc9bf127--deck",
+    "triangles": 900,
+    "beveledEdges": 112,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-ffc5518d9892477ad05b--deck",
+    "triangles": 976,
+    "beveledEdges": 115,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-7ceebee6336152691b53--deck",
+    "triangles": 866,
+    "beveledEdges": 91,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-c5fa343376505f993a45--deck",
+    "triangles": 964,
+    "beveledEdges": 114,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-a735909957b9e773f219--deck",
+    "triangles": 900,
+    "beveledEdges": 112,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-749baebbcaac89945d5c--deck",
+    "triangles": 772,
+    "beveledEdges": 99,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-395319254b5dd541b5c9--deck",
+    "triangles": 772,
+    "beveledEdges": 99,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-67c91d419e31812795c4--deck",
+    "triangles": 772,
+    "beveledEdges": 99,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-b90945c434415efcef4d--deck",
+    "triangles": 772,
+    "beveledEdges": 99,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-a561ef19a47095f7af9b--deck",
+    "triangles": 900,
+    "beveledEdges": 112,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-79da3bdf7a767bb89c8b--deck",
+    "triangles": 942,
+    "beveledEdges": 108,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-1a05e8da6e2c1ec33a1c--deck",
+    "triangles": 788,
+    "beveledEdges": 81,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-f720d0e3287882975690--deck",
+    "triangles": 944,
+    "beveledEdges": 112,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-2ae59f43b3e997e6ee94--deck",
+    "triangles": 900,
+    "beveledEdges": 112,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-df324c9b4e916c78412f--deck",
+    "triangles": 756,
+    "beveledEdges": 93,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-f75dd89e6deed9eefdb9--deck",
+    "triangles": 792,
+    "beveledEdges": 92,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-1f69531882e3417aadf4--deck",
+    "triangles": 820,
+    "beveledEdges": 96,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-27d644c2d1643c69a713--deck",
+    "triangles": 756,
+    "beveledEdges": 93,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-d5094b4fbaf77ad6ebeb--deck",
+    "triangles": 900,
+    "beveledEdges": 112,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-add5f7040084fbad8df6--deck",
+    "triangles": 946,
+    "beveledEdges": 115,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-7ec54250fbcf112c0861--deck",
+    "triangles": 650,
+    "beveledEdges": 69,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-1a7d03bf8c7aabde4976--deck",
+    "triangles": 940,
+    "beveledEdges": 114,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-8d853ce060a72d6e1e39--deck",
+    "triangles": 900,
+    "beveledEdges": 112,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-152849dcee209e8ef9ac--deck",
+    "triangles": 974,
+    "beveledEdges": 114,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-2ecd61f4910b8988dd2c--deck",
+    "triangles": 652,
+    "beveledEdges": 70,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-0f1f4618418c21228e80--deck",
+    "triangles": 972,
+    "beveledEdges": 114,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-c2db52503da57679ba31--deck",
+    "triangles": 900,
+    "beveledEdges": 112,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-f4b0cfbfdcdfd800e350--walls",
+    "triangles": 136,
+    "beveledEdges": 16,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-f4b0cfbfdcdfd800e350--cutaway-port",
+    "triangles": 234,
+    "beveledEdges": 28,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-9a74ad0724eb741a2b63--walls",
+    "triangles": 350,
+    "beveledEdges": 41,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-9a74ad0724eb741a2b63--cutaway-port",
+    "triangles": 300,
+    "beveledEdges": 33,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-9a74ad0724eb741a2b63--cutaway-aft",
+    "triangles": 278,
+    "beveledEdges": 34,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-070229a9a22dcd1fc3e1--walls",
+    "triangles": 240,
+    "beveledEdges": 30,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-070229a9a22dcd1fc3e1--cutaway-port",
+    "triangles": 396,
+    "beveledEdges": 40,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-a086c1f719d417b167f3--walls",
+    "triangles": 860,
+    "beveledEdges": 77,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-a086c1f719d417b167f3--cutaway-port",
+    "triangles": 976,
+    "beveledEdges": 91,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-a086c1f719d417b167f3--cutaway-aft",
+    "triangles": 210,
+    "beveledEdges": 26,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-328e6e9149ea347b95d7--walls",
+    "triangles": 136,
+    "beveledEdges": 16,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-328e6e9149ea347b95d7--cutaway-port",
+    "triangles": 234,
+    "beveledEdges": 28,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-6e64c7b0aa0165cbe846--walls",
+    "triangles": 532,
+    "beveledEdges": 49,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-6e64c7b0aa0165cbe846--cutaway-port",
+    "triangles": 1382,
+    "beveledEdges": 111,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-f198db40cdb355118c21--walls",
+    "triangles": 240,
+    "beveledEdges": 30,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-f198db40cdb355118c21--cutaway-port",
+    "triangles": 464,
+    "beveledEdges": 45,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-f198db40cdb355118c21--partitions",
+    "triangles": 44,
+    "beveledEdges": 8,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-1f4f2ce23a20dba31e8b--walls",
+    "triangles": 958,
+    "beveledEdges": 88,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-1f4f2ce23a20dba31e8b--cutaway-port",
+    "triangles": 1402,
+    "beveledEdges": 131,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-1f4f2ce23a20dba31e8b--partitions",
+    "triangles": 974,
+    "beveledEdges": 100,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-8027121656ac690dd209--walls",
+    "triangles": 626,
+    "beveledEdges": 51,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-8027121656ac690dd209--cutaway-port",
+    "triangles": 1192,
+    "beveledEdges": 89,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-0e4aefe72a90960922e9--walls",
+    "triangles": 240,
+    "beveledEdges": 30,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-0e4aefe72a90960922e9--cutaway-port",
+    "triangles": 440,
+    "beveledEdges": 45,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-0e4aefe72a90960922e9--partitions",
+    "triangles": 44,
+    "beveledEdges": 8,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-96878a6d75e5c294b532--walls",
+    "triangles": 812,
+    "beveledEdges": 76,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-96878a6d75e5c294b532--cutaway-port",
+    "triangles": 1218,
+    "beveledEdges": 121,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-96878a6d75e5c294b532--partitions",
+    "triangles": 894,
+    "beveledEdges": 95,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-6c3fb1c92331674881a0--walls",
+    "triangles": 478,
+    "beveledEdges": 49,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-6c3fb1c92331674881a0--cutaway-port",
+    "triangles": 1214,
+    "beveledEdges": 107,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-6c3fb1c92331674881a0--partitions",
+    "triangles": 56,
+    "beveledEdges": 4,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-2adc55eddecec9617cf7--walls",
+    "triangles": 832,
+    "beveledEdges": 77,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-2adc55eddecec9617cf7--cutaway-port",
+    "triangles": 1220,
+    "beveledEdges": 106,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-489c21ef5238f76ea87b--walls",
+    "triangles": 136,
+    "beveledEdges": 16,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-489c21ef5238f76ea87b--cutaway-port",
+    "triangles": 278,
+    "beveledEdges": 33,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-489c21ef5238f76ea87b--partitions",
+    "triangles": 44,
+    "beveledEdges": 8,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-6c1c5c2e0e3161fd9cdb--walls",
+    "triangles": 552,
+    "beveledEdges": 55,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-6c1c5c2e0e3161fd9cdb--cutaway-port",
+    "triangles": 990,
+    "beveledEdges": 102,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-6c1c5c2e0e3161fd9cdb--partitions",
+    "triangles": 968,
+    "beveledEdges": 99,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-46db5c6ab5c468a19a1b--walls",
+    "triangles": 460,
+    "beveledEdges": 53,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-46db5c6ab5c468a19a1b--cutaway-port",
+    "triangles": 504,
+    "beveledEdges": 51,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-a653aff356ddbd6732c7--walls",
+    "triangles": 736,
+    "beveledEdges": 76,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-a653aff356ddbd6732c7--cutaway-port",
+    "triangles": 792,
+    "beveledEdges": 74,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-a653aff356ddbd6732c7--cutaway-bow",
+    "triangles": 252,
+    "beveledEdges": 30,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-a653aff356ddbd6732c7--partitions",
+    "triangles": 138,
+    "beveledEdges": 20,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-431bb6d0d480e3b0ba1b--walls",
+    "triangles": 168,
+    "beveledEdges": 19,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-431bb6d0d480e3b0ba1b--cutaway-port",
+    "triangles": 68,
+    "beveledEdges": 12,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-431bb6d0d480e3b0ba1b--cutaway-bow",
+    "triangles": 234,
+    "beveledEdges": 28,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-a7c31e5a4591741723d0--walls",
+    "triangles": 366,
+    "beveledEdges": 42,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-a7c31e5a4591741723d0--cutaway-starboard",
+    "triangles": 350,
+    "beveledEdges": 43,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-a7c31e5a4591741723d0--cutaway-aft",
+    "triangles": 278,
+    "beveledEdges": 34,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-305bece95974253b0fbc--walls",
+    "triangles": 136,
+    "beveledEdges": 16,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-305bece95974253b0fbc--cutaway-starboard",
+    "triangles": 234,
+    "beveledEdges": 28,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-262364013153b9117f95--walls",
+    "triangles": 952,
+    "beveledEdges": 80,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-262364013153b9117f95--cutaway-starboard",
+    "triangles": 990,
+    "beveledEdges": 91,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-262364013153b9117f95--cutaway-aft",
+    "triangles": 210,
+    "beveledEdges": 26,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-915dc23e886f070d75c4--walls",
+    "triangles": 248,
+    "beveledEdges": 30,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-915dc23e886f070d75c4--cutaway-starboard",
+    "triangles": 424,
+    "beveledEdges": 44,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-c8b14cc871b1aad06c36--walls",
+    "triangles": 564,
+    "beveledEdges": 53,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-c8b14cc871b1aad06c36--cutaway-starboard",
+    "triangles": 1332,
+    "beveledEdges": 103,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-29a2b4f5499e93c9edca--walls",
+    "triangles": 136,
+    "beveledEdges": 16,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-29a2b4f5499e93c9edca--cutaway-starboard",
+    "triangles": 234,
+    "beveledEdges": 28,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-0bf0c79e5a52a9cee388--walls",
+    "triangles": 954,
+    "beveledEdges": 87,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-0bf0c79e5a52a9cee388--cutaway-starboard",
+    "triangles": 1402,
+    "beveledEdges": 120,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-0bf0c79e5a52a9cee388--partitions",
+    "triangles": 1012,
+    "beveledEdges": 99,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-386f7415c520e22bd6b6--walls",
+    "triangles": 248,
+    "beveledEdges": 30,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-386f7415c520e22bd6b6--cutaway-starboard",
+    "triangles": 492,
+    "beveledEdges": 49,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-386f7415c520e22bd6b6--partitions",
+    "triangles": 44,
+    "beveledEdges": 8,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-16ad11623e8457b9fa65--walls",
+    "triangles": 714,
+    "beveledEdges": 58,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-16ad11623e8457b9fa65--cutaway-starboard",
+    "triangles": 1166,
+    "beveledEdges": 81,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-3b538ddb00f4d1a7d749--walls",
+    "triangles": 796,
+    "beveledEdges": 75,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-3b538ddb00f4d1a7d749--cutaway-starboard",
+    "triangles": 1206,
+    "beveledEdges": 116,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-3b538ddb00f4d1a7d749--partitions",
+    "triangles": 912,
+    "beveledEdges": 89,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-23d5284bc8c7e3ad49d7--walls",
+    "triangles": 248,
+    "beveledEdges": 30,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-23d5284bc8c7e3ad49d7--cutaway-starboard",
+    "triangles": 468,
+    "beveledEdges": 49,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-23d5284bc8c7e3ad49d7--partitions",
+    "triangles": 44,
+    "beveledEdges": 8,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-c561706cce53aba7f13e--walls",
+    "triangles": 502,
+    "beveledEdges": 52,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-c561706cce53aba7f13e--cutaway-starboard",
+    "triangles": 1172,
+    "beveledEdges": 105,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-c561706cce53aba7f13e--partitions",
+    "triangles": 88,
+    "beveledEdges": 8,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-3b10a5b6237f977755ea--walls",
+    "triangles": 974,
+    "beveledEdges": 80,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-3b10a5b6237f977755ea--cutaway-starboard",
+    "triangles": 1112,
+    "beveledEdges": 95,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-f8984ad617033cbb9b07--walls",
+    "triangles": 522,
+    "beveledEdges": 52,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-f8984ad617033cbb9b07--cutaway-starboard",
+    "triangles": 940,
+    "beveledEdges": 102,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-f8984ad617033cbb9b07--partitions",
+    "triangles": 1012,
+    "beveledEdges": 97,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-7f90173a1eca4acb88bc--walls",
+    "triangles": 136,
+    "beveledEdges": 16,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-7f90173a1eca4acb88bc--cutaway-starboard",
+    "triangles": 278,
+    "beveledEdges": 33,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-7f90173a1eca4acb88bc--partitions",
+    "triangles": 44,
+    "beveledEdges": 8,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-7bef359a5de707350425--walls",
+    "triangles": 672,
+    "beveledEdges": 71,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-7bef359a5de707350425--cutaway-starboard",
+    "triangles": 762,
+    "beveledEdges": 75,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-7bef359a5de707350425--cutaway-bow",
+    "triangles": 252,
+    "beveledEdges": 30,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-7bef359a5de707350425--partitions",
+    "triangles": 166,
+    "beveledEdges": 21,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-da5b65baa0bb652537e3--walls",
+    "triangles": 406,
+    "beveledEdges": 48,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-da5b65baa0bb652537e3--cutaway-starboard",
+    "triangles": 498,
+    "beveledEdges": 52,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-51420dc8f1930a7eb109--walls",
+    "triangles": 168,
+    "beveledEdges": 19,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-51420dc8f1930a7eb109--cutaway-starboard",
+    "triangles": 68,
+    "beveledEdges": 12,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-51420dc8f1930a7eb109--cutaway-bow",
+    "triangles": 234,
+    "beveledEdges": 28,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-4d2655e20be90a6b2257--walls",
+    "triangles": 136,
+    "beveledEdges": 16,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-4d2655e20be90a6b2257--cutaway-aft",
+    "triangles": 234,
+    "beveledEdges": 28,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-8a552b558b8807293eed--walls",
+    "triangles": 150,
+    "beveledEdges": 21,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-8a552b558b8807293eed--cutaway-aft",
+    "triangles": 210,
+    "beveledEdges": 26,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-8a552b558b8807293eed--partitions",
+    "triangles": 372,
+    "beveledEdges": 41,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-b4de51cd37611d574002--walls",
+    "triangles": 220,
+    "beveledEdges": 26,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-b4de51cd37611d574002--cutaway-aft",
+    "triangles": 316,
+    "beveledEdges": 36,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-494f1ec5dcdcd3375a1a--walls",
+    "triangles": 152,
+    "beveledEdges": 17,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-494f1ec5dcdcd3375a1a--cutaway-aft",
+    "triangles": 234,
+    "beveledEdges": 28,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-422bf815cc05a72270f8--walls",
+    "triangles": 150,
+    "beveledEdges": 21,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-422bf815cc05a72270f8--cutaway-aft",
+    "triangles": 210,
+    "beveledEdges": 26,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-422bf815cc05a72270f8--partitions",
+    "triangles": 374,
+    "beveledEdges": 42,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-5c1a4fdce877ff7bf0e0--walls",
+    "triangles": 208,
+    "beveledEdges": 26,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-5c1a4fdce877ff7bf0e0--cutaway-bow",
+    "triangles": 322,
+    "beveledEdges": 37,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-5c1a4fdce877ff7bf0e0--partitions",
+    "triangles": 690,
+    "beveledEdges": 71,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-7307ebdc3866eef2b2a2--walls",
+    "triangles": 136,
+    "beveledEdges": 16,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-7307ebdc3866eef2b2a2--cutaway-bow",
+    "triangles": 306,
+    "beveledEdges": 36,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-7307ebdc3866eef2b2a2--partitions",
+    "triangles": 68,
+    "beveledEdges": 12,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-002f6703ec63d38c33b7--walls",
+    "triangles": 208,
+    "beveledEdges": 26,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-002f6703ec63d38c33b7--cutaway-bow",
+    "triangles": 444,
+    "beveledEdges": 48,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-002f6703ec63d38c33b7--partitions",
+    "triangles": 1048,
+    "beveledEdges": 109,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-25e9091c6c81219a608e--walls",
+    "triangles": 136,
+    "beveledEdges": 16,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-25e9091c6c81219a608e--cutaway-bow",
+    "triangles": 342,
+    "beveledEdges": 39,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-25e9091c6c81219a608e--partitions",
+    "triangles": 88,
+    "beveledEdges": 16,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-62dfc8c64701b4a9cb35--walls",
+    "triangles": 208,
+    "beveledEdges": 26,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-62dfc8c64701b4a9cb35--cutaway-bow",
+    "triangles": 338,
+    "beveledEdges": 41,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-62dfc8c64701b4a9cb35--partitions",
+    "triangles": 670,
+    "beveledEdges": 67,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-c51a32347b17dff3e66d--walls",
+    "triangles": 136,
+    "beveledEdges": 16,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-c51a32347b17dff3e66d--cutaway-bow",
+    "triangles": 310,
+    "beveledEdges": 37,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-c51a32347b17dff3e66d--partitions",
+    "triangles": 68,
+    "beveledEdges": 12,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-77cb6148602659b39502--armor",
+    "triangles": 710,
+    "beveledEdges": 82,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-cc46be4cf37030e6a389--armor",
+    "triangles": 396,
+    "beveledEdges": 43,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-18280ba6cc037eb433dc--armor",
+    "triangles": 2406,
+    "beveledEdges": 212,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-a754ceb1ebef9f1395d9--armor",
+    "triangles": 2654,
+    "beveledEdges": 225,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-3da4aef9b526b104b324--armor",
+    "triangles": 2884,
+    "beveledEdges": 250,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-e21a69be0c5b6a98e812--armor",
+    "triangles": 2564,
+    "beveledEdges": 221,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-91c8f3d728f25c968810--armor",
+    "triangles": 2652,
+    "beveledEdges": 231,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-0fe602115d20ec950357--armor",
+    "triangles": 2784,
+    "beveledEdges": 234,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-0ac1e39dec34655a366f--armor",
+    "triangles": 2686,
+    "beveledEdges": 234,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-dd83177cdf0e1d968cb7--armor",
+    "triangles": 2752,
+    "beveledEdges": 230,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-b351480b6386fb131dc0--armor",
+    "triangles": 2974,
+    "beveledEdges": 262,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-faef9d1eda09aecf071f--armor",
+    "triangles": 2016,
+    "beveledEdges": 147,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-1091805096727f9eb448--armor",
+    "triangles": 3250,
+    "beveledEdges": 213,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-9046031ff83521748fa1--armor",
+    "triangles": 380,
+    "beveledEdges": 42,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-f4ffbb8320323e7acc45--armor",
+    "triangles": 706,
+    "beveledEdges": 78,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-7b28f47930a6f7cbdf10--armor",
+    "triangles": 2574,
+    "beveledEdges": 222,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-3cb4b658b677f06829b6--armor",
+    "triangles": 2750,
+    "beveledEdges": 233,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-0558bcda4ab0cb8c9f70--armor",
+    "triangles": 3024,
+    "beveledEdges": 256,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-8ddb637a40bd23dfd03a--armor",
+    "triangles": 2760,
+    "beveledEdges": 232,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-1c0570cdd9d7bc9d67da--armor",
+    "triangles": 2804,
+    "beveledEdges": 239,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-505abaccb2279cad2d0f--armor",
+    "triangles": 2934,
+    "beveledEdges": 245,
+    "nonmanifoldEdges": 2,
+    "evaluatedNonmanifoldEdges": 2
+  },
+  {
+    "name": "GEO-part-f307639bad50377eba7b--armor",
+    "triangles": 2882,
+    "beveledEdges": 245,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-66a37b7990899a620125--armor",
+    "triangles": 2882,
+    "beveledEdges": 240,
+    "nonmanifoldEdges": 2,
+    "evaluatedNonmanifoldEdges": 2
+  },
+  {
+    "name": "GEO-part-2143e7c0fcb3b5b3270f--armor",
+    "triangles": 2998,
+    "beveledEdges": 270,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-6797363006a4bcfe6b87--armor",
+    "triangles": 2030,
+    "beveledEdges": 143,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-ce9c55eb24b9e2d8332d--armor",
+    "triangles": 3232,
+    "beveledEdges": 212,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-c65fb5ae4553c6c26a8a--armor",
+    "triangles": 192,
+    "beveledEdges": 24,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-dd8a6e1947e768593d77--armor",
+    "triangles": 356,
+    "beveledEdges": 38,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-cca68ddca6a772cdeea1--armor",
+    "triangles": 192,
+    "beveledEdges": 24,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-929291505929fd42df81--armor",
+    "triangles": 2244,
+    "beveledEdges": 139,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-3f4a4b5981e5bde4e5f1--armor",
+    "triangles": 3486,
+    "beveledEdges": 218,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-c1c071d08ed0f0fe02a3--armor",
+    "triangles": 192,
+    "beveledEdges": 24,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-6fdd7871218a61551c0e--armor",
+    "triangles": 3486,
+    "beveledEdges": 218,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-f06959c8141fd31593e3--armor",
+    "triangles": 2252,
+    "beveledEdges": 137,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-f9359e749b8b317680ed--armor",
+    "triangles": 938,
+    "beveledEdges": 67,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-db068dd5378e4f5be732--armor",
+    "triangles": 450,
+    "beveledEdges": 48,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-7beb4d0b6f2781e70f5d--armor",
+    "triangles": 938,
+    "beveledEdges": 67,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-4f7ae9b4ef6a0797b795--partitions",
+    "triangles": 976,
+    "beveledEdges": 98,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-ddf6d537b7d731206eb9--partitions",
+    "triangles": 1288,
+    "beveledEdges": 132,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-03ff3a1f9d4a892cbaab--partitions",
+    "triangles": 536,
+    "beveledEdges": 50,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-700cbf3cd394356b4eaf--partitions",
+    "triangles": 1336,
+    "beveledEdges": 136,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-b68b5bb424b607ab7458--partitions",
+    "triangles": 596,
+    "beveledEdges": 62,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-dea5602de2d4f24d79cb--partitions",
+    "triangles": 570,
+    "beveledEdges": 60,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-3f0bcec2befccab744d4--partitions",
+    "triangles": 1152,
+    "beveledEdges": 117,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-880c67421085b52fac3c--partitions",
+    "triangles": 964,
+    "beveledEdges": 96,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-6084a1d605103c8b6110--partitions",
+    "triangles": 1218,
+    "beveledEdges": 125,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-0975008f8da949152b98--partitions",
+    "triangles": 562,
+    "beveledEdges": 57,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-8041df3803cadce3c472--partitions",
+    "triangles": 1326,
+    "beveledEdges": 136,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-1850147a0c9d014b6db4--partitions",
+    "triangles": 550,
+    "beveledEdges": 57,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-6661a7a3369cae1e3e9d--partitions",
+    "triangles": 560,
+    "beveledEdges": 59,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-529f6a1f75b92297412f--partitions",
+    "triangles": 1072,
+    "beveledEdges": 107,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-827961a32d599c00edef--room-storage-container-2.15-0.25",
+    "triangles": 508,
+    "beveledEdges": 58,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-56f197cde09c88860e9c--room-storage-container-3.5-0.25",
+    "triangles": 508,
+    "beveledEdges": 58,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-50898252a921c7be50b3--roof",
+    "triangles": 160,
+    "beveledEdges": 20,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-5c53af159a14e3454da7--roof",
+    "triangles": 268,
+    "beveledEdges": 32,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-05049180a0e5eceefc12--roof",
+    "triangles": 160,
+    "beveledEdges": 20,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-b86fe448a0cdd955e88b--roof",
+    "triangles": 1498,
+    "beveledEdges": 137,
+    "nonmanifoldEdges": 2,
+    "evaluatedNonmanifoldEdges": 2
+  },
+  {
+    "name": "GEO-part-712235769fd1db178911--roof",
+    "triangles": 160,
+    "beveledEdges": 20,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-d5a958cd5c64f788d607--roof",
+    "triangles": 1446,
+    "beveledEdges": 141,
+    "nonmanifoldEdges": 2,
+    "evaluatedNonmanifoldEdges": 2
+  },
+  {
+    "name": "GEO-part-ccf7c8d305f71dc5f596--roof",
+    "triangles": 1426,
+    "beveledEdges": 141,
+    "nonmanifoldEdges": 2,
+    "evaluatedNonmanifoldEdges": 2
+  },
+  {
+    "name": "GEO-part-3a18bc76a2d47e563b4b--roof",
+    "triangles": 1404,
+    "beveledEdges": 138,
+    "nonmanifoldEdges": 2,
+    "evaluatedNonmanifoldEdges": 2
+  },
+  {
+    "name": "GEO-part-1d5c3e6be30e7f2cda99--roof",
+    "triangles": 268,
+    "beveledEdges": 32,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-acb9d36d47113a25ad84--roof",
+    "triangles": 1368,
+    "beveledEdges": 129,
+    "nonmanifoldEdges": 4,
+    "evaluatedNonmanifoldEdges": 4
+  },
+  {
+    "name": "GEO-part-34accc51ea8752a66670--roof",
+    "triangles": 1514,
+    "beveledEdges": 126,
+    "nonmanifoldEdges": 5,
+    "evaluatedNonmanifoldEdges": 5
+  },
+  {
+    "name": "GEO-part-e188bf92bb905027d600--roof",
+    "triangles": 1524,
+    "beveledEdges": 126,
+    "nonmanifoldEdges": 2,
+    "evaluatedNonmanifoldEdges": 2
+  },
+  {
+    "name": "GEO-part-06fe670dace09ce26bdf--roof",
+    "triangles": 2152,
+    "beveledEdges": 201,
+    "nonmanifoldEdges": 1,
+    "evaluatedNonmanifoldEdges": 1
+  },
+  {
+    "name": "GEO-part-e14864df3df74006207a--roof",
+    "triangles": 1388,
+    "beveledEdges": 112,
+    "nonmanifoldEdges": 4,
+    "evaluatedNonmanifoldEdges": 4
+  },
+  {
+    "name": "GEO-part-df744c52b2f4f085efc3--roof",
+    "triangles": 1454,
+    "beveledEdges": 122,
+    "nonmanifoldEdges": 6,
+    "evaluatedNonmanifoldEdges": 6
+  },
+  {
+    "name": "GEO-part-834cca417ad1520fb91b--roof",
+    "triangles": 1912,
+    "beveledEdges": 161,
+    "nonmanifoldEdges": 3,
+    "evaluatedNonmanifoldEdges": 3
+  },
+  {
+    "name": "GEO-part-06c58ee456dae94b1772--roof",
+    "triangles": 1616,
+    "beveledEdges": 136,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-2760976b04d38507b400--roof",
+    "triangles": 2128,
+    "beveledEdges": 203,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-a4eed62e70496db38a2a--roof",
+    "triangles": 1592,
+    "beveledEdges": 134,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-8ca6ba766169b463abbf--roof",
+    "triangles": 1718,
+    "beveledEdges": 147,
+    "nonmanifoldEdges": 7,
+    "evaluatedNonmanifoldEdges": 7
+  },
+  {
+    "name": "GEO-part-9c1ccfb3902a1e19de44--roof",
+    "triangles": 1422,
+    "beveledEdges": 129,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-2353952b313ac7582770--roof",
+    "triangles": 1194,
+    "beveledEdges": 113,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-e7f6d59dd9f860ed57d6--roof",
+    "triangles": 1912,
+    "beveledEdges": 181,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-ca1cbb89761ec5c604b8--roof",
+    "triangles": 1182,
+    "beveledEdges": 112,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-196967a04cc184797d72--roof",
+    "triangles": 1320,
+    "beveledEdges": 124,
+    "nonmanifoldEdges": 2,
+    "evaluatedNonmanifoldEdges": 2
+  },
+  {
+    "name": "GEO-part-9fe552c6f9293ec26860--roof",
+    "triangles": 1646,
+    "beveledEdges": 143,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-61e4ccf651374ea0d773--roof",
+    "triangles": 1914,
+    "beveledEdges": 165,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-701ca6e3c7861c04acbf--roof",
+    "triangles": 2212,
+    "beveledEdges": 207,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-a87c82cebb4bbbf8db11--roof",
+    "triangles": 1866,
+    "beveledEdges": 162,
+    "nonmanifoldEdges": 1,
+    "evaluatedNonmanifoldEdges": 1
+  },
+  {
+    "name": "GEO-part-ae18e82003fce6d677bc--roof",
+    "triangles": 1488,
+    "beveledEdges": 130,
+    "nonmanifoldEdges": 4,
+    "evaluatedNonmanifoldEdges": 4
+  },
+  {
+    "name": "GEO-part-229a43bbe1eb96367621--roof",
+    "triangles": 1726,
+    "beveledEdges": 154,
+    "nonmanifoldEdges": 4,
+    "evaluatedNonmanifoldEdges": 4
+  },
+  {
+    "name": "GEO-part-5838f5816573759b23e7--roof",
+    "triangles": 1160,
+    "beveledEdges": 107,
+    "nonmanifoldEdges": 2,
+    "evaluatedNonmanifoldEdges": 2
+  },
+  {
+    "name": "GEO-part-4c52da8cda73444f19d3--roof",
+    "triangles": 2148,
+    "beveledEdges": 204,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-771b73697fcd1af0ffe1--roof",
+    "triangles": 1114,
+    "beveledEdges": 101,
+    "nonmanifoldEdges": 4,
+    "evaluatedNonmanifoldEdges": 4
+  },
+  {
+    "name": "GEO-part-4a4b34fe2247bfa2ed2a--roof",
+    "triangles": 1634,
+    "beveledEdges": 149,
+    "nonmanifoldEdges": 5,
+    "evaluatedNonmanifoldEdges": 5
+  },
+  {
+    "name": "GEO-part-12e80210cf3fd09756c0--roof",
+    "triangles": 1644,
+    "beveledEdges": 140,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-d4a9faaa669f3ecc29fd--roof",
+    "triangles": 1604,
+    "beveledEdges": 135,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-8f65f9fd39b16b2bec9e--roof",
+    "triangles": 2128,
+    "beveledEdges": 205,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-b5a08afd6c5d6c897d51--roof",
+    "triangles": 1584,
+    "beveledEdges": 133,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-ecfd7775a5086626cd96--roof",
+    "triangles": 1444,
+    "beveledEdges": 126,
+    "nonmanifoldEdges": 4,
+    "evaluatedNonmanifoldEdges": 4
+  },
+  {
+    "name": "GEO-part-63ee593f180a4f4c4c7a--roof",
+    "triangles": 1252,
+    "beveledEdges": 115,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-16c015c4cd41f2332a37--roof",
+    "triangles": 1052,
+    "beveledEdges": 103,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-c15a5229e466c6057639--roof",
+    "triangles": 1470,
+    "beveledEdges": 137,
+    "nonmanifoldEdges": 1,
+    "evaluatedNonmanifoldEdges": 1
+  },
+  {
+    "name": "GEO-part-f4692a493f2aa4f6dddf--roof",
+    "triangles": 968,
+    "beveledEdges": 97,
+    "nonmanifoldEdges": 2,
+    "evaluatedNonmanifoldEdges": 2
+  },
+  {
+    "name": "GEO-part-5db85939e66f62926062--roof",
+    "triangles": 1224,
+    "beveledEdges": 116,
+    "nonmanifoldEdges": 1,
+    "evaluatedNonmanifoldEdges": 1
+  },
+  {
+    "name": "GEO-part-eeb15021768e26d40156--roof",
+    "triangles": 622,
+    "beveledEdges": 53,
+    "nonmanifoldEdges": 2,
+    "evaluatedNonmanifoldEdges": 2
+  },
+  {
+    "name": "GEO-part-1eeda7c71b6b49c4d10f--roof",
+    "triangles": 804,
+    "beveledEdges": 86,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-4cc10bea50462151551e--roof",
+    "triangles": 648,
+    "beveledEdges": 72,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-0852d726f42e315c86e5--roof",
+    "triangles": 1042,
+    "beveledEdges": 104,
+    "nonmanifoldEdges": 4,
+    "evaluatedNonmanifoldEdges": 4
+  },
+  {
+    "name": "GEO-part-de026fd7e962df61ffd0--roof",
+    "triangles": 648,
+    "beveledEdges": 72,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-4d7f7db485619f1df26b--roof",
+    "triangles": 796,
+    "beveledEdges": 86,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-ff627f158a6d1ecfb097--roof",
+    "triangles": 620,
+    "beveledEdges": 53,
+    "nonmanifoldEdges": 2,
+    "evaluatedNonmanifoldEdges": 2
+  },
+  {
+    "name": "GEO-part-1f09f4c68827e149fa9c--roof",
+    "triangles": 1748,
+    "beveledEdges": 103,
+    "nonmanifoldEdges": 19,
+    "evaluatedNonmanifoldEdges": 19
+  },
+  {
+    "name": "GEO-part-7fa7517c047ae56f4b28--roof",
+    "triangles": 690,
+    "beveledEdges": 42,
+    "nonmanifoldEdges": 5,
+    "evaluatedNonmanifoldEdges": 5
+  },
+  {
+    "name": "GEO-part-c4ebd0e128bf0763b85d--roof",
+    "triangles": 814,
+    "beveledEdges": 82,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-0033c1002bfadaf3e0b6--roof",
+    "triangles": 1452,
+    "beveledEdges": 128,
+    "nonmanifoldEdges": 2,
+    "evaluatedNonmanifoldEdges": 2
+  },
+  {
+    "name": "GEO-part-0206b2454e1dbd5e3274--roof",
+    "triangles": 1800,
+    "beveledEdges": 107,
+    "nonmanifoldEdges": 19,
+    "evaluatedNonmanifoldEdges": 19
+  },
+  {
+    "name": "GEO-part-eb56b82575d151efa88d--roof",
+    "triangles": 708,
+    "beveledEdges": 47,
+    "nonmanifoldEdges": 5,
+    "evaluatedNonmanifoldEdges": 5
+  },
+  {
+    "name": "GEO-part-e38c1e630241ecc0b307--roof",
+    "triangles": 712,
+    "beveledEdges": 37,
+    "nonmanifoldEdges": 7,
+    "evaluatedNonmanifoldEdges": 7
+  },
+  {
+    "name": "GEO-part-0ef98e6e5bb5837bb2ed--roof",
+    "triangles": 1748,
+    "beveledEdges": 98,
+    "nonmanifoldEdges": 21,
+    "evaluatedNonmanifoldEdges": 21
+  },
+  {
+    "name": "GEO-part-f6c7a7c712b8f5b5ff8e--roof",
+    "triangles": 1368,
+    "beveledEdges": 126,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-5579825aaf92eda0f9b6--roof",
+    "triangles": 1774,
+    "beveledEdges": 101,
+    "nonmanifoldEdges": 21,
+    "evaluatedNonmanifoldEdges": 21
+  },
+  {
+    "name": "GEO-part-8b4b8c4170ff037ee643--roof",
+    "triangles": 726,
+    "beveledEdges": 39,
+    "nonmanifoldEdges": 7,
+    "evaluatedNonmanifoldEdges": 7
+  },
+  {
+    "name": "GEO-part-a683b4cc337dc2f749e3--roof",
+    "triangles": 720,
+    "beveledEdges": 44,
+    "nonmanifoldEdges": 6,
+    "evaluatedNonmanifoldEdges": 6
+  },
+  {
+    "name": "GEO-part-7401b331645b083cdd2d--roof",
+    "triangles": 498,
+    "beveledEdges": 25,
+    "nonmanifoldEdges": 3,
+    "evaluatedNonmanifoldEdges": 3
+  },
+  {
+    "name": "GEO-part-2c5bc4e281f43ec5e8d4--roof",
+    "triangles": 504,
+    "beveledEdges": 25,
+    "nonmanifoldEdges": 3,
+    "evaluatedNonmanifoldEdges": 3
+  },
+  {
+    "name": "GEO-part-309c54ab7d04658a554d--markings",
+    "triangles": 68,
+    "beveledEdges": 8,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-e8b51ac6443c73becfcb--drives-main--3.6",
+    "triangles": 24322,
+    "beveledEdges": 1107,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-4d754a140cc642ded990--drives-main-3.6",
+    "triangles": 24368,
+    "beveledEdges": 1106,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-e15ef10ca93701b58ccb--drives-main-0",
+    "triangles": 11444,
+    "beveledEdges": 530,
+    "nonmanifoldEdges": 2,
+    "evaluatedNonmanifoldEdges": 2
+  },
+  {
+    "name": "GEO-part-a9dcbf6707ca20039a5c--drives-maneuver--1--6.5",
+    "triangles": 854,
+    "beveledEdges": 81,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-a06cfaab58b430855803--drives-maneuver-1--6.5",
+    "triangles": 850,
+    "beveledEdges": 81,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-393498d8c8af6149ef28--drives-retro--1",
+    "triangles": 1072,
+    "beveledEdges": 93,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-bff3fb5ea88746ff9519--bulkhead",
+    "triangles": 9606,
+    "beveledEdges": 786,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-589b17abed05c7460ba5--airlock",
+    "triangles": 5288,
+    "beveledEdges": 470,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-47fe7106f6e495b8869c--walls",
+    "triangles": 736,
+    "beveledEdges": 76,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-47fe7106f6e495b8869c--cutaway-port",
+    "triangles": 792,
+    "beveledEdges": 74,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-47fe7106f6e495b8869c--cutaway-bow",
+    "triangles": 210,
+    "beveledEdges": 26,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-7b9d7425f1a0c9d1b49d--walls",
+    "triangles": 672,
+    "beveledEdges": 71,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-7b9d7425f1a0c9d1b49d--cutaway-starboard",
+    "triangles": 762,
+    "beveledEdges": 75,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-7b9d7425f1a0c9d1b49d--cutaway-bow",
+    "triangles": 210,
+    "beveledEdges": 26,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-76f7a12a949f54912b6e--walls",
+    "triangles": 232,
+    "beveledEdges": 24,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-76f7a12a949f54912b6e--cutaway-bow",
+    "triangles": 234,
+    "beveledEdges": 28,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-8234505da5362a63a5da--walls",
+    "triangles": 136,
+    "beveledEdges": 16,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  },
+  {
+    "name": "GEO-part-8234505da5362a63a5da--cutaway-bow",
+    "triangles": 234,
+    "beveledEdges": 28,
+    "nonmanifoldEdges": 0,
+    "evaluatedNonmanifoldEdges": 0
+  }
+]

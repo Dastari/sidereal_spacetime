@@ -1,0 +1,36 @@
+{
+  "schema": "sidereal.native-pressure-room-runtime.v1",
+  "auditSha256": "f347642d4ae424e63fa5abe0326f2e6cf0d82a5f168f0191c878f327056eec4e",
+  "sources": {
+    "wall": {
+      "url": "/assets/construction/pressure-room-r006/wall.glb",
+      "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db"
+    },
+    "floor": {
+      "url": "/assets/construction/pressure-room-r006/floor.glb",
+      "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585"
+    },
+    "roof": {
+      "url": "/assets/construction/pressure-room-r006/roof.glb",
+      "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711"
+    },
+    "contact": {
+      "url": "/assets/construction/pressure-room-r006/contact.glb",
+      "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60"
+    },
+    "door": {
+      "url": "/assets/construction/pressure-room-r006/door.glb",
+      "sha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426"
+    },
+    "gasket": {
+      "url": "/assets/construction/pressure-room-r006/gasket.glb",
+      "sha256": "c65a2c6273e8773956e555ea26879b8b4d0d58d483e42eef94b55c8052e75092"
+    },
+    "junction": {
+      "url": "/assets/construction/pressure-room-r006/junction.glb",
+      "sha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69"
+    }
+  },
+  "status": "opt-in qualified review fixture; not final art approval, live Wayfarer refit or general airtightness",
+  "placementCount": 44
+}

@@ -1,0 +1,27 @@
+{
+  "revision": "r002",
+  "grid": {
+    "cases": 2772,
+    "solved": 1677,
+    "fallback": 1095,
+    "unresolved": 0
+  },
+  "transition": {
+    "frames": 4320,
+    "solved": 2155,
+    "fallback": 2165,
+    "unresolved": 0
+  },
+  "maximumBodyPenetrationM": 0,
+  "assetValidation": "pass",
+  "sharedPatch": "unapplied; typechecked in memory and dry-checked",
+  "visualAcceptance": "changes requested: low rifle carry, scope eye gap, acquisition/gait playback, final corrected pistol browser review",
+  "GPU": "pose-specialist blanked and closed",
+  "files": [
+    "grid-audit.json",
+    "transition-audit.json",
+    "cpu-audit.json",
+    "asset-validation.json",
+    "delivery-manifest.json"
+  ]
+}

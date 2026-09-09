@@ -1,0 +1,165 @@
+{
+  "schema": "sidereal.art-library.revision-fragment.v1",
+  "designId": "shipyard.structure.boundary-kit",
+  "previousDesignSha256": "eebf6e21759286c88a598afb68f45064949cdbcb3a3928789e7573b4580c4211",
+  "previousCurrentRevision": 5,
+  "authorization": "Parent integration owner authorized additive r006 staging and current-revision pointer update; no final art approval or installation authorization inferred.",
+  "revision": {
+    "revision": 6,
+    "created_at": "2026-09-09T07:42:10.155543+00:00",
+    "author": "construction_resume",
+    "review": {
+      "outcome": "partial",
+      "notes": "22 native checks and7 compiler/installation tests pass. Static native seal qualified at1um contact tolerance; whole-game installation and full airlock authority remain separate. Supersedes provisional a006 CSG volume/bypass diagnosis without changing native GLB.",
+      "recorded_at": "2026-09-09T08:04:01.102062+00:00"
+    },
+    "stage": "in-progress",
+    "change": "Additive quarter-floor body junctions and reserved threshold variant; a007 qualifies full static test-room contact and native free volumes using exact authored-solid GLB correspondence. Runtime installation/authority and final visual approval remain pending.",
+    "hypothesis": "Native floor-body junction closures plus exact authored-solid decomposition permit a complete static pressure test room without changing installed source art.",
+    "covered_reference_ids": [],
+    "evidence": [
+      {
+        "role": "blender-source",
+        "path": "designs/shipyard.structure.boundary-kit/revisions/r006/final-a006/boundary-kit.blend",
+        "sha256": "31916d28a06b1ed5f6cfbaa8b2a4c4379b257e7cad3918b9eb27e6efa70493a5",
+        "bytes": 821366,
+        "recorded_at": "2026-09-09T07:42:10.155543+00:00",
+        "notes": "Staged additive native room closure; not installed or owner approved.",
+        "capture_context": null
+      },
+      {
+        "role": "glb",
+        "path": "designs/shipyard.structure.boundary-kit/revisions/r006/final-a006/kit.glb",
+        "sha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+        "bytes": 37604,
+        "recorded_at": "2026-09-09T07:42:10.155543+00:00",
+        "notes": "Staged additive native room closure; not installed or owner approved.",
+        "capture_context": null
+      },
+      {
+        "role": "specification",
+        "path": "designs/shipyard.structure.boundary-kit/revisions/r006/interfaces.json",
+        "sha256": "570dad4423825cd5af48818bc6747616162bf1ece47d8c644cc3a93a54ea3696",
+        "bytes": 4140,
+        "recorded_at": "2026-09-09T07:42:10.155543+00:00",
+        "notes": "Staged additive native room closure; not installed or owner approved.",
+        "capture_context": null
+      },
+      {
+        "role": "validation",
+        "path": "designs/shipyard.structure.boundary-kit/revisions/r006/final-a006/native-room-validation.json",
+        "sha256": "37260018695db3c55af1712b450324acd9cc662e0f8af37053a96ca7090d8af8",
+        "bytes": 15114,
+        "recorded_at": "2026-09-09T07:42:10.155543+00:00",
+        "notes": "Staged additive native room closure; not installed or owner approved.",
+        "capture_context": null
+      },
+      {
+        "role": "blender-close",
+        "path": "designs/shipyard.structure.boundary-kit/revisions/r006/final-a006/junction-before.png",
+        "sha256": "f2e192c359b2d955d583f58634523e79f8b47f36ad7c6159c036b9ac91b23e2e",
+        "bytes": 1274531,
+        "recorded_at": "2026-09-09T07:42:10.155543+00:00",
+        "notes": "Staged additive native room closure; not installed or owner approved.",
+        "capture_context": "Cycles CPU32 AgX"
+      },
+      {
+        "role": "blender-close",
+        "path": "designs/shipyard.structure.boundary-kit/revisions/r006/final-a006/junction-after.png",
+        "sha256": "b2b8a2d645f4f0eb3795584de14550b34596324370aa5c36392cfd270cf3c29e",
+        "bytes": 1260787,
+        "recorded_at": "2026-09-09T07:42:10.155543+00:00",
+        "notes": "Staged additive native room closure; not installed or owner approved.",
+        "capture_context": "Cycles CPU32 AgX"
+      },
+      {
+        "role": "cutout",
+        "path": "designs/shipyard.structure.boundary-kit/revisions/r006/final-a006/junction-cutout.png",
+        "sha256": "4bc88a0fc70fa1241bc6e50391b96c0ffd538de407eccfdb3c29be6f8fe425aa",
+        "bytes": 392220,
+        "recorded_at": "2026-09-09T07:42:10.155543+00:00",
+        "notes": "Staged additive native room closure; not installed or owner approved.",
+        "capture_context": "Cycles CPU32 AgX"
+      },
+      {
+        "role": "specification",
+        "path": "designs/shipyard.structure.boundary-kit/revisions/r006/native-derived-meshes.json",
+        "sha256": "54454e4d7e9d497f54f85fd58d5d313672cadeff23e1287e7362dcf7a0d7aa04",
+        "bytes": 32940,
+        "recorded_at": "2026-09-09T07:42:10.155543+00:00",
+        "notes": "Staged additive native room closure; not installed or owner approved.",
+        "capture_context": null
+      },
+      {
+        "role": "validation",
+        "path": "designs/shipyard.structure.boundary-kit/revisions/r006/qualification-a007/native-room-validation.json",
+        "sha256": "f347642d4ae424e63fa5abe0326f2e6cf0d82a5f168f0191c878f327056eec4e",
+        "bytes": 16250,
+        "recorded_at": "2026-09-09T08:04:01.102062+00:00",
+        "notes": "Corrected static native contact qualification; no installation or owner final approval.",
+        "capture_context": null
+      },
+      {
+        "role": "validation",
+        "path": "designs/shipyard.structure.boundary-kit/revisions/r006/qualification-a007/correction.json",
+        "sha256": "a2f870ed18d25914993beeab14c147d1333edc33e5d870af420f96adaeb25dd0",
+        "bytes": 969,
+        "recorded_at": "2026-09-09T08:04:01.102062+00:00",
+        "notes": "Corrected static native contact qualification; no installation or owner final approval.",
+        "capture_context": null
+      },
+      {
+        "role": "specification",
+        "path": "designs/shipyard.structure.boundary-kit/revisions/r006/native-authored-solids.json",
+        "sha256": "fe45ae18d410f4258c38d0bd8578d058aaac0d11971b5505b3fa3a2f71be2de4",
+        "bytes": 772359,
+        "recorded_at": "2026-09-09T08:04:01.102062+00:00",
+        "notes": "Corrected static native contact qualification; no installation or owner final approval.",
+        "capture_context": null
+      }
+    ]
+  },
+  "historicalAttempts": [
+    {
+      "attempt": "a001",
+      "path": ".runtime/construction-enclosure-audit/r006-attempt-a001",
+      "status": "retained failed/iterative native fitting evidence"
+    },
+    {
+      "attempt": "a002",
+      "path": ".runtime/construction-enclosure-audit/r006-attempt-a002",
+      "status": "retained failed/iterative native fitting evidence"
+    },
+    {
+      "attempt": "a003",
+      "path": ".runtime/construction-enclosure-audit/r006-attempt-a003",
+      "status": "retained failed/iterative native fitting evidence"
+    },
+    {
+      "attempt": "a004",
+      "path": ".runtime/construction-enclosure-audit/r006-attempt-a004",
+      "status": "retained failed/iterative native fitting evidence"
+    },
+    {
+      "attempt": "a005",
+      "path": ".runtime/construction-enclosure-audit/r006-attempt-a005",
+      "status": "retained failed/iterative native fitting evidence"
+    },
+    {
+      "attempt": "a006",
+      "path": ".runtime/construction-enclosure-audit/r006-attempt-a006",
+      "status": "current exact candidate"
+    }
+  ],
+  "qualificationCorrection": {
+    "schema": "sidereal.native-audit-correction.v1",
+    "supersededAudit": "final-a006/native-room-validation.json",
+    "supersededSha256": "37260018695db3c55af1712b450324acd9cc662e0f8af37053a96ca7090d8af8",
+    "replacementAudit": "qualification-a007/native-room-validation.json",
+    "replacementSha256": "f347642d4ae424e63fa5abe0326f2e6cf0d82a5f168f0191c878f327056eec4e",
+    "nativeGlbUnchanged": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+    "reason": "Merged touching native CSG rail components lost solid volume and introduced false leakage. Authored closed sub-solids now match every actual native GLB triangle at1um before union. Coplanar bottom contact is independently area-checked and tested with10nm perturbation below1um tolerance.",
+    "status": "Exact static exterior+door contact and fixed above-datum volumes qualified; no pressure/material/actuation rating or final art approval.",
+    "recordedAt": "2026-09-09T08:04:01.102062+00:00"
+  }
+}

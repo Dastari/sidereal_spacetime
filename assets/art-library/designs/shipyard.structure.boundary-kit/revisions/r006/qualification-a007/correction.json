@@ -1,0 +1,11 @@
+{
+  "schema": "sidereal.native-audit-correction.v1",
+  "supersededAudit": "final-a006/native-room-validation.json",
+  "supersededSha256": "37260018695db3c55af1712b450324acd9cc662e0f8af37053a96ca7090d8af8",
+  "replacementAudit": "qualification-a007/native-room-validation.json",
+  "replacementSha256": "f347642d4ae424e63fa5abe0326f2e6cf0d82a5f168f0191c878f327056eec4e",
+  "nativeGlbUnchanged": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+  "reason": "Merged touching native CSG rail components lost solid volume and introduced false leakage. Authored closed sub-solids now match every actual native GLB triangle at1um before union. Coplanar bottom contact is independently area-checked and tested with10nm perturbation below1um tolerance.",
+  "status": "Exact static exterior+door contact and fixed above-datum volumes qualified; no pressure/material/actuation rating or final art approval.",
+  "recordedAt": "2026-09-09T08:04:01.102062+00:00"
+}

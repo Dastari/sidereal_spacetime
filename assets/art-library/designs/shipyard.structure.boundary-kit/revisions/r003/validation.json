@@ -1,0 +1,200 @@
+{
+  "checks": [
+    {
+      "name": "single explicit additive selector",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "identity source node transform",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "native normal UV tangent attributes",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "entire actual underside contacts native floor triangle union",
+      "pass": true,
+      "details": {
+        "projectedContactM2": 0.00036000038763509684,
+        "projectedUndersideM2": 0.00036000038763509684,
+        "triangleOverlayPolygons": 16
+      }
+    },
+    {
+      "name": "no gap or penetration at exact affine triangle intersections",
+      "pass": true,
+      "details": {
+        "maximumAbsoluteDeviationM": 2.7755575615628914e-17,
+        "toleranceM": 1e-07
+      }
+    },
+    {
+      "name": "gasket contact patch closed by native floor plus exported insert triangles",
+      "pass": true,
+      "details": {
+        "beforeContactM2": 0.011357999925334079,
+        "insertContactM2": 7.200007466598435e-05,
+        "combinedM2": 0.011430000000000063,
+        "requiredM2": 0.011429999999999996
+      }
+    },
+    {
+      "name": "flush floor datum and no walking step",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "full 1.25m aperture unchanged",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "preserved exact floor GLB",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "single sided PBR, no lights cameras",
+      "pass": true,
+      "details": null
+    },
+    {
+      "name": "closed nondegenerate native solid",
+      "pass": true,
+      "details": {
+        "triangles": 16,
+        "degenerate": 0
+      }
+    },
+    {
+      "name": "16 rectangular family pairs nominally compatible within1micrometre export tolerance; exact fit certified only for quarter fixture",
+      "pass": true,
+      "details": [
+        {
+          "left": "square-2m",
+          "right": "square-2m",
+          "projectedContactM2": 0.00036000038763509684,
+          "maximumDeviationM": 1.4389521305058217e-07,
+          "pass": true
+        },
+        {
+          "left": "square-2m",
+          "right": "half-2x1",
+          "projectedContactM2": 0.00036000038763509684,
+          "maximumDeviationM": 1.4389521305058217e-07,
+          "pass": true
+        },
+        {
+          "left": "square-2m",
+          "right": "quarter-1m",
+          "projectedContactM2": 0.00036000038763509684,
+          "maximumDeviationM": 1.4389521305058217e-07,
+          "pass": true
+        },
+        {
+          "left": "square-2m",
+          "right": "strip-4x1",
+          "projectedContactM2": 0.00036000038763509684,
+          "maximumDeviationM": 1.4389521305058217e-07,
+          "pass": true
+        },
+        {
+          "left": "half-2x1",
+          "right": "square-2m",
+          "projectedContactM2": 0.00036000038763509684,
+          "maximumDeviationM": 1.4389521305058217e-07,
+          "pass": true
+        },
+        {
+          "left": "half-2x1",
+          "right": "half-2x1",
+          "projectedContactM2": 0.00036000038763509684,
+          "maximumDeviationM": 1.4389521305058217e-07,
+          "pass": true
+        },
+        {
+          "left": "half-2x1",
+          "right": "quarter-1m",
+          "projectedContactM2": 0.00036000038763509684,
+          "maximumDeviationM": 1.4389521305058217e-07,
+          "pass": true
+        },
+        {
+          "left": "half-2x1",
+          "right": "strip-4x1",
+          "projectedContactM2": 0.00036000038763509684,
+          "maximumDeviationM": 1.4389521305058217e-07,
+          "pass": true
+        },
+        {
+          "left": "quarter-1m",
+          "right": "square-2m",
+          "projectedContactM2": 0.00036000038763509684,
+          "maximumDeviationM": 2.7755575615628914e-17,
+          "pass": true
+        },
+        {
+          "left": "quarter-1m",
+          "right": "half-2x1",
+          "projectedContactM2": 0.00036000038763509684,
+          "maximumDeviationM": 2.7755575615628914e-17,
+          "pass": true
+        },
+        {
+          "left": "quarter-1m",
+          "right": "quarter-1m",
+          "projectedContactM2": 0.00036000038763509684,
+          "maximumDeviationM": 2.7755575615628914e-17,
+          "pass": true
+        },
+        {
+          "left": "quarter-1m",
+          "right": "strip-4x1",
+          "projectedContactM2": 0.00036000038763509684,
+          "maximumDeviationM": 2.7755575615628914e-17,
+          "pass": true
+        },
+        {
+          "left": "strip-4x1",
+          "right": "square-2m",
+          "projectedContactM2": 0.00036000038763509684,
+          "maximumDeviationM": 4.3170760224975346e-07,
+          "pass": true
+        },
+        {
+          "left": "strip-4x1",
+          "right": "half-2x1",
+          "projectedContactM2": 0.00036000038763509684,
+          "maximumDeviationM": 4.3170760224975346e-07,
+          "pass": true
+        },
+        {
+          "left": "strip-4x1",
+          "right": "quarter-1m",
+          "projectedContactM2": 0.00036000038763509684,
+          "maximumDeviationM": 4.3170760224975346e-07,
+          "pass": true
+        },
+        {
+          "left": "strip-4x1",
+          "right": "strip-4x1",
+          "projectedContactM2": 0.00036000038763509684,
+          "maximumDeviationM": 4.3170760224975346e-07,
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "pass": true,
+  "kitSha256": "c77ebd056fa9fe5509b7e60598b68e9ab5858579542ffdf48cec7bfa785b3c0d",
+  "floorSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+  "limits": [
+    "Native rectangular square/half/quarter/strip straight seam pairs verified; rotations, diagonal and corner profiles need equivalent native triangle contact validation.",
+    "Geometry fit only, no pressure/strength or authoritative continuous movement certification.",
+    "Existing hinge/seal swept volume remains parent-owned; insert never exceeds floorTop6."
+  ]
+}

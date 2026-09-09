@@ -1,0 +1,278 @@
+{
+  "node-ee493bf1352e": {
+    "triangles": 20,
+    "materials": 2,
+    "vertices": 12,
+    "nodePrefix": "GEO-boundary-r004-node-ee493bf1352e--surface"
+  },
+  "span-086cc581b11f": {
+    "triangles": 2604,
+    "materials": 6,
+    "vertices": 1352,
+    "nodePrefix": "GEO-boundary-r004-span-086cc581b11f--surface"
+  },
+  "span-b3f0724acb39": {
+    "triangles": 1740,
+    "materials": 6,
+    "vertices": 904,
+    "nodePrefix": "GEO-boundary-r004-span-b3f0724acb39--surface"
+  },
+  "span-0cdd4c8ec952": {
+    "triangles": 4332,
+    "materials": 6,
+    "vertices": 2248,
+    "nodePrefix": "GEO-boundary-r004-span-0cdd4c8ec952--surface"
+  },
+  "node-8ace9108954c": {
+    "triangles": 20,
+    "materials": 2,
+    "vertices": 12,
+    "nodePrefix": "GEO-boundary-r004-node-8ace9108954c--surface"
+  },
+  "node-4cf5a3e80bfc": {
+    "triangles": 20,
+    "materials": 2,
+    "vertices": 12,
+    "nodePrefix": "GEO-boundary-r004-node-4cf5a3e80bfc--surface"
+  },
+  "span-94768f04e98a": {
+    "triangles": 2604,
+    "materials": 6,
+    "vertices": 1352,
+    "nodePrefix": "GEO-boundary-r004-span-94768f04e98a--surface"
+  },
+  "span-0314fecad407": {
+    "triangles": 3468,
+    "materials": 6,
+    "vertices": 1800,
+    "nodePrefix": "GEO-boundary-r004-span-0314fecad407--surface"
+  },
+  "span-808c0ebd2217": {
+    "triangles": 2604,
+    "materials": 6,
+    "vertices": 1352,
+    "nodePrefix": "GEO-boundary-r004-span-808c0ebd2217--surface"
+  },
+  "node-600f98889a3d": {
+    "triangles": 20,
+    "materials": 2,
+    "vertices": 12,
+    "nodePrefix": "GEO-boundary-r004-node-600f98889a3d--surface"
+  },
+  "node-5ef3fc8bee96": {
+    "triangles": 20,
+    "materials": 2,
+    "vertices": 12,
+    "nodePrefix": "GEO-boundary-r004-node-5ef3fc8bee96--surface"
+  },
+  "span-e1ee17a40bd0": {
+    "triangles": 4332,
+    "materials": 6,
+    "vertices": 2248,
+    "nodePrefix": "GEO-boundary-r004-span-e1ee17a40bd0--surface"
+  },
+  "span-6ec4ef6b98b1": {
+    "triangles": 4332,
+    "materials": 6,
+    "vertices": 2248,
+    "nodePrefix": "GEO-boundary-r004-span-6ec4ef6b98b1--surface"
+  },
+  "span-2558d18d8aea": {
+    "triangles": 2604,
+    "materials": 6,
+    "vertices": 1352,
+    "nodePrefix": "GEO-boundary-r004-span-2558d18d8aea--surface"
+  },
+  "node-8b91be106a9b": {
+    "triangles": 20,
+    "materials": 2,
+    "vertices": 12,
+    "nodePrefix": "GEO-boundary-r004-node-8b91be106a9b--surface"
+  },
+  "node-9c2c257cf6fe": {
+    "triangles": 20,
+    "materials": 2,
+    "vertices": 12,
+    "nodePrefix": "GEO-boundary-r004-node-9c2c257cf6fe--surface"
+  },
+  "span-08fd6477c200": {
+    "triangles": 4332,
+    "materials": 6,
+    "vertices": 2248,
+    "nodePrefix": "GEO-boundary-r004-span-08fd6477c200--surface"
+  },
+  "span-808e279e3305": {
+    "triangles": 2604,
+    "materials": 6,
+    "vertices": 1352,
+    "nodePrefix": "GEO-boundary-r004-span-808e279e3305--surface"
+  },
+  "span-be8caa482150": {
+    "triangles": 4332,
+    "materials": 6,
+    "vertices": 2248,
+    "nodePrefix": "GEO-boundary-r004-span-be8caa482150--surface"
+  },
+  "node-74c0b4ffc689": {
+    "triangles": 20,
+    "materials": 2,
+    "vertices": 12,
+    "nodePrefix": "GEO-boundary-r004-node-74c0b4ffc689--surface"
+  },
+  "node-b3757ae7933a": {
+    "triangles": 20,
+    "materials": 2,
+    "vertices": 12,
+    "nodePrefix": "GEO-boundary-r004-node-b3757ae7933a--surface"
+  },
+  "span-d47d3475d32a": {
+    "triangles": 3468,
+    "materials": 6,
+    "vertices": 1800,
+    "nodePrefix": "GEO-boundary-r004-span-d47d3475d32a--surface"
+  },
+  "span-ac212cda6bdf": {
+    "triangles": 4332,
+    "materials": 6,
+    "vertices": 2248,
+    "nodePrefix": "GEO-boundary-r004-span-ac212cda6bdf--surface"
+  },
+  "span-618a6deb050d": {
+    "triangles": 1740,
+    "materials": 6,
+    "vertices": 904,
+    "nodePrefix": "GEO-boundary-r004-span-618a6deb050d--surface"
+  },
+  "node-ac322cc2ef83": {
+    "triangles": 20,
+    "materials": 2,
+    "vertices": 12,
+    "nodePrefix": "GEO-boundary-r004-node-ac322cc2ef83--surface"
+  },
+  "node-dd5634ec14cc": {
+    "triangles": 20,
+    "materials": 2,
+    "vertices": 12,
+    "nodePrefix": "GEO-boundary-r004-node-dd5634ec14cc--surface"
+  },
+  "span-1fccd896f86f": {
+    "triangles": 3468,
+    "materials": 6,
+    "vertices": 1800,
+    "nodePrefix": "GEO-boundary-r004-span-1fccd896f86f--surface"
+  },
+  "span-f6f884420a9f": {
+    "triangles": 1740,
+    "materials": 6,
+    "vertices": 904,
+    "nodePrefix": "GEO-boundary-r004-span-f6f884420a9f--surface"
+  },
+  "span-135ed5730033": {
+    "triangles": 4332,
+    "materials": 6,
+    "vertices": 2248,
+    "nodePrefix": "GEO-boundary-r004-span-135ed5730033--surface"
+  },
+  "node-722dea1af576": {
+    "triangles": 20,
+    "materials": 2,
+    "vertices": 12,
+    "nodePrefix": "GEO-boundary-r004-node-722dea1af576--surface"
+  },
+  "node-9f376826b3e4": {
+    "triangles": 20,
+    "materials": 2,
+    "vertices": 12,
+    "nodePrefix": "GEO-boundary-r004-node-9f376826b3e4--surface"
+  },
+  "span-a3fe624b4c51": {
+    "triangles": 2604,
+    "materials": 6,
+    "vertices": 1352,
+    "nodePrefix": "GEO-boundary-r004-span-a3fe624b4c51--surface"
+  },
+  "node-028c6d82a9cd": {
+    "triangles": 20,
+    "materials": 2,
+    "vertices": 12,
+    "nodePrefix": "GEO-boundary-r004-node-028c6d82a9cd--surface"
+  },
+  "node-fa76146eb8d8": {
+    "triangles": 20,
+    "materials": 2,
+    "vertices": 12,
+    "nodePrefix": "GEO-boundary-r004-node-fa76146eb8d8--surface"
+  },
+  "node-3b50213b5a7b": {
+    "triangles": 20,
+    "materials": 2,
+    "vertices": 12,
+    "nodePrefix": "GEO-boundary-r004-node-3b50213b5a7b--surface"
+  },
+  "node-521432080d97": {
+    "triangles": 20,
+    "materials": 2,
+    "vertices": 12,
+    "nodePrefix": "GEO-boundary-r004-node-521432080d97--surface"
+  },
+  "span-2072e1ebfaf9": {
+    "triangles": 2604,
+    "materials": 6,
+    "vertices": 1352,
+    "nodePrefix": "GEO-boundary-r004-span-2072e1ebfaf9--surface"
+  },
+  "span-56b00de0648a": {
+    "triangles": 4332,
+    "materials": 6,
+    "vertices": 2248,
+    "nodePrefix": "GEO-boundary-r004-span-56b00de0648a--surface"
+  },
+  "span-e15d62f9fc09": {
+    "triangles": 4332,
+    "materials": 6,
+    "vertices": 2248,
+    "nodePrefix": "GEO-boundary-r004-span-e15d62f9fc09--surface"
+  },
+  "span-ae8b5f8aa228": {
+    "triangles": 1740,
+    "materials": 6,
+    "vertices": 904,
+    "nodePrefix": "GEO-boundary-r004-span-ae8b5f8aa228--surface"
+  },
+  "span-ab0d57a0fb09": {
+    "triangles": 1740,
+    "materials": 6,
+    "vertices": 904,
+    "nodePrefix": "GEO-boundary-r004-span-ab0d57a0fb09--surface"
+  },
+  "span-76cad9647098": {
+    "triangles": 1740,
+    "materials": 6,
+    "vertices": 904,
+    "nodePrefix": "GEO-boundary-r004-span-76cad9647098--surface"
+  },
+  "span-b3230e7b8584": {
+    "triangles": 4332,
+    "materials": 6,
+    "vertices": 2248,
+    "nodePrefix": "GEO-boundary-r004-span-b3230e7b8584--surface"
+  },
+  "span-a2d8e928c4dc": {
+    "triangles": 3468,
+    "materials": 6,
+    "vertices": 1800,
+    "nodePrefix": "GEO-boundary-r004-span-a2d8e928c4dc--surface"
+  },
+  "node-b4c788600641": {
+    "triangles": 32,
+    "materials": 2,
+    "vertices": 18,
+    "nodePrefix": "GEO-boundary-r004-node-b4c788600641--surface"
+  },
+  "node-a8148ac9f645": {
+    "triangles": 12,
+    "materials": 2,
+    "vertices": 8,
+    "nodePrefix": "GEO-boundary-r004-node-a8148ac9f645--surface"
+  }
+}

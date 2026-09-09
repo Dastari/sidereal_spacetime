@@ -1,0 +1,148 @@
+{
+  "sourceSha256": "3f615eeca6bbec35b45b207e0a0a6d42ad6edca5de781c1fa994d0abc5efc166",
+  "glbSha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+  "renderer": "Blender4.3.2 Cycles CPU,32samples,AgX,4threads",
+  "images": [
+    {
+      "path": "all12-closed-loops-oblique.png",
+      "sha256": "caba056c804c6ebc5e3a3888da2e9418e1a81dfdc0e636c45be906ef5aa52d88",
+      "width": 2400,
+      "height": 1800,
+      "pngColorType": 6
+    },
+    {
+      "path": "all12-closed-loops-top.png",
+      "sha256": "a581e3709c9a29e0a8c9e9fd4fca3f18fcdd79292dce4d2d65ad6934db73e597",
+      "width": 2400,
+      "height": 1800,
+      "pngColorType": 6
+    },
+    {
+      "path": "all12-native-roof-contact.png",
+      "sha256": "b79343cbb86940c0688a1a54d53c362760316cd0b2c4ec6b32ae931ab4f6eec6",
+      "width": 2400,
+      "height": 1800,
+      "pngColorType": 6
+    },
+    {
+      "path": "mixed-collinear-module-joins.png",
+      "sha256": "7189dbe7eaa93297f6e318da751f1bfe80957288fba69c2114fc187957ed0e0c",
+      "width": 1100,
+      "height": 1000,
+      "pngColorType": 6
+    },
+    {
+      "path": "mixed-orthogonal-T.png",
+      "sha256": "b2c5e72bbf34fa4a481b13b4a26957150d70363fce9b6b0600f16f44e399656e",
+      "width": 1100,
+      "height": 1000,
+      "pngColorType": 6
+    },
+    {
+      "path": "mixed-reentrant-L.png",
+      "sha256": "abdadd6301cb69044e6a0eaa4cec40094b3d34f5a0dfd97f2ab7ce824fc086b4",
+      "width": 1100,
+      "height": 1000,
+      "pngColorType": 6
+    },
+    {
+      "path": "mixed-square-triangle.png",
+      "sha256": "60be208df2afc66e815d2351a6a27f3d5ca640bb919176f318135a1609f880a4",
+      "width": 1100,
+      "height": 1000,
+      "pngColorType": 6
+    },
+    {
+      "path": "native-family-cutout.png",
+      "sha256": "0e730719d160094b2777c84ae5a3222bfefc324000161ec601fc7adaf3e8d761",
+      "width": 1100,
+      "height": 1000,
+      "pngColorType": 6
+    },
+    {
+      "path": "single-corner-clipped.png",
+      "sha256": "93673ae31e0ffd477fedbaf602fedd01ed81ec03f088213454dc6c4ce86400c7",
+      "width": 1100,
+      "height": 1000,
+      "pngColorType": 6
+    },
+    {
+      "path": "single-half-2x1.png",
+      "sha256": "2a4cd5da3b59a12abab1332598f1ad54eae3af29081d48269465a304e41f689e",
+      "width": 1100,
+      "height": 1000,
+      "pngColorType": 6
+    },
+    {
+      "path": "single-quarter-1m.png",
+      "sha256": "06440cabf014175d771af720a80061716ba0dd6c7efea3e0ebdcbb3470482654",
+      "width": 1100,
+      "height": 1000,
+      "pngColorType": 6
+    },
+    {
+      "path": "single-square-2m.png",
+      "sha256": "207a9e97e39417beaf124a9b0f9a334a323ff19799b903dd3472a37fed072ccf",
+      "width": 1100,
+      "height": 1000,
+      "pngColorType": 6
+    },
+    {
+      "path": "single-strip-4x1.png",
+      "sha256": "694d883732e8155a556aea3d0026f30eaee5b20575ef4d0bff899e7c77798036",
+      "width": 1100,
+      "height": 1000,
+      "pngColorType": 6
+    },
+    {
+      "path": "single-taper-4m.png",
+      "sha256": "e0702ef8578bed35863400937fa7198cae17b27b949799d59611e8925e6951f1",
+      "width": 1100,
+      "height": 1000,
+      "pngColorType": 6
+    },
+    {
+      "path": "single-triangle-1m.png",
+      "sha256": "9d6e4366f849b2719321249791d73ca5980fb0aba428431efc9446e0b12d28d2",
+      "width": 1100,
+      "height": 1000,
+      "pngColorType": 6
+    },
+    {
+      "path": "single-triangle-45.png",
+      "sha256": "3f95b4a0caa4ef15b6e1c7fe18609093314c04d693b8631a76f78db38b6e5dbc",
+      "width": 1100,
+      "height": 1000,
+      "pngColorType": 6
+    },
+    {
+      "path": "single-triangle-long-left.png",
+      "sha256": "9e8f5af3409b5e316f53ddc0aed0a48cb846a01812af5833ed0c1883a2ddc46e",
+      "width": 1100,
+      "height": 1000,
+      "pngColorType": 6
+    },
+    {
+      "path": "single-triangle-long-right.png",
+      "sha256": "c4a1fc569ad00a311201be08d0712f68fb23dd4b4f02f307b8c5f6ce92689b88",
+      "width": 1100,
+      "height": 1000,
+      "pngColorType": 6
+    },
+    {
+      "path": "single-triangle-slim-left.png",
+      "sha256": "e08567081f4471b3702c360ba8489912a0d61c56e81600882ad310706531c9e6",
+      "width": 1100,
+      "height": 1000,
+      "pngColorType": 6
+    },
+    {
+      "path": "single-triangle-slim-right.png",
+      "sha256": "44c2386965181aac71e13f1a64bfc317b1251baed8468e27fe5989bb76c739bb",
+      "width": 1100,
+      "height": 1000,
+      "pngColorType": 6
+    }
+  ],
+  "review": "Actual final top board, collinear fixture and cutout inspected; all other a006 geometry/cameras unchanged from inspected a005. Parent separately inspected final slim-right fixture. No game or owner approval inferred."
+}

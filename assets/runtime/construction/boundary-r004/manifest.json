@@ -1,0 +1,13 @@
+{
+  "schema": "sidereal.native-boundary-family-runtime.v1",
+  "id": "shipyard.structure.boundary-kit",
+  "revision": "r004",
+  "sourcePins": {
+    "kit.glb": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+    "interfaces.json": "136afd89f22c1cbea3ba590fca4ebc4cd81f82615f71fcadcedc2d041b73544b",
+    "collision-proxies.json": "83a408e22f8c56b1c515827938273297ed41e6d70a94eeb13180290158c8e399",
+    "boundary-kit.blend": "3f615eeca6bbec35b45b207e0a0a6d42ad6edca5de781c1fa994d0abc5efc166"
+  },
+  "runtimeMetadataSha256": "5ea059a89480c1903aa4071b723bb5ed78f5a32f8d43a44299caa12d18fb68bf",
+  "status": "working candidate; exact opt-in only, no pressure/native-damage/final-art approval"
+}

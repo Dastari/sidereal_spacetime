@@ -1,0 +1,42 @@
+{
+  "revision": "r002",
+  "source": "handheld-source.blend",
+  "sourceSha256": "f25ff514cb2ecb07a1bc5a20ec40603f644d8fb362a583080cfb259c62fc47d6",
+  "entries": [
+    {
+      "assetId": "carbine",
+      "sha256": "aba632e370f18a0be48e8f082c425e0da7f9978e3700ac7211ae1b11efa8e118",
+      "bytes": 216996
+    },
+    {
+      "assetId": "long-rifle",
+      "sha256": "57457e19003fcb6bbe6543dfef3fa2ee317ae9029dad88cbbe19d42889080039",
+      "bytes": 232172
+    },
+    {
+      "assetId": "compact-pistol",
+      "sha256": "5a6516f85126486d37ffb0ecf9d12bfeac25f28a0b35976d7d7128aa98b4bbbb",
+      "bytes": 105192
+    },
+    {
+      "assetId": "heavy-handgun",
+      "sha256": "329cd64ccbdeba1e12e6df85c8ecd331c3e8b3781e95a3cb434f5b61834e36e9",
+      "bytes": 119440
+    },
+    {
+      "assetId": "sample-scanner",
+      "sha256": "8e1a9a64f22f41bc9e171dbe63c93b9605dbc9582f5987029741c6cd586fee74",
+      "bytes": 72052
+    },
+    {
+      "assetId": "plasma-cutter",
+      "sha256": "1fdc536778e0726a88ca1eb0d569524c8de0176607d9d31ee993e9df1e4f0371",
+      "bytes": 81744
+    },
+    {
+      "assetId": "flashlight",
+      "sha256": "6ebe55855b087ca2b983c0856a440d4d984d26d390ae88ec076183e3fdf46643",
+      "bytes": 32696
+    }
+  ]
+}
