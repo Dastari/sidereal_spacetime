@@ -146,7 +146,11 @@ export async function loadConstructionInstance(
       instanceId: input.instanceId,
       deckId: input.deckId,
     };
-    for (const m of result.meshes) m.isPickable = false;
+    for (const m of result.meshes) {
+      // Structural floors block the pick ray but are not selectable equipment.
+      m.isPickable = true;
+      m.metadata = { ...m.metadata, ...result.node.metadata, category: "floor" };
+    }
     return result;
   });
   const authored = await loadConstructionAuthoredAssembly(

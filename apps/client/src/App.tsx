@@ -818,7 +818,7 @@ export default function App({
                         container.kind === "grid",
                     )))
               ) {
-                setSelectedObject(undefined);
+                setSelectedObject(id);
                 objectCommand("open-storage", id);
               } else setSelectedObject(id);
             },
