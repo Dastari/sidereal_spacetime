@@ -1,0 +1,3053 @@
+{
+  "version": 1,
+  "approvedManifestSha256": "512ea3056138b3da315bb92e681c01ba5d758d54928f74d986b58bd9b001e4dd",
+  "assetCount": 73,
+  "units": "metres; author XY deck plane, Z height; visual GLB XYZ converts to X/-Z/Y",
+  "status": "Exact visual audit; reservation proposals only; no authority stacking interface approved by this report",
+  "rows": [
+    {
+      "assetId": "part-c06e4f5f6f6dace38e41",
+      "designId": "cargo.standard.small",
+      "appearance": "standard-small",
+      "revision": 3,
+      "glbPath": "assets/art-library/designs/cargo.standard.small/revisions/r003/glb.glb",
+      "glbSha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+      "blendSha256": "5cf90a4af3373549cbc97701b32754bfa6eef63dc996dcfc4b74af17c2215493",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.3305000066757202,
+          -0.28049999475479126,
+          0.0
+        ],
+        "max": [
+          0.3305000066757202,
+          0.20500001311302185,
+          0.5114999413490295
+        ]
+      },
+      "visualDimensionsM": [
+        0.6610000133514404,
+        0.4855000078678131,
+        0.5114999413490295
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        0.5
+      ],
+      "neutralHeightPlusHandlingM": 0.6614999413490296,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.46399999999999997,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.46399999999999997,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-abb5fe4af40225b7eae4",
+      "designId": "cargo.standard.medium",
+      "appearance": "standard-medium",
+      "revision": 3,
+      "glbPath": "assets/art-library/designs/cargo.standard.medium/revisions/r003/glb.glb",
+      "glbSha256": "b206e9ca51fff669848037ab6288882df033293d535c4f31e96034e1bde7db2c",
+      "blendSha256": "645ed047c59cdd8a296a9e75c06a729d564256706c4cb4c85e492234452f00bc",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.5304999947547913,
+          -0.4505000114440918,
+          0.0
+        ],
+        "max": [
+          0.5304999947547913,
+          0.34584999084472656,
+          0.9514999985694885
+        ]
+      },
+      "visualDimensionsM": [
+        1.0609999895095825,
+        0.7963500022888184,
+        0.9514999985694885
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.5,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.1014999985694884,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.904,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.904,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-f12452ef26700fa33271",
+      "designId": "cargo.standard.large",
+      "appearance": "standard-large",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.standard.large/revisions/r002/glb.glb",
+      "glbSha256": "c5327211a125e711f907a41691a5bacf5253f9dc9398ed1484891f947691ced8",
+      "blendSha256": "77214bcfdd20ceb52aa7f84bd5915ddb3e5377316a6e83fe40e4544c8101afce",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.9704999923706055,
+          -0.7270000576972961,
+          0.0
+        ],
+        "max": [
+          0.9704999923706055,
+          0.5891000032424927,
+          1.7200000286102295
+        ]
+      },
+      "visualDimensionsM": [
+        1.940999984741211,
+        1.3161000609397888,
+        1.7200000286102295
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        2.0,
+        1.5
+      ],
+      "neutralHeightPlusHandlingM": 1.8700000286102294,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 1.704,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 1.704,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-b3ba935a9fdc172d4b05",
+      "designId": "cargo.standard.oversized",
+      "appearance": "standard-oversized",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.standard.oversized/revisions/r002/glb.glb",
+      "glbSha256": "cabf3570fc40613b8476ade9627f78033963e691ddd385a996bcf548ce7a5985",
+      "blendSha256": "43ffef9453511923460fb69a1c7a9144899a16c6a081567fe87a1342f4caf367",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.9704999923706055,
+          -2.0269999504089355,
+          0.0
+        ],
+        "max": [
+          0.9704999923706055,
+          1.8890999555587769,
+          1.9199999570846558
+        ]
+      },
+      "visualDimensionsM": [
+        1.940999984741211,
+        3.9160999059677124,
+        1.9199999570846558
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        2.0,
+        4.0
+      ],
+      "neutralHeightPlusHandlingM": 2.0699999570846557,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 1.904,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 1.904,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-7b3c579c1281fc95571e",
+      "designId": "cargo.reinforced.medium",
+      "appearance": "reinforced-medium",
+      "revision": 3,
+      "glbPath": "assets/art-library/designs/cargo.reinforced.medium/revisions/r003/glb.glb",
+      "glbSha256": "d0c38b77acee4430c023a003a1e8bc536d39a401064724fd586f9499c2fe5bb6",
+      "blendSha256": "86d58cae92f9eecd5ad7398fd1e7b32b382731d62a468748ab7acaa40198ab3f",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.5304999947547913,
+          -0.46299999952316284,
+          0.0
+        ],
+        "max": [
+          0.5304999947547913,
+          0.34584999084472656,
+          0.9514999985694885
+        ]
+      },
+      "visualDimensionsM": [
+        1.0609999895095825,
+        0.8088499903678894,
+        0.9514999985694885
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.5,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.1014999985694884,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.904,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.904,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-7c2f338895b10331d945",
+      "designId": "cargo.reinforced.large",
+      "appearance": "reinforced-large",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.reinforced.large/revisions/r002/glb.glb",
+      "glbSha256": "662494d06bd0bb22b221f171e5c154808fdcf2e7198aea086b234755fc833188",
+      "blendSha256": "b9d28e31d1e952b5aa13f3b5dd12ab742c42b2dd8014e87f9ae5af2be55cad71",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.9704999923706055,
+          -0.8220000267028809,
+          0.0
+        ],
+        "max": [
+          0.9704999923706055,
+          0.5891000032424927,
+          1.7200000286102295
+        ]
+      },
+      "visualDimensionsM": [
+        1.940999984741211,
+        1.4111000299453735,
+        1.7200000286102295
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        2.0,
+        1.5
+      ],
+      "neutralHeightPlusHandlingM": 1.8700000286102294,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 1.704,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 1.704,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-988451da35483981368a",
+      "designId": "cargo.reinforced.oversized",
+      "appearance": "reinforced-oversized",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.reinforced.oversized/revisions/r002/glb.glb",
+      "glbSha256": "f1120e09b195eae7c347c77c529c53dd2df448431c79cd8e50640e62f02e79ae",
+      "blendSha256": "ad014ef3faab889b9582f9c883a04ca384acc1218d902e50c5db056d5fabaa12",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.9704999923706055,
+          -2.122000217437744,
+          0.0
+        ],
+        "max": [
+          0.9704999923706055,
+          1.8890999555587769,
+          1.9199999570846558
+        ]
+      },
+      "visualDimensionsM": [
+        1.940999984741211,
+        4.011100172996521,
+        1.9199999570846558
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        2.0,
+        4.5
+      ],
+      "neutralHeightPlusHandlingM": 2.0699999570846557,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 1.904,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 1.904,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-ba8af622916752a9337b",
+      "designId": "cargo.refrigerated.medium",
+      "appearance": "refrigerated-medium",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.refrigerated.medium/revisions/r002/glb.glb",
+      "glbSha256": "0119364ddd193ae12fa5288498d3dadbc34809d63ff0bf5d1f6062e82e94e886",
+      "blendSha256": "04c8189fd16c30fd40b11545a528d7482a602e95bf849d3d604bf454c52dcd9b",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.4580000042915344,
+          -0.7324999570846558,
+          0.0
+        ],
+        "max": [
+          0.4580000042915344,
+          0.6000000238418579,
+          0.6800000071525574
+        ]
+      },
+      "visualDimensionsM": [
+        0.9160000085830688,
+        1.3324999809265137,
+        0.6800000071525574
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.5
+      ],
+      "neutralHeightPlusHandlingM": 0.8300000071525574,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.664,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.664,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-a35ecc5e892707a10931",
+      "designId": "cargo.refrigerated.large",
+      "appearance": "refrigerated-large",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.refrigerated.large/revisions/r002/glb.glb",
+      "glbSha256": "1abde7fc69cb70837bcbfa31a3c92e76020bc2d545739ddf10ea88455c37afe6",
+      "blendSha256": "cfeef967b116f920956d21f9aae6d302e0a7c17da06800b357addd30556da10b",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.6980000138282776,
+          -1.0325000286102295,
+          0.0
+        ],
+        "max": [
+          0.6980000138282776,
+          0.8999999761581421,
+          1.159999966621399
+        ]
+      },
+      "visualDimensionsM": [
+        1.3960000276565552,
+        1.9325000047683716,
+        1.159999966621399
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.5,
+        2.0
+      ],
+      "neutralHeightPlusHandlingM": 1.3099999666213988,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 1.144,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 1.144,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-3e4990bfd3cff3c322a6",
+      "designId": "cargo.vacuum.medium",
+      "appearance": "vacuum-medium",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.vacuum.medium/revisions/r002/glb.glb",
+      "glbSha256": "c8fc1355219f88600dd3391a2b805ae25100d4bdf08f2f09b3b4fdda4949bb2f",
+      "blendSha256": "1d36122e65102d47c67ff42c132c8cafc6c0f43a5fa1738f12c895993bf396ff",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.43050000071525574,
+          -0.7639999985694885,
+          0.0
+        ],
+        "max": [
+          0.43050000071525574,
+          0.6000000238418579,
+          0.6800000071525574
+        ]
+      },
+      "visualDimensionsM": [
+        0.8610000014305115,
+        1.3640000224113464,
+        0.6800000071525574
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.5
+      ],
+      "neutralHeightPlusHandlingM": 0.8300000071525574,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.664,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.664,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-78c27f9eba15730f6e16",
+      "designId": "cargo.vacuum.large",
+      "appearance": "vacuum-large",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.vacuum.large/revisions/r002/glb.glb",
+      "glbSha256": "978718994a5323bb1b794065029bf2f9f6b50a9a50534bc8502a7acf3e85a4c3",
+      "blendSha256": "201c07f9749d5423283c1e77b28c340d3e1c5ac1082745451509dc81126e1c6d",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.6704999804496765,
+          -1.063999891281128,
+          0.0
+        ],
+        "max": [
+          0.6704999804496765,
+          0.8999999761581421,
+          1.159999966621399
+        ]
+      },
+      "visualDimensionsM": [
+        1.340999960899353,
+        1.96399986743927,
+        1.159999966621399
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.5,
+        2.0
+      ],
+      "neutralHeightPlusHandlingM": 1.3099999666213988,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 1.144,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 1.144,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-b9296fc370e00c573edb",
+      "designId": "cargo.salvage.large",
+      "appearance": "salvage-large",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.salvage.large/revisions/r002/glb.glb",
+      "glbSha256": "bc35466888b7ef8fbd077aeb4656ee9591aba7c5bfffae40f258582ff3d443f1",
+      "blendSha256": "0821e500f0d57f37f00a6373546c53b74726f4ef7b53714d0ec0a7274bfd4586",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.6704999804496765,
+          -1.0325000286102295,
+          0.0
+        ],
+        "max": [
+          0.6704999804496765,
+          0.8999999761581421,
+          1.2540000677108765
+        ]
+      },
+      "visualDimensionsM": [
+        1.340999960899353,
+        1.9325000047683716,
+        1.2540000677108765
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.5,
+        2.0
+      ],
+      "neutralHeightPlusHandlingM": 1.4040000677108764,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 1.144,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 1.144,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-6bb94c053cd8cf77c986",
+      "designId": "cargo.salvage.oversized",
+      "appearance": "salvage-oversized",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.salvage.oversized/revisions/r002/glb.glb",
+      "glbSha256": "034bc87366c86c39589d5a05754205c5c44b17164849572fe7c54b9c1fd90238",
+      "blendSha256": "b9d69b0416626c54d6432ed8332f80e62ea3e6c89f9331dbd4a91c5e30bedd5a",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.9704999923706055,
+          -2.0325000286102295,
+          0.0
+        ],
+        "max": [
+          0.9704999923706055,
+          1.9000000953674316,
+          1.8540000915527344
+        ]
+      },
+      "visualDimensionsM": [
+        1.940999984741211,
+        3.932500123977661,
+        1.8540000915527344
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        2.0,
+        4.0
+      ],
+      "neutralHeightPlusHandlingM": 2.0040000915527343,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 1.744,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 1.744,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-91ea0f7d9a898641e10a",
+      "designId": "cargo.medical.small",
+      "appearance": "medical-small",
+      "revision": 3,
+      "glbPath": "assets/art-library/designs/cargo.medical.small/revisions/r003/glb.glb",
+      "glbSha256": "98a665e309e5b136f7658b0a7588b15971f94f9d82af85075f50d8253eeb5998",
+      "blendSha256": "c5ec606f05e5593a0273aa105e3f7a8e00a34e0614402126526fd045a412b190",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.3305000066757202,
+          -0.28049999475479126,
+          0.0
+        ],
+        "max": [
+          0.3305000066757202,
+          0.20500001311302185,
+          0.3915000259876251
+        ]
+      },
+      "visualDimensionsM": [
+        0.6610000133514404,
+        0.4855000078678131,
+        0.3915000259876251
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        0.5
+      ],
+      "neutralHeightPlusHandlingM": 0.5415000259876251,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.344,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.344,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-30f4da34f1916e0c5c3f",
+      "designId": "cargo.medical.medium",
+      "appearance": "medical-medium",
+      "revision": 3,
+      "glbPath": "assets/art-library/designs/cargo.medical.medium/revisions/r003/glb.glb",
+      "glbSha256": "e73ec71e8699877088c1ee182106e1738d737159f97a960650b2cdf7c032be5e",
+      "blendSha256": "be88f2fd2521b646334806f9c2f790e458b0a56f2c08431a9986369918800fb6",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.5304999947547913,
+          -0.4505000114440918,
+          0.0
+        ],
+        "max": [
+          0.5304999947547913,
+          0.34584999084472656,
+          0.6315000057220459
+        ]
+      },
+      "visualDimensionsM": [
+        1.0609999895095825,
+        0.7963500022888184,
+        0.6315000057220459
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.5,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 0.7815000057220459,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.584,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.584,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-a4d1c1ae60720fcbe403",
+      "designId": "cargo.high-value.small",
+      "appearance": "high-value-small",
+      "revision": 3,
+      "glbPath": "assets/art-library/designs/cargo.high-value.small/revisions/r003/glb.glb",
+      "glbSha256": "91962c400f4cfd41907a0b8702f772d394e976b4f5f7cbc0a50b3759e4a03c89",
+      "blendSha256": "335f395e1ac5c92956e36c7602e2848adee92f2c2980f290b16f5db69df02649",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.3305000066757202,
+          -0.4104999899864197,
+          0.0
+        ],
+        "max": [
+          0.3305000066757202,
+          0.24500000476837158,
+          0.4714999794960022
+        ]
+      },
+      "visualDimensionsM": [
+        0.6610000133514404,
+        0.6554999947547913,
+        0.4714999794960022
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 0.6214999794960022,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.424,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.424,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-73d0f3a802c4cb9166c1",
+      "designId": "cargo.high-value.medium",
+      "appearance": "high-value-medium",
+      "revision": 3,
+      "glbPath": "assets/art-library/designs/cargo.high-value.medium/revisions/r003/glb.glb",
+      "glbSha256": "35a4471f701d9882797a53c43efa9ab1a46dce8fca2c0d45da640184517b92d0",
+      "blendSha256": "1006809489076ccec8ac8ce8bea251ae52e2dba1e05c3c3c8314bfb4e4ce8181",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.5304999947547913,
+          -0.640500009059906,
+          0.0
+        ],
+        "max": [
+          0.5304999947547913,
+          0.4458500146865845,
+          0.7914999723434448
+        ]
+      },
+      "visualDimensionsM": [
+        1.0609999895095825,
+        1.0863500237464905,
+        0.7914999723434448
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.5,
+        1.5
+      ],
+      "neutralHeightPlusHandlingM": 0.9414999723434448,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.744,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.744,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-3b7ca37c50e723c351a6",
+      "designId": "cargo.fluid.medium",
+      "appearance": "fluid-medium",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.fluid.medium/revisions/r002/glb.glb",
+      "glbSha256": "93def67d6bdde3e7c7062995a8086063b26eb9c42a44c74b6692c2bb9bb97b35",
+      "blendSha256": "924d5c93e48e74e798ee86d3e9f32db12e921a0177deb0d2d4fb11b943417db7",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.43050000071525574,
+          -0.5800000429153442,
+          0.0
+        ],
+        "max": [
+          0.43050000071525574,
+          0.5800000429153442,
+          0.6800000071525574
+        ]
+      },
+      "visualDimensionsM": [
+        0.8610000014305115,
+        1.1600000858306885,
+        0.6800000071525574
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.5
+      ],
+      "neutralHeightPlusHandlingM": 0.8300000071525574,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.664,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.664,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-e925d94b0d7fa47fbedb",
+      "designId": "cargo.fluid.large",
+      "appearance": "fluid-large",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.fluid.large/revisions/r002/glb.glb",
+      "glbSha256": "3a27abd17b594b46f58c68d5b983a35974dcbb088090785677b7589e545e1f40",
+      "blendSha256": "eb31d1298d4e6cf77fef6b1f0a081cf2b3b04315d660ffcc929444f2c5253c98",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.6704999804496765,
+          -0.8799999952316284,
+          0.0
+        ],
+        "max": [
+          0.6704999804496765,
+          0.8799999952316284,
+          1.159999966621399
+        ]
+      },
+      "visualDimensionsM": [
+        1.340999960899353,
+        1.7599999904632568,
+        1.159999966621399
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.5,
+        2.0
+      ],
+      "neutralHeightPlusHandlingM": 1.3099999666213988,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 1.144,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 1.144,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-fbd7255612b311847eb2",
+      "designId": "cargo.fluid-cryo.medium",
+      "appearance": "cryo",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-cryo.medium/revisions/r001/appearances/cryo/glb.glb",
+      "glbSha256": "c63384726bd7b7891283bc72fbfab66de94e803618bd6d0a9ef9b8d093d51c66",
+      "blendSha256": "94cba39bd64adc59c743198c4173bcc3b1ab6d8171754539cadb02ce98653684",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.3400000035762787,
+          -0.3400000035762787,
+          0.0
+        ],
+        "max": [
+          0.3400000035762787,
+          0.3400000035762787,
+          1.3600000143051147
+        ]
+      },
+      "visualDimensionsM": [
+        0.6800000071525574,
+        0.6800000071525574,
+        1.3600000143051147
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.5100000143051147,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-81d226967abf2efefc20",
+      "designId": "cargo.fluid-fuel.medium",
+      "appearance": "fuel",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-fuel.medium/revisions/r001/appearances/fuel/glb.glb",
+      "glbSha256": "a2f9fca902c7df08f3e8bad348d09034df8f26d9c248d0d912558886aa2eecf6",
+      "blendSha256": "cc5750b992d736e2a72c23bc07c02c3ac05d8dd3f79ecb2decd5cc10a6f03268",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.2760000228881836,
+          -0.27399998903274536,
+          0.0
+        ],
+        "max": [
+          0.2760000228881836,
+          0.27399998903274536,
+          0.8639999628067017
+        ]
+      },
+      "visualDimensionsM": [
+        0.5520000457763672,
+        0.5479999780654907,
+        0.8639999628067017
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.0139999628067016,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-392d51c57ab75c82dc9c",
+      "designId": "cargo.fluid-chemical.medium",
+      "appearance": "chemical",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-chemical.medium/revisions/r001/appearances/chemical/glb.glb",
+      "glbSha256": "23d36657b742c2148682a6fd15e7e76e31434f997f1c7d51881b98fc0d579357",
+      "blendSha256": "e2b3a2acb6f62b5c9d397d0c09085a03c669c7a40021d8939a51978df602aa6a",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.27399998903274536,
+          -0.27399998903274536,
+          0.0
+        ],
+        "max": [
+          0.27399998903274536,
+          0.27399998903274536,
+          0.8639999628067017
+        ]
+      },
+      "visualDimensionsM": [
+        0.5479999780654907,
+        0.5479999780654907,
+        0.8639999628067017
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.0139999628067016,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-9e3dbcbc867202b08b48",
+      "designId": "cargo.fluid-gas.medium",
+      "appearance": "gas",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-gas.medium/revisions/r001/appearances/gas/glb.glb",
+      "glbSha256": "c3752988956571beaba2e3ee3e520c823bb040e5923a6c103191a33fc75eb484",
+      "blendSha256": "60961860b0aebdd02ad1838ac58e125575bf0a92840381666200b12c37bb744e",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.4399999976158142,
+          -0.3400000035762787,
+          0.0
+        ],
+        "max": [
+          0.4399999976158142,
+          0.3400000035762787,
+          0.8999999761581421
+        ]
+      },
+      "visualDimensionsM": [
+        0.8799999952316284,
+        0.6800000071525574,
+        0.8999999761581421
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.049999976158142,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-66a83f73eef38512fd34",
+      "designId": "cargo.fluid-water.medium",
+      "appearance": "water",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-water.medium/revisions/r001/appearances/water/glb.glb",
+      "glbSha256": "5dcd32b998180c78bb842c5e68e7bdb24a23a0f97dbab95de1e4e4be4db7b8f5",
+      "blendSha256": "f3cc44cfca8cfc80e0bd360f2650bdab51dc960b838bed053da622af34fda16c",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.4399999976158142,
+          -0.3490000069141388,
+          0.0
+        ],
+        "max": [
+          0.4399999976158142,
+          0.3400000035762787,
+          0.9070000052452087
+        ]
+      },
+      "visualDimensionsM": [
+        0.8799999952316284,
+        0.6890000104904175,
+        0.9070000052452087
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.0570000052452087,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-bcd15c0ae99c611cd840",
+      "designId": "cargo.standard.narrow",
+      "appearance": "narrow-blue",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.standard.narrow/revisions/r001/appearances/narrow-blue/glb.glb",
+      "glbSha256": "b7706350f40b5da148da8bf14cc3d5b11066bdabc930ceb879f4ae5e2990e5c7",
+      "blendSha256": "644b85de43276691aec6247d1adf8271a67a89665164355aafcc6f55c4565f6c",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.12099999934434891,
+          -0.12399999797344208,
+          0.0
+        ],
+        "max": [
+          0.12099999934434891,
+          0.12700000405311584,
+          0.44200000166893005
+        ]
+      },
+      "visualDimensionsM": [
+        0.24199999868869781,
+        0.2510000020265579,
+        0.44200000166893005
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        0.5,
+        0.5
+      ],
+      "neutralHeightPlusHandlingM": 0.5920000016689301,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-ddbf6661871ea40b586b",
+      "designId": "cargo.standard.tiny",
+      "appearance": "tiny-magenta",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.standard.tiny/revisions/r001/appearances/tiny-magenta/glb.glb",
+      "glbSha256": "37765969cf2ac4d760dd189f718dc794ce923ecbeea0adac4a2914f2b3be6a2f",
+      "blendSha256": "7bd69b7162b53168a3bb1344393fa3d9c5d52baada96b1ded71000e3903c04fe",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.09099999815225601,
+          -0.10799999535083771,
+          0.0
+        ],
+        "max": [
+          0.10099999606609344,
+          0.11100000143051147,
+          0.17100000381469727
+        ]
+      },
+      "visualDimensionsM": [
+        0.19199999421834946,
+        0.21899999678134918,
+        0.17100000381469727
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        0.5,
+        0.5
+      ],
+      "neutralHeightPlusHandlingM": 0.3210000038146973,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-a0cc41ad3cc80d2c07a4",
+      "designId": "cargo.standard.oversized",
+      "appearance": "standard-oversized-pale",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.standard.oversized/revisions/r002/appearances/standard-oversized-pale/glb.glb",
+      "glbSha256": "ab75deb1463f719934339f6029fb1b4260d54e26719ced47d1ab9937ed81280d",
+      "blendSha256": "840ab4da8185351b01551915bf55b474a74447c463fa69b987fd3e4f07b6530f",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.9704999923706055,
+          -2.0269999504089355,
+          0.0
+        ],
+        "max": [
+          0.9704999923706055,
+          1.8890999555587769,
+          1.9199999570846558
+        ]
+      },
+      "visualDimensionsM": [
+        1.940999984741211,
+        3.9160999059677124,
+        1.9199999570846558
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        2.0,
+        4.0
+      ],
+      "neutralHeightPlusHandlingM": 2.0699999570846557,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 1.904,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 1.904,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-e7e053b614f1a2ab5ef1",
+      "designId": "cargo.standard.oversized",
+      "appearance": "standard-oversized-amber",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.standard.oversized/revisions/r002/appearances/standard-oversized-amber/glb.glb",
+      "glbSha256": "11d154af0b54789610d2f1b4be5dce3331c2e89bbf7e8995c4a0ba40575a7674",
+      "blendSha256": "e7f750df06e45a5c167aad3e7d46fe4cf3084b4e445ec9e8cee1203d38326c03",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.9704999923706055,
+          -2.0269999504089355,
+          0.0
+        ],
+        "max": [
+          0.9704999923706055,
+          1.8890999555587769,
+          1.9199999570846558
+        ]
+      },
+      "visualDimensionsM": [
+        1.940999984741211,
+        3.9160999059677124,
+        1.9199999570846558
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        2.0,
+        4.0
+      ],
+      "neutralHeightPlusHandlingM": 2.0699999570846557,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 1.904,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 1.904,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-41d3f8bf61743df8e351",
+      "designId": "cargo.standard.oversized",
+      "appearance": "standard-oversized-blue",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.standard.oversized/revisions/r002/appearances/standard-oversized-blue/glb.glb",
+      "glbSha256": "2850e09c7d07c04ac7ba2d0c2f5ac6c1932704e20928278810c6ecbbf51fa3c1",
+      "blendSha256": "90dbeedc283cde5080eed8665fb6cbadb228fe85de4b61501c0e5a0c1127872f",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.9704999923706055,
+          -2.0269999504089355,
+          0.0
+        ],
+        "max": [
+          0.9704999923706055,
+          1.8890999555587769,
+          1.9199999570846558
+        ]
+      },
+      "visualDimensionsM": [
+        1.940999984741211,
+        3.9160999059677124,
+        1.9199999570846558
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        2.0,
+        4.0
+      ],
+      "neutralHeightPlusHandlingM": 2.0699999570846557,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 1.904,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 1.904,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-f897d81e4c69384df03b",
+      "designId": "cargo.standard.oversized",
+      "appearance": "standard-oversized-red",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.standard.oversized/revisions/r002/appearances/standard-oversized-red/glb.glb",
+      "glbSha256": "e601361679b0fe9deafe4caa0a863c53fceb9ce53840430a48106777789191df",
+      "blendSha256": "ffec0d2526b8da8e3e0e06db1bd72e10a1242c24ed5d0e1c491d0bc338152a36",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.9704999923706055,
+          -2.0269999504089355,
+          0.0
+        ],
+        "max": [
+          0.9704999923706055,
+          1.8890999555587769,
+          1.9199999570846558
+        ]
+      },
+      "visualDimensionsM": [
+        1.940999984741211,
+        3.9160999059677124,
+        1.9199999570846558
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        2.0,
+        4.0
+      ],
+      "neutralHeightPlusHandlingM": 2.0699999570846557,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 1.904,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 1.904,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-12743466dc1eeca3e482",
+      "designId": "cargo.reinforced.large",
+      "appearance": "reinforced-large-blue",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.reinforced.large/revisions/r002/appearances/reinforced-large-blue/glb.glb",
+      "glbSha256": "ae395110aef810c6c0119aa7c149f8055cd35112178fdec1ad98a18c581cde75",
+      "blendSha256": "c2113ef0d01e398ff145196f072f72e596b80ae7e1564b2711f6d89411395624",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.9704999923706055,
+          -0.8220000267028809,
+          0.0
+        ],
+        "max": [
+          0.9704999923706055,
+          0.5891000032424927,
+          1.7200000286102295
+        ]
+      },
+      "visualDimensionsM": [
+        1.940999984741211,
+        1.4111000299453735,
+        1.7200000286102295
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        2.0,
+        1.5
+      ],
+      "neutralHeightPlusHandlingM": 1.8700000286102294,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 1.704,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 1.704,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-6c94a694e1a91110e76f",
+      "designId": "cargo.reinforced.large",
+      "appearance": "reinforced-large-red",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.reinforced.large/revisions/r002/appearances/reinforced-large-red/glb.glb",
+      "glbSha256": "5fb50d1445e011342f8ef5fe994f8f27c7e8bf01518b902e65b1a56111fd74df",
+      "blendSha256": "c9bf2e394281da4708301b54696f8dfd34125078e5075379e1c860e509336eef",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.9704999923706055,
+          -0.8220000267028809,
+          0.0
+        ],
+        "max": [
+          0.9704999923706055,
+          0.5891000032424927,
+          1.7200000286102295
+        ]
+      },
+      "visualDimensionsM": [
+        1.940999984741211,
+        1.4111000299453735,
+        1.7200000286102295
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        2.0,
+        1.5
+      ],
+      "neutralHeightPlusHandlingM": 1.8700000286102294,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 1.704,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 1.704,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-a82fc07c0f2cf57ffef8",
+      "designId": "cargo.refrigerated.medium",
+      "appearance": "refrigerated-medium-green",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.refrigerated.medium/revisions/r002/appearances/refrigerated-medium-green/glb.glb",
+      "glbSha256": "b9bced5b170f7035d0efc2fb50af90e4935c328e8aac2065978d9c034e330746",
+      "blendSha256": "395ba9658d8aff10b8fac9f556ca4f3de33f1cfc68ffa2b89fab29a82e04dbc9",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.4580000042915344,
+          -0.7324999570846558,
+          0.0
+        ],
+        "max": [
+          0.4580000042915344,
+          0.6000000238418579,
+          0.6800000071525574
+        ]
+      },
+      "visualDimensionsM": [
+        0.9160000085830688,
+        1.3324999809265137,
+        0.6800000071525574
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.5
+      ],
+      "neutralHeightPlusHandlingM": 0.8300000071525574,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.664,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.664,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-be4057636f5003ee5fed",
+      "designId": "cargo.refrigerated.medium",
+      "appearance": "refrigerated-medium-pale",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.refrigerated.medium/revisions/r002/appearances/refrigerated-medium-pale/glb.glb",
+      "glbSha256": "a0b28cf785212fb719ea3eee2e388b516804299c84374c9f069be4ab3501174e",
+      "blendSha256": "3a2f5f8a31628d28a7725d1a76675849e8bf68a279df414ccc30a8d8b9e25c0f",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.4580000042915344,
+          -0.7324999570846558,
+          0.0
+        ],
+        "max": [
+          0.4580000042915344,
+          0.6000000238418579,
+          0.6800000071525574
+        ]
+      },
+      "visualDimensionsM": [
+        0.9160000085830688,
+        1.3324999809265137,
+        0.6800000071525574
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.5
+      ],
+      "neutralHeightPlusHandlingM": 0.8300000071525574,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.664,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.664,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-45eba046115a3166e3e6",
+      "designId": "cargo.refrigerated.medium",
+      "appearance": "refrigerated-medium-red",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.refrigerated.medium/revisions/r002/appearances/refrigerated-medium-red/glb.glb",
+      "glbSha256": "6729889a462e3a276c9975ade4c80769c2aa3fab43b76b0f8d2f0f5545453ef0",
+      "blendSha256": "7731f6d6a7f2690b7b7c4163d60c92ed59d0426177a3d2272ebe48c2f35d59c5",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.4580000042915344,
+          -0.7324999570846558,
+          0.0
+        ],
+        "max": [
+          0.4580000042915344,
+          0.6000000238418579,
+          0.6800000071525574
+        ]
+      },
+      "visualDimensionsM": [
+        0.9160000085830688,
+        1.3324999809265137,
+        0.6800000071525574
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.5
+      ],
+      "neutralHeightPlusHandlingM": 0.8300000071525574,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.664,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.664,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-648c1308e0a5ccd4c749",
+      "designId": "cargo.vacuum.medium",
+      "appearance": "vacuum-medium-pale",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.vacuum.medium/revisions/r002/appearances/vacuum-medium-pale/glb.glb",
+      "glbSha256": "afe864ebafda474e0ffedeb3c58e3aba426661ef467fcf7c779cf47a911f0195",
+      "blendSha256": "6ff9f2bdab965993de352d1247f4da9b0b9577d778817ccaae7283349d9a4eb2",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.43050000071525574,
+          -0.7639999985694885,
+          0.0
+        ],
+        "max": [
+          0.43050000071525574,
+          0.6000000238418579,
+          0.6800000071525574
+        ]
+      },
+      "visualDimensionsM": [
+        0.8610000014305115,
+        1.3640000224113464,
+        0.6800000071525574
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.5
+      ],
+      "neutralHeightPlusHandlingM": 0.8300000071525574,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.664,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.664,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-f54c717c38a363f7e658",
+      "designId": "cargo.vacuum.medium",
+      "appearance": "vacuum-medium-dark",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.vacuum.medium/revisions/r002/appearances/vacuum-medium-dark/glb.glb",
+      "glbSha256": "9a3450840436ff9f70c3844973e41cf9924dbd175b5f59b5a8cb780b963a1867",
+      "blendSha256": "41936b6d9f7b7f34729a36efb9ecf984bd49ff1cfa5e5c4cc232c475f892fcf8",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.43050000071525574,
+          -0.7639999985694885,
+          0.0
+        ],
+        "max": [
+          0.43050000071525574,
+          0.6000000238418579,
+          0.6800000071525574
+        ]
+      },
+      "visualDimensionsM": [
+        0.8610000014305115,
+        1.3640000224113464,
+        0.6800000071525574
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.5
+      ],
+      "neutralHeightPlusHandlingM": 0.8300000071525574,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.664,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.664,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-c1ebb67dff29784e301a",
+      "designId": "cargo.vacuum.medium",
+      "appearance": "vacuum-medium-amber",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.vacuum.medium/revisions/r002/appearances/vacuum-medium-amber/glb.glb",
+      "glbSha256": "0ae108878ae42ad84468a0552acd2c5569f8932f4230e7154dae8b2aa8a0b9bc",
+      "blendSha256": "c357c36af280c0142520c1593308f4229b07c8ac473889cf0ddada1f5c46f7cc",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.43050000071525574,
+          -0.7639999985694885,
+          0.0
+        ],
+        "max": [
+          0.43050000071525574,
+          0.6000000238418579,
+          0.6800000071525574
+        ]
+      },
+      "visualDimensionsM": [
+        0.8610000014305115,
+        1.3640000224113464,
+        0.6800000071525574
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.5
+      ],
+      "neutralHeightPlusHandlingM": 0.8300000071525574,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.664,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.664,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-a09eeadccb5c9982cac6",
+      "designId": "cargo.salvage.large",
+      "appearance": "salvage-large-red",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.salvage.large/revisions/r002/appearances/salvage-large-red/glb.glb",
+      "glbSha256": "5d8c3aab6482782cbfbac5cf0cc6f5d11fd2946e89613f5afc2d7d37e6c98bf1",
+      "blendSha256": "2d0c06599b8bb7678cf594692b0e15ba4cf1e92a3e37c29cdc326736d9661a2a",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.6704999804496765,
+          -1.0325000286102295,
+          0.0
+        ],
+        "max": [
+          0.6704999804496765,
+          0.8999999761581421,
+          1.2540000677108765
+        ]
+      },
+      "visualDimensionsM": [
+        1.340999960899353,
+        1.9325000047683716,
+        1.2540000677108765
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.5,
+        2.0
+      ],
+      "neutralHeightPlusHandlingM": 1.4040000677108764,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 1.144,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 1.144,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-b2141c33d215edfc9f69",
+      "designId": "cargo.salvage.large",
+      "appearance": "salvage-large-pale",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.salvage.large/revisions/r002/appearances/salvage-large-pale/glb.glb",
+      "glbSha256": "df714234a94dd90e898e2568289f8d254f79d1eb8384cadc66f0c494a10c6891",
+      "blendSha256": "7fd62afd52a026733b027c453dc0274ebf5b38a033ba7517554ff67670bc594c",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.6704999804496765,
+          -1.0325000286102295,
+          0.0
+        ],
+        "max": [
+          0.6704999804496765,
+          0.8999999761581421,
+          1.2540000677108765
+        ]
+      },
+      "visualDimensionsM": [
+        1.340999960899353,
+        1.9325000047683716,
+        1.2540000677108765
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.5,
+        2.0
+      ],
+      "neutralHeightPlusHandlingM": 1.4040000677108764,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 1.144,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 1.144,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-5ec11cd63618cfba9ee6",
+      "designId": "cargo.salvage.large",
+      "appearance": "salvage-large-amber",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.salvage.large/revisions/r002/appearances/salvage-large-amber/glb.glb",
+      "glbSha256": "ea53a010cc578989dd6f6e7a274cc3a928116eaa9f842ff706770f52fb92f090",
+      "blendSha256": "736468d4b20605855a6a0c478188dc07b7f01bca4b63bfaddb87d7508ce5dbaa",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.6704999804496765,
+          -1.0325000286102295,
+          0.0
+        ],
+        "max": [
+          0.6704999804496765,
+          0.8999999761581421,
+          1.2540000677108765
+        ]
+      },
+      "visualDimensionsM": [
+        1.340999960899353,
+        1.9325000047683716,
+        1.2540000677108765
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.5,
+        2.0
+      ],
+      "neutralHeightPlusHandlingM": 1.4040000677108764,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 1.144,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 1.144,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-0c13b0afa67118c11465",
+      "designId": "cargo.medical.small",
+      "appearance": "medical-small-red",
+      "revision": 3,
+      "glbPath": "assets/art-library/designs/cargo.medical.small/revisions/r003/appearances/medical-small-red/glb.glb",
+      "glbSha256": "30adaac760feaf192873f432b87ffe7655565947d35e0858d257a8fbe537dbc7",
+      "blendSha256": "21d0d461a43cef646d32457c0ac0bb4a37114b4dceda957fcf91b0bd7ff4c3a0",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.3305000066757202,
+          -0.28049999475479126,
+          0.0
+        ],
+        "max": [
+          0.3305000066757202,
+          0.20500001311302185,
+          0.3915000259876251
+        ]
+      },
+      "visualDimensionsM": [
+        0.6610000133514404,
+        0.4855000078678131,
+        0.3915000259876251
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        0.5
+      ],
+      "neutralHeightPlusHandlingM": 0.5415000259876251,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.344,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.344,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-75a256627549b94938af",
+      "designId": "cargo.medical.small",
+      "appearance": "medical-small-green",
+      "revision": 3,
+      "glbPath": "assets/art-library/designs/cargo.medical.small/revisions/r003/appearances/medical-small-green/glb.glb",
+      "glbSha256": "313c58343a48b364378fc40fa89f87db0f012ab194ee9b24f19949290a4a8bc1",
+      "blendSha256": "70819206938754c152370f8c75597b33eb4fc3c7aeeced9716a892f2fb9e69a2",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.3305000066757202,
+          -0.28049999475479126,
+          0.0
+        ],
+        "max": [
+          0.3305000066757202,
+          0.20500001311302185,
+          0.3915000259876251
+        ]
+      },
+      "visualDimensionsM": [
+        0.6610000133514404,
+        0.4855000078678131,
+        0.3915000259876251
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        0.5
+      ],
+      "neutralHeightPlusHandlingM": 0.5415000259876251,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.344,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.344,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-70124a17eeed22f9fdf8",
+      "designId": "cargo.medical.small",
+      "appearance": "medical-small-blue",
+      "revision": 3,
+      "glbPath": "assets/art-library/designs/cargo.medical.small/revisions/r003/appearances/medical-small-blue/glb.glb",
+      "glbSha256": "597dd4786249d9c853901d07791e9525c6fc8bc7106b57573a2f4b6582411211",
+      "blendSha256": "f45319a1c9e4752f27551a7425b00b30066cae245e3669c029c6752253c812f4",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.3305000066757202,
+          -0.28049999475479126,
+          0.0
+        ],
+        "max": [
+          0.3305000066757202,
+          0.20500001311302185,
+          0.3915000259876251
+        ]
+      },
+      "visualDimensionsM": [
+        0.6610000133514404,
+        0.4855000078678131,
+        0.3915000259876251
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        0.5
+      ],
+      "neutralHeightPlusHandlingM": 0.5415000259876251,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.344,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.344,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-41d39cecfe513b1a0885",
+      "designId": "cargo.high-value.small",
+      "appearance": "high-value-small-amber",
+      "revision": 3,
+      "glbPath": "assets/art-library/designs/cargo.high-value.small/revisions/r003/appearances/high-value-small-amber/glb.glb",
+      "glbSha256": "153c745e10390599a7bbd372bca850e466a3524bc4b0056083bc487e22fcced9",
+      "blendSha256": "9e5a2fcd724a40efa9f4fea6007a0fd02cbe27f7324c88feea818d288da2fe15",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.3305000066757202,
+          -0.4104999899864197,
+          0.0
+        ],
+        "max": [
+          0.3305000066757202,
+          0.24500000476837158,
+          0.4714999794960022
+        ]
+      },
+      "visualDimensionsM": [
+        0.6610000133514404,
+        0.6554999947547913,
+        0.4714999794960022
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 0.6214999794960022,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.424,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.424,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-47640f88de2e1065b623",
+      "designId": "cargo.high-value.small",
+      "appearance": "high-value-small-red",
+      "revision": 3,
+      "glbPath": "assets/art-library/designs/cargo.high-value.small/revisions/r003/appearances/high-value-small-red/glb.glb",
+      "glbSha256": "bd671de55b8c0b1e97012cbd53996388cef0b5d49a522896f3613c5c2ab7a879",
+      "blendSha256": "c33a19cd4e85027496a8dc9a7b794f4a3410335700471ccdf67dd71645b11c7f",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.3305000066757202,
+          -0.4104999899864197,
+          0.0
+        ],
+        "max": [
+          0.3305000066757202,
+          0.24500000476837158,
+          0.4714999794960022
+        ]
+      },
+      "visualDimensionsM": [
+        0.6610000133514404,
+        0.6554999947547913,
+        0.4714999794960022
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 0.6214999794960022,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.424,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.424,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-0fbeb32a435ded59a627",
+      "designId": "cargo.high-value.small",
+      "appearance": "high-value-small-blue",
+      "revision": 3,
+      "glbPath": "assets/art-library/designs/cargo.high-value.small/revisions/r003/appearances/high-value-small-blue/glb.glb",
+      "glbSha256": "8fe6602f055114b8c30c36672c9e1e7807b3aec96f2d694b98b7cedc62ad6547",
+      "blendSha256": "655c926bdc20bb57ac920f1a43b6fe9101c3fc6c94df8a36a4f5de326656b8f5",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.3305000066757202,
+          -0.4104999899864197,
+          0.0
+        ],
+        "max": [
+          0.3305000066757202,
+          0.24500000476837158,
+          0.4714999794960022
+        ]
+      },
+      "visualDimensionsM": [
+        0.6610000133514404,
+        0.6554999947547913,
+        0.4714999794960022
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 0.6214999794960022,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.424,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.424,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-b447c4118a56a63180a8",
+      "designId": "cargo.fluid.medium",
+      "appearance": "fluid-medium-covered",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.fluid.medium/revisions/r002/appearances/fluid-medium-covered/glb.glb",
+      "glbSha256": "9491b1f773ae848b2c5d3f434ae4da4d56f2a627bc739350070493e8a5e91646",
+      "blendSha256": "02b2f1b2e527ab261de82a4716c23a7aad283c6aacb33e5e279c0dc52e21bfda",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.43050000071525574,
+          -0.5800000429153442,
+          0.0
+        ],
+        "max": [
+          0.43050000071525574,
+          0.5800000429153442,
+          0.6800000071525574
+        ]
+      },
+      "visualDimensionsM": [
+        0.8610000014305115,
+        1.1600000858306885,
+        0.6800000071525574
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.5
+      ],
+      "neutralHeightPlusHandlingM": 0.8300000071525574,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.664,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.664,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-e9c7d5963786d1fec3e3",
+      "designId": "cargo.fluid.medium",
+      "appearance": "fluid-medium-amber",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.fluid.medium/revisions/r002/appearances/fluid-medium-amber/glb.glb",
+      "glbSha256": "87c6c3b90dc447e6fd0bf18d6fc346bd6f15a334e80100364253bd97f5cbdf14",
+      "blendSha256": "90f8a4fb2165dc1a44f274865ac22ab167ee58179a711acaa90fb8bc1fd69a2a",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.43050000071525574,
+          -0.5800000429153442,
+          0.0
+        ],
+        "max": [
+          0.43050000071525574,
+          0.5800000429153442,
+          0.6800000071525574
+        ]
+      },
+      "visualDimensionsM": [
+        0.8610000014305115,
+        1.1600000858306885,
+        0.6800000071525574
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.5
+      ],
+      "neutralHeightPlusHandlingM": 0.8300000071525574,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.664,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.664,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-d0db8fa035dfee89aab0",
+      "designId": "cargo.fluid.medium",
+      "appearance": "fluid-medium-glass-gauge",
+      "revision": 2,
+      "glbPath": "assets/art-library/designs/cargo.fluid.medium/revisions/r002/appearances/fluid-medium-glass-gauge/glb.glb",
+      "glbSha256": "186d101731c12f314cd7f5fbc324ba59519272fea1cd74a2073a7133c817f00b",
+      "blendSha256": "21f63f462fba82223ea03e3c8374f8511b742fce957a7d7cadfd49c5404f5e1a",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.4490000009536743,
+          -0.5800000429153442,
+          0.0
+        ],
+        "max": [
+          0.4490000009536743,
+          0.5800000429153442,
+          0.6800000071525574
+        ]
+      },
+      "visualDimensionsM": [
+        0.8980000019073486,
+        1.1600000858306885,
+        0.6800000071525574
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.5
+      ],
+      "neutralHeightPlusHandlingM": 0.8300000071525574,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.664,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.664,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-5382f8dbbeb54e663d33",
+      "designId": "cargo.standard.small",
+      "appearance": "standard-small-red",
+      "revision": 3,
+      "glbPath": "assets/art-library/designs/cargo.standard.small/revisions/r003/appearances/standard-small-red/glb.glb",
+      "glbSha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+      "blendSha256": "7c8541b2de044bebcc6206e56594be0f0ea8dae03944e4bebff5843862c0f1ce",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.3305000066757202,
+          -0.28049999475479126,
+          0.0
+        ],
+        "max": [
+          0.3305000066757202,
+          0.20500001311302185,
+          0.5114999413490295
+        ]
+      },
+      "visualDimensionsM": [
+        0.6610000133514404,
+        0.4855000078678131,
+        0.5114999413490295
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        0.5
+      ],
+      "neutralHeightPlusHandlingM": 0.6614999413490296,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.46399999999999997,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.46399999999999997,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-0e982ae6b34746506f67",
+      "designId": "cargo.standard.medium",
+      "appearance": "standard-medium-blue",
+      "revision": 3,
+      "glbPath": "assets/art-library/designs/cargo.standard.medium/revisions/r003/appearances/standard-medium-blue/glb.glb",
+      "glbSha256": "2219fbab29ca11caeda8036cdf4727af9bc072db6c9071a633de2682cdaaf010",
+      "blendSha256": "3e0be0f70438ab4ad2fbf93e74016fac9dd1af37259ba0f99ea7ffb977f2ad40",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.5304999947547913,
+          -0.4505000114440918,
+          0.0
+        ],
+        "max": [
+          0.5304999947547913,
+          0.34584999084472656,
+          0.9514999985694885
+        ]
+      },
+      "visualDimensionsM": [
+        1.0609999895095825,
+        0.7963500022888184,
+        0.9514999985694885
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.5,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.1014999985694884,
+      "reportedStacking": {
+        "foot_width_m": 0.04,
+        "receiver_opening_m": 0.044,
+        "insertion_m": 0.016,
+        "pitch_m": 0.904,
+        "columns_coincident": true
+      },
+      "reportedEmptyStackPitchM": 0.904,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-5d5d4a34049e170b1040",
+      "designId": "cargo.fluid-cryo.medium",
+      "appearance": "cargo.fluid-cryo.medium.appearance-1",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-cryo.medium/revisions/r001/appearances/cargo-fluid-cryo-medium-appearance-1/glb.glb",
+      "glbSha256": "cd894cff32132f45da2073749af3f79dab0d285ef5eb05567aa751b24711e611",
+      "blendSha256": "e5b396c021541894d8940a3c23ba84d9a9e073640bd02ff9a150f9d51b2f0712",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.3400000035762787,
+          -0.3400000035762787,
+          0.0
+        ],
+        "max": [
+          0.3400000035762787,
+          0.3400000035762787,
+          1.3600000143051147
+        ]
+      },
+      "visualDimensionsM": [
+        0.6800000071525574,
+        0.6800000071525574,
+        1.3600000143051147
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.5100000143051147,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-5d103ad6aa3172180976",
+      "designId": "cargo.fluid-cryo.medium",
+      "appearance": "cargo.fluid-cryo.medium.appearance-2",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-cryo.medium/revisions/r001/appearances/cargo-fluid-cryo-medium-appearance-2/glb.glb",
+      "glbSha256": "1b19771dd577a05f23ff65f1feca4f39946e8ad0cf4c42b35b51d7320f6dd435",
+      "blendSha256": "d8ceacc25df5fb992c5238455909cb3d1fe030cbb8c82344cdc13a68e3518c81",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.3400000035762787,
+          -0.3400000035762787,
+          0.0
+        ],
+        "max": [
+          0.3400000035762787,
+          0.3400000035762787,
+          1.3600000143051147
+        ]
+      },
+      "visualDimensionsM": [
+        0.6800000071525574,
+        0.6800000071525574,
+        1.3600000143051147
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.5100000143051147,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-8f848965775db332ad3b",
+      "designId": "cargo.fluid-cryo.medium",
+      "appearance": "cargo.fluid-cryo.medium.appearance-3",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-cryo.medium/revisions/r001/appearances/cargo-fluid-cryo-medium-appearance-3/glb.glb",
+      "glbSha256": "77e593e7453f0b0c16d3b61c6cbcdd6c7be53fb86fef0fe04a88ba8110033c47",
+      "blendSha256": "3637d134caee1923ad311190764d61269518948681417b1875cf9e83182412ee",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.3400000035762787,
+          -0.3400000035762787,
+          0.0
+        ],
+        "max": [
+          0.3400000035762787,
+          0.3400000035762787,
+          1.3600000143051147
+        ]
+      },
+      "visualDimensionsM": [
+        0.6800000071525574,
+        0.6800000071525574,
+        1.3600000143051147
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.5100000143051147,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-e8b348082816c379c3ad",
+      "designId": "cargo.fluid-cryo.medium",
+      "appearance": "cargo.fluid-cryo.medium.appearance-4",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-cryo.medium/revisions/r001/appearances/cargo-fluid-cryo-medium-appearance-4/glb.glb",
+      "glbSha256": "583a056b96b1459e3861eba33f46c52327a1ac5eb127ec80a5aa754598bf1db5",
+      "blendSha256": "b0f16a32f576bfb6b9b2c8c0b5e9ef03bacd8e954b69c0320359add64975bd98",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.3400000035762787,
+          -0.3400000035762787,
+          0.0
+        ],
+        "max": [
+          0.3400000035762787,
+          0.3400000035762787,
+          1.3600000143051147
+        ]
+      },
+      "visualDimensionsM": [
+        0.6800000071525574,
+        0.6800000071525574,
+        1.3600000143051147
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.5100000143051147,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-3cc2aaa47b61c3695a01",
+      "designId": "cargo.fluid-fuel.medium",
+      "appearance": "cargo.fluid-fuel.medium.appearance-1",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-fuel.medium/revisions/r001/appearances/cargo-fluid-fuel-medium-appearance-1/glb.glb",
+      "glbSha256": "88b545da34d02be1a0697e4a61949e4ab073191eeb2bd599425c5a98549dae64",
+      "blendSha256": "82eca1ebbc5ff796bafea2f771a631f27a5cd53abafecdc336bee06d65a51a4f",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.2760000228881836,
+          -0.27399998903274536,
+          0.0
+        ],
+        "max": [
+          0.2760000228881836,
+          0.27399998903274536,
+          0.8639999628067017
+        ]
+      },
+      "visualDimensionsM": [
+        0.5520000457763672,
+        0.5479999780654907,
+        0.8639999628067017
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.0139999628067016,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-ff4c81d16308982b5556",
+      "designId": "cargo.fluid-fuel.medium",
+      "appearance": "cargo.fluid-fuel.medium.appearance-2",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-fuel.medium/revisions/r001/appearances/cargo-fluid-fuel-medium-appearance-2/glb.glb",
+      "glbSha256": "b08fd66f120a2bca68053a75cc4f295e2513ca0ad8bbfde41fd8a4e16926c0a2",
+      "blendSha256": "ccc4f2687b641fb06e7a51caa018be569e5adc4ce63c8850ffdf6df15923eb8e",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.2760000228881836,
+          -0.27399998903274536,
+          0.0
+        ],
+        "max": [
+          0.2760000228881836,
+          0.27399998903274536,
+          0.8639999628067017
+        ]
+      },
+      "visualDimensionsM": [
+        0.5520000457763672,
+        0.5479999780654907,
+        0.8639999628067017
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.0139999628067016,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-8963649e2154815c6e0a",
+      "designId": "cargo.fluid-fuel.medium",
+      "appearance": "cargo.fluid-fuel.medium.appearance-3",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-fuel.medium/revisions/r001/appearances/cargo-fluid-fuel-medium-appearance-3/glb.glb",
+      "glbSha256": "60bacc18625011c465412692f01611064dd79e413a2224ea78b20548048779cf",
+      "blendSha256": "652a6d66677e889fef4ce93bfda8a73847bf3e012f19f8282292b548ada16116",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.2760000228881836,
+          -0.27399998903274536,
+          0.0
+        ],
+        "max": [
+          0.2760000228881836,
+          0.27399998903274536,
+          0.8639999628067017
+        ]
+      },
+      "visualDimensionsM": [
+        0.5520000457763672,
+        0.5479999780654907,
+        0.8639999628067017
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.0139999628067016,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-355fd132ec5fadfb1f66",
+      "designId": "cargo.fluid-fuel.medium",
+      "appearance": "cargo.fluid-fuel.medium.appearance-4",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-fuel.medium/revisions/r001/appearances/cargo-fluid-fuel-medium-appearance-4/glb.glb",
+      "glbSha256": "6323a87028232d82ee01a7f350ba478659794024d4149f76a1d3ff9c168a095d",
+      "blendSha256": "59bb45b7de7314a5f2e05521a8856aaa56be8d9ecc3e2095d8f388b304d35139",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.2760000228881836,
+          -0.27399998903274536,
+          0.0
+        ],
+        "max": [
+          0.2760000228881836,
+          0.27399998903274536,
+          0.8639999628067017
+        ]
+      },
+      "visualDimensionsM": [
+        0.5520000457763672,
+        0.5479999780654907,
+        0.8639999628067017
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.0139999628067016,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-0f76eb112155db5b4e8b",
+      "designId": "cargo.fluid-chemical.medium",
+      "appearance": "cargo.fluid-chemical.medium.appearance-1",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-chemical.medium/revisions/r001/appearances/cargo-fluid-chemical-medium-appearance-1/glb.glb",
+      "glbSha256": "eb59a94d0bd940d80736d002acd896c4653514c625032c93fe4f68cf7a400e0d",
+      "blendSha256": "0662e6465cec9f8bdb919340290ef28cd588534b10d873082815dec09a7e3c6d",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.27399998903274536,
+          -0.27399998903274536,
+          0.0
+        ],
+        "max": [
+          0.27399998903274536,
+          0.27399998903274536,
+          0.8639999628067017
+        ]
+      },
+      "visualDimensionsM": [
+        0.5479999780654907,
+        0.5479999780654907,
+        0.8639999628067017
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.0139999628067016,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-84891c854514b15139aa",
+      "designId": "cargo.fluid-chemical.medium",
+      "appearance": "cargo.fluid-chemical.medium.appearance-2",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-chemical.medium/revisions/r001/appearances/cargo-fluid-chemical-medium-appearance-2/glb.glb",
+      "glbSha256": "73c3930e2deda3541bcc5046c760ba0729cbca998a27eb5784a0aceed16fc05f",
+      "blendSha256": "47cff10f854cfe3c249c0bf38436cd2e9621f4ceb1d5ac5a526fc5e385c268db",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.27399998903274536,
+          -0.27399998903274536,
+          0.0
+        ],
+        "max": [
+          0.27399998903274536,
+          0.27399998903274536,
+          0.8639999628067017
+        ]
+      },
+      "visualDimensionsM": [
+        0.5479999780654907,
+        0.5479999780654907,
+        0.8639999628067017
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.0139999628067016,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-b215126fd8b9f5447d00",
+      "designId": "cargo.fluid-chemical.medium",
+      "appearance": "cargo.fluid-chemical.medium.appearance-3",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-chemical.medium/revisions/r001/appearances/cargo-fluid-chemical-medium-appearance-3/glb.glb",
+      "glbSha256": "edcab4ad0d252c3f05823cab7489c3c6b0ac0fa38b4539e06009a4f1a5f3f7f1",
+      "blendSha256": "4bf4162661937883219f22674011e1af329ea1ae7897588c4e885352d70a8b8c",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.27399998903274536,
+          -0.27399998903274536,
+          0.0
+        ],
+        "max": [
+          0.27399998903274536,
+          0.27399998903274536,
+          0.8639999628067017
+        ]
+      },
+      "visualDimensionsM": [
+        0.5479999780654907,
+        0.5479999780654907,
+        0.8639999628067017
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.0139999628067016,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-5377949ed91bc9fc3973",
+      "designId": "cargo.fluid-chemical.medium",
+      "appearance": "cargo.fluid-chemical.medium.appearance-4",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-chemical.medium/revisions/r001/appearances/cargo-fluid-chemical-medium-appearance-4/glb.glb",
+      "glbSha256": "152c548e2fcefc35a11fe7dc99ebb9405014c986ef90635cd835717fade2bf25",
+      "blendSha256": "07fafe1a7b3379543c2734681138836239854951bfda825447d25fc175256e6a",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.27399998903274536,
+          -0.27399998903274536,
+          0.0
+        ],
+        "max": [
+          0.27399998903274536,
+          0.27399998903274536,
+          0.8639999628067017
+        ]
+      },
+      "visualDimensionsM": [
+        0.5479999780654907,
+        0.5479999780654907,
+        0.8639999628067017
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.0139999628067016,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-8bcf56f5a154cbb954de",
+      "designId": "cargo.fluid-gas.medium",
+      "appearance": "cargo.fluid-gas.medium.appearance-1",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-gas.medium/revisions/r001/appearances/cargo-fluid-gas-medium-appearance-1/glb.glb",
+      "glbSha256": "3a00c3838ead1c808c70e4fb1b1832bfc8945ae18ce7588a402866f70f6dad13",
+      "blendSha256": "9d4c988b8cba97857b769210461f024fcc46359979fdcbd34c0ec5c59beda3a3",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.4399999976158142,
+          -0.3400000035762787,
+          0.0
+        ],
+        "max": [
+          0.4399999976158142,
+          0.3400000035762787,
+          0.8999999761581421
+        ]
+      },
+      "visualDimensionsM": [
+        0.8799999952316284,
+        0.6800000071525574,
+        0.8999999761581421
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.049999976158142,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-74fd36d0f31a11c97535",
+      "designId": "cargo.fluid-gas.medium",
+      "appearance": "cargo.fluid-gas.medium.appearance-2",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-gas.medium/revisions/r001/appearances/cargo-fluid-gas-medium-appearance-2/glb.glb",
+      "glbSha256": "bd4daafa7b5a43ac052a526f9efdf14453c895bb8692e47fd31585a0eb4a98a3",
+      "blendSha256": "611bfb2d7dbb6b19ad71d8723631674b812bd9076cdb18b41129d3df758a5a7b",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.4399999976158142,
+          -0.3400000035762787,
+          0.0
+        ],
+        "max": [
+          0.4399999976158142,
+          0.3400000035762787,
+          0.8999999761581421
+        ]
+      },
+      "visualDimensionsM": [
+        0.8799999952316284,
+        0.6800000071525574,
+        0.8999999761581421
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.049999976158142,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-96aa76d51e89c5278c25",
+      "designId": "cargo.fluid-gas.medium",
+      "appearance": "cargo.fluid-gas.medium.appearance-3",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-gas.medium/revisions/r001/appearances/cargo-fluid-gas-medium-appearance-3/glb.glb",
+      "glbSha256": "8a0a7f8a075c2aabfc2dd8c01786afb88ac314ecb3bcc28ed569c3ee787bc677",
+      "blendSha256": "6ebd0e29df7f1087052fa587cf8508165de2bf56e37c60262979303d8de04774",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.4399999976158142,
+          -0.3400000035762787,
+          0.0
+        ],
+        "max": [
+          0.4399999976158142,
+          0.3400000035762787,
+          0.8999999761581421
+        ]
+      },
+      "visualDimensionsM": [
+        0.8799999952316284,
+        0.6800000071525574,
+        0.8999999761581421
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.049999976158142,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-a8c9ac9eb43a547c76a7",
+      "designId": "cargo.fluid-gas.medium",
+      "appearance": "cargo.fluid-gas.medium.appearance-4",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-gas.medium/revisions/r001/appearances/cargo-fluid-gas-medium-appearance-4/glb.glb",
+      "glbSha256": "40042759b8028894914c0edb6c30ad2d68e01e208da6c02b6a3a55bc41257ea0",
+      "blendSha256": "d8e427f9f4618025f108bf4e74f2b1c93bfd9073513f96d7842ebb3e9d84d02d",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.4399999976158142,
+          -0.3400000035762787,
+          0.0
+        ],
+        "max": [
+          0.4399999976158142,
+          0.3400000035762787,
+          0.8999999761581421
+        ]
+      },
+      "visualDimensionsM": [
+        0.8799999952316284,
+        0.6800000071525574,
+        0.8999999761581421
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.049999976158142,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-38b95e9ee2941d12d072",
+      "designId": "cargo.fluid-water.medium",
+      "appearance": "cargo.fluid-water.medium.appearance-1",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-water.medium/revisions/r001/appearances/cargo-fluid-water-medium-appearance-1/glb.glb",
+      "glbSha256": "3c64e8b882606fa0131f0da467a0cdcf44af0f299262805a2bed5fc9fac877ca",
+      "blendSha256": "74625e4a4ce7a7fde50d759c7a056ed0583a839043e4d7fc0a4250451a31b58c",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.4399999976158142,
+          -0.3490000069141388,
+          0.0
+        ],
+        "max": [
+          0.4399999976158142,
+          0.3400000035762787,
+          0.9070000052452087
+        ]
+      },
+      "visualDimensionsM": [
+        0.8799999952316284,
+        0.6890000104904175,
+        0.9070000052452087
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.0570000052452087,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-2b4c94f694595ac8fd1d",
+      "designId": "cargo.fluid-water.medium",
+      "appearance": "cargo.fluid-water.medium.appearance-2",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-water.medium/revisions/r001/appearances/cargo-fluid-water-medium-appearance-2/glb.glb",
+      "glbSha256": "5deea8cf44e1a75776dc388207f034fbbd61fe6fe4eb7b73f8ea888b476484bb",
+      "blendSha256": "9cc8f3e7ac569e414432558948349142acc649e6c0d79c43de0af0b823c28459",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.4399999976158142,
+          -0.3490000069141388,
+          0.0
+        ],
+        "max": [
+          0.4399999976158142,
+          0.3400000035762787,
+          0.9070000052452087
+        ]
+      },
+      "visualDimensionsM": [
+        0.8799999952316284,
+        0.6890000104904175,
+        0.9070000052452087
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.0570000052452087,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-7858296690991b13320c",
+      "designId": "cargo.fluid-water.medium",
+      "appearance": "cargo.fluid-water.medium.appearance-3",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-water.medium/revisions/r001/appearances/cargo-fluid-water-medium-appearance-3/glb.glb",
+      "glbSha256": "6b3c29b0472a072325cf72a1c138e6585b7b287cff1df124a5adbcb887b2571b",
+      "blendSha256": "4af47283d9d3f0ba0593450f74fd1e8760ca1914cfe7f4e678abeefec993ae17",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.4399999976158142,
+          -0.3490000069141388,
+          0.0
+        ],
+        "max": [
+          0.4399999976158142,
+          0.3400000035762787,
+          0.9070000052452087
+        ]
+      },
+      "visualDimensionsM": [
+        0.8799999952316284,
+        0.6890000104904175,
+        0.9070000052452087
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.0570000052452087,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-9d84eacfac58c57c012b",
+      "designId": "cargo.fluid-water.medium",
+      "appearance": "cargo.fluid-water.medium.appearance-4",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.fluid-water.medium/revisions/r001/appearances/cargo-fluid-water-medium-appearance-4/glb.glb",
+      "glbSha256": "a95d0bcdb784c857be886a9437c788c5d4785179eb8de6733c041b9cc25f2d09",
+      "blendSha256": "9244ff2aa3b6c883f35b09197908db1f50c2da67c91c3327518ea2c8f8a53889",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.4399999976158142,
+          -0.3490000069141388,
+          0.0
+        ],
+        "max": [
+          0.4399999976158142,
+          0.3400000035762787,
+          0.9070000052452087
+        ]
+      },
+      "visualDimensionsM": [
+        0.8799999952316284,
+        0.6890000104904175,
+        0.9070000052452087
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        1.0,
+        1.0
+      ],
+      "neutralHeightPlusHandlingM": 1.0570000052452087,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    },
+    {
+      "assetId": "part-091a05481726fc7ccac0",
+      "designId": "cargo.standard.narrow",
+      "appearance": "narrow-red",
+      "revision": 1,
+      "glbPath": "assets/art-library/designs/cargo.standard.narrow/revisions/r001/appearances/narrow-red/glb.glb",
+      "glbSha256": "7a7ba27e84e4895e4b801c5fc578a1936620bfd14533fe4195218b76d016578c",
+      "blendSha256": "25ea08bc5c026da5b6376fc4f7c7a857391c2684292078df41649425e15e0e33",
+      "visualBoundsAuthorM": {
+        "min": [
+          -0.12099999934434891,
+          -0.12399999797344208,
+          0.0
+        ],
+        "max": [
+          0.12099999934434891,
+          0.12700000405311584,
+          0.44200000166893005
+        ]
+      },
+      "visualDimensionsM": [
+        0.24199999868869781,
+        0.2510000020265579,
+        0.44200000166893005
+      ],
+      "authoredValidationMaximumDeltaM": 0.0,
+      "proposedHalfMetreReservationM": [
+        0.5,
+        0.5
+      ],
+      "neutralHeightPlusHandlingM": 0.5920000016689301,
+      "reportedStacking": {},
+      "reportedEmptyStackPitchM": null,
+      "pitchFitsExisting32UnitsPerMetre": false,
+      "filledStackingApproved": false,
+      "authorityInterfaceQualified": false,
+      "interfaceGap": "Visual approval does not qualify load ratings, mixed-size bearing coverage or a grid-aligned stacking carrier."
+    }
+  ]
+}
