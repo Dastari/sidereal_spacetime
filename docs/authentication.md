@@ -1,19 +1,38 @@
-# Shared OIDC provider, separate applications and game permissions
+# Dedicated account authentication
 
-Status: Provider selected; registrations prepared; live sign-in remains M1
-Last updated: 2026-09-08
-Owners: Sidereal project
+The owner superseded the Orchard provider plan on 2026-09-09. Sidereal uses the reusable dedicated Dastari provider; Orchard remains untouched.
 
-Reuse Orchard's existing Keycloak issuer: `https://auth.orchard.dastari.net/realms/orchard`. Public discovery was fetched successfully on 2026-09-08 and advertises Authorization Code endpoints, JWKS and PKCE S256. The provider's existing users, verification/recovery and MFA flows remain provider-owned. No new identity server is required for this pivot.
+## Installed provider and application origins
 
-Prepare two public browser clients, `sidereal-game` and `sidereal-dashboard`, using the JSON registrations in `ops/oidc`. Each uses Authorization Code + PKCE S256, with implicit flow, password grant and service accounts disabled. The prepared registrations contain only exact localhost callback/origin values; add the chosen exact HTTPS production origins before deployment. There are no wildcard callbacks or browser client secrets. These files are reviewable registration inputs; they have not been imported into the live Keycloak realm, and the existing Orchard client has not been changed.
+- Issuer: `https://auth.dastari.net/realms/dastari`.
+- Game client: public `sidereal-game`, canonical callback `https://sidereal.dastari.net/auth/callback`. The exact tailnet review callback remains registered separately.
+- Dashboard client: public `sidereal-dashboard`, exact callback `https://sidereal.tail7a58a6.ts.net:8445/auth/callback`.
+- The public game is an immutable client build behind NPM host23, forwarded to `10.0.1.200:5183`. Managed deployment and recovery are documented in [public game routing](public_game_routing.md). The game8444/dashboard8445 review routes remain tailnet-only Tailscale Serve proxies, managed by `python3 scripts/dev.py auth-https-setup|status|stop`; existing port443 is preserved. Dashboard authorization remains independent.
+- Provider lifecycle, private backup locations and remaining operational work: [provider handoff](../ops/keycloak/README.md).
 
-The two apps have separate storage/origins and separate OIDC state/nonce/PKCE flows. The provider can give SSO through its own session; do not pass tokens through cross-app query strings or share browser localStorage as an authentication bridge. Configure audience mappers and verify exact issuer, intended audience and expiry at the SpacetimeDB authentication boundary and in module policy. Use provider refresh/session behavior via a maintained OIDC library. Production mode must reject anonymous local tokens; never silently fall back to the lab identity.
+The 2026-09-09 public cutover has passed HTTP routing, actual PKCE callback into the game, reload, logout and credential re-login with character/items preserved. A five-minute continuity run passed with software-render frames paused. A render-stalled run exposed slow renewal retry; the transport recovery fix subsequently passed a public failure-injection check: a stalled second subscription retried at46.056seconds, before the original60-second ticket expiry, preserving the same character, seven items and appearance. These are distinct gates; do not treat the paused-render test as hardware rendering acceptance. See [current public verification](handoffs/public_login_verification.md).
 
-One issuer/subject links to one Sidereal account identity, with multiple independently owned character UUIDs. The original Sidereal email account and local scaffold test identities are not automatically the same account. Do not grant ownership/admin by matching email text. Explicitly link the owner's verified provider identity through a trusted bootstrap procedure, preserving Toby's requested admin privileges without copying passwords or MFA secrets.
+## Client implementation
 
-Game membership and dashboard permissions live in private, revocable server records. A valid provider account grants no automatic authoring rights. Check separate scopes such as `world.read`, `blueprint.write`, `world.refit`, `script.edit`, `script.publish`, `account.manage`; revalidate every privileged operation and enforce MFA/session assurance for sensitive publication according to the selected policy. Keycloak realm administration is a separate permission plane from game administration. The same validation applies to direct reducer calls from modified clients.
+The game uses `oidc-client-ts` Authorization Code + PKCE S256 with no browser secret or password grant. The dedicated provider handles credentials; the game receives the callback and supplies the ID token to SpacetimeDB. OIDC session and pending authorization state live in sessionStorage. The pinned SpacetimeDB SDK exchanges the ID token for a 60-second WebSocket ticket. The client therefore opens a replacement connection every30seconds and waits for its subscription before closing the old one, preserving the authoritative presence lease and occupied controls. ID-token renewal uses the same overlap. Expiry/logout unmounts the game and disconnects all its sockets. OIDC tokens are never written to `sidereal.lab.token`.
 
-M0 remains explicitly `mode = "development"` in `dev.toml`: the game creates private test identities, while the dashboard provides read-only assembly/design review. M1 must implement real PKCE login, callback/renewal/logout, verified membership and character binding, admin scopes and tests for wrong issuer/audience, revoked access and stale sessions before public exposure or live dashboard mutation. Provider selection is now settled; production origins, application registration and trusted bootstrap remain concrete deployment work.
+The game landing screen uses the current Barlow typography, navy/cyan frames and shipped nebula asset. Account opens a separate panel with sign-out and the explicit migration flow. Actual provider PKCE/callback and game Account transfer have passed. The transferred review character retained its UUID, seven inventory item UUIDs/placements, appearance and position; the old development identity lost access. A72-second actual browser continuity check crossed multiple ticket rotations; logout cleared the session and re-login retained the same character and inventory.
 
-The lifecycle runner refuses startup/publication when `auth.mode` is anything other than `development` until M1 provides the production adapter. Changing a configuration label alone cannot enable or claim secure production login.
+Development builds retain an explicit development-character entry. Existing HTTP development sessions with a stored lab token continue directly to avoid stranding current work. Production builds do not offer that UI fallback. The database remains explicitly hybrid-development during this migration; do not describe it as production OIDC-only enforcement.
+
+## Preserve an existing character
+
+1. Keep the development character open in its original browser/origin.
+2. Sign in to the secure game in another window. Before creating a new character, open Account and copy its destination account code.
+3. Paste that code into Account in the development session and request transfer.
+4. Accept the named character on the signed-in destination account.
+
+Both identities must have authenticated active sessions; the invitation expires after five minutes. The target must have no existing world state. Reducers atomically transfer ownership while preserving character, ship, inventory, equipment, appearance and audit identities. No email-to-character mapping or client-written owner/transform is used. The old development identity is retired; its local token is retained rather than silently overwritten. Transfer is not an account merge.
+
+## Server enforcement and boundaries
+
+IFCS owns the exact issuer/audience/expiry checks and two-sided link reducers. Dashboard-only tokens are rejected from the game database, including when the same subject has a concurrent game session. Private base tables remain private. See [persistence and auth evidence](character_persistence.md) for actual tests and the principal-scoped view expiry limitation.
+
+Completed gates include isolated auth/persistence smoke, additive normal development publication, provider PKCE/callback, actual game account transfer,72-second overlapping connection continuity, logout/re-login, genuine-token isolated transfer/reconnect, and genuine dashboard-token rejection while the same subject held a valid game socket. A managed database process restart retained both full character appearance/inventory/container snapshots, equipped/displaced weapon IDs, combat energy/sequence, ship and operation receipts. The aged moving asteroid remained in the private table but had left discovery; the durable-row restart check explicitly excludes that transient discovery assertion. Logs: `.runtime/auth-real-provider-smoke.log`, `.runtime/auth-real-dashboard-admission.log`, `.runtime/auth-controlled-restart-persistence.log`; browser evidence is under `output/playwright/dastari-*`. Foreign-issuer rejection has focused policy coverage, not a second real-provider experiment. Occupied helm renewal over72seconds also passed without losing the station; a changed Medic appearance survived reload with its authoritative revision and seven item UUIDs retained (`.runtime/auth-seated-continuity.log`, `.runtime/appearance-and-sprint-proof.log`). Concurrent private fixture testing does not yet establish visible shared-space multiplayer.
+
+Protocol reference: [oidc-client-ts UserManager and PKCE](https://authts.github.io/oidc-client-ts/).

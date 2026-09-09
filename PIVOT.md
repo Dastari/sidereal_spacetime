@@ -4,6 +4,8 @@ Status: Accepted direction; implementation staged
 Last updated: 2026-09-08
 Owners: Sidereal project
 
+2026-09-08 owner art clarification: current TypeScript voxel-solid models are being phased out in favor of Blender-authored meshes and materials. Blender source is the replacement visual authority; TypeScript retains integration, metadata and simulation responsibilities. Required occupancy/collision/damage representations remain separate from the authored visible mesh. See [Blender model migration](docs/blender_asset_migration.md) for the staged replacement contract; existing voxel fixtures describe implementation history.
+
 ## Decision and boundaries
 
 Build a new project at `/root/sidereal_spacetime`. Keep `/root/sidereal` intact as reference. All legacy game services and its Postgres container are stopped. The complete Cargo target cache was cleaned at the owner's request. The private legacy database backup is `/root/sidereal-backups/pre-spacetime-pivot-2026-09-08.dump`; the existing Docker volume is preserved. Cargo reported 195.3 GiB logical artifacts removed; the filesystem reclaimed approximately 65 GiB. Never infer that the old database was migrated.
@@ -40,7 +42,7 @@ npm run smoke
 npm run stop
 ```
 
-The browser application is `http://10.0.1.200:5173` on this machine (or `http://localhost:5173`). It proxies its own SpacetimeDB endpoint; the database listens only on `127.0.0.1:3100`. `dev.toml` is the only local service configuration. No NPM reverse-proxy or router changes are part of this scaffold. The legacy public game host remains stopped.
+The browser application is `http://10.0.1.200:5173` on this machine (or `http://localhost:5173`). It proxies its own SpacetimeDB endpoint; the database listens only on `127.0.0.1:3100`. `dev.toml` is the only local service configuration. The original scaffold did not change public routing. On 2026-09-09 the owner explicitly authorized repointing `sidereal.dastari.net` to this project; NPM now serves the managed immutable client build at port5183. The legacy Rust services remain stopped. See [public routing and verification](docs/public_game_routing.md).
 
 The foundation includes a Blender-derived 3D ship review scene, new UI shell/components, a local development identity, private persistent character/ship rows, server-owned movement and seat interaction, an expected-revision rename transaction, generated TypeScript bindings and tests. These are development fixtures. Full modular refits, combat, inventory, OIDC/MFA, multiplayer crew admission, tactical intelligence and complete dashboard editors are milestone work, not completed features.
 
@@ -53,7 +55,7 @@ The foundation includes a Blender-derived 3D ship review scene, new UI shell/com
 | DR-0040 handoff/ghost lanes | Out of scope for this project. Spatial indexing and admission/load budgets remain. |
 | Graph entities/components | Normalized typed rows keyed by stable UUIDs, explicit relationships and transactional deletion policy. |
 | Native Windows and Bevy WASM builds | Browser distribution; optional desktop wrapper only after browser acceptance. |
-| Sprite-only modular ship rendering | Modular glTF meshes, orthographic top-down camera, cutaway layers and local interior lighting. |
+| Sprite-only modular ship rendering | Modular glTF meshes, long-lens overhead/angled camera, cutaway layers and local interior lighting. |
 | Legacy UI chrome and Bevy widgets | New shared UI component library and design tokens. Preserve interactions and capabilities, not old styling. |
 | Lua runtime and shader catalog | Preserve source as reference. Versioned declarative content first; sandboxed scripts/editor/compiler pipeline in a dedicated milestone. No arbitrary client code evaluation inside reducers. |
 | Binary/PNG caches | Versioned HTTP asset packages; public visuals versus authorized data kept separate. |
@@ -79,3 +81,7 @@ Treat upstream roadmap dates as proposals. The scaffold uses currently installed
 The game frontend and authoring dashboard are separate Vite/React applications: `apps/client` at port 5173 and `apps/dashboard` at port 5174. Each builds independently into its own `dist`; app builds do not publish the backend. Shared packages contain reusable contracts/components, never app entrypoints. Run `npm run build:client` or `npm run build:dashboard`; `npm run build` is the explicit all-project gate. Dashboard: http://10.0.1.200:5174.
 
 Reuse the existing Orchard Keycloak provider with separate Sidereal clients; see [authentication](docs/authentication.md). Full owner-managed [scripting and object lifecycles](docs/scripting_lifecycle.md) are part of the core design: typed contracts exist now, authority integration follows M1/M2, and the Script Studio begins in M3. The broad content tools continue in M8.
+
+2026-09-08 current art/physics extension: see [visual theme](docs/visual_theme.md), [reference translation](docs/art_reference_guide.md), [real voxel construction](docs/voxel_construction.md), [spatial environment](docs/space_environment.md) and [IFCS integration](docs/ifcs_integration.md). These proofs extend M0; they do not complete shared-world networking, functional modular refits or combat.
+
+2026-09-09 owner authentication override: use the dedicated reusable Dastari Keycloak provider at `https://auth.dastari.net/realms/dastari`, installed in managed Proxmox CT116. This supersedes earlier instructions to reuse Orchard. Preserve Orchard unchanged. Game and dashboard use separate public PKCE clients and exact HTTPS callbacks; development identity migration is explicit and must preserve character/inventory UUIDs. See `ops/keycloak/README.md` and `docs/authentication.md` for implemented versus pending validation.

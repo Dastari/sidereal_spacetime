@@ -4,6 +4,8 @@ Status: Accepted direction; implementation staged
 Last updated: 2026-09-08
 Owners: Sidereal project
 
+Current owner direction: [Blender model migration](blender_asset_migration.md). TypeScript voxel-solid model authoring is being retired. Replacement visual assets use editable Blender meshes, materials and validated GLB exports; existing voxel exports below document the implementation being migrated. Keep any required gameplay proxies separate from the authored visual surface.
+
 ## Preserved material
 
 `assets/import_manifest.json` lists every copied source/content file, its size and SHA-256. The original repository remains the source of additional reference assets. This project includes original `.blend` kit/ship/station/frigate studies, selected top views, semantic faction palettes, legacy construction/hull/universe packages and Lua scripts. Original documents are in `reference`. Legacy source scripts are retained under `assets/source/legacy_art_tools` for provenance; they are not imported as gameplay code.
@@ -41,3 +43,9 @@ Prompt/reference/style → generated draft → Blender modeling/material/rig cle
 Skills are under `.agents/skills` and available on the next turn/session discovery. New project rules live in root `AGENTS.md`; copied legacy rules are inert reference material.
 
 2026-09-08 separate apps: each app build copies the canonical review GLB and documents into only its own public directory via `scripts/prepare_app.py`. Exporting the Blender source updates the canonical asset; rebuild/prepare each desired consumer explicitly.
+
+## 2026-09-08 voxel and metal asset path
+
+`npm run art:voxels` builds semantic voxel room/hull data, meshes visible faces, bakes original brushed-metal normal and roughness maps in Blender, renders a neutral HDR reflection rig, saves editable Blender sources and exports the ship plus a reusable asteroid. The camera modes share this exact new ship. In dashboard Shipyard, the Source model selector also loads the original 887-mesh Blender assembly as a separate source study. The new voxel ship is newly authored, not a claimed automatic conversion of that original mesh.
+
+`npm run art:check` checks model and material integrity. The material bake is cached by recipe hash, while voxel compilation/export is deterministic source-driven work. Originals under `assets/source/blender` remain unchanged. New sources are `voxel_wayfarer.blend`, `voxel_asteroid.blend`, `brushed_metal.blend` and `reflection_workshop.blend`; the corresponding recipes live in `scripts/` and `packages/content/src/voxel-wayfarer.ts`. Future live destruction consumes the canonical voxel data and authored material physics, never a screenshot or mesh triangle count.

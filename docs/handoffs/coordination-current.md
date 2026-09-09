@@ -16,7 +16,7 @@ Construction is the next main priority after public login acceptance. Native vis
 
 The public client release is immutable and independent of development and dashboard outputs. Source edits do not silently update it; publish deliberately through the managed lifecycle after validation. The world database was not reset or republished for public routing. Existing character, inventory and ship state must survive each later construction migration.
 
-Repository source/artifact checkpoints still require careful scoped commit reconciliation; do not sweep current external-agent files, unpublished native revisions or local evidence with `git add -A`. Earlier checkpoint hashes are evidence of their exact state, not a license to overwrite newer work.
+Scoped source checkpoint committed as `6de61c1c`; installed runtime/native artifact checkpoint committed as `7e0d5359`. Current bytes were preserved, not overwritten: 503 source hashes and 1,488 committed artifact hashes were verified, including 832 LFS pointers. Seventeen ignored review logs remain on disk and are explicitly excluded from the artifact manifest. The active ladder/traversal slice and broader historical art-library archive remain outside these checkpoints. `git gc` completed; the follow-up count is 21 loose objects / 171.50 KiB, 2 packs / 1.80 GiB. This local repository has no remote; these commits are not an off-host backup, deployment or final artistic sign-off.
 
 ## Current validation and immediate order
 

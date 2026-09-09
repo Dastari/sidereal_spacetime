@@ -29,6 +29,8 @@ The new dashboard uses the new component library and shared Babylon rendering/co
 
 ## Shipyard interaction contract
 
+The owner-requested [layout editor design](ship_layout_editor_design.md) translates the four editor mockups into floorplan, rooms, exterior, cargo and utility authoring stages. Use its [external implementation prompt](handoffs/ship_layout_editor_implementation_prompt.md) to begin the local planner/compiler slice. It extends this contract; no live construction milestone is completed by the document.
+
 A central 3D viewport can use an orthographic editing plane and transparency checkerboard. The tool strip sits beside the canvas; layer selection/visibility lives in a right drawer. The parts palette is floating/dockable, fully resizable, icon-first, searchable and tabbed for all placeable things including exterior finishes/markings. Left navigation contains hulls/classes/library, not a second block list. Inspector details appear for a selected part rather than long palette panels.
 
 Support drag from palette, drag to move, box/multi-select, snap, replace-on-drop within the appropriate editing domain, rotate, F/Shift+F flip, delete, Ctrl/Cmd-drag copy, pan/zoom and fit. Right-click first cancels active selection/placement; on an unselected part it offers contextual actions. Undo/redo is complete and command-based, including replacement and grouping; no permanent visual history panel. Refresh restores drafts AND undo/redo scoped to identity/document/live entity while retaining the original expected revision. Detect conflicts before apply. Session state cannot store auth secrets or become canonical world state.

@@ -53,3 +53,15 @@ A visual proof extends M0 ahead of the larger network/gameplay milestones: origi
 2026-09-08 inventory extension: the owner requested playable carried equipment ahead of the larger milestones. Private item/container/hotbar authority now supports a one-time lab kit, multi-cell packing/rotation, stable backpack contents, equip swaps and nearby crate access with revision/retry guards; actual subscribed equipment drives character presentation. This is an M5 foundation slice, not completion: transfers between players, stacking, world drops, permissions beyond the private lab, fluid transfer/utilities, combat and live component mass integration remain open. See [inventory authority](inventory_authority.md) and [current handoff](handoffs/2026-09-08_astra_visual_iteration.md).
 
 2026-09-09 native integration checkpoint: R006 pilot hull, the r002 native floor review candidate and all 73 approved cargo appearances are installed in the local catalogs. Four original storage placements now use approved native pods with private container bindings; actual pointer store/retrieve, reload persistence and out-of-reach rejection passed without changing item/container identities. R006 collision revision 3 aligns walking clearance, the single doorway and forward ship contact capsule; focused tests, isolated smoke and normal-client walking/piloting checks passed. Native finish study04 and ice-r015 remain local visual candidates, not final art approval. The combined ship checkpoint passed 263 tests, typecheck, build, art and floor checks. This extends the M2/M5 foundation slices; multiplayer admission, general assembly-derived collision/refit, pressure zones and production release gates remain open. Exact revisions, evidence, installation and recovery are in [the release record](releases/native-ship-2026-09-08/README.md).
+
+2026-09-09 modular character/equipment checkpoint: all ten existing archetypes are
+split into 90 real inventory components, with male/female modesty-covered bases,
+eight independent hair styles and the shared 16-bone, twelve-clip rig. The four
+existing ship crate UUIDs receive one permanent, idempotent uniform delivery;
+real pointer inventory/paper-doll equip and unequip, mixed sets and persistence
+pass. Native source/export checks, 450 tests, full build, isolated authority
+smoke and real Babylon browser fitting evidence extend the M2/M5 foundation.
+This does not complete M2/M5 or grant armor/stat bonuses. Exact revisions,
+pending owner art approvals and evidence are in the
+[component handoff](handoffs/character_components.md) and
+[living index](../assets/art-library/character-components/INDEX.md).

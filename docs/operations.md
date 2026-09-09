@@ -8,7 +8,7 @@ Owners: Sidereal project
 
 `/root/sidereal` source, data/content, Blender sources, original downloadable client and Docker volume remain available. Its managed services were stopped through `scripts/siderealctl down`; `docker compose stop` stopped its Postgres service. `cargo clean` removed only build outputs. A validated 1,149,265,346-byte custom-format database backup exists at `/root/sidereal-backups/pre-spacetime-pivot-2026-09-08.dump` with mode 0600. Backup listing was validated; a full restore of that large reference database was not performed. The backup and old volume are not imported into the new project.
 
-Do not start old and new stacks through each other's tooling. Restarting old Sidereal requires rebuilding its Cargo binaries first. The old HTTP public endpoints will remain unavailable while it is stopped. Public reverse proxies have not been redirected to this development scaffold.
+Do not start old and new stacks through each other's tooling. Restarting old Sidereal requires rebuilding its Cargo binaries first. The legacy Rust services remain stopped. On 2026-09-09 the owner authorized repointing `sidereal.dastari.net` to this project's managed public client build; see [public routing](public_game_routing.md).
 
 ## New installation
 
@@ -27,7 +27,7 @@ npm run stop
 
 `npm run dev` starts the local durable database, waits for HTTP readiness, publishes the module with `--delete-data=never`, then starts both independent Vite applications and waits for readiness. It refuses occupied ports. PIDs and Linux start times are recorded privately, so stop cannot kill an unrelated reused PID. Logs are under `.runtime`. The server data is `.spacetime-data`; secrets/CLI keys are `.tools/spacetime/config`. Never commit either.
 
-Default browser: `http://localhost:5173`, LAN `http://10.0.1.200:5173`. The explicit Tailscale host allowed for this machine is in `dev.toml`. Browser WebSocket/API traffic uses the same origin `/v1` proxy; database port 3100 binds loopback. This is a local development identity service, not production account login. Use HTTPS and trusted issuer validation before public deployment. No original user token/account was copied; anonymous lab identities can only access their own test rows.
+Default browser: `http://localhost:5173`, LAN `http://10.0.1.200:5173`. The explicit Tailscale host allowed for this machine is in `dev.toml`. Browser WebSocket/API traffic uses the same origin `/v1` proxy; database port 3100 binds loopback. The HTTP development route retains explicit local identities. The public HTTPS game uses the dedicated Dastari PKCE provider; server authority remains hybrid-development during migration. See [authentication evidence and limits](authentication.md). No original user token/account was copied; anonymous lab identities can only access their own test rows.
 
 ## Build and test
 
