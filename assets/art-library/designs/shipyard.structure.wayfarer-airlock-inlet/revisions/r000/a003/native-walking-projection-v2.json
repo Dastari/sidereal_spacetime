@@ -1,0 +1,2637 @@
+{
+  "schema": "sidereal.wayfarer-airlock-native-walking.v1",
+  "status": "qualified-isolated-source-projection-not-registered",
+  "bodyRadiusM": 0.3,
+  "bodyHeightM": 1.8,
+  "bodySlabCommonM": [
+    0.187501,
+    1.9875
+  ],
+  "sourcePins": [
+    {
+      "path": "assets/art-library/designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/interior-frame.glb",
+      "sha256": "ca7d05ef7b06fa47471bd2e02cd47c7df2530df7b7dd644b668fa1412267ce3e"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/structural-aperture.glb",
+      "sha256": "02e2073e07de3f512b22ba51e0cf728b6024bbcd3df065275e11f9eaf69bf239"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/armor-collar.glb",
+      "sha256": "276aeb99c55091916ae0534adcff819f7d173b620e6b4b7b76fd092ec6c050ba"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/stepped-roof.glb",
+      "sha256": "06358b50ea88a81cb83e1c9ab098c4b2189f8a4cb0bcc77df23b5a847acb3289"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/flush-threshold.glb",
+      "sha256": "048a8b2505c8c16a7a72cbf3f2be340dcf9d7cfeda667c64575132c2d6cccab5"
+    },
+    {
+      "path": "assets/runtime/assembly/floor/r002/kit.glb",
+      "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.roof-kit/revisions/r001/kit.glb",
+      "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r004/family/kit.glb",
+      "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r005/final-a004/kit.glb",
+      "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r001/kit.glb",
+      "sha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r002/kit.glb",
+      "sha256": "c65a2c6273e8773956e555ea26879b8b4d0d58d483e42eef94b55c8052e75092"
+    },
+    {
+      "path": "/root/sidereal_spacetime/assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r006/final-a006/kit.glb",
+      "sha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69"
+    }
+  ],
+  "rows": [
+    {
+      "sourcePlacedId": "wall-2--2",
+      "role": "interior-frame",
+      "nativeSourceSha256": "ca7d05ef7b06fa47471bd2e02cd47c7df2530df7b7dd644b668fa1412267ce3e",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.1178334843925255,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              4.875,
+              -3.375
+            ],
+            [
+              4.846602998673916,
+              -3.3289920017123222
+            ],
+            [
+              4.834734998643398,
+              -3.292245998978615
+            ],
+            [
+              4.833999998867512,
+              -3.2894999980926514
+            ],
+            [
+              4.828000001609325,
+              -3.2320000007748604
+            ],
+            [
+              4.828000001609325,
+              -3.1379999965429306
+            ],
+            [
+              4.833999998867512,
+              -3.0754999965429306
+            ],
+            [
+              4.834734998643398,
+              -3.0727540031075478
+            ],
+            [
+              4.846602998673916,
+              -3.0360080003738403
+            ],
+            [
+              4.875,
+              -3.0
+            ],
+            [
+              5.0,
+              -3.0
+            ],
+            [
+              5.0,
+              -3.375
+            ]
+          ]
+        },
+        {
+          "vertices": [
+            [
+              4.875,
+              -5.0
+            ],
+            [
+              4.846602998673916,
+              -4.96399199962616
+            ],
+            [
+              4.834734998643398,
+              -4.927245996892452
+            ],
+            [
+              4.833999998867512,
+              -4.924500003457069
+            ],
+            [
+              4.828000001609325,
+              -4.866999998688698
+            ],
+            [
+              4.828000001609325,
+              -4.773000001907349
+            ],
+            [
+              4.833999998867512,
+              -4.710500001907349
+            ],
+            [
+              4.834734998643398,
+              -4.707754001021385
+            ],
+            [
+              4.846602998673916,
+              -4.671007998287678
+            ],
+            [
+              4.875,
+              -4.625
+            ],
+            [
+              5.0,
+              -4.625
+            ],
+            [
+              5.0,
+              -5.0
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        -2.0,
+        0.0,
+        0.0,
+        0.0,
+        2.0,
+        2.6875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "wall-3--2",
+      "role": "structural-aperture",
+      "nativeSourceSha256": "02e2073e07de3f512b22ba51e0cf728b6024bbcd3df065275e11f9eaf69bf239",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.234375,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              5.0,
+              -3.375
+            ],
+            [
+              5.0,
+              -3.0
+            ],
+            [
+              5.3125,
+              -3.0
+            ],
+            [
+              5.3125,
+              -3.375
+            ]
+          ]
+        },
+        {
+          "vertices": [
+            [
+              5.0,
+              -5.0
+            ],
+            [
+              5.0,
+              -4.625
+            ],
+            [
+              5.3125,
+              -4.625
+            ],
+            [
+              5.3125,
+              -5.0
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        0.0,
+        0.0,
+        0.0,
+        0.3125,
+        2.0,
+        2.6875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "superstructure-3--2",
+      "role": "armor-collar",
+      "nativeSourceSha256": "276aeb99c55091916ae0534adcff819f7d173b620e6b4b7b76fd092ec6c050ba",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.5660783024061868,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              5.3125,
+              -3.375
+            ],
+            [
+              5.3125,
+              -3.0
+            ],
+            [
+              5.9375,
+              -3.0
+            ],
+            [
+              6.06148199737072,
+              -3.043606996536255
+            ],
+            [
+              6.071392998099327,
+              -3.053517997264862
+            ],
+            [
+              6.1099290028214455,
+              -3.1097600013017654
+            ],
+            [
+              6.112000003457069,
+              -3.1174999997019768
+            ],
+            [
+              6.112000003457069,
+              -3.2674999982118607
+            ],
+            [
+              6.1099290028214455,
+              -3.275239996612072
+            ],
+            [
+              6.071392998099327,
+              -3.3314820006489754
+            ],
+            [
+              6.06148199737072,
+              -3.3413930013775826
+            ],
+            [
+              5.9375,
+              -3.375
+            ]
+          ]
+        },
+        {
+          "vertices": [
+            [
+              5.3125,
+              -5.0
+            ],
+            [
+              5.3125,
+              -4.625
+            ],
+            [
+              5.9375,
+              -4.625
+            ],
+            [
+              6.06148199737072,
+              -4.668606996536255
+            ],
+            [
+              6.071392998099327,
+              -4.678517997264862
+            ],
+            [
+              6.1099290028214455,
+              -4.734760001301765
+            ],
+            [
+              6.112000003457069,
+              -4.742499999701977
+            ],
+            [
+              6.112000003457069,
+              -4.892499998211861
+            ],
+            [
+              6.1099290028214455,
+              -4.900239996612072
+            ],
+            [
+              6.071392998099327,
+              -4.956482000648975
+            ],
+            [
+              6.06148199737072,
+              -4.9663930013775826
+            ],
+            [
+              5.9375,
+              -5.0
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        0.3125,
+        0.0,
+        -0.25,
+        1.112,
+        2.0,
+        2.6875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-wayfarer-airlock-inlet-stepped-roof",
+      "role": "stepped-roof",
+      "nativeSourceSha256": "06358b50ea88a81cb83e1c9ab098c4b2189f8a4cb0bcc77df23b5a847acb3289",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        -0.25,
+        0.0,
+        2.6875,
+        0.36,
+        2.0,
+        3.19
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-wayfarer-airlock-inlet-flush-threshold",
+      "role": "flush-threshold",
+      "nativeSourceSha256": "048a8b2505c8c16a7a72cbf3f2be340dcf9d7cfeda667c64575132c2d6cccab5",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        -0.125,
+        0.0,
+        0.125,
+        2.0,
+        2.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-0",
+      "role": "floor",
+      "sourcePartIndex": 0,
+      "nativeSourceSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-1",
+      "role": "roof",
+      "sourcePartIndex": 1,
+      "nativeSourceSha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        0.0,
+        0.0,
+        3.0,
+        1.0,
+        1.0,
+        3.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-2",
+      "role": "floor",
+      "sourcePartIndex": 2,
+      "nativeSourceSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        2.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-3",
+      "role": "roof",
+      "sourcePartIndex": 3,
+      "nativeSourceSha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        0.0,
+        1.0,
+        3.0,
+        1.0,
+        2.0,
+        3.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-4",
+      "role": "floor",
+      "sourcePartIndex": 4,
+      "nativeSourceSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        1.0,
+        0.0,
+        0.0,
+        2.0,
+        1.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-5",
+      "role": "roof",
+      "sourcePartIndex": 5,
+      "nativeSourceSha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        1.0,
+        0.0,
+        3.0,
+        2.0,
+        1.0,
+        3.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-6",
+      "role": "floor",
+      "sourcePartIndex": 6,
+      "nativeSourceSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        1.0,
+        1.0,
+        0.0,
+        2.0,
+        2.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-7",
+      "role": "roof",
+      "sourcePartIndex": 7,
+      "nativeSourceSha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        1.0,
+        1.0,
+        3.0,
+        2.0,
+        2.0,
+        3.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-8",
+      "role": "floor",
+      "sourcePartIndex": 8,
+      "nativeSourceSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        2.0,
+        0.0,
+        0.0,
+        3.0,
+        1.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-9",
+      "role": "roof",
+      "sourcePartIndex": 9,
+      "nativeSourceSha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        2.0,
+        0.0,
+        3.0,
+        3.0,
+        1.0,
+        3.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-10",
+      "role": "floor",
+      "sourcePartIndex": 10,
+      "nativeSourceSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        2.0,
+        1.0,
+        0.0,
+        3.0,
+        2.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-11",
+      "role": "roof",
+      "sourcePartIndex": 11,
+      "nativeSourceSha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        2.0,
+        1.0,
+        3.0,
+        3.0,
+        2.0,
+        3.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-12",
+      "role": "floor",
+      "sourcePartIndex": 12,
+      "nativeSourceSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        3.0,
+        0.0,
+        0.0,
+        4.0,
+        1.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-13",
+      "role": "roof",
+      "sourcePartIndex": 13,
+      "nativeSourceSha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        3.0,
+        0.0,
+        3.0,
+        4.0,
+        1.0,
+        3.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-14",
+      "role": "floor",
+      "sourcePartIndex": 14,
+      "nativeSourceSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        3.0,
+        1.0,
+        0.0,
+        4.0,
+        2.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-15",
+      "role": "roof",
+      "sourcePartIndex": 15,
+      "nativeSourceSha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        3.0,
+        1.0,
+        3.0,
+        4.0,
+        2.0,
+        3.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-16",
+      "role": "wall",
+      "sourcePartIndex": 16,
+      "nativeSourceSha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.01171875,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              4.953125,
+              -5.046875
+            ],
+            [
+              4.953125,
+              -4.9375
+            ],
+            [
+              5.046875,
+              -4.9375
+            ],
+            [
+              5.0625,
+              -4.953125
+            ],
+            [
+              5.0625,
+              -5.046875
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        -0.046875,
+        -0.046875,
+        0.1875,
+        0.0625,
+        0.0625,
+        3.0
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-17",
+      "role": "wall",
+      "sourcePartIndex": 17,
+      "nativeSourceSha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.01171875,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              4.953125,
+              -3.0625
+            ],
+            [
+              4.953125,
+              -2.953125
+            ],
+            [
+              5.0625,
+              -2.953125
+            ],
+            [
+              5.0625,
+              -3.046875
+            ],
+            [
+              5.046875,
+              -3.0625
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        -0.046875,
+        1.9375,
+        0.1875,
+        0.0625,
+        2.046875,
+        3.0
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-18",
+      "role": "wall",
+      "sourcePartIndex": 18,
+      "nativeSourceSha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.01318359375,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              6.9375,
+              -5.046875
+            ],
+            [
+              6.9375,
+              -4.953125
+            ],
+            [
+              6.953125,
+              -4.9375
+            ],
+            [
+              7.046875,
+              -4.9375
+            ],
+            [
+              7.0625,
+              -4.953125
+            ],
+            [
+              7.0625,
+              -5.046875
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        1.9375,
+        -0.046875,
+        0.1875,
+        2.0625,
+        0.0625,
+        3.0
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-19",
+      "role": "wall",
+      "sourcePartIndex": 19,
+      "nativeSourceSha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.01318359375,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              6.953125,
+              -3.0625
+            ],
+            [
+              6.9375,
+              -3.046875
+            ],
+            [
+              6.9375,
+              -2.953125
+            ],
+            [
+              7.0625,
+              -2.953125
+            ],
+            [
+              7.0625,
+              -3.046875
+            ],
+            [
+              7.046875,
+              -3.0625
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        1.9375,
+        1.9375,
+        0.1875,
+        2.0625,
+        2.046875,
+        3.0
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-20",
+      "role": "wall",
+      "sourcePartIndex": 20,
+      "nativeSourceSha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.01171875,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              10.9375,
+              -5.046875
+            ],
+            [
+              10.9375,
+              -4.953125
+            ],
+            [
+              10.953125,
+              -4.9375
+            ],
+            [
+              11.046875,
+              -4.9375
+            ],
+            [
+              11.046875,
+              -5.046875
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        5.9375,
+        -0.046875,
+        0.1875,
+        6.046875,
+        0.0625,
+        3.0
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-21",
+      "role": "wall",
+      "sourcePartIndex": 21,
+      "nativeSourceSha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.01171875,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              10.953125,
+              -3.0625
+            ],
+            [
+              10.9375,
+              -3.046875
+            ],
+            [
+              10.9375,
+              -2.953125
+            ],
+            [
+              11.046875,
+              -2.953125
+            ],
+            [
+              11.046875,
+              -3.0625
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        5.9375,
+        1.9375,
+        0.1875,
+        6.046875,
+        2.046875,
+        3.0
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-22",
+      "role": "wall",
+      "sourcePartIndex": 22,
+      "nativeSourceSha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.23130187610630493,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              5.0764999985694885,
+              -5.0618750005960464
+            ],
+            [
+              5.075085997581482,
+              -5.061288997530937
+            ],
+            [
+              5.0625,
+              -5.046875
+            ],
+            [
+              5.0625,
+              -4.953125
+            ],
+            [
+              5.075085997581482,
+              -4.938711002469063
+            ],
+            [
+              5.0764999985694885,
+              -4.9381249994039536
+            ],
+            [
+              6.9235000014305115,
+              -4.9381249994039536
+            ],
+            [
+              6.924914002418518,
+              -4.938711002469063
+            ],
+            [
+              6.9375,
+              -4.953125
+            ],
+            [
+              6.9375,
+              -5.046875
+            ],
+            [
+              6.924914002418518,
+              -5.061288997530937
+            ],
+            [
+              6.9235000014305115,
+              -5.0618750005960464
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        0.0625,
+        -0.061875,
+        0.1875,
+        1.9375,
+        0.061875,
+        3.0
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-23",
+      "role": "wall",
+      "sourcePartIndex": 23,
+      "nativeSourceSha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.23130187610630493,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              7.0764999985694885,
+              -5.0618750005960464
+            ],
+            [
+              7.075085997581482,
+              -5.061288997530937
+            ],
+            [
+              7.0625,
+              -5.046875
+            ],
+            [
+              7.0625,
+              -4.953125
+            ],
+            [
+              7.075085997581482,
+              -4.938711002469063
+            ],
+            [
+              7.0764999985694885,
+              -4.9381249994039536
+            ],
+            [
+              8.923500001430511,
+              -4.9381249994039536
+            ],
+            [
+              8.924914002418518,
+              -4.938711002469063
+            ],
+            [
+              8.9375,
+              -4.953125
+            ],
+            [
+              8.9375,
+              -5.046875
+            ],
+            [
+              8.924914002418518,
+              -5.061288997530937
+            ],
+            [
+              8.923500001430511,
+              -5.0618750005960464
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        2.0625,
+        -0.061875,
+        0.1875,
+        3.9375,
+        0.061875,
+        3.0
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-24",
+      "role": "wall",
+      "sourcePartIndex": 24,
+      "nativeSourceSha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.23130187610630493,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              7.0764999985694885,
+              -3.0618750005960464
+            ],
+            [
+              7.075085997581482,
+              -3.061288997530937
+            ],
+            [
+              7.0625,
+              -3.046875
+            ],
+            [
+              7.0625,
+              -2.953125
+            ],
+            [
+              7.075085997581482,
+              -2.938711002469063
+            ],
+            [
+              7.0764999985694885,
+              -2.9381249994039536
+            ],
+            [
+              8.923500001430511,
+              -2.9381249994039536
+            ],
+            [
+              8.924914002418518,
+              -2.938711002469063
+            ],
+            [
+              8.9375,
+              -2.953125
+            ],
+            [
+              8.9375,
+              -3.046875
+            ],
+            [
+              8.924914002418518,
+              -3.061288997530937
+            ],
+            [
+              8.923500001430511,
+              -3.0618750005960464
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        2.0625,
+        1.938125,
+        0.1875,
+        3.9375,
+        2.061875,
+        3.0
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-25",
+      "role": "wall",
+      "sourcePartIndex": 25,
+      "nativeSourceSha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.23130187610630493,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              5.0764999985694885,
+              -3.0618750005960464
+            ],
+            [
+              5.075085997581482,
+              -3.061288997530937
+            ],
+            [
+              5.0625,
+              -3.046875
+            ],
+            [
+              5.0625,
+              -2.953125
+            ],
+            [
+              5.075085997581482,
+              -2.938711002469063
+            ],
+            [
+              5.0764999985694885,
+              -2.9381249994039536
+            ],
+            [
+              6.9235000014305115,
+              -2.9381249994039536
+            ],
+            [
+              6.924914002418518,
+              -2.938711002469063
+            ],
+            [
+              6.9375,
+              -2.953125
+            ],
+            [
+              6.9375,
+              -3.046875
+            ],
+            [
+              6.924914002418518,
+              -3.061288997530937
+            ],
+            [
+              6.9235000014305115,
+              -3.0618750005960464
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        0.0625,
+        1.938125,
+        0.1875,
+        1.9375,
+        2.061875,
+        3.0
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-27",
+      "role": "contact",
+      "sourcePartIndex": 27,
+      "nativeSourceSha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        0.0,
+        0.0,
+        0.1835,
+        1.0,
+        1.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-28",
+      "role": "contact",
+      "sourcePartIndex": 28,
+      "nativeSourceSha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        0.0,
+        1.0,
+        0.1835,
+        1.0,
+        2.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-29",
+      "role": "contact",
+      "sourcePartIndex": 29,
+      "nativeSourceSha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        1.0,
+        0.0,
+        0.1835,
+        2.0,
+        1.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-30",
+      "role": "contact",
+      "sourcePartIndex": 30,
+      "nativeSourceSha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        1.0,
+        1.0,
+        0.1835,
+        2.0,
+        2.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-31",
+      "role": "contact",
+      "sourcePartIndex": 31,
+      "nativeSourceSha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        2.0,
+        0.0,
+        0.1835,
+        3.0,
+        1.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-32",
+      "role": "contact",
+      "sourcePartIndex": 32,
+      "nativeSourceSha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        2.0,
+        1.0,
+        0.1835,
+        3.0,
+        2.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-33",
+      "role": "contact",
+      "sourcePartIndex": 33,
+      "nativeSourceSha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        3.0,
+        0.0,
+        0.1835,
+        4.0,
+        1.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-34",
+      "role": "contact",
+      "sourcePartIndex": 34,
+      "nativeSourceSha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        3.0,
+        1.0,
+        0.1835,
+        4.0,
+        2.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-35",
+      "role": "door",
+      "sourcePartIndex": 35,
+      "nativeSourceSha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.07489915553748816,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              6.953125,
+              -3.375
+            ],
+            [
+              6.942354999482632,
+              -3.3637700006365776
+            ],
+            [
+              6.941124998033047,
+              -3.3607999980449677
+            ],
+            [
+              6.9381249994039536,
+              -3.3400000035762787
+            ],
+            [
+              6.9381249994039536,
+              -3.1080000028014183
+            ],
+            [
+              6.941124998033047,
+              -3.0872000008821487
+            ],
+            [
+              6.942354999482632,
+              -3.084229998290539
+            ],
+            [
+              6.953125,
+              -3.0625
+            ],
+            [
+              7.046875,
+              -3.0625
+            ],
+            [
+              7.057645000517368,
+              -3.084229998290539
+            ],
+            [
+              7.058875001966953,
+              -3.0872000008821487
+            ],
+            [
+              7.0618750005960464,
+              -3.1080000028014183
+            ],
+            [
+              7.0618750005960464,
+              -3.3400000035762787
+            ],
+            [
+              7.058875001966953,
+              -3.3607999980449677
+            ],
+            [
+              7.057645000517368,
+              -3.3637700006365776
+            ],
+            [
+              7.046875,
+              -3.375
+            ]
+          ]
+        },
+        {
+          "vertices": [
+            [
+              6.953125,
+              -4.9375
+            ],
+            [
+              6.942354999482632,
+              -4.915770001709461
+            ],
+            [
+              6.941124998033047,
+              -4.912799999117851
+            ],
+            [
+              6.9381249994039536,
+              -4.891999997198582
+            ],
+            [
+              6.9381249994039536,
+              -4.659999996423721
+            ],
+            [
+              6.941124998033047,
+              -4.639200001955032
+            ],
+            [
+              6.942354999482632,
+              -4.636229999363422
+            ],
+            [
+              6.953125,
+              -4.625
+            ],
+            [
+              7.046875,
+              -4.625
+            ],
+            [
+              7.057645000517368,
+              -4.636229999363422
+            ],
+            [
+              7.058875001966953,
+              -4.639200001955032
+            ],
+            [
+              7.0618750005960464,
+              -4.659999996423721
+            ],
+            [
+              7.0618750005960464,
+              -4.891999997198582
+            ],
+            [
+              7.058875001966953,
+              -4.912799999117851
+            ],
+            [
+              7.057645000517368,
+              -4.915770001709461
+            ],
+            [
+              7.046875,
+              -4.9375
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        1.938125,
+        0.0625,
+        0.1875,
+        2.061875,
+        1.9375,
+        3.0
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-36",
+      "role": "door",
+      "sourcePartIndex": 36,
+      "nativeSourceSha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.07864665650032038,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              7.052500002086163,
+              -4.6875
+            ],
+            [
+              7.051086001098156,
+              -4.686913996934891
+            ],
+            [
+              7.0,
+              -4.623000003397465
+            ],
+            [
+              7.0,
+              -3.3769999966025352
+            ],
+            [
+              7.0625,
+              -3.3769999966025352
+            ],
+            [
+              7.0625,
+              -4.685500003397465
+            ],
+            [
+              7.061913996934891,
+              -4.686913996934891
+            ],
+            [
+              7.060500003397465,
+              -4.6875
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        2.0,
+        0.3125,
+        0.1895,
+        2.0625,
+        1.623,
+        2.4355
+      ],
+      "dynamicDoorPart": true
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-37",
+      "role": "gasket",
+      "sourcePartIndex": 37,
+      "nativeSourceSha256": "c65a2c6273e8773956e555ea26879b8b4d0d58d483e42eef94b55c8052e75092",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.011430004201531396,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              7.0625,
+              -4.634999997913837
+            ],
+            [
+              7.0625,
+              -3.3650000020861626
+            ],
+            [
+              7.07150000333786,
+              -3.3650000020861626
+            ],
+            [
+              7.07150000333786,
+              -4.634999997913837
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        2.0625,
+        0.365,
+        0.1875,
+        2.0715,
+        1.635,
+        2.4475
+      ],
+      "dynamicDoorPart": true
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-38",
+      "role": "gasket",
+      "sourcePartIndex": 38,
+      "nativeSourceSha256": "c65a2c6273e8773956e555ea26879b8b4d0d58d483e42eef94b55c8052e75092",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.0010499999344348865,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              7.045000001788139,
+              -3.375
+            ],
+            [
+              7.045000001788139,
+              -3.344999998807907
+            ],
+            [
+              7.0625,
+              -3.344999998807907
+            ],
+            [
+              7.0625,
+              -3.375
+            ]
+          ]
+        },
+        {
+          "vertices": [
+            [
+              7.045000001788139,
+              -4.655000001192093
+            ],
+            [
+              7.045000001788139,
+              -4.625
+            ],
+            [
+              7.0625,
+              -4.625
+            ],
+            [
+              7.0625,
+              -4.655000001192093
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        2.045,
+        0.345,
+        0.1875,
+        2.0625,
+        1.655,
+        2.4675
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-39",
+      "role": "junction",
+      "sourcePartIndex": 39,
+      "nativeSourceSha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        2.046875,
+        0.996,
+        0.1835,
+        2.09,
+        1.004,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-40",
+      "role": "junction",
+      "sourcePartIndex": 40,
+      "nativeSourceSha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        0.994,
+        0.994,
+        0.0,
+        1.006,
+        1.006,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-41",
+      "role": "junction",
+      "sourcePartIndex": 41,
+      "nativeSourceSha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        2.994,
+        0.994,
+        0.0,
+        3.006,
+        1.006,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-42",
+      "role": "junction",
+      "sourcePartIndex": 42,
+      "nativeSourceSha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        1.994,
+        0.994,
+        0.0,
+        2.006,
+        1.006,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-43",
+      "role": "floor",
+      "sourcePartIndex": 43,
+      "nativeSourceSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        4.0,
+        0.0,
+        0.0,
+        5.0,
+        1.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-44",
+      "role": "roof",
+      "sourcePartIndex": 44,
+      "nativeSourceSha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        4.0,
+        0.0,
+        3.0,
+        5.0,
+        1.0,
+        3.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-45",
+      "role": "floor",
+      "sourcePartIndex": 45,
+      "nativeSourceSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        4.0,
+        1.0,
+        0.0,
+        5.0,
+        2.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-46",
+      "role": "roof",
+      "sourcePartIndex": 46,
+      "nativeSourceSha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        4.0,
+        1.0,
+        3.0,
+        5.0,
+        2.0,
+        3.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-47",
+      "role": "floor",
+      "sourcePartIndex": 47,
+      "nativeSourceSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        5.0,
+        0.0,
+        0.0,
+        6.0,
+        1.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-48",
+      "role": "roof",
+      "sourcePartIndex": 48,
+      "nativeSourceSha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        5.0,
+        0.0,
+        3.0,
+        6.0,
+        1.0,
+        3.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-49",
+      "role": "floor",
+      "sourcePartIndex": 49,
+      "nativeSourceSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        5.0,
+        1.0,
+        0.0,
+        6.0,
+        2.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-50",
+      "role": "roof",
+      "sourcePartIndex": 50,
+      "nativeSourceSha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        5.0,
+        1.0,
+        3.0,
+        6.0,
+        2.0,
+        3.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-51",
+      "role": "wall",
+      "sourcePartIndex": 51,
+      "nativeSourceSha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.23130187610630493,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              9.076499998569489,
+              -5.0618750005960464
+            ],
+            [
+              9.075085997581482,
+              -5.061288997530937
+            ],
+            [
+              9.0625,
+              -5.046875
+            ],
+            [
+              9.0625,
+              -4.953125
+            ],
+            [
+              9.075085997581482,
+              -4.938711002469063
+            ],
+            [
+              9.076499998569489,
+              -4.9381249994039536
+            ],
+            [
+              10.923500001430511,
+              -4.9381249994039536
+            ],
+            [
+              10.924914002418518,
+              -4.938711002469063
+            ],
+            [
+              10.9375,
+              -4.953125
+            ],
+            [
+              10.9375,
+              -5.046875
+            ],
+            [
+              10.924914002418518,
+              -5.061288997530937
+            ],
+            [
+              10.923500001430511,
+              -5.0618750005960464
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        4.0625,
+        -0.061875,
+        0.1875,
+        5.9375,
+        0.061875,
+        3.0
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-52",
+      "role": "wall",
+      "sourcePartIndex": 52,
+      "nativeSourceSha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.23130187610630493,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              9.076499998569489,
+              -3.0618750005960464
+            ],
+            [
+              9.075085997581482,
+              -3.061288997530937
+            ],
+            [
+              9.0625,
+              -3.046875
+            ],
+            [
+              9.0625,
+              -2.953125
+            ],
+            [
+              9.075085997581482,
+              -2.938711002469063
+            ],
+            [
+              9.076499998569489,
+              -2.9381249994039536
+            ],
+            [
+              10.923500001430511,
+              -2.9381249994039536
+            ],
+            [
+              10.924914002418518,
+              -2.938711002469063
+            ],
+            [
+              10.9375,
+              -2.953125
+            ],
+            [
+              10.9375,
+              -3.046875
+            ],
+            [
+              10.924914002418518,
+              -3.061288997530937
+            ],
+            [
+              10.923500001430511,
+              -3.0618750005960464
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        4.0625,
+        1.938125,
+        0.1875,
+        5.9375,
+        2.061875,
+        3.0
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-53",
+      "role": "contact",
+      "sourcePartIndex": 53,
+      "nativeSourceSha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        4.0,
+        0.0,
+        0.1835,
+        5.0,
+        1.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-54",
+      "role": "contact",
+      "sourcePartIndex": 54,
+      "nativeSourceSha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        4.0,
+        1.0,
+        0.1835,
+        5.0,
+        2.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-55",
+      "role": "contact",
+      "sourcePartIndex": 55,
+      "nativeSourceSha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        5.0,
+        0.0,
+        0.1835,
+        6.0,
+        1.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-56",
+      "role": "contact",
+      "sourcePartIndex": 56,
+      "nativeSourceSha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        5.0,
+        1.0,
+        0.1835,
+        6.0,
+        2.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-57",
+      "role": "wall",
+      "sourcePartIndex": 57,
+      "nativeSourceSha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.01171875,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              8.9375,
+              -5.046875
+            ],
+            [
+              8.9375,
+              -4.953125
+            ],
+            [
+              9.0625,
+              -4.953125
+            ],
+            [
+              9.0625,
+              -5.046875
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        3.9375,
+        -0.046875,
+        0.1875,
+        4.0625,
+        0.046875,
+        3.0
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-58",
+      "role": "wall",
+      "sourcePartIndex": 58,
+      "nativeSourceSha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.01171875,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              8.9375,
+              -3.046875
+            ],
+            [
+              8.9375,
+              -2.953125
+            ],
+            [
+              9.0625,
+              -2.953125
+            ],
+            [
+              9.0625,
+              -3.046875
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        3.9375,
+        1.953125,
+        0.1875,
+        4.0625,
+        2.046875,
+        3.0
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-59",
+      "role": "junction",
+      "sourcePartIndex": 59,
+      "nativeSourceSha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        3.994,
+        0.994,
+        0.0,
+        4.006,
+        1.006,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-60",
+      "role": "junction",
+      "sourcePartIndex": 60,
+      "nativeSourceSha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        4.994,
+        0.994,
+        0.0,
+        5.006,
+        1.006,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-61",
+      "role": "door",
+      "sourcePartIndex": 61,
+      "nativeSourceSha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.07489915553748816,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              10.953125,
+              -3.375
+            ],
+            [
+              10.942354999482632,
+              -3.3637700006365776
+            ],
+            [
+              10.941124998033047,
+              -3.3607999980449677
+            ],
+            [
+              10.938124999403954,
+              -3.3400000035762787
+            ],
+            [
+              10.938124999403954,
+              -3.1080000028014183
+            ],
+            [
+              10.941124998033047,
+              -3.0872000008821487
+            ],
+            [
+              10.942354999482632,
+              -3.084229998290539
+            ],
+            [
+              10.953125,
+              -3.0625
+            ],
+            [
+              11.046875,
+              -3.0625
+            ],
+            [
+              11.057645000517368,
+              -3.084229998290539
+            ],
+            [
+              11.058875001966953,
+              -3.0872000008821487
+            ],
+            [
+              11.061875000596046,
+              -3.1080000028014183
+            ],
+            [
+              11.061875000596046,
+              -3.3400000035762787
+            ],
+            [
+              11.058875001966953,
+              -3.3607999980449677
+            ],
+            [
+              11.057645000517368,
+              -3.3637700006365776
+            ],
+            [
+              11.046875,
+              -3.375
+            ]
+          ]
+        },
+        {
+          "vertices": [
+            [
+              10.953125,
+              -4.9375
+            ],
+            [
+              10.942354999482632,
+              -4.915770001709461
+            ],
+            [
+              10.941124998033047,
+              -4.912799999117851
+            ],
+            [
+              10.938124999403954,
+              -4.891999997198582
+            ],
+            [
+              10.938124999403954,
+              -4.659999996423721
+            ],
+            [
+              10.941124998033047,
+              -4.639200001955032
+            ],
+            [
+              10.942354999482632,
+              -4.636229999363422
+            ],
+            [
+              10.953125,
+              -4.625
+            ],
+            [
+              11.046875,
+              -4.625
+            ],
+            [
+              11.057645000517368,
+              -4.636229999363422
+            ],
+            [
+              11.058875001966953,
+              -4.639200001955032
+            ],
+            [
+              11.061875000596046,
+              -4.659999996423721
+            ],
+            [
+              11.061875000596046,
+              -4.891999997198582
+            ],
+            [
+              11.058875001966953,
+              -4.912799999117851
+            ],
+            [
+              11.057645000517368,
+              -4.915770001709461
+            ],
+            [
+              11.046875,
+              -4.9375
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        5.938125,
+        0.0625,
+        0.1875,
+        6.061875,
+        1.9375,
+        3.0
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-62",
+      "role": "door",
+      "sourcePartIndex": 62,
+      "nativeSourceSha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.07864665650032038,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              10.9375,
+              -4.623000003397465
+            ],
+            [
+              10.9375,
+              -3.3144999966025352
+            ],
+            [
+              10.93808600306511,
+              -3.3130860030651093
+            ],
+            [
+              10.939499996602535,
+              -3.3125
+            ],
+            [
+              10.947499997913837,
+              -3.3125
+            ],
+            [
+              10.948913998901844,
+              -3.3130860030651093
+            ],
+            [
+              11.0,
+              -3.3769999966025352
+            ],
+            [
+              11.0,
+              -4.623000003397465
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        5.9375,
+        0.377,
+        0.1895,
+        6.0,
+        1.6875,
+        2.4355
+      ],
+      "dynamicDoorPart": true
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-63",
+      "role": "gasket",
+      "sourcePartIndex": 63,
+      "nativeSourceSha256": "c65a2c6273e8773956e555ea26879b8b4d0d58d483e42eef94b55c8052e75092",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.011430004201531396,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              10.92849999666214,
+              -4.634999997913837
+            ],
+            [
+              10.92849999666214,
+              -3.3650000020861626
+            ],
+            [
+              10.9375,
+              -3.3650000020861626
+            ],
+            [
+              10.9375,
+              -4.634999997913837
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        5.9285,
+        0.365,
+        0.1875,
+        5.9375,
+        1.635,
+        2.4475
+      ],
+      "dynamicDoorPart": true
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-64",
+      "role": "gasket",
+      "sourcePartIndex": 64,
+      "nativeSourceSha256": "c65a2c6273e8773956e555ea26879b8b4d0d58d483e42eef94b55c8052e75092",
+      "classification": "native-body-slab-obstacle",
+      "areaM2": 0.0010499999344348865,
+      "obstacles": [
+        {
+          "vertices": [
+            [
+              10.9375,
+              -3.375
+            ],
+            [
+              10.9375,
+              -3.344999998807907
+            ],
+            [
+              10.95499999821186,
+              -3.344999998807907
+            ],
+            [
+              10.95499999821186,
+              -3.375
+            ]
+          ]
+        },
+        {
+          "vertices": [
+            [
+              10.9375,
+              -4.655000001192093
+            ],
+            [
+              10.9375,
+              -4.625
+            ],
+            [
+              10.95499999821186,
+              -4.625
+            ],
+            [
+              10.95499999821186,
+              -4.655000001192093
+            ]
+          ]
+        }
+      ],
+      "nativeBoundsCommonM": [
+        5.9375,
+        0.345,
+        0.1875,
+        5.955,
+        1.655,
+        2.4675
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-65",
+      "role": "junction",
+      "sourcePartIndex": 65,
+      "nativeSourceSha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        5.91,
+        0.996,
+        0.1835,
+        5.953125,
+        1.004,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-66",
+      "role": "floor",
+      "sourcePartIndex": 66,
+      "nativeSourceSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        6.0,
+        0.0,
+        0.0,
+        7.0,
+        1.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-67",
+      "role": "floor",
+      "sourcePartIndex": 67,
+      "nativeSourceSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        6.0,
+        1.0,
+        0.0,
+        7.0,
+        2.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-68",
+      "role": "floor",
+      "sourcePartIndex": 68,
+      "nativeSourceSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        7.0,
+        0.0,
+        0.0,
+        8.0,
+        1.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    },
+    {
+      "sourcePlacedId": "candidate-extended-new-vestibule-native-69",
+      "role": "floor",
+      "sourcePartIndex": 69,
+      "nativeSourceSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "classification": "proved-outside-body-slab",
+      "areaM2": 0,
+      "obstacles": [],
+      "nativeBoundsCommonM": [
+        7.0,
+        1.0,
+        0.0,
+        8.0,
+        2.0,
+        0.1875
+      ],
+      "dynamicDoorPart": false
+    }
+  ],
+  "method": "Actual native solid intersection with accepted body slab, positive-fill XY silhouette, separate connected-component convex covers with containment check; disjoint jambs remain separate. Existing source wall/floor precision policy unchanged.",
+  "dynamicPolicy": "Closed leaf/gasket projections are spawn-state only; replace all four dynamic parts from accepted physical hinge/morph state on every door change. Never omit a moving leaf merely because opening.passable becomes true.",
+  "limits": [
+    "Caller-supplied colliders are not accepted; authority must pin exact document and this proof.",
+    "Negative clearance is conservative around visible shallow details; no fitted-collider shrink.",
+    "No whole-ship sealing or damage qualification."
+  ]
+}

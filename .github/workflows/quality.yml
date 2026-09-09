@@ -18,6 +18,8 @@ jobs:
           python-version: "3.12"
       - run: npm ci
       - run: python -m pip install -r scripts/art_library/requirements.txt
+      - run: python -m venv .runtime/construction-enclosure-python
+      - run: .runtime/construction-enclosure-python/bin/python -m pip install -r scripts/geometry_tests/requirements.txt
       - run: npm run typecheck
       - run: npm test -- --maxWorkers=2
       - run: node --test scripts/quality-rules.test.mjs

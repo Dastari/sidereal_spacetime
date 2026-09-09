@@ -19,6 +19,16 @@
       "source": "native CSG",
       "recorded_at": "2026-09-09T20:39:18.817393+00:00",
       "notes": "a001 preserved after exporter succeeded but local Blender denoiser unavailable. a002 material/context render passed; native audit found existing quarter-floor bevel seams in new vestibule. a003 adds authored flush seam strips;21 native checks pass."
+    },
+    {
+      "source": "parent technical review",
+      "recorded_at": "2026-09-09T21:07:06.927467+00:00",
+      "notes": "Parent reviewed actuala003 context-candidate and attachment-cutaway PNGs and authorized candidate technical integration qualification. This is not final owner artistic approval."
+    },
+    {
+      "source": "native motion/source compiler",
+      "recorded_at": "2026-09-09T21:07:06.927467+00:00",
+      "notes": "Eight additional native motion/neighbor gates pass; v2 connected-component conservative covers fit existing32-shape budget. Current standard compiler accepts67floors/266objects, and two source-qualified instance plans allocate independent UUIDs. No database spawn or gas-neighbor approval."
     }
   ],
   "approvals": [],
@@ -210,6 +220,33 @@
           "notes": "Isolated candidate only; native local qualification is not owner artistic approval or installed-game evidence.",
           "capture_context": null,
           "recorded_at": "2026-09-09T20:39:18.817393+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/native-motion-neighbor-qualification.json",
+          "sha256": "c1aa90c8523ada60ee99ac6bc4b8a1004f2642aee820464078627532a7948869",
+          "bytes": 6753,
+          "notes": "Additional isolated source qualification; no art sign-off or runtime registration.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T21:07:06.927467+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/native-walking-projection.json",
+          "sha256": "87f4487367f187b795cac9c486c4dc8619e68be67335f35b638d23c2c686e82e",
+          "bytes": 224760,
+          "notes": "Additional isolated source qualification; no art sign-off or runtime registration.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T21:07:06.927467+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/native-walking-projection-v2.json",
+          "sha256": "d576415689b561bff0964fe2d99006b8dda18827030438f3993d6612a6d71c56",
+          "bytes": 64772,
+          "notes": "Additional isolated source qualification; no art sign-off or runtime registration.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T21:07:06.927467+00:00"
         }
       ]
     }

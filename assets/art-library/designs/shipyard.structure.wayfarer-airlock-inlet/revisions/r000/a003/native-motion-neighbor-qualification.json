@@ -1,0 +1,252 @@
+{
+  "schema": "sidereal.wayfarer-native-airlock-motion-neighbor.v1",
+  "pass": true,
+  "checks": [
+    {
+      "name": "Complete native hinge interval clear of new inlet: inner",
+      "pass": true,
+      "detail": {
+        "intersectionM3": 0.0,
+        "localEnvelopeM": [
+          [
+            0.2905,
+            -1.373,
+            0.1895
+          ],
+          [
+            1.6244895197752154,
+            0.0,
+            2.4355
+          ]
+        ],
+        "method": "analytic trigonometric extrema for every actual leaf and retracted-gasket vertex; continuous[-90,0]degrees"
+      }
+    },
+    {
+      "name": "Complete native hinge interval clear of new inlet: outer",
+      "pass": true,
+      "detail": {
+        "intersectionM3": 0.0,
+        "localEnvelopeM": [
+          [
+            0.2905,
+            -1.373,
+            0.1895
+          ],
+          [
+            1.6244895197752154,
+            0.0,
+            2.4355
+          ]
+        ],
+        "method": "analytic trigonometric extrema for every actual leaf and retracted-gasket vertex; continuous[-90,0]degrees"
+      }
+    },
+    {
+      "name": "Actual attached chamber topology inner=False outer=False",
+      "pass": true,
+      "detail": {
+        "boundedChamberCount": 1,
+        "expected": 1
+      }
+    },
+    {
+      "name": "Actual attached chamber topology inner=True outer=False",
+      "pass": true,
+      "detail": {
+        "boundedChamberCount": 0,
+        "expected": 0
+      }
+    },
+    {
+      "name": "Accepted native body clearance inner=True outer=False",
+      "pass": true,
+      "detail": {
+        "intersectionM3": 0.0,
+        "routeM": [
+          [
+            0.65,
+            1
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "heightM": 1.8,
+        "radiusM": 0.3
+      }
+    },
+    {
+      "name": "Actual attached chamber topology inner=False outer=True",
+      "pass": true,
+      "detail": {
+        "boundedChamberCount": 0,
+        "expected": 0
+      }
+    },
+    {
+      "name": "Accepted native body clearance inner=False outer=True",
+      "pass": true,
+      "detail": {
+        "intersectionM3": 0.0,
+        "routeM": [
+          [
+            4,
+            1
+          ],
+          [
+            7,
+            1
+          ]
+        ],
+        "heightM": 1.8,
+        "radiusM": 0.3
+      }
+    },
+    {
+      "name": "Unqualified ship-side inlet is connected to exterior in tested composition",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "newSourcePins": [
+    {
+      "id": "interior-frame",
+      "replacesSourcePlacedId": "wall-2--2",
+      "anchorCommonM": [
+        -1,
+        1,
+        0
+      ],
+      "worldPositionM": [
+        4,
+        -4,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "file": "interior-frame.glb",
+      "sha256": "ca7d05ef7b06fa47471bd2e02cd47c7df2530df7b7dd644b668fa1412267ce3e",
+      "nodePrefix": "GEO-inlet-interior-frame--",
+      "editableComponents": 12
+    },
+    {
+      "id": "structural-aperture",
+      "replacesSourcePlacedId": "wall-3--2",
+      "anchorCommonM": [
+        0.125,
+        1,
+        0
+      ],
+      "worldPositionM": [
+        5.125,
+        -4,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "file": "structural-aperture.glb",
+      "sha256": "02e2073e07de3f512b22ba51e0cf728b6024bbcd3df065275e11f9eaf69bf239",
+      "nodePrefix": "GEO-inlet-structural-aperture--",
+      "editableComponents": 4
+    },
+    {
+      "id": "armor-collar",
+      "replacesSourcePlacedId": "superstructure-3--2",
+      "anchorCommonM": [
+        0.5625,
+        1,
+        -0.25
+      ],
+      "worldPositionM": [
+        5.5625,
+        -4,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "file": "armor-collar.glb",
+      "sha256": "276aeb99c55091916ae0534adcff819f7d173b620e6b4b7b76fd092ec6c050ba",
+      "nodePrefix": "GEO-inlet-armor-collar--",
+      "editableComponents": 26
+    },
+    {
+      "id": "stepped-roof",
+      "replacesSourcePlacedId": null,
+      "anchorCommonM": [
+        0,
+        0,
+        0
+      ],
+      "worldPositionM": [
+        5,
+        -5,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "file": "stepped-roof.glb",
+      "sha256": "06358b50ea88a81cb83e1c9ab098c4b2189f8a4cb0bcc77df23b5a847acb3289",
+      "nodePrefix": "GEO-inlet-stepped-roof--",
+      "editableComponents": 5
+    },
+    {
+      "id": "flush-threshold",
+      "replacesSourcePlacedId": null,
+      "anchorCommonM": [
+        0,
+        0,
+        0
+      ],
+      "worldPositionM": [
+        5,
+        -5,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "file": "flush-threshold.glb",
+      "sha256": "048a8b2505c8c16a7a72cbf3f2be340dcf9d7cfeda667c64575132c2d6cccab5",
+      "nodePrefix": "GEO-inlet-flush-threshold--",
+      "editableComponents": 3
+    }
+  ],
+  "sourceAirlockAuditSha256": "eb7eab8523d68906a302a84cf06a5b2a507229d15e89fb96f66d1ade8b6e0aa6",
+  "closedReportSha256": "3e9f4a4056fd01b7c11c3a0a2d974e590723f50a462ff6fd28077d1f9d324f69",
+  "portalStates": [
+    {
+      "innerOpen": false,
+      "outerOpen": false,
+      "boundedChamberCount": 1,
+      "neighborInterpretation": "when inner opens chamber joins unqualified/open ship-side neighbor; when outer opens joins exterior vacuum"
+    },
+    {
+      "innerOpen": true,
+      "outerOpen": false,
+      "boundedChamberCount": 0,
+      "neighborInterpretation": "when inner opens chamber joins unqualified/open ship-side neighbor; when outer opens joins exterior vacuum"
+    },
+    {
+      "innerOpen": false,
+      "outerOpen": true,
+      "boundedChamberCount": 0,
+      "neighborInterpretation": "when inner opens chamber joins unqualified/open ship-side neighbor; when outer opens joins exterior vacuum"
+    }
+  ],
+  "neighborBoundary": {
+    "status": "unqualified-open-ship-side",
+    "wholeWayfarerSealed": false,
+    "installablePressurizedNeighbor": false,
+    "initialCandidatePolicy": "vacuum-only independent fixture; do not allocate/refill gas or overwrite any pre-existing compartment state",
+    "requiresBeforePressurizedAttachment": [
+      "Qualified full connected Wayfarer compartment geometry including roofs/windows/cockpit and utility penetrations",
+      "Accepted free-volume mapping and immutable source/document proof",
+      "Server-conserved gas transfer and validated inner boundary connection"
+    ]
+  },
+  "limits": [
+    "Continuous hinge proof checks new inlet against actual moving leaf/gasket; original enclosure clearances retain their separately hash-pinned source qualification.",
+    "Not a new approval of exterior survival, docking, pumps, ventilation routing or whole-ship enclosure."
+  ]
+}

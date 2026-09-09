@@ -110,7 +110,7 @@ def qualify(directory):
    check('New native chamber volume accounting '+str((x,y)),0<free<2.8125 and abs(free+excluded-2.8125)<1e-8)
  return {'schema':'sidereal.wayfarer-airlock-inlet-qualification.v1','status':'qualified-local-native-candidate' if all(c['pass'] for c in checks) else 'failed-local-native-candidate','pass':all(c['pass'] for c in checks),'newParts':pins,'oldSourcePins':source_pins,'airlockAuditSha256':hashlib.sha256(audit_path.read_bytes()).hexdigest(),'omittedNewAirlockParts':[26],'chamberFreeVolumes':volumes,'checks':checks,'coordinateRoundingM':.000001,'gasketContactRoundingM':.00000001,'limitations':['No whole Wayfarer pressure seal or gas-neighbor authority qualification.','No final artistic approval, runtime registration, installed browser evidence or live refit.','Visual material response confers no armor/strength/power rating.','Full hinge-sweep combination and external landing egress authority remain separately governed by native airlock contract.']}
 if __name__=='__main__':
- directory=ROOT/sys.argv[1];report=qualify(directory);output=directory/'native-qualification.json'
+ directory=ROOT/sys.argv[1];report=json.loads(json.dumps(qualify(directory)));output=directory/'native-qualification.json'
  if output.exists():assert json.loads(output.read_text())==report,'Do not overwrite a changed qualification'
  else:output.write_text(json.dumps(report,indent=2)+'\n')
  print(json.dumps({'pass':report['pass'],'checks':len(report['checks']),'failed':[c for c in report['checks'] if not c['pass']],'output':str(output)}))
