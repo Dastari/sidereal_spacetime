@@ -1,3 +1,5 @@
+import { planQualifiedWayfarerFunctionalSeeds } from "../../sim/src/construction-functional-instances";
+import { randomUUID } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { Identity } from "spacetimedb";
 import { test, expect, vi } from "vitest";
@@ -135,7 +137,10 @@ function fixture() {
     timestamp: { microsSinceUnixEpoch: 10n },
     newUuidV4: () => ({ toString: allocate }),
   };
-  const install = (plan: ReturnType<typeof spawn>) => {
+  const install = (
+    plan: ReturnType<typeof spawn>,
+    seeds?: ReturnType<typeof planQualifiedWayfarerFunctionalSeeds>,
+  ) => {
     db.constructionInstance.insert({
       id: plan.instanceId,
       owner,
@@ -150,7 +155,7 @@ function fixture() {
       instanceId: plan.instanceId,
       elevation: 0,
     });
-    installQualifiedInstanceInteractions(ctx, plan);
+    installQualifiedInstanceInteractions(ctx, plan, seeds);
   };
   const plan = spawn();
   install(plan);
@@ -483,4 +488,29 @@ test("actual grant expiry hook releases a seated actor and legacy leaveCouch del
     localY: 3,
     shipId: f.plan.instanceId,
   });
+});
+
+test("trusted factory preserves its preallocated interaction IDs and rejects altered scope or definitions before writes", () => {
+  const f = fixture(),
+    plan = f.spawn(),
+    seeds = planQualifiedWayfarerFunctionalSeeds(plan, randomUUID);
+  const allocation = vi.spyOn(f.ctx, "newUuidV4");
+  f.install(plan, seeds);
+  expect(allocation).not.toHaveBeenCalled();
+  expect(
+    f.db.interactionObject.rows
+      .filter((r: any) => r.shipId === plan.instanceId)
+      .map((r: any) => r.id),
+  ).toEqual(seeds.interactions.map((s) => s.id));
+  for (const mutation of ["instance", "enabled", "duplicate"]) {
+    const next = f.spawn(),
+      bad = planQualifiedWayfarerFunctionalSeeds(next, randomUUID);
+    if (mutation === "instance") bad.instanceId = plan.instanceId;
+    if (mutation === "enabled") bad.interactions[0].enabled = false;
+    if (mutation === "duplicate")
+      bad.interactions[1].id = bad.interactions[0].id;
+    const before = f.db.interactionObject.rows.length;
+    expect(() => f.install(next, bad)).toThrow();
+    expect(f.db.interactionObject.rows).toHaveLength(before);
+  }
 });

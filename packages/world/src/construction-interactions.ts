@@ -25,6 +25,7 @@ import {
   type DeckCollisionFrame,
 } from "../../sim/src/construction-collision";
 import { constructionCollision } from "./construction-doors";
+import { stableStringify } from "../../sim/src/layout-geometry";
 
 /** Private binding only. Canonical interaction state and unique seat occupancy
  * continue to use interactionObject/couchSeat, never a second occupancy store. */
@@ -61,7 +62,9 @@ export interface ConstructionInteractionBinding {
   recoveryRequested: boolean;
   recoveryReason: string;
 }
-export type ConstructionInteractionContext = ReducerCtx<InferSchema<typeof world>>;
+export type ConstructionInteractionContext = ReducerCtx<
+  InferSchema<typeof world>
+>;
 type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
 const actorFor = (ctx: ReadContext) =>
   ctx.db.character.by_owner.filter(ctx.sender)[Symbol.iterator]().next().value;
@@ -126,11 +129,7 @@ function qualified(ctx: ReadContext, binding: ConstructionInteractionBinding) {
       idMapJson: instance.idMapJson,
     });
   }
-  const frame = constructionCollision(
-      ctx,
-      instance,
-      binding.deckId,
-    ),
+  const frame = constructionCollision(ctx, instance, binding.deckId),
     point = approach(binding.sourceId, definition);
   if (!canOccupyDeck(frame, loc(binding, ...point), 0.3))
     throw new SenderError("Interaction approach has no standing support");
@@ -230,14 +229,39 @@ function freeExit(
 export function installQualifiedInstanceInteractions(
   ctx: ConstructionInteractionContext,
   plan: ConstructionInstancePlan,
+  /** Trusted server factory output only; never a reducer argument. */
+  suppliedSeeds?: ReturnType<typeof planQualifiedWayfarerFunctionalSeeds>,
 ) {
   if (plan.blueprintSha256 !== QUALIFIED_WAYFARER_SHA256) return;
   const instance = ctx.db.constructionInstance.id.find(plan.instanceId);
   if (!instance)
     throw new SenderError("Interaction installation requires spawned instance");
+  const suppliedIds =
+    suppliedSeeds &&
+    [...suppliedSeeds.containers, ...suppliedSeeds.interactions].map(
+      (s) => s.id,
+    );
+  let suppliedIndex = 0;
   const seeds = planQualifiedWayfarerFunctionalSeeds(plan, () =>
-    ctx.newUuidV4().toString(),
+    suppliedIds ? suppliedIds[suppliedIndex++] : ctx.newUuidV4().toString(),
   );
+  if (suppliedSeeds) {
+    const canonical = (value: unknown) =>
+      stableStringify(
+        JSON.parse(
+          JSON.stringify(value, (_key, v) =>
+            typeof v === "bigint" ? { u64: v.toString() } : v,
+          ),
+        ),
+      );
+    if (
+      suppliedIndex !== suppliedIds!.length ||
+      canonical(seeds) !== canonical(suppliedSeeds)
+    )
+      throw new SenderError(
+        "Preallocated interaction seeds differ from exact qualified instance",
+      );
+  }
   const sources = new Map(
     plan.mappings.objects.map((m) => [m.instanceId, m.sourceId]),
   );
