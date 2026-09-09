@@ -1,7 +1,7 @@
 # Implementation sequence and acceptance gates
 
 Status: Accepted direction; implementation staged
-Last updated: 2026-09-08
+Last updated: 2026-09-10
 Owners: Sidereal project
 
 ## Status discipline
@@ -23,7 +23,9 @@ M0 is the original verified scaffold. The dated checkpoints below record later d
 
 ## Concrete next work package
 
-Current priority (2026-09-09): authenticated persistent accounts and the pose/Graphics functional checkpoint passed. Complete authored construction next: tileset interfaces, independent blueprint instances, walls/doors, operational deck transitions, pressure, cargo/services and damage, then the Wayfarer template. The first published two-deck document and native-floor walking instance are an intermediate checkpoint. Shared-world exterior/crew views, visible remote actors and network replay remain required M1 work; private per-account fixtures are not shared-world multiplayer. Keep base spatial tables private; no sharding.
+Current priority (2026-09-10): authentication and character/equipment presentation are installed, and normal shared-space entry is now deployed. New characters enter one canonical shared system; existing private characters explicitly choose **Map → Join shared system** without losing their identities or inventory. Two real accounts passed shared-body/remote-exterior and accepted movement review. This closes a bounded shared-space slice, not all of M1: general crew admission, remote character presentation, multi-character selection, replay/latency and capacity acceptance remain open.
+
+Complete authored construction next. Exact native ladder/stair and pressure-room adapters plus a static full-visual Wayfarer review are registered, with isolated authority/browser evidence. The qualified Wayfarer has its original one deck and 262 native placements; two static review instances have independent identities. It is not yet a functional multi-deck ship template or a no-loss live refit. Next connect qualified floor/support behavior and independently allocated inventory/interactions, then prove cargo, utilities, pressure/airlocks and damage against the same authored instance. Elevators, general supported cargo stacks, resource-driven flight and native voxel destruction remain required. Planet and general rendering iterations stay paused. See [the construction target](ship_construction_rebuild.md) and [normal shared release](handoffs/shared_world_normal_activation.md).
 
 ## Launch policy decisions to settle before their dependent phase
 
@@ -65,3 +67,6 @@ This does not complete M2/M5 or grant armor/stat bonuses. Exact revisions,
 pending owner art approvals and evidence are in the
 [component handoff](handoffs/character_components.md) and
 [living index](../assets/art-library/character-components/INDEX.md).
+
+
+2026-09-10 deployed shared-entry checkpoint: dedicated Dastari original-token admission and account persistence are retained; per-socket keyed shared caches, nine-cell ship queries, canonical bodies, native remote exterior interpolation and normal explicit legacy migration are connected. Fresh-account PKCE auto-admission and exact old-module → current private-account upgrade/retry checks passed. Combined validation: 932 tests in 159 files, 76 document checks, full world/client/dashboard build, installed art checks, lifecycle Python checks and isolated authority smoke. Exact public world/client and fresh recovery pins are in [normal shared activation](handoffs/shared_world_normal_activation.md). This does not complete M2–M9 or turn review instances into supplied, damage-ready ships.

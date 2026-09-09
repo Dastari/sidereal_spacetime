@@ -1,18 +1,24 @@
-# Scaffold verification record
+# Verification record
 
-Status: M0 foundation verified; later gameplay phases remain open
-Last updated: 2026-09-08
+Status: shared-entry release installed; authored construction remains a bounded review capability
+Last updated: 2026-09-10
 Owners: Sidereal project
 
-## Current checkpoint — 2026-09-09
+## Current checkpoint — 2026-09-10
 
-The sections below preserve the original M0 verification, including its 11-test count and then-planned Orchard registration. They are **historical**, not the current test total or authentication state.
+The installed normal shared-entry candidate passed 932 tests in 159 files, strict TypeScript, 76 document/provenance checks, the full world/client/dashboard build, installed art validation, 33 lifecycle Python and nine art Python checks, and isolated authority smoke. These counts identify that exact release; unregistered follow-up work must get new checks rather than borrowing this result.
 
-The construction walking checkpoint passed 415 tests in 94 files, typecheck, build, art validation and isolated authority smoke. Dedicated Dastari Keycloak login, identity transfer, inventory/appearance preservation, occupied-session renewal and managed database restart were tested. Character pose and Graphics/local-light controls passed functional browser review with documented art limitations.
+Dedicated Dastari Keycloak at `https://auth.dastari.net/realms/dastari` supplies real PKCE login. Original-provider-token admission fixes the host's 60-second transport-ticket expiry; it does not reinstate periodic socket churn. Fresh real accounts now enter the canonical shared system atomically. Existing private actors reconnect in place and explicitly choose **Map → Join shared system**. Two actual accounts observed canonical bodies, native remote ship exteriors and authoritative movement. The normal Map/Join/no-query reload flow passed isolated browser acceptance. Public route/artifact bytes and authoritative state continuity passed; final public browser evidence is recorded in the [shared activation ledger](handoffs/shared_world_normal_activation.md).
 
-Actual Shipyard save/load/publication, two independently allocated instances and native-floor walking/collision/reload/return passed. Multi-deck document storage is implemented; operational inter-deck traversal, complete pressure/doors/services and the full Wayfarer rebuild remain incomplete. See [the exact construction checkpoint](releases/construction-walking-2026-09-09.json) and [current integration work](handoffs/integration_continuation_worklist.md). Later edits need fresh checks; these counts identify a dated snapshot.
+Across public publication, 603 item rows, 165 containers, 25 characters, 25 stations, 17 inventory states, 85 hotbar rows, three appearance rows and six weapon-energy rows were unchanged. All 25 ship IDs/static columns were preserved; previously moving ships advanced only dynamic position/heading/tick between timed snapshots. The separate private-to-shared HUD fixture retained all 99 authoritative items/18 containers and its IDs; it had no custom appearance row and is not cited as a custom-appearance test.
 
-Visible shared-space multiplayer and production OIDC-only rollout are not claimed. Original installation, failure-recovery and capacity limitations below must be interpreted against their recorded date.
+Construction has authored multi-deck documents and exact supported native traversal/pressure fixtures. The full 262-placement, one-deck Wayfarer visual template was published/spawned twice in an isolated authority database, walked with conservative collision, shown with native roof/cutaway behavior and exited safely in the game. The normal live ship has not been replaced by a complete functional authored multi-deck vessel. General utilities, cargo stacking, pressure-rated airlocks, independent functional equipment/contents and localized native destruction are not completed by this review. See [qualified Wayfarer review](handoffs/wayfarer_walking_integration.md) and [construction requirements](ship_construction_rebuild.md).
+
+Actual same-host isolated restore and two restarts passed for the earlier pinned cold archive. A fresh pre-release archive was captured with a 26.042-second managed writer pause; that new archive was not duplicated/restored again. Neither proof establishes off-host recovery, point-in-time recovery, abrupt-failure correctness or production capacity. Public game and dashboard retain independent release boundaries; server auth remains hybrid-development during migration.
+
+## Historical M0 verification — 2026-09-08
+
+The installation counts, 11-test result, Orchard discovery and screenshots below describe the original scaffold only. They are preserved as dated evidence, not current authentication, test totals or feature status.
 
 ## Preserved installation and sources
 
@@ -21,7 +27,7 @@ Visible shared-space multiplayer and production OIDC-only rollout are not claime
 - Original source, authored content, downloadable client and database volume retained. Private custom-format database backup: `/root/sidereal-backups/pre-spacetime-pivot-2026-09-08.dump`, 1,149,265,346 bytes, mode 0600. Its restore listing passed; a full legacy restore was not tested.
 - 243 legacy documents copied and inventoried by path/status/headings/SHA-256; 1,196 imported source/content/art files recorded with hashes. The document/source checker verifies every imported hash. Orchard documents are retained separately; its art packs and credentials were not imported.
 
-## Working software
+## Historical working software
 
 Node 24.18.0; npm 11.16.0; TypeScript 6.0.3; SpacetimeDB CLI/server/SDK 2.10.0; Babylon.js 9.25.0; React 19.2.8; Vite 8.2.2; Blender 4.3.2. Packages are locked. A clean `npm ci` succeeded and the npm audit at installation reported zero vulnerabilities. The reviewed Blender MCP commit and frozen Python dependency versions are recorded in the asset documents/lockfile.
 
@@ -39,9 +45,9 @@ Node 24.18.0; npm 11.16.0; TypeScript 6.0.3; SpacetimeDB CLI/server/SDK 2.10.0; 
 | Browser, Chromium/WebGL2 | Real GLB loaded; W produced server-owned velocity; TAB switched to bow-left cabin; E left the seat; walking/rename UI exercised; rename persisted after browser reload. Dashboard navigation, component specimens, model inspection and mobile layouts checked. |
 | Provider discovery | Existing Orchard Keycloak discovery/JWKS endpoint metadata fetched; PKCE S256 advertised. New Sidereal client registrations prepared, not installed. Startup/publication refuses an unimplemented production auth mode. |
 
-Tests and screenshots are locally available under `.runtime` and `output/playwright`. These paths are ignored by git; private identity evidence must not be copied into public docs or browser assets. Smoke tests reset only the explicitly isolated database ending in `-smoke`, never the normal lab database. Service addresses come from `dev.toml`, including app builds and smoke configuration.
+Tests and screenshots are locally available under `.runtime` and `output/playwright`. These paths are ignored by git; private identity evidence must not be copied into public docs or browser assets. The original disposable smoke fixture could be reset only in its isolated namespace; current named smoke publication is additive and never resets the normal database. Service addresses come from `dev.toml`, including app builds and smoke configuration.
 
-## Browser evidence
+## Historical browser evidence
 
 Local screenshots: `output/playwright/flight.png`, `interior.png`, `shipyard-3d.png`, `dashboard.png`, `ui-components.png`, `client-mobile.png`, `dashboard-mobile.png`. Mobile verification covers layout, not touch flight controls. The collaborative inline-preview tool timed out; direct Chromium automation and HTTP checks succeeded. This is a preview-tool limitation, not a failed game/server health probe.
 
@@ -49,8 +55,8 @@ The native GLB study contains 887 source meshes. It is a review asset; mesh batc
 
 ## Remaining work and limitations
 
-This is a runnable scaffold, not a migrated complete game. The lab currently uses private per-identity fixture ships, a simple cabin collider/crew proxy and fixed fixture mass/thrust. Multi-character accounts, shared crew admission, full interest/redaction, input acknowledgement/replay, real component-derived capabilities, utilities, inventories, combat, tactical instruments, factions, industry and the full authoring tools remain phased work.
+Shared-space rendering does not provide boarding, shared crew interiors, arbitrary remote character visibility or full multiplayer gameplay. Installed stock flight still uses bounded fixture mass/actuator policy; utilities and arbitrary installed-component capability changes need their own authority integration. General multi-character selection, latency/replay and load acceptance remain incomplete. Existing inventory, personal combat, native character/pose and graphics work is implemented in slices; this record does not reclassify it as wholly absent.
 
-Scripting currently has validated type/manifest/lifecycle contracts. It does not yet execute or hot-publish owner scripts. Core lifecycle integration begins M1/M2; Script Studio starts M3. OIDC reuses the selected existing provider, but real login, registration deployment, server audience policy and trusted admin bootstrap remain M1. No old account password, MFA secret or role was automatically migrated.
+Construction remains the highest next priority: qualified support/clearance; fresh per-instance functional equipment and storage; pressure/airlock resource/interlock behavior; cargo grids and supported stacks; 3D services; elevator operation; armor and localized structural/native destruction; then a complete semantic Wayfarer and no-loss existing-ship migration. An editor label, a pure validator and an isolated static walking instance are different completion levels.
 
-Durability verification used graceful restart. Abrupt failure, complete new-world restore, upgrades under load and production TLS/auth/abuse checks are M9 acceptance gates. New app servers are development Vite processes managed by the project runner. The legacy public reverse proxies/router were not redirected; use the new LAN addresses in [operations](operations.md).
+Scripting has validated manifest/lifecycle foundations, not a fully implemented Script Studio or unrestricted hot-code pipeline. No old password, MFA secret or role was automatically migrated into Dastari. Production OIDC-only enforcement, broader abuse/capacity tests, supervised static hosting, off-host recovery and upgrades under load remain open. The public NPM route now points to the managed Sidereal browser release; the old Rust game remains stopped. See [operations](operations.md) and [public routing](public_game_routing.md).

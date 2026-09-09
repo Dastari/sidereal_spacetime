@@ -1,12 +1,12 @@
-# Normal shared-world activation proposal — 2026-09-10
+# Normal shared-world activation — 2026-09-10
 
-Status: implemented in the combined development candidate, awaiting the integration owner's normal-HUD browser acceptance and immutable public release. The server new-character branch, normal transport/presentation path, native canvas navigation action and durable account-scoped join controller are now connected. Public deployment is not implied by this document. The owner's blanket deployment authorization is recorded; final browser acceptance and artifact pinning are coordination gates, not a request for new permission.
+Status: installed in the public game after the normal-HUD isolated browser acceptance. Public existing-account join, fresh-account creation and two-account native exterior review passed; the final same-account reload evidence is being recorded. The server new-character branch, normal transport/presentation path, native canvas navigation action and durable account-scoped join controller are now connected. The exact installed world/client hashes and preserved state are recorded below. The owner's blanket deployment authorization is recorded; final browser acceptance and artifact pinning are coordination gates, not a request for new permission.
 
 ## Existing characters: explicit relocation only
 
 Normal login reconnects the existing character and ship in their current context. It must never automatically call `joinSharedSystem` for an existing character, including one currently occupying the pilot seat. Native construction visitors remain in their accepted visit/deck and must leave that context before joining. Existing ship, character, station, item, container, appearance and fitting UUIDs remain stable.
 
-The compact **Join shared system** action is installed to the existing navigation card in `packages/canvas-ui/src/index.ts`, using its native panel/button atlas, Barlow typography and cyan/navy theme. It replaces neither the top navigation nor the inventory. Installed content:
+The compact **Join shared system** action is installed in the existing navigation card in `packages/canvas-ui/src/index.ts`, using its native panel/button atlas, Barlow typography and cyan/navy theme. It replaces neither the top navigation nor the inventory. Installed content:
 
 > Explore together
 >
@@ -24,7 +24,7 @@ The journal adapter uses localStorage `getItem`/`setItem`/`removeItem`. The help
 
 ## New characters: create directly in the canonical system
 
-Current `enterLab` creates per-ship body fixtures in its new-character branch. Do not label a client-side follow-up join as direct shared creation: a crash between two reducers would leave a private character.
+`enterLab` now creates fresh characters directly in the canonical shared system in one authoritative transaction. It no longer creates per-ship body fixtures in the new-character branch; existing-character reconnection retains its prior private or shared context.
 
 Concrete server integration in `packages/world/src/index.ts`:
 
@@ -98,3 +98,19 @@ Normal-entry source checkpoint: `c3e141bb71cae772ab8d5a8effc8cd40637d0243`; pinn
 - Managed fresh cold archive `.runtime/recovery-20260910-031300.tar`, SHA-256 `81e5f0e3b3935da15b35ddf6c45ed0f0dc923b85513ef36517bfb86eefe5ae03`, 29,635,358,720 bytes, 7,893 members. The managed database writer was stopped for 26.042 seconds and restarted without publication/reset. Prior tested recovery evidence remains retained; this fresh archive has not itself been restored into another copy.
 - Before/after backup authoritative comparisons retained every row unchanged for 25 characters, 25 stations, 603 inventory items, 165 containers, 17 inventory states, 85 hotbar rows, three appearance rows and six weapon-energy rows. All 25 ship UUIDs/static fields remained unchanged; eight moving ships advanced only x/y/heading/tick between the non-atomic read snapshots and restart. These dynamic differences are not represented as exact snapshot equality.
 - Exact private candidate and continuity records: `.runtime/releases/normal-shared-20260910/candidate.json`, `backup-continuity.json`, `backup-ship-continuity.json`. Public client and dashboard processes remained on their previous releases during backup and staging. Root's actual normal navigation/explicit-join browser review is pending at this checkpoint. No hardware FPS improvement is claimed from software-GPU evidence.
+
+
+## Public installation — 2026-09-10
+
+After the normal Map → Join → reload browser flow passed on the isolated upgraded private account, the pinned world `317c007a…` was published through the managed lifecycle with `--delete-data=never`. Its resulting bundle hash matched the pinned artifact exactly before immutable client `66b5a92b…` was activated. The normal database retained identity `c2005c24147323197826efa22f24e30d2d99a93a5a5091949f2ad25fa2127572`. The HTTPS public entry `/assets/index-Cenf-nBs.js` was fetched through NPM and matched the installed artifact byte-for-byte; dedicated Dastari issuer discovery also passed. Dashboard and proxy routes were unchanged.
+
+The isolated HUD action retained all 99 authoritative inventory items and 18 containers unchanged, with the same actor/ship/station IDs; only the connected flag and expected ship revision changed. Its appearance table was empty before/after, so this fixture does not prove custom-appearance preservation. Root's isolated browser captured `private-map-ready.png` and `accepted.png`, then an ordinary no-query reload retained the accepted admission and all seven visible item rows.
+
+After public publication, all 25 characters, 25 stations, 603 inventory items, 165 containers, 17 inventory states, 85 hotbar rows, three actual appearance rows and six weapon-energy rows matched the post-backup authoritative baseline exactly. All 25 ship identities/static columns remained unchanged; only x/y/heading/tick changed for the previously moving ships across timed observations. This public publication has not automatically relocated existing private ships. Final parent public-browser acceptance is still a separate check, not inferred from HTTP or SQL success.
+
+
+### Public browser acceptance
+
+Root exercised the actual public Map → Join flow on the existing Pose Integration Review account, retaining the same actor/ship and all 81 visible inventory rows. A separate real Dastari Shared Beta account was created through the public onboarding UI and automatically admitted with zero private body fixtures. Both accounts observed two ship motion rows; the actual native two-ship image is `output/playwright/shared-public-browser-review/two-accounts-live.png`. This intentionally adds a new account's actor/ship after the 25-row pre-publication continuity checkpoint; it is not an inventory/identity loss.
+
+A presentation defect was found in the fresh-character screen: release `66b5a92b…` still displays old development/private-laboratory wording even for a real Dastari login. Authority and fresh shared admission are correct. The narrow provider-aware copy correction is implemented in source and is held for the next matched world/client candidate because subsequent generated bindings add a support-elevation field absent from world `317c007a…`; do not deploy a schema-mismatched client-only rebuild. The correction does not change login, identity or world authority.
