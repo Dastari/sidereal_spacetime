@@ -50,6 +50,10 @@ Stop the new stack, then `python3 scripts/dev.py backup` produces a mode-0600 co
 
 The M0 backup helper captures data only and is a development recovery aid. M9 must automate encrypted key/config backup and a complete validated restore before public release.
 
+For coordinated releases, `python3 scripts/dev.py backup-database` now interrupts only the managed database, preserving the running application processes. It writes a mode0600 cold archive containing database data, CLI config, `dev.toml` and the previous public-client release metadata, then restarts the same database without publishing even if archive creation fails. Hashing and archive inventory happen after restart. The2026-09-10 release archive took21.406seconds of database interruption; its exact private path/hash and limits are recorded in the [release ledger](handoffs/world_network_public_release_20260910.md). It is an on-host recovery set; no off-host replication, point-in-time recovery or full restoration exercise is implied. Keep its credential-bearing contents private.
+
+`public-client-stage` prepares and verifies an immutable client without changing the live process. After a compatible additive world publication, `public-client-activate` verifies and activates that exact stage. The commands use the same managed entrypoint, `python3 scripts/dev.py`; the independent dashboard is not published. The current protocol requires coordinated world/client rollout and existing browser refresh. Never treat an old client-only switch as a safe rollback across an authority protocol change.
+
 ## Publishing and long-running service plan
 
 Vite dev is the review server. Production will serve `apps/client/dist` and `apps/dashboard/dist` through a managed static server/reverse proxy with HTTPS, WebSocket upgrade, bounded payloads, trusted origins, safe caching and production OIDC. Pin assets by content hash and publish manifest atomically. Add systemd supervision/restart policy, disk/memory/tick alerts, log retention, scheduled backups, graceful draining and release rollback at M9. Do not treat a terminal-launched development process as a production service.
