@@ -158,3 +158,46 @@ describe("once-per-system space stepping", () => {
     expect(result.changedBodyIds).toEqual([]);
   });
 });
+
+it("finishes only achieved zero-demand braking and leaves coasting or unavailable axes alone", () => {
+  const tiny = body("ship", 0, { vy: 5e-7, omega: 0 });
+  const braking = control("ship", {
+    intent: { throttle: 0, turn: 0 },
+    actuators: [{ ...control("ship").actuators[0], rotation: Math.PI }],
+  });
+  expect(stepSystemSpace([tiny], [braking]).bodies[0].vy).toBe(0);
+  for (const disabled of [
+    { ...braking, enabled: false },
+    { ...braking, actuators: [] },
+    {
+      ...braking,
+      actuators: braking.actuators.map((a) => ({ ...a, availability: 0 })),
+    },
+  ]) {
+    expect(stepSystemSpace([tiny], [disabled]).bodies[0].vy).toBe(tiny.vy);
+  }
+  const rock = body("rock", 20, { vx: 5e-50, omega: 4e-60 });
+  const result = stepSystemSpace([tiny, rock], [braking]);
+  expect(result.bodies.find((b) => b.id === "rock")).toMatchObject({
+    vx: rock.vx,
+    omega: rock.omega,
+  });
+});
+
+it("nonzero pilot demand remains meaningful below the braking terminal tolerance", () => {
+  const result = stepSystemSpace(
+    [body("ship", 0)],
+    [control("ship", { intent: { throttle: 1e-9, turn: 0 } })],
+  );
+  expect(result.bodies[0].vy).toBeGreaterThan(0);
+});
+
+it("tiny unassisted contacts still conserve the pair's linear momentum", () => {
+  const a = body("a", -1, { vx: 4e-7 }),
+    b = body("b", 1);
+  const result = stepSystemSpace([a, b]);
+  expect(
+    result.bodies.reduce((sum, v) => sum + v.massKg * v.vx, 0),
+  ).toBeCloseTo(a.massKg * a.vx, 15);
+  expect(result.bodies.some((v) => v.vx !== 0)).toBe(true);
+});

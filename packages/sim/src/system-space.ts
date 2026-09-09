@@ -20,6 +20,15 @@ export const SYSTEM_SPACE_LIMITS = Object.freeze({
   totalActuators: 1024,
   substeps: 3,
 });
+
+/** Terminal accuracy of authorized IFCS braking, not passive space damping.
+ * At most one micrometre/second and 0.1 microradian/second are removed, only
+ * while the allocator is actually reducing that component toward zero demand.
+ * Coasting bodies, rocks and unavailable control axes retain all their motion. */
+export const SYSTEM_CONTROL_REST = Object.freeze({
+  metresPerSecond: 1e-6,
+  radiansPerSecond: 1e-7,
+});
 export interface SystemFlightControl {
   bodyId: string;
   /** Already validated occupancy/power/resource authority, rechecked this tick. */
@@ -195,13 +204,30 @@ export function stepSystemSpace(
           }))
           .sort(compareIds),
       );
+      // Finish the controller's asymptotic braking tail at physical tolerances.
+      // Require achieved reduction: an enabled computer without available thrust
+      // cannot erase momentum. Never apply this to contact results or rocks.
+      const zeroDemand =
+        control.enabled &&
+        control.intent.throttle === 0 &&
+        control.intent.turn === 0;
+      const priorSpeed = Math.hypot(body.vx, body.vy);
+      const nextSpeed = Math.hypot(flight.motion.vx, flight.motion.vy);
+      const stopLinear =
+        zeroDemand &&
+        nextSpeed < priorSpeed &&
+        nextSpeed <= SYSTEM_CONTROL_REST.metresPerSecond;
+      const stopAngular =
+        zeroDemand &&
+        Math.abs(flight.motion.omega) < Math.abs(body.omega) &&
+        Math.abs(flight.motion.omega) <= SYSTEM_CONTROL_REST.radiansPerSecond;
       // integrateWrench also computes a tentative drift. Discard it: all actual
       // position/heading advancement belongs to the shared contact solver.
       return {
         ...body,
-        vx: flight.motion.vx,
-        vy: flight.motion.vy,
-        omega: flight.motion.omega,
+        vx: stopLinear ? 0 : flight.motion.vx,
+        vy: stopLinear ? 0 : flight.motion.vy,
+        omega: stopAngular ? 0 : flight.motion.omega,
       };
     });
     // Reject an out-of-domain drift atomically at this substep; never clamp away

@@ -308,13 +308,19 @@ export function stepNativePressure(
   const oldClock = ctx.db.constructionAtmosphereClock.id.find(CLOCK_ID);
   const now = ctx.timestamp.microsSinceUnixEpoch;
   demand(now >= 0n, "invalid scheduler timestamp");
-  if (oldClock && now <= oldClock.lastScheduleMicros) return false;
+  if (
+    oldClock &&
+    (now <= oldClock.lastScheduleMicros ||
+      now - oldClock.lastScheduleMicros < 50_000n)
+  )
+    return false;
   const tick = (oldClock?.tick ?? 0n) + 1n;
   demand(tick <= 18446744073709551615n, "simulation clock exhausted");
   demand(
     installations.length <= ATMOSPHERE_LIMITS.instances,
     "installation budget exceeded",
   );
+  let changed = false;
   for (const installed of installations) {
     const instance = ctx.db.constructionInstance.id.find(installed.id);
     const door = ctx.db.constructionDoor.id.find(installed.doorId);
@@ -393,6 +399,7 @@ export function stepNativePressure(
       next.hingeFraction !== installed.acceptedFraction ||
       next.sealRetraction !== installed.sealRetraction;
     if (poseChanged) {
+      changed = true;
       const accepted = compileAccepted(
         compile,
         installed.id,
@@ -422,7 +429,8 @@ export function stepNativePressure(
       poseChanged ||
       next.blocked !== door!.blocked ||
       moving !== door!.moving
-    )
+    ) {
+      changed = true;
       ctx.db.constructionDoor.id.update({
         ...door!,
         fraction: next.hingeFraction,
@@ -430,8 +438,17 @@ export function stepNativePressure(
         moving,
         revision: door!.revision + 1n,
       });
+    }
   }
-  stepAtmosphere(ctx.db.constructionAtmosphere, tick, STEP_SECONDS);
+  const gasChanges = stepAtmosphere(
+    ctx.db.constructionAtmosphere,
+    tick,
+    STEP_SECONDS,
+  );
+  // Only committed state changes consume a simulation sample. Sealed/equilibrated
+  // installations do not broadcast a clock at 20 Hz; resuming still takes one
+  // fixed step, and a replay of a changed sample is rejected above.
+  if (!changed && gasChanges === 0) return false;
   const clock = { id: CLOCK_ID, tick, lastScheduleMicros: now };
   if (oldClock) ctx.db.constructionAtmosphereClock.id.update(clock);
   else ctx.db.constructionAtmosphereClock.insert(clock);

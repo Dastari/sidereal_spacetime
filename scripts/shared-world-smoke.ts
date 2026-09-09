@@ -66,7 +66,6 @@ export async function sharedWorldSmoke(client: Client, wait: Wait) {
     for (const [c, name] of [
       [a, "Shared Alpha"],
       [b, "Shared Beta"],
-      [outsider, "Legacy Observer"],
     ] as const) {
       await c.reducers.enterLab({ name });
       await c.reducers.claimStarterKit({});
@@ -74,13 +73,17 @@ export async function sharedWorldSmoke(client: Client, wait: Wait) {
     }
     await wait(
       () => a.db.ownShips.count() === 1n && b.db.ownShips.count() === 1n,
-      "legacy identities",
+      "new persistent identities",
     );
-    assert.equal(
-      a.db.visibleShipMotion.count(),
-      0n,
-      "login never implicitly joins",
+    await wait(
+      () =>
+        a.db.ownWorldAdmission.count() === 1n &&
+        b.db.ownWorldAdmission.count() === 1n,
+      "new characters enter shared world atomically",
     );
+    // Third principal intentionally has no character: arbitrary wildcard SQL
+    // does not create admission or grant a view of the canonical system.
+    assert.equal(outsider.db.ownCharacters.count(), 0n);
     const oldA = ship(a),
       oldB = ship(b),
       actorA = actor(a),
@@ -94,13 +97,20 @@ export async function sharedWorldSmoke(client: Client, wait: Wait) {
       expectedAdmissionRevision: 0n,
       operationId: randomUUID(),
     });
-    const joinA = request(a),
-      joinB = request(b);
+    const joinA = request(a);
     await assert.rejects(
       b.reducers.joinSharedSystem({ ...joinA, operationId: randomUUID() }),
     );
-    await a.reducers.joinSharedSystem(joinA);
-    await b.reducers.joinSharedSystem(joinB);
+    await assert.rejects(
+      outsider.reducers.joinSharedSystem({
+        ...joinA,
+        operationId: randomUUID(),
+      }),
+    );
+    await assert.rejects(
+      a.reducers.joinSharedSystem(joinA),
+      "automatic admission must not be relocated by a new explicit join",
+    );
     await wait(
       () =>
         a.db.visibleShipMotion.shipId.find(oldB.id) !== undefined &&
@@ -149,11 +159,13 @@ export async function sharedWorldSmoke(client: Client, wait: Wait) {
       ].sort(),
     );
     const stableMotion = json(a.db.visibleShipMotion.shipId.find(oldA.id));
-    await a.reducers.joinSharedSystem(joinA);
+    const stableAdmission = json([...a.db.ownWorldAdmission.iter()]);
+    await a.reducers.enterLab({ name: "Shared Alpha" });
+    assert.equal(json([...a.db.ownWorldAdmission.iter()]), stableAdmission);
     assert.equal(
       json(a.db.visibleShipMotion.shipId.find(oldA.id)),
       stableMotion,
-      "receipt replay does not relocate",
+      "re-entering existing character does not relocate",
     );
     await assert.rejects(
       a.reducers.joinSharedSystem({ ...joinA, operationId: randomUUID() }),
@@ -301,6 +313,45 @@ export async function sharedWorldSmoke(client: Client, wait: Wait) {
     );
     assert.equal(snapshot(a), beforeA);
     assert.equal(snapshot(b), beforeB);
+    // A real moving ship must reach terminal IFCS rest; testing only initial
+    // zeroes misses asymptotic braking tails that rewrite motion indefinitely.
+    for (
+      let i = 0;
+      i < 450 && (ship(a).vx !== 0 || ship(a).vy !== 0 || ship(a).omega !== 0);
+      i++
+    ) {
+      await a.reducers.setIntent({
+        sequence: ++sequence,
+        throttle: 0,
+        turn: 0,
+        dx: 0,
+        dy: 0,
+        sprint: false,
+      });
+      await new Promise((resolve) => setTimeout(resolve, 45));
+    }
+    assert.deepEqual(
+      [ship(a).vx, ship(a).vy, ship(a).omega],
+      [0, 0, 0],
+      "accepted flight brakes to exact terminal rest",
+    );
+    const settled = json(a.db.visibleShipMotion.shipId.find(oldA.id));
+    for (let i = 0; i < 25; i++) {
+      await a.reducers.setIntent({
+        sequence: ++sequence,
+        throttle: 0,
+        turn: 0,
+        dx: 0,
+        dy: 0,
+        sprint: false,
+      });
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    }
+    assert.equal(
+      json(a.db.visibleShipMotion.shipId.find(oldA.id)),
+      settled,
+      "resting ship motion and sample tick remain unchanged despite active idle input",
+    );
     const admissionBefore = [...a.db.ownWorldAdmission.iter()][0]!;
     a.disconnect();
     reconnected = await client(first.token);
@@ -335,8 +386,14 @@ export async function sharedWorldSmoke(client: Client, wait: Wait) {
       privateBasesDenied: 7,
       canonicalIdsAndInventoryPreserved: true,
       reconnectMembershipPreserved: true,
+      movedThenRestedWithoutMotionWrites: true,
       exactNegativeCellSqlAccepted: true,
-      admission: "explicit",
+      admission:
+        "new characters join atomically; existing admission is retained",
+      crossOwnerAndUnenteredJoinDenied: true,
+      reentryPreservesAdmission: true,
+      exactLegacyJoinReceiptReplay:
+        "separate pure and preupgrade-fixture acceptance",
       scope:
         "ordinary authenticated development principals; real-provider factory supported separately",
     };

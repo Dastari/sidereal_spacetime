@@ -188,3 +188,61 @@ describe("authoritative once-per-system adapter", () => {
     ).toMatchObject({ status: "exhausted", reason: "sample-regressed" });
   });
 });
+
+it("real stock flight brakes to exact rest and then emits no motion, actuator or clock writes", () => {
+  const f = setup();
+  rest(f);
+  pilot(f);
+  f.db.authSession.connectionId.update({
+    ...f.db.authSession.connectionId.find("c1"),
+    expiresMicros: 1_000_000_000_000n,
+  });
+  let now = 100_000n;
+  const step = (throttle: number, turn: number) => {
+    now += 50_000n;
+    f.db.input.characterId.update({
+      ...f.db.input.characterId.find("actor1"),
+      throttle,
+      turn,
+      updatedMicros: now,
+    });
+    return stepSharedWorld({
+      ...f.physics(),
+      timestamp: { microsSinceUnixEpoch: now },
+    });
+  };
+  for (let i = 0; i < 15; i++) step(1, 0.3);
+  expect(
+    Math.hypot(
+      f.db.shipWorldMotion.shipId.find("ship1").vx,
+      f.db.shipWorldMotion.shipId.find("ship1").vy,
+    ),
+  ).toBeGreaterThan(0.1);
+  for (let i = 0; i < 500; i++) step(0, 0);
+  expect(f.db.shipWorldMotion.shipId.find("ship1")).toMatchObject({
+    vx: 0,
+    vy: 0,
+    omega: 0,
+  });
+  expect(
+    [...f.db.actuatorOutput.rows.values()].every(
+      (row: any) => row.throttle === 0,
+    ),
+  ).toBe(true);
+  const writes = () =>
+    f.db.shipWorldMotion.writes +
+    f.db.bodyWorldMotion.writes +
+    f.db.actuatorOutput.writes +
+    f.db.worldSystem.writes;
+  const before = writes(),
+    motion = f.db.shipWorldMotion.shipId.find("ship1");
+  for (let i = 0; i < 100; i++)
+    expect(step(0, 0)).toMatchObject({
+      status: "idle",
+      changedMotions: 0,
+      changedOutputs: 0,
+    });
+  expect(writes()).toBe(before);
+  expect(f.db.shipWorldMotion.shipId.find("ship1")).toEqual(motion);
+  expect(step(1, 0).changedMotions).toBeGreaterThan(0);
+});

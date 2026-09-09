@@ -132,6 +132,7 @@ function inventorySnapshot(c: Connected) {
 /** Public read before join: existing admission is a safe no-op. Never invent a
  * new operation or relocate an admitted ship just to prepare a test. */
 async function ensureAdmission(c: Connected, name: string) {
+  const existedBefore = !!character(c);
   await c.connection.reducers.enterLab({ name });
   await wait(
     () => !!character(c)?.connected && !!ownShip(c),
@@ -140,13 +141,26 @@ async function ensureAdmission(c: Connected, name: string) {
   await c.connection.reducers.claimStarterKit({});
   const actor = character(c),
     ship = ownShip(c);
+  if (!existedBefore)
+    await wait(
+      () =>
+        c.binding.store
+          .getSnapshot()
+          .admission.some((row) => row.characterId === actor.id),
+      "new provider character atomically enters shared world",
+    );
   const known = c.binding.store
     .getSnapshot()
     .admission.find((row) => row.characterId === actor.id);
   if (known) {
     assert.equal(known.shipId, ship.id);
     assert.equal(known.systemId, SHARED_SYSTEM_SEED.systemId);
-    return { joined: false, shipId: ship.id, characterId: actor.id };
+    return {
+      joined: false,
+      admittedAtCreation: !existedBefore,
+      shipId: ship.id,
+      characterId: actor.id,
+    };
   }
   const request = {
     characterId: actor.id,
@@ -163,7 +177,12 @@ async function ensureAdmission(c: Connected, name: string) {
         .admission.some((row) => row.shipId === ship.id),
     "accepted provider world admission",
   );
-  return { joined: true, shipId: ship.id, characterId: actor.id };
+  return {
+    joined: true,
+    admittedAtCreation: false,
+    shipId: ship.id,
+    characterId: actor.id,
+  };
 }
 let a: Connected | undefined,
   b: Connected | undefined,
@@ -259,12 +278,13 @@ try {
     characters: [left.characterId, right.characterId],
     canonicalBodies: SHARED_SYSTEM_SEED.bodies.map((row) => row.id),
     initialJoins: [left.joined, right.joined],
+    admittedAtCreation: [left.admittedAtCreation, right.admittedAtCreation],
     timestamp: new Date().toISOString(),
     visualAcceptance:
       "Parent browser review remains separate; this harness uses no GPU",
   };
   writeFileSync(
-    ".runtime/shared-world-provider-summary.json",
+    process.env.SIDEREAL_PROVIDER_SUMMARY_FILE ?? ".runtime/shared-world-provider-summary.json",
     JSON.stringify(result, null, 2),
   );
   console.log("Actual two-provider shared-world acceptance passed", result);

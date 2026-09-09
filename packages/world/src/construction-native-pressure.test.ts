@@ -456,9 +456,9 @@ test("global pressure admission rejects a 33rd installation before pressure writ
   expect(f.db.constructionAtmosphere.id.find(input.instanceId)).toBeUndefined();
   // An exact prior transaction retry remains valid at the admission ceiling.
   installNativePressure(f.ctx, first!, compile);
-  expect(f.tick()).toBe(true);
+  expect(f.tick()).toBe(false);
   expect([...f.db.constructionAtmosphere.iter()]).toEqual(gasBefore);
-  expect([...f.db.constructionAtmosphereClock.iter()][0].tick).toBe(1n);
+  expect([...f.db.constructionAtmosphereClock.iter()]).toEqual([]);
 });
 
 test("immutable validation caches cannot hide edits made without revision increments", () => {
@@ -484,7 +484,7 @@ test("immutable validation caches cannot hide edits made without revision increm
   });
   expect(() => f.tick()).toThrow(/model no longer matches/);
   f.db.constructionAtmosphere.id.update(gas);
-  expect(f.tick()).toBe(true);
+  expect(f.tick()).toBe(false);
 });
 
 test("empty pressure scheduling writes no clock and first later installation takes one fixed step", () => {
@@ -514,4 +514,65 @@ test("moving pressure door reads indexed instance occupants without scanning eve
   expect(
     f.db.constructionNativePressure.id.find(input.instanceId).sealRetraction,
   ).toBeCloseTo(0.2);
+});
+
+test("installed sealed pressure remains write-free while idle and resumes once without catch-up", () => {
+  const f = fixture(),
+    input = f.install();
+  charge(f.db);
+  const clocks = vi.spyOn(f.db.constructionAtmosphereClock, "insert");
+  const clockUpdates = vi.spyOn(f.db.constructionAtmosphereClock.id, "update");
+  const gas = vi.spyOn(f.db.constructionAtmosphere.id, "update");
+  const pose = vi.spyOn(f.db.constructionNativePressure.id, "update");
+  const hinge = vi.spyOn(f.db.constructionDoor.id, "update");
+  for (let i = 0; i < 100; i++) expect(f.tick()).toBe(false);
+  for (const spy of [clocks, clockUpdates, gas, pose, hinge])
+    expect(spy).not.toHaveBeenCalled();
+  const prior = f.db.constructionDoor.id.find(input.doorId);
+  f.db.constructionDoor.id.update({ ...prior, targetOpen: true, moving: true });
+  f.ctx.timestamp.microsSinceUnixEpoch += 86_400_000_000n;
+  expect(f.tick()).toBe(true);
+  expect(
+    f.db.constructionNativePressure.id.find(input.instanceId).sealRetraction,
+  ).toBeCloseTo(0.2);
+  expect(clocks).toHaveBeenCalledTimes(1);
+  expect(clockUpdates).not.toHaveBeenCalled();
+  expect(gas).toHaveBeenCalled();
+  const snapshot = JSON.stringify(
+    [...f.db.constructionNativePressure.iter()],
+    (_, value) => (typeof value === "bigint" ? String(value) : value),
+  );
+  expect(stepNativePressure(f.ctx, compile)).toBe(false);
+  f.ctx.timestamp.microsSinceUnixEpoch += 49_999n;
+  expect(stepNativePressure(f.ctx, compile)).toBe(false);
+  expect(
+    JSON.stringify([...f.db.constructionNativePressure.iter()], (_, value) =>
+      typeof value === "bigint" ? String(value) : value,
+    ),
+  ).toBe(snapshot);
+  f.ctx.timestamp.microsSinceUnixEpoch += 1n;
+  expect(stepNativePressure(f.ctx, compile)).toBe(true);
+  expect(clockUpdates).toHaveBeenCalledTimes(1);
+  expect(
+    f.db.constructionNativePressure.id.find(input.instanceId).sealRetraction,
+  ).toBeCloseTo(0.4);
+  expect(
+    total(f.db.constructionAtmosphere.id.find(input.instanceId)),
+  ).toBeCloseTo(100, 10);
+});
+
+test("open vacuum pressure becomes write-free again after the hinge settles", () => {
+  const f = fixture(),
+    input = f.install();
+  const door = f.db.constructionDoor.id.find(input.doorId);
+  f.db.constructionDoor.id.update({ ...door, targetOpen: true, moving: true });
+  for (let i = 0; i < 30; i++) f.tick();
+  expect(
+    f.db.constructionNativePressure.id.find(input.instanceId).acceptedFraction,
+  ).toBe(1);
+  const clock = vi.spyOn(f.db.constructionAtmosphereClock.id, "update");
+  const gas = vi.spyOn(f.db.constructionAtmosphere.id, "update");
+  for (let i = 0; i < 100; i++) expect(f.tick()).toBe(false);
+  expect(clock).not.toHaveBeenCalled();
+  expect(gas).not.toHaveBeenCalled();
 });
