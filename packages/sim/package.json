@@ -28,7 +28,8 @@
     "./spatial-cells": "./src/spatial-cells.ts",
     "./system-space": "./src/system-space.ts",
     "./construction-stairs-document": "./src/construction-stairs-document.ts",
-    "./collision": "./src/collision.ts"
+    "./collision": "./src/collision.ts",
+    "./scoped-inventory": "./src/scoped-inventory.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",
