@@ -1,4 +1,15 @@
+import * as inputControl from "./input-control";
+import { inputControl as inputControlTable, inputControlCursor } from "./input-control-tables";
 import * as nativePressure from "./construction-native-pressure";
+import * as traversal from "./construction-traversal";
+import { nativeTraversalRegistry } from "./construction-traversal-registry";
+import {
+  constructionTraversalLink,
+  constructionTraversal,
+  constructionTraversalReservation,
+  constructionTraversalClock,
+  constructionTraversalAudit,
+} from "./construction-traversal-tables";
 import { compilePublishedNativePressureRoom } from "@sidereal/sim/construction-native-room-published";
 import { constructionAtmosphere } from "./construction-atmosphere-tables";
 import {
@@ -134,6 +145,13 @@ const movementTimer = table(
   { scheduledId: t.u64().primaryKey().autoInc(), scheduledAt: t.scheduleAt() },
 );
 const db = schema({
+  inputControl: inputControlTable,
+  inputControlCursor,
+  constructionTraversalLink,
+  constructionTraversal,
+  constructionTraversalReservation,
+  constructionTraversalClock,
+  constructionTraversalAudit,
   constructionAtmosphere,
   constructionNativePressure,
   constructionAtmosphereClock,
@@ -186,7 +204,7 @@ export const setCharacterAppearance = db.reducer(
     expectedRevision: t.u64(),
     operationId: t.string(),
   },
-  auth.gameAction(appearance.setCharacterAppearance),
+  auth.gameAction(appearance.setCharacterAppearance, true),
 );
 export const ownActuatorOutputs = db.view(
   { name: "own_actuator_outputs", public: true },
@@ -340,7 +358,19 @@ export const enterLab = db.reducer({ name: t.string() }, (ctx, { name }) => {
 });
 export const connectSession = db.clientConnected(connected);
 export const disconnect = db.clientDisconnected((ctx) => {
-  if (lastDisconnected(ctx)) auth.clearOwner(ctx, ctx.sender);
+  inputControl.disconnectInputControl(ctx);
+  if (lastDisconnected(ctx)) {
+    traversal.interruptConstructionTraversalOwner(ctx, ctx.sender);
+    auth.clearOwner(ctx, ctx.sender);
+  }
+});
+export const claimInputControl = db.reducer((ctx) => {
+  auth.requireGame(ctx);
+  inputControl.claimInputControl(ctx);
+});
+export const releaseInputControl = db.reducer((ctx) => {
+  auth.requireGame(ctx);
+  inputControl.releaseInputControl(ctx);
 });
 export const setIntent = db.reducer(
   {
@@ -361,13 +391,14 @@ export const setIntent = db.reducer(
       throw new SenderError("Invalid input");
     const actor = [...ctx.db.character.by_owner.filter(ctx.sender)][0];
     if (!actor?.connected) throw new SenderError("Enter the lab first");
+    if (ctx.db.constructionTraversal.characterId.find(actor.id)) return;
     const command = ctx.db.input.characterId.find(actor.id);
-    if (!command || args.sequence <= command.sequence)
-      throw new SenderError("Stale input sequence");
+    if (!command || !inputControl.canRecordInput(ctx, actor.id, args.sequence)) return;
     const seat = ctx.db.station.shipId.find(actor.shipId);
     const controlled = seat?.operational && seat.occupantId === actor.id;
     if ((args.throttle !== 0 || args.turn !== 0) && !controlled)
       throw new SenderError("Occupy the control station to pilot");
+    if (!inputControl.recordInput(ctx, actor.id, args.sequence)) return;
     ctx.db.input.characterId.update({
       ...command,
       ...args,
@@ -380,6 +411,7 @@ export const useStation = db.reducer((ctx) => {
   auth.requireGame(ctx);
   const actor = [...ctx.db.character.by_owner.filter(ctx.sender)][0];
   if (!actor?.connected) throw new SenderError("Character unavailable");
+  traversal.requireStandingConstructionActor(ctx, actor.id);
   const seat = ctx.db.station.shipId.find(actor.shipId);
   if (!seat?.operational) throw new SenderError("Station unavailable");
   if (ctx.db.couchSeat.characterId.find(actor.id))
@@ -473,6 +505,7 @@ export const stepWorld = db.reducer(
     construction.expireGrants(ctx);
     constructionDoors.stepDoors(ctx);
     nativePressure.stepNativePressure(ctx, compilePublishedNativePressureRoom);
+    traversal.stepConstructionTraversals(ctx, nativeTraversalRegistry);
     combat.stepCombat(ctx);
     for (const target of ctx.db.ship.iter()) {
       const seat = ctx.db.station.shipId.find(target.id);
@@ -486,6 +519,7 @@ export const stepWorld = db.reducer(
         seat?.operational &&
         actor?.connected &&
         auth.canConsume(ctx, actor.owner) &&
+        inputControl.consumeInputControl(ctx, actor.id) &&
         actor.shipId === target.id &&
         command &&
         ctx.timestamp.microsSinceUnixEpoch - command.updatedMicros < 300000n;
@@ -574,6 +608,7 @@ export const stepWorld = db.reducer(
       const active =
         actor.connected &&
         auth.canConsume(ctx, actor.owner) &&
+        inputControl.consumeInputControl(ctx, actor.id) &&
         seat?.occupantId !== actor.id &&
         !ctx.db.couchSeat.characterId.find(actor.id) &&
         command &&
@@ -599,12 +634,13 @@ export const stepWorld = db.reducer(
       const sprinting =
         command.sprint &&
         (point.x !== actor.localX || point.y !== actor.localY);
-      ctx.db.character.id.update({
-        ...actor,
-        localX: point.x,
-        localY: point.y,
-        sprinting,
-      });
+      if (point.x !== actor.localX || point.y !== actor.localY || sprinting !== actor.sprinting)
+        ctx.db.character.id.update({
+          ...actor,
+          localX: point.x,
+          localY: point.y,
+          sprinting,
+        });
     }
   },
 );
@@ -641,7 +677,7 @@ export const transferInventoryItem = db.reducer(
     expectedRevision: t.u64(),
     operationId: t.string(),
   },
-  auth.gameAction(inventoryOperations.transferItem),
+  auth.gameAction(inventoryOperations.transferItem, true),
 );
 export const takeAllInventoryItems = db.reducer(
   {
@@ -649,16 +685,22 @@ export const takeAllInventoryItems = db.reducer(
     expectedRevision: t.u64(),
     operationId: t.string(),
   },
-  auth.gameAction(inventoryOperations.takeAll),
+  auth.gameAction(inventoryOperations.takeAll, true),
 );
 export const dropInventoryItem = db.reducer(
   { itemId: t.string(), expectedRevision: t.u64(), operationId: t.string() },
-  auth.gameAction(inventoryOperations.dropItem),
+  auth.gameAction(inventoryOperations.dropItem, true),
 );
-export const claimStarterKit = db.reducer(auth.gameAction(inventory.claimKit));
+export const storeAllInventoryItems = db.reducer(
+  { containerId: t.string(), destinationId: t.string(), expectedRevision: t.u64(), operationId: t.string() },
+  auth.gameAction(inventoryOperations.storeAll, true),
+);
+export const claimStarterKit = db.reducer(
+  auth.gameAction(inventory.claimKit, true),
+);
 export const claimCharacterArmory = db.reducer(
   { expectedRevision: t.u64(), operationId: t.string() },
-  auth.gameAction(inventory.claimCharacterArmory),
+  auth.gameAction(inventory.claimCharacterArmory, true),
 );
 export const moveInventoryItem = db.reducer(
   {
@@ -670,11 +712,11 @@ export const moveInventoryItem = db.reducer(
     expectedRevision: t.u64(),
     operationId: t.string(),
   },
-  auth.gameAction(inventory.moveItem),
+  auth.gameAction(inventory.moveItem, true),
 );
 export const equipInventoryItem = db.reducer(
   { itemId: t.string(), expectedRevision: t.u64(), operationId: t.string() },
-  auth.gameAction(inventory.equipItem),
+  auth.gameAction(inventory.equipItem, true),
 );
 export const assignInventoryHotbar = db.reducer(
   {
@@ -683,11 +725,11 @@ export const assignInventoryHotbar = db.reducer(
     expectedRevision: t.u64(),
     operationId: t.string(),
   },
-  auth.gameAction(inventory.assignHotbar),
+  auth.gameAction(inventory.assignHotbar, true),
 );
 export const activateInventoryHotbar = db.reducer(
   { slot: t.u8(), expectedRevision: t.u64(), operationId: t.string() },
-  auth.gameAction(inventory.activateHotbar),
+  auth.gameAction(inventory.activateHotbar, true),
 );
 
 export const ownInteractions = db.view(
@@ -702,7 +744,7 @@ export const interactObject = db.reducer(
     expectedRevision: t.u64(),
     operationId: t.string(),
   },
-  auth.gameAction(interactions.interact),
+  auth.gameAction(interactions.interact, true),
 );
 
 export const ownCombat = db.view(
@@ -712,11 +754,11 @@ export const ownCombat = db.view(
 );
 export const setCombatAim = db.reducer(
   { active: t.bool(), angle: t.f64() },
-  auth.gameAction(combat.setAim),
+  auth.gameAction(combat.setAim, true),
 );
 export const fireWeapon = db.reducer(
   { itemId: t.string(), expectedRevision: t.u64(), operationId: t.string() },
-  auth.gameAction(combat.fire),
+  auth.gameAction(combat.fire, true),
 );
 
 export const ownIdentityLinks = db.view(
@@ -762,7 +804,7 @@ export const setConstructionGrant = db.reducer(
     expectedRevision: t.u64(),
     operationId: t.string(),
   },
-  auth.gameAction(construction.setGrant),
+  auth.gameAction(construction.setGrant, true),
 );
 export const saveConstructionDraft = db.reducer(
   {
@@ -772,7 +814,7 @@ export const saveConstructionDraft = db.reducer(
     expectedRevision: t.u64(),
     operationId: t.string(),
   },
-  auth.gameAction(construction.saveDraft),
+  auth.gameAction(construction.saveDraft, true),
 );
 export const publishConstructionBlueprint = db.reducer(
   {
@@ -781,7 +823,7 @@ export const publishConstructionBlueprint = db.reducer(
     expectedRevision: t.u64(),
     operationId: t.string(),
   },
-  auth.gameAction(construction.publishBlueprint),
+  auth.gameAction(construction.publishBlueprint, true),
 );
 
 export const ownConstructionInstances = db.view(
@@ -801,7 +843,7 @@ export const spawnConstructionBlueprint = db.reducer(
     sourceDeckId: t.string(),
     operationId: t.string(),
   },
-  auth.gameAction(constructionInstances.spawnBlueprint),
+  auth.gameAction(constructionInstances.spawnBlueprint, true),
 );
 
 export const ownConstructionLocation = db.view(
@@ -815,7 +857,7 @@ export const enterConstructionReview = db.reducer(
     expectedShipId: t.string(),
     operationId: t.string(),
   },
-  auth.gameAction(constructionInstances.enterReview),
+  auth.gameAction(constructionInstances.enterReview, true),
 );
 export const leaveConstructionReview = db.reducer(
   {
@@ -823,7 +865,7 @@ export const leaveConstructionReview = db.reducer(
     expectedRevision: t.u64(),
     operationId: t.string(),
   },
-  auth.gameAction(constructionInstances.leaveReview),
+  auth.gameAction(constructionInstances.leaveReview, true),
 );
 
 export const ownConstructionDoors = db.view(
@@ -839,11 +881,55 @@ export const setConstructionDoor = db.reducer(
     open: t.bool(),
     operationId: t.string(),
   },
-  auth.gameAction(constructionDoors.requestDoor),
+  auth.gameAction(constructionDoors.requestDoor, true),
 );
 
 export const ownConstructionNativePressure = db.view(
   { name: "own_construction_native_pressure", public: true },
   t.array(nativePressure.nativePressureProjection),
   auth.gameView(nativePressure.ownNativePressure),
+);
+
+export const ownConstructionTraversals = db.view(
+  { name: "own_construction_traversals", public: true },
+  t.array(traversal.traversalProjection),
+  auth.gameView(traversal.ownConstructionTraversals),
+);
+export const ownConstructionTraversalLinks = db.view(
+  { name: "own_construction_traversal_links", public: true },
+  t.array(traversal.traversalLinkProjection),
+  auth.gameView(traversal.ownConstructionTraversalLinks),
+);
+export const beginConstructionTraversal = db.reducer(
+  {
+    linkId: t.string(),
+    expectedVisitId: t.string(),
+    expectedLocationRevision: t.u64(),
+    expectedInstanceRevision: t.u64(),
+    expectedLinkRevision: t.u64(),
+    operationId: t.string(),
+  },
+  auth.gameAction((ctx, args) => {
+    const actor = [...ctx.db.character.by_owner.filter(ctx.sender)][0];
+    if (!actor) throw new SenderError("Connected character required");
+    traversal.beginConstructionTraversal(
+      ctx,
+      actor.id,
+      args,
+      nativeTraversalRegistry,
+    );
+  }),
+);
+export const cancelConstructionTraversal = db.reducer(
+  {
+    traversalId: t.string(),
+    expectedVisitId: t.string(),
+    expectedRevision: t.u64(),
+    operationId: t.string(),
+  },
+  auth.gameAction((ctx, args) => {
+    const actor = [...ctx.db.character.by_owner.filter(ctx.sender)][0];
+    if (!actor) throw new SenderError("Connected character required");
+    traversal.cancelConstructionTraversal(ctx, actor.id, args);
+  }),
 );

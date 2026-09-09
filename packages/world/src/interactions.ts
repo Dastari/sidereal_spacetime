@@ -66,8 +66,8 @@ export function leaveCouch(ctx: Context, characterId: string) {
     });
   clearInteractionInput(ctx, characterId);
 }
-export const interactionProjection = t.object("VisibleInteraction", {
-  id: t.string(),
+export const interactionProjection = t.row("VisibleInteraction", {
+  id: t.string().primaryKey(),
   placementId: t.string(),
   assetId: t.string(),
   name: t.string(),

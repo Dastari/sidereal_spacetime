@@ -1,3 +1,4 @@
+import { nativeTraversalRoomCollision } from "./construction-traversal-document";
 import { nativePressureRoomCollision } from "./construction-pressure-document";
 import { pinnedFamilyCollision } from "./construction-boundary-family";
 import {
@@ -6,8 +7,8 @@ import {
   CONSTRUCTION_LIMITS,
   type ConstructionDocument,
   type ConstructionSnapshot,
-} from "../../content/src/construction";
-import type { Point } from "../../content/src/ship-layout";
+} from "@sidereal/content/construction";
+import type { Point } from "@sidereal/content/ship-layout";
 import {
   compileConstruction,
   constructionHash,
@@ -38,7 +39,10 @@ export type ConstructionInstanceIdKind =
   | "room"
   | "route-node"
   | "route"
-  | "hole";
+  | "hole"
+  | "traversal-link"
+  | "native-part"
+  | "traversal-aperture";
 export interface ConstructionIdentityMapping {
   sourceId: string;
   instanceId: string;
@@ -53,8 +57,10 @@ export interface ConstructionInstanceMappings {
   routeNodes: ConstructionIdentityMapping[];
   routes: ConstructionIdentityMapping[];
   holes: ConstructionIdentityMapping[];
-  /** Current construction schema has no traversal/cargo-grid declarations. Never infer them from room names. */
-  traversalLinks: [];
+  /** Exact native bindings; never inferred from room names. */
+  traversalLinks: ConstructionIdentityMapping[];
+  nativeParts: ConstructionIdentityMapping[];
+  traversalApertures: ConstructionIdentityMapping[];
   cargoGrids: [];
 }
 export interface SpawnObjectCollisionBinding {
@@ -203,6 +209,11 @@ export function planConstructionInstance(
       (sourceDeck.ceiling - PINNED_FLOOR_KIT.datums.floorTop) / 32,
     "Selected deck has insufficient standing clearance above native floor top",
   );
+  assert(
+    !source.traversalRoom ||
+      (request.bodyRadiusM === 0.3 && request.bodyHeightM === 1.8),
+    "Native traversal fixture requires its qualified standing body",
+  );
   const objects = [
     ...source.layout.fittings,
     ...(source.layout.assembly?.parts ?? []),
@@ -214,11 +225,13 @@ export function planConstructionInstance(
     "Every object requires explicit collision coverage before safe spawn",
   );
   const coverage = new Set<string>(),
-    obstacles: DeckObstacle[] = source.pressureRoom
-      ? nativePressureRoomCollision(source, request.sourceDeckId)
-      : source.boundaryKit?.revision === "r004"
-        ? pinnedFamilyCollision(source.layout, request.sourceDeckId)
-        : [];
+    obstacles: DeckObstacle[] = source.traversalRoom
+      ? nativeTraversalRoomCollision(source, request.sourceDeckId)
+      : source.pressureRoom
+        ? nativePressureRoomCollision(source, request.sourceDeckId)
+        : source.boundaryKit?.revision === "r004"
+          ? pinnedFamilyCollision(source.layout, request.sourceDeckId)
+          : [];
   for (const [i, binding] of [...request.objectCollisionBindings]
     .sort((a, b) => compareText(a.sourceObjectId, b.sourceObjectId))
     .entries()) {
@@ -306,6 +319,13 @@ export function planConstructionInstance(
     layout.nodes,
     layout.routes,
     layout.decks.flatMap((d) => d.holes),
+    source.traversalRoom
+      ? [
+          { id: source.traversalRoom.linkId },
+          ...source.traversalRoom.parts,
+          ...source.traversalRoom.apertures,
+        ]
+      : [],
   ].flat();
   // readLayout currently enforces this across all domains; keep an explicit guard
   // here because this plan deliberately uses one source-ID lookup for references.
@@ -368,7 +388,15 @@ export function planConstructionInstance(
       "hole",
       layout.decks.flatMap((d) => d.holes),
     ),
-    traversalLinks: [],
+    traversalLinks: map(
+      "traversal-link",
+      source.traversalRoom ? [{ id: source.traversalRoom.linkId }] : [],
+    ),
+    nativeParts: map("native-part", source.traversalRoom?.parts ?? []),
+    traversalApertures: map(
+      "traversal-aperture",
+      source.traversalRoom?.apertures ?? [],
+    ),
     cargoGrids: [],
   };
   const all = new Map(
@@ -418,6 +446,14 @@ export function planConstructionInstance(
   for (const floor of spawned.floors) {
     floor.id = mapped(floor.id);
     floor.deckId = mapped(floor.deckId);
+  }
+  if (spawned.traversalRoom) {
+    const r = spawned.traversalRoom;
+    r.lowerDeckId = mapped(r.lowerDeckId);
+    r.upperDeckId = mapped(r.upperDeckId);
+    r.linkId = mapped(r.linkId);
+    for (const part of r.parts) part.id = mapped(part.id);
+    for (const aperture of r.apertures) aperture.id = mapped(aperture.id);
   }
   // UUID expansion can push a valid source over the parser budget. Validate the
   // exact remapped representation before the world adapter inserts any instance rows.

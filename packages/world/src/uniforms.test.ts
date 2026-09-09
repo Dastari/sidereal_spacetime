@@ -1,7 +1,7 @@
 import { expect, test, vi } from "vitest";
 vi.mock("spacetimedb/server", () => ({
   SenderError: class extends Error {},
-  t: new Proxy({}, { get: () => () => ({}) }),
+  t: new Proxy({}, { get: () => () => ({ primaryKey() { return this; } }) }),
 }));
 import { seedCharacterUniforms } from "./inventory";
 import { LAB_STORAGE_FIXTURES } from "@sidereal/content/storage-fixtures";

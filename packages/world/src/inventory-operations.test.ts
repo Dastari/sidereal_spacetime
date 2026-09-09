@@ -1,12 +1,13 @@
 import { expect, test, vi } from "vitest";
 vi.mock("spacetimedb/server", () => ({
   SenderError: class extends Error {},
-  t: new Proxy({}, { get: () => () => ({}) }),
+  t: new Proxy({}, { get: () => () => ({ primaryKey() { return this; } }) }),
 }));
 import {
   dropItem,
   transferItem,
   takeAll,
+  storeAll,
   groundItemsView,
 } from "./inventory-operations";
 import { equipItem } from "./inventory";
@@ -231,4 +232,57 @@ test("take all moves the fitting subset atomically and retains oversized or over
   expect(() => takeAll(f.ctx, { ...f.mutation(), containerId: "bag" })).toThrow(
     "nearby storage",
   );
+});
+test("quick transfer and take all require a contiguous footprint, not just enough empty cells", () => {
+  const f = fixture();
+  f.containers[1].width = 4;
+  f.containers[1].height = 4;
+  f.items[1].containerId = "crate";
+  // Eight free cells remain in alternating columns, but neither orientation
+  // of the 2x4 carbine fits. Pockets also lack a free 4x2 rectangle.
+  for (const x of [1, 3])
+    for (const y of [0, 2])
+      f.items.push(f.item(`block-${x}-${y}`, "power-cell", "bag", x, y));
+  f.items.push(f.item("scanner", "scanner", "crate", 2));
+  const before = JSON.stringify(f.items);
+  expect(() =>
+    transferItem(f.ctx, { ...f.mutation(), itemId: "gun", containerId: "bag" }),
+  ).toThrow("No room");
+  expect(JSON.stringify(f.items)).toBe(before);
+  expect(f.states[0].revision).toBe(1n);
+  takeAll(f.ctx, { ...f.mutation(), containerId: "crate" });
+  expect(f.items.find((i) => i.id === "gun")?.containerId).toBe("crate");
+  expect(f.items.find((i) => i.id === "scanner")?.containerId).toBe("bag");
+});
+test("store all moves only fitting carried contents, retains equipment, and retries exactly once", () => {
+  const f = fixture();
+  f.containers[2].width = f.containers[2].height = 2;
+  f.items[2].containerId = "bag";
+  f.items[2].x = 2;
+  const command = {
+    ...f.mutation(),
+    containerId: "bag",
+    destinationId: "crate",
+  };
+  storeAll(f.ctx, command);
+  storeAll(f.ctx, command);
+  expect(f.items.find((i) => i.id === "medical")?.containerId).toBe("crate");
+  expect(f.items.find((i) => i.id === "gun")?.containerId).toBe("bag");
+  expect(f.items.find((i) => i.id === "pack")?.equipmentSlot).toBe("back");
+  expect(f.states[0].revision).toBe(2n);
+  expect(() =>
+    storeAll(f.ctx, {
+      ...f.mutation(),
+      containerId: "crate",
+      destinationId: "bag",
+    }),
+  ).toThrow("carried inventory");
+  f.actor.localY = -10;
+  expect(() =>
+    storeAll(f.ctx, {
+      ...f.mutation(),
+      containerId: "bag",
+      destinationId: "crate",
+    }),
+  ).toThrow("nearby storage");
 });

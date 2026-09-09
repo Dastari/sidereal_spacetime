@@ -1,0 +1,60 @@
+{
+  "date": "2026-09-09",
+  "status": "isolated native ladder gameplay review passed; access and browser cleanup complete",
+  "database": "sidereal-spacetime-dev-review-traversal-r000",
+  "databaseIdentity": "c200eee63ba084cb79bdb3e4780767e97c5b6fb1605a9f079caf1665c808983f",
+  "finalPublishedBundleSha256": "9f383ec3f04a9bb9878062f17c76e387297f69ddac5b23945e63374bfea0a1ac",
+  "native": {
+    "pin": {
+      "id": "shipyard.structure.traversal-ladder",
+      "revision": "r000-a003",
+      "sha256": "a41e28d065833c1be30ae1e1e5a4a49832b0771157e6a80b1343f82ccec9e714"
+    },
+    "sources": {
+      "ladder-kit": {
+        "url": "/assets/construction/traversal-r000-a003/ladder-kit.glb",
+        "sha256": "f4fb453f44fe84f577107d72fad15459e6e59ec9ad2ed122bceadead5b855625"
+      },
+      "floor": {
+        "url": "/assets/construction/traversal-r000-a003/floor.glb",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585"
+      },
+      "roof": {
+        "url": "/assets/construction/traversal-r000-a003/roof.glb",
+        "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711"
+      }
+    },
+    "collisionSha256": "61e4c100d8649d468fd1b0758bcfb2a5b9a6b8b78583b7818439a7b77199e5a9",
+    "status": "opt-in native traversal review; not normal Wayfarer refit or final art approval"
+  },
+  "blueprintId": "eca46097-ce7d-4e2c-8250-2f1e10153797",
+  "blueprintSha256": "ad61f3869efba3cf94697a13476a9e3ee7eb720f5fc0c1a702e0dc0e530ae363",
+  "instances": [
+    "a5e6a5d1-239e-42ed-a8a3-b69a90ac64bc",
+    "33a46bbc-53a6-4bbb-8f59-af64fce4e918"
+  ],
+  "validation": {
+    "check": "636 tests /126 files passed before next stair slice",
+    "build": "passed",
+    "artCheck": "passed",
+    "runtimeInstaller": "3 sources /28 placements verified",
+    "python": "16 lifecycle/publication and9 art tests passed",
+    "isolatedSmoke": "two-account private appearance/inventory/equipment reconnect passed",
+    "browser": "actual publish/spawn2, keyboard approach/up/down/cancel, upper walking and guard collision, last-socket reconnect, foreign denial, all-four-grant expiry return and original stock/inventory restoration passed"
+  },
+  "evidence": "output/playwright/native-traversal-room/",
+  "cleanup": {
+    "workspaceGrants": "all4 revoked",
+    "providerRole": "managed revoke completed exit0",
+    "freshLoginAndBrowserClose": "role absent, self-grant denied, both apps signed out, tabs blanked and named browser closed; GPU released"
+  },
+  "limits": [
+    "Opt-in isolated fixture; no normal world publication or Wayfarer refit",
+    "No actual database process restart; shared daemon preserved",
+    "No pressure/gas/utility/elevator qualification",
+    "Current standing pose transported; no climb animation acceptance",
+    "No final artistic approval",
+    "Not shared cross-account world gameplay",
+    "Next stair source work and external inventory changes are concurrent and excluded from frozen browser candidate claims"
+  ]
+}

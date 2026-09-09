@@ -85,6 +85,7 @@ export const CombatReceipt = __t.object("CombatReceipt", {
 export type CombatReceipt = __Infer<typeof CombatReceipt>;
 
 export const CombatStatus = __t.object("CombatStatus", {
+  characterId: __t.string(),
   aimActive: __t.bool(),
   aimAngle: __t.f64(),
   weaponItemId: __t.string(),
@@ -336,6 +337,116 @@ export const ConstructionReceipt = __t.object("ConstructionReceipt", {
 });
 export type ConstructionReceipt = __Infer<typeof ConstructionReceipt>;
 
+export const ConstructionTraversal = __t.object("ConstructionTraversal", {
+  characterId: __t.string(),
+  id: __t.string(),
+  owner: __t.identity(),
+  instanceId: __t.string(),
+  linkId: __t.string(),
+  visitId: __t.string(),
+  sourceDeckId: __t.string(),
+  destinationDeckId: __t.string(),
+  instanceRevision: __t.u64(),
+  linkRevision: __t.u64(),
+  revision: __t.u64(),
+  locationRevision: __t.u64(),
+  stateJson: __t.string(),
+  acceptedX: __t.f64(),
+  acceptedY: __t.f64(),
+  acceptedZ: __t.f64(),
+  phase: __t.string(),
+  interruption: __t.string(),
+  lastTick: __t.u64(),
+});
+export type ConstructionTraversal = __Infer<typeof ConstructionTraversal>;
+
+export const ConstructionTraversalAudit = __t.object("ConstructionTraversalAudit", {
+  id: __t.string(),
+  owner: __t.identity(),
+  characterId: __t.string(),
+  instanceId: __t.string(),
+  linkId: __t.string(),
+  visitId: __t.string(),
+  sourceDeckId: __t.string(),
+  destinationDeckId: __t.string(),
+  outcome: __t.string(),
+  interruption: __t.string(),
+  revision: __t.u64(),
+  completedTick: __t.u64(),
+});
+export type ConstructionTraversalAudit = __Infer<typeof ConstructionTraversalAudit>;
+
+export const ConstructionTraversalClock = __t.object("ConstructionTraversalClock", {
+  id: __t.string(),
+  tick: __t.u64(),
+  lastScheduleMicros: __t.u64(),
+});
+export type ConstructionTraversalClock = __Infer<typeof ConstructionTraversalClock>;
+
+export const ConstructionTraversalLink = __t.object("ConstructionTraversalLink", {
+  id: __t.string(),
+  owner: __t.identity(),
+  instanceId: __t.string(),
+  sourceLinkId: __t.string(),
+  lowerDeckId: __t.string(),
+  upperDeckId: __t.string(),
+  instanceRevision: __t.u64(),
+  revision: __t.u64(),
+  adapterId: __t.string(),
+  adapterRevision: __t.string(),
+  auditSha256: __t.string(),
+  installationJson: __t.string(),
+  contractJson: __t.string(),
+  fingerprint: __t.string(),
+});
+export type ConstructionTraversalLink = __Infer<typeof ConstructionTraversalLink>;
+
+export const ConstructionTraversalLinkIntent = __t.object("ConstructionTraversalLinkIntent", {
+  id: __t.string(),
+  characterId: __t.string(),
+  instanceId: __t.string(),
+  linkId: __t.string(),
+  visitId: __t.string(),
+  sourceDeckId: __t.string(),
+  destinationDeckId: __t.string(),
+  locationRevision: __t.u64(),
+  instanceRevision: __t.u64(),
+  linkRevision: __t.u64(),
+  atLanding: __t.bool(),
+  x: __t.f64(),
+  y: __t.f64(),
+  z: __t.f64(),
+});
+export type ConstructionTraversalLinkIntent = __Infer<typeof ConstructionTraversalLinkIntent>;
+
+export const ConstructionTraversalReservation = __t.object("ConstructionTraversalReservation", {
+  linkId: __t.string(),
+  instanceId: __t.string(),
+  owner: __t.identity(),
+  traversalId: __t.string(),
+  characterId: __t.string(),
+  sourceDeckId: __t.string(),
+  destinationDeckId: __t.string(),
+  reservationJson: __t.string(),
+});
+export type ConstructionTraversalReservation = __Infer<typeof ConstructionTraversalReservation>;
+
+export const ConstructionTraversalStatus = __t.object("ConstructionTraversalStatus", {
+  characterId: __t.string(),
+  traversalId: __t.string(),
+  instanceId: __t.string(),
+  linkId: __t.string(),
+  sourceDeckId: __t.string(),
+  destinationDeckId: __t.string(),
+  phase: __t.string(),
+  interruption: __t.string(),
+  revision: __t.u64(),
+  x: __t.f64(),
+  y: __t.f64(),
+  z: __t.f64(),
+});
+export type ConstructionTraversalStatus = __Infer<typeof ConstructionTraversalStatus>;
+
 export const CouchSeat = __t.object("CouchSeat", {
   characterId: __t.string(),
   objectId: __t.string(),
@@ -378,6 +489,22 @@ export const Input = __t.object("Input", {
   sprint: __t.bool(),
 });
 export type Input = __Infer<typeof Input>;
+
+export const InputControl = __t.object("InputControl", {
+  characterId: __t.string(),
+  owner: __t.identity(),
+  connectionId: __t.string(),
+  sequence: __t.u64(),
+});
+export type InputControl = __Infer<typeof InputControl>;
+
+export const InputControlCursor = __t.object("InputControlCursor", {
+  connectionId: __t.string(),
+  owner: __t.identity(),
+  characterId: __t.string(),
+  sequence: __t.u64(),
+});
+export type InputControlCursor = __Infer<typeof InputControlCursor>;
 
 export const InteractionObject = __t.object("InteractionObject", {
   id: __t.string(),
@@ -502,6 +629,12 @@ export type OwnConstructionLocation = __Infer<typeof OwnConstructionLocation>;
 
 export const OwnConstructionNativePressure = __t.object("OwnConstructionNativePressure", {});
 export type OwnConstructionNativePressure = __Infer<typeof OwnConstructionNativePressure>;
+
+export const OwnConstructionTraversalLinks = __t.object("OwnConstructionTraversalLinks", {});
+export type OwnConstructionTraversalLinks = __Infer<typeof OwnConstructionTraversalLinks>;
+
+export const OwnConstructionTraversals = __t.object("OwnConstructionTraversals", {});
+export type OwnConstructionTraversals = __Infer<typeof OwnConstructionTraversals>;
 
 export const OwnEditReceipts = __t.object("OwnEditReceipts", {});
 export type OwnEditReceipts = __Infer<typeof OwnEditReceipts>;

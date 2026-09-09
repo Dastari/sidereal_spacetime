@@ -13,7 +13,7 @@ import {
 export default __t.row({
   revision: __t.u64(),
   kitGranted: __t.bool().name("kit_granted"),
-  pocketsId: __t.string().name("pockets_id"),
+  pocketsId: __t.string().primaryKey().name("pockets_id"),
   carriedMassKg: __t.f64().name("carried_mass_kg"),
   carryLimitKg: __t.f64().name("carry_limit_kg"),
 });

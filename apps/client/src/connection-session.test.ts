@@ -1,7 +1,12 @@
 import { afterEach, expect, it, vi } from "vitest";
 import { createConnectionSession } from "./connection-session";
 afterEach(() => vi.useRealTimers());
-function fixture() {
+function fixture(
+  auth: { kind: "oidc"; token: string } | undefined = {
+    kind: "oidc",
+    token: "first",
+  },
+) {
   vi.useFakeTimers();
   const connections: any[] = [];
   const changes = vi.fn(),
@@ -19,7 +24,7 @@ function fixture() {
     },
     statuses,
     changes,
-    { kind: "oidc", token: "first" },
+    auth,
   );
   return { connections, session, statuses, selected: () => selected };
 }
@@ -27,7 +32,7 @@ it("keeps the old presence until the replacement subscription is ready", () => {
   const f = fixture(),
     old = f.connections[0];
   old.status("ready");
-  vi.advanceTimersByTime(30_000);
+  f.session.authenticate({ kind: "oidc", token: "second" });
   const next = f.connections[1];
   expect(old.disconnect).not.toHaveBeenCalled();
   expect(f.selected()).toBe(old);
@@ -40,7 +45,7 @@ it("keeps the old presence until the replacement subscription is ready", () => {
 it("uses the refreshed ID token and ignores an obsolete pending connection", () => {
   const f = fixture();
   f.connections[0].status("ready");
-  vi.advanceTimersByTime(30_000);
+  f.session.authenticate({ kind: "oidc", token: "second" });
   const obsolete = f.connections[1];
   f.session.authenticate({ kind: "oidc", token: "renewed" });
   const latest = f.connections[2];
@@ -55,7 +60,7 @@ it("retries a failed replacement without dropping the existing connection", () =
   const f = fixture(),
     old = f.connections[0];
   old.status("ready");
-  vi.advanceTimersByTime(30_000);
+  f.session.authenticate({ kind: "oidc", token: "second" });
   f.connections[1].status("offline", "failed");
   expect(old.disconnect).not.toHaveBeenCalled();
   vi.advanceTimersByTime(1_000);
@@ -65,7 +70,7 @@ it("retries a failed replacement without dropping the existing connection", () =
 it("disposes both connections and prevents late callbacks from reviving a session", () => {
   const f = fixture();
   f.connections[0].status("ready");
-  vi.advanceTimersByTime(30_000);
+  f.session.authenticate({ kind: "oidc", token: "second" });
   f.session.dispose();
   f.connections[1].status("ready");
   vi.advanceTimersByTime(120_000);
@@ -73,11 +78,12 @@ it("disposes both connections and prevents late callbacks from reviving a sessio
   expect(f.connections).toHaveLength(2);
 });
 
-it("retries a timed-out renewal before the old 60-second ticket expires", () => {
+it("retries a timed-out token replacement while retaining the usable socket", () => {
   const f = fixture(),
     old = f.connections[0];
   old.status("ready");
-  vi.advanceTimersByTime(45_000);
+  f.session.authenticate({ kind: "oidc", token: "second" });
+  vi.advanceTimersByTime(15_000);
   expect(f.connections[1].disconnect).toHaveBeenCalledOnce();
   expect(f.statuses).toHaveBeenLastCalledWith(
     "connecting",
@@ -105,7 +111,7 @@ it("immediately reconnects a lost current socket without claiming that it is rea
 it("caps retry backoff and cancels pending retries on disposal", () => {
   const f = fixture();
   f.connections[0].status("ready");
-  vi.advanceTimersByTime(30_000);
+  f.session.authenticate({ kind: "oidc", token: "second" });
   for (const delay of [1000, 2000, 4000, 5000, 5000]) {
     const n = f.connections.length;
     f.connections[n - 1].status("offline");
@@ -118,4 +124,30 @@ it("caps retry backoff and cancels pending retries on disposal", () => {
   const n = f.connections.length;
   vi.advanceTimersByTime(120_000);
   expect(f.connections).toHaveLength(n);
+});
+
+it("does not periodically rotate healthy sockets or replace them for the same token", () => {
+  const f = fixture();
+  f.connections[0].status("ready");
+  f.session.authenticate({ kind: "oidc", token: "first" });
+  vi.advanceTimersByTime(24 * 60 * 60 * 1000);
+  expect(f.connections).toHaveLength(1);
+  expect(f.connections[0].disconnect).not.toHaveBeenCalled();
+  f.session.dispose();
+});
+it("reconnects development identities after socket failure and startup failure", () => {
+  const f = fixture();
+  f.session.authenticate(undefined);
+  const dev = f.connections.at(-1);
+  expect(dev.auth).toBeUndefined();
+  dev.status("offline");
+  vi.advanceTimersByTime(1000);
+  const retry = f.connections.at(-1);
+  expect(retry.auth).toBeUndefined();
+  retry.status("ready");
+  retry.status("offline");
+  vi.advanceTimersByTime(0);
+  expect(f.connections.at(-1)).not.toBe(retry);
+  expect(f.connections.at(-1).auth).toBeUndefined();
+  f.session.dispose();
 });

@@ -21,7 +21,10 @@
     "./construction-boundary-family": "./src/construction-boundary-family.ts",
     "./construction-native-room-published": "./src/construction-native-room-published.ts",
     "./construction-seal-motion": "./src/construction-seal-motion.ts",
-    "./construction-pressure-document": "./src/construction-pressure-document.ts"
+    "./construction-pressure-document": "./src/construction-pressure-document.ts",
+    "./construction-traversal": "./src/construction-traversal.ts",
+    "./construction-traversal-document": "./src/construction-traversal-document.ts",
+    "./construction-stairs": "./src/construction-stairs.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",

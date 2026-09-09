@@ -1,8 +1,9 @@
 export type GameAuthentication = { token: string; kind: "oidc" };
 type Status = "connecting" | "ready" | "offline";
-/** The pinned SDK exchanges ID tokens for 60-second WebSocket tickets. Rotate
- * the authenticated connection while the old subscription is still present.
- * Closing first would revoke the final presence lease and eject a seated actor. */
+/** Replace a socket on token change or transport failure, never on a ticket timer.
+ * The SDK exchanges credentials when opening the WebSocket; that handshake does
+ * not establish a periodic renewal deadline. OIDC owns token renewal. Keep an old
+ * usable subscription until its replacement is ready to preserve presence. */
 export function createConnectionSession<T extends { disconnect(): void }>(
   open: (
     change: () => void,
@@ -20,15 +21,15 @@ export function createConnectionSession<T extends { disconnect(): void }>(
     disposed = false;
   let retryDelay = 1_000;
   let generation = 0,
-    rotation: ReturnType<typeof setTimeout> | undefined,
+    retryTimer: ReturnType<typeof setTimeout> | undefined,
     timeout: ReturnType<typeof setTimeout> | undefined;
   const clearTimers = () => {
-    clearTimeout(rotation);
+    clearTimeout(retryTimer);
     clearTimeout(timeout);
   };
-  const schedule = (delay = 30_000) => {
-    clearTimeout(rotation);
-    if (auth && !disposed) rotation = setTimeout(replace, delay);
+  const schedule = (delay: number) => {
+    clearTimeout(retryTimer);
+    if (!disposed) retryTimer = setTimeout(replace, delay);
   };
   const retry = () => {
     schedule(retryDelay);
@@ -57,9 +58,8 @@ export function createConnectionSession<T extends { disconnect(): void }>(
           onStatus("ready");
           onChange();
           old?.disconnect();
-          schedule();
         } else if (candidate === current) {
-          if (state === "offline" && auth) {
+          if (state === "offline") {
             onStatus("connecting", "Reconnecting to your account…");
             if (!pending) schedule(0);
           } else onStatus(state, error);

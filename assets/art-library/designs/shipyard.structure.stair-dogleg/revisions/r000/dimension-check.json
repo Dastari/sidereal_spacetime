@@ -1,0 +1,32 @@
+{
+  "schema": "sidereal.stair-dimensional-check.v1",
+  "status": "arithmetic-only-not-native-validation",
+  "checks": [
+    {
+      "name": "Seventeen uniform risers meet walking datums",
+      "pass": true
+    },
+    {
+      "name": "First flight meets intermediate landing",
+      "pass": true
+    },
+    {
+      "name": "Second flight meets grid-aligned upper landing",
+      "pass": true
+    },
+    {
+      "name": "Every riser and going lies on 1/32m lattice",
+      "pass": true
+    },
+    {
+      "name": "Conservative predicted entrance-edge headroom",
+      "pass": true,
+      "predictedClearanceM": 0.4500000000000002
+    },
+    {
+      "name": "Radius0.3m turn reference fits proposed landing free region",
+      "pass": true
+    }
+  ],
+  "requiresNext": "Actual authored Blender mesh/support/body sweep qualification; these calculations do not replace it."
+}

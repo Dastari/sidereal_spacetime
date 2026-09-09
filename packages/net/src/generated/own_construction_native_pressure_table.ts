@@ -17,7 +17,7 @@ import {
 export default __t.row({
   instanceId: __t.string().name("instance_id"),
   deckId: __t.string().name("deck_id"),
-  doorId: __t.string().name("door_id"),
+  doorId: __t.string().primaryKey().name("door_id"),
   fraction: __t.f64(),
   sealRetraction: __t.f64().name("seal_retraction"),
   revision: __t.u64(),

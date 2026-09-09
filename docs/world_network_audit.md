@@ -1,0 +1,38 @@
+# World and connection audit — 2026-09-09
+
+Status: first corrective candidate implemented and under isolated browser/authority review. This is not shared-world completion or a public deployment. The owner's construction goal remains active; complete the immediate write/input corrections before integrating the qualified native stair fixture. Character/inventory presentation remains externally owned; planets remain paused.
+
+## Verified and corrected in this candidate
+
+- Handcrafted projected rows now use the pinned SDK's `t.row` and exactly one primary key. Existing sender admission and row/column filtering stay intact. A real-SDK metadata regression covers all 19 handcrafted projections. Traversal link intents use an actor/link composite key, because one owner may project multiple actors. Inventory status uses its stable pocket-container ID; hotbar slot keys are scoped to the current single-character view. More general multi-character views must introduce actor/slot composite keys before expansion.
+- Unchanged atmosphere structure/gas rows no longer write on every global tick. Gas conservation and active fixed-step/replay checks remain. Empty pressure/traversal schedulers no longer create/update clocks; resuming work after idle does not catch up elapsed wall time. Native pressure still writes its small clock while installations exist; this is not a fully event-driven scheduler.
+- Both stock-deck and construction-review movement avoid identical character-row updates while blocked. Traversal no longer repeatedly clears already-cleared input. Door occupancy reads use the existing instance index.
+- The bound-document size claim was already addressed: the pure instance planner checks 262144 UTF-8 bytes after UUID expansion, with a regression. The world adapter uses that validated result.
+- Healthy game/dashboard connections no longer rotate every 30 seconds. Token changes preserve make-before-break replacement; socket failures retry for development identities too. Subscription handles and cache-listener cleanup are retained. The installed SDK's subscription error field is `context.event`; the candidate retains it and supplies a useful fallback.
+- Focused visible tabs explicitly claim movement control. A private per-character connection lease plus bounded per-connection sequence cursor prevents unrelated tab sequence bases from poisoning input. Release/reclaim retains that connection's sequence floor; actual disconnect removes its cursor. Nonholder/stale movement is a harmless no-op and cannot clear the new holder. Station and character permissions still apply. Consumption checks the holder's own admission, even when a sibling tab is admitted.
+- Movement sends changed intent promptly, refreshes moving intent at 100 ms (below the existing 300 ms expiry), and refreshes idle intent at 1 s. Unfocused tabs release control and stop sending. An idle 1 s cadence must not be applied to ongoing movement.
+
+## Audit qualifications
+
+The installed SDK is 2.10.0. Its `server/views.ts` emits key metadata only for row builders, and `server/view.test-d.ts` demonstrates `t.row`. [Official view documentation](https://spacetimedb.com/docs/functions/views/) describes keyed update callbacks versus insert/delete-only behavior without a known key. Missing keys do **not**, by themselves, prove every unchanged row or whole document is re-sent on every refresh. Measure actual bytes/callbacks before assigning savings.
+
+`src/sdk/ws.ts` exchanges the auth token when opening a socket. That connection-time ticket is not a demonstrated 60-second established-socket lifetime. Historical successful renewal timings are retained in authentication records; their ticket-expiry interpretation is corrected. `db_connection_impl.ts` places subscription errors in `event`, so changing that field blindly would introduce a bug.
+
+Likewise, 100 callers ×25 view definitions does not establish 2500 evaluations for every ship write. Dependency tracking, accessed indexes, subscriptions and changed rows matter. The current private-account topology is real; the proposed fanout magnitude needs instrumented measurement.
+
+Do not wrap subsystem mutation in broad catch-and-continue blocks: reducer atomicity must not be replaced with committing partially mutated state. Independent scheduled reducers need explicit ownership and invariants before they provide fault isolation.
+
+## Next shared-universe delivery gates
+
+1. Capture the corrected idle/moving baseline: reducer counts, logical row writes, view insert/update/delete, bytes, CPU and multi-client scaling. Existing tests are correctness gates, not a claimed 100-player capacity.
+2. Introduce one canonical system/body seed independent of account identity, and separate static ship descriptions from dynamic world-space motion. Add deterministic spatial-cell keys/indexes, including negative-coordinate and boundary tests. Migrate existing private fixtures explicitly with stable UUID/state mapping; do not silently duplicate or replace cargo/characters/ships on login.
+3. Specify discovery/admission before publishing moving-entity projections. Keep authoritative tables private. Shared anonymous views may expose genuinely universal information. A lean public presence table is acceptable only when its limited columns and server-enforced visibility policy are proven against arbitrary client subscriptions. Nine-cell client SQL is an interest filter, never authorization. If experimental visibility filters cannot prove that policy on the pinned server, retain authorized keyed views until a measured safe alternative is available.
+4. Add retained cell-subscription transitions with overlap/deduplication, authorization revocation and reconnect recovery. Render remote actors keyed by stable entity ID with server-tick interpolation, insertion and deletion. Split client cache/store notifications instead of repainting the entire React composition on any row delta.
+5. Prove two distinct OIDC accounts in the same authoritative world: both see the same discovered bodies and each other where permitted; neither sees the other's private inventory or hidden installations. Shared crew/seat grants, movement and disconnect cases must be tested separately from private-account persistence.
+6. Move due events into bounded independent scheduled reducers where suitable. Preserve the existing timer row's installed interval unless an explicit migration changes it; editing a source constant is not a migration. Door/pressure/traversal clocks, power accounting and permission expiry must retain transactional boundaries and recovery semantics.
+
+Compression/light-mode/index choices require supported-version tests and byte/CPU measurements. Reduce debug logging before load measurement through the managed lifecycle. Backups need a verified restore exercise; an archive existing on disk is not replication or point-in-time recovery.
+
+## Construction continuation
+
+The native ladder's isolated gameplay/permission/reconnect acceptance is complete. Stairs r000/a003 now have native geometry and 13 focused pure movement tests; integration still requires actual deck-datum binding, private standing/step state, reservations, accepted-position rendering and a real browser walk. Powered elevators remain behind utility/load/interlock authority. Neither fixture completes the authored multi-deck Wayfarer migration.

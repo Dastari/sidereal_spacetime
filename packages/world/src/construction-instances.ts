@@ -1,4 +1,12 @@
 import { installNativePressure } from "./construction-native-pressure";
+import { nativeTraversalRoomInstallation } from "@sidereal/sim/construction-traversal-document";
+import { NATIVE_TRAVERSAL_ROOM_PIN } from "@sidereal/content/construction-traversal-room";
+import { nativeTraversalRegistry } from "./construction-traversal-registry";
+import {
+  installTraversalLink,
+  requireStandingConstructionActor,
+  constructionTraversalPositionAllowed,
+} from "./construction-traversal";
 import {
   compilePublishedNativePressureRoom,
   NATIVE_PRESSURE_FLOW_POLICY,
@@ -97,6 +105,18 @@ export function spawnBlueprint(
     });
   }
   installDoors(ctx, plan.instanceId, plan.document);
+  if (plan.document.traversalRoom) {
+    installTraversalLink(
+      ctx,
+      {
+        sourceLinkId: plan.mappings.traversalLinks[0].sourceId,
+        adapterId: NATIVE_TRAVERSAL_ROOM_PIN.id,
+        adapterRevision: NATIVE_TRAVERSAL_ROOM_PIN.revision,
+        installation: nativeTraversalRoomInstallation(plan.document, 1n, 1n),
+      },
+      nativeTraversalRegistry,
+    );
+  }
   if (plan.document.pressureRoom) {
     const ids = validateNativePressureRoomDocument(plan.document);
     const native = compilePublishedNativePressureRoom({
@@ -119,8 +139,8 @@ export function spawnBlueprint(
   }
   receipt(ctx, op.key, op.request, plan.instanceId, 1n);
 }
-export const instanceProjection = t.object("ConstructionInstanceStatus", {
-  id: t.string(),
+export const instanceProjection = t.row("ConstructionInstanceStatus", {
+  id: t.string().primaryKey(),
   workspaceId: t.string(),
   blueprintId: t.string(),
   blueprintSha256: t.string(),
@@ -152,8 +172,8 @@ export function ownInstances(ctx: ReadContext) {
     }),
   );
 }
-export const deckProjection = t.object("ConstructionDeckStatus", {
-  id: t.string(),
+export const deckProjection = t.row("ConstructionDeckStatus", {
+  id: t.string().primaryKey(),
   instanceId: t.string(),
   sourceDeckId: t.string(),
   name: t.string(),
@@ -247,6 +267,7 @@ export function leaveReview(
 ) {
   const actor = actorFor(ctx);
   if (!actor?.connected) throw new SenderError("Connected character required");
+  requireStandingConstructionActor(ctx, actor.id);
   const location = ctx.db.constructionLocation.characterId.find(actor.id);
   const op = operation(
     ctx,
@@ -285,8 +306,8 @@ export function leaveReview(
     args.expectedRevision,
   );
 }
-export const locationProjection = t.object("ConstructionLocationStatus", {
-  characterId: t.string(),
+export const locationProjection = t.row("ConstructionLocationStatus", {
+  characterId: t.string().primaryKey(),
   visitId: t.string(),
   instanceId: t.string(),
   deckId: t.string(),
@@ -314,6 +335,7 @@ export function stepActor(
 ) {
   const location = ctx.db.constructionLocation.characterId.find(actor.id);
   if (!location) return false;
+  if (ctx.db.constructionTraversal.characterId.find(actor.id)) return true;
   const instance = ctx.db.constructionInstance.id.find(location.instanceId);
   if (!instance || actor.shipId !== instance.id) return true;
   const frame = constructionCollision(ctx, instance, location.deckId);
@@ -329,13 +351,26 @@ export function stepActor(
     [(command.dx / norm) * distance, (command.dy / norm) * distance],
     0.3,
   );
-  ctx.db.character.id.update({
-    ...actor,
-    localX: next.position[0],
-    localY: next.position[1],
-    sprinting:
-      command.sprint &&
-      (next.position[0] !== actor.localX || next.position[1] !== actor.localY),
-  });
+  if (
+    !constructionTraversalPositionAllowed(
+      ctx,
+      actor.id,
+      instance.id,
+      location.deckId,
+      next.position[0],
+      next.position[1],
+    )
+  )
+    return true;
+  const moved =
+    next.position[0] !== actor.localX || next.position[1] !== actor.localY;
+  const sprinting = command.sprint && moved;
+  if (moved || actor.sprinting !== sprinting)
+    ctx.db.character.id.update({
+      ...actor,
+      localX: next.position[0],
+      localY: next.position[1],
+      sprinting,
+    });
   return true;
 }

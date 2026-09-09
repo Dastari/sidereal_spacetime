@@ -3,6 +3,7 @@ import {
   nativePressureRoomCollision,
 } from "@sidereal/sim/construction-pressure-document";
 import { pinnedFamilyCollision } from "@sidereal/sim/construction-boundary-family";
+import { nativeTraversalRoomCollision } from "@sidereal/sim/construction-traversal-document";
 import {
   SenderError,
   t,
@@ -95,11 +96,13 @@ export function constructionCollision(
       shipId: instance.id,
       perimeterHalfWidthM: width,
       partitionHalfWidthM: document.pressureRoom ? 0.0625 : width,
-      obstacles: document.pressureRoom
-        ? nativePressureRoomCollision(document, deckId)
-        : document.boundaryKit?.revision === "r004"
-          ? pinnedFamilyCollision(document.layout, deckId)
-          : [],
+      obstacles: document.traversalRoom
+        ? nativeTraversalRoomCollision(document, deckId)
+        : document.pressureRoom
+          ? nativePressureRoomCollision(document, deckId)
+          : document.boundaryKit?.revision === "r004"
+            ? pinnedFamilyCollision(document.layout, deckId)
+            : [],
     });
     baseCache.set(key, base);
   }
@@ -226,10 +229,10 @@ export function stepDoors(ctx: Context) {
       door.id
     )
       continue;
-    const bodies = [...ctx.db.constructionLocation.iter()]
-      .filter(
-        (l) => l.instanceId === door.instanceId && l.deckId === door.deckId,
-      )
+    const bodies = [
+      ...ctx.db.constructionLocation.by_instance.filter(door.instanceId),
+    ]
+      .filter((l) => l.deckId === door.deckId)
       .map((l) => ctx.db.character.id.find(l.characterId))
       .filter((a) => a?.shipId === door.instanceId)
       .map((a) => ({
@@ -257,8 +260,8 @@ export function stepDoors(ctx: Context) {
     });
   }
 }
-export const doorProjection = t.object("ConstructionDoorStatus", {
-  id: t.string(),
+export const doorProjection = t.row("ConstructionDoorStatus", {
+  id: t.string().primaryKey(),
   instanceId: t.string(),
   deckId: t.string(),
   fraction: t.f64(),

@@ -173,6 +173,8 @@ if (restore) {
   try {
     await a.reducers.enterLab({ name: "Smoke Alpha" });
     await b.reducers.enterLab({ name: "Smoke Beta" });
+    await a.reducers.claimInputControl({});
+    await b.reducers.claimInputControl({});
     await wait(
       () => a.db.ownShips.count() === 1n && b.db.ownShips.count() === 1n,
       "two private ships",
@@ -286,6 +288,7 @@ if (restore) {
     const { connection: flight } = await client();
     try {
       await flight.reducers.enterLab({ name: "IFCS proof" });
+      await flight.reducers.claimInputControl({});
       await wait(() => flight.db.ownShips.count() === 1n, "IFCS fixture");
       await wait(
         () => flight.db.ownActuatorOutputs.count() === 9n,
@@ -474,6 +477,27 @@ if (restore) {
       sprint: true,
     });
     await wait(() => !ownActor().sprinting, "zero movement clears sprint");
+    // Replayed input is an idempotent no-op, not a rejected promise. It must not
+    // refresh the movement timeout or replace the newer accepted stop.
+    const stopped = { x: ownActor().localX, y: ownActor().localY };
+    await a.reducers.setIntent({
+      sequence: 5n,
+      throttle: 0,
+      turn: 0,
+      dx: 1,
+      dy: 0,
+      sprint: true,
+    });
+    await new Promise((r) => setTimeout(r, 200));
+    assert.equal(
+      ownActor().localX,
+      stopped.x,
+      "stale input leaves accepted stop unchanged",
+    );
+    assert.equal(ownActor().localY, stopped.y);
+    assert.equal(ownActor().sprinting, false);
+    summary.stale_input_is_noop = true;
+
     await a.reducers.useStation({});
     await a.reducers.useStation({});
     await a.reducers.setIntent({

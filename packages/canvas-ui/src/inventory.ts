@@ -2,8 +2,10 @@ import { drawHudIcon, type HudIcon } from "./hud-icons";
 import type { EquipmentSlot } from "@sidereal/content/character-components";
 import {
   INVENTORY_DEFINITIONS,
+  LIQUID_DENSITY_KG_PER_LITRE,
   type InventoryDefinition,
 } from "../../content/src/inventory";
+import { inventoryMass } from "../../sim/src/inventory";
 import { CanvasUI, palette } from "./toolkit";
 import { contains, type Rect } from "./layout";
 import { WindowStack, type FloatingWindow } from "./windows";
@@ -64,12 +66,15 @@ export interface InventoryActions {
   equipItem(itemId: string): void;
   transferItem?(itemId: string, containerId: string): void;
   takeAll?(containerId: string): void;
+  storeAll?(containerId: string, destinationId: string): void;
   dropItem?(itemId: string): void;
   assignHotbar(slot: number, itemId: string): void;
   activateHotbar(slot: number): void;
 }
 const definition = (item: InventoryItem) =>
   INVENTORY_DEFINITIONS.find((d) => d.id === item.definitionId);
+/** Shared logical cell size; overflow scrolls instead of shrinking footprints. */
+export const INVENTORY_CELL_SIZE = 48;
 export function inventoryPlacement(
   state: InventoryState,
   item: InventoryItem,
@@ -277,6 +282,7 @@ export function createInventoryUI(
     rarity: string;
     sort: "Name" | "Rarity" | "Type";
     view: "icons" | "grid";
+    scrollX: number;
   };
   const filters = new Map<string, Filters>();
   const filterFor = (id: string) => {
@@ -286,7 +292,8 @@ export function createInventoryUI(
         query: "",
         rarity: "All",
         sort: "Name",
-        view: "icons",
+        view: "grid",
+        scrollX: 0,
       });
     return filters.get(id)!;
   };
@@ -303,6 +310,7 @@ export function createInventoryUI(
     container: InventoryContainer;
     rect: Rect;
     cell: number;
+    limitX: number;
     visible?: Rect;
   }[] = [];
   let panes: { window: string; container: InventoryContainer; rect: Rect }[] =
@@ -356,20 +364,23 @@ export function createInventoryUI(
     }
     cancelHeld();
   }
-  function quickTransfer(item: InventoryItem) {
-    if (!current) return;
-    const source = current.state.containers.find(
-      (c) => c.id === item.containerId,
-    );
-    const other = [...stack.windows]
+  function openTransferContainer() {
+    return [...stack.windows]
       .reverse()
-      .map((w) => current!.state.containers.find((c) => c.id === w.id))
+      .map((w) => current?.state.containers.find((c) => c.id === w.id))
       .find(
         (c) =>
           c?.kind === "grid" &&
           !c.carried &&
           !c.placementId?.startsWith("ground:"),
       );
+  }
+  function quickTransfer(item: InventoryItem) {
+    if (!current) return;
+    const source = current.state.containers.find(
+      (c) => c.id === item.containerId,
+    );
+    const other = openTransferContainer();
     transfer(
       item,
       (item.equipmentSlot || source?.carried) && other ? other.id : "",
@@ -414,7 +425,13 @@ export function createInventoryUI(
       x,
       y: 72 + Math.min(3, existing.length) * 14,
       w: width,
-      h: Math.max(290, Math.min(640, ui.height - 178)),
+      h: Math.max(
+        290,
+        Math.min(
+          id === "character" ? 680 : 640,
+          ui.height - (id === "character" ? 128 : 178),
+        ),
+      ),
     });
     stack.clamp(ui.width, ui.height);
     invalidate();
@@ -622,11 +639,12 @@ export function createInventoryUI(
     if (!d) return;
     const id = "item-" + window + "-" + item.id;
     ui.ctx.save();
-    if (dim || item.id === selected) ui.ctx.globalAlpha = dim ? 0.22 : 0.38;
+    if (dim) ui.ctx.globalAlpha = 0.3;
     drawItemFrame(ui, box, {
       rarity: itemRarity(d.id),
       hovered: ui.hover === id,
       focused: ui.focus === id,
+      selected: item.id === selected,
     });
     icon(ui, d, { x: box.x + 6, y: box.y + 6, w: box.w - 12, h: box.h - 12 });
     ui.ctx.restore();
@@ -749,9 +767,9 @@ export function createInventoryUI(
       () => {
         const sorts = ["Name", "Rarity", "Type"] as const;
         f.sort = sorts[(sorts.indexOf(f.sort) + 1) % sorts.length];
-        f.view = "icons";
         invalidate();
       },
+      { disabled: f.view === "grid" },
     );
     ui.button(
       "view-" + window.id,
@@ -824,22 +842,73 @@ export function createInventoryUI(
         );
       return Math.max(cell, Math.ceil(visible.length / cols) * (cell + 7));
     }
-    const cell = Math.min(48, r.w / container.width),
-      target = {
-        window,
-        container,
-        rect: {
-          x: r.x,
-          y: r.y,
-          w: cell * container.width,
-          h: cell * container.height,
-        },
-        cell,
+    // Keep the physical layout visible, including filtered-out occupied cells.
+    const cell = INVENTORY_CELL_SIZE;
+    const limitX = Math.max(0, container.width * cell - r.w);
+    f.scrollX = Math.max(0, Math.min(limitX, f.scrollX));
+    const scrollHeight = limitX ? 34 : 0;
+    if (limitX) {
+      const pan = (delta: number) => {
+        f.scrollX = Math.max(0, Math.min(limitX, f.scrollX + delta));
+        invalidate();
       };
+      ui.button(
+        "grid-left-" + container.id,
+        "‹",
+        { x: r.x, y: r.y, w: 26, h: 26 },
+        () => pan(-cell),
+        { disabled: f.scrollX === 0 },
+      );
+      ui.button(
+        "grid-right-" + container.id,
+        "›",
+        { x: r.x + r.w - 26, y: r.y, w: 26, h: 26 },
+        () => pan(cell),
+        { disabled: f.scrollX === limitX },
+      );
+      const track = { x: r.x + 32, y: r.y, w: r.w - 64, h: 26 };
+      ui.ctx.fillStyle = palette.line;
+      ui.ctx.fillRect(track.x + 12, track.y + 11, track.w - 24, 4);
+      ui.ctx.fillStyle = palette.blue;
+      ui.ctx.fillRect(
+        track.x + 8 + ((track.w - 24) * f.scrollX) / limitX,
+        track.y + 3,
+        8,
+        20,
+      );
+      ui.hits.push({
+        id: "grid-pan-" + container.id,
+        label: "Scroll grid horizontally; Shift-wheel also scrolls",
+        rect: track,
+        value: f.scrollX / limitX,
+        change: (value) => {
+          f.scrollX = Math.max(0, Math.min(1, value)) * limitX;
+          invalidate();
+        },
+      });
+    }
+    const origin = { x: r.x - f.scrollX, y: r.y + scrollHeight };
+    const target = {
+      window,
+      container,
+      rect: {
+        x: origin.x,
+        y: origin.y,
+        w: cell * container.width,
+        h: cell * container.height,
+      },
+      cell,
+      limitX,
+    };
     targets.push(target);
     for (let y = 0; y < container.height; y++)
       for (let x = 0; x < container.width; x++) {
-        const box = { x: r.x + x * cell, y: r.y + y * cell, w: cell, h: cell };
+        const box = {
+          x: origin.x + x * cell,
+          y: origin.y + y * cell,
+          w: cell,
+          h: cell,
+        };
         drawItemFrame(
           ui,
           { x: box.x + 2, y: box.y + 2, w: cell - 4, h: cell - 4 },
@@ -862,8 +931,8 @@ export function createInventoryUI(
           state,
           item,
           {
-            x: r.x + item.x * cell + 2,
-            y: r.y + item.y * cell + 2,
+            x: origin.x + item.x * cell + 2,
+            y: origin.y + item.y * cell + 2,
             w: (item.rotated ? d.height : d.width) * cell - 4,
             h: (item.rotated ? d.width : d.height) * cell - 4,
           },
@@ -872,7 +941,7 @@ export function createInventoryUI(
           !matches(item, f),
         );
     }
-    return target.rect.h;
+    return target.rect.h + scrollHeight;
   }
   function storage(
     state: InventoryState,
@@ -881,10 +950,13 @@ export function createInventoryUI(
     pending: boolean,
   ) {
     const pack = state.items.find((i) => i.equipmentSlot === "back");
+    const equippedStorage = new Set(
+      state.items.filter((i) => i.equipmentSlot).map((i) => i.id),
+    );
     const personal = state.containers.filter(
       (c) =>
         c.kind === "grid" &&
-        (c.parentItemId === pack?.id || (!c.parentItemId && c.carried)),
+        (equippedStorage.has(c.parentItemId) || (!c.parentItemId && c.carried)),
     );
     const container =
       window.id === "inventory"
@@ -904,11 +976,22 @@ export function createInventoryUI(
         );
         return 50;
       }
+      const tabColumns = Math.max(1, Math.floor(r.w / 114));
       personal.forEach((entry, i) =>
         ui.button(
           "storage-tab-" + entry.id,
-          entry.parentItemId ? "Backpack" : "Pockets",
-          { x: r.x + i * 114, y, w: 106, h: 29 },
+          entry.parentItemId
+            ? state.items.find((i) => i.id === entry.parentItemId)
+                ?.equipmentSlot === "back"
+              ? "Backpack"
+              : entry.name
+            : "Pockets",
+          {
+            x: r.x + (i % tabColumns) * 114,
+            y: y + Math.floor(i / tabColumns) * 39,
+            w: Math.min(106, r.w),
+            h: 29,
+          },
           () => {
             activeContainer = entry.id;
             window.scroll = 0;
@@ -917,7 +1000,7 @@ export function createInventoryUI(
           { selected: container?.id === entry.id },
         ),
       );
-      y += 39;
+      y += 39 * Math.ceil(personal.length / tabColumns);
     }
     if (!container) return 0;
     if (container.kind === "liquid") {
@@ -950,31 +1033,29 @@ export function createInventoryUI(
     const count = state.items.filter(
       (i) => i.containerId === container.id,
     ).length;
-    ui.text(
-      `${count} items · ${container.width} × ${container.height} slots`,
-      r.x,
-      y,
-      11,
-      palette.muted,
-      r.w / 2,
-    );
-    ui.text(
-      window.id === "inventory"
-        ? `${state.carriedMassKg.toFixed(1)} / ${state.carryLimitKg} kg carried`
-        : `${container.maxMassKg} kg capacity`,
-      r.x + r.w * 0.54,
-      y,
-      11,
-      palette.blue,
-      r.w * 0.46,
-    );
-    if (window.id === "inventory")
-      ui.bar(
-        { x: r.x + r.w * 0.54, y: y + 16, w: r.w * 0.46, h: 5 },
-        state.carriedMassKg / Math.max(1, state.carryLimitKg),
+    const destination =
+      window.id === "inventory" ? openTransferContainer() : undefined;
+    const personalHeader = window.id === "inventory";
+    const payload = personalHeader
+      ? state.carriedMassKg
+      : inventoryMass(
+          state,
+          INVENTORY_DEFINITIONS,
+          LIQUID_DENSITY_KG_PER_LITRE,
+        ).containerMass(container.id);
+    const capacity = personalHeader ? state.carryLimitKg : container.maxMassKg;
+    if (personalHeader && destination && actions.storeAll) {
+      ui.button(
+        "store-all-" + container.id,
+        "Store all",
+        { x: r.x, y, w: 128, h: 32 },
+        () => {
+          actions.storeAll!(container.id, destination.id);
+          cancelHeld();
+        },
+        { disabled: pending || !count },
       );
-    y += 30;
-    if (!container.carried && actions.takeAll) {
+    } else if (!container.carried && actions.takeAll) {
       ui.button(
         "take-all-" + container.id,
         "Take all",
@@ -985,40 +1066,23 @@ export function createInventoryUI(
         },
         { disabled: pending || !count },
       );
-      ui.text(
-        "Backpack first · excess stays here",
-        r.x + 140,
-        y + 9,
-        11,
-        palette.muted,
-        r.w - 140,
-      );
-      y += 44;
     }
-    y += grid(state, container, { ...r, y }, window.id, pending) + 15;
+    const meterX = r.x + Math.max(142, r.w * 0.54),
+      meterW = r.x + r.w - meterX;
     ui.text(
-      "Click to pick up · Shift-click to transfer · Right-click for actions",
-      r.x,
-      y,
-      10,
-      palette.muted,
-      r.w,
+      `${payload.toFixed(1)} / ${capacity} kg`,
+      meterX,
+      y + 3,
+      11,
+      palette.blue,
+      meterW,
     );
-    y += 25;
-    if (window.id === "inventory") {
-      const nested = state.containers.filter(
-        (c) => c.parentItemId && !personal.includes(c) && c.carried,
-      );
-      nested.forEach((entry) => {
-        ui.button(
-          "open-container-" + entry.id,
-          entry.name,
-          { x: r.x, y, w: r.w, h: 29 },
-          () => open(entry.id),
-        );
-        y += 36;
-      });
-    }
+    ui.bar(
+      { x: meterX, y: y + 22, w: meterW, h: 5 },
+      payload / Math.max(1, capacity),
+    );
+    y += 44;
+    y += grid(state, container, { ...r, y }, window.id, pending) + 8;
     return y - r.y + 8;
   }
   function quickSlot(
@@ -1258,6 +1322,12 @@ export function createInventoryUI(
       for (const target of targets.filter((t) => t.window === window.id))
         target.visible = {
           ...target.rect,
+          x: Math.max(target.rect.x, viewport.x),
+          w: Math.max(
+            0,
+            Math.min(target.rect.x + target.rect.w, viewport.x + viewport.w) -
+              Math.max(target.rect.x, viewport.x),
+          ),
           y: Math.max(target.rect.y, viewport.y),
           h: Math.max(
             0,
@@ -1311,22 +1381,53 @@ export function createInventoryUI(
       const item = state.items.find((i) => i.id === selected),
         d = item && definition(item),
         p = ui.pointerPosition();
-      if (d) {
+      if (d && item) {
+        const top = stack.at(p.x, p.y);
+        const destination = targets.find(
+          (t) =>
+            t.window === top?.id && contains(t.visible ?? t.rect, p.x, p.y),
+        );
+        const source = targets.find((t) => t.container.id === item.containerId);
+        const cell = destination?.cell ?? source?.cell ?? INVENTORY_CELL_SIZE;
+        const column = destination
+          ? Math.floor((p.x - destination.rect.x) / cell)
+          : 0;
+        const row = destination
+          ? Math.floor((p.y - destination.rect.y) / cell)
+          : 0;
         const box = {
-          x: dragging?.x ?? Math.max(8, p.x + 12),
-          y: dragging?.y ?? Math.max(8, p.y + 12),
-          w: 64,
-          h: 76,
+          x: destination
+            ? destination.rect.x + column * cell + 2
+            : Math.max(8, p.x + 12),
+          y: destination
+            ? destination.rect.y + row * cell + 2
+            : Math.max(8, p.y + 12),
+          w: (rotated ? d.height : d.width) * cell - 4,
+          h: (rotated ? d.width : d.height) * cell - 4,
         };
         ui.ctx.save();
-        ui.ctx.globalAlpha = 0.85;
+        ui.ctx.globalAlpha = 0.96;
         drawItemFrame(ui, box, { rarity: itemRarity(d.id), selected: true });
         icon(ui, d, { x: box.x + 4, y: box.y + 4, w: box.w - 8, h: box.h - 8 });
+        if (destination) {
+          ui.ctx.strokeStyle = inventoryPlacement(
+            state,
+            item,
+            destination.container,
+            column,
+            row,
+            rotated,
+          )
+            ? palette.red
+            : palette.green;
+          ui.ctx.lineWidth = 2;
+          ui.ctx.strokeRect(box.x, box.y, box.w, box.h);
+        }
         ui.ctx.restore();
         ui.text(
           "R rotate · Right-click cancel",
           Math.min(box.x, ui.width - 180),
-          Math.min(box.y + 82, ui.height - 18),
+          Math.min(box.y + box.h + 8, ui.height - 18),
           10,
           palette.blue,
           180,
@@ -1408,12 +1509,20 @@ export function createInventoryUI(
       const id = stack.windows.at(-1)?.id;
       if (id) closeWindow(id);
     },
-    scroll: (delta: number, x?: number, y?: number) => {
+    scroll: (delta: number, x?: number, y?: number, horizontalDelta = 0) => {
       const w =
         x !== undefined && y !== undefined
           ? stack.at(x, y)
           : stack.windows.at(-1);
       if (w) {
+        const grid = targets.find((t) => t.window === w.id);
+        if (horizontalDelta && grid) {
+          const f = filterFor(grid.container.id);
+          f.scrollX = Math.max(
+            0,
+            Math.min(grid.limitX, f.scrollX + horizontalDelta),
+          );
+        }
         w.scroll = Math.max(0, Math.min(w.limit, w.scroll + delta));
         context = undefined;
         invalidate();

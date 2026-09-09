@@ -1,3 +1,4 @@
+import { validateNativeTraversalRoomDocument } from "./construction-traversal-document";
 import type { ConstructionDocument } from "@sidereal/content/construction";
 import {
   CONSTRUCTION_ROOF_INTERFACES as kit,
@@ -13,15 +14,27 @@ import {
 
 /** Compile matching native roof geometry only. Contact geometry is not a seal rating. */
 export function planNativeRoofs(
-  document: Pick<ConstructionDocument, "layout" | "floors">,
+  document: Pick<ConstructionDocument, "layout" | "floors"> &
+    Partial<ConstructionDocument>,
   deckId: string,
 ): ConstructionRoofPlacement[] {
+  const traversal = document.traversalRoom
+    ? validateNativeTraversalRoomDocument(document as ConstructionDocument)
+    : undefined;
   const deck = document.layout.decks.find((d) => d.id === deckId);
   if (!deck) throw Error("Unknown roof deck");
   if (!deck.roof) return [];
   if (deck.ceiling !== kit.datumsUnits.roofUnderside)
     throw Error("Pinned native roof requires its exact ceiling datum");
-  const floors = document.floors.filter((f) => f.deckId === deckId);
+  const floors = document.floors.filter(
+    (f) =>
+      f.deckId === deckId &&
+      !(
+        traversal?.lowerDeckId === deckId &&
+        f.origin[0] === 64 &&
+        f.origin[1] === 64
+      ),
+  );
   return floors.map((floor) => {
     const part = kit.parts.find((p) => p.id === floor.partId);
     const paired = floorKit.parts.find((p) => p.id === floor.partId);

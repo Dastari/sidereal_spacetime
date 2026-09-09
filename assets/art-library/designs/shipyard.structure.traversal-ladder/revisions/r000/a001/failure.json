@@ -1,0 +1,4 @@
+{
+  "status": "render-failed",
+  "reason": "Installed Blender4.3.2 lacks OpenImageDenoise; exact GLB/source and five passed geometry checks preserved. Next attempt disables denoising without changing geometry."
+}

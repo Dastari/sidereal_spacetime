@@ -202,6 +202,7 @@ export async function inventorySmoke(
   );
   // Reach an actual world container using validated walk intents through its doorway.
   await a.reducers.useStation({});
+    await a.reducers.claimInputControl({});
   let sequence = 0n;
   const walk = async (dx: number, dy: number, duration: number) => {
     const end = Date.now() + duration;
@@ -416,6 +417,18 @@ export async function inventorySmoke(
     y: retainedPistol.y,
     rotated: retainedPistol.rotated,
   });
+  // Store all uses one expected revision and keeps carried/equipped UUIDs intact.
+  const storeBefore = items().filter(i => i.containerId === packGrid.id).map(i => ({...i}));
+  const storeCommand = {...mutation(), containerId:packGrid.id, destinationId:crate.id};
+  await a.reducers.storeAllInventoryItems(storeCommand);
+  const storeRevision=state().revision;
+  await a.reducers.storeAllInventoryItems(storeCommand);
+  assert.equal(state().revision,storeRevision,"store-all retry is exactly once");
+  const stored=storeBefore.filter(i=>items().find(x=>x.id===i.id)?.containerId===crate.id);
+  assert(stored.length>0,"store all transfers fitting carried items");
+  assert.equal(items().find(i=>i.id===pack.id)?.equipmentSlot,"back","store all retains worn backpack");
+  await assert.rejects(b.reducers.storeAllInventoryItems({containerId:packGrid.id,destinationId:crate.id,expectedRevision:[...b.db.ownInventoryState.iter()][0].revision,operationId:"foreign-store-all"}));
+  for(const i of stored)await a.reducers.moveInventoryItem({...mutation(),itemId:i.id,containerId:i.containerId,x:i.x,y:i.y,rotated:i.rotated});
   // Ground loot uses server-derived positions, persistent UUIDs and ordinary access.
   const dropBefore = {...find("scanner")};
   const dropCommand = {...mutation(),itemId:scanner.id};

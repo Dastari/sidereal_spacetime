@@ -1,0 +1,85 @@
+{
+  "schema": "sidereal.native-traversal-validation.v1",
+  "pass": true,
+  "checks": [
+    {
+      "name": "Actual native solids clear segment body envelope0",
+      "pass": true,
+      "hits": []
+    },
+    {
+      "name": "Actual native solids clear segment body envelope1",
+      "pass": true,
+      "hits": []
+    },
+    {
+      "name": "Actual native solids clear segment body envelope2",
+      "pass": true,
+      "hits": []
+    },
+    {
+      "name": "Actual lower-roof has genuine2m panel/edge aperture",
+      "pass": true,
+      "hits": []
+    },
+    {
+      "name": "Actual upper-floor has genuine2m panel/edge aperture",
+      "pass": true,
+      "hits": []
+    },
+    {
+      "name": "Exact authored-to-GLB triangle multiset traversal-aperture-edge",
+      "pass": true,
+      "triangles": 424,
+      "coordinateToleranceM": 1e-06,
+      "maxVertexCoordinateDeviationM": 4.76837158203125e-07
+    },
+    {
+      "name": "Exact authored-to-GLB triangle multiset traversal-guard",
+      "pass": true,
+      "triangles": 5452,
+      "coordinateToleranceM": 1e-06,
+      "maxVertexCoordinateDeviationM": 4.76837158203125e-07
+    },
+    {
+      "name": "Exact authored-to-GLB triangle multiset traversal-ladder",
+      "pass": true,
+      "triangles": 11280,
+      "coordinateToleranceM": 1e-06,
+      "maxVertexCoordinateDeviationM": 4.76837158203125e-07
+    },
+    {
+      "name": "Portable opaque PBR materials retained",
+      "pass": true
+    },
+    {
+      "name": "Only3native groups and4path sockets exported",
+      "pass": true
+    },
+    {
+      "name": "Actual standing landing clear lower",
+      "pass": true,
+      "hits": []
+    },
+    {
+      "name": "Actual standing landing clear upper",
+      "pass": true,
+      "hits": []
+    },
+    {
+      "name": "Upper guard assembly has minimum1m clear dedicated entry",
+      "pass": true,
+      "measuredEntryClearWidthM": 1.0399999618530273
+    }
+  ],
+  "cost": {
+    "meshes": 3,
+    "primitives": 11,
+    "triangles": 17156,
+    "materials": 6,
+    "textures": 0
+  },
+  "sourceBlendSha256": "2eb0ff3e028f147811b413e03555b194c3ba4acff4b1ad5a89103114067f0242",
+  "glbSha256": "f4fb453f44fe84f577107d72fad15459e6e59ec9ad2ed122bceadead5b855625",
+  "qualificationScope": "Exact native static geometry and bounded capsule path only; no gameplay publication, pressure/load/armor rating, climb animation fit or owner artistic approval."
+}

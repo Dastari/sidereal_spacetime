@@ -1,6 +1,6 @@
 import {expect,test,vi} from 'vitest';
 import {Identity} from 'spacetimedb';
-vi.mock('spacetimedb/server',()=>({SenderError:class extends Error{},Range:class {constructor(public from:any,public to:any){}},t:new Proxy({},{get:()=>()=>({})})}));
+vi.mock('spacetimedb/server',()=>({SenderError:class extends Error{},Range:class {constructor(public from:any,public to:any){}},t:new Proxy({},{get:()=>()=>({primaryKey(){return this;}})})}));
 vi.mock('./auth',()=>({requireGame:(ctx:any)=>{if(!ctx.testAuthenticated)throw Error('unauthenticated');return {kind:ctx.testKind??'oidc'};}}));
 import {setGrant,saveDraft,publishBlueprint,ownDrafts,ownBlueprints,expireGrants} from './construction';
 import {emptyLayout,SHAPE_REVISION} from '../../content/src/ship-layout';

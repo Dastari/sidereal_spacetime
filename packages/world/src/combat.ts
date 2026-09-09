@@ -54,7 +54,8 @@ export function setAim(ctx: Context, args: { active: boolean; angle: number }) {
     ctx.db.combatAim.characterId.update(row);
   else ctx.db.combatAim.insert(row);
 }
-export const combatProjection = t.object("CombatStatus", {
+export const combatProjection = t.row("CombatStatus", {
+  characterId: t.string().primaryKey(),
   aimActive: t.bool(),
   aimAngle: t.f64(),
   weaponItemId: t.string(),
@@ -79,6 +80,7 @@ export function combatView(ctx: ReadContext) {
     energy = item && ctx.db.weaponEnergy.itemId.find(item.id);
   return [
     {
+      characterId: actor.id,
       aimActive: !!aim?.active && available(ctx, actor),
       aimAngle: aim?.angle ?? 0,
       weaponItemId: definition ? item!.id : "",

@@ -1,0 +1,22 @@
+{
+  "adapterId": "shipyard.structure.traversal-ladder",
+  "revision": "r000-a002",
+  "status": "staged",
+  "auditSha256": "4f1d8be6d380a2223ff0b08de194d327bef1711ae73281d9bf50eb6a3e874e1b",
+  "sources": {
+    "ladder-kit": {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a002/kit.glb",
+      "sha256": "ea82d300630c04567391947eddf1fd84a42d45c7db354ef2efcf5150cc6cf336"
+    },
+    "floor": {
+      "path": "assets/runtime/assembly/floor/r002/kit.glb",
+      "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585"
+    },
+    "roof": {
+      "path": "assets/art-library/designs/shipyard.structure.roof-kit/revisions/r001/kit.glb",
+      "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711"
+    }
+  },
+  "runtimePublication": false,
+  "ownerFinalSignoff": null
+}

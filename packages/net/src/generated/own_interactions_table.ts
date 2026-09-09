@@ -11,7 +11,7 @@ import {
 } from "spacetimedb";
 
 export default __t.row({
-  id: __t.string(),
+  id: __t.string().primaryKey(),
   placementId: __t.string().name("placement_id"),
   assetId: __t.string().name("asset_id"),
   name: __t.string(),

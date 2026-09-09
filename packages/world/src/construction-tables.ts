@@ -121,7 +121,12 @@ export const constructionDeck = table(
 );
 /** Explicit development review transit; future physical docking/EVA uses its own authority. */
 export const constructionLocation = table(
-  { name: "construction_location" },
+  {
+    name: "construction_location",
+    indexes: [
+      { accessor: "by_instance", algorithm: "btree", columns: ["instanceId"] },
+    ],
+  },
   {
     characterId: t.string().primaryKey(),
     visitId: t.string(),

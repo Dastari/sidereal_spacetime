@@ -1,0 +1,323 @@
+[
+  {
+    "supportId": "flight-a-tread-01",
+    "pass": false,
+    "hits": [
+      {
+        "solidId": "GEO-stair-flight-a--tread-02",
+        "penetrationLowerBoundM": 0.10746347749063292
+      },
+      {
+        "solidId": "GEO-stair-flight-a--riser-02",
+        "penetrationLowerBoundM": 0.08768390310671209
+      },
+      {
+        "solidId": "GEO-stair-flight-a--nosing-02",
+        "penetrationLowerBoundM": 0.09426637690841991
+      },
+      {
+        "solidId": "GEO-stair-flight-a--grip-02-0",
+        "penetrationLowerBoundM": 0.024713191604390228
+      }
+    ],
+    "minimumContainingBoxClearanceM": -0.10746347749063292
+  },
+  {
+    "supportId": "flight-a-tread-02",
+    "pass": false,
+    "hits": [
+      {
+        "solidId": "GEO-stair-flight-a--tread-03",
+        "penetrationLowerBoundM": 0.10746347749063292
+      },
+      {
+        "solidId": "GEO-stair-flight-a--riser-03",
+        "penetrationLowerBoundM": 0.08768390310671209
+      },
+      {
+        "solidId": "GEO-stair-flight-a--nosing-03",
+        "penetrationLowerBoundM": 0.09426637690841991
+      },
+      {
+        "solidId": "GEO-stair-flight-a--grip-03-0",
+        "penetrationLowerBoundM": 0.024713191604390228
+      }
+    ],
+    "minimumContainingBoxClearanceM": -0.10746347749063292
+  },
+  {
+    "supportId": "flight-a-tread-03",
+    "pass": false,
+    "hits": [
+      {
+        "solidId": "GEO-stair-flight-a--tread-04",
+        "penetrationLowerBoundM": 0.10746347749063292
+      },
+      {
+        "solidId": "GEO-stair-flight-a--riser-04",
+        "penetrationLowerBoundM": 0.08768390310671209
+      },
+      {
+        "solidId": "GEO-stair-flight-a--nosing-04",
+        "penetrationLowerBoundM": 0.09426637690841991
+      },
+      {
+        "solidId": "GEO-stair-flight-a--grip-04-0",
+        "penetrationLowerBoundM": 0.024713191604390228
+      }
+    ],
+    "minimumContainingBoxClearanceM": -0.10746347749063292
+  },
+  {
+    "supportId": "flight-a-tread-04",
+    "pass": false,
+    "hits": [
+      {
+        "solidId": "GEO-stair-flight-a--tread-05",
+        "penetrationLowerBoundM": 0.10746347749063292
+      },
+      {
+        "solidId": "GEO-stair-flight-a--riser-05",
+        "penetrationLowerBoundM": 0.08768390310671209
+      },
+      {
+        "solidId": "GEO-stair-flight-a--nosing-05",
+        "penetrationLowerBoundM": 0.09426637690841991
+      },
+      {
+        "solidId": "GEO-stair-flight-a--grip-05-0",
+        "penetrationLowerBoundM": 0.024713191604390228
+      }
+    ],
+    "minimumContainingBoxClearanceM": -0.10746347749063292
+  },
+  {
+    "supportId": "flight-a-tread-05",
+    "pass": false,
+    "hits": [
+      {
+        "solidId": "GEO-stair-flight-a--tread-06",
+        "penetrationLowerBoundM": 0.10746347749063292
+      },
+      {
+        "solidId": "GEO-stair-flight-a--riser-06",
+        "penetrationLowerBoundM": 0.08768390310671209
+      },
+      {
+        "solidId": "GEO-stair-flight-a--nosing-06",
+        "penetrationLowerBoundM": 0.09426637690841991
+      },
+      {
+        "solidId": "GEO-stair-flight-a--grip-06-0",
+        "penetrationLowerBoundM": 0.024713191604390228
+      }
+    ],
+    "minimumContainingBoxClearanceM": -0.10746347749063292
+  },
+  {
+    "supportId": "flight-a-tread-06",
+    "pass": false,
+    "hits": [
+      {
+        "solidId": "GEO-stair-flight-a--tread-07",
+        "penetrationLowerBoundM": 0.10746347749063292
+      },
+      {
+        "solidId": "GEO-stair-flight-a--riser-07",
+        "penetrationLowerBoundM": 0.08768390310671209
+      },
+      {
+        "solidId": "GEO-stair-flight-a--nosing-07",
+        "penetrationLowerBoundM": 0.09426637690841991
+      },
+      {
+        "solidId": "GEO-stair-flight-a--grip-07-0",
+        "penetrationLowerBoundM": 0.024713191604390228
+      }
+    ],
+    "minimumContainingBoxClearanceM": -0.10746347749063292
+  },
+  {
+    "supportId": "flight-a-tread-07",
+    "pass": false,
+    "hits": [
+      {
+        "solidId": "GEO-stair-flight-a--tread-08",
+        "penetrationLowerBoundM": 0.10746347749063292
+      },
+      {
+        "solidId": "GEO-stair-flight-a--riser-08",
+        "penetrationLowerBoundM": 0.08768390310671209
+      },
+      {
+        "solidId": "GEO-stair-flight-a--nosing-08",
+        "penetrationLowerBoundM": 0.09426637690841991
+      },
+      {
+        "solidId": "GEO-stair-flight-a--grip-08-0",
+        "penetrationLowerBoundM": 0.024713191604390228
+      }
+    ],
+    "minimumContainingBoxClearanceM": -0.10746347749063292
+  },
+  {
+    "supportId": "flight-a-tread-08",
+    "pass": false,
+    "hits": [
+      {
+        "solidId": "GEO-stair-midlanding--bearing-pan",
+        "penetrationLowerBoundM": 0.10746347749063292
+      }
+    ],
+    "minimumContainingBoxClearanceM": -0.10746347749063292
+  },
+  {
+    "supportId": "flight-b-tread-01",
+    "pass": false,
+    "hits": [
+      {
+        "solidId": "GEO-stair-flight-b--tread-02",
+        "penetrationLowerBoundM": 0.10746347749063306
+      },
+      {
+        "solidId": "GEO-stair-flight-b--riser-02",
+        "penetrationLowerBoundM": 0.08768390310671226
+      },
+      {
+        "solidId": "GEO-stair-flight-b--nosing-02",
+        "penetrationLowerBoundM": 0.09426637690842005
+      },
+      {
+        "solidId": "GEO-stair-flight-b--grip-02-2",
+        "penetrationLowerBoundM": 0.04866611013900679
+      }
+    ],
+    "minimumContainingBoxClearanceM": -0.10746347749063306
+  },
+  {
+    "supportId": "flight-b-tread-02",
+    "pass": false,
+    "hits": [
+      {
+        "solidId": "GEO-stair-flight-b--tread-03",
+        "penetrationLowerBoundM": 0.10746347749063306
+      },
+      {
+        "solidId": "GEO-stair-flight-b--riser-03",
+        "penetrationLowerBoundM": 0.08768390310671226
+      },
+      {
+        "solidId": "GEO-stair-flight-b--nosing-03",
+        "penetrationLowerBoundM": 0.09426637690842005
+      },
+      {
+        "solidId": "GEO-stair-flight-b--grip-03-2",
+        "penetrationLowerBoundM": 0.04866611013900679
+      }
+    ],
+    "minimumContainingBoxClearanceM": -0.10746347749063306
+  },
+  {
+    "supportId": "flight-b-tread-03",
+    "pass": false,
+    "hits": [
+      {
+        "solidId": "GEO-stair-flight-b--tread-04",
+        "penetrationLowerBoundM": 0.10746347749063306
+      },
+      {
+        "solidId": "GEO-stair-flight-b--riser-04",
+        "penetrationLowerBoundM": 0.08768390310671226
+      },
+      {
+        "solidId": "GEO-stair-flight-b--nosing-04",
+        "penetrationLowerBoundM": 0.09426637690842005
+      },
+      {
+        "solidId": "GEO-stair-flight-b--grip-04-2",
+        "penetrationLowerBoundM": 0.04866611013900679
+      }
+    ],
+    "minimumContainingBoxClearanceM": -0.10746347749063306
+  },
+  {
+    "supportId": "flight-b-tread-04",
+    "pass": false,
+    "hits": [
+      {
+        "solidId": "GEO-stair-flight-b--tread-05",
+        "penetrationLowerBoundM": 0.10746347749063306
+      },
+      {
+        "solidId": "GEO-stair-flight-b--riser-05",
+        "penetrationLowerBoundM": 0.08768390310671226
+      },
+      {
+        "solidId": "GEO-stair-flight-b--nosing-05",
+        "penetrationLowerBoundM": 0.09426637690842005
+      },
+      {
+        "solidId": "GEO-stair-flight-b--grip-05-2",
+        "penetrationLowerBoundM": 0.04866611013900679
+      }
+    ],
+    "minimumContainingBoxClearanceM": -0.10746347749063306
+  },
+  {
+    "supportId": "flight-b-tread-05",
+    "pass": false,
+    "hits": [
+      {
+        "solidId": "GEO-stair-flight-b--tread-06",
+        "penetrationLowerBoundM": 0.10746347749063306
+      },
+      {
+        "solidId": "GEO-stair-flight-b--riser-06",
+        "penetrationLowerBoundM": 0.08768390310671226
+      },
+      {
+        "solidId": "GEO-stair-flight-b--nosing-06",
+        "penetrationLowerBoundM": 0.09426637690842005
+      },
+      {
+        "solidId": "GEO-stair-flight-b--grip-06-2",
+        "penetrationLowerBoundM": 0.04866611013900679
+      }
+    ],
+    "minimumContainingBoxClearanceM": -0.10746347749063306
+  },
+  {
+    "supportId": "flight-b-tread-06",
+    "pass": false,
+    "hits": [
+      {
+        "solidId": "GEO-stair-flight-b--tread-07",
+        "penetrationLowerBoundM": 0.10746347749063306
+      },
+      {
+        "solidId": "GEO-stair-flight-b--riser-07",
+        "penetrationLowerBoundM": 0.08768390310671226
+      },
+      {
+        "solidId": "GEO-stair-flight-b--nosing-07",
+        "penetrationLowerBoundM": 0.09426637690842005
+      },
+      {
+        "solidId": "GEO-stair-flight-b--grip-07-2",
+        "penetrationLowerBoundM": 0.04866611013900679
+      }
+    ],
+    "minimumContainingBoxClearanceM": -0.10746347749063306
+  },
+  {
+    "supportId": "flight-b-tread-07",
+    "pass": false,
+    "hits": [
+      {
+        "solidId": "REVIEW-upper-floor-4-2--GEO-part-a3f5c1c3caa171a94d6c--floor",
+        "penetrationLowerBoundM": 0.10746347749063306
+      }
+    ],
+    "minimumContainingBoxClearanceM": -0.10746347749063306
+  }
+]

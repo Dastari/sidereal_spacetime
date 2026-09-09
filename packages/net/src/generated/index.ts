@@ -37,7 +37,10 @@ import {
 import AcceptIdentityLinkReducer from "./accept_identity_link_reducer";
 import ActivateInventoryHotbarReducer from "./activate_inventory_hotbar_reducer";
 import AssignInventoryHotbarReducer from "./assign_inventory_hotbar_reducer";
+import BeginConstructionTraversalReducer from "./begin_construction_traversal_reducer";
+import CancelConstructionTraversalReducer from "./cancel_construction_traversal_reducer";
 import ClaimCharacterArmoryReducer from "./claim_character_armory_reducer";
+import ClaimInputControlReducer from "./claim_input_control_reducer";
 import ClaimStarterKitReducer from "./claim_starter_kit_reducer";
 import DropInventoryItemReducer from "./drop_inventory_item_reducer";
 import EnterConstructionReviewReducer from "./enter_construction_review_reducer";
@@ -48,6 +51,7 @@ import InteractObjectReducer from "./interact_object_reducer";
 import LeaveConstructionReviewReducer from "./leave_construction_review_reducer";
 import MoveInventoryItemReducer from "./move_inventory_item_reducer";
 import PublishConstructionBlueprintReducer from "./publish_construction_blueprint_reducer";
+import ReleaseInputControlReducer from "./release_input_control_reducer";
 import RenameShipReducer from "./rename_ship_reducer";
 import RequestIdentityLinkReducer from "./request_identity_link_reducer";
 import SaveConstructionDraftReducer from "./save_construction_draft_reducer";
@@ -57,6 +61,7 @@ import SetConstructionDoorReducer from "./set_construction_door_reducer";
 import SetConstructionGrantReducer from "./set_construction_grant_reducer";
 import SetIntentReducer from "./set_intent_reducer";
 import SpawnConstructionBlueprintReducer from "./spawn_construction_blueprint_reducer";
+import StoreAllInventoryItemsReducer from "./store_all_inventory_items_reducer";
 import TakeAllInventoryItemsReducer from "./take_all_inventory_items_reducer";
 import TransferInventoryItemReducer from "./transfer_inventory_item_reducer";
 import UseStationReducer from "./use_station_reducer";
@@ -76,6 +81,8 @@ import OwnConstructionGrantsRow from "./own_construction_grants_table";
 import OwnConstructionInstancesRow from "./own_construction_instances_table";
 import OwnConstructionLocationRow from "./own_construction_location_table";
 import OwnConstructionNativePressureRow from "./own_construction_native_pressure_table";
+import OwnConstructionTraversalLinksRow from "./own_construction_traversal_links_table";
+import OwnConstructionTraversalsRow from "./own_construction_traversals_table";
 import OwnEditReceiptsRow from "./own_edit_receipts_table";
 import OwnGroundItemsRow from "./own_ground_items_table";
 import OwnIdentityLinksRow from "./own_identity_links_table";
@@ -176,6 +183,20 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnConstructionNativePressureRow),
+  ownConstructionTraversalLinks: __table({
+    name: 'own_construction_traversal_links',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnConstructionTraversalLinksRow),
+  ownConstructionTraversals: __table({
+    name: 'own_construction_traversals',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnConstructionTraversalsRow),
   ownEditReceipts: __table({
     name: 'own_edit_receipts',
     indexes: [
@@ -260,7 +281,10 @@ const reducersSchema = __reducers(
   __reducerSchema("accept_identity_link", AcceptIdentityLinkReducer),
   __reducerSchema("activate_inventory_hotbar", ActivateInventoryHotbarReducer),
   __reducerSchema("assign_inventory_hotbar", AssignInventoryHotbarReducer),
+  __reducerSchema("begin_construction_traversal", BeginConstructionTraversalReducer),
+  __reducerSchema("cancel_construction_traversal", CancelConstructionTraversalReducer),
   __reducerSchema("claim_character_armory", ClaimCharacterArmoryReducer),
+  __reducerSchema("claim_input_control", ClaimInputControlReducer),
   __reducerSchema("claim_starter_kit", ClaimStarterKitReducer),
   __reducerSchema("drop_inventory_item", DropInventoryItemReducer),
   __reducerSchema("enter_construction_review", EnterConstructionReviewReducer),
@@ -271,6 +295,7 @@ const reducersSchema = __reducers(
   __reducerSchema("leave_construction_review", LeaveConstructionReviewReducer),
   __reducerSchema("move_inventory_item", MoveInventoryItemReducer),
   __reducerSchema("publish_construction_blueprint", PublishConstructionBlueprintReducer),
+  __reducerSchema("release_input_control", ReleaseInputControlReducer),
   __reducerSchema("rename_ship", RenameShipReducer),
   __reducerSchema("request_identity_link", RequestIdentityLinkReducer),
   __reducerSchema("save_construction_draft", SaveConstructionDraftReducer),
@@ -280,6 +305,7 @@ const reducersSchema = __reducers(
   __reducerSchema("set_construction_grant", SetConstructionGrantReducer),
   __reducerSchema("set_intent", SetIntentReducer),
   __reducerSchema("spawn_construction_blueprint", SpawnConstructionBlueprintReducer),
+  __reducerSchema("store_all_inventory_items", StoreAllInventoryItemsReducer),
   __reducerSchema("take_all_inventory_items", TakeAllInventoryItemsReducer),
   __reducerSchema("transfer_inventory_item", TransferInventoryItemReducer),
   __reducerSchema("use_station", UseStationReducer),

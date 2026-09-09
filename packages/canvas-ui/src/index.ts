@@ -1,6 +1,6 @@
+import { drawAppearanceControls } from "./appearance-controls";
 import { drawGroundLoot } from "./ground-loot";
 import type { GroundItemLabel } from "../../render/src/ground-items";
-import { CHARACTER_HAIR_STYLES } from "@sidereal/content/character-components";
 import type { LocalLightLimit } from "../../render/src/local-light-budget";
 import { topHudLayout } from "./system-menu-layout";
 import { drawGraphicsMenu } from "./graphics-menu";
@@ -189,11 +189,11 @@ export function createGameUI(
     }
     return false;
   };
-  ui.scroll = (delta, x, y) => {
+  ui.scroll = (delta, x, y, horizontalDelta) => {
     if (diagnostics.scroll(delta, x, y)) return;
     if (!menu && objectDetails?.scroll(delta, x, y)) return;
     if (inventory?.isOpen()) {
-      inventory.scroll(delta, x, y);
+      inventory.scroll(delta, x, y, horizontalDelta);
       return;
     }
     if (menu) {
@@ -671,7 +671,7 @@ export function createGameUI(
         tab === "Graphics"
           ? 570
           : tab === "Crew"
-            ? 350
+            ? 600
             : tab === "Controls"
               ? 330
               : 300;
@@ -791,63 +791,11 @@ export function createGameUI(
           ),
         );
       } else if (tab === "Crew") {
-        ui.text("Character appearance", inner.x, inner.y, 20, palette.blue);
-        ui.paragraph(
-          "Body and hair are saved to your character. Equip armor and clothing individually from inventory.",
-          { ...inner, y: inner.y + 35, h: 50 },
-          14,
-        );
-        const look = resolveCrewAppearance(appearance);
-        const rows: {
-          key: keyof CrewAppearance;
-          label: string;
-          options: readonly string[];
-        }[] = [
-          { key: "bodyType", label: "Body", options: ["male", "female"] },
-          { key: "hairStyle", label: "Hair", options: CHARACTER_HAIR_STYLES },
-        ];
-        const slots = grid(
-          { ...inner, y: inner.y + 90, h: 180 },
-          2,
-          rows.length,
-        );
-        rows.forEach(({ key, label, options }, i) =>
-          ui.button(
-            "crew-" + key,
-            label + ": " + look[key] + " ›",
-            slots[i],
-            () => {
-              const value =
-                options[
-                  (options.indexOf(String(look[key])) + 1) % options.length
-                ];
-              appearance =
-                key === "outfit"
-                  ? { outfit: value as CrewAppearance["outfit"] }
-                  : { ...appearance, [key]: value };
-              customize();
-            },
-          ),
-        );
-        const swatches = [
-          ["Warm", "#bb805e"],
-          ["Light", "#e0b899"],
-          ["Deep", "#764e3b"],
-          ["Tan", "#bc8c68"],
-        ];
-        const colors = grid({ ...inner, y: inner.y + 284, h: 64 }, 2, 4);
-        swatches.forEach(([label, value], i) =>
-          ui.button(
-            "skin-" + label,
-            label,
-            colors[i],
-            () => {
-              appearance = { ...appearance, skin: value };
-              customize();
-            },
-            { selected: look.skin === value },
-          ),
-        );
+        const height = drawAppearanceControls(ui, inner, appearance, patch => {
+          appearance = { ...appearance, ...patch };
+          customize();
+        });
+        maxScroll = Math.max(0, height - viewport.h);
       } else {
         const rows = [
           "W / S      Thrust forward / reverse",

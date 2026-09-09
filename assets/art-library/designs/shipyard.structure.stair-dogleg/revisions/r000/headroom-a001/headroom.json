@@ -1,0 +1,191 @@
+{
+  "schema": "sidereal.stair-native-headroom-study.v1",
+  "status": "entrance-only-staged",
+  "sourcePins": {
+    "roof": {
+      "path": "assets/art-library/designs/shipyard.structure.roof-kit/revisions/r001/kit.glb",
+      "prefix": "GEO-roof-square-2m--surface",
+      "z": 3,
+      "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711"
+    },
+    "floor": {
+      "path": "assets/runtime/assembly/floor/r002/kit.glb",
+      "prefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "z": 3.1875,
+      "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585"
+    }
+  },
+  "nativeTreads": [
+    {
+      "id": "GEO-flight-a-tread-1",
+      "boundsM": {
+        "min": [
+          0.25,
+          1.6875,
+          0.34375
+        ],
+        "max": [
+          1.75,
+          2.0,
+          0.375
+        ]
+      }
+    },
+    {
+      "id": "GEO-flight-a-tread-2",
+      "boundsM": {
+        "min": [
+          0.25,
+          2.0,
+          0.53125
+        ],
+        "max": [
+          1.75,
+          2.3125,
+          0.5625
+        ]
+      }
+    },
+    {
+      "id": "GEO-flight-a-tread-3",
+      "boundsM": {
+        "min": [
+          0.25,
+          2.3125,
+          0.71875
+        ],
+        "max": [
+          1.75,
+          2.625,
+          0.75
+        ]
+      }
+    },
+    {
+      "id": "GEO-flight-a-tread-4",
+      "boundsM": {
+        "min": [
+          0.25,
+          2.625,
+          0.90625
+        ],
+        "max": [
+          1.75,
+          2.9375,
+          0.9375
+        ]
+      }
+    },
+    {
+      "id": "GEO-flight-a-tread-5",
+      "boundsM": {
+        "min": [
+          0.25,
+          2.9375,
+          1.09375
+        ],
+        "max": [
+          1.75,
+          3.25,
+          1.125
+        ]
+      }
+    },
+    {
+      "id": "GEO-flight-a-tread-6",
+      "boundsM": {
+        "min": [
+          0.25,
+          3.25,
+          1.28125
+        ],
+        "max": [
+          1.75,
+          3.5625,
+          1.3125
+        ]
+      }
+    },
+    {
+      "id": "GEO-flight-a-tread-7",
+      "boundsM": {
+        "min": [
+          0.25,
+          3.5625,
+          1.46875
+        ],
+        "max": [
+          1.75,
+          3.875,
+          1.5
+        ]
+      }
+    },
+    {
+      "id": "GEO-flight-a-tread-8",
+      "boundsM": {
+        "min": [
+          0.25,
+          3.875,
+          1.65625
+        ],
+        "max": [
+          1.75,
+          4.1875,
+          1.6875
+        ]
+      }
+    }
+  ],
+  "nativeObstacleBounds": [
+    {
+      "id": "REVIEW-native-roof--GEO-roof-square-2m--surface",
+      "boundsM": {
+        "min": [
+          0.0,
+          0.0,
+          3.0
+        ],
+        "max": [
+          2.0,
+          2.0,
+          3.1875
+        ]
+      }
+    },
+    {
+      "id": "REVIEW-native-floor--GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "boundsM": {
+        "min": [
+          0.0,
+          0.0,
+          3.1875
+        ],
+        "max": [
+          2.0,
+          2.0,
+          3.375
+        ]
+      }
+    }
+  ],
+  "body": {
+    "radiusM": 0.3,
+    "heightM": 1.8
+  },
+  "method": "Actual evaluated mesh bounds contain native surfaces. Continuous piecewise-constant leading-radius lift envelope; critical support events plus obstacle interval closest points. Capsule-axis distance to containing AABBs minus radius is a conservative surface-clearance lower bound. Applies in either direction to this same upright body envelope.",
+  "criticalSamples": 28,
+  "worst": {
+    "centerYM": 2.325,
+    "feetZM": 0.9375,
+    "obstacleId": "REVIEW-native-roof--GEO-roof-square-2m--surface",
+    "capsuleClearanceLowerBoundM": 0.3496393230093143
+  },
+  "rectangularBodyRoofClearanceLowerBoundM": 0.44999999999999996,
+  "pass": true,
+  "limits": [
+    "Roof-edge clearance only: conservative lift envelope is not a qualified supported step gait.",
+    "No landing turn, guards, supports, full-kit collision, upper ceiling, armor fit or runtime qualification.",
+    "No native GLB export or publication."
+  ]
+}

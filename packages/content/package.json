@@ -17,7 +17,10 @@
     "./inventory": "./src/inventory.ts",
     "./storage-fixtures": "./src/storage-fixtures.ts",
     "./construction-boundary-family": "./src/construction-boundary-family.ts",
-    "./construction-pressure-room": "./src/construction-pressure-room.ts"
+    "./construction-pressure-room": "./src/construction-pressure-room.ts",
+    "./construction-traversal": "./src/construction-traversal.ts",
+    "./construction-traversal-room": "./src/construction-traversal-room.ts",
+    "./construction-stairs": "./src/construction-stairs.ts"
   },
   "dependencies": {}
 }

@@ -23,6 +23,22 @@ export function ConstructionReview({
       )
     : [];
   const grants = [...connection.db.ownConstructionGrants.iter()];
+  const traversal = [...connection.db.ownConstructionTraversals.iter()].find(
+    (t) => t.characterId === actor.id && t.instanceId === visit?.instanceId,
+  );
+  const links = [...connection.db.ownConstructionTraversalLinks.iter()].filter(
+    (l) => l.characterId === actor.id && l.instanceId === visit?.instanceId,
+  );
+  const decks = [...connection.db.ownConstructionDecks.iter()];
+  const workspaceId = instances.find(
+    (i) => i.id === visit?.instanceId,
+  )?.workspaceId;
+  const mayTraverse = grants.some(
+    (g) =>
+      g.workspaceId === workspaceId &&
+      g.capability === "instance.spawn" &&
+      !g.revoked,
+  );
   const pressure =
     visit &&
     [...connection.db.ownConstructionNativePressure.iter()].find(
@@ -37,11 +53,12 @@ export function ConstructionReview({
     >
       <strong>Shipyard walking review</strong>
       <small>
-        Authored native rooms and local door controls. Qualified pressure
-        fixture only; powered airlocks and flight remain pending.
+        Authored room and ladder review. Powered airlocks and flight remain
+        pending.
       </small>
       {visit ? (
         <button
+          disabled={!!traversal}
           onClick={() =>
             act(() =>
               connection.reducers.leaveConstructionReview({
@@ -80,6 +97,65 @@ export function ConstructionReview({
           </button>
         ))
       )}
+      {visit && (
+        <section aria-label="Deck traversal">
+          <strong>
+            {decks.find((d) => d.id === visit.deckId)?.name ?? "Occupied deck"}
+          </strong>
+          {traversal ? (
+            <>
+              <small>
+                {traversal.phase} · {traversal.z.toFixed(2)} m
+                {traversal.interruption ? ` · ${traversal.interruption}` : ""}
+              </small>
+              <button
+                disabled={!mayTraverse || traversal.phase === "returning"}
+                onClick={() =>
+                  act(() =>
+                    connection.reducers.cancelConstructionTraversal({
+                      traversalId: traversal.traversalId,
+                      expectedVisitId: visit.visitId,
+                      expectedRevision: traversal.revision,
+                      operationId: createOperationId(),
+                    }),
+                  )
+                }
+              >
+                Cancel climb · return to start
+              </button>
+            </>
+          ) : (
+            links.map((link) => {
+              const distance = Math.hypot(
+                actor.localX - link.x,
+                actor.localY - link.y,
+              );
+              return (
+                <button
+                  key={link.linkId}
+                  disabled={!mayTraverse || !link.atLanding}
+                  onClick={() =>
+                    act(() =>
+                      connection.reducers.beginConstructionTraversal({
+                        linkId: link.linkId,
+                        expectedVisitId: link.visitId,
+                        expectedLocationRevision: link.locationRevision,
+                        expectedInstanceRevision: link.instanceRevision,
+                        expectedLinkRevision: link.linkRevision,
+                        operationId: createOperationId(),
+                      }),
+                    )
+                  }
+                >
+                  {!link.atLanding
+                    ? `Approach ladder · ${distance.toFixed(1)} m`
+                    : `Climb to ${decks.find((d) => d.id === link.destinationDeckId)?.name ?? "other deck"}`}
+                </button>
+              );
+            })
+          )}
+        </section>
+      )}
       {pressure && (
         <section aria-label="Compartment pressure">
           <strong>Qualified pressure room</strong>
@@ -104,7 +180,7 @@ export function ConstructionReview({
         doors.map((d) => (
           <button
             key={d.id}
-            disabled={d.moving && !d.blocked}
+            disabled={!!traversal || (d.moving && !d.blocked)}
             onClick={() =>
               act(() =>
                 connection.reducers.setConstructionDoor({

@@ -1,0 +1,415 @@
+{
+  "schema": "sidereal.native-traversal-specification.v1",
+  "designId": "shipyard.structure.traversal-ladder",
+  "revision": "r000-a003",
+  "basis": "Owner-authorized traversal plan; pale-studless source sheet inspected as material/edge language, no image-derived ladder dimensions.",
+  "sourceReference": "core-construction-blocks--exploded-roof-cap",
+  "units": "metres",
+  "deckDatums": {
+    "lower": {
+      "originZ": 0,
+      "walkingZ": 0.1875
+    },
+    "upper": {
+      "originZ": 3.1875,
+      "walkingZ": 3.375
+    }
+  },
+  "fixtureFootprintM": [
+    6,
+    6
+  ],
+  "gridModuleM": 2,
+  "physicalApertures": [
+    {
+      "id": "lower-roof-shaft",
+      "role": "lower-roof",
+      "boundsM": {
+        "min": [
+          2,
+          2,
+          3
+        ],
+        "max": [
+          4,
+          4,
+          3.1875
+        ]
+      }
+    },
+    {
+      "id": "upper-floor-shaft",
+      "role": "upper-floor",
+      "boundsM": {
+        "min": [
+          2,
+          2,
+          3.1875
+        ],
+        "max": [
+          4,
+          4,
+          3.375
+        ]
+      }
+    }
+  ],
+  "pathM": [
+    [
+      3,
+      1.25,
+      0.1875
+    ],
+    [
+      3,
+      2.5,
+      0.1875
+    ],
+    [
+      3,
+      2.5,
+      3.375
+    ],
+    [
+      3,
+      1.25,
+      3.375
+    ]
+  ],
+  "bodyPolicy": {
+    "radiusM": 0.3,
+    "heightM": 1.8
+  },
+  "parts": [
+    {
+      "id": "traversal-ladder",
+      "sourceId": "ladder-kit",
+      "nodePrefix": "GEO-traversal-ladder--surface",
+      "originM": [
+        0,
+        0,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "traversal-guard",
+      "sourceId": "ladder-kit",
+      "nodePrefix": "GEO-traversal-guard--surface",
+      "originM": [
+        0,
+        0,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "traversal-aperture-edge",
+      "sourceId": "ladder-kit",
+      "nodePrefix": "GEO-traversal-aperture-edge--surface",
+      "originM": [
+        0,
+        0,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-floor-0-0",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        0,
+        0,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-floor-0-2",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        0,
+        2,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-floor-0-4",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        0,
+        4,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-floor-2-0",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        2,
+        0,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-floor-2-2",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        2,
+        2,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-floor-2-4",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        2,
+        4,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-floor-4-0",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        4,
+        0,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-floor-4-2",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        4,
+        2,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-floor-4-4",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        4,
+        4,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "upper-floor-0-0",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        0,
+        0,
+        3.1875
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "upper-floor-0-2",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        0,
+        2,
+        3.1875
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "upper-floor-0-4",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        0,
+        4,
+        3.1875
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "upper-floor-2-0",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        2,
+        0,
+        3.1875
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "upper-floor-2-4",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        2,
+        4,
+        3.1875
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "upper-floor-4-0",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        4,
+        0,
+        3.1875
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "upper-floor-4-2",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        4,
+        2,
+        3.1875
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "upper-floor-4-4",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        4,
+        4,
+        3.1875
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-roof-0-0",
+      "sourceId": "roof",
+      "nodePrefix": "GEO-roof-square-2m--surface",
+      "originM": [
+        0,
+        0,
+        3
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-roof-0-2",
+      "sourceId": "roof",
+      "nodePrefix": "GEO-roof-square-2m--surface",
+      "originM": [
+        0,
+        2,
+        3
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-roof-0-4",
+      "sourceId": "roof",
+      "nodePrefix": "GEO-roof-square-2m--surface",
+      "originM": [
+        0,
+        4,
+        3
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-roof-2-0",
+      "sourceId": "roof",
+      "nodePrefix": "GEO-roof-square-2m--surface",
+      "originM": [
+        2,
+        0,
+        3
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-roof-2-4",
+      "sourceId": "roof",
+      "nodePrefix": "GEO-roof-square-2m--surface",
+      "originM": [
+        2,
+        4,
+        3
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-roof-4-0",
+      "sourceId": "roof",
+      "nodePrefix": "GEO-roof-square-2m--surface",
+      "originM": [
+        4,
+        0,
+        3
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-roof-4-2",
+      "sourceId": "roof",
+      "nodePrefix": "GEO-roof-square-2m--surface",
+      "originM": [
+        4,
+        2,
+        3
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-roof-4-4",
+      "sourceId": "roof",
+      "nodePrefix": "GEO-roof-square-2m--surface",
+      "originM": [
+        4,
+        4,
+        3
+      ],
+      "quarterTurns": 0
+    }
+  ],
+  "minimumGuardEntryClearWidthM": 1.0399999618530273,
+  "materials": [
+    "pale enamel",
+    "indigo frame",
+    "rung steel",
+    "traction rubber",
+    "amber access marks",
+    "burgundy service cover"
+  ],
+  "ratings": {
+    "mass": "unrated",
+    "load": "unrated",
+    "pressure": "unqualified",
+    "damage": "no authority proxy installed"
+  },
+  "status": "native geometry qualified, not runtime installed or owner art-approved",
+  "runtimeNotes": [
+    "Preserve the three new GLB semantic groups; the 25 existing native panels are context placements and must not load twice.",
+    "Both floors and the lower ceiling must use the exact listed 25 panels. Omit the central module on the upper floor and lower roof only.",
+    "Upper origin 3.1875 m already includes the lower roof envelope top; add the floor walking datum once.",
+    "No authored climbing animation or actual mixed-armor fit is claimed."
+  ]
+}

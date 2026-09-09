@@ -3,7 +3,7 @@ import { Identity } from "spacetimedb";
 vi.mock("spacetimedb/server", () => ({
   SenderError: class extends Error {},
   Range: class {},
-  t: new Proxy({}, { get: () => () => ({}) }),
+  t: new Proxy({}, { get: () => () => ({ primaryKey: () => ({}) }) }),
 }));
 vi.mock("./auth", () => ({ requireGame: () => ({ kind: "oidc" }) }));
 vi.mock("./combat", () => ({ clearAim: vi.fn() }));
@@ -72,10 +72,24 @@ function fixture() {
     constructionReceipt: table({ by_principal: "principal" }),
     constructionInstance: table({ by_owner: "owner" }),
     constructionDeck: table({ by_instance: "instanceId" }),
-    constructionLocation: table({}, "characterId"),
+    constructionLocation: table({ by_instance: "instanceId" }, "characterId"),
     constructionNativePressure: table({ by_owner: "owner", by_door: "doorId" }),
     constructionAtmosphere: table({ by_owner: "owner" }),
     constructionAtmosphereClock: table(),
+    constructionTraversalLink: table({
+      by_owner: "owner",
+      by_instance: "instanceId",
+    }),
+    constructionTraversal: table(
+      { by_owner: "owner", by_instance: "instanceId" },
+      "characterId",
+    ),
+    constructionTraversalReservation: table(
+      { by_instance: "instanceId" },
+      "linkId",
+    ),
+    constructionTraversalClock: table(),
+    constructionTraversalAudit: table({ by_owner: "owner" }),
     constructionDoor: table({
       by_instance: "instanceId",
       by_deck: "deckId",
@@ -212,6 +226,17 @@ test("review walking uses authored perimeter, clears controls and rejects stale 
     1.7000001,
   );
   expect(ctx.db.character.id.find("actor").localX).toBeGreaterThan(1.69);
+  const atWall = ctx.db.character.id.find("actor");
+  const updateActor = vi.spyOn(ctx.db.character.id, "update");
+  for (let i = 0; i < 20; i++)
+    stepActor(ctx, ctx.db.character.id.find("actor"), {
+      dx: 1,
+      dy: 0,
+      sprint: true,
+    });
+  expect(ctx.db.character.id.find("actor")).toEqual(atWall);
+  expect(updateActor).not.toHaveBeenCalled();
+  updateActor.mockRestore();
   leaveReview(ctx, {
     expectedVisitId: first.visitId,
     expectedRevision: first.revision,

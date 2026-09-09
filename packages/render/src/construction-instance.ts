@@ -1,3 +1,6 @@
+import { NATIVE_TRAVERSAL_ROOM_SOURCES } from "@sidereal/content/construction-traversal-room";
+import { nativeTraversalRoomInstallation } from "@sidereal/sim/construction-traversal-document";
+import { loadConstructionTraversal } from "./construction-traversal";
 import { NATIVE_PRESSURE_ROOM_SOURCES } from "@sidereal/content/construction-pressure-room";
 import {
   compilePublishedNativePressureRoom,
@@ -58,6 +61,17 @@ export async function loadConstructionInstance(
     !document.layout.decks.some((d) => d.id === input.deckId)
   )
     throw Error("Construction instance/deck mismatch");
+  if (document.traversalRoom) {
+    const native = nativeTraversalRoomInstallation(document, 1n, 1n);
+    return loadConstructionTraversal(scene, parent, {
+      instanceId: input.instanceId,
+      selectedDeckId: input.deckId,
+      lowerDeckId: native.lower.deckId,
+      upperDeckId: native.upper.deckId,
+      installation: native.parts,
+      sources: NATIVE_TRAVERSAL_ROOM_SOURCES,
+    });
+  }
   if (document.pressureRoom) {
     const openingId = document.layout.openings[0].id;
     const native = compilePublishedNativePressureRoom({

@@ -1,0 +1,520 @@
+{
+  "schema": "sidereal.stair-dimension-proposal.v1",
+  "designId": "shipyard.structure.stair-dogleg",
+  "revision": "r000",
+  "status": "dimension-proposal-only",
+  "nativeQualification": false,
+  "ownerFinalSignoff": null,
+  "nativeSource": null,
+  "visualExport": null,
+  "coordinates": "Blender XY planar; Z up; metres",
+  "moduleM": 2,
+  "latticeUnitsPerM": 32,
+  "footprintM": [
+    4,
+    6
+  ],
+  "deckDatums": {
+    "lowerOrigin": 0,
+    "lowerWalk": 0.1875,
+    "lowerRoofUnderside": 3,
+    "upperOrigin": 3.1875,
+    "upperWalk": 3.375
+  },
+  "risers": {
+    "count": 17,
+    "heightM": 0.1875,
+    "flightCounts": [
+      9,
+      8
+    ]
+  },
+  "treadGoingM": 0.3125,
+  "repeatedNosingPitchDegrees": 30.96375653207352,
+  "minimumClearFlightWidthM": 1.5,
+  "guardHeightM": 1.1,
+  "bodyPolicy": {
+    "radiusM": 0.3,
+    "heightM": 1.8,
+    "status": "existing-authority-review-body-policy; actual armor fit unvalidated"
+  },
+  "landings": {
+    "lower": {
+      "anchorM": [
+        1,
+        0.75,
+        0.1875
+      ],
+      "nominalY": [
+        0,
+        1.6875
+      ]
+    },
+    "intermediate": {
+      "topZ": 1.875,
+      "nominalBoundsXY": [
+        [
+          0,
+          4.1875
+        ],
+        [
+          4,
+          6
+        ]
+      ],
+      "clearBoundsXY": [
+        [
+          0.25,
+          4.1875
+        ],
+        [
+          3.75,
+          5.875
+        ]
+      ],
+      "referenceTurnM": [
+        [
+          1,
+          5.0625,
+          1.875
+        ],
+        [
+          3,
+          5.0625,
+          1.875
+        ]
+      ]
+    },
+    "upper": {
+      "anchorM": [
+        3,
+        0.75,
+        3.375
+      ],
+      "nominalY": [
+        0,
+        2
+      ]
+    }
+  },
+  "intermediateTreads": [
+    {
+      "id": "flight-a-tread-01",
+      "clearPolygonM": [
+        [
+          0.25,
+          1.6875
+        ],
+        [
+          1.75,
+          1.6875
+        ],
+        [
+          1.75,
+          2.0
+        ],
+        [
+          0.25,
+          2.0
+        ]
+      ],
+      "topZ": 0.375,
+      "status": "proposed-native-surface"
+    },
+    {
+      "id": "flight-a-tread-02",
+      "clearPolygonM": [
+        [
+          0.25,
+          2.0
+        ],
+        [
+          1.75,
+          2.0
+        ],
+        [
+          1.75,
+          2.3125
+        ],
+        [
+          0.25,
+          2.3125
+        ]
+      ],
+      "topZ": 0.5625,
+      "status": "proposed-native-surface"
+    },
+    {
+      "id": "flight-a-tread-03",
+      "clearPolygonM": [
+        [
+          0.25,
+          2.3125
+        ],
+        [
+          1.75,
+          2.3125
+        ],
+        [
+          1.75,
+          2.625
+        ],
+        [
+          0.25,
+          2.625
+        ]
+      ],
+      "topZ": 0.75,
+      "status": "proposed-native-surface"
+    },
+    {
+      "id": "flight-a-tread-04",
+      "clearPolygonM": [
+        [
+          0.25,
+          2.625
+        ],
+        [
+          1.75,
+          2.625
+        ],
+        [
+          1.75,
+          2.9375
+        ],
+        [
+          0.25,
+          2.9375
+        ]
+      ],
+      "topZ": 0.9375,
+      "status": "proposed-native-surface"
+    },
+    {
+      "id": "flight-a-tread-05",
+      "clearPolygonM": [
+        [
+          0.25,
+          2.9375
+        ],
+        [
+          1.75,
+          2.9375
+        ],
+        [
+          1.75,
+          3.25
+        ],
+        [
+          0.25,
+          3.25
+        ]
+      ],
+      "topZ": 1.125,
+      "status": "proposed-native-surface"
+    },
+    {
+      "id": "flight-a-tread-06",
+      "clearPolygonM": [
+        [
+          0.25,
+          3.25
+        ],
+        [
+          1.75,
+          3.25
+        ],
+        [
+          1.75,
+          3.5625
+        ],
+        [
+          0.25,
+          3.5625
+        ]
+      ],
+      "topZ": 1.3125,
+      "status": "proposed-native-surface"
+    },
+    {
+      "id": "flight-a-tread-07",
+      "clearPolygonM": [
+        [
+          0.25,
+          3.5625
+        ],
+        [
+          1.75,
+          3.5625
+        ],
+        [
+          1.75,
+          3.875
+        ],
+        [
+          0.25,
+          3.875
+        ]
+      ],
+      "topZ": 1.5,
+      "status": "proposed-native-surface"
+    },
+    {
+      "id": "flight-a-tread-08",
+      "clearPolygonM": [
+        [
+          0.25,
+          3.875
+        ],
+        [
+          1.75,
+          3.875
+        ],
+        [
+          1.75,
+          4.1875
+        ],
+        [
+          0.25,
+          4.1875
+        ]
+      ],
+      "topZ": 1.6875,
+      "status": "proposed-native-surface"
+    },
+    {
+      "id": "flight-b-tread-01",
+      "clearPolygonM": [
+        [
+          2.25,
+          3.875
+        ],
+        [
+          3.75,
+          3.875
+        ],
+        [
+          3.75,
+          4.1875
+        ],
+        [
+          2.25,
+          4.1875
+        ]
+      ],
+      "topZ": 2.0625,
+      "status": "proposed-native-surface"
+    },
+    {
+      "id": "flight-b-tread-02",
+      "clearPolygonM": [
+        [
+          2.25,
+          3.5625
+        ],
+        [
+          3.75,
+          3.5625
+        ],
+        [
+          3.75,
+          3.875
+        ],
+        [
+          2.25,
+          3.875
+        ]
+      ],
+      "topZ": 2.25,
+      "status": "proposed-native-surface"
+    },
+    {
+      "id": "flight-b-tread-03",
+      "clearPolygonM": [
+        [
+          2.25,
+          3.25
+        ],
+        [
+          3.75,
+          3.25
+        ],
+        [
+          3.75,
+          3.5625
+        ],
+        [
+          2.25,
+          3.5625
+        ]
+      ],
+      "topZ": 2.4375,
+      "status": "proposed-native-surface"
+    },
+    {
+      "id": "flight-b-tread-04",
+      "clearPolygonM": [
+        [
+          2.25,
+          2.9375
+        ],
+        [
+          3.75,
+          2.9375
+        ],
+        [
+          3.75,
+          3.25
+        ],
+        [
+          2.25,
+          3.25
+        ]
+      ],
+      "topZ": 2.625,
+      "status": "proposed-native-surface"
+    },
+    {
+      "id": "flight-b-tread-05",
+      "clearPolygonM": [
+        [
+          2.25,
+          2.625
+        ],
+        [
+          3.75,
+          2.625
+        ],
+        [
+          3.75,
+          2.9375
+        ],
+        [
+          2.25,
+          2.9375
+        ]
+      ],
+      "topZ": 2.8125,
+      "status": "proposed-native-surface"
+    },
+    {
+      "id": "flight-b-tread-06",
+      "clearPolygonM": [
+        [
+          2.25,
+          2.3125
+        ],
+        [
+          3.75,
+          2.3125
+        ],
+        [
+          3.75,
+          2.625
+        ],
+        [
+          2.25,
+          2.625
+        ]
+      ],
+      "topZ": 3.0,
+      "status": "proposed-native-surface"
+    },
+    {
+      "id": "flight-b-tread-07",
+      "clearPolygonM": [
+        [
+          2.25,
+          2.0
+        ],
+        [
+          3.75,
+          2.0
+        ],
+        [
+          3.75,
+          2.3125
+        ],
+        [
+          2.25,
+          2.3125
+        ]
+      ],
+      "topZ": 3.1875,
+      "status": "proposed-native-surface"
+    }
+  ],
+  "physicalPanelOmission": {
+    "roles": [
+      "lower-roof",
+      "upper-floor"
+    ],
+    "kitLocalModuleOriginsXY": [
+      [
+        0,
+        2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        0,
+        4
+      ],
+      [
+        2,
+        4
+      ]
+    ],
+    "lowerFloorBelowRetained": true
+  },
+  "validationBoard": {
+    "footprintM": [
+      8,
+      10
+    ],
+    "kitOriginM": [
+      2,
+      2,
+      0
+    ],
+    "omittedModuleOriginsXY": [
+      [
+        2,
+        4
+      ],
+      [
+        4,
+        4
+      ],
+      [
+        2,
+        6
+      ],
+      [
+        4,
+        6
+      ]
+    ]
+  },
+  "movementMode": "ordinary-authoritative-walking-on-qualified-support-surfaces",
+  "ladderMode": false,
+  "ratings": {
+    "pressure": null,
+    "load": null,
+    "mass": null,
+    "damageAdapter": null
+  },
+  "alternative": {
+    "id": "straight-stair",
+    "footprintM": [
+      2,
+      8
+    ],
+    "goings": 16,
+    "flightRunM": 5,
+    "lowerLandingM": 1.5,
+    "upperLandingM": 1.5
+  }
+}

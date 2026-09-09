@@ -1,0 +1,9 @@
+{
+  "status": "retained-intermediate",
+  "findings": [
+    "Five geometric clearance/aperture checks passed; complete actual Blender render evidence saved.",
+    "Default Blender material culling exported double-sided; next attempt enables single-sided materials.",
+    "1um rounding-grid triangle comparison produced false differences from submicrometre float32 transform variations; next validator uses nearest authored vertices within1um and exact mapped triangle connectivity.",
+    "Cutout camera clipped top-left rail; next capture widens framing."
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "pin": {
+    "id": "shipyard.structure.traversal-ladder",
+    "revision": "r000-a003",
+    "sha256": "a41e28d065833c1be30ae1e1e5a4a49832b0771157e6a80b1343f82ccec9e714"
+  },
+  "sources": {
+    "ladder-kit": {
+      "url": "/assets/construction/traversal-r000-a003/ladder-kit.glb",
+      "sha256": "f4fb453f44fe84f577107d72fad15459e6e59ec9ad2ed122bceadead5b855625"
+    },
+    "floor": {
+      "url": "/assets/construction/traversal-r000-a003/floor.glb",
+      "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585"
+    },
+    "roof": {
+      "url": "/assets/construction/traversal-r000-a003/roof.glb",
+      "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711"
+    }
+  },
+  "collisionSha256": "61e4c100d8649d468fd1b0758bcfb2a5b9a6b8b78583b7818439a7b77199e5a9",
+  "status": "opt-in native traversal review; not normal Wayfarer refit or final art approval"
+}

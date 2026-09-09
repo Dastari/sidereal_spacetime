@@ -1,0 +1,69 @@
+{
+  "blenderVersion": "4.3.2",
+  "renderer": "Cycles CPU",
+  "samples": 32,
+  "captures": [
+    {
+      "file": "cutout.png",
+      "cameraM": [
+        10,
+        -8,
+        8
+      ],
+      "targetM": [
+        2,
+        3,
+        2.15
+      ],
+      "orthographicScaleM": 9,
+      "contextMode": "cutout"
+    },
+    {
+      "file": "blender-lower.png",
+      "cameraM": [
+        11,
+        -10,
+        10
+      ],
+      "targetM": [
+        2,
+        3,
+        1.8
+      ],
+      "orthographicScaleM": 12,
+      "contextMode": "lower"
+    },
+    {
+      "file": "blender-context.png",
+      "cameraM": [
+        12,
+        -11,
+        13
+      ],
+      "targetM": [
+        2,
+        3,
+        2
+      ],
+      "orthographicScaleM": 14,
+      "contextMode": "all"
+    },
+    {
+      "file": "blender-top.png",
+      "cameraM": [
+        2,
+        3,
+        16
+      ],
+      "targetM": [
+        2,
+        3,
+        0
+      ],
+      "orthographicScaleM": 11.5,
+      "contextMode": "all"
+    }
+  ],
+  "sourceBlendSha256": "57a3174e95938f94cebf01a0da3ca19d1d86478e377ffee2d632caaf661621bc",
+  "glbSha256": "845ab13f1a1e7a6a4332e00f9ea9fd443b1c29d1b8d941102168fe9a7415db15"
+}

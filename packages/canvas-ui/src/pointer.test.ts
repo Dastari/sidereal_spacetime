@@ -74,8 +74,30 @@ function setup() {
       preventDefault() {},
       stopImmediatePropagation() {},
     });
-  return { ui, pointer, key, action, drag, drop, context };
+  const wheel = (deltaX: number, deltaY: number, shiftKey = false) =>
+    handlers.get("wheel")!({
+      clientX: 20,
+      clientY: 20,
+      deltaX,
+      deltaY,
+      deltaMode: 0,
+      shiftKey,
+      preventDefault() {},
+      stopImmediatePropagation() {},
+    });
+  return { ui, pointer, key, wheel, action, drag, drop, context };
 }
+test("trackpad and Shift-wheel preserve the horizontal scroll axis", () => {
+  const f = setup();
+  f.ui.panels = [{ x: 0, y: 0, w: 100, h: 100 }];
+  f.ui.scroll = vi.fn();
+  f.wheel(48, 0);
+  expect(f.ui.scroll).toHaveBeenLastCalledWith(0, 20, 20, 48);
+  f.wheel(0, 48, true);
+  expect(f.ui.scroll).toHaveBeenLastCalledWith(0, 20, 20, 48);
+  f.wheel(0, 48);
+  expect(f.ui.scroll).toHaveBeenLastCalledWith(48, 20, 20, 0);
+});
 test("search typing accumulates before repaint and select-all clears or replaces the query", () => {
   const f = setup(),
     change = vi.fn();

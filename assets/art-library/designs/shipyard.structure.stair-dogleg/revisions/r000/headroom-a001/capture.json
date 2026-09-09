@@ -1,0 +1,18 @@
+{
+  "blenderVersion": "4.3.2",
+  "renderer": "Cycles CPU",
+  "samples": 24,
+  "cameraM": [
+    8.0,
+    5.800000190734863,
+    3.700000047683716
+  ],
+  "targetM": [
+    1.0,
+    2.0999999046325684,
+    1.7000000476837158
+  ],
+  "orthographicScaleM": 5,
+  "image": "roof-edge-capsule.png",
+  "blendSha256": "8e908d75568049825d77486f5a05120b1656319c713a50f817f30cf7bf12b7e1"
+}

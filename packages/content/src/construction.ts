@@ -42,6 +42,15 @@ export interface ConstructionDocument {
   roofKit?: { id: string; revision: string; sha256: string };
   /** Exact bounded native enclosure review, not a generic pressure flag. */
   pressureRoom?: { id: string; revision: string; sha256: string };
+  /** Exact native two-deck manual traversal fixture; no pressure qualification. */
+  traversalRoom?: {
+    pin: { id: string; revision: string; sha256: string };
+    lowerDeckId: string;
+    upperDeckId: string;
+    linkId: string;
+    parts: { id: string; sourcePartId: string }[];
+    apertures: { id: string; sourceApertureId: string }[];
+  };
 }
 export interface ConstructionReadiness {
   geometry: boolean;

@@ -1,0 +1,22 @@
+{
+  "adapterId": "shipyard.structure.stair-dogleg",
+  "revision": "r000-a001",
+  "status": "staged",
+  "auditSha256": "d2a9607ab9509c76771d05fa51b1de6c4f10936b5b6ebf5d2a20c53446d88c43",
+  "sources": {
+    "stair-kit": {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a001/kit.glb",
+      "sha256": "7073cc9b366e56a3f67f4ea8f296063bdfe0df38fb5c02794b92a8e2272a4034"
+    },
+    "floor": {
+      "path": "assets/runtime/assembly/floor/r002/kit.glb",
+      "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585"
+    },
+    "roof": {
+      "path": "assets/art-library/designs/shipyard.structure.roof-kit/revisions/r001/kit.glb",
+      "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711"
+    }
+  },
+  "runtimePublication": false,
+  "ownerFinalSignoff": null
+}

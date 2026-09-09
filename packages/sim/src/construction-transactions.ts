@@ -1,3 +1,4 @@
+import { validateNativeTraversalRoomDocument } from "./construction-traversal-document";
 import { validateNativePressureRoomDocument } from "./construction-pressure-document";
 import { CONSTRUCTION_BOUNDARY_FAMILY_PIN } from "@sidereal/content/construction-boundary-family";
 import { planPinnedBoundaryFamily } from "./construction-boundary-family";
@@ -105,6 +106,7 @@ export function readConstructionDraft(raw: string): {
           "boundaryKit",
           "roofKit",
           "pressureRoom",
+          "traversalRoom",
         ].includes(k),
     )
   )
@@ -171,6 +173,11 @@ export function readConstructionDraft(raw: string): {
   }
   // JSON.parse above already owns this data; SpacetimeDB has no structuredClone global.
   const normalized = input as unknown as ConstructionDocument;
+  if (input.traversalRoom !== undefined) {
+    validateNativeTraversalRoomDocument(normalized);
+    normalized.traversalRoom!.parts.sort((a, b) => compareText(a.id, b.id));
+    normalized.traversalRoom!.apertures.sort((a, b) => compareText(a.id, b.id));
+  }
   for (const key of [
     "decks",
     "tiles",
@@ -231,6 +238,7 @@ export function compileConstruction(raw: string): ConstructionSnapshot {
         .join(", "),
     );
   if (input.pressureRoom) validateNativePressureRoomDocument(input);
+  if (input.traversalRoom) validateNativeTraversalRoomDocument(input);
   if (input.boundaryKit?.revision === "r004")
     for (const deck of layout.decks) planPinnedBoundaryFamily(layout, deck.id);
   else if (input.boundaryKit)

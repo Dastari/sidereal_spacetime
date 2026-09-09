@@ -106,6 +106,44 @@ export function takeAll(
     commitItems(ctx, a, items);
   });
 }
+/** Move the selected carried inventory's fitting contents into an open world crate. */
+export function storeAll(
+  ctx: Context,
+  args: Mutation & { containerId: string; destinationId: string },
+) {
+  transaction(
+    ctx,
+    args,
+    "store-all",
+    [args.containerId, args.destinationId],
+    (a) => {
+      if (
+        !a.canContainer(args.containerId) ||
+        !a.carriedContainer(args.containerId)
+      )
+        throw new SenderError("Choose a carried inventory to store");
+      if (
+        !a.canContainer(args.destinationId) ||
+        a.carriedContainer(args.destinationId) ||
+        ground(a, args.destinationId)
+      )
+        throw new SenderError("Open nearby storage to store items");
+      let items = a.data.items,
+        moved = 0;
+      for (const item of a.data.items.filter(
+        (i) => i.containerId === args.containerId,
+      )) {
+        const next = transfer(a, item.id, [args.destinationId], items);
+        if (next) {
+          items = next;
+          moved++;
+        }
+      }
+      if (!moved) throw new SenderError("No items fit in the destination");
+      commitItems(ctx, a, items);
+    },
+  );
+}
 /** Position comes entirely from the actor; a client cannot author drop transforms. */
 export function dropItem(ctx: Context, args: Mutation & { itemId: string }) {
   transaction(ctx, args, "drop-item", [args.itemId], (a) => {
@@ -160,8 +198,8 @@ export function dropItem(ctx: Context, args: Mutation & { itemId: string }) {
     });
   });
 }
-export const groundItemProjection = t.object("VisibleGroundItem", {
-  id: t.string(),
+export const groundItemProjection = t.row("VisibleGroundItem", {
+  id: t.string().primaryKey(),
   definitionId: t.string(),
   localX: t.f64(),
   localY: t.f64(),

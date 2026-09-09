@@ -1,0 +1,469 @@
+{
+  "schema": "sidereal.native-traversal-audit.v1",
+  "adapterId": "shipyard.structure.traversal-ladder",
+  "revision": "r000-a003",
+  "qualification": {
+    "nativeMeshMatch": true,
+    "physicalApertures": true,
+    "capsuleSweepClear": true,
+    "guardedLandings": true
+  },
+  "body": {
+    "radiusM": 0.3,
+    "heightM": 1.8
+  },
+  "decks": {
+    "lower": {
+      "originZ": 0,
+      "walkingZ": 0.1875
+    },
+    "upper": {
+      "originZ": 3.1875,
+      "walkingZ": 3.375
+    }
+  },
+  "parts": [
+    {
+      "id": "traversal-ladder",
+      "sourceId": "ladder-kit",
+      "nodePrefix": "GEO-traversal-ladder--surface",
+      "originM": [
+        0,
+        0,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "traversal-guard",
+      "sourceId": "ladder-kit",
+      "nodePrefix": "GEO-traversal-guard--surface",
+      "originM": [
+        0,
+        0,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "traversal-aperture-edge",
+      "sourceId": "ladder-kit",
+      "nodePrefix": "GEO-traversal-aperture-edge--surface",
+      "originM": [
+        0,
+        0,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-floor-0-0",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        0,
+        0,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-floor-0-2",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        0,
+        2,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-floor-0-4",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        0,
+        4,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-floor-2-0",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        2,
+        0,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-floor-2-2",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        2,
+        2,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-floor-2-4",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        2,
+        4,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-floor-4-0",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        4,
+        0,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-floor-4-2",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        4,
+        2,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-floor-4-4",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        4,
+        4,
+        0
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "upper-floor-0-0",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        0,
+        0,
+        3.1875
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "upper-floor-0-2",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        0,
+        2,
+        3.1875
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "upper-floor-0-4",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        0,
+        4,
+        3.1875
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "upper-floor-2-0",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        2,
+        0,
+        3.1875
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "upper-floor-2-4",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        2,
+        4,
+        3.1875
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "upper-floor-4-0",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        4,
+        0,
+        3.1875
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "upper-floor-4-2",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        4,
+        2,
+        3.1875
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "upper-floor-4-4",
+      "sourceId": "floor",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originM": [
+        4,
+        4,
+        3.1875
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-roof-0-0",
+      "sourceId": "roof",
+      "nodePrefix": "GEO-roof-square-2m--surface",
+      "originM": [
+        0,
+        0,
+        3
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-roof-0-2",
+      "sourceId": "roof",
+      "nodePrefix": "GEO-roof-square-2m--surface",
+      "originM": [
+        0,
+        2,
+        3
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-roof-0-4",
+      "sourceId": "roof",
+      "nodePrefix": "GEO-roof-square-2m--surface",
+      "originM": [
+        0,
+        4,
+        3
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-roof-2-0",
+      "sourceId": "roof",
+      "nodePrefix": "GEO-roof-square-2m--surface",
+      "originM": [
+        2,
+        0,
+        3
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-roof-2-4",
+      "sourceId": "roof",
+      "nodePrefix": "GEO-roof-square-2m--surface",
+      "originM": [
+        2,
+        4,
+        3
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-roof-4-0",
+      "sourceId": "roof",
+      "nodePrefix": "GEO-roof-square-2m--surface",
+      "originM": [
+        4,
+        0,
+        3
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-roof-4-2",
+      "sourceId": "roof",
+      "nodePrefix": "GEO-roof-square-2m--surface",
+      "originM": [
+        4,
+        2,
+        3
+      ],
+      "quarterTurns": 0
+    },
+    {
+      "id": "lower-roof-4-4",
+      "sourceId": "roof",
+      "nodePrefix": "GEO-roof-square-2m--surface",
+      "originM": [
+        4,
+        4,
+        3
+      ],
+      "quarterTurns": 0
+    }
+  ],
+  "apertures": [
+    {
+      "id": "lower-roof-shaft",
+      "role": "lower-roof",
+      "boundsM": {
+        "min": [
+          2,
+          2,
+          3
+        ],
+        "max": [
+          4,
+          4,
+          3.1875
+        ]
+      }
+    },
+    {
+      "id": "upper-floor-shaft",
+      "role": "upper-floor",
+      "boundsM": {
+        "min": [
+          2,
+          2,
+          3.1875
+        ],
+        "max": [
+          4,
+          4,
+          3.375
+        ]
+      }
+    }
+  ],
+  "pathM": [
+    [
+      3,
+      1.25,
+      0.1875
+    ],
+    [
+      3,
+      2.5,
+      0.1875
+    ],
+    [
+      3,
+      2.5,
+      3.375
+    ],
+    [
+      3,
+      1.25,
+      3.375
+    ]
+  ],
+  "corridorFreeBoundsM": [
+    {
+      "min": [
+        2.65,
+        0.9,
+        0.1875
+      ],
+      "max": [
+        3.35,
+        2.85,
+        1.9875
+      ]
+    },
+    {
+      "min": [
+        2.65,
+        2.15,
+        0.1875
+      ],
+      "max": [
+        3.35,
+        2.85,
+        5.175
+      ]
+    },
+    {
+      "min": [
+        2.65,
+        0.9,
+        3.375
+      ],
+      "max": [
+        3.35,
+        2.85,
+        5.175
+      ]
+    }
+  ],
+  "landings": {
+    "lower": {
+      "anchorM": [
+        3,
+        1.25,
+        0.1875
+      ],
+      "freeBoundsM": {
+        "min": [
+          2.55,
+          0.8,
+          0.1875
+        ],
+        "max": [
+          3.45,
+          1.7,
+          1.9875
+        ]
+      }
+    },
+    "upper": {
+      "anchorM": [
+        3,
+        1.25,
+        3.375
+      ],
+      "freeBoundsM": {
+        "min": [
+          2.55,
+          0.8,
+          3.375
+        ],
+        "max": [
+          3.45,
+          1.7,
+          5.175
+        ]
+      }
+    }
+  }
+}

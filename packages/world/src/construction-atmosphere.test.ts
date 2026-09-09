@@ -292,3 +292,44 @@ test("persistent resource accounting cannot hide nonfinite or unaccounted gas", 
     expect(t.id.find("one")).toEqual(before);
   }
 });
+
+test("vacuum and equilibrium produce no writes; opening a sealed charged model resumes one fixed step", () => {
+  const t = table();
+  let writes = 0;
+  const update = t.id.update;
+  t.id.update = (row) => {
+    writes++;
+    return update(row);
+  };
+  initializeAtmosphere(
+    t,
+    { id: "vacuum", owner },
+    accepted(),
+    { kind: "vacuum" },
+    0n,
+  );
+  initializeAtmosphere(
+    t,
+    { id: "equal", owner },
+    accepted(),
+    {
+      ...charge,
+      gas: charge.gas.map((g) => ({ ...g, moles: 50 })),
+    },
+    0n,
+  );
+  const before = [...t.iter()];
+  for (let i = 1; i <= 100; i++)
+    expect(stepAtmosphere(t, BigInt(i), 0.05)).toBe(0);
+  expect(writes).toBe(0);
+  expect([...t.iter()]).toEqual(before);
+  replaceAtmosphereModel(t, "equal", 1n, accepted(true), "reject-removal");
+  stepAtmosphere(t, 1000000n, 0.05);
+  const flowing = t.id.find("equal")!;
+  expect(flowing.ventedMoles).toBeGreaterThan(0);
+  expect(flowing.ventedMoles).toBeLessThan(50);
+  expect(total(flowing)).toBeCloseTo(100, 10);
+  const afterWrites = writes;
+  stepAtmosphere(t, 1000000n, 0.05);
+  expect(writes).toBe(afterWrites);
+});

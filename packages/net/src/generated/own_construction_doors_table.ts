@@ -11,7 +11,7 @@ import {
 } from "spacetimedb";
 
 export default __t.row({
-  id: __t.string(),
+  id: __t.string().primaryKey(),
   instanceId: __t.string().name("instance_id"),
   deckId: __t.string().name("deck_id"),
   fraction: __t.f64(),

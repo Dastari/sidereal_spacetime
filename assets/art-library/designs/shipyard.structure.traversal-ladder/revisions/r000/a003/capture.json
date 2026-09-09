@@ -1,0 +1,53 @@
+{
+  "blenderVersion": "4.3.2",
+  "renderer": "Cycles CPU",
+  "samples": 32,
+  "assetSha256": "f4fb453f44fe84f577107d72fad15459e6e59ec9ad2ed122bceadead5b855625",
+  "captures": [
+    {
+      "file": "cutout.png",
+      "cameraPosition": [
+        8,
+        -6,
+        6.3
+      ],
+      "target": [
+        3,
+        2.9,
+        2.4
+      ],
+      "orthographicScale": 6.6,
+      "contextPanels": false
+    },
+    {
+      "file": "blender-context.png",
+      "cameraPosition": [
+        10,
+        -10,
+        10
+      ],
+      "target": [
+        3,
+        2.5,
+        2.1
+      ],
+      "orthographicScale": 9.6,
+      "contextPanels": true
+    },
+    {
+      "file": "blender-top.png",
+      "cameraPosition": [
+        3,
+        3,
+        12
+      ],
+      "target": [
+        3,
+        3,
+        0
+      ],
+      "orthographicScale": 6.8,
+      "contextPanels": true
+    }
+  ]
+}

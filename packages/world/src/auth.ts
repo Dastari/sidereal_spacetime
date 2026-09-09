@@ -91,9 +91,19 @@ export function requireGame(ctx: Context) {
     throw new SenderError("Game session expired");
   return kind;
 }
-export function gameAction<A>(action: (ctx: Context, args: A) => void) {
+export function gameAction<A>(
+  action: (ctx: Context, args: A) => void,
+  requireStanding = false,
+) {
   return (ctx: Context, args: A) => {
     requireGame(ctx);
+    if (
+      requireStanding &&
+      ctx.db.constructionTraversal.by_owner.filter(ctx.sender).next().value
+    )
+      throw new SenderError(
+        "Finish or cancel the active deck traversal before this action",
+      );
     action(ctx, args);
   };
 }
@@ -139,8 +149,8 @@ export function expireSessions(ctx: Context) {
     if (!canConsume(ctx, owner)) clearOwner(ctx, owner);
 }
 const opValid = (id: string) => /^[a-zA-Z0-9:_-]{1,80}$/.test(id);
-export const identityLinkProjection = t.object("VisibleIdentityLink", {
-  id: t.string(),
+export const identityLinkProjection = t.row("VisibleIdentityLink", {
+  id: t.string().primaryKey(),
   characterId: t.string(),
   characterName: t.string(),
   sourceIdentity: t.string(),
@@ -191,7 +201,14 @@ export function requestIdentityLink(
       throw new SenderError("Link operation reused");
     return;
   }
-  if([...ctx.db.constructionInstance.by_owner.filter(ctx.sender)].length || [...ctx.db.constructionGrant.by_principal.filter(ctx.sender)].length || [...ctx.db.constructionReceipt.by_principal.filter(ctx.sender)].length) throw new SenderError('Construction authoring state requires explicit migration review');
+  if (
+    [...ctx.db.constructionInstance.by_owner.filter(ctx.sender)].length ||
+    [...ctx.db.constructionGrant.by_principal.filter(ctx.sender)].length ||
+    [...ctx.db.constructionReceipt.by_principal.filter(ctx.sender)].length
+  )
+    throw new SenderError(
+      "Construction authoring state requires explicit migration review",
+    );
   const characters = [...ctx.db.character.by_owner.filter(ctx.sender)],
     ships = [...ctx.db.ship.by_owner.filter(ctx.sender)];
   if (
@@ -270,12 +287,20 @@ export function acceptIdentityLink(
     throw new SenderError("Identity link expired or source disconnected");
   if (
     [...ctx.db.character.by_owner.filter(ctx.sender)].length ||
-    [...ctx.db.ship.by_owner.filter(ctx.sender)].length || [...ctx.db.constructionInstance.by_owner.filter(ctx.sender)].length
+    [...ctx.db.ship.by_owner.filter(ctx.sender)].length ||
+    [...ctx.db.constructionInstance.by_owner.filter(ctx.sender)].length
   )
     throw new SenderError(
       "Target already has world state; merge requires review",
     );
-  if([...ctx.db.constructionInstance.by_owner.filter(row.source)].length || [...ctx.db.constructionGrant.by_principal.filter(row.source)].length || [...ctx.db.constructionReceipt.by_principal.filter(row.source)].length) throw new SenderError('Construction authoring state requires explicit migration review');
+  if (
+    [...ctx.db.constructionInstance.by_owner.filter(row.source)].length ||
+    [...ctx.db.constructionGrant.by_principal.filter(row.source)].length ||
+    [...ctx.db.constructionReceipt.by_principal.filter(row.source)].length
+  )
+    throw new SenderError(
+      "Construction authoring state requires explicit migration review",
+    );
   const actor = ctx.db.character.id.find(row.characterId),
     ship = ctx.db.ship.id.find(row.shipId);
   if (

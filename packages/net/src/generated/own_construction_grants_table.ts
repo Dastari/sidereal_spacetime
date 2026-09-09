@@ -11,7 +11,7 @@ import {
 } from "spacetimedb";
 
 export default __t.row({
-  id: __t.string(),
+  id: __t.string().primaryKey(),
   workspaceId: __t.string().name("workspace_id"),
   capability: __t.string(),
   expiresMicros: __t.u64().name("expires_micros"),

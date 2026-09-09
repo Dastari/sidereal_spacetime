@@ -11,6 +11,6 @@ import {
 } from "spacetimedb";
 
 export default __t.row({
-  slot: __t.u8(),
+  slot: __t.u8().primaryKey(),
   itemId: __t.string().name("item_id"),
 });

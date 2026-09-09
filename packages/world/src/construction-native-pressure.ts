@@ -301,13 +301,16 @@ export function stepNativePressure(
   ctx: Context,
   compile: NativePressureCompiler,
 ) {
+  const installations = [...ctx.db.constructionNativePressure.iter()];
+  // Empty installations have no elapsed work to preserve. The next admitted
+  // instance consumes one fixed step, never the idle wall-clock interval.
+  if (installations.length === 0) return false;
   const oldClock = ctx.db.constructionAtmosphereClock.id.find(CLOCK_ID);
   const now = ctx.timestamp.microsSinceUnixEpoch;
   demand(now >= 0n, "invalid scheduler timestamp");
   if (oldClock && now <= oldClock.lastScheduleMicros) return false;
   const tick = (oldClock?.tick ?? 0n) + 1n;
   demand(tick <= 18446744073709551615n, "simulation clock exhausted");
-  const installations = [...ctx.db.constructionNativePressure.iter()];
   demand(
     installations.length <= ATMOSPHERE_LIMITS.instances,
     "installation budget exceeded",
@@ -353,11 +356,8 @@ export function stepNativePressure(
       : installed.acceptedFraction === 0 && installed.sealRetraction === 0;
     const bodies = idle
       ? []
-      : [...ctx.db.constructionLocation.iter()]
-          .filter(
-            (l) =>
-              l.instanceId === installed.id && l.deckId === installed.deckId,
-          )
+      : [...ctx.db.constructionLocation.by_instance.filter(installed.id)]
+          .filter((l) => l.deckId === installed.deckId)
           .map((l) => ctx.db.character.id.find(l.characterId))
           .filter((a) => a?.shipId === installed.id)
           .map((a) => ({
@@ -438,12 +438,12 @@ export function stepNativePressure(
   return true;
 }
 
-export const nativePressureProjection = t.object(
+export const nativePressureProjection = t.row(
   "ConstructionNativePressureStatus",
   {
     instanceId: t.string(),
     deckId: t.string(),
-    doorId: t.string(),
+    doorId: t.string().primaryKey(),
     fraction: t.f64(),
     sealRetraction: t.f64(),
     revision: t.u64(),

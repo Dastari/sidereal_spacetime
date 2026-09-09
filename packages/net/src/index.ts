@@ -1,3 +1,7 @@
+import {
+  createConnectionResources,
+  subscriptionErrorMessage,
+} from "./connection-resources";
 import { DbConnection, tables } from "./generated";
 export { DbConnection, tables };
 export type {
@@ -22,6 +26,7 @@ export function connect(
   onStatus: (status: NetworkState, error?: string) => void,
   auth?: { token: string; kind: "oidc" },
 ): DbConnection {
+  const resources = createConnectionResources();
   const url = new URL(window.location.href);
   url.protocol = url.protocol === "https:" ? "wss:" : "ws:";
   const builder = DbConnection.builder()
@@ -32,13 +37,14 @@ export function connect(
     )
     .onConnect((connection, _identity, token) => {
       if (!auth) localStorage.setItem("sidereal.lab.token", token);
-      connection
+      const subscription = connection
         .subscriptionBuilder()
         .onApplied(() => {
+          if (!resources.applied(subscription)) return;
           onStatus("ready");
           onChange();
         })
-        .onError((e) => onStatus("offline", String(e.event)))
+        .onError((e) => onStatus("offline", subscriptionErrorMessage(e)))
         .subscribe([
           ...(new URLSearchParams(location.search).has("constructionReview")
             ? [
@@ -48,6 +54,8 @@ export function connect(
                 tables.ownConstructionLocation,
                 tables.ownConstructionDoors,
                 tables.ownConstructionNativePressure,
+                tables.ownConstructionTraversals,
+                tables.ownConstructionTraversalLinks,
               ]
             : []),
           tables.ownIdentityLinks,
@@ -66,6 +74,7 @@ export function connect(
           tables.ownInventoryContainers,
           tables.ownInventoryHotbar,
         ]);
+      resources.retain("game", subscription);
     })
     .onConnectError((_context, error) => onStatus("offline", String(error)))
     .onDisconnect(() => onStatus("offline"));
@@ -79,6 +88,8 @@ export function connect(
           connection.db.ownConstructionLocation,
           connection.db.ownConstructionDoors,
           connection.db.ownConstructionNativePressure,
+          connection.db.ownConstructionTraversals,
+          connection.db.ownConstructionTraversalLinks,
         ]
       : []),
     connection.db.ownIdentityLinks,
@@ -100,6 +111,19 @@ export function connect(
     table.onInsert(onChange);
     table.onUpdate(onChange);
     table.onDelete(onChange);
+    resources.listen(() => {
+      table.removeOnInsert(onChange);
+      table.removeOnUpdate(onChange);
+      table.removeOnDelete(onChange);
+    });
   }
+  const disconnect = connection.disconnect.bind(connection);
+  connection.disconnect = () => {
+    try {
+      resources.dispose();
+    } finally {
+      disconnect();
+    }
+  };
   return connection;
 }

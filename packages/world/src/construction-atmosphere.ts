@@ -219,14 +219,15 @@ export function stepAtmosphere(
     const current = stored(row),
       next = stepCompartmentGas(current.topology, current.gas, seconds);
     const gasJson = encode(next.gas);
+    // A no-op step has no resource or replay effect. Keep lastTick as the last
+    // committed gas step instead of rewriting the large structure blob at 20 Hz.
+    if (gasJson === row.gasJson && next.ventedMoles === 0) continue;
     table.id.update({
       ...row,
       gasJson,
       lastTick: tick,
       ventedMoles: row.ventedMoles + next.ventedMoles,
-      revision:
-        row.revision +
-        (gasJson !== row.gasJson || next.ventedMoles !== 0 ? 1n : 0n),
+      revision: row.revision + 1n,
     });
     if (gasJson !== row.gasJson) changed++;
   }

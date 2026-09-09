@@ -1,0 +1,43 @@
+{
+  "kind": "four independent qualified rest/turn placements shown together for review; not multiplayer authority or animation evidence",
+  "body": {
+    "radiusM": 0.3,
+    "heightM": 1.8
+  },
+  "posesM": {
+    "flight-a-supported-stop": [
+      1,
+      2.33,
+      0.75
+    ],
+    "intermediate-turn": [
+      2,
+      5.0625,
+      1.875
+    ],
+    "flight-b-supported-stop": [
+      3,
+      2.92,
+      2.8125
+    ],
+    "upper-supported-stop": [
+      3,
+      0.75,
+      3.375
+    ]
+  },
+  "context": "lower-floor-only presentation cutaway; roof/floor obstacles remain in full numeric audit",
+  "sourceBlendSha256": "2d02ff1e8e38dca22627739c7a3321593e0b8f22ce66ae4cb98b5fccbcecbec6",
+  "reviewBlendSha256": "03ed9d82937227fe63cc1ba318255f04125c93fc861048976bf5def84059b1fd",
+  "cameraM": [
+    12.0,
+    -9.0,
+    11.0
+  ],
+  "targetM": [
+    2.0,
+    3.0,
+    2.450000047683716
+  ],
+  "renderer": "Cycles CPU32"
+}

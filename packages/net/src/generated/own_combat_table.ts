@@ -11,6 +11,7 @@ import {
 } from "spacetimedb";
 
 export default __t.row({
+  characterId: __t.string().primaryKey().name("character_id"),
   aimActive: __t.bool().name("aim_active"),
   aimAngle: __t.f64().name("aim_angle"),
   weaponItemId: __t.string().name("weapon_item_id"),

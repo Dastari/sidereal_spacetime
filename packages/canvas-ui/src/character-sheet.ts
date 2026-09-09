@@ -1,11 +1,5 @@
-import {
-  CHARACTER_HAIR_STYLES,
-  type EquipmentSlot,
-} from "@sidereal/content/character-components";
-import {
-  resolveCrewAppearance,
-  type CrewAppearance,
-} from "@sidereal/render/crew/appearance";
+import type { EquipmentSlot } from "@sidereal/content/character-components";
+import type { CrewAppearance } from "@sidereal/render/crew/appearance";
 import type { InventoryState } from "./inventory";
 import {
   INVENTORY_DEFINITIONS,
@@ -170,43 +164,11 @@ export function createCharacterSheet(
     );
   }
   function equipment(r: Rect, state: InventoryState, pending: boolean) {
-    section(ui, { ...r, h: 528 }, "EQUIPMENT");
-    const look = resolveCrewAppearance(options.cosmetics?.appearance?.() ?? {});
-    const body = look.bodyType,
-      hair = look.hairStyle;
-    const choiceWidth = (r.w - 28) / 2;
-    ui.button(
-      "character-body",
-      body === "female" ? "Body: Female" : "Body: Male",
-      { x: r.x + 12, y: r.y + 36, w: choiceWidth, h: 27 },
-      () => {
-        options.cosmetics?.change?.({
-          bodyType: body === "female" ? "male" : "female",
-        });
-        ui.invalidate();
-      },
-      { disabled: !options.cosmetics?.change },
-    );
-    ui.button(
-      "character-hair",
-      "Hair: " + hair,
-      { x: r.x + 16 + choiceWidth, y: r.y + 36, w: choiceWidth, h: 27 },
-      () => {
-        options.cosmetics?.change?.({
-          hairStyle:
-            CHARACTER_HAIR_STYLES[
-              (CHARACTER_HAIR_STYLES.indexOf(hair) + 1) %
-                CHARACTER_HAIR_STYLES.length
-            ],
-        });
-        ui.invalidate();
-      },
-      { disabled: !options.cosmetics?.change },
-    );
+    section(ui, { ...r, h: 490 }, "EQUIPMENT");
     const cardW = Math.max(65, Math.min(90, r.w * 0.245));
     const view = {
       x: r.x + cardW + 4,
-      y: r.y + 68,
+      y: r.y + 36,
       w: r.w - 2 * cardW - 8,
       h: Math.min(383, Math.max(96, (viewport?.h ?? 546) - 130)),
     };
@@ -264,7 +226,7 @@ export function createCharacterSheet(
         row = i % 5;
       const box = {
         x: col ? r.x + r.w - cardW - 8 : r.x + 8,
-        y: r.y + 68 + row * 79,
+        y: r.y + 36 + row * 79,
         w: cardW,
         h: 73,
       };
@@ -315,7 +277,7 @@ export function createCharacterSheet(
       r.w - 2 * cardW,
     );
     const compactPreview = view.h < 383;
-    const controlsY = compactPreview ? view.y + view.h + 26 : r.y + 486;
+    const controlsY = compactPreview ? view.y + view.h + 26 : r.y + 450;
     const controlsX = compactPreview ? view.x + 8 : r.x + 12;
     const controlsWidth = compactPreview ? view.w - 16 : r.w - 24;
     ui.button(
@@ -337,15 +299,6 @@ export function createCharacterSheet(
         preview?.setRotation(rotation);
         ui.invalidate();
       },
-    );
-
-    ui.text(
-      "Body & hair · gear equipped from inventory",
-      r.x + 8,
-      r.y + 530,
-      10,
-      palette.muted,
-      r.w - 16,
     );
   }
   function statistics(r: Rect) {
@@ -510,8 +463,8 @@ export function createCharacterSheet(
       );
       const body = { ...r, y: r.y + 40 };
       if (page === "Equipment") {
-        equipment({ ...body, h: 558 }, state, pending);
-        return 586;
+        equipment({ ...body, h: 490 }, state, pending);
+        return 538;
       }
       if (r.w >= 570) {
         const left = Math.max(190, r.w * 0.34);

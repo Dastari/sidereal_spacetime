@@ -1,0 +1,82 @@
+{
+  "schema": "sidereal.native-traversal-validation.v1",
+  "pass": false,
+  "checks": [
+    {
+      "name": "Actual native solids clear segment body envelope0",
+      "pass": true,
+      "hits": []
+    },
+    {
+      "name": "Actual native solids clear segment body envelope1",
+      "pass": true,
+      "hits": []
+    },
+    {
+      "name": "Actual native solids clear segment body envelope2",
+      "pass": true,
+      "hits": []
+    },
+    {
+      "name": "Actual lower-roof has genuine2m panel/edge aperture",
+      "pass": true,
+      "hits": []
+    },
+    {
+      "name": "Actual upper-floor has genuine2m panel/edge aperture",
+      "pass": true,
+      "hits": []
+    },
+    {
+      "name": "Exact authored-to-GLB triangle multiset traversal-aperture-edge",
+      "pass": false,
+      "triangles": 424,
+      "coordinateToleranceM": 1e-06
+    },
+    {
+      "name": "Exact authored-to-GLB triangle multiset traversal-guard",
+      "pass": false,
+      "triangles": 5452,
+      "coordinateToleranceM": 1e-06
+    },
+    {
+      "name": "Exact authored-to-GLB triangle multiset traversal-ladder",
+      "pass": false,
+      "triangles": 11280,
+      "coordinateToleranceM": 1e-06
+    },
+    {
+      "name": "Portable opaque PBR materials retained",
+      "pass": false
+    },
+    {
+      "name": "Only3native groups and4path sockets exported",
+      "pass": true
+    },
+    {
+      "name": "Actual standing landing clear lower",
+      "pass": true,
+      "hits": []
+    },
+    {
+      "name": "Actual standing landing clear upper",
+      "pass": true,
+      "hits": []
+    },
+    {
+      "name": "Upper guard assembly has minimum1m clear dedicated entry",
+      "pass": true,
+      "measuredEntryClearWidthM": 1.0399999618530273
+    }
+  ],
+  "cost": {
+    "meshes": 3,
+    "primitives": 11,
+    "triangles": 17156,
+    "materials": 6,
+    "textures": 0
+  },
+  "sourceBlendSha256": "f8f30e5070a326c13583a500374e297ffc9c39bece162f9c407beafd025fa927",
+  "glbSha256": "ea82d300630c04567391947eddf1fd84a42d45c7db354ef2efcf5150cc6cf336",
+  "qualificationScope": "Exact native static geometry and bounded capsule path only; no gameplay publication, pressure/load/armor rating, climb animation fit or owner artistic approval."
+}

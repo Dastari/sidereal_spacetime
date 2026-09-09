@@ -102,15 +102,15 @@ export function access(ctx: ReadContext) {
     bindings,
   };
 }
-export const stateProjection = t.object("InventoryStatus", {
+export const stateProjection = t.row("InventoryStatus", {
   revision: t.u64(),
   kitGranted: t.bool(),
-  pocketsId: t.string(),
+  pocketsId: t.string().primaryKey(),
   carriedMassKg: t.f64(),
   carryLimitKg: t.f64(),
 });
-export const itemProjection = t.object("VisibleInventoryItem", {
-  id: t.string(),
+export const itemProjection = t.row("VisibleInventoryItem", {
+  id: t.string().primaryKey(),
   definitionId: t.string(),
   containerId: t.string(),
   equipmentSlot: t.string(),
@@ -118,9 +118,9 @@ export const itemProjection = t.object("VisibleInventoryItem", {
   y: t.i32(),
   rotated: t.bool(),
 });
-export const containerProjection = t.object("VisibleInventoryContainer", {
+export const containerProjection = t.row("VisibleInventoryContainer", {
   placementId: t.string(),
-  id: t.string(),
+  id: t.string().primaryKey(),
   parentItemId: t.string(),
   kind: t.string(),
   name: t.string(),
@@ -132,8 +132,8 @@ export const containerProjection = t.object("VisibleInventoryContainer", {
   liquidType: t.string(),
   carried: t.bool(),
 });
-export const hotbarProjection = t.object("VisibleInventoryHotbar", {
-  slot: t.u8(),
+export const hotbarProjection = t.row("VisibleInventoryHotbar", {
+  slot: t.u8().primaryKey(),
   itemId: t.string(),
 });
 export function inventoryStateView(ctx: ReadContext) {

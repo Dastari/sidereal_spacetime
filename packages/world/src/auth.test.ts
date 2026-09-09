@@ -2,7 +2,7 @@ import { expect, test, vi } from "vitest";
 import { Identity } from "spacetimedb";
 vi.mock("spacetimedb/server", () => ({
   SenderError: class extends Error {},
-  t: new Proxy({}, { get: () => () => ({}) }),
+  t: new Proxy({}, { get: () => () => ({ primaryKey() { return this; } }) }),
 }));
 vi.mock("./combat", () => ({ clearAim: vi.fn() }));
 vi.mock("./interactions", () => ({ leaveCouch: vi.fn() }));

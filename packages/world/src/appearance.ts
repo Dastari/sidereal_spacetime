@@ -4,7 +4,7 @@ import {validateAppearanceJson} from '../../sim/src/appearance';
 import {CHARACTER_APPEARANCE_ENUMS,CHARACTER_APPEARANCE_COLORS} from '../../content/src/appearance';
 type ReadContext=Pick<ViewCtx<InferSchema<typeof world>>,'db'|'sender'>;
 type Context=ReducerCtx<InferSchema<typeof world>>;
-export const appearanceProjection=t.object('CharacterAppearanceStatus',{characterId:t.string(),revision:t.u64(),appearanceJson:t.string()});
+export const appearanceProjection=t.row('CharacterAppearanceStatus',{characterId:t.string().primaryKey(),revision:t.u64(),appearanceJson:t.string()});
 export function ownAppearance(ctx:ReadContext) {
   return [...ctx.db.character.by_owner.filter(ctx.sender)].map(actor=>
     ctx.db.characterAppearance.characterId.find(actor.id) ?? {characterId:actor.id,revision:0n,appearanceJson:'{}'});

@@ -2,6 +2,7 @@ import { afterEach, expect, test, vi } from "vitest";
 import { CanvasUI } from "./toolkit";
 import { drawGroundLoot } from "./ground-loot";
 import { createInventoryUI, type InventoryState } from "./inventory";
+import { drawAppearanceControls } from "./appearance-controls";
 afterEach(() => vi.unstubAllGlobals());
 test("a dense ground pile keeps pickup labels separate and inside a compact viewport", () => {
   const { ui } = fixture();
@@ -87,6 +88,7 @@ function fixture() {
     equipItem: vi.fn(),
     transferItem: vi.fn(),
     takeAll: vi.fn(),
+    storeAll: vi.fn(),
     dropItem: vi.fn(),
     assignHotbar: vi.fn(),
     activateHotbar: vi.fn(),
@@ -259,6 +261,7 @@ test("dragging to a backpack icon targets its contents rather than its parent gr
   state.items[0].equipmentSlot = "";
   state.items[0].containerId = "crate";
   state.items[1].containerId = "crate";
+  state.items[1].x = 3;
   board.open("crate");
   draw();
   const source = hit("item-crate-gun");
@@ -296,11 +299,9 @@ test("paper-doll backpack accepts contents while matching armor equips and unequ
   hit("unequip-item").action?.();
   expect(actions.transferItem).toHaveBeenLastCalledWith("gun", "");
 });
-test("explicit slot view preserves placement coordinates and held rotation until drop", () => {
+test("default Tetris grid preserves placement coordinates and held rotation until drop", () => {
   const { board, draw, hit, actions, state } = fixture();
   board.open("inventory");
-  draw();
-  hit("view-inventory").action?.();
   draw();
   hit("item-inventory-gun").action?.();
   board.rotate();
@@ -315,6 +316,148 @@ test("explicit slot view preserves placement coordinates and held rotation until
     rotated: true,
   });
   expect(state.items[1].rotated).toBe(false);
+});
+test("backpacks and crates show different item footprints at their saved positions", () => {
+  for (const [containerId, window] of [
+    ["bag", "inventory"],
+    ["crate", "crate"],
+  ]) {
+    const { board, draw, hit, state, ui } = fixture();
+    state.items[1].containerId = containerId;
+    state.items.push({
+      id: "cell",
+      definitionId: "power-cell",
+      containerId,
+      equipmentSlot: "",
+      x: 4,
+      y: 0,
+      rotated: false,
+    });
+    board.open(window);
+    draw();
+    const unit = hit(`slot-${containerId}-0-0`).rect;
+    const rifle = hit(`item-${window}-gun`).rect;
+    const cell = hit(`item-${window}-cell`).rect;
+    expect(rifle).toEqual({
+      x: unit.x + 2,
+      y: unit.y + 2,
+      w: unit.w * 2 - 4,
+      h: unit.h * 4 - 4,
+    });
+    expect(cell).toEqual({
+      x: unit.x + unit.w * 4 + 2,
+      y: unit.y + 2,
+      w: unit.w - 4,
+      h: unit.h * 2 - 4,
+    });
+    hit(`filter-${window}-Weapons`).action?.();
+    draw();
+    expect(hit(`item-${window}-gun`).rect).toEqual(rifle);
+    expect(hit(`item-${window}-cell`).rect).toEqual(cell);
+    expect(hit(`item-${window}-cell`).disabled).toBe(true);
+    expect(hit(`view-${window}`).label).toBe("Icons");
+    expect(hit(`sort-${window}`).disabled).toBe(true);
+  }
+});
+test("held preview snaps to the full footprint and rotation changes fit without changing inventory", () => {
+  const { board, draw, hit, state, ui, actions } = fixture();
+  board.open("inventory");
+  draw();
+  const slot = hit("slot-bag-5-1").rect;
+  vi.spyOn(ui, "pointerPosition").mockReturnValue({
+    x: slot.x + 10,
+    y: slot.y + 10,
+  });
+  const strokes: { rect: number[]; color: string }[] = [];
+  ui.ctx.strokeRect = (...rect) => {
+    strokes.push({ rect, color: String(ui.ctx.strokeStyle) });
+  };
+  const before = JSON.stringify(state);
+  hit("item-inventory-gun").action?.();
+  draw();
+  expect(strokes.at(-1)?.rect).toEqual([
+    slot.x + 2,
+    slot.y + 2,
+    slot.w * 2 - 4,
+    slot.h * 4 - 4,
+  ]);
+  expect(strokes.at(-1)?.color).toBe("#74dcbb");
+  board.rotate();
+  draw();
+  expect(strokes.at(-1)?.rect).toEqual([
+    slot.x + 2,
+    slot.y + 2,
+    slot.w * 4 - 4,
+    slot.h * 2 - 4,
+  ]);
+  expect(strokes.at(-1)?.color).toBe("#ff8eaa");
+  hit("slot-bag-5-1").action?.();
+  expect(actions.moveItem).not.toHaveBeenCalled();
+  expect(JSON.stringify(state)).toBe(before);
+});
+test("Icons remains optional and returning to Slots restores the physical layout", () => {
+  const { board, draw, hit, state, ui } = fixture();
+  board.open("inventory");
+  draw();
+  const footprint = { ...hit("item-inventory-gun").rect };
+  const before = JSON.stringify(state);
+  expect(hit("sort-inventory").disabled).toBe(true);
+  hit("view-inventory").action?.();
+  draw();
+  const icon = hit("item-inventory-gun").rect;
+  expect(icon.w).toBe(icon.h);
+  expect(hit("sort-inventory").disabled).toBe(false);
+  hit("sort-inventory").action?.();
+  draw();
+  hit("view-inventory").action?.();
+  draw();
+  expect(hit("item-inventory-gun").rect).toEqual(footprint);
+  expect(ui.hits.some((h) => h.id === "slot-bag-0-0")).toBe(true);
+  expect(JSON.stringify(state)).toBe(before);
+});
+test("different container widths keep equal cells and scrolling preserves exact drop coordinates", () => {
+  const { board, draw, hit, state, ui, actions } = fixture();
+  state.containers[2].width = 14;
+  state.containers[2].height = 14;
+  state.items.push({
+    ...state.items[1],
+    id: "far-rifle",
+    containerId: "crate",
+    x: 12,
+  });
+  board.open("inventory");
+  board.open("crate");
+  draw();
+  expect(hit("slot-bag-0-0").rect.w).toBe(48);
+  expect(hit("slot-crate-0-0").rect.w).toBe(48);
+  expect(hit("item-crate-far-rifle").rect.w).toBeLessThan(92);
+  hit("grid-pan-crate").change?.(1);
+  draw();
+  expect(hit("item-crate-far-rifle").rect.w).toBe(
+    hit("item-inventory-gun").rect.w,
+  );
+  expect(hit("item-crate-far-rifle").rect.h).toBe(
+    hit("item-inventory-gun").rect.h,
+  );
+  const source = hit("item-inventory-gun");
+  const destination = hit("slot-crate-10-0").rect;
+  source.drag?.(8, 0);
+  source.drop?.(destination.x + 5, destination.y + 5);
+  expect(actions.moveItem).toHaveBeenCalledWith({
+    itemId: "gun",
+    containerId: "crate",
+    x: 10,
+    y: 0,
+    rotated: false,
+  });
+  board.scroll(1000, destination.x, destination.y);
+  draw();
+  expect(hit("slot-crate-13-13").rect.w).toBe(48);
+  board.scroll(-1000, destination.x, destination.y, -1000);
+  ui.width = 390;
+  draw();
+  expect(hit("slot-crate-0-0").rect.w).toBe(48);
+  expect(hit("grid-right-crate").disabled).toBe(false);
 });
 test("ground drop uses an item intent and modal menus cannot consume stale pickup targets", () => {
   const { board, draw, hit, ui, actions } = fixture();
@@ -333,18 +476,18 @@ test("ground drop uses an item intent and modal menus cannot consume stale picku
   );
   expect(actions.dropItem).toHaveBeenCalledWith("gun");
 });
-test("filters and search affect visible icons without changing source data", () => {
-  const { board, draw, hit, ui, state } = fixture();
+test("filters and search dim occupied footprints without changing source data", () => {
+  const { board, draw, hit, state } = fixture();
   board.open("inventory");
   draw();
   const before = JSON.stringify(state);
   hit("filter-inventory-Armor").action?.();
   draw();
-  expect(ui.hits.some((h) => h.id === "item-inventory-gun")).toBe(false);
+  expect(hit("item-inventory-gun").disabled).toBe(true);
   hit("filter-inventory-All").action?.();
   hit("search-inventory").edit?.change("frontier");
   draw();
-  expect(hit("item-inventory-gun")).toBeDefined();
+  expect(hit("item-inventory-gun").disabled).toBe(false);
   expect(JSON.stringify(state)).toBe(before);
 });
 test("compact controls stay in bounds and stats are a separate tab", () => {
@@ -353,7 +496,7 @@ test("compact controls stay in bounds and stats are a separate tab", () => {
   ui.height = 600;
   board.open("inventory");
   draw();
-  for (const id of ["rarity-inventory", "sort-inventory", "view-inventory"])
+  for (const id of ["rarity-inventory", "search-inventory"])
     expect(hit(id).rect.w).toBeGreaterThan(80);
   board.toggle("inventory");
   board.open("character");
@@ -362,6 +505,48 @@ test("compact controls stay in bounds and stats are a separate tab", () => {
   hit("character-page-1").action?.();
   draw();
   expect(ui.hits.some((h) => h.id === "character-rotate")).toBe(false);
+});
+test("storage header exposes Store all only with a world destination and removes duplicated hints", () => {
+  const { board, draw, hit, ui, actions } = fixture();
+  const labels = vi.spyOn(ui, "text");
+  board.open("inventory");
+  draw();
+  expect(ui.hits.some((h) => h.id === "store-all-bag")).toBe(false);
+  board.open("crate");
+  draw();
+  hit("store-all-bag").action?.();
+  expect(actions.storeAll).toHaveBeenCalledWith("bag", "crate");
+  expect(
+    labels.mock.calls.some(([text]) =>
+      /Click to pick up|items ·|Backpack first/.test(text),
+    ),
+  ).toBe(false);
+  board.open("character");
+  draw();
+  expect(
+    ui.hits.some((h) =>
+      ["character-body", "character-hair", "character-down"].includes(h.id),
+    ),
+  ).toBe(false);
+  expect(labels.mock.calls.some(([text]) => text.includes("Body & hair"))).toBe(
+    false,
+  );
+});
+test("crew color swatches send separate supported skin and hair choices", () => {
+  const { ui } = fixture();
+  const change = vi.fn();
+  drawAppearanceControls(
+    ui,
+    { x: 0, y: 0, w: 430, h: 500 },
+    { skin: "#bb805e", hair: "#3b2823" },
+    change,
+  );
+  ui.hits.find((h) => h.id === "crew-hair-color-7")!.action?.();
+  expect(change).toHaveBeenLastCalledWith({ hair: "#2a8c95" });
+  ui.hits.find((h) => h.id === "crew-skin-color-6")!.action?.();
+  expect(change).toHaveBeenLastCalledWith({ skin: "#764e3b" });
+  expect(ui.hits.some((h) => h.id === "crew-bodyType")).toBe(true);
+  expect(ui.hits.some((h) => h.id === "crew-hairStyle")).toBe(true);
 });
 test("range loss closes storage and removes stale targets", () => {
   const { board, draw, state, ui } = fixture();

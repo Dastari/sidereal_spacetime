@@ -12,7 +12,7 @@ import {
 
 export default __t.row({
   placementId: __t.string().name("placement_id"),
-  id: __t.string(),
+  id: __t.string().primaryKey(),
   parentItemId: __t.string().name("parent_item_id"),
   kind: __t.string(),
   name: __t.string(),

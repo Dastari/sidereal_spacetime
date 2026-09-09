@@ -63,6 +63,7 @@ export async function interactionSmoke(
     .subscribe("SELECT * FROM interaction_object");
   await wait(() => privateRejected, "private interaction base rejected");
   await a.reducers.useStation({});
+  await a.reducers.claimInputControl({});
   let sequence = 0n;
   const intent = async (dx: number, dy: number) =>
     a.reducers.setIntent({

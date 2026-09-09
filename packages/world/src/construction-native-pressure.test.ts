@@ -3,7 +3,7 @@ import { expect, test, vi } from "vitest";
 import { Identity } from "spacetimedb";
 vi.mock("spacetimedb/server", () => ({
   SenderError: class extends Error {},
-  t: new Proxy({}, { get: () => () => ({}) }),
+  t: new Proxy({}, { get: () => () => ({ primaryKey: () => ({}) }) }),
 }));
 import { createNativePressureRoomDocument } from "@sidereal/sim/construction-pressure-document";
 import { createNativePressureRoomCompiler } from "@sidereal/sim/construction-native-room";
@@ -75,7 +75,7 @@ function fixture() {
       by_deck: "deckId",
       by_moving: "moving",
     }),
-    constructionLocation: table({}, "characterId"),
+    constructionLocation: table({ by_instance: "instanceId" }, "characterId"),
     character: table({ by_owner: "owner" }),
     constructionGrant: table({ by_principal: "principal" }),
     constructionReceipt: table({ by_principal: "principal" }),
@@ -457,9 +457,8 @@ test("global pressure admission rejects a 33rd installation before pressure writ
   // An exact prior transaction retry remains valid at the admission ceiling.
   installNativePressure(f.ctx, first!, compile);
   expect(f.tick()).toBe(true);
-  expect(
-    [...f.db.constructionAtmosphere.iter()].every((row) => row.lastTick === 1n),
-  ).toBe(true);
+  expect([...f.db.constructionAtmosphere.iter()]).toEqual(gasBefore);
+  expect([...f.db.constructionAtmosphereClock.iter()][0].tick).toBe(1n);
 });
 
 test("immutable validation caches cannot hide edits made without revision increments", () => {
@@ -486,4 +485,33 @@ test("immutable validation caches cannot hide edits made without revision increm
   expect(() => f.tick()).toThrow(/model no longer matches/);
   f.db.constructionAtmosphere.id.update(gas);
   expect(f.tick()).toBe(true);
+});
+
+test("empty pressure scheduling writes no clock and first later installation takes one fixed step", () => {
+  const f = fixture();
+  for (let i = 0; i < 100; i++) expect(f.tick()).toBe(false);
+  expect([...f.db.constructionAtmosphereClock.iter()]).toEqual([]);
+  const input = f.install();
+  const door = f.db.constructionDoor.id.find(input.doorId);
+  f.db.constructionDoor.id.update({ ...door, targetOpen: true, moving: true });
+  f.ctx.timestamp.microsSinceUnixEpoch += 86400000000n;
+  expect(f.tick()).toBe(true);
+  expect(
+    f.db.constructionNativePressure.id.find(input.instanceId).sealRetraction,
+  ).toBeCloseTo(0.2);
+  expect([...f.db.constructionAtmosphereClock.iter()][0].tick).toBe(1n);
+});
+
+test("moving pressure door reads indexed instance occupants without scanning every location", () => {
+  const f = fixture(),
+    input = f.install();
+  f.db.constructionLocation.iter = () => {
+    throw Error("full location scan");
+  };
+  const door = f.db.constructionDoor.id.find(input.doorId);
+  f.db.constructionDoor.id.update({ ...door, targetOpen: true, moving: true });
+  expect(() => f.tick()).not.toThrow();
+  expect(
+    f.db.constructionNativePressure.id.find(input.instanceId).sealRetraction,
+  ).toBeCloseTo(0.2);
 });

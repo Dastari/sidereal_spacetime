@@ -55,10 +55,10 @@ export function publishBlueprint(ctx:Context,args:{workspaceId:string;draftId:st
 }
 /** ViewCtx has no clock: expire actual grants on the authority tick; reducers always check exact time. */
 export function expireGrants(ctx:Context){for(const g of ctx.db.constructionGrant.by_expiry.filter(new Range(null,{tag:'included',value:ctx.timestamp.microsSinceUnixEpoch})))if(!g.revoked)ctx.db.constructionGrant.id.update({...g,revoked:true,nextCheckMicros:forever,revision:g.revision+1n});}
-export const grantProjection=t.object('ConstructionGrantStatus',{id:t.string(),workspaceId:t.string(),capability:t.string(),expiresMicros:t.u64(),revoked:t.bool(),revision:t.u64()});
+export const grantProjection=t.row('ConstructionGrantStatus',{id:t.string().primaryKey(),workspaceId:t.string(),capability:t.string(),expiresMicros:t.u64(),revoked:t.bool(),revision:t.u64()});
 export function ownGrants(ctx:ReadContext){return [...ctx.db.constructionGrant.by_principal.filter(ctx.sender)].map(({id,workspaceId,capability,expiresMicros,revoked,revision})=>({id,workspaceId,capability,expiresMicros,revoked,revision}));}
-export const draftProjection=t.object('ConstructionDraftStatus',{id:t.string(),workspaceId:t.string(),revision:t.u64(),documentJson:t.string(),sha256:t.string()});
+export const draftProjection=t.row('ConstructionDraftStatus',{id:t.string().primaryKey(),workspaceId:t.string(),revision:t.u64(),documentJson:t.string(),sha256:t.string()});
 function readWorkspaces(ctx:ReadContext){return new Set(grants(ctx).filter(g=>!g.revoked&&g.capability==='draft.read').map(g=>g.workspaceId));}
 export function ownDrafts(ctx:ReadContext){return [...readWorkspaces(ctx)].flatMap(w=>[...ctx.db.constructionDraft.by_workspace.filter(w)].map(({id,workspaceId,revision,documentJson,sha256})=>({id,workspaceId,revision,documentJson,sha256})));}
-export const blueprintProjection=t.object('ConstructionBlueprintStatus',{id:t.string(),workspaceId:t.string(),draftId:t.string(),sourceRevision:t.u64(),canonical:t.string(),sha256:t.string(),readinessJson:t.string()});
+export const blueprintProjection=t.row('ConstructionBlueprintStatus',{id:t.string().primaryKey(),workspaceId:t.string(),draftId:t.string(),sourceRevision:t.u64(),canonical:t.string(),sha256:t.string(),readinessJson:t.string()});
 export function ownBlueprints(ctx:ReadContext){return [...readWorkspaces(ctx)].flatMap(w=>[...ctx.db.constructionBlueprint.by_workspace.filter(w)].map(({id,workspaceId,draftId,sourceRevision,canonical,sha256,readinessJson})=>({id,workspaceId,draftId,sourceRevision,canonical,sha256,readinessJson})));}

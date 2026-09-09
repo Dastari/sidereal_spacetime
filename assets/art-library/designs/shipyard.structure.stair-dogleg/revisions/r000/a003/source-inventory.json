@@ -1,0 +1,111 @@
+{
+  "schema": "sidereal.native-stair-source-inventory.v1",
+  "revision": "r000-a003",
+  "files": [
+    {
+      "path": "author.py",
+      "sha256": "bcae49eb5e14958fe5e8f99d05614ff3ede08c20983b9a53478e40d06d057514",
+      "bytes": 16749
+    },
+    {
+      "path": "authored-triangles.json.gz",
+      "sha256": "4b45f6f3fd93abab70221d3f5da93d5ac6bdc90d054e56fbd501f87d2f8fae0b",
+      "bytes": 386986
+    },
+    {
+      "path": "blender-context.png",
+      "sha256": "a78a1b99521818fa1fd93fc050c9e7a546175f43886f224b2daf590ff84fd16e",
+      "bytes": 1953907
+    },
+    {
+      "path": "blender-lower.png",
+      "sha256": "a260078c76b4634836773e35c8374224157b9f1e3617924d5316872633e6a90f",
+      "bytes": 1861293
+    },
+    {
+      "path": "blender-source.blend",
+      "sha256": "2d02ff1e8e38dca22627739c7a3321593e0b8f22ce66ae4cb98b5fccbcecbec6",
+      "bytes": 5212331
+    },
+    {
+      "path": "blender-top.png",
+      "sha256": "1865e4ace8e41501336b464106ed346d9a8031204421c43290cd0044cda289bd",
+      "bytes": 2214953
+    },
+    {
+      "path": "capsule-fit.blend",
+      "sha256": "03ed9d82937227fe63cc1ba318255f04125c93fc861048976bf5def84059b1fd",
+      "bytes": 5455243
+    },
+    {
+      "path": "capsule-fit.json",
+      "sha256": "ff336eba4b2d9b6addcfe6a1a4150100ac21b842c21194ce378735c51461c83d",
+      "bytes": 924
+    },
+    {
+      "path": "capsule-fit.png",
+      "sha256": "951356a64130543f1c5d40f5653449920ec709148455993d35719085d19eab76",
+      "bytes": 2066757
+    },
+    {
+      "path": "capture.json",
+      "sha256": "459b290dff8d798b0e32b8a1b58298ffbb2437f0c819a78cb3244f0abb4eb055",
+      "bytes": 1194
+    },
+    {
+      "path": "cutout.png",
+      "sha256": "ee33af503f6ca4447876be81859492b5becff16beb88b834ebb64f792149317c",
+      "bytes": 1783453
+    },
+    {
+      "path": "delivery.json",
+      "sha256": "600ffd7da0ae53bde02aed5d6652f51515f251ae8608305d9eab92bdfaf59d27",
+      "bytes": 862
+    },
+    {
+      "path": "kit.glb",
+      "sha256": "8d2f8359f6221a43245fdd9b10671892cbe5d05f5ba8569ff04f1f8e54f728a7",
+      "bytes": 2719168
+    },
+    {
+      "path": "native-collision-triangles.json.gz",
+      "sha256": "b3b80c48bcbafef462384ec43dc23e6aaf9e3cfbe5eb2be83b38dfb76a0c1106",
+      "bytes": 824985
+    },
+    {
+      "path": "native-measurements.json",
+      "sha256": "0e3c40fd905be56becbeb8a9302136e3e518f4a10cf157ae0d19da016cc1fc9f",
+      "bytes": 108821
+    },
+    {
+      "path": "rejected-center-stops.json",
+      "sha256": "354d3bfcec26db30cfe4952f2c3dcdacd2c031ca3d8e73919b09e563f88a1852",
+      "bytes": 8836
+    },
+    {
+      "path": "review.md",
+      "sha256": "0003969d799b16e981191eb96321f0361afaf056a152764cf572121e7557e73d",
+      "bytes": 3902
+    },
+    {
+      "path": "review_body.py",
+      "sha256": "7ed529778372204887ab9911c9c9c62d8684b4b2e73dce5c854b5dafe4049f5d",
+      "bytes": 2613
+    },
+    {
+      "path": "stair-audit.json",
+      "sha256": "8df56649474fa8379af3a2c678716fc1f80406e9f9457e85498598f6a0be9831",
+      "bytes": 110211
+    },
+    {
+      "path": "validate.py",
+      "sha256": "c92c5631008384d07f68079a5add19128ae927638d598b34c2f2be0457e4514f",
+      "bytes": 13985
+    },
+    {
+      "path": "validation.json",
+      "sha256": "d11ddbd002089fc2a3b81ea17d045585924629480fd781d4a2b5995cf520da88",
+      "bytes": 25778
+    }
+  ]
+}

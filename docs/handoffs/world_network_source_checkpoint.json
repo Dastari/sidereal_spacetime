@@ -1,0 +1,1142 @@
+{
+  "date": "2026-09-09",
+  "scope": "Tested connection/input and idle-write correction; keyed bindings; previously verified native ladder and qualified stair pure/source checkpoint. Includes current externally authored inventory source required by the tested composition; preserves it without redesign. No public deployment or final art approval.",
+  "checks": {
+    "check": "676 tests /132 files",
+    "build": "pass",
+    "authoritySmoke": "sidereal-spacetime-dev-audit-network-smoke; pass",
+    "browser": "pending final audit-network-review acceptance"
+  },
+  "files": [
+    {
+      "path": "apps/client/src/App.tsx",
+      "sha256": "badd03a2abecbd433465adfe47bdc22b9c982798b3271eed14c08db9d2119282",
+      "bytes": 33713
+    },
+    {
+      "path": "apps/client/src/ConstructionReview.tsx",
+      "sha256": "385569d6404577a4a4e8dce5f11b6d113f798504806bb1b8f99c44a55bfb3455",
+      "bytes": 7245
+    },
+    {
+      "path": "apps/client/src/connection-session.test.ts",
+      "sha256": "06f4f0337b18bd2aff8e28dc4d689b9382ed5d48ecdab69dc91ffb59a5d06587",
+      "bytes": 5311
+    },
+    {
+      "path": "apps/client/src/intent-transmitter.test.ts",
+      "sha256": "9b774649d41f4ab6e2311f15dd3237b80d6edc75ab79766449becca73cab7dc3",
+      "bytes": 2545
+    },
+    {
+      "path": "apps/client/src/intent-transmitter.ts",
+      "sha256": "6e08d03bf36ed31a079d33cfc9bb4b3022c08d60a773edde060310ce6ba17626",
+      "bytes": 2344
+    },
+    {
+      "path": "apps/client/src/movement-control.test.ts",
+      "sha256": "6993c89029e40a4dc813a426d0029cc2a5519f7340702bf49eaf65d72886d9d3",
+      "bytes": 2615
+    },
+    {
+      "path": "apps/client/src/movement-control.ts",
+      "sha256": "d4d3d3ffccc8271750f09de10b735e393603ebf3cc3b4a342a4782dc12c5d826",
+      "bytes": 2035
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/DESIGN.html",
+      "sha256": "b5ca87a7c9b0c1fbc73883f409e223684602a9109cd630fdb923bd614e1b52ec",
+      "bytes": 3883
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/DESIGN.md",
+      "sha256": "56498d3f9ce383b25e4ebfaf091cb2024a0aad98d4ea2a62bebf94ccc02196ce",
+      "bytes": 3932
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/design.json",
+      "sha256": "69adcc2c427dd8f628bea51882aeb4d24f7ae07e2270bea3ad44db9fa9811c04",
+      "bytes": 32966
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a001/author.py",
+      "sha256": "e3aad8c489c31b4e9d33faa34ce8d054a689fe95934c89be9e9389900efded59",
+      "bytes": 16439
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a001/authored-triangles.json.gz",
+      "sha256": "0592a0b37d8b764cc86a82830e063575b3d8719c51048d18d663c07077c2c50f",
+      "bytes": 388597
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a001/blender-context.png",
+      "sha256": "6bccba9f93d480d6e4989d852ee6d10dc9af6f2bb92128ce8eda9aa6c2df371e",
+      "bytes": 1953789
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a001/blender-lower.png",
+      "sha256": "2f13cfe1ef2a23cad4ca02944752636f6042e57235ac9d253a6c85b809a2f4e7",
+      "bytes": 1859049
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a001/blender-source.blend",
+      "sha256": "509d55a3e2e46e64c18eecb6886864eb6b676a4d073e8bb065c7dcfac0f0cc25",
+      "bytes": 5217755
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a001/blender-top.png",
+      "sha256": "1a29c1b8f0f8fd7114014503a664fa2ba3748891b48f1a0d7301ee484ad4489b",
+      "bytes": 2215061
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a001/capture.json",
+      "sha256": "fe050ad4017e40973dc1c2bf7e6a12fb187d007ee8990d77e2d875e807bd7251",
+      "bytes": 1194
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a001/cutout.png",
+      "sha256": "b06f1a7f22577decdcf6d06e23b4d33b08f87e735da0967947fc74dff371c740",
+      "bytes": 1777067
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a001/delivery.json",
+      "sha256": "788a01f4bc371d3d66d49eb9d80cacd6a3e215073e5124bac4ecb60f70c99567",
+      "bytes": 843
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a001/kit.glb",
+      "sha256": "7073cc9b366e56a3f67f4ea8f296063bdfe0df38fb5c02794b92a8e2272a4034",
+      "bytes": 2730888
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a001/native-collision-triangles.json.gz",
+      "sha256": "90a07d3def4837401b0da5dbe95df39983880e2bca91457524f4814b4f1a0e2e",
+      "bytes": 826652
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a001/native-measurements.json",
+      "sha256": "508f890275f4c23136c04d06fd073fd955ada01a279be699ba487c9c3a1d0c8c",
+      "bytes": 108486
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a001/rejected-center-stops.json",
+      "sha256": "7c02cd20adf4bafc1ce0994dc6fa30fcb05c04c177602706b85220408e52e60f",
+      "bytes": 9208
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a001/review.md",
+      "sha256": "953eb13e7de698da874b03b6ea04d7cd18018e34eae35b15df4a446313433a6b",
+      "bytes": 1256
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a001/stair-audit.json",
+      "sha256": "d2a9607ab9509c76771d05fa51b1de6c4f10936b5b6ebf5d2a20c53446d88c43",
+      "bytes": 109880
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a001/validate.py",
+      "sha256": "c92c5631008384d07f68079a5add19128ae927638d598b34c2f2be0457e4514f",
+      "bytes": 13985
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a001/validation.json",
+      "sha256": "2d0383bb41bd8aa109652281d6cd1a0a3d3a5003625e054aa4f822ac761c84f6",
+      "bytes": 27373
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a002/author.py",
+      "sha256": "c15a4dd90ee93ba08d134d9a8660d85c22a4f2b06eb02fb9891898def632d199",
+      "bytes": 16439
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a002/authored-triangles.json.gz",
+      "sha256": "56f5b67e55000321622e869083c91602df351f6a42c299ae146679d65d6d8ffc",
+      "bytes": 388630
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a002/blender-context.png",
+      "sha256": "cb7884c03c80ce1c5bf585f17408b87020e80f6f54fe711b47bb9e6d585d673d",
+      "bytes": 1954382
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a002/blender-lower.png",
+      "sha256": "ee9d670c1290e84aec5ea38c43f4ad09c8a52549117e7d0d188b1060e6c8ff70",
+      "bytes": 1857300
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a002/blender-source.blend",
+      "sha256": "57a3174e95938f94cebf01a0da3ca19d1d86478e377ffee2d632caaf661621bc",
+      "bytes": 5217755
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a002/blender-top.png",
+      "sha256": "41dd74b8c560a5920ab0513cea3851d286b1fbef8740c2dbf9699cf221c70a82",
+      "bytes": 2215188
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a002/capture.json",
+      "sha256": "c4e4b2a7b7719deff635ab79392cd28e52ed1240e74b4bf98fb8329a5c9ec7c7",
+      "bytes": 1194
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a002/cutout.png",
+      "sha256": "ff18010d42853c7b994ca953db59b975b3d102abc116f8b9fae6598be982f7a1",
+      "bytes": 1776547
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a002/delivery.json",
+      "sha256": "5bba8235fb68e386e0565ff62f8cb9401e5297aeb5a446a5ec0eaf1c70af2494",
+      "bytes": 862
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a002/kit.glb",
+      "sha256": "845ab13f1a1e7a6a4332e00f9ea9fd443b1c29d1b8d941102168fe9a7415db15",
+      "bytes": 2730896
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a002/native-collision-triangles.json.gz",
+      "sha256": "8e0c40c6279cf9946be781cf2d865bca1c116527ef50487144ce402677a8d39f",
+      "bytes": 826685
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a002/native-measurements.json",
+      "sha256": "f0e17ae3b3e8366cb64f878f6d0123db3fc9eaef3a2a7cc96e7c8e31a393f644",
+      "bytes": 108486
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a002/rejected-center-stops.json",
+      "sha256": "1cc5c2d07497a4dd328aaa71f972935b7f8aac708d23e668b40e4795c8d61c69",
+      "bytes": 9210
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a002/review.md",
+      "sha256": "a4d05d59d241e28c061727d2c52447e25c6f36ea2f267f56c083348afc032c64",
+      "bytes": 932
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a002/stair-audit.json",
+      "sha256": "b788e50724cdf16c7146ede8cf2783d6cebfefa1eb6ce73d73841e8788d73c23",
+      "bytes": 109878
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a002/validate.py",
+      "sha256": "c92c5631008384d07f68079a5add19128ae927638d598b34c2f2be0457e4514f",
+      "bytes": 13985
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a002/validation.json",
+      "sha256": "0aed6b56e9483adb4ce6014134e26bd3a7d393804a5d6f4772c79a47d883b331",
+      "bytes": 25778
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/author.py",
+      "sha256": "bcae49eb5e14958fe5e8f99d05614ff3ede08c20983b9a53478e40d06d057514",
+      "bytes": 16749
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/authored-triangles.json.gz",
+      "sha256": "4b45f6f3fd93abab70221d3f5da93d5ac6bdc90d054e56fbd501f87d2f8fae0b",
+      "bytes": 386986
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/blender-context.png",
+      "sha256": "a78a1b99521818fa1fd93fc050c9e7a546175f43886f224b2daf590ff84fd16e",
+      "bytes": 1953907
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/blender-lower.png",
+      "sha256": "a260078c76b4634836773e35c8374224157b9f1e3617924d5316872633e6a90f",
+      "bytes": 1861293
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/blender-source.blend",
+      "sha256": "2d02ff1e8e38dca22627739c7a3321593e0b8f22ce66ae4cb98b5fccbcecbec6",
+      "bytes": 5212331
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/blender-top.png",
+      "sha256": "1865e4ace8e41501336b464106ed346d9a8031204421c43290cd0044cda289bd",
+      "bytes": 2214953
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/capsule-fit.blend",
+      "sha256": "03ed9d82937227fe63cc1ba318255f04125c93fc861048976bf5def84059b1fd",
+      "bytes": 5455243
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/capsule-fit.json",
+      "sha256": "ff336eba4b2d9b6addcfe6a1a4150100ac21b842c21194ce378735c51461c83d",
+      "bytes": 924
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/capsule-fit.png",
+      "sha256": "951356a64130543f1c5d40f5653449920ec709148455993d35719085d19eab76",
+      "bytes": 2066757
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/capture.json",
+      "sha256": "459b290dff8d798b0e32b8a1b58298ffbb2437f0c819a78cb3244f0abb4eb055",
+      "bytes": 1194
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/cutout.png",
+      "sha256": "ee33af503f6ca4447876be81859492b5becff16beb88b834ebb64f792149317c",
+      "bytes": 1783453
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/delivery.json",
+      "sha256": "600ffd7da0ae53bde02aed5d6652f51515f251ae8608305d9eab92bdfaf59d27",
+      "bytes": 862
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/kit.glb",
+      "sha256": "8d2f8359f6221a43245fdd9b10671892cbe5d05f5ba8569ff04f1f8e54f728a7",
+      "bytes": 2719168
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/native-collision-triangles.json.gz",
+      "sha256": "b3b80c48bcbafef462384ec43dc23e6aaf9e3cfbe5eb2be83b38dfb76a0c1106",
+      "bytes": 824985
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/native-measurements.json",
+      "sha256": "0e3c40fd905be56becbeb8a9302136e3e518f4a10cf157ae0d19da016cc1fc9f",
+      "bytes": 108821
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/rejected-center-stops.json",
+      "sha256": "354d3bfcec26db30cfe4952f2c3dcdacd2c031ca3d8e73919b09e563f88a1852",
+      "bytes": 8836
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/review.md",
+      "sha256": "0003969d799b16e981191eb96321f0361afaf056a152764cf572121e7557e73d",
+      "bytes": 3902
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/review_body.py",
+      "sha256": "7ed529778372204887ab9911c9c9c62d8684b4b2e73dce5c854b5dafe4049f5d",
+      "bytes": 2613
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/source-inventory.json",
+      "sha256": "25add2bff0caa9644131da590f754eaa134a3f749fcbb991ff625499d49156fa",
+      "bytes": 3317
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/stair-audit.json",
+      "sha256": "8df56649474fa8379af3a2c678716fc1f80406e9f9457e85498598f6a0be9831",
+      "bytes": 110211
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/validate.py",
+      "sha256": "c92c5631008384d07f68079a5add19128ae927638d598b34c2f2be0457e4514f",
+      "bytes": 13985
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/validation.json",
+      "sha256": "d11ddbd002089fc2a3b81ea17d045585924629480fd781d4a2b5995cf520da88",
+      "bytes": 25778
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/author.py",
+      "sha256": "bcae49eb5e14958fe5e8f99d05614ff3ede08c20983b9a53478e40d06d057514",
+      "bytes": 16749
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/dimension-check.json",
+      "sha256": "79fbf9852bb405af29ddaa34a3673129a0999b28cd8b0f4686a6a645b7ca5845",
+      "bytes": 872
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/fit-plan.md",
+      "sha256": "ea6f8095430fdf3f2411e46704d1b6877024bf4d7003af2c4d28e42dc267facb",
+      "bytes": 8054
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/headroom-a001/author.py",
+      "sha256": "398346393aab2b0e57c1ce56fec5b6791ae5f4dbff28e1b7778bfe68e0c96a7a",
+      "bytes": 8130
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/headroom-a001/blender-source.blend",
+      "sha256": "8e908d75568049825d77486f5a05120b1656319c713a50f817f30cf7bf12b7e1",
+      "bytes": 1618087
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/headroom-a001/capture.json",
+      "sha256": "f21d9fce14c9d7c008f0357fb31b6ac35c90e323cd5a389fa6f14e60dbfc1f37",
+      "bytes": 375
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/headroom-a001/headroom.json",
+      "sha256": "14fade2ad30c7fd0dd61e883e4113a6183e3c03c73a218425d12099183857bda",
+      "bytes": 4017
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/headroom-a001/review.md",
+      "sha256": "847e44e6137a36a73ed5d7fc7f406dbb6cae346b45891e3eb17e993dc38fcfe0",
+      "bytes": 2950
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/headroom-a001/roof-edge-capsule.png",
+      "sha256": "2a0e3ef9ad0cb2bc76ed793421ea025b418a9ecb30ab2821a4f38795f6160436",
+      "bytes": 1260197
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/review_body.py",
+      "sha256": "7ed529778372204887ab9911c9c9c62d8684b4b2e73dce5c854b5dafe4049f5d",
+      "bytes": 2613
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/specification.json",
+      "sha256": "5762af44798afd195af6fe70528d6f2a3d55ac1ffa2d554576d039fce2b35520",
+      "bytes": 8116
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/validate.py",
+      "sha256": "c92c5631008384d07f68079a5add19128ae927638d598b34c2f2be0457e4514f",
+      "bytes": 13985
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/DESIGN.html",
+      "sha256": "fbfa381106ffc13deb665d84f5732607b222b42fc0bd34eac50487ddefdd53e9",
+      "bytes": 9035
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/DESIGN.md",
+      "sha256": "22f9f10b8ba19ab8cff33d4c3ccf53e527c9d86404e151584de4a2ee6b615ef2",
+      "bytes": 9708
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/design.json",
+      "sha256": "8852d7521194b46b5056bfe5d1c3306c5393980cf6acac76a5c312282b63e72c",
+      "bytes": 19007
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a001/author.py",
+      "sha256": "2343a79f3fd2e199ab431dcba8300ccfb743b97a64cec6b9d2e3e9000045d5f7",
+      "bytes": 12435
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a001/blender-source.blend",
+      "sha256": "63a535e1583bd95560867b0943b41289f84045001ef37bcd8024f1fdd1705fd4",
+      "bytes": 3354155
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a001/failure.json",
+      "sha256": "d6c1be7bcf169c07e7607e770c07e34167d627b0e234c1b6ec9ca02a764cd3bb",
+      "bytes": 213
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a001/kit.glb",
+      "sha256": "ea82d300630c04567391947eddf1fd84a42d45c7db354ef2efcf5150cc6cf336",
+      "bytes": 1234424
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a001/native-measurements.json",
+      "sha256": "f5c437e773e04b4a3499099fc841455de22039dac67b26ed75c33c4d1fae821d",
+      "bytes": 43049
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a002/author.py",
+      "sha256": "11c13dabb525a781f920d1c04dedf8418b26a0044d1701e9367b8f4875b0f351",
+      "bytes": 13179
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a002/authored-triangles.json.gz",
+      "sha256": "baf3b11da0bd4bcfb5bf826d01d970511149ede3d040af22d4ecdfcbad8f6d0e",
+      "bytes": 168952
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a002/blender-context.png",
+      "sha256": "fb3d26ee706d0c677bf331e0d75019c64c7f4ab6340a83927f1678eae5053f5e",
+      "bytes": 1510776
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a002/blender-source.blend",
+      "sha256": "f8f30e5070a326c13583a500374e297ffc9c39bece162f9c407beafd025fa927",
+      "bytes": 3354155
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a002/blender-top.png",
+      "sha256": "c92a5778d68b49ccfe7d315bd9281e22503d0dadfd316b769a5eaf6f59022fcd",
+      "bytes": 1845334
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a002/capture.json",
+      "sha256": "20d84ecc3bdf944a536fc701c2ae7671be149f3a31da4e1c854ce72c1de7d66d",
+      "bytes": 894
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a002/cutout.png",
+      "sha256": "e36423c75803970061b620e98222e9b6470ae0c69b13c0d1a9a96cb68f767853",
+      "bytes": 1142705
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a002/delivery.json",
+      "sha256": "117692c7521658dbd337d296be7cd2642c11cdf8dcd4d47a17e45e8ce084ef00",
+      "bytes": 852
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a002/kit.glb",
+      "sha256": "ea82d300630c04567391947eddf1fd84a42d45c7db354ef2efcf5150cc6cf336",
+      "bytes": 1234424
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a002/native-measurements.json",
+      "sha256": "f5c437e773e04b4a3499099fc841455de22039dac67b26ed75c33c4d1fae821d",
+      "bytes": 43049
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a002/review.json",
+      "sha256": "2a1317b6c29a474378b3b5e8f9cc47e06ccc147cd65ba035dc24710287571955",
+      "bytes": 561
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a002/traversal-audit.json",
+      "sha256": "4f1d8be6d380a2223ff0b08de194d327bef1711ae73281d9bf50eb6a3e874e1b",
+      "bytes": 8214
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a002/validate.py",
+      "sha256": "4b8479b78851738d7dd457e253ffab98a86efde91c04ced6d1afc1967e398cf3",
+      "bytes": 7170
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a002/validation.json",
+      "sha256": "01cb30e0b3ceb038c93696c6fbe17434a0e829db414e5178924b6511d44772dd",
+      "bytes": 2225
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a003/author.py",
+      "sha256": "9676c122f2b4d1296a9e84c4a62d786a5edc21fe0c2981d18022927724fd5e4b",
+      "bytes": 13207
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a003/authored-triangles.json.gz",
+      "sha256": "baf3b11da0bd4bcfb5bf826d01d970511149ede3d040af22d4ecdfcbad8f6d0e",
+      "bytes": 168952
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a003/blender-context.png",
+      "sha256": "e8cf7bd074a6ba04c7b713c44fb8b554c58473a7fef2628c360f4a2977b49c54",
+      "bytes": 1510776
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a003/blender-source.blend",
+      "sha256": "2eb0ff3e028f147811b413e03555b194c3ba4acff4b1ad5a89103114067f0242",
+      "bytes": 3354155
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a003/blender-top.png",
+      "sha256": "01ad46da4fe7aaa3cc9459c2f9615438968c26989d7c689d6552b2592fba3f20",
+      "bytes": 1845334
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a003/capture.json",
+      "sha256": "8d01c7bb0099f8d939092a336f9788c3254f8660a42f85268549b2ee07661d1d",
+      "bytes": 894
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a003/collision-envelopes.json",
+      "sha256": "61e4c100d8649d468fd1b0758bcfb2a5b9a6b8b78583b7818439a7b77199e5a9",
+      "bytes": 41484
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a003/cutout.png",
+      "sha256": "db63cf522da3cf878659d29604780709106c4d4887f7f341e1de7481bd5d5094",
+      "bytes": 1035424
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a003/delivery.json",
+      "sha256": "bc5820d772b28d76e725f49b4298a0dded7fd2b7671654c11f1dadc0f6f96cbd",
+      "bytes": 871
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a003/kit.glb",
+      "sha256": "f4fb453f44fe84f577107d72fad15459e6e59ec9ad2ed122bceadead5b855625",
+      "bytes": 1234308
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a003/native-measurements.json",
+      "sha256": "1202052cbbed502914aa16e3ebfa70403db1ba4f88b418dcfd2b55890e10ecdc",
+      "bytes": 43049
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a003/review.md",
+      "sha256": "45c8d01aa07094f6ee46161f0dffbf32b661ec95f26f3fcdb8d113b07530b5d3",
+      "bytes": 1796
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a003/specification.json",
+      "sha256": "bdae7b2d7076ea0b9e87dd75e83d30b8dca43a037c352a90f9f9e866d22dd0d6",
+      "bytes": 8287
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a003/traversal-audit.json",
+      "sha256": "a41e28d065833c1be30ae1e1e5a4a49832b0771157e6a80b1343f82ccec9e714",
+      "bytes": 8213
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a003/validate.py",
+      "sha256": "ec4e7e558c19e0f4fe8c9717d69af3e9d80241ed67d2101dd0f24aa8331815c0",
+      "bytes": 8410
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/a003/validation.json",
+      "sha256": "626a5169bb6762783c915e53a027ca6080f27b69f60d4cf2a9043a9e04613fce",
+      "bytes": 2403
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/author.py",
+      "sha256": "9676c122f2b4d1296a9e84c4a62d786a5edc21fe0c2981d18022927724fd5e4b",
+      "bytes": 13207
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.traversal-ladder/revisions/r000/validate.py",
+      "sha256": "ec4e7e558c19e0f4fe8c9717d69af3e9d80241ed67d2101dd0f24aa8331815c0",
+      "bytes": 8410
+    },
+    {
+      "path": "assets/runtime/construction/traversal-r000-a003/floor.glb",
+      "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "bytes": 368076
+    },
+    {
+      "path": "assets/runtime/construction/traversal-r000-a003/ladder-kit.glb",
+      "sha256": "f4fb453f44fe84f577107d72fad15459e6e59ec9ad2ed122bceadead5b855625",
+      "bytes": 1234308
+    },
+    {
+      "path": "assets/runtime/construction/traversal-r000-a003/manifest.json",
+      "sha256": "ad947d21929cd3e624b07ba17d523060edb940bde13230d2483a78b3eab7f0a4",
+      "bytes": 905
+    },
+    {
+      "path": "assets/runtime/construction/traversal-r000-a003/roof.glb",
+      "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+      "bytes": 3580236
+    },
+    {
+      "path": "docs/authentication.md",
+      "sha256": "6af06045e63d18075963d32964c95cdfabc2623d52939c8520e2945722e06e4a",
+      "bytes": 6836
+    },
+    {
+      "path": "docs/handoffs/construction_next_slice.md",
+      "sha256": "bfb624b1c577aaa99330e1eb4b972a197318193dd6e34ceef1e558f77fff6421",
+      "bytes": 21880
+    },
+    {
+      "path": "docs/handoffs/construction_stairs_elevators.md",
+      "sha256": "bf8d31b74ad62eb8269e7704d881648a70ac51b45eb430a08125dd6160f6a6b9",
+      "bytes": 27981
+    },
+    {
+      "path": "docs/handoffs/coordination-current.md",
+      "sha256": "7d637b305db9af943747d2f00b5c1347bfb80f29aa020e9d535e5ae93cd25ebb",
+      "bytes": 7131
+    },
+    {
+      "path": "docs/handoffs/native_traversal_browser_review.md",
+      "sha256": "5d76199a9b66009d1df87d4b971b912b58f201e48cd7d4387da4749302cc205c",
+      "bytes": 16043
+    },
+    {
+      "path": "docs/handoffs/native_traversal_integration_checkpoint.json",
+      "sha256": "a70760ee0cf3ad9a89274e567a9ff53fc87addc902ae31e221bf034282072adc",
+      "bytes": 2984
+    },
+    {
+      "path": "docs/handoffs/network_input_audit_2026_09_09.md",
+      "sha256": "15baed1dd87ada0256dc4140358d8e71050ac32e5144f687b16832966c2e96bd",
+      "bytes": 6909
+    },
+    {
+      "path": "docs/multiplayer_status.md",
+      "sha256": "7c3d037da034ad1183a7aa97030b71741bf55d5aacc69f0563e2b42f989b2367",
+      "bytes": 4339
+    },
+    {
+      "path": "docs/world_network_audit.md",
+      "sha256": "02a99fe45e37b52dd13d1930ee3bda7c1eddcb53c76962995ccad775454f1a7e",
+      "bytes": 7378
+    },
+    {
+      "path": "packages/canvas-ui/src/appearance-controls.ts",
+      "sha256": "4357ec7a9e18e50ac0763caeae4e73833d74a31f2898c27a65437f9a5e62ff2a",
+      "bytes": 2689
+    },
+    {
+      "path": "packages/canvas-ui/src/character-sheet.ts",
+      "sha256": "106a5907b7861b470f1c86496d25d5c169b28ed573570763551922ba64c060e2",
+      "bytes": 15455
+    },
+    {
+      "path": "packages/canvas-ui/src/index.ts",
+      "sha256": "d708905520f3b8a452114e68c8def5880dbbc7a72175d553210225007a06432e",
+      "bytes": 29439
+    },
+    {
+      "path": "packages/canvas-ui/src/inventory-windows.test.ts",
+      "sha256": "03ab745010708ac607a8837e14ed5d5833058af1356c8fd77bf0b07955cd9272",
+      "bytes": 17953
+    },
+    {
+      "path": "packages/canvas-ui/src/inventory.ts",
+      "sha256": "62a241086bdd963ab5734f2e812e7f10b439c47636060366da0a10440db5ae88",
+      "bytes": 45799
+    },
+    {
+      "path": "packages/canvas-ui/src/pointer.test.ts",
+      "sha256": "ad0719d7f6d3331bcb3f92084eefc190bf3e9e2588195be78c57a0c01c254f41",
+      "bytes": 4422
+    },
+    {
+      "path": "packages/canvas-ui/src/toolkit.ts",
+      "sha256": "6b90eccec96fcb0869ddbd48d975da39184eb7e021937f9d23cf73e7070de435",
+      "bytes": 22714
+    },
+    {
+      "path": "packages/content/package.json",
+      "sha256": "5204a8680968b2f8d571dfb876d8918a60c4fee1ff6f42aa720d64092208ab5f",
+      "bytes": 1159
+    },
+    {
+      "path": "packages/content/src/construction-stairs.ts",
+      "sha256": "46b2f6eabc2762f55a47ae5e04cd70be08c69d86018647e92627dff8f7c70db7",
+      "bytes": 2760
+    },
+    {
+      "path": "packages/content/src/construction-traversal-room.ts",
+      "sha256": "2e3fc781c7b71945903ba416e6245735deced57cfd8189a15c0249211aaa0114",
+      "bytes": 40854
+    },
+    {
+      "path": "packages/content/src/construction-traversal.ts",
+      "sha256": "6d4529eebdf0756bbb1e61b9ae3d08f560775fbcf3ca3466902c3f7d5c03ad40",
+      "bytes": 2291
+    },
+    {
+      "path": "packages/content/src/construction.ts",
+      "sha256": "69f1bd289f5f6a2a2db67ed39ef63582ee4b5020876af8810d80f8f1bda2dc86",
+      "bytes": 2459
+    },
+    {
+      "path": "packages/net/src/connection-resources.test.ts",
+      "sha256": "3a048ee077417d6dcf086f5f497a5e1d8328ace6fc08125000b775498082afe7",
+      "bytes": 2418
+    },
+    {
+      "path": "packages/net/src/connection-resources.ts",
+      "sha256": "8518b2655a8ce8bcb8e986d16e6c61973526d85c682a90b9c9fbb0bb46452ccb",
+      "bytes": 2423
+    },
+    {
+      "path": "packages/net/src/connection-session.ts",
+      "sha256": "aad21a4ccb01b2b093f2cef3ec55e94c40a52b37fb4b0a974193f2197a961002",
+      "bytes": 3488
+    },
+    {
+      "path": "packages/net/src/generated/begin_construction_traversal_reducer.ts",
+      "sha256": "614ec0e3644cca16c8d5293fd07213ec3f58117dc5f6c0a0b7c386b08cacc541",
+      "bytes": 559
+    },
+    {
+      "path": "packages/net/src/generated/cancel_construction_traversal_reducer.ts",
+      "sha256": "bc1278bf7f347cd992048cf3e9022aa96ec57ee6442ade7d505feaed5fb4d98e",
+      "bytes": 482
+    },
+    {
+      "path": "packages/net/src/generated/claim_input_control_reducer.ts",
+      "sha256": "d03a53c3e6123d4b3a9a6e1ca930b65c8fdd34f0c216fb81fb9862120ca98ea6",
+      "bytes": 359
+    },
+    {
+      "path": "packages/net/src/generated/index.ts",
+      "sha256": "c393f29d1a579cca5b4a964f97a292790dab4742306fcc310fdc4edf126b0abe",
+      "bytes": 14730
+    },
+    {
+      "path": "packages/net/src/generated/own_appearance_table.ts",
+      "sha256": "8fbbc2061f4d0f4f7f0881ed850b8e00c93a1dac6f55a2c76099f38518fc4a62",
+      "bytes": 511
+    },
+    {
+      "path": "packages/net/src/generated/own_combat_table.ts",
+      "sha256": "d45fa7b46ee7ed9c951002a1b24970e6743e7a77a1098fa81bfb4fbcbd7aa011",
+      "bytes": 936
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_blueprints_table.ts",
+      "sha256": "dcf81fe4a19fb67d7a0d55c34bb51b3f360122089082ea618d06b6ca744e6505",
+      "bytes": 668
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_decks_table.ts",
+      "sha256": "c9177e2a7fd2d9d7d4484c7295d6606cf6b50fa5922fb7fa6ba11791366aa1f6",
+      "bytes": 571
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_doors_table.ts",
+      "sha256": "4c642ad456a3f16664b0af39c2b4dc7ad99c70da78f28a9b3d24d3854d93d76b",
+      "bytes": 627
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_drafts_table.ts",
+      "sha256": "dcf2ee4ac1992781919e6e0db4371bf5bc4bd2a8450c168a6f892890651827d4",
+      "bytes": 567
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_grants_table.ts",
+      "sha256": "6336e56c73acdc764b443ee1a0f838c5708d2f19b99e99f64533416da2eb4cfc",
+      "bytes": 577
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_instances_table.ts",
+      "sha256": "141cd26ec314d479dcc4292d4357232831693119e0f20e90802ba1b143a4d594",
+      "bytes": 709
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_location_table.ts",
+      "sha256": "d4af51065f5ca7bd7aa0ddc5c09a90015e6ef7d2b8a173466195b78b849b3476",
+      "bytes": 585
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_native_pressure_table.ts",
+      "sha256": "058186e0abeb6d1bb2a2181c3c7fbd4bd4f04cfa27a2d1b0823b4138388f0a96",
+      "bytes": 875
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_traversal_links_table.ts",
+      "sha256": "12f00f932f512b06852376573b198addd2aa1d986480c3a6f082881d3a053479",
+      "bytes": 953
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_traversals_table.ts",
+      "sha256": "b3764eb979b993df6590fb3d93ac0d51ba354d858cf5875123ea512d3ac40060",
+      "bytes": 810
+    },
+    {
+      "path": "packages/net/src/generated/own_ground_items_table.ts",
+      "sha256": "6f63a48fd4815aae3ca414cc204a909b6f945a842f0e5f3148f6a952a26674fc",
+      "bytes": 553
+    },
+    {
+      "path": "packages/net/src/generated/own_identity_links_table.ts",
+      "sha256": "50505888c27d93377b9412810837b90103a0e3d02da08ac8308e5ccebb17cbab",
+      "bytes": 715
+    },
+    {
+      "path": "packages/net/src/generated/own_interactions_table.ts",
+      "sha256": "fa20a42cc55cc18e1b849b9c61082b737a1f43509bc5cd43fc118b350ffdd83c",
+      "bytes": 756
+    },
+    {
+      "path": "packages/net/src/generated/own_inventory_containers_table.ts",
+      "sha256": "706b88ab87f9707d271469e79c8e619a4809b3884542d15fddfb19778ae4aea2",
+      "bytes": 807
+    },
+    {
+      "path": "packages/net/src/generated/own_inventory_hotbar_table.ts",
+      "sha256": "1e7dd7e7ddaf976ab16edc0dc3c995cef263a6b6ad03cf75a983934dbf892067",
+      "bytes": 440
+    },
+    {
+      "path": "packages/net/src/generated/own_inventory_items_table.ts",
+      "sha256": "196b0ea3be900d7fc590be6d085963e1ceec0e412267f1d8d461350fa739de4e",
+      "bytes": 613
+    },
+    {
+      "path": "packages/net/src/generated/own_inventory_state_table.ts",
+      "sha256": "2caa1ff87039fac5fae7b830c658707331aa22b2504d98538c9983761f2ed9c8",
+      "bytes": 599
+    },
+    {
+      "path": "packages/net/src/generated/release_input_control_reducer.ts",
+      "sha256": "d03a53c3e6123d4b3a9a6e1ca930b65c8fdd34f0c216fb81fb9862120ca98ea6",
+      "bytes": 359
+    },
+    {
+      "path": "packages/net/src/generated/store_all_inventory_items_reducer.ts",
+      "sha256": "33866cf523c9ea4707365ae118e193f4ed19a4b77e084f315f0342759b20e77e",
+      "bytes": 480
+    },
+    {
+      "path": "packages/net/src/generated/types.ts",
+      "sha256": "ffac0de85f8a196e410bf8f852182b003616f7aa0e5fadd11217ff42a70d22bc",
+      "bytes": 25468
+    },
+    {
+      "path": "packages/net/src/generated/types/reducers.ts",
+      "sha256": "b1e798799b1244a0184b56f2a70ea9af9a8b78a3faaa58d464f2f569b574e0ee",
+      "bytes": 5153
+    },
+    {
+      "path": "packages/net/src/index.ts",
+      "sha256": "33044e882381c10dbaefaf043c3a0c6c47bb5fda8404cb70a957a62e8740ceb7",
+      "bytes": 4525
+    },
+    {
+      "path": "packages/render/src/construction-instance.ts",
+      "sha256": "58ff6e21181bb505d5481eb042c701e45579408f0449366f4b34ad8529fce022",
+      "bytes": 11487
+    },
+    {
+      "path": "packages/render/src/construction-traversal.test.ts",
+      "sha256": "bbbf4d79798fcdbc22b0eec443f76ae892c7cfec2f1686fdf50b3fc6bb91d641",
+      "bytes": 12163
+    },
+    {
+      "path": "packages/render/src/construction-traversal.ts",
+      "sha256": "7e4d619ece0541bab3ffb86c37d47672f26187f8c03d7e937b33e449f12d07b1",
+      "bytes": 10956
+    },
+    {
+      "path": "packages/render/src/index.ts",
+      "sha256": "400a6f84cd112ef539a1eccc3d481cc6cfe75bae1816626398ed6f3ebeefb069",
+      "bytes": 34687
+    },
+    {
+      "path": "packages/sim/package.json",
+      "sha256": "82f1116bbb56ff9a812e7232a244fd9068ba4ed69830153233f813032fe75fee",
+      "bytes": 1589
+    },
+    {
+      "path": "packages/sim/src/construction-instance.ts",
+      "sha256": "c986f8e02f4e695a3d4363a7b00c63f0e6b0d374fe7fcbc097ad710fd859e91e",
+      "bytes": 16509
+    },
+    {
+      "path": "packages/sim/src/construction-roofs.ts",
+      "sha256": "428dbf5e5ec9f9259e6aef4ea4315fa7898723bc9c1da30cc1d2cf53deb94052",
+      "bytes": 3077
+    },
+    {
+      "path": "packages/sim/src/construction-stairs.test.ts",
+      "sha256": "b756b227752387c91ea3e81e3213df9d2415389c5ad8357cdc3e6c891d12c1a1",
+      "bytes": 23118
+    },
+    {
+      "path": "packages/sim/src/construction-stairs.ts",
+      "sha256": "4fffa3a9e086aed2649cc9972a89257fb901b2c672da6ae82467ae848ccba09f",
+      "bytes": 36779
+    },
+    {
+      "path": "packages/sim/src/construction-transactions.ts",
+      "sha256": "cf7ae32eeb192321db83d007db5fc0bb465f6d393b3a9c3bec27289fbe1c3977",
+      "bytes": 9780
+    },
+    {
+      "path": "packages/sim/src/construction-traversal-document.test.ts",
+      "sha256": "f06412973c0c5f0e45c15f9b0e27929cd94a26889ec129a88c4340e62935674c",
+      "bytes": 7501
+    },
+    {
+      "path": "packages/sim/src/construction-traversal-document.ts",
+      "sha256": "bb163c87bb7df137dc7fbb6dba69969fd660fcb9e3ce5d1a6f39c531b171791a",
+      "bytes": 11025
+    },
+    {
+      "path": "packages/sim/src/construction-traversal.test.ts",
+      "sha256": "ee39881d37cbc9d2627be3f52914713e033388df22c2fd912c35f2fa634b790d",
+      "bytes": 21338
+    },
+    {
+      "path": "packages/sim/src/construction-traversal.ts",
+      "sha256": "596b8a5df24d20ab5ad53ecc3d1a6273138e3587b0a21e89a498f60a86a9add8",
+      "bytes": 31213
+    },
+    {
+      "path": "packages/world/src/appearance.ts",
+      "sha256": "b62a8c61f97cd97c7692a888b12b9827e4fbc30ce83bfc8f26217580eae2e549",
+      "bytes": 2424
+    },
+    {
+      "path": "packages/world/src/auth.test.ts",
+      "sha256": "09b497e8f00f99292d149dcbce9eac8c98c9dac830c01dfe80a26dd430e18271",
+      "bytes": 7894
+    },
+    {
+      "path": "packages/world/src/auth.ts",
+      "sha256": "f15de375289246b5219f1b116f42eeb598d84e3b8237c815c5a6ad9f4a20294b",
+      "bytes": 12037
+    },
+    {
+      "path": "packages/world/src/combat.ts",
+      "sha256": "598d31613e6b177b955e7ce9d50a25f5be5682cefb5818a26f89b1534ae32fb2",
+      "bytes": 6742
+    },
+    {
+      "path": "packages/world/src/construction-atmosphere.test.ts",
+      "sha256": "f41bec14a8e2df41d4addbd3f16572caaf89809aaa5ea090889b53f718c20b8b",
+      "bytes": 9849
+    },
+    {
+      "path": "packages/world/src/construction-atmosphere.ts",
+      "sha256": "6bf301af3857c6b18c14f1646a9d352cf7931513720feb92a3f2b449b632cb78",
+      "bytes": 9167
+    },
+    {
+      "path": "packages/world/src/construction-doors.ts",
+      "sha256": "c6c2aa592432a7e82c80adb78089e7318c7f5aac559edf34bd25351ae062e801",
+      "bytes": 9126
+    },
+    {
+      "path": "packages/world/src/construction-instances.test.ts",
+      "sha256": "d3d840038f77a2a5fca4d3da07d848f447fa64e9dd19d2d4abe9d1c355eef834",
+      "bytes": 14034
+    },
+    {
+      "path": "packages/world/src/construction-instances.ts",
+      "sha256": "acea8f88fd20146782ca3d2c56fb82c5683caddd0acd6d3e194f214fc21b7e38",
+      "bytes": 12038
+    },
+    {
+      "path": "packages/world/src/construction-native-pressure.test.ts",
+      "sha256": "8ba9e99c1cddddc1f4a869ada8ff81bc90b62f2e87216a33b953359bfd2525ce",
+      "bytes": 18820
+    },
+    {
+      "path": "packages/world/src/construction-native-pressure.ts",
+      "sha256": "ff0d6b89d1825a830500c579e4bb4565e5594c5a3c41ab5e562ba1adce233916",
+      "bytes": 15895
+    },
+    {
+      "path": "packages/world/src/construction-tables.ts",
+      "sha256": "d33f23d14d919604e955aa0982cd86ae95d5feeafd54415d27e1ecb2e69945d7",
+      "bytes": 4073
+    },
+    {
+      "path": "packages/world/src/construction-traversal-registry.ts",
+      "sha256": "627fbf6ffa582bf61803dbfed979bec590be7992183651d0dee3d8af8d5e8e89",
+      "bytes": 1000
+    },
+    {
+      "path": "packages/world/src/construction-traversal-tables.ts",
+      "sha256": "275dce13576a261d324003af30addbc3b0f362282dd170fb725d9eeb4a312d8b",
+      "bytes": 3295
+    },
+    {
+      "path": "packages/world/src/construction-traversal.test.ts",
+      "sha256": "76fd1da453ed045384232c6f2c4330c2c2d2b507e810f4fe1b08e7c3671c6c6e",
+      "bytes": 29963
+    },
+    {
+      "path": "packages/world/src/construction-traversal.ts",
+      "sha256": "0c659c9cd851e6b1280bf3472f67d097a8bc742b6fde2df66ea4a6b526099dda",
+      "bytes": 35903
+    },
+    {
+      "path": "packages/world/src/construction.test.ts",
+      "sha256": "b18feb99f80cae57292c7e95c7431539805445b9871ba141d6ef147ba00476c6",
+      "bytes": 5476
+    },
+    {
+      "path": "packages/world/src/construction.ts",
+      "sha256": "14a74e5653c634cb7753c2a56ccc8f48867c17085906b090c7dcb8f40318a589",
+      "bytes": 8525
+    },
+    {
+      "path": "packages/world/src/index.ts",
+      "sha256": "f8283394b52b3e1f99e902be97309cb8738e37ba80d73f3d527958c02cf22352",
+      "bytes": 28957
+    },
+    {
+      "path": "packages/world/src/input-control-tables.ts",
+      "sha256": "bb33b3abb70e62bbd3f1f311275c6842479f5a3ffc649d1568896f78aff45fc8",
+      "bytes": 845
+    },
+    {
+      "path": "packages/world/src/input-control.test.ts",
+      "sha256": "971d1bd38dd10521a0b0aadbc6ab095ec629d3814fa5c2ee5f5c6837be479c80",
+      "bytes": 7538
+    },
+    {
+      "path": "packages/world/src/input-control.ts",
+      "sha256": "8e0a715d08670245234ae096e027357b0fffce41ad21d5d58b60141e06743c5c",
+      "bytes": 7609
+    },
+    {
+      "path": "packages/world/src/interactions.ts",
+      "sha256": "7ff4c7a4d99316f86d72a400f38e2e9ee21ec68e355bb4520a9ba3cfb79ace84",
+      "bytes": 6893
+    },
+    {
+      "path": "packages/world/src/inventory-operations.test.ts",
+      "sha256": "3dc128080789e982c10214cba765007670d7a8b7ed906ba6c062fbcf157b8b61",
+      "bytes": 8598
+    },
+    {
+      "path": "packages/world/src/inventory-operations.ts",
+      "sha256": "73c0a62431b4a779d62f4fd7e4dbfbb9bfde63a4741e03dd0040c011818390af",
+      "bytes": 7461
+    },
+    {
+      "path": "packages/world/src/inventory.ts",
+      "sha256": "3e86b17a2c70dbf256818232de1c4e00b1417b2de120b2a46ebe45a92fe51411",
+      "bytes": 23228
+    },
+    {
+      "path": "packages/world/src/storage.test.ts",
+      "sha256": "6cf0f74fbfc2629078f593d50199533c1eb20ec9d06f705643746a240073eecf",
+      "bytes": 4538
+    },
+    {
+      "path": "packages/world/src/uniforms.test.ts",
+      "sha256": "452733a6852ec4beddd567c0d6e45c16640ce3bcdd0049280e301ba91ec79250",
+      "bytes": 4079
+    },
+    {
+      "path": "packages/world/src/view-keys.test.ts",
+      "sha256": "d858bf27558915208bbbf8e45a493f513b574adbbb3fcfea86ad1e8a9b1a3c8b",
+      "bytes": 2181
+    },
+    {
+      "path": "scripts/art_library/run_traversal.py",
+      "sha256": "613fc95e2c9aa547221c8730519d1f25684f9d534dd39e34609a9d016b9ff9c5",
+      "bytes": 920
+    },
+    {
+      "path": "scripts/character-components-smoke.ts",
+      "sha256": "3778cbb2d83708642b612ba04543a24465fa9312b9859633fbc3a5b5867b7011",
+      "bytes": 7514
+    },
+    {
+      "path": "scripts/install_construction_traversal.py",
+      "sha256": "0483b10445cb32e75ac40004c8ee7184358a4b94ec5b3ec87e861a5fcac9d195",
+      "bytes": 3389
+    },
+    {
+      "path": "scripts/install_construction_traversal_runtime.py",
+      "sha256": "b8ce36f5aa59255e07fa9592fc32437e91b98e7d7f618b71a8f54aea70ca9bd9",
+      "bytes": 2924
+    },
+    {
+      "path": "scripts/interaction-smoke.ts",
+      "sha256": "fbb0d894fd7166ebdece875c4c00c273719dfeb101a7f03480622dfdd970631c",
+      "bytes": 5194
+    },
+    {
+      "path": "scripts/inventory-smoke.ts",
+      "sha256": "4733ffa36bdcb9d54ce2fc9eec820c482d9e08f44ff52ea9985b0e8f5ece96ef",
+      "bytes": 16031
+    },
+    {
+      "path": "scripts/native-traversal-review.ts",
+      "sha256": "60a4a242fc8db499a0229aa653723f4d7df0050ee1356dd418c9f21ac4df0c5c",
+      "bytes": 14580
+    },
+    {
+      "path": "scripts/smoke.ts",
+      "sha256": "3322e5bae1abe00cff08909fd348aa9e46ad230fdbbf3b124e70508a22f46450",
+      "bytes": 23852
+    },
+    {
+      "path": "scripts/traversal-smoke.ts",
+      "sha256": "1771c514e886d5f53dabea57e0152684abe76d142fa0c0518b033dbc1d2c4c81",
+      "bytes": 18077
+    }
+  ]
+}

@@ -1,3 +1,7 @@
+import type {
+  ConstructionTraversalAcceptedState,
+  resolveConstructionTraversalFrame,
+} from "./construction-traversal";
 import { createGroundItems, type GroundItem } from "./ground-items";
 import {
   loadConstructionInstance,
@@ -74,7 +78,14 @@ export type SceneState = {
     shotSequence?: bigint;
   };
   selectedObject?: string;
-  constructionDoors?: readonly { openingId: string; fraction: number; sealRetraction?: number }[];
+  /** Accepted occupied deck; changing UI selection cannot supply this value. */
+  constructionDeckId?: string;
+  constructionTraversal?: ConstructionTraversalAcceptedState | null;
+  constructionDoors?: readonly {
+    openingId: string;
+    fraction: number;
+    sealRetraction?: number;
+  }[];
   objectLights?: readonly { placementId: string; enabled: boolean }[];
   vx?: number;
   vy?: number;
@@ -208,8 +219,21 @@ async function buildWorld(
   let updateConstructionView:
     ((position: Vector3, interior: boolean) => void) | undefined;
   let updateConstructionDoors:
-    | ((states: readonly { openingId: string; fraction: number; sealRetraction?: number }[]) => void)
+    | ((
+        states: readonly {
+          openingId: string;
+          fraction: number;
+          sealRetraction?: number;
+        }[],
+      ) => void)
     | undefined;
+  let updateConstructionTraversal:
+    | ((
+        occupiedDeckId: string | undefined,
+        accepted: ConstructionTraversalAcceptedState | null | undefined,
+      ) => ReturnType<typeof resolveConstructionTraversalFrame>)
+    | undefined;
+  let disposeConstruction: (() => void) | undefined;
   const engineStudy = options.source?.startsWith("engine-") ?? false;
   const sourceFile = engineStudy
     ? options.source === "engine-original"
@@ -229,6 +253,9 @@ async function buildWorld(
       constructionFrame = loaded.cameraFrame;
       updateConstructionDoors = loaded.setDoors;
       updateConstructionView = loaded.setView;
+      if ("applyAcceptedTraversal" in loaded)
+        updateConstructionTraversal = loaded.applyAcceptedTraversal;
+      if ("dispose" in loaded) disposeConstruction = loaded.dispose;
     } else {
       imported = await SceneLoader.ImportMeshAsync(
         "",
@@ -436,7 +463,7 @@ async function buildWorld(
       (options.blocksObjectSelection?.() ?? false),
     options.onObjectSelected,
   );
-  const groundItems = createGroundItems(scene,shipRoot,options.equipmentPose);
+  const groundItems = createGroundItems(scene, shipRoot, options.equipmentPose);
   const graphics = createGraphicsSettings(scene);
   const localLights = createLocalLightBudget();
   const combatAim = createCombatAim(scene, canvas, shipRoot, imported.meshes);
@@ -584,9 +611,15 @@ async function buildWorld(
       ? flightZoom
       : easeCameraZoom(displayedFlightZoom, flightZoom, dt);
     shipRoot.rotation.y = displayed.heading;
+    const traversalFrame = updateConstructionTraversal?.(
+      state.constructionDeckId,
+      state.constructionTraversal,
+    );
+    if (traversalFrame) walkingElevation = traversalFrame.walkingElevation;
     const dx = state.localX - displayed.localX,
       dy = state.localY - displayed.localY;
-    const walking = Math.hypot(dx, dy) > 0.015 && !state.seated;
+    const walking =
+      Math.hypot(dx, dy) > 0.015 && !state.seated && !traversalFrame?.inTransit;
     avatar.rotation.y = -posePlacementHeading({
       currentHeading: -avatar.rotation.y,
       travelHeading: walking ? Math.atan2(dx, dy) : undefined,
@@ -601,7 +634,7 @@ async function buildWorld(
     updateConstructionDoors?.(state.constructionDoors ?? []);
     cabinVisibility.update(cabinVisible, state.objectLights ?? []);
     lighting.setCabinVisible(cabinVisible);
-    groundItems.update(state.groundItems ?? [],cabinVisible);
+    groundItems.update(state.groundItems ?? [], cabinVisible);
     if (cabinVisible && debugFeatures.snapshot().characters)
       crew?.update({
         moving: walking,
@@ -634,11 +667,12 @@ async function buildWorld(
       );
     // Native r002 deck datum; this offset is presentation, not simulation height.
     avatar.position.set(displayed.localX, walkingElevation, -displayed.localY);
-    marker.position.set(
-      displayed.localX,
-      walkingElevation + 0.02,
-      -displayed.localY,
-    );
+    if (traversalFrame?.acceptedPositionM) {
+      const [x, y, z] = traversalFrame.acceptedPositionM;
+      avatar.position.set(x, z, -y);
+    }
+    marker.position.copyFrom(avatar.position);
+    marker.position.y += 0.02;
     marker.setEnabled(cabinVisible && blend > 0.2);
     for (const mesh of roof) {
       applyCutawayVisibility(mesh, focusedBodyId ? 1 : 1 - blend);
@@ -673,7 +707,7 @@ async function buildWorld(
     for (const label of labels.getChildMeshes())
       if (label.metadata?.side)
         label.setEnabled(label.metadata.side * Math.cos(cameraLocal) < 0);
-    lighting.update(blend, displayed.localX, displayed.localY);
+    lighting.update(blend, avatar.position.x, -avatar.position.z);
     flightEffects.update(state.actuatorOutputs ?? [], state.reducedMotion);
     camera.alpha +=
       angleDelta(
@@ -688,13 +722,13 @@ async function buildWorld(
       s = Math.sin(displayed.heading);
     const targetLocalX =
       (constructionFrame?.centerX ?? 0) * (1 - blend * 0.6) +
-      displayed.localX * blend * 0.6;
+      avatar.position.x * blend * 0.6;
     const targetLocalY =
       (constructionFrame?.centerY ?? 0) * (1 - blend * 0.6) +
-      displayed.localY * blend * 0.6;
+      -avatar.position.z * blend * 0.6;
     camera.target.set(
       targetLocalX * c - targetLocalY * s,
-      0.8 * blend + (options.construction ? walkingElevation : 0),
+      0.8 * blend + (options.construction ? avatar.position.y : 0),
       -(targetLocalX * s + targetLocalY * c),
     );
     const aspect = canvas.clientWidth / Math.max(1, canvas.clientHeight),
@@ -914,6 +948,9 @@ async function buildWorld(
     dispose() {
       if (disposed) return;
       disposed = true;
+      updateConstructionTraversal = undefined;
+      updateConstructionDoors = undefined;
+      updateConstructionView = undefined;
       scene.onAfterAnimationsObservable.remove(combatObserver);
       groundItems.dispose();
       combatAim.dispose();
@@ -939,6 +976,8 @@ async function buildWorld(
       environment.dispose();
       diagnostics.dispose();
       debugFeatures.dispose();
+      disposeConstruction?.();
+      disposeConstruction = undefined;
       scene.dispose();
       engine.dispose();
     },

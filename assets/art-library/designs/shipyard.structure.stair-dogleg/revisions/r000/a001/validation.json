@@ -1,0 +1,942 @@
+{
+  "schema": "sidereal.native-stair-validation.v1",
+  "pass": false,
+  "checks": [
+    {
+      "name": "Exact authored-to-GLB triangle multiset stair-aperture-edge",
+      "pass": true,
+      "triangles": 48,
+      "coordinateToleranceM": 1e-06,
+      "maxVertexCoordinateDeviationM": 0
+    },
+    {
+      "name": "Exact authored-to-GLB triangle multiset stair-enclosure",
+      "pass": true,
+      "triangles": 1880,
+      "coordinateToleranceM": 1e-06,
+      "maxVertexCoordinateDeviationM": 0
+    },
+    {
+      "name": "Exact authored-to-GLB triangle multiset stair-flight-a",
+      "pass": true,
+      "triangles": 9212,
+      "coordinateToleranceM": 1e-06,
+      "maxVertexCoordinateDeviationM": 4.76837158203125e-07
+    },
+    {
+      "name": "Exact authored-to-GLB triangle multiset stair-flight-b",
+      "pass": true,
+      "triangles": 8084,
+      "coordinateToleranceM": 1e-06,
+      "maxVertexCoordinateDeviationM": 4.76837158203125e-07
+    },
+    {
+      "name": "Exact authored-to-GLB triangle multiset stair-frame",
+      "pass": true,
+      "triangles": 6392,
+      "coordinateToleranceM": 1e-06,
+      "maxVertexCoordinateDeviationM": 9.5367431640625e-07
+    },
+    {
+      "name": "Exact authored-to-GLB triangle multiset stair-guard",
+      "pass": true,
+      "triangles": 8460,
+      "coordinateToleranceM": 1e-06,
+      "maxVertexCoordinateDeviationM": 4.76837158203125e-07
+    },
+    {
+      "name": "Exact authored-to-GLB triangle multiset stair-midlanding",
+      "pass": true,
+      "triangles": 940,
+      "coordinateToleranceM": 1e-06,
+      "maxVertexCoordinateDeviationM": 0
+    },
+    {
+      "name": "Exact authored-to-GLB triangle multiset stair-upper-guard",
+      "pass": true,
+      "triangles": 3008,
+      "coordinateToleranceM": 1e-06,
+      "maxVertexCoordinateDeviationM": 4.76837158203125e-07
+    },
+    {
+      "name": "Six opaque native PBR materials preserved",
+      "pass": true
+    },
+    {
+      "name": "Eight native groups and four sockets only",
+      "pass": true
+    },
+    {
+      "name": "Actual flat native contact flight-a-tread-01",
+      "pass": true,
+      "nativeObject": "GEO-stair-flight-a--tread-01",
+      "contactAreaM2": 0.44475,
+      "coveredAreaM2": 0.4447499999999993
+    },
+    {
+      "name": "Actual flat native contact flight-a-tread-02",
+      "pass": true,
+      "nativeObject": "GEO-stair-flight-a--tread-02",
+      "contactAreaM2": 0.44475,
+      "coveredAreaM2": 0.4447499999999993
+    },
+    {
+      "name": "Actual flat native contact flight-a-tread-03",
+      "pass": true,
+      "nativeObject": "GEO-stair-flight-a--tread-03",
+      "contactAreaM2": 0.44475,
+      "coveredAreaM2": 0.4447499999999993
+    },
+    {
+      "name": "Actual flat native contact flight-a-tread-04",
+      "pass": true,
+      "nativeObject": "GEO-stair-flight-a--tread-04",
+      "contactAreaM2": 0.44475,
+      "coveredAreaM2": 0.4447499999999993
+    },
+    {
+      "name": "Actual flat native contact flight-a-tread-05",
+      "pass": true,
+      "nativeObject": "GEO-stair-flight-a--tread-05",
+      "contactAreaM2": 0.44475,
+      "coveredAreaM2": 0.4447499999999993
+    },
+    {
+      "name": "Actual flat native contact flight-a-tread-06",
+      "pass": true,
+      "nativeObject": "GEO-stair-flight-a--tread-06",
+      "contactAreaM2": 0.44475,
+      "coveredAreaM2": 0.4447499999999993
+    },
+    {
+      "name": "Actual flat native contact flight-a-tread-07",
+      "pass": true,
+      "nativeObject": "GEO-stair-flight-a--tread-07",
+      "contactAreaM2": 0.44475,
+      "coveredAreaM2": 0.4447499999999993
+    },
+    {
+      "name": "Actual flat native contact flight-a-tread-08",
+      "pass": true,
+      "nativeObject": "GEO-stair-flight-a--tread-08",
+      "contactAreaM2": 0.44475,
+      "coveredAreaM2": 0.4447499999999993
+    },
+    {
+      "name": "Actual flat native contact flight-b-tread-01",
+      "pass": true,
+      "nativeObject": "GEO-stair-flight-b--tread-01",
+      "contactAreaM2": 0.44475,
+      "coveredAreaM2": 0.44475000000000264
+    },
+    {
+      "name": "Actual flat native contact flight-b-tread-02",
+      "pass": true,
+      "nativeObject": "GEO-stair-flight-b--tread-02",
+      "contactAreaM2": 0.44475,
+      "coveredAreaM2": 0.44475000000000264
+    },
+    {
+      "name": "Actual flat native contact flight-b-tread-03",
+      "pass": true,
+      "nativeObject": "GEO-stair-flight-b--tread-03",
+      "contactAreaM2": 0.44475,
+      "coveredAreaM2": 0.44475000000000087
+    },
+    {
+      "name": "Actual flat native contact flight-b-tread-04",
+      "pass": true,
+      "nativeObject": "GEO-stair-flight-b--tread-04",
+      "contactAreaM2": 0.44475,
+      "coveredAreaM2": 0.44475000000000087
+    },
+    {
+      "name": "Actual flat native contact flight-b-tread-05",
+      "pass": true,
+      "nativeObject": "GEO-stair-flight-b--tread-05",
+      "contactAreaM2": 0.44475,
+      "coveredAreaM2": 0.44475000000000087
+    },
+    {
+      "name": "Actual flat native contact flight-b-tread-06",
+      "pass": true,
+      "nativeObject": "GEO-stair-flight-b--tread-06",
+      "contactAreaM2": 0.44475,
+      "coveredAreaM2": 0.44475000000000087
+    },
+    {
+      "name": "Actual flat native contact flight-b-tread-07",
+      "pass": true,
+      "nativeObject": "GEO-stair-flight-b--tread-07",
+      "contactAreaM2": 0.44475,
+      "coveredAreaM2": 0.44475
+    },
+    {
+      "name": "Actual flat native contact midlanding",
+      "pass": true,
+      "nativeObject": "GEO-stair-midlanding--bearing-pan",
+      "contactAreaM2": 5.615749999999999,
+      "coveredAreaM2": 5.615750000000001
+    },
+    {
+      "name": "Actual flat native contact lower-landing",
+      "pass": true,
+      "nativeObject": "REVIEW-lower-floor-2-2--GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "contactAreaM2": 2.14425,
+      "coveredAreaM2": 2.14425
+    },
+    {
+      "name": "Actual flat native contact upper-landing",
+      "pass": true,
+      "nativeObject": "REVIEW-upper-floor-4-2--GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "contactAreaM2": 2.613,
+      "coveredAreaM2": 2.6129999999999995
+    },
+    {
+      "name": "Bidirectional continuous supported step flight-a-step-01",
+      "pass": true,
+      "actualSourceAndDestinationContact": true,
+      "phases": [
+        {
+          "phase": "source-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 0.0
+        },
+        {
+          "phase": "lift",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 0.0
+        },
+        {
+          "phase": "forward",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "settle",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "destination-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        }
+      ]
+    },
+    {
+      "name": "Bidirectional continuous supported step flight-a-step-02",
+      "pass": true,
+      "actualSourceAndDestinationContact": true,
+      "phases": [
+        {
+          "phase": "source-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "lift",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "forward",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "settle",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "destination-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        }
+      ]
+    },
+    {
+      "name": "Bidirectional continuous supported step flight-a-step-03",
+      "pass": true,
+      "actualSourceAndDestinationContact": true,
+      "phases": [
+        {
+          "phase": "source-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "lift",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "forward",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "settle",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "destination-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        }
+      ]
+    },
+    {
+      "name": "Bidirectional continuous supported step flight-a-step-04",
+      "pass": true,
+      "actualSourceAndDestinationContact": true,
+      "phases": [
+        {
+          "phase": "source-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "lift",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "forward",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "settle",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "destination-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        }
+      ]
+    },
+    {
+      "name": "Bidirectional continuous supported step flight-a-step-05",
+      "pass": true,
+      "actualSourceAndDestinationContact": true,
+      "phases": [
+        {
+          "phase": "source-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "lift",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "forward",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "settle",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "destination-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        }
+      ]
+    },
+    {
+      "name": "Bidirectional continuous supported step flight-a-step-06",
+      "pass": true,
+      "actualSourceAndDestinationContact": true,
+      "phases": [
+        {
+          "phase": "source-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "lift",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "forward",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "settle",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "destination-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        }
+      ]
+    },
+    {
+      "name": "Bidirectional continuous supported step flight-a-step-07",
+      "pass": true,
+      "actualSourceAndDestinationContact": true,
+      "phases": [
+        {
+          "phase": "source-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "lift",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "forward",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "settle",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "destination-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        }
+      ]
+    },
+    {
+      "name": "Bidirectional continuous supported step flight-a-step-08",
+      "pass": false,
+      "actualSourceAndDestinationContact": true,
+      "phases": [
+        {
+          "phase": "source-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "lift",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": 5.551115123125783e-17
+        },
+        {
+          "phase": "forward",
+          "pass": false,
+          "hits": [
+            {
+              "solidId": "GEO-stair-flight-a--final-riser",
+              "penetrationLowerBoundM": 0.02014233528452347
+            }
+          ],
+          "minimumContainingBoxClearanceM": -0.02014233528452347
+        },
+        {
+          "phase": "settle",
+          "pass": false,
+          "hits": [
+            {
+              "solidId": "GEO-stair-flight-a--final-riser",
+              "penetrationLowerBoundM": 0.02014233528452347
+            }
+          ],
+          "minimumContainingBoxClearanceM": -0.02014233528452347
+        },
+        {
+          "phase": "destination-rest",
+          "pass": false,
+          "hits": [
+            {
+              "solidId": "GEO-stair-flight-a--final-riser",
+              "penetrationLowerBoundM": 0.02014233528452347
+            }
+          ],
+          "minimumContainingBoxClearanceM": -0.02014233528452347
+        }
+      ]
+    },
+    {
+      "name": "Bidirectional continuous supported step flight-a-step-09",
+      "pass": false,
+      "actualSourceAndDestinationContact": true,
+      "phases": [
+        {
+          "phase": "source-rest",
+          "pass": false,
+          "hits": [
+            {
+              "solidId": "GEO-stair-flight-a--final-riser",
+              "penetrationLowerBoundM": 0.02014233528452347
+            }
+          ],
+          "minimumContainingBoxClearanceM": -0.02014233528452347
+        },
+        {
+          "phase": "lift",
+          "pass": false,
+          "hits": [
+            {
+              "solidId": "GEO-stair-flight-a--final-riser",
+              "penetrationLowerBoundM": 0.02014233528452347
+            }
+          ],
+          "minimumContainingBoxClearanceM": -0.02014233528452347
+        },
+        {
+          "phase": "forward",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "settle",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "destination-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        }
+      ]
+    },
+    {
+      "name": "Bidirectional continuous supported step flight-b-step-01",
+      "pass": true,
+      "actualSourceAndDestinationContact": true,
+      "phases": [
+        {
+          "phase": "source-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "lift",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "forward",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "settle",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "destination-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        }
+      ]
+    },
+    {
+      "name": "Bidirectional continuous supported step flight-b-step-02",
+      "pass": true,
+      "actualSourceAndDestinationContact": true,
+      "phases": [
+        {
+          "phase": "source-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "lift",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "forward",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "settle",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "destination-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        }
+      ]
+    },
+    {
+      "name": "Bidirectional continuous supported step flight-b-step-03",
+      "pass": true,
+      "actualSourceAndDestinationContact": true,
+      "phases": [
+        {
+          "phase": "source-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "lift",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "forward",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "settle",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "destination-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        }
+      ]
+    },
+    {
+      "name": "Bidirectional continuous supported step flight-b-step-04",
+      "pass": true,
+      "actualSourceAndDestinationContact": true,
+      "phases": [
+        {
+          "phase": "source-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "lift",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "forward",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "settle",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "destination-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        }
+      ]
+    },
+    {
+      "name": "Bidirectional continuous supported step flight-b-step-05",
+      "pass": true,
+      "actualSourceAndDestinationContact": true,
+      "phases": [
+        {
+          "phase": "source-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "lift",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "forward",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "settle",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "destination-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        }
+      ]
+    },
+    {
+      "name": "Bidirectional continuous supported step flight-b-step-06",
+      "pass": true,
+      "actualSourceAndDestinationContact": true,
+      "phases": [
+        {
+          "phase": "source-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "lift",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "forward",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "settle",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "destination-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        }
+      ]
+    },
+    {
+      "name": "Bidirectional continuous supported step flight-b-step-07",
+      "pass": false,
+      "actualSourceAndDestinationContact": true,
+      "phases": [
+        {
+          "phase": "source-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "lift",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "forward",
+          "pass": false,
+          "hits": [
+            {
+              "solidId": "GEO-stair-flight-b--final-riser",
+              "penetrationLowerBoundM": 0.020142335284523583
+            }
+          ],
+          "minimumContainingBoxClearanceM": -0.020142335284523583
+        },
+        {
+          "phase": "settle",
+          "pass": false,
+          "hits": [
+            {
+              "solidId": "GEO-stair-flight-b--final-riser",
+              "penetrationLowerBoundM": 0.020142335284523583
+            }
+          ],
+          "minimumContainingBoxClearanceM": -0.020142335284523583
+        },
+        {
+          "phase": "destination-rest",
+          "pass": false,
+          "hits": [
+            {
+              "solidId": "GEO-stair-flight-b--final-riser",
+              "penetrationLowerBoundM": 0.020142335284523583
+            }
+          ],
+          "minimumContainingBoxClearanceM": -0.020142335284523583
+        }
+      ]
+    },
+    {
+      "name": "Bidirectional continuous supported step flight-b-step-08",
+      "pass": false,
+      "actualSourceAndDestinationContact": true,
+      "phases": [
+        {
+          "phase": "source-rest",
+          "pass": false,
+          "hits": [
+            {
+              "solidId": "GEO-stair-flight-b--final-riser",
+              "penetrationLowerBoundM": 0.020142335284523583
+            }
+          ],
+          "minimumContainingBoxClearanceM": -0.020142335284523583
+        },
+        {
+          "phase": "lift",
+          "pass": false,
+          "hits": [
+            {
+              "solidId": "GEO-stair-flight-b--final-riser",
+              "penetrationLowerBoundM": 0.020142335284523583
+            }
+          ],
+          "minimumContainingBoxClearanceM": -0.020142335284523583
+        },
+        {
+          "phase": "forward",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "settle",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        },
+        {
+          "phase": "destination-rest",
+          "pass": true,
+          "hits": [],
+          "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+        }
+      ]
+    },
+    {
+      "name": "Continuous full-body walking corridor lower-approach",
+      "pass": true,
+      "hits": [],
+      "minimumContainingBoxClearanceM": 0.0
+    },
+    {
+      "name": "Continuous full-body walking corridor mid-in",
+      "pass": true,
+      "hits": [],
+      "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+    },
+    {
+      "name": "Continuous full-body walking corridor mid-turn",
+      "pass": true,
+      "hits": [],
+      "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+    },
+    {
+      "name": "Continuous full-body walking corridor mid-out",
+      "pass": true,
+      "hits": [],
+      "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+    },
+    {
+      "name": "Continuous full-body walking corridor upper-approach",
+      "pass": true,
+      "hits": [],
+      "minimumContainingBoxClearanceM": -1.6653345369377348e-16
+    },
+    {
+      "name": "Unsafe tread-center stops rejected by actual solid bounds",
+      "pass": true,
+      "rejectedCount": 15
+    },
+    {
+      "name": "Actual four-panel aperture lower-roof",
+      "pass": true,
+      "hits": []
+    },
+    {
+      "name": "Actual four-panel aperture upper-floor",
+      "pass": true,
+      "hits": []
+    },
+    {
+      "name": "Full flight clear width a",
+      "pass": true,
+      "measuredMinimumM": 1.599999949336052
+    },
+    {
+      "name": "Full flight clear width b",
+      "pass": true,
+      "measuredMinimumM": 1.5999999046325684
+    }
+  ],
+  "cost": {
+    "meshes": 8,
+    "primitives": 22,
+    "triangles": 38024,
+    "materials": 6,
+    "textures": 0
+  },
+  "sourceBlendSha256": "509d55a3e2e46e64c18eecb6886864eb6b676a4d073e8bb065c7dcfac0f0cc25",
+  "glbSha256": "7073cc9b366e56a3f67f4ea8f296063bdfe0df38fb5c02794b92a8e2272a4034",
+  "capsuleMethod": "Continuous Minkowski sweep: union of upright capsule core segments over each rectangular launch strip and linear phase is a containing core AABB; distance to every evaluated-native object AABB must be >=radius. Reverse uses identical swept set. Actual contact rectangles independently covered by native planar triangles.",
+  "unsupportedAlternative": "Tread-center stops fail and are forbidden. Only qualified downhill-edge resting strips may settle; interrupted steps must finish or reverse through the same bounded sweep.",
+  "qualificationScope": "Pinned static native geometry, actual support rectangles and bounded full-size capsule step/walk envelopes; no runtime integration, character animation/armor fit, pressure/load/damage rating or owner artistic approval."
+}

@@ -1,3 +1,5 @@
+import { createMovementControl } from "./movement-control";
+import { createIntentTransmitter } from "./intent-transmitter";
 import { LAB_STORAGE_FIXTURES } from "../../../packages/content/src/storage-fixtures";
 import { ConstructionReview } from "./ConstructionReview";
 import { PILOT_LAYOUT } from "../../../packages/content/src/pilot-layout";
@@ -69,8 +71,17 @@ export default function App({
   );
   const [modelStatus, setModelStatus] = useState("Loading vessel"),
     [pending, setPending] = useState(false);
-  const connection = useRef<DbConnection | null>(null),
-    sequence = useRef(BigInt(Date.now()) * 1000n);
+  const connection = useRef<DbConnection | null>(null);
+  const movementControl = useRef<ReturnType<typeof createMovementControl<DbConnection>> | null>(null);
+  useEffect(() => {
+    const control = createMovementControl<DbConnection>({
+      claim: c => c.reducers.claimInputControl({}),
+      release: c => c.reducers.releaseInputControl({}),
+      onError: e => setError(String(e)),
+    });
+    movementControl.current = control;
+    return () => { control.dispose(); movementControl.current = null; };
+  }, []);
   const session = useRef<ReturnType<
     typeof createConnectionSession<DbConnection>
   > | null>(null);
@@ -551,6 +562,7 @@ export default function App({
                         }),
                       ),
                     transferItem: (itemId, containerId) => void perform(() => connection.current!.reducers.transferInventoryItem({itemId,containerId,...inventoryCommand()})),
+                    storeAll: (containerId, destinationId) => void perform(() => connection.current!.reducers.storeAllInventoryItems({containerId,destinationId,...inventoryCommand()})),
                     takeAll: (containerId) => void perform(() => connection.current!.reducers.takeAllInventoryItems({containerId,...inventoryCommand()})),
                     dropItem: (itemId) => void perform(() => connection.current!.reducers.dropInventoryItem({itemId,...inventoryCommand()})),
                     equipItem: (itemId) =>
@@ -630,7 +642,7 @@ export default function App({
     };
   }, [
     constructionInstance?.id,
-    constructionVisit?.deckId,
+    constructionInstance?.documentJson,
     new URLSearchParams(location.search).has("constructionReview")
       ? ready
       : true,
@@ -686,6 +698,8 @@ export default function App({
         itemId: combat?.weaponItemId,
         shotSequence: combat?.shotSequence,
       },
+      constructionDeckId: constructionVisit?.deckId,
+      constructionTraversal: c && constructionVisit ? [...c.db.ownConstructionTraversals.iter()].find(t => t.characterId === actor?.id && t.instanceId === constructionVisit.instanceId) ?? null : null,
       constructionDoors:
         c && constructionVisit
           ? [...c.db.ownConstructionDoors.iter()]
@@ -750,8 +764,20 @@ export default function App({
   ]);
   useEffect(() => {
     const keys = new Set<string>();
+    const transmitter = createIntentTransmitter<DbConnection>({
+      now: () => performance.now(),
+      send: (c, intent) => {
+        const control = movementControl.current;
+        if (!control?.canSend(c)) return Promise.resolve();
+        return c.reducers.setIntent({ ...intent, sequence: control.nextSequence(c) });
+      },
+      onError: e => setError(String(e)),
+    });
     const send = () => {
-      if (!connection.current?.isActive || !actor?.connected || !ready) return;
+      const c = connection.current, control = movementControl.current;
+      const active = !!c?.isActive && !!actor?.connected && ready && document.hasFocus() && !document.hidden;
+      control?.activate(active ? c : null);
+      if (!active || !c || !control?.canSend(c)) return;
       const blocked =
         (gui.current?.blocked() ?? true) ||
         document.hidden ||
@@ -762,16 +788,13 @@ export default function App({
         intent.horizontal,
         intent.vertical,
       ) ?? { dx: 0, dy: 0 };
-      connection.current.reducers
-        .setIntent({
-          sequence: ++sequence.current,
-          throttle: intent.throttle,
-          turn: intent.turn,
-          dx: walk.dx,
-          dy: walk.dy,
-          sprint: intent.sprint,
-        })
-        .catch((e) => setError(String(e)));
+      transmitter.offer(c, {
+        throttle: intent.throttle,
+        turn: intent.turn,
+        dx: walk.dx,
+        dy: walk.dy,
+        sprint: intent.sprint,
+      });
     };
     const down = (e: KeyboardEvent) => {
       if (gui.current?.blocked() || !actor?.connected || !ready) return;
@@ -799,26 +822,31 @@ export default function App({
       ) {
         e.preventDefault();
         keys.add(e.code);
+        send();
       }
     };
-    const up = (e: KeyboardEvent) => keys.delete(e.code);
+    const up = (e: KeyboardEvent) => { keys.delete(e.code); send(); };
     const blur = () => {
       keys.clear();
-      send();
+      movementControl.current?.activate(null);
     };
+    const visibility = () => { keys.clear(); send(); };
     window.addEventListener("keydown", down);
     window.addEventListener("keyup", up);
+    window.addEventListener("focus", send);
     window.addEventListener("blur", blur);
-    document.addEventListener("visibilitychange", blur);
+    document.addEventListener("visibilitychange", visibility);
     const interval = setInterval(send, 50);
     return () => {
       clearInterval(interval);
       keys.clear();
       send();
       window.removeEventListener("keydown", down);
+      transmitter.dispose();
       window.removeEventListener("keyup", up);
+      window.removeEventListener("focus", send);
       window.removeEventListener("blur", blur);
-      document.removeEventListener("visibilitychange", blur);
+      document.removeEventListener("visibilitychange", visibility);
     };
   }, [actor?.connected, seated, interior, ready]);
   useEffect(() => {

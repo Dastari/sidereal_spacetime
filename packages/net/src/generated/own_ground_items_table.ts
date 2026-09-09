@@ -11,7 +11,7 @@ import {
 } from "spacetimedb";
 
 export default __t.row({
-  id: __t.string(),
+  id: __t.string().primaryKey(),
   definitionId: __t.string().name("definition_id"),
   localX: __t.f64().name("local_x"),
   localY: __t.f64().name("local_y"),

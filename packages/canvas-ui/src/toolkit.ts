@@ -72,7 +72,12 @@ export class CanvasUI {
   private observer;
   draw: () => void = () => {};
   escape: () => void = () => {};
-  scroll: (delta: number, x?: number, y?: number) => void = () => {};
+  scroll: (
+    delta: number,
+    x?: number,
+    y?: number,
+    horizontalDelta?: number,
+  ) => void = () => {};
   shortcut: (code: string) => boolean = () => false;
   constructor(
     readonly canvas: HTMLCanvasElement,
@@ -249,12 +254,14 @@ export class CanvasUI {
   private wheel = (e: WheelEvent) => {
     this.pointer = this.point(e);
     if (this.pointerBlocked()) {
+      const unit =
+        (e.deltaMode === 1 ? 20 : e.deltaMode === 2 ? this.height : 1) /
+        this.scale;
       this.scroll(
-        (e.deltaY *
-          (e.deltaMode === 1 ? 20 : e.deltaMode === 2 ? this.height : 1)) /
-          this.scale,
+        e.shiftKey ? 0 : e.deltaY * unit,
         this.pointer.x,
         this.pointer.y,
+        (e.deltaX || 0 || (e.shiftKey ? e.deltaY : 0)) * unit,
       );
       e.preventDefault();
       e.stopImmediatePropagation();
