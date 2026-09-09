@@ -3,7 +3,7 @@ import {
   INVENTORY_DEFINITIONS,
   LIQUID_DENSITY_KG_PER_LITRE,
 } from "../packages/content/src/inventory";
-import { LAB_STORAGE_FIXTURES } from "../packages/content/src/storage-fixtures";
+import { walkNative } from "./native-starter-smoke";
 import assert from "node:assert/strict";
 import type { DbConnection } from "../packages/net/src/generated";
 export async function inventorySmoke(
@@ -37,6 +37,11 @@ export async function inventorySmoke(
     original,
   );
   assert.equal(state().revision, 1n);
+  assert.equal(
+    containers().length,
+    3,
+    "native kit replay retains exactly three personal containers",
+  );
   assert(
     !containers().some(
       (c) => c.name.includes("Storage") || c.name.includes("Engineering"),
@@ -200,200 +205,158 @@ export async function inventorySmoke(
   await assert.rejects(
     a.reducers.activateInventoryHotbar({ ...mutation(), slot: 1 }),
   );
-  // Reach an actual world container using validated walk intents through its doorway.
-  await a.reducers.useStation({});
-    await a.reducers.claimInputControl({});
-  let sequence = 0n;
-  const walk = async (dx: number, dy: number, duration: number) => {
-    const end = Date.now() + duration;
-    while (Date.now() < end) {
-      await a.reducers.setIntent({
-        sequence: ++sequence,
-        throttle: 0,
-        turn: 0,
-        dx,
-        dy,
-        sprint: false,
-      });
-      await new Promise((r) => setTimeout(r, 100));
-    }
-    await a.reducers.setIntent({
-      sequence: ++sequence,
-      throttle: 0,
-      turn: 0,
-      dx: 0,
-      dy: 0,
-      sprint: false,
-    });
-  };
-  const approach = async (x: number, y: number) => {
-    const deadline = Date.now() + 10000;
-    while (Date.now() < deadline) {
-      const actor = [...a.db.ownCharacters.iter()][0];
-      const dx = x - actor.localX,
-        dy = y - actor.localY,
-        length = Math.hypot(dx, dy);
-      if (length < 0.09) {
-        await walk(0, 0, 0);
-        return;
-      }
-      await a.reducers.setIntent({
-        sequence: ++sequence,
-        throttle: 0,
-        turn: 0,
-        dx: dx / Math.max(1, length),
-        dy: dy / Math.max(1, length),
-        sprint: false,
-      });
-      await new Promise((resolve) => setTimeout(resolve, 70));
-    }
-    throw new Error("Storage approach timed out");
-  };
-  await approach(0, 3);
-  await approach(-2.4, 3);
-  await approach(-2.5, 2.75);
+  // Native starters own empty instance containers. Personal inventory remains
+  // private; scoped transfers validate both container revisions and item identity.
+  await a.reducers.claimInputControl({});
+  for (const [x, y] of [
+    [-2, -1.5],
+    [0, -1.5],
+    [0, 3],
+    [-2.4, 3],
+    [-3.5, 2.75],
+  ])
+    await walkNative(a, x!, y!);
+  const cargo = () => [...a.db.ownReachableCargoContainers.iter()];
+  const cargoItems = () => [...a.db.ownReachableCargoItems.iter()];
+  const revisions = () => [...a.db.ownCarriedInventoryRevisions.iter()];
+  const revision = (id: string) =>
+    revisions().find((r) => r.id === id)?.revision ??
+    cargo().find((r) => r.id === id)?.revision ??
+    cargoItems().find((r) => r.id === id)?.revision;
   await wait(
-    () => containers().some((c) => c.name === "Storage supply crate"),
-    "nearby storage crate discovered by authority",
+    () => cargo().filter((c) => c.placedObjectId).length === 4,
+    "four native cargo containers reachable",
   );
-  const crate = containers().find((c) => c.name === "Storage supply crate")!,
-    rifle = find("long-rifle");
-  assert(rifle);
-  await wait(
-    () => containers().filter((c) => c.placementId).length === 4,
-    "four actual storage placement bindings visible",
+  const roots = cargo().filter((c) => c.placedObjectId);
+  assert.equal(cargoItems().length, 0, "new authored containers start empty");
+  assert.equal(
+    new Set(roots.map((c) => c.id)).size,
+    4,
+    "four independent container UUIDs",
   );
-  assert.equal(crate.placementId, LAB_STORAGE_FIXTURES[0].placementId);
-  const storageRows = containers().filter((c) => c.placementId);
-  const storedIds = storageRows.map((c) => c.id).sort(),
-    beforeKitAgain = state().revision;
-  await a.reducers.claimStarterKit({});
-  assert.deepEqual(
-    containers()
-      .filter((c) => c.placementId)
-      .map((c) => c.id)
-      .sort(),
-    storedIds,
-  );
-  assert.equal(state().revision, beforeKitAgain);
-  const otherCrate = storageRows.find((c) => c.id !== crate.id)!;
   assert(
-    storageRows.every((c) =>
-      items().some(
-        (i) => i.containerId === c.id && i.definitionId.startsWith("crew-"),
-      ),
-    ),
-    "all four existing crates contain uniform pieces",
+    roots.every((c) => c.id !== c.placedObjectId),
+    "inventory and placed-object identities remain distinct",
   );
-  const freeStorage = (itemId: string, containerId: string) => {
-    const found = firstInventoryPlacement(
-      { items: items(), containers: containers() },
-      INVENTORY_DEFINITIONS,
-      LIQUID_DENSITY_KG_PER_LITRE,
-      state().pocketsId,
-      32,
+  const crate = roots[0]!;
+  const originalPistol = { ...find("compact-pistol") };
+  const transferCommand = (
+    itemId: string,
+    destinationContainerId: string,
+    x: number,
+    y: number,
+    rotated = false,
+  ) => {
+    const item =
+      items().find((i) => i.id === itemId) ??
+      cargoItems().find((i) => i.id === itemId);
+    assert(item, "visible transfer source");
+    return {
+      operationId: crypto.randomUUID(),
       itemId,
-      containerId,
-    );
-    assert(found, "legal storage position");
-    return found;
+      sourceContainerId: item.containerId,
+      destinationContainerId,
+      x,
+      y,
+      rotated,
+      expectedItemRevision: revision(itemId)!,
+      expectedSourceRevision: revision(item.containerId)!,
+      expectedDestinationRevision: revision(destinationContainerId)!,
+      expectedCharacterRevision: state().revision,
+    };
   };
-  const scannerBefore = { ...find("scanner") };
-  await a.reducers.moveInventoryItem({
-    ...mutation(),
-    itemId: scanner.id,
-    ...freeStorage(scanner.id, otherCrate.id),
-  });
-  assert.equal(find("scanner").containerId, otherCrate.id);
-  if (scannerBefore.equipmentSlot)
-    await a.reducers.equipInventoryItem({ ...mutation(), itemId: scanner.id });
-  else
-    await a.reducers.moveInventoryItem({
-      ...mutation(),
-      itemId: scanner.id,
-      containerId: scannerBefore.containerId,
-      x: scannerBefore.x,
-      y: scannerBefore.y,
-      rotated: scannerBefore.rotated,
-    });
-
-  // Taking a weapon from world storage must never silently leave the old hand item there.
+  const restorePistol = async () => {
+    await a.reducers.transferScopedCargoItem(
+      transferCommand(
+        pistol.id,
+        originalPistol.containerId,
+        originalPistol.x,
+        originalPistol.y,
+        originalPistol.rotated,
+      ),
+    );
+    await wait(
+      () => items().some((i) => i.id === pistol.id),
+      "same pistol withdrawn to personal grid",
+    );
+    assert.deepEqual(find("compact-pistol"), originalPistol);
+  };
+  for (const root of roots) {
+    const command = transferCommand(pistol.id, root.id, 0, 0);
+    await assert.rejects(b.reducers.transferScopedCargoItem(command));
+    await a.reducers.transferScopedCargoItem(command);
+    await wait(
+      () =>
+        cargoItems().some(
+          (i) => i.id === pistol.id && i.containerId === root.id,
+        ),
+      "pistol stored in actual native container",
+    );
+    assert(
+      !items().some((i) => i.id === pistol.id),
+      "stored item leaves carried projection",
+    );
+    const after = revision(root.id);
+    await a.reducers.transferScopedCargoItem(command);
+    assert.equal(
+      revision(root.id),
+      after,
+      "scoped transfer retry is exactly once",
+    );
+    await assert.rejects(
+      a.reducers.moveInventoryItem({
+        ...mutation(),
+        itemId: pistol.id,
+        containerId: originalPistol.containerId,
+        x: originalPistol.x,
+        y: originalPistol.y,
+        rotated: originalPistol.rotated,
+      }),
+    );
+    await restorePistol();
+  }
+  // A stored weapon cannot be equipped through the legacy private reducer. The
+  // deliberate take-then-equip sequence must preserve the displaced hand item.
+  await a.reducers.transferScopedCargoItem(
+    transferCommand(pistol.id, crate.id, 0, 0),
+  );
+  await assert.rejects(
+    a.reducers.equipInventoryItem({ ...mutation(), itemId: pistol.id }),
+  );
+  await restorePistol();
   await a.reducers.equipInventoryItem({ ...mutation(), itemId: pistol.id });
-  await a.reducers.equipInventoryItem({ ...mutation(), itemId: rifle.id });
+  await a.reducers.equipInventoryItem({ ...mutation(), itemId: carbine.id });
   assert.equal(find("compact-pistol").id, pistol.id);
   assert(
     containers().find((c) => c.id === find("compact-pistol").containerId)
       ?.carried,
   );
-  // Without the pack, the long rifle fits no carried grid. Reject the swap atomically.
-  await a.reducers.moveInventoryItem({
-    ...mutation(),
-    itemId: pack.id,
-    ...storageRows
-      .map((c) =>
-        firstInventoryPlacement(
-          { items: items(), containers: containers() },
-          INVENTORY_DEFINITIONS,
-          LIQUID_DENSITY_KG_PER_LITRE,
-          state().pocketsId,
-          32,
-          pack.id,
-          c.id,
-        ),
-      )
-      .find((p) => p !== undefined)!,
-  });
-  const beforeNoFit = state().revision;
-  const beforeNoFitItems = JSON.stringify(items());
-  await assert.rejects(
-    a.reducers.equipInventoryItem({
-      ...mutation(),
-      itemId: find("heavy-handgun").id,
-    }),
+  // Capture an otherwise-valid withdrawal before walking away: reach loss must
+  // deny it and remove both container metadata and its contents from this client.
+  const beforeRangePistol = { ...find("compact-pistol") };
+  await a.reducers.transferScopedCargoItem(
+    transferCommand(pistol.id, crate.id, 0, 0),
   );
-  assert.equal(state().revision, beforeNoFit);
-  assert.equal(JSON.stringify(items()), beforeNoFitItems);
-  await a.reducers.equipInventoryItem({ ...mutation(), itemId: pack.id });
-  await a.reducers.moveInventoryItem({
-    ...mutation(),
-    itemId: rifle.id,
-    containerId: crate.id,
-    x: 0,
-    y: 0,
-    rotated: false,
-  });
-  await a.reducers.equipInventoryItem({ ...mutation(), itemId: scanner.id });
-  await a.reducers.assignInventoryHotbar({
-    ...mutation(),
-    slot: 2,
-    itemId: rifle.id,
-  });
-  const retainedPistol = { ...find("compact-pistol") };
-  await a.reducers.moveInventoryItem({
-    ...mutation(),
-    itemId: pistol.id,
-    ...freeStorage(pistol.id, crate.id),
-  });
+  const withdrawal = transferCommand(
+    pistol.id,
+    beforeRangePistol.containerId,
+    beforeRangePistol.x,
+    beforeRangePistol.y,
+    beforeRangePistol.rotated,
+  );
+  for (const [x, y] of [
+    [-2.4, 3],
+    [0, 3],
+    [0, -1.5],
+  ])
+    await walkNative(a, x!, y!);
   await wait(
-    () => find("compact-pistol").containerId === crate.id,
-    "actual transfer into nearby crate",
+    () => !cargo().some((c) => c.id === crate.id),
+    "range loss revokes native cargo discovery",
   );
-  assert(Math.abs(state().carriedMassKg - 8.6) < 1e-8);
-  await walk(1, 0, 800);
-  await wait(
-    () => !containers().some((c) => c.id === crate.id),
-    "container access revoked on range loss",
-  );
-  assert(!items().some((i) => i.id === rifle.id || i.id === pistol.id));
-  await rejectMove(rifle.id, packGrid.id, 2, 0);
-  await assert.rejects(
-    a.reducers.activateInventoryHotbar({ ...mutation(), slot: 2 }),
-  );
-  assert.equal(
-    [...a.db.ownInventoryHotbar.iter()].find((h) => h.slot === 2)!.itemId,
-    "",
-  );
-  // Retries remain exactly once even after capacity128 receipt eviction.
+  assert(!cargoItems().some((i) => i.id === pistol.id));
+  await assert.rejects(a.reducers.transferScopedCargoItem(withdrawal));
+  // Personal operation IDs stay single-use even after bounded receipt eviction.
   const oldest = { ...mutation(), slot: 4, itemId: "" };
   await a.reducers.assignInventoryHotbar(oldest);
   for (let i = 0; i < 129; i++)
@@ -403,50 +366,125 @@ export async function inventorySmoke(
       itemId: "",
     });
   await assert.rejects(a.reducers.assignInventoryHotbar(oldest));
-  await approach(-2.5, 2.75);
+  for (const [x, y] of [
+    [0, 3],
+    [-2.4, 3],
+    [-3.5, 2.75],
+  ])
+    await walkNative(a, x!, y!);
   await wait(
-    () => containers().some((c) => c.id === crate.id),
-    "explicitly stored pistol becomes reachable again",
+    () => cargo().some((c) => c.id === crate.id),
+    "native cargo rediscovered",
   );
-  assert.equal(find("compact-pistol").id, pistol.id);
-  await a.reducers.moveInventoryItem({
-    ...mutation(),
-    itemId: pistol.id,
-    containerId: retainedPistol.containerId,
-    x: retainedPistol.x,
-    y: retainedPistol.y,
-    rotated: retainedPistol.rotated,
-  });
-  // Store all uses one expected revision and keeps carried/equipped UUIDs intact.
-  const storeBefore = items().filter(i => i.containerId === packGrid.id).map(i => ({...i}));
-  const storeCommand = {...mutation(), containerId:packGrid.id, destinationId:crate.id};
-  await a.reducers.storeAllInventoryItems(storeCommand);
-  const storeRevision=state().revision;
-  await a.reducers.storeAllInventoryItems(storeCommand);
-  assert.equal(state().revision,storeRevision,"store-all retry is exactly once");
-  const stored=storeBefore.filter(i=>items().find(x=>x.id===i.id)?.containerId===crate.id);
-  assert(stored.length>0,"store all transfers fitting carried items");
-  assert.equal(items().find(i=>i.id===pack.id)?.equipmentSlot,"back","store all retains worn backpack");
-  await assert.rejects(b.reducers.storeAllInventoryItems({containerId:packGrid.id,destinationId:crate.id,expectedRevision:[...b.db.ownInventoryState.iter()][0].revision,operationId:"foreign-store-all"}));
-  for(const i of stored)await a.reducers.moveInventoryItem({...mutation(),itemId:i.id,containerId:i.containerId,x:i.x,y:i.y,rotated:i.rotated});
+  await a.reducers.transferScopedCargoItem(
+    transferCommand(
+      pistol.id,
+      beforeRangePistol.containerId,
+      beforeRangePistol.x,
+      beforeRangePistol.y,
+      beforeRangePistol.rotated,
+    ),
+  );
+  // Bulk UI is intentionally serial: each item receives fresh revisions and an
+  // explicit operation ID, with completed UUIDs restored even between operations.
+  const storedBefore = items()
+    .filter((i) => i.containerId === packGrid.id)
+    .map((i) => ({ ...i }));
+  const placed: typeof storedBefore = [];
+  for (const item of storedBefore) {
+    const fit = firstInventoryPlacement(
+      {
+        items: [
+          ...items(),
+          ...cargoItems().map((i) => ({ ...i, equipmentSlot: "" })),
+        ],
+        containers: [
+          ...containers(),
+          ...cargo().map((c) => ({
+            ...c,
+            carried: false,
+            placementId: c.placedObjectId,
+          })),
+        ],
+      },
+      INVENTORY_DEFINITIONS,
+      LIQUID_DENSITY_KG_PER_LITRE,
+      state().pocketsId,
+      32,
+      item.id,
+      crate.id,
+    );
+    if (!fit) continue;
+    await a.reducers.transferScopedCargoItem(
+      transferCommand(item.id, crate.id, fit.x, fit.y, fit.rotated),
+    );
+    placed.push(item);
+  }
+  assert(placed.length > 0, "serial bulk stores fitting carried items");
+  assert.equal(
+    find("field-pack").equipmentSlot,
+    "back",
+    "bulk preserves worn pack",
+  );
+  for (const item of placed)
+    await a.reducers.transferScopedCargoItem(
+      transferCommand(item.id, item.containerId, item.x, item.y, item.rotated),
+    );
+  assert.deepEqual(
+    items()
+      .map((i) => i.id)
+      .sort(),
+    original,
+    "all seven starter UUIDs survive scoped storage",
+  );
   // Ground loot uses server-derived positions, persistent UUIDs and ordinary access.
-  const dropBefore = {...find("scanner")};
-  const dropCommand = {...mutation(),itemId:scanner.id};
+  const dropCommand = { ...mutation(), itemId: scanner.id };
   await a.reducers.dropInventoryItem(dropCommand);
-  await wait(()=>[...a.db.ownGroundItems.iter()].some(i=>i.id===scanner.id),"dropped scanner projection");
-  const dropRevision=state().revision;
+  await wait(
+    () => [...a.db.ownGroundItems.iter()].some((i) => i.id === scanner.id),
+    "dropped scanner projection",
+  );
+  const dropRevision = state().revision;
   await a.reducers.dropInventoryItem(dropCommand);
-  assert.equal(state().revision,dropRevision,"drop retry is exactly once");
-  assert(![...b.db.ownGroundItems.iter()].some(i=>i.id===scanner.id),"foreign ground loot is private");
-  const dropped=[...a.db.ownGroundItems.iter()].find(i=>i.id===scanner.id)!;
-  const character=[...a.db.ownCharacters.iter()][0];
-  assert.equal(dropped.localX,character.localX);assert.equal(dropped.localY,character.localY);
-  assert(!("characterId" in dropped)&&!("shipId" in dropped),"ground projection redacts internal ownership");
-  await assert.rejects(b.reducers.transferInventoryItem({itemId:scanner.id,containerId:"",expectedRevision:[...b.db.ownInventoryState.iter()][0].revision,operationId:"foreign-ground-pickup"}));
-  await a.reducers.transferInventoryItem({...mutation(),itemId:scanner.id,containerId:""});
-  await wait(()=>![...a.db.ownGroundItems.iter()].some(i=>i.id===scanner.id),"ground wrapper removed after pickup");
-  assert.equal(find("scanner").containerId,packGrid.id,"quick pickup prefers backpack");
-  if(dropBefore.equipmentSlot)await a.reducers.equipInventoryItem({...mutation(),itemId:scanner.id});
+  assert.equal(state().revision, dropRevision, "drop retry is exactly once");
+  assert(
+    ![...b.db.ownGroundItems.iter()].some((i) => i.id === scanner.id),
+    "foreign ground loot is private",
+  );
+  const dropped = [...a.db.ownGroundItems.iter()].find(
+    (i) => i.id === scanner.id,
+  )!;
+  const character = [...a.db.ownCharacters.iter()][0];
+  assert.equal(dropped.localX, character.localX);
+  assert.equal(dropped.localY, character.localY);
+  assert(
+    !("characterId" in dropped) && !("shipId" in dropped),
+    "ground projection redacts internal ownership",
+  );
+  await assert.rejects(
+    b.reducers.transferInventoryItem({
+      itemId: scanner.id,
+      containerId: "",
+      expectedRevision: [...b.db.ownInventoryState.iter()][0].revision,
+      operationId: "foreign-ground-pickup",
+    }),
+  );
+  await a.reducers.transferInventoryItem({
+    ...mutation(),
+    itemId: scanner.id,
+    containerId: "",
+  });
+  await wait(
+    () => ![...a.db.ownGroundItems.iter()].some((i) => i.id === scanner.id),
+    "ground wrapper removed after pickup",
+  );
+  assert.equal(
+    find("scanner").containerId,
+    packGrid.id,
+    "quick pickup prefers backpack",
+  );
+  // Pin the final equipped item explicitly for the reconnect evidence contract.
+  await a.reducers.equipInventoryItem({ ...mutation(), itemId: scanner.id });
   return {
     itemId: scanner.id,
     packId: pack.id,

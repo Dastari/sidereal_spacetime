@@ -1,3 +1,4 @@
+import { enterNativePilot, leaveNativePilot } from "./native-starter-smoke";
 import assert from "node:assert/strict";
 import type { DbConnection } from "../packages/net/src/generated";
 export async function combatSmoke(
@@ -8,6 +9,8 @@ export async function combatSmoke(
   await assert.rejects(a.reducers.setCombatAim({ active: true, angle: 0 }));
   await a.reducers.enterLab({ name: "Combat Smoke" });
   await a.reducers.claimStarterKit({});
+  await a.reducers.claimInputControl({});
+  await enterNativePilot(a, true);
   const state = () => [...a.db.ownCombat.iter()][0];
   const inventory = () => [...a.db.ownInventoryState.iter()][0];
   const item = (definitionId: string) =>
@@ -38,7 +41,7 @@ export async function combatSmoke(
       operationId: crypto.randomUUID(),
     }),
   );
-  await a.reducers.useStation({});
+  await leaveNativePilot(a);
   await a.reducers.setCombatAim({ active: true, angle: 5 * Math.PI });
   await wait(() => state().aimActive, "aim active");
   assert(Math.abs(Math.abs(state().aimAngle) - Math.PI) < 1e-8);
@@ -122,9 +125,9 @@ export async function combatSmoke(
     "passive energy must not churn action CAS",
   );
   await a.reducers.setCombatAim({ active: true, angle: 0 });
-  await a.reducers.useStation({});
+  await enterNativePilot(a);
   assert.equal(state().aimActive, false, "helm clears aim");
-  await a.reducers.useStation({});
+  await leaveNativePilot(a);
   // Keep a fresh intent across disconnect so reconnect must prove authority clears it.
   await a.reducers.setCombatAim({ active: true, angle: 0.5 });
   return {

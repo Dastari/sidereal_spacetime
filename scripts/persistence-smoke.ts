@@ -71,7 +71,7 @@ export async function persistenceSmoke(client:Client,wait:Wait):Promise<Persiste
   try {
    a.disconnect();await new Promise(resolve=>setTimeout(resolve,200));
    assert.equal([...secondTab.connection.db.ownCharacters.iter()][0].connected,true,'closing one tab must not disconnect remaining account session');
-   assert.equal([...secondTab.connection.db.ownStations.iter()][0].occupantId,evidence[0].snapshot.characterId,'remaining session retains occupied station');
+   assert.equal([...secondTab.connection.db.ownStations.iter()][0].occupantId,undefined,'remaining standing session gains no incidental pilot control');
    await secondTab.connection.reducers.claimStarterKit({});
    assert.deepEqual(persistenceSnapshot(secondTab.connection),evidence[0].snapshot);
   } finally {secondTab.connection.disconnect();}

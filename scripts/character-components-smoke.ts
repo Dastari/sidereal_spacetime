@@ -28,6 +28,68 @@ export async function characterComponentsSmoke(client: Client, wait: Wait) {
       expectedRevision: state().revision,
       operationId: crypto.randomUUID(),
     });
+    if (a.db.ownGameShipAccess.count() === 1n) {
+      // Native personal ships start with empty scoped cargo, not the historical
+      // 90-piece lab armory. Keep that legacy journey below; never call it passed
+      // for a fixture that has no authoritative component issuance path.
+      const beforeItems = JSON.stringify(items());
+      const beforeRevision = state().revision;
+      await assert.rejects(a.reducers.claimCharacterArmory(command()));
+      assert.equal(
+        JSON.stringify(items()),
+        beforeItems,
+        "unsupported issuance mints no items",
+      );
+      assert.equal(
+        state().revision,
+        beforeRevision,
+        "denied issuance is atomic",
+      );
+      for (const bodyType of ["male", "female"]) {
+        const appearance = [...a.db.ownAppearance.iter()][0]!;
+        await a.reducers.setCharacterAppearance({
+          appearanceJson: JSON.stringify({
+            bodyType,
+            hairStyle: bodyType === "female" ? "braids" : "ponytail",
+          }),
+          expectedRevision: appearance.revision,
+          operationId: crypto.randomUUID(),
+        });
+        assert.equal(
+          JSON.parse([...a.db.ownAppearance.iter()][0]!.appearanceJson)
+            .bodyType,
+          bodyType,
+        );
+      }
+      const expectedAppearance = [...a.db.ownAppearance.iter()][0]!
+        .appearanceJson;
+      a.disconnect();
+      await new Promise((r) => setTimeout(r, 150));
+      a = (await client(session.token)).connection;
+      await a.reducers.enterLab({ name: "Component Fit Smoke" });
+      await wait(
+        () => a.db.ownAppearance.count() === 1n,
+        "native body appearance reconnect",
+      );
+      assert.equal(
+        [...a.db.ownAppearance.iter()][0]!.appearanceJson,
+        expectedAppearance,
+      );
+      assert.deepEqual(
+        items().map((i) => i.id),
+        original,
+        "native starter UUIDs retained",
+      );
+      return {
+        passed: true,
+        bodyTypes: 2,
+        reconnectPreserved: true,
+        nativeArmoryIssued: false,
+        components: 0,
+        limitation:
+          "Native scoped armory issuance is not implemented; legacy 90-component equipment journey remains separate.",
+      };
+    }
     assert(
       !items().some((i) => i.definitionId.startsWith("crew-")),
       "stored uniforms are hidden while out of reach",

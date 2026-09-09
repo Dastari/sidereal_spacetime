@@ -22,7 +22,7 @@ export async function interactionSmoke(
   const actor = () => [...a.db.ownCharacters.iter()][0];
   const couch = () => rows().find((row) => row.kind === "seat")!;
   const light = () =>
-    rows().find((row) => row.placementId === "room-hydroponics-tray--1.5")!;
+    rows().find((row) => row.kind === "light" && row.localY === -1.5)!;
   const ids = rows()
     .map((row) => row.id)
     .sort();
@@ -62,7 +62,6 @@ export async function interactionSmoke(
     })
     .subscribe("SELECT * FROM interaction_object");
   await wait(() => privateRejected, "private interaction base rejected");
-  await a.reducers.useStation({});
   await a.reducers.claimInputControl({});
   let sequence = 0n;
   const intent = async (dx: number, dy: number) =>
@@ -89,6 +88,8 @@ export async function interactionSmoke(
     }
     await intent(0, 0);
   };
+  await move(-2, -1.5);
+  await move(0, -1.5);
   await move(0, 3);
   await move(2.25, 3);
   const sit = {
@@ -97,10 +98,10 @@ export async function interactionSmoke(
     expectedRevision: couch().revision,
     operationId: "sit-1",
   };
-  await a.reducers.setCombatAim({active:true,angle:0});
+  await a.reducers.setCombatAim({ active: true, angle: 0 });
   await a.reducers.interactObject(sit);
-  assert.equal([...a.db.ownCombat.iter()][0].aimActive,false);
-  await assert.rejects(a.reducers.setCombatAim({active:true,angle:0}));
+  assert.equal([...a.db.ownCombat.iter()][0].aimActive, false);
+  await assert.rejects(a.reducers.setCombatAim({ active: true, angle: 0 }));
   await wait(() => couch().seatedByYou, "couch seated");
   const revision = couch().revision;
   await a.reducers.interactObject(sit);

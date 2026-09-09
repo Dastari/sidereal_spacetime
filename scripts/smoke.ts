@@ -1,3 +1,11 @@
+import {
+  acquireNativePilot,
+  nextSequence,
+  intentSequences,
+  walkNative,
+  enterNativePilot,
+  leaveNativePilot,
+} from "./native-starter-smoke";
 import { characterComponentsSmoke } from "./character-components-smoke";
 import { constructionDenialSmoke } from "./construction-smoke";
 import { identityLinkSmoke } from "./identity-link-smoke";
@@ -5,7 +13,7 @@ import { persistenceSmoke, verifyPersistence } from "./persistence-smoke";
 import { combatSmoke } from "./combat-smoke";
 import { interactionSmoke } from "./interaction-smoke";
 import { inventorySmoke } from "./inventory-smoke";
-import { PILOT_LAYOUT } from "../packages/content/src/pilot-layout";
+import { QUALIFIED_PILOT_POSITION } from "../packages/sim/src/construction-pilot";
 import { SHARED_SYSTEM_SEED } from "../packages/content/src/shared-system";
 import assert from "node:assert/strict";
 import { readFileSync, writeFileSync } from "node:fs";
@@ -50,6 +58,10 @@ async function client(token?: string) {
           tables.ownCharacters,
           tables.ownShips,
           tables.ownStations,
+          tables.ownAuthoredFlights,
+          tables.ownAuthoredFlightFittings,
+          tables.ownGameShipAccess,
+          tables.ownConstructionLocation,
           tables.ownEditReceipts,
           tables.ownSpaceBodies,
           tables.ownWorldAdmission,
@@ -65,6 +77,9 @@ async function client(token?: string) {
           tables.ownInventoryItems,
           tables.ownInventoryContainers,
           tables.ownInventoryHotbar,
+          tables.ownReachableCargoContainers,
+          tables.ownReachableCargoItems,
+          tables.ownCarriedInventoryRevisions,
         ]);
     })
     .build();
@@ -285,12 +300,13 @@ if (restore) {
       "new planet destinations are distributed across the lab",
     );
     summary.canonical_shared_bodies = true;
+    await enterNativePilot(a, true);
     // Alpha starts on the approach rock axis and can only send piloting intent. Contact and impulse must come from the
     // scheduled authority; there is no transform/velocity/collision reducer.
     for (let i = 1; i <= 45; i++) {
       await a.reducers.setIntent({
         sprint: false,
-        sequence: BigInt(i),
+        sequence: nextSequence(a),
         throttle: 1,
         turn: 0,
         dx: 0,
@@ -300,7 +316,7 @@ if (restore) {
     }
     await a.reducers.setIntent({
       sprint: false,
-      sequence: 46n,
+      sequence: nextSequence(a),
       throttle: 0,
       turn: 0,
       dx: 0,
@@ -326,6 +342,7 @@ if (restore) {
       await flight.reducers.enterLab({ name: "IFCS proof" });
       await flight.reducers.claimInputControl({});
       await wait(() => flight.db.ownShips.count() === 1n, "IFCS fixture");
+      await enterNativePilot(flight, true);
       await wait(
         () => flight.db.ownActuatorOutputs.count() === 9n,
         "bounded fixture output rows",
@@ -342,11 +359,10 @@ if (restore) {
         .onError(() => (outputRejected = true))
         .subscribe("SELECT * FROM actuator_output");
       await wait(() => outputRejected, "private actuator table rejected");
-      let sequence = 0n;
       const commandFlight = async (throttle: number, turn: number) => {
         await flight.reducers.setIntent({
           sprint: false,
-          sequence: ++sequence,
+          sequence: nextSequence(flight),
           throttle,
           turn,
           dx: 0,
@@ -363,7 +379,12 @@ if (restore) {
       for (let i = 0; i < 45; i++) await commandFlight(0, 0);
       assert(
         [...flight.db.ownActuatorOutputs.iter()].some(
-          (o) => o.actuatorId.startsWith("drives-retro") && o.throttle > 0,
+          (o) =>
+            [...flight.db.ownAuthoredFlightFittings.iter()].some(
+              (f) =>
+                f.id === o.actuatorId &&
+                f.sourceDeviceId.startsWith("drives-retro"),
+            ) && o.throttle > 0,
         ),
         "achieved retro output is subscribed",
       );
@@ -396,7 +417,7 @@ if (restore) {
         expired.omega,
         "expired control cannot continue assisted torque",
       );
-      await flight.reducers.useStation({});
+      await leaveNativePilot(flight);
       await commandFlight(0, 0);
       const unseated = [...flight.db.ownShips.iter()][0];
       assert.equal(
@@ -444,7 +465,7 @@ if (restore) {
     summary.revision_idempotency = true;
     await a.reducers.setIntent({
       sprint: false,
-      sequence: 101n,
+      sequence: nextSequence(a),
       throttle: 1,
       turn: 0,
       dx: 0,
@@ -452,11 +473,11 @@ if (restore) {
     });
     await wait(() => [...a.db.ownShips.iter()][0].vy > 0, "authority thrust");
     summary.authoritative_flight = true;
-    await a.reducers.useStation({});
+    await leaveNativePilot(a);
     await assert.rejects(
       a.reducers.setIntent({
         sprint: false,
-        sequence: 102n,
+        sequence: nextSequence(a),
         throttle: 1,
         turn: 0,
         dx: 0,
@@ -466,7 +487,7 @@ if (restore) {
     summary.unseated_control_rejected = true;
     await a.reducers.setIntent({
       sprint: false,
-      sequence: 103n,
+      sequence: nextSequence(a),
       throttle: 0,
       turn: 0,
       dx: 1,
@@ -480,7 +501,7 @@ if (restore) {
     await assert.rejects(
       a.reducers.setIntent({
         sprint: false,
-        sequence: 104n,
+        sequence: nextSequence(a),
         throttle: 0,
         turn: 0,
         dx: 100,
@@ -490,22 +511,24 @@ if (restore) {
     summary.invalid_input_rejected = true;
     // Anchor each short sprint near the seat so timing variance cannot make
     // the later acquisition assertion depend on network round-trip latency.
-    await a.reducers.useStation({});
-    await a.reducers.useStation({});
+    await enterNativePilot(a);
+    await leaveNativePilot(a);
     const ownActor = () => [...a.db.ownCharacters.iter()][0];
+    const sprintStartX = ownActor().localX;
     await a.reducers.setIntent({
-      sequence: 105n,
+      sequence: nextSequence(a),
       throttle: 0,
       turn: 0,
       dx: 1,
       dy: 0,
       sprint: true,
     });
-    await wait(() => ownActor().sprinting, "authoritative sprint activation");
-    const sprintX = ownActor().localX;
-    assert(sprintX > 0, "sprint state accompanies server displacement");
+    await wait(
+      () => ownActor().sprinting && ownActor().localX > sprintStartX,
+      "authoritative sprint displacement",
+    );
     await a.reducers.setIntent({
-      sequence: 106n,
+      sequence: nextSequence(a),
       throttle: 0,
       turn: 0,
       dx: 0,
@@ -516,8 +539,9 @@ if (restore) {
     // Replayed input is an idempotent no-op, not a rejected promise. It must not
     // refresh the movement timeout or replace the newer accepted stop.
     const stopped = { x: ownActor().localX, y: ownActor().localY };
+    const staleSequence = intentSequences.get(a)! - 1n;
     await a.reducers.setIntent({
-      sequence: 105n,
+      sequence: staleSequence,
       throttle: 0,
       turn: 0,
       dx: 1,
@@ -534,10 +558,10 @@ if (restore) {
     assert.equal(ownActor().sprinting, false);
     summary.stale_input_is_noop = true;
 
-    await a.reducers.useStation({});
-    await a.reducers.useStation({});
+    await enterNativePilot(a);
+    await leaveNativePilot(a);
     await a.reducers.setIntent({
-      sequence: 107n,
+      sequence: nextSequence(a),
       throttle: 0,
       turn: 0,
       dx: 0,
@@ -546,9 +570,9 @@ if (restore) {
     });
     await wait(() => ownActor().sprinting, "sprint before input timeout");
     await wait(() => !ownActor().sprinting, "input timeout clears sprint");
-    await a.reducers.useStation({});
+    await enterNativePilot(a);
     await a.reducers.setIntent({
-      sequence: 108n,
+      sequence: nextSequence(a),
       throttle: 0,
       turn: 0,
       dx: 1,
@@ -560,10 +584,10 @@ if (restore) {
     await new Promise((resolve) => setTimeout(resolve, 150));
     assert.equal(ownActor().sprinting, false);
     assert.equal(ownActor().localX, 0);
-    assert.equal(ownActor().localY, PILOT_LAYOUT.station.y);
-    await a.reducers.useStation({});
+    assert.equal(ownActor().localY, QUALIFIED_PILOT_POSITION[1]);
+    await leaveNativePilot(a);
     await a.reducers.setIntent({
-      sequence: 109n,
+      sequence: nextSequence(a),
       throttle: 0,
       turn: 0,
       dx: 1,
@@ -571,24 +595,23 @@ if (restore) {
       sprint: true,
     });
     await wait(() => ownActor().sprinting, "sprint before station acquisition");
-    await a.reducers.useStation({});
+    await acquireNativePilot(a);
     await wait(
       () => !ownActor().sprinting,
       "station acquisition clears sprint",
     );
-    await a.reducers.useStation({});
+    await leaveNativePilot(a);
     summary.authoritative_sprint_and_resets = true;
 
     // Re-seat to a known server-owned position, then walk toward an actual room bulkhead.
-    await a.reducers.useStation({});
-    await a.reducers.useStation({});
-    let sequence = 110n;
+    await enterNativePilot(a);
+    await leaveNativePilot(a);
     const walkFor = async (dx: number, dy: number, duration: number) => {
       const end = Date.now() + duration;
       while (Date.now() < end) {
         await a.reducers.setIntent({
           sprint: false,
-          sequence: sequence++,
+          sequence: nextSequence(a),
           throttle: 0,
           turn: 0,
           dx,
@@ -598,7 +621,7 @@ if (restore) {
       }
       await a.reducers.setIntent({
         sprint: false,
-        sequence: sequence++,
+        sequence: nextSequence(a),
         throttle: 0,
         turn: 0,
         dx: 0,
@@ -607,25 +630,25 @@ if (restore) {
     };
     await walkFor(1, 0, 1300);
     assert(
-      Math.abs(ownActor().localX - 1.968) < 0.01,
-      "native straight canopy blocks crew",
+      ownActor().localX > 1.75 && ownActor().localX < 1.85,
+      `native swept canopy blocks crew at ${ownActor().localX},${ownActor().localY}`,
     );
     await walkFor(0, -1, 1200);
     assert(
       ownActor().localY >= 9.3 && ownActor().localY < 9.43,
       "native bridge rear jamb blocks crew",
     );
-    await walkFor(-1, 0, 800);
+    await walkNative(a, 0, ownActor().localY);
     assert(
       Math.abs(ownActor().localX) < 0.2,
       "crew aligned with central bridge doorway",
     );
-    await walkFor(0, -1, 1000);
+    await walkNative(a, 0, 7.5);
     assert(
       ownActor().localY < 8.325,
       "central native doorway remains walkable",
     );
-    await walkFor(1, 0, 800);
+    await walkNative(a, 2, 7.5);
     await walkFor(0, -1, 1500);
     summary.authoritative_native_bow_collision = true;
     const atWall = [...a.db.ownCharacters.iter()][0];
