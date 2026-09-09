@@ -149,6 +149,7 @@ def main():
     parser.add_argument('--module-artifact', help='Pinned compiled JS/WASM; publish-review only')
     parser.add_argument('--artifact-sha256', help='Required digest with --module-artifact')
     parser.add_argument('--smoke-name', help='Separate named smoke database; additive publication, never reset')
+    parser.add_argument('--fresh-smoke', action='store_true', help='Reserve an unused numbered fixture for a named smoke run; never reset')
     parser.add_argument('--archive', help='Private cold archive; restore-review-prepare only')
     parser.add_argument('--expected-sha256', help='Pinned cold archive digest; restore-review-prepare only')
     args = parser.parse_args()
@@ -161,6 +162,8 @@ def main():
         if command not in ('smoke', 'smoke-restart', 'smoke-auth-admission') or not re.fullmatch(r'[a-z0-9][a-z0-9-]{0,39}', args.smoke_name):
             parser.error('--smoke-name requires a smoke command and lowercase name of at most40 characters')
         smoke_database = CFG['project']['database'] + '-' + args.smoke_name + '-smoke'
+    if args.fresh_smoke and (command != 'smoke' or not args.smoke_name or len(args.smoke_name) > 32):
+        parser.error('--fresh-smoke requires smoke --smoke-name with a label of at most32 characters; restart reuses the printed name')
     if args.module_artifact is not None or args.artifact_sha256 is not None:
         if command != 'publish-review' or not args.module_artifact or not args.artifact_sha256:
             parser.error('Pinned module artifact and SHA-256 are paired publish-review-only arguments')
@@ -210,10 +213,26 @@ def main():
     elif command == 'smoke-prepare':
         publish(CFG['project']['database'] + '-smoke', reset=True)
     elif command in ('smoke', 'smoke-restart', 'smoke-auth-admission'):
+        evidence = None
+        if args.fresh_smoke:
+            from fresh_smoke import reserve
+            fixture = reserve(sys.modules[__name__], args.smoke_name)
+            smoke_database = fixture['database']
+            evidence = fixture['evidenceDirectory']
+            print(json.dumps({'freshSmoke': fixture, 'restartCommand': 'python3 scripts/dev.py smoke-restart --smoke-name ' + fixture['smokeName']}), flush=True)
+        elif args.smoke_name:
+            from fresh_smoke import evidence_directory
+            evidence = evidence_directory(sys.modules[__name__], smoke_database)
+            if evidence and command == 'smoke':
+                raise RuntimeError('Reserved fresh fixture already exists; use a new --fresh-smoke run or smoke-restart for persistence')
         if command == 'smoke':
             publish(smoke_database, reset=args.smoke_name is None)
         env = os.environ.copy()
         env.update(SIDEREAL_SMOKE_URL=DB_URL, SIDEREAL_SMOKE_DATABASE=smoke_database)
+        if evidence:
+            env['SIDEREAL_SMOKE_EVIDENCE_DIR'] = evidence
+        else:
+            env.pop('SIDEREAL_SMOKE_EVIDENCE_DIR', None)
         arguments = ['--verify-restart'] if command == 'smoke-restart' else []
         script = 'scripts/auth-admission-smoke.ts' if command == 'smoke-auth-admission' else 'scripts/smoke.ts'
         run([str(ROOT/'node_modules/.bin/tsx'), script, *arguments], env=env)

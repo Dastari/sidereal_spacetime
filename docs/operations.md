@@ -65,3 +65,23 @@ Vite dev is the review server. Production will serve `apps/client/dist` and `app
 `npm run dev:client` starts only the game frontend (and its database if needed); `npm run dev:dashboard` starts only the dashboard review app. `npm run stop:client` and `npm run stop:dashboard` stop only that app; the world and sibling stay running. `npm run build:client` and `npm run build:dashboard` build only the selected package and write only its public preparation/output. `npm run build` explicitly builds all three projects. The shared workspace lockfile pins library versions but does not couple app runtime or deployment. Each app also has a standalone workspace `typecheck` command.
 
 Dashboard: http://10.0.1.200:5174 (localhost:5174). The root `dev.toml` configures both ports, peer links and trusted hostnames. Before a production app build, set `VITE_CLIENT_URL` / `VITE_DASHBOARD_URL` to the chosen exact external origins. No privileged browser secrets belong in Vite settings. The same [Keycloak provider](authentication.md) will serve separate PKCE app registrations at M1.
+
+## Fresh named shared-world smoke fixtures
+
+The generic shared collision proof requires the first two deterministic safe berths. Reusing a populated named review database changes berth allocation and is not a repeat of that fixture. Use:
+
+```sh
+python3 scripts/dev.py smoke --smoke-name construction-combined --fresh-smoke
+```
+
+The runner reserves the first unused `construction-combined-rNNNN` name atomically, checks that the corresponding project-prefixed `…-smoke` database does not exist on the host, and publishes with data deletion disabled. Allocation is bounded to 256 attempts; use another label if exhausted. Concurrent runs cannot share a local reservation. An already existing host database is skipped even if its old local evidence was removed. The normal database and prior review instances are never selected or reset by this mode.
+
+The command prints the exact restart command, for example:
+
+```sh
+python3 scripts/dev.py smoke-restart --smoke-name construction-combined-r0001
+```
+
+Run that command only after the coordinated managed process restart; it reuses the exact database and its private per-run identity evidence rather than allocating another fixture. Reserved directories under `.runtime/smoke-runs/` are mode0700; credentials and reservation records are mode0600. Keep them private and preserve failed-run evidence. A new test run uses the original label with `--fresh-smoke` again. Do not use the printed run name for another seed pass.
+
+Existing ordinary disposable `smoke`, historical fixed named upgrade fixtures and `publish-review` retain their separate semantics. Fresh allocation is explicitly a `smoke` option; it is rejected for normal publication and restart. The scripted collision assertion fails early with this guidance if invoked against the wrong berths; it does not silently skip or weaken the contact proof.

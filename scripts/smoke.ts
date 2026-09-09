@@ -9,6 +9,7 @@ import { PILOT_LAYOUT } from "../packages/content/src/pilot-layout";
 import { SHARED_SYSTEM_SEED } from "../packages/content/src/shared-system";
 import assert from "node:assert/strict";
 import { readFileSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 import { DbConnection, tables } from "../packages/net/src/generated";
 function requiredEnv(name: string): string {
   const value = process.env[name];
@@ -20,6 +21,8 @@ function requiredEnv(name: string): string {
 }
 const host = requiredEnv("SIDEREAL_SMOKE_URL");
 const database = requiredEnv("SIDEREAL_SMOKE_DATABASE");
+const evidenceDirectory = process.env.SIDEREAL_SMOKE_EVIDENCE_DIR ?? ".runtime";
+const evidencePath = (name: string) => join(evidenceDirectory, name);
 if (!database.endsWith("-smoke"))
   throw new Error("Smoke requires an isolated -smoke database");
 const wait = async (fn: () => boolean, message: string) => {
@@ -93,8 +96,10 @@ const summary: Record<string, unknown> = {
 const restore = process.argv.includes("--verify-restart");
 if (restore) {
   const evidence = JSON.parse(
-    readFileSync(".runtime/smoke-identity.json", "utf8"),
+    readFileSync(evidencePath("smoke-identity.json"), "utf8"),
   );
+  if (evidence.database && evidence.database !== database)
+    throw Error("Restart evidence belongs to a different smoke database");
   const { connection: a } = await client(evidence.token);
   try {
     await wait(
@@ -205,6 +210,11 @@ if (restore) {
     const ship = [...a.db.ownShips.iter()][0];
     const other = [...b.db.ownShips.iter()][0];
     assert.notEqual(ship.id, other.id);
+    assert.deepEqual(
+      [ship.x, ship.y, other.x, other.y],
+      [0, 0, 50, 0],
+      "Collision proof requires the first two canonical berths. Use managed smoke --smoke-name LABEL --fresh-smoke; never reuse/reset an occupied review system.",
+    );
     assert.equal(a.db.ownShips.count(), 1n);
     assert.equal(b.db.ownShips.count(), 1n);
     summary.isolated_views = true;
@@ -724,8 +734,9 @@ if (restore) {
         wait,
       );
     writeFileSync(
-      ".runtime/smoke-identity.json",
+      evidencePath("smoke-identity.json"),
       JSON.stringify({
+        database,
         persistenceEvidence,
         token: first.token,
         shipId: ship.id,
@@ -740,7 +751,7 @@ if (restore) {
       { mode: 0o600 },
     );
     writeFileSync(
-      ".runtime/smoke-results.json",
+      evidencePath("smoke-results.json"),
       JSON.stringify(summary, null, 2) + "\n",
     );
     console.log(JSON.stringify(summary, null, 2));
