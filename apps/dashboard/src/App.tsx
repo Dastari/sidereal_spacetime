@@ -236,9 +236,9 @@ export default function App() {
           </ToolButton>
           <a
             className="tool-button"
-            href="/PIVOT.md"
+            href="/help/shipyard.md"
             target="_blank"
-            aria-label="Read pivot plan"
+            aria-label="Read Shipyard help"
           >
             <BookOpen />
           </a>
@@ -304,10 +304,10 @@ export default function App() {
                 </p>
                 <a
                   className="secondary full"
-                  href="/docs/authoring.md"
+                  href="/help/shipyard.md"
                   target="_blank"
                 >
-                  Read shipyard plan
+                  Read Shipyard help
                 </a>
               </Panel>
             </aside>
@@ -320,8 +320,8 @@ export default function App() {
                 <h1>Build a living universe.</h1>
                 <p>The authoring suite, rebuilt around one persistent world.</p>
               </div>
-              <a href="/PIVOT.md" target="_blank" className="secondary">
-                Open implementation plan <ArrowUpRight size={17} />
+              <a href="/help/shipyard.md" target="_blank" className="secondary">
+                Open Shipyard help <ArrowUpRight size={17} />
               </a>
             </div>
             <div className="suite-list">
@@ -366,7 +366,7 @@ export default function App() {
                   authoring contract for the required reducers, UI and
                   acceptance tests.
                 </p>
-                <a href="/docs/authoring.md" target="_blank">
+                <a href="/help/shipyard.md" target="_blank">
                   Read authoring contract
                 </a>
               </dialog>

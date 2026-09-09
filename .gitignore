@@ -15,3 +15,7 @@ apps/*/public/assets/
 apps/*/public/docs/
 apps/*/public/reference/
 apps/*/public/PIVOT.md
+apps/*/public/help/
+# Blender autosaves are recoverable local work, not selected source revisions.
+*.blend1
+*.blend2
