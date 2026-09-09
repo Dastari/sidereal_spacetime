@@ -1,0 +1,51 @@
+import { expect, test } from "vitest";
+import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
+import { Scene } from "@babylonjs/core/scene";
+import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
+import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
+import { createHolographicDisc } from "./holographic-disc";
+
+test("projection is a flat, nonpickable surface; boot lighting only affects current subjects", () => {
+  const engine = new NullEngine(), scene = new Scene(engine);
+  const actor = CreateBox("actor",{},scene), replacement = CreateBox("next",{},scene);
+  actor.material = replacement.material = new PBRMaterial("actor-surface",scene);
+  const disc = createHolographicDisc(scene);
+  expect(disc.mesh.getTotalIndices()).toBe(6);
+  expect(disc.mesh.getBoundingInfo().boundingBox.extendSize.y).toBe(0);
+  expect(disc.mesh.isPickable).toBe(false);
+  disc.setSubjects([actor]);
+  expect(disc.light.includedOnlyMeshes).toHaveLength(1);
+  expect(disc.light.includedOnlyMeshes[0]).toBe(actor);
+  expect(scene.customRenderTargets[0].renderList?.[0]).toBe(actor);
+  disc.setSubjects([replacement]);
+  expect(disc.light.includedOnlyMeshes).toHaveLength(1);
+  expect(disc.light.includedOnlyMeshes[0]).toBe(replacement);
+  expect(scene.customRenderTargets[0].renderList?.[0]).toBe(replacement);
+  disc.update(14,true);
+  const stable = disc.light.intensity;
+  disc.update(400,true);
+  expect(disc.light.intensity).toBe(stable);
+  disc.dispose();
+  disc.dispose();
+  expect(scene.customRenderTargets).toHaveLength(0);
+  expect(scene.lights).toHaveLength(0);
+  expect(scene.effectLayers).toHaveLength(0);
+  expect(actor.isDisposed()).toBe(false);
+  scene.dispose(); engine.dispose();
+});
+
+test("independent projectors retain their scene resources when another closes", () => {
+  const engine = new NullEngine(), scene = new Scene(engine);
+  const first = createHolographicDisc(scene), second = createHolographicDisc(scene);
+  first.dispose();
+  first.update(3);
+  first.setSubjects([]);
+  expect(second.mesh.isDisposed()).toBe(false);
+  expect(scene.customRenderTargets).toHaveLength(1);
+  expect(scene.lights).toHaveLength(1);
+  expect(scene.lights[0]).toBe(second.light);
+  second.dispose();
+  expect(scene.meshes).toHaveLength(0);
+  expect(scene.customRenderTargets).toHaveLength(0);
+  scene.dispose(); engine.dispose();
+});

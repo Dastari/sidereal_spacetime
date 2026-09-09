@@ -25,3 +25,4 @@ export const THEMES = [
 ] as const;
 export const DECK_HALF_WIDTH = 5;
 export const DECK_HALF_LENGTH = 9;
+export { SPACE_VISTAS, DEFAULT_SPACE_VISTA } from "./environment";

@@ -1,0 +1,23 @@
+[Unit]
+Description=Dastari dedicated Keycloak identity provider
+After=network-online.target postgresql.service
+Wants=network-online.target
+Requires=postgresql.service
+[Service]
+Type=simple
+User=keycloak
+Group=keycloak
+EnvironmentFile=/etc/keycloak/service.env
+WorkingDirectory=/opt/keycloak
+ExecStart=/opt/keycloak/bin/kc.sh start --optimized --import-realm
+Restart=on-failure
+RestartSec=5
+TimeoutStartSec=180
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=full
+ReadWritePaths=/opt/keycloak/data /var/log/keycloak
+LimitNOFILE=65536
+[Install]
+WantedBy=multi-user.target

@@ -10,6 +10,32 @@ import {
   type Infer as __Infer,
 } from "spacetimedb";
 
+export const ActuatorOutput = __t.object("ActuatorOutput", {
+  id: __t.string(),
+  shipId: __t.string(),
+  actuatorId: __t.string(),
+  throttle: __t.f64(),
+  tick: __t.u64(),
+});
+export type ActuatorOutput = __Infer<typeof ActuatorOutput>;
+
+export const AppearanceReceipt = __t.object("AppearanceReceipt", {
+  id: __t.string(),
+  characterId: __t.string(),
+  request: __t.string(),
+  revision: __t.u64(),
+});
+export type AppearanceReceipt = __Infer<typeof AppearanceReceipt>;
+
+export const AuthSession = __t.object("AuthSession", {
+  connectionId: __t.string(),
+  owner: __t.identity(),
+  kind: __t.string(),
+  game: __t.bool(),
+  expiresMicros: __t.u64(),
+});
+export type AuthSession = __Infer<typeof AuthSession>;
+
 export const Character = __t.object("Character", {
   id: __t.string(),
   owner: __t.identity(),
@@ -18,8 +44,303 @@ export const Character = __t.object("Character", {
   localX: __t.f64(),
   localY: __t.f64(),
   connected: __t.bool(),
+  sprinting: __t.bool(),
 });
 export type Character = __Infer<typeof Character>;
+
+export const CharacterAppearance = __t.object("CharacterAppearance", {
+  characterId: __t.string(),
+  revision: __t.u64(),
+  appearanceJson: __t.string(),
+});
+export type CharacterAppearance = __Infer<typeof CharacterAppearance>;
+
+export const CharacterAppearanceStatus = __t.object("CharacterAppearanceStatus", {
+  characterId: __t.string(),
+  revision: __t.u64(),
+  appearanceJson: __t.string(),
+});
+export type CharacterAppearanceStatus = __Infer<typeof CharacterAppearanceStatus>;
+
+export const CharacterUniformIssue = __t.object("CharacterUniformIssue", {
+  characterId: __t.string(),
+  version: __t.u32(),
+});
+export type CharacterUniformIssue = __Infer<typeof CharacterUniformIssue>;
+
+export const CombatAim = __t.object("CombatAim", {
+  characterId: __t.string(),
+  active: __t.bool(),
+  angle: __t.f64(),
+  updatedMicros: __t.u64(),
+});
+export type CombatAim = __Infer<typeof CombatAim>;
+
+export const CombatReceipt = __t.object("CombatReceipt", {
+  id: __t.string(),
+  characterId: __t.string(),
+  request: __t.string(),
+  createdMicros: __t.u64(),
+});
+export type CombatReceipt = __Infer<typeof CombatReceipt>;
+
+export const CombatStatus = __t.object("CombatStatus", {
+  aimActive: __t.bool(),
+  aimAngle: __t.f64(),
+  weaponItemId: __t.string(),
+  weaponDefinitionId: __t.string(),
+  energy: __t.f64(),
+  capacity: __t.f64(),
+  shotCost: __t.f64(),
+  cooldownMs: __t.u32(),
+  rangeMeters: __t.f64(),
+  revision: __t.u64(),
+  shotSequence: __t.u64(),
+  lastShotAngle: __t.f64(),
+});
+export type CombatStatus = __Infer<typeof CombatStatus>;
+
+export const ConnectionPresence = __t.object("ConnectionPresence", {
+  connectionId: __t.string(),
+  owner: __t.identity(),
+});
+export type ConnectionPresence = __Infer<typeof ConnectionPresence>;
+
+export const ConstructionAtmosphere = __t.object("ConstructionAtmosphere", {
+  id: __t.string(),
+  owner: __t.identity(),
+  structureJson: __t.string(),
+  proofHash: __t.string(),
+  initialAllocationHash: __t.string(),
+  gasJson: __t.string(),
+  sourceMoles: __t.f64(),
+  ventedMoles: __t.f64(),
+  removedMoles: __t.f64(),
+  revision: __t.u64(),
+  lastTick: __t.u64(),
+});
+export type ConstructionAtmosphere = __Infer<typeof ConstructionAtmosphere>;
+
+export const ConstructionAtmosphereClock = __t.object("ConstructionAtmosphereClock", {
+  id: __t.string(),
+  tick: __t.u64(),
+  lastScheduleMicros: __t.u64(),
+});
+export type ConstructionAtmosphereClock = __Infer<typeof ConstructionAtmosphereClock>;
+
+export const ConstructionBlueprint = __t.object("ConstructionBlueprint", {
+  id: __t.string(),
+  workspaceId: __t.string(),
+  draftId: __t.string(),
+  sourceRevision: __t.u64(),
+  canonical: __t.string(),
+  sha256: __t.string(),
+  readinessJson: __t.string(),
+  publishedBy: __t.identity(),
+});
+export type ConstructionBlueprint = __Infer<typeof ConstructionBlueprint>;
+
+export const ConstructionBlueprintStatus = __t.object("ConstructionBlueprintStatus", {
+  id: __t.string(),
+  workspaceId: __t.string(),
+  draftId: __t.string(),
+  sourceRevision: __t.u64(),
+  canonical: __t.string(),
+  sha256: __t.string(),
+  readinessJson: __t.string(),
+});
+export type ConstructionBlueprintStatus = __Infer<typeof ConstructionBlueprintStatus>;
+
+export const ConstructionDeck = __t.object("ConstructionDeck", {
+  id: __t.string(),
+  instanceId: __t.string(),
+  sourceDeckId: __t.string(),
+  name: __t.string(),
+  elevation: __t.f64(),
+  ceiling: __t.f64(),
+});
+export type ConstructionDeck = __Infer<typeof ConstructionDeck>;
+
+export const ConstructionDeckStatus = __t.object("ConstructionDeckStatus", {
+  id: __t.string(),
+  instanceId: __t.string(),
+  sourceDeckId: __t.string(),
+  name: __t.string(),
+  elevation: __t.f64(),
+  ceiling: __t.f64(),
+});
+export type ConstructionDeckStatus = __Infer<typeof ConstructionDeckStatus>;
+
+export const ConstructionDoor = __t.object("ConstructionDoor", {
+  id: __t.string(),
+  instanceId: __t.string(),
+  deckId: __t.string(),
+  x: __t.f64(),
+  y: __t.f64(),
+  quarterTurns: __t.u8(),
+  fraction: __t.f64(),
+  targetOpen: __t.bool(),
+  blocked: __t.bool(),
+  moving: __t.bool(),
+  revision: __t.u64(),
+});
+export type ConstructionDoor = __Infer<typeof ConstructionDoor>;
+
+export const ConstructionDoorStatus = __t.object("ConstructionDoorStatus", {
+  id: __t.string(),
+  instanceId: __t.string(),
+  deckId: __t.string(),
+  fraction: __t.f64(),
+  targetOpen: __t.bool(),
+  blocked: __t.bool(),
+  moving: __t.bool(),
+  revision: __t.u64(),
+});
+export type ConstructionDoorStatus = __Infer<typeof ConstructionDoorStatus>;
+
+export const ConstructionDraft = __t.object("ConstructionDraft", {
+  id: __t.string(),
+  workspaceId: __t.string(),
+  revision: __t.u64(),
+  documentJson: __t.string(),
+  sha256: __t.string(),
+  updatedBy: __t.identity(),
+});
+export type ConstructionDraft = __Infer<typeof ConstructionDraft>;
+
+export const ConstructionDraftStatus = __t.object("ConstructionDraftStatus", {
+  id: __t.string(),
+  workspaceId: __t.string(),
+  revision: __t.u64(),
+  documentJson: __t.string(),
+  sha256: __t.string(),
+});
+export type ConstructionDraftStatus = __Infer<typeof ConstructionDraftStatus>;
+
+export const ConstructionGrant = __t.object("ConstructionGrant", {
+  id: __t.string(),
+  principal: __t.identity(),
+  workspaceId: __t.string(),
+  capability: __t.string(),
+  expiresMicros: __t.u64(),
+  nextCheckMicros: __t.u64(),
+  revoked: __t.bool(),
+  revision: __t.u64(),
+  issuedBy: __t.identity(),
+});
+export type ConstructionGrant = __Infer<typeof ConstructionGrant>;
+
+export const ConstructionGrantStatus = __t.object("ConstructionGrantStatus", {
+  id: __t.string(),
+  workspaceId: __t.string(),
+  capability: __t.string(),
+  expiresMicros: __t.u64(),
+  revoked: __t.bool(),
+  revision: __t.u64(),
+});
+export type ConstructionGrantStatus = __Infer<typeof ConstructionGrantStatus>;
+
+export const ConstructionInstance = __t.object("ConstructionInstance", {
+  id: __t.string(),
+  owner: __t.identity(),
+  workspaceId: __t.string(),
+  blueprintId: __t.string(),
+  blueprintSha256: __t.string(),
+  name: __t.string(),
+  revision: __t.u64(),
+  documentJson: __t.string(),
+  idMapJson: __t.string(),
+  spawnDeckId: __t.string(),
+  spawnX: __t.f64(),
+  spawnY: __t.f64(),
+  createdMicros: __t.u64(),
+});
+export type ConstructionInstance = __Infer<typeof ConstructionInstance>;
+
+export const ConstructionInstanceStatus = __t.object("ConstructionInstanceStatus", {
+  id: __t.string(),
+  workspaceId: __t.string(),
+  blueprintId: __t.string(),
+  blueprintSha256: __t.string(),
+  name: __t.string(),
+  revision: __t.u64(),
+  documentJson: __t.string(),
+  spawnDeckId: __t.string(),
+});
+export type ConstructionInstanceStatus = __Infer<typeof ConstructionInstanceStatus>;
+
+export const ConstructionLocation = __t.object("ConstructionLocation", {
+  characterId: __t.string(),
+  visitId: __t.string(),
+  instanceId: __t.string(),
+  deckId: __t.string(),
+  returnShipId: __t.string(),
+  returnX: __t.f64(),
+  returnY: __t.f64(),
+  revision: __t.u64(),
+});
+export type ConstructionLocation = __Infer<typeof ConstructionLocation>;
+
+export const ConstructionLocationStatus = __t.object("ConstructionLocationStatus", {
+  characterId: __t.string(),
+  visitId: __t.string(),
+  instanceId: __t.string(),
+  deckId: __t.string(),
+  revision: __t.u64(),
+});
+export type ConstructionLocationStatus = __Infer<typeof ConstructionLocationStatus>;
+
+export const ConstructionNativePressure = __t.object("ConstructionNativePressure", {
+  id: __t.string(),
+  owner: __t.identity(),
+  deckId: __t.string(),
+  doorId: __t.string(),
+  documentHash: __t.string(),
+  installedPartsJson: __t.string(),
+  installationFingerprint: __t.string(),
+  auditSha256: __t.string(),
+  acceptedFraction: __t.f64(),
+  sealRetraction: __t.f64(),
+  revision: __t.u64(),
+});
+export type ConstructionNativePressure = __Infer<typeof ConstructionNativePressure>;
+
+export const ConstructionNativePressureCompartment = __t.object("ConstructionNativePressureCompartment", {
+  id: __t.string(),
+  volumeM3: __t.f64(),
+  pressurePa: __t.f64(),
+});
+export type ConstructionNativePressureCompartment = __Infer<typeof ConstructionNativePressureCompartment>;
+
+export const ConstructionNativePressureStatus = __t.object("ConstructionNativePressureStatus", {
+  instanceId: __t.string(),
+  deckId: __t.string(),
+  doorId: __t.string(),
+  fraction: __t.f64(),
+  sealRetraction: __t.f64(),
+  revision: __t.u64(),
+  atmosphereRevision: __t.u64(),
+  ventedMoles: __t.f64(),
+  get compartments() {
+    return __t.array(ConstructionNativePressureCompartment);
+  },
+});
+export type ConstructionNativePressureStatus = __Infer<typeof ConstructionNativePressureStatus>;
+
+export const ConstructionReceipt = __t.object("ConstructionReceipt", {
+  id: __t.string(),
+  principal: __t.identity(),
+  request: __t.string(),
+  resultId: __t.string(),
+  revision: __t.u64(),
+});
+export type ConstructionReceipt = __Infer<typeof ConstructionReceipt>;
+
+export const CouchSeat = __t.object("CouchSeat", {
+  characterId: __t.string(),
+  objectId: __t.string(),
+});
+export type CouchSeat = __Infer<typeof CouchSeat>;
 
 export const EditReceipt = __t.object("EditReceipt", {
   id: __t.string(),
@@ -31,6 +352,21 @@ export const EditReceipt = __t.object("EditReceipt", {
 });
 export type EditReceipt = __Infer<typeof EditReceipt>;
 
+export const IdentityLink = __t.object("IdentityLink", {
+  id: __t.string(),
+  operationKey: __t.string(),
+  source: __t.identity(),
+  target: __t.identity(),
+  characterId: __t.string(),
+  characterName: __t.string(),
+  shipId: __t.string(),
+  expiresMicros: __t.u64(),
+  accepted: __t.bool(),
+  acceptOperationId: __t.string(),
+  receiptIdsJson: __t.string(),
+});
+export type IdentityLink = __Infer<typeof IdentityLink>;
+
 export const Input = __t.object("Input", {
   characterId: __t.string(),
   sequence: __t.u64(),
@@ -39,8 +375,91 @@ export const Input = __t.object("Input", {
   dx: __t.f64(),
   dy: __t.f64(),
   updatedMicros: __t.u64(),
+  sprint: __t.bool(),
 });
 export type Input = __Infer<typeof Input>;
+
+export const InteractionObject = __t.object("InteractionObject", {
+  id: __t.string(),
+  shipId: __t.string(),
+  placementId: __t.string(),
+  revision: __t.u64(),
+  enabled: __t.bool(),
+});
+export type InteractionObject = __Infer<typeof InteractionObject>;
+
+export const InteractionReceipt = __t.object("InteractionReceipt", {
+  id: __t.string(),
+  characterId: __t.string(),
+  operationId: __t.string(),
+  request: __t.string(),
+  createdMicros: __t.u64(),
+});
+export type InteractionReceipt = __Infer<typeof InteractionReceipt>;
+
+export const InventoryContainer = __t.object("InventoryContainer", {
+  id: __t.string(),
+  characterId: __t.string(),
+  parentItemId: __t.string(),
+  kind: __t.string(),
+  name: __t.string(),
+  width: __t.u32(),
+  height: __t.u32(),
+  maxMassKg: __t.f64(),
+  capacityLitres: __t.f64(),
+  amountLitres: __t.f64(),
+  liquidType: __t.string(),
+  shipId: __t.string(),
+  localX: __t.f64(),
+  localY: __t.f64(),
+  carried: __t.bool(),
+});
+export type InventoryContainer = __Infer<typeof InventoryContainer>;
+
+export const InventoryHotbar = __t.object("InventoryHotbar", {
+  id: __t.string(),
+  characterId: __t.string(),
+  slot: __t.u8(),
+  itemId: __t.string(),
+});
+export type InventoryHotbar = __Infer<typeof InventoryHotbar>;
+
+export const InventoryItem = __t.object("InventoryItem", {
+  id: __t.string(),
+  characterId: __t.string(),
+  definitionId: __t.string(),
+  containerId: __t.string(),
+  equipmentSlot: __t.string(),
+  x: __t.i32(),
+  y: __t.i32(),
+  rotated: __t.bool(),
+});
+export type InventoryItem = __Infer<typeof InventoryItem>;
+
+export const InventoryReceipt = __t.object("InventoryReceipt", {
+  id: __t.string(),
+  characterId: __t.string(),
+  operationId: __t.string(),
+  request: __t.string(),
+  revision: __t.u64(),
+});
+export type InventoryReceipt = __Infer<typeof InventoryReceipt>;
+
+export const InventoryState = __t.object("InventoryState", {
+  characterId: __t.string(),
+  revision: __t.u64(),
+  kitGranted: __t.bool(),
+});
+export type InventoryState = __Infer<typeof InventoryState>;
+
+export const InventoryStatus = __t.object("InventoryStatus", {
+  revision: __t.u64(),
+  kitGranted: __t.bool(),
+  pocketsId: __t.string(),
+  carriedMassKg: __t.f64(),
+  carryLimitKg: __t.f64(),
+});
+export type InventoryStatus = __Infer<typeof InventoryStatus>;
 
 export const MovementTimer = __t.object("MovementTimer", {
   scheduledId: __t.u64(),
@@ -48,17 +467,92 @@ export const MovementTimer = __t.object("MovementTimer", {
 });
 export type MovementTimer = __Infer<typeof MovementTimer>;
 
+export const OwnActuatorOutputs = __t.object("OwnActuatorOutputs", {});
+export type OwnActuatorOutputs = __Infer<typeof OwnActuatorOutputs>;
+
+export const OwnAppearance = __t.object("OwnAppearance", {});
+export type OwnAppearance = __Infer<typeof OwnAppearance>;
+
 export const OwnCharacters = __t.object("OwnCharacters", {});
 export type OwnCharacters = __Infer<typeof OwnCharacters>;
+
+export const OwnCombat = __t.object("OwnCombat", {});
+export type OwnCombat = __Infer<typeof OwnCombat>;
+
+export const OwnConstructionBlueprints = __t.object("OwnConstructionBlueprints", {});
+export type OwnConstructionBlueprints = __Infer<typeof OwnConstructionBlueprints>;
+
+export const OwnConstructionDecks = __t.object("OwnConstructionDecks", {});
+export type OwnConstructionDecks = __Infer<typeof OwnConstructionDecks>;
+
+export const OwnConstructionDoors = __t.object("OwnConstructionDoors", {});
+export type OwnConstructionDoors = __Infer<typeof OwnConstructionDoors>;
+
+export const OwnConstructionDrafts = __t.object("OwnConstructionDrafts", {});
+export type OwnConstructionDrafts = __Infer<typeof OwnConstructionDrafts>;
+
+export const OwnConstructionGrants = __t.object("OwnConstructionGrants", {});
+export type OwnConstructionGrants = __Infer<typeof OwnConstructionGrants>;
+
+export const OwnConstructionInstances = __t.object("OwnConstructionInstances", {});
+export type OwnConstructionInstances = __Infer<typeof OwnConstructionInstances>;
+
+export const OwnConstructionLocation = __t.object("OwnConstructionLocation", {});
+export type OwnConstructionLocation = __Infer<typeof OwnConstructionLocation>;
+
+export const OwnConstructionNativePressure = __t.object("OwnConstructionNativePressure", {});
+export type OwnConstructionNativePressure = __Infer<typeof OwnConstructionNativePressure>;
 
 export const OwnEditReceipts = __t.object("OwnEditReceipts", {});
 export type OwnEditReceipts = __Infer<typeof OwnEditReceipts>;
 
+export const OwnGroundItems = __t.object("OwnGroundItems", {});
+export type OwnGroundItems = __Infer<typeof OwnGroundItems>;
+
+export const OwnIdentityLinks = __t.object("OwnIdentityLinks", {});
+export type OwnIdentityLinks = __Infer<typeof OwnIdentityLinks>;
+
+export const OwnInteractions = __t.object("OwnInteractions", {});
+export type OwnInteractions = __Infer<typeof OwnInteractions>;
+
+export const OwnInventoryContainers = __t.object("OwnInventoryContainers", {});
+export type OwnInventoryContainers = __Infer<typeof OwnInventoryContainers>;
+
+export const OwnInventoryHotbar = __t.object("OwnInventoryHotbar", {});
+export type OwnInventoryHotbar = __Infer<typeof OwnInventoryHotbar>;
+
+export const OwnInventoryItems = __t.object("OwnInventoryItems", {});
+export type OwnInventoryItems = __Infer<typeof OwnInventoryItems>;
+
+export const OwnInventoryState = __t.object("OwnInventoryState", {});
+export type OwnInventoryState = __Infer<typeof OwnInventoryState>;
+
 export const OwnShips = __t.object("OwnShips", {});
 export type OwnShips = __Infer<typeof OwnShips>;
 
+export const OwnSpaceBodies = __t.object("OwnSpaceBodies", {});
+export type OwnSpaceBodies = __Infer<typeof OwnSpaceBodies>;
+
 export const OwnStations = __t.object("OwnStations", {});
 export type OwnStations = __Infer<typeof OwnStations>;
+
+export const PilotLayoutReceipt = __t.object("PilotLayoutReceipt", {
+  shipId: __t.string(),
+  revision: __t.u32(),
+  stationId: __t.string(),
+  previousX: __t.f64(),
+  previousY: __t.f64(),
+  appliedMicros: __t.u64(),
+});
+export type PilotLayoutReceipt = __Infer<typeof PilotLayoutReceipt>;
+
+export const RetiredIdentity = __t.object("RetiredIdentity", {
+  source: __t.identity(),
+  target: __t.identity(),
+  characterId: __t.string(),
+  linkedMicros: __t.u64(),
+});
+export type RetiredIdentity = __Infer<typeof RetiredIdentity>;
 
 export const Ship = __t.object("Ship", {
   id: __t.string(),
@@ -78,6 +572,26 @@ export const Ship = __t.object("Ship", {
 });
 export type Ship = __Infer<typeof Ship>;
 
+export const SpaceBody = __t.object("SpaceBody", {
+  id: __t.string(),
+  shipId: __t.string(),
+  key: __t.string(),
+  kind: __t.string(),
+  appearance: __t.string(),
+  x: __t.f64(),
+  y: __t.f64(),
+  vx: __t.f64(),
+  vy: __t.f64(),
+  heading: __t.f64(),
+  omega: __t.f64(),
+  height: __t.f64(),
+  radius: __t.f64(),
+  massKg: __t.f64(),
+  seed: __t.u32(),
+  tick: __t.u64(),
+});
+export type SpaceBody = __Infer<typeof SpaceBody>;
+
 export const Station = __t.object("Station", {
   id: __t.string(),
   shipId: __t.string(),
@@ -87,4 +601,93 @@ export const Station = __t.object("Station", {
   operational: __t.bool(),
 });
 export type Station = __Infer<typeof Station>;
+
+export const StorageBinding = __t.object("StorageBinding", {
+  id: __t.string(),
+  characterId: __t.string(),
+  containerId: __t.string(),
+  placementId: __t.string(),
+});
+export type StorageBinding = __Infer<typeof StorageBinding>;
+
+export const VisibleGroundItem = __t.object("VisibleGroundItem", {
+  id: __t.string(),
+  definitionId: __t.string(),
+  localX: __t.f64(),
+  localY: __t.f64(),
+  reachable: __t.bool(),
+});
+export type VisibleGroundItem = __Infer<typeof VisibleGroundItem>;
+
+export const VisibleIdentityLink = __t.object("VisibleIdentityLink", {
+  id: __t.string(),
+  characterId: __t.string(),
+  characterName: __t.string(),
+  sourceIdentity: __t.string(),
+  targetIdentity: __t.string(),
+  expiresMicros: __t.u64(),
+  status: __t.string(),
+  side: __t.string(),
+});
+export type VisibleIdentityLink = __Infer<typeof VisibleIdentityLink>;
+
+export const VisibleInteraction = __t.object("VisibleInteraction", {
+  id: __t.string(),
+  placementId: __t.string(),
+  assetId: __t.string(),
+  name: __t.string(),
+  kind: __t.string(),
+  localX: __t.f64(),
+  localY: __t.f64(),
+  revision: __t.u64(),
+  enabled: __t.bool(),
+  occupied: __t.bool(),
+  seatedByYou: __t.bool(),
+  reachable: __t.bool(),
+});
+export type VisibleInteraction = __Infer<typeof VisibleInteraction>;
+
+export const VisibleInventoryContainer = __t.object("VisibleInventoryContainer", {
+  placementId: __t.string(),
+  id: __t.string(),
+  parentItemId: __t.string(),
+  kind: __t.string(),
+  name: __t.string(),
+  width: __t.u32(),
+  height: __t.u32(),
+  maxMassKg: __t.f64(),
+  capacityLitres: __t.f64(),
+  amountLitres: __t.f64(),
+  liquidType: __t.string(),
+  carried: __t.bool(),
+});
+export type VisibleInventoryContainer = __Infer<typeof VisibleInventoryContainer>;
+
+export const VisibleInventoryHotbar = __t.object("VisibleInventoryHotbar", {
+  slot: __t.u8(),
+  itemId: __t.string(),
+});
+export type VisibleInventoryHotbar = __Infer<typeof VisibleInventoryHotbar>;
+
+export const VisibleInventoryItem = __t.object("VisibleInventoryItem", {
+  id: __t.string(),
+  definitionId: __t.string(),
+  containerId: __t.string(),
+  equipmentSlot: __t.string(),
+  x: __t.i32(),
+  y: __t.i32(),
+  rotated: __t.bool(),
+});
+export type VisibleInventoryItem = __Infer<typeof VisibleInventoryItem>;
+
+export const WeaponEnergy = __t.object("WeaponEnergy", {
+  itemId: __t.string(),
+  energy: __t.f64(),
+  checkpointMicros: __t.u64(),
+  lastShotMicros: __t.u64(),
+  revision: __t.u64(),
+  shotSequence: __t.u64(),
+  lastShotAngle: __t.f64(),
+});
+export type WeaponEnergy = __Infer<typeof WeaponEnergy>;
 

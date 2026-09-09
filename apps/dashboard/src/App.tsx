@@ -1,3 +1,4 @@
+import {PILOT_LAYOUT} from '../../../packages/content/src/pilot-layout';
 import React, { useEffect, useRef, useState } from "react";
 import {
   Orbit,
@@ -28,6 +29,9 @@ import "@fontsource/barlow/600.css";
 import "@fontsource/barlow-condensed/500.css";
 import "@fontsource/barlow-condensed/600.css";
 import "./style.css";
+import AssemblyEditor from "./shipyard/AssemblyEditor";
+import LayoutEditor from "./shipyard/layout/LayoutEditor";
+import PlanetStudio from "./planet-studio/PlanetStudio";
 import { LAYERS, THEMES } from "@sidereal/content";
 const tools = [
   [
@@ -103,19 +107,27 @@ const tools = [
     "M9",
   ],
 ] as const;
-type Route = "dashboard" | "shipyard" | "components";
+type Route = "planets" | "dashboard" | "shipyard" | "assembly" | "models" | "components";
 const currentRoute = (): Route =>
-  location.pathname.includes("shipyard")
-    ? "shipyard"
-    : location.pathname.includes("components")
-      ? "components"
-      : "dashboard";
+  location.pathname.includes("shipyard") && new URLSearchParams(location.search).has("assembly") ? "assembly" :
+  location.pathname.includes("planets")
+    ? "planets"
+    : location.pathname.includes("models")
+      ? "models"
+      : location.pathname.includes("shipyard")
+        ? "shipyard"
+        : location.pathname.includes("components")
+          ? "components"
+          : "dashboard";
 export default function App() {
   const [route, setRoute] = useState<Route>(currentRoute);
   const [toolDetail, setToolDetail] = useState<(typeof tools)[number] | null>(
     null,
   );
   const [interior, setInterior] = useState(false);
+  const [source, setSource] = useState<
+    "voxel" | "original" | "engine-original" | "engine-voxel"
+  >("voxel");
   const [inspect, setInspect] = useState(false);
   const [modelStatus, setModelStatus] = useState("Loading Blender study");
   const canvas = useRef<HTMLCanvasElement>(null);
@@ -127,7 +139,7 @@ export default function App() {
     x: 0,
     y: 0,
     localX: 0,
-    localY: 6,
+    localY: PILOT_LAYOUT.station.y,
     interior,
     inspect,
     grid: true,
@@ -143,10 +155,12 @@ export default function App() {
   };
   useEffect(() => {
     const target = canvas.current;
-    if (route !== "shipyard" || !target) return;
+    if (route !== "models" || !target) return;
     let disposed = false;
     import("@sidereal/render")
-      .then(({ createWorld }) => createWorld(target, setModelStatus))
+      .then(({ createWorld }) =>
+        createWorld(target, setModelStatus, { source }),
+      )
       .then((v) => {
         if (disposed) v.dispose();
         else {
@@ -160,7 +174,7 @@ export default function App() {
       view.current?.dispose();
       view.current = null;
     };
-  }, [route]);
+  }, [route, source]);
   useEffect(() => {
     state.current = { ...state.current, interior, inspect };
     view.current?.update(state.current);
@@ -194,10 +208,16 @@ export default function App() {
             Workspaces
           </button>
           <button
-            className={route === "shipyard" ? "selected" : ""}
+            className={route === "shipyard" || route === "assembly" ? "selected" : ""}
             onClick={() => navigate("shipyard")}
           >
             Shipyard
+          </button>
+          <button
+            className={route === "planets" ? "selected" : ""}
+            onClick={() => navigate("planets")}
+          >
+            Genesis
           </button>
           <a
             className="nav-link"
@@ -221,7 +241,7 @@ export default function App() {
           </ToolButton>
           <ToolButton
             label="Shipyard"
-            active={route === "shipyard"}
+            active={route === "shipyard" || route === "assembly"}
             onClick={() => navigate("shipyard")}
           >
             <Ship />
@@ -243,10 +263,18 @@ export default function App() {
             <BookOpen />
           </a>
         </aside>
-        {route === "shipyard" ? (
+        {route === "planets" ? (
+          <PlanetStudio />
+        ) : route === "shipyard" || route === "assembly" ? (
+          route === "assembly" ? <AssemblyEditor /> : <LayoutEditor />
+        ) : route === "models" ? (
           <>
             <main className="viewport editor">
-              <canvas ref={canvas} aria-label="3D ship assembly preview" />
+              <canvas
+                ref={canvas}
+                tabIndex={0}
+                aria-label="3D ship assembly preview"
+              />
               <div className="view-heading">
                 <div>
                   <span className="muted">Shipyard · assembly study</span>
@@ -281,11 +309,36 @@ export default function App() {
             </main>
             <aside className="inspector">
               <Panel title="Review display">
+                <label>
+                  Source model
+                  <select
+                    aria-label="Source model"
+                    value={source}
+                    onChange={(e) =>
+                      setSource(
+                        e.target.value as
+                          | "voxel"
+                          | "original"
+                          | "engine-original"
+                          | "engine-voxel",
+                      )
+                    }
+                  >
+                    <option value="voxel">Voxel Wayfarer</option>
+                    <option value="original">Original Blender assembly</option>
+                    <option value="engine-original">
+                      Engine · Blender source
+                    </option>
+                    <option value="engine-voxel">
+                      Engine · Voxelized result
+                    </option>
+                  </select>
+                </label>
                 <button className="layer" onClick={() => setInterior(false)}>
-                  Blender assembly <span>{!interior ? "Visible" : ""}</span>
+                  Exterior shell <span>{!interior ? "Visible" : ""}</span>
                 </button>
                 <button className="layer" onClick={() => setInterior(true)}>
-                  Cabin fixture <span>{interior ? "Visible" : ""}</span>
+                  Interior cutaway <span>{interior ? "Visible" : ""}</span>
                 </button>
               </Panel>
               <Panel title="Planned assembly layers">
@@ -334,7 +387,9 @@ export default function App() {
                     onClick={() =>
                       title === "Shipyard"
                         ? navigate("shipyard")
-                        : setToolDetail(tool)
+                        : title === "Genesis"
+                          ? navigate("planets")
+                          : setToolDetail(tool)
                     }
                   >
                     <span className="suite-icon">
@@ -346,8 +401,10 @@ export default function App() {
                     </div>
                     <Status>
                       {title === "Shipyard"
-                        ? "3D review ready"
-                        : milestone + " planned"}
+                        ? "Layout planner ready"
+                        : title === "Genesis"
+                          ? "Generator ready"
+                          : milestone + " planned"}
                     </Status>
                     <ArrowUpRight size={18} />
                   </button>

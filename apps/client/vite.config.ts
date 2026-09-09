@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
+import { poseReviewAssets } from "./pose-review-assets";
 const config = JSON.parse(
   execFileSync(
     "python3",
@@ -12,6 +13,9 @@ const config = JSON.parse(
     { encoding: "utf8" },
   ),
 ) as {
+  authIssuer: string;
+  authClientId: string;
+  authOrigin: string;
   database: string;
   databaseUrl: string;
   clientPort: number;
@@ -20,8 +24,14 @@ const config = JSON.parse(
 };
 export default defineConfig({
   root: fileURLToPath(new URL(".", import.meta.url)),
-  plugins: [react()],
+  plugins: [
+    react(),
+    poseReviewAssets(fileURLToPath(new URL("../..", import.meta.url))),
+  ],
   define: {
+    "import.meta.env.VITE_AUTH_ISSUER": JSON.stringify(config.authIssuer),
+    "import.meta.env.VITE_AUTH_CLIENT_ID": JSON.stringify(config.authClientId),
+    "import.meta.env.VITE_AUTH_ORIGIN": JSON.stringify(config.authOrigin),
     "import.meta.env.VITE_DATABASE": JSON.stringify(
       process.env.VITE_DATABASE ?? config.database,
     ),

@@ -1,31 +1,12 @@
+import { LAB_STORAGE_FIXTURES } from "../../../packages/content/src/storage-fixtures";
+import { ConstructionReview } from "./ConstructionReview";
+import { PILOT_LAYOUT } from "../../../packages/content/src/pilot-layout";
+import { AccountPanel } from "./AccountPanel";
+import { createConnectionSession } from "./connection-session";
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Orbit,
-  Compass,
-  Layers,
-  Box,
-  ArrowUpRight,
-  MousePointer2,
-  RotateCw,
-  Move,
-  LayoutGrid,
-  FlaskConical,
-  Code2,
-  Music2,
-  Palette,
-  Shield,
-  Users,
-  ChartNoAxesCombined,
-  BookOpen,
-  Undo2,
-  Redo2,
-  Ship,
-} from "lucide-react";
-import { Panel, Readout, Status, ToolButton, ItemSlot } from "@sidereal/ui";
 import "@fontsource/barlow/400.css";
 import "@fontsource/barlow/500.css";
 import "@fontsource/barlow/600.css";
-import "@fontsource/barlow-condensed/500.css";
 import "@fontsource/barlow-condensed/600.css";
 import "./style.css";
 import {
@@ -34,129 +15,788 @@ import {
   type ShipRow,
   type CharacterRow,
   type StationRow,
+  type SpaceBodyRow,
+  type ActuatorOutputRow,
 } from "@sidereal/net";
-export default function App() {
-  const [status, setStatus] = useState("connecting");
-  const [error, setError] = useState("");
-  const [revision, refresh] = useState(0);
-  const [interior, setInterior] = useState(false);
-  const [inspect, setInspect] = useState(false);
-  const [modelStatus, setModelStatus] = useState("Loading Blender study");
-  const [name, setName] = useState("Captain");
-  const [shipName, setShipName] = useState("");
-  const [saving, setSaving] = useState(false);
-  const connection = useRef<DbConnection | null>(null);
-  const sequence = useRef(BigInt(Date.now()) * 1000n);
+import { SPACE_VISTAS, DEFAULT_SPACE_VISTA } from "@sidereal/content";
+import {
+  LAB_FLIGHT_ACTUATORS,
+  LAB_FLIGHT_MASS,
+} from "../../../packages/content/src/flight";
+import { LAB_BODIES } from "../../../packages/content/src/space";
+import { LAB_INTERACTIONS } from "../../../packages/content/src/interactions";
+import { inventoryView, inventoryAppearance } from "./inventory";
+import { createCombatInput } from "./combat-input";
+import { createOperationId } from "./operation-id";
+import { INVENTORY_DEFINITIONS } from "../../../packages/content/src/inventory";
+import {
+  objectDetails,
+  loadInspectionCatalog,
+  interactionAction,
+  interactionLabel,
+  type EquipmentCatalog,
+} from "./objects";
+import type { CrewAppearance } from "../../../packages/render/src/crew/appearance";
+import type { SceneState } from "../../../packages/render/src";
+import {
+  createGameUI,
+  gameplayIntent,
+  type GameUIState,
+} from "../../../packages/canvas-ui/src";
+export default function App({
+  auth,
+  accountName = "Development character",
+  onSignOut = () => {},
+}: {
+  auth?: { token: string; kind: "oidc" };
+  accountName?: string;
+  onSignOut?: () => void;
+}) {
+  const [selectedObject, setSelectedObject] = useState<string>();
+  const [combatEnabled, setCombatEnabled] = useState(false);
+  const [equipmentCatalog, setEquipmentCatalog] = useState<EquipmentCatalog>();
+  const appearanceWrites = useRef(Promise.resolve());
+  const [rendererFailed, setRendererFailed] = useState(false);
+  const [status, setStatus] = useState("connecting"),
+    [error, setError] = useState("");
+  const [revision, refresh] = useState(0),
+    [interior, setInterior] = useState(true);
+  const [vistaId, setVistaId] = useState(
+    () => localStorage.getItem("sidereal.vista") ?? DEFAULT_SPACE_VISTA,
+  );
+  const [reducedMotion, setReducedMotion] = useState(
+    () => matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+  const [modelStatus, setModelStatus] = useState("Loading vessel"),
+    [pending, setPending] = useState(false);
+  const connection = useRef<DbConnection | null>(null),
+    sequence = useRef(BigInt(Date.now()) * 1000n);
+  const session = useRef<ReturnType<
+    typeof createConnectionSession<DbConnection>
+  > | null>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const view = useRef<Awaited<
     ReturnType<(typeof import("@sidereal/render"))["createWorld"]>
   > | null>(null);
-  const sceneState = useRef({
+  const gui = useRef<ReturnType<typeof createGameUI> | null>(null);
+  const sceneState = useRef<SceneState>({
+    vx: 0,
+    vy: 0,
+    actuatorOutputs: [] as ActuatorOutputRow[],
     heading: 0,
     x: 0,
     y: 0,
     localX: 0,
-    localY: 6,
+    localY: PILOT_LAYOUT.station.y,
     interior: false,
     inspect: false,
     grid: false,
+    seated: false,
+    sprinting: false,
+    vistaId,
+    reducedMotion,
+    bodies: [] as SpaceBodyRow[],
   });
   useEffect(() => {
-    const c = connect(
-      () => refresh((v) => v + 1),
+    const active = createConnectionSession(
+      connect,
+      (c) => {
+        connection.current = c;
+      },
       (s, e) => {
         setStatus(s);
         if (e) setError(e);
+        else if (s === "ready")
+          setError((previous) =>
+            previous.startsWith("Account connection ") ||
+            previous === "Reconnecting to your account…"
+              ? ""
+              : previous,
+          );
       },
+      () => refresh((v) => v + 1),
+      auth,
     );
-    connection.current = c;
-    return () => c.disconnect();
+    session.current = active;
+    return () => {
+      session.current = null;
+      active.dispose();
+    };
   }, []);
+  useEffect(() => {
+    session.current?.authenticate(auth);
+  }, [auth?.token]);
   const c = connection.current;
   const ship = (c ? [...c.db.ownShips.iter()][0] : undefined) as
     ShipRow | undefined;
   const actor = (c ? [...c.db.ownCharacters.iter()][0] : undefined) as
     CharacterRow | undefined;
+  const constructionVisit = c
+    ? [...c.db.ownConstructionLocation.iter()][0]
+    : undefined;
+  const constructionInstance =
+    c && constructionVisit
+      ? [...c.db.ownConstructionInstances.iter()].find(
+          (i) => i.id === constructionVisit.instanceId,
+        )
+      : undefined;
   const station = (c ? [...c.db.ownStations.iter()][0] : undefined) as
     StationRow | undefined;
-  const seated = Boolean(actor && station?.occupantId === actor.id);
-  const ready = status === "ready";
+  const seated = Boolean(actor && station?.occupantId === actor.id),
+    ready = status === "ready";
+  const inventory = inventoryView(c, ready && !!actor?.connected);
+  const appearanceRow =
+    c && ready ? [...c.db.ownAppearance.iter()][0] : undefined;
+  const cosmetics: CrewAppearance = appearanceRow
+    ? JSON.parse(appearanceRow.appearanceJson)
+    : {};
+  function saveAppearance(patch: CrewAppearance) {
+    // Serialize local clicks; authority still rejects stale revisions from other tabs.
+    appearanceWrites.current = appearanceWrites.current
+      .then(async () => {
+        const db = connection.current;
+        if (!db?.isActive)
+          throw new Error("Reconnect before changing appearance.");
+        const row = [...db.db.ownAppearance.iter()][0];
+        if (!row) throw new Error("Character appearance is not ready.");
+        await db.reducers.setCharacterAppearance({
+          appearanceJson: JSON.stringify({
+            ...JSON.parse(row.appearanceJson),
+            ...patch,
+          }),
+          expectedRevision: row.revision,
+          operationId: createOperationId(),
+        });
+      })
+      .catch((error) => setError(String(error)));
+  }
+  const combat =
+    c && ready && actor?.connected ? [...c.db.ownCombat.iter()][0] : undefined;
+  const interactions =
+    ready && actor?.connected && c ? [...c.db.ownInteractions.iter()] : [];
+  const couch = interactions.find((row) => row.seatedByYou);
+  const nearStation =
+    !!actor &&
+    !!station &&
+    actor.shipId === station.shipId &&
+    Math.hypot(actor.localX - station.localX, actor.localY - station.localY) <=
+      1.8;
+  const selectedInteraction = interactions.find(
+    (row) =>
+      row.placementId === selectedObject &&
+      row.reachable &&
+      (!row.occupied || row.seatedByYou),
+  );
+  const nearestInteraction = interactions
+    .filter((row) => row.reachable && (!row.occupied || row.seatedByYou))
+    .sort(
+      (a, b) =>
+        Math.hypot(a.localX - actor!.localX, a.localY - actor!.localY) -
+        Math.hypot(b.localX - actor!.localX, b.localY - actor!.localY),
+    )[0];
+  const contextObject =
+    couch ??
+    (!seated
+      ? (selectedInteraction ?? (!nearStation ? nearestInteraction : undefined))
+      : undefined);
+  const interactionPrompt = contextObject
+    ? interactionLabel(contextObject)
+    : seated
+      ? "Leave control seat"
+      : nearStation
+        ? "Control seat"
+        : undefined;
+  useEffect(() => {
+    const abort = new AbortController();
+    loadInspectionCatalog(abort.signal)
+      .then((catalog) => {
+        if (!abort.signal.aborted) setEquipmentCatalog(catalog);
+      })
+      .catch((error) => {
+        if (!abort.signal.aborted) setError(String(error));
+      });
+    return () => abort.abort();
+  }, []);
+  const admittedBodyKeys = new Set(
+    c ? [...c.db.ownSpaceBodies.iter()].map((body) => body.key) : [],
+  );
+  const needsCelestialCatalog =
+    LAB_BODIES.some(
+      (body) => body.kind !== "asteroid" && !admittedBodyKeys.has(body.key),
+    ) || interactions.length === 0;
+  const requestedCatalog = useRef("");
+  useEffect(() => {
+    if (
+      !actor?.connected ||
+      !ready ||
+      !needsCelestialCatalog ||
+      requestedCatalog.current === actor.id
+    )
+      return;
+    requestedCatalog.current = actor.id;
+    // Request the server's idempotent lab seeding path. Client never submits
+    // body positions or rows, and existing UUIDs/momentum remain untouched.
+    c?.reducers.enterLab({ name: actor.name }).catch((e) => {
+      requestedCatalog.current = "";
+      setError(String(e));
+    });
+  }, [actor?.id, actor?.connected, ready, needsCelestialCatalog]);
+  useEffect(() => {
+    localStorage.setItem("sidereal.vista", vistaId);
+  }, [vistaId]);
   useEffect(() => {
     if (actor && ready && !actor.connected)
       c?.reducers
         .enterLab({ name: actor.name })
         .catch((e) => setError(String(e)));
-  }, [actor?.connected, ready]);
+  }, [actor?.connected, actor?.id, ready, c]);
+  const uiState: GameUIState = {
+    characterAppearance: cosmetics,
+    graphics: view.current?.getGraphicsSettings(),
+    localLightLimit: view.current?.getLocalLightBudget().limit,
+    combat: {
+      enabled: combatEnabled,
+      active: !!combat?.aimActive,
+      weaponName:
+        INVENTORY_DEFINITIONS.find((d) => d.id === combat?.weaponDefinitionId)
+          ?.name ?? "Equip a weapon",
+      energy: combat?.energy ?? 0,
+      capacity: combat?.capacity ?? 0,
+      shotCost: combat?.shotCost ?? 0,
+    },
+    resting: !!couch,
+    objectDetails: objectDetails(
+      selectedObject,
+      equipmentCatalog,
+      interactions,
+      actor,
+      { seated, near: nearStation, occupied: !!station?.occupantId },
+      c && ready ? [...c.db.ownActuatorOutputs.iter()] : [],
+      inventory.containers,
+    ),
+    interactionPrompt,
+    inventory,
+    status,
+    error,
+    modelStatus,
+    hasActor: !!actor,
+    connected: ready && !!actor?.connected,
+    actorName: actor?.name ?? "",
+    shipName: constructionInstance?.name ?? ship?.name ?? "",
+    seated,
+    nearStation,
+    interior,
+    speed: constructionInstance
+      ? 0
+      : ship
+        ? Math.hypot(ship.vx, ship.vy)
+        : undefined,
+    heading: ship
+      ? ((((ship.heading * 180) / Math.PI) % 360) + 360) % 360
+      : undefined,
+    mass: !constructionInstance && ship ? LAB_FLIGHT_MASS.massKg : undefined,
+    thrust:
+      !constructionInstance && ship
+        ? LAB_FLIGHT_ACTUATORS.filter((device) =>
+            device.id.startsWith("drives-main-"),
+          ).reduce(
+            (total, device) => total + device.maxThrustN * device.availability,
+            0,
+          )
+        : undefined,
+    x: ship?.x,
+    y: ship?.y,
+    revision: ship?.revision.toString(),
+    receipts: c ? [...c.db.ownEditReceipts.iter()].length : 0,
+    pending,
+    vistaId,
+    reducedMotion,
+    destinations: c
+      ? [...c.db.ownSpaceBodies.iter()]
+          .filter((body) => body.kind === "planet" || body.kind === "star")
+          .map(({ id, key, kind, x, y }) => ({
+            id,
+            name: key
+              .split("-")
+              .map((word) => word[0].toUpperCase() + word.slice(1))
+              .join(" "),
+            kind,
+            x,
+            y,
+          }))
+      : [],
+  };
+  const live = useRef({
+    actor,
+    ship,
+    ready,
+    pending,
+    uiState,
+    contextObject,
+    couch,
+    combat,
+    combatEnabled,
+    constructionInstance,
+  });
+  live.current = {
+    actor,
+    ship,
+    ready,
+    pending,
+    uiState,
+    contextObject,
+    couch,
+    combat,
+    combatEnabled,
+    constructionInstance,
+  };
+  const actionPending = useRef(false);
+  const perform = async (action: () => Promise<unknown>) => {
+    if (actionPending.current || !live.current.ready) return;
+    actionPending.current = true;
+    setPending(true);
+    setError("");
+    try {
+      await action();
+    } catch (e) {
+      setError(String(e));
+    } finally {
+      actionPending.current = false;
+      setPending(false);
+    }
+  };
+  const inventoryCommand = () => ({
+    expectedRevision: BigInt(live.current.uiState.inventory?.revision ?? "0"),
+    operationId:
+      crypto.randomUUID?.() ??
+      `inventory-${Date.now()}-${Array.from(crypto.getRandomValues(new Uint32Array(2))).join("-")}`,
+  });
+  const objectCommand = (action: string, placementId?: string) => {
+    const connectionNow = connection.current;
+    if (
+      action === "open-storage" &&
+      connectionNow &&
+      live.current.actor?.connected
+    ) {
+      const container = [
+        ...connectionNow.db.ownInventoryContainers.iter(),
+      ].find(
+        (container) =>
+          container.placementId === placementId && container.kind === "grid",
+      );
+      if (container) gui.current?.openContainer(container.id);
+      return;
+    }
+    if (
+      action === "use-station" &&
+      connectionNow &&
+      live.current.actor?.connected
+    ) {
+      void perform(() => connectionNow.reducers.useStation({}));
+      return;
+    }
+    const row =
+      connectionNow &&
+      [...connectionNow.db.ownInteractions.iter()].find(
+        (r) => r.placementId === placementId,
+      );
+    if (!row || !connectionNow || !live.current.actor?.connected) return;
+    void perform(() =>
+      connectionNow.reducers.interactObject({
+        objectId: row.id,
+        action,
+        expectedRevision: row.revision,
+        operationId:
+          crypto.randomUUID?.() ??
+          `object-${Date.now()}-${Array.from(crypto.getRandomValues(new Uint32Array(2))).join("-")}`,
+      }),
+    );
+  };
+  const interact = () => {
+    const row = live.current.contextObject;
+    if (row) objectCommand(interactionAction(row), row.placementId);
+    else if (
+      live.current.actor?.connected &&
+      (live.current.uiState.seated || live.current.uiState.nearStation)
+    )
+      void perform(() => connection.current!.reducers.useStation({}));
+  };
+  const issuedKit = useRef("");
   useEffect(() => {
-    if (ship) setShipName(ship.name);
-  }, [ship?.name]);
+    if (
+      !ready ||
+      !actor?.connected ||
+      inventory.revision !== "0" ||
+      issuedKit.current === actor.id
+    )
+      return;
+    issuedKit.current = actor.id;
+    void perform(() => connection.current!.reducers.claimStarterKit({}));
+  }, [ready, actor?.id, actor?.connected, inventory.revision]);
   useEffect(() => {
+    if (
+      new URLSearchParams(location.search).has("constructionReview") &&
+      !ready
+    )
+      return;
     let disposed = false;
-    if (!canvas.current) return;
+    const abort = new AbortController();
+    const element = canvas.current!;
     import("@sidereal/render")
-      .then(({ createWorld }) => createWorld(canvas.current!, setModelStatus))
+      .then(async ({ createWorld, loadEquipmentPoseConfiguration }) => {
+        if (disposed) return null;
+        const equipmentPose = await loadEquipmentPoseConfiguration();
+        if (disposed) return null;
+        return createWorld(
+          element,
+          (text) => {
+            if (!disposed) setModelStatus(text);
+          },
+          {
+            signal: abort.signal,
+            equipmentPose,
+            construction:
+              constructionInstance && constructionVisit
+                ? {
+                    instanceId: constructionInstance.id,
+                    documentJson: constructionInstance.documentJson,
+                    deckId: constructionVisit.deckId,
+                  }
+                : undefined,
+            onScene(scene) {
+              if (disposed) return;
+              gui.current = createGameUI(
+                element,
+                scene,
+                live.current.uiState,
+                {
+                  interact,
+                  combat: () => setCombatEnabled((v) => !v),
+                  objectDetails: {
+                    action: (action) =>
+                      objectCommand(
+                        action,
+                        live.current.uiState.objectDetails?.placementId,
+                      ),
+                    close: () => setSelectedObject(undefined),
+                  },
+                  view: () => setInterior((v) => !v),
+                  station: () => {
+                    if (live.current.actor?.connected)
+                      void perform(() =>
+                        connection.current!.reducers.useStation({}),
+                      );
+                  },
+                  enter: (name) =>
+                    void perform(() =>
+                      connection.current!.reducers.enterLab({ name }),
+                    ),
+                  rename: (name) => {
+                    if (live.current.constructionInstance) {
+                      setError("Rename the construction template in Shipyard.");
+                      return;
+                    }
+                    const current = live.current.ship;
+                    if (current)
+                      void perform(() =>
+                        connection.current!.reducers.renameShip({
+                          shipId: current.id,
+                          name,
+                          expectedRevision: current.revision,
+                          operationId:
+                            crypto.randomUUID?.() ??
+                            `edit-${Date.now()}-${Array.from(crypto.getRandomValues(new Uint32Array(2))).join("-")}`,
+                        }),
+                      );
+                  },
+                  vista: setVistaId,
+                  motion: setReducedMotion,
+                  camera: () => view.current?.resetCamera(),
+                  diagnostics: (enabled) =>
+                    view.current?.getDiagnostics(enabled),
+                  diagnosticsToggle: (key) =>
+                    view.current?.toggleDebugFeature(key),
+                  diagnosticsReset: () => view.current?.resetDebugFeatures(),
+                  focusDestination: (id) => view.current?.focusBody(id),
+                  crew: saveAppearance,
+                  graphics: (patch) => {
+                    view.current?.setGraphicsSettings(patch);
+                    refresh((v) => v + 1);
+                  },
+                  graphicsReset: () => {
+                    view.current?.resetGraphicsSettings();
+                    refresh((v) => v + 1);
+                  },
+                  localLightLimit: (limit) => {
+                    view.current?.setLocalLightLimit(limit);
+                    refresh((v) => v + 1);
+                  },
+                  groundItems: () => view.current?.groundItemLabels() ?? [],
+                  inventory: {
+                    claimKit: () =>
+                      void perform(() =>
+                        connection.current!.reducers.claimStarterKit({}),
+                      ),
+                    claimArmory: () =>
+                      void perform(() =>
+                        connection.current!.reducers.claimCharacterArmory(
+                          inventoryCommand(),
+                        ),
+                      ),
+                    moveItem: (input) =>
+                      void perform(() =>
+                        connection.current!.reducers.moveInventoryItem({
+                          ...input,
+                          ...inventoryCommand(),
+                        }),
+                      ),
+                    transferItem: (itemId, containerId) => void perform(() => connection.current!.reducers.transferInventoryItem({itemId,containerId,...inventoryCommand()})),
+                    takeAll: (containerId) => void perform(() => connection.current!.reducers.takeAllInventoryItems({containerId,...inventoryCommand()})),
+                    dropItem: (itemId) => void perform(() => connection.current!.reducers.dropInventoryItem({itemId,...inventoryCommand()})),
+                    equipItem: (itemId) =>
+                      void perform(() =>
+                        connection.current!.reducers.equipInventoryItem({
+                          itemId,
+                          ...inventoryCommand(),
+                        }),
+                      ),
+                    assignHotbar: (slot, itemId) =>
+                      void perform(() =>
+                        connection.current!.reducers.assignInventoryHotbar({
+                          slot,
+                          itemId,
+                          ...inventoryCommand(),
+                        }),
+                      ),
+                    activateHotbar: (slot) =>
+                      void perform(() =>
+                        connection.current!.reducers.activateInventoryHotbar({
+                          slot,
+                          ...inventoryCommand(),
+                        }),
+                      ),
+                  },
+                  dismiss: () => setError(""),
+                  retry: () => location.reload(),
+                },
+                SPACE_VISTAS,
+              );
+            },
+            onPreviewError: (text) => {
+              if (!disposed) setError(text);
+            },
+            blocksCameraInput: () => gui.current?.pointerBlocked() ?? false,
+            blocksObjectSelection: () => live.current.combatEnabled,
+            onObjectSelected: (id) => {
+              if (disposed) return;
+              if (id?.startsWith("ground:")) {
+                void perform(()=>connection.current!.reducers.transferInventoryItem({itemId:id.slice(7),containerId:"",...inventoryCommand()}));
+                return;
+              }
+              if (id && LAB_STORAGE_FIXTURES.some(fixture=>fixture.placementId === id)) {
+                setSelectedObject(undefined);
+                objectCommand("open-storage", id);
+              } else setSelectedObject(id);
+            },
+            onLoadError: (text) => {
+              if (!disposed) {
+                setModelStatus("Vessel unavailable");
+                setError(text);
+              }
+            },
+          },
+        );
+      })
       .then((result) => {
+        if (!result) return;
         if (disposed) result.dispose();
         else {
           view.current = result;
           result.update(sceneState.current);
         }
       })
-      .catch((e) => setError(String(e)));
+      .catch((e) => {
+        if (disposed) return;
+        setError(String(e));
+        setRendererFailed(true);
+      });
     return () => {
       disposed = true;
+      abort.abort();
+      gui.current?.dispose();
+      gui.current = null;
       view.current?.dispose();
       view.current = null;
     };
-  }, []);
+  }, [
+    constructionInstance?.id,
+    constructionVisit?.deckId,
+    new URLSearchParams(location.search).has("constructionReview")
+      ? ready
+      : true,
+  ]);
+  useEffect(() => {
+    if (!rendererFailed || !canvas.current) return;
+    const element = canvas.current;
+    const draw = () => {
+      element.width = element.clientWidth;
+      element.height = element.clientHeight;
+      const ctx = element.getContext("2d");
+      if (!ctx) return;
+      ctx.fillStyle = "#091a30";
+      ctx.fillRect(0, 0, element.width, element.height);
+      ctx.fillStyle = "#eff6ff";
+      ctx.font = "24px Barlow, sans-serif";
+      ctx.fillText(
+        "The graphics renderer could not start.",
+        24,
+        70,
+        element.width - 48,
+      );
+      ctx.font = "16px Barlow, sans-serif";
+      ctx.fillText(
+        "Enable WebGL, then click here or press Enter to retry.",
+        24,
+        110,
+        element.width - 48,
+      );
+    };
+    const retry = () => location.reload();
+    const key = (event: KeyboardEvent) => {
+      if (event.key === "Enter") retry();
+    };
+    draw();
+    element.addEventListener("click", retry);
+    element.addEventListener("keydown", key);
+    window.addEventListener("resize", draw);
+    return () => {
+      element.removeEventListener("click", retry);
+      element.removeEventListener("keydown", key);
+      window.removeEventListener("resize", draw);
+    };
+  }, [rendererFailed]);
   useEffect(() => {
     sceneState.current = {
-      heading: ship?.heading ?? 0,
-      x: ship?.x ?? 0,
-      y: ship?.y ?? 0,
+      selectedObject,
+      groundItems: ready && c && !constructionInstance ? [...c.db.ownGroundItems.iter()] : [],
+      combat: {
+        active: combatEnabled && !!combat?.aimActive,
+        angle: combat?.aimAngle ?? 0,
+        range: combat?.rangeMeters ?? 60,
+        itemId: combat?.weaponItemId,
+        shotSequence: combat?.shotSequence,
+      },
+      constructionDoors:
+        c && constructionVisit
+          ? [...c.db.ownConstructionDoors.iter()]
+              .filter(
+                (d) =>
+                  d.instanceId === constructionVisit.instanceId &&
+                  d.deckId === constructionVisit.deckId,
+              )
+              .map((d) => {
+                const seal=[...c.db.ownConstructionNativePressure.iter()].find(p=>p.doorId===d.id);
+                return {openingId:d.id,fraction:d.fraction,sealRetraction:seal?.sealRetraction};
+              })
+          : [],
+      objectLights: LAB_INTERACTIONS.filter((row) => row.kind === "light").map(
+        ({ placementId }) => ({
+          placementId,
+          enabled:
+            interactions.find((row) => row.placementId === placementId)
+              ?.enabled ?? false,
+        }),
+      ),
+      ...inventoryAppearance(inventory, cosmetics),
+      vx: constructionInstance ? 0 : (ship?.vx ?? 0),
+      vy: constructionInstance ? 0 : (ship?.vy ?? 0),
+      actuatorOutputs:
+        ready && c && ship
+          ? [...c.db.ownActuatorOutputs.iter()].filter(
+              (output) => output.shipId === ship.id,
+            )
+          : [],
+      heading: constructionInstance ? 0 : (ship?.heading ?? 0),
+      x: constructionInstance ? 0 : (ship?.x ?? 0),
+      y: constructionInstance ? 0 : (ship?.y ?? 0),
       localX: actor?.localX ?? 0,
-      localY: actor?.localY ?? 6,
+      localY: actor?.localY ?? PILOT_LAYOUT.station.y,
       interior,
-      inspect,
+      inspect: false,
       grid: false,
+      seated: seated || !!couch,
+      seatFacing: couch ? (Math.sign(couch.localX) * Math.PI) / 2 : 0,
+      sprinting: actor?.sprinting ?? false,
+      vistaId,
+      reducedMotion,
+      bodies: c && !constructionInstance ? [...c.db.ownSpaceBodies.iter()] : [],
     };
     view.current?.update(sceneState.current);
-  }, [revision, interior, inspect]);
+    gui.current?.update(uiState);
+  }, [
+    revision,
+    interior,
+    seated,
+    vistaId,
+    reducedMotion,
+    status,
+    error,
+    modelStatus,
+    pending,
+    cosmetics,
+    selectedObject,
+    equipmentCatalog,
+    combatEnabled,
+  ]);
   useEffect(() => {
     const keys = new Set<string>();
-    const inputTarget = () =>
-      ["INPUT", "TEXTAREA", "SELECT"].includes(
-        document.activeElement?.tagName ?? "",
-      );
     const send = () => {
-      if (!connection.current || !actor?.connected) return;
-      const vertical = (keys.has("KeyW") ? 1 : 0) - (keys.has("KeyS") ? 1 : 0);
-      const horizontal =
-        (keys.has("KeyD") ? 1 : 0) - (keys.has("KeyA") ? 1 : 0);
+      if (!connection.current?.isActive || !actor?.connected || !ready) return;
+      const blocked =
+        (gui.current?.blocked() ?? true) ||
+        document.hidden ||
+        !!live.current.couch;
+      if (blocked) keys.clear();
+      const intent = gameplayIntent(keys, seated, interior, blocked);
+      const walk = view.current?.screenToDeck(
+        intent.horizontal,
+        intent.vertical,
+      ) ?? { dx: 0, dy: 0 };
       connection.current.reducers
         .setIntent({
           sequence: ++sequence.current,
-          throttle: seated && !interior ? vertical : 0,
-          turn: seated && !interior ? -horizontal : 0,
-          dx: !seated && interior ? vertical : 0,
-          dy: !seated && interior ? -horizontal : 0,
+          throttle: intent.throttle,
+          turn: intent.turn,
+          dx: walk.dx,
+          dy: walk.dy,
+          sprint: intent.sprint,
         })
         .catch((e) => setError(String(e)));
     };
     const down = (e: KeyboardEvent) => {
-      if (inputTarget()) return;
+      if (gui.current?.blocked() || !actor?.connected || !ready) return;
       if (e.code === "Tab") {
         e.preventDefault();
+        keys.clear();
+        send();
         if (!e.repeat) setInterior((v) => !v);
         return;
       }
-      if (e.code === "KeyE" && !e.repeat) {
-        connection.current?.reducers
-          .useStation({})
-          .catch((e) => setError(String(e)));
+      if (e.code === "KeyV" && !e.repeat) {
+        e.preventDefault();
+        setCombatEnabled((v) => !v);
         return;
       }
-      if (["KeyW", "KeyA", "KeyS", "KeyD"].includes(e.code)) {
+      if (e.code === "KeyE" && !e.repeat) {
+        e.preventDefault();
+        interact();
+        return;
+      }
+      if (
+        ["KeyW", "KeyA", "KeyS", "KeyD", "ShiftLeft", "ShiftRight"].includes(
+          e.code,
+        )
+      ) {
         e.preventDefault();
         keys.add(e.code);
       }
@@ -169,6 +809,7 @@ export default function App() {
     window.addEventListener("keydown", down);
     window.addEventListener("keyup", up);
     window.addEventListener("blur", blur);
+    document.addEventListener("visibilitychange", blur);
     const interval = setInterval(send, 50);
     return () => {
       clearInterval(interval);
@@ -177,266 +818,120 @@ export default function App() {
       window.removeEventListener("keydown", down);
       window.removeEventListener("keyup", up);
       window.removeEventListener("blur", blur);
+      document.removeEventListener("visibilitychange", blur);
     };
-  }, [actor?.connected, seated, interior]);
-  const rename = async () => {
-    if (!ship || !c) return;
-    setSaving(true);
-    setError("");
-    try {
-      await c.reducers.renameShip({
-        shipId: ship.id,
-        name: shipName,
-        expectedRevision: ship.revision,
-        operationId:
-          crypto.randomUUID?.() ??
-          `edit-${Date.now()}-${Array.from(crypto.getRandomValues(new Uint32Array(2))).join("-")}`,
-      });
-    } catch (e) {
-      setError(String(e));
-    } finally {
-      setSaving(false);
-    }
-  };
-  const speed = ship ? Math.hypot(ship.vx, ship.vy) : 0;
-  const dashboardUrl = new URL(window.location.href);
-  dashboardUrl.port = import.meta.env.VITE_DASHBOARD_PORT;
-  dashboardUrl.pathname = "/";
-  dashboardUrl.search = "";
-  dashboardUrl.hash = "";
-  return (
-    <div className="app">
-      <header className="app-header">
-        <a href="/" className="brand">
-          <span className="brand-symbol">
-            <Orbit size={26} />
-          </span>
-          Sidereal<span className="edition">Spacetime</span>
-        </a>
-        <nav aria-label="Workspace">
-          <button className="selected">Flight deck</button>
-          <a
-            className="nav-link"
-            href={import.meta.env.VITE_DASHBOARD_URL ?? dashboardUrl.href}
-          >
-            Creator workspace <ArrowUpRight size={14} />
-          </a>
-        </nav>
-        <div className="account">
-          <Status good={ready}>
-            {ready ? "Local world connected" : status}
-          </Status>
-          <span>{actor?.name ?? "Development lab"}</span>
-        </div>
-      </header>
-      <div className="workspace">
-        <aside className="rail" aria-label="Tools">
-          <ToolButton label="Flight deck" active>
-            <Compass />
-          </ToolButton>
-          <a
-            className="tool-button"
-            href={import.meta.env.VITE_DASHBOARD_URL ?? dashboardUrl.href}
-            aria-label="Open separate creator app"
-          >
-            <LayoutGrid />
-          </a>
-          <span className="rail-spacer" />
-          <a
-            className="tool-button"
-            href="/PIVOT.md"
-            target="_blank"
-            aria-label="Read pivot plan"
-          >
-            <BookOpen />
-          </a>
-        </aside>{" "}
-        <main className="viewport">
-          <canvas ref={canvas} aria-label="Top-down 3D ship viewport" />
-          <div className="view-heading">
-            <div>
-              <span className="muted">Personal flight laboratory</span>
-              <h1>{ship?.name ?? "Wayfarer"}</h1>
-              <span className="ship-class">Frontier utility vessel</span>
-            </div>
-            <div className="view-actions">
-              <button
-                className={interior ? "selected" : ""}
-                onClick={() => setInterior((v) => !v)}
-              >
-                <Layers size={16} />
-                {interior ? "Cabin study" : "Blender assembly"}
-              </button>
-              <ToolButton
-                label="Inspect 3D angle"
-                active={inspect}
-                onClick={() => setInspect((v) => !v)}
-              >
-                <Orbit size={18} />
-              </ToolButton>
-            </div>
-          </div>
-          {!actor && (
-            <form
-              className="entry-card"
-              onSubmit={(e) => {
-                e.preventDefault();
-                c?.reducers
-                  .enterLab({ name })
-                  .catch((e) => setError(String(e)));
-              }}
-            >
-              <h2>Take the controls.</h2>
-              <p>Create a persistent test character and a private ship.</p>
-              <label>
-                Character name
-                <input
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  minLength={2}
-                  maxLength={40}
-                />
-              </label>
-              <button className="primary" disabled={!ready}>
-                Enter flight lab <ArrowUpRight size={17} />
-              </button>
-              <small>
-                This local identity is separate from your original account.
-              </small>
-            </form>
-          )}
-          {actor && interior && (
-            <button
-              className="action-prompt"
-              onClick={() =>
-                c?.reducers.useStation({}).catch((e) => setError(String(e)))
+  }, [actor?.connected, seated, interior, ready]);
+  useEffect(() => {
+    const element = canvas.current!;
+    let focused = true;
+    const input = createCombatInput({
+      state: () => {
+        const liveState = live.current,
+          row = liveState.combat;
+        return {
+          active: liveState.combatEnabled,
+          allowed:
+            !!connection.current?.isActive &&
+            liveState.ready &&
+            !!liveState.actor?.connected &&
+            !liveState.uiState.seated &&
+            !liveState.couch &&
+            liveState.uiState.interior,
+          blocked:
+            !focused ||
+            document.hidden ||
+            (gui.current?.blocked() ?? true) ||
+            (gui.current?.pointerBlocked() ?? true),
+          weapon: row?.weaponItemId
+            ? {
+                itemId: row.weaponItemId,
+                revision: row.revision,
+                energy: row.energy,
+                shotCost: row.shotCost,
+                cooldownMs: row.cooldownMs,
               }
-            >
-              <kbd>E</kbd>
-              {seated
-                ? "Leave control seat"
-                : Math.hypot(actor.localX, actor.localY - 6) <= 1.8
-                  ? "Use control station"
-                  : "Approach control station"}
-            </button>
-          )}
-          <div className="view-footer">
-            <span>
-              <i className="live-dot" />
-              {modelStatus}
-            </span>
-            <span>
-              {interior ? "Cabin collision study" : "3D assembly study"}
-              <span className="divider">/</span>
-              TAB changes view
-            </span>
-          </div>
-        </main>
-        <aside className="inspector">
-          <Panel title="Vessel">
-            <div className="vessel-title">
-              <Ship size={27} />
-              <div>
-                <strong>{ship?.name ?? "Wayfarer"}</strong>
-                <span>
-                  {seated
-                    ? "Control station occupied"
-                    : "Control station available"}
-                </span>
-              </div>
-            </div>
-            <div className="readouts">
-              <Readout label="Speed" value={speed.toFixed(1)} unit="m/s" />
-              <Readout
-                label="Mass"
-                value={ship ? (ship.massKg / 1000).toFixed(1) : "12.0"}
-                unit="t"
-              />
-              <Readout
-                label="Heading"
-                value={
-                  ship
-                    ? (
-                        ((((ship.heading * 180) / Math.PI) % 360) + 360) %
-                        360
-                      ).toFixed(0)
-                    : "0"
-                }
-                unit="°"
-              />
-              <Readout
-                label="Thrust capacity"
-                value={ship ? (ship.thrustN / 1000).toFixed(0) : "36"}
-                unit="kN"
-              />
-            </div>
-            <p className="fine-print">
-              Fixture mass and thrust. Installed-part compilation is scheduled
-              for M2.
-            </p>
-          </Panel>
-          <Panel title="Flight controls">
-            <div className="key-row">
-              <kbd>W</kbd>
-              <kbd>S</kbd>
-              <span>Forward / reverse thrust</span>
-            </div>
-            <div className="key-row">
-              <kbd>A</kbd>
-              <kbd>D</kbd>
-              <span>Rotate ship</span>
-            </div>
-            <div className="key-row">
-              <kbd>E</kbd>
-              <span>Enter / leave seat</span>
-            </div>
-            <p className="fine-print">
-              In the cabin, WASD walks while out of the seat. Releasing thrust
-              preserves momentum.
-            </p>
-          </Panel>
-          <Panel
-            title="Live identity"
-            action={<Status>r{ship?.revision.toString() ?? "—"}</Status>}
-          >
-            <label>
-              Vessel name
-              <input
-                value={shipName}
-                onChange={(e) => setShipName(e.target.value)}
-                disabled={!ship}
-                maxLength={48}
-              />
-            </label>
-            <button
-              className="secondary full"
-              disabled={!ship || saving || shipName === ship.name}
-              onClick={rename}
-            >
-              {saving ? "Applying…" : "Apply to live ship"}
-            </button>
-            <p className="fine-print">
-              Revision-checked and saved by the authority. Blueprint editing
-              arrives in M3.
-            </p>
-            <span className="receipt">
-              {c ? [...c.db.ownEditReceipts.iter()].length : 0} persistent edit
-              receipts
-            </span>
-          </Panel>
-        </aside>
-      </div>
-      {error && (
-        <div className="error-banner" role="alert">
-          <span>{error}</span>
-          <button onClick={() => setError("")}>Dismiss</button>
-        </div>
-      )}
-      <footer className="app-footer">
-        <span>Sidereal Spacetime 0.1</span>
-        <span>Flight laboratory · foundation build</span>
-        <span>Independent game client</span>
-      </footer>
-    </div>
+            : undefined,
+        };
+      },
+      aim: () => view.current?.aimDirection(),
+      sendAim: (active, angle) =>
+        connection.current!.reducers.setCombatAim({ active, angle }),
+      fire: (itemId, expectedRevision) =>
+        connection.current!.reducers.fireWeapon({
+          itemId,
+          expectedRevision,
+          operationId: createOperationId(),
+        }),
+      error: (error) => setError(String(error)),
+    });
+    const move = (event: PointerEvent) =>
+      view.current?.setAimPointer(event.clientX, event.clientY);
+    const down = (event: PointerEvent) => {
+      move(event);
+      if (
+        event.button === 0 &&
+        live.current.combatEnabled &&
+        !gui.current?.pointerBlocked()
+      )
+        input.trigger(true);
+    };
+    const up = (event: PointerEvent) => {
+      if (event.button === 0) input.trigger(false);
+    };
+    const cancel = () => input.cancel();
+    const blur = () => {
+      focused = false;
+      input.cancel();
+      void input.tick();
+    };
+    const focus = () => {
+      focused = true;
+    };
+    const visibility = () => {
+      if (document.hidden) blur();
+      else focus();
+    };
+    element.addEventListener("pointermove", move);
+    element.addEventListener("pointerdown", down);
+    window.addEventListener("pointerup", up);
+    window.addEventListener("pointercancel", cancel);
+    window.addEventListener("blur", blur);
+    window.addEventListener("focus", focus);
+    document.addEventListener("visibilitychange", visibility);
+    const timer = setInterval(() => void input.tick(), 100);
+    return () => {
+      clearInterval(timer);
+      input.dispose();
+      element.removeEventListener("pointermove", move);
+      element.removeEventListener("pointerdown", down);
+      window.removeEventListener("pointerup", up);
+      window.removeEventListener("pointercancel", cancel);
+      window.removeEventListener("blur", blur);
+      window.removeEventListener("focus", focus);
+      document.removeEventListener("visibilitychange", visibility);
+    };
+  }, []);
+  return (
+    <>
+      <canvas
+        key={rendererFailed ? "fallback" : "webgl"}
+        className="game-canvas"
+        ref={canvas}
+        tabIndex={0}
+        aria-label={
+          rendererFailed
+            ? "Graphics renderer failed. Enable WebGL, then press Enter to retry."
+            : "Sidereal game. WASD moves. Tab changes view. E uses the control seat. Escape opens the console. F6 focuses interface controls."
+        }
+      />
+      <ConstructionReview connection={c} onError={setError} />
+      <AccountPanel
+        connection={c}
+        characterId={actor?.id}
+        name={accountName}
+        oidc={!!auth}
+        onSignOut={onSignOut}
+      />
+    </>
   );
 }

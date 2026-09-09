@@ -1,0 +1,190 @@
+.assembly-editor {
+  background-color: #dce4e8;
+  background-image: conic-gradient(
+    #eaf0f2 25%,
+    transparent 0 50%,
+    #eaf0f2 0 75%,
+    transparent 0
+  );
+  background-size: 24px 24px;
+  position: relative;
+  min-height: 600px;
+}
+.assembly-title {
+  position: absolute;
+  top: 22px;
+  left: 28px;
+  color: #223847;
+  pointer-events: none;
+}
+.assembly-title h1 {
+  font-size: 27px;
+  margin: 0 0 4px;
+}
+.assembly-title span {
+  font-size: 13px;
+  color: #526975;
+}
+.assembly-tools {
+  position: absolute;
+  left: 10px;
+  top: 105px;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  background: #eff4f5;
+  border: 1px solid #a9bac4;
+  border-radius: 5px;
+  gap: 3px;
+}
+.assembly-tools .tool-button {
+  color: #314c5c;
+}
+.assembly-tools .tool-button:disabled {
+  opacity: 0.35;
+}
+.assembly-palette {
+  position: absolute;
+  left: 72px;
+  bottom: 48px;
+  width: 244px;
+  height: 256px;
+  min-width: 155px;
+  min-height: 145px;
+  max-width: 65%;
+  max-height: 75%;
+  resize: both;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #f5f8f8;
+  border: 1px solid #9eafb9;
+  border-radius: 6px;
+  box-shadow: 0 5px 22px #0b25362a;
+  color: #223847;
+}
+.palette-grip {
+  display: flex;
+  gap: 7px;
+  padding: 9px 10px;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  border-bottom: 1px solid #bdcbd1;
+}
+.palette-grip span {
+  margin-left: auto;
+  font-size: 10px;
+  color: #657f8c;
+}
+.assembly-palette select {
+  margin: 7px;
+  width: calc(100% - 14px);
+  padding: 5px;
+  background: white;
+  color: #29434f;
+  border: 1px solid #becbd2;
+}
+.part-icon-grid {
+  overflow: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+  align-content: start;
+  gap: 5px;
+  padding: 5px 8px 10px;
+}
+.part-icon-grid button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: #e4ecef;
+  color: #314d5e;
+  border: 1px solid #bccbd2;
+  border-radius: 3px;
+  padding: 7px 2px;
+  min-width: 0;
+}
+.part-icon-grid button:hover {
+  background: #d1e8ee;
+  border-color: #438799;
+}
+.part-icon-grid span {
+  font-size: 9px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.assembly-layer {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 0;
+  text-transform: capitalize;
+  font-size: 13px !important;
+}
+.assembly-layer input {
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  accent-color: #6cc8cd;
+}
+.assembly-layer span {
+  margin-left: auto;
+  color: #8099a6;
+}
+.part-position {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 12px 0;
+}
+.part-position input {
+  padding: 6px !important;
+  width: 100%;
+}
+.part-position label {
+  min-width: 0;
+  font-size: 11px;
+}
+.part-id {
+  display: block;
+  font-size: 10px;
+  overflow-wrap: anywhere;
+  color: #7e9ba8;
+  margin-top: 6px;
+}
+.assembly-error {
+  position: absolute;
+  top: 85px;
+  left: 80px;
+  right: 30px;
+  background: #963f44;
+  color: white;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.assembly-editor .view-footer {
+  color: #405966;
+}
+.assembly-editor canvas {
+  touch-action: none;
+}
+.assembly-editor canvas:focus-visible {
+  outline: 2px solid #4095a7;
+  outline-offset: -2px;
+}
+@media (max-width: 800px) {
+  .assembly-palette {
+    width: 190px;
+    height: 190px;
+  }
+  .assembly-title {
+    left: 20px;
+  }
+  .assembly-title h1 {
+    font-size: 22px;
+  }
+}

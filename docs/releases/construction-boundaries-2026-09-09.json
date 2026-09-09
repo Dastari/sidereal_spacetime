@@ -1,0 +1,100 @@
+{
+  "schema": "sidereal.release-checkpoint.v1",
+  "date": "2026-09-09",
+  "status": "native boundary and hinged-door working checkpoint; full construction incomplete",
+  "world": {
+    "path": "packages/world/dist/bundle.js",
+    "sha256": "18b1329162980b865fe2388e71de02bfca363c00d243dc73bf9eef83a738c928",
+    "publication": "normal development database; managed publish, delete-data=never"
+  },
+  "client": {
+    "path": "apps/client/dist",
+    "files": 1525,
+    "treeSha256": "55918c8cd83c99d02d6f21d57a56e947f9dd27110b4a17e0dfd796c1af9afd32"
+  },
+  "dashboard": {
+    "path": "apps/dashboard/dist",
+    "files": 1564,
+    "treeSha256": "c6026f48ad38030da137d198643035bfe418ec61229f5fcd988e19bf25dd66df"
+  },
+  "checks": {
+    "aggregate": "450 tests / 100 files + typecheck + 73 docs PASS",
+    "build": "PASS; existing chunk-size warnings",
+    "art": "PASS",
+    "authoritySmoke": "full isolated smoke PASS",
+    "managedReviewDatabase": "3 Python command-routing guards PASS"
+  },
+  "native": {
+    "design": "shipyard.structure.boundary-kit",
+    "revision": "r001",
+    "glbSha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+    "interfaceSha256": "33347b32b1675fee00d36046a05de37013fa32eca6e2a4d671464da3499972d9",
+    "status": "working candidate; no owner art approval, no pressure seal/damage certification"
+  },
+  "browser": {
+    "database": "sidereal-spacetime-dev-review-boundaries-20260909",
+    "blueprint": "b18bbc43-b817-4072-b272-b2d647d3fe97",
+    "sha256": "95d0f89d65ad128c59b7ea827e198e0287189d604136f2b7e3d4fa40086926ad",
+    "instances": [
+      "8206764f-e06b-4aa4-a9c0-0a1e66de235d",
+      "f5c85374-d05e-4068-abef-4dbe5c091e6f"
+    ],
+    "proof": [
+      "actual Shipyard save/publish/spawn buttons",
+      "native walls/physical hinge and camera cutaway",
+      "actual door buttons and WASD blocked/open passage",
+      "conservative obstruction/resume",
+      "reconnect preserves door/visit/position",
+      "second instance independent door state",
+      "final Return preserves7items/containers/appearance"
+    ],
+    "screenshots": [
+      {
+        "path": "output/playwright/construction-boundary-r001-cutaway-closed.png",
+        "sha256": "585089c2c7eaf689fe652624c877066d5f992b33423530cc895af988e58327e4"
+      },
+      {
+        "path": "output/playwright/construction-boundary-r001-open.png",
+        "sha256": "816b25f562dd195e69cc7d9206189ffde32fb54d13197dcec9e751f05a60d9ac"
+      }
+    ],
+    "limitations": [
+      "manual software-GPU frames, no hardware FPS/real-time polish claim",
+      "no construction process-restart or shared-crew proof"
+    ],
+    "session": "closed"
+  },
+  "normalReadback": {
+    "constructionInstances": 0,
+    "constructionGrants": 0,
+    "constructionDoors": 0,
+    "characters": 23,
+    "ships": 23,
+    "inventoryItems": 225,
+    "note": "post-publication counts only; other agents added normal test rows since previous checkpoint, so these are not a before/after snapshot equality assertion"
+  },
+  "compatibility": [
+    "game review remains opt-in ?constructionReview=1",
+    "historical floor-only documents omit boundaryKit and remain compatible",
+    "door private view/reducer requires additive schema first; reconnect old sockets",
+    "runtime exact boundary assets required in each independent app",
+    "normal Wayfarer assembly unchanged"
+  ],
+  "limitations": [
+    "roof r001 delivered but not installed",
+    "pressure/gaskets/airlocks, deck traversal, cargo/services, native damage and complete Wayfarer template remain pending",
+    "draft doors use an explicit prototype manual motion rate, no invented art ratings"
+  ],
+  "installationOrder": [
+    "pin native runtime assets",
+    "additively publish world module",
+    "independently release compatible client/dashboard builds",
+    "reconnect and review"
+  ],
+  "recovery": [
+    "leave review via Return before disabling UI",
+    "retain additive private tables and IDs; no reset or destructive rollback",
+    "restore compatible app artifacts independently; no blind snapshot replacement"
+  ],
+  "authorization": "owner authorized coordinated integration and full construction implementation; no final art approval inferred"
+}

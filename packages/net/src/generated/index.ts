@@ -34,23 +34,78 @@ import {
 } from "spacetimedb";
 
 // Import all reducer arg schemas
+import AcceptIdentityLinkReducer from "./accept_identity_link_reducer";
+import ActivateInventoryHotbarReducer from "./activate_inventory_hotbar_reducer";
+import AssignInventoryHotbarReducer from "./assign_inventory_hotbar_reducer";
+import ClaimCharacterArmoryReducer from "./claim_character_armory_reducer";
+import ClaimStarterKitReducer from "./claim_starter_kit_reducer";
+import DropInventoryItemReducer from "./drop_inventory_item_reducer";
+import EnterConstructionReviewReducer from "./enter_construction_review_reducer";
 import EnterLabReducer from "./enter_lab_reducer";
+import EquipInventoryItemReducer from "./equip_inventory_item_reducer";
+import FireWeaponReducer from "./fire_weapon_reducer";
+import InteractObjectReducer from "./interact_object_reducer";
+import LeaveConstructionReviewReducer from "./leave_construction_review_reducer";
+import MoveInventoryItemReducer from "./move_inventory_item_reducer";
+import PublishConstructionBlueprintReducer from "./publish_construction_blueprint_reducer";
 import RenameShipReducer from "./rename_ship_reducer";
+import RequestIdentityLinkReducer from "./request_identity_link_reducer";
+import SaveConstructionDraftReducer from "./save_construction_draft_reducer";
+import SetCharacterAppearanceReducer from "./set_character_appearance_reducer";
+import SetCombatAimReducer from "./set_combat_aim_reducer";
+import SetConstructionDoorReducer from "./set_construction_door_reducer";
+import SetConstructionGrantReducer from "./set_construction_grant_reducer";
 import SetIntentReducer from "./set_intent_reducer";
+import SpawnConstructionBlueprintReducer from "./spawn_construction_blueprint_reducer";
+import TakeAllInventoryItemsReducer from "./take_all_inventory_items_reducer";
+import TransferInventoryItemReducer from "./transfer_inventory_item_reducer";
 import UseStationReducer from "./use_station_reducer";
 
 // Import all procedure arg schemas
 
 // Import all table schema definitions
+import OwnActuatorOutputsRow from "./own_actuator_outputs_table";
+import OwnAppearanceRow from "./own_appearance_table";
 import OwnCharactersRow from "./own_characters_table";
+import OwnCombatRow from "./own_combat_table";
+import OwnConstructionBlueprintsRow from "./own_construction_blueprints_table";
+import OwnConstructionDecksRow from "./own_construction_decks_table";
+import OwnConstructionDoorsRow from "./own_construction_doors_table";
+import OwnConstructionDraftsRow from "./own_construction_drafts_table";
+import OwnConstructionGrantsRow from "./own_construction_grants_table";
+import OwnConstructionInstancesRow from "./own_construction_instances_table";
+import OwnConstructionLocationRow from "./own_construction_location_table";
+import OwnConstructionNativePressureRow from "./own_construction_native_pressure_table";
 import OwnEditReceiptsRow from "./own_edit_receipts_table";
+import OwnGroundItemsRow from "./own_ground_items_table";
+import OwnIdentityLinksRow from "./own_identity_links_table";
+import OwnInteractionsRow from "./own_interactions_table";
+import OwnInventoryContainersRow from "./own_inventory_containers_table";
+import OwnInventoryHotbarRow from "./own_inventory_hotbar_table";
+import OwnInventoryItemsRow from "./own_inventory_items_table";
+import OwnInventoryStateRow from "./own_inventory_state_table";
 import OwnShipsRow from "./own_ships_table";
+import OwnSpaceBodiesRow from "./own_space_bodies_table";
 import OwnStationsRow from "./own_stations_table";
 
 /** Type-only namespace exports for generated type groups. */
 
 /** The schema information for all tables in this module. This is defined the same was as the tables would have been defined in the server. */
 const tablesSchema = __schema({
+  ownActuatorOutputs: __table({
+    name: 'own_actuator_outputs',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnActuatorOutputsRow),
+  ownAppearance: __table({
+    name: 'own_appearance',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnAppearanceRow),
   ownCharacters: __table({
     name: 'own_characters',
     indexes: [
@@ -58,6 +113,69 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnCharactersRow),
+  ownCombat: __table({
+    name: 'own_combat',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnCombatRow),
+  ownConstructionBlueprints: __table({
+    name: 'own_construction_blueprints',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnConstructionBlueprintsRow),
+  ownConstructionDecks: __table({
+    name: 'own_construction_decks',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnConstructionDecksRow),
+  ownConstructionDoors: __table({
+    name: 'own_construction_doors',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnConstructionDoorsRow),
+  ownConstructionDrafts: __table({
+    name: 'own_construction_drafts',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnConstructionDraftsRow),
+  ownConstructionGrants: __table({
+    name: 'own_construction_grants',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnConstructionGrantsRow),
+  ownConstructionInstances: __table({
+    name: 'own_construction_instances',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnConstructionInstancesRow),
+  ownConstructionLocation: __table({
+    name: 'own_construction_location',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnConstructionLocationRow),
+  ownConstructionNativePressure: __table({
+    name: 'own_construction_native_pressure',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnConstructionNativePressureRow),
   ownEditReceipts: __table({
     name: 'own_edit_receipts',
     indexes: [
@@ -65,6 +183,55 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnEditReceiptsRow),
+  ownGroundItems: __table({
+    name: 'own_ground_items',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnGroundItemsRow),
+  ownIdentityLinks: __table({
+    name: 'own_identity_links',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnIdentityLinksRow),
+  ownInteractions: __table({
+    name: 'own_interactions',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnInteractionsRow),
+  ownInventoryContainers: __table({
+    name: 'own_inventory_containers',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnInventoryContainersRow),
+  ownInventoryHotbar: __table({
+    name: 'own_inventory_hotbar',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnInventoryHotbarRow),
+  ownInventoryItems: __table({
+    name: 'own_inventory_items',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnInventoryItemsRow),
+  ownInventoryState: __table({
+    name: 'own_inventory_state',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnInventoryStateRow),
   ownShips: __table({
     name: 'own_ships',
     indexes: [
@@ -72,6 +239,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnShipsRow),
+  ownSpaceBodies: __table({
+    name: 'own_space_bodies',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnSpaceBodiesRow),
   ownStations: __table({
     name: 'own_stations',
     indexes: [
@@ -83,9 +257,31 @@ const tablesSchema = __schema({
 
 /** The schema information for all reducers in this module. This is defined the same way as the reducers would have been defined in the server, except the body of the reducer is omitted in code generation. */
 const reducersSchema = __reducers(
+  __reducerSchema("accept_identity_link", AcceptIdentityLinkReducer),
+  __reducerSchema("activate_inventory_hotbar", ActivateInventoryHotbarReducer),
+  __reducerSchema("assign_inventory_hotbar", AssignInventoryHotbarReducer),
+  __reducerSchema("claim_character_armory", ClaimCharacterArmoryReducer),
+  __reducerSchema("claim_starter_kit", ClaimStarterKitReducer),
+  __reducerSchema("drop_inventory_item", DropInventoryItemReducer),
+  __reducerSchema("enter_construction_review", EnterConstructionReviewReducer),
   __reducerSchema("enter_lab", EnterLabReducer),
+  __reducerSchema("equip_inventory_item", EquipInventoryItemReducer),
+  __reducerSchema("fire_weapon", FireWeaponReducer),
+  __reducerSchema("interact_object", InteractObjectReducer),
+  __reducerSchema("leave_construction_review", LeaveConstructionReviewReducer),
+  __reducerSchema("move_inventory_item", MoveInventoryItemReducer),
+  __reducerSchema("publish_construction_blueprint", PublishConstructionBlueprintReducer),
   __reducerSchema("rename_ship", RenameShipReducer),
+  __reducerSchema("request_identity_link", RequestIdentityLinkReducer),
+  __reducerSchema("save_construction_draft", SaveConstructionDraftReducer),
+  __reducerSchema("set_character_appearance", SetCharacterAppearanceReducer),
+  __reducerSchema("set_combat_aim", SetCombatAimReducer),
+  __reducerSchema("set_construction_door", SetConstructionDoorReducer),
+  __reducerSchema("set_construction_grant", SetConstructionGrantReducer),
   __reducerSchema("set_intent", SetIntentReducer),
+  __reducerSchema("spawn_construction_blueprint", SpawnConstructionBlueprintReducer),
+  __reducerSchema("take_all_inventory_items", TakeAllInventoryItemsReducer),
+  __reducerSchema("transfer_inventory_item", TransferInventoryItemReducer),
   __reducerSchema("use_station", UseStationReducer),
 );
 

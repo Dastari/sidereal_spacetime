@@ -1,0 +1,14 @@
+{
+  "name": "@sidereal/canvas-ui",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@babylonjs/core": "9.25.0",
+    "@sidereal/content": "0.1.0",
+    "@sidereal/render": "0.1.0"
+  }
+}

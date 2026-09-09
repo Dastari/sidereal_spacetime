@@ -18,4 +18,5 @@ export default __t.row({
   localX: __t.f64().name("local_x"),
   localY: __t.f64().name("local_y"),
   connected: __t.bool(),
+  sprinting: __t.bool(),
 });

@@ -1,0 +1,162 @@
+{
+  "schema": "sidereal.integration-checkpoint.v1",
+  "date": "2026-09-09",
+  "status": "qualified native pressure room and diagnostic fixes; tested isolated candidate, not normal game deployment or final art approval",
+  "pressureAuditSha256": "f347642d4ae424e63fa5abe0326f2e6cf0d82a5f168f0191c878f327056eec4e",
+  "installedReview": {
+    "database": "sidereal-spacetime-dev-review-pressure-r006",
+    "workspaceId": "native-pressure-review-r006",
+    "blueprint": {
+      "id": "3a075ecd-3d41-4f6f-8580-f1a9dbddda55",
+      "sha256": "0292985abc1551714c404aac21ce7c31ef41d45675212a84c03b164d0afe9370"
+    },
+    "instances": [
+      {
+        "instanceId": "8dfe3621-bc1b-41d9-b57d-2cac34c6b749",
+        "deckId": "ac75376a-c52f-4b46-8da8-47b85a4562ff",
+        "doorId": "7cca3659-d230-4d94-883a-dffa4f2eb62c"
+      },
+      {
+        "instanceId": "890226c2-307d-47eb-852b-39fc2f717aa9",
+        "deckId": "4aff2c3c-9a85-4002-b11c-76093848fec6",
+        "doorId": "6a88e578-ac57-429c-9b14-34aba7a65d1a"
+      }
+    ]
+  },
+  "validation": {
+    "check": "573 tests / 122 files, typecheck and 75-document check pass",
+    "build": "pass; existing Vite chunk-size warnings",
+    "artCheck": "pass",
+    "isolatedSmoke": "sidereal-spacetime-dev-pressure-r006-smoke pass",
+    "nativeSourceCheck": "10 source pins / 7 runtime GLBs / 44 placements",
+    "browser": "Actual Shipyard publish/two-spawn, native door/gasket/collision, sibling isolation, owner reconnect, unauthorized principal, grant expiry and provider-role cleanup passed; graphics cap reload/reset passed; named browser signed out/closed.",
+    "quality": "root pressure imports and generated formatting fixed; unrelated active character/inventory lint and formatting violations remain"
+  },
+  "files": [
+    {
+      "path": "scripts/install_construction_pressure_room.py",
+      "sha256": "230cd5939174625ec635993a43eb86505aacb531323a51a70b6603f05407d902"
+    },
+    {
+      "path": "packages/content/src/construction-pressure-room.ts",
+      "sha256": "306f06677d68f7b96af81f4edd5400273adc0ddbda91b3bdb7c89bb3dfad590c"
+    },
+    {
+      "path": "packages/content/src/construction.ts",
+      "sha256": "eba5f6b9c0494521b829c304979129075e26aecaa95c80f5077ce67d7c7b84e3"
+    },
+    {
+      "path": "packages/sim/src/construction-native-room.ts",
+      "sha256": "9e9223514ed3283568b44d4b7e6510f95897cca71baf3361a0aa41df6a7e0cd5"
+    },
+    {
+      "path": "packages/sim/src/construction-native-room-published.ts",
+      "sha256": "9ffad638e66b8ad3935f91510b933353b5e406f31e90d4e4d6cf07db0f5c5d6a"
+    },
+    {
+      "path": "packages/sim/src/construction-pressure-document.ts",
+      "sha256": "da5376733592ab45ace3cfacd8c8fa79843284169f9c73af243a90a9decba6ec"
+    },
+    {
+      "path": "packages/sim/src/construction-transactions.ts",
+      "sha256": "6f6638005ecf031f48b985784ca947eaa2831efd903e41185f1387c08af807fd"
+    },
+    {
+      "path": "packages/sim/src/construction-instance.ts",
+      "sha256": "f08c8994a6d96fc63639574bf589a3df082a31ecdce34c0fc7917dbbf5d4e80f"
+    },
+    {
+      "path": "packages/world/src/construction-atmosphere.ts",
+      "sha256": "34a4b8ea9ddcffb7bfc70d2f7b5d02a1daa7619eab5465523269e44cc9ad5c8e"
+    },
+    {
+      "path": "packages/world/src/construction-atmosphere-tables.ts",
+      "sha256": "477ee2a38091563d80db7ce0e49303ca7901237455d45761b45fbd0ade48e72d"
+    },
+    {
+      "path": "packages/world/src/construction-native-pressure.ts",
+      "sha256": "2e3e62a8833cf219a9e3d057b41565068822995857f26a177d87913b8df88774"
+    },
+    {
+      "path": "packages/world/src/construction-native-pressure-tables.ts",
+      "sha256": "d806c15030af06157e41957683cdd956ba31d047985bd4f5b8d70041cfa7d9c7"
+    },
+    {
+      "path": "packages/world/src/construction-instances.ts",
+      "sha256": "2b5c927447af699bedbcd1ab25dee35d5d5d85f1c2422495a2e79c9109cba372"
+    },
+    {
+      "path": "packages/world/src/construction-doors.ts",
+      "sha256": "10513406c56234abfee17cb3964468c3eef0912913015202312ef92e893b77c5"
+    },
+    {
+      "path": "packages/world/src/index.ts",
+      "sha256": "22a73442f62a097340c88947d852afe18c016ef9961a2d29405309d062514516"
+    },
+    {
+      "path": "packages/render/src/construction-pressure-room.ts",
+      "sha256": "50ae1b345936a217185460e136e0953d8fdb7c32db22af609883ba6d1a483b30"
+    },
+    {
+      "path": "packages/render/src/construction-instance.ts",
+      "sha256": "b36e869a4d4ac59f7e1e642f9b4d04c4046642c36fe14b48cd87e5316ef359f7"
+    },
+    {
+      "path": "packages/render/src/index.ts",
+      "sha256": "5d15abeac6d2c4b9df3d5797511a961d587984bf15e972574af9480532bf5b55"
+    },
+    {
+      "path": "packages/net/src/index.ts",
+      "sha256": "5628475849008d4b63eebc5559bbe848b568ba9731ed2c23e493a1b268a2b1bb"
+    },
+    {
+      "path": "apps/client/src/ConstructionReview.tsx",
+      "sha256": "96c44c7192986a7f11fe445ebf934e664892a5003a7767653ac6c8bdf78c047f"
+    },
+    {
+      "path": "apps/client/src/App.tsx",
+      "sha256": "7d5a22484a5f30b952945819e6ede4234e0e779cc07ef7c50bcce28adf883ac9"
+    },
+    {
+      "path": "packages/render/src/local-light-budget.ts",
+      "sha256": "c6ed9b6597b159b0b0cc0432336b8a560e6be1776552110cdab2c8a2307494e7"
+    },
+    {
+      "path": "packages/render/src/debug-features.ts",
+      "sha256": "9ac30145eeaee633b5dfe5fea44e7b3ebf15b3834bfc1097ea7083caf0edacac"
+    },
+    {
+      "path": "packages/render/src/diagnostics.ts",
+      "sha256": "2e9e891f604b7a012c3c76d5bfd15f2ff0688b6780e72b00f086d9ffa4804828"
+    },
+    {
+      "path": "scripts/dev.py",
+      "sha256": "74496322aedd3d21617b14993104f25bd307061e61e7396a5cb619be1eb1e537"
+    },
+    {
+      "path": "scripts/keycloak_service.py",
+      "sha256": "20e3a901274e357a5b0e2ca4d2fde3d0f38a922e57e537baff113704a9afc8fb"
+    },
+    {
+      "path": "ops/keycloak/review-authoring-role.py",
+      "sha256": "31164bb63e7f9aa22139a22910014e3d03450fa880ab6c65850daf609ab6be3b"
+    }
+  ],
+  "limits": [
+    "Native fixture starts in vacuum; no browser charged gas-transfer proof or life support.",
+    "Conservative door sweep blocks otherwise clear positions; refinement required before usable airlock.",
+    "Full multi-deck traversal, Wayfarer template conversion, cargo support, services, structural damage and powered airlocks remain outstanding.",
+    "Shared App/renderer snapshots include externally owned character/inventory changes; these hashes do not transfer ownership.",
+    "No whole-repository commit or final source/art archival closure is claimed."
+  ],
+  "publicClientManifest": {
+    "origin": "https://sidereal.dastari.net",
+    "sha256": "f36662364a8298de7db3e83e46e2375537fdecbe4aa1636c8b176d534c7f6bb2",
+    "release": "/root/sidereal_spacetime/.runtime/public-client/releases/20260909-181651-f36662364a82"
+  },
+  "evidence": [
+    "output/playwright/native-pressure-room/acceptance.json",
+    "output/playwright/render-plan/debug-shadow/acceptance.json",
+    "output/playwright/render-plan/debug-shadow/local-light-persistence.json"
+  ]
+}

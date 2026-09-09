@@ -6,13 +6,57 @@
 import { type Infer as __Infer } from "spacetimedb";
 
 // Import all reducer arg schemas
+import AcceptIdentityLinkReducer from "../accept_identity_link_reducer";
+import ActivateInventoryHotbarReducer from "../activate_inventory_hotbar_reducer";
+import AssignInventoryHotbarReducer from "../assign_inventory_hotbar_reducer";
+import ClaimCharacterArmoryReducer from "../claim_character_armory_reducer";
+import ClaimStarterKitReducer from "../claim_starter_kit_reducer";
+import DropInventoryItemReducer from "../drop_inventory_item_reducer";
+import EnterConstructionReviewReducer from "../enter_construction_review_reducer";
 import EnterLabReducer from "../enter_lab_reducer";
+import EquipInventoryItemReducer from "../equip_inventory_item_reducer";
+import FireWeaponReducer from "../fire_weapon_reducer";
+import InteractObjectReducer from "../interact_object_reducer";
+import LeaveConstructionReviewReducer from "../leave_construction_review_reducer";
+import MoveInventoryItemReducer from "../move_inventory_item_reducer";
+import PublishConstructionBlueprintReducer from "../publish_construction_blueprint_reducer";
 import RenameShipReducer from "../rename_ship_reducer";
+import RequestIdentityLinkReducer from "../request_identity_link_reducer";
+import SaveConstructionDraftReducer from "../save_construction_draft_reducer";
+import SetCharacterAppearanceReducer from "../set_character_appearance_reducer";
+import SetCombatAimReducer from "../set_combat_aim_reducer";
+import SetConstructionDoorReducer from "../set_construction_door_reducer";
+import SetConstructionGrantReducer from "../set_construction_grant_reducer";
 import SetIntentReducer from "../set_intent_reducer";
+import SpawnConstructionBlueprintReducer from "../spawn_construction_blueprint_reducer";
+import TakeAllInventoryItemsReducer from "../take_all_inventory_items_reducer";
+import TransferInventoryItemReducer from "../transfer_inventory_item_reducer";
 import UseStationReducer from "../use_station_reducer";
 
+export type AcceptIdentityLinkParams = __Infer<typeof AcceptIdentityLinkReducer>;
+export type ActivateInventoryHotbarParams = __Infer<typeof ActivateInventoryHotbarReducer>;
+export type AssignInventoryHotbarParams = __Infer<typeof AssignInventoryHotbarReducer>;
+export type ClaimCharacterArmoryParams = __Infer<typeof ClaimCharacterArmoryReducer>;
+export type ClaimStarterKitParams = __Infer<typeof ClaimStarterKitReducer>;
+export type DropInventoryItemParams = __Infer<typeof DropInventoryItemReducer>;
+export type EnterConstructionReviewParams = __Infer<typeof EnterConstructionReviewReducer>;
 export type EnterLabParams = __Infer<typeof EnterLabReducer>;
+export type EquipInventoryItemParams = __Infer<typeof EquipInventoryItemReducer>;
+export type FireWeaponParams = __Infer<typeof FireWeaponReducer>;
+export type InteractObjectParams = __Infer<typeof InteractObjectReducer>;
+export type LeaveConstructionReviewParams = __Infer<typeof LeaveConstructionReviewReducer>;
+export type MoveInventoryItemParams = __Infer<typeof MoveInventoryItemReducer>;
+export type PublishConstructionBlueprintParams = __Infer<typeof PublishConstructionBlueprintReducer>;
 export type RenameShipParams = __Infer<typeof RenameShipReducer>;
+export type RequestIdentityLinkParams = __Infer<typeof RequestIdentityLinkReducer>;
+export type SaveConstructionDraftParams = __Infer<typeof SaveConstructionDraftReducer>;
+export type SetCharacterAppearanceParams = __Infer<typeof SetCharacterAppearanceReducer>;
+export type SetCombatAimParams = __Infer<typeof SetCombatAimReducer>;
+export type SetConstructionDoorParams = __Infer<typeof SetConstructionDoorReducer>;
+export type SetConstructionGrantParams = __Infer<typeof SetConstructionGrantReducer>;
 export type SetIntentParams = __Infer<typeof SetIntentReducer>;
+export type SpawnConstructionBlueprintParams = __Infer<typeof SpawnConstructionBlueprintReducer>;
+export type TakeAllInventoryItemsParams = __Infer<typeof TakeAllInventoryItemsReducer>;
+export type TransferInventoryItemParams = __Infer<typeof TransferInventoryItemReducer>;
 export type UseStationParams = __Infer<typeof UseStationReducer>;
 

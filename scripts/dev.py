@@ -115,7 +115,7 @@ def publish(database=None, reset=False):
     cli(*arguments)
 
 
-def database_up():
+def database_up(publish_module=True):
     require_development()
     state = load()
     if 'database' in state and alive(state['database']):
@@ -124,7 +124,8 @@ def database_up():
     port_free(CFG['server']['host'], CFG['server']['port'])
     launch('database', CLI + ['start', '--listen-addr', f"{CFG['server']['host']}:{CFG['server']['port']}", '--data-dir', str(ROOT / '.spacetime-data'), '--non-interactive'])
     ready(DB_URL + '/v1/ping', 'database')
-    publish()
+    if publish_module:
+        publish()
 
 
 def app_up(name):
@@ -143,9 +144,32 @@ def app_up(name):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('command', choices=['setup', 'up', 'up-client', 'up-dashboard', 'down', 'stop-client', 'stop-dashboard', 'status', 'build-world', 'generate', 'publish', 'export-art', 'mcp', 'smoke-prepare', 'smoke', 'smoke-restart', 'backup'])
-    command = parser.parse_args().command
-    if command == 'setup':
+    parser.add_argument('command', choices=['public-client-deploy', 'public-client-up', 'public-client-stop', 'public-client-proxy', 'auth-https-setup', 'auth-https-status', 'auth-https-stop', 'keycloak-setup', 'keycloak-start', 'keycloak-stop', 'keycloak-status', 'keycloak-bootstrap', 'keycloak-authoring', 'keycloak-game-origin', 'keycloak-repair-cache', 'keycloak-review-grant', 'keycloak-review-revoke', 'setup', 'up', 'up-client', 'up-dashboard', 'down', 'stop-client', 'stop-dashboard', 'status', 'build-world', 'generate', 'publish', 'publish-review', 'export-art', 'export-voxels', 'export-engine', 'export-assembly', 'export-bulkheads', 'export-crew', 'export-equipment', 'export-inventory-icons', 'mcp', 'smoke-prepare', 'smoke-update', 'smoke', 'smoke-restart', 'smoke-auth-admission', 'restart-database', 'backup'])
+    parser.add_argument('--review-name', help='Named additive test database suffix; publish-review only')
+    parser.add_argument('--smoke-name', help='Separate named smoke database; additive publication, never reset')
+    args = parser.parse_args()
+    command = args.command
+    smoke_database = CFG['project']['database'] + '-smoke'
+    if args.smoke_name is not None:
+        import re
+        if command not in ('smoke', 'smoke-restart', 'smoke-auth-admission') or not re.fullmatch(r'[a-z0-9][a-z0-9-]{0,39}', args.smoke_name):
+            parser.error('--smoke-name requires a smoke command and lowercase name of at most40 characters')
+        smoke_database = CFG['project']['database'] + '-' + args.smoke_name + '-smoke'
+    if args.review_name is not None and command != 'publish-review':
+        parser.error('--review-name is valid only for publish-review')
+    if command.startswith('public-client-'):
+        if command == 'public-client-stop':
+            down('public-client')
+        else:
+            from public_client import command as public_command
+            public_command(command.removeprefix('public-client-'), CFG, sys.modules[__name__])
+    elif command.startswith('auth-https-'):
+        from auth_https import command as auth_https_command
+        auth_https_command(command.removeprefix('auth-https-'), CFG)
+    elif command.startswith('keycloak-'):
+        from keycloak_service import command as keycloak_command
+        keycloak_command(command.removeprefix('keycloak-'))
+    elif command == 'setup':
         if not (TOOLS / 'bin' / CFG['project']['spacetime_version'] / 'spacetimedb-cli').exists():
             installer = STATE / 'install-spacetime.sh'
             urllib.request.urlretrieve('https://install.spacetimedb.com', installer)
@@ -160,15 +184,31 @@ def main():
         cli('generate', '--lang', 'typescript', '--out-dir', 'packages/net/src/generated', '--module-path', 'packages/world', '--yes')
     elif command == 'publish':
         publish()
+    elif command == 'publish-review':
+        import re
+        if not args.review_name or not re.fullmatch(r'[a-z0-9][a-z0-9-]{0,39}', args.review_name):
+            parser.error('publish-review requires a lowercase --review-name of at most40 characters')
+        publish(CFG['project']['database'] + '-review-' + args.review_name, reset=False)
+    elif command == 'smoke-update':
+        publish(CFG['project']['database'] + '-smoke', reset=False)
     elif command == 'smoke-prepare':
         publish(CFG['project']['database'] + '-smoke', reset=True)
-    elif command in ('smoke', 'smoke-restart'):
+    elif command in ('smoke', 'smoke-restart', 'smoke-auth-admission'):
         if command == 'smoke':
-            publish(CFG['project']['database'] + '-smoke', reset=True)
+            publish(smoke_database, reset=args.smoke_name is None)
         env = os.environ.copy()
-        env.update(SIDEREAL_SMOKE_URL=DB_URL, SIDEREAL_SMOKE_DATABASE=CFG['project']['database'] + '-smoke')
+        env.update(SIDEREAL_SMOKE_URL=DB_URL, SIDEREAL_SMOKE_DATABASE=smoke_database)
         arguments = ['--verify-restart'] if command == 'smoke-restart' else []
-        run([str(ROOT/'node_modules/.bin/tsx'), 'scripts/smoke.ts', *arguments], env=env)
+        script = 'scripts/auth-admission-smoke.ts' if command == 'smoke-auth-admission' else 'scripts/smoke.ts'
+        run([str(ROOT/'node_modules/.bin/tsx'), script, *arguments], env=env)
+    elif command == 'restart-database':
+        require_development()
+        previous = load().get('database')
+        if not previous or not alive(previous):
+            raise RuntimeError('A managed running database is required for restart proof.')
+        down('database')
+        database_up(publish_module=False)
+        print(json.dumps({'database_restarted': True, 'previous_pid': previous['pid'], 'current_pid': load()['database']['pid'], 'module_published': False}))
     elif command == 'down':
         down()
     elif command.startswith('stop-'):
@@ -185,6 +225,31 @@ def main():
             app_up(name)
     elif command == 'export-art':
         run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/export_glb.py'])
+    elif command == 'export-voxels':
+        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/build_interior_prop_source.py'])
+        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/build_ship_fixture_source.py'])
+        run([str(ROOT/'node_modules/.bin/tsx'), 'scripts/build_voxel.ts'])
+        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/build_metal_materials.py'])
+        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/export_voxel_blender.py'])
+    elif command == 'export-equipment':
+        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/build_equipment_source.py'])
+    elif command == 'export-inventory-icons':
+        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/build_inventory_icons.py'])
+    elif command == 'export-crew':
+        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/build_crew_source.py'])
+    elif command == 'export-bulkheads':
+        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/build_bulkhead_source.py'])
+        for slug in ['bulkhead', 'airlock']:
+            run([str(ROOT/'node_modules/.bin/tsx'), 'scripts/mesh_sampled_asset.ts', slug])
+            run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/export_sampled_asset.py', '--', slug])
+    elif command == 'export-assembly':
+        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/build_interior_prop_source.py'])
+        run([str(ROOT/'node_modules/.bin/tsx'), 'scripts/build_assembly.ts'])
+        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/export_voxel_blender.py', '--', '--assembly'])
+    elif command == 'export-engine':
+        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/build_engine_source.py'])
+        run([str(ROOT/'node_modules/.bin/tsx'), 'scripts/mesh_sampled_asset.ts'])
+        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/export_sampled_asset.py'])
     elif command == 'mcp':
         run([sys.executable, 'scripts/blender_mcp.py'])
     elif command == 'backup':

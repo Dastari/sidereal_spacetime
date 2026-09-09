@@ -1,0 +1,81 @@
+{
+  "schema": "sidereal.release-checkpoint.v1",
+  "date": "2026-09-09",
+  "status": "matching native roofs working checkpoint; full construction incomplete",
+  "world": {
+    "path": "packages/world/dist/bundle.js",
+    "sha256": "9d230a1db73db347961eb3f128b3e88a69582360d377025cf41de42a0a9abec9",
+    "publication": "managed normal development database, delete-data=never"
+  },
+  "client": {
+    "path": "apps/client/dist",
+    "files": 1528,
+    "treeSha256": "c3bdfee7b7e8d660c50ef315e9da975babb307ef97cc1726e2ae89faadc384d8"
+  },
+  "dashboard": {
+    "path": "apps/dashboard/dist",
+    "files": 1567,
+    "treeSha256": "9488eacd33427aa86f2155190145a8affcc495695a8b40736daa6c230e1f6904"
+  },
+  "checks": {
+    "aggregate": "474tests/103files + typecheck +73docs PASS",
+    "authoritySmoke": "full isolated PASS",
+    "build": "PASS; existing large chunk warnings",
+    "art": "PASS",
+    "python": "11 source/tool +7 art-library tests PASS",
+    "quality": "lint215existing/0new; format213existing/0new; no rebaseline"
+  },
+  "native": {
+    "id": "shipyard.structure.roof-kit",
+    "revision": "r001",
+    "glbSha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+    "interfaceSha256": "ffa320a5edc5b99a45ff50a4d33f94c0346fe87972358a73a4fee8375de68a57",
+    "status": "working candidate; no owner art, pressure or native damage approval"
+  },
+  "browser": {
+    "database": "sidereal-spacetime-dev-review-boundaries-20260909",
+    "blueprintId": "ad0f8a81-ee7f-4eed-a104-6d1d18527f42",
+    "blueprintSha256": "a3fbf686ae6b5163a5535f6d3809adf935e3702f8022f86d7075340762718e5e",
+    "instanceId": "55bcd413-6659-441b-bfe2-9e1a36cb2f48",
+    "screenshots": [
+      {
+        "path": "output/playwright/construction-roof-r001-interior.png",
+        "sha256": "339b073b7b1360e18c8d26abacf899b7955c771fc2a75bc5b5fe5d5581c875d7"
+      },
+      {
+        "path": "output/playwright/construction-roof-r001-flight.png",
+        "sha256": "f56e3385da0a9a4c9b0d1b56676129dab625083b9b5e917aefc19151eeb354c8"
+      }
+    ],
+    "scope": [
+      "actual Shipyard Load/roof opt-in/Save/Publish/Spawn",
+      "actual game Enter, wheel and interior/top-down visibility",
+      "reload preserves IDs and server rows",
+      "Return preserves7items/containers/appearance/all3door rows"
+    ],
+    "session": "closed; software-GPU manually stepped; no hardware performance claim",
+    "limits": [
+      "actual browser lower deck only; upper datum covered by native tests",
+      "no construction process-restart or shared-crew proof"
+    ]
+  },
+  "compatibility": [
+    "optional roofKit exact pin; historical documents unchanged",
+    "selected-deck roof flag remains authored intent",
+    "normal Wayfarer assets and framing unchanged",
+    "native geometry retained; collision/pressure remain separate",
+    "no normal construction fixtures or grants seeded"
+  ],
+  "remaining": [
+    "gasket/floor seam and diagonal boundary interface integration",
+    "operational pressure, airlocks, physical deck traversal",
+    "cargo/support,3D utilities, scoped damage",
+    "complete semantic Wayfarer template and two complete independent playable instances"
+  ],
+  "recovery": [
+    "retain additive private tables and all UUIDs; never reset for rollback",
+    "Return review actor before disabling review UI",
+    "restore compatible independent app artifacts without replacing authored snapshots"
+  ],
+  "authorization": "owner authorized coordinated integrations and full construction implementation; final art approval remains separate"
+}

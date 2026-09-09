@@ -3,6 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "exports": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./ship-layout": "./src/ship-layout.ts",
+    "./construction": "./src/construction.ts",
+    "./construction-boundary": "./src/construction-boundary.ts",
+    "./construction-roof": "./src/construction-roof.ts",
+    "./assembly": "./src/assembly.ts",
+    "./construction-boundary-interfaces.json": "./src/construction-boundary-interfaces.json",
+    "./construction-floor-interfaces.json": "./src/construction-floor-interfaces.json",
+    "./character-components": "./src/character-components.ts",
+    "./appearance": "./src/appearance.ts",
+    "./inventory": "./src/inventory.ts",
+    "./storage-fixtures": "./src/storage-fixtures.ts",
+    "./construction-boundary-family": "./src/construction-boundary-family.ts",
+    "./construction-pressure-room": "./src/construction-pressure-room.ts"
+  },
   "dependencies": {}
 }

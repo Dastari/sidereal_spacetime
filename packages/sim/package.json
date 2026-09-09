@@ -3,6 +3,28 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "exports": "./src/index.ts",
-  "dependencies": {}
+  "exports": {
+    ".": "./src/index.ts",
+    "./construction-transactions": "./src/construction-transactions.ts",
+    "./construction-boundaries": "./src/construction-boundaries.ts",
+    "./construction-roofs": "./src/construction-roofs.ts",
+    "./construction-topology": "./src/construction-topology.ts",
+    "./construction-pressure-layout": "./src/construction-pressure-layout.ts",
+    "./construction-native-contacts": "./src/construction-native-contacts.ts",
+    "./construction-native-room": "./src/construction-native-room.ts",
+    "./construction-collision": "./src/construction-collision.ts",
+    "./construction-door-motion": "./src/construction-door-motion.ts",
+    "./armor-issue": "./src/armor-issue.ts",
+    "./appearance": "./src/appearance.ts",
+    "./layout-compiler": "./src/layout-compiler.ts",
+    "./layout-geometry": "./src/layout-geometry.ts",
+    "./construction-boundary-family": "./src/construction-boundary-family.ts",
+    "./construction-native-room-published": "./src/construction-native-room-published.ts",
+    "./construction-seal-motion": "./src/construction-seal-motion.ts",
+    "./construction-pressure-document": "./src/construction-pressure-document.ts"
+  },
+  "dependencies": {
+    "@noble/hashes": "2.4.0",
+    "@sidereal/content": "0.1.0"
+  }
 }

@@ -1,0 +1,1288 @@
+{
+  "schema": "sidereal.tileset-interface.v1",
+  "id": "shipyard.floor.mapped-deck-kit",
+  "revision": "r002-interface-1",
+  "family": "structural-2m-deck-v1",
+  "latticePerMeter": 32,
+  "moduleUnits": 64,
+  "coordinateMapping": "BlenderXYZ-to-renderer-XZ-minusY",
+  "datums": {
+    "floorBottom": 0,
+    "floorTop": 6,
+    "roofBottom": null,
+    "roofTop": null,
+    "serviceBottom": null,
+    "serviceTop": null
+  },
+  "profiles": [
+    {
+      "id": "deck-flat-6",
+      "mates": [
+        "deck-flat-6"
+      ]
+    }
+  ],
+  "parts": [
+    {
+      "id": "square-2m",
+      "role": "floor",
+      "footprint": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          64,
+          64
+        ],
+        [
+          0,
+          64
+        ]
+      ],
+      "bottom": 0,
+      "top": 6,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            64,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            64,
+            0
+          ],
+          "b": [
+            64,
+            64
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            64,
+            64
+          ],
+          "b": [
+            0,
+            64
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-3",
+          "a": [
+            0,
+            64
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        }
+      ],
+      "mounts": [],
+      "ports": [],
+      "native": {
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+        "sourceToNominal": {
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "reflected": false
+        }
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null
+    },
+    {
+      "id": "half-2x1",
+      "role": "floor",
+      "footprint": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          64,
+          32
+        ],
+        [
+          0,
+          32
+        ]
+      ],
+      "bottom": 0,
+      "top": 6,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            64,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            64,
+            0
+          ],
+          "b": [
+            64,
+            32
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            64,
+            32
+          ],
+          "b": [
+            0,
+            32
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-3",
+          "a": [
+            0,
+            32
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        }
+      ],
+      "mounts": [],
+      "ports": [],
+      "native": {
+        "assetId": "part-926a2afada18f96d51a3",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "nodePrefix": "GEO-part-926a2afada18f96d51a3--floor",
+        "sourceToNominal": {
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "reflected": false
+        }
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null
+    },
+    {
+      "id": "quarter-1m",
+      "role": "floor",
+      "footprint": [
+        [
+          0,
+          0
+        ],
+        [
+          32,
+          0
+        ],
+        [
+          32,
+          32
+        ],
+        [
+          0,
+          32
+        ]
+      ],
+      "bottom": 0,
+      "top": 6,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            32,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            32,
+            0
+          ],
+          "b": [
+            32,
+            32
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            32,
+            32
+          ],
+          "b": [
+            0,
+            32
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-3",
+          "a": [
+            0,
+            32
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        }
+      ],
+      "mounts": [],
+      "ports": [],
+      "native": {
+        "assetId": "part-0b833a4f3016609e9b96",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+        "sourceToNominal": {
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "reflected": false
+        }
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null
+    },
+    {
+      "id": "strip-4x1",
+      "role": "floor",
+      "footprint": [
+        [
+          0,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          128,
+          32
+        ],
+        [
+          0,
+          32
+        ]
+      ],
+      "bottom": 0,
+      "top": 6,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            128,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            128,
+            0
+          ],
+          "b": [
+            128,
+            32
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            128,
+            32
+          ],
+          "b": [
+            0,
+            32
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-3",
+          "a": [
+            0,
+            32
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        }
+      ],
+      "mounts": [],
+      "ports": [],
+      "native": {
+        "assetId": "part-baa2e4a6cbe886a5c292",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "nodePrefix": "GEO-part-baa2e4a6cbe886a5c292--floor",
+        "sourceToNominal": {
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "reflected": false
+        }
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null
+    },
+    {
+      "id": "triangle-45",
+      "role": "floor",
+      "footprint": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          0,
+          64
+        ]
+      ],
+      "bottom": 0,
+      "top": 6,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            64,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            64,
+            0
+          ],
+          "b": [
+            0,
+            64
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            0,
+            64
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        }
+      ],
+      "mounts": [],
+      "ports": [],
+      "native": {
+        "assetId": "part-771cc318e835d7a08abd",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "nodePrefix": "GEO-part-771cc318e835d7a08abd--floor",
+        "sourceToNominal": {
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "reflected": false
+        }
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null
+    },
+    {
+      "id": "triangle-long-left",
+      "role": "floor",
+      "footprint": [
+        [
+          0,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          0,
+          64
+        ]
+      ],
+      "bottom": 0,
+      "top": 6,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            128,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            128,
+            0
+          ],
+          "b": [
+            0,
+            64
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            0,
+            64
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        }
+      ],
+      "mounts": [],
+      "ports": [],
+      "native": {
+        "assetId": "part-79328356071c674a2c8b",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "nodePrefix": "GEO-part-79328356071c674a2c8b--floor",
+        "sourceToNominal": {
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "reflected": false
+        }
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null
+    },
+    {
+      "id": "triangle-long-right",
+      "role": "floor",
+      "footprint": [
+        [
+          0,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          128,
+          64
+        ]
+      ],
+      "bottom": 0,
+      "top": 6,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            128,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            128,
+            0
+          ],
+          "b": [
+            128,
+            64
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            128,
+            64
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        }
+      ],
+      "mounts": [],
+      "ports": [],
+      "native": {
+        "assetId": "part-e0dde5e97e9bed05b4b6",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "nodePrefix": "GEO-part-e0dde5e97e9bed05b4b6--floor",
+        "sourceToNominal": {
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "reflected": false
+        }
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null
+    },
+    {
+      "id": "triangle-slim-left",
+      "role": "floor",
+      "footprint": [
+        [
+          0,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          0,
+          32
+        ]
+      ],
+      "bottom": 0,
+      "top": 6,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            128,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            128,
+            0
+          ],
+          "b": [
+            0,
+            32
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            0,
+            32
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        }
+      ],
+      "mounts": [],
+      "ports": [],
+      "native": {
+        "assetId": "part-cf72797120e52d05662c",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "nodePrefix": "GEO-part-cf72797120e52d05662c--floor",
+        "sourceToNominal": {
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "reflected": false
+        }
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null
+    },
+    {
+      "id": "triangle-slim-right",
+      "role": "floor",
+      "footprint": [
+        [
+          0,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          128,
+          32
+        ]
+      ],
+      "bottom": 0,
+      "top": 6,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            128,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            128,
+            0
+          ],
+          "b": [
+            128,
+            32
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            128,
+            32
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        }
+      ],
+      "mounts": [],
+      "ports": [],
+      "native": {
+        "assetId": "part-e315cf681838afff216e",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "nodePrefix": "GEO-part-e315cf681838afff216e--floor",
+        "sourceToNominal": {
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "reflected": false
+        }
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null
+    },
+    {
+      "id": "corner-clipped",
+      "role": "floor",
+      "footprint": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          64,
+          32
+        ],
+        [
+          32,
+          64
+        ],
+        [
+          0,
+          64
+        ]
+      ],
+      "bottom": 0,
+      "top": 6,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            64,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            64,
+            0
+          ],
+          "b": [
+            64,
+            32
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            64,
+            32
+          ],
+          "b": [
+            32,
+            64
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-3",
+          "a": [
+            32,
+            64
+          ],
+          "b": [
+            0,
+            64
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-4",
+          "a": [
+            0,
+            64
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        }
+      ],
+      "mounts": [],
+      "ports": [],
+      "native": {
+        "assetId": "part-94474fb38b16d77e6429",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "nodePrefix": "GEO-part-94474fb38b16d77e6429--floor",
+        "sourceToNominal": {
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "reflected": false
+        }
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null
+    },
+    {
+      "id": "taper-4m",
+      "role": "floor",
+      "footprint": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          48,
+          128
+        ],
+        [
+          16,
+          128
+        ]
+      ],
+      "bottom": 0,
+      "top": 6,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            64,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            64,
+            0
+          ],
+          "b": [
+            48,
+            128
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            48,
+            128
+          ],
+          "b": [
+            16,
+            128
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-3",
+          "a": [
+            16,
+            128
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        }
+      ],
+      "mounts": [],
+      "ports": [],
+      "native": {
+        "assetId": "part-73f48194371a682af29c",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "nodePrefix": "GEO-part-73f48194371a682af29c--floor",
+        "sourceToNominal": {
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "reflected": false
+        }
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null
+    },
+    {
+      "id": "triangle-1m",
+      "role": "floor",
+      "footprint": [
+        [
+          0,
+          0
+        ],
+        [
+          32,
+          0
+        ],
+        [
+          0,
+          32
+        ]
+      ],
+      "bottom": 0,
+      "top": 6,
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "forbidden",
+      "edges": [
+        {
+          "id": "edge-0",
+          "a": [
+            0,
+            0
+          ],
+          "b": [
+            32,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-1",
+          "a": [
+            32,
+            0
+          ],
+          "b": [
+            0,
+            32
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        },
+        {
+          "id": "edge-2",
+          "a": [
+            0,
+            32
+          ],
+          "b": [
+            0,
+            0
+          ],
+          "profile": "deck-flat-6",
+          "bottom": 0,
+          "top": 6,
+          "seals": []
+        }
+      ],
+      "mounts": [],
+      "ports": [],
+      "native": {
+        "assetId": "part-7902f7617fb23eb8abe3",
+        "revision": "r002",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "nodePrefix": "GEO-part-7902f7617fb23eb8abe3--floor",
+        "sourceToNominal": {
+          "translation": [
+            0,
+            0,
+            0
+          ],
+          "quarterTurns": 0,
+          "reflected": false
+        }
+      },
+      "damageMode": "voxel",
+      "damageAdapter": null,
+      "structuralDefinitionId": null
+    }
+  ]
+}

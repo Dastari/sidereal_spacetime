@@ -1,0 +1,206 @@
+.planet-studio {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 292px;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  background: #080e20;
+}
+.planet-view {
+  position: relative;
+  min-height: 540px;
+  overflow: hidden;
+}
+.planet-view canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  touch-action: none;
+}
+.planet-heading {
+  position: absolute;
+  z-index: 1;
+  left: 26px;
+  right: 26px;
+  top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.planet-heading button {
+  pointer-events: auto;
+}
+.planet-heading h1 {
+  font-size: 34px;
+  margin: 0;
+}
+.planet-heading p {
+  margin: 2px 0;
+  color: #b7c8de;
+}
+.planet-controls {
+  background: #111c2e;
+  padding: 20px;
+  overflow: auto;
+  border-left: 1px solid #314760;
+}
+.planet-controls h2 {
+  margin: 0 0 16px;
+  font-size: 22px;
+}
+.planet-controls label {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 14px;
+  color: #c9d5e5;
+  font-size: 14px;
+}
+.planet-controls select,
+.planet-controls input[type="number"] {
+  width: 100%;
+  background: #091427;
+  border: 1px solid #405773;
+  border-radius: 4px;
+  padding: 8px;
+  color: #edf5ff;
+}
+.planet-range span {
+  display: flex;
+  justify-content: space-between;
+}
+.planet-range output {
+  color: #a4ccf5;
+}
+.planet-range input {
+  width: 100%;
+  accent-color: #75baff;
+}
+.planet-seed-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.planet-seed-actions button {
+  flex: 1;
+  font-size: 12px;
+  padding: 7px;
+}
+.planet-controls .planet-check {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.planet-palette {
+  border: 0;
+  margin: 0 0 18px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.planet-palette legend {
+  padding: 0;
+  margin-bottom: 8px;
+  color: #c9d5e5;
+  font-size: 14px;
+}
+.planet-palette input {
+  width: 23px;
+  height: 28px;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+.planet-view-footer {
+  position: absolute;
+  bottom: 17px;
+  left: 24px;
+  right: 24px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  color: #c4d1e7;
+  pointer-events: none;
+}
+.planet-family-key {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 55px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+.planet-family-key button {
+  border: 1px solid #405773;
+  background: #14223cd9;
+  color: #dcecff;
+  padding: 8px;
+  border-radius: 4px;
+  text-transform: capitalize;
+}
+.planet-controls :focus-visible,
+.planet-heading button:focus-visible,
+.planet-family-key button:focus-visible {
+  outline: 2px solid #8acbff;
+  outline-offset: 3px;
+}
+@media (max-width: 900px) {
+  .planet-studio {
+    grid-template-columns: minmax(0, 1fr) 245px;
+  }
+  .planet-controls {
+    padding: 14px;
+  }
+  .planet-heading {
+    left: 15px;
+    right: 15px;
+  }
+  .planet-heading button {
+    max-width: 125px;
+  }
+}
+@media (max-width: 650px) {
+  .planet-studio {
+    display: block;
+    overflow: auto;
+  }
+  .planet-view {
+    height: 460px;
+    min-height: 460px;
+  }
+  .planet-controls {
+    border-left: 0;
+  }
+  .planet-view-footer span:last-child {
+    display: none;
+  }
+  .planet-family-key {
+    left: 12px;
+    right: 12px;
+    gap: 3px;
+  }
+  .planet-family-key button {
+    font-size: 11px;
+    padding: 5px;
+  }
+}
+.planet-import {
+  margin-top: 14px;
+}
+.planet-import input {
+  font-size: 11px;
+  max-width: 100%;
+}
+.planet-import input::file-selector-button {
+  background: #243b58;
+  border: 1px solid #52718e;
+  color: #edf5ff;
+  border-radius: 4px;
+  padding: 6px;
+  cursor: pointer;
+}

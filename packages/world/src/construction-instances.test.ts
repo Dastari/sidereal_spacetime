@@ -1,0 +1,432 @@
+import { test, expect, vi } from "vitest";
+import { Identity } from "spacetimedb";
+vi.mock("spacetimedb/server", () => ({
+  SenderError: class extends Error {},
+  Range: class {},
+  t: new Proxy({}, { get: () => () => ({}) }),
+}));
+vi.mock("./auth", () => ({ requireGame: () => ({ kind: "oidc" }) }));
+vi.mock("./combat", () => ({ clearAim: vi.fn() }));
+import {
+  spawnBlueprint,
+  ownInstances,
+  ownDecks,
+  enterReview,
+  leaveReview,
+  stepActor,
+  ownLocation,
+} from "./construction-instances";
+import { emptyLayout, stampTile } from "../../content/src/ship-layout";
+import { bindConstructionLayout } from "../../sim/src/construction-layout";
+import { compileConstruction } from "../../sim/src/construction-transactions";
+import { CONSTRUCTION_BOUNDARY_PIN } from "@sidereal/content/construction-boundary";
+import {
+  requestDoor,
+  stepDoors,
+  ownDoors,
+  constructionCollision,
+} from "./construction-doors";
+import { canOccupyDeck } from "@sidereal/sim/construction-collision";
+function table(indexes: Record<string, string> = {}, primary = "id") {
+  const rows: any[] = [];
+  const result: any = {
+    rows,
+    iter: () => rows.values(),
+    insert: (r: any) => {
+      if (rows.some((x) => x[primary] === r[primary])) throw Error("duplicate");
+      rows.push(r);
+      return r;
+    },
+  };
+  result[primary] = {
+    find: (id: string) => rows.find((r) => r[primary] === id),
+    update: (r: any) => {
+      const i = rows.findIndex((x) => x[primary] === r[primary]);
+      if (i < 0) throw Error("missing");
+      rows[i] = r;
+    },
+    delete: (id: string) => {
+      const i = rows.findIndex((r) => r[primary] === id);
+      if (i >= 0) rows.splice(i, 1);
+    },
+  };
+  for (const [name, key] of Object.entries(indexes))
+    result[name] = {
+      filter: (v: any) => rows.filter((r) => String(r[key]) === String(v)),
+      find: (v: any) => rows.find((r) => String(r[key]) === String(v)),
+    };
+  return result;
+}
+
+function fixture() {
+  const owner = Identity.fromString("1".repeat(64)),
+    other = Identity.fromString("2".repeat(64));
+  const layout = emptyLayout("template", "deck");
+  layout.tiles.push(stampTile("f", "deck", "rectangle", [0, 0]));
+  const snapshot = compileConstruction(
+    JSON.stringify(bindConstructionLayout(layout).document),
+  );
+  const db: any = {
+    constructionBlueprint: table(),
+    constructionGrant: table({ by_principal: "principal" }),
+    constructionReceipt: table({ by_principal: "principal" }),
+    constructionInstance: table({ by_owner: "owner" }),
+    constructionDeck: table({ by_instance: "instanceId" }),
+    constructionLocation: table({}, "characterId"),
+    constructionNativePressure: table({ by_owner: "owner", by_door: "doorId" }),
+    constructionAtmosphere: table({ by_owner: "owner" }),
+    constructionAtmosphereClock: table(),
+    constructionDoor: table({
+      by_instance: "instanceId",
+      by_deck: "deckId",
+      by_moving: "moving",
+    }),
+    character: table({ by_owner: "owner" }),
+    ship: table(),
+    station: table({ shipId: "shipId" }),
+    couchSeat: table({}, "characterId"),
+    input: table({}, "characterId"),
+  };
+  db.constructionBlueprint.insert({
+    id: "blueprint",
+    workspaceId: "w",
+    sourceRevision: 1n,
+    ...snapshot,
+  });
+  for (const capability of ["draft.read", "instance.spawn"])
+    db.constructionGrant.insert({
+      id: capability,
+      principal: owner,
+      workspaceId: "w",
+      capability,
+      expiresMicros: 100n,
+      revoked: false,
+    });
+  let n = 0;
+  const ctx: any = {
+    db,
+    sender: owner,
+    timestamp: { microsSinceUnixEpoch: 10n },
+    newUuidV4: () => ({
+      toString: () =>
+        `00000000-0000-4000-8000-${(++n).toString().padStart(12, "0")}`,
+    }),
+  };
+  return {
+    ctx,
+    other,
+    args: {
+      blueprintId: "blueprint",
+      expectedSha256: snapshot.sha256,
+      sourceDeckId: "deck",
+      operationId: "spawn-1",
+    },
+  };
+}
+test("two server spawns are independent, replay-safe and scoped to their owner", () => {
+  const { ctx, other, args } = fixture();
+  spawnBlueprint(ctx, args);
+  spawnBlueprint(ctx, args);
+  expect(ownInstances(ctx)).toHaveLength(1);
+  spawnBlueprint(ctx, { ...args, operationId: "spawn-2" });
+  const rows = ownInstances(ctx);
+  expect(rows).toHaveLength(2);
+  expect(rows[0].id).not.toBe(rows[1].id);
+  const a = JSON.parse(rows[0].documentJson),
+    b = JSON.parse(rows[1].documentJson);
+  expect(a.floors[0].id).not.toBe(b.floors[0].id);
+  expect(a.floors[0].id).toBe(a.layout.tiles[0].id);
+  expect(ownDecks(ctx)).toHaveLength(2);
+  expect(ownInstances({ ...ctx, sender: other })).toEqual([]);
+  expect(ownDecks({ ...ctx, sender: other })).toEqual([]);
+  expect(ctx.db.constructionBlueprint.rows[0].canonical).not.toContain(
+    rows[0].id,
+  );
+});
+test("wrong revision, missing grant and expired replay cannot create instances", () => {
+  const { ctx, other, args } = fixture();
+  expect(() =>
+    spawnBlueprint(ctx, { ...args, expectedSha256: "0".repeat(64) }),
+  ).toThrow("SHA");
+  expect(() => spawnBlueprint({ ...ctx, sender: other }, args)).toThrow(
+    "grant",
+  );
+  expect(ctx.db.constructionInstance.rows).toEqual([]);
+  spawnBlueprint(ctx, args);
+  ctx.timestamp.microsSinceUnixEpoch = 100n;
+  expect(() => spawnBlueprint(ctx, args)).toThrow("grant");
+  expect(ownInstances(ctx)).toHaveLength(1);
+});
+test("unknown deck fails before inserting live state", () => {
+  const { ctx, args } = fixture();
+  expect(() =>
+    spawnBlueprint(ctx, { ...args, sourceDeckId: "missing" }),
+  ).toThrow("deck");
+  expect(ctx.db.constructionInstance.rows).toEqual([]);
+  expect(ctx.db.constructionDeck.rows).toEqual([]);
+});
+
+test("review walking uses authored perimeter, clears controls and rejects stale return from an earlier visit", () => {
+  const { ctx, args } = fixture();
+  spawnBlueprint(ctx, args);
+  const instance = ownInstances(ctx)[0];
+  ctx.db.character.insert({
+    id: "actor",
+    owner: ctx.sender,
+    shipId: "legacy",
+    localX: 8,
+    localY: 9,
+    connected: true,
+    sprinting: false,
+  });
+  ctx.db.ship.insert({ id: "legacy" });
+  ctx.db.input.insert({
+    characterId: "actor",
+    sequence: 9n,
+    dx: 1,
+    dy: 1,
+    throttle: 1,
+    turn: 1,
+    sprint: true,
+  });
+  enterReview(ctx, {
+    instanceId: instance.id,
+    expectedShipId: "legacy",
+    operationId: "enter-1",
+  });
+  const first = ownLocation(ctx)[0];
+  expect(ctx.db.input.characterId.find("actor")).toMatchObject({
+    sequence: 9n,
+    dx: 0,
+    dy: 0,
+    throttle: 0,
+    turn: 0,
+  });
+  for (let i = 0; i < 80; i++)
+    stepActor(ctx, ctx.db.character.id.find("actor"), {
+      dx: 1,
+      dy: 0,
+      sprint: true,
+    });
+  expect(ctx.db.character.id.find("actor").localX).toBeLessThanOrEqual(
+    1.7000001,
+  );
+  expect(ctx.db.character.id.find("actor").localX).toBeGreaterThan(1.69);
+  leaveReview(ctx, {
+    expectedVisitId: first.visitId,
+    expectedRevision: first.revision,
+    operationId: "leave-1",
+  });
+  expect(ctx.db.character.id.find("actor")).toMatchObject({
+    shipId: "legacy",
+    localX: 8,
+    localY: 9,
+  });
+  enterReview(ctx, {
+    instanceId: instance.id,
+    expectedShipId: "legacy",
+    operationId: "enter-2",
+  });
+  expect(ownLocation(ctx)[0].visitId).not.toBe(first.visitId);
+  expect(() =>
+    leaveReview(ctx, {
+      expectedVisitId: first.visitId,
+      expectedRevision: 1n,
+      operationId: "delayed-leave",
+    }),
+  ).toThrow("return");
+  ctx.timestamp.microsSinceUnixEpoch = 100n;
+  const current = ownLocation(ctx)[0];
+  leaveReview(ctx, {
+    expectedVisitId: current.visitId,
+    expectedRevision: current.revision,
+    operationId: "leave-after-expiry",
+  });
+  expect(ownLocation(ctx)).toEqual([]);
+});
+test("review entry denies seating and stale source frame without mutating character", () => {
+  const { ctx, args } = fixture();
+  spawnBlueprint(ctx, args);
+  const instance = ownInstances(ctx)[0];
+  ctx.db.character.insert({
+    id: "actor",
+    owner: ctx.sender,
+    shipId: "legacy",
+    connected: true,
+  });
+  ctx.db.ship.insert({ id: "legacy" });
+  ctx.db.station.insert({ id: "helm", shipId: "legacy", occupantId: "actor" });
+  expect(() =>
+    enterReview(ctx, {
+      instanceId: instance.id,
+      expectedShipId: "legacy",
+      operationId: "seat",
+    }),
+  ).toThrow("Stand up");
+  expect(ownLocation(ctx)).toEqual([]);
+  ctx.db.station.id.update({ id: "helm", shipId: "legacy" });
+  expect(() =>
+    enterReview(ctx, {
+      instanceId: instance.id,
+      expectedShipId: "stale",
+      operationId: "frame",
+    }),
+  ).toThrow("location");
+});
+
+function doorFixture() {
+  const f = fixture(),
+    layout = emptyLayout("door-template", "deck");
+  for (let x = 0; x < 2; x++)
+    for (let y = 0; y < 2; y++)
+      layout.tiles.push(
+        stampTile(`f-${x}-${y}`, "deck", "rectangle", [x * 64, y * 64]),
+      );
+  layout.partitions.push({
+    id: "partition",
+    deckId: "deck",
+    a: [64, 0],
+    b: [64, 128],
+    seal: "design-sealed",
+  });
+  layout.openings.push({
+    id: "door",
+    deckId: "deck",
+    partitionId: "partition",
+    a: [64, 12],
+    b: [64, 52],
+    kind: "door",
+    clearance: 16,
+    sill: 0,
+  });
+  const document = bindConstructionLayout(layout).document;
+  document.boundaryKit = { ...CONSTRUCTION_BOUNDARY_PIN };
+  const snapshot = compileConstruction(JSON.stringify(document));
+  f.ctx.db.constructionBlueprint.id.update({
+    id: "blueprint",
+    workspaceId: "w",
+    sourceRevision: 1n,
+    ...snapshot,
+  });
+  let n = 1000;
+  f.ctx.newUuidV4 = () => ({
+    toString: () =>
+      `00000000-0000-4000-8000-${(++n).toString().padStart(12, "0")}`,
+  });
+  f.args.expectedSha256 = snapshot.sha256;
+  spawnBlueprint(f.ctx, f.args);
+  const instance = ownInstances(f.ctx)[0];
+  f.ctx.db.character.insert({
+    id: "door-actor",
+    owner: f.ctx.sender,
+    shipId: "legacy",
+    localX: 8,
+    localY: 9,
+    connected: true,
+  });
+  f.ctx.db.ship.insert({ id: "legacy" });
+  enterReview(f.ctx, {
+    instanceId: instance.id,
+    expectedShipId: "legacy",
+    operationId: "enter-door",
+  });
+  const actor = f.ctx.db.character.id.find("door-actor");
+  f.ctx.db.character.id.update({ ...actor, localX: 1, localY: 1 });
+  return {
+    ...f,
+    instance,
+    door: ownDoors(f.ctx)[0],
+    visit: ownLocation(f.ctx)[0],
+  };
+}
+test("native door motion, passability and physical open leaf are authoritative and instance scoped", () => {
+  const { ctx, other, instance, door, visit, args } = doorFixture();
+  const command = {
+    openingId: door.id,
+    expectedVisitId: visit.visitId,
+    expectedRevision: door.revision,
+    open: true,
+    operationId: "open",
+  };
+  expect(ownDoors({ ...ctx, sender: other })).toEqual([]);
+  expect(() => requestDoor({ ...ctx, sender: other }, command)).toThrow();
+  requestDoor(ctx, command);
+  requestDoor(ctx, command);
+  expect(ownDoors(ctx)[0].revision).toBe(2n);
+  for (let i = 0; i < 10; i++) stepDoors(ctx);
+  expect(ownDoors(ctx)[0].fraction).toBeCloseTo(0.5);
+  const location = {
+    shipId: instance.id,
+    deckId: visit.deckId,
+    position: [2, 1] as [number, number],
+  };
+  expect(
+    canOccupyDeck(
+      constructionCollision(
+        ctx,
+        ctx.db.constructionInstance.id.find(instance.id),
+        visit.deckId,
+      ),
+      location,
+      0.3,
+    ),
+  ).toBe(false);
+  for (let i = 0; i < 10; i++) stepDoors(ctx);
+  expect(ownDoors(ctx)[0].fraction).toBe(1);
+  const frame = constructionCollision(
+    ctx,
+    ctx.db.constructionInstance.id.find(instance.id),
+    visit.deckId,
+  );
+  expect(canOccupyDeck(frame, location, 0.3)).toBe(true);
+  expect(
+    canOccupyDeck(frame, { ...location, position: [2.8, 0.35] }, 0.3),
+  ).toBe(false);
+  spawnBlueprint(ctx, { ...args, operationId: "second-native" });
+  const doors = ownDoors(ctx);
+  expect(doors).toHaveLength(2);
+  expect(doors[1].id).not.toBe(doors[0].id);
+  expect(doors[1].fraction).toBe(0);
+  expect(() =>
+    requestDoor(ctx, {
+      ...command,
+      openingId: doors[1].id,
+      operationId: "remote",
+    }),
+  ).toThrow("instance");
+});
+test("door obstruction retains state until clear, with stale visit/revision and remote reach rejected", () => {
+  const { ctx, door, visit } = doorFixture();
+  let actor = ctx.db.character.id.find("door-actor");
+  const command = {
+    openingId: door.id,
+    expectedVisitId: visit.visitId,
+    expectedRevision: door.revision,
+    open: true,
+    operationId: "open",
+  };
+  expect(() =>
+    requestDoor(ctx, { ...command, expectedVisitId: "old" }),
+  ).toThrow();
+  expect(() => requestDoor(ctx, { ...command, expectedRevision: 99n })).toThrow(
+    "revision",
+  );
+  ctx.db.character.id.update({ ...actor, localX: 0.5, localY: 3.5 });
+  expect(() => requestDoor(ctx, command)).toThrow("reach");
+  ctx.db.character.id.update(actor);
+  requestDoor(ctx, command);
+  ctx.db.character.id.update({ ...actor, localX: 2.8, localY: 1 });
+  stepDoors(ctx);
+  expect(ownDoors(ctx)[0]).toMatchObject({
+    fraction: 0,
+    blocked: true,
+    moving: true,
+  });
+  ctx.db.character.id.update(actor);
+  for (let i = 0; i < 20; i++) stepDoors(ctx);
+  expect(ownDoors(ctx)[0]).toMatchObject({
+    fraction: 1,
+    blocked: false,
+    moving: false,
+  });
+});

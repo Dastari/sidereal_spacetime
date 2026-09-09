@@ -1,0 +1,813 @@
+import { HullDecalPanel } from "../HullDecalPanel";
+import { useEffect, useRef, useState } from "react";
+import {
+  Box,
+  Move,
+  Orbit,
+  RotateCw,
+  FlipHorizontal,
+  Copy,
+  Trash2,
+  Focus,
+  Plus,
+} from "lucide-react";
+import {
+  PART_CATEGORIES,
+  type PartCatalog,
+  type PartCategory,
+  type PartPlacement,
+} from "../../../../../packages/content/src/assembly";
+import {
+  assemblyMismatches,
+  editVisualPart,
+  importShipAssembly,
+  layoutVisualParts,
+  visualRevision,
+} from "../../../../../packages/content/src/layout-assembly";
+import type { LayoutDocument } from "../../../../../packages/content/src/ship-layout";
+import type { CompiledLayout } from "../../../../../packages/sim/src/layout-compiler";
+import type {
+  HullViewState,
+  HullCameraState,
+} from "../../../../../packages/render/src/layout-hull";
+import { uuid } from "./useLayout";
+import "./hull.css";
+type Handle = ReturnType<
+  (typeof import("../../../../../packages/render/src/layout-hull"))["createHullViewport"]
+>;
+interface Props {
+  mode: "Hull" | "Objects";
+  doc: LayoutDocument;
+  catalog?: PartCatalog;
+  catalogError: string;
+  blocked: boolean;
+  result?: CompiledLayout;
+  projection: string;
+  commit: (change: (d: LayoutDocument) => LayoutDocument) => void;
+  adopt: (d: LayoutDocument) => void;
+  error: (s: string) => void;
+}
+export default function HullWorkspace(props: Props) {
+  const { doc, catalog, commit } = props;
+  const [selection, select] = useState(""),
+    [assetId, setAsset] = useState(""),
+    [tool, setTool] = useState<HullViewState["tool"]>("select"),
+    [category, setCategory] = useState<PartCategory | "all">(
+      props.mode === "Objects" ? "equipment" : "wall",
+    ),
+    [search, setSearch] = useState(""),
+    [height, setHeight] = useState(0),
+    [snap, setSnap] = useState(0.03125),
+    [status, setStatus] = useState("Loading workbench…"),
+    [loading, setLoading] = useState(false),
+    [visible, setVisible] = useState(new Set<PartCategory>(PART_CATEGORIES)),
+    [library, setLibrary] = useState<"current" | "all">("current");
+  const canvas = useRef<HTMLCanvasElement>(null),
+    viewport = useRef<Handle | null>(null),
+    latest = useRef(props),
+    camera = useRef<HullCameraState | undefined>(undefined),
+    lastDoc = useRef(doc.id);
+  latest.current = props;
+  const clipboard = useRef<{
+    part: PartPlacement;
+    fitting?: LayoutDocument["fittings"][number];
+    count: number;
+  } | null>(null);
+  const [copiedLabel, setCopiedLabel] = useState("");
+  useEffect(() => {
+    setCategory(props.mode === "Objects" ? "equipment" : "wall");
+    setSearch("");
+  }, [props.mode]);
+
+  const parts = catalog ? layoutVisualParts(doc, catalog) : [],
+    selected = parts.find((p) => p.id === selection),
+    asset = catalog?.assets.find((a) => a.id === assetId),
+    selectedAsset = catalog?.assets.find((a) => a.id === selected?.assetId),
+    fitting = doc.fittings.some((f) => f.id === selection);
+  const mismatches = catalog ? assemblyMismatches(doc, catalog) : [];
+  const blocked = props.blocked || !catalog || mismatches.length > 0;
+  const callback = useRef({
+    move: (_id: string, _p: [number, number, number], _copy: boolean) => {},
+    place: (_id: string, _p: [number, number, number]) => {},
+  });
+  const state = useRef<HullViewState>({
+    parts,
+    selected: selection,
+    visible,
+    tool,
+    assetId,
+    height,
+    snap,
+    blocked,
+    projection: props.projection,
+    floor: props.result,
+  });
+  state.current = {
+    parts,
+    selected: selection,
+    visible,
+    tool,
+    assetId,
+    height,
+    snap,
+    blocked,
+    projection: props.projection,
+    floor: props.result,
+  };
+  function mutate(part: PartPlacement) {
+    if (blocked || !catalog) return;
+    commit((d) => editVisualPart(d, part, catalog));
+  }
+  function add(id: string, p: [number, number, number]) {
+    if (blocked || !catalog || !catalog.assets.some((a) => a.id === id)) return;
+    const placement: PartPlacement = {
+      id: uuid(),
+      assetId: id,
+      position: p,
+      rotation: 0,
+      flipped: false,
+      removedCells: [],
+    };
+    commit((d) => {
+      d.assembly ??= {
+        schema: "sidereal.layout-assembly.v1",
+        source: null,
+        revisions: {},
+        parts: [],
+      };
+      d.assembly.revisions[id] = visualRevision(catalog, id);
+      d.assembly.parts.push(placement);
+      return d;
+    });
+    select(placement.id);
+  }
+  function duplicate(
+    part: PartPlacement,
+    position: [number, number, number] = [
+      part.position[0] + 1,
+      part.position[1],
+      part.position[2],
+    ],
+  ) {
+    if (blocked || !catalog) return;
+    const copy = { ...structuredClone(part), id: uuid(), position };
+    commit((d) => {
+      const existing = d.fittings.find((f) => f.id === part.id);
+      if (existing) {
+        d.fittings.push({ ...structuredClone(existing), id: copy.id });
+        return editVisualPart(d, copy, catalog);
+      }
+      d.assembly ??= {
+        schema: "sidereal.layout-assembly.v1",
+        source: null,
+        revisions: {},
+        parts: [],
+      };
+      d.assembly.revisions[part.assetId] = visualRevision(
+        catalog,
+        part.assetId,
+      );
+      if (part.fittingProxy)
+        d.assembly.revisions[part.fittingProxy.assetId] = visualRevision(
+          catalog,
+          part.fittingProxy.assetId,
+        );
+      d.assembly.parts.push(copy);
+      return d;
+    });
+    select(copy.id);
+  }
+  function copySelected() {
+    if (!selected) return;
+    clipboard.current = {
+      part: structuredClone(selected),
+      fitting: structuredClone(doc.fittings.find((f) => f.id === selected.id)),
+      count: 0,
+    };
+    setCopiedLabel(selectedAsset?.label ?? selected.assetId);
+  }
+  function paste() {
+    if (blocked || !catalog || !clipboard.current) return;
+    const saved = clipboard.current;
+    saved.count++;
+    const copy = {
+      ...structuredClone(saved.part),
+      id: uuid(),
+      position: [
+        saved.part.position[0] + saved.count,
+        saved.part.position[1],
+        saved.part.position[2],
+      ] as [number, number, number],
+    };
+    commit((d) => {
+      if (saved.fitting) {
+        d.fittings.push({ ...structuredClone(saved.fitting), id: copy.id });
+        return editVisualPart(d, copy, catalog);
+      }
+      d.assembly ??= {
+        schema: "sidereal.layout-assembly.v1",
+        source: null,
+        revisions: {},
+        parts: [],
+      };
+      d.assembly.revisions[copy.assetId] = visualRevision(
+        catalog,
+        copy.assetId,
+      );
+      if (copy.fittingProxy)
+        d.assembly.revisions[copy.fittingProxy.assetId] = visualRevision(
+          catalog,
+          copy.fittingProxy.assetId,
+        );
+      d.assembly.parts.push(copy);
+      return d;
+    });
+    select(copy.id);
+    setTool("select");
+  }
+  function remove() {
+    if (blocked) return;
+    commit((d) => {
+      if (d.assembly)
+        d.assembly.parts = d.assembly.parts.filter((p) => p.id !== selection);
+      d.fittings = d.fittings.filter((p) => p.id !== selection);
+      return d;
+    });
+    select("");
+  }
+  callback.current = {
+    place: add,
+    move: (id, p, copy) => {
+      const part = parts.find((p) => p.id === id);
+      if (part) {
+        if (copy) duplicate(part, p);
+        else mutate({ ...part, position: p });
+      }
+    },
+  };
+  useEffect(() => {
+    if (!catalog || !canvas.current) return;
+    let disposed = false;
+    import("../../../../../packages/render/src/layout-hull")
+      .then(({ createHullViewport }) => {
+        if (disposed || !canvas.current) return;
+        const v = createHullViewport(
+          canvas.current,
+          catalog,
+          {
+            select,
+            move: (...args) => callback.current.move(...args),
+            place: (...args) => callback.current.place(...args),
+            status: setStatus,
+          },
+          camera.current,
+        );
+        viewport.current = v;
+        v.update(state.current);
+        v.ready().then(() => {
+          if (!disposed && !camera.current) v.fit();
+        });
+      })
+      .catch((e) => {
+        if (!disposed)
+          setStatus(`Workbench unavailable: ${String(e)}. Draft preserved.`);
+      });
+    return () => {
+      disposed = true;
+      if (viewport.current) {
+        camera.current = viewport.current.getCamera();
+        viewport.current.dispose();
+        viewport.current = null;
+      }
+    };
+  }, [catalog]);
+  useEffect(() => {
+    viewport.current?.update(state.current);
+    if (lastDoc.current !== doc.id) {
+      lastDoc.current = doc.id;
+      select("");
+      viewport.current?.ready().then(() => viewport.current?.fit());
+    }
+  }, [
+    doc,
+    props.result,
+    props.projection,
+    selection,
+    visible,
+    tool,
+    assetId,
+    height,
+    snap,
+    blocked,
+  ]);
+  useEffect(() => {
+    const key = (e: KeyboardEvent) => {
+      if (
+        (e.target as HTMLElement).closest(
+          'input,textarea,select,[contenteditable="true"],dialog',
+        )
+      )
+        return;
+      if (e.key === "Escape") {
+        viewport.current?.cancel();
+        setTool("select");
+        return;
+      }
+      if (canvas.current?.dataset.gestureActive === "true") return;
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "c" && selected) {
+        e.preventDefault();
+        copySelected();
+        return;
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "v") {
+        e.preventDefault();
+        paste();
+        return;
+      }
+      if (
+        blocked ||
+        canvas.current?.dataset.gestureActive === "true" ||
+        !selected
+      )
+        return;
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "d") {
+        e.preventDefault();
+        duplicate(selected);
+      } else if (e.key === "Delete" || e.key === "Backspace") {
+        e.preventDefault();
+        remove();
+      } else if (e.key.toLowerCase() === "r")
+        mutate({ ...selected, rotation: selected.rotation + Math.PI / 2 });
+      else if (e.key.toLowerCase() === "f")
+        mutate({ ...selected, flipped: !selected.flipped });
+      else if (
+        ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)
+      ) {
+        e.preventDefault();
+        mutate({
+          ...selected,
+          position: [
+            selected.position[0] +
+              (e.key === "ArrowLeft"
+                ? -snap
+                : e.key === "ArrowRight"
+                  ? snap
+                  : 0),
+            selected.position[1] +
+              (e.key === "ArrowUp" ? snap : e.key === "ArrowDown" ? -snap : 0),
+            selected.position[2],
+          ],
+        });
+      }
+    };
+    window.addEventListener("keydown", key);
+    return () => window.removeEventListener("keydown", key);
+  });
+  async function loadWayfarer() {
+    if (!catalog || loading) return;
+    setLoading(true);
+    try {
+      const response = await fetch("/assets/assembly/wayfarer.json", {
+        cache: "no-cache",
+      });
+      if (!response.ok) throw Error("Wayfarer assembly unavailable");
+      const draft = importShipAssembly(
+        await response.json(),
+        catalog,
+        uuid(),
+        uuid(),
+      );
+      latest.current.adopt(draft);
+    } catch (e) {
+      props.error(`${String(e)}. Your current draft is preserved.`);
+    } finally {
+      setLoading(false);
+    }
+  }
+  const currentIds = new Set(parts.map((p) => p.assetId));
+  const palette =
+    catalog?.assets
+      .filter(
+        (a) =>
+          (category === "all" || a.category === category) &&
+          a.label.toLowerCase().includes(search.toLowerCase()) &&
+          (library === "all" || currentIds.has(a.id) || !!a.visual),
+      )
+      .sort(
+        (a, b) =>
+          Number(!!b.visual) - Number(!!a.visual) ||
+          a.label.localeCompare(b.label),
+      ) ?? [];
+  return (
+    <div className="hull-workspace" data-hull-workspace>
+      <aside className="hull-library" aria-label="Hull component library">
+        <h2>
+          {props.mode === "Objects"
+            ? "Objects & equipment"
+            : "Ship building blocks"}
+        </h2>
+        <button
+          className="layout-primary hull-load"
+          disabled={loading || !catalog || props.blocked}
+          onClick={loadWayfarer}
+        >
+          {loading ? "Loading ship…" : "Load existing Wayfarer"}
+        </button>
+        <p className="layout-note">
+          Opens a separate editable copy of the game’s authored ship. Your
+          current draft stays saved.
+        </p>
+        {doc.legacy && (
+          <button
+            disabled={blocked}
+            onClick={() => {
+              if (!catalog || !doc.legacy) return;
+              try {
+                const source = JSON.parse(doc.legacy.sourceRaw);
+                const copy = importShipAssembly(
+                  source.present ?? source,
+                  catalog,
+                  uuid(),
+                  uuid(),
+                );
+                copy.legacy = structuredClone(doc.legacy);
+                props.adopt(copy);
+              } catch (e) {
+                props.error(`${String(e)}. Preserved source is unchanged.`);
+              }
+            }}
+          >
+            Edit preserved assembly as a copy
+          </button>
+        )}
+        {props.catalogError && <p role="alert">{props.catalogError}</p>}
+        <label>
+          Find component
+          <input
+            aria-label="Find hull component"
+            type="search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </label>
+        <label>
+          Category
+          <select
+            aria-label="Hull component category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value as typeof category)}
+          >
+            <option value="all">All components</option>
+            {PART_CATEGORIES.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label>
+          Library
+          <select
+            aria-label="Hull library scope"
+            value={library}
+            onChange={(e) => setLibrary(e.target.value as typeof library)}
+          >
+            <option value="current">Native kit + this ship</option>
+            <option value="all">All retained components</option>
+          </select>
+        </label>
+        <div className="hull-palette">
+          {palette.map((a) => (
+            <button
+              key={a.id}
+              aria-label={`Place ${a.label}`}
+              aria-pressed={assetId === a.id && tool === "place"}
+              disabled={blocked}
+              draggable={!blocked}
+              onDragStart={(e) =>
+                e.dataTransfer.setData("application/sidereal-hull", a.id)
+              }
+              onClick={() => {
+                setAsset(a.id);
+                setTool("place");
+              }}
+            >
+              {a.thumbnail ? (
+                <img
+                  loading="lazy"
+                  src={a.thumbnail}
+                  alt=""
+                  onError={(e) => (e.currentTarget.style.visibility = "hidden")}
+                />
+              ) : (
+                <Box size={28} />
+              )}
+              <span>{a.label}</span>
+              <small>{a.visual ? "Blender mesh" : "Retained part"}</small>
+            </button>
+          ))}
+        </div>
+      </aside>
+      <section className="hull-center">
+        <div className="hull-toolbar">
+          <button
+            aria-label="Select and move components"
+            aria-pressed={tool === "select"}
+            onClick={() => setTool("select")}
+          >
+            <Move size={17} />
+            Move
+          </button>
+          <button
+            aria-label="Orbit ship"
+            aria-pressed={tool === "orbit"}
+            onClick={() => setTool("orbit")}
+          >
+            <Orbit size={17} />
+            Orbit
+          </button>
+          <button aria-label="Fit ship" onClick={() => viewport.current?.fit()}>
+            <Focus size={17} />
+            Fit
+          </button>
+          <button
+            aria-label="Copy selected component"
+            disabled={!selected}
+            onClick={copySelected}
+          >
+            <Copy size={17} />
+            Copy
+          </button>
+          <button
+            aria-label="Paste component"
+            disabled={blocked || !copiedLabel}
+            onClick={paste}
+          >
+            <Plus size={17} />
+            Paste
+          </button>
+          <label>
+            Snap
+            <select
+              aria-label="Hull snap"
+              value={snap}
+              onChange={(e) => setSnap(Number(e.target.value))}
+            >
+              {[0.03125, 0.125, 0.25, 0.5, 1, 2].map((n) => (
+                <option value={n} key={n}>
+                  {n} m
+                </option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Build height
+            <input
+              aria-label="Build height"
+              type="number"
+              min="-256"
+              max="256"
+              step={snap}
+              value={height}
+              onChange={(e) => setHeight(Number(e.target.value))}
+            />
+            <span>m</span>
+          </label>
+        </div>
+        <div
+          className="hull-viewport"
+          onDragOver={(e) => {
+            if (!blocked) e.preventDefault();
+          }}
+          onDrop={(e) => {
+            e.preventDefault();
+            const id = e.dataTransfer.getData("application/sidereal-hull"),
+              p = viewport.current?.dropPoint(e.clientX, e.clientY);
+            if (id && p) add(id, p);
+          }}
+        >
+          <canvas
+            ref={canvas}
+            tabIndex={0}
+            aria-label="Editable 3D ship hull"
+          />
+          <div className="hull-caption">
+            <strong>{doc.name}</strong>
+            <span>
+              {tool === "place"
+                ? `Place ${asset?.label ?? "component"} · click on build plane`
+                : "Middle drag or Orbit to rotate · right drag to pan · wheel to zoom"}
+            </span>
+          </div>
+          {tool === "place" && (
+            <button className="hull-cancel" onClick={() => setTool("select")}>
+              Cancel placement · Esc
+            </button>
+          )}
+        </div>
+        <div className="hull-render-status" role="status">
+          {copiedLabel && <span>Copied: {copiedLabel}</span>}
+          {status}
+          <span>{parts.length} placements · shared local history</span>
+        </div>
+      </section>
+      <aside className="hull-inspector" aria-label="Hull component inspector">
+        <h2>{selected ? "Selected component" : "Assembly"}</h2>
+        {mismatches.length > 0 && (
+          <p role="alert">
+            {mismatches.length} components have unavailable revisions. Draft
+            preserved; export before resolving the catalog.
+          </p>
+        )}
+        {selected ? (
+          <>
+            <h3>{selectedAsset?.label ?? selected.assetId}</h3>
+            <p className="hull-id">{selected.id}</p>
+            {!fitting && (
+              <HullDecalPanel
+                part={selected}
+                asset={selectedAsset}
+                disabled={blocked}
+                change={(decals) => mutate({ ...selected, decals })}
+              />
+            )}
+            {(["East", "North", "Height"] as const).map((label, i) => (
+              <label key={label}>
+                {label} · m
+                <input
+                  aria-label={`Component ${label.toLowerCase()}`}
+                  type="number"
+                  step={snap}
+                  min="-256"
+                  max="256"
+                  disabled={blocked || (fitting && i === 2)}
+                  value={selected.position[i]}
+                  onChange={(e) => {
+                    const p = [...selected.position] as [
+                      number,
+                      number,
+                      number,
+                    ];
+                    p[i] = Number(e.target.value);
+                    mutate({ ...selected, position: p });
+                  }}
+                />
+              </label>
+            ))}
+            {fitting && (
+              <p className="layout-note">
+                This fitting rests on its named deck. Move it in the floorplan
+                to change its room.
+              </p>
+            )}
+            <label>
+              Yaw · degrees
+              <input
+                aria-label="Component yaw"
+                type="number"
+                step="90"
+                disabled={blocked}
+                value={
+                  Math.round(((selected.rotation * 180) / Math.PI) * 1000) /
+                  1000
+                }
+                onChange={(e) =>
+                  mutate({
+                    ...selected,
+                    rotation: (Number(e.target.value) * Math.PI) / 180,
+                  })
+                }
+              />
+            </label>
+            <div className="hull-actions">
+              <button
+                title="Rotate component"
+                aria-label="Rotate component"
+                disabled={blocked}
+                onClick={() =>
+                  mutate({
+                    ...selected,
+                    rotation: selected.rotation + Math.PI / 2,
+                  })
+                }
+              >
+                <RotateCw size={16} />
+                Rotate
+              </button>
+              <button
+                title="Mirror component"
+                aria-label="Mirror component"
+                aria-pressed={selected.flipped}
+                disabled={blocked}
+                onClick={() =>
+                  mutate({ ...selected, flipped: !selected.flipped })
+                }
+              >
+                <FlipHorizontal size={16} />
+                Mirror
+              </button>
+              <button
+                title="Duplicate component"
+                aria-label="Duplicate component"
+                disabled={blocked}
+                onClick={() => duplicate(selected)}
+              >
+                <Copy size={16} />
+                Duplicate
+              </button>
+              <button
+                title="Delete component"
+                aria-label="Delete component"
+                disabled={blocked}
+                onClick={remove}
+              >
+                <Trash2 size={16} />
+                Delete
+              </button>
+              <button
+                title="Focus component"
+                aria-label="Focus component"
+                onClick={() => viewport.current?.fit(selection)}
+              >
+                <Focus size={16} />
+                Focus
+              </button>
+            </div>
+            <p className="layout-note">
+              {selectedAsset?.visual
+                ? "Existing Blender surface and materials."
+                : "Existing retained part-library surface."}{" "}
+              Changes affect this placement only.
+            </p>
+            {!!selected.removedCells.length && (
+              <p className="layout-note">
+                Preserved damage proposal: {selected.removedCells.length} cells.
+                This view shows the intact source surface.
+              </p>
+            )}
+          </>
+        ) : (
+          <p className="layout-note">
+            Select any panel, floor, engine or fitting in the viewport or
+            component list. Drag to move; Ctrl-drag to duplicate.
+          </p>
+        )}
+        {asset && (
+          <button
+            disabled={blocked}
+            className="hull-add-origin"
+            onClick={() => add(asset.id, [0, 0, height])}
+          >
+            <Plus size={16} />
+            Add chosen part at origin
+          </button>
+        )}
+        <h3>Visibility</h3>
+        <div className="hull-layers">
+          {PART_CATEGORIES.map((c) => (
+            <label key={c}>
+              <input
+                type="checkbox"
+                aria-label={`Show ${c} components`}
+                checked={visible.has(c)}
+                onChange={() =>
+                  setVisible((v) => {
+                    const s = new Set(v);
+                    s.has(c) ? s.delete(c) : s.add(c);
+                    return s;
+                  })
+                }
+              />
+              {c}
+            </label>
+          ))}
+        </div>
+        <h3>Placed components ({parts.length})</h3>
+        <div className="hull-components">
+          {parts.map((p) => (
+            <button
+              key={p.id}
+              aria-label={`Select component ${p.id}`}
+              aria-pressed={selection === p.id}
+              onClick={(event) => {
+                select(p.id);
+                setTool("select");
+                event.currentTarget.closest('.hull-inspector')?.scrollTo({top:0});
+              }}
+            >
+              <span>
+                {catalog?.assets.find((a) => a.id === p.assetId)?.label ??
+                  p.assetId}
+              </span>
+              <small>{p.id}</small>
+            </button>
+          ))}
+        </div>
+        <p className="layout-note">
+          Visual assembly only. Floor topology, collision and live installation
+          remain separate. Publish and refit stay disabled.
+        </p>
+      </aside>
+    </div>
+  );
+}

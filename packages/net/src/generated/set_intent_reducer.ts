@@ -16,4 +16,5 @@ export default {
   turn: __t.f64(),
   dx: __t.f64(),
   dy: __t.f64(),
+  sprint: __t.bool(),
 };

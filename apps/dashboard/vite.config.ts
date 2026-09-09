@@ -17,11 +17,19 @@ const config = JSON.parse(
   clientPort: number;
   dashboardPort: number;
   allowedHosts: string[];
+  authIssuer: string;
+  authOrigin: string;
+  authoringClientId: string;
 };
 export default defineConfig({
   root: fileURLToPath(new URL(".", import.meta.url)),
   plugins: [react()],
   define: {
+    "import.meta.env.VITE_AUTH_ISSUER": JSON.stringify(config.authIssuer),
+    "import.meta.env.VITE_AUTH_ORIGIN": JSON.stringify(config.authOrigin),
+    "import.meta.env.VITE_AUTHORING_CLIENT_ID": JSON.stringify(
+      config.authoringClientId,
+    ),
     "import.meta.env.VITE_DATABASE": JSON.stringify(
       process.env.VITE_DATABASE ?? config.database,
     ),

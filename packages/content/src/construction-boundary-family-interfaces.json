@@ -1,0 +1,3464 @@
+{
+  "revision": "r004",
+  "latticePerMeter": 32,
+  "floorTopUnits": 6,
+  "wallTopUnits": 96,
+  "coreThicknessM": 0.09375,
+  "decorativeEnvelopeWidthM": 0.125,
+  "parts": [
+    {
+      "id": "node-ee493bf1352e",
+      "assetUuid": "12ff9b07-573d-5e20-bc72-0d55caf24cff",
+      "kind": "node",
+      "signatureRays": [
+        [-1, 0],
+        [0, -1]
+      ],
+      "cutbackM": 0.0625,
+      "corePolygonM": [
+        [0.046875, 0.046875],
+        [0.046875, -0.0625],
+        [-0.046875, -0.0625],
+        [-0.046875, -0.046875],
+        [-0.0625, -0.046875],
+        [-0.0625, 0.046875]
+      ],
+      "ports": [
+        {
+          "directionUnits": [-1, 0],
+          "positionM": [-0.0625, 0.0],
+          "normalOut": [-1.0, 0.0],
+          "segmentM": [
+            [-0.0625, -0.046875],
+            [-0.0625, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "directionUnits": [0, -1],
+          "positionM": [0.0, -0.0625],
+          "normalOut": [0.0, -1.0],
+          "segmentM": [
+            [0.046875, -0.0625],
+            [-0.046875, -0.0625]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceSpanUnits": null,
+      "scope": "two-ray convex/reentrant/straight physical node",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-node-ee493bf1352e--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [-0.0625, -0.046875],
+            [-0.046875, -0.046875],
+            [-0.0625, 0.046875]
+          ],
+          [
+            [-0.0625, 0.046875],
+            [-0.046875, -0.046875],
+            [0.046875, 0.046875]
+          ],
+          [
+            [-0.046875, -0.0625],
+            [0.046875, -0.0625],
+            [-0.046875, -0.046875]
+          ],
+          [
+            [-0.046875, -0.046875],
+            [0.046875, -0.0625],
+            [0.046875, 0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "node-ee493bf1352e"
+      }
+    },
+    {
+      "id": "span-086cc581b11f",
+      "assetUuid": "b398a8bb-ad1c-5cc2-98bf-c2e45a29e22e",
+      "kind": "span",
+      "sourceSpanUnits": [64, 0],
+      "startCutbackM": 0.0625,
+      "endCutbackM": 0.0625,
+      "bodyLengthM": 1.875,
+      "corePolygonM": [
+        [0.0625, -0.046875],
+        [1.9375, -0.046875],
+        [1.9375, 0.046875],
+        [0.0625, 0.046875]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.0625, 0.0],
+          "normalOut": [-1.0, -0.0],
+          "segmentM": [
+            [0.0625, -0.046875],
+            [0.0625, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [1.9375, 0.0],
+          "normalOut": [1.0, 0.0],
+          "segmentM": [
+            [1.9375, -0.046875],
+            [1.9375, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [2.0, 0.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-086cc581b11f--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.0625, -0.046875],
+            [1.9375, -0.046875],
+            [1.9375, 0.046875],
+            [0.0625, 0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-086cc581b11f"
+      }
+    },
+    {
+      "id": "span-b3f0724acb39",
+      "assetUuid": "6a00dc2b-fef4-5dde-a660-87cad7ff1ddf",
+      "kind": "span",
+      "sourceSpanUnits": [32, 0],
+      "startCutbackM": 0.0625,
+      "endCutbackM": 0.0625,
+      "bodyLengthM": 0.875,
+      "corePolygonM": [
+        [0.0625, -0.046875],
+        [0.9375, -0.046875],
+        [0.9375, 0.046875],
+        [0.0625, 0.046875]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.0625, 0.0],
+          "normalOut": [-1.0, -0.0],
+          "segmentM": [
+            [0.0625, -0.046875],
+            [0.0625, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [0.9375, 0.0],
+          "normalOut": [1.0, 0.0],
+          "segmentM": [
+            [0.9375, -0.046875],
+            [0.9375, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [1.0, 0.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-b3f0724acb39--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.0625, -0.046875],
+            [0.9375, -0.046875],
+            [0.9375, 0.046875],
+            [0.0625, 0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-b3f0724acb39"
+      }
+    },
+    {
+      "id": "span-0cdd4c8ec952",
+      "assetUuid": "3e8f0874-1940-5a3c-bd55-9135c482fed9",
+      "kind": "span",
+      "sourceSpanUnits": [128, 0],
+      "startCutbackM": 0.0625,
+      "endCutbackM": 0.0625,
+      "bodyLengthM": 3.875,
+      "corePolygonM": [
+        [0.0625, -0.046875],
+        [3.9375, -0.046875],
+        [3.9375, 0.046875],
+        [0.0625, 0.046875]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.0625, 0.0],
+          "normalOut": [-1.0, -0.0],
+          "segmentM": [
+            [0.0625, -0.046875],
+            [0.0625, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [3.9375, 0.0],
+          "normalOut": [1.0, 0.0],
+          "segmentM": [
+            [3.9375, -0.046875],
+            [3.9375, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [4.0, 0.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-0cdd4c8ec952--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.0625, -0.046875],
+            [3.9375, -0.046875],
+            [3.9375, 0.046875],
+            [0.0625, 0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-0cdd4c8ec952"
+      }
+    },
+    {
+      "id": "node-8ace9108954c",
+      "assetUuid": "58fea5e1-f846-598b-98e7-1993a0d01361",
+      "kind": "node",
+      "signatureRays": [
+        [-1, -1],
+        [-1, 0]
+      ],
+      "cutbackM": 0.1875,
+      "corePolygonM": [
+        [-0.11316626073624, -0.046875],
+        [-0.1875, -0.046875],
+        [-0.1875, 0.046875],
+        [0.11316626073624, 0.046875],
+        [-0.09943689110436, -0.1657281518406],
+        [-0.1657281518406, -0.09943689110436]
+      ],
+      "ports": [
+        {
+          "directionUnits": [-1, -1],
+          "positionM": [-0.13258252147247765, -0.13258252147247765],
+          "normalOut": [-0.7071067811865475, -0.7071067811865475],
+          "segmentM": [
+            [-0.09943689110435824, -0.16572815184059705],
+            [-0.16572815184059705, -0.09943689110435824]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "directionUnits": [-1, 0],
+          "positionM": [-0.1875, 0.0],
+          "normalOut": [-1.0, 0.0],
+          "segmentM": [
+            [-0.1875, -0.046875],
+            [-0.1875, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceSpanUnits": null,
+      "scope": "two-ray convex/reentrant/straight physical node",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-node-8ace9108954c--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [-0.1875, -0.046875],
+            [-0.11316626073624, -0.046875],
+            [-0.1875, 0.046875]
+          ],
+          [
+            [-0.1875, 0.046875],
+            [-0.11316626073624, -0.046875],
+            [0.11316626073624, 0.046875]
+          ],
+          [
+            [-0.1657281518406, -0.09943689110436],
+            [-0.09943689110436, -0.1657281518406],
+            [-0.11316626073624, -0.046875]
+          ],
+          [
+            [-0.11316626073624, -0.046875],
+            [-0.09943689110436, -0.1657281518406],
+            [0.11316626073624, 0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "node-8ace9108954c"
+      }
+    },
+    {
+      "id": "node-4cf5a3e80bfc",
+      "assetUuid": "83e9fd7c-e07d-5caf-b3cc-01e92976b7f1",
+      "kind": "node",
+      "signatureRays": [
+        [-1, -1],
+        [0, -1]
+      ],
+      "cutbackM": 0.1875,
+      "corePolygonM": [
+        [0.046875, 0.11316626073624],
+        [0.046875, -0.1875],
+        [-0.046875, -0.1875],
+        [-0.046875, -0.11316626073624],
+        [-0.09943689110436, -0.1657281518406],
+        [-0.1657281518406, -0.09943689110436]
+      ],
+      "ports": [
+        {
+          "directionUnits": [-1, -1],
+          "positionM": [-0.13258252147247765, -0.13258252147247765],
+          "normalOut": [-0.7071067811865475, -0.7071067811865475],
+          "segmentM": [
+            [-0.09943689110435824, -0.16572815184059705],
+            [-0.16572815184059705, -0.09943689110435824]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "directionUnits": [0, -1],
+          "positionM": [0.0, -0.1875],
+          "normalOut": [0.0, -1.0],
+          "segmentM": [
+            [0.046875, -0.1875],
+            [-0.046875, -0.1875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceSpanUnits": null,
+      "scope": "two-ray convex/reentrant/straight physical node",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-node-4cf5a3e80bfc--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [-0.1657281518406, -0.09943689110436],
+            [-0.09943689110436, -0.1657281518406],
+            [-0.046875, -0.11316626073624]
+          ],
+          [
+            [-0.1657281518406, -0.09943689110436],
+            [-0.046875, -0.11316626073624],
+            [0.046875, 0.11316626073624]
+          ],
+          [
+            [-0.046875, -0.1875],
+            [0.046875, -0.1875],
+            [-0.046875, -0.11316626073624]
+          ],
+          [
+            [-0.046875, -0.11316626073624],
+            [0.046875, -0.1875],
+            [0.046875, 0.11316626073624]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "node-4cf5a3e80bfc"
+      }
+    },
+    {
+      "id": "span-94768f04e98a",
+      "assetUuid": "b42a31b2-d397-5f99-9f72-7de5f4b64933",
+      "kind": "span",
+      "sourceSpanUnits": [64, 0],
+      "startCutbackM": 0.0625,
+      "endCutbackM": 0.1875,
+      "bodyLengthM": 1.75,
+      "corePolygonM": [
+        [0.0625, -0.046875],
+        [1.8125, -0.046875],
+        [1.8125, 0.046875],
+        [0.0625, 0.046875]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.0625, 0.0],
+          "normalOut": [-1.0, -0.0],
+          "segmentM": [
+            [0.0625, -0.046875],
+            [0.0625, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [1.8125, 0.0],
+          "normalOut": [1.0, 0.0],
+          "segmentM": [
+            [1.8125, -0.046875],
+            [1.8125, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [2.0, 0.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-94768f04e98a--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.0625, -0.046875],
+            [1.8125, -0.046875],
+            [1.8125, 0.046875],
+            [0.0625, 0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-94768f04e98a"
+      }
+    },
+    {
+      "id": "span-0314fecad407",
+      "assetUuid": "586124c8-5c93-5589-9356-1ba03f989c09",
+      "kind": "span",
+      "sourceSpanUnits": [64, 64],
+      "startCutbackM": 0.1875,
+      "endCutbackM": 0.1875,
+      "bodyLengthM": 2.4534271247461903,
+      "corePolygonM": [
+        [0.16572815184059705, 0.09943689110435824],
+        [1.9005631088956418, 1.834271848159403],
+        [1.834271848159403, 1.9005631088956418],
+        [0.09943689110435824, 0.16572815184059705]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.13258252147247765, 0.13258252147247765],
+          "normalOut": [-0.7071067811865475, -0.7071067811865475],
+          "segmentM": [
+            [0.16572815184059705, 0.09943689110435824],
+            [0.09943689110435824, 0.16572815184059705]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [1.8674174785275224, 1.8674174785275224],
+          "normalOut": [0.7071067811865475, 0.7071067811865475],
+          "segmentM": [
+            [1.9005631088956418, 1.834271848159403],
+            [1.834271848159403, 1.9005631088956418]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [2.0, 2.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-0314fecad407--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.09943689110435824, 0.16572815184059705],
+            [0.16572815184059705, 0.09943689110435824],
+            [1.9005631088956418, 1.834271848159403],
+            [1.834271848159403, 1.9005631088956418]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-0314fecad407"
+      }
+    },
+    {
+      "id": "span-808c0ebd2217",
+      "assetUuid": "fedcc948-3598-52a1-ba45-bebe7a8d801c",
+      "kind": "span",
+      "sourceSpanUnits": [64, 0],
+      "startCutbackM": 0.1875,
+      "endCutbackM": 0.0625,
+      "bodyLengthM": 1.75,
+      "corePolygonM": [
+        [0.1875, -0.046875],
+        [1.9375, -0.046875],
+        [1.9375, 0.046875],
+        [0.1875, 0.046875]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.1875, 0.0],
+          "normalOut": [-1.0, -0.0],
+          "segmentM": [
+            [0.1875, -0.046875],
+            [0.1875, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [1.9375, 0.0],
+          "normalOut": [1.0, 0.0],
+          "segmentM": [
+            [1.9375, -0.046875],
+            [1.9375, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [2.0, 0.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-808c0ebd2217--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.1875, -0.046875],
+            [1.9375, -0.046875],
+            [1.9375, 0.046875],
+            [0.1875, 0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-808c0ebd2217"
+      }
+    },
+    {
+      "id": "node-600f98889a3d",
+      "assetUuid": "38d66e02-0395-5127-b20d-e49609978f82",
+      "kind": "node",
+      "signatureRays": [
+        [-2, 1],
+        [0, 1]
+      ],
+      "cutbackM": 0.125,
+      "corePolygonM": [
+        [-0.046875, 0.07584534322265],
+        [-0.046875, 0.125],
+        [0.046875, 0.125],
+        [0.046875, -0.07584534322265],
+        [-0.13276653616405, 0.01397542485937],
+        [-0.09084026158593, 0.09782797401562]
+      ],
+      "ports": [
+        {
+          "directionUnits": [-2, 1],
+          "positionM": [-0.11180339887498948, 0.05590169943749474],
+          "normalOut": [-0.8944271909999159, 0.4472135954999579],
+          "segmentM": [
+            [-0.13276653616405001, 0.013975424859373684],
+            [-0.09084026158592895, 0.0978279740156158]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "directionUnits": [0, 1],
+          "positionM": [0.0, 0.125],
+          "normalOut": [0.0, 1.0],
+          "segmentM": [
+            [-0.046875, 0.125],
+            [0.046875, 0.125]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceSpanUnits": null,
+      "scope": "two-ray convex/reentrant/straight physical node",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-node-600f98889a3d--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [-0.13276653616405, 0.01397542485937],
+            [-0.046875, 0.07584534322265],
+            [-0.09084026158593, 0.09782797401562]
+          ],
+          [
+            [-0.13276653616405, 0.01397542485937],
+            [0.046875, -0.07584534322265],
+            [-0.046875, 0.07584534322265]
+          ],
+          [
+            [-0.046875, 0.07584534322265],
+            [0.046875, -0.07584534322265],
+            [0.046875, 0.125]
+          ],
+          [
+            [-0.046875, 0.07584534322265],
+            [0.046875, 0.125],
+            [-0.046875, 0.125]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "node-600f98889a3d"
+      }
+    },
+    {
+      "id": "node-5ef3fc8bee96",
+      "assetUuid": "138d2a4d-90cb-54ee-9ffd-343742e5b4c5",
+      "kind": "node",
+      "signatureRays": [
+        [-2, 1],
+        [-1, 0]
+      ],
+      "cutbackM": 0.28125,
+      "corePolygonM": [
+        [0.1985656864453, -0.046875],
+        [-0.28125, -0.046875],
+        [-0.28125, 0.046875],
+        [-0.1985656864453, 0.046875],
+        [-0.27252078475779, 0.08385254915624],
+        [-0.23059451017967, 0.16770509831248]
+      ],
+      "ports": [
+        {
+          "directionUnits": [-2, 1],
+          "positionM": [-0.25155764746872633, 0.12577882373436317],
+          "normalOut": [-0.8944271909999159, 0.4472135954999579],
+          "segmentM": [
+            [-0.27252078475778685, 0.0838525491562421],
+            [-0.2305945101796658, 0.16770509831248423]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "directionUnits": [-1, 0],
+          "positionM": [-0.28125, 0.0],
+          "normalOut": [-1.0, 0.0],
+          "segmentM": [
+            [-0.28125, -0.046875],
+            [-0.28125, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceSpanUnits": null,
+      "scope": "two-ray convex/reentrant/straight physical node",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-node-5ef3fc8bee96--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [-0.28125, -0.046875],
+            [-0.1985656864453, 0.046875],
+            [-0.28125, 0.046875]
+          ],
+          [
+            [-0.28125, -0.046875],
+            [0.1985656864453, -0.046875],
+            [-0.1985656864453, 0.046875]
+          ],
+          [
+            [-0.27252078475779, 0.08385254915624],
+            [-0.1985656864453, 0.046875],
+            [-0.23059451017967, 0.16770509831248]
+          ],
+          [
+            [-0.23059451017967, 0.16770509831248],
+            [-0.1985656864453, 0.046875],
+            [0.1985656864453, -0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "node-5ef3fc8bee96"
+      }
+    },
+    {
+      "id": "span-e1ee17a40bd0",
+      "assetUuid": "88775134-85a1-551b-b73f-dee9ad8dead6",
+      "kind": "span",
+      "sourceSpanUnits": [128, 0],
+      "startCutbackM": 0.0625,
+      "endCutbackM": 0.28125,
+      "bodyLengthM": 3.65625,
+      "corePolygonM": [
+        [0.0625, -0.046875],
+        [3.71875, -0.046875],
+        [3.71875, 0.046875],
+        [0.0625, 0.046875]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.0625, 0.0],
+          "normalOut": [-1.0, -0.0],
+          "segmentM": [
+            [0.0625, -0.046875],
+            [0.0625, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [3.71875, 0.0],
+          "normalOut": [1.0, 0.0],
+          "segmentM": [
+            [3.71875, -0.046875],
+            [3.71875, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [4.0, 0.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-e1ee17a40bd0--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.0625, -0.046875],
+            [3.71875, -0.046875],
+            [3.71875, 0.046875],
+            [0.0625, 0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-e1ee17a40bd0"
+      }
+    },
+    {
+      "id": "span-6ec4ef6b98b1",
+      "assetUuid": "803fe485-e9b1-5602-b3d0-ae1f781e7307",
+      "kind": "span",
+      "sourceSpanUnits": [64, 128],
+      "startCutbackM": 0.28125,
+      "endCutbackM": 0.125,
+      "bodyLengthM": 4.06588595499958,
+      "corePolygonM": [
+        [0.16770509831248423, 0.2305945101796658],
+        [1.9860245751406262, 3.86723346383595],
+        [1.9021720259843842, 3.909159738414071],
+        [0.0838525491562421, 0.27252078475778685]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.12577882373436317, 0.25155764746872633],
+          "normalOut": [-0.4472135954999579, -0.8944271909999159],
+          "segmentM": [
+            [0.16770509831248423, 0.2305945101796658],
+            [0.0838525491562421, 0.27252078475778685]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [1.9440983005625052, 3.8881966011250104],
+          "normalOut": [0.4472135954999579, 0.8944271909999159],
+          "segmentM": [
+            [1.9860245751406262, 3.86723346383595],
+            [1.9021720259843842, 3.909159738414071]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [2.0, 4.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-6ec4ef6b98b1--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.0838525491562421, 0.27252078475778685],
+            [0.16770509831248423, 0.2305945101796658],
+            [1.9860245751406262, 3.86723346383595],
+            [1.9021720259843842, 3.909159738414071]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-6ec4ef6b98b1"
+      }
+    },
+    {
+      "id": "span-2558d18d8aea",
+      "assetUuid": "6893ef3c-8b9e-533a-a45d-9ab7d249501f",
+      "kind": "span",
+      "sourceSpanUnits": [64, 0],
+      "startCutbackM": 0.125,
+      "endCutbackM": 0.0625,
+      "bodyLengthM": 1.8125,
+      "corePolygonM": [
+        [0.125, -0.046875],
+        [1.9375, -0.046875],
+        [1.9375, 0.046875],
+        [0.125, 0.046875]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.125, 0.0],
+          "normalOut": [-1.0, -0.0],
+          "segmentM": [
+            [0.125, -0.046875],
+            [0.125, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [1.9375, 0.0],
+          "normalOut": [1.0, 0.0],
+          "segmentM": [
+            [1.9375, -0.046875],
+            [1.9375, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [2.0, 0.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-2558d18d8aea--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.125, -0.046875],
+            [1.9375, -0.046875],
+            [1.9375, 0.046875],
+            [0.125, 0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-2558d18d8aea"
+      }
+    },
+    {
+      "id": "node-8b91be106a9b",
+      "assetUuid": "59cf7621-14cb-5121-8d62-26bf80cbb359",
+      "kind": "node",
+      "signatureRays": [
+        [-2, -1],
+        [-1, 0]
+      ],
+      "cutbackM": 0.28125,
+      "corePolygonM": [
+        [-0.1985656864453, -0.046875],
+        [-0.28125, -0.046875],
+        [-0.28125, 0.046875],
+        [0.1985656864453, 0.046875],
+        [-0.23059451017967, -0.16770509831248],
+        [-0.27252078475779, -0.08385254915624]
+      ],
+      "ports": [
+        {
+          "directionUnits": [-2, -1],
+          "positionM": [-0.25155764746872633, -0.12577882373436317],
+          "normalOut": [-0.8944271909999159, -0.4472135954999579],
+          "segmentM": [
+            [-0.2305945101796658, -0.16770509831248423],
+            [-0.27252078475778685, -0.0838525491562421]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "directionUnits": [-1, 0],
+          "positionM": [-0.28125, 0.0],
+          "normalOut": [-1.0, 0.0],
+          "segmentM": [
+            [-0.28125, -0.046875],
+            [-0.28125, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceSpanUnits": null,
+      "scope": "two-ray convex/reentrant/straight physical node",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-node-8b91be106a9b--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [-0.28125, -0.046875],
+            [-0.1985656864453, -0.046875],
+            [-0.28125, 0.046875]
+          ],
+          [
+            [-0.28125, 0.046875],
+            [-0.1985656864453, -0.046875],
+            [0.1985656864453, 0.046875]
+          ],
+          [
+            [-0.27252078475779, -0.08385254915624],
+            [-0.23059451017967, -0.16770509831248],
+            [-0.1985656864453, -0.046875]
+          ],
+          [
+            [-0.23059451017967, -0.16770509831248],
+            [0.1985656864453, 0.046875],
+            [-0.1985656864453, -0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "node-8b91be106a9b"
+      }
+    },
+    {
+      "id": "node-9c2c257cf6fe",
+      "assetUuid": "36f0317f-8741-51f1-80c9-3e1c17853050",
+      "kind": "node",
+      "signatureRays": [
+        [-2, -1],
+        [0, -1]
+      ],
+      "cutbackM": 0.125,
+      "corePolygonM": [
+        [0.046875, 0.07584534322265],
+        [0.046875, -0.125],
+        [-0.046875, -0.125],
+        [-0.046875, -0.07584534322265],
+        [-0.09084026158593, -0.09782797401562],
+        [-0.13276653616405, -0.01397542485937]
+      ],
+      "ports": [
+        {
+          "directionUnits": [-2, -1],
+          "positionM": [-0.11180339887498948, -0.05590169943749474],
+          "normalOut": [-0.8944271909999159, -0.4472135954999579],
+          "segmentM": [
+            [-0.09084026158592895, -0.0978279740156158],
+            [-0.13276653616405001, -0.013975424859373684]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "directionUnits": [0, -1],
+          "positionM": [0.0, -0.125],
+          "normalOut": [0.0, -1.0],
+          "segmentM": [
+            [0.046875, -0.125],
+            [-0.046875, -0.125]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceSpanUnits": null,
+      "scope": "two-ray convex/reentrant/straight physical node",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-node-9c2c257cf6fe--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [-0.13276653616405, -0.01397542485937],
+            [-0.09084026158593, -0.09782797401562],
+            [-0.046875, -0.07584534322265]
+          ],
+          [
+            [-0.13276653616405, -0.01397542485937],
+            [-0.046875, -0.07584534322265],
+            [0.046875, 0.07584534322265]
+          ],
+          [
+            [-0.046875, -0.125],
+            [0.046875, -0.125],
+            [-0.046875, -0.07584534322265]
+          ],
+          [
+            [-0.046875, -0.07584534322265],
+            [0.046875, -0.125],
+            [0.046875, 0.07584534322265]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "node-9c2c257cf6fe"
+      }
+    },
+    {
+      "id": "span-08fd6477c200",
+      "assetUuid": "c19341dd-d771-5cc1-af9a-39c789465620",
+      "kind": "span",
+      "sourceSpanUnits": [128, 0],
+      "startCutbackM": 0.28125,
+      "endCutbackM": 0.0625,
+      "bodyLengthM": 3.65625,
+      "corePolygonM": [
+        [0.28125, -0.046875],
+        [3.9375, -0.046875],
+        [3.9375, 0.046875],
+        [0.28125, 0.046875]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.28125, 0.0],
+          "normalOut": [-1.0, -0.0],
+          "segmentM": [
+            [0.28125, -0.046875],
+            [0.28125, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [3.9375, 0.0],
+          "normalOut": [1.0, 0.0],
+          "segmentM": [
+            [3.9375, -0.046875],
+            [3.9375, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [4.0, 0.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-08fd6477c200--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.28125, -0.046875],
+            [3.9375, -0.046875],
+            [3.9375, 0.046875],
+            [0.28125, 0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-08fd6477c200"
+      }
+    },
+    {
+      "id": "span-808e279e3305",
+      "assetUuid": "8ede5d78-2086-515b-a2f6-3a6d6961522a",
+      "kind": "span",
+      "sourceSpanUnits": [64, 0],
+      "startCutbackM": 0.0625,
+      "endCutbackM": 0.125,
+      "bodyLengthM": 1.8125,
+      "corePolygonM": [
+        [0.0625, -0.046875],
+        [1.875, -0.046875],
+        [1.875, 0.046875],
+        [0.0625, 0.046875]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.0625, 0.0],
+          "normalOut": [-1.0, -0.0],
+          "segmentM": [
+            [0.0625, -0.046875],
+            [0.0625, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [1.875, 0.0],
+          "normalOut": [1.0, 0.0],
+          "segmentM": [
+            [1.875, -0.046875],
+            [1.875, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [2.0, 0.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-808e279e3305--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.0625, -0.046875],
+            [1.875, -0.046875],
+            [1.875, 0.046875],
+            [0.0625, 0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-808e279e3305"
+      }
+    },
+    {
+      "id": "span-be8caa482150",
+      "assetUuid": "6571105b-ae65-5610-9d0a-6281ed7b26e7",
+      "kind": "span",
+      "sourceSpanUnits": [128, 64],
+      "startCutbackM": 0.125,
+      "endCutbackM": 0.28125,
+      "bodyLengthM": 4.06588595499958,
+      "corePolygonM": [
+        [0.13276653616405001, 0.013975424859373684],
+        [3.7694054898203344, 1.8322949016875159],
+        [3.727479215242213, 1.916147450843758],
+        [0.09084026158592895, 0.0978279740156158]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.11180339887498948, 0.05590169943749474],
+          "normalOut": [-0.8944271909999159, -0.4472135954999579],
+          "segmentM": [
+            [0.13276653616405001, 0.013975424859373684],
+            [0.09084026158592895, 0.0978279740156158]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [3.748442352531274, 1.874221176265637],
+          "normalOut": [0.8944271909999159, 0.4472135954999579],
+          "segmentM": [
+            [3.7694054898203344, 1.8322949016875159],
+            [3.727479215242213, 1.916147450843758]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [4.0, 2.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-be8caa482150--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.09084026158592895, 0.0978279740156158],
+            [0.13276653616405001, 0.013975424859373684],
+            [3.7694054898203344, 1.8322949016875159],
+            [3.727479215242213, 1.916147450843758]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-be8caa482150"
+      }
+    },
+    {
+      "id": "node-74c0b4ffc689",
+      "assetUuid": "112fadca-012d-59f3-bbee-c5fb00c7bd3e",
+      "kind": "node",
+      "signatureRays": [
+        [-4, 1],
+        [0, 1]
+      ],
+      "cutbackM": 0.125,
+      "corePolygonM": [
+        [-0.046875, 0.06003639405021],
+        [-0.046875, 0.125],
+        [0.046875, 0.125],
+        [0.046875, -0.06003639405021],
+        [-0.13263666994174, -0.01515847656477],
+        [-0.10989895509459, 0.07579238282385]
+      ],
+      "ports": [
+        {
+          "directionUnits": [-4, 1],
+          "positionM": [-0.12126781251816648, 0.03031695312954162],
+          "normalOut": [-0.9701425001453319, 0.24253562503633297],
+          "segmentM": [
+            [-0.13263666994174458, -0.01515847656477081],
+            [-0.10989895509458837, 0.07579238282385406]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "directionUnits": [0, 1],
+          "positionM": [0.0, 0.125],
+          "normalOut": [0.0, 1.0],
+          "segmentM": [
+            [-0.046875, 0.125],
+            [0.046875, 0.125]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceSpanUnits": null,
+      "scope": "two-ray convex/reentrant/straight physical node",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-node-74c0b4ffc689--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [-0.13263666994174, -0.01515847656477],
+            [-0.046875, 0.06003639405021],
+            [-0.10989895509459, 0.07579238282385]
+          ],
+          [
+            [-0.13263666994174, -0.01515847656477],
+            [0.046875, -0.06003639405021],
+            [-0.046875, 0.06003639405021]
+          ],
+          [
+            [-0.046875, 0.06003639405021],
+            [0.046875, -0.06003639405021],
+            [0.046875, 0.125]
+          ],
+          [
+            [-0.046875, 0.06003639405021],
+            [0.046875, 0.125],
+            [-0.046875, 0.125]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "node-74c0b4ffc689"
+      }
+    },
+    {
+      "id": "node-b3757ae7933a",
+      "assetUuid": "4078ca74-bc7a-5a5f-8226-fb2931a172a5",
+      "kind": "node",
+      "signatureRays": [
+        [-4, 1],
+        [-1, 0]
+      ],
+      "cutbackM": 0.53125,
+      "corePolygonM": [
+        [0.38077057620083, -0.046875],
+        [-0.53125, -0.046875],
+        [-0.53125, 0.046875],
+        [-0.38077057620083, 0.046875],
+        [-0.52675706062579, 0.08337162110624],
+        [-0.50401934577863, 0.17432248049486]
+      ],
+      "ports": [
+        {
+          "directionUnits": [-4, 1],
+          "positionM": [-0.5153882032022076, 0.1288470508005519],
+          "normalOut": [-0.9701425001453319, 0.24253562503633297],
+          "segmentM": [
+            [-0.5267570606257856, 0.08337162110623947],
+            [-0.5040193457786295, 0.17432248049486432]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "directionUnits": [-1, 0],
+          "positionM": [-0.53125, 0.0],
+          "normalOut": [-1.0, 0.0],
+          "segmentM": [
+            [-0.53125, -0.046875],
+            [-0.53125, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceSpanUnits": null,
+      "scope": "two-ray convex/reentrant/straight physical node",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-node-b3757ae7933a--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [-0.53125, -0.046875],
+            [-0.38077057620083, 0.046875],
+            [-0.53125, 0.046875]
+          ],
+          [
+            [-0.53125, -0.046875],
+            [0.38077057620083, -0.046875],
+            [-0.38077057620083, 0.046875]
+          ],
+          [
+            [-0.52675706062579, 0.08337162110624],
+            [-0.38077057620083, 0.046875],
+            [-0.50401934577863, 0.17432248049486]
+          ],
+          [
+            [-0.50401934577863, 0.17432248049486],
+            [-0.38077057620083, 0.046875],
+            [0.38077057620083, -0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "node-b3757ae7933a"
+      }
+    },
+    {
+      "id": "span-d47d3475d32a",
+      "assetUuid": "3da86c87-0010-5650-be97-cf4e96145cbc",
+      "kind": "span",
+      "sourceSpanUnits": [128, 0],
+      "startCutbackM": 0.0625,
+      "endCutbackM": 0.53125,
+      "bodyLengthM": 3.40625,
+      "corePolygonM": [
+        [0.0625, -0.046875],
+        [3.46875, -0.046875],
+        [3.46875, 0.046875],
+        [0.0625, 0.046875]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.0625, 0.0],
+          "normalOut": [-1.0, -0.0],
+          "segmentM": [
+            [0.0625, -0.046875],
+            [0.0625, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [3.46875, 0.0],
+          "normalOut": [1.0, 0.0],
+          "segmentM": [
+            [3.46875, -0.046875],
+            [3.46875, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [4.0, 0.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-d47d3475d32a--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.0625, -0.046875],
+            [3.46875, -0.046875],
+            [3.46875, 0.046875],
+            [0.0625, 0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-d47d3475d32a"
+      }
+    },
+    {
+      "id": "span-ac212cda6bdf",
+      "assetUuid": "93124188-a81b-567b-a9e2-6e10b8f0857d",
+      "kind": "span",
+      "sourceSpanUnits": [32, 128],
+      "startCutbackM": 0.53125,
+      "endCutbackM": 0.125,
+      "bodyLengthM": 3.4668556256176606,
+      "corePolygonM": [
+        [0.17432248049486432, 0.5040193457786295],
+        [1.0151584765647708, 3.8673633300582555],
+        [0.924207617176146, 3.8901010449054114],
+        [0.08337162110623947, 0.5267570606257856]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.1288470508005519, 0.5153882032022076],
+          "normalOut": [-0.24253562503633297, -0.9701425001453319],
+          "segmentM": [
+            [0.17432248049486432, 0.5040193457786295],
+            [0.08337162110623947, 0.5267570606257856]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [0.9696830468704584, 3.8787321874818335],
+          "normalOut": [0.24253562503633297, 0.9701425001453319],
+          "segmentM": [
+            [1.0151584765647708, 3.8673633300582555],
+            [0.924207617176146, 3.8901010449054114]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [1.0, 4.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-ac212cda6bdf--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.08337162110623947, 0.5267570606257856],
+            [0.17432248049486432, 0.5040193457786295],
+            [1.0151584765647708, 3.8673633300582555],
+            [0.924207617176146, 3.8901010449054114]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-ac212cda6bdf"
+      }
+    },
+    {
+      "id": "span-618a6deb050d",
+      "assetUuid": "8a4e56d2-461f-530a-9bc0-1918a3b0d20c",
+      "kind": "span",
+      "sourceSpanUnits": [32, 0],
+      "startCutbackM": 0.125,
+      "endCutbackM": 0.0625,
+      "bodyLengthM": 0.8125,
+      "corePolygonM": [
+        [0.125, -0.046875],
+        [0.9375, -0.046875],
+        [0.9375, 0.046875],
+        [0.125, 0.046875]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.125, 0.0],
+          "normalOut": [-1.0, -0.0],
+          "segmentM": [
+            [0.125, -0.046875],
+            [0.125, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [0.9375, 0.0],
+          "normalOut": [1.0, 0.0],
+          "segmentM": [
+            [0.9375, -0.046875],
+            [0.9375, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [1.0, 0.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-618a6deb050d--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.125, -0.046875],
+            [0.9375, -0.046875],
+            [0.9375, 0.046875],
+            [0.125, 0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-618a6deb050d"
+      }
+    },
+    {
+      "id": "node-ac322cc2ef83",
+      "assetUuid": "cbdc0e20-d7d6-5147-9d0b-f96a13a3cccb",
+      "kind": "node",
+      "signatureRays": [
+        [-4, -1],
+        [-1, 0]
+      ],
+      "cutbackM": 0.53125,
+      "corePolygonM": [
+        [-0.38077057620083, -0.046875],
+        [-0.53125, -0.046875],
+        [-0.53125, 0.046875],
+        [0.38077057620083, 0.046875],
+        [-0.50401934577863, -0.17432248049486],
+        [-0.52675706062579, -0.08337162110624]
+      ],
+      "ports": [
+        {
+          "directionUnits": [-4, -1],
+          "positionM": [-0.5153882032022076, -0.1288470508005519],
+          "normalOut": [-0.9701425001453319, -0.24253562503633297],
+          "segmentM": [
+            [-0.5040193457786295, -0.17432248049486432],
+            [-0.5267570606257856, -0.08337162110623947]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "directionUnits": [-1, 0],
+          "positionM": [-0.53125, 0.0],
+          "normalOut": [-1.0, 0.0],
+          "segmentM": [
+            [-0.53125, -0.046875],
+            [-0.53125, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceSpanUnits": null,
+      "scope": "two-ray convex/reentrant/straight physical node",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-node-ac322cc2ef83--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [-0.53125, -0.046875],
+            [-0.38077057620083, -0.046875],
+            [-0.53125, 0.046875]
+          ],
+          [
+            [-0.53125, 0.046875],
+            [-0.38077057620083, -0.046875],
+            [0.38077057620083, 0.046875]
+          ],
+          [
+            [-0.52675706062579, -0.08337162110624],
+            [-0.50401934577863, -0.17432248049486],
+            [-0.38077057620083, -0.046875]
+          ],
+          [
+            [-0.50401934577863, -0.17432248049486],
+            [0.38077057620083, 0.046875],
+            [-0.38077057620083, -0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "node-ac322cc2ef83"
+      }
+    },
+    {
+      "id": "node-dd5634ec14cc",
+      "assetUuid": "184460db-ae27-56f4-8dd2-8b128ded7349",
+      "kind": "node",
+      "signatureRays": [
+        [-4, -1],
+        [0, -1]
+      ],
+      "cutbackM": 0.125,
+      "corePolygonM": [
+        [0.046875, 0.06003639405021],
+        [0.046875, -0.125],
+        [-0.046875, -0.125],
+        [-0.046875, -0.06003639405021],
+        [-0.10989895509459, -0.07579238282385],
+        [-0.13263666994174, 0.01515847656477]
+      ],
+      "ports": [
+        {
+          "directionUnits": [-4, -1],
+          "positionM": [-0.12126781251816648, -0.03031695312954162],
+          "normalOut": [-0.9701425001453319, -0.24253562503633297],
+          "segmentM": [
+            [-0.10989895509458837, -0.07579238282385406],
+            [-0.13263666994174458, 0.01515847656477081]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "directionUnits": [0, -1],
+          "positionM": [0.0, -0.125],
+          "normalOut": [0.0, -1.0],
+          "segmentM": [
+            [0.046875, -0.125],
+            [-0.046875, -0.125]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceSpanUnits": null,
+      "scope": "two-ray convex/reentrant/straight physical node",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-node-dd5634ec14cc--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [-0.13263666994174, 0.01515847656477],
+            [-0.10989895509459, -0.07579238282385],
+            [-0.046875, -0.06003639405021]
+          ],
+          [
+            [-0.13263666994174, 0.01515847656477],
+            [-0.046875, -0.06003639405021],
+            [0.046875, 0.06003639405021]
+          ],
+          [
+            [-0.046875, -0.125],
+            [0.046875, -0.125],
+            [-0.046875, -0.06003639405021]
+          ],
+          [
+            [-0.046875, -0.06003639405021],
+            [0.046875, -0.125],
+            [0.046875, 0.06003639405021]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "node-dd5634ec14cc"
+      }
+    },
+    {
+      "id": "span-1fccd896f86f",
+      "assetUuid": "1fba97b9-8b5a-5a65-9231-c43c7406cac3",
+      "kind": "span",
+      "sourceSpanUnits": [128, 0],
+      "startCutbackM": 0.53125,
+      "endCutbackM": 0.0625,
+      "bodyLengthM": 3.40625,
+      "corePolygonM": [
+        [0.53125, -0.046875],
+        [3.9375, -0.046875],
+        [3.9375, 0.046875],
+        [0.53125, 0.046875]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.53125, 0.0],
+          "normalOut": [-1.0, -0.0],
+          "segmentM": [
+            [0.53125, -0.046875],
+            [0.53125, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [3.9375, 0.0],
+          "normalOut": [1.0, 0.0],
+          "segmentM": [
+            [3.9375, -0.046875],
+            [3.9375, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [4.0, 0.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-1fccd896f86f--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.53125, -0.046875],
+            [3.9375, -0.046875],
+            [3.9375, 0.046875],
+            [0.53125, 0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-1fccd896f86f"
+      }
+    },
+    {
+      "id": "span-f6f884420a9f",
+      "assetUuid": "fc265165-c17a-5e4e-8821-5d601f28ff87",
+      "kind": "span",
+      "sourceSpanUnits": [32, 0],
+      "startCutbackM": 0.0625,
+      "endCutbackM": 0.125,
+      "bodyLengthM": 0.8125,
+      "corePolygonM": [
+        [0.0625, -0.046875],
+        [0.875, -0.046875],
+        [0.875, 0.046875],
+        [0.0625, 0.046875]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.0625, 0.0],
+          "normalOut": [-1.0, -0.0],
+          "segmentM": [
+            [0.0625, -0.046875],
+            [0.0625, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [0.875, 0.0],
+          "normalOut": [1.0, 0.0],
+          "segmentM": [
+            [0.875, -0.046875],
+            [0.875, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [1.0, 0.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-f6f884420a9f--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.0625, -0.046875],
+            [0.875, -0.046875],
+            [0.875, 0.046875],
+            [0.0625, 0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-f6f884420a9f"
+      }
+    },
+    {
+      "id": "span-135ed5730033",
+      "assetUuid": "c8ef3214-dc5f-5e2e-8496-f46a9008f5f3",
+      "kind": "span",
+      "sourceSpanUnits": [128, 32],
+      "startCutbackM": 0.125,
+      "endCutbackM": 0.53125,
+      "bodyLengthM": 3.4668556256176606,
+      "corePolygonM": [
+        [0.13263666994174458, -0.01515847656477081],
+        [3.4959806542213703, 0.8256775195051357],
+        [3.4732429393742144, 0.9166283788937605],
+        [0.10989895509458837, 0.07579238282385406]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.12126781251816648, 0.03031695312954162],
+          "normalOut": [-0.9701425001453319, -0.24253562503633297],
+          "segmentM": [
+            [0.13263666994174458, -0.01515847656477081],
+            [0.10989895509458837, 0.07579238282385406]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [3.4846117967977923, 0.8711529491994481],
+          "normalOut": [0.9701425001453319, 0.24253562503633297],
+          "segmentM": [
+            [3.4959806542213703, 0.8256775195051357],
+            [3.4732429393742144, 0.9166283788937605]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [4.0, 1.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-135ed5730033--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.10989895509458837, 0.07579238282385406],
+            [0.13263666994174458, -0.01515847656477081],
+            [3.4959806542213703, 0.8256775195051357],
+            [3.4732429393742144, 0.9166283788937605]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-135ed5730033"
+      }
+    },
+    {
+      "id": "node-722dea1af576",
+      "assetUuid": "98127b0f-f007-574b-92ae-a92e3702c382",
+      "kind": "node",
+      "signatureRays": [
+        [-1, -1],
+        [0, 1]
+      ],
+      "cutbackM": 0.0625,
+      "corePolygonM": [
+        [-0.046875, 0.01941626073624],
+        [-0.046875, 0.0625],
+        [0.046875, 0.0625],
+        [0.046875, -0.01941626073624],
+        [-0.01104854345604, -0.07733980419228],
+        [-0.07733980419228, -0.01104854345604]
+      ],
+      "ports": [
+        {
+          "directionUnits": [-1, -1],
+          "positionM": [-0.044194173824159216, -0.044194173824159216],
+          "normalOut": [-0.7071067811865475, -0.7071067811865475],
+          "segmentM": [
+            [-0.011048543456039804, -0.07733980419227862],
+            [-0.07733980419227862, -0.011048543456039804]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "directionUnits": [0, 1],
+          "positionM": [0.0, 0.0625],
+          "normalOut": [0.0, 1.0],
+          "segmentM": [
+            [-0.046875, 0.0625],
+            [0.046875, 0.0625]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceSpanUnits": null,
+      "scope": "two-ray convex/reentrant/straight physical node",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-node-722dea1af576--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [-0.07733980419228, -0.01104854345604],
+            [-0.01104854345604, -0.07733980419228],
+            [-0.046875, 0.01941626073624]
+          ],
+          [
+            [-0.046875, 0.01941626073624],
+            [-0.01104854345604, -0.07733980419228],
+            [0.046875, -0.01941626073624]
+          ],
+          [
+            [-0.046875, 0.01941626073624],
+            [0.046875, -0.01941626073624],
+            [0.046875, 0.0625]
+          ],
+          [
+            [-0.046875, 0.01941626073624],
+            [0.046875, 0.0625],
+            [-0.046875, 0.0625]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "node-722dea1af576"
+      }
+    },
+    {
+      "id": "node-9f376826b3e4",
+      "assetUuid": "e8e447bb-1908-5e64-99fb-64c1f8abda29",
+      "kind": "node",
+      "signatureRays": [
+        [-1, -1],
+        [1, 0]
+      ],
+      "cutbackM": 0.0625,
+      "corePolygonM": [
+        [-0.01941626073624, 0.046875],
+        [0.0625, 0.046875],
+        [0.0625, -0.046875],
+        [0.01941626073624, -0.046875],
+        [-0.01104854345604, -0.07733980419228],
+        [-0.07733980419228, -0.01104854345604]
+      ],
+      "ports": [
+        {
+          "directionUnits": [-1, -1],
+          "positionM": [-0.044194173824159216, -0.044194173824159216],
+          "normalOut": [-0.7071067811865475, -0.7071067811865475],
+          "segmentM": [
+            [-0.011048543456039804, -0.07733980419227862],
+            [-0.07733980419227862, -0.011048543456039804]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "directionUnits": [1, 0],
+          "positionM": [0.0625, 0.0],
+          "normalOut": [1.0, 0.0],
+          "segmentM": [
+            [0.0625, 0.046875],
+            [0.0625, -0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceSpanUnits": null,
+      "scope": "two-ray convex/reentrant/straight physical node",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-node-9f376826b3e4--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [-0.07733980419228, -0.01104854345604],
+            [-0.01104854345604, -0.07733980419228],
+            [0.01941626073624, -0.046875]
+          ],
+          [
+            [-0.07733980419228, -0.01104854345604],
+            [0.01941626073624, -0.046875],
+            [-0.01941626073624, 0.046875]
+          ],
+          [
+            [-0.01941626073624, 0.046875],
+            [0.01941626073624, -0.046875],
+            [0.0625, 0.046875]
+          ],
+          [
+            [0.01941626073624, -0.046875],
+            [0.0625, -0.046875],
+            [0.0625, 0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "node-9f376826b3e4"
+      }
+    },
+    {
+      "id": "span-a3fe624b4c51",
+      "assetUuid": "1ec2b968-c075-53d1-82d2-b35a788ed9a2",
+      "kind": "span",
+      "sourceSpanUnits": [32, 32],
+      "startCutbackM": 0.0625,
+      "endCutbackM": 0.0625,
+      "bodyLengthM": 1.2892135623730951,
+      "corePolygonM": [
+        [0.07733980419227862, 0.011048543456039804],
+        [0.9889514565439602, 0.9226601958077213],
+        [0.9226601958077213, 0.9889514565439602],
+        [0.011048543456039804, 0.07733980419227862]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.044194173824159216, 0.044194173824159216],
+          "normalOut": [-0.7071067811865475, -0.7071067811865475],
+          "segmentM": [
+            [0.07733980419227862, 0.011048543456039804],
+            [0.011048543456039804, 0.07733980419227862]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [0.9558058261758408, 0.9558058261758408],
+          "normalOut": [0.7071067811865475, 0.7071067811865475],
+          "segmentM": [
+            [0.9889514565439602, 0.9226601958077213],
+            [0.9226601958077213, 0.9889514565439602]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [1.0, 1.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-a3fe624b4c51--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.011048543456039804, 0.07733980419227862],
+            [0.07733980419227862, 0.011048543456039804],
+            [0.9889514565439602, 0.9226601958077213],
+            [0.9226601958077213, 0.9889514565439602]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-a3fe624b4c51"
+      }
+    },
+    {
+      "id": "node-028c6d82a9cd",
+      "assetUuid": "2edca855-405e-50ce-ba0f-7215488bfe77",
+      "kind": "node",
+      "signatureRays": [
+        [-8, 1],
+        [0, 1]
+      ],
+      "cutbackM": 0.09375,
+      "corePolygonM": [
+        [-0.046875, 0.05309916649394],
+        [-0.046875, 0.09375],
+        [0.046875, 0.09375],
+        [0.046875, -0.05309916649394],
+        [-0.09884017912578, -0.03488476910321],
+        [-0.08721192275804, 0.05814128183869]
+      ],
+      "ports": [
+        {
+          "directionUnits": [-8, 1],
+          "positionM": [-0.09302605094190636, 0.011628256367738295],
+          "normalOut": [-0.9922778767136677, 0.12403473458920847],
+          "segmentM": [
+            [-0.0988401791257755, -0.034884769103214884],
+            [-0.08721192275803721, 0.05814128183869147]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "directionUnits": [0, 1],
+          "positionM": [0.0, 0.09375],
+          "normalOut": [0.0, 1.0],
+          "segmentM": [
+            [-0.046875, 0.09375],
+            [0.046875, 0.09375]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceSpanUnits": null,
+      "scope": "two-ray convex/reentrant/straight physical node",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-node-028c6d82a9cd--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [-0.09884017912578, -0.03488476910321],
+            [-0.046875, 0.05309916649394],
+            [-0.08721192275804, 0.05814128183869]
+          ],
+          [
+            [-0.09884017912578, -0.03488476910321],
+            [0.046875, -0.05309916649394],
+            [-0.046875, 0.05309916649394]
+          ],
+          [
+            [-0.046875, 0.05309916649394],
+            [0.046875, -0.05309916649394],
+            [0.046875, 0.09375]
+          ],
+          [
+            [-0.046875, 0.05309916649394],
+            [0.046875, 0.09375],
+            [-0.046875, 0.09375]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "node-028c6d82a9cd"
+      }
+    },
+    {
+      "id": "node-fa76146eb8d8",
+      "assetUuid": "e7d57d01-8981-5416-a423-02e6b28c0b04",
+      "kind": "node",
+      "signatureRays": [
+        [-8, 1],
+        [0, -1]
+      ],
+      "cutbackM": 0.0625,
+      "corePolygonM": [
+        [0.046875, 0.04138041649394],
+        [0.046875, -0.0625],
+        [-0.046875, -0.0625],
+        [-0.046875, -0.04138041649394],
+        [-0.06783149547847, -0.03876085455913],
+        [-0.05620323911074, 0.05426519638278]
+      ],
+      "ports": [
+        {
+          "directionUnits": [-8, 1],
+          "positionM": [-0.062017367294604234, 0.007752170911825529],
+          "normalOut": [-0.9922778767136677, 0.12403473458920847],
+          "segmentM": [
+            [-0.06783149547847338, -0.03876085455912765],
+            [-0.05620323911073509, 0.054265196382778706]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "directionUnits": [0, -1],
+          "positionM": [0.0, -0.0625],
+          "normalOut": [0.0, -1.0],
+          "segmentM": [
+            [0.046875, -0.0625],
+            [-0.046875, -0.0625]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceSpanUnits": null,
+      "scope": "two-ray convex/reentrant/straight physical node",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-node-fa76146eb8d8--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [-0.06783149547847, -0.03876085455913],
+            [-0.046875, -0.04138041649394],
+            [-0.05620323911074, 0.05426519638278]
+          ],
+          [
+            [-0.05620323911074, 0.05426519638278],
+            [-0.046875, -0.04138041649394],
+            [0.046875, 0.04138041649394]
+          ],
+          [
+            [-0.046875, -0.0625],
+            [0.046875, -0.0625],
+            [-0.046875, -0.04138041649394]
+          ],
+          [
+            [-0.046875, -0.04138041649394],
+            [0.046875, -0.0625],
+            [0.046875, 0.04138041649394]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "node-fa76146eb8d8"
+      }
+    },
+    {
+      "id": "node-3b50213b5a7b",
+      "assetUuid": "c3f6e891-7431-5ed9-9ac3-eebf36d86d67",
+      "kind": "node",
+      "signatureRays": [
+        [-8, -1],
+        [0, 1]
+      ],
+      "cutbackM": 0.0625,
+      "corePolygonM": [
+        [-0.046875, 0.04138041649394],
+        [-0.046875, 0.0625],
+        [0.046875, 0.0625],
+        [0.046875, -0.04138041649394],
+        [-0.05620323911074, -0.05426519638278],
+        [-0.06783149547847, 0.03876085455913]
+      ],
+      "ports": [
+        {
+          "directionUnits": [-8, -1],
+          "positionM": [-0.062017367294604234, -0.007752170911825529],
+          "normalOut": [-0.9922778767136677, -0.12403473458920847],
+          "segmentM": [
+            [-0.05620323911073509, -0.054265196382778706],
+            [-0.06783149547847338, 0.03876085455912765]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "directionUnits": [0, 1],
+          "positionM": [0.0, 0.0625],
+          "normalOut": [0.0, 1.0],
+          "segmentM": [
+            [-0.046875, 0.0625],
+            [0.046875, 0.0625]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceSpanUnits": null,
+      "scope": "two-ray convex/reentrant/straight physical node",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-node-3b50213b5a7b--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [-0.06783149547847, 0.03876085455913],
+            [-0.05620323911074, -0.05426519638278],
+            [-0.046875, 0.04138041649394]
+          ],
+          [
+            [-0.05620323911074, -0.05426519638278],
+            [0.046875, -0.04138041649394],
+            [-0.046875, 0.04138041649394]
+          ],
+          [
+            [-0.046875, 0.04138041649394],
+            [0.046875, -0.04138041649394],
+            [0.046875, 0.0625]
+          ],
+          [
+            [-0.046875, 0.04138041649394],
+            [0.046875, 0.0625],
+            [-0.046875, 0.0625]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "node-3b50213b5a7b"
+      }
+    },
+    {
+      "id": "node-521432080d97",
+      "assetUuid": "69a16fcb-4b0d-56c4-bc8a-2c93f25758c7",
+      "kind": "node",
+      "signatureRays": [
+        [-8, -1],
+        [0, -1]
+      ],
+      "cutbackM": 0.09375,
+      "corePolygonM": [
+        [0.046875, 0.05309916649394],
+        [0.046875, -0.09375],
+        [-0.046875, -0.09375],
+        [-0.046875, -0.05309916649394],
+        [-0.08721192275804, -0.05814128183869],
+        [-0.09884017912578, 0.03488476910321]
+      ],
+      "ports": [
+        {
+          "directionUnits": [-8, -1],
+          "positionM": [-0.09302605094190636, -0.011628256367738295],
+          "normalOut": [-0.9922778767136677, -0.12403473458920847],
+          "segmentM": [
+            [-0.08721192275803721, -0.05814128183869147],
+            [-0.0988401791257755, 0.034884769103214884]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "directionUnits": [0, -1],
+          "positionM": [0.0, -0.09375],
+          "normalOut": [0.0, -1.0],
+          "segmentM": [
+            [0.046875, -0.09375],
+            [-0.046875, -0.09375]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceSpanUnits": null,
+      "scope": "two-ray convex/reentrant/straight physical node",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-node-521432080d97--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [-0.09884017912578, 0.03488476910321],
+            [-0.08721192275804, -0.05814128183869],
+            [-0.046875, -0.05309916649394]
+          ],
+          [
+            [-0.09884017912578, 0.03488476910321],
+            [-0.046875, -0.05309916649394],
+            [0.046875, 0.05309916649394]
+          ],
+          [
+            [-0.046875, -0.09375],
+            [0.046875, -0.09375],
+            [-0.046875, -0.05309916649394]
+          ],
+          [
+            [-0.046875, -0.05309916649394],
+            [0.046875, -0.09375],
+            [0.046875, 0.05309916649394]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "node-521432080d97"
+      }
+    },
+    {
+      "id": "span-2072e1ebfaf9",
+      "assetUuid": "ed3eb71d-4128-5ebf-9a9a-298619c51e62",
+      "kind": "span",
+      "sourceSpanUnits": [64, 0],
+      "startCutbackM": 0.09375,
+      "endCutbackM": 0.09375,
+      "bodyLengthM": 1.8125,
+      "corePolygonM": [
+        [0.09375, -0.046875],
+        [1.90625, -0.046875],
+        [1.90625, 0.046875],
+        [0.09375, 0.046875]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.09375, 0.0],
+          "normalOut": [-1.0, -0.0],
+          "segmentM": [
+            [0.09375, -0.046875],
+            [0.09375, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [1.90625, 0.0],
+          "normalOut": [1.0, 0.0],
+          "segmentM": [
+            [1.90625, -0.046875],
+            [1.90625, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [2.0, 0.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-2072e1ebfaf9--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.09375, -0.046875],
+            [1.90625, -0.046875],
+            [1.90625, 0.046875],
+            [0.09375, 0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-2072e1ebfaf9"
+      }
+    },
+    {
+      "id": "span-56b00de0648a",
+      "assetUuid": "472c8b99-7e88-5711-856a-705feaeebfa4",
+      "kind": "span",
+      "sourceSpanUnits": [128, 16],
+      "startCutbackM": 0.09375,
+      "endCutbackM": 0.0625,
+      "bodyLengthM": 3.8748788741492746,
+      "corePolygonM": [
+        [0.0988401791257755, -0.034884769103214884],
+        [3.9437967608892652, 0.4457348036172213],
+        [3.9321685045215267, 0.5387608545591277],
+        [0.08721192275803721, 0.05814128183869147]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.09302605094190636, 0.011628256367738295],
+          "normalOut": [-0.9922778767136677, -0.12403473458920847],
+          "segmentM": [
+            [0.0988401791257755, -0.034884769103214884],
+            [0.08721192275803721, 0.05814128183869147]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [3.937982632705396, 0.4922478290881745],
+          "normalOut": [0.9922778767136677, 0.12403473458920847],
+          "segmentM": [
+            [3.9437967608892652, 0.4457348036172213],
+            [3.9321685045215267, 0.5387608545591277]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [4.0, 0.5],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-56b00de0648a--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.08721192275803721, 0.05814128183869147],
+            [0.0988401791257755, -0.034884769103214884],
+            [3.9437967608892652, 0.4457348036172213],
+            [3.9321685045215267, 0.5387608545591277]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-56b00de0648a"
+      }
+    },
+    {
+      "id": "span-e15d62f9fc09",
+      "assetUuid": "b1939758-bc79-5f28-8746-3769ad564f01",
+      "kind": "span",
+      "sourceSpanUnits": [16, 128],
+      "startCutbackM": 0.0625,
+      "endCutbackM": 0.09375,
+      "bodyLengthM": 3.8748788741492746,
+      "corePolygonM": [
+        [0.054265196382778706, 0.05620323911073509],
+        [0.5348847691032149, 3.9011598208742244],
+        [0.4418587181613085, 3.912788077241963],
+        [-0.03876085455912765, 0.06783149547847338]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.007752170911825529, 0.062017367294604234],
+          "normalOut": [-0.12403473458920847, -0.9922778767136677],
+          "segmentM": [
+            [0.054265196382778706, 0.05620323911073509],
+            [-0.03876085455912765, 0.06783149547847338]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [0.4883717436322617, 3.9069739490580937],
+          "normalOut": [0.12403473458920847, 0.9922778767136677],
+          "segmentM": [
+            [0.5348847691032149, 3.9011598208742244],
+            [0.4418587181613085, 3.912788077241963]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [0.5, 4.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-e15d62f9fc09--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [-0.03876085455912765, 0.06783149547847338],
+            [0.054265196382778706, 0.05620323911073509],
+            [0.5348847691032149, 3.9011598208742244],
+            [0.4418587181613085, 3.912788077241963]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-e15d62f9fc09"
+      }
+    },
+    {
+      "id": "span-ae8b5f8aa228",
+      "assetUuid": "884bafb9-4053-59f9-b314-159ab757f692",
+      "kind": "span",
+      "sourceSpanUnits": [32, 0],
+      "startCutbackM": 0.0625,
+      "endCutbackM": 0.1875,
+      "bodyLengthM": 0.75,
+      "corePolygonM": [
+        [0.0625, -0.046875],
+        [0.8125, -0.046875],
+        [0.8125, 0.046875],
+        [0.0625, 0.046875]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.0625, 0.0],
+          "normalOut": [-1.0, -0.0],
+          "segmentM": [
+            [0.0625, -0.046875],
+            [0.0625, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [0.8125, 0.0],
+          "normalOut": [1.0, 0.0],
+          "segmentM": [
+            [0.8125, -0.046875],
+            [0.8125, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [1.0, 0.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-ae8b5f8aa228--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.0625, -0.046875],
+            [0.8125, -0.046875],
+            [0.8125, 0.046875],
+            [0.0625, 0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-ae8b5f8aa228"
+      }
+    },
+    {
+      "id": "span-ab0d57a0fb09",
+      "assetUuid": "1d471915-6bf7-553a-a2d5-790fa728e751",
+      "kind": "span",
+      "sourceSpanUnits": [32, 32],
+      "startCutbackM": 0.1875,
+      "endCutbackM": 0.1875,
+      "bodyLengthM": 1.0392135623730951,
+      "corePolygonM": [
+        [0.16572815184059705, 0.09943689110435824],
+        [0.9005631088956418, 0.8342718481594029],
+        [0.8342718481594029, 0.9005631088956418],
+        [0.09943689110435824, 0.16572815184059705]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.13258252147247765, 0.13258252147247765],
+          "normalOut": [-0.7071067811865475, -0.7071067811865475],
+          "segmentM": [
+            [0.16572815184059705, 0.09943689110435824],
+            [0.09943689110435824, 0.16572815184059705]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [0.8674174785275224, 0.8674174785275224],
+          "normalOut": [0.7071067811865475, 0.7071067811865475],
+          "segmentM": [
+            [0.9005631088956418, 0.8342718481594029],
+            [0.8342718481594029, 0.9005631088956418]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [1.0, 1.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-ab0d57a0fb09--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.09943689110435824, 0.16572815184059705],
+            [0.16572815184059705, 0.09943689110435824],
+            [0.9005631088956418, 0.8342718481594029],
+            [0.8342718481594029, 0.9005631088956418]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-ab0d57a0fb09"
+      }
+    },
+    {
+      "id": "span-76cad9647098",
+      "assetUuid": "13de1c4a-e67b-596d-85ee-4b3ffab43fd2",
+      "kind": "span",
+      "sourceSpanUnits": [32, 0],
+      "startCutbackM": 0.1875,
+      "endCutbackM": 0.0625,
+      "bodyLengthM": 0.75,
+      "corePolygonM": [
+        [0.1875, -0.046875],
+        [0.9375, -0.046875],
+        [0.9375, 0.046875],
+        [0.1875, 0.046875]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.1875, 0.0],
+          "normalOut": [-1.0, -0.0],
+          "segmentM": [
+            [0.1875, -0.046875],
+            [0.1875, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [0.9375, 0.0],
+          "normalOut": [1.0, 0.0],
+          "segmentM": [
+            [0.9375, -0.046875],
+            [0.9375, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [1.0, 0.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-76cad9647098--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.1875, -0.046875],
+            [0.9375, -0.046875],
+            [0.9375, 0.046875],
+            [0.1875, 0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-76cad9647098"
+      }
+    },
+    {
+      "id": "span-b3230e7b8584",
+      "assetUuid": "3cc8118b-c554-5e15-89b4-21e5be01de2f",
+      "kind": "span",
+      "sourceSpanUnits": [128, 0],
+      "startCutbackM": 0.0625,
+      "endCutbackM": 0.1875,
+      "bodyLengthM": 3.75,
+      "corePolygonM": [
+        [0.0625, -0.046875],
+        [3.8125, -0.046875],
+        [3.8125, 0.046875],
+        [0.0625, 0.046875]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.0625, 0.0],
+          "normalOut": [-1.0, -0.0],
+          "segmentM": [
+            [0.0625, -0.046875],
+            [0.0625, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [3.8125, 0.0],
+          "normalOut": [1.0, 0.0],
+          "segmentM": [
+            [3.8125, -0.046875],
+            [3.8125, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [4.0, 0.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-b3230e7b8584--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.0625, -0.046875],
+            [3.8125, -0.046875],
+            [3.8125, 0.046875],
+            [0.0625, 0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-b3230e7b8584"
+      }
+    },
+    {
+      "id": "span-a2d8e928c4dc",
+      "assetUuid": "0d6e68c6-3442-5db3-9944-4bc2036fd162",
+      "kind": "span",
+      "sourceSpanUnits": [64, 64],
+      "startCutbackM": 0.1875,
+      "endCutbackM": 0.0625,
+      "bodyLengthM": 2.5784271247461903,
+      "corePolygonM": [
+        [0.16572815184059705, 0.09943689110435824],
+        [1.9889514565439603, 1.9226601958077214],
+        [1.9226601958077214, 1.9889514565439603],
+        [0.09943689110435824, 0.16572815184059705]
+      ],
+      "ports": [
+        {
+          "endpoint": "start",
+          "positionM": [0.13258252147247765, 0.13258252147247765],
+          "normalOut": [-0.7071067811865475, -0.7071067811865475],
+          "segmentM": [
+            [0.16572815184059705, 0.09943689110435824],
+            [0.09943689110435824, 0.16572815184059705]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "endpoint": "end",
+          "positionM": [1.9558058261758409, 1.9558058261758409],
+          "normalOut": [0.7071067811865475, 0.7071067811865475],
+          "segmentM": [
+            [1.9889514565439603, 1.9226601958077214],
+            [1.9226601958077214, 1.9889514565439603]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceStartM": [0, 0],
+      "sourceEndM": [2.0, 2.0],
+      "scope": "exact native authored length and paired endpoint variant; never scaled",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-span-a2d8e928c4dc--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [0.09943689110435824, 0.16572815184059705],
+            [0.16572815184059705, 0.09943689110435824],
+            [1.9889514565439603, 1.9226601958077214],
+            [1.9226601958077214, 1.9889514565439603]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "span-a2d8e928c4dc"
+      }
+    },
+    {
+      "id": "node-b4c788600641",
+      "assetUuid": "b80fe9c4-4d22-5de9-ad60-79099a16f046",
+      "kind": "node",
+      "signatureRays": [
+        [-1, 0],
+        [0, -1],
+        [0, 1]
+      ],
+      "cutbackM": 0.0625,
+      "corePolygonM": [
+        [-0.046875, -0.0625],
+        [-0.046875, -0.046875],
+        [-0.0625, -0.046875],
+        [-0.0625, 0.046875],
+        [-0.046875, 0.046875],
+        [-0.046875, 0.0625],
+        [0.046875, 0.0625],
+        [0.046875, 0.0],
+        [0.046875, -0.0625]
+      ],
+      "ports": [
+        {
+          "directionUnits": [-1, 0],
+          "positionM": [-0.0625, 0.0],
+          "normalOut": [-1.0, 0.0],
+          "segmentM": [
+            [-0.0625, -0.046875],
+            [-0.0625, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "directionUnits": [0, -1],
+          "positionM": [0.0, -0.0625],
+          "normalOut": [0.0, -1.0],
+          "segmentM": [
+            [0.046875, -0.0625],
+            [-0.046875, -0.0625]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "directionUnits": [0, 1],
+          "positionM": [0.0, 0.0625],
+          "normalOut": [0.0, 1.0],
+          "segmentM": [
+            [-0.046875, 0.0625],
+            [0.046875, 0.0625]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceSpanUnits": null,
+      "scope": "orthogonal T node",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-node-b4c788600641--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [-0.0625, -0.046875],
+            [-0.046875, -0.046875],
+            [-0.0625, 0.046875]
+          ],
+          [
+            [-0.0625, 0.046875],
+            [-0.046875, -0.046875],
+            [-0.046875, 0.046875]
+          ],
+          [
+            [-0.046875, -0.0625],
+            [0.046875, -0.0625],
+            [-0.046875, -0.046875]
+          ],
+          [
+            [-0.046875, -0.046875],
+            [0.046875, -0.0625],
+            [0.046875, 0.0]
+          ],
+          [
+            [-0.046875, -0.046875],
+            [0.046875, 0.0],
+            [-0.046875, 0.046875]
+          ],
+          [
+            [-0.046875, 0.046875],
+            [0.046875, 0.0],
+            [0.046875, 0.0625]
+          ],
+          [
+            [-0.046875, 0.046875],
+            [0.046875, 0.0625],
+            [-0.046875, 0.0625]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "node-b4c788600641"
+      }
+    },
+    {
+      "id": "node-a8148ac9f645",
+      "assetUuid": "c9eba64d-f7da-5a94-82be-5b6fd062b327",
+      "kind": "node",
+      "signatureRays": [
+        [-1, 0],
+        [1, 0]
+      ],
+      "cutbackM": 0.0625,
+      "corePolygonM": [
+        [0.0625, 0.046875],
+        [0.0625, -0.046875],
+        [-0.0625, -0.046875],
+        [-0.0625, 0.046875]
+      ],
+      "ports": [
+        {
+          "directionUnits": [-1, 0],
+          "positionM": [-0.0625, 0.0],
+          "normalOut": [-1.0, 0.0],
+          "segmentM": [
+            [-0.0625, -0.046875],
+            [-0.0625, 0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        },
+        {
+          "directionUnits": [1, 0],
+          "positionM": [0.0625, 0.0],
+          "normalOut": [1.0, 0.0],
+          "segmentM": [
+            [0.0625, 0.046875],
+            [0.0625, -0.046875]
+          ],
+          "widthM": 0.09375,
+          "verticalRangeM": [0.1875, 3],
+          "nominalContactAreaM2": 0.263671875
+        }
+      ],
+      "sourceSpanUnits": null,
+      "scope": "two-ray convex/reentrant/straight physical node",
+      "native": {
+        "nodePrefix": "GEO-boundary-r004-node-a8148ac9f645--surface",
+        "scale": [1, 1, 1]
+      },
+      "collision": {
+        "convexPolygonsM": [
+          [
+            [-0.0625, -0.046875],
+            [0.0625, -0.046875],
+            [0.0625, 0.046875],
+            [-0.0625, 0.046875]
+          ]
+        ],
+        "bottomM": 0.1875,
+        "topM": 3,
+        "proofPartId": "node-a8148ac9f645"
+      }
+    }
+  ],
+  "grammar": {
+    "matching": "primitive integer ray vectors sorted, canonicalize over exact quarter-turns only; no reflection or scaling",
+    "nodeSignatures": [
+      {
+        "partId": "node-ee493bf1352e",
+        "rays": [
+          [-1, 0],
+          [0, -1]
+        ],
+        "cutbackM": 0.0625
+      },
+      {
+        "partId": "node-8ace9108954c",
+        "rays": [
+          [-1, -1],
+          [-1, 0]
+        ],
+        "cutbackM": 0.1875
+      },
+      {
+        "partId": "node-4cf5a3e80bfc",
+        "rays": [
+          [-1, -1],
+          [0, -1]
+        ],
+        "cutbackM": 0.1875
+      },
+      {
+        "partId": "node-600f98889a3d",
+        "rays": [
+          [-2, 1],
+          [0, 1]
+        ],
+        "cutbackM": 0.125
+      },
+      {
+        "partId": "node-5ef3fc8bee96",
+        "rays": [
+          [-2, 1],
+          [-1, 0]
+        ],
+        "cutbackM": 0.28125
+      },
+      {
+        "partId": "node-8b91be106a9b",
+        "rays": [
+          [-2, -1],
+          [-1, 0]
+        ],
+        "cutbackM": 0.28125
+      },
+      {
+        "partId": "node-9c2c257cf6fe",
+        "rays": [
+          [-2, -1],
+          [0, -1]
+        ],
+        "cutbackM": 0.125
+      },
+      {
+        "partId": "node-74c0b4ffc689",
+        "rays": [
+          [-4, 1],
+          [0, 1]
+        ],
+        "cutbackM": 0.125
+      },
+      {
+        "partId": "node-b3757ae7933a",
+        "rays": [
+          [-4, 1],
+          [-1, 0]
+        ],
+        "cutbackM": 0.53125
+      },
+      {
+        "partId": "node-ac322cc2ef83",
+        "rays": [
+          [-4, -1],
+          [-1, 0]
+        ],
+        "cutbackM": 0.53125
+      },
+      {
+        "partId": "node-dd5634ec14cc",
+        "rays": [
+          [-4, -1],
+          [0, -1]
+        ],
+        "cutbackM": 0.125
+      },
+      {
+        "partId": "node-722dea1af576",
+        "rays": [
+          [-1, -1],
+          [0, 1]
+        ],
+        "cutbackM": 0.0625
+      },
+      {
+        "partId": "node-9f376826b3e4",
+        "rays": [
+          [-1, -1],
+          [1, 0]
+        ],
+        "cutbackM": 0.0625
+      },
+      {
+        "partId": "node-028c6d82a9cd",
+        "rays": [
+          [-8, 1],
+          [0, 1]
+        ],
+        "cutbackM": 0.09375
+      },
+      {
+        "partId": "node-fa76146eb8d8",
+        "rays": [
+          [-8, 1],
+          [0, -1]
+        ],
+        "cutbackM": 0.0625
+      },
+      {
+        "partId": "node-3b50213b5a7b",
+        "rays": [
+          [-8, -1],
+          [0, 1]
+        ],
+        "cutbackM": 0.0625
+      },
+      {
+        "partId": "node-521432080d97",
+        "rays": [
+          [-8, -1],
+          [0, -1]
+        ],
+        "cutbackM": 0.09375
+      },
+      {
+        "partId": "node-b4c788600641",
+        "rays": [
+          [-1, 0],
+          [0, -1],
+          [0, 1]
+        ],
+        "cutbackM": 0.0625
+      },
+      {
+        "partId": "node-a8148ac9f645",
+        "rays": [
+          [-1, 0],
+          [1, 0]
+        ],
+        "cutbackM": 0.0625
+      }
+    ],
+    "spanSignatures": [
+      {
+        "partId": "span-086cc581b11f",
+        "deltaUnits": [64, 0],
+        "startCutbackM": 0.0625,
+        "endCutbackM": 0.0625
+      },
+      {
+        "partId": "span-b3f0724acb39",
+        "deltaUnits": [32, 0],
+        "startCutbackM": 0.0625,
+        "endCutbackM": 0.0625
+      },
+      {
+        "partId": "span-0cdd4c8ec952",
+        "deltaUnits": [128, 0],
+        "startCutbackM": 0.0625,
+        "endCutbackM": 0.0625
+      },
+      {
+        "partId": "span-94768f04e98a",
+        "deltaUnits": [64, 0],
+        "startCutbackM": 0.0625,
+        "endCutbackM": 0.1875
+      },
+      {
+        "partId": "span-0314fecad407",
+        "deltaUnits": [64, 64],
+        "startCutbackM": 0.1875,
+        "endCutbackM": 0.1875
+      },
+      {
+        "partId": "span-808c0ebd2217",
+        "deltaUnits": [64, 0],
+        "startCutbackM": 0.1875,
+        "endCutbackM": 0.0625
+      },
+      {
+        "partId": "span-e1ee17a40bd0",
+        "deltaUnits": [128, 0],
+        "startCutbackM": 0.0625,
+        "endCutbackM": 0.28125
+      },
+      {
+        "partId": "span-6ec4ef6b98b1",
+        "deltaUnits": [64, 128],
+        "startCutbackM": 0.28125,
+        "endCutbackM": 0.125
+      },
+      {
+        "partId": "span-2558d18d8aea",
+        "deltaUnits": [64, 0],
+        "startCutbackM": 0.125,
+        "endCutbackM": 0.0625
+      },
+      {
+        "partId": "span-08fd6477c200",
+        "deltaUnits": [128, 0],
+        "startCutbackM": 0.28125,
+        "endCutbackM": 0.0625
+      },
+      {
+        "partId": "span-808e279e3305",
+        "deltaUnits": [64, 0],
+        "startCutbackM": 0.0625,
+        "endCutbackM": 0.125
+      },
+      {
+        "partId": "span-be8caa482150",
+        "deltaUnits": [128, 64],
+        "startCutbackM": 0.125,
+        "endCutbackM": 0.28125
+      },
+      {
+        "partId": "span-d47d3475d32a",
+        "deltaUnits": [128, 0],
+        "startCutbackM": 0.0625,
+        "endCutbackM": 0.53125
+      },
+      {
+        "partId": "span-ac212cda6bdf",
+        "deltaUnits": [32, 128],
+        "startCutbackM": 0.53125,
+        "endCutbackM": 0.125
+      },
+      {
+        "partId": "span-618a6deb050d",
+        "deltaUnits": [32, 0],
+        "startCutbackM": 0.125,
+        "endCutbackM": 0.0625
+      },
+      {
+        "partId": "span-1fccd896f86f",
+        "deltaUnits": [128, 0],
+        "startCutbackM": 0.53125,
+        "endCutbackM": 0.0625
+      },
+      {
+        "partId": "span-f6f884420a9f",
+        "deltaUnits": [32, 0],
+        "startCutbackM": 0.0625,
+        "endCutbackM": 0.125
+      },
+      {
+        "partId": "span-135ed5730033",
+        "deltaUnits": [128, 32],
+        "startCutbackM": 0.125,
+        "endCutbackM": 0.53125
+      },
+      {
+        "partId": "span-a3fe624b4c51",
+        "deltaUnits": [32, 32],
+        "startCutbackM": 0.0625,
+        "endCutbackM": 0.0625
+      },
+      {
+        "partId": "span-2072e1ebfaf9",
+        "deltaUnits": [64, 0],
+        "startCutbackM": 0.09375,
+        "endCutbackM": 0.09375
+      },
+      {
+        "partId": "span-56b00de0648a",
+        "deltaUnits": [128, 16],
+        "startCutbackM": 0.09375,
+        "endCutbackM": 0.0625
+      },
+      {
+        "partId": "span-e15d62f9fc09",
+        "deltaUnits": [16, 128],
+        "startCutbackM": 0.0625,
+        "endCutbackM": 0.09375
+      },
+      {
+        "partId": "span-ae8b5f8aa228",
+        "deltaUnits": [32, 0],
+        "startCutbackM": 0.0625,
+        "endCutbackM": 0.1875
+      },
+      {
+        "partId": "span-ab0d57a0fb09",
+        "deltaUnits": [32, 32],
+        "startCutbackM": 0.1875,
+        "endCutbackM": 0.1875
+      },
+      {
+        "partId": "span-76cad9647098",
+        "deltaUnits": [32, 0],
+        "startCutbackM": 0.1875,
+        "endCutbackM": 0.0625
+      },
+      {
+        "partId": "span-b3230e7b8584",
+        "deltaUnits": [128, 0],
+        "startCutbackM": 0.0625,
+        "endCutbackM": 0.1875
+      },
+      {
+        "partId": "span-a2d8e928c4dc",
+        "deltaUnits": [64, 64],
+        "startCutbackM": 0.1875,
+        "endCutbackM": 0.0625
+      }
+    ],
+    "reject": [
+      "Unlisted node signatures including diagonal T and four-way crossings",
+      "Unlisted span lengths/end-cutback pairing",
+      "Unsupported floorTop/ceiling datums",
+      "Door/passage opening not separately adapted to endpoint profile",
+      "Any arbitrary scale/reflection or inferred geometry substitution"
+    ]
+  }
+}

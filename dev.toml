@@ -8,17 +8,29 @@ port = 3100
 [client]
 host = "0.0.0.0"
 port = 5173
-allowed_hosts = ["sidereal.tail7a58a6.ts.net"]
+allowed_hosts = ["sidereal.tail7a58a6.ts.net", "sidereal.dastari.net"]
 [dashboard]
 host = "0.0.0.0"
 port = 5174
 allowed_hosts = ["sidereal.tail7a58a6.ts.net"]
 [auth]
 mode = "development"
-issuer = "https://auth.orchard.dastari.net/realms/orchard"
+issuer = "https://auth.dastari.net/realms/dastari"
 client_id = "sidereal-game"
 dashboard_client_id = "sidereal-dashboard"
-# Provider clients are prepared in ops/oidc; production integration is M1.
+authoring_client_id = "sidereal-shipyard"
+# Dedicated reusable provider; development identities remain available during explicit migration.
+client_origin = "https://sidereal.dastari.net"
+client_review_origin = "https://sidereal.tail7a58a6.ts.net:8444"
+dashboard_origin = "https://sidereal.tail7a58a6.ts.net:8445"
 [art]
 blender = "/usr/bin/blender"
 mcp_port = 9886
+
+[art_library]
+host = "0.0.0.0"
+port = 5175
+
+[public_client]
+host = "0.0.0.0"
+port = 5183

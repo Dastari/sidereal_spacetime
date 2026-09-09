@@ -1,0 +1,3301 @@
+{
+  "schema": 1,
+  "revision": 8,
+  "rigId": "crew-shared-16-v1",
+  "bodyTypes": [
+    "male",
+    "female"
+  ],
+  "hairStyles": [
+    "none",
+    "swept",
+    "cropped",
+    "crest",
+    "scientist",
+    "bob",
+    "ponytail",
+    "bun",
+    "braids"
+  ],
+  "sets": {
+    "captain": {
+      "belt": "captain-belt",
+      "boots": "captain-boots",
+      "helmet": "captain-helmet",
+      "chest": "captain-chest",
+      "shoulders": "captain-shoulders",
+      "gloves": "captain-gloves",
+      "back": "captain-back",
+      "legs": "captain-legs"
+    },
+    "engineer": {
+      "back": "engineer-back",
+      "belt": "engineer-belt",
+      "boots": "engineer-boots",
+      "chest": "engineer-chest",
+      "helmet": "engineer-helmet",
+      "visor": "engineer-visor",
+      "gloves": "engineer-gloves",
+      "legs": "engineer-legs",
+      "shoulders": "engineer-shoulders"
+    },
+    "medic": {
+      "back": "medic-back",
+      "belt": "medic-belt",
+      "boots": "medic-boots",
+      "chest": "medic-chest",
+      "gloves": "medic-gloves",
+      "legs": "medic-legs",
+      "helmet": "medic-helmet",
+      "visor": "medic-visor",
+      "shoulders": "medic-shoulders"
+    },
+    "pilot": {
+      "belt": "pilot-belt",
+      "boots": "pilot-boots",
+      "chest": "pilot-chest",
+      "back": "pilot-back",
+      "gloves": "pilot-gloves",
+      "legs": "pilot-legs",
+      "helmet": "pilot-helmet",
+      "visor": "pilot-visor",
+      "shoulders": "pilot-shoulders"
+    },
+    "security": {
+      "belt": "security-belt",
+      "boots": "security-boots",
+      "chest": "security-chest",
+      "back": "security-back",
+      "gloves": "security-gloves",
+      "legs": "security-legs",
+      "helmet": "security-helmet",
+      "shoulders": "security-shoulders"
+    },
+    "marine": {
+      "belt": "marine-belt",
+      "boots": "marine-boots",
+      "chest": "marine-chest",
+      "gloves": "marine-gloves",
+      "legs": "marine-legs",
+      "shoulders": "marine-shoulders",
+      "helmet": "marine-helmet",
+      "visor": "marine-visor",
+      "back": "marine-back"
+    },
+    "salvage": {
+      "back": "salvage-back",
+      "belt": "salvage-belt",
+      "boots": "salvage-boots",
+      "chest": "salvage-chest",
+      "gloves": "salvage-gloves",
+      "legs": "salvage-legs",
+      "helmet": "salvage-helmet",
+      "visor": "salvage-visor",
+      "shoulders": "salvage-shoulders"
+    },
+    "recon": {
+      "belt": "recon-belt",
+      "boots": "recon-boots",
+      "chest": "recon-chest",
+      "back": "recon-back",
+      "gloves": "recon-gloves",
+      "legs": "recon-legs",
+      "helmet": "recon-helmet",
+      "visor": "recon-visor",
+      "shoulders": "recon-shoulders"
+    },
+    "scientist": {
+      "belt": "scientist-belt",
+      "boots": "scientist-boots",
+      "chest": "scientist-chest",
+      "back": "scientist-back",
+      "gloves": "scientist-gloves",
+      "legs": "scientist-legs",
+      "shoulders": "scientist-shoulders"
+    },
+    "mechanic": {
+      "back": "mechanic-back",
+      "belt": "mechanic-belt",
+      "boots": "mechanic-boots",
+      "chest": "mechanic-chest",
+      "gloves": "mechanic-gloves",
+      "legs": "mechanic-legs",
+      "helmet": "mechanic-helmet",
+      "shoulders": "mechanic-shoulders"
+    }
+  },
+  "components": [
+    {
+      "id": "captain-belt",
+      "archetype": "captain",
+      "slot": "belt",
+      "name": "Captain utility belt",
+      "massKg": 0.25,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.21,
+          -0.1935,
+          0.8
+        ],
+        "max": [
+          0.21,
+          0.14,
+          0.87
+        ],
+        "size": [
+          0.42,
+          0.3335,
+          0.07
+        ]
+      }
+    },
+    {
+      "id": "captain-boots",
+      "archetype": "captain",
+      "slot": "boots",
+      "name": "Captain boots",
+      "massKg": 0.65,
+      "grid": [
+        2,
+        2
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "feet"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.26,
+          -0.2555,
+          -0.0
+        ],
+        "max": [
+          0.26,
+          0.145,
+          0.215
+        ],
+        "size": [
+          0.52,
+          0.4005,
+          0.215
+        ]
+      }
+    },
+    {
+      "id": "captain-helmet",
+      "archetype": "captain",
+      "slot": "helmet",
+      "name": "Captain helmet",
+      "massKg": 0.65,
+      "grid": [
+        2,
+        2
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.3111,
+          -0.3953,
+          1.7288
+        ],
+        "max": [
+          0.3111,
+          0.27966,
+          1.93296
+        ],
+        "size": [
+          0.6222,
+          0.67496,
+          0.20416
+        ]
+      }
+    },
+    {
+      "id": "captain-chest",
+      "archetype": "captain",
+      "slot": "chest",
+      "name": "Captain chest garment",
+      "massKg": 1.4,
+      "grid": [
+        2,
+        3
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "torso",
+        "upperarms"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.475,
+          -0.2135,
+          0.825
+        ],
+        "max": [
+          0.475,
+          0.16,
+          1.2825
+        ],
+        "size": [
+          0.95,
+          0.3735,
+          0.4575
+        ]
+      }
+    },
+    {
+      "id": "captain-shoulders",
+      "archetype": "captain",
+      "slot": "shoulders",
+      "name": "Captain shoulder guards",
+      "massKg": 0.3,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.435,
+          -0.1795,
+          1.08
+        ],
+        "max": [
+          0.435,
+          0.16,
+          1.293
+        ],
+        "size": [
+          0.87,
+          0.3395,
+          0.213
+        ]
+      }
+    },
+    {
+      "id": "captain-gloves",
+      "archetype": "captain",
+      "slot": "gloves",
+      "name": "Captain gloves / gauntlets",
+      "massKg": 0.22,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "forearms",
+        "hands"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.4925,
+          -0.143,
+          0.648
+        ],
+        "max": [
+          0.4925,
+          0.1175,
+          0.92
+        ],
+        "size": [
+          0.985,
+          0.2605,
+          0.272
+        ]
+      }
+    },
+    {
+      "id": "captain-back",
+      "archetype": "captain",
+      "slot": "back",
+      "name": "Captain backpack",
+      "massKg": 1.2,
+      "grid": [
+        3,
+        4
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.22,
+          0.175,
+          0.79
+        ],
+        "max": [
+          0.22,
+          0.4875,
+          1.395
+        ],
+        "size": [
+          0.44,
+          0.3125,
+          0.605
+        ]
+      }
+    },
+    {
+      "id": "captain-legs",
+      "archetype": "captain",
+      "slot": "legs",
+      "name": "Captain legwear",
+      "massKg": 0.85,
+      "grid": [
+        2,
+        3
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "legs"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.2535,
+          -0.1695,
+          0.16
+        ],
+        "max": [
+          0.2535,
+          0.13,
+          0.87
+        ],
+        "size": [
+          0.507,
+          0.2995,
+          0.71
+        ]
+      }
+    },
+    {
+      "id": "engineer-back",
+      "archetype": "engineer",
+      "slot": "back",
+      "name": "Engineer backpack",
+      "massKg": 1.2,
+      "grid": [
+        3,
+        4
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.18,
+          0.145,
+          0.87
+        ],
+        "max": [
+          0.18,
+          0.4025,
+          1.26
+        ],
+        "size": [
+          0.36,
+          0.2575,
+          0.39
+        ]
+      }
+    },
+    {
+      "id": "engineer-belt",
+      "archetype": "engineer",
+      "slot": "belt",
+      "name": "Engineer utility belt",
+      "massKg": 0.25,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.2175,
+          -0.315,
+          0.78
+        ],
+        "max": [
+          0.2925,
+          0.14,
+          1.04
+        ],
+        "size": [
+          0.51,
+          0.455,
+          0.26
+        ]
+      }
+    },
+    {
+      "id": "engineer-boots",
+      "archetype": "engineer",
+      "slot": "boots",
+      "name": "Engineer boots",
+      "massKg": 0.65,
+      "grid": [
+        2,
+        2
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "feet"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.26,
+          -0.2555,
+          -0.0
+        ],
+        "max": [
+          0.26,
+          0.145,
+          0.215
+        ],
+        "size": [
+          0.52,
+          0.4005,
+          0.215
+        ]
+      }
+    },
+    {
+      "id": "engineer-chest",
+      "archetype": "engineer",
+      "slot": "chest",
+      "name": "Engineer chest garment",
+      "massKg": 1.4,
+      "grid": [
+        2,
+        3
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "torso",
+        "upperarms"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.475,
+          -0.33,
+          0.82
+        ],
+        "max": [
+          0.475,
+          0.16,
+          1.2825
+        ],
+        "size": [
+          0.95,
+          0.49,
+          0.4625
+        ]
+      }
+    },
+    {
+      "id": "engineer-helmet",
+      "archetype": "engineer",
+      "slot": "helmet",
+      "name": "Engineer helmet",
+      "massKg": 0.65,
+      "grid": [
+        2,
+        2
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.3721,
+          -0.4071,
+          1.4794
+        ],
+        "max": [
+          0.3721,
+          0.28556,
+          1.93702
+        ],
+        "size": [
+          0.7442,
+          0.69266,
+          0.45762
+        ]
+      }
+    },
+    {
+      "id": "engineer-visor",
+      "archetype": "engineer",
+      "slot": "visor",
+      "name": "Engineer visor / optics",
+      "massKg": 0.12,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.2684,
+          -0.34928,
+          1.75084
+        ],
+        "max": [
+          0.2684,
+          -0.19352,
+          1.86452
+        ],
+        "size": [
+          0.5368,
+          0.15576,
+          0.11368
+        ]
+      }
+    },
+    {
+      "id": "engineer-gloves",
+      "archetype": "engineer",
+      "slot": "gloves",
+      "name": "Engineer gloves / gauntlets",
+      "massKg": 0.22,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "forearms",
+        "hands"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.4925,
+          -0.143,
+          0.648
+        ],
+        "max": [
+          0.4925,
+          0.1175,
+          0.92
+        ],
+        "size": [
+          0.985,
+          0.2605,
+          0.272
+        ]
+      }
+    },
+    {
+      "id": "engineer-legs",
+      "archetype": "engineer",
+      "slot": "legs",
+      "name": "Engineer legwear",
+      "massKg": 0.85,
+      "grid": [
+        2,
+        3
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "legs"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.2535,
+          -0.1695,
+          0.16
+        ],
+        "max": [
+          0.2535,
+          0.13,
+          0.87
+        ],
+        "size": [
+          0.507,
+          0.2995,
+          0.71
+        ]
+      }
+    },
+    {
+      "id": "engineer-shoulders",
+      "archetype": "engineer",
+      "slot": "shoulders",
+      "name": "Engineer shoulder guards",
+      "massKg": 0.3,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.435,
+          -0.1795,
+          1.08
+        ],
+        "max": [
+          0.435,
+          0.16,
+          1.26
+        ],
+        "size": [
+          0.87,
+          0.3395,
+          0.18
+        ]
+      }
+    },
+    {
+      "id": "medic-back",
+      "archetype": "medic",
+      "slot": "back",
+      "name": "Medic backpack",
+      "massKg": 1.2,
+      "grid": [
+        3,
+        4
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.2685000002384186,
+          0.1525000035762787,
+          0.8484998941421509
+        ],
+        "max": [
+          0.2685000002384186,
+          0.4675000011920929,
+          1.303999900817871
+        ],
+        "size": [
+          0.5370000004768372,
+          0.3149999976158142,
+          0.4555000066757202
+        ]
+      }
+    },
+    {
+      "id": "medic-belt",
+      "archetype": "medic",
+      "slot": "belt",
+      "name": "Medic utility belt",
+      "massKg": 0.25,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.26649999618530273,
+          -0.2174999862909317,
+          0.5950000286102295
+        ],
+        "max": [
+          0.29499998688697815,
+          0.15850000083446503,
+          0.8844999670982361
+        ],
+        "size": [
+          0.5614999830722809,
+          0.37599998712539673,
+          0.2894999384880066
+        ]
+      }
+    },
+    {
+      "id": "medic-boots",
+      "archetype": "medic",
+      "slot": "boots",
+      "name": "Medic boots",
+      "massKg": 0.65,
+      "grid": [
+        2,
+        2
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "feet"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.25599998235702515,
+          -0.2800024747848511,
+          0.0019999928772449493
+        ],
+        "max": [
+          0.25599998235702515,
+          0.11852158606052399,
+          0.20399999618530273
+        ],
+        "size": [
+          0.5119999647140503,
+          0.39852406084537506,
+          0.20200000330805779
+        ]
+      }
+    },
+    {
+      "id": "medic-chest",
+      "archetype": "medic",
+      "slot": "chest",
+      "name": "Medic chest garment",
+      "massKg": 1.4,
+      "grid": [
+        2,
+        3
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "torso",
+        "upperarms"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.45399999618530273,
+          -0.2280000001192093,
+          0.840999960899353
+        ],
+        "max": [
+          0.4540000259876251,
+          0.16899999976158142,
+          1.2689998149871826
+        ],
+        "size": [
+          0.9080000221729279,
+          0.3969999998807907,
+          0.4279998540878296
+        ]
+      }
+    },
+    {
+      "id": "medic-gloves",
+      "archetype": "medic",
+      "slot": "gloves",
+      "name": "Medic gloves / gauntlets",
+      "massKg": 0.22,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "forearms",
+        "hands"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.49100014567375183,
+          -0.16099967062473297,
+          0.620499849319458
+        ],
+        "max": [
+          0.491000235080719,
+          0.10399982333183289,
+          0.986500084400177
+        ],
+        "size": [
+          0.9820003807544708,
+          0.26499949395656586,
+          0.366000235080719
+        ]
+      }
+    },
+    {
+      "id": "medic-legs",
+      "archetype": "medic",
+      "slot": "legs",
+      "name": "Medic legwear",
+      "massKg": 0.85,
+      "grid": [
+        2,
+        3
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "legs"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.2434999942779541,
+          -0.16099999845027924,
+          0.2029999941587448
+        ],
+        "max": [
+          0.2434999942779541,
+          0.15399999916553497,
+          0.8185000419616699
+        ],
+        "size": [
+          0.4869999885559082,
+          0.3149999976158142,
+          0.6155000478029251
+        ]
+      }
+    },
+    {
+      "id": "medic-helmet",
+      "archetype": "medic",
+      "slot": "helmet",
+      "name": "Medic helmet",
+      "massKg": 0.65,
+      "grid": [
+        2,
+        2
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.3790000081062317,
+          -0.29649999737739563,
+          1.3494999408721924
+        ],
+        "max": [
+          0.3790000081062317,
+          0.2680000066757202,
+          1.8989999294281006
+        ],
+        "size": [
+          0.7580000162124634,
+          0.5645000040531158,
+          0.5494999885559082
+        ]
+      }
+    },
+    {
+      "id": "medic-visor",
+      "archetype": "medic",
+      "slot": "visor",
+      "name": "Medic visor / optics",
+      "massKg": 0.12,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.25,
+          -0.3199999928474426,
+          1.437999963760376
+        ],
+        "max": [
+          0.25,
+          -0.2141803503036499,
+          1.690000057220459
+        ],
+        "size": [
+          0.5,
+          0.10581964254379272,
+          0.252000093460083
+        ]
+      }
+    },
+    {
+      "id": "medic-shoulders",
+      "archetype": "medic",
+      "slot": "shoulders",
+      "name": "Medic shoulder guards",
+      "massKg": 0.3,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.4269999861717224,
+          -0.16499996185302734,
+          1.1685000658035278
+        ],
+        "max": [
+          0.4270000159740448,
+          0.12699998915195465,
+          1.2975001335144043
+        ],
+        "size": [
+          0.8540000021457672,
+          0.291999951004982,
+          0.12900006771087646
+        ]
+      }
+    },
+    {
+      "id": "pilot-belt",
+      "archetype": "pilot",
+      "slot": "belt",
+      "name": "Pilot utility belt",
+      "massKg": 0.25,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.21,
+          -0.1935,
+          0.8
+        ],
+        "max": [
+          0.21,
+          0.14,
+          0.87
+        ],
+        "size": [
+          0.42,
+          0.3335,
+          0.07
+        ]
+      }
+    },
+    {
+      "id": "pilot-boots",
+      "archetype": "pilot",
+      "slot": "boots",
+      "name": "Pilot boots",
+      "massKg": 0.65,
+      "grid": [
+        2,
+        2
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "feet"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.26,
+          -0.2555,
+          -0.0
+        ],
+        "max": [
+          0.26,
+          0.145,
+          0.215
+        ],
+        "size": [
+          0.52,
+          0.4005,
+          0.215
+        ]
+      }
+    },
+    {
+      "id": "pilot-chest",
+      "archetype": "pilot",
+      "slot": "chest",
+      "name": "Pilot chest garment",
+      "massKg": 1.4,
+      "grid": [
+        2,
+        3
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "torso",
+        "upperarms"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.475,
+          -0.243,
+          0.82
+        ],
+        "max": [
+          0.475,
+          0.16,
+          1.2825
+        ],
+        "size": [
+          0.95,
+          0.403,
+          0.4625
+        ]
+      }
+    },
+    {
+      "id": "pilot-back",
+      "archetype": "pilot",
+      "slot": "back",
+      "name": "Pilot backpack",
+      "massKg": 1.2,
+      "grid": [
+        3,
+        4
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.22,
+          0.175,
+          0.79
+        ],
+        "max": [
+          0.22,
+          0.4875,
+          1.395
+        ],
+        "size": [
+          0.44,
+          0.3125,
+          0.605
+        ]
+      }
+    },
+    {
+      "id": "pilot-gloves",
+      "archetype": "pilot",
+      "slot": "gloves",
+      "name": "Pilot gloves / gauntlets",
+      "massKg": 0.22,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "forearms",
+        "hands"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.4925,
+          -0.143,
+          0.648
+        ],
+        "max": [
+          0.4925,
+          0.1175,
+          0.92
+        ],
+        "size": [
+          0.985,
+          0.2605,
+          0.272
+        ]
+      }
+    },
+    {
+      "id": "pilot-legs",
+      "archetype": "pilot",
+      "slot": "legs",
+      "name": "Pilot legwear",
+      "massKg": 0.85,
+      "grid": [
+        2,
+        3
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "legs"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.2535,
+          -0.1695,
+          0.16
+        ],
+        "max": [
+          0.2535,
+          0.13,
+          1.13
+        ],
+        "size": [
+          0.507,
+          0.2995,
+          0.97
+        ]
+      }
+    },
+    {
+      "id": "pilot-helmet",
+      "archetype": "pilot",
+      "slot": "helmet",
+      "name": "Pilot helmet",
+      "massKg": 0.65,
+      "grid": [
+        2,
+        2
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.4331,
+          -0.33276,
+          1.27988
+        ],
+        "max": [
+          0.4331,
+          0.34338,
+          1.98284
+        ],
+        "size": [
+          0.8662,
+          0.67614,
+          0.70296
+        ]
+      }
+    },
+    {
+      "id": "pilot-visor",
+      "archetype": "pilot",
+      "slot": "visor",
+      "name": "Pilot visor / optics",
+      "massKg": 0.12,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.28304,
+          -0.354,
+          1.433
+        ],
+        "max": [
+          0.28304,
+          -0.22863,
+          1.7404
+        ],
+        "size": [
+          0.56608,
+          0.12537,
+          0.3074
+        ]
+      }
+    },
+    {
+      "id": "pilot-shoulders",
+      "archetype": "pilot",
+      "slot": "shoulders",
+      "name": "Pilot shoulder guards",
+      "massKg": 0.3,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.435,
+          -0.1795,
+          1.08
+        ],
+        "max": [
+          0.435,
+          0.16,
+          1.26
+        ],
+        "size": [
+          0.87,
+          0.3395,
+          0.18
+        ]
+      }
+    },
+    {
+      "id": "security-belt",
+      "archetype": "security",
+      "slot": "belt",
+      "name": "Security officer utility belt",
+      "massKg": 0.25,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.21,
+          -0.1935,
+          0.8
+        ],
+        "max": [
+          0.21,
+          0.14,
+          0.87
+        ],
+        "size": [
+          0.42,
+          0.3335,
+          0.07
+        ]
+      }
+    },
+    {
+      "id": "security-boots",
+      "archetype": "security",
+      "slot": "boots",
+      "name": "Security officer boots",
+      "massKg": 0.65,
+      "grid": [
+        2,
+        2
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "feet"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.26,
+          -0.2555,
+          -0.0
+        ],
+        "max": [
+          0.26,
+          0.145,
+          0.215
+        ],
+        "size": [
+          0.52,
+          0.4005,
+          0.215
+        ]
+      }
+    },
+    {
+      "id": "security-chest",
+      "archetype": "security",
+      "slot": "chest",
+      "name": "Security officer chest garment",
+      "massKg": 1.4,
+      "grid": [
+        2,
+        3
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "torso",
+        "upperarms"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.475,
+          -0.2135,
+          0.825
+        ],
+        "max": [
+          0.475,
+          0.16,
+          1.2825
+        ],
+        "size": [
+          0.95,
+          0.3735,
+          0.4575
+        ]
+      }
+    },
+    {
+      "id": "security-back",
+      "archetype": "security",
+      "slot": "back",
+      "name": "Security officer backpack",
+      "massKg": 1.2,
+      "grid": [
+        3,
+        4
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.22,
+          0.175,
+          0.79
+        ],
+        "max": [
+          0.22,
+          0.4875,
+          1.395
+        ],
+        "size": [
+          0.44,
+          0.3125,
+          0.605
+        ]
+      }
+    },
+    {
+      "id": "security-gloves",
+      "archetype": "security",
+      "slot": "gloves",
+      "name": "Security officer gloves / gauntlets",
+      "massKg": 0.22,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "forearms",
+        "hands"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.4925,
+          -0.143,
+          0.648
+        ],
+        "max": [
+          0.4925,
+          0.1175,
+          0.92
+        ],
+        "size": [
+          0.985,
+          0.2605,
+          0.272
+        ]
+      }
+    },
+    {
+      "id": "security-legs",
+      "archetype": "security",
+      "slot": "legs",
+      "name": "Security officer legwear",
+      "massKg": 0.85,
+      "grid": [
+        2,
+        3
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "legs"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.2535,
+          -0.1695,
+          0.16
+        ],
+        "max": [
+          0.2535,
+          0.13,
+          0.87
+        ],
+        "size": [
+          0.507,
+          0.2995,
+          0.71
+        ]
+      }
+    },
+    {
+      "id": "security-helmet",
+      "archetype": "security",
+      "slot": "helmet",
+      "name": "Security officer helmet",
+      "massKg": 0.65,
+      "grid": [
+        2,
+        2
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.3111,
+          -0.3953,
+          1.7288
+        ],
+        "max": [
+          0.3111,
+          0.27966,
+          1.93296
+        ],
+        "size": [
+          0.6222,
+          0.67496,
+          0.20416
+        ]
+      }
+    },
+    {
+      "id": "security-shoulders",
+      "archetype": "security",
+      "slot": "shoulders",
+      "name": "Security officer shoulder guards",
+      "massKg": 0.3,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.435,
+          -0.1795,
+          1.08
+        ],
+        "max": [
+          0.435,
+          0.16,
+          1.293
+        ],
+        "size": [
+          0.87,
+          0.3395,
+          0.213
+        ]
+      }
+    },
+    {
+      "id": "marine-belt",
+      "archetype": "marine",
+      "slot": "belt",
+      "name": "Heavy marine utility belt",
+      "massKg": 0.4,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.26,
+          -0.235,
+          0.71
+        ],
+        "max": [
+          0.26,
+          0.14,
+          0.88
+        ],
+        "size": [
+          0.52,
+          0.375,
+          0.17
+        ]
+      }
+    },
+    {
+      "id": "marine-boots",
+      "archetype": "marine",
+      "slot": "boots",
+      "name": "Heavy marine boots",
+      "massKg": 1.04,
+      "grid": [
+        2,
+        2
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "feet"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.26,
+          -0.2555,
+          -0.0
+        ],
+        "max": [
+          0.26,
+          0.145,
+          0.215
+        ],
+        "size": [
+          0.52,
+          0.4005,
+          0.215
+        ]
+      }
+    },
+    {
+      "id": "marine-chest",
+      "archetype": "marine",
+      "slot": "chest",
+      "name": "Heavy marine chest garment",
+      "massKg": 2.24,
+      "grid": [
+        2,
+        3
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "torso",
+        "upperarms"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.475,
+          -0.3525,
+          0.8
+        ],
+        "max": [
+          0.475,
+          0.16,
+          1.2825
+        ],
+        "size": [
+          0.95,
+          0.5125,
+          0.4825
+        ]
+      }
+    },
+    {
+      "id": "marine-gloves",
+      "archetype": "marine",
+      "slot": "gloves",
+      "name": "Heavy marine gloves / gauntlets",
+      "massKg": 0.352,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "forearms",
+        "hands"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.4925,
+          -0.143,
+          0.648
+        ],
+        "max": [
+          0.4925,
+          0.1175,
+          0.92
+        ],
+        "size": [
+          0.985,
+          0.2605,
+          0.272
+        ]
+      }
+    },
+    {
+      "id": "marine-legs",
+      "archetype": "marine",
+      "slot": "legs",
+      "name": "Heavy marine legwear",
+      "massKg": 1.36,
+      "grid": [
+        2,
+        3
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "legs"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.255,
+          -0.212,
+          0.16
+        ],
+        "max": [
+          0.255,
+          0.13,
+          1.13
+        ],
+        "size": [
+          0.51,
+          0.342,
+          0.97
+        ]
+      }
+    },
+    {
+      "id": "marine-shoulders",
+      "archetype": "marine",
+      "slot": "shoulders",
+      "name": "Heavy marine shoulder guards",
+      "massKg": 0.48,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.495,
+          -0.215,
+          1.08
+        ],
+        "max": [
+          0.495,
+          0.195,
+          1.369
+        ],
+        "size": [
+          0.99,
+          0.41,
+          0.289
+        ]
+      }
+    },
+    {
+      "id": "marine-helmet",
+      "archetype": "marine",
+      "slot": "helmet",
+      "name": "Heavy marine helmet",
+      "massKg": 1.04,
+      "grid": [
+        2,
+        2
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.43432,
+          -0.40061,
+          1.2822
+        ],
+        "max": [
+          0.43432,
+          0.3481,
+          1.97878
+        ],
+        "size": [
+          0.86864,
+          0.74871,
+          0.69658
+        ]
+      }
+    },
+    {
+      "id": "marine-visor",
+      "archetype": "marine",
+      "slot": "visor",
+      "name": "Heavy marine visor / optics",
+      "massKg": 0.192,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.2806,
+          -0.37996,
+          1.4562
+        ],
+        "max": [
+          0.2806,
+          -0.25459,
+          1.7114
+        ],
+        "size": [
+          0.5612,
+          0.12537,
+          0.2552
+        ]
+      }
+    },
+    {
+      "id": "marine-back",
+      "archetype": "marine",
+      "slot": "back",
+      "name": "Heavy marine backpack",
+      "massKg": 1.92,
+      "grid": [
+        3,
+        4
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.215,
+          0.175,
+          0.835
+        ],
+        "max": [
+          0.215,
+          0.425,
+          1.33
+        ],
+        "size": [
+          0.43,
+          0.25,
+          0.495
+        ]
+      }
+    },
+    {
+      "id": "salvage-back",
+      "archetype": "salvage",
+      "slot": "back",
+      "name": "Salvage tech backpack",
+      "massKg": 1.2,
+      "grid": [
+        3,
+        4
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.18,
+          0.145,
+          0.87
+        ],
+        "max": [
+          0.18,
+          0.4025,
+          1.26
+        ],
+        "size": [
+          0.36,
+          0.2575,
+          0.39
+        ]
+      }
+    },
+    {
+      "id": "salvage-belt",
+      "archetype": "salvage",
+      "slot": "belt",
+      "name": "Salvage tech utility belt",
+      "massKg": 0.25,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.237,
+          -0.2385,
+          0.8
+        ],
+        "max": [
+          0.237,
+          0.14,
+          0.9315
+        ],
+        "size": [
+          0.474,
+          0.3785,
+          0.1315
+        ]
+      }
+    },
+    {
+      "id": "salvage-boots",
+      "archetype": "salvage",
+      "slot": "boots",
+      "name": "Salvage tech boots",
+      "massKg": 0.65,
+      "grid": [
+        2,
+        2
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "feet"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.26,
+          -0.2555,
+          -0.0
+        ],
+        "max": [
+          0.26,
+          0.145,
+          0.215
+        ],
+        "size": [
+          0.52,
+          0.4005,
+          0.215
+        ]
+      }
+    },
+    {
+      "id": "salvage-chest",
+      "archetype": "salvage",
+      "slot": "chest",
+      "name": "Salvage tech chest garment",
+      "massKg": 1.4,
+      "grid": [
+        2,
+        3
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "torso",
+        "upperarms"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.475,
+          -0.2415,
+          0.82
+        ],
+        "max": [
+          0.475,
+          0.16,
+          1.2825
+        ],
+        "size": [
+          0.95,
+          0.4015,
+          0.4625
+        ]
+      }
+    },
+    {
+      "id": "salvage-gloves",
+      "archetype": "salvage",
+      "slot": "gloves",
+      "name": "Salvage tech gloves / gauntlets",
+      "massKg": 0.22,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "forearms",
+        "hands"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.4925,
+          -0.143,
+          0.648
+        ],
+        "max": [
+          0.4925,
+          0.1175,
+          0.92
+        ],
+        "size": [
+          0.985,
+          0.2605,
+          0.272
+        ]
+      }
+    },
+    {
+      "id": "salvage-legs",
+      "archetype": "salvage",
+      "slot": "legs",
+      "name": "Salvage tech legwear",
+      "massKg": 0.85,
+      "grid": [
+        2,
+        3
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "legs"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.2535,
+          -0.1695,
+          0.16
+        ],
+        "max": [
+          0.2535,
+          0.13,
+          1.13
+        ],
+        "size": [
+          0.507,
+          0.2995,
+          0.97
+        ]
+      }
+    },
+    {
+      "id": "salvage-helmet",
+      "archetype": "salvage",
+      "slot": "helmet",
+      "name": "Salvage tech helmet",
+      "massKg": 0.65,
+      "grid": [
+        2,
+        2
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.4331,
+          -0.33276,
+          1.27988
+        ],
+        "max": [
+          0.4331,
+          0.34338,
+          1.97182
+        ],
+        "size": [
+          0.8662,
+          0.67614,
+          0.69194
+        ]
+      }
+    },
+    {
+      "id": "salvage-visor",
+      "archetype": "salvage",
+      "slot": "visor",
+      "name": "Salvage tech visor / optics",
+      "massKg": 0.12,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.28304,
+          -0.354,
+          1.433
+        ],
+        "max": [
+          0.28304,
+          -0.22863,
+          1.7404
+        ],
+        "size": [
+          0.56608,
+          0.12537,
+          0.3074
+        ]
+      }
+    },
+    {
+      "id": "salvage-shoulders",
+      "archetype": "salvage",
+      "slot": "shoulders",
+      "name": "Salvage tech shoulder guards",
+      "massKg": 0.3,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.435,
+          -0.1795,
+          1.08
+        ],
+        "max": [
+          0.435,
+          0.16,
+          1.26
+        ],
+        "size": [
+          0.87,
+          0.3395,
+          0.18
+        ]
+      }
+    },
+    {
+      "id": "recon-belt",
+      "archetype": "recon",
+      "slot": "belt",
+      "name": "Recon scout utility belt",
+      "massKg": 0.25,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.237,
+          -0.2385,
+          0.8
+        ],
+        "max": [
+          0.237,
+          0.14,
+          0.9315
+        ],
+        "size": [
+          0.474,
+          0.3785,
+          0.1315
+        ]
+      }
+    },
+    {
+      "id": "recon-boots",
+      "archetype": "recon",
+      "slot": "boots",
+      "name": "Recon scout boots",
+      "massKg": 0.65,
+      "grid": [
+        2,
+        2
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "feet"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.26,
+          -0.2555,
+          -0.0
+        ],
+        "max": [
+          0.26,
+          0.145,
+          0.215
+        ],
+        "size": [
+          0.52,
+          0.4005,
+          0.215
+        ]
+      }
+    },
+    {
+      "id": "recon-chest",
+      "archetype": "recon",
+      "slot": "chest",
+      "name": "Recon scout chest garment",
+      "massKg": 1.4,
+      "grid": [
+        2,
+        3
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "torso",
+        "upperarms"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.475,
+          -0.2415,
+          0.82
+        ],
+        "max": [
+          0.475,
+          0.16,
+          1.2825
+        ],
+        "size": [
+          0.95,
+          0.4015,
+          0.4625
+        ]
+      }
+    },
+    {
+      "id": "recon-back",
+      "archetype": "recon",
+      "slot": "back",
+      "name": "Recon scout backpack",
+      "massKg": 1.2,
+      "grid": [
+        3,
+        4
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.22,
+          0.175,
+          0.79
+        ],
+        "max": [
+          0.22,
+          0.4875,
+          1.395
+        ],
+        "size": [
+          0.44,
+          0.3125,
+          0.605
+        ]
+      }
+    },
+    {
+      "id": "recon-gloves",
+      "archetype": "recon",
+      "slot": "gloves",
+      "name": "Recon scout gloves / gauntlets",
+      "massKg": 0.22,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "forearms",
+        "hands"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.4925,
+          -0.143,
+          0.648
+        ],
+        "max": [
+          0.4925,
+          0.1175,
+          0.92
+        ],
+        "size": [
+          0.985,
+          0.2605,
+          0.272
+        ]
+      }
+    },
+    {
+      "id": "recon-legs",
+      "archetype": "recon",
+      "slot": "legs",
+      "name": "Recon scout legwear",
+      "massKg": 0.85,
+      "grid": [
+        2,
+        3
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "legs"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.2535,
+          -0.1695,
+          0.16
+        ],
+        "max": [
+          0.2535,
+          0.13,
+          1.13
+        ],
+        "size": [
+          0.507,
+          0.2995,
+          0.97
+        ]
+      }
+    },
+    {
+      "id": "recon-helmet",
+      "archetype": "recon",
+      "slot": "helmet",
+      "name": "Recon scout helmet",
+      "massKg": 0.65,
+      "grid": [
+        2,
+        2
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.40199,
+          -0.2419,
+          1.30656
+        ],
+        "max": [
+          0.40199,
+          0.34338,
+          1.98632
+        ],
+        "size": [
+          0.80398,
+          0.58528,
+          0.67976
+        ]
+      }
+    },
+    {
+      "id": "recon-visor",
+      "archetype": "recon",
+      "slot": "visor",
+      "name": "Recon scout visor / optics",
+      "massKg": 0.12,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.2562,
+          -0.52156,
+          1.346
+        ],
+        "max": [
+          0.2562,
+          -0.17582,
+          1.7433
+        ],
+        "size": [
+          0.5124,
+          0.34574,
+          0.3973
+        ]
+      }
+    },
+    {
+      "id": "recon-shoulders",
+      "archetype": "recon",
+      "slot": "shoulders",
+      "name": "Recon scout shoulder guards",
+      "massKg": 0.3,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.435,
+          -0.1795,
+          1.08
+        ],
+        "max": [
+          0.435,
+          0.16,
+          1.26
+        ],
+        "size": [
+          0.87,
+          0.3395,
+          0.18
+        ]
+      }
+    },
+    {
+      "id": "scientist-belt",
+      "archetype": "scientist",
+      "slot": "belt",
+      "name": "Scientist utility belt",
+      "massKg": 0.25,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.21,
+          -0.1935,
+          0.8
+        ],
+        "max": [
+          0.21,
+          0.14,
+          0.87
+        ],
+        "size": [
+          0.42,
+          0.3335,
+          0.07
+        ]
+      }
+    },
+    {
+      "id": "scientist-boots",
+      "archetype": "scientist",
+      "slot": "boots",
+      "name": "Scientist boots",
+      "massKg": 0.65,
+      "grid": [
+        2,
+        2
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "feet"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.26,
+          -0.2555,
+          -0.0
+        ],
+        "max": [
+          0.26,
+          0.145,
+          0.215
+        ],
+        "size": [
+          0.52,
+          0.4005,
+          0.215
+        ]
+      }
+    },
+    {
+      "id": "scientist-chest",
+      "archetype": "scientist",
+      "slot": "chest",
+      "name": "Scientist chest garment",
+      "massKg": 1.4,
+      "grid": [
+        2,
+        3
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "torso",
+        "upperarms"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.475,
+          -0.211,
+          0.68
+        ],
+        "max": [
+          0.475,
+          0.16,
+          1.2825
+        ],
+        "size": [
+          0.95,
+          0.371,
+          0.6025
+        ]
+      }
+    },
+    {
+      "id": "scientist-back",
+      "archetype": "scientist",
+      "slot": "back",
+      "name": "Scientist backpack",
+      "massKg": 1.2,
+      "grid": [
+        3,
+        4
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.22,
+          0.175,
+          0.79
+        ],
+        "max": [
+          0.22,
+          0.4875,
+          1.395
+        ],
+        "size": [
+          0.44,
+          0.3125,
+          0.605
+        ]
+      }
+    },
+    {
+      "id": "scientist-gloves",
+      "archetype": "scientist",
+      "slot": "gloves",
+      "name": "Scientist gloves / gauntlets",
+      "massKg": 0.22,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "forearms",
+        "hands"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.4925,
+          -0.143,
+          0.648
+        ],
+        "max": [
+          0.4925,
+          0.1175,
+          0.92
+        ],
+        "size": [
+          0.985,
+          0.2605,
+          0.272
+        ]
+      }
+    },
+    {
+      "id": "scientist-legs",
+      "archetype": "scientist",
+      "slot": "legs",
+      "name": "Scientist legwear",
+      "massKg": 0.85,
+      "grid": [
+        2,
+        3
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "legs"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.2535,
+          -0.1695,
+          0.16
+        ],
+        "max": [
+          0.2535,
+          0.13,
+          0.87
+        ],
+        "size": [
+          0.507,
+          0.2995,
+          0.71
+        ]
+      }
+    },
+    {
+      "id": "scientist-shoulders",
+      "archetype": "scientist",
+      "slot": "shoulders",
+      "name": "Scientist shoulder guards",
+      "massKg": 0.3,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.435,
+          -0.1795,
+          1.08
+        ],
+        "max": [
+          0.435,
+          0.16,
+          1.26
+        ],
+        "size": [
+          0.87,
+          0.3395,
+          0.18
+        ]
+      }
+    },
+    {
+      "id": "mechanic-back",
+      "archetype": "mechanic",
+      "slot": "back",
+      "name": "Mechanic backpack",
+      "massKg": 1.2,
+      "grid": [
+        3,
+        4
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.18,
+          0.145,
+          0.87
+        ],
+        "max": [
+          0.18,
+          0.4025,
+          1.26
+        ],
+        "size": [
+          0.36,
+          0.2575,
+          0.39
+        ]
+      }
+    },
+    {
+      "id": "mechanic-belt",
+      "archetype": "mechanic",
+      "slot": "belt",
+      "name": "Mechanic utility belt",
+      "massKg": 0.25,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.237,
+          -0.2765,
+          0.8
+        ],
+        "max": [
+          0.237,
+          0.14,
+          0.995
+        ],
+        "size": [
+          0.474,
+          0.4165,
+          0.195
+        ]
+      }
+    },
+    {
+      "id": "mechanic-boots",
+      "archetype": "mechanic",
+      "slot": "boots",
+      "name": "Mechanic boots",
+      "massKg": 0.65,
+      "grid": [
+        2,
+        2
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "feet"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.26,
+          -0.2555,
+          -0.0
+        ],
+        "max": [
+          0.26,
+          0.145,
+          0.215
+        ],
+        "size": [
+          0.52,
+          0.4005,
+          0.215
+        ]
+      }
+    },
+    {
+      "id": "mechanic-chest",
+      "archetype": "mechanic",
+      "slot": "chest",
+      "name": "Mechanic chest garment",
+      "massKg": 1.4,
+      "grid": [
+        2,
+        3
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "torso",
+        "upperarms"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.475,
+          -0.2415,
+          0.82
+        ],
+        "max": [
+          0.475,
+          0.16,
+          1.2825
+        ],
+        "size": [
+          0.95,
+          0.4015,
+          0.4625
+        ]
+      }
+    },
+    {
+      "id": "mechanic-gloves",
+      "archetype": "mechanic",
+      "slot": "gloves",
+      "name": "Mechanic gloves / gauntlets",
+      "massKg": 0.22,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "forearms",
+        "hands"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.4925,
+          -0.143,
+          0.648
+        ],
+        "max": [
+          0.4925,
+          0.1175,
+          0.92
+        ],
+        "size": [
+          0.985,
+          0.2605,
+          0.272
+        ]
+      }
+    },
+    {
+      "id": "mechanic-legs",
+      "archetype": "mechanic",
+      "slot": "legs",
+      "name": "Mechanic legwear",
+      "massKg": 0.85,
+      "grid": [
+        2,
+        3
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [
+        "legs"
+      ],
+      "boundsMeters": {
+        "min": [
+          -0.2535,
+          -0.1695,
+          0.16
+        ],
+        "max": [
+          0.2535,
+          0.13,
+          0.87
+        ],
+        "size": [
+          0.507,
+          0.2995,
+          0.71
+        ]
+      }
+    },
+    {
+      "id": "mechanic-helmet",
+      "archetype": "mechanic",
+      "slot": "helmet",
+      "name": "Mechanic helmet",
+      "massKg": 0.65,
+      "grid": [
+        2,
+        2
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.38552,
+          -0.3953,
+          1.5142
+        ],
+        "max": [
+          0.38552,
+          0.27966,
+          1.96544
+        ],
+        "size": [
+          0.77104,
+          0.67496,
+          0.45124
+        ]
+      }
+    },
+    {
+      "id": "mechanic-shoulders",
+      "archetype": "mechanic",
+      "slot": "shoulders",
+      "name": "Mechanic shoulder guards",
+      "massKg": 0.3,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.435,
+          -0.1795,
+          1.08
+        ],
+        "max": [
+          0.435,
+          0.16,
+          1.26
+        ],
+        "size": [
+          0.87,
+          0.3395,
+          0.18
+        ]
+      }
+    },
+    {
+      "id": "legacy-armor-expedition-chest",
+      "archetype": "legacy",
+      "slot": "chest",
+      "name": "Armor Expedition chest garment",
+      "massKg": 1.4,
+      "grid": [
+        2,
+        3
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.2475,
+          -0.2925,
+          0.87
+        ],
+        "max": [
+          0.2475,
+          -0.125,
+          1.2575
+        ],
+        "size": [
+          0.495,
+          0.1675,
+          0.3875
+        ]
+      }
+    },
+    {
+      "id": "legacy-helmet-explorer-helmet",
+      "archetype": "legacy",
+      "slot": "helmet",
+      "name": "Helmet Explorer helmet",
+      "massKg": 0.65,
+      "grid": [
+        2,
+        2
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.42212,
+          -0.3599,
+          1.2909
+        ],
+        "max": [
+          0.42212,
+          0.34338,
+          2.04722
+        ],
+        "size": [
+          0.84424,
+          0.70328,
+          0.75632
+        ]
+      }
+    },
+    {
+      "id": "legacy-helmet-explorer-visor",
+      "archetype": "legacy",
+      "slot": "visor",
+      "name": "Helmet Explorer visor / optics",
+      "massKg": 0.12,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.305,
+          -0.38114,
+          1.4504
+        ],
+        "max": [
+          0.305,
+          -0.2458,
+          1.781
+        ],
+        "size": [
+          0.61,
+          0.13534,
+          0.3306
+        ]
+      }
+    },
+    {
+      "id": "legacy-helmet-standard-helmet",
+      "archetype": "legacy",
+      "slot": "helmet",
+      "name": "Helmet Standard helmet",
+      "massKg": 0.65,
+      "grid": [
+        2,
+        2
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.4209,
+          -0.35105,
+          1.2764
+        ],
+        "max": [
+          0.4209,
+          0.34338,
+          1.96718
+        ],
+        "size": [
+          0.8418,
+          0.69443,
+          0.69078
+        ]
+      }
+    },
+    {
+      "id": "legacy-visor-standard-visor",
+      "archetype": "legacy",
+      "slot": "visor",
+      "name": "Visor Standard visor / optics",
+      "massKg": 0.12,
+      "grid": [
+        2,
+        1
+      ],
+      "bodyTypes": [
+        "male",
+        "female"
+      ],
+      "covers": [],
+      "boundsMeters": {
+        "min": [
+          -0.2806,
+          -0.354,
+          1.433
+        ],
+        "max": [
+          0.2806,
+          -0.22863,
+          1.7346
+        ],
+        "size": [
+          0.5612,
+          0.12537,
+          0.3016
+        ]
+      }
+    }
+  ],
+  "visualRevisions": {
+    "captain-belt": 2,
+    "captain-boots": 2,
+    "captain-helmet": 2,
+    "captain-chest": 2,
+    "captain-shoulders": 2,
+    "captain-gloves": 2,
+    "captain-back": 2,
+    "captain-legs": 2,
+    "engineer-back": 2,
+    "engineer-belt": 2,
+    "engineer-boots": 2,
+    "engineer-chest": 2,
+    "engineer-helmet": 2,
+    "engineer-visor": 2,
+    "engineer-gloves": 2,
+    "engineer-legs": 2,
+    "engineer-shoulders": 2,
+    "medic-back": 8,
+    "medic-belt": 8,
+    "medic-boots": 8,
+    "medic-chest": 8,
+    "medic-gloves": 8,
+    "medic-legs": 8,
+    "medic-helmet": 8,
+    "medic-visor": 8,
+    "medic-shoulders": 8,
+    "pilot-belt": 2,
+    "pilot-boots": 2,
+    "pilot-chest": 2,
+    "pilot-back": 2,
+    "pilot-gloves": 2,
+    "pilot-legs": 2,
+    "pilot-helmet": 2,
+    "pilot-visor": 2,
+    "pilot-shoulders": 2,
+    "security-belt": 2,
+    "security-boots": 2,
+    "security-chest": 2,
+    "security-back": 2,
+    "security-gloves": 2,
+    "security-legs": 2,
+    "security-helmet": 2,
+    "security-shoulders": 2,
+    "marine-belt": 2,
+    "marine-boots": 2,
+    "marine-chest": 2,
+    "marine-gloves": 2,
+    "marine-legs": 2,
+    "marine-shoulders": 2,
+    "marine-helmet": 2,
+    "marine-visor": 2,
+    "marine-back": 2,
+    "salvage-back": 2,
+    "salvage-belt": 2,
+    "salvage-boots": 2,
+    "salvage-chest": 2,
+    "salvage-gloves": 2,
+    "salvage-legs": 2,
+    "salvage-helmet": 2,
+    "salvage-visor": 2,
+    "salvage-shoulders": 2,
+    "recon-belt": 2,
+    "recon-boots": 2,
+    "recon-chest": 2,
+    "recon-back": 2,
+    "recon-gloves": 2,
+    "recon-legs": 2,
+    "recon-helmet": 2,
+    "recon-visor": 2,
+    "recon-shoulders": 2,
+    "scientist-belt": 2,
+    "scientist-boots": 2,
+    "scientist-chest": 2,
+    "scientist-back": 2,
+    "scientist-gloves": 2,
+    "scientist-legs": 2,
+    "scientist-shoulders": 2,
+    "mechanic-back": 2,
+    "mechanic-belt": 2,
+    "mechanic-boots": 2,
+    "mechanic-chest": 2,
+    "mechanic-gloves": 2,
+    "mechanic-legs": 2,
+    "mechanic-helmet": 2,
+    "mechanic-shoulders": 2,
+    "legacy-armor-expedition-chest": 2,
+    "legacy-helmet-explorer-helmet": 2,
+    "legacy-helmet-explorer-visor": 2,
+    "legacy-helmet-standard-helmet": 2,
+    "legacy-visor-standard-visor": 2,
+    "base-male": 8,
+    "base-female": 8,
+    "hair-swept": 8,
+    "hair-cropped": 2,
+    "hair-crest": 8,
+    "hair-scientist": 2,
+    "hair-bob": 2,
+    "hair-ponytail": 8,
+    "hair-bun": 2,
+    "hair-braids": 2
+  }
+}
