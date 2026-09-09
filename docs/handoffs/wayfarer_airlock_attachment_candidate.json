@@ -1,0 +1,3232 @@
+{
+  "schema": "sidereal.wayfarer-airlock-attachment-candidate.v1",
+  "status": "blocked-native-interfaces-required",
+  "sourceBlueprintSha256": "362f37217f63a44a470676f104c8368bd0973ca03f5e29eab190bc4d6df71340",
+  "airlockAudit": {
+    "path": "assets/art-library/designs/shipyard.structure.external-airlock/revisions/r000/audit-a007.json",
+    "sha256": "eb7eab8523d68906a302a84cf06a5b2a507229d15e89fb96f66d1ade8b6e0aa6"
+  },
+  "selectedBay": {
+    "side": "starboard",
+    "centerY": -4,
+    "nominalSpanY": [
+      -5,
+      -3
+    ],
+    "nominalSideX": 5,
+    "reason": "2m aligned bay avoids cockpit/cargo and external-thruster centerlines; extended option avoids equipment, compact full fixture overlaps crew-bed cover and must omit its interior test-room pieces"
+  },
+  "sourceNativeBarriers": [
+    {
+      "path": "assets/runtime/assembly/parts.glb",
+      "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+      "nodePrefix": "GEO-part-0bf0c79e5a52a9cee388--",
+      "sourcePlacedId": "wall-2--2",
+      "originalPlacement": {
+        "id": "wall-2--2",
+        "assetId": "part-0bf0c79e5a52a9cee388",
+        "position": [
+          4,
+          -4,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "nativeTriangles": 3368,
+      "boundsM": [
+        [
+          3.0,
+          -5.0,
+          0.0
+        ],
+        [
+          5.0,
+          -3.0,
+          2.6875
+        ]
+      ],
+      "blockedRayCount": 20,
+      "rays": [
+        {
+          "y": -4.5,
+          "z": 0.4,
+          "hitCount": 2,
+          "x": [
+            4.5625,
+            5.0
+          ]
+        },
+        {
+          "y": -4.5,
+          "z": 1,
+          "hitCount": 2,
+          "x": [
+            4.8125,
+            5.0
+          ]
+        },
+        {
+          "y": -4.5,
+          "z": 1.8,
+          "hitCount": 2,
+          "x": [
+            4.5625,
+            5.0
+          ]
+        },
+        {
+          "y": -4.5,
+          "z": 2.1,
+          "hitCount": 2,
+          "x": [
+            4.625,
+            5.0
+          ]
+        },
+        {
+          "y": -4.25,
+          "z": 0.4,
+          "hitCount": 2,
+          "x": [
+            4.5625,
+            5.0
+          ]
+        },
+        {
+          "y": -4.25,
+          "z": 1,
+          "hitCount": 2,
+          "x": [
+            4.8125,
+            5.0
+          ]
+        },
+        {
+          "y": -4.25,
+          "z": 1.8,
+          "hitCount": 2,
+          "x": [
+            4.5625,
+            5.0
+          ]
+        },
+        {
+          "y": -4.25,
+          "z": 2.1,
+          "hitCount": 2,
+          "x": [
+            4.625,
+            5.0
+          ]
+        },
+        {
+          "y": -4,
+          "z": 0.4,
+          "hitCount": 2,
+          "x": [
+            4.6875,
+            5.0
+          ]
+        },
+        {
+          "y": -4,
+          "z": 1,
+          "hitCount": 4,
+          "x": [
+            3.5625,
+            3.9375,
+            4.6875,
+            5.0
+          ]
+        },
+        {
+          "y": -4,
+          "z": 1.8,
+          "hitCount": 2,
+          "x": [
+            4.6875,
+            5.0
+          ]
+        },
+        {
+          "y": -4,
+          "z": 2.1,
+          "hitCount": 2,
+          "x": [
+            4.6875,
+            5.0
+          ]
+        },
+        {
+          "y": -3.75,
+          "z": 0.4,
+          "hitCount": 2,
+          "x": [
+            4.75,
+            5.0
+          ]
+        },
+        {
+          "y": -3.75,
+          "z": 1,
+          "hitCount": 2,
+          "x": [
+            4.8125,
+            5.0
+          ]
+        },
+        {
+          "y": -3.75,
+          "z": 1.8,
+          "hitCount": 2,
+          "x": [
+            4.75,
+            5.0
+          ]
+        },
+        {
+          "y": -3.75,
+          "z": 2.1,
+          "hitCount": 2,
+          "x": [
+            4.75,
+            5.0
+          ]
+        },
+        {
+          "y": -3.5,
+          "z": 0.4,
+          "hitCount": 2,
+          "x": [
+            4.8125,
+            5.0
+          ]
+        },
+        {
+          "y": -3.5,
+          "z": 1,
+          "hitCount": 5,
+          "x": [
+            3.5625,
+            3.9375,
+            4.6875,
+            4.8125,
+            5.0
+          ]
+        },
+        {
+          "y": -3.5,
+          "z": 1.8,
+          "hitCount": 2,
+          "x": [
+            4.8125,
+            5.0
+          ]
+        },
+        {
+          "y": -3.5,
+          "z": 2.1,
+          "hitCount": 2,
+          "x": [
+            4.8125,
+            5.0
+          ]
+        }
+      ]
+    },
+    {
+      "path": "assets/runtime/assembly/parts.glb",
+      "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+      "nodePrefix": "GEO-part-386f7415c520e22bd6b6--",
+      "sourcePlacedId": "wall-3--2",
+      "originalPlacement": {
+        "id": "wall-3--2",
+        "assetId": "part-386f7415c520e22bd6b6",
+        "position": [
+          5.125,
+          -4,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "nativeTriangles": 784,
+      "boundsM": [
+        [
+          5.0,
+          -5.0,
+          0.0
+        ],
+        [
+          5.312500014901161,
+          -3.0,
+          2.6875
+        ]
+      ],
+      "blockedRayCount": 20,
+      "rays": [
+        {
+          "y": -4.5,
+          "z": 0.4,
+          "hitCount": 2,
+          "x": [
+            5.0,
+            5.1875
+          ]
+        },
+        {
+          "y": -4.5,
+          "z": 1,
+          "hitCount": 2,
+          "x": [
+            5.0,
+            5.1875
+          ]
+        },
+        {
+          "y": -4.5,
+          "z": 1.8,
+          "hitCount": 2,
+          "x": [
+            5.0,
+            5.1875
+          ]
+        },
+        {
+          "y": -4.5,
+          "z": 2.1,
+          "hitCount": 2,
+          "x": [
+            5.0,
+            5.1875
+          ]
+        },
+        {
+          "y": -4.25,
+          "z": 0.4,
+          "hitCount": 2,
+          "x": [
+            5.0,
+            5.1875
+          ]
+        },
+        {
+          "y": -4.25,
+          "z": 1,
+          "hitCount": 2,
+          "x": [
+            5.0,
+            5.1875
+          ]
+        },
+        {
+          "y": -4.25,
+          "z": 1.8,
+          "hitCount": 2,
+          "x": [
+            5.0,
+            5.1875
+          ]
+        },
+        {
+          "y": -4.25,
+          "z": 2.1,
+          "hitCount": 2,
+          "x": [
+            5.0,
+            5.1875
+          ]
+        },
+        {
+          "y": -4,
+          "z": 0.4,
+          "hitCount": 2,
+          "x": [
+            5.0,
+            5.3125
+          ]
+        },
+        {
+          "y": -4,
+          "z": 1,
+          "hitCount": 2,
+          "x": [
+            5.0,
+            5.3125
+          ]
+        },
+        {
+          "y": -4,
+          "z": 1.8,
+          "hitCount": 2,
+          "x": [
+            5.0,
+            5.3125
+          ]
+        },
+        {
+          "y": -4,
+          "z": 2.1,
+          "hitCount": 2,
+          "x": [
+            5.0,
+            5.3125
+          ]
+        },
+        {
+          "y": -3.75,
+          "z": 0.4,
+          "hitCount": 2,
+          "x": [
+            5.0,
+            5.1875
+          ]
+        },
+        {
+          "y": -3.75,
+          "z": 1,
+          "hitCount": 2,
+          "x": [
+            5.0,
+            5.1875
+          ]
+        },
+        {
+          "y": -3.75,
+          "z": 1.8,
+          "hitCount": 2,
+          "x": [
+            5.0,
+            5.1875
+          ]
+        },
+        {
+          "y": -3.75,
+          "z": 2.1,
+          "hitCount": 2,
+          "x": [
+            5.0,
+            5.1875
+          ]
+        },
+        {
+          "y": -3.5,
+          "z": 0.4,
+          "hitCount": 2,
+          "x": [
+            5.0,
+            5.1875
+          ]
+        },
+        {
+          "y": -3.5,
+          "z": 1,
+          "hitCount": 2,
+          "x": [
+            5.0,
+            5.1875
+          ]
+        },
+        {
+          "y": -3.5,
+          "z": 1.8,
+          "hitCount": 2,
+          "x": [
+            5.0,
+            5.1875
+          ]
+        },
+        {
+          "y": -3.5,
+          "z": 2.1,
+          "hitCount": 2,
+          "x": [
+            5.0,
+            5.1875
+          ]
+        }
+      ]
+    },
+    {
+      "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+      "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+      "nodePrefix": "GEO-part-0558bcda4ab0cb8c9f70--surface",
+      "sourcePlacedId": "superstructure-3--2",
+      "originalPlacement": {
+        "id": "superstructure-3--2",
+        "assetId": "part-0558bcda4ab0cb8c9f70",
+        "position": [
+          5.5625,
+          -4,
+          -0.25
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "nativeTriangles": 2516,
+      "boundsM": [
+        [
+          5.3125,
+          -5.0,
+          -0.25
+        ],
+        [
+          6.120000004768372,
+          -3.0,
+          2.6875
+        ]
+      ],
+      "blockedRayCount": 20,
+      "rays": [
+        {
+          "y": -4.5,
+          "z": 0.4,
+          "hitCount": 4,
+          "x": [
+            5.3125,
+            5.33,
+            5.56,
+            5.7
+          ]
+        },
+        {
+          "y": -4.5,
+          "z": 1,
+          "hitCount": 8,
+          "x": [
+            5.3125,
+            5.33,
+            5.56,
+            5.62,
+            5.7,
+            5.79,
+            5.8,
+            5.965
+          ]
+        },
+        {
+          "y": -4.5,
+          "z": 1.8,
+          "hitCount": 8,
+          "x": [
+            5.3125,
+            5.33,
+            5.56,
+            5.66,
+            5.7,
+            6.05,
+            6.05,
+            6.095
+          ]
+        },
+        {
+          "y": -4.5,
+          "z": 2.1,
+          "hitCount": 8,
+          "x": [
+            5.3125,
+            5.33,
+            5.56,
+            5.66,
+            5.7,
+            6.045,
+            6.05,
+            6.085
+          ]
+        },
+        {
+          "y": -4.25,
+          "z": 0.4,
+          "hitCount": 4,
+          "x": [
+            5.3125,
+            5.33,
+            5.56,
+            5.7
+          ]
+        },
+        {
+          "y": -4.25,
+          "z": 1,
+          "hitCount": 8,
+          "x": [
+            5.3125,
+            5.33,
+            5.56,
+            5.62,
+            5.7,
+            5.79,
+            5.8,
+            5.965
+          ]
+        },
+        {
+          "y": -4.25,
+          "z": 1.8,
+          "hitCount": 6,
+          "x": [
+            5.3125,
+            5.33,
+            5.56,
+            5.66,
+            5.7,
+            6.05
+          ]
+        },
+        {
+          "y": -4.25,
+          "z": 2.1,
+          "hitCount": 8,
+          "x": [
+            5.3125,
+            5.33,
+            5.56,
+            5.66,
+            5.7,
+            6.045,
+            6.05,
+            6.085
+          ]
+        },
+        {
+          "y": -4,
+          "z": 0.4,
+          "hitCount": 4,
+          "x": [
+            5.3125,
+            5.33,
+            5.56,
+            5.7
+          ]
+        },
+        {
+          "y": -4,
+          "z": 1,
+          "hitCount": 6,
+          "x": [
+            5.3125,
+            5.33,
+            5.56,
+            5.7,
+            5.72,
+            6.025
+          ]
+        },
+        {
+          "y": -4,
+          "z": 1.8,
+          "hitCount": 6,
+          "x": [
+            5.3125,
+            5.33,
+            5.56,
+            5.66,
+            5.7,
+            6.05
+          ]
+        },
+        {
+          "y": -4,
+          "z": 2.1,
+          "hitCount": 8,
+          "x": [
+            5.3125,
+            5.33,
+            5.56,
+            5.66,
+            5.7,
+            6.045,
+            6.05,
+            6.085
+          ]
+        },
+        {
+          "y": -3.75,
+          "z": 0.4,
+          "hitCount": 4,
+          "x": [
+            5.3125,
+            5.33,
+            5.56,
+            5.7
+          ]
+        },
+        {
+          "y": -3.75,
+          "z": 1,
+          "hitCount": 8,
+          "x": [
+            5.3125,
+            5.33,
+            5.56,
+            5.62,
+            5.7,
+            5.79,
+            5.8,
+            5.965
+          ]
+        },
+        {
+          "y": -3.75,
+          "z": 1.8,
+          "hitCount": 6,
+          "x": [
+            5.3125,
+            5.33,
+            5.56,
+            5.66,
+            5.7,
+            6.05
+          ]
+        },
+        {
+          "y": -3.75,
+          "z": 2.1,
+          "hitCount": 8,
+          "x": [
+            5.3125,
+            5.33,
+            5.56,
+            5.66,
+            5.7,
+            6.045,
+            6.05,
+            6.085
+          ]
+        },
+        {
+          "y": -3.5,
+          "z": 0.4,
+          "hitCount": 4,
+          "x": [
+            5.3125,
+            5.33,
+            5.56,
+            5.7
+          ]
+        },
+        {
+          "y": -3.5,
+          "z": 1,
+          "hitCount": 8,
+          "x": [
+            5.3125,
+            5.33,
+            5.56,
+            5.62,
+            5.7,
+            5.79,
+            5.8,
+            5.965
+          ]
+        },
+        {
+          "y": -3.5,
+          "z": 1.8,
+          "hitCount": 6,
+          "x": [
+            5.3125,
+            5.33,
+            5.56,
+            5.66,
+            5.7,
+            6.05
+          ]
+        },
+        {
+          "y": -3.5,
+          "z": 2.1,
+          "hitCount": 6,
+          "x": [
+            5.3125,
+            5.33,
+            5.56,
+            5.66,
+            5.7,
+            6.05
+          ]
+        }
+      ]
+    }
+  ],
+  "bayScan": [
+    {
+      "side": "port",
+      "bayCenterY": -8,
+      "conservativeRouteBlockers": [
+        {
+          "id": "wall--3--4",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "wall--2--4",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "superstructure--3--4",
+          "role": "outer-armor-unrated"
+        }
+      ]
+    },
+    {
+      "side": "port",
+      "bayCenterY": -6,
+      "conservativeRouteBlockers": [
+        {
+          "id": "wall--3--3",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "wall--2--3",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "equipment-locker--4.7--6",
+          "role": "interior-equipment"
+        },
+        {
+          "id": "superstructure--3--3",
+          "role": "outer-armor-unrated"
+        },
+        {
+          "id": "room-engineering",
+          "role": "interior-equipment"
+        },
+        {
+          "id": "drives-maneuver--1--6.5",
+          "role": "external-system"
+        }
+      ]
+    },
+    {
+      "side": "port",
+      "bayCenterY": -4,
+      "conservativeRouteBlockers": [
+        {
+          "id": "wall--3--2",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "wall--2--2",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "superstructure--3--2",
+          "role": "outer-armor-unrated"
+        }
+      ]
+    },
+    {
+      "side": "port",
+      "bayCenterY": -2,
+      "conservativeRouteBlockers": [
+        {
+          "id": "wall--3--1",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "wall--2--1",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "equipment-locker--4.7--2",
+          "role": "interior-equipment"
+        },
+        {
+          "id": "superstructure--3--1",
+          "role": "outer-armor-unrated"
+        },
+        {
+          "id": "room-hydroponics-tray--2.4",
+          "role": "interior-equipment"
+        },
+        {
+          "id": "room-hydroponics-tray--1.5",
+          "role": "interior-equipment"
+        }
+      ]
+    },
+    {
+      "side": "port",
+      "bayCenterY": 0,
+      "conservativeRouteBlockers": [
+        {
+          "id": "wall--3-0",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "wall--2-0",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "superstructure--3-0",
+          "role": "outer-armor-unrated"
+        }
+      ]
+    },
+    {
+      "side": "port",
+      "bayCenterY": 2,
+      "conservativeRouteBlockers": [
+        {
+          "id": "wall--3-1",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "wall--2-1",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "equipment-locker--4.7-2",
+          "role": "interior-equipment"
+        },
+        {
+          "id": "superstructure--3-1",
+          "role": "outer-armor-unrated"
+        },
+        {
+          "id": "room-storage-container-2.15-0.25",
+          "role": "cargo-container"
+        },
+        {
+          "id": "room-storage-container-2.15-1",
+          "role": "cargo-container"
+        }
+      ]
+    },
+    {
+      "side": "port",
+      "bayCenterY": 4,
+      "conservativeRouteBlockers": [
+        {
+          "id": "wall--3-2",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "wall--2-2",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "superstructure--3-2",
+          "role": "outer-armor-unrated"
+        },
+        {
+          "id": "room-storage-container-3.5-0.25",
+          "role": "cargo-container"
+        },
+        {
+          "id": "room-storage-container-3.5-1",
+          "role": "cargo-container"
+        }
+      ]
+    },
+    {
+      "side": "port",
+      "bayCenterY": 6,
+      "conservativeRouteBlockers": [
+        {
+          "id": "wall--3-3",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "wall--2-3",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "superstructure--3-3",
+          "role": "outer-armor-unrated"
+        },
+        {
+          "id": "drives-maneuver--1-6.5",
+          "role": "external-system"
+        }
+      ]
+    },
+    {
+      "side": "port",
+      "bayCenterY": 8,
+      "conservativeRouteBlockers": [
+        {
+          "id": "wall--3-4",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "wall--2-4",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "superstructure--3-4",
+          "role": "outer-armor-unrated"
+        },
+        {
+          "id": "drives-retro--1",
+          "role": "external-system"
+        }
+      ]
+    },
+    {
+      "side": "starboard",
+      "bayCenterY": -8,
+      "conservativeRouteBlockers": [
+        {
+          "id": "wall-2--4",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "wall-3--4",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "superstructure-3--4",
+          "role": "outer-armor-unrated"
+        }
+      ]
+    },
+    {
+      "side": "starboard",
+      "bayCenterY": -6,
+      "conservativeRouteBlockers": [
+        {
+          "id": "wall-2--3",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "wall-3--3",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "equipment-locker-4.7--6",
+          "role": "interior-equipment"
+        },
+        {
+          "id": "superstructure-3--3",
+          "role": "outer-armor-unrated"
+        },
+        {
+          "id": "room-crew",
+          "role": "interior-equipment"
+        },
+        {
+          "id": "drives-maneuver-1--6.5",
+          "role": "external-system"
+        }
+      ]
+    },
+    {
+      "side": "starboard",
+      "bayCenterY": -4,
+      "conservativeRouteBlockers": [
+        {
+          "id": "wall-2--2",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "wall-3--2",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "superstructure-3--2",
+          "role": "outer-armor-unrated"
+        }
+      ]
+    },
+    {
+      "side": "starboard",
+      "bayCenterY": -2,
+      "conservativeRouteBlockers": [
+        {
+          "id": "wall-2--1",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "wall-3--1",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "equipment-locker-4.7--2",
+          "role": "interior-equipment"
+        },
+        {
+          "id": "superstructure-3--1",
+          "role": "outer-armor-unrated"
+        },
+        {
+          "id": "room-medbay",
+          "role": "interior-equipment"
+        }
+      ]
+    },
+    {
+      "side": "starboard",
+      "bayCenterY": 0,
+      "conservativeRouteBlockers": [
+        {
+          "id": "wall-2-0",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "wall-3-0",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "superstructure-3-0",
+          "role": "outer-armor-unrated"
+        },
+        {
+          "id": "room-medbay",
+          "role": "interior-equipment"
+        }
+      ]
+    },
+    {
+      "side": "starboard",
+      "bayCenterY": 2,
+      "conservativeRouteBlockers": [
+        {
+          "id": "wall-2-1",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "wall-3-1",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "equipment-locker-4.7-2",
+          "role": "interior-equipment"
+        },
+        {
+          "id": "superstructure-3-1",
+          "role": "outer-armor-unrated"
+        },
+        {
+          "id": "room-lounge",
+          "role": "interior-equipment"
+        }
+      ]
+    },
+    {
+      "side": "starboard",
+      "bayCenterY": 4,
+      "conservativeRouteBlockers": [
+        {
+          "id": "wall-2-2",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "wall-3-2",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "superstructure-3-2",
+          "role": "outer-armor-unrated"
+        },
+        {
+          "id": "room-lounge",
+          "role": "interior-equipment"
+        }
+      ]
+    },
+    {
+      "side": "starboard",
+      "bayCenterY": 6,
+      "conservativeRouteBlockers": [
+        {
+          "id": "wall-2-3",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "wall-3-3",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "superstructure-3-3",
+          "role": "outer-armor-unrated"
+        },
+        {
+          "id": "drives-maneuver-1-6.5",
+          "role": "external-system"
+        }
+      ]
+    },
+    {
+      "side": "starboard",
+      "bayCenterY": 8,
+      "conservativeRouteBlockers": [
+        {
+          "id": "wall-2-4",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "wall-3-4",
+          "role": "structural-wall-unqualified"
+        },
+        {
+          "id": "superstructure-3-4",
+          "role": "outer-armor-unrated"
+        },
+        {
+          "id": "drives-retro-1",
+          "role": "external-system"
+        }
+      ]
+    }
+  ],
+  "interfaces": {
+    "floor": {
+      "path": "assets/runtime/assembly/floor/r002/kit.glb",
+      "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "sourcePlacedId": "floor-2--2",
+      "originalPlacement": {
+        "id": "floor-2--2",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          3,
+          -5,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-b90945c434415efcef4d",
+          "offset": [
+            1,
+            1,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      }
+    },
+    "roof": {
+      "path": "assets/runtime/assembly/roof/r004/kit.glb",
+      "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+      "nodePrefix": "GEO-shoulder-vent--surface",
+      "sourcePlacedId": "roof-2--2",
+      "originalPlacement": {
+        "id": "roof-2--2",
+        "assetId": "part-8ca6ba766169b463abbf",
+        "position": [
+          4,
+          -4,
+          2.6875
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    "roofEdge": {
+      "path": "assets/runtime/assembly/roof/r004/kit.glb",
+      "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+      "nodePrefix": "GEO-edge-long--surface",
+      "sourcePlacedId": "roof-3--2",
+      "originalPlacement": {
+        "id": "roof-3--2",
+        "assetId": "part-05049180a0e5eceefc12",
+        "position": [
+          5.125,
+          -4,
+          2.6875
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    "oldFloorTopM": 0.1875,
+    "newFloorTopM": 0.1875,
+    "oldRoofUndersideM": 2.6875,
+    "newRoofUndersideM": 3,
+    "roofUndersideMismatchM": 0.3125
+  },
+  "candidates": [
+    {
+      "protectedSourceCoverOverlaps": [
+        {
+          "sourcePlacedId": "room-crew",
+          "conservativeOverlapM2": 0.44514809330877186
+        }
+      ],
+      "id": "compact-existing-interior",
+      "status": "blocked-attachment-study-only",
+      "originM": [
+        3,
+        -5,
+        0
+      ],
+      "quarterTurns": 0,
+      "nativePlacements": [
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            3.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-0",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 0
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            3.0,
+            -5.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-1",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 1
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            3.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-2",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 2
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            3.0,
+            -4.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-3",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 3
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            4.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-4",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 4
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            4.0,
+            -5.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-5",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 5
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            4.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-6",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 6
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            4.0,
+            -4.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-7",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 7
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            5.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-8",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 8
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            5.0,
+            -5.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-9",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 9
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            5.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-10",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 10
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            5.0,
+            -4.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-11",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 11
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            6.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-12",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 12
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            6.0,
+            -5.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-13",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 13
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            6.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-14",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 14
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            6.0,
+            -4.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-15",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 15
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-node-ee493bf1352e--surface",
+          "originM": [
+            3.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 2,
+          "id": "candidate-compact-existing-interior-native-16",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 16
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-node-ee493bf1352e--surface",
+          "originM": [
+            3.0,
+            -3.0,
+            0
+          ],
+          "quarterTurns": 1,
+          "id": "candidate-compact-existing-interior-native-17",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 17
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-node-b4c788600641--surface",
+          "originM": [
+            5.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 3,
+          "id": "candidate-compact-existing-interior-native-18",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 18
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-node-b4c788600641--surface",
+          "originM": [
+            5.0,
+            -3.0,
+            0
+          ],
+          "quarterTurns": 1,
+          "id": "candidate-compact-existing-interior-native-19",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 19
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-node-ee493bf1352e--surface",
+          "originM": [
+            9,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 3,
+          "id": "candidate-compact-existing-interior-native-20",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 20
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-node-ee493bf1352e--surface",
+          "originM": [
+            9,
+            -3.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-21",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 21
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-span-086cc581b11f--surface",
+          "originM": [
+            3.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-22",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 22
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-span-086cc581b11f--surface",
+          "originM": [
+            5.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-23",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 23
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-span-086cc581b11f--surface",
+          "originM": [
+            7.0,
+            -3.0,
+            0
+          ],
+          "quarterTurns": 2,
+          "id": "candidate-compact-existing-interior-native-24",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 24
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-span-086cc581b11f--surface",
+          "originM": [
+            5.0,
+            -3.0,
+            0
+          ],
+          "quarterTurns": 2,
+          "id": "candidate-compact-existing-interior-native-25",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 25
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-span-086cc581b11f--surface",
+          "originM": [
+            3.0,
+            -3.0,
+            0
+          ],
+          "quarterTurns": 3,
+          "id": "candidate-compact-existing-interior-native-26",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 26
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-548e33c75c9600c6--surface",
+          "originM": [
+            3.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-27",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 27
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-f77e2e79aa988ef8--surface",
+          "originM": [
+            3.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-28",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 28
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-6f4e90afc9658454--surface",
+          "originM": [
+            4.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-29",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 29
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-746876da6e77a233--surface",
+          "originM": [
+            4.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-30",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 30
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-548e33c75c9600c6--surface",
+          "originM": [
+            5.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-31",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 31
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-f77e2e79aa988ef8--surface",
+          "originM": [
+            5.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-32",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 32
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-6f4e90afc9658454--surface",
+          "originM": [
+            6.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-33",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 33
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-746876da6e77a233--surface",
+          "originM": [
+            6.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-34",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 34
+        },
+        {
+          "source": "door",
+          "nodePrefix": "GEO-door-frame-2m--surface",
+          "originM": [
+            5.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 1,
+          "id": "candidate-compact-existing-interior-native-35",
+          "sha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+          "sourcePartIndex": 35
+        },
+        {
+          "source": "door",
+          "nodePrefix": "GEO-door-leaf--surface",
+          "originM": [
+            5.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 1,
+          "id": "candidate-compact-existing-interior-native-36",
+          "sha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+          "sourcePartIndex": 36
+        },
+        {
+          "source": "gasket",
+          "nodePrefix": "GEO-door-perimeter-seal--surface",
+          "originM": [
+            5.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 1,
+          "id": "candidate-compact-existing-interior-native-37",
+          "sha256": "c65a2c6273e8773956e555ea26879b8b4d0d58d483e42eef94b55c8052e75092",
+          "sourcePartIndex": 37
+        },
+        {
+          "source": "gasket",
+          "nodePrefix": "GEO-door-frame-seal-seat--surface",
+          "originM": [
+            5.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 1,
+          "id": "candidate-compact-existing-interior-native-38",
+          "sha256": "c65a2c6273e8773956e555ea26879b8b4d0d58d483e42eef94b55c8052e75092",
+          "sourcePartIndex": 38
+        },
+        {
+          "source": "junction",
+          "nodePrefix": "GEO-floor-junction-door-strip-reserved--surface",
+          "originM": [
+            5.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 1,
+          "id": "candidate-compact-existing-interior-native-39",
+          "sha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+          "sourcePartIndex": 39
+        },
+        {
+          "source": "junction",
+          "nodePrefix": "GEO-floor-junction-interior-four-quarter--surface",
+          "originM": [
+            4.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-40",
+          "sha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+          "sourcePartIndex": 40
+        },
+        {
+          "source": "junction",
+          "nodePrefix": "GEO-floor-junction-interior-four-quarter--surface",
+          "originM": [
+            6.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-41",
+          "sha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+          "sourcePartIndex": 41
+        },
+        {
+          "source": "junction",
+          "nodePrefix": "GEO-floor-junction-partition-four-quarter--surface",
+          "originM": [
+            5.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-42",
+          "sha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+          "sourcePartIndex": 42
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            7.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-43",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 43
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            7.0,
+            -5.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-44",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 44
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            7.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-45",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 45
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            7.0,
+            -4.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-46",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 46
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            8.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-47",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 47
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            8.0,
+            -5.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-48",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 48
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            8.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-49",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 49
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            8.0,
+            -4.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-50",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 50
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-span-086cc581b11f--surface",
+          "originM": [
+            7.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-51",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 51
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-span-086cc581b11f--surface",
+          "originM": [
+            9.0,
+            -3.0,
+            0
+          ],
+          "quarterTurns": 2,
+          "id": "candidate-compact-existing-interior-native-52",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 52
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-548e33c75c9600c6--surface",
+          "originM": [
+            7.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-53",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 53
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-f77e2e79aa988ef8--surface",
+          "originM": [
+            7.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-54",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 54
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-6f4e90afc9658454--surface",
+          "originM": [
+            8.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-55",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 55
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-746876da6e77a233--surface",
+          "originM": [
+            8.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-56",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 56
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-node-a8148ac9f645--surface",
+          "originM": [
+            7,
+            -5,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-57",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 57
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-node-a8148ac9f645--surface",
+          "originM": [
+            7,
+            -3,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-58",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 58
+        },
+        {
+          "source": "junction",
+          "nodePrefix": "GEO-floor-junction-interior-four-quarter--surface",
+          "originM": [
+            7,
+            -4,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-59",
+          "sha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+          "sourcePartIndex": 59
+        },
+        {
+          "source": "junction",
+          "nodePrefix": "GEO-floor-junction-interior-four-quarter--surface",
+          "originM": [
+            8,
+            -4,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-60",
+          "sha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+          "sourcePartIndex": 60
+        },
+        {
+          "source": "door",
+          "nodePrefix": "GEO-door-frame-2m--surface",
+          "originM": [
+            9,
+            -3,
+            0
+          ],
+          "quarterTurns": 3,
+          "id": "candidate-compact-existing-interior-native-61",
+          "sha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+          "sourcePartIndex": 61
+        },
+        {
+          "source": "door",
+          "nodePrefix": "GEO-door-leaf--surface",
+          "originM": [
+            9,
+            -3,
+            0
+          ],
+          "quarterTurns": 3,
+          "id": "candidate-compact-existing-interior-native-62",
+          "sha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+          "sourcePartIndex": 62
+        },
+        {
+          "source": "gasket",
+          "nodePrefix": "GEO-door-perimeter-seal--surface",
+          "originM": [
+            9,
+            -3,
+            0
+          ],
+          "quarterTurns": 3,
+          "id": "candidate-compact-existing-interior-native-63",
+          "sha256": "c65a2c6273e8773956e555ea26879b8b4d0d58d483e42eef94b55c8052e75092",
+          "sourcePartIndex": 63
+        },
+        {
+          "source": "gasket",
+          "nodePrefix": "GEO-door-frame-seal-seat--surface",
+          "originM": [
+            9,
+            -3,
+            0
+          ],
+          "quarterTurns": 3,
+          "id": "candidate-compact-existing-interior-native-64",
+          "sha256": "c65a2c6273e8773956e555ea26879b8b4d0d58d483e42eef94b55c8052e75092",
+          "sourcePartIndex": 64
+        },
+        {
+          "source": "junction",
+          "nodePrefix": "GEO-floor-junction-door-strip-reserved--surface",
+          "originM": [
+            9,
+            -4,
+            0
+          ],
+          "quarterTurns": 3,
+          "id": "candidate-compact-existing-interior-native-65",
+          "sha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+          "sourcePartIndex": 65
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            9.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-66",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 66
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            9.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-67",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 67
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            10.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-68",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 68
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            10.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-compact-existing-interior-native-69",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 69
+        }
+      ],
+      "nominalFootprintM": [
+        [
+          3,
+          -5
+        ],
+        [
+          11,
+          -3
+        ]
+      ],
+      "overlapExistingFloorM2": 4.0,
+      "sharedFloorEdgeM": 0.0,
+      "floorTopM": 0.1875,
+      "nativeAirlockRoofUndersideM": 3,
+      "preserveAllOriginalPlacedIds": true,
+      "activationAllowed": false
+    },
+    {
+      "protectedSourceCoverOverlaps": [],
+      "id": "extended-new-vestibule",
+      "status": "blocked-attachment-study-only",
+      "originM": [
+        5,
+        -5,
+        0
+      ],
+      "quarterTurns": 0,
+      "nativePlacements": [
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            5.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-0",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 0
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            5.0,
+            -5.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-1",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 1
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            5.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-2",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 2
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            5.0,
+            -4.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-3",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 3
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            6.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-4",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 4
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            6.0,
+            -5.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-5",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 5
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            6.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-6",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 6
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            6.0,
+            -4.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-7",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 7
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            7.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-8",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 8
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            7.0,
+            -5.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-9",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 9
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            7.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-10",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 10
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            7.0,
+            -4.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-11",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 11
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            8.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-12",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 12
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            8.0,
+            -5.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-13",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 13
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            8.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-14",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 14
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            8.0,
+            -4.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-15",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 15
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-node-ee493bf1352e--surface",
+          "originM": [
+            5.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 2,
+          "id": "candidate-extended-new-vestibule-native-16",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 16
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-node-ee493bf1352e--surface",
+          "originM": [
+            5.0,
+            -3.0,
+            0
+          ],
+          "quarterTurns": 1,
+          "id": "candidate-extended-new-vestibule-native-17",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 17
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-node-b4c788600641--surface",
+          "originM": [
+            7.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 3,
+          "id": "candidate-extended-new-vestibule-native-18",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 18
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-node-b4c788600641--surface",
+          "originM": [
+            7.0,
+            -3.0,
+            0
+          ],
+          "quarterTurns": 1,
+          "id": "candidate-extended-new-vestibule-native-19",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 19
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-node-ee493bf1352e--surface",
+          "originM": [
+            11,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 3,
+          "id": "candidate-extended-new-vestibule-native-20",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 20
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-node-ee493bf1352e--surface",
+          "originM": [
+            11,
+            -3.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-21",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 21
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-span-086cc581b11f--surface",
+          "originM": [
+            5.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-22",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 22
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-span-086cc581b11f--surface",
+          "originM": [
+            7.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-23",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 23
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-span-086cc581b11f--surface",
+          "originM": [
+            9.0,
+            -3.0,
+            0
+          ],
+          "quarterTurns": 2,
+          "id": "candidate-extended-new-vestibule-native-24",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 24
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-span-086cc581b11f--surface",
+          "originM": [
+            7.0,
+            -3.0,
+            0
+          ],
+          "quarterTurns": 2,
+          "id": "candidate-extended-new-vestibule-native-25",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 25
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-span-086cc581b11f--surface",
+          "originM": [
+            5.0,
+            -3.0,
+            0
+          ],
+          "quarterTurns": 3,
+          "id": "candidate-extended-new-vestibule-native-26",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 26
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-548e33c75c9600c6--surface",
+          "originM": [
+            5.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-27",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 27
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-f77e2e79aa988ef8--surface",
+          "originM": [
+            5.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-28",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 28
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-6f4e90afc9658454--surface",
+          "originM": [
+            6.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-29",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 29
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-746876da6e77a233--surface",
+          "originM": [
+            6.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-30",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 30
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-548e33c75c9600c6--surface",
+          "originM": [
+            7.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-31",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 31
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-f77e2e79aa988ef8--surface",
+          "originM": [
+            7.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-32",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 32
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-6f4e90afc9658454--surface",
+          "originM": [
+            8.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-33",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 33
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-746876da6e77a233--surface",
+          "originM": [
+            8.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-34",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 34
+        },
+        {
+          "source": "door",
+          "nodePrefix": "GEO-door-frame-2m--surface",
+          "originM": [
+            7.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 1,
+          "id": "candidate-extended-new-vestibule-native-35",
+          "sha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+          "sourcePartIndex": 35
+        },
+        {
+          "source": "door",
+          "nodePrefix": "GEO-door-leaf--surface",
+          "originM": [
+            7.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 1,
+          "id": "candidate-extended-new-vestibule-native-36",
+          "sha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+          "sourcePartIndex": 36
+        },
+        {
+          "source": "gasket",
+          "nodePrefix": "GEO-door-perimeter-seal--surface",
+          "originM": [
+            7.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 1,
+          "id": "candidate-extended-new-vestibule-native-37",
+          "sha256": "c65a2c6273e8773956e555ea26879b8b4d0d58d483e42eef94b55c8052e75092",
+          "sourcePartIndex": 37
+        },
+        {
+          "source": "gasket",
+          "nodePrefix": "GEO-door-frame-seal-seat--surface",
+          "originM": [
+            7.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 1,
+          "id": "candidate-extended-new-vestibule-native-38",
+          "sha256": "c65a2c6273e8773956e555ea26879b8b4d0d58d483e42eef94b55c8052e75092",
+          "sourcePartIndex": 38
+        },
+        {
+          "source": "junction",
+          "nodePrefix": "GEO-floor-junction-door-strip-reserved--surface",
+          "originM": [
+            7.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 1,
+          "id": "candidate-extended-new-vestibule-native-39",
+          "sha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+          "sourcePartIndex": 39
+        },
+        {
+          "source": "junction",
+          "nodePrefix": "GEO-floor-junction-interior-four-quarter--surface",
+          "originM": [
+            6.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-40",
+          "sha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+          "sourcePartIndex": 40
+        },
+        {
+          "source": "junction",
+          "nodePrefix": "GEO-floor-junction-interior-four-quarter--surface",
+          "originM": [
+            8.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-41",
+          "sha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+          "sourcePartIndex": 41
+        },
+        {
+          "source": "junction",
+          "nodePrefix": "GEO-floor-junction-partition-four-quarter--surface",
+          "originM": [
+            7.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-42",
+          "sha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+          "sourcePartIndex": 42
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            9.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-43",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 43
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            9.0,
+            -5.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-44",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 44
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            9.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-45",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 45
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            9.0,
+            -4.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-46",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 46
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            10.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-47",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 47
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            10.0,
+            -5.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-48",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 48
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            10.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-49",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 49
+        },
+        {
+          "source": "roof",
+          "nodePrefix": "GEO-roof-quarter-1m--surface",
+          "originM": [
+            10.0,
+            -4.0,
+            3
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-50",
+          "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+          "sourcePartIndex": 50
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-span-086cc581b11f--surface",
+          "originM": [
+            9.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-51",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 51
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-span-086cc581b11f--surface",
+          "originM": [
+            11.0,
+            -3.0,
+            0
+          ],
+          "quarterTurns": 2,
+          "id": "candidate-extended-new-vestibule-native-52",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 52
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-548e33c75c9600c6--surface",
+          "originM": [
+            9.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-53",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 53
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-f77e2e79aa988ef8--surface",
+          "originM": [
+            9.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-54",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 54
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-6f4e90afc9658454--surface",
+          "originM": [
+            10.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-55",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 55
+        },
+        {
+          "source": "contact",
+          "nodePrefix": "GEO-boundary-r005-base-746876da6e77a233--surface",
+          "originM": [
+            10.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-56",
+          "sha256": "c31c946c54d9e797ea592541c7eb728083fc12a2e18b5713c307ece3c5bd1b60",
+          "sourcePartIndex": 56
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-node-a8148ac9f645--surface",
+          "originM": [
+            9,
+            -5,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-57",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 57
+        },
+        {
+          "source": "wall",
+          "nodePrefix": "GEO-boundary-r004-node-a8148ac9f645--surface",
+          "originM": [
+            9,
+            -3,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-58",
+          "sha256": "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db",
+          "sourcePartIndex": 58
+        },
+        {
+          "source": "junction",
+          "nodePrefix": "GEO-floor-junction-interior-four-quarter--surface",
+          "originM": [
+            9,
+            -4,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-59",
+          "sha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+          "sourcePartIndex": 59
+        },
+        {
+          "source": "junction",
+          "nodePrefix": "GEO-floor-junction-interior-four-quarter--surface",
+          "originM": [
+            10,
+            -4,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-60",
+          "sha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+          "sourcePartIndex": 60
+        },
+        {
+          "source": "door",
+          "nodePrefix": "GEO-door-frame-2m--surface",
+          "originM": [
+            11,
+            -3,
+            0
+          ],
+          "quarterTurns": 3,
+          "id": "candidate-extended-new-vestibule-native-61",
+          "sha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+          "sourcePartIndex": 61
+        },
+        {
+          "source": "door",
+          "nodePrefix": "GEO-door-leaf--surface",
+          "originM": [
+            11,
+            -3,
+            0
+          ],
+          "quarterTurns": 3,
+          "id": "candidate-extended-new-vestibule-native-62",
+          "sha256": "4c631ad5517bf6d6cc88af29aba4a6890808c33effeed4205acb26a022758426",
+          "sourcePartIndex": 62
+        },
+        {
+          "source": "gasket",
+          "nodePrefix": "GEO-door-perimeter-seal--surface",
+          "originM": [
+            11,
+            -3,
+            0
+          ],
+          "quarterTurns": 3,
+          "id": "candidate-extended-new-vestibule-native-63",
+          "sha256": "c65a2c6273e8773956e555ea26879b8b4d0d58d483e42eef94b55c8052e75092",
+          "sourcePartIndex": 63
+        },
+        {
+          "source": "gasket",
+          "nodePrefix": "GEO-door-frame-seal-seat--surface",
+          "originM": [
+            11,
+            -3,
+            0
+          ],
+          "quarterTurns": 3,
+          "id": "candidate-extended-new-vestibule-native-64",
+          "sha256": "c65a2c6273e8773956e555ea26879b8b4d0d58d483e42eef94b55c8052e75092",
+          "sourcePartIndex": 64
+        },
+        {
+          "source": "junction",
+          "nodePrefix": "GEO-floor-junction-door-strip-reserved--surface",
+          "originM": [
+            11,
+            -4,
+            0
+          ],
+          "quarterTurns": 3,
+          "id": "candidate-extended-new-vestibule-native-65",
+          "sha256": "415bd41cc9fc1e485be22c089a22c4e4961387b33d3402a1a40b063228a8fa69",
+          "sourcePartIndex": 65
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            11.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-66",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 66
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            11.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-67",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 67
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            12.0,
+            -5.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-68",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 68
+        },
+        {
+          "source": "floor",
+          "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
+          "originM": [
+            12.0,
+            -4.0,
+            0
+          ],
+          "quarterTurns": 0,
+          "id": "candidate-extended-new-vestibule-native-69",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "sourcePartIndex": 69
+        }
+      ],
+      "nominalFootprintM": [
+        [
+          5,
+          -5
+        ],
+        [
+          13,
+          -3
+        ]
+      ],
+      "overlapExistingFloorM2": 0.0,
+      "sharedFloorEdgeM": 2.0,
+      "floorTopM": 0.1875,
+      "nativeAirlockRoofUndersideM": 3,
+      "preserveAllOriginalPlacedIds": true,
+      "activationAllowed": false
+    }
+  ],
+  "checks": {
+    "exactNativeSourceHashes": true,
+    "exact2mNominalFloorAndVerticalDatum": true,
+    "existingBarrierNativeRayHits": true,
+    "currentAperturePassable": false,
+    "compactPlacementDuplicatesExistingFloor": true,
+    "extendedPlacementNoFloorAreaOverlap": true,
+    "extendedPlacementAvoidsProtectedEquipmentCovers": true,
+    "roofInterfaceMatches": false,
+    "attachedSealQualified": false,
+    "readyForCompilerOrRuntime": false
+  },
+  "requiredAdaptations": [
+    {
+      "kind": "native-side-structural-aperture",
+      "sourcePlacedIds": [
+        "wall-2--2",
+        "wall-3--2"
+      ],
+      "requirement": "Authored native 2m port with >=1.25m clear opening and >=1.8m supported body height; preserve or separately replace old under-deck backing, never delete the floor tile or assign empty collision."
+    },
+    {
+      "kind": "native-external-armor-aperture",
+      "sourcePlacedIds": [
+        "superstructure-3--2"
+      ],
+      "requirement": "Matching 2m faction armor collar with actual through-aperture; preserve independent penetrable armor representation. No pressure/strength inferred from appearance."
+    },
+    {
+      "kind": "native-roof-transition",
+      "sourcePlacedIds": [
+        "roof-2--2",
+        "roof-3--2"
+      ],
+      "requirement": "312.5mm stepped sealed header/roof collar, matching existing2.6875m underside and new3m underside without scaling either source."
+    },
+    {
+      "kind": "native-floor-and-inlet-transition",
+      "sourcePlacedIds": [
+        "floor-2--2"
+      ],
+      "requirement": "Compact option omits four NEW duplicate quarter floors and inlet-room pieces, then requalifies actual full2m floor edge/door support/contact solids; extended option must replace airlock back wall source index26 with real open inlet and account hull thickness. Neither existing70part proof certifies these modifications."
+    },
+    {
+      "kind": "actual-gas-neighbor-interface",
+      "sourcePlacedIds": [],
+      "requirement": "Do not treat entire Wayfarer as sealed. Requalify chamber/interface free volumes and boundaries, attach inner port only to an accepted compartment/gas store; no free gas allocation."
+    }
+  ],
+  "preservation": {
+    "originalPlacementCount": 262,
+    "cockpitIds": [
+      "pilot-r004-floor-square-00",
+      "pilot-r004-floor-square-01",
+      "pilot-r004-floor-square-02",
+      "pilot-r004-floor-square-03",
+      "pilot-r004-floor-square-04",
+      "pilot-r004-floor-corner45-05",
+      "pilot-r004-floor-corner45-06",
+      "pilot-r004-hull-straight-07",
+      "pilot-r004-canopy-side-08",
+      "pilot-r004-hull-straight-09",
+      "pilot-r004-canopy-side-left-10",
+      "pilot-r004-hull-diagonal45-11",
+      "pilot-r004-canopy-diagonal45-12",
+      "pilot-r004-hull-diagonal45-13",
+      "pilot-r004-canopy-diagonal45-14",
+      "pilot-r004-bow-transom-15",
+      "pilot-r004-canopy-nose-16",
+      "pilot-r004-corner-buttress-17",
+      "pilot-r004-corner-buttress-18",
+      "pilot-r004-airlock-frame-22",
+      "pilot-r004-pilot-roof-25",
+      "pilot-context-vestibule-roof-0",
+      "pilot-context-vestibule-roof-1",
+      "pilot-context-vestibule-roof-2",
+      "pilot-r005-outer-shoulder-transition-starboard",
+      "pilot-r005-outer-shoulder-transition-port",
+      "pilot-r005-outer-roof-collar-starboard",
+      "pilot-r005-outer-roof-collar-port",
+      "pilot-r005-outer-diagonal-cheek-starboard",
+      "pilot-r005-outer-diagonal-cheek-port",
+      "pilot-r005-outer-bow-bumper-center",
+      "pilot-r004-rear-partition-23",
+      "pilot-r004-rear-partition-24"
+    ],
+    "cargoIds": [
+      "room-storage-container-2.15-0.25",
+      "room-storage-container-2.15-1",
+      "room-storage-container-3.5-0.25",
+      "room-storage-container-3.5-1"
+    ],
+    "allOriginalSourcesAndTransformsUnchanged": true
+  },
+  "limits": [
+    "Native ray hits prove tested paths obstructed, not a full closed-mesh pressure proof.",
+    "Conservative bay scan may reject real subcomponent gaps; it never authorizes passage.",
+    "No art edit, no compiled template, no live refit and no final artistic approval."
+  ]
+}
