@@ -1,6 +1,6 @@
 # Wayfarer: new editable Shipyard draft
 
-2026-09-10 · implemented in source; Structure preview and draft preservation reviewed, final Objects preview review pending.
+2026-09-10 · implemented and available in the managed dashboard; Structure, Hull/Objects and saved-draft preservation passed real browser review.
 
 The Shipyard **New → Wayfarer template · current native layout** action forks the pinned semantic Wayfarer into a new local document. It does not publish a blueprint, spawn an instance or refit a live ship.
 
@@ -19,7 +19,7 @@ Before adoption, the current in-memory history and camera/layers are saved to th
 
 ## Validation and browser checklist
 
-Focused tests cover exact pin/placement preservation, independent copies, tamper rejection, saving an unsaved proposal, conflict/recovery refusal and quota failure. Focused template/state tests passed (8 tests in 2 files), full typecheck passed, and the independent dashboard build passed. New adapter/tests pass ESLint. Final combined release validation and real browser acceptance remain pending.
+Focused tests cover exact pin/placement preservation, independent copies, tamper rejection, saving an unsaved proposal, conflict/recovery refusal and quota failure. Focused template/state tests passed (8 tests in 2 files), full typecheck passed, and the independent dashboard build passed. New adapter/tests pass ESLint. The combined gates and actual browser acceptance are recorded below.
 
 For the actual dashboard browser review:
 
@@ -38,3 +38,9 @@ Structure/Rooms preview honors selected deck and floor/roof layer switches. Hull
 Actual Structure browser evidence: `output/playwright/wayfarer-template-review/native-floor-final.png`, `native-roof-final.png`, and `native-floor-hidden.png`. The native preview reports 262 placements with 51 native floors. An independently named prior draft reopened intact after the template fork. Add-deck, undo and reload were exercised. The first black-floor screenshot is retained as diagnostic history, not final acceptance.
 
 Combined candidate validation: 1,023 tests in 173 files, full world/client/dashboard build, art checks and a fresh isolated generic authority smoke all passed. Dashboard-specific tests comprise 12 tests in three files; the new adapter/tests also pass ESLint. These checks do not claim final art approval, hardware FPS improvement, arbitrary playable decks or a complete live-refit workflow.
+
+## Final Objects acceptance and availability
+
+The final browser showed the complete native cockpit, floor and equipment context with roof layers independently controlled. Adding one lounge created212 editable assembly objects while retaining all51 semantic floor records. Saving and reloading preserved the entire draft JSON exactly, then Undo restored the previous object count. Evidence: `output/playwright/wayfarer-template-review/objects-native-final.png`, `objects-placed-reloaded.png` and `object-persistence.txt`. The named browser was blanked and closed afterward.
+
+The actual user-accessible Shipyard is [the managed HTTPS dashboard](https://sidereal.tail7a58a6.ts.net:8445/shipyard), also available at `http://sidereal.tail7a58a6.ts.net:5174/shipyard`. Both routes returned200 and the same current dashboard document. It serves the current source through the independent managed development server, including this template action; it is not a private mocked preview. There is no separate immutable public-dashboard activation in the current lifecycle. The independently validated `apps/dashboard/dist` artifact has tree SHA-256 `c1f343ae650d5676c90f6a9937e099d9012366d4e6ddf8dd0841d1cad8aecf11`. Game publication does not restart or replace this dashboard.

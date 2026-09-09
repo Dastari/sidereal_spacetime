@@ -34,11 +34,17 @@ The preceding hashes are historical cutovers. The authentication corrective clie
 
 The initial audit rollout exposed a60-second OIDC admission failure despite the socket remaining open. The corrective release binds each game connection to the host-verified original provider expiry; bootstrap OIDC tickets alone grant no gameplay. See the [coordinated release ledger](handoffs/world_network_public_release_20260910.md) for exact artifacts, the preserved pre-release client, private cold-backup metadata, isolated real-provider verification and final public browser evidence. The route, dedicated provider, dashboard and durable character/inventory state were preserved. This is not shared-universe or production-durability completion.
 
-### Current normal shared-world release — 2026-09-10
+### Earlier normal shared-world release — 2026-09-10
 
-The installed client is `66b5a92b0b6d0c1db0dbbc3ceba0bbd7b0706e909de94d469de15a07a84fddf1`, directory `20260910-030916-66b5a92b0b6d`, entry `/assets/index-Cenf-nBs.js`. It pairs with additive world bundle `317c007a22ae5a5a2fe5c6fb8c041f567c022f48954d08085b5fd327cb41e1ec`. New characters enter the shared system directly; existing private characters choose **Map → Join shared system**. Existing identity, inventories and private access remain authoritative. The input-control and original-provider-proof protocols above are retained.
+That installed client was `66b5a92b0b6d0c1db0dbbc3ceba0bbd7b0706e909de94d469de15a07a84fddf1`, directory `20260910-030916-66b5a92b0b6d`, entry `/assets/index-Cenf-nBs.js`. It pairs with additive world bundle `317c007a22ae5a5a2fe5c6fb8c041f567c022f48954d08085b5fd327cb41e1ec`. New characters enter the shared system directly; existing private characters choose **Map → Join shared system**. Existing identity, inventories and private access remain authoritative. The input-control and original-provider-proof protocols above are retained.
 
 The public entry bytes match the immutable artifact through NPM. The normal database identity was preserved, and authoritative inventory/appearance/character continuity was checked across publication. A fresh managed cold archive was captured before deployment. See the [normal shared activation record](handoffs/shared_world_normal_activation.md) for pinned artifacts, checks, upgrade/explicit-join evidence, recovery scope and actual public account/join/two-exterior evidence and the pending onboarding-copy correction. The independently deployed dashboard is unchanged.
+
+### Current construction cargo release — 2026-09-10
+
+Installed client `a561f80776db35587edfc28a3a760621eb6de6b6ef1babd78cf60ca41edce488`, directory `20260910-053758-a561f80776db`, entry `/assets/index-NKgC0rNY.js`, pairs with additive world `9388fee2f396b792e53710751b19727f002bccee096ed2c072c4943be7212dcd`. This adds qualified low-step height, native-instance cargo inventory and sofa/grow-light controls, preserving the normal shared-entry and original-provider proof protocols. Provider-aware onboarding now says **Enter universe**. Exact HTTPS bytes, database identity and stable character/item/container/appearance records passed post-publication checks. See [the coordinated construction release](handoffs/construction_cargo_release_20260910.md) for fresh backup, real restart persistence, isolated browser evidence and pending final public-browser confirmation.
+
+The independently managed Shipyard at `https://sidereal.tail7a58a6.ts.net:8445/shipyard` already serves its reviewed editable Wayfarer template and complete native floor preview; it has its own build and current development-server lifecycle, not an immutable public-game artifact.
 
 ## Verification and recovery
 
