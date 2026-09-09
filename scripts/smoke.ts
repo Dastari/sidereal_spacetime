@@ -6,7 +6,7 @@ import { combatSmoke } from "./combat-smoke";
 import { interactionSmoke } from "./interaction-smoke";
 import { inventorySmoke } from "./inventory-smoke";
 import { PILOT_LAYOUT } from "../packages/content/src/pilot-layout";
-import { LAB_BODIES } from "../packages/content/src/space";
+import { SHARED_SYSTEM_SEED } from "../packages/content/src/shared-system";
 import assert from "node:assert/strict";
 import { readFileSync, writeFileSync } from "node:fs";
 import { DbConnection, tables } from "../packages/net/src/generated";
@@ -49,6 +49,11 @@ async function client(token?: string) {
           tables.ownStations,
           tables.ownEditReceipts,
           tables.ownSpaceBodies,
+          tables.ownWorldAdmission,
+          tables.visibleBodyMotion,
+          tables.visibleBodyDescriptions,
+          tables.visibleShipMotion,
+          tables.visibleShipDescriptions,
           tables.ownActuatorOutputs,
           tables.ownInteractions,
           tables.ownCombat,
@@ -63,6 +68,24 @@ async function client(token?: string) {
   await wait(() => ready, "subscription");
   return { connection, token: saved };
 }
+/** Join public descriptors and accepted motion; fixture seed supplies labels only. */
+const sharedBodies = (c: DbConnection) =>
+  [...c.db.visibleBodyDescriptions.iter()].flatMap((d) => {
+    const m = c.db.visibleBodyMotion.bodyId.find(d.bodyId);
+    return m
+      ? [
+          {
+            ...d,
+            ...m,
+            id: d.bodyId,
+            tick: m.serverTick,
+            key:
+              SHARED_SYSTEM_SEED.bodies.find((b) => b.id === d.bodyId)?.key ??
+              d.bodyId,
+          },
+        ]
+      : [];
+  });
 const summary: Record<string, unknown> = {
   date: new Date().toISOString(),
   database,
@@ -82,16 +105,16 @@ if (restore) {
       "restart persisted identity/name",
     );
     assert.equal([...a.db.ownEditReceipts.iter()].length, 1);
-    const rock = [...a.db.ownSpaceBodies.iter()].find(
-      (b) => b.id === evidence.bodyId,
-    );
+    await a.reducers.enterLab({ name: "Smoke Alpha" });
+    const rock = sharedBodies(a).find((b) => b.id === evidence.bodyId);
     assert(rock, "authored body identity survived restart");
     if (process.env.SIDEREAL_SMOKE_PERSISTENT_ROWS_ONLY !== "1") {
       const { connection: b } = await client(evidence.collisionToken);
       try {
+        await b.reducers.enterLab({ name: "Smoke Beta" });
         await wait(
           () =>
-            [...b.db.ownSpaceBodies.iter()].some(
+            sharedBodies(b).some(
               (r) => r.id === evidence.movingRockId && r.tick > 0n && r.vy > 0,
             ),
           "moving asteroid persisted",
@@ -203,15 +226,24 @@ if (restore) {
     summary.private_table_rejected = true;
     await wait(
       () =>
-        a.db.ownSpaceBodies.count() === BigInt(LAB_BODIES.length) &&
-        b.db.ownSpaceBodies.count() === BigInt(LAB_BODIES.length),
-      "persistent lab bodies",
+        sharedBodies(a).length === SHARED_SYSTEM_SEED.bodies.length &&
+        sharedBodies(b).length === SHARED_SYSTEM_SEED.bodies.length,
+      "canonical shared bodies",
     );
-    const bodyIds = new Set([...a.db.ownSpaceBodies.iter()].map((r) => r.id));
-    assert(
-      [...b.db.ownSpaceBodies.iter()].every((r) => !bodyIds.has(r.id)),
-      "other lab bodies are private",
+    const bodyIds = new Set(sharedBodies(a).map((r) => r.id));
+    assert.deepEqual(
+      new Set(sharedBodies(b).map((r) => r.id)),
+      bodyIds,
+      "both accounts discover the same canonical bodies",
     );
+    assert.equal(
+      a.db.ownSpaceBodies.count(),
+      0n,
+      "fresh shared entry exposes no private fixture bodies",
+    );
+    assert.equal(b.db.ownSpaceBodies.count(), 0n);
+    assert.equal(a.db.ownWorldAdmission.count(), 1n);
+    assert.equal(b.db.ownWorldAdmission.count(), 1n);
     let bodiesRejected = false;
     b.subscriptionBuilder()
       .onError(() => (bodiesRejected = true))
@@ -219,18 +251,16 @@ if (restore) {
     await wait(() => bodiesRejected, "private body table rejected");
     await a.reducers.enterLab({ name: "Smoke Alpha" });
     assert.equal(
-      a.db.ownSpaceBodies.count(),
-      BigInt(LAB_BODIES.length),
+      sharedBodies(a).length,
+      SHARED_SYSTEM_SEED.bodies.length,
       "enter is idempotent",
     );
     assert.deepEqual(
-      new Set([...a.db.ownSpaceBodies.iter()].map((r) => r.id)),
+      new Set(sharedBodies(a).map((r) => r.id)),
       bodyIds,
       "catalog refresh preserves all placed body UUIDs",
     );
-    const celestial = [...a.db.ownSpaceBodies.iter()].filter(
-      (r) => r.kind === "planet",
-    );
+    const celestial = sharedBodies(a).filter((r) => r.kind === "planet");
     assert.equal(
       celestial.length,
       11,
@@ -244,11 +274,11 @@ if (restore) {
       celestial.filter((r) => Math.hypot(r.x, r.y) > 1000).length >= 8,
       "new planet destinations are distributed across the lab",
     );
-    summary.private_persistent_bodies = true;
-    // Beta can only send piloting intent. Contact and impulse must come from the
+    summary.canonical_shared_bodies = true;
+    // Alpha starts on the approach rock axis and can only send piloting intent. Contact and impulse must come from the
     // scheduled authority; there is no transform/velocity/collision reducer.
     for (let i = 1; i <= 45; i++) {
-      await b.reducers.setIntent({
+      await a.reducers.setIntent({
         sprint: false,
         sequence: BigInt(i),
         throttle: 1,
@@ -258,7 +288,7 @@ if (restore) {
       });
       await new Promise((r) => setTimeout(r, 100));
     }
-    await b.reducers.setIntent({
+    await a.reducers.setIntent({
       sprint: false,
       sequence: 46n,
       throttle: 0,
@@ -268,21 +298,17 @@ if (restore) {
     });
     await wait(
       () =>
-        [...b.db.ownSpaceBodies.iter()].some(
+        sharedBodies(b).some(
           (r) => r.key === "approach-rock" && r.vy > 0 && r.tick > 0n,
         ),
       "server asteroid collision",
     );
-    const movingRock = [...b.db.ownSpaceBodies.iter()].find(
-      (r) => r.key === "approach-rock",
-    )!;
-    const betaShip = [...b.db.ownShips.iter()][0];
-    assert(betaShip.vy < 10, "ship loses forward speed on contact");
-    assert.equal(
-      [...a.db.ownSpaceBodies.iter()].find((r) => r.key === "approach-rock")!
-        .vy,
-      0,
-      "other instance is unchanged",
+    const movingRock = sharedBodies(b).find((r) => r.key === "approach-rock")!;
+    const collisionShip = [...a.db.ownShips.iter()][0];
+    assert(collisionShip.vy < 10, "ship loses forward speed on contact");
+    assert(
+      sharedBodies(a).find((r) => r.id === movingRock.id)!.vy > 0,
+      "the same canonical rock's impulse is visible to both accounts",
     );
     summary.server_asteroid_collision = true;
     const { connection: flight } = await client();
@@ -408,7 +434,7 @@ if (restore) {
     summary.revision_idempotency = true;
     await a.reducers.setIntent({
       sprint: false,
-      sequence: 1n,
+      sequence: 101n,
       throttle: 1,
       turn: 0,
       dx: 0,
@@ -420,7 +446,7 @@ if (restore) {
     await assert.rejects(
       a.reducers.setIntent({
         sprint: false,
-        sequence: 2n,
+        sequence: 102n,
         throttle: 1,
         turn: 0,
         dx: 0,
@@ -430,7 +456,7 @@ if (restore) {
     summary.unseated_control_rejected = true;
     await a.reducers.setIntent({
       sprint: false,
-      sequence: 3n,
+      sequence: 103n,
       throttle: 0,
       turn: 0,
       dx: 1,
@@ -444,7 +470,7 @@ if (restore) {
     await assert.rejects(
       a.reducers.setIntent({
         sprint: false,
-        sequence: 4n,
+        sequence: 104n,
         throttle: 0,
         turn: 0,
         dx: 100,
@@ -458,7 +484,7 @@ if (restore) {
     await a.reducers.useStation({});
     const ownActor = () => [...a.db.ownCharacters.iter()][0];
     await a.reducers.setIntent({
-      sequence: 5n,
+      sequence: 105n,
       throttle: 0,
       turn: 0,
       dx: 1,
@@ -469,7 +495,7 @@ if (restore) {
     const sprintX = ownActor().localX;
     assert(sprintX > 0, "sprint state accompanies server displacement");
     await a.reducers.setIntent({
-      sequence: 6n,
+      sequence: 106n,
       throttle: 0,
       turn: 0,
       dx: 0,
@@ -481,7 +507,7 @@ if (restore) {
     // refresh the movement timeout or replace the newer accepted stop.
     const stopped = { x: ownActor().localX, y: ownActor().localY };
     await a.reducers.setIntent({
-      sequence: 5n,
+      sequence: 105n,
       throttle: 0,
       turn: 0,
       dx: 1,
@@ -501,7 +527,7 @@ if (restore) {
     await a.reducers.useStation({});
     await a.reducers.useStation({});
     await a.reducers.setIntent({
-      sequence: 7n,
+      sequence: 107n,
       throttle: 0,
       turn: 0,
       dx: 0,
@@ -511,25 +537,23 @@ if (restore) {
     await wait(() => ownActor().sprinting, "sprint before input timeout");
     await wait(() => !ownActor().sprinting, "input timeout clears sprint");
     await a.reducers.useStation({});
-    const seatedTick = [...a.db.ownShips.iter()][0].tick;
     await a.reducers.setIntent({
-      sequence: 8n,
+      sequence: 108n,
       throttle: 0,
       turn: 0,
       dx: 1,
       dy: 0,
       sprint: true,
     });
-    await wait(
-      () => [...a.db.ownShips.iter()][0].tick >= seatedTick + 2n,
-      "seated sprint consumed without walking",
-    );
+    // An idle shared ship correctly emits no motion ticks. Allow consumption
+    // time, then prove the seated actor cannot walk or enter sprint state.
+    await new Promise((resolve) => setTimeout(resolve, 150));
     assert.equal(ownActor().sprinting, false);
     assert.equal(ownActor().localX, 0);
     assert.equal(ownActor().localY, PILOT_LAYOUT.station.y);
     await a.reducers.useStation({});
     await a.reducers.setIntent({
-      sequence: 9n,
+      sequence: 109n,
       throttle: 0,
       turn: 0,
       dx: 1,
@@ -548,7 +572,7 @@ if (restore) {
     // Re-seat to a known server-owned position, then walk toward an actual room bulkhead.
     await a.reducers.useStation({});
     await a.reducers.useStation({});
-    let sequence = 10n;
+    let sequence = 110n;
     const walkFor = async (dx: number, dy: number, duration: number) => {
       const end = Date.now() + duration;
       while (Date.now() < end) {
@@ -705,7 +729,7 @@ if (restore) {
         persistenceEvidence,
         token: first.token,
         shipId: ship.id,
-        bodyId: [...bodyIds][0],
+        bodyId: celestial[0]!.id,
         collisionToken: second.token,
         movingRockId: movingRock.id,
         inventoryToken: inventoryClient.token,

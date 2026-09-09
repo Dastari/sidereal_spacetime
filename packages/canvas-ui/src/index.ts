@@ -1,3 +1,8 @@
+import {
+  drawSharedEntry,
+  type SharedEntryState,
+  type SharedEntryActions,
+} from "./shared-entry";
 import { drawAppearanceControls } from "./appearance-controls";
 import { drawGroundLoot } from "./ground-loot";
 import type { GroundItemLabel } from "../../render/src/ground-items";
@@ -41,6 +46,7 @@ import {
 } from "./layout";
 export { gameplayIntent } from "./layout";
 export type GameUIState = {
+  sharedEntry?: SharedEntryState;
   characterAppearance?: CrewAppearance;
   graphics?: GraphicsSettings;
   localLightLimit?: LocalLightLimit;
@@ -86,6 +92,7 @@ export type GameUIState = {
   }[];
 };
 export type GameUIActions = {
+  sharedEntry?: SharedEntryActions;
   groundItems?: () => readonly GroundItemLabel[];
   graphics?: (patch: Partial<GraphicsSettings>) => void;
   graphicsReset?: () => void;
@@ -161,7 +168,11 @@ export function createGameUI(
     maxScroll = 0;
   let showGroundLabels = true;
   ui.shortcut = (code) => {
-    if (code === "KeyZ" && state.hasActor && !menu) {showGroundLabels=!showGroundLabels;ui.invalidate();return true;}
+    if (code === "KeyZ" && state.hasActor && !menu) {
+      showGroundLabels = !showGroundLabels;
+      ui.invalidate();
+      return true;
+    }
     if (code === "F3") {
       diagnostics.toggle();
       return true;
@@ -243,7 +254,13 @@ export function createGameUI(
     // Floating inventory/character windows own their panel bounds, not the
     // uncovered world. Keyboard/gameplay remains blocked while they are open.
     ui.modal = menu || !state.hasActor || state.status !== "ready";
-    if (showGroundLabels && !menu && state.interior) drawGroundLoot(ui,actions.groundItems?.() ?? [],id=>actions.inventory?.transferItem?.(id,""),state.pending);
+    if (showGroundLabels && !menu && state.interior)
+      drawGroundLoot(
+        ui,
+        actions.groundItems?.() ?? [],
+        (id) => actions.inventory?.transferItem?.(id, ""),
+        state.pending,
+      );
     const nav = [
       ...(actions.combat
         ? [
@@ -403,11 +420,32 @@ export function createGameUI(
     }
     if (state.status !== "ready" || !state.connected)
       ui.text("● " + state.status, 24, topHud.bottom + 8, 12, palette.gold);
+    let navigationTop = Math.max(narrow ? 106 : 140, topHud.bottom + 14);
+    if (
+      state.hasActor &&
+      state.connected &&
+      navVisible &&
+      state.sharedEntry &&
+      actions.sharedEntry &&
+      h > 360
+    ) {
+      navigationTop += drawSharedEntry(
+        ui,
+        {
+          x: narrow ? 18 : w - 280,
+          y: navigationTop,
+          w: narrow ? w - 36 : 262,
+        },
+        state.sharedEntry,
+        actions.sharedEntry,
+      );
+    }
     if (
       state.hasActor &&
       state.connected &&
       navVisible &&
       state.destinations.length &&
+      h - navigationTop >= 245 &&
       h > 360
     ) {
       const destination =
@@ -428,7 +466,7 @@ export function createGameUI(
       const pagination = destinationPagination(
         state.destinations.length,
         h,
-        Math.max(narrow ? 106 : 140, topHud.bottom + 14),
+        navigationTop,
         destinationPage,
       );
       const { rows: destinationRows, pages: destinationPages } = pagination;
@@ -791,10 +829,15 @@ export function createGameUI(
           ),
         );
       } else if (tab === "Crew") {
-        const height = drawAppearanceControls(ui, inner, appearance, patch => {
-          appearance = { ...appearance, ...patch };
-          customize();
-        });
+        const height = drawAppearanceControls(
+          ui,
+          inner,
+          appearance,
+          (patch) => {
+            appearance = { ...appearance, ...patch };
+            customize();
+          },
+        );
         maxScroll = Math.max(0, height - viewport.h);
       } else {
         const rows = [

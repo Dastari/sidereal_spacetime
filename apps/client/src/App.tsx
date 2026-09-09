@@ -1,3 +1,4 @@
+import { useSharedWorldEntry } from "./use-shared-world-entry";
 import { SharedWorldReview } from "./SharedWorldReview";
 import {
   sharedBodyPresentation,
@@ -71,6 +72,9 @@ export default function App({
     const params = new URLSearchParams(location.search);
     return params.has("sharedWorldReview") && !params.has("constructionReview");
   });
+  const [sharedEnabled] = useState(
+    () => !new URLSearchParams(location.search).has("constructionReview"),
+  );
   const [sharedPresentation] = useState(() => createSharedWorldPresentation());
   const sharedAdmission = useSyncExternalStore(
     (listener) =>
@@ -144,7 +148,7 @@ export default function App({
       (c) => {
         connection.current = c;
         sharedPresentation.select(
-          sharedReview ? getSharedWorldBinding(c)?.store : undefined,
+          sharedEnabled ? getSharedWorldBinding(c)?.store : undefined,
         );
       },
       (s, e) => {
@@ -188,9 +192,12 @@ export default function App({
       : undefined
   ) as ShipRow | undefined;
   localShipId.current = ship?.id;
-  const sharedBinding = sharedReview ? getSharedWorldBinding(c) : undefined;
+  const sharedBinding = sharedEnabled ? getSharedWorldBinding(c) : undefined;
+  const sharedEntry = useSharedWorldEntry(c, sharedEnabled);
+  const sharedEntryActions = useRef(sharedEntry);
+  sharedEntryActions.current = sharedEntry;
   const navigationBodies =
-    sharedReview && sharedAdmission
+    sharedEnabled && sharedAdmission
       ? sharedBodyPresentation(
           sharedPresentation.store,
           performance.now(),
@@ -323,6 +330,7 @@ export default function App({
         .catch((e) => setError(String(e)));
   }, [actor?.connected, actor?.id, ready, c]);
   const uiState: GameUIState = {
+    sharedEntry: sharedEnabled ? sharedEntry.state : undefined,
     characterAppearance: cosmetics,
     graphics: view.current?.getGraphicsSettings(),
     localLightLimit: view.current?.getLocalLightBudget().limit,
@@ -427,7 +435,7 @@ export default function App({
     }
   };
   useEffect(() => {
-    if (!sharedReview) return;
+    if (!sharedEnabled) return;
     const syncNavigation = () => {
       const admitted = sharedPresentation.store.getSnapshot().admission[0];
       const bodies = admitted
@@ -452,7 +460,7 @@ export default function App({
     return () => {
       for (const stop of stops) stop();
     };
-  }, [sharedReview, sharedPresentation]);
+  }, [sharedEnabled, sharedPresentation]);
   const inventoryCommand = () => ({
     expectedRevision: BigInt(live.current.uiState.inventory?.revision ?? "0"),
     operationId:
@@ -552,7 +560,7 @@ export default function App({
           {
             signal: abort.signal,
             equipmentPose,
-            sharedWorld: sharedReview
+            sharedWorld: sharedEnabled
               ? {
                   store: sharedPresentation.store,
                   localShipId: () =>
@@ -573,6 +581,10 @@ export default function App({
                 scene,
                 live.current.uiState,
                 {
+                  sharedEntry: {
+                    join: () => sharedEntryActions.current.join(),
+                    review: () => sharedEntryActions.current.review(),
+                  },
                   interact,
                   combat: () => setCombatEnabled((v) => !v),
                   objectDetails: {

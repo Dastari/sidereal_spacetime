@@ -83,10 +83,7 @@ export function connect(
         }
       }
       if (proofAbort.signal.aborted || !connection.isActive) return;
-      if (
-        new URLSearchParams(location.search).has("sharedWorldReview") &&
-        !new URLSearchParams(location.search).has("constructionReview")
-      ) {
+      if (!new URLSearchParams(location.search).has("constructionReview")) {
         sharedBindings.set(
           connection,
           bindSharedWorld({

@@ -22,6 +22,7 @@ export interface SharedJoinJournal {
 export interface SharedJoinActionState {
   phase: "idle" | "pending" | "submitted" | "admitted" | "blocked" | "error";
   message: string;
+  reviewRequired?: boolean;
 }
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const u64 = (value: unknown): value is string =>
@@ -84,12 +85,18 @@ export function createSharedWorldJoinAction(options: {
   let inFlight: Promise<SharedJoinActionState> | undefined;
   let snapshot: SharedJoinActionState = { phase: "idle", message: "" };
   const listeners = new Set<() => void>();
-  function set(phase: SharedJoinActionState["phase"], message: string) {
+  function set(
+    phase: SharedJoinActionState["phase"],
+    message: string,
+    reviewRequired = false,
+  ) {
     if (
       !disposed &&
-      (phase !== snapshot.phase || message !== snapshot.message)
+      (phase !== snapshot.phase ||
+        message !== snapshot.message ||
+        reviewRequired !== snapshot.reviewRequired)
     ) {
-      snapshot = Object.freeze({ phase, message });
+      snapshot = Object.freeze({ phase, message, reviewRequired });
       for (const listener of [...listeners]) listener();
     }
     return snapshot;
@@ -109,7 +116,8 @@ export function createSharedWorldJoinAction(options: {
       if (saved && !prior)
         return set(
           "blocked",
-          "The saved join request is invalid. Clear it before trying again.",
+          "The saved join request is invalid. Review it before trying again.",
+          true,
         );
       if (
         prior &&
@@ -122,6 +130,7 @@ export function createSharedWorldJoinAction(options: {
         return set(
           "blocked",
           "Your ship changed since the saved request. Review the current ship before starting a new join.",
+          true,
         );
       }
       const request = prior ?? {
@@ -189,5 +198,44 @@ export function createSharedWorldJoinAction(options: {
       disposed = true;
       listeners.clear();
     },
+  };
+}
+
+/** Account-scoped controller with explicit activation. Effect cleanup can detach
+ * and reattach it during Fast Refresh without reviving an old in-flight action. */
+export function createSharedWorldJoinSession(
+  options: Parameters<typeof createSharedWorldJoinAction>[0],
+) {
+  const idle: SharedJoinActionState = Object.freeze({
+    phase: "idle",
+    message: "",
+  });
+  let key: string | undefined;
+  let active: ReturnType<typeof createSharedWorldJoinAction> | undefined;
+  let detach: (() => void) | undefined;
+  const listeners = new Set<() => void>();
+  const emit = () => {
+    for (const listener of [...listeners]) listener();
+  };
+  return {
+    getKey: () => key,
+    getSnapshot: () => active?.getSnapshot() ?? idle,
+    subscribe(listener: () => void) {
+      listeners.add(listener);
+      return () => {
+        listeners.delete(listener);
+      };
+    },
+    select(next: string | undefined) {
+      if (next === key) return;
+      detach?.();
+      active?.dispose();
+      key = next;
+      active = next ? createSharedWorldJoinAction(options) : undefined;
+      detach = active?.subscribe(emit);
+      emit();
+    },
+    join: () => active?.join() ?? Promise.resolve(idle),
+    discardPending: () => active?.discardPending() ?? false,
   };
 }

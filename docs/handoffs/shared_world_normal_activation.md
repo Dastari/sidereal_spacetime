@@ -1,14 +1,14 @@
 # Normal shared-world activation proposal — 2026-09-10
 
-Status: staged implementation proposal for integration-owner review. The durable explicit-join helper and tests exist; App, canvas HUD and the new-character server branch below are not changed by this proposal. Existing query review remains the installed development path. The owner's blanket deployment authorization is recorded; combined browser acceptance and artifact pinning are coordination gates, not a request for new user permission.
+Status: implemented in the combined development candidate, awaiting the integration owner's normal-HUD browser acceptance and immutable public release. The server new-character branch, normal transport/presentation path, native canvas navigation action and durable account-scoped join controller are now connected. Public deployment is not implied by this document. The owner's blanket deployment authorization is recorded; final browser acceptance and artifact pinning are coordination gates, not a request for new permission.
 
 ## Existing characters: explicit relocation only
 
 Normal login reconnects the existing character and ship in their current context. It must never automatically call `joinSharedSystem` for an existing character, including one currently occupying the pilot seat. Native construction visitors remain in their accepted visit/deck and must leave that context before joining. Existing ship, character, station, item, container, appearance and fitting UUIDs remain stable.
 
-Add a compact **Join shared system** action to the existing navigation card in `packages/canvas-ui/src/index.ts`, using its native panel/button atlas, Barlow typography and cyan/navy theme. It replaces neither the top navigation nor the inventory. Proposed content:
+The compact **Join shared system** action is installed to the existing navigation card in `packages/canvas-ui/src/index.ts`, using its native panel/button atlas, Barlow typography and cyan/navy theme. It replaces neither the top navigation nor the inventory. Installed content:
 
-> Private space
+> Explore together
 >
 > Move this ship to a safe berth in the shared system. Your ship and belongings stay with you.
 >
@@ -16,7 +16,7 @@ Add a compact **Join shared system** action to the existing navigation card in `
 
 Clicking this explicitly authorizes that one migration. The button is disabled while the original-token admission handshake or shared baseline subscription is pending, the actor is disconnected, a native visit exists or a request is running. Existing shared admission shows **Shared system** with a concise contact count and the ordinary navigation list; the debug UUID/socket panel remains query-only. Retain local control/pilot authority checks; membership is not a control grant.
 
-Use `createSharedWorldJoinAction` from `apps/client/src/shared-world-join-action.ts`. Mount one action controller for the active verified account identity/database and dispose it on replacement. Its `readContext` callback reads the current active connection, its explicit baseline-readiness observable, `ownWorldAdmission`, `ownCharacters`, `ownShips` and native visit rows. It never trusts a stale React copy or an empty cache before subscription apply.
+Use `createSharedWorldJoinAction` from `apps/client/src/shared-world-join-action.ts`. `useSharedWorldEntry` activates one action controller for the verified account identity/database and disposes its action on replacement or effect cleanup; Fast Refresh can safely reactivate it. Its `readContext` callback reads the current active connection, its explicit baseline-readiness observable, `ownWorldAdmission`, `ownCharacters`, `ownShips` and native visit rows. It never trusts a stale React copy or an empty cache before subscription apply.
 
 The journal adapter uses localStorage `getItem`/`setItem`/`removeItem`. The helper derives the key from configured database plus verified connection identity; no access token, refresh token, password, character name, inventory document or transform is stored. It serializes only operation UUID, character/ship UUIDs and exact expected u64 revisions. Journal write happens before reducer submission. Storage failure prevents submission rather than silently losing retry identity.
 
@@ -75,3 +75,16 @@ Use a compatible forward fix if acceptance fails after users have joined. A clie
 ## Helper validation
 
 Eight focused action tests plus five existing join-decision tests passed. Cases cover baseline readiness, explicit-only execution, write-before-send, lost-response/reload replay, accepted-admission skipping, account/database isolation, revision conflict/review, storage corruption/failure, click coalescing, exact u64 preservation and disposal. Full TypeScript check passed at this helper checkpoint. Normal HUD rendering and the new-character server branch remain unimplemented until the integration owner proceeds with this concrete proposal.
+
+
+## Implemented acceptance evidence
+
+- Fresh real Dastari PKCE accounts against `sidereal-spacetime-dev-review-new-shared-entry-smoke`: both newly created actors had accepted admission immediately (`admittedAtCreation: [true, true]`), so neither client sent an explicit join. Both accounts observed the same bodies and remote movement, kept private views restricted, and preserved appearance/inventory/UUIDs on reconnect. Private evidence: `.runtime/new-shared-entry-provider-summary.json`. Operator reads confirmed zero private `space_body` rows and zero `legacy_body_alias` rows in this fresh database. Review token files were logged out and removed.
+- The exact prior module artifact SHA-256 `fb46173302350372acbed5e4b5733ac4a8090460151b25705e61554cd6bec67e` was installed only into `sidereal-spacetime-dev-review-legacy-private-upgrade`. Ordinary reducers seeded a private actor/ship/starter inventory before an additive current-module publication with `--delete-data=never`. Reconnection retained the same character, ship, position/velocity, appearance, seven visible items, containers, hotbar and sixteen private body IDs, with zero shared admission. Disconnect releases the pilot station by design; the test reacquired it through the proximity reducer before comparing snapshots. It does not claim seat occupancy persists across disconnect.
+- The same legacy fixture then explicitly joined and replayed the exact operation/revision request. Admission was unchanged by replay; character/ship UUIDs and all visible item rows were preserved. Evidence: `.runtime/legacy-private-upgrade-summary.json`. The reproducible two-phase harness is `scripts/legacy-shared-upgrade-smoke.ts`; seed on the pinned old module first, upgrade additively, then run `--verify` once (it deliberately performs the migration at the end).
+- Generic isolated authority smoke now checks shared bodies rather than private universe copies, observes one rock impulse from both accounts, and retains permission, idempotency, input lease, walking/collision and IFCS checks. Its discovery scopes are actual accepted views. The `traversal-idle-final` named run passed. It caught and prompted repair of missing initial nine-row actuator telemetry in shared space; steady idle output suppression remains intact.
+- The normal canvas card uses the existing toolkit/palette, leaves external inventory UI intact, and stacks ahead of destinations. On short displays the invitation gets priority; destination controls return after admission when enough height remains. The debug SharedWorldReview panel remains query-only. Root browser acceptance remains the final UI gate.
+
+## Managed pinned-module review
+
+`scripts/dev.py publish-review --review-name NAME --module-artifact FILE --artifact-sha256 SHA256` stages verified JS/WASM bytes privately and publishes only to the project-prefixed named review database, never resets it, and rejects unpaired flags, invalid names, symlinks and hash mismatches. This is for upgrade tests, not a bypass for publishing an old module over the normal database. Source artifacts and credentials remain outside git; the checked-in helper/tests contain no tokens.

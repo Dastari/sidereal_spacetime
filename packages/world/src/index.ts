@@ -372,7 +372,6 @@ export const enterLab = db.reducer({ name: t.string() }, (ctx, { name }) => {
     operational: true,
   });
   alignPilotLayout(ctx, shipId);
-  seedBodies(shipId);
   ctx.db.input.insert({
     characterId,
     sequence: 0n,
@@ -382,6 +381,15 @@ export const enterLab = db.reducer({ name: t.string() }, (ctx, { name }) => {
     dy: 0,
     updatedMicros: ctx.timestamp.microsSinceUnixEpoch,
     sprint: false,
+  });
+  // New characters enter the canonical system in this same transaction. Existing
+  // characters above retain their current space until an explicit join action.
+  sharedWorld.joinSharedSystem(ctx, {
+    characterId,
+    shipId,
+    expectedShipRevision: ctx.db.ship.id.find(shipId)!.revision,
+    expectedAdmissionRevision: 0n,
+    operationId: ctx.newUuidV4().toString(),
   });
 });
 export const connectSession = db.clientConnected(connected);

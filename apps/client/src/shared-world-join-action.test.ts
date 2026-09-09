@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import {
   createSharedWorldJoinAction,
+  createSharedWorldJoinSession,
   decodeSharedJoinRequest,
   encodeSharedJoinRequest,
   sharedJoinJournalKey,
@@ -176,5 +177,57 @@ describe("normal shared-world explicit join action", () => {
     finish!();
     await request;
     expect(changed).toHaveBeenCalledOnce();
+  });
+});
+
+describe("account-scoped shared join lifecycle", () => {
+  it("detaches an old in-flight account without changing the replacement UI or journal", async () => {
+    const f = fixture();
+    let resolve!: () => void;
+    f.send.mockImplementationOnce(
+      () =>
+        new Promise<void>((done) => {
+          resolve = done;
+        }),
+    );
+    const session = createSharedWorldJoinSession({
+      readContext: () => f.current,
+      journal: f.journal,
+      send: f.send,
+      operationId: f.makeId,
+    });
+    const oldKey = sharedJoinJournalKey(f.current);
+    session.select(oldKey);
+    const oldRequest = session.join();
+    expect(session.getSnapshot().phase).toBe("pending");
+    f.current.identity = "b".repeat(64);
+    const nextKey = sharedJoinJournalKey(f.current);
+    session.select(nextKey);
+    expect(session.getSnapshot().phase).toBe("idle");
+    await session.join();
+    const nextJournal = f.journalData.get(nextKey);
+    expect(session.getSnapshot().phase).toBe("submitted");
+    resolve();
+    await oldRequest;
+    expect(session.getSnapshot().phase).toBe("submitted");
+    expect(f.journalData.get(nextKey)).toBe(nextJournal);
+    expect(f.journalData.has(oldKey)).toBe(true);
+  });
+  it("can detach and reactivate during effect cleanup while preserving durable retry", async () => {
+    const f = fixture();
+    const session = createSharedWorldJoinSession({
+      readContext: () => f.current,
+      journal: f.journal,
+      send: f.send,
+      operationId: f.makeId,
+    });
+    const key = sharedJoinJournalKey(f.current);
+    session.select(key);
+    await session.join();
+    session.select(undefined);
+    expect(session.getSnapshot().phase).toBe("idle");
+    session.select(key);
+    await session.join();
+    expect(f.send.mock.calls[1]![0]).toEqual(f.send.mock.calls[0]![0]);
   });
 });
