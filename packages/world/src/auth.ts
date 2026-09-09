@@ -168,10 +168,10 @@ export function gameAction<A>(
 export function gameView<R>(view: (ctx: ReadContext) => R[]) {
   return (ctx: ReadContext): R[] => (canReadGame(ctx) ? view(ctx) : []);
 }
-export function clearOwner(ctx: Context, owner: Identity) {
+export function clearOwner(ctx: Context, owner: Identity, reason: "disconnect" | "auth-loss" = "auth-loss") {
   for (const actor of ctx.db.character.by_owner.filter(owner)) {
     combat.clearAim(ctx, actor.id);
-    interactions.leaveCouch(ctx, actor.id);
+    interactions.leaveCouch(ctx, actor.id, reason);
     if (actor.connected || actor.sprinting)
       ctx.db.character.id.update({
         ...ctx.db.character.id.find(actor.id)!,

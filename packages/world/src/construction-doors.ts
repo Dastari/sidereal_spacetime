@@ -84,7 +84,7 @@ export function installDoors(
   }
 }
 export function constructionCollision(
-  ctx: Pick<Context, "db">,
+  ctx: Pick<ReadContext, "db">,
   instance: { id: string; revision: bigint; documentJson: string },
   deckId: string,
 ) {

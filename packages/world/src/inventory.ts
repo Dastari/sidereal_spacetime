@@ -1,3 +1,7 @@
+import {
+  legacyInventorySnapshot,
+  synchronizeLegacyInventory,
+} from "./scoped-inventory-authority";
 import { packArmorIssue } from "@sidereal/sim/armor-issue";
 import { LAB_STORAGE_FIXTURES } from "../../content/src/storage-fixtures";
 import { CABIN_PARTITIONS } from "../../content/src/interior";
@@ -32,11 +36,9 @@ function actorFor(ctx: ReadContext) {
   return [...ctx.db.character.by_owner.filter(ctx.sender)][0];
 }
 function snapshot(ctx: ReadContext, characterId: string) {
-  return {
-    items: [...ctx.db.inventoryItem.by_character.filter(characterId)],
-    containers: [...ctx.db.inventoryContainer.by_character.filter(characterId)],
-  };
+  return legacyInventorySnapshot(ctx, characterId);
 }
+
 export function access(ctx: ReadContext) {
   const actor = actorFor(ctx);
   if (!actor?.connected) return;
@@ -230,12 +232,12 @@ export function inventoryHotbarView(ctx: ReadContext) {
       )
     : [];
 }
-export function claimKit(ctx: Context) {
+function claimKitInternal(ctx: Context) {
   const actor = actorFor(ctx);
   if (!actor?.connected) fail("Enter the lab before claiming equipment");
   if (ctx.db.inventoryState.characterId.find(actor.id)?.kitGranted) {
-    seedStorage(ctx, actor.id);
-    seedCharacterUniforms(ctx, actor.id);
+    seedStorageInternal(ctx, actor.id);
+    seedCharacterUniformsInternal(ctx, actor.id);
     return;
   }
   const characterId = actor.id,
@@ -329,8 +331,8 @@ export function claimKit(ctx: Context) {
   item("long-rifle", crate, 0, 0);
   item("heavy-handgun", crate, 2, 0);
   liquid("Engineering fuel tank", "", 100, 20, -3.1, -6);
-  seedStorage(ctx, actor.id);
-  seedCharacterUniforms(ctx, actor.id);
+  seedStorageInternal(ctx, actor.id);
+  seedCharacterUniformsInternal(ctx, actor.id);
   const data = snapshot(ctx, actor.id),
     pockets = data.containers.find((c) => c.carried)!;
   validateInventory(
@@ -385,6 +387,7 @@ export function transaction(
       error instanceof Error ? error.message : "Invalid inventory operation",
     );
   }
+  synchronizeLegacyInventory(ctx, a.actor.id, a.data);
   const revision = state.revision + 1n;
   ctx.db.inventoryState.characterId.update({ ...state, revision });
   const receipts = [
@@ -418,8 +421,10 @@ export function commitItems(
       ctx.db.inventoryItem.id.update({ ...old, ...item });
   }
   // Ground wrappers have no identity of their own once their item is retrieved.
-  for (const binding of a.bindings.filter(b => b.placementId.startsWith("ground:"))) {
-    if (!items.some(item => item.containerId === binding.containerId)) {
+  for (const binding of a.bindings.filter((b) =>
+    b.placementId.startsWith("ground:"),
+  )) {
+    if (!items.some((item) => item.containerId === binding.containerId)) {
       ctx.db.storageBinding.id.delete(binding.id);
       ctx.db.inventoryContainer.id.delete(binding.containerId);
     }
@@ -522,7 +527,13 @@ export function moveItem(
     (a) => {
       if (!a.canItem(args.itemId) || !a.canContainer(args.containerId))
         fail("Item or destination is out of reach");
-      if (a.bindings.some(b => b.containerId === args.containerId && b.placementId.startsWith("ground:")))
+      if (
+        a.bindings.some(
+          (b) =>
+            b.containerId === args.containerId &&
+            b.placementId.startsWith("ground:"),
+        )
+      )
         fail("Use Drop to place an item on the ground");
       const items = a.data.items.map((i) =>
         i.id === args.itemId
@@ -584,7 +595,7 @@ export function activateHotbar(
 }
 
 /** Idempotent fixture migration: retain the old crate UUID/contents; add only empty storage. */
-export function seedStorage(ctx: Context, characterId: string) {
+function seedStorageInternal(ctx: Context, characterId: string) {
   const actor = ctx.db.character.id.find(characterId);
   if (!actor) return;
   const containers = [
@@ -634,7 +645,7 @@ export function seedStorage(ctx: Context, characterId: string) {
 /** Owner-requested one-time uniform delivery into the four existing ship crates.
  * Stable item/container UUIDs, old placements, nested cargo and equipment survive.
  * This is fixed lab content seeding, not an arbitrary client mint capability. */
-export function seedCharacterUniforms(
+function seedCharacterUniformsInternal(
   ctx: Context,
   characterId: string,
 ): boolean {
@@ -782,7 +793,30 @@ export function claimCharacterArmory(ctx: Context, args: Mutation) {
       )
     )
       fail("Move within reach of a storage supply crate");
-    if (!seedCharacterUniforms(ctx, a.actor.id))
+    if (!seedCharacterUniformsInternal(ctx, a.actor.id))
       fail("Make room in the four supply crates before issuing uniforms");
   });
+}
+
+/** All direct seeding paths maintain the same sidecars as personal transactions.
+ * Private lab storage stays private; no UUIDs or balances are replaced. */
+export function claimKit(ctx: Context) {
+  const actor = actorFor(ctx);
+  const before = actor ? snapshot(ctx, actor.id) : undefined;
+  claimKitInternal(ctx);
+  if (actor && before) synchronizeLegacyInventory(ctx, actor.id, before);
+}
+export function seedStorage(ctx: Context, characterId: string) {
+  const before = snapshot(ctx, characterId);
+  seedStorageInternal(ctx, characterId);
+  synchronizeLegacyInventory(ctx, characterId, before);
+}
+export function seedCharacterUniforms(
+  ctx: Context,
+  characterId: string,
+): boolean {
+  const before = snapshot(ctx, characterId);
+  const result = seedCharacterUniformsInternal(ctx, characterId);
+  synchronizeLegacyInventory(ctx, characterId, before);
+  return result;
 }

@@ -99,6 +99,11 @@ export const scopedInventoryReceipt = table(
 export const scopedCargoContainerProjection = t.row(
   "ScopedCargoContainerStatus",
   {
+    capacityLitres: t.f64(),
+    amountLitres: t.f64(),
+    liquidType: t.string(),
+    name: t.string(),
+    placedObjectId: t.string(),
     id: t.string().primaryKey(),
     parentItemId: t.string(),
     kind: t.string(),
@@ -117,3 +122,12 @@ export const scopedCargoItemProjection = t.row("ScopedCargoItemStatus", {
   rotated: t.bool(),
   revision: t.u64(),
 });
+
+export const scopedCarriedRevisionProjection = t.row(
+  "ScopedCarriedInventoryRevision",
+  {
+    id: t.string().primaryKey(),
+    kind: t.string(),
+    revision: t.u64(),
+  },
+);

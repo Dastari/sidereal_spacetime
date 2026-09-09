@@ -285,6 +285,18 @@ export const ConstructionInstanceStatus = __t.object("ConstructionInstanceStatus
 });
 export type ConstructionInstanceStatus = __Infer<typeof ConstructionInstanceStatus>;
 
+export const ConstructionInteractionBinding = __t.object("ConstructionInteractionBinding", {
+  objectId: __t.string(),
+  placedObjectId: __t.string(),
+  instanceId: __t.string(),
+  deckId: __t.string(),
+  sourceId: __t.string(),
+  instanceRevision: __t.u64(),
+  recoveryRequested: __t.bool(),
+  recoveryReason: __t.string(),
+});
+export type ConstructionInteractionBinding = __Infer<typeof ConstructionInteractionBinding>;
+
 export const ConstructionLocation = __t.object("ConstructionLocation", {
   characterId: __t.string(),
   visitId: __t.string(),
@@ -616,6 +628,15 @@ export const InputControlCursor = __t.object("InputControlCursor", {
 });
 export type InputControlCursor = __Infer<typeof InputControlCursor>;
 
+export const InstanceInventoryBinding = __t.object("InstanceInventoryBinding", {
+  placedObjectId: __t.string(),
+  containerId: __t.string(),
+  instanceId: __t.string(),
+  deckId: __t.string(),
+  definitionRevision: __t.string(),
+});
+export type InstanceInventoryBinding = __Infer<typeof InstanceInventoryBinding>;
+
 export const InteractionObject = __t.object("InteractionObject", {
   id: __t.string(),
   shipId: __t.string(),
@@ -653,6 +674,24 @@ export const InventoryContainer = __t.object("InventoryContainer", {
 });
 export type InventoryContainer = __Infer<typeof InventoryContainer>;
 
+export const InventoryContainerScope = __t.object("InventoryContainerScope", {
+  containerId: __t.string(),
+  rootContainerId: __t.string(),
+  revision: __t.u64(),
+  rootKind: __t.string(),
+  rootCharacterId: __t.string(),
+  instanceId: __t.string(),
+  deckId: __t.string(),
+  placedObjectId: __t.string(),
+  instanceRevision: __t.u64(),
+  definitionRevision: __t.string(),
+  accessX: __t.f64(),
+  accessY: __t.f64(),
+  accessZ: __t.f64(),
+  lifecycle: __t.string(),
+});
+export type InventoryContainerScope = __Infer<typeof InventoryContainerScope>;
+
 export const InventoryHotbar = __t.object("InventoryHotbar", {
   id: __t.string(),
   characterId: __t.string(),
@@ -672,6 +711,15 @@ export const InventoryItem = __t.object("InventoryItem", {
   rotated: __t.bool(),
 });
 export type InventoryItem = __Infer<typeof InventoryItem>;
+
+export const InventoryItemMembership = __t.object("InventoryItemMembership", {
+  itemId: __t.string(),
+  revision: __t.u64(),
+  containerId: __t.string(),
+  rootContainerId: __t.string(),
+  rootCharacterId: __t.string(),
+});
+export type InventoryItemMembership = __Infer<typeof InventoryItemMembership>;
 
 export const InventoryReceipt = __t.object("InventoryReceipt", {
   id: __t.string(),
@@ -720,6 +768,9 @@ export type OwnActuatorOutputs = __Infer<typeof OwnActuatorOutputs>;
 export const OwnAppearance = __t.object("OwnAppearance", {});
 export type OwnAppearance = __Infer<typeof OwnAppearance>;
 
+export const OwnCarriedInventoryRevisions = __t.object("OwnCarriedInventoryRevisions", {});
+export type OwnCarriedInventoryRevisions = __Infer<typeof OwnCarriedInventoryRevisions>;
+
 export const OwnCharacters = __t.object("OwnCharacters", {});
 export type OwnCharacters = __Infer<typeof OwnCharacters>;
 
@@ -749,6 +800,21 @@ export type OwnConstructionLocation = __Infer<typeof OwnConstructionLocation>;
 
 export const OwnConstructionNativePressure = __t.object("OwnConstructionNativePressure", {});
 export type OwnConstructionNativePressure = __Infer<typeof OwnConstructionNativePressure>;
+
+export const OwnConstructionSeat = __t.object("OwnConstructionSeat", {});
+export type OwnConstructionSeat = __Infer<typeof OwnConstructionSeat>;
+
+export const OwnConstructionSeatStatus = __t.object("OwnConstructionSeatStatus", {
+  characterId: __t.string(),
+  instanceId: __t.string(),
+  deckId: __t.string(),
+  objectId: __t.string(),
+  localX: __t.f64(),
+  localY: __t.f64(),
+  standingElevationM: __t.f64(),
+  releasePending: __t.bool(),
+});
+export type OwnConstructionSeatStatus = __Infer<typeof OwnConstructionSeatStatus>;
 
 export const OwnConstructionStairEgressGeometry = __t.object("OwnConstructionStairEgressGeometry", {});
 export type OwnConstructionStairEgressGeometry = __Infer<typeof OwnConstructionStairEgressGeometry>;
@@ -786,6 +852,12 @@ export type OwnInventoryItems = __Infer<typeof OwnInventoryItems>;
 export const OwnInventoryState = __t.object("OwnInventoryState", {});
 export type OwnInventoryState = __Infer<typeof OwnInventoryState>;
 
+export const OwnReachableCargoContainers = __t.object("OwnReachableCargoContainers", {});
+export type OwnReachableCargoContainers = __Infer<typeof OwnReachableCargoContainers>;
+
+export const OwnReachableCargoItems = __t.object("OwnReachableCargoItems", {});
+export type OwnReachableCargoItems = __Infer<typeof OwnReachableCargoItems>;
+
 export const OwnShips = __t.object("OwnShips", {});
 export type OwnShips = __Infer<typeof OwnShips>;
 
@@ -815,6 +887,52 @@ export const RetiredIdentity = __t.object("RetiredIdentity", {
   linkedMicros: __t.u64(),
 });
 export type RetiredIdentity = __Infer<typeof RetiredIdentity>;
+
+export const ScopedCargoContainerStatus = __t.object("ScopedCargoContainerStatus", {
+  capacityLitres: __t.f64(),
+  amountLitres: __t.f64(),
+  liquidType: __t.string(),
+  name: __t.string(),
+  placedObjectId: __t.string(),
+  id: __t.string(),
+  parentItemId: __t.string(),
+  kind: __t.string(),
+  width: __t.u32(),
+  height: __t.u32(),
+  maxMassKg: __t.f64(),
+  revision: __t.u64(),
+});
+export type ScopedCargoContainerStatus = __Infer<typeof ScopedCargoContainerStatus>;
+
+export const ScopedCargoItemStatus = __t.object("ScopedCargoItemStatus", {
+  id: __t.string(),
+  definitionId: __t.string(),
+  containerId: __t.string(),
+  x: __t.i32(),
+  y: __t.i32(),
+  rotated: __t.bool(),
+  revision: __t.u64(),
+});
+export type ScopedCargoItemStatus = __Infer<typeof ScopedCargoItemStatus>;
+
+export const ScopedCarriedInventoryRevision = __t.object("ScopedCarriedInventoryRevision", {
+  id: __t.string(),
+  kind: __t.string(),
+  revision: __t.u64(),
+});
+export type ScopedCarriedInventoryRevision = __Infer<typeof ScopedCarriedInventoryRevision>;
+
+export const ScopedInventoryReceipt = __t.object("ScopedInventoryReceipt", {
+  id: __t.string(),
+  actorId: __t.string(),
+  operationId: __t.string(),
+  request: __t.string(),
+  itemId: __t.string(),
+  sourceContainerId: __t.string(),
+  destinationContainerId: __t.string(),
+  resultingItemRevision: __t.u64(),
+});
+export type ScopedInventoryReceipt = __Infer<typeof ScopedInventoryReceipt>;
 
 export const SharedAdmissionProjection = __t.object("SharedAdmissionProjection", {
   characterId: __t.string(),

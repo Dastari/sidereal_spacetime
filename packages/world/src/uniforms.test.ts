@@ -1,7 +1,16 @@
+import { inventoryMetadataTestTables } from "./scoped-inventory-test-support";
 import { expect, test, vi } from "vitest";
 vi.mock("spacetimedb/server", () => ({
   SenderError: class extends Error {},
-  t: new Proxy({}, { get: () => () => ({ primaryKey() { return this; } }) }),
+  table: () => ({}),
+  t: new Proxy(
+    {},
+    {
+      get: () => () => ({
+        primaryKey() { return this; }, unique() { return this; },
+      }),
+    },
+  ),
 }));
 import { seedCharacterUniforms } from "./inventory";
 import { LAB_STORAGE_FIXTURES } from "@sidereal/content/storage-fixtures";
@@ -48,6 +57,7 @@ test("uniform migration fills the original four containers once, retaining cargo
     receipt: { characterId: string; version: number } | undefined,
     state = { characterId: "actor", revision: 12n, kitGranted: true };
   const db = {
+    ...inventoryMetadataTestTables(),
     character: { id: { find: () => ({ id: "actor", shipId: "ship" }) } },
     characterUniformIssue: {
       characterId: { find: () => receipt },

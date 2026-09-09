@@ -1,4 +1,9 @@
-import {clearAim} from "./combat";
+import {
+  constructionInteractionView,
+  interactWithConstructionObject,
+  releaseConstructionSeat,
+} from "./construction-interactions";
+import { clearAim } from "./combat";
 import {
   SenderError,
   t,
@@ -43,7 +48,12 @@ export function clearInteractionInput(ctx: Context, characterId: string) {
       sprint: false,
     });
 }
-export function leaveCouch(ctx: Context, characterId: string) {
+export function leaveCouch(
+  ctx: Context,
+  characterId: string,
+  reason: "stand" | "disconnect" | "auth-loss" = "stand",
+) {
+  if (releaseConstructionSeat(ctx, characterId, reason).handled) return;
   const seat = ctx.db.couchSeat.characterId.find(characterId);
   if (!seat) return;
   const object = ctx.db.interactionObject.id.find(seat.objectId);
@@ -83,6 +93,8 @@ export const interactionProjection = t.row("VisibleInteraction", {
 export function interactionView(ctx: ReadContext) {
   const actor = [...ctx.db.character.by_owner.filter(ctx.sender)][0];
   if (!actor?.connected) return [];
+  if (ctx.db.constructionLocation.characterId.find(actor.id))
+    return constructionInteractionView(ctx);
   return [...ctx.db.interactionObject.by_ship.filter(actor.shipId)].flatMap(
     (object) => {
       const d = LAB_INTERACTIONS.find(
@@ -125,6 +137,7 @@ export function interact(
     operationId: string;
   },
 ) {
+  if (interactWithConstructionObject(ctx, args)) return;
   const actor = [...ctx.db.character.by_owner.filter(ctx.sender)][0];
   if (!actor?.connected) throw new SenderError("Character unavailable");
   const object = ctx.db.interactionObject.id.find(args.objectId);

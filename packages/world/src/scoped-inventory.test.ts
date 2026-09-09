@@ -502,6 +502,11 @@ describe("unregistered scoped cargo authority adapter", () => {
         "height",
         "maxMassKg",
         "revision",
+        "name",
+        "placedObjectId",
+        "capacityLitres",
+        "amountLitres",
+        "liquidType",
       ].sort(),
     );
     expect(inspectScopedCargo(f.repo, "bob-pockets").items).toEqual([]);

@@ -1,9 +1,11 @@
+import { installQualifiedInstanceInteractions } from "./construction-interactions";
 import {
   qualifiedWayfarerWalkingBindings,
   QUALIFIED_WAYFARER_SHA256,
 } from "../../sim/src/wayfarer-walking-bindings";
 import { qualifyWayfarerThresholdMotion } from "../../sim/src/wayfarer-threshold";
 import { createConstructionStandingSupport } from "./construction-standing-support";
+import { installQualifiedInstanceCargo } from "./scoped-inventory-installation";
 import {
   installConstructionStair,
   requireNoConstructionStair,
@@ -122,6 +124,8 @@ export function spawnBlueprint(
     });
   }
   installDoors(ctx, plan.instanceId, plan.document);
+  installQualifiedInstanceCargo(ctx, plan);
+  installQualifiedInstanceInteractions(ctx, plan);
   if (plan.document.stairRoom) installConstructionStair(ctx, plan.instanceId);
   if (plan.document.traversalRoom) {
     installTraversalLink(
@@ -307,6 +311,8 @@ export function leaveReview(
     !ctx.db.ship.id.find(location.returnShipId)
   )
     throw new SenderError("Valid review return location required");
+  if (ctx.db.couchSeat.characterId.find(actor.id))
+    throw new SenderError("Stand up before leaving construction review");
   // Returning must remain possible after a workspace grant expires.
   ctx.db.character.id.update({
     ...actor,

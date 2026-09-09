@@ -1,7 +1,6 @@
 # Instance and deck scoped inventory contract
 
-Status: executable pure transfer planner, unregistered authority adapter/private sidecars and tests; **not registered or installed**
-in the authoritative database. Existing inventory UI and schema are unchanged.
+Status: registered additive authority and generated views/reducer, validated on an isolated database with real Dastari accounts. Parent-owned game UI and the matched public release are pending final browser/gate acceptance. Updated: 2026-09-10.
 Owner priority: functional cargo for independently spawned native Wayfarer
 instances, followed by the other defined functional entities.
 
@@ -82,7 +81,7 @@ from racing a shared transfer. Per-container revisions serialize shared access
 between different characters without pretending that one character's revision
 owns world storage.
 
-## Required additive authority migration
+## Implemented additive authority migration
 
 Current `inventoryItem` and `inventoryContainer` rows contain `characterId`, and
 `storageBinding` is a private per-character laboratory fixture mapping. Do not
@@ -90,7 +89,7 @@ clone those fixtures per visiting actor or delete/recreate existing item rows.
 Do not reuse a sentinel character ID as a substitute for an explicit ownership
 model without updating every affected read and mutation.
 
-Proposed coordinated migration:
+The registered migration implements the following boundaries:
 
 1. Add private container scope/revision and item revision metadata keyed by the
    **existing IDs**, plus indexed item membership by container and container
@@ -130,21 +129,7 @@ restrictions. Grant-authorized visitation/crew access must be coordinated before
 claiming two real players can stand at the same crate. The pure access contract
 supports distinct actors, but this is not implemented boarding authority.
 
-## Acceptance before activation
-
-Pure tests cover atomic failure, current actor/deck/grant/LOS, liquids, revised
-roots, backpack cycles and identity preservation, existing hand-item stow,
-weight/capacity and two granted actors racing deposits/withdrawals. The authority
-adapter still needs real database tests for atomic rollback, concurrent requests,
-private view removal, denied replay after access loss and persistence across a
-module restart. Two real provider accounts must access only their permitted
-instance/deck; removing grants must remove contents immediately. Actual reference-
-style storage UI and qualified access points require the parent browser review.
-No registered schema, generated bindings, world entrypoint, live rows or canvas/App files
-were changed. New table declarations are inactive until the coordinated migration.
-
-
-## Unregistered authority adapter now staged
+## Registered adapter and data contract
 
 `packages/world/src/scoped-inventory.ts` implements `resolveCargoAccess`,
 `qualifyCargoAccessPoint`, `transferScopedCargo` and `inspectScopedCargo`.
@@ -156,8 +141,7 @@ cleanup and receipt in the same enclosing reducer. Storage exceptions propagate;
 there is no catch-and-continue after writes. Tests emulate transaction rollback,
 which is not a substitute for an actual isolated SpacetimeDB smoke.
 
-`packages/world/src/scoped-inventory-tables.ts` declares four **private,
-unregistered** additive tables:
+`packages/world/src/scoped-inventory-tables.ts` declares four **private, registered** additive tables:
 
 - `inventoryContainerScope`: existing container ID/revision, root membership,
   explicit character or instance/deck/placed-object scope, qualified approach,
@@ -170,13 +154,10 @@ unregistered** additive tables:
 - `scopedInventoryReceipt`: actor+operation identity, request and exact result.
   Adapter primary key must be `JSON.stringify([actorId, operationId])`.
 
-Two keyed `t.row` projections expose only container ID, parent item ID, storage
-kind/grid/current development capacity/revision and item ID, definition ID,
-container ID/grid placement/revision. No private instance document, actor/grant
+Keyed `t.row` projections expose container ID, placed-object ID, name, parent item ID, storage kind/grid/current development capacity/revision, actual capacityLitres/amountLitres/liquidType, and item ID, definition ID, container ID/grid placement/revision. A third projection exposes only carried item/container IDs, kind and revision for transfer CAS. Liquid values preserve the truthful contents of a stored fuel canister; liquid reservoirs still reject solid-item insertion. No private instance document, actor/grant
 or visit data, or weapon resource rows are included. `inspectScopedCargo` checks
 actual access, geometry, reach and occlusion every time, and returns no rows
-on loss; incomplete/mixed-root membership also fails closed. A private inspected
-root target and normal `auth.gameView` wrapper remain integration requirements.
+on loss; incomplete/mixed-root membership also fails closed. The registered admitted `auth.gameView` wrappers expose at most the bounded currently reachable roots; a client-selected target is not authority.
 View adapters must use materialized grant expiry (scheduled revocation), because
 the current view context has no wall clock; reducers also check exact current time.
 
@@ -185,10 +166,7 @@ existing current workspace `instance.spawn` grant and an actual matching
 `constructionLocation` can use the cargo adapter. The actor's authoritative ship,
 visit instance/deck, supported standing pose and geometry revision must agree.
 The actor and approach point both require a free 0.3m standing circle on the
-current qualified collision frame. Height matches that frame's authoritative
-planar support elevation within 5cm; visual deck-top or decorative mesh origin
-must not be substituted. More general native elevated access needs accepted
-surface-support data before that envelope expands.
+current qualified collision frame. Height matches the actual native standing-support query within 5cm; the same accepted support provider used by character movement handles the qualified floor and thresholds. Decorative mesh origins are not authority.
 
 Crew visitation remains separate work. `AcceptedCrewVisit` specifies a current
 visit/actor/instance-bound, expiring, revocable proof from a future allowed-entry
@@ -199,23 +177,22 @@ locations; giving an inventory grant alone neither admits nor moves the actor.
 Two actors can then race one shared container: stale container revisions fail,
 refreshed non-overlapping deposits succeed, and revocation removes access.
 
-### Remaining integration blockers
+### Actual installation and compatibility
 
-1. Bind `CargoRepository` to actual registered ctx.db tables only after all legacy
-   personal mutations maintain sidecar revisions/root indices atomically.
-2. Keep old private laboratory fixtures explicitly legacy/private during backfill;
-   do not map their roots to carried-character scope, which would bypass their
-   existing proximity rules. Reject unsupported roots until an explicit migration.
-3. Pin and validate actual authored approach points for each of the four native
-   Wayfarer crates against the qualified floor/object frame. The empty seed plan's
-   placement centers are not sufficient. Bind once during the approved spawn path.
-4. Add inspected-root target/reducer and normal admitted keyed views, then run
-   real authority smoke for atomic rollback, revisions, expiry and restart.
-5. Implement a separately permissioned crew visit/boarding path before claiming
-   shared multi-account crate interaction in the actual game. Preserve physical
-   entry semantics; inventory permission never authorizes review teleportation.
-6. Wire the inventory UI via the parent; no external inventory UI work is changed.
+`scoped-inventory-authority.ts` binds reads/writes to actual registered `ctx.db` tables. `scoped-inventory-migration.ts` computes UUID-preserving metadata changes at every existing inventory mutation/seeding boundary. Old laboratory roots stay `legacy-private`; old reducers cannot move instance-owned items. World-owned payload rows use an empty legacy character lookup only as a compatibility index; explicit indexed root scope remains authority. Descendants migrate together, and retrieval restores the recipient lookup. Weapon energy stays keyed to the original item UUID.
 
-Current focused evidence: `.runtime/scoped-inventory-adapter-tests.log`,
-`.runtime/scoped-inventory-adapter-tsc.log`. These are source-level proofs,
-not a registered schema, live storage feature or installed browser review.
+`scoped-inventory-installation.ts` installs four fresh empty roots inside the qualified Wayfarer spawn transaction, pinned to source SHA256 `362f37217f63a44a470676f104c8368bd0973ca03f5e29eab190bc4d6df71340`. It validates every approach before inserting. Existing cargo geometry was unchanged: the old proposed approach collided with native furniture, so approaches were qualified on actual free floor. Actor point (-3.5, 2.75) is reachable through 38 swept quarter-meter steps from spawn. The four current approaches are (-3.75,2.625), (-2.875,2.5), (-3.75,2.875), (-2.875,3). No native collider was weakened.
+
+Registered views: `own_reachable_cargo_containers`, `own_reachable_cargo_items`, `own_carried_inventory_revisions`. Registered reducer: `transfer_scoped_cargo_item`. Arguments are operationId/itemId, expectedItemRevision, sourceContainerId/expectedSourceRevision, destinationContainerId/expectedDestinationRevision, expectedCharacterRevision and x/y/rotated. No permission or physical location comes from the request.
+
+### Validation and remaining acceptance
+
+- Aggregate registered cargo gate: 987 tests across 166 files plus typecheck and full build passed. Logs: `.runtime/scoped-inventory-integrated-check.log`, `.runtime/scoped-inventory-integrated-build.log`.
+- Managed isolated authority smoke passed on `sidereal-spacetime-dev-cargo-instance-smoke`; log `.runtime/scoped-inventory-authority-smoke.log`.
+- Real primary-provider journey spawned two exact native instances and walked through collision to all eight independently allocated empty crates. The same pistol UUID was stored/retrieved in each; replay produced no additional revisions; old personal reducers could not retrieve world-owned items; second-instance attempts against first-instance cargo were denied; moving out of range removed views. Evidence: `.runtime/cargo-authority-review/journey.json` and `.runtime/cargo-provider-journey.log`.
+- A separate reconnect restored the exact stored pistol, actor appearance, visit and container revision. Grant revocation removed cargo rows and denied receipt replay; grant restoration allowed retrieval of that same UUID. Evidence: `.runtime/cargo-authority-review/persistence-result.json`. This is a reconnect proof, **not a server restart proof**.
+- A distinct ordinary provider account was denied all four private tables, foreign instance entry and foreign cargo transfer. Evidence: `.runtime/cargo-authority-review/private-denials.json`.
+- Latest focused 25 tests include actual ctx.db nested fuel-canister storage/retrieval and exact liquid contents preservation. Latest managed generation includes liquid projection fields and the construction-interaction agent's seat view. These later additions require the final matched aggregate/module/browser gate.
+- Temporary provider-admin role was revoked; fresh-token admin denial passed, own provider sessions were logged out and own token files deleted. Existing fixtures and unrelated sessions were preserved.
+
+Actual crew boarding is still separate: this installation permits the existing owner review entry with a live workspace grant. A second account denial proof does not demonstrate two admitted crew using one crate. The generic adapter tests that concurrency contract, but production crew admission is not installed. Server restart durability, actual storage UI browser review, current combined interaction fixture and public activation remain integration-owner gates. Interior HP, payload ratings and functional power were not invented from art.

@@ -60,6 +60,8 @@ export interface CargoGrant {
 export interface CargoGeometry {
   instanceRevision: bigint;
   frame: DeckCollisionFrame;
+  /** Server-qualified native standing support, when different from the nominal plane. */
+  supportHeightAt?: (x: number, y: number) => number;
 }
 /** The ctx.db adapter must perform these indexed reads in the current reducer or
  * view transaction. No callback may resolve actor, position or grants from args. */
@@ -160,7 +162,11 @@ export function resolveCargoAccess(
     ![actor.localX, actor.localY, actor.supportedHeightM].every(
       Number.isFinite,
     ) ||
-    Math.abs(actor.supportedHeightM - geometry.frame.elevationM) > 0.05 ||
+    Math.abs(
+      actor.supportedHeightM -
+        (geometry.supportHeightAt?.(actor.localX, actor.localY) ??
+          geometry.frame.elevationM),
+    ) > 0.05 ||
     !canOccupyDeck(
       geometry.frame,
       {
@@ -209,7 +215,10 @@ export function qualifyCargoAccessPoint(
     p.every(Number.isFinite) &&
     geometry.frame.shipId === scope.instanceId &&
     geometry.frame.deckId === scope.deckId &&
-    Math.abs(p[2] - geometry.frame.elevationM) <= 0.05 &&
+    Math.abs(
+      p[2] -
+        (geometry.supportHeightAt?.(p[0], p[1]) ?? geometry.frame.elevationM),
+    ) <= 0.05 &&
     canOccupyDeck(
       geometry.frame,
       {
@@ -373,25 +382,21 @@ export function inspectScopedCargo(
   if (!items || !validInspectedTree(rootContainerId, containers, items))
     return empty;
   return {
-    containers: containers.map(
-      ({
-        id,
-        parentItemId,
-        kind,
-        width,
-        height,
-        maxMassKg,
-        revision,
-      }): CargoContainerProjection => ({
-        id,
-        parentItemId,
-        kind,
-        width,
-        height,
-        maxMassKg,
-        revision,
-      }),
-    ),
+    containers: containers.map((c): CargoContainerProjection => ({
+      id: c.id,
+      parentItemId: c.parentItemId,
+      kind: c.kind,
+      width: c.width,
+      height: c.height,
+      maxMassKg: c.maxMassKg,
+      revision: c.revision,
+      capacityLitres: c.capacityLitres,
+      amountLitres: c.amountLitres,
+      liquidType: c.liquidType,
+      name: c.name ?? "Cargo container",
+      placedObjectId:
+        c.scope?.kind === "instance" ? c.scope.placedObjectId : "",
+    })),
     items: items.map(
       ({
         id,
@@ -414,6 +419,11 @@ export function inspectScopedCargo(
   };
 }
 export interface CargoContainerProjection {
+  name: string;
+  placedObjectId: string;
+  capacityLitres: number;
+  amountLitres: number;
+  liquidType: string;
   id: string;
   parentItemId: string;
   kind: string;

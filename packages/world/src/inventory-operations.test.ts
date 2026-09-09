@@ -1,7 +1,8 @@
 import { expect, test, vi } from "vitest";
 vi.mock("spacetimedb/server", () => ({
   SenderError: class extends Error {},
-  t: new Proxy({}, { get: () => () => ({ primaryKey() { return this; } }) }),
+  table: () => ({}),
+  t: new Proxy({}, { get: () => () => ({ primaryKey() { return this; }, unique() { return this; } }) }),
 }));
 import {
   dropItem,
@@ -82,9 +83,9 @@ function fixture() {
     revision: bigint;
   }[] = [];
   const states = [{ characterId: "actor", revision: 1n, kitGranted: true }];
-  function table<T extends { id?: string; characterId?: string }>(
+  function table<T extends { id?: string; characterId?: string; containerId?: string; itemId?: string }>(
     rows: T[],
-    key: "id" | "characterId" = "id",
+    key: "id" | "characterId" | "containerId" | "itemId" = "id",
   ) {
     const index = {
       find: (id: string) => rows.find((r) => r[key] === id),
@@ -119,6 +120,8 @@ function fixture() {
           filter: (owner: string) => (owner === "owner" ? [actor] : []),
         },
       },
+      inventoryItemMembership: table<{ itemId: string; containerId: string; rootContainerId: string; revision: bigint }>([], "itemId"),
+      inventoryContainerScope: table<{ containerId: string; rootContainerId: string; rootKind: string; revision: bigint }>([], "containerId"),
       inventoryItem: table(items),
       inventoryContainer: table(containers),
       storageBinding: table(bindings),

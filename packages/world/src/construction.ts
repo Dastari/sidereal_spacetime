@@ -1,3 +1,4 @@
+import { recoverConstructionSeatsForGrant } from "./construction-interactions";
 import {SenderError,Range,t,type ReducerCtx,type ViewCtx,type InferSchema} from 'spacetimedb/server';
 import {Identity} from 'spacetimedb';
 import type world from './index';
@@ -34,6 +35,7 @@ export function setGrant(ctx:Context,args:{principal:string;workspaceId:string;c
  if(!prior&&[...ctx.db.constructionGrant.by_principal.filter(principal)].length>=64)throw new SenderError('Principal grant limit reached');
  const next={id,principal,workspaceId:args.workspaceId,capability:args.capability,expiresMicros:args.expiresMicros,nextCheckMicros:args.revoked?forever:args.expiresMicros,revoked:args.revoked,revision:args.expectedRevision+1n,issuedBy:ctx.sender};
  if(prior)ctx.db.constructionGrant.id.update(next);else ctx.db.constructionGrant.insert(next);
+ if(args.revoked && ["draft.read","instance.spawn"].includes(args.capability)) recoverConstructionSeatsForGrant(ctx,principal,args.workspaceId);
  receipt(ctx,op.key,op.request,id,next.revision);
 }
 export function saveDraft(ctx:Context,args:{workspaceId:string;draftId:string;documentJson:string;expectedRevision:bigint;operationId:string}){
@@ -54,7 +56,7 @@ export function publishBlueprint(ctx:Context,args:{workspaceId:string;draftId:st
  const id=ctx.newUuidV4().toString();ctx.db.constructionBlueprint.insert({id,workspaceId:args.workspaceId,draftId:args.draftId,sourceRevision:prior.revision,canonical:snapshot.canonical,sha256:snapshot.sha256,readinessJson:JSON.stringify(snapshot.readiness),publishedBy:ctx.sender});receipt(ctx,op.key,op.request,id,prior.revision);
 }
 /** ViewCtx has no clock: expire actual grants on the authority tick; reducers always check exact time. */
-export function expireGrants(ctx:Context){for(const g of ctx.db.constructionGrant.by_expiry.filter(new Range(null,{tag:'included',value:ctx.timestamp.microsSinceUnixEpoch})))if(!g.revoked)ctx.db.constructionGrant.id.update({...g,revoked:true,nextCheckMicros:forever,revision:g.revision+1n});}
+export function expireGrants(ctx:Context){for(const g of ctx.db.constructionGrant.by_expiry.filter(new Range(null,{tag:'included',value:ctx.timestamp.microsSinceUnixEpoch})))if(!g.revoked){ctx.db.constructionGrant.id.update({...g,revoked:true,nextCheckMicros:forever,revision:g.revision+1n});if(['draft.read','instance.spawn'].includes(g.capability))recoverConstructionSeatsForGrant(ctx,g.principal,g.workspaceId);}}
 export const grantProjection=t.row('ConstructionGrantStatus',{id:t.string().primaryKey(),workspaceId:t.string(),capability:t.string(),expiresMicros:t.u64(),revoked:t.bool(),revision:t.u64()});
 export function ownGrants(ctx:ReadContext){return [...ctx.db.constructionGrant.by_principal.filter(ctx.sender)].map(({id,workspaceId,capability,expiresMicros,revoked,revision})=>({id,workspaceId,capability,expiresMicros,revoked,revision}));}
 export const draftProjection=t.row('ConstructionDraftStatus',{id:t.string().primaryKey(),workspaceId:t.string(),revision:t.u64(),documentJson:t.string(),sha256:t.string()});

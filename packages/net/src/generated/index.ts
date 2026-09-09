@@ -66,6 +66,7 @@ import SpawnConstructionBlueprintReducer from "./spawn_construction_blueprint_re
 import StoreAllInventoryItemsReducer from "./store_all_inventory_items_reducer";
 import TakeAllInventoryItemsReducer from "./take_all_inventory_items_reducer";
 import TransferInventoryItemReducer from "./transfer_inventory_item_reducer";
+import TransferScopedCargoItemReducer from "./transfer_scoped_cargo_item_reducer";
 import UseStationReducer from "./use_station_reducer";
 
 // Import all procedure arg schemas
@@ -73,6 +74,7 @@ import UseStationReducer from "./use_station_reducer";
 // Import all table schema definitions
 import OwnActuatorOutputsRow from "./own_actuator_outputs_table";
 import OwnAppearanceRow from "./own_appearance_table";
+import OwnCarriedInventoryRevisionsRow from "./own_carried_inventory_revisions_table";
 import OwnCharactersRow from "./own_characters_table";
 import OwnCombatRow from "./own_combat_table";
 import OwnConstructionBlueprintsRow from "./own_construction_blueprints_table";
@@ -83,6 +85,7 @@ import OwnConstructionGrantsRow from "./own_construction_grants_table";
 import OwnConstructionInstancesRow from "./own_construction_instances_table";
 import OwnConstructionLocationRow from "./own_construction_location_table";
 import OwnConstructionNativePressureRow from "./own_construction_native_pressure_table";
+import OwnConstructionSeatRow from "./own_construction_seat_table";
 import OwnConstructionStairEgressGeometryRow from "./own_construction_stair_egress_geometry_table";
 import OwnConstructionStairWalksRow from "./own_construction_stair_walks_table";
 import OwnConstructionTraversalLinksRow from "./own_construction_traversal_links_table";
@@ -95,6 +98,8 @@ import OwnInventoryContainersRow from "./own_inventory_containers_table";
 import OwnInventoryHotbarRow from "./own_inventory_hotbar_table";
 import OwnInventoryItemsRow from "./own_inventory_items_table";
 import OwnInventoryStateRow from "./own_inventory_state_table";
+import OwnReachableCargoContainersRow from "./own_reachable_cargo_containers_table";
+import OwnReachableCargoItemsRow from "./own_reachable_cargo_items_table";
 import OwnShipsRow from "./own_ships_table";
 import OwnSpaceBodiesRow from "./own_space_bodies_table";
 import OwnStationsRow from "./own_stations_table";
@@ -122,6 +127,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnAppearanceRow),
+  ownCarriedInventoryRevisions: __table({
+    name: 'own_carried_inventory_revisions',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnCarriedInventoryRevisionsRow),
   ownCharacters: __table({
     name: 'own_characters',
     indexes: [
@@ -192,6 +204,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnConstructionNativePressureRow),
+  ownConstructionSeat: __table({
+    name: 'own_construction_seat',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnConstructionSeatRow),
   ownConstructionStairEgressGeometry: __table({
     name: 'own_construction_stair_egress_geometry',
     indexes: [
@@ -276,6 +295,20 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnInventoryStateRow),
+  ownReachableCargoContainers: __table({
+    name: 'own_reachable_cargo_containers',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnReachableCargoContainersRow),
+  ownReachableCargoItems: __table({
+    name: 'own_reachable_cargo_items',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnReachableCargoItemsRow),
   ownShips: __table({
     name: 'own_ships',
     indexes: [
@@ -368,6 +401,7 @@ const reducersSchema = __reducers(
   __reducerSchema("store_all_inventory_items", StoreAllInventoryItemsReducer),
   __reducerSchema("take_all_inventory_items", TakeAllInventoryItemsReducer),
   __reducerSchema("transfer_inventory_item", TransferInventoryItemReducer),
+  __reducerSchema("transfer_scoped_cargo_item", TransferScopedCargoItemReducer),
   __reducerSchema("use_station", UseStationReducer),
 );
 

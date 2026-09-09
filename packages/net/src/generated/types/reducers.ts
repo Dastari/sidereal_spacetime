@@ -38,6 +38,7 @@ import SpawnConstructionBlueprintReducer from "../spawn_construction_blueprint_r
 import StoreAllInventoryItemsReducer from "../store_all_inventory_items_reducer";
 import TakeAllInventoryItemsReducer from "../take_all_inventory_items_reducer";
 import TransferInventoryItemReducer from "../transfer_inventory_item_reducer";
+import TransferScopedCargoItemReducer from "../transfer_scoped_cargo_item_reducer";
 import UseStationReducer from "../use_station_reducer";
 
 export type AcceptIdentityLinkParams = __Infer<typeof AcceptIdentityLinkReducer>;
@@ -72,5 +73,6 @@ export type SpawnConstructionBlueprintParams = __Infer<typeof SpawnConstructionB
 export type StoreAllInventoryItemsParams = __Infer<typeof StoreAllInventoryItemsReducer>;
 export type TakeAllInventoryItemsParams = __Infer<typeof TakeAllInventoryItemsReducer>;
 export type TransferInventoryItemParams = __Infer<typeof TransferInventoryItemReducer>;
+export type TransferScopedCargoItemParams = __Infer<typeof TransferScopedCargoItemReducer>;
 export type UseStationParams = __Infer<typeof UseStationReducer>;
 

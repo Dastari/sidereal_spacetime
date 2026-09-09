@@ -34,6 +34,7 @@ export type InventoryRootScope =
       accessPointM: Point3;
     };
 export interface ScopedContainer extends GridContainer {
+  name?: string;
   revision: bigint;
   /** Root-only ownership. Nested contents follow the actual containment tree. */
   scope?: InventoryRootScope;

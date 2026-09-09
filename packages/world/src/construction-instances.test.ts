@@ -1,9 +1,13 @@
 import { test, expect, vi } from "vitest";
 import { Identity } from "spacetimedb";
 vi.mock("spacetimedb/server", () => ({
+  table: () => ({}),
   SenderError: class extends Error {},
   Range: class {},
-  t: new Proxy({}, { get: () => () => ({ primaryKey: () => ({}) }) }),
+  t: new Proxy(
+    {},
+    { get: () => () => ({ primaryKey: () => ({}), unique: () => ({}) }) },
+  ),
 }));
 vi.mock("./auth", () => ({ requireGame: () => ({ kind: "oidc" }) }));
 vi.mock("./combat", () => ({ clearAim: vi.fn() }));
@@ -111,8 +115,24 @@ function fixture() {
     character: table({ by_owner: "owner" }),
     ship: table(),
     station: table({ shipId: "shipId" }),
-    couchSeat: table({}, "characterId"),
+    couchSeat: table({ objectId: "objectId" }, "characterId"),
+    interactionObject: table({ by_ship: "shipId" }),
+    interactionReceipt: table({ by_character: "characterId" }),
+    constructionInteractionBinding: table(
+      {
+        by_instance: "instanceId",
+        by_recovery: "recoveryRequested",
+        placedObjectId: "placedObjectId",
+      },
+      "objectId",
+    ),
     input: table({}, "characterId"),
+    inventoryContainer: table({ by_character: "characterId" }),
+    inventoryContainerScope: table({}, "containerId"),
+    instanceInventoryBinding: table(
+      { by_instance: "instanceId" },
+      "placedObjectId",
+    ),
   };
   db.constructionBlueprint.insert({
     id: "blueprint",

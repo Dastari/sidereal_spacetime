@@ -1,4 +1,12 @@
-import { worldSystem, shipWorldMotion, systemBody, bodyWorldMotion, worldAdmission, worldJoinReceipt, legacyBodyAlias } from "./shared-world-tables";
+import {
+  worldSystem,
+  shipWorldMotion,
+  systemBody,
+  bodyWorldMotion,
+  worldAdmission,
+  worldJoinReceipt,
+  legacyBodyAlias,
+} from "./shared-world-tables";
 import * as sharedWorld from "./shared-world";
 import * as sharedViews from "./shared-world-views";
 import { stepSharedWorld } from "./shared-world-physics";
@@ -16,7 +24,10 @@ import {
   constructionStairAudit,
 } from "./construction-stairs-tables";
 import * as inputControl from "./input-control";
-import { inputControl as inputControlTable, inputControlCursor } from "./input-control-tables";
+import {
+  inputControl as inputControlTable,
+  inputControlCursor,
+} from "./input-control-tables";
 import * as nativePressure from "./construction-native-pressure";
 import * as traversal from "./construction-traversal";
 import { nativeTraversalRegistry } from "./construction-traversal-registry";
@@ -71,6 +82,19 @@ import {
   inventoryHotbar,
   inventoryReceipt,
 } from "./inventory-tables";
+import {
+  inventoryContainerScope,
+  inventoryItemMembership,
+  instanceInventoryBinding,
+  scopedInventoryReceipt,
+} from "./scoped-inventory-tables";
+import * as constructionInteractions from "./construction-interactions";
+import * as scopedCargo from "./scoped-inventory-authority";
+import {
+  scopedCargoContainerProjection,
+  scopedCargoItemProjection,
+  scopedCarriedRevisionProjection,
+} from "./scoped-inventory-tables";
 import * as inventory from "./inventory";
 import * as inventoryOperations from "./inventory-operations";
 import { schema, table, t, SenderError } from "spacetimedb/server";
@@ -205,6 +229,11 @@ const db = schema({
   inventoryContainer,
   inventoryHotbar,
   inventoryReceipt,
+  inventoryContainerScope,
+  inventoryItemMembership,
+  instanceInventoryBinding,
+  scopedInventoryReceipt,
+  constructionInteractionBinding: constructionInteractions.constructionInteractionBinding,
   character,
   ship,
   station,
@@ -262,12 +291,25 @@ export const ownShips = db.view(
   { name: "own_ships", public: true },
   t.array(ship.rowType),
   (ctx) =>
-    !auth.canReadGame(ctx) ? [] : [...ctx.db.ship.by_owner.filter(ctx.sender)].map((s) => {
-      const m = ctx.db.shipWorldMotion.shipId.find(s.id);
-      // Preserve owner-only membership and the legacy projection shape. The static
-      // ship row remains migration evidence; only the lean motion row advances.
-      return m ? { ...s, x: m.x, y: m.y, vx: m.vx, vy: m.vy, heading: m.heading, omega: m.omega, tick: m.serverTick } : s;
-    }),
+    !auth.canReadGame(ctx)
+      ? []
+      : [...ctx.db.ship.by_owner.filter(ctx.sender)].map((s) => {
+          const m = ctx.db.shipWorldMotion.shipId.find(s.id);
+          // Preserve owner-only membership and the legacy projection shape. The static
+          // ship row remains migration evidence; only the lean motion row advances.
+          return m
+            ? {
+                ...s,
+                x: m.x,
+                y: m.y,
+                vx: m.vx,
+                vy: m.vy,
+                heading: m.heading,
+                omega: m.omega,
+                tick: m.serverTick,
+              }
+            : s;
+        }),
 );
 export const ownStations = db.view(
   { name: "own_stations", public: true },
@@ -401,7 +443,7 @@ export const disconnect = db.clientDisconnected((ctx) => {
   inputControl.disconnectInputControl(ctx);
   if (lastDisconnected(ctx)) {
     traversal.interruptConstructionTraversalOwner(ctx, ctx.sender);
-    auth.clearOwner(ctx, ctx.sender);
+    auth.clearOwner(ctx, ctx.sender, "disconnect");
   }
 });
 export const claimInputControl = db.reducer((ctx) => {
@@ -545,6 +587,7 @@ export const stepWorld = db.reducer(
       throw new SenderError("Server schedule only");
     auth.expireSessions(ctx);
     construction.expireGrants(ctx);
+    constructionInteractions.recoverConstructionSeats(ctx);
     constructionDoors.stepDoors(ctx);
     nativePressure.stepNativePressure(ctx, compilePublishedNativePressureRoom);
     traversal.stepConstructionTraversals(ctx, nativeTraversalRegistry);
@@ -666,7 +709,15 @@ export const stepWorld = db.reducer(
           ctx.db.character.id.update({ ...actor, sprinting: false });
         continue;
       }
-      if (constructionInstances.stepActor(ctx, actor, command, createConstructionStairWorldHooks(ctx))) continue;
+      if (
+        constructionInstances.stepActor(
+          ctx,
+          actor,
+          command,
+          createConstructionStairWorldHooks(ctx),
+        )
+      )
+        continue;
       let point = { x: actor.localX, y: actor.localY };
       for (let i = 0; i < 3; i++)
         point = walk(
@@ -739,7 +790,12 @@ export const dropInventoryItem = db.reducer(
   auth.gameAction(inventoryOperations.dropItem, true),
 );
 export const storeAllInventoryItems = db.reducer(
-  { containerId: t.string(), destinationId: t.string(), expectedRevision: t.u64(), operationId: t.string() },
+  {
+    containerId: t.string(),
+    destinationId: t.string(),
+    expectedRevision: t.u64(),
+    operationId: t.string(),
+  },
   auth.gameAction(inventoryOperations.storeAll, true),
 );
 export const claimStarterKit = db.reducer(
@@ -994,10 +1050,16 @@ export const ownConstructionStairEgressGeometry = db.view(
 );
 
 // Shared-space admission is explicit and additive. No login relocates a ship.
-export const joinSharedSystem = db.reducer({
-  characterId: t.string(), shipId: t.string(), expectedShipRevision: t.u64(),
-  expectedAdmissionRevision: t.u64(), operationId: t.string(),
-}, auth.gameAction(sharedWorld.joinSharedSystem));
+export const joinSharedSystem = db.reducer(
+  {
+    characterId: t.string(),
+    shipId: t.string(),
+    expectedShipRevision: t.u64(),
+    expectedAdmissionRevision: t.u64(),
+    operationId: t.string(),
+  },
+  auth.gameAction(sharedWorld.joinSharedSystem),
+);
 export const ownWorldAdmission = db.view(
   { name: "own_world_admission", public: true }, t.array(sharedViews.ownWorldAdmissionProjection),
   auth.gameView(sharedViews.ownWorldAdmission),
@@ -1007,11 +1069,18 @@ export const visibleShipMotion = db.view(
   auth.gameView(sharedViews.visibleShipMotion),
 );
 export const visibleShipDescriptions = db.view(
-  { name: "visible_ship_descriptions", public: true }, t.array(sharedViews.visibleShipDescriptionProjection),
-  auth.gameView((ctx) => sharedViews.visibleShipDescriptions(ctx, (shipId) =>
-    ctx.db.shipWorldMotion.shipId.find(shipId)
-      ? { publishedExteriorAssetId: SHARED_STOCK_EXTERIOR_ID, appearanceRevision: 1n }
-      : undefined)),
+  { name: "visible_ship_descriptions", public: true },
+  t.array(sharedViews.visibleShipDescriptionProjection),
+  auth.gameView((ctx) =>
+    sharedViews.visibleShipDescriptions(ctx, (shipId) =>
+      ctx.db.shipWorldMotion.shipId.find(shipId)
+        ? {
+            publishedExteriorAssetId: SHARED_STOCK_EXTERIOR_ID,
+            appearanceRevision: 1n,
+          }
+        : undefined,
+    ),
+  ),
 );
 export const visibleBodyMotion = db.view(
   { name: "visible_body_motion", public: true }, t.array(sharedViews.visibleBodyMotionProjection),
@@ -1020,4 +1089,41 @@ export const visibleBodyMotion = db.view(
 export const visibleBodyDescriptions = db.view(
   { name: "visible_body_descriptions", public: true }, t.array(sharedViews.visibleBodyDescriptionProjection),
   auth.gameView(sharedViews.visibleBodyDescriptions),
+);
+
+export const ownReachableCargoContainers = db.view(
+  { name: "own_reachable_cargo_containers", public: true },
+  t.array(scopedCargoContainerProjection),
+  auth.gameView(scopedCargo.reachableCargoContainers),
+);
+export const ownReachableCargoItems = db.view(
+  { name: "own_reachable_cargo_items", public: true },
+  t.array(scopedCargoItemProjection),
+  auth.gameView(scopedCargo.reachableCargoItems),
+);
+export const ownCarriedInventoryRevisions = db.view(
+  { name: "own_carried_inventory_revisions", public: true },
+  t.array(scopedCarriedRevisionProjection),
+  auth.gameView(scopedCargo.carriedInventoryRevisions),
+);
+export const transferScopedCargoItem = db.reducer(
+  {
+    operationId: t.string(),
+    itemId: t.string(),
+    expectedItemRevision: t.u64(),
+    sourceContainerId: t.string(),
+    expectedSourceRevision: t.u64(),
+    destinationContainerId: t.string(),
+    expectedDestinationRevision: t.u64(),
+    expectedCharacterRevision: t.u64(),
+    x: t.i32(),
+    y: t.i32(),
+    rotated: t.bool(),
+  },
+  auth.gameAction(scopedCargo.moveScopedCargo, true),
+);
+
+export const ownConstructionSeat = db.view(
+  { name: "own_construction_seat", public: true }, t.array(constructionInteractions.constructionSeatProjection),
+  auth.gameView(constructionInteractions.ownConstructionSeat),
 );
