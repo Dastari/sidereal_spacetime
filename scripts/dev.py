@@ -144,7 +144,7 @@ def app_up(name):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('command', choices=['public-client-deploy', 'public-client-up', 'public-client-stop', 'public-client-proxy', 'auth-https-setup', 'auth-https-status', 'auth-https-stop', 'keycloak-setup', 'keycloak-start', 'keycloak-stop', 'keycloak-status', 'keycloak-bootstrap', 'keycloak-authoring', 'keycloak-game-origin', 'keycloak-repair-cache', 'keycloak-review-grant', 'keycloak-review-revoke', 'setup', 'up', 'up-client', 'up-dashboard', 'down', 'stop-client', 'stop-dashboard', 'status', 'build-world', 'generate', 'publish', 'publish-review', 'export-art', 'export-voxels', 'export-engine', 'export-assembly', 'export-bulkheads', 'export-crew', 'export-equipment', 'export-inventory-icons', 'mcp', 'smoke-prepare', 'smoke-update', 'smoke', 'smoke-restart', 'smoke-auth-admission', 'restart-database', 'backup'])
+    parser.add_argument('command', choices=['backup-database', 'public-client-stage', 'public-client-activate', 'public-client-deploy', 'public-client-up', 'public-client-stop', 'public-client-proxy', 'auth-https-setup', 'auth-https-status', 'auth-https-stop', 'keycloak-setup', 'keycloak-start', 'keycloak-stop', 'keycloak-status', 'keycloak-bootstrap', 'keycloak-authoring', 'keycloak-game-origin', 'keycloak-repair-cache', 'keycloak-review-grant', 'keycloak-review-revoke', 'setup', 'up', 'up-client', 'up-dashboard', 'down', 'stop-client', 'stop-dashboard', 'status', 'build-world', 'generate', 'publish', 'publish-review', 'export-art', 'export-voxels', 'export-engine', 'export-assembly', 'export-bulkheads', 'export-crew', 'export-equipment', 'export-inventory-icons', 'mcp', 'smoke-prepare', 'smoke-update', 'smoke', 'smoke-restart', 'smoke-auth-admission', 'restart-database', 'backup'])
     parser.add_argument('--review-name', help='Named additive test database suffix; publish-review only')
     parser.add_argument('--smoke-name', help='Separate named smoke database; additive publication, never reset')
     args = parser.parse_args()
@@ -252,6 +252,9 @@ def main():
         run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/export_sampled_asset.py'])
     elif command == 'mcp':
         run([sys.executable, 'scripts/blender_mcp.py'])
+    elif command == 'backup-database':
+        from release_backup import backup_database
+        backup_database(sys.modules[__name__])
     elif command == 'backup':
         if any(alive(row) for row in load().values()):
             raise RuntimeError('Stop the new stack before a consistent cold backup.')
