@@ -33,6 +33,13 @@ class ReviewDatabaseTests(unittest.TestCase):
                 self.invoke("publish", "--review-name", "safe")
         publish.assert_not_called()
 
+    def test_artifact_flags_are_paired_and_review_only(self):
+        with patch.object(dev, "publish") as publish, contextlib.redirect_stderr(io.StringIO()):
+            for args in [("publish", "--module-artifact", "old.js", "--artifact-sha256", "a" * 64), ("publish-review", "--review-name", "safe", "--module-artifact", "old.js"), ("publish-review", "--review-name", "safe", "--artifact-sha256", "a" * 64)]:
+                with self.subTest(args=args), self.assertRaises(SystemExit):
+                    self.invoke(*args)
+        publish.assert_not_called()
+
     def test_named_smoke_is_isolated_and_additive(self):
         with patch.object(dev, "publish") as publish, patch.object(dev, "run") as run:
             self.invoke("smoke", "--smoke-name", "pressure-r006")

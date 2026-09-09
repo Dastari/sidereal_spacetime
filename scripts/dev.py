@@ -146,6 +146,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('command', choices=['restore-review-prepare', 'restore-review-up', 'restore-review-restart', 'restore-review-stop', 'backup-database', 'public-client-stage', 'public-client-activate', 'public-client-deploy', 'public-client-up', 'public-client-stop', 'public-client-proxy', 'auth-https-setup', 'auth-https-status', 'auth-https-stop', 'keycloak-setup', 'keycloak-start', 'keycloak-stop', 'keycloak-status', 'keycloak-bootstrap', 'keycloak-authoring', 'keycloak-game-origin', 'keycloak-repair-cache', 'keycloak-review-grant', 'keycloak-review-revoke', 'keycloak-shared-review-account', 'setup', 'up', 'up-client', 'up-dashboard', 'down', 'stop-client', 'stop-dashboard', 'status', 'build-world', 'generate', 'publish', 'publish-review', 'export-art', 'export-voxels', 'export-engine', 'export-assembly', 'export-bulkheads', 'export-crew', 'export-equipment', 'export-inventory-icons', 'mcp', 'smoke-prepare', 'smoke-update', 'smoke', 'smoke-restart', 'smoke-auth-admission', 'restart-database', 'backup'])
     parser.add_argument('--review-name', help='Named additive test database suffix; publish-review only')
+    parser.add_argument('--module-artifact', help='Pinned compiled JS/WASM; publish-review only')
+    parser.add_argument('--artifact-sha256', help='Required digest with --module-artifact')
     parser.add_argument('--smoke-name', help='Separate named smoke database; additive publication, never reset')
     parser.add_argument('--archive', help='Private cold archive; restore-review-prepare only')
     parser.add_argument('--expected-sha256', help='Pinned cold archive digest; restore-review-prepare only')
@@ -159,6 +161,9 @@ def main():
         if command not in ('smoke', 'smoke-restart', 'smoke-auth-admission') or not re.fullmatch(r'[a-z0-9][a-z0-9-]{0,39}', args.smoke_name):
             parser.error('--smoke-name requires a smoke command and lowercase name of at most40 characters')
         smoke_database = CFG['project']['database'] + '-' + args.smoke_name + '-smoke'
+    if args.module_artifact is not None or args.artifact_sha256 is not None:
+        if command != 'publish-review' or not args.module_artifact or not args.artifact_sha256:
+            parser.error('Pinned module artifact and SHA-256 are paired publish-review-only arguments')
     if args.review_name is not None and command != 'publish-review':
         parser.error('--review-name is valid only for publish-review')
     if command.startswith('restore-review-'):
@@ -195,7 +200,11 @@ def main():
         import re
         if not args.review_name or not re.fullmatch(r'[a-z0-9][a-z0-9-]{0,39}', args.review_name):
             parser.error('publish-review requires a lowercase --review-name of at most40 characters')
-        publish(CFG['project']['database'] + '-review-' + args.review_name, reset=False)
+        if args.module_artifact:
+            from review_module import publish as publish_artifact
+            print(json.dumps(publish_artifact(sys.modules[__name__], args.review_name, args.module_artifact, args.artifact_sha256)))
+        else:
+            publish(CFG['project']['database'] + '-review-' + args.review_name, reset=False)
     elif command == 'smoke-update':
         publish(CFG['project']['database'] + '-smoke', reset=False)
     elif command == 'smoke-prepare':
