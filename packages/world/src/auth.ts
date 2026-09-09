@@ -14,7 +14,7 @@ import * as interactions from "./interactions";
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
 const forever = 18446744073709551615n;
-function classify(ctx: Context) {
+function classify(ctx: Context, admittedExpiresSeconds?: number) {
   const jwt = ctx.senderAuth.jwt;
   try {
     return classifyVerifiedClaims(
@@ -24,9 +24,10 @@ function classify(ctx: Context) {
             subject: jwt.subject,
             audience: jwt.audience,
             expiresSeconds:
-              typeof jwt.fullPayload.exp === "number"
+              admittedExpiresSeconds ??
+              (typeof jwt.fullPayload.exp === "number"
                 ? jwt.fullPayload.exp
-                : undefined,
+                : undefined),
           }
         : null,
       Number(ctx.timestamp.microsSinceUnixEpoch) / 1e6,
@@ -53,7 +54,9 @@ export function registerSession(ctx: Context) {
     connectionId: ctx.connectionId.toHexString(),
     owner: ctx.sender,
     kind: kind.kind,
-    game: kind.game,
+    // Host WebSocket tickets replace the original provider expiry. OIDC
+    // connections stay pending until an original verified provider proof binds.
+    game: kind.kind === "development" && kind.game,
     expiresMicros:
       kind.expiresSeconds === undefined
         ? forever
@@ -61,6 +64,52 @@ export function registerSession(ctx: Context) {
   };
   if (ctx.db.authSession.connectionId.find(row.connectionId))
     ctx.db.authSession.connectionId.update(row);
+  else ctx.db.authSession.insert(row);
+}
+/** HTTP calls carry the original provider JWT in Authorization. The host verifies
+ * that JWT; the module never accepts client-parsed claims or a requested expiry.
+ * Browser WebSocket tickets instead expose a host-shortened 60-second exp. */
+export function bindGameSession(ctx: Context, args: { connectionId: string }) {
+  // Pinned host HTTP calls also run a transient connected/disconnected lifecycle.
+  // Transport/connectionId is not a proof discriminator. Every host re-signed
+  // token serializes hex_identity; original Dastari provider JWTs do not.
+  if (
+    ctx.senderAuth.jwt &&
+    Object.hasOwn(ctx.senderAuth.jwt.fullPayload, "hex_identity")
+  )
+    throw new SenderError(
+      "Original provider token required for session binding",
+    );
+  const kind = classify(ctx);
+  if (kind.kind !== "oidc" || !kind.game || kind.expiresSeconds === undefined)
+    throw new SenderError("OIDC game audience required for session binding");
+  if (!/^[a-f0-9]{32}$/.test(args.connectionId))
+    throw new SenderError("Invalid target connection");
+  if (ctx.db.retiredIdentity.source.find(ctx.sender))
+    throw new SenderError("Retired identity cannot bind a session");
+  const presence = ctx.db.connectionPresence.connectionId.find(
+    args.connectionId,
+  );
+  if (!presence || !presence.owner.isEqual(ctx.sender))
+    throw new SenderError("An owned live game connection is required");
+  const previous = ctx.db.authSession.connectionId.find(args.connectionId);
+  if (
+    previous &&
+    (!previous.owner.isEqual(ctx.sender) || previous.kind !== "oidc")
+  )
+    throw new SenderError("Target connection admission does not match");
+  const expiresMicros = BigInt(Math.floor(kind.expiresSeconds * 1e6));
+  // The initial host ticket may outlive a nearly-expired provider token.
+  // Always apply this proof's exact verified expiry, even when it is shorter.
+  if (previous?.game && previous.expiresMicros === expiresMicros) return;
+  const row = {
+    connectionId: args.connectionId,
+    owner: ctx.sender,
+    kind: "oidc",
+    game: true,
+    expiresMicros,
+  };
+  if (previous) ctx.db.authSession.connectionId.update(row);
   else ctx.db.authSession.insert(row);
 }
 export function canReadGame(ctx: ReadContext): boolean {
@@ -78,17 +127,25 @@ export function canConsume(ctx: Context, owner: Identity): boolean {
   );
 }
 export function requireGame(ctx: Context) {
-  const kind = classify(ctx);
-  if (!kind.game || !ctx.connectionId || !canConsume(ctx, ctx.sender))
+  if (!ctx.connectionId || !canConsume(ctx, ctx.sender))
     throw new SenderError("Active game authentication required");
   const session = ctx.db.authSession.connectionId.find(
     ctx.connectionId.toHexString(),
   );
   if (
     !session?.game ||
+    !session.owner.isEqual(ctx.sender) ||
     session.expiresMicros <= ctx.timestamp.microsSinceUnixEpoch
   )
     throw new SenderError("Game session expired");
+  // Preserve issuer/audience validation for the immutable socket claims, but
+  // use the server-verified provider expiry bound to this exact connection.
+  const kind = classify(
+    ctx,
+    session.kind === "oidc" ? Number(session.expiresMicros) / 1e6 : undefined,
+  );
+  if (!kind.game || kind.kind !== session.kind)
+    throw new SenderError("Game session authentication does not match");
   return kind;
 }
 export function gameAction<A>(

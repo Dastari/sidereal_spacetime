@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { DbConnection, tables } from "../packages/net/src/generated";
+import { bindGameSessionProof } from "../packages/net/src/game-session-proof";
 const host = process.env.SIDEREAL_SMOKE_URL,
   database = process.env.SIDEREAL_SMOKE_DATABASE;
 assert(
@@ -47,14 +48,28 @@ async function probe(token: string, denied: boolean) {
       .withDatabaseName(database!)
       .withToken(token)
       .onConnect((c) => {
-        c.subscriptionBuilder()
-          .onApplied(() => {
-            ready = true;
-          })
-          .onError(() => {
-            rejected = true;
-          })
-          .subscribe([tables.ownCharacters]);
+        void (async () => {
+          if (!denied) {
+            assert(c.connectionId, "Connected socket has a connection ID");
+            await bindGameSessionProof({
+              origin: host!,
+              database: database!,
+              connectionId: c.connectionId.toHexString(),
+              token,
+              signal: AbortSignal.timeout(10000),
+            });
+          }
+          c.subscriptionBuilder()
+            .onApplied(() => {
+              ready = true;
+            })
+            .onError(() => {
+              rejected = true;
+            })
+            .subscribe([tables.ownCharacters]);
+        })().catch(() => {
+          rejected = true;
+        });
       })
       .onConnectError(() => {
         rejected = true;

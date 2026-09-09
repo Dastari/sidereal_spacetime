@@ -357,6 +357,10 @@ export const enterLab = db.reducer({ name: t.string() }, (ctx, { name }) => {
   });
 });
 export const connectSession = db.clientConnected(connected);
+export const bindGameSession = db.reducer(
+  { connectionId: t.string() },
+  auth.bindGameSession,
+);
 export const disconnect = db.clientDisconnected((ctx) => {
   inputControl.disconnectInputControl(ctx);
   if (lastDisconnected(ctx)) {

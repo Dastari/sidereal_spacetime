@@ -2,12 +2,22 @@ import { expect, test, vi } from "vitest";
 import { Identity } from "spacetimedb";
 vi.mock("spacetimedb/server", () => ({
   SenderError: class extends Error {},
-  t: new Proxy({}, { get: () => () => ({ primaryKey() { return this; } }) }),
+  t: new Proxy(
+    {},
+    {
+      get: () => () => ({
+        primaryKey() {
+          return this;
+        },
+      }),
+    },
+  ),
 }));
 vi.mock("./combat", () => ({ clearAim: vi.fn() }));
 vi.mock("./interactions", () => ({ leaveCouch: vi.fn() }));
 import {
   registerSession,
+  bindGameSession,
   requestIdentityLink,
   acceptIdentityLink,
   requireGame,
@@ -51,10 +61,11 @@ function fixture() {
     return result;
   }
   const db: any = {
-    constructionInstance:table("id",{by_owner:"owner"}),
-    constructionGrant:table("id",{by_principal:"principal"}),
-    constructionReceipt:table("id",{by_principal:"principal"}),
+    constructionInstance: table("id", { by_owner: "owner" }),
+    constructionGrant: table("id", { by_principal: "principal" }),
+    constructionReceipt: table("id", { by_principal: "principal" }),
     authSession: table("connectionId", { by_owner: "owner" }),
+    connectionPresence: table("connectionId", { by_owner: "owner" }),
     retiredIdentity: table("source", { by_target: "target" }),
     identityLink: table("id", {
       by_source: "source",
@@ -95,7 +106,10 @@ function fixture() {
     ({
       db,
       sender: owner,
-      connectionId: { toHexString: () => owner.toHexString() },
+      connectionId: {
+        toHexString: () =>
+          oidc ? owner.toHexString().slice(0, 32) : owner.toHexString(),
+      },
       timestamp: { microsSinceUnixEpoch: 1000000000n },
       newUuidV4: () => ({
         toString: () => `link-${db.identityLink.rows.length}`,
@@ -113,6 +127,11 @@ function fixture() {
     b = context(target, true);
   registerSession(a);
   registerSession(b);
+  db.connectionPresence.insert({
+    connectionId: b.connectionId!.toHexString(),
+    owner: target,
+  });
+  bindGameSession(b, { connectionId: b.connectionId!.toHexString() });
   return {
     a,
     b,
@@ -197,12 +216,171 @@ test("expiry removes view admission and active controls; dashboard audience neve
   expect(() => registerSession(other.b)).toThrow();
   expect(() => requireGame(other.b)).toThrow();
 });
-test('construction state cannot be orphaned by a legacy identity link or merged into an occupied target',()=>{
- for(const domain of ['constructionInstance','constructionGrant','constructionReceipt'] as const){
-  const f=fixture(),row=domain==='constructionInstance'?{id:'constructed',owner:f.source}:{id:'authoring',principal:f.source};
-  f.db[domain].insert(row);expect(()=>f.request()).toThrow('Construction');expect(f.db.character.rows[0].owner).toBe(f.source);
-  const later=fixture();later.request();later.db[domain].insert(domain==='constructionInstance'?{id:'constructed',owner:later.source}:{id:'authoring',principal:later.source});
-  expect(()=>acceptIdentityLink(later.b,{requestId:'link-0',operationId:'accept'})).toThrow('Construction');expect(later.db.retiredIdentity.rows).toEqual([]);
- }
- const target=fixture();target.request();target.db.constructionInstance.insert({id:'target-instance',owner:target.target});expect(()=>acceptIdentityLink(target.b,{requestId:'link-0',operationId:'accept'})).toThrow('world state');
+test("construction state cannot be orphaned by a legacy identity link or merged into an occupied target", () => {
+  for (const domain of [
+    "constructionInstance",
+    "constructionGrant",
+    "constructionReceipt",
+  ] as const) {
+    const f = fixture(),
+      row =
+        domain === "constructionInstance"
+          ? { id: "constructed", owner: f.source }
+          : { id: "authoring", principal: f.source };
+    f.db[domain].insert(row);
+    expect(() => f.request()).toThrow("Construction");
+    expect(f.db.character.rows[0].owner).toBe(f.source);
+    const later = fixture();
+    later.request();
+    later.db[domain].insert(
+      domain === "constructionInstance"
+        ? { id: "constructed", owner: later.source }
+        : { id: "authoring", principal: later.source },
+    );
+    expect(() =>
+      acceptIdentityLink(later.b, {
+        requestId: "link-0",
+        operationId: "accept",
+      }),
+    ).toThrow("Construction");
+    expect(later.db.retiredIdentity.rows).toEqual([]);
+  }
+  const target = fixture();
+  target.request();
+  target.db.constructionInstance.insert({
+    id: "target-instance",
+    owner: target.target,
+  });
+  expect(() =>
+    acceptIdentityLink(target.b, {
+      requestId: "link-0",
+      operationId: "accept",
+    }),
+  ).toThrow("world state");
+});
+
+function bindingFixture() {
+  const f = fixture();
+  f.db.authSession.connectionId.delete(f.b.connectionId!.toHexString());
+  f.db.connectionPresence.connectionId.delete(f.b.connectionId!.toHexString());
+  const connectionId = "b".repeat(32);
+  Object.assign(f.b, { connectionId: { toHexString: () => connectionId } });
+  Object.assign(f.b.senderAuth.jwt!.fullPayload, {
+    exp: 1060,
+    hex_identity: f.target.toHexString(),
+  });
+  registerSession(f.b);
+  f.db.connectionPresence.insert({ connectionId, owner: f.target });
+  const http = {
+    ...f.b,
+    connectionId: { toHexString: () => "c".repeat(32) },
+    senderAuth: {
+      jwt: {
+        ...f.b.senderAuth.jwt!,
+        fullPayload: { exp: 1300 },
+      },
+    },
+  } as unknown as Parameters<typeof bindGameSession>[0];
+  return { ...f, connectionId, http };
+}
+
+test("original verified HTTP token binds exact socket past ticket expiry, not provider expiry", () => {
+  const f = bindingFixture();
+  bindGameSession(f.http, { connectionId: f.connectionId });
+  expect(f.db.authSession.connectionId.find(f.connectionId).expiresMicros).toBe(
+    1300000000n,
+  );
+  Object.assign(f.b.timestamp, { microsSinceUnixEpoch: 1070000000n });
+  expireSessions(f.b);
+  expect(requireGame(f.b).kind).toBe("oidc");
+  Object.assign(f.b.timestamp, { microsSinceUnixEpoch: 1300000000n });
+  expect(() => requireGame(f.b)).toThrow();
+  expireSessions(f.b);
+  expect(f.db.authSession.connectionId.find(f.connectionId)).toBeUndefined();
+});
+
+test("binding is idempotent and always uses this proof's exact verified expiry", () => {
+  const f = bindingFixture();
+  bindGameSession(f.http, { connectionId: f.connectionId });
+  const first = f.db.authSession.connectionId.find(f.connectionId);
+  bindGameSession(f.http, { connectionId: f.connectionId });
+  expect(f.db.authSession.connectionId.find(f.connectionId)).toBe(first);
+  Object.assign(f.http.senderAuth.jwt!.fullPayload, { exp: 1400 });
+  bindGameSession(f.http, { connectionId: f.connectionId });
+  Object.assign(f.http.senderAuth.jwt!.fullPayload, { exp: 1300 });
+  bindGameSession(f.http, { connectionId: f.connectionId });
+  expect(f.db.authSession.connectionId.find(f.connectionId).expiresMicros).toBe(
+    1300000000n,
+  );
+});
+
+test("near-expiry provider proof shortens a longer bootstrap ticket", () => {
+  const f = bindingFixture();
+  Object.assign(f.http.senderAuth.jwt!.fullPayload, { exp: 1010 });
+  bindGameSession(f.http, { connectionId: f.connectionId });
+  expect(f.db.authSession.connectionId.find(f.connectionId).expiresMicros).toBe(
+    1010000000n,
+  );
+  Object.assign(f.b.timestamp, { microsSinceUnixEpoch: 1010000000n });
+  expect(() => requireGame(f.b)).toThrow();
+});
+
+test("binding rejects other principals, closed sockets, host tickets, invalid claims and retired identities", () => {
+  for (const issue of [
+    "foreign",
+    "closed",
+    "socket",
+    "audience",
+    "issuer",
+    "expired",
+    "retired",
+    "invalid-id",
+  ]) {
+    const f = bindingFixture();
+    if (issue === "foreign") Object.assign(f.http, { sender: f.source });
+    if (issue === "closed")
+      f.db.connectionPresence.connectionId.delete(f.connectionId);
+    if (issue === "audience")
+      Object.assign(f.http.senderAuth.jwt!, {
+        audience: [policy.dashboardAudience],
+      });
+    if (issue === "issuer")
+      Object.assign(f.http.senderAuth.jwt!, {
+        issuer: "https://untrusted.test",
+      });
+    if (issue === "expired")
+      Object.assign(f.http.senderAuth.jwt!.fullPayload, { exp: 1000 });
+    if (issue === "retired") f.db.retiredIdentity.insert({ source: f.target });
+    expect(() =>
+      bindGameSession(issue === "socket" ? f.b : f.http, {
+        connectionId: issue === "invalid-id" ? "x" : f.connectionId,
+      }),
+    ).toThrow();
+    expect(
+      f.db.authSession.connectionId.find(f.connectionId).expiresMicros,
+    ).toBe(1060000000n);
+  }
+});
+
+test("OIDC bootstrap has no gameplay or view admission until original provider proof", () => {
+  const f = bindingFixture();
+  expect(f.db.authSession.connectionId.find(f.connectionId).game).toBe(false);
+  expect(canReadGame(f.b)).toBe(false);
+  expect(() => requireGame(f.b)).toThrow();
+  bindGameSession(f.http, { connectionId: f.connectionId });
+  expect(canReadGame(f.b)).toBe(true);
+  expect(requireGame(f.b).kind).toBe("oidc");
+});
+
+test("expired preliminary admission can be restored only while the same owned socket remains present", () => {
+  const f = bindingFixture();
+  f.db.authSession.connectionId.delete(f.connectionId);
+  bindGameSession(f.http, { connectionId: f.connectionId });
+  expect(f.db.authSession.connectionId.find(f.connectionId).expiresMicros).toBe(
+    1300000000n,
+  );
+  f.db.connectionPresence.connectionId.delete(f.connectionId);
+  expect(() =>
+    bindGameSession(f.http, { connectionId: f.connectionId }),
+  ).toThrow();
 });
