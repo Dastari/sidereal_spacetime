@@ -38,6 +38,7 @@ import AcceptIdentityLinkReducer from "./accept_identity_link_reducer";
 import ActivateInventoryHotbarReducer from "./activate_inventory_hotbar_reducer";
 import AssignInventoryHotbarReducer from "./assign_inventory_hotbar_reducer";
 import BeginConstructionTraversalReducer from "./begin_construction_traversal_reducer";
+import BindGameSessionReducer from "./bind_game_session_reducer";
 import CancelConstructionTraversalReducer from "./cancel_construction_traversal_reducer";
 import ClaimCharacterArmoryReducer from "./claim_character_armory_reducer";
 import ClaimInputControlReducer from "./claim_input_control_reducer";
@@ -282,6 +283,7 @@ const reducersSchema = __reducers(
   __reducerSchema("activate_inventory_hotbar", ActivateInventoryHotbarReducer),
   __reducerSchema("assign_inventory_hotbar", AssignInventoryHotbarReducer),
   __reducerSchema("begin_construction_traversal", BeginConstructionTraversalReducer),
+  __reducerSchema("bind_game_session", BindGameSessionReducer),
   __reducerSchema("cancel_construction_traversal", CancelConstructionTraversalReducer),
   __reducerSchema("claim_character_armory", ClaimCharacterArmoryReducer),
   __reducerSchema("claim_input_control", ClaimInputControlReducer),

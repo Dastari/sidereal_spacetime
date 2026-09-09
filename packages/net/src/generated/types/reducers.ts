@@ -10,6 +10,7 @@ import AcceptIdentityLinkReducer from "../accept_identity_link_reducer";
 import ActivateInventoryHotbarReducer from "../activate_inventory_hotbar_reducer";
 import AssignInventoryHotbarReducer from "../assign_inventory_hotbar_reducer";
 import BeginConstructionTraversalReducer from "../begin_construction_traversal_reducer";
+import BindGameSessionReducer from "../bind_game_session_reducer";
 import CancelConstructionTraversalReducer from "../cancel_construction_traversal_reducer";
 import ClaimCharacterArmoryReducer from "../claim_character_armory_reducer";
 import ClaimInputControlReducer from "../claim_input_control_reducer";
@@ -42,6 +43,7 @@ export type AcceptIdentityLinkParams = __Infer<typeof AcceptIdentityLinkReducer>
 export type ActivateInventoryHotbarParams = __Infer<typeof ActivateInventoryHotbarReducer>;
 export type AssignInventoryHotbarParams = __Infer<typeof AssignInventoryHotbarReducer>;
 export type BeginConstructionTraversalParams = __Infer<typeof BeginConstructionTraversalReducer>;
+export type BindGameSessionParams = __Infer<typeof BindGameSessionReducer>;
 export type CancelConstructionTraversalParams = __Infer<typeof CancelConstructionTraversalReducer>;
 export type ClaimCharacterArmoryParams = __Infer<typeof ClaimCharacterArmoryReducer>;
 export type ClaimInputControlParams = __Infer<typeof ClaimInputControlReducer>;
