@@ -1,4 +1,9 @@
-import { qualifiedWayfarerWalkingBindings, QUALIFIED_WAYFARER_SHA256 } from "../../sim/src/wayfarer-walking-bindings";
+import {
+  qualifiedWayfarerWalkingBindings,
+  QUALIFIED_WAYFARER_SHA256,
+} from "../../sim/src/wayfarer-walking-bindings";
+import { qualifyWayfarerThresholdMotion } from "../../sim/src/wayfarer-threshold";
+import { createConstructionStandingSupport } from "./construction-standing-support";
 import {
   installConstructionStair,
   requireNoConstructionStair,
@@ -78,8 +83,10 @@ export function spawnBlueprint(
         bodyHeightM: 1.8,
         perimeterHalfWidthM: legacyNativeBoundaries ? 0.0625 : 0,
         partitionHalfWidthM: legacyNativeBoundaries ? 0.0625 : 0,
-        objectCollisionBindings: snapshot.sha256 === QUALIFIED_WAYFARER_SHA256
-          ? qualifiedWayfarerWalkingBindings(snapshot, 0.3, 1.8) : [],
+        objectCollisionBindings:
+          snapshot.sha256 === QUALIFIED_WAYFARER_SHA256
+            ? qualifiedWayfarerWalkingBindings(snapshot, 0.3, 1.8)
+            : [],
       },
       () => ctx.newUuidV4().toString(),
     );
@@ -324,21 +331,38 @@ export const locationProjection = t.row("ConstructionLocationStatus", {
   instanceId: t.string(),
   deckId: t.string(),
   revision: t.u64(),
+  standingElevationM: t.f64(),
 });
+const standingSupport = createConstructionStandingSupport();
 export function ownLocation(ctx: ReadContext) {
   const actor = actorFor(ctx),
     location = actor && ctx.db.constructionLocation.characterId.find(actor.id);
-  return location
-    ? [
-        {
-          characterId: location.characterId,
-          visitId: location.visitId,
-          instanceId: location.instanceId,
-          deckId: location.deckId,
-          revision: location.revision,
-        },
-      ]
-    : [];
+  if (!actor || !location) return [];
+  const instance = ctx.db.constructionInstance.id.find(location.instanceId),
+    deck = ctx.db.constructionDeck.id.find(location.deckId);
+  if (!instance || !deck) return [];
+  try {
+    const standingElevationM = standingSupport({
+      actor,
+      location,
+      instance,
+      deck,
+    });
+    return [
+      {
+        characterId: location.characterId,
+        visitId: location.visitId,
+        instanceId: location.instanceId,
+        deckId: location.deckId,
+        revision: location.revision,
+        standingElevationM,
+      },
+    ];
+  } catch {
+    // A mismatched visit, modified source or missing proof cannot fall back to
+    // an invented support height or expose another instance's private geometry.
+    return [];
+  }
 }
 export function stepActor(
   ctx: Context,
@@ -392,6 +416,18 @@ export function stepActor(
     return true;
   const moved =
     next.position[0] !== actor.localX || next.position[1] !== actor.localY;
+  if (moved && instance.blueprintSha256 === QUALIFIED_WAYFARER_SHA256) {
+    // The collision frame already qualified the immutable native instance.
+    // Check all intermediate low-step contacts before accepting the XY move.
+    try {
+      qualifyWayfarerThresholdMotion(
+        [actor.localX, actor.localY],
+        next.position,
+      );
+    } catch {
+      return true;
+    }
+  }
   const sprinting = command.sprint && moved;
   if (moved || actor.sprinting !== sprinting)
     ctx.db.character.id.update({

@@ -6,6 +6,7 @@ import {
   constructionHash,
 } from "./construction-transactions";
 import type { SpawnObjectCollisionBinding } from "./construction-instance";
+import { qualifiedWayfarerThresholdBinding } from "./wayfarer-threshold";
 /** Immutable server-selected qualifier for one exact source snapshot. Clients
  * cannot provide alternative empty colliders or transplant these onto a refit. */
 export function qualifiedWayfarerWalkingBindings(
@@ -26,14 +27,22 @@ export function qualifiedWayfarerWalkingBindings(
     bodyHeightM > proof.standingSlabM[1] - proof.standingSlabM[0]
   )
     throw Error("Wayfarer walking proof: unsupported actor envelope");
-  return proof.bindings.map((binding) => ({
-    sourceObjectId: binding.sourceObjectId,
-    definitionId: "wayfarer-walk-r001-" + binding.assetId,
-    deckIds: [proof.deckId],
-    obstacles: binding.obstacles.map((o) => ({
-      vertices: o.vertices.map(([x, y]): Point => [x, y]),
-    })),
-  }));
+  const threshold =
+    bodyHeightM <= 1.8
+      ? qualifiedWayfarerThresholdBinding(bodyHeightM, snapshot)
+      : null;
+  return proof.bindings.map((binding) =>
+    threshold?.sourceObjectId === binding.sourceObjectId
+      ? threshold
+      : {
+          sourceObjectId: binding.sourceObjectId,
+          definitionId: "wayfarer-walk-r001-" + binding.assetId,
+          deckIds: [proof.deckId],
+          obstacles: binding.obstacles.map((o) => ({
+            vertices: o.vertices.map(([x, y]): Point => [x, y]),
+          })),
+        },
+  );
 }
 
 export const QUALIFIED_WAYFARER_SHA256 = proof.documentSha256;

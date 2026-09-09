@@ -303,6 +303,7 @@ export const ConstructionLocationStatus = __t.object("ConstructionLocationStatus
   instanceId: __t.string(),
   deckId: __t.string(),
   revision: __t.u64(),
+  standingElevationM: __t.f64(),
 });
 export type ConstructionLocationStatus = __Infer<typeof ConstructionLocationStatus>;
 

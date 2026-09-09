@@ -489,16 +489,172 @@ const ordinaryHooks = {
   otherAcceptedPosition: () => undefined,
 };
 
-import {readFileSync} from 'node:fs';
-import {WAYFARER_CONVERSION_PIN} from '../../content/src/wayfarer-conversion-candidate';
-import {createWayfarerConversionCandidate,type WayfarerPinnedInputs} from '../../sim/src/wayfarer-conversion-candidate';
-test('trusted full Wayfarer spawn retains qualified collision after UUID remap and reload',()=>{
- const f=fixture(),c=createWayfarerConversionCandidate(Object.fromEntries(Object.keys(WAYFARER_CONVERSION_PIN.sources).map(p=>[p,readFileSync(p,'utf8')])) as WayfarerPinnedInputs);
- let qualifiedId=0;f.ctx.newUuidV4=()=>({toString:()=>`11111111-0000-4000-8000-${(++qualifiedId).toString().padStart(12,'0')}`});
- f.ctx.db.constructionBlueprint.id.update({...f.ctx.db.constructionBlueprint.id.find('blueprint'),...c.snapshot});
- const args={...f.args,expectedSha256:c.snapshot.sha256,sourceDeckId:WAYFARER_CONVERSION_PIN.deckId};
- spawnBlueprint(f.ctx,args);spawnBlueprint(f.ctx,{...args,operationId:'second-qualified'});
- const instances=f.ctx.db.constructionInstance.rows;expect(instances).toHaveLength(2);
- for(const instance of instances){const frame=constructionCollision(f.ctx,instance,instance.spawnDeckId);expect(frame.obstacles).toHaveLength(98);expect(canOccupyDeck(frame,{shipId:instance.id,deckId:instance.spawnDeckId,position:[-1.8,8.8]},.3)).toBe(false);expect(canOccupyDeck(frame,{shipId:instance.id,deckId:instance.spawnDeckId,position:[0,0]},.3)).toBe(true);}
- expect(JSON.parse(instances[0].idMapJson).objects).toHaveLength(211);
+import { readFileSync } from "node:fs";
+import { WAYFARER_CONVERSION_PIN } from "../../content/src/wayfarer-conversion-candidate";
+import {
+  createWayfarerConversionCandidate,
+  type WayfarerPinnedInputs,
+} from "../../sim/src/wayfarer-conversion-candidate";
+test("trusted full Wayfarer spawn retains qualified collision after UUID remap and reload", () => {
+  const f = fixture(),
+    c = createWayfarerConversionCandidate(
+      Object.fromEntries(
+        Object.keys(WAYFARER_CONVERSION_PIN.sources).map((p) => [
+          p,
+          readFileSync(p, "utf8"),
+        ]),
+      ) as WayfarerPinnedInputs,
+    );
+  let qualifiedId = 0;
+  f.ctx.newUuidV4 = () => ({
+    toString: () =>
+      `11111111-0000-4000-8000-${(++qualifiedId).toString().padStart(12, "0")}`,
+  });
+  f.ctx.db.constructionBlueprint.id.update({
+    ...f.ctx.db.constructionBlueprint.id.find("blueprint"),
+    ...c.snapshot,
+  });
+  const args = {
+    ...f.args,
+    expectedSha256: c.snapshot.sha256,
+    sourceDeckId: WAYFARER_CONVERSION_PIN.deckId,
+  };
+  spawnBlueprint(f.ctx, args);
+  spawnBlueprint(f.ctx, { ...args, operationId: "second-qualified" });
+  const instances = f.ctx.db.constructionInstance.rows;
+  expect(instances).toHaveLength(2);
+  for (const instance of instances) {
+    const frame = constructionCollision(f.ctx, instance, instance.spawnDeckId);
+    expect(frame.obstacles).toHaveLength(99);
+    expect(
+      canOccupyDeck(
+        frame,
+        {
+          shipId: instance.id,
+          deckId: instance.spawnDeckId,
+          position: [-1.8, 8.8],
+        },
+        0.3,
+      ),
+    ).toBe(false);
+    expect(
+      canOccupyDeck(
+        frame,
+        { shipId: instance.id, deckId: instance.spawnDeckId, position: [0, 0] },
+        0.3,
+      ),
+    ).toBe(true);
+  }
+  expect(JSON.parse(instances[0].idMapJson).objects).toHaveLength(211);
+});
+
+test("ordinary Wayfarer intent crosses the sill, retains stopped support without writes and preserves safe grant-loss return", () => {
+  const f = fixture(),
+    c = createWayfarerConversionCandidate(
+      Object.fromEntries(
+        Object.keys(WAYFARER_CONVERSION_PIN.sources).map((p) => [
+          p,
+          readFileSync(p, "utf8"),
+        ]),
+      ) as WayfarerPinnedInputs,
+    );
+  let allocated = 0;
+  f.ctx.newUuidV4 = () => ({
+    toString: () =>
+      `22222222-0000-4000-8000-${(++allocated).toString().padStart(12, "0")}`,
+  });
+  f.ctx.db.constructionBlueprint.id.update({
+    ...f.ctx.db.constructionBlueprint.id.find("blueprint"),
+    ...c.snapshot,
+  });
+  spawnBlueprint(f.ctx, {
+    ...f.args,
+    expectedSha256: c.snapshot.sha256,
+    sourceDeckId: WAYFARER_CONVERSION_PIN.deckId,
+  });
+  const instance = f.ctx.db.constructionInstance.rows[0];
+  f.ctx.db.ship.insert({ id: "original-ship" });
+  f.ctx.db.character.insert({
+    id: "actor",
+    owner: f.ctx.sender,
+    shipId: "original-ship",
+    localX: 0,
+    localY: 10.25,
+    connected: true,
+    sprinting: false,
+  });
+  enterReview(f.ctx, {
+    instanceId: instance.id,
+    expectedShipId: "original-ship",
+    operationId: "enter-threshold",
+  });
+  // Accepted supported fixture start; every subsequent crossing is normal intent.
+  f.ctx.db.character.id.update({
+    ...f.ctx.db.character.id.find("actor"),
+    localX: 0,
+    localY: 8.55,
+  });
+  const move = (dy: number, allowed = true) =>
+    stepActor(
+      f.ctx,
+      f.ctx.db.character.id.find("actor"),
+      { dx: 0, dy, sprint: false },
+      { ...ordinaryHooks, mayEnter: () => allowed },
+    );
+  move(1);
+  move(1);
+  expect(ownLocation(f.ctx)[0].standingElevationM).toBeCloseTo(0.21875);
+  move(1);
+  move(0.52);
+  expect(f.ctx.db.character.id.find("actor").localY).toBeCloseTo(8.99);
+  expect(ownLocation(f.ctx)[0].standingElevationM).toBeCloseTo(0.2375);
+  const actorUpdate = vi.spyOn(f.ctx.db.character.id, "update"),
+    locationUpdate = vi.spyOn(
+      f.ctx.db.constructionLocation.characterId,
+      "update",
+    );
+  for (let i = 0; i < 20; i++) move(0);
+  expect(actorUpdate).not.toHaveBeenCalled();
+  expect(locationUpdate).not.toHaveBeenCalled();
+  move(1, false);
+  expect(actorUpdate).not.toHaveBeenCalled();
+  expect(ownLocation(f.ctx)[0].standingElevationM).toBeCloseTo(0.2375);
+  actorUpdate.mockRestore();
+  locationUpdate.mockRestore();
+  move(-1);
+  expect(ownLocation(f.ctx)[0].standingElevationM).toBeCloseTo(0.21875);
+  for (let i = 0; i < 3; i++) move(-1);
+  expect(ownLocation(f.ctx)[0].standingElevationM).toBe(0.1875);
+  for (let i = 0; i < 6; i++) move(1);
+  move(0.88);
+  expect(f.ctx.db.character.id.find("actor").localY).toBeCloseTo(9.35);
+  expect(ownLocation(f.ctx)[0].standingElevationM).toBe(0.1875);
+  for (let i = 0; i < 20; i++) move(1);
+  expect(f.ctx.db.character.id.find("actor").localY).toBeLessThan(10.25);
+  for (const grant of f.ctx.db.constructionGrant.rows) grant.revoked = true;
+  expect(ownInstances(f.ctx)).toEqual([]);
+  expect(ownDecks(f.ctx)).toEqual([]);
+  const visit = ownLocation(f.ctx)[0];
+  expect(Object.keys(visit).sort()).toEqual(
+    [
+      "characterId",
+      "deckId",
+      "instanceId",
+      "revision",
+      "standingElevationM",
+      "visitId",
+    ].sort(),
+  );
+  leaveReview(f.ctx, {
+    expectedVisitId: visit.visitId,
+    expectedRevision: visit.revision,
+    operationId: "leave-threshold",
+  });
+  expect(f.ctx.db.character.id.find("actor")).toMatchObject({
+    id: "actor",
+    shipId: "original-ship",
+    localX: 0,
+    localY: 10.25,
+  });
+  expect(ownLocation(f.ctx)).toEqual([]);
 });

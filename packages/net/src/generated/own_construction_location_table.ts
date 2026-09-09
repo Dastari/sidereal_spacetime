@@ -16,4 +16,5 @@ export default __t.row({
   instanceId: __t.string().name("instance_id"),
   deckId: __t.string().name("deck_id"),
   revision: __t.u64(),
+  standingElevationM: __t.f64().name("standing_elevation_m"),
 });

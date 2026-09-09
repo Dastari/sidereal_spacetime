@@ -1,6 +1,8 @@
-# Staged supported-stair authority
+# Integrated supported-stair authority
 
-2026-09-10. The integration owner accepted the restricted egress policy below for staging. These new files are not registered in the world schema or deployed:
+2026-09-10. The exact a003 supported-stair authority is registered and included in public world release `317c007a`; its native renderer is included in client `66b5a92b`. Isolated provider journeys and the coordinator’s real-browser ascent/descent, grant-loss minimum-geometry, reconnect and safe-return checks passed. This qualifies the pinned two-deck review fixture, not arbitrary stairs, general construction completion or final owner art approval. Elevator rules remain pure/staged.
+
+The implementation consists of:
 
 - `packages/world/src/construction-stairs-tables.ts`: four private tables for installed link, active walk, conservative reservation and bounded terminal audit. There is no always-written stair clock row.
 - `packages/world/src/construction-stairs-authority.ts`: internal validated installation, intent-driven automatic landing entry, persisted accepted XYZ/support solver, safe terminal deck commit, reservations and keyed own pose projection.
@@ -8,7 +10,7 @@
 
 This uses `construction-stairs-document.ts` and the trusted pinned compiler. It does not accept a client-authored walking surface. Each consumption checks current document bytes/hash, native proof, actual deck elevations/IDs, immutable actor anchor/visit/source deck, instance and stair revision, reservation identity, game admission, movement-control lease and workspace grant. It persists XYZ separately while ordinary character XY/source deck remain unchanged until the terminal landing commit. Source context is the exact60-part a003 document from `native_stair_document_integration.md`.
 
-## Shared integration contract
+## Applied shared integration contract (retained checklist)
 
 1. Import/register all four private tables in `world/index.ts`; regenerate bindings through the managed generator after schema wiring. Do not hand-edit bindings. Keep existing private ladder/pressure tables and views intact.
 2. After validated instance/deck insertion, call internal `installConstructionStair(ctx, instance.id)` for exact `document.stairRoom` instances. Installation is replay-safe only for the identical current instance/document/proof. It is not a public reducer accepting arbitrary installation JSON. The shared spawn planner owns exact UUID mapping and document validation.
@@ -25,7 +27,7 @@ This uses `construction-stairs-document.ts` and the trusted pinned compiler. It 
 6. Drive `stepConstructionStairs` on the server's fixed50 ms schedule even when no fresh ordinary intent exists: interrupted partial risers still require physical recovery. It returns0 without writes when no active rows; supported idle state is not rewritten each tick. It advances at most one fixed step, never elapsed-time catch-up. Keep per-instance location index for occupant queries. The pure solver uses0.3 m radius/1.8 m height and conservative one-occupant passage reservations.
 7. Add `requireNoConstructionStair` beside standing guards for equipment/inventory/combat/stations/review exit; add `requireNoReservedStairInstance` to structural refit/deletion/capture paths as appropriate. An administrative or unrelated instance edit must never strand a body by silently removing its support.
 8. Add a `gameView`-wrapped `ownConstructionStairWalks` view using keyed `stairWalkProjection`, and subscribe only where the matching backend exists. Add the pose to the renderer's construction state. Existing instance/blueprint discovery remains workspace-authorized. On grant loss the own pose survives, but it must not restore general workspace read/interaction access.
-9. Rendering during restricted egress needs only the already-qualified immutable stair and landing geometry, selected by the exact audit pin/own active stair context. Preserve an admitted own minimum geometry projection/cache for this; do not expose the entire private instance document after its read grant is gone. No separate minimum-egress geometry view is registered by this staged adapter yet. This is an explicit shared wiring obligation.
+9. Rendering during restricted egress needs only the already-qualified immutable stair and landing geometry, selected by the exact audit pin/own active stair context. Preserve an admitted own minimum geometry projection/cache for this; do not expose the entire private instance document after its read grant is gone. The keyed admitted-own minimum-egress geometry view is now registered; it supplies only eleven fields for the exact qualified stair/decks/visit/proof after full private instance/deck access disappears.
 10. Add isolated SpacetimeDB smoke tests covering actual table transactions/receipts, server input lease and auth expiry, grant loss, two instances, reconnect, reservations and completeSafeEgress. The in-memory tests assert error propagation, not database rollback implementation. Then aggregate check/build/art validation and real browser two-flight walking are required before deployment claims.
 
 ## Accepted conservative recovery policy
@@ -94,7 +96,7 @@ The managed generator produced `own_construction_stair_walks_table.ts` and `own_
 
 Actual isolated reconnect testing found and fixed a lease integration problem: the general input controller restarts sequences per connection, while the stair solver previously retained an old sequence across reconnects. The world adapter now stores the **server-derived input connection ID inside private solver JSON** and resets only the input cursor when a newly validated lease changes. Position, support, pending physical recovery, reservation, character and visit identity remain unchanged. This adds no public field and accepts no client-authored epoch. A sequence-one reconnect regression is included.
 
-Validation checkpoints: combined `npm run check` passed820 tests before that additional regression; focused stair authority now31 tests. Combined `npm run build` passed. Managed isolated baseline smoke passed on `sidereal-spacetime-dev-stairs-native-20260910-smoke`. Actual provider PKCE authoring saved/published the native document, spawned two disjoint-ID instances, and all four private stair base table subscriptions were denied. Full journey/lease/revocation validation is still in progress; do not interpret this checkpoint as public deployment or final art acceptance.
+Validation checkpoints: combined `npm run check` passed820 tests before that additional regression; focused stair authority now31 tests. Combined `npm run build` passed. Managed isolated baseline smoke passed on `sidereal-spacetime-dev-stairs-native-20260910-smoke`. Actual provider PKCE authoring saved/published the native document, spawned two disjoint-ID instances, and all four private stair base table subscriptions were denied. That was an intermediate checkpoint. Subsequent real-provider journey/reconnect/grant-loss checks, the 32-test idle-write regression suite, and the coordinator’s browser review passed before public release `317c007a`. See the current status at the top; final art approval remains separate.
 
 ### Completed isolated server evidence and ownership handoff
 

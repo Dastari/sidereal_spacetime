@@ -49,7 +49,7 @@ test("every source object has a qualified obstacle or explicit geometric separat
   };
   expect(
     qualifiedWayfarerInstanceObstacles(instance, a.spawn.deckId),
-  ).toHaveLength(98);
+  ).toHaveLength(99);
   const altered = structuredClone(a.document);
   altered.layout.assembly!.parts[0].position[0] += 0.1;
   expect(() =>

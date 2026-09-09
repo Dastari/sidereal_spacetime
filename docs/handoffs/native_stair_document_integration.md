@@ -1,6 +1,6 @@
-# Native dogleg stairs: document bridge ready for integration
+# Native dogleg stairs: integrated document bridge
 
-2026-09-10. This bounded slice adds source/content and pure construction-document code only. No world table, active reducer, shared construction schema/parser, renderer, application, public asset directory or deployed service was changed. Native geometric qualification is not final owner art approval. Stair gameplay and elevator gameplay are not yet live.
+2026-09-10. The exact a003 document bridge is integrated with the shared construction schema/parser, instance UUID mapping, native renderer and supported-stair authority. Public world `317c007a` and client `66b5a92b` include this implementation and the exact runtime assets at `assets/runtime/construction/stairs-r000-a003`. Isolated server journeys and the coordinator’s actual-browser two-flight ascent/descent, grant-loss egress, reconnect and safe return passed. This is a qualified two-deck review fixture, not a completed general multi-deck Shipyard or final owner art approval. Elevator rules remain pure/staged.
 
 ## Exact candidate and completed code
 
@@ -18,13 +18,13 @@ Source lives under `assets/art-library/designs/shipyard.structure.stair-dogleg/r
 New files:
 
 - `scripts/stage_construction_stairs_runtime.py`: verifies the pinned audit and all three complete GLB byte hashes. Default generates only the new content module; `--check` is read-only; optional `--stage-assets` copies exact GLBs into private `.runtime/art-library/stairs/r000-a003/`. It does **not** publish runtime assets or mutate a database.
-- `packages/content/src/construction-stairs-room.ts`: exact generated audit text, delivery, proposed runtime URLs and pins. The URL declarations are a contract, not evidence those assets are publicly installed.
-- `packages/sim/src/construction-stairs-document.ts`: exact fixture creation/validation, native source installation, matching roof plan, conservative ordinary-deck collision and pure binding-remap helper. `NativeStairRoomDocument` is a local staged extension until the shared content schema adopts it.
+- `packages/content/src/construction-stairs-room.ts`: exact generated audit text, delivery, proposed runtime URLs and pins. The exact three GLBs are now installed under the pinned runtime path above.
+- `packages/sim/src/construction-stairs-document.ts`: exact fixture creation/validation, native source installation, matching roof plan, conservative ordinary-deck collision and pure binding-remap helper. The shared content schema now contains the exact stair binding; parsing, compilation and instance mapping use this qualified contract.
 - `packages/sim/src/construction-stairs-document.test.ts`: 20 passing tests covering exact layout/support/roof geometry, source corruption, unqualified mutations, independently mapped identities, reload equivalence and both landings/upper shaft.
 
 The fixture has 20 lower-floor panels, 16 upper-floor panels, 16 lower-roof panels and eight stair-kit groups: **60 separate placed objects** sharing only three immutable GLBs. There are 18 independently bound walking support patches and 17 qualified riser transitions. Deck origins are 0 and 3.1875 m (lattice 0/102); actual floor tops are 0.1875 and 3.375 m. The lower roof is at 3 m (lattice96). Upper floor and lower roof omit four panels at source XY `(2,4)`, `(2,6)`, `(4,4)`, `(4,6)`, leaving a real 4×4 m opening `[2,4]..[6,8]`. Lower floors beneath the stair remain present.
 
-## Narrow shared integration patch contract
+## Applied shared integration contract (historical implementation checklist)
 
 The release owner should reconcile these changes after the current rollout freeze. Do not mechanically reuse an old ladder patch.
 
