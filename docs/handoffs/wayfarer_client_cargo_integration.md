@@ -1,6 +1,6 @@
 # Authored Wayfarer: cockpit support, inspection and cargo UI
 
-2026-09-10 — implemented in source; combined cargo/interaction browser acceptance passed; managed restart acceptance and release pending.
+2026-09-10 — implemented in source; combined cargo/interaction browser acceptance passed; managed restart acceptance passed; release pending.
 
 The client subscribes to the server-filtered keyed cargo roots/items and carried revision sidecars. Native accepted document placements resolve to the existing published display catalog by asset ID, with their new instance placement UUIDs. Visible native meshes participate in picking; structural categories prevent floor/wall/roof selection and keep opaque geometry in the pick ray. Selection remains a presentation feature, never access authority.
 
@@ -26,4 +26,12 @@ Actual keyboard approach and E seated the character on the new instance sofa at 
 
 At the qualified hydroponics approach, E switched grow light `11ef9572-372b-48db-bf12-a0c8c85ab34d` from off to on. Its actual native mesh emissive materials changed; both other grow-light rows and materials remained identical. Screenshots came from rendered frames, not just a painted UI texture. Software-GPU evidence does not establish hardware frame rate.
 
-Evidence: `output/playwright/cargo-browser-review/{store,reload,retrieve,sofa,light}.json`, `stored-rotated.png`, `sofa-seated.png`, `light-off.png`, `light-on.png`. Browser remains open only for the managed restart proof, after which it will be signed out, blanked and closed.
+Evidence: `output/playwright/cargo-browser-review/{store,reload,retrieve,sofa,light}.json`, `stored-rotated.png`, `sofa-seated.png`, `light-off.png`, `light-on.png`. Browser completed the restart proof, returned to the original ship, signed out, blanked and closed.
+
+## Actual database process restart
+
+The managed standalone writer stopped and restarted during cold backup `recovery-20260910-052604.tar` (SHA256 `bd96ef5487bbee576e852dd0f4b3f73975e5b805b4bc26bbe2e45d40753a34cf`; interruption46.87s). The already-open ordinary browser reconnected automatically. Actor/ship/XY, visit/deck/support, carried items including grid positions and rotation, appearance and three grow-light states/revisions matched exactly. Keyed light rows were sorted for comparison because cache iteration order changed legitimately. Stored cargo had already been retrieved before this restart; its persistence was separately checked by browser reload, not claimed as this process-restart journey.
+
+`restart-before.json`, `restart-after.json` and `after-server-restart.png` record the actual browser proof. The independent authority comparison `.runtime/releases/construction-cargo-20260910/after-backup-continuity.json` preserved all792 review item rows,152 containers, memberships, two instance documents, one active visit, eight interaction bindings and60 interaction rows. Normal-world603 items and other recorded persistence sets also matched.
+
+The actual Return button restored the original ship `83046fa7-da92-4278-97a0-59a1ee732713` at `(0,10.25)`, all seven carried item UUIDs and no construction visit. `exit.json`/`logout.json` record return and actual Sign out; the named `cargo-browser-review` session was then blanked and closed. No final art sign-off or production refit is implied.
