@@ -144,11 +144,15 @@ def app_up(name):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('command', choices=['backup-database', 'public-client-stage', 'public-client-activate', 'public-client-deploy', 'public-client-up', 'public-client-stop', 'public-client-proxy', 'auth-https-setup', 'auth-https-status', 'auth-https-stop', 'keycloak-setup', 'keycloak-start', 'keycloak-stop', 'keycloak-status', 'keycloak-bootstrap', 'keycloak-authoring', 'keycloak-game-origin', 'keycloak-repair-cache', 'keycloak-review-grant', 'keycloak-review-revoke', 'setup', 'up', 'up-client', 'up-dashboard', 'down', 'stop-client', 'stop-dashboard', 'status', 'build-world', 'generate', 'publish', 'publish-review', 'export-art', 'export-voxels', 'export-engine', 'export-assembly', 'export-bulkheads', 'export-crew', 'export-equipment', 'export-inventory-icons', 'mcp', 'smoke-prepare', 'smoke-update', 'smoke', 'smoke-restart', 'smoke-auth-admission', 'restart-database', 'backup'])
+    parser.add_argument('command', choices=['restore-review-prepare', 'restore-review-up', 'restore-review-restart', 'restore-review-stop', 'backup-database', 'public-client-stage', 'public-client-activate', 'public-client-deploy', 'public-client-up', 'public-client-stop', 'public-client-proxy', 'auth-https-setup', 'auth-https-status', 'auth-https-stop', 'keycloak-setup', 'keycloak-start', 'keycloak-stop', 'keycloak-status', 'keycloak-bootstrap', 'keycloak-authoring', 'keycloak-game-origin', 'keycloak-repair-cache', 'keycloak-review-grant', 'keycloak-review-revoke', 'setup', 'up', 'up-client', 'up-dashboard', 'down', 'stop-client', 'stop-dashboard', 'status', 'build-world', 'generate', 'publish', 'publish-review', 'export-art', 'export-voxels', 'export-engine', 'export-assembly', 'export-bulkheads', 'export-crew', 'export-equipment', 'export-inventory-icons', 'mcp', 'smoke-prepare', 'smoke-update', 'smoke', 'smoke-restart', 'smoke-auth-admission', 'restart-database', 'backup'])
     parser.add_argument('--review-name', help='Named additive test database suffix; publish-review only')
     parser.add_argument('--smoke-name', help='Separate named smoke database; additive publication, never reset')
+    parser.add_argument('--archive', help='Private cold archive; restore-review-prepare only')
+    parser.add_argument('--expected-sha256', help='Pinned cold archive digest; restore-review-prepare only')
     args = parser.parse_args()
     command = args.command
+    if (args.archive is not None or args.expected_sha256 is not None) and command != 'restore-review-prepare':
+        parser.error('Recovery archive arguments are valid only for restore-review-prepare')
     smoke_database = CFG['project']['database'] + '-smoke'
     if args.smoke_name is not None:
         import re
@@ -157,7 +161,10 @@ def main():
         smoke_database = CFG['project']['database'] + '-' + args.smoke_name + '-smoke'
     if args.review_name is not None and command != 'publish-review':
         parser.error('--review-name is valid only for publish-review')
-    if command.startswith('public-client-'):
+    if command.startswith('restore-review-'):
+        from restore_review import command as restore_command
+        restore_command(command.removeprefix('restore-review-'), sys.modules[__name__], args.archive, args.expected_sha256)
+    elif command.startswith('public-client-'):
         if command == 'public-client-stop':
             down('public-client')
         else:

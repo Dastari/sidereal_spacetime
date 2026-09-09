@@ -34,3 +34,7 @@ port = 5175
 [public_client]
 host = "0.0.0.0"
 port = 5183
+
+[restore_review]
+host = "127.0.0.1"
+port = 3190
