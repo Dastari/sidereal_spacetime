@@ -1,3 +1,18 @@
+export type { SharedWorldReadiness } from "./bind-shared-world";
+import { bindSharedWorld } from "./bind-shared-world";
+export { SharedWorldStore } from "./shared-world-store";
+export type {
+  SharedAdmission,
+  SharedShipDescription,
+  SharedBodyDescription,
+} from "./shared-world-store";
+export { createSharedWorldPresentation } from "./shared-world-presentation";
+const sharedBindings = new WeakMap<
+  DbConnection,
+  ReturnType<typeof bindSharedWorld>
+>();
+export const getSharedWorldBinding = (connection: DbConnection | null) =>
+  connection ? sharedBindings.get(connection) : undefined;
 import { bindGameSessionProof } from "./game-session-proof";
 import {
   createConnectionResources,
@@ -68,6 +83,19 @@ export function connect(
         }
       }
       if (proofAbort.signal.aborted || !connection.isActive) return;
+      if (
+        new URLSearchParams(location.search).has("sharedWorldReview") &&
+        !new URLSearchParams(location.search).has("constructionReview")
+      ) {
+        sharedBindings.set(
+          connection,
+          bindSharedWorld({
+            connection,
+            resources,
+            onError: (message) => onStatus("offline", message),
+          }),
+        );
+      }
       const subscription = connection
         .subscriptionBuilder()
         .onApplied(() => {
@@ -87,6 +115,8 @@ export function connect(
                 tables.ownConstructionNativePressure,
                 tables.ownConstructionTraversals,
                 tables.ownConstructionTraversalLinks,
+                tables.ownConstructionStairWalks,
+                tables.ownConstructionStairEgressGeometry,
               ]
             : []),
           tables.ownIdentityLinks,
@@ -121,6 +151,8 @@ export function connect(
           connection.db.ownConstructionNativePressure,
           connection.db.ownConstructionTraversals,
           connection.db.ownConstructionTraversalLinks,
+          connection.db.ownConstructionStairWalks,
+          connection.db.ownConstructionStairEgressGeometry,
         ]
       : []),
     connection.db.ownIdentityLinks,

@@ -29,3 +29,9 @@ The installer derives from exact published source pins, compares the staged hand
 - Installer `--check` passed and `python3 scripts/prepare_app.py client` copied the exact manifest into development public assets.
 - No normal database or public release changed by this integration.
 - Actual two-account browser rendering, contact discovery/deletion, canonical-body Observe, login renewal continuity and combined native-stair regression review remain parent-owned acceptance. No hardware FPS or final remote-GLB visual acceptance is claimed here.
+
+## Root real-browser acceptance — 2026-09-10
+
+Two separate ordinary Dastari accounts authenticated through the provider against the isolated shared-provider database. Both received the same canonical system and one other ship contact. Primary browser screenshot `output/playwright/shared-browser-review/first-account.png` shows both native stock exteriors and shared celestial bodies. Secondary screenshot `output/playwright/shared-browser-second-review/second-account.png` and `frame.json` show the independent account, ready scene and remote root. Primary real keyboard E then W moved its accepted ship from y13.549965625 to y35.046756586; the secondary cache received that position and rendered the root at camera-relative (-50,0,-35.046756586). No simulation transform was injected.
+
+Review uses software GPU and manually advanced rendering to avoid monopolising the shared GPU slot; these are visual/integration checks, not hardware FPS measurements. Actual provider token renewal changed the secondary socket while retaining the admission and contact. Root fixed Fast Refresh effect cleanup to detach the old source rather than permanently dispose a React-retained presentation store. Source-mesh shadow flags now replace ineffective InstancedMesh assignments. Nineteen focused presentation/remote-loader tests passed. Normal login activation and explicit migration HUD are the next acceptance step, not yet public.

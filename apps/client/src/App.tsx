@@ -1,3 +1,9 @@
+import { SharedWorldReview } from "./SharedWorldReview";
+import {
+  sharedBodyPresentation,
+  bodyDestinations,
+} from "./shared-body-presentation";
+import { constructionPresentation } from "./construction-presentation";
 import { createMovementControl } from "./movement-control";
 import { createIntentTransmitter } from "./intent-transmitter";
 import { LAB_STORAGE_FIXTURES } from "../../../packages/content/src/storage-fixtures";
@@ -5,7 +11,12 @@ import { ConstructionReview } from "./ConstructionReview";
 import { PILOT_LAYOUT } from "../../../packages/content/src/pilot-layout";
 import { AccountPanel } from "./AccountPanel";
 import { createConnectionSession } from "./connection-session";
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import "@fontsource/barlow/400.css";
 import "@fontsource/barlow/500.css";
 import "@fontsource/barlow/600.css";
@@ -13,6 +24,8 @@ import "@fontsource/barlow-condensed/600.css";
 import "./style.css";
 import {
   connect,
+  createSharedWorldPresentation,
+  getSharedWorldBinding,
   type DbConnection,
   type ShipRow,
   type CharacterRow,
@@ -54,6 +67,17 @@ export default function App({
   accountName?: string;
   onSignOut?: () => void;
 }) {
+  const [sharedReview] = useState(() => {
+    const params = new URLSearchParams(location.search);
+    return params.has("sharedWorldReview") && !params.has("constructionReview");
+  });
+  const [sharedPresentation] = useState(() => createSharedWorldPresentation());
+  const sharedAdmission = useSyncExternalStore(
+    (listener) =>
+      sharedPresentation.store.subscribeTable("admission", listener),
+    () => sharedPresentation.store.getTableSnapshot("admission"),
+  )[0];
+  const localShipId = useRef<string | undefined>(undefined);
   const [selectedObject, setSelectedObject] = useState<string>();
   const [combatEnabled, setCombatEnabled] = useState(false);
   const [equipmentCatalog, setEquipmentCatalog] = useState<EquipmentCatalog>();
@@ -72,15 +96,21 @@ export default function App({
   const [modelStatus, setModelStatus] = useState("Loading vessel"),
     [pending, setPending] = useState(false);
   const connection = useRef<DbConnection | null>(null);
-  const movementControl = useRef<ReturnType<typeof createMovementControl<DbConnection>> | null>(null);
+  const movementControl = useRef<ReturnType<
+    typeof createMovementControl<DbConnection>
+  > | null>(null);
   useEffect(() => {
     const control = createMovementControl<DbConnection>({
-      claim: c => c.reducers.claimInputControl({}),
-      release: c => c.isActive ? c.reducers.releaseInputControl({}) : Promise.resolve(),
-      onError: e => setError(String(e)),
+      claim: (c) => c.reducers.claimInputControl({}),
+      release: (c) =>
+        c.isActive ? c.reducers.releaseInputControl({}) : Promise.resolve(),
+      onError: (e) => setError(String(e)),
     });
     movementControl.current = control;
-    return () => { control.dispose(); movementControl.current = null; };
+    return () => {
+      control.dispose();
+      movementControl.current = null;
+    };
   }, []);
   const session = useRef<ReturnType<
     typeof createConnectionSession<DbConnection>
@@ -113,6 +143,9 @@ export default function App({
       connect,
       (c) => {
         connection.current = c;
+        sharedPresentation.select(
+          sharedReview ? getSharedWorldBinding(c)?.store : undefined,
+        );
       },
       (s, e) => {
         setStatus(s);
@@ -132,27 +165,54 @@ export default function App({
     return () => {
       session.current = null;
       active.dispose();
+      // Detach the old socket. Fast Refresh can re-run this effect while keeping
+      // its state object; permanently disposing that object would hide all contacts.
+      sharedPresentation.select(undefined);
     };
   }, []);
   useEffect(() => {
     session.current?.authenticate(auth);
   }, [auth?.token]);
   const c = connection.current;
-  const ship = (c ? [...c.db.ownShips.iter()][0] : undefined) as
-    ShipRow | undefined;
-  const actor = (c ? [...c.db.ownCharacters.iter()][0] : undefined) as
-    CharacterRow | undefined;
-  const constructionVisit = c
-    ? [...c.db.ownConstructionLocation.iter()][0]
-    : undefined;
-  const constructionInstance =
-    c && constructionVisit
-      ? [...c.db.ownConstructionInstances.iter()].find(
-          (i) => i.id === constructionVisit.instanceId,
+  const ownedActors = c ? [...c.db.ownCharacters.iter()] : [];
+  const actor = (
+    sharedAdmission
+      ? ownedActors.find((row) => row.id === sharedAdmission.characterId)
+      : ownedActors.length === 1
+        ? ownedActors[0]
+        : undefined
+  ) as CharacterRow | undefined;
+  const ship = (
+    c && actor
+      ? [...c.db.ownShips.iter()].find((row) => row.id === actor.shipId)
+      : undefined
+  ) as ShipRow | undefined;
+  localShipId.current = ship?.id;
+  const sharedBinding = sharedReview ? getSharedWorldBinding(c) : undefined;
+  const navigationBodies =
+    sharedReview && sharedAdmission
+      ? sharedBodyPresentation(
+          sharedPresentation.store,
+          performance.now(),
+          false,
         )
-      : undefined;
-  const station = (c ? [...c.db.ownStations.iter()][0] : undefined) as
-    StationRow | undefined;
+      : c
+        ? [...c.db.ownSpaceBodies.iter()]
+        : [];
+  const constructionScene = constructionPresentation(
+    actor?.id,
+    c ? [...c.db.ownConstructionLocation.iter()] : [],
+    c ? [...c.db.ownConstructionInstances.iter()] : [],
+    c ? [...c.db.ownConstructionStairWalks.iter()] : [],
+    c ? [...c.db.ownConstructionStairEgressGeometry.iter()] : [],
+  );
+  const constructionVisit = constructionScene.visit;
+  const constructionInstance = constructionScene.instance;
+  const station = (
+    c && ship
+      ? [...c.db.ownStations.iter()].find((row) => row.shipId === ship.id)
+      : undefined
+  ) as StationRow | undefined;
   const seated = Boolean(actor && station?.occupantId === actor.id),
     ready = status === "ready";
   const inventory = inventoryView(c, ready && !!actor?.connected);
@@ -241,6 +301,7 @@ export default function App({
       !actor?.connected ||
       !ready ||
       !needsCelestialCatalog ||
+      !!sharedAdmission ||
       requestedCatalog.current === actor.id
     )
       return;
@@ -293,7 +354,9 @@ export default function App({
     hasActor: !!actor,
     connected: ready && !!actor?.connected,
     actorName: actor?.name ?? "",
-    shipName: constructionInstance?.name ?? ship?.name ?? "",
+    shipName:
+      constructionInstance?.name ??
+      (constructionScene.egress ? "Stairway / safe exit" : (ship?.name ?? "")),
     seated,
     nearStation,
     interior,
@@ -322,20 +385,7 @@ export default function App({
     pending,
     vistaId,
     reducedMotion,
-    destinations: c
-      ? [...c.db.ownSpaceBodies.iter()]
-          .filter((body) => body.kind === "planet" || body.kind === "star")
-          .map(({ id, key, kind, x, y }) => ({
-            id,
-            name: key
-              .split("-")
-              .map((word) => word[0].toUpperCase() + word.slice(1))
-              .join(" "),
-            kind,
-            x,
-            y,
-          }))
-      : [],
+    destinations: bodyDestinations(navigationBodies),
   };
   const live = useRef({
     actor,
@@ -376,6 +426,33 @@ export default function App({
       setPending(false);
     }
   };
+  useEffect(() => {
+    if (!sharedReview) return;
+    const syncNavigation = () => {
+      const admitted = sharedPresentation.store.getSnapshot().admission[0];
+      const bodies = admitted
+        ? sharedBodyPresentation(
+            sharedPresentation.store,
+            performance.now(),
+            false,
+          )
+        : connection.current
+          ? [...connection.current.db.ownSpaceBodies.iter()]
+          : [];
+      live.current.uiState = {
+        ...live.current.uiState,
+        destinations: bodyDestinations(bodies),
+      };
+      gui.current?.update(live.current.uiState);
+    };
+    const stops = (["bodyMotion", "bodyDescription", "admission"] as const).map(
+      (table) => sharedPresentation.store.subscribeTable(table, syncNavigation),
+    );
+    syncNavigation();
+    return () => {
+      for (const stop of stops) stop();
+    };
+  }, [sharedReview, sharedPresentation]);
   const inventoryCommand = () => ({
     expectedRevision: BigInt(live.current.uiState.inventory?.revision ?? "0"),
     operationId:
@@ -450,6 +527,15 @@ export default function App({
       !ready
     )
       return;
+    // A visit can arrive before its authorized geometry in another keyed view.
+    // Dispose the previous world and wait; never substitute the stock ship or a
+    // cached private document after a grant is revoked.
+    if (
+      constructionScene.active &&
+      !constructionScene.construction &&
+      !constructionScene.egress
+    )
+      return;
     let disposed = false;
     const abort = new AbortController();
     const element = canvas.current!;
@@ -466,14 +552,20 @@ export default function App({
           {
             signal: abort.signal,
             equipmentPose,
-            construction:
-              constructionInstance && constructionVisit
-                ? {
-                    instanceId: constructionInstance.id,
-                    documentJson: constructionInstance.documentJson,
-                    deckId: constructionVisit.deckId,
-                  }
-                : undefined,
+            sharedWorld: sharedReview
+              ? {
+                  store: sharedPresentation.store,
+                  localShipId: () =>
+                    sharedPresentation.store.getSnapshot().admission[0]
+                      ?.shipId ?? localShipId.current,
+                  bodies: (nowMs) =>
+                    sharedPresentation.store.getSnapshot().admission.length
+                      ? sharedBodyPresentation(sharedPresentation.store, nowMs)
+                      : undefined,
+                }
+              : undefined,
+            construction: constructionScene.construction,
+            constructionEgress: constructionScene.egress,
             onScene(scene) {
               if (disposed) return;
               gui.current = createGameUI(
@@ -561,10 +653,36 @@ export default function App({
                           ...inventoryCommand(),
                         }),
                       ),
-                    transferItem: (itemId, containerId) => void perform(() => connection.current!.reducers.transferInventoryItem({itemId,containerId,...inventoryCommand()})),
-                    storeAll: (containerId, destinationId) => void perform(() => connection.current!.reducers.storeAllInventoryItems({containerId,destinationId,...inventoryCommand()})),
-                    takeAll: (containerId) => void perform(() => connection.current!.reducers.takeAllInventoryItems({containerId,...inventoryCommand()})),
-                    dropItem: (itemId) => void perform(() => connection.current!.reducers.dropInventoryItem({itemId,...inventoryCommand()})),
+                    transferItem: (itemId, containerId) =>
+                      void perform(() =>
+                        connection.current!.reducers.transferInventoryItem({
+                          itemId,
+                          containerId,
+                          ...inventoryCommand(),
+                        }),
+                      ),
+                    storeAll: (containerId, destinationId) =>
+                      void perform(() =>
+                        connection.current!.reducers.storeAllInventoryItems({
+                          containerId,
+                          destinationId,
+                          ...inventoryCommand(),
+                        }),
+                      ),
+                    takeAll: (containerId) =>
+                      void perform(() =>
+                        connection.current!.reducers.takeAllInventoryItems({
+                          containerId,
+                          ...inventoryCommand(),
+                        }),
+                      ),
+                    dropItem: (itemId) =>
+                      void perform(() =>
+                        connection.current!.reducers.dropInventoryItem({
+                          itemId,
+                          ...inventoryCommand(),
+                        }),
+                      ),
                     equipItem: (itemId) =>
                       void perform(() =>
                         connection.current!.reducers.equipInventoryItem({
@@ -602,10 +720,21 @@ export default function App({
             onObjectSelected: (id) => {
               if (disposed) return;
               if (id?.startsWith("ground:")) {
-                void perform(()=>connection.current!.reducers.transferInventoryItem({itemId:id.slice(7),containerId:"",...inventoryCommand()}));
+                void perform(() =>
+                  connection.current!.reducers.transferInventoryItem({
+                    itemId: id.slice(7),
+                    containerId: "",
+                    ...inventoryCommand(),
+                  }),
+                );
                 return;
               }
-              if (id && LAB_STORAGE_FIXTURES.some(fixture=>fixture.placementId === id)) {
+              if (
+                id &&
+                LAB_STORAGE_FIXTURES.some(
+                  (fixture) => fixture.placementId === id,
+                )
+              ) {
                 setSelectedObject(undefined);
                 objectCommand("open-storage", id);
               } else setSelectedObject(id);
@@ -643,6 +772,9 @@ export default function App({
   }, [
     constructionInstance?.id,
     constructionInstance?.documentJson,
+    constructionVisit?.visitId,
+    constructionScene.egress?.proofHash,
+    constructionScene.egress?.stairId,
     new URLSearchParams(location.search).has("constructionReview")
       ? ready
       : true,
@@ -690,7 +822,10 @@ export default function App({
   useEffect(() => {
     sceneState.current = {
       selectedObject,
-      groundItems: ready && c && !constructionInstance ? [...c.db.ownGroundItems.iter()] : [],
+      groundItems:
+        ready && c && !constructionScene.active
+          ? [...c.db.ownGroundItems.iter()]
+          : [],
       combat: {
         active: combatEnabled && !!combat?.aimActive,
         angle: combat?.aimAngle ?? 0,
@@ -699,7 +834,15 @@ export default function App({
         shotSequence: combat?.shotSequence,
       },
       constructionDeckId: constructionVisit?.deckId,
-      constructionTraversal: c && constructionVisit ? [...c.db.ownConstructionTraversals.iter()].find(t => t.characterId === actor?.id && t.instanceId === constructionVisit.instanceId) ?? null : null,
+      constructionTraversal:
+        constructionScene.acceptedStair ??
+        (c && constructionVisit
+          ? ([...c.db.ownConstructionTraversals.iter()].find(
+              (t) =>
+                t.characterId === actor?.id &&
+                t.instanceId === constructionVisit.instanceId,
+            ) ?? null)
+          : null),
       constructionDoors:
         c && constructionVisit
           ? [...c.db.ownConstructionDoors.iter()]
@@ -709,8 +852,14 @@ export default function App({
                   d.deckId === constructionVisit.deckId,
               )
               .map((d) => {
-                const seal=[...c.db.ownConstructionNativePressure.iter()].find(p=>p.doorId===d.id);
-                return {openingId:d.id,fraction:d.fraction,sealRetraction:seal?.sealRetraction};
+                const seal = [
+                  ...c.db.ownConstructionNativePressure.iter(),
+                ].find((p) => p.doorId === d.id);
+                return {
+                  openingId: d.id,
+                  fraction: d.fraction,
+                  sealRetraction: seal?.sealRetraction,
+                };
               })
           : [],
       objectLights: LAB_INTERACTIONS.filter((row) => row.kind === "light").map(
@@ -722,17 +871,17 @@ export default function App({
         }),
       ),
       ...inventoryAppearance(inventory, cosmetics),
-      vx: constructionInstance ? 0 : (ship?.vx ?? 0),
-      vy: constructionInstance ? 0 : (ship?.vy ?? 0),
+      vx: constructionScene.active ? 0 : (ship?.vx ?? 0),
+      vy: constructionScene.active ? 0 : (ship?.vy ?? 0),
       actuatorOutputs:
         ready && c && ship
           ? [...c.db.ownActuatorOutputs.iter()].filter(
               (output) => output.shipId === ship.id,
             )
           : [],
-      heading: constructionInstance ? 0 : (ship?.heading ?? 0),
-      x: constructionInstance ? 0 : (ship?.x ?? 0),
-      y: constructionInstance ? 0 : (ship?.y ?? 0),
+      heading: constructionScene.active ? 0 : (ship?.heading ?? 0),
+      x: constructionScene.active ? 0 : (ship?.x ?? 0),
+      y: constructionScene.active ? 0 : (ship?.y ?? 0),
       localX: actor?.localX ?? 0,
       localY: actor?.localY ?? PILOT_LAYOUT.station.y,
       interior,
@@ -743,7 +892,7 @@ export default function App({
       sprinting: actor?.sprinting ?? false,
       vistaId,
       reducedMotion,
-      bodies: c && !constructionInstance ? [...c.db.ownSpaceBodies.iter()] : [],
+      bodies: !constructionScene.active ? navigationBodies : [],
     };
     view.current?.update(sceneState.current);
     gui.current?.update(uiState);
@@ -769,13 +918,22 @@ export default function App({
       send: (c, intent) => {
         const control = movementControl.current;
         if (!control?.canSend(c)) return Promise.resolve();
-        return c.reducers.setIntent({ ...intent, sequence: control.nextSequence(c) });
+        return c.reducers.setIntent({
+          ...intent,
+          sequence: control.nextSequence(c),
+        });
       },
-      onError: e => setError(String(e)),
+      onError: (e) => setError(String(e)),
     });
     const send = () => {
-      const c = connection.current, control = movementControl.current;
-      const active = !!c?.isActive && !!actor?.connected && ready && document.hasFocus() && !document.hidden;
+      const c = connection.current,
+        control = movementControl.current;
+      const active =
+        !!c?.isActive &&
+        !!actor?.connected &&
+        ready &&
+        document.hasFocus() &&
+        !document.hidden;
       control?.activate(active ? c : null);
       if (!active || !c || !control?.canSend(c)) return;
       const blocked =
@@ -825,12 +983,18 @@ export default function App({
         send();
       }
     };
-    const up = (e: KeyboardEvent) => { keys.delete(e.code); send(); };
+    const up = (e: KeyboardEvent) => {
+      keys.delete(e.code);
+      send();
+    };
     const blur = () => {
       keys.clear();
       movementControl.current?.activate(null);
     };
-    const visibility = () => { keys.clear(); send(); };
+    const visibility = () => {
+      keys.clear();
+      send();
+    };
     window.addEventListener("keydown", down);
     window.addEventListener("keyup", up);
     window.addEventListener("focus", send);
@@ -953,6 +1117,14 @@ export default function App({
         }
       />
       <ConstructionReview connection={c} onError={setError} />
+      {sharedReview && (
+        <SharedWorldReview
+          connection={c}
+          source={sharedBinding?.store}
+          readiness={sharedBinding?.readiness}
+          onError={setError}
+        />
+      )}
       <AccountPanel
         connection={c}
         characterId={actor?.id}

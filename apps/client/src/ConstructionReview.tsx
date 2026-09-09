@@ -1,4 +1,4 @@
-import type { DbConnection } from "../../../packages/net/src/generated";
+import type { DbConnection } from "@sidereal/net";
 import { createOperationId } from "./operation-id";
 /** Explicit temporary review transit; this is not physical airlock/docking gameplay. */
 export function ConstructionReview({
@@ -14,9 +14,31 @@ export function ConstructionReview({
   )
     return null;
   const actor = [...connection.db.ownCharacters.iter()][0],
-    visit = [...connection.db.ownConstructionLocation.iter()][0],
+    visit = [...connection.db.ownConstructionLocation.iter()].find(
+      (v) => v.characterId === actor?.id,
+    ),
     instances = [...connection.db.ownConstructionInstances.iter()];
-  if (!actor || !instances.length) return null;
+  if (!actor) return null;
+  const stair = [...connection.db.ownConstructionStairWalks.iter()].find(
+    (s) =>
+      s.characterId === actor.id &&
+      s.instanceId === visit?.instanceId &&
+      s.visitId === visit?.visitId,
+  );
+  if (stair?.egressOnly)
+    return (
+      <aside
+        className="construction-review-controls"
+        aria-label="Stairway safe exit"
+      >
+        <strong>Workspace access ended</strong>
+        <small>
+          Use WASD to reach either stair landing. You will return to your
+          original ship safely.
+        </small>
+      </aside>
+    );
+  if (!instances.length) return null;
   const doors = visit
     ? [...connection.db.ownConstructionDoors.iter()].filter(
         (d) => d.instanceId === visit.instanceId && d.deckId === visit.deckId,
@@ -53,12 +75,12 @@ export function ConstructionReview({
     >
       <strong>Shipyard walking review</strong>
       <small>
-        Authored room and ladder review. Powered airlocks and flight remain
+        Authored rooms, stairs and ladders. Powered airlocks and flight remain
         pending.
       </small>
       {visit ? (
         <button
-          disabled={!!traversal}
+          disabled={!!traversal || !!stair}
           onClick={() =>
             act(() =>
               connection.reducers.leaveConstructionReview({
@@ -180,7 +202,7 @@ export function ConstructionReview({
         doors.map((d) => (
           <button
             key={d.id}
-            disabled={!!traversal || (d.moving && !d.blocked)}
+            disabled={!!traversal || !!stair || (d.moving && !d.blocked)}
             onClick={() =>
               act(() =>
                 connection.reducers.setConstructionDoor({

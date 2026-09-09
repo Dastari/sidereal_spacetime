@@ -1,3 +1,18 @@
+import {
+  loadNativeStairEgress,
+  type NativeStairEgressGeometry,
+} from "./native-stair-scene";
+import { SHARED_STOCK_EXTERIOR_ID } from "@sidereal/content/shared-system";
+import {
+  createRemoteShips,
+  loadRemoteShipPrototype,
+  type RemoteShipStore,
+  type StockExteriorManifest,
+} from "./remote-ships";
+import {
+  loadNativeStairConstruction,
+  type NativeStairAcceptedState,
+} from "./native-stair-scene";
 import type {
   ConstructionTraversalAcceptedState,
   resolveConstructionTraversalFrame,
@@ -80,7 +95,12 @@ export type SceneState = {
   selectedObject?: string;
   /** Accepted occupied deck; changing UI selection cannot supply this value. */
   constructionDeckId?: string;
-  constructionTraversal?: ConstructionTraversalAcceptedState | null;
+  /** Stair accepted poses share the existing construction movement channel;
+   * the kind tag prevents a stale ladder pose from driving a stair fixture. */
+  constructionTraversal?:
+    | ConstructionTraversalAcceptedState
+    | (NativeStairAcceptedState & { kind: "stair" })
+    | null;
   constructionDoors?: readonly {
     openingId: string;
     fraction: number;
@@ -109,7 +129,14 @@ export type SceneState = {
   crewAppearance?: CrewAppearance;
 };
 export interface WorldOptions {
-  construction?: ConstructionRenderInput;
+  /** Opt-in accepted shared projections, separate from the private local ship. */
+  sharedWorld?: {
+    store: RemoteShipStore;
+    localShipId: () => string | undefined;
+    bodies: (nowMs: number) => readonly SpaceBodyState[] | undefined;
+  };
+  construction?: ConstructionRenderInput & { visitId?: string };
+  constructionEgress?: NativeStairEgressGeometry;
   equipmentPose?: EquipmentPoseConfiguration;
   onObjectSelected?: (placementId?: string) => void;
   source?: "voxel" | "original" | "engine-original" | "engine-voxel";
@@ -230,10 +257,12 @@ async function buildWorld(
   let updateConstructionTraversal:
     | ((
         occupiedDeckId: string | undefined,
-        accepted: ConstructionTraversalAcceptedState | null | undefined,
+        accepted: SceneState["constructionTraversal"],
       ) => ReturnType<typeof resolveConstructionTraversalFrame>)
     | undefined;
   let disposeConstruction: (() => void) | undefined;
+  let lastStairPosition: [number, number] | undefined;
+  let stairTravelHeading: number | undefined;
   const engineStudy = options.source?.startsWith("engine-") ?? false;
   const sourceFile = engineStudy
     ? options.source === "engine-original"
@@ -241,20 +270,43 @@ async function buildWorld(
       : "engine-pod.glb"
     : "wayfarer.glb";
   try {
-    if (options.construction) {
-      const loaded = await loadConstructionInstance(
-        scene,
-        shipRoot,
-        options.construction,
-      );
+    if (options.construction || options.constructionEgress) {
+      const loaded = options.constructionEgress
+        ? await loadNativeStairEgress(
+            scene,
+            shipRoot,
+            options.constructionEgress,
+          )
+        : ((await loadNativeStairConstruction(
+            scene,
+            shipRoot,
+            options.construction!,
+          )) ??
+          (await loadConstructionInstance(
+            scene,
+            shipRoot,
+            options.construction!,
+          )));
       installed = loaded.placements;
       imported = { meshes: loaded.meshes };
       walkingElevation = loaded.walkingElevation;
       constructionFrame = loaded.cameraFrame;
       updateConstructionDoors = loaded.setDoors;
       updateConstructionView = loaded.setView;
-      if ("applyAcceptedTraversal" in loaded)
-        updateConstructionTraversal = loaded.applyAcceptedTraversal;
+      if ("applyAcceptedStair" in loaded)
+        updateConstructionTraversal = (deckId, accepted) =>
+          loaded.applyAcceptedStair(
+            deckId,
+            accepted && "kind" in accepted && accepted.kind === "stair"
+              ? accepted
+              : undefined,
+          );
+      else if ("applyAcceptedTraversal" in loaded)
+        updateConstructionTraversal = (deckId, accepted) =>
+          loaded.applyAcceptedTraversal(
+            deckId,
+            accepted && "destinationDeckId" in accepted ? accepted : undefined,
+          );
       if ("dispose" in loaded) disposeConstruction = loaded.dispose;
     } else {
       imported = await SceneLoader.ImportMeshAsync(
@@ -352,9 +404,10 @@ async function buildWorld(
       if (mesh.material)
         mesh.material.transparencyMode = Material.MATERIAL_OPAQUE;
     }
-  const lighting = options.construction
-    ? createConstructionLighting(scene, imported.meshes)
-    : createShipLighting(scene, shipRoot, imported.meshes);
+  const lighting =
+    options.construction || options.constructionEgress
+      ? createConstructionLighting(scene, imported.meshes)
+      : createShipLighting(scene, shipRoot, imported.meshes);
   environment.setPrimaryLight(lighting.primaryLight);
   lighting.addActor(avatar.getChildMeshes());
   const cabinVisibility = createCabinVisibility(
@@ -384,7 +437,9 @@ async function buildWorld(
   emissive.emissiveColor = Color3.FromHexString("#31bafa");
   emissive.disableLighting = true;
   const emitters: Mesh[] = [];
-  for (const room of options.construction ? [] : CABIN_ROOMS) {
+  for (const room of options.construction || options.constructionEgress
+    ? []
+    : CABIN_ROOMS) {
     const plate = CreatePlane(
       "room-sign-" + room.id,
       { width: 1.5, height: 0.25, sideOrientation: Mesh.FRONTSIDE },
@@ -433,13 +488,14 @@ async function buildWorld(
     blurKernelSize: 24,
   });
   glow.intensity = 0.4;
-  const flightEffects = options.construction
-    ? {
-        meshes: [] as Mesh[],
-        update(_outputs: unknown, _motion?: boolean) {},
-        dispose() {},
-      }
-    : createFlightEffects(scene, shipRoot);
+  const flightEffects =
+    options.construction || options.constructionEgress
+      ? {
+          meshes: [] as Mesh[],
+          update(_outputs: unknown, _motion?: boolean) {},
+          dispose() {},
+        }
+      : createFlightEffects(scene, shipRoot);
   for (const mesh of flightEffects.meshes) glow.addIncludedOnlyMesh(mesh);
   for (const mesh of emitters) glow.addIncludedOnlyMesh(mesh);
   // Opaque crew parts also write black/depth into the glow mask, so lenses
@@ -478,7 +534,10 @@ async function buildWorld(
     inspect: false,
     grid: false,
   };
-  const displayed = {
+  const displayed: Pick<
+    SceneState,
+    "heading" | "x" | "y" | "localX" | "localY"
+  > = {
     heading: 0,
     x: 0,
     y: 0,
@@ -576,6 +635,36 @@ async function buildWorld(
   canvas.addEventListener("wheel", wheel, { passive: false });
   canvas.addEventListener("contextmenu", context);
   window.addEventListener("blur", up);
+  let sharedExteriorReady = false;
+  const remoteShips = options.sharedWorld
+    ? createRemoteShips(scene, options.sharedWorld.store, {
+        assetId: SHARED_STOCK_EXTERIOR_ID,
+        localShipId: options.sharedWorld.localShipId,
+        loadPrototype: async () => {
+          const response = await fetch(
+            "/assets/assembly/wayfarer-exterior-r001.json",
+            { signal: options.signal },
+          );
+          if (!response.ok) throw Error("Shared exterior manifest unavailable");
+          const manifest = (await response.json()) as StockExteriorManifest;
+          const prototype = await loadRemoteShipPrototype(
+            scene,
+            manifest,
+            SHARED_STOCK_EXTERIOR_ID,
+          );
+          sharedExteriorReady = true;
+          return prototype;
+        },
+        onError: (error) =>
+          options.onPreviewError?.(
+            error instanceof Error
+              ? error.message
+              : "Shared ship exterior unavailable",
+          ),
+      })
+    : undefined;
+  const visibleBodies = (nowMs: number) =>
+    options.sharedWorld?.bodies(nowMs) ?? state.bodies ?? [];
   let firstFrame = true;
   engine.stopRenderLoop(loadingFrame);
   engine.runRenderLoop(() => {
@@ -616,13 +705,46 @@ async function buildWorld(
       state.constructionTraversal,
     );
     if (traversalFrame) walkingElevation = traversalFrame.walkingElevation;
+    const acceptedStair =
+      state.constructionTraversal &&
+      "kind" in state.constructionTraversal &&
+      state.constructionTraversal.kind === "stair"
+        ? state.constructionTraversal
+        : undefined;
+    const stairMoving = !!(
+      traversalFrame?.inTransit &&
+      acceptedStair &&
+      ["walking", "stepping", "returning"].includes(acceptedStair.phase)
+    );
+    if (traversalFrame?.inTransit && acceptedStair) {
+      if (lastStairPosition) {
+        const sx = acceptedStair.x - lastStairPosition[0],
+          sy = acceptedStair.y - lastStairPosition[1];
+        if (Math.hypot(sx, sy) > 1e-6) stairTravelHeading = Math.atan2(sx, sy);
+      }
+      lastStairPosition = [acceptedStair.x, acceptedStair.y];
+    } else if (lastStairPosition) {
+      // The terminal authority commit changes actor XY/deck together. Do not
+      // visually slide back through the source anchor after the stair row clears.
+      displayed.localX = state.localX;
+      displayed.localY = state.localY;
+      lastStairPosition = undefined;
+      stairTravelHeading = undefined;
+    }
     const dx = state.localX - displayed.localX,
       dy = state.localY - displayed.localY;
     const walking =
-      Math.hypot(dx, dy) > 0.015 && !state.seated && !traversalFrame?.inTransit;
+      !state.seated &&
+      (stairMoving ||
+        (Math.hypot(dx, dy) > 0.015 && !traversalFrame?.inTransit));
+    const movementHeading = stairMoving
+      ? stairTravelHeading
+      : walking
+        ? Math.atan2(dx, dy)
+        : undefined;
     avatar.rotation.y = -posePlacementHeading({
       currentHeading: -avatar.rotation.y,
-      travelHeading: walking ? Math.atan2(dx, dy) : undefined,
+      travelHeading: movementHeading,
       bound: !!equipmentPose?.isBound,
       active: !!state.combat?.active,
       sprinting: state.sprinting,
@@ -654,7 +776,7 @@ async function buildWorld(
           facing: -avatar.rotation.y,
           active: !!state.combat?.active,
           moving: walking,
-          movementHeading: walking ? Math.atan2(dx, dy) : undefined,
+          movementHeading,
           seated: !!state.seated,
           sprinting: state.sprinting,
           hidden: !cabinVisible || !debugFeatures.snapshot().characters,
@@ -728,13 +850,17 @@ async function buildWorld(
       -avatar.position.z * blend * 0.6;
     camera.target.set(
       targetLocalX * c - targetLocalY * s,
-      0.8 * blend + (options.construction ? avatar.position.y : 0),
+      0.8 * blend +
+        (options.construction || options.constructionEgress
+          ? avatar.position.y
+          : 0),
       -(targetLocalX * s + targetLocalY * c),
     );
     const aspect = canvas.clientWidth / Math.max(1, canvas.clientHeight),
       half = displayedFlightZoom * (1 - blend) + displayedZoom * blend;
     camera.radius = half / Math.tan(camera.fov / 2);
-    const focus = state.bodies?.find((body) => body.id === focusedBodyId);
+    const bodies = visibleBodies(frameStarted);
+    const focus = bodies.find((body) => body.id === focusedBodyId);
     if (focusedBodyId && !focus) {
       focusedBodyId = undefined;
       up();
@@ -767,8 +893,9 @@ async function buildWorld(
       enabled: !state.grid,
       planetsEnabled: debugFeatures.snapshot().planets,
       reducedMotion: state.reducedMotion ?? false,
-      bodies: state.bodies ?? [],
+      bodies,
     });
+    remoteShips?.update({ x: displayed.x, y: displayed.y }, frameStarted);
     debugFeatures.afterFrame();
     const lightingAllowed = scene.lightsEnabled;
     localLights.update(
@@ -919,6 +1046,11 @@ async function buildWorld(
       debugFeatures.reset();
     },
     groundItemLabels: () => groundItems.labels(),
+    getSharedWorldDiagnostics: () => ({
+      enabled: !!remoteShips,
+      exteriorReady: sharedExteriorReady,
+      remoteShipIds: remoteShips?.getRootIds() ?? [],
+    }),
     update(next: SceneState) {
       state = next;
       objects.select(next.selectedObject);
@@ -932,7 +1064,9 @@ async function buildWorld(
     customizeCrew,
     focusBody(id?: string) {
       const next =
-        id && state.bodies?.some((body) => body.id === id) ? id : undefined;
+        id && visibleBodies(performance.now()).some((body) => body.id === id)
+          ? id
+          : undefined;
       if (next && next !== focusedBodyId) observation.reset();
       focusedBodyId = next;
       up();
@@ -953,6 +1087,7 @@ async function buildWorld(
       updateConstructionView = undefined;
       scene.onAfterAnimationsObservable.remove(combatObserver);
       groundItems.dispose();
+      remoteShips?.dispose();
       combatAim.dispose();
       localLights.dispose();
       graphics.dispose();

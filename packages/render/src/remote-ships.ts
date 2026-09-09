@@ -226,8 +226,11 @@ export async function loadRemoteShipPrototype(
       const meshes = loaded.meshes.filter(
         (m): m is Mesh => m instanceof Mesh && m.getTotalVertices() > 0,
       );
-      for (const mesh of meshes)
+      for (const mesh of meshes) {
+        // Babylon instances inherit this material/shadow flag from their source.
+        mesh.receiveShadows = true;
         matrices.set(mesh, mesh.computeWorldMatrix(true).clone());
+      }
       for (const mesh of loaded.meshes) {
         mesh.isVisible = false;
         mesh.isPickable = false;
@@ -279,7 +282,6 @@ export async function loadRemoteShipPrototype(
           mesh.rotationQuaternion = q;
           mesh.isVisible = true;
           mesh.isPickable = false;
-          mesh.receiveShadows = true;
           mesh.metadata = {
             remoteShipId: shipId,
             publishedExteriorAssetId: manifest.assetId,
