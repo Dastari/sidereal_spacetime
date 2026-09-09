@@ -49,6 +49,21 @@ def command(action):
   print('Dedicated provider runtime cache directory repaired; no restart or account changes.')
  elif action=='status':
   owned();print(capture(['pct','status',str(CT)]).strip());print(capture(['pct','exec',str(CT),'--','hostname','-I']).strip());print(capture(['pct','exec',str(CT),'--','systemctl','is-active','keycloak']).strip());print('Issuer: https://auth.dastari.net/realms/dastari')
+ elif action=='shared-review-account':
+  owned();ssh(['mkdir','-p',REMOTE]);ssh(['chmod','700',REMOTE])
+  source=ROOT/'ops/keycloak/shared-review-account.py'
+  subprocess.run(['scp','-q',str(source),f'{HOST}:{REMOTE}/{source.name}'],check=True)
+  remote='/root/dastari-keycloak/'+source.name
+  ssh(['pct','push',str(CT),f'{REMOTE}/{source.name}',remote,'--perms','0600'])
+  ssh(['pct','exec',str(CT),'--','python3',remote])
+  # Credentials are captured into a root-only file, never printed or put in argv.
+  payload=capture(['pct','exec',str(CT),'--','cat','/root/dastari-keycloak/sidereal-shared-review.json'])
+  import os,tempfile
+  fd,tmp=tempfile.mkstemp(prefix='sidereal-shared-auth-',dir='/tmp')
+  with os.fdopen(fd,'w') as stream:stream.write(payload)
+  destination=Path('/tmp/sidereal-shared-auth-review.json')
+  os.replace(tmp,destination);destination.chmod(0o600)
+  print('Secondary review credentials available at /tmp/sidereal-shared-auth-review.json (0600); values not printed.')
  elif action in ('authoring', 'game-origin', 'review-grant', 'review-revoke'):
   owned();ssh(['mkdir','-p',REMOTE]);ssh(['chmod','700',REMOTE])
   source=ROOT/'ops/keycloak'/('review-authoring-role.py' if action.startswith('review-') else 'configure-authoring.py' if action=='authoring' else 'configure-game-origin.py')

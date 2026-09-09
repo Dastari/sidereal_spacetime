@@ -514,7 +514,49 @@ The first extended range test exhausted its bounded flight time before reaching
 fresh isolated run increased the bounded flight duration and passed the range
 assertion. The initial shared migration smoke also passed independently. None of
 these tests mutates the normal database. Standalone smoke uses development
-principals; the helper accepts a real-provider client factory, but two different
-Dastari accounts and visible remote exterior browser review remain required before
-normal shared-world activation. This does not claim shared crew boarding, a new
+principals. The separate actual-provider acceptance below now verifies two
+different Dastari accounts; visible remote exterior browser review still remains
+required before normal shared-world activation. This does not claim shared crew boarding, a new
 multi-seat station model, native elevator activation or a50-player capacity proof.
+
+
+## Actual Dastari account acceptance
+
+`scripts/shared-world-provider-smoke.ts` uses the real generated SDK connection,
+original ID-token `bindGameSessionProof`, `bindSharedWorld` readiness, retained
+cell subscription adapter and keyed cache. On 2026-09-09 at 16:22 UTC the first
+run passed for two distinct ordinary Dastari accounts; the repeat at 16:24 UTC
+passed with both existing admissions skipped, confirming review setup does not
+relocate admitted ships or generate replacement identities. The isolated database
+is `sidereal-spacetime-dev-shared-provider-smoke`; normal game data is untouched.
+
+Verified: both accounts see the same canonical bodies and each other's ship;
+accepted pilot input propagates into the other account's keyed remote-motion
+cache; owner-only ship views remain one row each; appearance, item/container/
+hotbar UUIDs survive movement and reconnect; disconnect clears the old cache
+and advances its epoch; reconnect hydrates the remote ship without rejoining.
+The review world retains the two accounts and ships for parent browser review.
+Safe IDs and assertions are in `.runtime/shared-world-provider-summary.json`;
+transport output is `.runtime/shared-world-provider-smoke.log`.
+
+Ordinary login is exercised by `scripts/shared_world_provider_login.py` through
+Keycloak's real Authorization Code + PKCE S256 flow using the existing exact
+HTTPS game-review callback. It enables no password grant and changes no public
+client or realm policy. The game uses the provider **ID token**; the access token
+is not substituted for it. Credentials and temporary token responses remain in
+0600 files outside git and are never printed. Both proof-only provider sessions
+were logged out and their temporary token files removed after validation.
+
+The secondary account is created/reused only through the managed CT116 command
+`python3 scripts/dev.py keycloak-shared-review-account`. Its helper refuses to
+reset an existing username without its managed credential file and does not grant
+construction/admin roles. It leaves existing accounts and Orchard unchanged.
+The reusable primary and secondary credential files remain root-only for parent
+browser review; their values are absent from all evidence. The managed secondary
+profile includes an unverified `.invalid` test email solely to satisfy the
+existing ordinary profile requirements, without relaxing that policy.
+
+This proof has no GPU/browser component. Visible native exterior alignment,
+interpolation and user-facing join flow must still pass the parent browser review.
+The standard managed authority smoke for this named database also passed, and
+full TypeScript plus Python compile checks passed after adding these helpers.
