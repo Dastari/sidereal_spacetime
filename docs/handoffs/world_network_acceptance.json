@@ -1,0 +1,31 @@
+{
+  "date": "2026-09-09",
+  "sourceCheckpoint": "ce099d0e",
+  "status": "isolated candidate verified; paired public rollout pending",
+  "database": "sidereal-spacetime-dev-review-audit-network",
+  "databaseIdentity": "c200801273a2f35bd8ba9afe5007763734878886b5a344b58212873ec8b1a537",
+  "worldBundleSha256": "a75d8f94fe748455ced851e81d2da692037a2bd92c716da57dd8ca161a3738e0",
+  "gates": {
+    "check": "685 tests /132 files",
+    "build": "passed",
+    "art": "passed before client-only dead-ack fix; native assets unchanged",
+    "python": "passed",
+    "authoritySmoke": "sidereal-spacetime-dev-audit-network-smoke passed",
+    "browser": "A/B/A movement; background0intents;75.495s stable socket/74idleintents; keyed update/unsubscribe delete; last-socket replacement then realmovement passed"
+  },
+  "evidence": "output/playwright/audit-network-review",
+  "limitations": [
+    "No fresh OIDC browser renewal test in this pass; focused renewal helper tests passed",
+    "No hardware FPS or100playerload claim",
+    "No database process restart/shared universe acceptance",
+    "Public database/client unchanged; coordinated matching protocol rollout required"
+  ],
+  "cleanup": "named audit-network-review browser blanked and closed; GPU released; no provider roles used",
+  "finalClientSources": {
+    "apps/client/src/App.tsx": "9161ce09bb12d63d71aa272e94707a731bbf1c8833c7aff7d6de50e4d88243d3",
+    "apps/client/src/movement-control.ts": "2a72cf308ee62eeb983deec4aee61701b538c03b6d15f93950af3c143e8673ce",
+    "apps/client/src/intent-transmitter.ts": "728c9d80679cd4af5d5f9ce7b622593eb485a11c6aa636e08255b78da43c7dc7",
+    "packages/net/src/connection-session.ts": "aad21a4ccb01b2b093f2cef3ec55e94c40a52b37fb4b0a974193f2197a961002",
+    "packages/net/src/index.ts": "33044e882381c10dbaefaf043c3a0c6c47bb5fda8404cb70a957a62e8740ceb7"
+  }
+}

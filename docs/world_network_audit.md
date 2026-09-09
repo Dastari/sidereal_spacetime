@@ -1,6 +1,6 @@
 # World and connection audit — 2026-09-09
 
-Status: first corrective candidate implemented and under isolated browser/authority review. This is not shared-world completion or a public deployment. The owner's construction goal remains active; complete the immediate write/input corrections before integrating the qualified native stair fixture. Character/inventory presentation remains externally owned; planets remain paused.
+Status: first corrective candidate passed isolated browser/authority review; public rollout pending. This is not shared-world completion or a public deployment. The owner's construction goal remains active; complete the immediate write/input corrections before integrating the qualified native stair fixture. Character/inventory presentation remains externally owned; planets remain paused.
 
 ## Verified and corrected in this candidate
 
@@ -36,3 +36,11 @@ Compression/light-mode/index choices require supported-version tests and byte/CP
 ## Construction continuation
 
 The native ladder's isolated gameplay/permission/reconnect acceptance is complete. Stairs r000/a003 now have native geometry and 13 focused pure movement tests; integration still requires actual deck-datum binding, private standing/step state, reservations, accepted-position rendering and a real browser walk. Powered elevators remain behind utility/load/interlock authority. Neither fixture completes the authored multi-deck Wayfarer migration.
+
+## Release compatibility
+
+The candidate adds `claim_input_control` / `release_input_control` and makes movement require a claimed connection. Its generated client cannot use an old module, and an old client will not claim on the new module. Publish the validated module and matching client as a coordinated release with existing sessions refreshed; do not update just one half or silently grant control from background legacy input. Until that rollout, the immutable public client and its normal database remain unchanged. The development source tree contains the new protocol and must use the named review database for this candidate. Preserve backups and active character/item state; no database reset is needed for these additive private tables.
+
+## Browser-discovered reconnect correction
+
+The first browser pass recovered its socket/cache/UUIDs but could not resume movement: the control queue awaited release acknowledgement from the closed socket indefinitely. The final candidate skips inactive-socket release in App and bounds release/claim acknowledgement waits. The intent transmitter also invalidates unresolved old-socket calls on replacement and bounds uncertain same-socket acknowledgements. Late completions cannot restore obsolete local ownership. Regression coverage includes deliberately never-resolving promises, disposed controllers, delayed old responses and connection replacement. Combined validation after this correction: 685 tests across132 files and full build pass; final browser movement-after-reconnect passed and evidence is recorded in `handoffs/world_network_acceptance.json`.

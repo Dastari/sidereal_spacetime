@@ -76,7 +76,7 @@ export default function App({
   useEffect(() => {
     const control = createMovementControl<DbConnection>({
       claim: c => c.reducers.claimInputControl({}),
-      release: c => c.reducers.releaseInputControl({}),
+      release: c => c.isActive ? c.reducers.releaseInputControl({}) : Promise.resolve(),
       onError: e => setError(String(e)),
     });
     movementControl.current = control;

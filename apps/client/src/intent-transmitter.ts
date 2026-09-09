@@ -23,18 +23,27 @@ export function createIntentTransmitter<T extends object>(options: {
 }) {
   let previous:
     { connection: T; intent: MovementIntent; at: number } | undefined;
-  let pending: { connection: T; intent: MovementIntent } | undefined;
+  let pending:
+    { connection: T; intent: MovementIntent; at: number } | undefined;
   let currentConnection: T | undefined;
   let failedUntil = 0;
   let disposed = false;
   return {
     offer(connection: T, intent: MovementIntent) {
-      if (disposed || pending) return false;
+      if (disposed) return false;
       const now = options.now();
       if (currentConnection !== connection) {
         currentConnection = connection;
         previous = undefined;
+        pending = undefined;
         failedUntil = 0;
+      }
+      if (pending) {
+        if (now - pending.at < 1000) return false;
+        // Bound an uncertain acknowledgement, not the server request. Newer
+        // connection-local sequences make a late older packet harmless.
+        pending = undefined;
+        previous = undefined;
       }
       if (now < failedUntil) return false;
       const heartbeat = moving(intent) ? 100 : 1000;
@@ -44,12 +53,15 @@ export function createIntentTransmitter<T extends object>(options: {
         now - previous.at < heartbeat
       )
         return false;
-      const attempt = { connection, intent: { ...intent } };
+      const attempt = { connection, intent: { ...intent }, at: now };
       pending = attempt;
       previous = { ...attempt, at: now };
       // Capture synchronous reducer adapter failures too.
       Promise.resolve()
-        .then(() => options.send(connection, attempt.intent))
+        .then(() => {
+          if (disposed || pending !== attempt) return;
+          return options.send(connection, attempt.intent);
+        })
         .then(
           () => {
             if (pending === attempt) pending = undefined;
