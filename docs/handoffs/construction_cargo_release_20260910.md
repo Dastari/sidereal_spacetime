@@ -1,6 +1,6 @@
 # Construction cargo and interactions: coordinated candidate
 
-2026-09-10 · deployed through the managed lifecycle; public artifact and durable-state checks passed, final fresh public browser verification is coordinated by root.
+2026-09-10 · deployed through the managed lifecycle; public artifact and durable-state checks passed, final fresh public browser verification passed.
 
 This candidate combines qualified Wayfarer low-step standing height, independent native-instance cargo inventory and truthful liquid-state projections, qualified sofa seating and grow-light controls, the normal Dastari onboarding wording, and cargo object naming. It preserves the earlier shared-universe entry and original-provider session proof. The independent dashboard adds an editable pinned Wayfarer draft and complete native floor context in its preview paths.
 
@@ -52,4 +52,8 @@ The post-publication authoritative comparison preserved all603 inventory items,1
 
 The editable template is already available through the independent managed dashboard at `https://sidereal.tail7a58a6.ts.net:8445/shipyard`; its current source is served on5174 and both routes were verified. Its independently built artifact SHA-256 is `c1f343ae650d5676c90f6a9937e099d9012366d4e6ddf8dd0841d1cad8aecf11`. No immutable dashboard release mechanism currently exists; this statement distinguishes its managed development deployment from the pinned public game release. Final Objects placement/reload proof and roof/floor visuals passed before deployment.
 
-The preceding317c/66b5 artifacts and all cold archives are preserved. Recovery must keep application protocol compatibility and newer player state; the older client alone is incompatible with newly projected fields. The source freeze is released for the next isolated flight/airlock integration. Final public fresh-login/render evidence belongs to root's post-deployment review; no hardware frame-rate claim or new art sign-off is made.
+The preceding317c/66b5 artifacts and all cold archives are preserved. Recovery must keep application protocol compatibility and newer player state; the older client alone is incompatible with newly projected fields. The source freeze is released for the next isolated flight/airlock integration. Root's final public fresh-login/render review passed; no hardware frame-rate claim or new art sign-off is made.
+
+## Final public browser acceptance
+
+Root signed into the exacta561 public release with a fresh Dastari flow and obtained a fully rendered, ready game scene. Existing actor `689b973d-a007-42cc-9177-293eef7035d5`, original ship `d00e8875-2443-4e86-914a-42827aca9d2e`, the accepted shared admission and all81 visible item rows were retained. Evidence: `output/playwright/construction-public-review/state.json`, `warm.json`, `finish.json` and `private-map-ready.png`. The account was signed out and the named browser blanked and closed. This completes the current matched release acceptance; the next starter/flight/airlock work remains separate.
