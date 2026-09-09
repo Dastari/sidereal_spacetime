@@ -1,5 +1,9 @@
 import { LAB_FLIGHT_ACTUATORS } from "@sidereal/content/flight";
 
+/** Display allowlist only; authority independently validates the full source. */
+export const QUALIFIED_FLIGHT_PREVIEW_SHA256 =
+  "362f37217f63a44a470676f104c8368bd0973ca03f5e29eab190bc4d6df71340";
+
 export interface AuthoredFlightStatus {
   shipId: string;
   stationId: string;
@@ -20,7 +24,7 @@ interface Visit {
   instanceId: string;
   deckId: string;
   visitId: string;
-  revision: bigint;
+  revision?: bigint;
 }
 interface Admission {
   characterId: string;

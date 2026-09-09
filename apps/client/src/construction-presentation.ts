@@ -5,11 +5,13 @@ interface Visit {
   instanceId: string;
   deckId: string;
   standingElevationM?: number;
+  revision?: bigint;
 }
 interface Instance {
   id: string;
   name: string;
   documentJson: string;
+  blueprintSha256?: string;
 }
 interface Stair {
   characterId: string;

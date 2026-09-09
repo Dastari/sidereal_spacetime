@@ -139,6 +139,8 @@ export interface WorldOptions {
   };
   construction?: ConstructionRenderInput & { visitId?: string };
   constructionEgress?: NativeStairEgressGeometry;
+  /** Allow known authored exhaust geometry; accepted telemetry still drives it. */
+  authoredFlightEffects?: boolean;
   equipmentPose?: EquipmentPoseConfiguration;
   onObjectSelected?: (placementId?: string) => void;
   source?: "voxel" | "original" | "engine-original" | "engine-voxel";
@@ -491,7 +493,8 @@ async function buildWorld(
   });
   glow.intensity = 0.4;
   const flightEffects =
-    options.construction || options.constructionEgress
+    (options.construction && !options.authoredFlightEffects) ||
+    options.constructionEgress
       ? {
           meshes: [] as Mesh[],
           update(_outputs: unknown, _motion?: boolean) {},

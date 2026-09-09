@@ -19,6 +19,7 @@ export function objectDetails(
   helm?: { seated: boolean; near: boolean; occupied: boolean },
   outputs: readonly { actuatorId: string; throttle: number }[] = [],
   containers: InventoryState["containers"] = [],
+  fittings: readonly { placedObjectId: string; sourceDeviceId: string }[] = [],
 ): ObjectDetailsState | undefined {
   if (!placementId) return;
   const entry = catalog?.entries.find((e) =>
@@ -34,16 +35,17 @@ export function objectDetails(
   const knownStorage =
     !!storage ||
     LAB_STORAGE_FIXTURES.some((fixture) => fixture.placementId === placementId);
+  const sourceId =
+    fittings.find((fitting) => fitting.placedObjectId === placementId)
+      ?.sourceDeviceId ?? placementId;
   const isHelm =
-    placementId === "equipment-control-seat" ||
-    placementId === "equipment-control-console";
-  const drive = LAB_FLIGHT_ACTUATORS.find(
-    (device) => device.id === placementId,
-  );
+    sourceId === "equipment-control-seat" ||
+    sourceId === "equipment-control-console";
+  const drive = LAB_FLIGHT_ACTUATORS.find((device) => device.id === sourceId);
   const driveName = drive
-    ? placementId.includes("-main-")
+    ? sourceId.includes("-main-")
       ? "Main engine"
-      : placementId.includes("-retro-")
+      : sourceId.includes("-retro-")
         ? "Retro thruster"
         : "Maneuvering thruster"
     : undefined;

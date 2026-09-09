@@ -1,4 +1,9 @@
 import {
+  QUALIFIED_FLIGHT_PREVIEW_SHA256,
+  authoredFlightPresentation,
+  authoredExhaustTelemetry,
+} from "./construction-flight-presentation";
+import {
   readCargo,
   usesScopedCargo,
   moveScopedCargo,
@@ -80,9 +85,7 @@ export default function App({
     const params = new URLSearchParams(location.search);
     return params.has("sharedWorldReview") && !params.has("constructionReview");
   });
-  const [sharedEnabled] = useState(
-    () => !new URLSearchParams(location.search).has("constructionReview"),
-  );
+  const [sharedEnabled] = useState(true);
   const [sharedPresentation] = useState(() => createSharedWorldPresentation());
   const sharedAdmission = useSyncExternalStore(
     (listener) =>
@@ -214,6 +217,12 @@ export default function App({
       : c
         ? [...c.db.ownSpaceBodies.iter()]
         : [];
+  const gameShipAccess =
+    c && actor
+      ? [...c.db.ownGameShipAccess.iter()].find(
+          (row) => row.characterId === actor.id && row.shipId === actor.shipId,
+        )
+      : undefined;
   const constructionScene = constructionPresentation(
     actor?.id,
     c ? [...c.db.ownConstructionLocation.iter()] : [],
@@ -223,6 +232,35 @@ export default function App({
   );
   const constructionVisit = constructionScene.visit;
   const constructionInstance = constructionScene.instance;
+  const authoredFlight = authoredFlightPresentation(
+    actor,
+    constructionVisit,
+    !!constructionInstance,
+    c ? [...c.db.ownWorldAdmission.iter()] : [],
+    c ? [...c.db.ownAuthoredFlights.iter()] : [],
+    ship,
+  );
+  const staticConstruction =
+    constructionScene.active && !authoredFlight.admitted;
+  const displayedOutputs = readyForOutputs();
+  function readyForOutputs() {
+    const outputs =
+      c && actor?.connected && ship
+        ? [...c.db.ownActuatorOutputs.iter()].filter(
+            (row) => row.shipId === ship.id,
+          )
+        : [];
+    return constructionScene.active
+      ? authoredFlight.admitted && ship && c
+        ? authoredExhaustTelemetry(
+            ship.id,
+            [...c.db.ownAuthoredFlightFittings.iter()],
+            outputs,
+          )
+        : []
+      : outputs;
+  }
+
   const inspectionCatalog = useMemo(
     () =>
       constructionScene.active
@@ -242,7 +280,13 @@ export default function App({
       ? [...c.db.ownStations.iter()].find((row) => row.shipId === ship.id)
       : undefined
   ) as StationRow | undefined;
-  const seated = Boolean(actor && station?.occupantId === actor.id),
+  const seated = Boolean(
+      actor &&
+      (station?.occupantId === actor.id ||
+        (constructionVisit &&
+          authoredFlight.status &&
+          authoredFlight.status.seatState !== "none")),
+    ),
     ready = status === "ready";
   const inventory = inventoryView(c, ready && !!actor?.connected);
   const appearanceRow =
@@ -285,6 +329,7 @@ export default function App({
         )
       : undefined;
   const nearStation =
+    (!constructionScene.active || authoredFlight.admitted) &&
     !!actor &&
     !!station &&
     actor.shipId === station.shipId &&
@@ -340,6 +385,7 @@ export default function App({
       !ready ||
       !needsCelestialCatalog ||
       !!sharedAdmission ||
+      !!gameShipAccess ||
       requestedCatalog.current === actor.id
     )
       return;
@@ -350,7 +396,14 @@ export default function App({
       requestedCatalog.current = "";
       setError(String(e));
     });
-  }, [actor?.id, actor?.connected, ready, needsCelestialCatalog]);
+  }, [
+    actor?.id,
+    actor?.connected,
+    ready,
+    needsCelestialCatalog,
+    gameShipAccess?.shipId,
+    sharedAdmission?.shipId,
+  ]);
   useEffect(() => {
     localStorage.setItem("sidereal.vista", vistaId);
   }, [vistaId]);
@@ -383,8 +436,11 @@ export default function App({
       interactions,
       actor,
       { seated, near: nearStation, occupied: !!station?.occupantId },
-      c && ready ? [...c.db.ownActuatorOutputs.iter()] : [],
+      ready ? displayedOutputs : [],
       inventory.containers,
+      c && constructionScene.active
+        ? [...c.db.ownAuthoredFlightFittings.iter()]
+        : [],
     ),
     interactionPrompt,
     inventory,
@@ -395,12 +451,12 @@ export default function App({
     connected: ready && !!actor?.connected,
     actorName: actor?.name ?? "",
     shipName:
-      constructionInstance?.name ??
+      (gameShipAccess ? ship?.name : constructionInstance?.name) ??
       (constructionScene.egress ? "Stairway / safe exit" : (ship?.name ?? "")),
     seated,
     nearStation,
     interior,
-    speed: constructionInstance
+    speed: staticConstruction
       ? 0
       : ship
         ? Math.hypot(ship.vx, ship.vy)
@@ -499,6 +555,31 @@ export default function App({
       crypto.randomUUID?.() ??
       `inventory-${Date.now()}-${Array.from(crypto.getRandomValues(new Uint32Array(2))).join("-")}`,
   });
+  const useControlStation = () => {
+    const current = connection.current;
+    const actorNow = current && [...current.db.ownCharacters.iter()][0];
+    if (!current || !actorNow?.connected) return;
+    const visit = [...current.db.ownConstructionLocation.iter()].find(
+      (row) => row.characterId === actorNow.id,
+    );
+    if (!visit) return void perform(() => current.reducers.useStation({}));
+    const flight = [...current.db.ownAuthoredFlights.iter()].find(
+      (row) => row.shipId === actorNow.shipId,
+    );
+    if (!flight)
+      return setError(
+        "Activate this authored ship and begin its flight review before piloting.",
+      );
+    void perform(() =>
+      flight.seatState !== "none"
+        ? current.reducers.leaveAuthoredPilot({})
+        : current.reducers.enterAuthoredPilot({
+            stationId: flight.stationId,
+            expectedStationRevision: flight.stationRevision,
+            operationId: createOperationId(),
+          }),
+    );
+  };
   const objectCommand = (action: string, placementId?: string) => {
     const connectionNow = connection.current;
     if (
@@ -518,7 +599,7 @@ export default function App({
       connectionNow &&
       live.current.actor?.connected
     ) {
-      void perform(() => connectionNow.reducers.useStation({}));
+      useControlStation();
       return;
     }
     const row =
@@ -545,7 +626,7 @@ export default function App({
       live.current.actor?.connected &&
       (live.current.uiState.seated || live.current.uiState.nearStation)
     )
-      void perform(() => connection.current!.reducers.useStation({}));
+      useControlStation();
   };
   const issuedKit = useRef("");
   useEffect(() => {
@@ -553,18 +634,21 @@ export default function App({
       !ready ||
       !actor?.connected ||
       inventory.revision !== "0" ||
+      !!gameShipAccess ||
       issuedKit.current === actor.id
     )
       return;
     issuedKit.current = actor.id;
     void perform(() => connection.current!.reducers.claimStarterKit({}));
-  }, [ready, actor?.id, actor?.connected, inventory.revision]);
+  }, [
+    ready,
+    actor?.id,
+    actor?.connected,
+    inventory.revision,
+    gameShipAccess?.shipId,
+  ]);
   useEffect(() => {
-    if (
-      new URLSearchParams(location.search).has("constructionReview") &&
-      !ready
-    )
-      return;
+    if (!ready || (gameShipAccess && !constructionVisit)) return;
     // A visit can arrive before its authorized geometry in another keyed view.
     // Dispose the previous world and wait; never substitute the stock ship or a
     // cached private document after a grant is revoked.
@@ -603,6 +687,9 @@ export default function App({
                 }
               : undefined,
             construction: constructionScene.construction,
+            authoredFlightEffects:
+              constructionInstance?.blueprintSha256 ===
+              QUALIFIED_FLIGHT_PREVIEW_SHA256,
             constructionEgress: constructionScene.egress,
             onScene(scene) {
               if (disposed) return;
@@ -626,12 +713,7 @@ export default function App({
                     close: () => setSelectedObject(undefined),
                   },
                   view: () => setInterior((v) => !v),
-                  station: () => {
-                    if (live.current.actor?.connected)
-                      void perform(() =>
-                        connection.current!.reducers.useStation({}),
-                      );
-                  },
+                  station: useControlStation,
                   enter: (name) =>
                     void perform(() =>
                       connection.current!.reducers.enterLab({ name }),
@@ -858,9 +940,8 @@ export default function App({
     constructionVisit?.visitId,
     constructionScene.egress?.proofHash,
     constructionScene.egress?.stairId,
-    new URLSearchParams(location.search).has("constructionReview")
-      ? ready
-      : true,
+    gameShipAccess?.shipId,
+    ready,
   ]);
   useEffect(() => {
     if (!rendererFailed || !canvas.current) return;
@@ -964,17 +1045,12 @@ export default function App({
             }),
           ),
       ...inventoryAppearance(inventory, cosmetics),
-      vx: constructionScene.active ? 0 : (ship?.vx ?? 0),
-      vy: constructionScene.active ? 0 : (ship?.vy ?? 0),
-      actuatorOutputs:
-        ready && c && ship
-          ? [...c.db.ownActuatorOutputs.iter()].filter(
-              (output) => output.shipId === ship.id,
-            )
-          : [],
-      heading: constructionScene.active ? 0 : (ship?.heading ?? 0),
-      x: constructionScene.active ? 0 : (ship?.x ?? 0),
-      y: constructionScene.active ? 0 : (ship?.y ?? 0),
+      vx: staticConstruction ? 0 : (ship?.vx ?? 0),
+      vy: staticConstruction ? 0 : (ship?.vy ?? 0),
+      actuatorOutputs: ready ? displayedOutputs : [],
+      heading: staticConstruction ? 0 : (ship?.heading ?? 0),
+      x: staticConstruction ? 0 : (ship?.x ?? 0),
+      y: staticConstruction ? 0 : (ship?.y ?? 0),
       localX: actor?.localX ?? 0,
       localY: actor?.localY ?? PILOT_LAYOUT.station.y,
       interior,
@@ -988,7 +1064,7 @@ export default function App({
       sprinting: actor?.sprinting ?? false,
       vistaId,
       reducedMotion,
-      bodies: !constructionScene.active ? navigationBodies : [],
+      bodies: !staticConstruction ? navigationBodies : [],
     };
     view.current?.update(sceneState.current);
     gui.current?.update(uiState);

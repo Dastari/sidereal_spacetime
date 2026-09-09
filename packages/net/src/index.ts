@@ -83,7 +83,7 @@ export function connect(
         }
       }
       if (proofAbort.signal.aborted || !connection.isActive) return;
-      if (!new URLSearchParams(location.search).has("constructionReview")) {
+      {
         sharedBindings.set(
           connection,
           bindSharedWorld({
@@ -102,20 +102,22 @@ export function connect(
         })
         .onError((e) => onStatus("offline", subscriptionErrorMessage(e)))
         .subscribe([
+          // Gameplay reads are server-filtered for accepted owned ships and reviews.
+          tables.ownGameShipAccess,
+          tables.ownConstructionInstances,
+          tables.ownConstructionDecks,
+          tables.ownConstructionLocation,
+          tables.ownConstructionSeat,
+          tables.ownAuthoredFlights,
+          tables.ownAuthoredFlightFittings,
+          tables.ownConstructionDoors,
+          tables.ownConstructionNativePressure,
+          tables.ownConstructionTraversals,
+          tables.ownConstructionTraversalLinks,
+          tables.ownConstructionStairWalks,
+          tables.ownConstructionStairEgressGeometry,
           ...(new URLSearchParams(location.search).has("constructionReview")
-            ? [
-                tables.ownConstructionGrants,
-                tables.ownConstructionInstances,
-                tables.ownConstructionDecks,
-                tables.ownConstructionLocation,
-                tables.ownConstructionSeat,
-                tables.ownConstructionDoors,
-                tables.ownConstructionNativePressure,
-                tables.ownConstructionTraversals,
-                tables.ownConstructionTraversalLinks,
-                tables.ownConstructionStairWalks,
-                tables.ownConstructionStairEgressGeometry,
-              ]
+            ? [tables.ownConstructionGrants]
             : []),
           tables.ownIdentityLinks,
           tables.ownAppearance,
@@ -142,20 +144,22 @@ export function connect(
     .onDisconnect(() => onStatus("offline"));
   const connection = builder.build();
   for (const table of [
+    // Gameplay reads are server-filtered for accepted owned ships and reviews.
+    connection.db.ownGameShipAccess,
+    connection.db.ownConstructionInstances,
+    connection.db.ownConstructionDecks,
+    connection.db.ownConstructionLocation,
+    connection.db.ownConstructionSeat,
+    connection.db.ownAuthoredFlights,
+    connection.db.ownAuthoredFlightFittings,
+    connection.db.ownConstructionDoors,
+    connection.db.ownConstructionNativePressure,
+    connection.db.ownConstructionTraversals,
+    connection.db.ownConstructionTraversalLinks,
+    connection.db.ownConstructionStairWalks,
+    connection.db.ownConstructionStairEgressGeometry,
     ...(new URLSearchParams(location.search).has("constructionReview")
-      ? [
-          connection.db.ownConstructionGrants,
-          connection.db.ownConstructionInstances,
-          connection.db.ownConstructionDecks,
-          connection.db.ownConstructionLocation,
-          connection.db.ownConstructionSeat,
-          connection.db.ownConstructionDoors,
-          connection.db.ownConstructionNativePressure,
-          connection.db.ownConstructionTraversals,
-          connection.db.ownConstructionTraversalLinks,
-          connection.db.ownConstructionStairWalks,
-          connection.db.ownConstructionStairEgressGeometry,
-        ]
+      ? [connection.db.ownConstructionGrants]
       : []),
     connection.db.ownIdentityLinks,
     connection.db.ownAppearance,

@@ -1,3 +1,4 @@
+import { AuthoredFlightReview } from "./AuthoredFlightReview";
 import type { DbConnection } from "@sidereal/net";
 import { createOperationId } from "./operation-id";
 /** Explicit temporary review transit; this is not physical airlock/docking gameplay. */
@@ -19,6 +20,14 @@ export function ConstructionReview({
     ),
     instances = [...connection.db.ownConstructionInstances.iter()];
   if (!actor) return null;
+  // Permanent gameplay membership has no review return destination. A query
+  // flag must not expose authoring/review controls for a normal owned ship.
+  if (
+    [...connection.db.ownGameShipAccess.iter()].some(
+      (row) => row.characterId === actor.id && row.shipId === actor.shipId,
+    )
+  )
+    return null;
   const stair = [...connection.db.ownConstructionStairWalks.iter()].find(
     (s) =>
       s.characterId === actor.id &&
@@ -38,7 +47,10 @@ export function ConstructionReview({
         </small>
       </aside>
     );
-  if (!instances.length) return null;
+  if (!instances.length && !visit) return null;
+  const flight = [...connection.db.ownAuthoredFlights.iter()].find(
+    (row) => row.shipId === visit?.instanceId,
+  );
   const doors = visit
     ? [...connection.db.ownConstructionDoors.iter()].filter(
         (d) => d.instanceId === visit.instanceId && d.deckId === visit.deckId,
@@ -75,19 +87,28 @@ export function ConstructionReview({
     >
       <strong>Shipyard walking review</strong>
       <small>
-        Authored rooms, stairs and ladders. Powered airlocks and flight remain
-        pending.
+        Authored rooms, stairs and ladders. Qualified ships can enter an
+        explicit flight review. Powered airlocks remain pending.
       </small>
       {visit ? (
         <button
-          disabled={!!traversal || !!stair}
+          disabled={
+            !!traversal || !!stair || (!!flight && flight.seatState !== "none")
+          }
           onClick={() =>
             act(() =>
-              connection.reducers.leaveConstructionReview({
-                expectedVisitId: visit.visitId,
-                expectedRevision: visit.revision,
-                operationId: createOperationId(),
-              }),
+              flight?.flightAdmitted
+                ? connection.reducers.returnAuthoredFlightReview({
+                    expectedVisitId: visit.visitId,
+                    expectedVisitRevision: visit.revision,
+                    expectedAdmissionRevision: flight.admissionRevision,
+                    operationId: createOperationId(),
+                  })
+                : connection.reducers.leaveConstructionReview({
+                    expectedVisitId: visit.visitId,
+                    expectedRevision: visit.revision,
+                    operationId: createOperationId(),
+                  }),
             )
           }
         >
@@ -118,6 +139,13 @@ export function ConstructionReview({
             Walk {i.name} · {i.id.slice(0, 8)}
           </button>
         ))
+      )}
+      {visit && (
+        <AuthoredFlightReview
+          connection={connection}
+          instanceId={visit.instanceId}
+          onError={onError}
+        />
       )}
       {visit && (
         <section aria-label="Deck traversal">
