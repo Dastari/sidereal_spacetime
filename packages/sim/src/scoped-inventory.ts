@@ -79,6 +79,8 @@ export interface InventoryActorAccess {
   instanceRevision: bigint;
   interactionPointM: Point3;
   nowMicros: bigint;
+  /** Current exact game-owned binding, resolved only by server access adapter. */
+  ownedGameVisit?: boolean;
   grants: readonly {
     actorId: string;
     instanceId: string;
@@ -250,14 +252,15 @@ function rootAccess(scope: InventoryRootScope, access: InventoryActorAccess) {
     "Container is on another deck",
   );
   demand(
-    access.grants.some(
-      (g) =>
-        g.actorId === access.actorId &&
-        g.instanceId === scope.instanceId &&
-        g.capability === "inventory.transfer" &&
-        !g.revoked &&
-        g.expiresMicros > access.nowMicros,
-    ),
+    access.ownedGameVisit === true ||
+      access.grants.some(
+        (g) =>
+          g.actorId === access.actorId &&
+          g.instanceId === scope.instanceId &&
+          g.capability === "inventory.transfer" &&
+          !g.revoked &&
+          g.expiresMicros > access.nowMicros,
+      ),
     "grant-denied",
     "Current instance inventory grant required",
   );

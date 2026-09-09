@@ -1,4 +1,8 @@
 import {
+  ownedGameShipAccess,
+  GAME_OWNED_TEMPLATE_NAMESPACE,
+} from "./game-ship-access-authority";
+import {
   SenderError,
   type ReducerCtx,
   type ViewCtx,
@@ -199,10 +203,18 @@ function readCargo(ctx: ReadContext, nowMicros = 0n): CargoInventoryReader {
             id: i.id,
             ownerPrincipal: i.owner.toHexString(),
             workspaceId: i.workspaceId,
+            gameOwned: i.workspaceId === GAME_OWNED_TEMPLATE_NAMESPACE,
             revision: i.revision,
           }
         : undefined;
     },
+    ownedGameVisit: (visit) =>
+      ownedGameShipAccess(
+        ctx,
+        visit.instanceId,
+        visit.deckId,
+        nowMicros || undefined,
+      ).useObjects,
     grants: () =>
       [...ctx.db.constructionGrant.by_principal.filter(ctx.sender)]
         .filter((g) => g.capability === "instance.spawn")

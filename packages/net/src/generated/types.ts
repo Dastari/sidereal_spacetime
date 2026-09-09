@@ -687,6 +687,28 @@ export const EditReceipt = __t.object("EditReceipt", {
 });
 export type EditReceipt = __Infer<typeof EditReceipt>;
 
+export const GameShipAccess = __t.object("GameShipAccess", {
+  shipId: __t.string(),
+  instanceId: __t.string(),
+  owner: __t.identity(),
+  characterId: __t.string(),
+  deckId: __t.string(),
+  templateSha256: __t.string(),
+  instanceRevision: __t.u64(),
+  lifecycle: __t.string(),
+});
+export type GameShipAccess = __Infer<typeof GameShipAccess>;
+
+export const GameShipAccessStatus = __t.object("GameShipAccessStatus", {
+  shipId: __t.string(),
+  characterId: __t.string(),
+  instanceId: __t.string(),
+  deckId: __t.string(),
+  revision: __t.u64(),
+  templateSha256: __t.string(),
+});
+export type GameShipAccessStatus = __Infer<typeof GameShipAccessStatus>;
+
 export const IdentityLink = __t.object("IdentityLink", {
   id: __t.string(),
   operationKey: __t.string(),
@@ -939,6 +961,9 @@ export type OwnConstructionTraversals = __Infer<typeof OwnConstructionTraversals
 export const OwnEditReceipts = __t.object("OwnEditReceipts", {});
 export type OwnEditReceipts = __Infer<typeof OwnEditReceipts>;
 
+export const OwnGameShipAccess = __t.object("OwnGameShipAccess", {});
+export type OwnGameShipAccess = __Infer<typeof OwnGameShipAccess>;
+
 export const OwnGroundItems = __t.object("OwnGroundItems", {});
 export type OwnGroundItems = __Infer<typeof OwnGroundItems>;
 
@@ -977,6 +1002,15 @@ export type OwnStations = __Infer<typeof OwnStations>;
 
 export const OwnWorldAdmission = __t.object("OwnWorldAdmission", {});
 export type OwnWorldAdmission = __Infer<typeof OwnWorldAdmission>;
+
+export const PersonalStarterReceipt = __t.object("PersonalStarterReceipt", {
+  owner: __t.identity(),
+  entitlement: __t.string(),
+  characterId: __t.string(),
+  shipId: __t.string(),
+  templateSha256: __t.string(),
+});
+export type PersonalStarterReceipt = __Infer<typeof PersonalStarterReceipt>;
 
 export const PilotLayoutReceipt = __t.object("PilotLayoutReceipt", {
   shipId: __t.string(),

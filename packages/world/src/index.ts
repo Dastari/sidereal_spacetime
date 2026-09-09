@@ -1,3 +1,13 @@
+import { preserveWayfarerStarterKit } from "./wayfarer-personal-kit";
+import {
+  personalStarterReceipt,
+  gameShipAccess,
+} from "./wayfarer-starter-tables";
+import { createWayfarerStarterAuthority } from "./wayfarer-starter-authority";
+import {
+  gameShipAccessProjection,
+  ownGameShipAccess as readGameShipAccess,
+} from "./game-ship-access-authority";
 import {
   constructionFlightBinding,
   constructionFlightFitting,
@@ -127,7 +137,6 @@ import * as inventoryOperations from "./inventory-operations";
 import { schema, table, t, SenderError } from "spacetimedb/server";
 import { ScheduleAt } from "spacetimedb";
 import { walk, assertRevision } from "../../sim/src/index";
-import { STARTER } from "../../content/src/index";
 import { CABIN_COLLIDERS } from "../../content/src/interior";
 import { LAB_BODIES, bodyDiscoverable } from "../../content/src/space";
 import { LAB_FLIGHT_ACTUATORS } from "../../content/src/flight";
@@ -213,6 +222,8 @@ const movementTimer = table(
   { scheduledId: t.u64().primaryKey().autoInc(), scheduledAt: t.scheduleAt() },
 );
 const db = schema({
+  personalStarterReceipt,
+  gameShipAccess,
   constructionFlightBinding,
   constructionFlightFitting,
   constructionFlightStation,
@@ -418,63 +429,7 @@ export const enterLab = db.reducer({ name: t.string() }, (ctx, { name }) => {
     });
     return;
   }
-  const characterId = ctx.newUuidV4().toString(),
-    shipId = ctx.newUuidV4().toString();
-  interactions.seedInteractions(ctx, shipId);
-  ctx.db.character.insert({
-    id: characterId,
-    owner: ctx.sender,
-    name: clean,
-    shipId,
-    localX: 0,
-    localY: PILOT_LAYOUT.station.y,
-    connected: true,
-    sprinting: false,
-  });
-  ctx.db.ship.insert({
-    id: shipId,
-    owner: ctx.sender,
-    name: STARTER.name,
-    revision: 1n,
-    x: 0,
-    y: 0,
-    vx: 0,
-    vy: 0,
-    heading: 0,
-    omega: 0,
-    massKg: STARTER.massKg,
-    thrustN: STARTER.thrustN,
-    turnAcceleration: STARTER.turnAcceleration,
-    tick: 0n,
-  });
-  ctx.db.station.insert({
-    id: ctx.newUuidV4().toString(),
-    shipId,
-    occupantId: characterId,
-    localX: 0,
-    localY: PILOT_LAYOUT.station.y,
-    operational: true,
-  });
-  alignPilotLayout(ctx, shipId);
-  ctx.db.input.insert({
-    characterId,
-    sequence: 0n,
-    throttle: 0,
-    turn: 0,
-    dx: 0,
-    dy: 0,
-    updatedMicros: ctx.timestamp.microsSinceUnixEpoch,
-    sprint: false,
-  });
-  // New characters enter the canonical system in this same transaction. Existing
-  // characters above retain their current space until an explicit join action.
-  sharedWorld.joinSharedSystem(ctx, {
-    characterId,
-    shipId,
-    expectedShipRevision: ctx.db.ship.id.find(shipId)!.revision,
-    expectedAdmissionRevision: 0n,
-    operationId: ctx.newUuidV4().toString(),
-  });
+  createWayfarerStarterAuthority(ctx, clean);
 });
 export const connectSession = db.clientConnected(connected);
 export const bindGameSession = db.reducer(
@@ -880,7 +835,9 @@ export const storeAllInventoryItems = db.reducer(
   auth.gameAction(inventoryOperations.storeAll, true),
 );
 export const claimStarterKit = db.reducer(
-  auth.gameAction(inventory.claimKit, true),
+  auth.gameAction((ctx) => {
+    if (!preserveWayfarerStarterKit(ctx)) inventory.claimKit(ctx);
+  }, true),
 );
 export const claimCharacterArmory = db.reducer(
   { expectedRevision: t.u64(), operationId: t.string() },
@@ -1281,4 +1238,10 @@ export const ownAuthoredFlightFittings = db.view(
   { name: "own_authored_flight_fittings", public: true },
   t.array(authoredFlightFittingProjection),
   auth.gameView(readAuthoredFlightFittings),
+);
+
+export const ownGameShipAccess = db.view(
+  { name: "own_game_ship_access", public: true },
+  t.array(gameShipAccessProjection),
+  auth.gameView(readGameShipAccess),
 );

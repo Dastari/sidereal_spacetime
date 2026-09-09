@@ -129,6 +129,7 @@ function fixture() {
       "objectId",
     ),
     input: table({}, "characterId"),
+    inventoryItem: table({ by_character: "characterId" }),
     inventoryContainer: table({ by_character: "characterId" }),
     inventoryContainerScope: table({}, "containerId"),
     instanceInventoryBinding: table(

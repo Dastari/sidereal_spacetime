@@ -1,3 +1,8 @@
+import {
+  ownedGameShipAccess,
+  GAME_OWNED_TEMPLATE_NAMESPACE,
+  type GameShipAccessDatabase,
+} from "./game-ship-access-authority";
 import { t } from "spacetimedb/server";
 import type { Identity } from "spacetimedb";
 import type {
@@ -32,7 +37,14 @@ export interface FlightViewContext {
       };
     };
     constructionInstance: {
-      id: Find<Owned & { id: string; revision: bigint }>;
+      id: Find<
+        Owned & {
+          id: string;
+          revision: bigint;
+          workspaceId: string;
+          blueprintSha256: string;
+        }
+      >;
     };
     constructionLocation: {
       characterId: Find<{
@@ -74,7 +86,7 @@ export interface FlightViewContext {
         }
       >;
     };
-  };
+  } & GameShipAccessDatabase;
 }
 export type AcceptedFlightContext = {
   sender: Identity;
@@ -85,7 +97,8 @@ export type AcceptedFlightContext = {
     | "worldAdmission"
     | "constructionFlightBinding"
     | "constructionInstance"
-  >;
+  > &
+    GameShipAccessDatabase;
 };
 function bounded<T>(rows: Iterable<T>, max: number): T[] | undefined {
   const out: T[] = [];
@@ -111,6 +124,17 @@ export function hasAcceptedAuthoredFlight(
     admission = ctx.db.worldAdmission.characterId.find(a.id),
     binding = ctx.db.constructionFlightBinding.shipId.find(a.shipId),
     instance = ctx.db.constructionInstance.id.find(a.shipId);
+  if (instance?.workspaceId === GAME_OWNED_TEMPLATE_NAMESPACE) {
+    return !!(
+      visit &&
+      binding &&
+      binding.owner.isEqual(ctx.sender) &&
+      binding.instanceId === a.shipId &&
+      binding.deckId === visit.deckId &&
+      binding.instanceRevision === instance.revision &&
+      ownedGameShipAccess(ctx, a.shipId, visit.deckId).readInterior
+    );
+  }
   return !!(
     visit &&
     review &&

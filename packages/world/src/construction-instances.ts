@@ -1,3 +1,7 @@
+import {
+  ownedGameShipAccess,
+  GAME_OWNED_TEMPLATE_NAMESPACE,
+} from "./game-ship-access-authority";
 import { installQualifiedInstanceInteractions } from "./construction-interactions";
 import {
   qualifiedWayfarerWalkingBindings,
@@ -351,6 +355,11 @@ export function ownLocation(ctx: ReadContext) {
   const instance = ctx.db.constructionInstance.id.find(location.instanceId),
     deck = ctx.db.constructionDeck.id.find(location.deckId);
   if (!instance || !deck) return [];
+  if (
+    instance.workspaceId === GAME_OWNED_TEMPLATE_NAMESPACE &&
+    !ownedGameShipAccess(ctx, instance.id, deck.id).readInterior
+  )
+    return [];
   try {
     const standingElevationM = standingSupport({
       actor,
@@ -390,7 +399,16 @@ export function stepActor(
   const instance = ctx.db.constructionInstance.id.find(location.instanceId);
   if (!instance || actor.shipId !== instance.id) return true;
   // A retained review visit does not restore workspace interaction after revocation.
-  if (!stairHooks.mayEnter(actor.owner, instance.workspaceId)) return true;
+  const mayWalk =
+    instance.workspaceId === GAME_OWNED_TEMPLATE_NAMESPACE
+      ? ownedGameShipAccess(
+          { ...ctx, sender: actor.owner },
+          instance.id,
+          location.deckId,
+          ctx.timestamp.microsSinceUnixEpoch,
+        ).walkDeck
+      : stairHooks.mayEnter(actor.owner, instance.workspaceId);
+  if (!mayWalk) return true;
   if (tryEnterConstructionStair(ctx, stairHooks, actor.id)) return true;
   const frame = constructionCollision(ctx, instance, location.deckId);
   const norm = Math.max(1, Math.hypot(command.dx, command.dy)),
@@ -458,6 +476,10 @@ export function readableInstances(ctx: ReadContext) {
       .map((g) => g.workspaceId),
   );
   return [...ctx.db.constructionInstance.by_owner.filter(ctx.sender)].filter(
-    (instance) => workspaces.has(instance.workspaceId),
+    (instance) =>
+      instance.workspaceId === GAME_OWNED_TEMPLATE_NAMESPACE
+        ? ownedGameShipAccess(ctx, instance.id, instance.spawnDeckId)
+            .readInterior
+        : workspaces.has(instance.workspaceId),
   );
 }

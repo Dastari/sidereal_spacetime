@@ -39,6 +39,7 @@ export interface CargoInstance {
   id: string;
   ownerPrincipal: string;
   workspaceId: string;
+  gameOwned?: boolean;
   revision: bigint;
 }
 /** A future crew admission adapter must mint this only alongside accepted physical
@@ -72,6 +73,8 @@ export interface CargoAccessReader {
   visit(characterId: string): CargoVisit | undefined;
   instance(instanceId: string): CargoInstance | undefined;
   grants(principal: string): Iterable<CargoGrant>;
+  /** Derived from durable gameplay binding and the accepted owner/deck/admission. */
+  ownedGameVisit?(visit: CargoVisit): boolean;
   acceptedCrewVisit(visitId: string): AcceptedCrewVisit | undefined;
   geometry(instanceId: string, deckId: string): CargoGeometry | undefined;
 }
@@ -109,8 +112,9 @@ export function resolveCargoAccess(
     return reject("wrong-instance", "Accepted construction entry is required");
   const instance = reader.instance(visit.instanceId);
   if (!instance) return reject("wrong-instance", "Instance unavailable");
+  const gameOwned = reader.ownedGameVisit?.(visit) === true;
   const grants = collect(
-    reader.grants(reader.principal),
+    gameOwned ? [] : reader.grants(reader.principal),
     SCOPED_INVENTORY_LIMITS.grants,
   );
   if (!grants) return reject("budget", "Relevant grant budget exceeded");
@@ -121,6 +125,7 @@ export function resolveCargoAccess(
       g.expiresMicros > reader.nowMicros,
   );
   const ownerGrant =
+    !instance.gameOwned &&
     instance.ownerPrincipal === reader.principal &&
     active.find(
       (g) =>
@@ -140,7 +145,7 @@ export function resolveCargoAccess(
         g.resourceId === instance.id && g.capability === "inventory.transfer",
     );
   const grant = ownerGrant || crewGrant;
-  if (!grant)
+  if (!grant && !gameOwned)
     return reject(
       "grant-denied",
       "Current review or accepted crew access required",
@@ -191,15 +196,18 @@ export function resolveCargoAccess(
     instanceRevision: instance.revision,
     interactionPointM: [actor.localX, actor.localY, actor.supportedHeightM],
     nowMicros: reader.nowMicros,
-    grants: [
-      {
-        actorId: actor.id,
-        instanceId: instance.id,
-        capability: "inventory.transfer",
-        expiresMicros: grant.expiresMicros,
-        revoked: false,
-      },
-    ],
+    ownedGameVisit: gameOwned,
+    grants: grant
+      ? [
+          {
+            actorId: actor.id,
+            instanceId: instance.id,
+            capability: "inventory.transfer",
+            expiresMicros: grant.expiresMicros,
+            revoked: false,
+          },
+        ]
+      : [],
     geometry,
   };
 }

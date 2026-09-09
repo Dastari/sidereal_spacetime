@@ -43,13 +43,26 @@ function fixture() {
   };
   let seat: any;
   const visit = {
+      characterId: "actor",
       visitId: "visit",
       revision: 2n,
       instanceId: "ship",
       deckId: "deck",
     },
-    admission = { owner, shipId: "ship", revision: 8n },
-    instance = { id: "ship", owner, revision: 1n };
+    admission = {
+      owner,
+      characterId: "actor",
+      systemId: "system",
+      shipId: "ship",
+      revision: 8n,
+    },
+    instance = {
+      id: "ship",
+      owner,
+      revision: 1n,
+      workspaceId: "review",
+      blueprintSha256: "source",
+    };
   const rows = Array.from({ length: 10 }, (_, i) => ({
     id: `device${i}`,
     shipId: "ship",
@@ -66,6 +79,20 @@ function fixture() {
   const ctx: FlightViewContext = {
     sender: owner,
     db: {
+      gameShipAccess: { shipId: { find: () => undefined } },
+      constructionDeck: {
+        id: { find: () => ({ id: "deck", instanceId: "ship" }) },
+      },
+      ship: { id: { find: () => ({ id: "ship", owner, name: "Ship" }) } },
+      shipWorldMotion: {
+        shipId: { find: () => ({ shipId: "ship", systemId: "system" }) },
+      },
+      authSession: {
+        by_owner: {
+          filter: () => [{ game: true, expiresMicros: 999999999999n }],
+        },
+      },
+      retiredIdentity: { source: { find: () => undefined } },
       character: { by_owner: { filter: () => actors } },
       constructionFlightBinding: {
         shipId: { find: (id) => bindings.find((b) => b.shipId === id) },

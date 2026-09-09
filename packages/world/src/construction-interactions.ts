@@ -1,4 +1,8 @@
 import {
+  ownedGameShipAccess,
+  GAME_OWNED_TEMPLATE_NAMESPACE,
+} from "./game-ship-access-authority";
+import {
   SenderError,
   table,
   t,
@@ -446,7 +450,17 @@ export function interactWithConstructionObject(
       throw new SenderError("Operation ID already used");
     return true;
   }
-  if (args.action !== "stand") {
+  if (
+    args.action !== "stand" &&
+    !ownedGameShipAccess(
+      ctx,
+      q.instance.id,
+      binding.deckId,
+      ctx.timestamp.microsSinceUnixEpoch,
+    ).useObjects
+  ) {
+    if (q.instance.workspaceId === GAME_OWNED_TEMPLATE_NAMESPACE)
+      throw new SenderError("Current game-owned ship access required");
     requireGrant(ctx, q.instance.workspaceId, "draft.read");
     requireGrant(ctx, q.instance.workspaceId, "instance.spawn");
   }
@@ -552,8 +566,20 @@ export function constructionInteractionView(ctx: ReadContext) {
   const grants = [
     ...ctx.db.constructionGrant.by_principal.filter(ctx.sender),
   ].filter((g) => !g.revoked && g.workspaceId === instance.workspaceId);
-  if (!grants.some((g) => g.capability === "draft.read")) return [];
-  const canInteract = grants.some((g) => g.capability === "instance.spawn");
+  const gameAccess = ownedGameShipAccess(ctx, instance.id, visit.deckId);
+  if (
+    instance.workspaceId === GAME_OWNED_TEMPLATE_NAMESPACE &&
+    !gameAccess.readInterior
+  )
+    return [];
+  if (
+    !gameAccess.readInterior &&
+    !grants.some((g) => g.capability === "draft.read")
+  )
+    return [];
+  const canInteract =
+    gameAccess.useObjects ||
+    grants.some((g) => g.capability === "instance.spawn");
   return [
     ...ctx.db.constructionInteractionBinding.by_instance.filter(instance.id),
   ].flatMap((binding) => {

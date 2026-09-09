@@ -1,3 +1,7 @@
+import {
+  ownedGameShipAccess,
+  GAME_OWNED_TEMPLATE_NAMESPACE,
+} from "./game-ship-access-authority";
 import { PilotGeometryError } from "../../sim/src/construction-pilot";
 import type { Infer } from "spacetimedb/server";
 import type { constructionPilotSeat } from "./construction-pilot-tables";
@@ -141,6 +145,13 @@ export function constructionPilotRepository(
         instance.revision !== s.instanceRevision
       )
         return false;
+      if (instance.workspaceId === GAME_OWNED_TEMPLATE_NAMESPACE)
+        return ownedGameShipAccess(
+          { ...ctx, sender: row.owner },
+          instance.id,
+          s.deckId,
+          ctx.timestamp.microsSinceUnixEpoch,
+        ).useObjects;
       return ["draft.read", "instance.spawn"].every((capability) => {
         const grant = ctx.db.constructionGrant.id.find(
           JSON.stringify([a.ownerId, instance.workspaceId, capability]),

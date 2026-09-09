@@ -99,6 +99,7 @@ import OwnConstructionStairWalksRow from "./own_construction_stair_walks_table";
 import OwnConstructionTraversalLinksRow from "./own_construction_traversal_links_table";
 import OwnConstructionTraversalsRow from "./own_construction_traversals_table";
 import OwnEditReceiptsRow from "./own_edit_receipts_table";
+import OwnGameShipAccessRow from "./own_game_ship_access_table";
 import OwnGroundItemsRow from "./own_ground_items_table";
 import OwnIdentityLinksRow from "./own_identity_links_table";
 import OwnInteractionsRow from "./own_interactions_table";
@@ -268,6 +269,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnEditReceiptsRow),
+  ownGameShipAccess: __table({
+    name: 'own_game_ship_access',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnGameShipAccessRow),
   ownGroundItems: __table({
     name: 'own_ground_items',
     indexes: [
