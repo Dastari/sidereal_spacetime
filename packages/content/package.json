@@ -24,7 +24,8 @@
     "./construction-stairs-room": "./src/construction-stairs-room.ts",
     "./shared-system": "./src/shared-system.ts",
     "./space": "./src/space.ts",
-    "./flight": "./src/flight.ts"
+    "./flight": "./src/flight.ts",
+    "./wayfarer-starter": "./src/wayfarer-starter.ts"
   },
   "dependencies": {}
 }

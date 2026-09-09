@@ -1,0 +1,3065 @@
+{
+  "compiler": "construction-1",
+  "floorKit": {
+    "id": "shipyard.floor.mapped-deck-kit",
+    "revision": "r002-interface-1",
+    "sha256": "25ede9372bc0d62eb1fb9c2f0ec03209bf49b0df5c78bbcafc5e902985ef0c04"
+  },
+  "floors": [
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--1--1",
+      "origin": [-96, -96, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--1--2",
+      "origin": [-96, -160, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--1--3",
+      "origin": [-96, -224, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--1--4",
+      "origin": [-96, -288, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--1-0",
+      "origin": [-96, -32, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--1-1",
+      "origin": [-96, 32, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--1-2",
+      "origin": [-96, 96, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--1-3",
+      "origin": [-96, 160, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--1-4",
+      "origin": [-96, 224, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--2--1",
+      "origin": [-160, -96, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--2--2",
+      "origin": [-160, -160, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--2--3",
+      "origin": [-160, -224, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--2--4",
+      "origin": [-160, -288, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--2-0",
+      "origin": [-160, -32, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--2-1",
+      "origin": [-160, 32, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--2-2",
+      "origin": [-160, 96, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--2-3",
+      "origin": [-160, 160, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--2-4",
+      "origin": [-160, 224, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-0--1",
+      "origin": [-32, -96, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-0--2",
+      "origin": [-32, -160, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-0--3",
+      "origin": [-32, -224, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-0--4",
+      "origin": [-32, -288, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-0-0",
+      "origin": [-32, -32, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-0-1",
+      "origin": [-32, 32, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-0-2",
+      "origin": [-32, 96, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-0-3",
+      "origin": [-32, 160, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-1--1",
+      "origin": [32, -96, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-1--2",
+      "origin": [32, -160, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-1--3",
+      "origin": [32, -224, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-1--4",
+      "origin": [32, -288, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-1-0",
+      "origin": [32, -32, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-1-1",
+      "origin": [32, 32, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-1-2",
+      "origin": [32, 96, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-1-3",
+      "origin": [32, 160, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-1-4",
+      "origin": [32, 224, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-2--1",
+      "origin": [96, -96, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-2--2",
+      "origin": [96, -160, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-2--3",
+      "origin": [96, -224, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-2--4",
+      "origin": [96, -288, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-2-0",
+      "origin": [96, -32, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-2-1",
+      "origin": [96, 32, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-2-2",
+      "origin": [96, 96, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-2-3",
+      "origin": [96, 160, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-2-4",
+      "origin": [96, 224, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "pilot-r004-floor-corner45-05",
+      "origin": [32, 352, 0],
+      "partId": "triangle-45",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "pilot-r004-floor-corner45-06",
+      "origin": [-32, 352, 0],
+      "partId": "triangle-45",
+      "quarterTurns": 1,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "pilot-r004-floor-square-00",
+      "origin": [-96, 288, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "pilot-r004-floor-square-01",
+      "origin": [-32, 288, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "pilot-r004-floor-square-02",
+      "origin": [32, 288, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "pilot-r004-floor-square-03",
+      "origin": [-32, 352, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "pilot-r004-floor-square-04",
+      "origin": [-32, 224, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    }
+  ],
+  "layout": {
+    "appearance": {
+      "accent": "#45d8f5",
+      "kit": "Unassigned / draft proxy",
+      "primary": "#6d8795"
+    },
+    "assembly": {
+      "parts": [
+        {
+          "assetId": "part-f4b0cfbfdcdfd800e350",
+          "flipped": false,
+          "id": "wall--3--5",
+          "position": [-5.125, -9.125, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-9a74ad0724eb741a2b63",
+          "flipped": false,
+          "id": "wall--2--5",
+          "position": [-4, -9.1875, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-070229a9a22dcd1fc3e1",
+          "flipped": false,
+          "id": "wall--3--4",
+          "position": [-5.1875, -8, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-a086c1f719d417b167f3",
+          "flipped": false,
+          "id": "wall--2--4",
+          "position": [-4, -8, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-328e6e9149ea347b95d7",
+          "flipped": false,
+          "id": "wall--3--3",
+          "position": [-5.125, -6, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-6e64c7b0aa0165cbe846",
+          "flipped": false,
+          "id": "wall--2--3",
+          "position": [-4.6875, -6, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-f198db40cdb355118c21",
+          "flipped": false,
+          "id": "wall--3--2",
+          "position": [-5.1875, -4, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-1f4f2ce23a20dba31e8b",
+          "flipped": false,
+          "id": "wall--2--2",
+          "position": [-4, -4, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-328e6e9149ea347b95d7",
+          "flipped": false,
+          "id": "wall--3--1",
+          "position": [-5.125, -2, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-8027121656ac690dd209",
+          "flipped": false,
+          "id": "wall--2--1",
+          "position": [-4.6875, -2, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-0e4aefe72a90960922e9",
+          "flipped": false,
+          "id": "wall--3-0",
+          "position": [-5.1875, 0, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-96878a6d75e5c294b532",
+          "flipped": false,
+          "id": "wall--2-0",
+          "position": [-4, 0, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-328e6e9149ea347b95d7",
+          "flipped": false,
+          "id": "wall--3-1",
+          "position": [-5.125, 2, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-6c3fb1c92331674881a0",
+          "flipped": false,
+          "id": "wall--2-1",
+          "position": [-4, 2, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-070229a9a22dcd1fc3e1",
+          "flipped": false,
+          "id": "wall--3-2",
+          "position": [-5.1875, 4, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-2adc55eddecec9617cf7",
+          "flipped": false,
+          "id": "wall--2-2",
+          "position": [-4.6875, 4, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-489c21ef5238f76ea87b",
+          "flipped": false,
+          "id": "wall--3-3",
+          "position": [-5.125, 6, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-6c1c5c2e0e3161fd9cdb",
+          "flipped": false,
+          "id": "wall--2-3",
+          "position": [-4, 6, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-46db5c6ab5c468a19a1b",
+          "flipped": false,
+          "id": "wall--3-4",
+          "position": [-5.1875, 8, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-47fe7106f6e495b8869c",
+          "flipped": false,
+          "id": "wall--2-4",
+          "position": [-4, 8, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-a7c31e5a4591741723d0",
+          "flipped": false,
+          "id": "wall-2--5",
+          "position": [4, -9.1875, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-305bece95974253b0fbc",
+          "flipped": false,
+          "id": "wall-3--5",
+          "position": [5.125, -9.125, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-262364013153b9117f95",
+          "flipped": false,
+          "id": "wall-2--4",
+          "position": [4, -8, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-915dc23e886f070d75c4",
+          "flipped": false,
+          "id": "wall-3--4",
+          "position": [5.125, -8, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c8b14cc871b1aad06c36",
+          "flipped": false,
+          "id": "wall-2--3",
+          "position": [4.6875, -6, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-29a2b4f5499e93c9edca",
+          "flipped": false,
+          "id": "wall-3--3",
+          "position": [5.125, -6, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-0bf0c79e5a52a9cee388",
+          "flipped": false,
+          "id": "wall-2--2",
+          "position": [4, -4, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-386f7415c520e22bd6b6",
+          "flipped": false,
+          "id": "wall-3--2",
+          "position": [5.125, -4, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-16ad11623e8457b9fa65",
+          "flipped": false,
+          "id": "wall-2--1",
+          "position": [4.6875, -2, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-29a2b4f5499e93c9edca",
+          "flipped": false,
+          "id": "wall-3--1",
+          "position": [5.125, -2, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-3b538ddb00f4d1a7d749",
+          "flipped": false,
+          "id": "wall-2-0",
+          "position": [4, 0, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-23d5284bc8c7e3ad49d7",
+          "flipped": false,
+          "id": "wall-3-0",
+          "position": [5.125, 0, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c561706cce53aba7f13e",
+          "flipped": false,
+          "id": "wall-2-1",
+          "position": [4.1875, 2, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-29a2b4f5499e93c9edca",
+          "flipped": false,
+          "id": "wall-3-1",
+          "position": [5.125, 2, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-3b10a5b6237f977755ea",
+          "flipped": false,
+          "id": "wall-2-2",
+          "position": [4.6875, 4, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-915dc23e886f070d75c4",
+          "flipped": false,
+          "id": "wall-3-2",
+          "position": [5.125, 4, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-f8984ad617033cbb9b07",
+          "flipped": false,
+          "id": "wall-2-3",
+          "position": [4, 6, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-7f90173a1eca4acb88bc",
+          "flipped": false,
+          "id": "wall-3-3",
+          "position": [5.125, 6, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-7b9d7425f1a0c9d1b49d",
+          "flipped": false,
+          "id": "wall-2-4",
+          "position": [4, 8, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-da5b65baa0bb652537e3",
+          "flipped": false,
+          "id": "wall-3-4",
+          "position": [5.125, 8, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-4d2655e20be90a6b2257",
+          "flipped": false,
+          "id": "wall--1--5",
+          "position": [-2, -9.125, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-8a552b558b8807293eed",
+          "flipped": false,
+          "id": "wall--1--4",
+          "position": [-2, -8, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-b4de51cd37611d574002",
+          "flipped": false,
+          "id": "wall-0--5",
+          "position": [0, -9.125, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-494f1ec5dcdcd3375a1a",
+          "flipped": false,
+          "id": "wall-0--4",
+          "position": [0, -8.875, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-4d2655e20be90a6b2257",
+          "flipped": false,
+          "id": "wall-1--5",
+          "position": [2, -9.125, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-422bf815cc05a72270f8",
+          "flipped": false,
+          "id": "wall-1--4",
+          "position": [2, -8, 0],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c0b6b036f5b3dd8bd2f3",
+          "flipped": false,
+          "id": "equipment-control-seat",
+          "position": [0, 10.25, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-d9f37a5f7ea6e8d13254",
+          "flipped": false,
+          "id": "equipment-control-console",
+          "position": [0, 11.25, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c03ec0260cd7329050a8",
+          "flipped": false,
+          "id": "equipment-locker--4.7--6",
+          "position": [-4.6875, -6, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c03ec0260cd7329050a8",
+          "flipped": false,
+          "id": "equipment-locker--4.7--2",
+          "position": [-4.6875, -2, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c03ec0260cd7329050a8",
+          "flipped": false,
+          "id": "equipment-locker--4.7-2",
+          "position": [-4.6875, 2, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c03ec0260cd7329050a8",
+          "flipped": false,
+          "id": "equipment-locker-4.7--6",
+          "position": [4.6875, -6, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c03ec0260cd7329050a8",
+          "flipped": false,
+          "id": "equipment-locker-4.7--2",
+          "position": [4.6875, -2, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c03ec0260cd7329050a8",
+          "flipped": false,
+          "id": "equipment-locker-4.7-2",
+          "position": [4.6875, 2, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-77cb6148602659b39502",
+          "flipped": false,
+          "id": "superstructure--3--5",
+          "position": [-5.375, -9.25, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-cc46be4cf37030e6a389",
+          "flipped": false,
+          "id": "superstructure--2--5",
+          "position": [-4, -9.375, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-18280ba6cc037eb433dc",
+          "flipped": false,
+          "id": "superstructure--3--4",
+          "position": [-5.5, -8, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-a754ceb1ebef9f1395d9",
+          "flipped": false,
+          "id": "superstructure--3--3",
+          "position": [-5.625, -6, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-3da4aef9b526b104b324",
+          "flipped": false,
+          "id": "superstructure--3--2",
+          "position": [-5.5625, -4, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-e21a69be0c5b6a98e812",
+          "flipped": false,
+          "id": "superstructure--3--1",
+          "position": [-5.5, -2, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-91c8f3d728f25c968810",
+          "decals": [
+            {
+              "color": "#d2d5e0",
+              "face": "left",
+              "id": "side-registration--1",
+              "kind": "text",
+              "position": [-0.5270000000000001, 0, 1.42],
+              "rotation": 0,
+              "size": [1.45, 0.58],
+              "text": "WF-01"
+            }
+          ],
+          "flipped": false,
+          "id": "superstructure--3-0",
+          "position": [-5.5, 0, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-0fe602115d20ec950357",
+          "flipped": false,
+          "id": "superstructure--3-1",
+          "position": [-5.625, 2, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-0ac1e39dec34655a366f",
+          "flipped": false,
+          "id": "superstructure--3-2",
+          "position": [-5.5, 4, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-dd83177cdf0e1d968cb7",
+          "flipped": false,
+          "id": "superstructure--3-3",
+          "position": [-5.625, 6, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-b351480b6386fb131dc0",
+          "flipped": false,
+          "id": "superstructure--3-4",
+          "position": [-5.5, 8, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-9046031ff83521748fa1",
+          "flipped": false,
+          "id": "superstructure-2--5",
+          "position": [4, -9.375, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-f4ffbb8320323e7acc45",
+          "flipped": false,
+          "id": "superstructure-3--5",
+          "position": [5.375, -9.25, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-7b28f47930a6f7cbdf10",
+          "flipped": false,
+          "id": "superstructure-3--4",
+          "position": [5.5, -8, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-3cb4b658b677f06829b6",
+          "flipped": false,
+          "id": "superstructure-3--3",
+          "position": [5.5625, -6, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-0558bcda4ab0cb8c9f70",
+          "flipped": false,
+          "id": "superstructure-3--2",
+          "position": [5.5625, -4, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-8ddb637a40bd23dfd03a",
+          "flipped": false,
+          "id": "superstructure-3--1",
+          "position": [5.5, -2, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-1c0570cdd9d7bc9d67da",
+          "decals": [
+            {
+              "color": "#d2d5e0",
+              "face": "right",
+              "id": "side-registration-1",
+              "kind": "text",
+              "position": [0.5270000000000001, 0, 1.42],
+              "rotation": 0,
+              "size": [1.45, 0.58],
+              "text": "WF-01"
+            }
+          ],
+          "flipped": false,
+          "id": "superstructure-3-0",
+          "position": [5.5, 0, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-505abaccb2279cad2d0f",
+          "flipped": false,
+          "id": "superstructure-3-1",
+          "position": [5.5625, 2, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-f307639bad50377eba7b",
+          "flipped": false,
+          "id": "superstructure-3-2",
+          "position": [5.5, 4, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-66a37b7990899a620125",
+          "flipped": false,
+          "id": "superstructure-3-3",
+          "position": [5.5625, 6, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-2143e7c0fcb3b5b3270f",
+          "flipped": false,
+          "id": "superstructure-3-4",
+          "position": [5.5, 8, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c65fb5ae4553c6c26a8a",
+          "flipped": false,
+          "id": "superstructure--1--5",
+          "position": [-2, -9.375, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-dd8a6e1947e768593d77",
+          "flipped": false,
+          "id": "superstructure-0--5",
+          "position": [0, -9.375, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c65fb5ae4553c6c26a8a",
+          "flipped": false,
+          "id": "superstructure-1--5",
+          "position": [2, -9.375, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-4f7ae9b4ef6a0797b795",
+          "flipped": false,
+          "id": "wall--1--3",
+          "position": [-1.375, -6, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-ddf6d537b7d731206eb9",
+          "flipped": false,
+          "id": "wall--1--2",
+          "position": [-2.125, -4, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-03ff3a1f9d4a892cbaab",
+          "flipped": false,
+          "id": "wall--1--1",
+          "position": [-1.375, -2.5, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-700cbf3cd394356b4eaf",
+          "flipped": false,
+          "id": "wall--1-0",
+          "position": [-2.0625, 0, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-b68b5bb424b607ab7458",
+          "flipped": false,
+          "id": "wall--1-1",
+          "position": [-2.0625, 1.75, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-dea5602de2d4f24d79cb",
+          "flipped": false,
+          "id": "wall--1-2",
+          "position": [-1.375, 4.25, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-3f0bcec2befccab744d4",
+          "flipped": false,
+          "id": "wall--1-3",
+          "position": [-2.125, 5.25, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-880c67421085b52fac3c",
+          "flipped": false,
+          "id": "wall-1--3",
+          "position": [1.375, -6, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-6084a1d605103c8b6110",
+          "flipped": false,
+          "id": "wall-1--2",
+          "position": [2.0625, -4, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-0975008f8da949152b98",
+          "flipped": false,
+          "id": "wall-1--1",
+          "position": [1.375, -2.5, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-8041df3803cadce3c472",
+          "flipped": false,
+          "id": "wall-1-0",
+          "position": [2.0625, 0, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-1850147a0c9d014b6db4",
+          "flipped": false,
+          "id": "wall-1-1",
+          "position": [1.75, 1.75, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-6661a7a3369cae1e3e9d",
+          "flipped": false,
+          "id": "wall-1-2",
+          "position": [1.375, 4.25, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-529f6a1f75b92297412f",
+          "flipped": false,
+          "id": "wall-1-3",
+          "position": [2.0625, 5.25, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-77728ecc8ad36b0ff45f",
+          "flipped": false,
+          "id": "room-engineering",
+          "position": [-3.6875, -6, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-acbbef7209c4ef100693",
+          "flipped": false,
+          "id": "room-hydroponics-tray--2.4",
+          "position": [-3.6875, -2.375, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-acbbef7209c4ef100693",
+          "flipped": false,
+          "id": "room-hydroponics-tray--1.5",
+          "position": [-3.6875, -1.5, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-acbbef7209c4ef100693",
+          "flipped": false,
+          "id": "room-hydroponics-tray--0.6",
+          "position": [-3.6875, -0.625, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c06e4f5f6f6dace38e41",
+          "flipped": false,
+          "id": "room-storage-container-2.15-0.25",
+          "position": [-4.0625, 2.0625, 0.1875],
+          "removedCells": [],
+          "rotation": 1.5707963267948966
+        },
+        {
+          "assetId": "part-5382f8dbbeb54e663d33",
+          "flipped": false,
+          "id": "room-storage-container-2.15-1",
+          "position": [-3.3125, 2.0625, 0.1875],
+          "removedCells": [],
+          "rotation": 1.5707963267948966
+        },
+        {
+          "assetId": "part-c06e4f5f6f6dace38e41",
+          "flipped": false,
+          "id": "room-storage-container-3.5-0.25",
+          "position": [-4.0625, 3.4375, 0.1875],
+          "removedCells": [],
+          "rotation": 1.5707963267948966
+        },
+        {
+          "assetId": "part-5382f8dbbeb54e663d33",
+          "flipped": false,
+          "id": "room-storage-container-3.5-1",
+          "position": [-3.3125, 3.4375, 0.1875],
+          "removedCells": [],
+          "rotation": 1.5707963267948966
+        },
+        {
+          "assetId": "part-c41467ac46f6b350df24",
+          "flipped": false,
+          "id": "room-crew",
+          "position": [3.6875, -6, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-cc610ba071b8eb38ab8c",
+          "flipped": false,
+          "id": "room-medbay",
+          "position": [3.6875, -1.5, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-73df516feb786d73fc5e",
+          "flipped": false,
+          "id": "room-lounge",
+          "position": [3.6875, 3, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-75910d7a0d27dfc17aaf",
+          "flipped": false,
+          "id": "equipment-bridge-bank--1.3",
+          "position": [-1.3125, 11.25, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-0f14bf002f4c11854337",
+          "flipped": false,
+          "id": "equipment-bridge-bank-1.3",
+          "position": [1.25, 11.25, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-50898252a921c7be50b3",
+          "flipped": false,
+          "id": "roof--3--5",
+          "position": [-5.125, -9.25, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-5c53af159a14e3454da7",
+          "flipped": false,
+          "id": "roof--2--5",
+          "position": [-4, -9.25, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-05049180a0e5eceefc12",
+          "flipped": false,
+          "id": "roof--3--4",
+          "position": [-5.125, -8, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-b86fe448a0cdd955e88b",
+          "flipped": false,
+          "id": "roof--2--4",
+          "position": [-4, -8, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-712235769fd1db178911",
+          "flipped": false,
+          "id": "roof--1--5",
+          "position": [-2, -9.25, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-d5a958cd5c64f788d607",
+          "flipped": false,
+          "id": "roof--1--4",
+          "position": [-2, -8, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-712235769fd1db178911",
+          "flipped": false,
+          "id": "roof-0--5",
+          "position": [0, -9.25, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-ccf7c8d305f71dc5f596",
+          "flipped": false,
+          "id": "roof-0--4",
+          "position": [0, -8, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-712235769fd1db178911",
+          "flipped": false,
+          "id": "roof-1--5",
+          "position": [2, -9.25, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-3a18bc76a2d47e563b4b",
+          "flipped": false,
+          "id": "roof-1--4",
+          "position": [2, -8, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-1d5c3e6be30e7f2cda99",
+          "flipped": false,
+          "id": "roof-2--5",
+          "position": [4, -9.25, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-acb9d36d47113a25ad84",
+          "flipped": false,
+          "id": "roof-2--4",
+          "position": [4, -8, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-50898252a921c7be50b3",
+          "flipped": false,
+          "id": "roof-3--5",
+          "position": [5.125, -9.25, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-05049180a0e5eceefc12",
+          "flipped": false,
+          "id": "roof-3--4",
+          "position": [5.125, -8, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-05049180a0e5eceefc12",
+          "flipped": false,
+          "id": "roof--3--3",
+          "position": [-5.125, -6, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-34accc51ea8752a66670",
+          "flipped": false,
+          "id": "roof--2--3",
+          "position": [-4, -6, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-e188bf92bb905027d600",
+          "flipped": false,
+          "id": "roof--1--3",
+          "position": [-2, -6, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-06fe670dace09ce26bdf",
+          "flipped": false,
+          "id": "roof-0--3",
+          "position": [0, -6, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-e14864df3df74006207a",
+          "flipped": false,
+          "id": "roof-1--3",
+          "position": [2, -6, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-df744c52b2f4f085efc3",
+          "flipped": false,
+          "id": "roof-2--3",
+          "position": [4, -6, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-05049180a0e5eceefc12",
+          "flipped": false,
+          "id": "roof-3--3",
+          "position": [5.125, -6, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-05049180a0e5eceefc12",
+          "flipped": false,
+          "id": "roof--3--2",
+          "position": [-5.125, -4, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-834cca417ad1520fb91b",
+          "flipped": false,
+          "id": "roof--2--2",
+          "position": [-4, -4, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-06c58ee456dae94b1772",
+          "flipped": false,
+          "id": "roof--1--2",
+          "position": [-2, -4, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-2760976b04d38507b400",
+          "flipped": false,
+          "id": "roof-0--2",
+          "position": [0, -4, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-a4eed62e70496db38a2a",
+          "flipped": false,
+          "id": "roof-1--2",
+          "position": [2, -4, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-8ca6ba766169b463abbf",
+          "flipped": false,
+          "id": "roof-2--2",
+          "position": [4, -4, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-05049180a0e5eceefc12",
+          "flipped": false,
+          "id": "roof-3--2",
+          "position": [5.125, -4, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-05049180a0e5eceefc12",
+          "flipped": false,
+          "id": "roof--3--1",
+          "position": [-5.125, -2, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-9c1ccfb3902a1e19de44",
+          "flipped": false,
+          "id": "roof--2--1",
+          "position": [-4, -2, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-2353952b313ac7582770",
+          "flipped": false,
+          "id": "roof--1--1",
+          "position": [-2, -2, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-e7f6d59dd9f860ed57d6",
+          "flipped": false,
+          "id": "roof-0--1",
+          "position": [0, -2, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-ca1cbb89761ec5c604b8",
+          "flipped": false,
+          "id": "roof-1--1",
+          "position": [2, -2, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-196967a04cc184797d72",
+          "flipped": false,
+          "id": "roof-2--1",
+          "position": [4, -2, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-05049180a0e5eceefc12",
+          "flipped": false,
+          "id": "roof-3--1",
+          "position": [5.125, -2, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-05049180a0e5eceefc12",
+          "flipped": false,
+          "id": "roof--3-0",
+          "position": [-5.125, 0, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-9fe552c6f9293ec26860",
+          "flipped": false,
+          "id": "roof--2-0",
+          "position": [-4, 0, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-61e4ccf651374ea0d773",
+          "flipped": false,
+          "id": "roof--1-0",
+          "position": [-2, 0, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-701ca6e3c7861c04acbf",
+          "decals": [
+            {
+              "color": "#d6d9e5",
+              "face": "top",
+              "id": "frontier-emblem",
+              "kind": "frontier-planet",
+              "position": [0, 0.3, 0.86],
+              "rotation": 0,
+              "size": [3, 1.5]
+            },
+            {
+              "color": "#d6d9e5",
+              "face": "top",
+              "id": "frontier-registration",
+              "kind": "text",
+              "position": [0, -1.35, 0.86],
+              "rotation": 0,
+              "size": [2.2, 1.1],
+              "text": "WF-01"
+            }
+          ],
+          "flipped": false,
+          "id": "roof-0-0",
+          "position": [0, 0, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-a87c82cebb4bbbf8db11",
+          "flipped": false,
+          "id": "roof-1-0",
+          "position": [2, 0, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-ae18e82003fce6d677bc",
+          "flipped": false,
+          "id": "roof-2-0",
+          "position": [4, 0, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-05049180a0e5eceefc12",
+          "flipped": false,
+          "id": "roof-3-0",
+          "position": [5.125, 0, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-05049180a0e5eceefc12",
+          "flipped": false,
+          "id": "roof--3-1",
+          "position": [-5.125, 2, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-229a43bbe1eb96367621",
+          "flipped": false,
+          "id": "roof--2-1",
+          "position": [-4, 2, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-5838f5816573759b23e7",
+          "flipped": false,
+          "id": "roof--1-1",
+          "position": [-2, 2, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-4c52da8cda73444f19d3",
+          "flipped": false,
+          "id": "roof-0-1",
+          "position": [0, 2, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-771b73697fcd1af0ffe1",
+          "flipped": false,
+          "id": "roof-1-1",
+          "position": [2, 2, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-4a4b34fe2247bfa2ed2a",
+          "flipped": false,
+          "id": "roof-2-1",
+          "position": [4, 2, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-05049180a0e5eceefc12",
+          "flipped": false,
+          "id": "roof-3-1",
+          "position": [5.125, 2, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-05049180a0e5eceefc12",
+          "flipped": false,
+          "id": "roof--3-2",
+          "position": [-5.125, 4, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-12e80210cf3fd09756c0",
+          "flipped": false,
+          "id": "roof--2-2",
+          "position": [-4, 4, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-d4a9faaa669f3ecc29fd",
+          "flipped": false,
+          "id": "roof--1-2",
+          "position": [-2, 4, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-8f65f9fd39b16b2bec9e",
+          "flipped": false,
+          "id": "roof-0-2",
+          "position": [0, 4, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-b5a08afd6c5d6c897d51",
+          "flipped": false,
+          "id": "roof-1-2",
+          "position": [2, 4, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-ecfd7775a5086626cd96",
+          "flipped": false,
+          "id": "roof-2-2",
+          "position": [4, 4, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-05049180a0e5eceefc12",
+          "flipped": false,
+          "id": "roof-3-2",
+          "position": [5.125, 4, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-05049180a0e5eceefc12",
+          "flipped": false,
+          "id": "roof--3-3",
+          "position": [-5.125, 6, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-63ee593f180a4f4c4c7a",
+          "flipped": false,
+          "id": "roof--2-3",
+          "position": [-4, 6, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-16c015c4cd41f2332a37",
+          "flipped": false,
+          "id": "roof--1-3",
+          "position": [-2, 6, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c15a5229e466c6057639",
+          "flipped": false,
+          "id": "roof-0-3",
+          "position": [0, 6, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-f4692a493f2aa4f6dddf",
+          "flipped": false,
+          "id": "roof-1-3",
+          "position": [2, 6, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-5db85939e66f62926062",
+          "flipped": false,
+          "id": "roof-2-3",
+          "position": [4, 6, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-05049180a0e5eceefc12",
+          "flipped": false,
+          "id": "roof-3-3",
+          "position": [5.125, 6, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-eeb15021768e26d40156",
+          "flipped": false,
+          "id": "roof--3-4",
+          "position": [-5.1875, 8, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-1eeda7c71b6b49c4d10f",
+          "flipped": false,
+          "id": "roof--2-4",
+          "position": [-4, 8, 2.5625],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-4d7f7db485619f1df26b",
+          "flipped": false,
+          "id": "roof-2-4",
+          "position": [4, 8, 2.5625],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-ff627f158a6d1ecfb097",
+          "flipped": false,
+          "id": "roof-3-4",
+          "position": [5.1875, 8, 2.6875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-309c54ab7d04658a554d",
+          "flipped": false,
+          "id": "decoration-0--3",
+          "position": [0.75, -5.1875, 3.375],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-309c54ab7d04658a554d",
+          "flipped": false,
+          "id": "decoration-0-1",
+          "position": [0.75, 1.5625, 3.375],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-309c54ab7d04658a554d",
+          "flipped": false,
+          "id": "decoration-0-3",
+          "position": [0.75, 6.3125, 3.375],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-e8b51ac6443c73becfcb",
+          "flipped": false,
+          "id": "drives-main--3.6",
+          "position": [-3.625, -11.5625, 0.125],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-4d754a140cc642ded990",
+          "flipped": false,
+          "id": "drives-main-3.6",
+          "position": [3.625, -11.5625, 0.125],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-e15ef10ca93701b58ccb",
+          "flipped": false,
+          "id": "drives-main-0",
+          "position": [0, -11, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-a9dcbf6707ca20039a5c",
+          "flipped": false,
+          "id": "drives-maneuver--1--6.5",
+          "position": [-6.375, -6.5, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-a9dcbf6707ca20039a5c",
+          "flipped": false,
+          "id": "drives-maneuver--1-6.5",
+          "position": [-6.375, 6.5, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-a06cfaab58b430855803",
+          "flipped": false,
+          "id": "drives-maneuver-1--6.5",
+          "position": [6.375, -6.5, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-a06cfaab58b430855803",
+          "flipped": false,
+          "id": "drives-maneuver-1-6.5",
+          "position": [6.375, 6.5, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-393498d8c8af6149ef28",
+          "flipped": false,
+          "id": "drives-retro--1",
+          "position": [-5.5, 8, 0.3125],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-393498d8c8af6149ef28",
+          "flipped": false,
+          "id": "drives-retro-1",
+          "position": [5.5, 8, 0.3125],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-4c25a5fd9da0bce537f5",
+          "flipped": false,
+          "id": "pilot-r004-hull-straight-07",
+          "position": [3, 9, 0.1875],
+          "removedCells": [],
+          "rotation": 1.5707963267948966
+        },
+        {
+          "assetId": "part-48cf8b9cf29d0b226ec4",
+          "flipped": false,
+          "id": "pilot-r004-canopy-side-08",
+          "position": [3, 9, 1.3125],
+          "removedCells": [],
+          "rotation": 1.5707963267948966
+        },
+        {
+          "assetId": "part-4c25a5fd9da0bce537f5",
+          "flipped": false,
+          "id": "pilot-r004-hull-straight-09",
+          "position": [-3, 11, 0.1875],
+          "removedCells": [],
+          "rotation": -1.5707963267948966
+        },
+        {
+          "assetId": "part-624989ddf1192dceee75",
+          "flipped": false,
+          "id": "pilot-r004-canopy-side-left-10",
+          "position": [-3, 11, 1.3125],
+          "removedCells": [],
+          "rotation": -1.5707963267948966
+        },
+        {
+          "assetId": "part-540c83fc49ee792d9a4a",
+          "flipped": false,
+          "id": "pilot-r004-hull-diagonal45-11",
+          "position": [3, 11, 0.1875],
+          "removedCells": [],
+          "rotation": 1.5707963267948966
+        },
+        {
+          "assetId": "part-b70713e9836547941e3f",
+          "flipped": false,
+          "id": "pilot-r004-canopy-diagonal45-12",
+          "position": [3, 11, 1.3125],
+          "removedCells": [],
+          "rotation": 1.5707963267948966
+        },
+        {
+          "assetId": "part-540c83fc49ee792d9a4a",
+          "flipped": false,
+          "id": "pilot-r004-hull-diagonal45-13",
+          "position": [-1, 13, 0.1875],
+          "removedCells": [],
+          "rotation": 3.141592653589793
+        },
+        {
+          "assetId": "part-b70713e9836547941e3f",
+          "flipped": false,
+          "id": "pilot-r004-canopy-diagonal45-14",
+          "position": [-1, 13, 1.3125],
+          "removedCells": [],
+          "rotation": 3.141592653589793
+        },
+        {
+          "assetId": "part-ecd751f76e602db806a3",
+          "flipped": false,
+          "id": "pilot-r004-bow-transom-15",
+          "position": [1, 13, 0.1875],
+          "removedCells": [],
+          "rotation": 3.141592653589793
+        },
+        {
+          "assetId": "part-4a1d28344c5ee632b249",
+          "flipped": false,
+          "id": "pilot-r004-canopy-nose-16",
+          "position": [1, 13, 1.3125],
+          "removedCells": [],
+          "rotation": 3.141592653589793
+        },
+        {
+          "assetId": "part-9f79f3a40a72f9b7ad4a",
+          "flipped": false,
+          "id": "pilot-r004-corner-buttress-17",
+          "position": [3, 9, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-9f79f3a40a72f9b7ad4a",
+          "flipped": true,
+          "id": "pilot-r004-corner-buttress-18",
+          "position": [-3, 9, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-70c422bca2d395c35ecb",
+          "flipped": false,
+          "id": "pilot-r004-airlock-frame-22",
+          "position": [1, 9, 0.1875],
+          "removedCells": [],
+          "rotation": 3.141592653589793
+        },
+        {
+          "assetId": "part-1d133c308abd8b172d95",
+          "flipped": false,
+          "id": "pilot-r004-pilot-roof-25",
+          "position": [-3, 9, 2.625],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-14404bc85f3a72ad3ab8",
+          "flipped": false,
+          "id": "pilot-context-vestibule-roof-0",
+          "position": [-3, 7, 2.625],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-14404bc85f3a72ad3ab8",
+          "decals": [
+            {
+              "color": "#292d3b",
+              "face": "top",
+              "id": "frontier-ship-name",
+              "kind": "text",
+              "position": [1, 1.5, 0.3],
+              "rotation": 0,
+              "size": [5.3, 1.35],
+              "text": "WAYFARER"
+            }
+          ],
+          "flipped": false,
+          "id": "pilot-context-vestibule-roof-1",
+          "position": [-1, 7, 2.625],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-14404bc85f3a72ad3ab8",
+          "flipped": false,
+          "id": "pilot-context-vestibule-roof-2",
+          "position": [1, 7, 2.625],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-e965a5502d9fe4c25406",
+          "flipped": false,
+          "id": "pilot-r005-outer-shoulder-transition-starboard",
+          "position": [5, 9, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-e965a5502d9fe4c25406",
+          "flipped": true,
+          "id": "pilot-r005-outer-shoulder-transition-port",
+          "position": [-5, 9, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-b3a1decd8a0336ac2030",
+          "flipped": false,
+          "id": "pilot-r005-outer-roof-collar-starboard",
+          "position": [5, 9, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-b3a1decd8a0336ac2030",
+          "flipped": true,
+          "id": "pilot-r005-outer-roof-collar-port",
+          "position": [-5, 9, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-437732483fa4d7acbcbc",
+          "flipped": false,
+          "id": "pilot-r005-outer-diagonal-cheek-starboard",
+          "position": [1, 11, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-437732483fa4d7acbcbc",
+          "flipped": true,
+          "id": "pilot-r005-outer-diagonal-cheek-port",
+          "position": [-1, 11, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-63a0c40bbb71cfeba4dd",
+          "flipped": false,
+          "id": "pilot-r005-outer-bow-bumper-center",
+          "position": [-2, 13, -0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-e7dddd4628bd6be8efb7",
+          "flipped": false,
+          "id": "pilot-r004-rear-partition-23",
+          "position": [-2.625, 8.625, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-e7dddd4628bd6be8efb7",
+          "flipped": false,
+          "id": "pilot-r004-rear-partition-24",
+          "position": [1, 8.625, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        }
+      ],
+      "revisions": {
+        "part-03ff3a1f9d4a892cbaab": "retained-part-library-v1",
+        "part-04c2fbf8cdd53d6bf70f": "2a443848a642a1a3ddc26cb7f53369bda56c1c2d1603f5cf3f075cd067b6dbcc",
+        "part-05049180a0e5eceefc12": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-0558bcda4ab0cb8c9f70": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "part-06c58ee456dae94b1772": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-06fe670dace09ce26bdf": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-070229a9a22dcd1fc3e1": "retained-part-library-v1",
+        "part-0975008f8da949152b98": "retained-part-library-v1",
+        "part-0ac1e39dec34655a366f": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "part-0bf0c79e5a52a9cee388": "retained-part-library-v1",
+        "part-0e4aefe72a90960922e9": "retained-part-library-v1",
+        "part-0f14bf002f4c11854337": "5bbe40f3637bc640bc26557c3c20e3d9e452587395b0ca7c05d45793ef5e014a",
+        "part-0f1f4618418c21228e80": "retained-part-library-v1",
+        "part-0fe602115d20ec950357": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "part-12e80210cf3fd09756c0": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-13b30dda6355f0ff17b3": "retained-part-library-v1",
+        "part-14404bc85f3a72ad3ab8": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-152849dcee209e8ef9ac": "retained-part-library-v1",
+        "part-15bc4d24f27173de47ce": "retained-part-library-v1",
+        "part-16ad11623e8457b9fa65": "retained-part-library-v1",
+        "part-16c015c4cd41f2332a37": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-18280ba6cc037eb433dc": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "part-1850147a0c9d014b6db4": "retained-part-library-v1",
+        "part-196967a04cc184797d72": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-1a05e8da6e2c1ec33a1c": "retained-part-library-v1",
+        "part-1a7d03bf8c7aabde4976": "retained-part-library-v1",
+        "part-1c0570cdd9d7bc9d67da": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "part-1d133c308abd8b172d95": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-1d5c3e6be30e7f2cda99": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-1eeda7c71b6b49c4d10f": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-1f4f2ce23a20dba31e8b": "retained-part-library-v1",
+        "part-1f69531882e3417aadf4": "retained-part-library-v1",
+        "part-2143e7c0fcb3b5b3270f": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "part-229a43bbe1eb96367621": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-2353952b313ac7582770": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-23d5284bc8c7e3ad49d7": "retained-part-library-v1",
+        "part-262364013153b9117f95": "retained-part-library-v1",
+        "part-2760976b04d38507b400": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-27d644c2d1643c69a713": "retained-part-library-v1",
+        "part-29a2b4f5499e93c9edca": "retained-part-library-v1",
+        "part-2adc55eddecec9617cf7": "retained-part-library-v1",
+        "part-2ae59f43b3e997e6ee94": "retained-part-library-v1",
+        "part-2ecd61f4910b8988dd2c": "retained-part-library-v1",
+        "part-305bece95974253b0fbc": "retained-part-library-v1",
+        "part-309c54ab7d04658a554d": "retained-part-library-v1",
+        "part-328e6e9149ea347b95d7": "retained-part-library-v1",
+        "part-34accc51ea8752a66670": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-386f7415c520e22bd6b6": "retained-part-library-v1",
+        "part-393498d8c8af6149ef28": "retained-part-library-v1",
+        "part-395319254b5dd541b5c9": "retained-part-library-v1",
+        "part-3a18bc76a2d47e563b4b": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-3b10a5b6237f977755ea": "retained-part-library-v1",
+        "part-3b538ddb00f4d1a7d749": "retained-part-library-v1",
+        "part-3cb4b658b677f06829b6": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "part-3da4aef9b526b104b324": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "part-3f0bcec2befccab744d4": "retained-part-library-v1",
+        "part-422bf815cc05a72270f8": "retained-part-library-v1",
+        "part-437732483fa4d7acbcbc": "6992c7d5fb25376f3d12d881f66ab002108ed275a63661ca84025968ca3cadfe",
+        "part-46db5c6ab5c468a19a1b": "retained-part-library-v1",
+        "part-47fe7106f6e495b8869c": "retained-part-library-v1",
+        "part-489c21ef5238f76ea87b": "retained-part-library-v1",
+        "part-48cf8b9cf29d0b226ec4": "65195aefcb5bf72da62839db8fec6123188af9f5ac17024cbe7d6d2cf8959b79",
+        "part-494f1ec5dcdcd3375a1a": "retained-part-library-v1",
+        "part-4a1d28344c5ee632b249": "d6859439499041ad474afd3d07b4fa1a67512eb7d90fb99720edfbfe5301a5f4",
+        "part-4a4b34fe2247bfa2ed2a": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-4c25a5fd9da0bce537f5": "59dd466fd25f5555fd8d29bd4183c2e5c7dd99884586bc7f251a2736fbe396d1",
+        "part-4c52da8cda73444f19d3": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-4d2655e20be90a6b2257": "retained-part-library-v1",
+        "part-4d754a140cc642ded990": "retained-part-library-v1",
+        "part-4d7f7db485619f1df26b": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-4f7ae9b4ef6a0797b795": "retained-part-library-v1",
+        "part-505abaccb2279cad2d0f": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "part-50898252a921c7be50b3": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-529f6a1f75b92297412f": "retained-part-library-v1",
+        "part-5382f8dbbeb54e663d33": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+        "part-540c83fc49ee792d9a4a": "118f1f2406b0c699517be811d77e585f49d5b9c7d650013f873885dbe74329a5",
+        "part-5838f5816573759b23e7": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-5c53af159a14e3454da7": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-5db85939e66f62926062": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-6084a1d605103c8b6110": "retained-part-library-v1",
+        "part-61e4ccf651374ea0d773": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-624989ddf1192dceee75": "9dcf37d5a749a152be66657b100a8d83c59856b4c3b4dc967387bf000723e792",
+        "part-63a0c40bbb71cfeba4dd": "3d0fd05cf021b3b5badf68e2e9f1011b5b621e64355390f61508a18a5e4cf61d",
+        "part-63ee593f180a4f4c4c7a": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-6661a7a3369cae1e3e9d": "retained-part-library-v1",
+        "part-66a37b7990899a620125": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "part-67c91d419e31812795c4": "retained-part-library-v1",
+        "part-6c1c5c2e0e3161fd9cdb": "retained-part-library-v1",
+        "part-6c3fb1c92331674881a0": "retained-part-library-v1",
+        "part-6e64c7b0aa0165cbe846": "retained-part-library-v1",
+        "part-700cbf3cd394356b4eaf": "retained-part-library-v1",
+        "part-701ca6e3c7861c04acbf": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-70c422bca2d395c35ecb": "825a836cb96f74363c83c1d5be4efc1a11df0ef71bbdafff8b2abb222cebdad6",
+        "part-712235769fd1db178911": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-73df516feb786d73fc5e": "3692ffd29f75026ef856af18a0a59538814b4836e8315d98c48e3c76d00735a8",
+        "part-749baebbcaac89945d5c": "retained-part-library-v1",
+        "part-75910d7a0d27dfc17aaf": "be3a73faed7b4a2c9e4c7b89477df3c1424284dd3e71ca84438fb049a8b3b5a8",
+        "part-771b73697fcd1af0ffe1": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-771cc318e835d7a08abd": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "part-77728ecc8ad36b0ff45f": "02ada2cf811e7893ffd98d8b6231974d111238e2dddf0ecd96739ff6b68a2cd3",
+        "part-77cb6148602659b39502": "retained-part-library-v1",
+        "part-79da3bdf7a767bb89c8b": "retained-part-library-v1",
+        "part-7a1a34a2a908f8ff455b": "3a621b356eee87d25e7e7691829aaf52bf68d64af80d2a8bd375be21239a3ac2",
+        "part-7b265b4d073afc9bf127": "retained-part-library-v1",
+        "part-7b28f47930a6f7cbdf10": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "part-7b9d7425f1a0c9d1b49d": "retained-part-library-v1",
+        "part-7ceebee6336152691b53": "retained-part-library-v1",
+        "part-7ec54250fbcf112c0861": "retained-part-library-v1",
+        "part-7f90173a1eca4acb88bc": "retained-part-library-v1",
+        "part-8027121656ac690dd209": "retained-part-library-v1",
+        "part-8041df3803cadce3c472": "retained-part-library-v1",
+        "part-834cca417ad1520fb91b": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-880c67421085b52fac3c": "retained-part-library-v1",
+        "part-8a552b558b8807293eed": "retained-part-library-v1",
+        "part-8ca6ba766169b463abbf": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-8d853ce060a72d6e1e39": "retained-part-library-v1",
+        "part-8ddb637a40bd23dfd03a": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "part-8f65f9fd39b16b2bec9e": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-9046031ff83521748fa1": "retained-part-library-v1",
+        "part-915dc23e886f070d75c4": "retained-part-library-v1",
+        "part-91c8f3d728f25c968810": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "part-96878a6d75e5c294b532": "retained-part-library-v1",
+        "part-9a74ad0724eb741a2b63": "retained-part-library-v1",
+        "part-9c1ccfb3902a1e19de44": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-9f79f3a40a72f9b7ad4a": "1b787888f92e9a7691337c02b297a8895703544003ddcec8eb655ff1ffe91af3",
+        "part-9fe552c6f9293ec26860": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-a06cfaab58b430855803": "retained-part-library-v1",
+        "part-a086c1f719d417b167f3": "retained-part-library-v1",
+        "part-a3f5c1c3caa171a94d6c": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "part-a4eed62e70496db38a2a": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-a561ef19a47095f7af9b": "retained-part-library-v1",
+        "part-a735909957b9e773f219": "retained-part-library-v1",
+        "part-a754ceb1ebef9f1395d9": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "part-a7c31e5a4591741723d0": "retained-part-library-v1",
+        "part-a87c82cebb4bbbf8db11": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-a9dcbf6707ca20039a5c": "retained-part-library-v1",
+        "part-acb9d36d47113a25ad84": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-acbbef7209c4ef100693": "1e96a18539191ea08d48b4134c2820043674f2c3b0960ce583ae1620ba5a81a8",
+        "part-add5f7040084fbad8df6": "retained-part-library-v1",
+        "part-ae18e82003fce6d677bc": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-b02132179cb305a21417": "retained-part-library-v1",
+        "part-b351480b6386fb131dc0": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "part-b3a1decd8a0336ac2030": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-b4de51cd37611d574002": "retained-part-library-v1",
+        "part-b5a08afd6c5d6c897d51": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-b68b5bb424b607ab7458": "retained-part-library-v1",
+        "part-b70713e9836547941e3f": "9495f6771dbeafaa24530562acd95a744414674853d7a13e45d2866f59e42526",
+        "part-b86fe448a0cdd955e88b": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-b90945c434415efcef4d": "retained-part-library-v1",
+        "part-c03ec0260cd7329050a8": "f527af1e44fc1570355c2268055b7b31343c45849a807b40993cf516c263093a",
+        "part-c06e4f5f6f6dace38e41": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+        "part-c0b6b036f5b3dd8bd2f3": "da38770d060f4c5397b2d0ae8ab01258d42ea1f12884cac3ed628c3b110c5a9c",
+        "part-c15a5229e466c6057639": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-c2db52503da57679ba31": "retained-part-library-v1",
+        "part-c41467ac46f6b350df24": "a5b58c4707df1e37aa70fa40e7d052e63be141df7703cd75337abe0e7610b4c7",
+        "part-c561706cce53aba7f13e": "retained-part-library-v1",
+        "part-c5fa343376505f993a45": "retained-part-library-v1",
+        "part-c65fb5ae4553c6c26a8a": "retained-part-library-v1",
+        "part-c8b14cc871b1aad06c36": "retained-part-library-v1",
+        "part-ca1cbb89761ec5c604b8": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-ca866457d5caccb943a9": "retained-part-library-v1",
+        "part-cc46be4cf37030e6a389": "retained-part-library-v1",
+        "part-cc610ba071b8eb38ab8c": "a8e5d2fa478e42723ffc82a845b223051a8f8878ece3c9ea80eb75e4a5021a3b",
+        "part-ccf7c8d305f71dc5f596": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-ce04d53853da84dd9d81": "retained-part-library-v1",
+        "part-d4a9faaa669f3ecc29fd": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-d5094b4fbaf77ad6ebeb": "retained-part-library-v1",
+        "part-d5a958cd5c64f788d607": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-d9f37a5f7ea6e8d13254": "713d8a83c902d24bb59e278eb2436b087ebdf06fbbbbbd5daa7d2340fc782a49",
+        "part-da5b65baa0bb652537e3": "retained-part-library-v1",
+        "part-dd83177cdf0e1d968cb7": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "part-dd8a6e1947e768593d77": "retained-part-library-v1",
+        "part-ddf6d537b7d731206eb9": "retained-part-library-v1",
+        "part-dea5602de2d4f24d79cb": "retained-part-library-v1",
+        "part-df324c9b4e916c78412f": "retained-part-library-v1",
+        "part-df744c52b2f4f085efc3": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-e14864df3df74006207a": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-e15ef10ca93701b58ccb": "retained-part-library-v1",
+        "part-e188bf92bb905027d600": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-e21a69be0c5b6a98e812": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "part-e7dddd4628bd6be8efb7": "53d58e142047665409aadeb232a83f0c5a1901da705234f2ffc8bda4f211e5c9",
+        "part-e7f6d59dd9f860ed57d6": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-e8b51ac6443c73becfcb": "retained-part-library-v1",
+        "part-e965a5502d9fe4c25406": "e34ba9c660088550058053cf9dff5a93bdc1b198d9262ba9f6f3acc05644a2fa",
+        "part-ecd751f76e602db806a3": "29ef84b9b36290094d9053f7635fe160ca5a1767af14eecc2d965ae7405f5f1d",
+        "part-ecfd7775a5086626cd96": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-eeb15021768e26d40156": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-f198db40cdb355118c21": "retained-part-library-v1",
+        "part-f307639bad50377eba7b": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "part-f4692a493f2aa4f6dddf": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-f4b0cfbfdcdfd800e350": "retained-part-library-v1",
+        "part-f4ffbb8320323e7acc45": "retained-part-library-v1",
+        "part-f720d0e3287882975690": "retained-part-library-v1",
+        "part-f75dd89e6deed9eefdb9": "retained-part-library-v1",
+        "part-f8984ad617033cbb9b07": "retained-part-library-v1",
+        "part-ff627f158a6d1ecfb097": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-ffc5518d9892477ad05b": "retained-part-library-v1"
+      },
+      "schema": "sidereal.layout-assembly.v1",
+      "source": { "documentId": "wayfarer-study", "name": "Wayfarer" }
+    },
+    "compiler": "floorplan-1",
+    "decks": [
+      {
+        "ceiling": 82,
+        "elevation": 0,
+        "holes": [],
+        "id": "wayfarer-main-deck",
+        "name": "Main deck · existing authored layout",
+        "order": 0,
+        "roof": false
+      }
+    ],
+    "dependencies": [{ "id": "floor-shapes", "revision": "lattice-shapes-1" }],
+    "fittings": [],
+    "id": "wayfarer-semantic-candidate-r001",
+    "kind": "ship",
+    "legacy": null,
+    "name": "Wayfarer · semantic conversion candidate r001",
+    "nodes": [],
+    "openings": [],
+    "partitions": [],
+    "playableDeckId": "wayfarer-main-deck",
+    "rooms": [],
+    "routes": [],
+    "schema": "sidereal.layout-draft.v1",
+    "source": null,
+    "tiles": [
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1--1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-96, -96],
+          [-32, -96],
+          [-32, -32],
+          [-96, -32]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1--2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-96, -160],
+          [-32, -160],
+          [-32, -96],
+          [-96, -96]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1--3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-96, -224],
+          [-32, -224],
+          [-32, -160],
+          [-96, -160]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1--4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-96, -288],
+          [-32, -288],
+          [-32, -224],
+          [-96, -224]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1-0",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-96, -32],
+          [-32, -32],
+          [-32, 32],
+          [-96, 32]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1-1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-96, 32],
+          [-32, 32],
+          [-32, 96],
+          [-96, 96]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1-2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-96, 96],
+          [-32, 96],
+          [-32, 160],
+          [-96, 160]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1-3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-96, 160],
+          [-32, 160],
+          [-32, 224],
+          [-96, 224]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1-4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-96, 224],
+          [-32, 224],
+          [-32, 288],
+          [-96, 288]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2--1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-160, -96],
+          [-96, -96],
+          [-96, -32],
+          [-160, -32]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2--2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-160, -160],
+          [-96, -160],
+          [-96, -96],
+          [-160, -96]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2--3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-160, -224],
+          [-96, -224],
+          [-96, -160],
+          [-160, -160]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2--4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-160, -288],
+          [-96, -288],
+          [-96, -224],
+          [-160, -224]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2-0",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-160, -32],
+          [-96, -32],
+          [-96, 32],
+          [-160, 32]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2-1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-160, 32],
+          [-96, 32],
+          [-96, 96],
+          [-160, 96]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2-2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-160, 96],
+          [-96, 96],
+          [-96, 160],
+          [-160, 160]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2-3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-160, 160],
+          [-96, 160],
+          [-96, 224],
+          [-160, 224]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2-4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-160, 224],
+          [-96, 224],
+          [-96, 288],
+          [-160, 288]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0--1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, -96],
+          [32, -96],
+          [32, -32],
+          [-32, -32]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0--2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, -160],
+          [32, -160],
+          [32, -96],
+          [-32, -96]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0--3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, -224],
+          [32, -224],
+          [32, -160],
+          [-32, -160]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0--4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, -288],
+          [32, -288],
+          [32, -224],
+          [-32, -224]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0-0",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, -32],
+          [32, -32],
+          [32, 32],
+          [-32, 32]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0-1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, 32],
+          [32, 32],
+          [32, 96],
+          [-32, 96]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0-2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, 96],
+          [32, 96],
+          [32, 160],
+          [-32, 160]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0-3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, 160],
+          [32, 160],
+          [32, 224],
+          [-32, 224]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1--1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, -96],
+          [96, -96],
+          [96, -32],
+          [32, -32]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1--2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, -160],
+          [96, -160],
+          [96, -96],
+          [32, -96]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1--3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, -224],
+          [96, -224],
+          [96, -160],
+          [32, -160]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1--4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, -288],
+          [96, -288],
+          [96, -224],
+          [32, -224]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1-0",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, -32],
+          [96, -32],
+          [96, 32],
+          [32, 32]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1-1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, 32],
+          [96, 32],
+          [96, 96],
+          [32, 96]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1-2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, 96],
+          [96, 96],
+          [96, 160],
+          [32, 160]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1-3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, 160],
+          [96, 160],
+          [96, 224],
+          [32, 224]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1-4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, 224],
+          [96, 224],
+          [96, 288],
+          [32, 288]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2--1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [96, -96],
+          [160, -96],
+          [160, -32],
+          [96, -32]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2--2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [96, -160],
+          [160, -160],
+          [160, -96],
+          [96, -96]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2--3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [96, -224],
+          [160, -224],
+          [160, -160],
+          [96, -160]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2--4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [96, -288],
+          [160, -288],
+          [160, -224],
+          [96, -224]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2-0",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [96, -32],
+          [160, -32],
+          [160, 32],
+          [96, 32]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2-1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [96, 32],
+          [160, 32],
+          [160, 96],
+          [96, 96]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2-2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [96, 96],
+          [160, 96],
+          [160, 160],
+          [96, 160]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2-3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [96, 160],
+          [160, 160],
+          [160, 224],
+          [96, 224]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2-4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [96, 224],
+          [160, 224],
+          [160, 288],
+          [96, 288]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "pilot-r004-floor-corner45-05",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "triangle",
+        "vertices": [
+          [32, 352],
+          [96, 352],
+          [32, 416]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "pilot-r004-floor-corner45-06",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "triangle",
+        "vertices": [
+          [-96, 352],
+          [-32, 352],
+          [-32, 416]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "pilot-r004-floor-square-00",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-96, 288],
+          [-32, 288],
+          [-32, 352],
+          [-96, 352]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "pilot-r004-floor-square-01",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, 288],
+          [32, 288],
+          [32, 352],
+          [-32, 352]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "pilot-r004-floor-square-02",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, 288],
+          [96, 288],
+          [96, 352],
+          [32, 352]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "pilot-r004-floor-square-03",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, 352],
+          [32, 352],
+          [32, 416],
+          [-32, 416]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "pilot-r004-floor-square-04",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, 224],
+          [32, 224],
+          [32, 288],
+          [-32, 288]
+        ]
+      }
+    ]
+  },
+  "schema": "sidereal.construction.v1"
+}

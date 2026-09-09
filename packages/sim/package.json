@@ -32,7 +32,13 @@
     "./scoped-inventory": "./src/scoped-inventory.ts",
     "./layout-validation": "./src/layout-validation.ts",
     "./inventory": "./src/inventory.ts",
-    "./construction-layout": "./src/construction-layout.ts"
+    "./construction-layout": "./src/construction-layout.ts",
+    "./construction-airlock-plan": "./src/construction-airlock-plan.ts",
+    "./construction-airlock-controller": "./src/construction-airlock-controller.ts",
+    "./construction-airlock-document": "./src/construction-airlock-document.ts",
+    "./wayfarer-starter": "./src/wayfarer-starter.ts",
+    "./game-ship-access": "./src/game-ship-access.ts",
+    "./construction-flight": "./src/construction-flight.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",
