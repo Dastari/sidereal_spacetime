@@ -1,0 +1,119 @@
+{
+  "schema": "sidereal.native-inlet-candidate.v1",
+  "status": "awaiting-native-qualification-and-parent-review",
+  "ownerFinalSignoff": null,
+  "sourceMaterialBlend": "assets/art-library/designs/shipyard.hull.side-armor/revisions/r003/blender-source.blend",
+  "sourceMaterialSha256": "70c57b06a2c170c28840e0566f077d3561e0b40c4f5e978d36940273ceec1abd",
+  "parts": [
+    {
+      "id": "interior-frame",
+      "replacesSourcePlacedId": "wall-2--2",
+      "anchorCommonM": [
+        -1,
+        1,
+        0
+      ],
+      "worldPositionM": [
+        4,
+        -4,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "file": "interior-frame.glb",
+      "sha256": "ca7d05ef7b06fa47471bd2e02cd47c7df2530df7b7dd644b668fa1412267ce3e",
+      "nodePrefix": "GEO-inlet-interior-frame--",
+      "editableComponents": 12
+    },
+    {
+      "id": "structural-aperture",
+      "replacesSourcePlacedId": "wall-3--2",
+      "anchorCommonM": [
+        0.125,
+        1,
+        0
+      ],
+      "worldPositionM": [
+        5.125,
+        -4,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "file": "structural-aperture.glb",
+      "sha256": "02e2073e07de3f512b22ba51e0cf728b6024bbcd3df065275e11f9eaf69bf239",
+      "nodePrefix": "GEO-inlet-structural-aperture--",
+      "editableComponents": 4
+    },
+    {
+      "id": "armor-collar",
+      "replacesSourcePlacedId": "superstructure-3--2",
+      "anchorCommonM": [
+        0.5625,
+        1,
+        -0.25
+      ],
+      "worldPositionM": [
+        5.5625,
+        -4,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "file": "armor-collar.glb",
+      "sha256": "276aeb99c55091916ae0534adcff819f7d173b620e6b4b7b76fd092ec6c050ba",
+      "nodePrefix": "GEO-inlet-armor-collar--",
+      "editableComponents": 26
+    },
+    {
+      "id": "stepped-roof",
+      "replacesSourcePlacedId": null,
+      "anchorCommonM": [
+        0,
+        0,
+        0
+      ],
+      "worldPositionM": [
+        5,
+        -5,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "file": "stepped-roof.glb",
+      "sha256": "06358b50ea88a81cb83e1c9ab098c4b2189f8a4cb0bcc77df23b5a847acb3289",
+      "nodePrefix": "GEO-inlet-stepped-roof--",
+      "editableComponents": 5
+    },
+    {
+      "id": "flush-threshold",
+      "replacesSourcePlacedId": null,
+      "anchorCommonM": [
+        0,
+        0,
+        0
+      ],
+      "worldPositionM": [
+        5,
+        -5,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "file": "flush-threshold.glb",
+      "sha256": "8c7ef0be63c6f3c9ed9dc24be685f1a16545c42a225ba1f1ccd4d7ef0c2fd42f",
+      "nodePrefix": "GEO-inlet-flush-threshold--",
+      "editableComponents": 1
+    }
+  ],
+  "omittedNewAirlockPartIndices": [
+    26
+  ],
+  "originalPlacementsPreserved": 262,
+  "originalPlacementTransformChanges": 0,
+  "floorTopM": 0.1875,
+  "oldRoofUndersideM": 2.6875,
+  "newRoofUndersideM": 3,
+  "apertureWidthM": 1.25,
+  "apertureHeightM": 2.25
+}

@@ -1,0 +1,389 @@
+{
+  "schema": "sidereal.wayfarer-airlock-inlet-qualification.v1",
+  "status": "failed-local-native-candidate",
+  "pass": false,
+  "newParts": [
+    {
+      "id": "interior-frame",
+      "replacesSourcePlacedId": "wall-2--2",
+      "anchorCommonM": [
+        -1,
+        1,
+        0
+      ],
+      "worldPositionM": [
+        4,
+        -4,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "file": "interior-frame.glb",
+      "sha256": "ca7d05ef7b06fa47471bd2e02cd47c7df2530df7b7dd644b668fa1412267ce3e",
+      "nodePrefix": "GEO-inlet-interior-frame--",
+      "editableComponents": 12,
+      "nativeTriangleCount": 1376
+    },
+    {
+      "id": "structural-aperture",
+      "replacesSourcePlacedId": "wall-3--2",
+      "anchorCommonM": [
+        0.125,
+        1,
+        0
+      ],
+      "worldPositionM": [
+        5.125,
+        -4,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "file": "structural-aperture.glb",
+      "sha256": "02e2073e07de3f512b22ba51e0cf728b6024bbcd3df065275e11f9eaf69bf239",
+      "nodePrefix": "GEO-inlet-structural-aperture--",
+      "editableComponents": 4,
+      "nativeTriangleCount": 48
+    },
+    {
+      "id": "armor-collar",
+      "replacesSourcePlacedId": "superstructure-3--2",
+      "anchorCommonM": [
+        0.5625,
+        1,
+        -0.25
+      ],
+      "worldPositionM": [
+        5.5625,
+        -4,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "file": "armor-collar.glb",
+      "sha256": "276aeb99c55091916ae0534adcff819f7d173b620e6b4b7b76fd092ec6c050ba",
+      "nodePrefix": "GEO-inlet-armor-collar--",
+      "editableComponents": 26,
+      "nativeTriangleCount": 4184
+    },
+    {
+      "id": "stepped-roof",
+      "replacesSourcePlacedId": null,
+      "anchorCommonM": [
+        0,
+        0,
+        0
+      ],
+      "worldPositionM": [
+        5,
+        -5,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "file": "stepped-roof.glb",
+      "sha256": "06358b50ea88a81cb83e1c9ab098c4b2189f8a4cb0bcc77df23b5a847acb3289",
+      "nodePrefix": "GEO-inlet-stepped-roof--",
+      "editableComponents": 5,
+      "nativeTriangleCount": 412
+    },
+    {
+      "id": "flush-threshold",
+      "replacesSourcePlacedId": null,
+      "anchorCommonM": [
+        0,
+        0,
+        0
+      ],
+      "worldPositionM": [
+        5,
+        -5,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "file": "flush-threshold.glb",
+      "sha256": "8c7ef0be63c6f3c9ed9dc24be685f1a16545c42a225ba1f1ccd4d7ef0c2fd42f",
+      "nodePrefix": "GEO-inlet-flush-threshold--",
+      "editableComponents": 1,
+      "nativeTriangleCount": 12
+    }
+  ],
+  "oldSourcePins": [
+    {
+      "path": "assets/runtime/assembly/floor/r002/kit.glb",
+      "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "sourcePlacedId": "floor-2--2",
+      "originalPlacement": {
+        "id": "floor-2--2",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          3,
+          -5,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-b90945c434415efcef4d",
+          "offset": [
+            1,
+            1,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      }
+    },
+    {
+      "path": "assets/runtime/assembly/roof/r004/kit.glb",
+      "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+      "nodePrefix": "GEO-shoulder-vent--surface",
+      "sourcePlacedId": "roof-2--2",
+      "originalPlacement": {
+        "id": "roof-2--2",
+        "assetId": "part-8ca6ba766169b463abbf",
+        "position": [
+          4,
+          -4,
+          2.6875
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "path": "assets/runtime/assembly/roof/r004/kit.glb",
+      "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+      "nodePrefix": "GEO-edge-long--surface",
+      "sourcePlacedId": "roof-3--2",
+      "originalPlacement": {
+        "id": "roof-3--2",
+        "assetId": "part-05049180a0e5eceefc12",
+        "position": [
+          5.125,
+          -4,
+          2.6875
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    }
+  ],
+  "airlockAuditSha256": "eb7eab8523d68906a302a84cf06a5b2a507229d15e89fb96f66d1ade8b6e0aa6",
+  "omittedNewAirlockParts": [
+    26
+  ],
+  "chamberFreeVolumes": [
+    {
+      "x": 2,
+      "y": 0,
+      "freeM3": 2.5025581375177235,
+      "excludedM3": 0.30994186248227673
+    },
+    {
+      "x": 3,
+      "y": 0,
+      "freeM3": 2.653348078330071,
+      "excludedM3": 0.15915192166992867
+    },
+    {
+      "x": 4,
+      "y": 0,
+      "freeM3": 2.653348078329129,
+      "excludedM3": 0.15915192167087136
+    },
+    {
+      "x": 5,
+      "y": 0,
+      "freeM3": 2.5018806562621787,
+      "excludedM3": 0.3106193437378213
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "freeM3": 2.5018806562621787,
+      "excludedM3": 0.3106193437378213
+    },
+    {
+      "x": 3,
+      "y": 1,
+      "freeM3": 2.653348078329129,
+      "excludedM3": 0.1591519216708713
+    },
+    {
+      "x": 4,
+      "y": 1,
+      "freeM3": 2.6533480783300716,
+      "excludedM3": 0.1591519216699287
+    },
+    {
+      "x": 5,
+      "y": 1,
+      "freeM3": 2.502558137517723,
+      "excludedM3": 0.30994186248227695
+    }
+  ],
+  "checks": [
+    {
+      "name": "Exactly three replacements keep original transforms",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Original262 placement records preserved",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Cockpit floor roof cargo unchanged",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "All native visual meshes are valid solids",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Continuous radius300mm height1800mm inlet body sweep",
+      "pass": true,
+      "detail": {
+        "intersectionM3": 0.0,
+        "fromM": [
+          -1.4,
+          1,
+          0.1875
+        ],
+        "toM": [
+          1.35,
+          1,
+          0.1875
+        ]
+      }
+    },
+    {
+      "name": "Original closed backwall negative control blocks inlet",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Body route clear with actual unchanged floor and roofs",
+      "pass": true,
+      "detail": {
+        "intersectionM3": 0.0
+      }
+    },
+    {
+      "name": "Continuous actual floor support across old/new seam",
+      "pass": false,
+      "detail": {
+        "unsupportedM2": 0.007905940204761333
+      }
+    },
+    {
+      "name": "Actual312.5mm roof step contact core",
+      "pass": true,
+      "detail": {
+        "boundsM": [
+          -0.0625,
+          0.0,
+          2.6875,
+          0.0625,
+          2.0,
+          3.125
+        ],
+        "nativeTriangles": 12,
+        "volumeM3": 0.109375
+      }
+    },
+    {
+      "name": "Missing transition negative control cannot reach new roof",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native roof transition contacts old roof",
+      "pass": true,
+      "detail": {
+        "contactM3": 0.1257044673924
+      }
+    },
+    {
+      "name": "Native roof transition contacts new roof",
+      "pass": true,
+      "detail": {
+        "contactM3": 0.0965082021526087
+      }
+    },
+    {
+      "name": "New composed native chamber remains sealed",
+      "pass": true,
+      "detail": [
+        {
+          "volumeM3": 20.598104989504872,
+          "boundsM": [
+            2.046875,
+            0.004,
+            0.1835,
+            5.953125,
+            1.996,
+            3.0
+          ]
+        }
+      ]
+    },
+    {
+      "name": "New native chamber volume accounting (2, 0)",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native chamber volume accounting (3, 0)",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native chamber volume accounting (4, 0)",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native chamber volume accounting (5, 0)",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native chamber volume accounting (2, 1)",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native chamber volume accounting (3, 1)",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native chamber volume accounting (4, 1)",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native chamber volume accounting (5, 1)",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "coordinateRoundingM": 1e-06,
+  "gasketContactRoundingM": 1e-08,
+  "limitations": [
+    "No whole Wayfarer pressure seal or gas-neighbor authority qualification.",
+    "No final artistic approval, runtime registration, installed browser evidence or live refit.",
+    "Visual material response confers no armor/strength/power rating.",
+    "Full hinge-sweep combination and external landing egress authority remain separately governed by native airlock contract."
+  ]
+}

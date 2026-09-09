@@ -1,0 +1,311 @@
+{
+  "schema": "sidereal.native-inlet-proxies.v1",
+  "frame": "common inlet XYZ metres; world origin[5,-5,0]",
+  "use": "separate provisional collision/contact representation; qualify against exported native meshes before authority",
+  "boxes": [
+    {
+      "part": "interior-frame",
+      "component": "port-jamb",
+      "minM": [
+        -0.125,
+        0,
+        0
+      ],
+      "maxM": [
+        0,
+        0.375,
+        2.6875
+      ],
+      "role": "authored-contact-core",
+      "sourceObject": "GEO-inlet-interior-frame--port-jamb"
+    },
+    {
+      "part": "interior-frame",
+      "component": "starboard-jamb",
+      "minM": [
+        -0.125,
+        1.625,
+        0
+      ],
+      "maxM": [
+        0,
+        2,
+        2.6875
+      ],
+      "role": "authored-contact-core",
+      "sourceObject": "GEO-inlet-interior-frame--starboard-jamb"
+    },
+    {
+      "part": "interior-frame",
+      "component": "header",
+      "minM": [
+        -0.125,
+        0.375,
+        2.4375
+      ],
+      "maxM": [
+        0,
+        1.625,
+        2.6875
+      ],
+      "role": "authored-contact-core",
+      "sourceObject": "GEO-inlet-interior-frame--header"
+    },
+    {
+      "part": "interior-frame",
+      "component": "flush-sill",
+      "minM": [
+        -0.125,
+        0.375,
+        0
+      ],
+      "maxM": [
+        0,
+        1.625,
+        0.1875
+      ],
+      "role": "authored-contact-core",
+      "sourceObject": "GEO-inlet-interior-frame--flush-sill"
+    },
+    {
+      "part": "structural-aperture",
+      "component": "port-jamb",
+      "minM": [
+        0,
+        0,
+        0
+      ],
+      "maxM": [
+        0.3125,
+        0.375,
+        2.6875
+      ],
+      "role": "authored-contact-core",
+      "sourceObject": "GEO-inlet-structural-aperture--port-jamb"
+    },
+    {
+      "part": "structural-aperture",
+      "component": "starboard-jamb",
+      "minM": [
+        0,
+        1.625,
+        0
+      ],
+      "maxM": [
+        0.3125,
+        2,
+        2.6875
+      ],
+      "role": "authored-contact-core",
+      "sourceObject": "GEO-inlet-structural-aperture--starboard-jamb"
+    },
+    {
+      "part": "structural-aperture",
+      "component": "header",
+      "minM": [
+        0,
+        0.375,
+        2.4375
+      ],
+      "maxM": [
+        0.3125,
+        1.625,
+        2.6875
+      ],
+      "role": "authored-contact-core",
+      "sourceObject": "GEO-inlet-structural-aperture--header"
+    },
+    {
+      "part": "structural-aperture",
+      "component": "flush-sill",
+      "minM": [
+        0,
+        0.375,
+        0
+      ],
+      "maxM": [
+        0.3125,
+        1.625,
+        0.1875
+      ],
+      "role": "authored-contact-core",
+      "sourceObject": "GEO-inlet-structural-aperture--flush-sill"
+    },
+    {
+      "part": "interior-frame",
+      "component": "underdeck-backing",
+      "minM": [
+        -2,
+        0,
+        0
+      ],
+      "maxM": [
+        0,
+        2,
+        0.09375
+      ],
+      "role": "authored-contact-core",
+      "sourceObject": "GEO-inlet-interior-frame--underdeck-backing"
+    },
+    {
+      "part": "armor-collar",
+      "component": "left-carrier",
+      "minM": [
+        0.3125,
+        0,
+        -0.25
+      ],
+      "maxM": [
+        0.9375,
+        0.375,
+        2.6875
+      ],
+      "role": "authored-contact-core",
+      "sourceObject": "GEO-inlet-armor-collar--left-carrier"
+    },
+    {
+      "part": "armor-collar",
+      "component": "right-carrier",
+      "minM": [
+        0.3125,
+        1.625,
+        -0.25
+      ],
+      "maxM": [
+        0.9375,
+        2,
+        2.6875
+      ],
+      "role": "authored-contact-core",
+      "sourceObject": "GEO-inlet-armor-collar--right-carrier"
+    },
+    {
+      "part": "armor-collar",
+      "component": "head-carrier",
+      "minM": [
+        0.3125,
+        0.375,
+        2.4375
+      ],
+      "maxM": [
+        0.9375,
+        1.625,
+        2.6875
+      ],
+      "role": "authored-contact-core",
+      "sourceObject": "GEO-inlet-armor-collar--head-carrier"
+    },
+    {
+      "part": "armor-collar",
+      "component": "bottom-carrier",
+      "minM": [
+        0.3125,
+        0.375,
+        -0.25
+      ],
+      "maxM": [
+        0.9375,
+        1.625,
+        0.1875
+      ],
+      "role": "authored-contact-core",
+      "sourceObject": "GEO-inlet-armor-collar--bottom-carrier"
+    },
+    {
+      "part": "stepped-roof",
+      "component": "sealed-height-riser",
+      "minM": [
+        -0.0625,
+        0,
+        2.6875
+      ],
+      "maxM": [
+        0.0625,
+        2,
+        3.125
+      ],
+      "role": "authored-contact-core",
+      "sourceObject": "GEO-inlet-stepped-roof--sealed-height-riser"
+    },
+    {
+      "part": "stepped-roof",
+      "component": "lower-contact-lap",
+      "minM": [
+        -0.25,
+        0,
+        2.6875
+      ],
+      "maxM": [
+        0.0625,
+        2,
+        2.8125
+      ],
+      "role": "authored-contact-core",
+      "sourceObject": "GEO-inlet-stepped-roof--lower-contact-lap"
+    },
+    {
+      "part": "stepped-roof",
+      "component": "upper-contact-lap",
+      "minM": [
+        -0.0625,
+        0,
+        3
+      ],
+      "maxM": [
+        0.35,
+        2,
+        3.14
+      ],
+      "role": "authored-contact-core",
+      "sourceObject": "GEO-inlet-stepped-roof--upper-contact-lap"
+    },
+    {
+      "part": "flush-threshold",
+      "component": "native-floor-contact",
+      "minM": [
+        -0.125,
+        0,
+        0.125
+      ],
+      "maxM": [
+        0.375,
+        2,
+        0.1875
+      ],
+      "role": "authored-contact-core",
+      "sourceObject": "GEO-inlet-flush-threshold--native-floor-contact"
+    },
+    {
+      "part": "flush-threshold",
+      "component": "vestibule-longitudinal-seam",
+      "minM": [
+        0,
+        0.99375,
+        0.16
+      ],
+      "maxM": [
+        2,
+        1.00625,
+        0.1875
+      ],
+      "role": "authored-contact-core",
+      "sourceObject": "GEO-inlet-flush-threshold--vestibule-longitudinal-seam"
+    },
+    {
+      "part": "flush-threshold",
+      "component": "vestibule-cross-seam",
+      "minM": [
+        0.99375,
+        0,
+        0.16
+      ],
+      "maxM": [
+        1.00625,
+        2,
+        0.1875
+      ],
+      "role": "authored-contact-core",
+      "sourceObject": "GEO-inlet-flush-threshold--vestibule-cross-seam"
+    }
+  ]
+}

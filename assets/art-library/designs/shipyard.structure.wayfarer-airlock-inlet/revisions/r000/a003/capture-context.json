@@ -1,0 +1,449 @@
+[
+  {
+    "path": "exterior.png",
+    "engine": "Cycles CPU",
+    "samples": 32,
+    "cameraM": [
+      7,
+      -5,
+      4.5
+    ],
+    "targetM": [
+      0.1,
+      1,
+      1.45
+    ],
+    "orthographicScaleM": 4.6,
+    "role": "actual isolated Blender mesh render; not installed game evidence"
+  },
+  {
+    "path": "interior.png",
+    "engine": "Cycles CPU",
+    "samples": 32,
+    "cameraM": [
+      -6,
+      -4,
+      4
+    ],
+    "targetM": [
+      0,
+      1,
+      1.5
+    ],
+    "orthographicScaleM": 4.6,
+    "role": "actual isolated Blender mesh render; not installed game evidence"
+  },
+  {
+    "path": "roof-transition.png",
+    "engine": "Cycles CPU",
+    "samples": 32,
+    "cameraM": [
+      4,
+      -4,
+      6
+    ],
+    "targetM": [
+      0,
+      1,
+      1.9
+    ],
+    "orthographicScaleM": 4.6,
+    "role": "actual isolated Blender mesh render; not installed game evidence"
+  },
+  {
+    "path": "context-original.png",
+    "engine": "Cycles CPU",
+    "samples": 32,
+    "cameraM": [
+      8,
+      -6,
+      5
+    ],
+    "targetM": [
+      0,
+      1,
+      1.5
+    ],
+    "orthographicScaleM": 7,
+    "role": "actual native source context with identical camera/light; candidate is not installed",
+    "sourcePins": [
+      {
+        "id": "floor-2--2",
+        "path": "assets/runtime/assembly/floor/r002/kit.glb",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "transform": {
+          "id": "floor-2--2",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            3,
+            -5,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-b90945c434415efcef4d",
+            "offset": [
+              1,
+              1,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        }
+      },
+      {
+        "id": "wall-3--3",
+        "path": "assets/runtime/assembly/parts.glb",
+        "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+        "transform": {
+          "id": "wall-3--3",
+          "assetId": "part-29a2b4f5499e93c9edca",
+          "position": [
+            5.125,
+            -6,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      },
+      {
+        "id": "wall-2--2",
+        "path": "assets/runtime/assembly/parts.glb",
+        "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+        "transform": {
+          "id": "wall-2--2",
+          "assetId": "part-0bf0c79e5a52a9cee388",
+          "position": [
+            4,
+            -4,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      },
+      {
+        "id": "wall-3--2",
+        "path": "assets/runtime/assembly/parts.glb",
+        "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+        "transform": {
+          "id": "wall-3--2",
+          "assetId": "part-386f7415c520e22bd6b6",
+          "position": [
+            5.125,
+            -4,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      },
+      {
+        "id": "wall-3--1",
+        "path": "assets/runtime/assembly/parts.glb",
+        "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+        "transform": {
+          "id": "wall-3--1",
+          "assetId": "part-29a2b4f5499e93c9edca",
+          "position": [
+            5.125,
+            -2,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      },
+      {
+        "id": "superstructure-3--3",
+        "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+        "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "transform": {
+          "id": "superstructure-3--3",
+          "assetId": "part-3cb4b658b677f06829b6",
+          "position": [
+            5.5625,
+            -6,
+            -0.25
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      },
+      {
+        "id": "superstructure-3--2",
+        "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+        "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "transform": {
+          "id": "superstructure-3--2",
+          "assetId": "part-0558bcda4ab0cb8c9f70",
+          "position": [
+            5.5625,
+            -4,
+            -0.25
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      },
+      {
+        "id": "superstructure-3--1",
+        "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+        "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "transform": {
+          "id": "superstructure-3--1",
+          "assetId": "part-8ddb637a40bd23dfd03a",
+          "position": [
+            5.5,
+            -2,
+            -0.25
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      },
+      {
+        "id": "roof-2--2",
+        "path": "assets/runtime/assembly/roof/r004/kit.glb",
+        "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "transform": {
+          "id": "roof-2--2",
+          "assetId": "part-8ca6ba766169b463abbf",
+          "position": [
+            4,
+            -4,
+            2.6875
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      },
+      {
+        "id": "roof-3--2",
+        "path": "assets/runtime/assembly/roof/r004/kit.glb",
+        "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "transform": {
+          "id": "roof-3--2",
+          "assetId": "part-05049180a0e5eceefc12",
+          "position": [
+            5.125,
+            -4,
+            2.6875
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      }
+    ]
+  },
+  {
+    "path": "context-candidate.png",
+    "engine": "Cycles CPU",
+    "samples": 32,
+    "cameraM": [
+      8,
+      -6,
+      5
+    ],
+    "targetM": [
+      0,
+      1,
+      1.5
+    ],
+    "orthographicScaleM": 7,
+    "role": "actual native source context with identical camera/light; candidate is not installed",
+    "sourcePins": [
+      {
+        "id": "floor-2--2",
+        "path": "assets/runtime/assembly/floor/r002/kit.glb",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "transform": {
+          "id": "floor-2--2",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            3,
+            -5,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-b90945c434415efcef4d",
+            "offset": [
+              1,
+              1,
+              -0.375
+            ],
+            "maxZ": 0.5625
+          }
+        }
+      },
+      {
+        "id": "wall-3--3",
+        "path": "assets/runtime/assembly/parts.glb",
+        "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+        "transform": {
+          "id": "wall-3--3",
+          "assetId": "part-29a2b4f5499e93c9edca",
+          "position": [
+            5.125,
+            -6,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      },
+      {
+        "id": "wall-2--2",
+        "path": "assets/runtime/assembly/parts.glb",
+        "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+        "transform": {
+          "id": "wall-2--2",
+          "assetId": "part-0bf0c79e5a52a9cee388",
+          "position": [
+            4,
+            -4,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      },
+      {
+        "id": "wall-3--2",
+        "path": "assets/runtime/assembly/parts.glb",
+        "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+        "transform": {
+          "id": "wall-3--2",
+          "assetId": "part-386f7415c520e22bd6b6",
+          "position": [
+            5.125,
+            -4,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      },
+      {
+        "id": "wall-3--1",
+        "path": "assets/runtime/assembly/parts.glb",
+        "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+        "transform": {
+          "id": "wall-3--1",
+          "assetId": "part-29a2b4f5499e93c9edca",
+          "position": [
+            5.125,
+            -2,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      },
+      {
+        "id": "superstructure-3--3",
+        "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+        "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "transform": {
+          "id": "superstructure-3--3",
+          "assetId": "part-3cb4b658b677f06829b6",
+          "position": [
+            5.5625,
+            -6,
+            -0.25
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      },
+      {
+        "id": "superstructure-3--2",
+        "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+        "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "transform": {
+          "id": "superstructure-3--2",
+          "assetId": "part-0558bcda4ab0cb8c9f70",
+          "position": [
+            5.5625,
+            -4,
+            -0.25
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      },
+      {
+        "id": "superstructure-3--1",
+        "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+        "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "transform": {
+          "id": "superstructure-3--1",
+          "assetId": "part-8ddb637a40bd23dfd03a",
+          "position": [
+            5.5,
+            -2,
+            -0.25
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      },
+      {
+        "id": "roof-2--2",
+        "path": "assets/runtime/assembly/roof/r004/kit.glb",
+        "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "transform": {
+          "id": "roof-2--2",
+          "assetId": "part-8ca6ba766169b463abbf",
+          "position": [
+            4,
+            -4,
+            2.6875
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      },
+      {
+        "id": "roof-3--2",
+        "path": "assets/runtime/assembly/roof/r004/kit.glb",
+        "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "transform": {
+          "id": "roof-3--2",
+          "assetId": "part-05049180a0e5eceefc12",
+          "position": [
+            5.125,
+            -4,
+            2.6875
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      }
+    ]
+  }
+]

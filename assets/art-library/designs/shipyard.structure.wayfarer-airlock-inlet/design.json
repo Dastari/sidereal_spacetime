@@ -1,0 +1,217 @@
+{
+  "schema": "sidereal.art-library.v1",
+  "id": "shipyard.structure.wayfarer-airlock-inlet",
+  "asset_uuid": "70cfe0c4-a780-54b0-a08e-90b8ff944750",
+  "reference_ids": [],
+  "inspiration_reference_ids": [
+    "8d7c1228-3700-5659-9cb1-7a82781c7867"
+  ],
+  "mapping_status": "Functional owner-requested aperture adaptation. Side-armor reference supplies material/theme inspiration, not an exact aperture shape.",
+  "current_revision": 0,
+  "state": "in-progress",
+  "owner_final_signoff": null,
+  "priority": 10,
+  "profile": "native-wayfarer-starboard-airlock-inlet",
+  "assigned_to": "stair_document",
+  "blocker": "Parent review and actual shared document/collision/door/gas-neighbor integration pending. Whole ship not qualified airtight.",
+  "feedback": [
+    {
+      "source": "native CSG",
+      "recorded_at": "2026-09-09T20:39:18.817393+00:00",
+      "notes": "a001 preserved after exporter succeeded but local Blender denoiser unavailable. a002 material/context render passed; native audit found existing quarter-floor bevel seams in new vestibule. a003 adds authored flush seam strips;21 native checks pass."
+    }
+  ],
+  "approvals": [],
+  "revisions": [
+    {
+      "revision": 0,
+      "created_at": "2026-09-09T20:39:18.817393+00:00",
+      "stage": "in-progress",
+      "change": "Three original-transform structural/armor apertures plus roof transition and flush native seam kit. Existing262 source placements/cockpit/cargo/floor/roof untouched.",
+      "hypothesis": "An exact2m aperture and312.5mm roof transition can attach a qualified native external airlock without deleting unrelated geometry or falsifying pressure seals.",
+      "covered_reference_ids": [],
+      "evidence": [
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/armor-collar.glb",
+          "sha256": "276aeb99c55091916ae0534adcff819f7d173b620e6b4b7b76fd092ec6c050ba",
+          "bytes": 998164,
+          "notes": "Isolated candidate only; native local qualification is not owner artistic approval or installed-game evidence.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T20:39:18.817393+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/attachment-capture.json",
+          "sha256": "40a993a833e7da7be32c2e108db7c9bd425f145daf1c245ff0ca69d4aa34a353",
+          "bytes": 21830,
+          "notes": "Isolated candidate only; native local qualification is not owner artistic approval or installed-game evidence.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T20:39:18.817393+00:00"
+        },
+        {
+          "role": "blender-render",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/attachment-closed.png",
+          "sha256": "cbb087c5913b125e08e78b1fea8afbba08e5940612b114bcab09bc626928ec5d",
+          "bytes": 2688405,
+          "notes": "Isolated candidate only; native local qualification is not owner artistic approval or installed-game evidence.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T20:39:18.817393+00:00"
+        },
+        {
+          "role": "blender-render",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/attachment-cutaway.png",
+          "sha256": "5398fb5ce1ae623f1e90ae32bb7e35916ad0a9f6ddf1577e9c768f0f81e78797",
+          "bytes": 2637036,
+          "notes": "Isolated candidate only; native local qualification is not owner artistic approval or installed-game evidence.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T20:39:18.817393+00:00"
+        },
+        {
+          "role": "editable-blender",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/blender-source.blend",
+          "sha256": "b1cc56d2e022e2565aa035f42b4369f2128afaf3ca10a4491ce7a5312850ab83",
+          "bytes": 1627592,
+          "notes": "Isolated candidate only; native local qualification is not owner artistic approval or installed-game evidence.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T20:39:18.817393+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/capture-context.json",
+          "sha256": "ce0dba3253a8789dbcf28402cb7300ac7c8c28ff23154fbadaab59504debfec5",
+          "bytes": 11566,
+          "notes": "Isolated candidate only; native local qualification is not owner artistic approval or installed-game evidence.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T20:39:18.817393+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/collision-proxies.json",
+          "sha256": "0f6334b74ca73e88242da0e220aa391b0dc8fab9fec482db5b3f333fd0e9eba2",
+          "bytes": 20829,
+          "notes": "Isolated candidate only; native local qualification is not owner artistic approval or installed-game evidence.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T20:39:18.817393+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/contact-proxies.json",
+          "sha256": "3568e40b53905ead95454e9bcd03876ed8967b44046e9e977f98340f63980589",
+          "bytes": 6324,
+          "notes": "Isolated candidate only; native local qualification is not owner artistic approval or installed-game evidence.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T20:39:18.817393+00:00"
+        },
+        {
+          "role": "blender-render",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/context-candidate.png",
+          "sha256": "a9c38e2437c299ea8bc9b20bf7592e5598c46fbfde12fb3b4834cd3fb97a9654",
+          "bytes": 2338409,
+          "notes": "Isolated candidate only; native local qualification is not owner artistic approval or installed-game evidence.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T20:39:18.817393+00:00"
+        },
+        {
+          "role": "blender-render",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/context-original.png",
+          "sha256": "80262bd052110f0f2a44b18a1086dea4c535d40844a94aee2b92cbe8efb8d308",
+          "bytes": 2329507,
+          "notes": "Isolated candidate only; native local qualification is not owner artistic approval or installed-game evidence.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T20:39:18.817393+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/delivery-manifest.json",
+          "sha256": "ff8e5a82fd5dc08a667974cbaa8e93211cf4303644566447223178ba906e4fae",
+          "bytes": 2999,
+          "notes": "Isolated candidate only; native local qualification is not owner artistic approval or installed-game evidence.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T20:39:18.817393+00:00"
+        },
+        {
+          "role": "blender-render",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/exterior.png",
+          "sha256": "d505a9a328e8a0f234ba34423cd05a3c5e0f4e25366299a8d2ec5ad9df8d7c53",
+          "bytes": 2183476,
+          "notes": "Isolated candidate only; native local qualification is not owner artistic approval or installed-game evidence.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T20:39:18.817393+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/flush-threshold.glb",
+          "sha256": "048a8b2505c8c16a7a72cbf3f2be340dcf9d7cfeda667c64575132c2d6cccab5",
+          "bytes": 332952,
+          "notes": "Isolated candidate only; native local qualification is not owner artistic approval or installed-game evidence.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T20:39:18.817393+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/interior-frame.glb",
+          "sha256": "ca7d05ef7b06fa47471bd2e02cd47c7df2530df7b7dd644b668fa1412267ce3e",
+          "bytes": 707784,
+          "notes": "Isolated candidate only; native local qualification is not owner artistic approval or installed-game evidence.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T20:39:18.817393+00:00"
+        },
+        {
+          "role": "blender-render",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/interior.png",
+          "sha256": "dee34d613d00e153322335530e6d913575a56e1f7868cd25bfa03755a74929c7",
+          "bytes": 2144677,
+          "notes": "Isolated candidate only; native local qualification is not owner artistic approval or installed-game evidence.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T20:39:18.817393+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/native-qualification.json",
+          "sha256": "3e9f4a4056fd01b7c11c3a0a2d974e590723f50a462ff6fd28077d1f9d324f69",
+          "bytes": 9354,
+          "notes": "Isolated candidate only; native local qualification is not owner artistic approval or installed-game evidence.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T20:39:18.817393+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/replacement-mapping.json",
+          "sha256": "7b6be86b42e904def098f1a70a36bff08c18773e3efbc9337667af6da3f86e2e",
+          "bytes": 290126,
+          "notes": "Isolated candidate only; native local qualification is not owner artistic approval or installed-game evidence.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T20:39:18.817393+00:00"
+        },
+        {
+          "role": "blender-render",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/roof-transition.png",
+          "sha256": "22afbf7cfabeb0a200132b13979975313213ae125af148ac2865fafecd2ce7f1",
+          "bytes": 2186834,
+          "notes": "Isolated candidate only; native local qualification is not owner artistic approval or installed-game evidence.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T20:39:18.817393+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/stepped-roof.glb",
+          "sha256": "06358b50ea88a81cb83e1c9ab098c4b2189f8a4cb0bcc77df23b5a847acb3289",
+          "bytes": 606696,
+          "notes": "Isolated candidate only; native local qualification is not owner artistic approval or installed-game evidence.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T20:39:18.817393+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.wayfarer-airlock-inlet/revisions/r000/a003/structural-aperture.glb",
+          "sha256": "02e2073e07de3f512b22ba51e0cf728b6024bbcd3df065275e11f9eaf69bf239",
+          "bytes": 333760,
+          "notes": "Isolated candidate only; native local qualification is not owner artistic approval or installed-game evidence.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T20:39:18.817393+00:00"
+        }
+      ]
+    }
+  ]
+}

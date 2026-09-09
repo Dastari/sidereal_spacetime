@@ -1,0 +1,764 @@
+{
+  "schema": "sidereal.native-inlet-collision-candidate.v1",
+  "status": "separate-unregistered-conservative-proxy",
+  "parts": [
+    {
+      "partId": "interior-frame",
+      "visualSha256": "ca7d05ef7b06fa47471bd2e02cd47c7df2530df7b7dd644b668fa1412267ce3e",
+      "placementWorldM": [
+        4,
+        -4,
+        0
+      ],
+      "components": [
+        {
+          "nativeNode": "GEO-inlet-interior-frame--port-jamb",
+          "minLocalM": [
+            0.875,
+            -1.0,
+            0.0
+          ],
+          "maxLocalM": [
+            1.0,
+            -0.625,
+            2.6875
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-interior-frame--starboard-jamb",
+          "minLocalM": [
+            0.875,
+            0.625,
+            0.0
+          ],
+          "maxLocalM": [
+            1.0,
+            1.0,
+            2.6875
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-interior-frame--header",
+          "minLocalM": [
+            0.875,
+            -0.625,
+            2.4375
+          ],
+          "maxLocalM": [
+            1.0,
+            0.625,
+            2.6875
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-interior-frame--flush-sill",
+          "minLocalM": [
+            0.875,
+            -0.625,
+            0.0
+          ],
+          "maxLocalM": [
+            1.0,
+            0.625,
+            0.1875
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-interior-frame--underdeck-backing",
+          "minLocalM": [
+            -1.0,
+            -1.0,
+            0.0
+          ],
+          "maxLocalM": [
+            1.0,
+            1.0,
+            0.09375
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-interior-frame--enamel-jamb-0.03",
+          "minLocalM": [
+            0.845,
+            -0.97,
+            0.229999
+          ],
+          "maxLocalM": [
+            0.875001,
+            -0.664999,
+            2.39
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-interior-frame--dark-jamb-inset-0.03",
+          "minLocalM": [
+            0.834,
+            -0.93,
+            0.54
+          ],
+          "maxLocalM": [
+            0.845001,
+            -0.704999,
+            1.96
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-interior-frame--amber-witness-0.03",
+          "minLocalM": [
+            0.827999,
+            -0.87,
+            1.95
+          ],
+          "maxLocalM": [
+            0.834,
+            -0.769999,
+            2.060001
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-interior-frame--enamel-jamb-1.665",
+          "minLocalM": [
+            0.845,
+            0.664999,
+            0.229999
+          ],
+          "maxLocalM": [
+            0.875001,
+            0.97,
+            2.39
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-interior-frame--dark-jamb-inset-1.665",
+          "minLocalM": [
+            0.834,
+            0.704999,
+            0.54
+          ],
+          "maxLocalM": [
+            0.845001,
+            0.93,
+            1.96
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-interior-frame--amber-witness-1.665",
+          "minLocalM": [
+            0.827999,
+            0.765,
+            1.95
+          ],
+          "maxLocalM": [
+            0.834,
+            0.865001,
+            2.060001
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-interior-frame--enamel-head",
+          "minLocalM": [
+            0.845,
+            -0.980001,
+            2.469999
+          ],
+          "maxLocalM": [
+            0.875001,
+            0.980001,
+            2.655001
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        }
+      ]
+    },
+    {
+      "partId": "structural-aperture",
+      "visualSha256": "02e2073e07de3f512b22ba51e0cf728b6024bbcd3df065275e11f9eaf69bf239",
+      "placementWorldM": [
+        5.125,
+        -4,
+        0
+      ],
+      "components": [
+        {
+          "nativeNode": "GEO-inlet-structural-aperture--port-jamb",
+          "minLocalM": [
+            -0.125,
+            -1.0,
+            0.0
+          ],
+          "maxLocalM": [
+            0.1875,
+            -0.625,
+            2.6875
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-structural-aperture--starboard-jamb",
+          "minLocalM": [
+            -0.125,
+            0.625,
+            0.0
+          ],
+          "maxLocalM": [
+            0.1875,
+            1.0,
+            2.6875
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-structural-aperture--header",
+          "minLocalM": [
+            -0.125,
+            -0.625,
+            2.4375
+          ],
+          "maxLocalM": [
+            0.1875,
+            0.625,
+            2.6875
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-structural-aperture--flush-sill",
+          "minLocalM": [
+            -0.125,
+            -0.625,
+            0.0
+          ],
+          "maxLocalM": [
+            0.1875,
+            0.625,
+            0.1875
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        }
+      ]
+    },
+    {
+      "partId": "armor-collar",
+      "visualSha256": "276aeb99c55091916ae0534adcff819f7d173b620e6b4b7b76fd092ec6c050ba",
+      "placementWorldM": [
+        5.5625,
+        -4,
+        -0.25
+      ],
+      "components": [
+        {
+          "nativeNode": "GEO-inlet-armor-collar--left-carrier",
+          "minLocalM": [
+            -0.25,
+            -1.0,
+            0.0
+          ],
+          "maxLocalM": [
+            0.375,
+            -0.625,
+            2.9375
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--right-carrier",
+          "minLocalM": [
+            -0.25,
+            0.625,
+            0.0
+          ],
+          "maxLocalM": [
+            0.375,
+            1.0,
+            2.9375
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--head-carrier",
+          "minLocalM": [
+            -0.25,
+            -0.625,
+            2.6875
+          ],
+          "maxLocalM": [
+            0.375,
+            0.625,
+            2.9375
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--bottom-carrier",
+          "minLocalM": [
+            -0.25,
+            -0.625,
+            0.0
+          ],
+          "maxLocalM": [
+            0.375,
+            0.625,
+            0.4375
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--left-edge-rib",
+          "minLocalM": [
+            0.362499,
+            -0.97,
+            0.06
+          ],
+          "maxLocalM": [
+            0.512501,
+            -0.664999,
+            2.88
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--left-service-recess",
+          "minLocalM": [
+            0.5075,
+            -0.935,
+            0.72
+          ],
+          "maxLocalM": [
+            0.521501,
+            -0.699999,
+            2.160001
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--left-wine-service-cover",
+          "minLocalM": [
+            0.5185,
+            -0.908,
+            0.969999
+          ],
+          "maxLocalM": [
+            0.549501,
+            -0.726999,
+            1.86
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--left-vent-0.58",
+          "minLocalM": [
+            0.519499,
+            -0.913,
+            0.829999
+          ],
+          "maxLocalM": [
+            0.5335,
+            -0.721999,
+            0.855
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--left-vent-1.72",
+          "minLocalM": [
+            0.519499,
+            -0.913,
+            1.969999
+          ],
+          "maxLocalM": [
+            0.5335,
+            -0.721999,
+            1.995
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--left-vent-1.79",
+          "minLocalM": [
+            0.519499,
+            -0.913,
+            2.04
+          ],
+          "maxLocalM": [
+            0.5335,
+            -0.721999,
+            2.065001
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--left-vent-1.86",
+          "minLocalM": [
+            0.519499,
+            -0.913,
+            2.109999
+          ],
+          "maxLocalM": [
+            0.5335,
+            -0.721999,
+            2.135
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--left-enamel-fastener-0.27",
+          "minLocalM": [
+            0.5135,
+            -0.9,
+            0.52
+          ],
+          "maxLocalM": [
+            0.547501,
+            -0.734999,
+            0.640001
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--left-enamel-fastener-2.23",
+          "minLocalM": [
+            0.5135,
+            -0.9,
+            2.479999
+          ],
+          "maxLocalM": [
+            0.547501,
+            -0.734999,
+            2.6
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--right-edge-rib",
+          "minLocalM": [
+            0.362499,
+            0.655,
+            0.06
+          ],
+          "maxLocalM": [
+            0.512501,
+            0.960001,
+            2.88
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--right-service-recess",
+          "minLocalM": [
+            0.5075,
+            0.69,
+            0.72
+          ],
+          "maxLocalM": [
+            0.521501,
+            0.925001,
+            2.160001
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--right-wine-service-cover",
+          "minLocalM": [
+            0.5185,
+            0.717,
+            0.969999
+          ],
+          "maxLocalM": [
+            0.549501,
+            0.898001,
+            1.86
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--right-vent-0.58",
+          "minLocalM": [
+            0.519499,
+            0.712,
+            0.829999
+          ],
+          "maxLocalM": [
+            0.5335,
+            0.903001,
+            0.855
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--right-vent-1.72",
+          "minLocalM": [
+            0.519499,
+            0.712,
+            1.969999
+          ],
+          "maxLocalM": [
+            0.5335,
+            0.903001,
+            1.995
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--right-vent-1.79",
+          "minLocalM": [
+            0.519499,
+            0.712,
+            2.04
+          ],
+          "maxLocalM": [
+            0.5335,
+            0.903001,
+            2.065001
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--right-vent-1.86",
+          "minLocalM": [
+            0.519499,
+            0.712,
+            2.109999
+          ],
+          "maxLocalM": [
+            0.5335,
+            0.903001,
+            2.135
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--right-enamel-fastener-0.27",
+          "minLocalM": [
+            0.5135,
+            0.725,
+            0.52
+          ],
+          "maxLocalM": [
+            0.547501,
+            0.890001,
+            0.640001
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--right-enamel-fastener-2.23",
+          "minLocalM": [
+            0.5135,
+            0.725,
+            2.479999
+          ],
+          "maxLocalM": [
+            0.547501,
+            0.890001,
+            2.6
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--crown-enamel",
+          "minLocalM": [
+            0.3625,
+            -0.980001,
+            2.725
+          ],
+          "maxLocalM": [
+            0.507501,
+            0.980001,
+            2.910001
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--crown-recess",
+          "minLocalM": [
+            0.5035,
+            -0.550001,
+            2.739999
+          ],
+          "maxLocalM": [
+            0.519501,
+            0.550001,
+            2.874
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--cyan-status-strip",
+          "minLocalM": [
+            0.518499,
+            -0.47,
+            2.79
+          ],
+          "maxLocalM": [
+            0.5255,
+            0.47,
+            2.832001
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-armor-collar--underdeck-enamel",
+          "minLocalM": [
+            0.3625,
+            -0.970001,
+            0.049999
+          ],
+          "maxLocalM": [
+            0.507501,
+            0.970001,
+            0.325001
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        }
+      ]
+    },
+    {
+      "partId": "stepped-roof",
+      "visualSha256": "06358b50ea88a81cb83e1c9ab098c4b2189f8a4cb0bcc77df23b5a847acb3289",
+      "placementWorldM": [
+        5,
+        -5,
+        0
+      ],
+      "components": [
+        {
+          "nativeNode": "GEO-inlet-stepped-roof--sealed-height-riser",
+          "minLocalM": [
+            -0.0625,
+            -0.0,
+            2.6875
+          ],
+          "maxLocalM": [
+            0.0625,
+            2.0,
+            3.125
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-stepped-roof--lower-contact-lap",
+          "minLocalM": [
+            -0.25,
+            -0.0,
+            2.6875
+          ],
+          "maxLocalM": [
+            0.0625,
+            2.0,
+            2.8125
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-stepped-roof--upper-contact-lap",
+          "minLocalM": [
+            -0.0625,
+            -0.0,
+            2.999999
+          ],
+          "maxLocalM": [
+            0.35,
+            2.0,
+            3.14
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-stepped-roof--upper-enamel-cap",
+          "minLocalM": [
+            -0.070001,
+            0.014999,
+            3.13
+          ],
+          "maxLocalM": [
+            0.36,
+            1.985001,
+            3.190001
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-stepped-roof--riser-inset",
+          "minLocalM": [
+            0.062499,
+            0.149999,
+            2.834999
+          ],
+          "maxLocalM": [
+            0.0825,
+            1.850001,
+            3.055
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        }
+      ]
+    },
+    {
+      "partId": "flush-threshold",
+      "visualSha256": "048a8b2505c8c16a7a72cbf3f2be340dcf9d7cfeda667c64575132c2d6cccab5",
+      "placementWorldM": [
+        5,
+        -5,
+        0
+      ],
+      "components": [
+        {
+          "nativeNode": "GEO-inlet-flush-threshold--native-floor-contact",
+          "minLocalM": [
+            -0.125,
+            -0.0,
+            0.125
+          ],
+          "maxLocalM": [
+            0.375,
+            2.0,
+            0.1875
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-flush-threshold--vestibule-longitudinal-seam",
+          "minLocalM": [
+            0.0,
+            0.993749,
+            0.159999
+          ],
+          "maxLocalM": [
+            2.0,
+            1.006251,
+            0.1875
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        },
+        {
+          "nativeNode": "GEO-inlet-flush-threshold--vestibule-cross-seam",
+          "minLocalM": [
+            0.993749,
+            -0.0,
+            0.159999
+          ],
+          "maxLocalM": [
+            1.006251,
+            2.0,
+            0.1875
+          ],
+          "method": "conservative evaluated native component AABB; outward1micrometre quantization"
+        }
+      ]
+    }
+  ],
+  "bodySweepQualification": "native-qualification.json uses actual full native surfaces, not these AABBs",
+  "sealRepresentation": "contact-proxies.json identifies actual authored continuous cores; collision envelopes do not imply a pressure seal",
+  "authorityInstalled": false
+}
