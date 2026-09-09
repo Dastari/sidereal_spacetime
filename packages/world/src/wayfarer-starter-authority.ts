@@ -111,6 +111,9 @@ export function createWayfarerStarterAuthority(
       },
       installDormantFlight: (p) => {
         insertQualifiedFlightPlan(ctx, p.flight);
+        // Gameplay naming is separate from the preserved review document label.
+        const ship = ctx.db.ship.id.find(p.flight.ship.id)!;
+        ctx.db.ship.id.update({ ...ship, name: "Wayfarer" });
       },
       activateQualifiedFlight: (p) => {
         const b = ctx.db.constructionFlightBinding.shipId.find(

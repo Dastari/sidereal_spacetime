@@ -161,6 +161,9 @@ test("actual starter database writers install two independent functional ships w
   expect(f.db.instanceInventoryBinding.rows).toHaveLength(8);
   expect(f.db.constructionInteractionBinding.rows).toHaveLength(8);
   expect(f.db.inventoryItem.rows).toHaveLength(14);
+  expect(f.db.ship.rows.every((ship: Row) => ship.name === "Wayfarer")).toBe(
+    true,
+  );
   expect(f.db.inventoryContainer.rows).toHaveLength(14); // 8 empty ship grids + 6 personal/nested containers.
   expect(f.db.inventoryItemMembership.rows).toHaveLength(14);
   expect(f.db.inventoryContainerScope.rows).toHaveLength(14);
