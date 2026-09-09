@@ -1,3 +1,7 @@
+import {
+  createWayfarerTemplateDraft,
+  preserveBeforeTemplate,
+} from "./wayfarer-template";
 import { useEffect, useRef, useState } from "react";
 import {
   emptyLayout,
@@ -249,8 +253,10 @@ export function useLayout() {
         deckId: d.decks[0].id,
       }));
       setError("");
+      return true;
     } catch (e) {
       setError(String(e));
+      return false;
     }
   }
   return {
@@ -354,6 +360,36 @@ export function useLayout() {
       } catch (e) {
         setError(String(e));
         setRecovery(raw);
+      }
+    },
+    createFromWayfarer: (template: unknown) => {
+      try {
+        if (!latest.current.history)
+          throw Error(
+            "Keep or export the current recovery document before loading a template",
+          );
+        const next = createWayfarerTemplateDraft(template, uuid());
+        if (localStorage.getItem(recoveryKey(initial.identity, next)) !== null)
+          throw Error("The new draft identity is already in use");
+        const checkpoint: Checkpoint = {
+          schema: "sidereal.layout-recovery.v1",
+          sequence: sequence.current + 1,
+          writer: writer.current,
+          history: latest.current.history,
+          view: latest.current.view,
+        };
+        expected.current = preserveBeforeTemplate(
+          localStorage,
+          initial.identity,
+          expected.current,
+          checkpoint,
+          blocked,
+        );
+        sequence.current = checkpoint.sequence;
+        return adopt(next);
+      } catch (e) {
+        setError(String(e));
+        return false;
       }
     },
     create: (kind: LayoutDocument["kind"], sample = false) => {

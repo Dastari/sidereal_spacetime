@@ -1,3 +1,4 @@
+import wayfarerTemplate from "./templates/wayfarer-r001.json";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import {
   Box,
@@ -1032,6 +1033,27 @@ export default function LayoutEditor() {
           >
             Empty station module
           </button>
+          <button
+            disabled={editor.blocked}
+            title={
+              editor.blocked
+                ? "Resolve or export the current recovery/conflict first"
+                : "Create a separate editable copy of the pinned native Wayfarer"
+            }
+            onClick={() => {
+              if (editor.createFromWayfarer(wayfarerTemplate)) {
+                setNewDialog(false);
+                select([]);
+              }
+            }}
+          >
+            Wayfarer template · current native layout
+          </button>
+          <p>
+            One authored deck with the current cockpit, floors, roof and
+            objects. Creates a local draft; changes need fresh gameplay
+            qualification.
+          </p>
           <button
             onClick={() => {
               editor.create("ship", true);

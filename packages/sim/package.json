@@ -29,7 +29,8 @@
     "./system-space": "./src/system-space.ts",
     "./construction-stairs-document": "./src/construction-stairs-document.ts",
     "./collision": "./src/collision.ts",
-    "./scoped-inventory": "./src/scoped-inventory.ts"
+    "./scoped-inventory": "./src/scoped-inventory.ts",
+    "./layout-validation": "./src/layout-validation.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",

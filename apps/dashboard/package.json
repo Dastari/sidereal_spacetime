@@ -8,6 +8,7 @@
     "@fontsource/barlow-condensed": "5.3.0",
     "@sidereal/content": "*",
     "@sidereal/render": "*",
+    "@sidereal/sim": "*",
     "@sidereal/ui": "*",
     "lucide-react": "1.42.0",
     "oidc-client-ts": "3.4.1",
