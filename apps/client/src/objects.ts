@@ -50,6 +50,7 @@ export function objectDetails(
   const name =
     driveName ??
     row?.name ??
+    storage?.name ??
     (asset.visual?.designId.split(".").at(-1) ?? asset.label)
       .replace(/[-_]+/g, " ")
       .replace(/\b\w/g, (letter) => letter.toUpperCase());
