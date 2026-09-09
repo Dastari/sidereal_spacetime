@@ -42,6 +42,7 @@ export function createConstructionStairWorldHooks(
     },
     mayEnter(owner, workspaceId) {
       try {
+        requireGrant({ ...ctx, sender: owner }, workspaceId, "draft.read");
         requireGrant({ ...ctx, sender: owner }, workspaceId, "instance.spawn");
         return true;
       } catch {

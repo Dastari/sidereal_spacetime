@@ -12,7 +12,8 @@ import {
 } from "@sidereal/sim/construction-traversal";
 vi.mock("spacetimedb/server", () => ({
   SenderError: class extends Error {},
-  t: new Proxy({}, { get: () => () => ({ primaryKey: () => ({}) }) }),
+  table: () => ({}),
+  t: new Proxy({}, { get: () => () => ({ primaryKey: () => ({}), unique: () => ({}) }) }),
 }));
 vi.mock("./auth", () => ({
   requireGame: (ctx: any) => {

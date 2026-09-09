@@ -3,7 +3,8 @@ import { expect, test, vi } from "vitest";
 import { Identity } from "spacetimedb";
 vi.mock("spacetimedb/server", () => ({
   SenderError: class extends Error {},
-  t: new Proxy({}, { get: () => () => ({ primaryKey: () => ({}) }) }),
+  table: () => ({}),
+  t: new Proxy({}, { get: () => () => ({ primaryKey: () => ({}), unique: () => ({}) }) }),
 }));
 import { createNativePressureRoomDocument } from "@sidereal/sim/construction-pressure-document";
 import { createNativePressureRoomCompiler } from "@sidereal/sim/construction-native-room";

@@ -2,7 +2,7 @@ import { expect, test, vi } from "vitest";
 // Replace only the server host boundary; builders are the real SDK builders.
 vi.mock("spacetimedb/server", async () => {
   const { t } = await import("spacetimedb");
-  return { t, SenderError: class extends Error {}, Range: class {} };
+  return { t, table: () => ({}), SenderError: class extends Error {}, Range: class {} };
 });
 import { appearanceProjection } from "./appearance";
 import { identityLinkProjection } from "./auth";
@@ -14,6 +14,8 @@ import { nativePressureProjection } from "./construction-native-pressure";
 import { traversalProjection, traversalLinkProjection } from "./construction-traversal";
 import { stateProjection, itemProjection, containerProjection, hotbarProjection } from "./inventory";
 import { groundItemProjection } from "./inventory-operations";
+import { constructionSeatProjection } from "./construction-interactions";
+import { scopedCargoContainerProjection, scopedCargoItemProjection, scopedCarriedRevisionProjection } from "./scoped-inventory-tables";
 import { interactionProjection } from "./interactions";
 
 // Use the real pinned SDK row metadata: a plain t.object erases these keys.
@@ -29,6 +31,9 @@ const projections = [
   [itemProjection, "id"], [containerProjection, "id"],
   [hotbarProjection, "slot"], [groundItemProjection, "id"],
   [interactionProjection, "id"],
+  [constructionSeatProjection, "characterId"],
+  [scopedCargoContainerProjection, "id"], [scopedCargoItemProjection, "id"],
+  [scopedCarriedRevisionProjection, "id"],
 ] as const;
 
 test("every handcrafted client view retains exactly one stable SDK row key", () => {
