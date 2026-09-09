@@ -1,3 +1,4 @@
+import { onboardingCopy } from "./onboarding-copy";
 import {
   drawSharedEntry,
   type SharedEntryState,
@@ -46,6 +47,7 @@ import {
 } from "./layout";
 export { gameplayIntent } from "./layout";
 export type GameUIState = {
+  accountKind?: "oidc" | "development";
   sharedEntry?: SharedEntryState;
   characterAppearance?: CrewAppearance;
   graphics?: GraphicsSettings;
@@ -591,6 +593,7 @@ export function createGameUI(
       );
     }
     if (!state.hasActor || state.status !== "ready") {
+      const onboarding = onboardingCopy(state.accountKind);
       const r = clampWindow(
         { x: (w - 420) / 2, y: (h - 360) / 2, w: 420, h: 360 },
         w,
@@ -599,7 +602,7 @@ export function createGameUI(
       ui.panel(r, true);
       ui.text(
         state.status === "ready"
-          ? "Take the controls."
+          ? onboarding.title
           : state.status === "offline"
             ? "Connection lost"
             : "Connecting to your world",
@@ -611,7 +614,7 @@ export function createGameUI(
       );
       ui.paragraph(
         state.status === "ready"
-          ? "Create a persistent test character and your own private ship."
+          ? onboarding.description
           : state.status === "offline"
             ? "Your controls are inactive. Reconnect to resume your character."
             : "Waiting for your permitted character and vessel data.",
@@ -631,13 +634,13 @@ export function createGameUI(
         );
         ui.button(
           "enter",
-          state.pending ? "Entering…" : "Enter flight laboratory",
+          state.pending ? "Entering…" : onboarding.action,
           { x: r.x + 24, y: r.y + 230, w: r.w - 48, h: 44 },
           () => actions.enter(name),
           { accent: true, disabled: state.pending || name.trim().length < 2 },
         );
         ui.paragraph(
-          "Local development identity. Separate from your original account.",
+          onboarding.identity,
           { x: r.x + 24, y: r.y + 290, w: r.w - 48, h: 44 },
           13,
         );
