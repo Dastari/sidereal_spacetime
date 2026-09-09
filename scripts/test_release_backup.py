@@ -42,3 +42,35 @@ class ReleaseBackupTests(unittest.TestCase):
                     backup_database(lifecycle)
             self.assertEqual(calls[-1], ('start', {'publish_module': False}))
             self.assertEqual(list(lifecycle.STATE.glob('recovery-*.tar')), [])
+
+    def test_low_space_refuses_before_stopping_live_writer(self):
+        with tempfile.TemporaryDirectory() as folder:
+            lifecycle, calls = self.fixture(folder)
+            with patch('release_backup.shutil.disk_usage', return_value=SimpleNamespace(free=1)):
+                with self.assertRaisesRegex(RuntimeError, 'safety reserve'):
+                    backup_database(lifecycle)
+            self.assertEqual(calls, [])
+            self.assertEqual(list(lifecycle.STATE.glob('recovery-*.tar')), [])
+
+    def test_partial_archive_is_removed_before_failure_restart(self):
+        with tempfile.TemporaryDirectory() as folder:
+            lifecycle, calls = self.fixture(folder)
+            def restart(**kwargs):
+                self.assertEqual(list(lifecycle.STATE.glob('recovery-*.tar')), [])
+                calls.append(('start', kwargs))
+            lifecycle.database_up = restart
+            with patch('release_backup.tarfile.open', side_effect=OSError('disk pressure')):
+                with self.assertRaisesRegex(OSError, 'disk pressure'):
+                    backup_database(lifecycle)
+            self.assertEqual(calls[-1], ('start', {'publish_module': False}))
+
+    def test_archive_stream_rechecks_actual_free_blocks(self):
+        from release_backup import BoundedArchiveWriter
+        import io
+        stream = io.BytesIO()
+        writer = BoundedArchiveWriter(stream, Path('.'))
+        writer.write(b'x' * (4 * 1024 ** 2))
+        with patch('release_backup.shutil.disk_usage', return_value=SimpleNamespace(free=1)):
+            with self.assertRaisesRegex(RuntimeError, 'safety reserve'):
+                writer.write(b'must-not-append')
+        self.assertEqual(len(stream.getvalue()), 4 * 1024 ** 2)

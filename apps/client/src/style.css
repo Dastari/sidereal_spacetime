@@ -25,7 +25,32 @@ body,
   outline: 2px solid #64c9ff;
   outline-offset: -2px;
 }
-.construction-review-controls { position:fixed; right:1rem; top:5rem; z-index:8; display:grid; gap:.5rem; max-width:21rem; padding:.8rem; color:#d8efff; background:#05162bee; border:1px solid #40cdeb; box-shadow:0 0 12px #31bafa44; }
-.construction-review-controls section { display:grid; gap:.4rem; }
-.construction-review-controls small { color:#a8bdd5; line-height:1.4; }
-.construction-review-controls button { color:#d8efff; background:#123455; border:1px solid #40cdeb; padding:.55rem; cursor:pointer; }
+.construction-review-controls {
+  position: fixed;
+  right: 1rem;
+  top: 5rem;
+  z-index: 8;
+  display: grid;
+  gap: 0.5rem;
+  max-width: 21rem;
+  padding: 0.8rem;
+  color: #d8efff;
+  background: #05162bee;
+  border: 1px solid #40cdeb;
+  box-shadow: 0 0 12px #31bafa44;
+}
+.construction-review-controls section {
+  display: grid;
+  gap: 0.4rem;
+}
+.construction-review-controls small {
+  color: #a8bdd5;
+  line-height: 1.4;
+}
+.construction-review-controls button {
+  color: #d8efff;
+  background: #123455;
+  border: 1px solid #40cdeb;
+  padding: 0.55rem;
+  cursor: pointer;
+}

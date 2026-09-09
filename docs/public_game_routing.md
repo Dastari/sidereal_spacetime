@@ -40,11 +40,15 @@ That installed client was `66b5a92b0b6d0c1db0dbbc3ceba0bbd7b0706e909de94d469de15
 
 The public entry bytes match the immutable artifact through NPM. The normal database identity was preserved, and authoritative inventory/appearance/character continuity was checked across publication. A fresh managed cold archive was captured before deployment. See the [normal shared activation record](handoffs/shared_world_normal_activation.md) for pinned artifacts, checks, upgrade/explicit-join evidence, recovery scope and actual public account/join/two-exterior evidence and the pending onboarding-copy correction. The independently deployed dashboard is unchanged.
 
-### Current construction cargo release — 2026-09-10
+### Earlier construction cargo release — 2026-09-10
 
 Installed client `a561f80776db35587edfc28a3a760621eb6de6b6ef1babd78cf60ca41edce488`, directory `20260910-053758-a561f80776db`, entry `/assets/index-NKgC0rNY.js`, pairs with additive world `9388fee2f396b792e53710751b19727f002bccee096ed2c072c4943be7212dcd`. This adds qualified low-step height, native-instance cargo inventory and sofa/grow-light controls, preserving the normal shared-entry and original-provider proof protocols. Provider-aware onboarding now says **Enter universe**. Exact HTTPS bytes, database identity and stable character/item/container/appearance records passed post-publication checks. See [the coordinated construction release](handoffs/construction_cargo_release_20260910.md) for fresh backup, real restart persistence, isolated browser evidence and final fresh public-login/render confirmation with the existing actor, original ship, admission and all81 visible items.
 
 The independently managed Shipyard at `https://sidereal.tail7a58a6.ts.net:8445/shipyard` already serves its reviewed editable Wayfarer template and complete native floor preview; it has its own build and current development-server lifecycle, not an immutable public-game artifact.
+
+### Current native personal starter release — 2026-09-10
+
+Installed client `2f5c1bd48a34bcf149c73e5c69c62a10ca64e3d095228462e4fef644a7e61874`, directory `20260910-071131-2f5c1bd48a34`, entry `/assets/index-Dw3BRGSE.js`, pairs with additive world `a962f39a07aeff0d3baae7fe80f13862b64fe22572428b71abe566a63046c2f0`. Fresh characters receive the qualified native Wayfarer with independent empty cargo and existing personal kit. Durable gameplay access replaces any need for editor grants; existing accounts retain their current ships and inventory. Native pilot controls still require the occupied valid station. Exact HTTPS bytes and unchanged normal database identity/stable records were verified after activation. Isolated ordinary-account normal UI and actual managed process-restart persistence passed; final fresh public first-character browser acceptance is in progress. See [the native starter release record](handoffs/native_starter_release_20260910.md) for exact artifacts, backup and limits. This does not yet convert existing ships or complete arbitrary Shipyard refits.
 
 ## Verification and recovery
 
