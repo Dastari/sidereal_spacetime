@@ -29,6 +29,15 @@ export interface ConstructionGrant {
 export interface ConstructionFloor extends InterfacePlacement {
   deckId: string;
 }
+export interface NativeStairRoomBinding {
+  pin: { id: string; revision: string; sha256: string };
+  lowerDeckId: string;
+  upperDeckId: string;
+  stairId: string;
+  parts: { id: string; sourcePartId: string }[];
+  apertures: { id: string; sourceApertureId: string }[];
+  supports: { id: string; sourceSupportId: string }[];
+}
 /** Source and semantic geometry must agree. Native visual placements never infer floor topology. */
 export interface ConstructionDocument {
   schema: typeof CONSTRUCTION_SCHEMA;
@@ -41,6 +50,8 @@ export interface ConstructionDocument {
   /** Matching native ceiling surfaces only on decks with an authored roof. */
   roofKit?: { id: string; revision: string; sha256: string };
   /** Exact bounded native enclosure review, not a generic pressure flag. */
+  /** Exact supported-walking native stair fixture; no pressure qualification. */
+  stairRoom?: NativeStairRoomBinding;
   pressureRoom?: { id: string; revision: string; sha256: string };
   /** Exact native two-deck manual traversal fixture; no pressure qualification. */
   traversalRoom?: {

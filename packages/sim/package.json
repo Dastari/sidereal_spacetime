@@ -27,6 +27,7 @@
     "./construction-stairs": "./src/construction-stairs.ts",
     "./spatial-cells": "./src/spatial-cells.ts",
     "./system-space": "./src/system-space.ts",
+    "./construction-stairs-document": "./src/construction-stairs-document.ts",
     "./collision": "./src/collision.ts"
   },
   "dependencies": {

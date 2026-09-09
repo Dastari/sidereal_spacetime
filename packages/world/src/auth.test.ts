@@ -61,6 +61,7 @@ function fixture() {
     return result;
   }
   const db: any = {
+    worldAdmission: table("characterId", { by_owner: "owner" }),
     constructionInstance: table("id", { by_owner: "owner" }),
     constructionGrant: table("id", { by_principal: "principal" }),
     constructionReceipt: table("id", { by_principal: "principal" }),
@@ -383,4 +384,16 @@ test("expired preliminary admission can be restored only while the same owned so
   expect(() =>
     bindGameSession(f.http, { connectionId: f.connectionId }),
   ).toThrow();
+});
+
+test("identity migration cannot strand admitted shared-world ownership", () => {
+  const f = fixture();
+  f.db.worldAdmission.insert({ characterId: "character", owner: f.source });
+  expect(() => f.request()).toThrow(/Shared-world membership/);
+  const g = fixture();
+  g.request();
+  g.db.worldAdmission.insert({ characterId: "character", owner: g.source });
+  expect(() =>
+    acceptIdentityLink(g.b, { requestId: "link-0", operationId: "accept" }),
+  ).toThrow(/Shared-world membership/);
 });

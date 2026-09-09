@@ -69,7 +69,10 @@ export function validateNativePressureRoomDocument(
     "exact publication pin required",
   );
   requireRoom(
-    !document.boundaryKit && same(document.roofKit, CONSTRUCTION_ROOF_PIN),
+    !document.boundaryKit &&
+      !document.traversalRoom &&
+      !document.stairRoom &&
+      same(document.roofKit, CONSTRUCTION_ROOF_PIN),
     "mixed native kits",
   );
   const l = document.layout,

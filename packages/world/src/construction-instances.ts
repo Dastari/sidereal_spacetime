@@ -1,3 +1,10 @@
+import {
+  installConstructionStair,
+  requireNoConstructionStair,
+  tryEnterConstructionStair,
+  constructionStairPositionAllowed,
+  type StairAuthorityHooks,
+} from "./construction-stairs-authority";
 import { installNativePressure } from "./construction-native-pressure";
 import { nativeTraversalRoomInstallation } from "@sidereal/sim/construction-traversal-document";
 import { NATIVE_TRAVERSAL_ROOM_PIN } from "@sidereal/content/construction-traversal-room";
@@ -105,6 +112,7 @@ export function spawnBlueprint(
     });
   }
   installDoors(ctx, plan.instanceId, plan.document);
+  if (plan.document.stairRoom) installConstructionStair(ctx, plan.instanceId);
   if (plan.document.traversalRoom) {
     installTraversalLink(
       ctx,
@@ -150,7 +158,7 @@ export const instanceProjection = t.row("ConstructionInstanceStatus", {
   spawnDeckId: t.string(),
 });
 export function ownInstances(ctx: ReadContext) {
-  return [...ctx.db.constructionInstance.by_owner.filter(ctx.sender)].map(
+  return readableInstances(ctx).map(
     ({
       id,
       workspaceId,
@@ -181,9 +189,9 @@ export const deckProjection = t.row("ConstructionDeckStatus", {
   ceiling: t.f64(),
 });
 export function ownDecks(ctx: ReadContext) {
-  return [...ctx.db.constructionInstance.by_owner.filter(ctx.sender)].flatMap(
-    (i) => [...ctx.db.constructionDeck.by_instance.filter(i.id)],
-  );
+  return readableInstances(ctx).flatMap((i) => [
+    ...ctx.db.constructionDeck.by_instance.filter(i.id),
+  ]);
 }
 
 import { sweepDeckCircle } from "../../sim/src/construction-collision";
@@ -268,6 +276,7 @@ export function leaveReview(
   const actor = actorFor(ctx);
   if (!actor?.connected) throw new SenderError("Connected character required");
   requireStandingConstructionActor(ctx, actor.id);
+  requireNoConstructionStair(ctx, actor.id);
   const location = ctx.db.constructionLocation.characterId.find(actor.id);
   const op = operation(
     ctx,
@@ -332,12 +341,20 @@ export function stepActor(
   ctx: Context,
   actor: NonNullable<ReturnType<typeof actorFor>>,
   command: { dx: number; dy: number; sprint: boolean },
+  stairHooks: StairAuthorityHooks,
 ) {
   const location = ctx.db.constructionLocation.characterId.find(actor.id);
   if (!location) return false;
-  if (ctx.db.constructionTraversal.characterId.find(actor.id)) return true;
+  if (
+    ctx.db.constructionTraversal.characterId.find(actor.id) ||
+    ctx.db.constructionStairWalk.characterId.find(actor.id)
+  )
+    return true;
   const instance = ctx.db.constructionInstance.id.find(location.instanceId);
   if (!instance || actor.shipId !== instance.id) return true;
+  // A retained review visit does not restore workspace interaction after revocation.
+  if (!stairHooks.mayEnter(actor.owner, instance.workspaceId)) return true;
+  if (tryEnterConstructionStair(ctx, stairHooks, actor.id)) return true;
   const frame = constructionCollision(ctx, instance, location.deckId);
   const norm = Math.max(1, Math.hypot(command.dx, command.dy)),
     distance = (command.sprint ? SPRINT_SPEED_MPS : WALK_SPEED_MPS) * 0.05;
@@ -359,6 +376,14 @@ export function stepActor(
       location.deckId,
       next.position[0],
       next.position[1],
+    ) ||
+    !constructionStairPositionAllowed(
+      ctx,
+      actor.id,
+      instance.id,
+      location.deckId,
+      next.position[0],
+      next.position[1],
     )
   )
     return true;
@@ -373,4 +398,17 @@ export function stepActor(
       sprinting,
     });
   return true;
+}
+
+/** View contexts have no clock; expiry is materialized by expireGrants. Reducers
+ * still check the exact current timestamp before every use. */
+export function readableInstances(ctx: ReadContext) {
+  const workspaces = new Set(
+    [...ctx.db.constructionGrant.by_principal.filter(ctx.sender)]
+      .filter((g) => !g.revoked && g.capability === "draft.read")
+      .map((g) => g.workspaceId),
+  );
+  return [...ctx.db.constructionInstance.by_owner.filter(ctx.sender)].filter(
+    (instance) => workspaces.has(instance.workspaceId),
+  );
 }

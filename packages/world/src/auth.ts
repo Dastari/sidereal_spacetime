@@ -156,10 +156,11 @@ export function gameAction<A>(
     requireGame(ctx);
     if (
       requireStanding &&
-      ctx.db.constructionTraversal.by_owner.filter(ctx.sender).next().value
+      (ctx.db.constructionTraversal.by_owner.filter(ctx.sender).next().value ||
+        ctx.db.constructionStairWalk.by_owner.filter(ctx.sender).next().value)
     )
       throw new SenderError(
-        "Finish or cancel the active deck traversal before this action",
+        "Finish active stair movement or finish/cancel the deck traversal before this action",
       );
     action(ctx, args);
   };
@@ -258,6 +259,8 @@ export function requestIdentityLink(
       throw new SenderError("Link operation reused");
     return;
   }
+  if ([...ctx.db.worldAdmission.by_owner.filter(ctx.sender)].length)
+    throw new SenderError("Shared-world membership requires explicit identity migration review");
   if (
     [...ctx.db.constructionInstance.by_owner.filter(ctx.sender)].length ||
     [...ctx.db.constructionGrant.by_principal.filter(ctx.sender)].length ||
@@ -350,6 +353,9 @@ export function acceptIdentityLink(
     throw new SenderError(
       "Target already has world state; merge requires review",
     );
+  if ([...ctx.db.worldAdmission.by_owner.filter(row.source)].length ||
+      [...ctx.db.worldAdmission.by_owner.filter(ctx.sender)].length)
+    throw new SenderError("Shared-world membership requires explicit identity migration review");
   if (
     [...ctx.db.constructionInstance.by_owner.filter(row.source)].length ||
     [...ctx.db.constructionGrant.by_principal.filter(row.source)].length ||

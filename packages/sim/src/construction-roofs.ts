@@ -1,3 +1,4 @@
+import { planNativeStairRoofs } from "./construction-stairs-document";
 import { validateNativeTraversalRoomDocument } from "./construction-traversal-document";
 import type { ConstructionDocument } from "@sidereal/content/construction";
 import {
@@ -18,6 +19,8 @@ export function planNativeRoofs(
     Partial<ConstructionDocument>,
   deckId: string,
 ): ConstructionRoofPlacement[] {
+  if (document.stairRoom)
+    return planNativeStairRoofs(document as ConstructionDocument, deckId);
   const traversal = document.traversalRoom
     ? validateNativeTraversalRoomDocument(document as ConstructionDocument)
     : undefined;

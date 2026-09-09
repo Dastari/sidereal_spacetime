@@ -1,30 +1,36 @@
 import {
   CONSTRUCTION_SCHEMA,
   CONSTRUCTION_COMPILER,
+  CONSTRUCTION_LIMITS,
   type ConstructionDocument,
 } from "@sidereal/content/construction";
 import {
-  NATIVE_TRAVERSAL_ROOM_AUDIT_TEXT,
-  NATIVE_TRAVERSAL_ROOM_DELIVERY,
-  NATIVE_TRAVERSAL_ROOM_PIN,
-  NATIVE_TRAVERSAL_ROOM_COLLISION,
-} from "@sidereal/content/construction-traversal-room";
-import { CONSTRUCTION_ROOF_PIN } from "@sidereal/content/construction-roof";
-import type { NativeTraversalAudit } from "@sidereal/content/construction-traversal";
+  NATIVE_STAIR_ROOM_AUDIT_TEXT,
+  NATIVE_STAIR_ROOM_DELIVERY,
+  NATIVE_STAIR_ROOM_PIN,
+} from "@sidereal/content/construction-stairs-room";
+import {
+  CONSTRUCTION_ROOF_PIN,
+  type ConstructionRoofPlacement,
+} from "@sidereal/content/construction-roof";
+import type {
+  NativeStairAudit,
+  StairInstallation,
+} from "@sidereal/content/construction-stairs";
 import floorKit from "@sidereal/content/construction-floor-interfaces.json";
 import { emptyLayout, stampTile } from "@sidereal/content/ship-layout";
 import { sha256 } from "@noble/hashes/sha2.js";
 import { bytesToHex } from "@noble/hashes/utils.js";
 import { canonicalPolygon, stableStringify } from "./layout-geometry";
-import {
-  createPublishedNativeTraversalCompiler,
-  type TraversalInstallation,
-} from "./construction-traversal";
+import { createPublishedNativeStairCompiler } from "./construction-stairs";
 import type { DeckObstacle } from "./construction-collision";
 
-const audit = JSON.parse(
-  NATIVE_TRAVERSAL_ROOM_AUDIT_TEXT,
-) as NativeTraversalAudit;
+import type { NativeStairRoomBinding } from "@sidereal/content/construction";
+export type { NativeStairRoomBinding } from "@sidereal/content/construction";
+export type NativeStairRoomDocument = ConstructionDocument & {
+  stairRoom: NativeStairRoomBinding;
+};
+const audit = JSON.parse(NATIVE_STAIR_ROOM_AUDIT_TEXT) as NativeStairAudit;
 const floorPin = {
   id: floorKit.id,
   revision: floorKit.revision,
@@ -34,25 +40,25 @@ const floorPin = {
 };
 const same = (a: unknown, b: unknown) =>
   stableStringify(a) === stableStringify(b);
-function requireRoom(value: unknown, reason: string): asserts value {
-  if (!value) throw Error("Native traversal document: " + reason);
+function requireRoom(v: unknown, reason: string): asserts v {
+  if (!v) throw Error("Native stair document: " + reason);
 }
 const validId = (v: unknown): v is string =>
-  typeof v === "string" && /^[a-zA-Z0-9:_./-]{1,160}$/.test(v);
+  typeof v === "string" && /^[a-zA-Z0-9:_./-]{1,128}$/.test(v);
 const keys = (v: object, expected: string[]) =>
   same(Object.keys(v).sort(), [...expected].sort());
+const absentUpper = (x: number, y: number) =>
+  [64, 128].includes(x) && [128, 192].includes(y);
 
-/** Trusted compact publication registry. Full source bytes are verified by the installer,
- * renderer and offline compiler tests; no reducer-supplied audit or qualification flag. */
-export const compileNativeTraversalRoom =
-  createPublishedNativeTraversalCompiler({
-    delivery: NATIVE_TRAVERSAL_ROOM_DELIVERY,
-    audit: new TextEncoder().encode(NATIVE_TRAVERSAL_ROOM_AUDIT_TEXT),
-  });
+/** Trusted compact registry built from the exact hash-verified native source. */
+export const compileNativeStairRoom = createPublishedNativeStairCompiler({
+  delivery: NATIVE_STAIR_ROOM_DELIVERY,
+  audit: new TextEncoder().encode(NATIVE_STAIR_ROOM_AUDIT_TEXT),
+});
 
-export function createNativeTraversalRoomDocument(): ConstructionDocument {
-  const layout = emptyLayout("native-traversal-review-r000-a003", "lower-deck");
-  layout.name = "Native two-deck ladder review";
+export function createNativeStairRoomDocument(): NativeStairRoomDocument {
+  const layout = emptyLayout("native-stair-review-r000-a003", "lower-deck");
+  layout.name = "Native two-deck dogleg stair review";
   layout.decks[0].name = "Lower deck";
   layout.decks.push({
     id: "upper-deck",
@@ -61,12 +67,12 @@ export function createNativeTraversalRoomDocument(): ConstructionDocument {
     elevation: 102,
     ceiling: 96,
     roof: false,
-    holes: [{ id: "semantic-upper-shaft", seed: [96, 96] }],
+    holes: [{ id: "semantic-upper-stairwell", seed: [128, 192] }],
   });
   for (const deck of layout.decks)
-    for (const x of [0, 64, 128])
-      for (const y of [0, 64, 128]) {
-        if (deck.order === 1 && x === 64 && y === 64) continue;
+    for (const x of [0, 64, 128, 192])
+      for (const y of [0, 64, 128, 192, 256]) {
+        if (deck.order === 1 && absentUpper(x, y)) continue;
         layout.tiles.push(
           stampTile(`semantic-${deck.id}-${x}-${y}`, deck.id, "rectangle", [
             x,
@@ -92,11 +98,11 @@ export function createNativeTraversalRoomDocument(): ConstructionDocument {
       quarterTurns: 0,
       reflected: false,
     })),
-    traversalRoom: {
-      pin: { ...NATIVE_TRAVERSAL_ROOM_PIN },
+    stairRoom: {
+      pin: { ...NATIVE_STAIR_ROOM_PIN },
       lowerDeckId: "lower-deck",
       upperDeckId: "upper-deck",
-      linkId: "manual-ladder",
+      stairId: "dogleg-stair",
       parts: audit.parts.map((p) => ({
         id: `native-${p.id}`,
         sourcePartId: p.id,
@@ -105,16 +111,24 @@ export function createNativeTraversalRoomDocument(): ConstructionDocument {
         id: `physical-${p.id}`,
         sourceApertureId: p.id,
       })),
+      supports: audit.supports.map((p) => ({
+        id: `support-${p.id}`,
+        sourceSupportId: p.id,
+      })),
     },
   };
 }
 
-/** IDs can be remapped; every physical input remains the exact qualified fixture.
- * This proof does not qualify unrelated fittings, roof edits, pressure or utilities. */
-export function validateNativeTraversalRoomDocument(
+/** Exact fixture proof, not a general stair placement or author-declared physics rating. */
+export function validateNativeStairRoomDocument(
   document: ConstructionDocument,
 ) {
-  const r = document.traversalRoom,
+  requireRoom(
+    new TextEncoder().encode(JSON.stringify(document)).length <=
+      CONSTRUCTION_LIMITS.bytes,
+    "document byte cap",
+  );
+  const r = document.stairRoom,
     l = document.layout;
   requireRoom(
     r &&
@@ -122,11 +136,12 @@ export function validateNativeTraversalRoomDocument(
         "pin",
         "lowerDeckId",
         "upperDeckId",
-        "linkId",
+        "stairId",
         "parts",
         "apertures",
+        "supports",
       ]) &&
-      same(r.pin, NATIVE_TRAVERSAL_ROOM_PIN),
+      same(r.pin, NATIVE_STAIR_ROOM_PIN),
     "exact publication pin and binding required",
   );
   requireRoom(
@@ -136,7 +151,7 @@ export function validateNativeTraversalRoomDocument(
       same(document.roofKit, CONSTRUCTION_ROOF_PIN) &&
       !document.boundaryKit &&
       !document.pressureRoom &&
-      !document.stairRoom,
+      !document.traversalRoom,
     "mixed or changed native kits",
   );
   requireRoom(
@@ -165,7 +180,7 @@ export function validateNativeTraversalRoomDocument(
     "unqualified topology, structure or equipment",
   );
   requireRoom(
-    l.tiles.length === 17 && document.floors.length === 17,
+    l.tiles.length === 36 && document.floors.length === 36,
     "exact native floor coverage required",
   );
   for (const [deckId, order, elevation, roof] of [
@@ -184,22 +199,22 @@ export function validateNativeTraversalRoomDocument(
     requireRoom(
       order === 0
         ? deck.holes.length === 0
-        : deck.holes.length === 1 && same(deck.holes[0].seed, [96, 96]),
+        : deck.holes.length === 1 && same(deck.holes[0].seed, [128, 192]),
       "exact upper floor aperture required",
     );
-    const cells = new Set<string>();
-    const tiles = l.tiles.filter((t) => t.deckId === deckId);
+    const cells = new Set<string>(),
+      tiles = l.tiles.filter((t) => t.deckId === deckId);
     requireRoom(
-      tiles.length === (order === 0 ? 9 : 8),
+      tiles.length === (order === 0 ? 20 : 16),
       "changed deck floor coverage",
     );
     for (const t of tiles) {
       const x = Math.min(...t.vertices.map((v) => v[0])),
         y = Math.min(...t.vertices.map((v) => v[1]));
       requireRoom(
-        [0, 64, 128].includes(x) &&
-          [0, 64, 128].includes(y) &&
-          !(order === 1 && x === 64 && y === 64) &&
+        [0, 64, 128, 192].includes(x) &&
+          [0, 64, 128, 192, 256].includes(y) &&
+          !(order === 1 && absentUpper(x, y)) &&
           !cells.has(`${x}:${y}`),
         "changed floor location or covered aperture",
       );
@@ -229,96 +244,122 @@ export function validateNativeTraversalRoomDocument(
       );
     }
   }
-  requireRoom(
-    Array.isArray(r.parts) &&
-      r.parts.length === audit.parts.length &&
-      Array.isArray(r.apertures) &&
-      r.apertures.length === audit.apertures.length,
-    "exact native part and aperture coverage required",
-  );
-  requireRoom(
-    r.parts.every((p) => p && keys(p, ["id", "sourcePartId"])) &&
+  for (const [bindings, originals, sourceKey] of [
+    [r.parts, audit.parts, "sourcePartId"],
+    [r.apertures, audit.apertures, "sourceApertureId"],
+    [r.supports, audit.supports, "sourceSupportId"],
+  ] as const) {
+    requireRoom(
+      Array.isArray(bindings) &&
+        bindings.length === originals.length &&
+        bindings.every((p) => p && keys(p, ["id", sourceKey])),
+      "exact native bindings required",
+    );
+    requireRoom(
       same(
-        r.parts.map((p) => p.sourcePartId).sort(),
-        audit.parts.map((p) => p.id).sort(),
+        bindings
+          .map((p) => (p as unknown as Record<string, string>)[sourceKey])
+          .sort(),
+        originals.map((p) => p.id).sort(),
       ),
-    "changed native part bindings",
-  );
-  requireRoom(
-    r.apertures.every((p) => p && keys(p, ["id", "sourceApertureId"])) &&
-      same(
-        r.apertures.map((p) => p.sourceApertureId).sort(),
-        audit.apertures.map((p) => p.id).sort(),
-      ),
-    "changed physical aperture bindings",
-  );
+      "changed native source bindings",
+    );
+  }
   const ids = [
     l.id,
     ...l.decks.map((d) => d.id),
     ...l.decks.flatMap((d) => d.holes.map((h) => h.id)),
     ...l.tiles.map((t) => t.id),
-    r.linkId,
+    r.stairId,
     ...r.parts.map((p) => p.id),
     ...r.apertures.map((p) => p.id),
+    ...r.supports.map((p) => p.id),
   ];
   requireRoom(
     ids.every(validId) &&
       new Set(ids.map((id) => id.toLowerCase())).size === ids.length,
     "invalid or overlapping semantic/native identities",
   );
+  // Separate floor mapping IDs intentionally equal semantic tile IDs, with exact coverage.
+  requireRoom(
+    new Set(document.floors.map((f) => f.id)).size === document.floors.length,
+    "duplicate floor binding",
+  );
   return {
     lowerDeckId: r.lowerDeckId,
     upperDeckId: r.upperDeckId,
-    linkId: r.linkId,
+    stairId: r.stairId,
   };
 }
 
-/** Bind the generated audit to actual placed IDs; callers supply only server revisions. */
-export function nativeTraversalRoomInstallation(
+export function nativeStairRoomInstallation(
   document: ConstructionDocument,
   instanceRevision: bigint,
-  linkRevision: bigint,
-): TraversalInstallation {
-  const ids = validateNativeTraversalRoomDocument(document),
-    r = document.traversalRoom!;
-  const native = JSON.parse(
-    NATIVE_TRAVERSAL_ROOM_AUDIT_TEXT,
-  ) as NativeTraversalAudit;
+  stairRevision: bigint,
+): StairInstallation {
+  const ids = validateNativeStairRoomDocument(document),
+    r = document.stairRoom!;
   return {
     instanceId: document.layout.id,
-    linkId: ids.linkId,
+    stairId: ids.stairId,
     instanceRevision,
-    linkRevision,
+    stairRevision,
     originM: [0, 0, 0],
     quarterTurns: 0,
-    lower: { deckId: ids.lowerDeckId, ...native.decks.lower },
-    upper: { deckId: ids.upperDeckId, ...native.decks.upper },
-    parts: native.parts.map((p) => ({
+    lowerDeckId: ids.lowerDeckId,
+    upperDeckId: ids.upperDeckId,
+    parts: audit.parts.map((p) => ({
       ...p,
       id: r.parts.find((b) => b.sourcePartId === p.id)!.id,
       sourcePartId: p.id,
       sha256:
-        NATIVE_TRAVERSAL_ROOM_DELIVERY.sources[
-          p.sourceId as keyof typeof NATIVE_TRAVERSAL_ROOM_DELIVERY.sources
+        NATIVE_STAIR_ROOM_DELIVERY.sources[
+          p.sourceId as keyof typeof NATIVE_STAIR_ROOM_DELIVERY.sources
         ].sha256,
     })),
-    apertures: native.apertures.map((p) => ({
+    apertures: audit.apertures.map((p) => ({
       ...p,
       id: r.apertures.find((b) => b.sourceApertureId === p.id)!.id,
       sourceApertureId: p.id,
       state: "physical-opening",
     })),
-    policy: { id: "manual-ladder-review-v1", metresPerSecond: 0.8 },
+    supports: r.supports.map((p) => ({ ...p })),
+    policy: { id: "manual-native-stair-review-v1", walkMps: 1, verticalMps: 2 },
   };
 }
 
-/** Conservative standing-body collision from evaluated native solids. Support panels
- * are handled by exact semantic floor coverage; the upper shaft remains unsupported. */
-export function nativeTraversalRoomCollision(
+/** Exact matching lower ceiling placements. The root roof planner must call this
+ * for stair fixtures, otherwise its generic floor-to-roof pairing covers the hole. */
+export function planNativeStairRoofs(
+  document: ConstructionDocument,
+  deckId: string,
+): ConstructionRoofPlacement[] {
+  const ids = validateNativeStairRoomDocument(document);
+  requireRoom(
+    [ids.lowerDeckId, ids.upperDeckId].includes(deckId),
+    "unknown roof deck",
+  );
+  if (deckId === ids.upperDeckId) return [];
+  return document.floors
+    .filter(
+      (f) => f.deckId === deckId && !absentUpper(f.origin[0], f.origin[1]),
+    )
+    .map((f) => ({
+      key: "roof:" + f.id,
+      floorId: f.id,
+      partId: f.partId,
+      origin: [f.origin[0], f.origin[1], 96],
+      quarterTurns: 0,
+    }));
+}
+
+/** Ordinary deck walking uses native solids, not a fake ramp. Stair-mode movement
+ * uses the compiler's full 3D support/solid proof and must intercept the landing. */
+export function nativeStairRoomCollision(
   document: ConstructionDocument,
   deckId: string,
 ): DeckObstacle[] {
-  const ids = validateNativeTraversalRoomDocument(document);
+  const ids = validateNativeStairRoomDocument(document);
   requireRoom(
     [ids.lowerDeckId, ids.upperDeckId].includes(deckId),
     "unknown collision deck",
@@ -327,16 +368,15 @@ export function nativeTraversalRoomCollision(
     deckId === ids.lowerDeckId
       ? audit.decks.lower.walkingZ
       : audit.decks.upper.walkingZ;
-  return NATIVE_TRAVERSAL_ROOM_COLLISION.parts
+  return audit.solids
     .filter(
       (p) =>
-        p.group !== "existing-panel" &&
         p.boundsM.max[2] > walkingZ + 1e-6 &&
         p.boundsM.min[2] < walkingZ + audit.body.heightM - 1e-6,
     )
     .map((p) => ({
-      id: `${ids.linkId}:${p.name}`,
-      definitionId: "native-traversal-r000-a003-solid",
+      id: `${document.stairRoom!.parts.find((b) => b.sourcePartId === p.partId)!.id}:${p.id}`,
+      definitionId: "native-stair-r000-a003-solid",
       vertices: [
         [p.boundsM.min[0], p.boundsM.min[1]],
         [p.boundsM.max[0], p.boundsM.min[1]],
@@ -344,4 +384,26 @@ export function nativeTraversalRoomCollision(
         [p.boundsM.min[0], p.boundsM.max[1]],
       ],
     }));
+}
+
+/** Apply only authoritative spawn allocations; immutable native source identities
+ * never change. Caller remaps layout/floor identities through its existing planner. */
+export function remapNativeStairRoomBinding(
+  binding: NativeStairRoomBinding,
+  ids: ReadonlyMap<string, string>,
+): NativeStairRoomBinding {
+  const get = (id: string) => {
+    const value = ids.get(id);
+    requireRoom(validId(value), "missing spawn identity mapping");
+    return value;
+  };
+  return {
+    pin: { ...binding.pin },
+    lowerDeckId: get(binding.lowerDeckId),
+    upperDeckId: get(binding.upperDeckId),
+    stairId: get(binding.stairId),
+    parts: binding.parts.map((p) => ({ ...p, id: get(p.id) })),
+    apertures: binding.apertures.map((p) => ({ ...p, id: get(p.id) })),
+    supports: binding.supports.map((p) => ({ ...p, id: get(p.id) })),
+  };
 }

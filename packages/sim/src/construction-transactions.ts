@@ -1,3 +1,4 @@
+import { validateNativeStairRoomDocument } from "./construction-stairs-document";
 import { validateNativeTraversalRoomDocument } from "./construction-traversal-document";
 import { validateNativePressureRoomDocument } from "./construction-pressure-document";
 import { CONSTRUCTION_BOUNDARY_FAMILY_PIN } from "@sidereal/content/construction-boundary-family";
@@ -107,6 +108,7 @@ export function readConstructionDraft(raw: string): {
           "roofKit",
           "pressureRoom",
           "traversalRoom",
+          "stairRoom",
         ].includes(k),
     )
   )
@@ -173,6 +175,15 @@ export function readConstructionDraft(raw: string): {
   }
   // JSON.parse above already owns this data; SpacetimeDB has no structuredClone global.
   const normalized = input as unknown as ConstructionDocument;
+  if (input.stairRoom !== undefined) {
+    validateNativeStairRoomDocument(normalized);
+    for (const bindings of [
+      normalized.stairRoom!.parts,
+      normalized.stairRoom!.apertures,
+      normalized.stairRoom!.supports,
+    ])
+      bindings.sort((a, b) => compareText(a.id, b.id));
+  }
   if (input.traversalRoom !== undefined) {
     validateNativeTraversalRoomDocument(normalized);
     normalized.traversalRoom!.parts.sort((a, b) => compareText(a.id, b.id));
@@ -237,6 +248,7 @@ export function compileConstruction(raw: string): ConstructionSnapshot {
         .map((d) => d.code)
         .join(", "),
     );
+  if (input.stairRoom) validateNativeStairRoomDocument(input);
   if (input.pressureRoom) validateNativePressureRoomDocument(input);
   if (input.traversalRoom) validateNativeTraversalRoomDocument(input);
   if (input.boundaryKit?.revision === "r004")

@@ -36,6 +36,21 @@ export const AuthSession = __t.object("AuthSession", {
 });
 export type AuthSession = __Infer<typeof AuthSession>;
 
+export const BodyWorldMotion = __t.object("BodyWorldMotion", {
+  bodyId: __t.string(),
+  systemId: __t.string(),
+  x: __t.f64(),
+  y: __t.f64(),
+  vx: __t.f64(),
+  vy: __t.f64(),
+  heading: __t.f64(),
+  omega: __t.f64(),
+  serverTick: __t.u64(),
+  cellX: __t.i64(),
+  cellY: __t.i64(),
+});
+export type BodyWorldMotion = __Infer<typeof BodyWorldMotion>;
+
 export const Character = __t.object("Character", {
   id: __t.string(),
   owner: __t.identity(),
@@ -337,6 +352,100 @@ export const ConstructionReceipt = __t.object("ConstructionReceipt", {
 });
 export type ConstructionReceipt = __Infer<typeof ConstructionReceipt>;
 
+export const ConstructionStairAudit = __t.object("ConstructionStairAudit", {
+  id: __t.string(),
+  owner: __t.identity(),
+  characterId: __t.string(),
+  instanceId: __t.string(),
+  stairId: __t.string(),
+  visitId: __t.string(),
+  sourceDeckId: __t.string(),
+  destinationDeckId: __t.string(),
+  outcome: __t.string(),
+  interruption: __t.string(),
+  revision: __t.u64(),
+  completedMicros: __t.u64(),
+});
+export type ConstructionStairAudit = __Infer<typeof ConstructionStairAudit>;
+
+export const ConstructionStairEgressGeometry = __t.object("ConstructionStairEgressGeometry", {
+  characterId: __t.string(),
+  instanceId: __t.string(),
+  stairId: __t.string(),
+  visitId: __t.string(),
+  lowerDeckId: __t.string(),
+  upperDeckId: __t.string(),
+  sourceDeckId: __t.string(),
+  adapterId: __t.string(),
+  adapterRevision: __t.string(),
+  auditSha256: __t.string(),
+  proofHash: __t.string(),
+});
+export type ConstructionStairEgressGeometry = __Infer<typeof ConstructionStairEgressGeometry>;
+
+export const ConstructionStairLink = __t.object("ConstructionStairLink", {
+  id: __t.string(),
+  owner: __t.identity(),
+  instanceId: __t.string(),
+  instanceRevision: __t.u64(),
+  revision: __t.u64(),
+  documentSha256: __t.string(),
+  proofHash: __t.string(),
+  lowerDeckId: __t.string(),
+  upperDeckId: __t.string(),
+});
+export type ConstructionStairLink = __Infer<typeof ConstructionStairLink>;
+
+export const ConstructionStairReservation = __t.object("ConstructionStairReservation", {
+  stairId: __t.string(),
+  instanceId: __t.string(),
+  characterId: __t.string(),
+  walkId: __t.string(),
+  visitId: __t.string(),
+  proofHash: __t.string(),
+  boundsJson: __t.string(),
+});
+export type ConstructionStairReservation = __Infer<typeof ConstructionStairReservation>;
+
+export const ConstructionStairWalk = __t.object("ConstructionStairWalk", {
+  characterId: __t.string(),
+  id: __t.string(),
+  owner: __t.identity(),
+  instanceId: __t.string(),
+  stairId: __t.string(),
+  visitId: __t.string(),
+  locationRevision: __t.u64(),
+  sourceDeckId: __t.string(),
+  anchorX: __t.f64(),
+  anchorY: __t.f64(),
+  stateJson: __t.string(),
+  revision: __t.u64(),
+  acceptedX: __t.f64(),
+  acceptedY: __t.f64(),
+  acceptedZ: __t.f64(),
+  phase: __t.string(),
+  egressOnly: __t.bool(),
+  interruption: __t.string(),
+});
+export type ConstructionStairWalk = __Infer<typeof ConstructionStairWalk>;
+
+export const ConstructionStairWalkStatus = __t.object("ConstructionStairWalkStatus", {
+  characterId: __t.string(),
+  walkId: __t.string(),
+  instanceId: __t.string(),
+  stairId: __t.string(),
+  sourceDeckId: __t.string(),
+  visitId: __t.string(),
+  phase: __t.string(),
+  egressOnly: __t.bool(),
+  interruption: __t.string(),
+  revision: __t.u64(),
+  x: __t.f64(),
+  y: __t.f64(),
+  z: __t.f64(),
+});
+export type ConstructionStairWalkStatus = __Infer<typeof ConstructionStairWalkStatus>;
+
 export const ConstructionTraversal = __t.object("ConstructionTraversal", {
   characterId: __t.string(),
   id: __t.string(),
@@ -588,6 +697,16 @@ export const InventoryStatus = __t.object("InventoryStatus", {
 });
 export type InventoryStatus = __Infer<typeof InventoryStatus>;
 
+export const LegacyBodyAlias = __t.object("LegacyBodyAlias", {
+  legacyBodyId: __t.string(),
+  owner: __t.identity(),
+  shipId: __t.string(),
+  canonicalBodyId: __t.string(),
+  systemId: __t.string(),
+  legacySnapshotJson: __t.string(),
+});
+export type LegacyBodyAlias = __Infer<typeof LegacyBodyAlias>;
+
 export const MovementTimer = __t.object("MovementTimer", {
   scheduledId: __t.u64(),
   scheduledAt: __t.scheduleAt(),
@@ -630,6 +749,12 @@ export type OwnConstructionLocation = __Infer<typeof OwnConstructionLocation>;
 export const OwnConstructionNativePressure = __t.object("OwnConstructionNativePressure", {});
 export type OwnConstructionNativePressure = __Infer<typeof OwnConstructionNativePressure>;
 
+export const OwnConstructionStairEgressGeometry = __t.object("OwnConstructionStairEgressGeometry", {});
+export type OwnConstructionStairEgressGeometry = __Infer<typeof OwnConstructionStairEgressGeometry>;
+
+export const OwnConstructionStairWalks = __t.object("OwnConstructionStairWalks", {});
+export type OwnConstructionStairWalks = __Infer<typeof OwnConstructionStairWalks>;
+
 export const OwnConstructionTraversalLinks = __t.object("OwnConstructionTraversalLinks", {});
 export type OwnConstructionTraversalLinks = __Infer<typeof OwnConstructionTraversalLinks>;
 
@@ -669,6 +794,9 @@ export type OwnSpaceBodies = __Infer<typeof OwnSpaceBodies>;
 export const OwnStations = __t.object("OwnStations", {});
 export type OwnStations = __Infer<typeof OwnStations>;
 
+export const OwnWorldAdmission = __t.object("OwnWorldAdmission", {});
+export type OwnWorldAdmission = __Infer<typeof OwnWorldAdmission>;
+
 export const PilotLayoutReceipt = __t.object("PilotLayoutReceipt", {
   shipId: __t.string(),
   revision: __t.u32(),
@@ -687,6 +815,62 @@ export const RetiredIdentity = __t.object("RetiredIdentity", {
 });
 export type RetiredIdentity = __Infer<typeof RetiredIdentity>;
 
+export const SharedAdmissionProjection = __t.object("SharedAdmissionProjection", {
+  characterId: __t.string(),
+  shipId: __t.string(),
+  systemId: __t.string(),
+  revision: __t.u64(),
+});
+export type SharedAdmissionProjection = __Infer<typeof SharedAdmissionProjection>;
+
+export const SharedBodyDescriptionProjection = __t.object("SharedBodyDescriptionProjection", {
+  bodyId: __t.string(),
+  kind: __t.string(),
+  appearance: __t.string(),
+  seed: __t.u32(),
+  radius: __t.f64(),
+  height: __t.f64(),
+});
+export type SharedBodyDescriptionProjection = __Infer<typeof SharedBodyDescriptionProjection>;
+
+export const SharedBodyMotionProjection = __t.object("SharedBodyMotionProjection", {
+  bodyId: __t.string(),
+  systemId: __t.string(),
+  cellX: __t.i64(),
+  cellY: __t.i64(),
+  x: __t.f64(),
+  y: __t.f64(),
+  vx: __t.f64(),
+  vy: __t.f64(),
+  heading: __t.f64(),
+  omega: __t.f64(),
+  serverTick: __t.u64(),
+});
+export type SharedBodyMotionProjection = __Infer<typeof SharedBodyMotionProjection>;
+
+export const SharedShipDescriptionProjection = __t.object("SharedShipDescriptionProjection", {
+  shipId: __t.string(),
+  publishedExteriorAssetId: __t.string(),
+  appearanceRevision: __t.u64(),
+  displayName: __t.string(),
+});
+export type SharedShipDescriptionProjection = __Infer<typeof SharedShipDescriptionProjection>;
+
+export const SharedShipMotionProjection = __t.object("SharedShipMotionProjection", {
+  shipId: __t.string(),
+  systemId: __t.string(),
+  cellX: __t.i64(),
+  cellY: __t.i64(),
+  x: __t.f64(),
+  y: __t.f64(),
+  vx: __t.f64(),
+  vy: __t.f64(),
+  heading: __t.f64(),
+  omega: __t.f64(),
+  serverTick: __t.u64(),
+});
+export type SharedShipMotionProjection = __Infer<typeof SharedShipMotionProjection>;
+
 export const Ship = __t.object("Ship", {
   id: __t.string(),
   owner: __t.identity(),
@@ -704,6 +888,21 @@ export const Ship = __t.object("Ship", {
   tick: __t.u64(),
 });
 export type Ship = __Infer<typeof Ship>;
+
+export const ShipWorldMotion = __t.object("ShipWorldMotion", {
+  shipId: __t.string(),
+  systemId: __t.string(),
+  x: __t.f64(),
+  y: __t.f64(),
+  vx: __t.f64(),
+  vy: __t.f64(),
+  heading: __t.f64(),
+  omega: __t.f64(),
+  serverTick: __t.u64(),
+  cellX: __t.i64(),
+  cellY: __t.i64(),
+});
+export type ShipWorldMotion = __Infer<typeof ShipWorldMotion>;
 
 export const SpaceBody = __t.object("SpaceBody", {
   id: __t.string(),
@@ -742,6 +941,26 @@ export const StorageBinding = __t.object("StorageBinding", {
   placementId: __t.string(),
 });
 export type StorageBinding = __Infer<typeof StorageBinding>;
+
+export const SystemBody = __t.object("SystemBody", {
+  id: __t.string(),
+  systemId: __t.string(),
+  authoredKey: __t.string(),
+  kind: __t.string(),
+  appearance: __t.string(),
+  seed: __t.u32(),
+  radius: __t.f64(),
+  height: __t.f64(),
+  massKg: __t.f64(),
+  charted: __t.bool(),
+});
+export type SystemBody = __Infer<typeof SystemBody>;
+
+export const VisibleBodyDescriptions = __t.object("VisibleBodyDescriptions", {});
+export type VisibleBodyDescriptions = __Infer<typeof VisibleBodyDescriptions>;
+
+export const VisibleBodyMotion = __t.object("VisibleBodyMotion", {});
+export type VisibleBodyMotion = __Infer<typeof VisibleBodyMotion>;
 
 export const VisibleGroundItem = __t.object("VisibleGroundItem", {
   id: __t.string(),
@@ -813,6 +1032,12 @@ export const VisibleInventoryItem = __t.object("VisibleInventoryItem", {
 });
 export type VisibleInventoryItem = __Infer<typeof VisibleInventoryItem>;
 
+export const VisibleShipDescriptions = __t.object("VisibleShipDescriptions", {});
+export type VisibleShipDescriptions = __Infer<typeof VisibleShipDescriptions>;
+
+export const VisibleShipMotion = __t.object("VisibleShipMotion", {});
+export type VisibleShipMotion = __Infer<typeof VisibleShipMotion>;
+
 export const WeaponEnergy = __t.object("WeaponEnergy", {
   itemId: __t.string(),
   energy: __t.f64(),
@@ -823,4 +1048,36 @@ export const WeaponEnergy = __t.object("WeaponEnergy", {
   lastShotAngle: __t.f64(),
 });
 export type WeaponEnergy = __Infer<typeof WeaponEnergy>;
+
+export const WorldAdmission = __t.object("WorldAdmission", {
+  characterId: __t.string(),
+  owner: __t.identity(),
+  shipId: __t.string(),
+  systemId: __t.string(),
+  revision: __t.u64(),
+});
+export type WorldAdmission = __Infer<typeof WorldAdmission>;
+
+export const WorldJoinReceipt = __t.object("WorldJoinReceipt", {
+  id: __t.string(),
+  owner: __t.identity(),
+  characterId: __t.string(),
+  shipId: __t.string(),
+  systemId: __t.string(),
+  requestJson: __t.string(),
+  revision: __t.u64(),
+  oldMotionJson: __t.string(),
+  newMotionJson: __t.string(),
+  createdMicros: __t.u64(),
+});
+export type WorldJoinReceipt = __Infer<typeof WorldJoinReceipt>;
+
+export const WorldSystem = __t.object("WorldSystem", {
+  id: __t.string(),
+  seedRevision: __t.u64(),
+  seedSha256: __t.string(),
+  migrationRevision: __t.u64(),
+  lastSimulationTick: __t.u64(),
+});
+export type WorldSystem = __Infer<typeof WorldSystem>;
 

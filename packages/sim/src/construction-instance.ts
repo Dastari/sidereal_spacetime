@@ -1,3 +1,7 @@
+import {
+  nativeStairRoomCollision,
+  remapNativeStairRoomBinding,
+} from "./construction-stairs-document";
 import { nativeTraversalRoomCollision } from "./construction-traversal-document";
 import { nativePressureRoomCollision } from "./construction-pressure-document";
 import { pinnedFamilyCollision } from "./construction-boundary-family";
@@ -42,7 +46,10 @@ export type ConstructionInstanceIdKind =
   | "hole"
   | "traversal-link"
   | "native-part"
-  | "traversal-aperture";
+  | "traversal-aperture"
+  | "stair-link"
+  | "stair-support"
+  | "stair-aperture";
 export interface ConstructionIdentityMapping {
   sourceId: string;
   instanceId: string;
@@ -61,6 +68,9 @@ export interface ConstructionInstanceMappings {
   traversalLinks: ConstructionIdentityMapping[];
   nativeParts: ConstructionIdentityMapping[];
   traversalApertures: ConstructionIdentityMapping[];
+  stairLinks: ConstructionIdentityMapping[];
+  stairSupports: ConstructionIdentityMapping[];
+  stairApertures: ConstructionIdentityMapping[];
   cargoGrids: [];
 }
 export interface SpawnObjectCollisionBinding {
@@ -210,7 +220,7 @@ export function planConstructionInstance(
     "Selected deck has insufficient standing clearance above native floor top",
   );
   assert(
-    !source.traversalRoom ||
+    !(source.traversalRoom || source.stairRoom) ||
       (request.bodyRadiusM === 0.3 && request.bodyHeightM === 1.8),
     "Native traversal fixture requires its qualified standing body",
   );
@@ -225,13 +235,15 @@ export function planConstructionInstance(
     "Every object requires explicit collision coverage before safe spawn",
   );
   const coverage = new Set<string>(),
-    obstacles: DeckObstacle[] = source.traversalRoom
-      ? nativeTraversalRoomCollision(source, request.sourceDeckId)
-      : source.pressureRoom
-        ? nativePressureRoomCollision(source, request.sourceDeckId)
-        : source.boundaryKit?.revision === "r004"
-          ? pinnedFamilyCollision(source.layout, request.sourceDeckId)
-          : [];
+    obstacles: DeckObstacle[] = source.stairRoom
+      ? nativeStairRoomCollision(source, request.sourceDeckId)
+      : source.traversalRoom
+        ? nativeTraversalRoomCollision(source, request.sourceDeckId)
+        : source.pressureRoom
+          ? nativePressureRoomCollision(source, request.sourceDeckId)
+          : source.boundaryKit?.revision === "r004"
+            ? pinnedFamilyCollision(source.layout, request.sourceDeckId)
+            : [];
   for (const [i, binding] of [...request.objectCollisionBindings]
     .sort((a, b) => compareText(a.sourceObjectId, b.sourceObjectId))
     .entries()) {
@@ -319,6 +331,14 @@ export function planConstructionInstance(
     layout.nodes,
     layout.routes,
     layout.decks.flatMap((d) => d.holes),
+    source.stairRoom
+      ? [
+          { id: source.stairRoom.stairId },
+          ...source.stairRoom.parts,
+          ...source.stairRoom.supports,
+          ...source.stairRoom.apertures,
+        ]
+      : [],
     source.traversalRoom
       ? [
           { id: source.traversalRoom.linkId },
@@ -392,11 +412,20 @@ export function planConstructionInstance(
       "traversal-link",
       source.traversalRoom ? [{ id: source.traversalRoom.linkId }] : [],
     ),
-    nativeParts: map("native-part", source.traversalRoom?.parts ?? []),
+    nativeParts: map(
+      "native-part",
+      source.traversalRoom?.parts ?? source.stairRoom?.parts ?? [],
+    ),
     traversalApertures: map(
       "traversal-aperture",
       source.traversalRoom?.apertures ?? [],
     ),
+    stairLinks: map(
+      "stair-link",
+      source.stairRoom ? [{ id: source.stairRoom.stairId }] : [],
+    ),
+    stairSupports: map("stair-support", source.stairRoom?.supports ?? []),
+    stairApertures: map("stair-aperture", source.stairRoom?.apertures ?? []),
     cargoGrids: [],
   };
   const all = new Map(
@@ -447,6 +476,8 @@ export function planConstructionInstance(
     floor.id = mapped(floor.id);
     floor.deckId = mapped(floor.deckId);
   }
+  if (spawned.stairRoom)
+    spawned.stairRoom = remapNativeStairRoomBinding(spawned.stairRoom, all);
   if (spawned.traversalRoom) {
     const r = spawned.traversalRoom;
     r.lowerDeckId = mapped(r.lowerDeckId);

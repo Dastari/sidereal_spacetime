@@ -49,6 +49,7 @@ import EnterLabReducer from "./enter_lab_reducer";
 import EquipInventoryItemReducer from "./equip_inventory_item_reducer";
 import FireWeaponReducer from "./fire_weapon_reducer";
 import InteractObjectReducer from "./interact_object_reducer";
+import JoinSharedSystemReducer from "./join_shared_system_reducer";
 import LeaveConstructionReviewReducer from "./leave_construction_review_reducer";
 import MoveInventoryItemReducer from "./move_inventory_item_reducer";
 import PublishConstructionBlueprintReducer from "./publish_construction_blueprint_reducer";
@@ -82,6 +83,8 @@ import OwnConstructionGrantsRow from "./own_construction_grants_table";
 import OwnConstructionInstancesRow from "./own_construction_instances_table";
 import OwnConstructionLocationRow from "./own_construction_location_table";
 import OwnConstructionNativePressureRow from "./own_construction_native_pressure_table";
+import OwnConstructionStairEgressGeometryRow from "./own_construction_stair_egress_geometry_table";
+import OwnConstructionStairWalksRow from "./own_construction_stair_walks_table";
 import OwnConstructionTraversalLinksRow from "./own_construction_traversal_links_table";
 import OwnConstructionTraversalsRow from "./own_construction_traversals_table";
 import OwnEditReceiptsRow from "./own_edit_receipts_table";
@@ -95,6 +98,11 @@ import OwnInventoryStateRow from "./own_inventory_state_table";
 import OwnShipsRow from "./own_ships_table";
 import OwnSpaceBodiesRow from "./own_space_bodies_table";
 import OwnStationsRow from "./own_stations_table";
+import OwnWorldAdmissionRow from "./own_world_admission_table";
+import VisibleBodyDescriptionsRow from "./visible_body_descriptions_table";
+import VisibleBodyMotionRow from "./visible_body_motion_table";
+import VisibleShipDescriptionsRow from "./visible_ship_descriptions_table";
+import VisibleShipMotionRow from "./visible_ship_motion_table";
 
 /** Type-only namespace exports for generated type groups. */
 
@@ -184,6 +192,20 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnConstructionNativePressureRow),
+  ownConstructionStairEgressGeometry: __table({
+    name: 'own_construction_stair_egress_geometry',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnConstructionStairEgressGeometryRow),
+  ownConstructionStairWalks: __table({
+    name: 'own_construction_stair_walks',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnConstructionStairWalksRow),
   ownConstructionTraversalLinks: __table({
     name: 'own_construction_traversal_links',
     indexes: [
@@ -275,6 +297,41 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnStationsRow),
+  ownWorldAdmission: __table({
+    name: 'own_world_admission',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnWorldAdmissionRow),
+  visibleBodyDescriptions: __table({
+    name: 'visible_body_descriptions',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, VisibleBodyDescriptionsRow),
+  visibleBodyMotion: __table({
+    name: 'visible_body_motion',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, VisibleBodyMotionRow),
+  visibleShipDescriptions: __table({
+    name: 'visible_ship_descriptions',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, VisibleShipDescriptionsRow),
+  visibleShipMotion: __table({
+    name: 'visible_ship_motion',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, VisibleShipMotionRow),
 });
 
 /** The schema information for all reducers in this module. This is defined the same way as the reducers would have been defined in the server, except the body of the reducer is omitted in code generation. */
@@ -294,6 +351,7 @@ const reducersSchema = __reducers(
   __reducerSchema("equip_inventory_item", EquipInventoryItemReducer),
   __reducerSchema("fire_weapon", FireWeaponReducer),
   __reducerSchema("interact_object", InteractObjectReducer),
+  __reducerSchema("join_shared_system", JoinSharedSystemReducer),
   __reducerSchema("leave_construction_review", LeaveConstructionReviewReducer),
   __reducerSchema("move_inventory_item", MoveInventoryItemReducer),
   __reducerSchema("publish_construction_blueprint", PublishConstructionBlueprintReducer),

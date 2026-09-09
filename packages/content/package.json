@@ -21,6 +21,7 @@
     "./construction-traversal": "./src/construction-traversal.ts",
     "./construction-traversal-room": "./src/construction-traversal-room.ts",
     "./construction-stairs": "./src/construction-stairs.ts",
+    "./construction-stairs-room": "./src/construction-stairs-room.ts",
     "./shared-system": "./src/shared-system.ts",
     "./space": "./src/space.ts",
     "./flight": "./src/flight.ts"

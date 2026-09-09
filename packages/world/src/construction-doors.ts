@@ -1,3 +1,4 @@
+import { nativeStairRoomCollision } from "@sidereal/sim/construction-stairs-document";
 import {
   validateNativePressureRoomDocument,
   nativePressureRoomCollision,
@@ -96,7 +97,9 @@ export function constructionCollision(
       shipId: instance.id,
       perimeterHalfWidthM: width,
       partitionHalfWidthM: document.pressureRoom ? 0.0625 : width,
-      obstacles: document.traversalRoom
+      obstacles: document.stairRoom
+        ? nativeStairRoomCollision(document, deckId)
+        : document.traversalRoom
         ? nativeTraversalRoomCollision(document, deckId)
         : document.pressureRoom
           ? nativePressureRoomCollision(document, deckId)

@@ -67,6 +67,19 @@ function fixture() {
     JSON.stringify(bindConstructionLayout(layout).document),
   );
   const db: any = {
+    constructionStairLink: table({
+      by_instance: "instanceId",
+      by_owner: "owner",
+    }),
+    constructionStairWalk: table(
+      { by_owner: "owner", by_instance: "instanceId" },
+      "characterId",
+    ),
+    constructionStairReservation: table(
+      { by_instance: "instanceId" },
+      "stairId",
+    ),
+    constructionStairAudit: table({ by_owner: "owner" }),
     constructionBlueprint: table(),
     constructionGrant: table({ by_principal: "principal" }),
     constructionReceipt: table({ by_principal: "principal" }),
@@ -217,11 +230,16 @@ test("review walking uses authored perimeter, clears controls and rejects stale 
     turn: 0,
   });
   for (let i = 0; i < 80; i++)
-    stepActor(ctx, ctx.db.character.id.find("actor"), {
-      dx: 1,
-      dy: 0,
-      sprint: true,
-    });
+    stepActor(
+      ctx,
+      ctx.db.character.id.find("actor"),
+      {
+        dx: 1,
+        dy: 0,
+        sprint: true,
+      },
+      ordinaryHooks,
+    );
   expect(ctx.db.character.id.find("actor").localX).toBeLessThanOrEqual(
     1.7000001,
   );
@@ -229,11 +247,16 @@ test("review walking uses authored perimeter, clears controls and rejects stale 
   const atWall = ctx.db.character.id.find("actor");
   const updateActor = vi.spyOn(ctx.db.character.id, "update");
   for (let i = 0; i < 20; i++)
-    stepActor(ctx, ctx.db.character.id.find("actor"), {
-      dx: 1,
-      dy: 0,
-      sprint: true,
-    });
+    stepActor(
+      ctx,
+      ctx.db.character.id.find("actor"),
+      {
+        dx: 1,
+        dy: 0,
+        sprint: true,
+      },
+      ordinaryHooks,
+    );
   expect(ctx.db.character.id.find("actor")).toEqual(atWall);
   expect(updateActor).not.toHaveBeenCalled();
   updateActor.mockRestore();
@@ -455,3 +478,13 @@ test("door obstruction retains state until clear, with stale visit/revision and 
     moving: false,
   });
 });
+
+const ordinaryHooks = {
+  mayConsumeMovement: () => false,
+  mayEnter: () => true,
+  incompatibleActivity: () => false,
+  clearControls: () => {},
+  suspendCombat: () => {},
+  completeSafeEgress: () => {},
+  otherAcceptedPosition: () => undefined,
+};

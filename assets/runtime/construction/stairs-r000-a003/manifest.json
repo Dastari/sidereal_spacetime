@@ -1,0 +1,56 @@
+{
+  "schema": "sidereal.native-stair-runtime.v1",
+  "pin": {
+    "id": "shipyard.structure.stair-dogleg",
+    "revision": "r000-a003",
+    "sha256": "8df56649474fa8379af3a2c678716fc1f80406e9f9457e85498598f6a0be9831"
+  },
+  "sources": {
+    "stair-kit": {
+      "url": "/assets/construction/stairs-r000-a003/stair-kit.glb",
+      "sha256": "8d2f8359f6221a43245fdd9b10671892cbe5d05f5ba8569ff04f1f8e54f728a7",
+      "bytes": 2719168
+    },
+    "floor": {
+      "url": "/assets/construction/stairs-r000-a003/floor.glb",
+      "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "bytes": 368076
+    },
+    "roof": {
+      "url": "/assets/construction/stairs-r000-a003/roof.glb",
+      "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711",
+      "bytes": 3580236
+    }
+  },
+  "provenance": {
+    "stair-kit": {
+      "source": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/kit.glb",
+      "sha256": "8d2f8359f6221a43245fdd9b10671892cbe5d05f5ba8569ff04f1f8e54f728a7"
+    },
+    "floor": {
+      "source": "assets/runtime/assembly/floor/r002/kit.glb",
+      "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585"
+    },
+    "roof": {
+      "source": "assets/art-library/designs/shipyard.structure.roof-kit/revisions/r001/kit.glb",
+      "sha256": "fe5646a431fcaa21033ca235094188b450c33e55e15735b7834fc18623fb3711"
+    }
+  },
+  "sourceAudit": {
+    "path": "assets/art-library/designs/shipyard.structure.stair-dogleg/revisions/r000/a003/stair-audit.json",
+    "sha256": "8df56649474fa8379af3a2c678716fc1f80406e9f9457e85498598f6a0be9831"
+  },
+  "installer": {
+    "path": "scripts/install_construction_stairs_runtime.py",
+    "sha256": "d19f660874c78a55a38244356034e103a8e7ca677d40a1343c24748d5842296c"
+  },
+  "authorization": {
+    "recordedDate": "2026-09-10",
+    "source": "Owner authorized all remaining integration/deployment; root specifically requested installing the exact three stair GLBs and manifest.",
+    "scope": "Runtime artifact installation for native stair integration; not final art approval."
+  },
+  "placements": 60,
+  "status": "Installed runtime source artifacts; actual gameplay depends on shared world/client wiring and browser acceptance.",
+  "ownerFinalArtSignoff": null,
+  "servicePublication": false
+}
