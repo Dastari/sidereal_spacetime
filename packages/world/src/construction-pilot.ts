@@ -1,5 +1,6 @@
 import {
   qualifyPilotGeometry,
+  PilotGeometryError,
   canApproachPilot,
   pilotRecoveryPoint,
   QUALIFIED_PILOT_POSITION,
@@ -215,7 +216,8 @@ export function recoverConstructionPilot(
   let point: { x: number; y: number; height: number } | undefined;
   try {
     point = pilotRecoveryPoint(db.geometry(s), db.nearbyActors(s), characterId);
-  } catch {
+  } catch (error) {
+    if (!(error instanceof PilotGeometryError)) throw error;
     reason = "invalid-geometry";
   }
   db.clearInputAndAim(characterId);

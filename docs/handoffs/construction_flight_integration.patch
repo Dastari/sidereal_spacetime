@@ -1,0 +1,223 @@
+--- a/packages/world/src/index.ts
++++ b/packages/world/src/index.ts
+@@ -1,3 +1,9 @@
++import { constructionFlightBinding, constructionFlightFitting, constructionFlightStation, constructionFlightReceipt } from "./construction-flight-tables";
++import { constructionPilotSeat } from "./construction-pilot-tables";
++import { installConstructionFlightAuthority } from "./construction-flight-authority";
++import { activateConstructionFlight } from "./construction-flight-activation";
++import { resolveShipFlightDefinition } from "./construction-flight-resolver";
++import { enterConstructionPilotAuthority, canConsumeConstructionPilot, recoverConstructionPilotAuthority, recoverPendingConstructionPilots } from "./construction-pilot-authority";
+ import {
+   worldSystem,
+   shipWorldMotion,
+@@ -186,6 +192,7 @@
+   { scheduledId: t.u64().primaryKey().autoInc(), scheduledAt: t.scheduleAt() },
+ );
+ const db = schema({
++  constructionFlightBinding, constructionFlightFitting, constructionFlightStation, constructionFlightReceipt, constructionPilotSeat,
+   worldSystem, shipWorldMotion, systemBody, bodyWorldMotion, worldAdmission, worldJoinReceipt, legacyBodyAlias,
+   constructionStairLink,
+   constructionStairWalk,
+@@ -478,7 +485,8 @@
+     if (!command || !inputControl.canRecordInput(ctx, actor.id, args.sequence)) return;
+     const seat = ctx.db.station.shipId.find(actor.shipId);
+     const onStair = !!ctx.db.constructionStairWalk.characterId.find(actor.id);
+-    const controlled = !onStair && seat?.operational && seat.occupantId === actor.id;
++    const controlled = !onStair && seat?.operational && seat.occupantId === actor.id &&
++      (!ctx.db.constructionFlightBinding.shipId.find(actor.shipId) || canConsumeConstructionPilot(ctx, actor.id));
+     if ((args.throttle !== 0 || args.turn !== 0) && !controlled)
+       throw new SenderError("Occupy the control station to pilot");
+     if (!inputControl.recordInput(ctx, actor.id, args.sequence)) return;
+@@ -496,6 +504,8 @@
+   if (!actor?.connected) throw new SenderError("Character unavailable");
+   traversal.requireStandingConstructionActor(ctx, actor.id);
+   stairs.requireNoConstructionStair(ctx, actor.id);
++  if (ctx.db.constructionFlightBinding.shipId.find(actor.shipId))
++    throw new SenderError("Use the native construction pilot command");
+   const seat = ctx.db.station.shipId.find(actor.shipId);
+   if (!seat?.operational) throw new SenderError("Station unavailable");
+   if (ctx.db.couchSeat.characterId.find(actor.id))
+@@ -588,6 +598,7 @@
+     auth.expireSessions(ctx);
+     construction.expireGrants(ctx);
+     constructionInteractions.recoverConstructionSeats(ctx);
++    recoverPendingConstructionPilots(ctx);
+     constructionDoors.stepDoors(ctx);
+     nativePressure.stepNativePressure(ctx, compilePublishedNativePressureRoom);
+     traversal.stepConstructionTraversals(ctx, nativeTraversalRegistry);
+@@ -595,7 +606,18 @@
+     combat.stepCombat(ctx);
+     // The canonical contact island advances once for all admitted ships/bodies,
+     // never inside the legacy per-owner loop below.
+-    stepSharedWorld(ctx);
++    stepSharedWorld(ctx, undefined, {
++      definitionForShip: shipId => resolveShipFlightDefinition({
++        binding: id => ctx.db.constructionFlightBinding.shipId.find(id),
++        constructionInstanceExists: id => !!ctx.db.constructionInstance.id.find(id),
++        currentInstanceRevision: id => ctx.db.constructionInstance.id.find(id)?.revision,
++        fittings: id => ctx.db.constructionFlightFitting.by_ship.filter(id),
++      }, shipId),
++      canPilot: characterId => {
++        const actor = ctx.db.character.id.find(characterId);
++        return !!actor && (!ctx.db.constructionFlightBinding.shipId.find(actor.shipId) || canConsumeConstructionPilot(ctx, characterId));
++      },
++    });
+     for (const target of ctx.db.ship.iter()) {
+       if (ctx.db.shipWorldMotion.shipId.find(target.id)) continue;
+       const seat = ctx.db.station.shipId.find(target.id);
+@@ -1127,3 +1149,20 @@
+   { name: "own_construction_seat", public: true }, t.array(constructionInteractions.constructionSeatProjection),
+   auth.gameView(constructionInteractions.ownConstructionSeat),
+ );
++
++// Explicit additive installation/activation. Neither boards nor moves an actor.
++export const installAuthoredShipFlight = db.reducer({instanceId:t.string(), expectedInstanceRevision:t.u64(), operationId:t.string()}, auth.gameAction((ctx,args) => {
++  installConstructionFlightAuthority(ctx,args,{reserveBerth: current => {
++    const system = sharedWorld.ensureCanonicalSystem(current.db);
++    return {systemId:system.id,...sharedWorld.reserveBerth(current.db,system.id),serverTick:current.timestamp.microsSinceUnixEpoch/50_000n};
++  }});
++}));
++export const activateAuthoredShipFlight = db.reducer({shipId:t.string(),expectedRevision:t.u64(),operationId:t.string()},auth.gameAction(activateConstructionFlight));
++export const enterAuthoredPilot = db.reducer({stationId:t.string(),expectedStationRevision:t.u64(),operationId:t.string()},auth.gameAction(enterConstructionPilotAuthority,true));
++export const leaveAuthoredPilot = db.reducer(auth.gameAction(ctx => {
++  const actor=[...ctx.db.character.by_owner.filter(ctx.sender)][0];
++  if (!actor?.connected) throw new SenderError("Active character required");
++  recoverConstructionPilotAuthority(ctx,actor.id,"stand");
++},true));
++const authoredFlightProjection=t.row("AuthoredFlightStatus",{shipId:t.string().primaryKey(),stationId:t.string(),deckId:t.string(),lifecycle:t.string(),revision:t.u64()});
++export const ownAuthoredFlights=db.view({name:"own_authored_flights",public:true},t.array(authoredFlightProjection),auth.gameView(ctx => [...ctx.db.constructionFlightBinding.by_owner.filter(ctx.sender)].map(({shipId,stationId,deckId,lifecycle,revision})=>({shipId,stationId,deckId,lifecycle,revision}))));
+--- a/packages/world/src/shared-world-physics.ts
++++ b/packages/world/src/shared-world-physics.ts
+@@ -1,3 +1,4 @@
++import type { resolveShipFlightDefinition } from "./construction-flight-resolver";
+ import type { Identity } from "spacetimedb";
+ import {
+   stepSystemSpace,
+@@ -91,6 +92,7 @@
+ export function stepSharedWorld(
+   ctx: SharedPhysicsContext,
+   systemId = SHARED_SYSTEM_SEED.systemId,
++  hooks?: {definitionForShip(shipId:string):ReturnType<typeof resolveShipFlightDefinition>;canPilot(characterId:string):boolean},
+ ): SharedPhysicsReport {
+   const report: SharedPhysicsReport = {
+     systemId,
+@@ -130,13 +132,15 @@
+   for (const ship of ships) {
+     if (ship.systemId !== systemId || !ctx.db.ship.id.find(ship.shipId))
+       return { ...report, status: "exhausted", reason: "invalid-system-ship" };
++    const definition = hooks?.definitionForShip(ship.shipId) ?? {status:"ready" as const,mass:LAB_FLIGHT_MASS,hull:LAB_HULL,profile:LAB_FLIGHT_PROFILE,speed:LAB_FLIGHT_SPEED,computer:LAB_FLIGHT_COMPUTER,actuators:LAB_FLIGHT_ACTUATORS};
++    if(definition.status === "invalid") return {...report,status:"exhausted",reason:definition.reason};
+     shipRows.set(ship.shipId, ship);
+     bodies.push({
+       ...ship,
+       id: ship.shipId,
+-      ...LAB_HULL,
+-      massKg: LAB_FLIGHT_MASS.massKg,
+-      inertia: LAB_FLIGHT_MASS.inertiaKgM2,
++      ...definition.hull,
++      massKg: definition.mass.massKg,
++      inertia: definition.mass.inertiaKgM2,
+     });
+     const station = ctx.db.station.shipId.find(ship.shipId);
+     const actor = station?.occupantId
+@@ -161,8 +165,9 @@
+       age >= 0n &&
+       age < 300000n &&
+       consumeInputControl(ctx, actor.id) &&
+-      LAB_FLIGHT_COMPUTER.installed &&
+-      LAB_FLIGHT_COMPUTER.powered
++      definition.computer.installed &&
++      definition.computer.powered &&
++      (!hooks || hooks.canPilot(actor.id))
+     );
+     controls.push({
+       bodyId: ship.shipId,
+@@ -170,11 +175,11 @@
+       intent: enabled
+         ? { throttle: input!.throttle, turn: input!.turn }
+         : { throttle: 0, turn: 0 },
+-      mass: LAB_FLIGHT_MASS,
+-      actuators: LAB_FLIGHT_ACTUATORS,
+-      profile: LAB_FLIGHT_PROFILE,
+-      maxForwardSpeed: LAB_FLIGHT_SPEED.forward,
+-      maxReverseSpeed: LAB_FLIGHT_SPEED.reverse,
++      mass: definition.mass,
++      actuators: definition.actuators,
++      profile: definition.profile,
++      maxForwardSpeed: definition.speed.forward,
++      maxReverseSpeed: definition.speed.reverse,
+     });
+   }
+   for (const body of descriptions) {
+--- a/packages/world/src/shared-world.ts
++++ b/packages/world/src/shared-world.ts
+@@ -276,7 +276,7 @@
+ }
+ /** Deterministic server berth. Conservative hull bounding circles guarantee no
+  * overlap without replacing the actual capsule contact representation. */
+-function reserveBerth(db: SharedWorldDatabase, systemId: string) {
++export function reserveBerth(db: SharedWorldDatabase, systemId: string) {
+   const ships = bounded(
+     db.shipWorldMotion.by_system.filter(systemId),
+     SHARED_SYSTEM_MAX_SHIPS,
+--- a/packages/world/src/auth.ts
++++ b/packages/world/src/auth.ts
+@@ -1,3 +1,4 @@
++import { recoverConstructionPilotAuthority } from "./construction-pilot-authority";
+ import {
+   SenderError,
+   type ReducerCtx,
+@@ -170,6 +171,8 @@
+ }
+ export function clearOwner(ctx: Context, owner: Identity, reason: "disconnect" | "auth-loss" = "auth-loss") {
+   for (const actor of ctx.db.character.by_owner.filter(owner)) {
++    if (ctx.db.constructionPilotSeat.characterId.find(actor.id))
++      recoverConstructionPilotAuthority(ctx,actor.id,reason);
+     combat.clearAim(ctx, actor.id);
+     interactions.leaveCouch(ctx, actor.id, reason);
+     if (actor.connected || actor.sprinting)
+@@ -179,7 +182,7 @@
+         sprinting: false,
+       });
+     const seat = ctx.db.station.shipId.find(actor.shipId);
+-    if (seat?.occupantId === actor.id)
++    if (seat?.occupantId === actor.id && !ctx.db.constructionPilotSeat.characterId.find(actor.id))
+       ctx.db.station.id.update({ ...seat, occupantId: undefined });
+     const input = ctx.db.input.characterId.find(actor.id);
+     if (input)
+--- a/packages/world/src/construction.ts
++++ b/packages/world/src/construction.ts
+@@ -1,3 +1,4 @@
++import { recoverConstructionPilotsForGrant } from "./construction-pilot-authority";
+ import { recoverConstructionSeatsForGrant } from "./construction-interactions";
+ import {SenderError,Range,t,type ReducerCtx,type ViewCtx,type InferSchema} from 'spacetimedb/server';
+ import {Identity} from 'spacetimedb';
+@@ -35,7 +36,7 @@
+  if(!prior&&[...ctx.db.constructionGrant.by_principal.filter(principal)].length>=64)throw new SenderError('Principal grant limit reached');
+  const next={id,principal,workspaceId:args.workspaceId,capability:args.capability,expiresMicros:args.expiresMicros,nextCheckMicros:args.revoked?forever:args.expiresMicros,revoked:args.revoked,revision:args.expectedRevision+1n,issuedBy:ctx.sender};
+  if(prior)ctx.db.constructionGrant.id.update(next);else ctx.db.constructionGrant.insert(next);
+- if(args.revoked && ["draft.read","instance.spawn"].includes(args.capability)) recoverConstructionSeatsForGrant(ctx,principal,args.workspaceId);
++ if(args.revoked && ["draft.read","instance.spawn"].includes(args.capability)) {recoverConstructionSeatsForGrant(ctx,principal,args.workspaceId); recoverConstructionPilotsForGrant(ctx,principal,args.workspaceId);}
+  receipt(ctx,op.key,op.request,id,next.revision);
+ }
+ export function saveDraft(ctx:Context,args:{workspaceId:string;draftId:string;documentJson:string;expectedRevision:bigint;operationId:string}){
+@@ -56,7 +57,7 @@
+  const id=ctx.newUuidV4().toString();ctx.db.constructionBlueprint.insert({id,workspaceId:args.workspaceId,draftId:args.draftId,sourceRevision:prior.revision,canonical:snapshot.canonical,sha256:snapshot.sha256,readinessJson:JSON.stringify(snapshot.readiness),publishedBy:ctx.sender});receipt(ctx,op.key,op.request,id,prior.revision);
+ }
+ /** ViewCtx has no clock: expire actual grants on the authority tick; reducers always check exact time. */
+-export function expireGrants(ctx:Context){for(const g of ctx.db.constructionGrant.by_expiry.filter(new Range(null,{tag:'included',value:ctx.timestamp.microsSinceUnixEpoch})))if(!g.revoked){ctx.db.constructionGrant.id.update({...g,revoked:true,nextCheckMicros:forever,revision:g.revision+1n});if(['draft.read','instance.spawn'].includes(g.capability))recoverConstructionSeatsForGrant(ctx,g.principal,g.workspaceId);}}
++export function expireGrants(ctx:Context){for(const g of ctx.db.constructionGrant.by_expiry.filter(new Range(null,{tag:'included',value:ctx.timestamp.microsSinceUnixEpoch})))if(!g.revoked){ctx.db.constructionGrant.id.update({...g,revoked:true,nextCheckMicros:forever,revision:g.revision+1n});if(['draft.read','instance.spawn'].includes(g.capability)){recoverConstructionSeatsForGrant(ctx,g.principal,g.workspaceId); recoverConstructionPilotsForGrant(ctx,g.principal,g.workspaceId);}}}
+ export const grantProjection=t.row('ConstructionGrantStatus',{id:t.string().primaryKey(),workspaceId:t.string(),capability:t.string(),expiresMicros:t.u64(),revoked:t.bool(),revision:t.u64()});
+ export function ownGrants(ctx:ReadContext){return [...ctx.db.constructionGrant.by_principal.filter(ctx.sender)].map(({id,workspaceId,capability,expiresMicros,revoked,revision})=>({id,workspaceId,capability,expiresMicros,revoked,revision}));}
+ export const draftProjection=t.row('ConstructionDraftStatus',{id:t.string().primaryKey(),workspaceId:t.string(),revision:t.u64(),documentJson:t.string(),sha256:t.string()});
+--- a/packages/world/src/construction-instances.ts
++++ b/packages/world/src/construction-instances.ts
+@@ -313,6 +313,8 @@
+     throw new SenderError("Valid review return location required");
+   if (ctx.db.couchSeat.characterId.find(actor.id))
+     throw new SenderError("Stand up before leaving construction review");
++  if(ctx.db.constructionPilotSeat.characterId.find(actor.id))
++    throw new SenderError("Stand up before leaving construction review");
+   // Returning must remain possible after a workspace grant expires.
+   ctx.db.character.id.update({
+     ...actor,

@@ -5,6 +5,7 @@ import type {
 import { canOccupyDeck, sweepDeckCircle } from "./construction-collision";
 import { qualifiedWayfarerInstanceObstacles } from "./wayfarer-walking-bindings";
 import type { QualifiedFlightInstance } from "./construction-flight";
+export class PilotGeometryError extends Error {}
 export const QUALIFIED_PILOT_APPROACH = [0, 9.375] as const;
 export const QUALIFIED_PILOT_POSITION = [0, 10.25] as const;
 export interface PilotGeometry {
@@ -25,7 +26,7 @@ const point = (
 export function qualifyPilotGeometry(g: PilotGeometry) {
   const { instance, frame } = g;
   if (frame.shipId !== instance.id || frame.deckId !== instance.spawnDeckId)
-    throw Error("Pilot instance/deck frame mismatch");
+    throw new PilotGeometryError("Pilot instance/deck frame mismatch");
   const expected = qualifiedWayfarerInstanceObstacles(instance, frame.deckId);
   const map = JSON.parse(instance.idMapJson) as {
     objects: { sourceId: string; instanceId: string }[];
@@ -37,7 +38,7 @@ export function qualifyPilotGeometry(g: PilotGeometry) {
         m.instanceId === g.seatPlacedObjectId,
     )
   )
-    throw Error("Exact native pilot seat mapping required");
+    throw new PilotGeometryError("Exact native pilot seat mapping required");
   const own = frame.obstacles.filter((o) =>
     o.id.startsWith(g.seatPlacedObjectId + ":"),
   );
@@ -49,14 +50,14 @@ export function qualifyPilotGeometry(g: PilotGeometry) {
     source.length !== 1 ||
     JSON.stringify(own[0].vertices) !== JSON.stringify(source[0].vertices)
   )
-    throw Error("Exact native pilot seat collider required");
+    throw new PilotGeometryError("Exact native pilot seat collider required");
   const segments = new Set(
     own.flatMap((o) =>
       o.vertices.map((_, i) => `obstacle:${JSON.stringify([o.id, i])}`),
     ),
   );
   if (frame.segments.filter((s) => segments.has(s.id)).length !== segments.size)
-    throw Error("Complete native pilot seat edges required");
+    throw new PilotGeometryError("Complete native pilot seat edges required");
   const transition = {
     ...frame,
     obstacles: frame.obstacles.filter((o) => !own.includes(o)),
@@ -70,12 +71,12 @@ export function qualifyPilotGeometry(g: PilotGeometry) {
     Math.abs(approachHeight! - 0.1875) > 0.05 ||
     Math.abs(seatHeight! - 0.1875) > 0.05
   )
-    throw Error("Pilot support surface is unqualified");
+    throw new PilotGeometryError("Pilot support surface is unqualified");
   if (
     !canOccupyDeck(frame, point(frame, ...QUALIFIED_PILOT_APPROACH), 0.3) ||
     !canOccupyDeck(transition, point(frame, ...QUALIFIED_PILOT_POSITION), 0.3)
   )
-    throw Error("Pilot approach/seat is obstructed");
+    throw new PilotGeometryError("Pilot approach/seat is obstructed");
   const swept = sweepDeckCircle(
     transition,
     point(frame, ...QUALIFIED_PILOT_APPROACH),
@@ -88,7 +89,7 @@ export function qualifyPilotGeometry(g: PilotGeometry) {
       swept.position[1] - QUALIFIED_PILOT_POSITION[1],
     ) > 1e-5
   )
-    throw Error("Pilot seating transition is obstructed");
+    throw new PilotGeometryError("Pilot seating transition is obstructed");
   return {
     frame,
     transition,
@@ -130,7 +131,7 @@ export function pilotRecoveryPoint(
   actorId: string,
 ) {
   if (nearby.length > 128)
-    throw Error("Pilot recovery occupancy budget exceeded");
+    throw new PilotGeometryError("Pilot recovery occupancy budget exceeded");
   const q = qualifyPilotGeometry(g);
   for (const [dx, dy] of [
     [0, 0],

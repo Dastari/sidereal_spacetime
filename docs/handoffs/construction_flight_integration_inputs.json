@@ -1,0 +1,8 @@
+{
+  "packages/world/src/index.ts": "2cb77237a5364a9feba7a6a3949ee04e8bce6e68e3bbe812d1f6973e29016a80",
+  "packages/world/src/shared-world-physics.ts": "43e195ef4fedcfc6bb271347e3f621e3f250344eb79a5b6359fb9aa5cb2f81b2",
+  "packages/world/src/shared-world.ts": "aced8d59174c3bd9776598471cb0582f46dc089dc4c43a4c9fe3ea93bcc35b20",
+  "packages/world/src/auth.ts": "8ff4db75cd1812be5bdd45070781ab959bc6a2fdf55d3736b19232641a0f4122",
+  "packages/world/src/construction.ts": "2bc9e852f1cf3197a3ee3b8c3d944de5d760365be9bdcf8e9e1f15b7991f9298",
+  "packages/world/src/construction-instances.ts": "dc84f80e18fee986a2b057410fa116fb2c00843911e337fbdf2f08277df76492"
+}

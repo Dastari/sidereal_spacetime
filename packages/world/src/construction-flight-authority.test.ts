@@ -50,7 +50,13 @@ function table(primary = "id") {
       if (rows.has(r[primary])) throw Error("Duplicate");
       rows.set(r[primary], { ...r });
     },
-    [primary]: { find: (id: string) => rows.get(id) },
+    [primary]: {
+      find: (id: string) => rows.get(id),
+      update: (row: any) => {
+        if (!rows.has(row[primary])) throw Error("Missing row");
+        rows.set(row[primary], { ...row });
+      },
+    },
     by_ship: {
       filter: (shipId: string) =>
         [...rows.values()].filter((r) => r.shipId === shipId),
@@ -277,4 +283,67 @@ test("resolved fitting IDs drive existing IFCS solver and disabled authority pro
   expect(disabled.commands[0].actuators.every((a) => a.throttle === 0)).toBe(
     true,
   );
+});
+
+test("dormant installed ships retain their physical definition and cannot stall another ship's contact island", async () => {
+  const { stepSystemSpace } = await import("../../sim/src/system-space");
+  const f = fixture();
+  installConstructionFlightAuthority(f.ctx, f.args, f.hooks);
+  const d = resolveShipFlightDefinition(f.reader, f.p.instanceId);
+  if (d.status === "invalid") throw Error(d.reason);
+  expect(d.status).toBe("dormant");
+  expect(d.computer.powered).toBe(false);
+  const a = {
+    id: f.p.instanceId,
+    x: 0,
+    y: 0,
+    vx: 0,
+    vy: 0,
+    heading: 0,
+    omega: 0,
+    massKg: d.mass.massKg,
+    inertia: d.mass.inertiaKgM2,
+    ...d.hull,
+  };
+  const b = { ...a, id: "another", x: 100, vx: 1 };
+  const step = stepSystemSpace([a, b]);
+  expect(step.exhausted).toBe(false);
+  expect(step.changedBodyIds).toEqual(["another"]);
+  expect(step.bodies.find((x) => x.id === "another")!.x).toBeCloseTo(100.05);
+});
+
+test("explicit activation qualifies native station but does not board, seat or change original ships", async () => {
+  const { activateConstructionFlight } =
+    await import("./construction-flight-activation");
+  const f = fixture();
+  installConstructionFlightAuthority(f.ctx, f.args, f.hooks);
+  f.db.constructionDeck = table();
+  f.db.constructionDeck.insert({
+    id: f.p.spawn.deckId,
+    instanceId: f.p.instanceId,
+    elevation: 0,
+  });
+  f.db.worldSystem = table();
+  f.db.worldSystem.insert({ id: "system" });
+  f.db.constructionDoor = { by_deck: { filter: () => [] } };
+  const actor = { shipId: "original", item: "pistol" };
+  const args = {
+    shipId: f.p.instanceId,
+    expectedRevision: 1n,
+    operationId: "activate",
+  };
+  activateConstructionFlight(f.ctx, args);
+  const b = f.db.constructionFlightBinding.shipId.find(f.p.instanceId);
+  expect(b.lifecycle).toBe("active");
+  expect(b.revision).toBe(2n);
+  expect(f.db.station.id.find(b.stationId).operational).toBe(true);
+  expect(f.db.station.id.find(b.stationId).occupantId).toBeUndefined();
+  expect(actor).toEqual({ shipId: "original", item: "pistol" });
+  expect(f.db.ship.id.find("original").revision).toBe(8n);
+  activateConstructionFlight(f.ctx, args);
+  expect(
+    f.db.constructionFlightBinding.shipId.find(f.p.instanceId).revision,
+  ).toBe(2n);
+  f.ctx.grants.delete("draft.read");
+  expect(() => activateConstructionFlight(f.ctx, args)).toThrow("grant");
 });

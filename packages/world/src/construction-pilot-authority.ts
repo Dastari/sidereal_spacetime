@@ -1,3 +1,4 @@
+import { PilotGeometryError } from "../../sim/src/construction-pilot";
 import type { Infer } from "spacetimedb/server";
 import type { constructionPilotSeat } from "./construction-pilot-tables";
 import type { constructionFlightBinding } from "./construction-flight-tables";
@@ -26,6 +27,9 @@ export type ConstructionPilotContext = Omit<ConstructionFlightContext, "db"> & {
         delete(id: string): unknown;
       };
       by_recovery: { filter(pending: boolean): Iterable<SeatRow> };
+      by_owner: {
+        filter(owner: import("spacetimedb").Identity): Iterable<SeatRow>;
+      };
       insert(r: SeatRow): unknown;
     };
     constructionFlightBinding: { shipId: { update(row: BindingRow): unknown } };
@@ -69,7 +73,12 @@ export function constructionPilotRepository(
       let height: number;
       try {
         height = support({ actor: a, location, instance, deck });
-      } catch {
+      } catch (error) {
+        if (
+          !(error instanceof Error) ||
+          !error.message.startsWith("Standing support:")
+        )
+          throw error;
         return;
       }
       return {
@@ -168,7 +177,7 @@ export function constructionPilotRepository(
         deck = ctx.db.constructionDeck.id.find(s.deckId),
         mapping = ctx.db.constructionFlightStation.stationId.find(s.id);
       if (!a || !location || !instance || !deck || !mapping)
-        throw Error("Current native pilot geometry required");
+        throw new PilotGeometryError("Current native pilot geometry required");
       return {
         instance,
         frame: constructionCollision(ctx, instance, s.deckId),
@@ -300,4 +309,40 @@ export function recoverConstructionPilotAuthority(
     characterId,
     reason,
   );
+}
+
+/** Grant callbacks call this only for draft.read/instance.spawn changes. Queries
+ * touch the affected owner's occupied seats, never all world actors/locations. */
+export function recoverConstructionPilotsForGrant(
+  ctx: ConstructionPilotContext,
+  owner: import("spacetimedb").Identity,
+  workspaceId: string,
+) {
+  const affected = [];
+  for (const seat of ctx.db.constructionPilotSeat.by_owner.filter(owner)) {
+    if (affected.length >= 64)
+      throw Error("Pilot owner recovery budget exceeded");
+    if (
+      ctx.db.constructionInstance.id.find(seat.shipId)?.workspaceId ===
+      workspaceId
+    )
+      affected.push(seat);
+  }
+  for (const seat of affected)
+    recoverConstructionPilotAuthority(ctx, seat.characterId, "grant-loss");
+}
+export function recoverPendingConstructionPilots(
+  ctx: ConstructionPilotContext,
+) {
+  const pending = [];
+  for (const seat of ctx.db.constructionPilotSeat.by_recovery.filter(true)) {
+    if (pending.length >= 64) throw Error("Pilot recovery budget exceeded");
+    pending.push(seat);
+  }
+  for (const seat of pending)
+    recoverConstructionPilotAuthority(
+      ctx,
+      seat.characterId,
+      seat.recoveryReason,
+    );
 }

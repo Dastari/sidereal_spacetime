@@ -68,8 +68,8 @@ export function resolveShipFlightDefinition(
       status: "invalid" as const,
       reason: "authored-flight-definition-mismatch",
     };
-  if (binding.lifecycle !== "active")
-    return { status: "dormant" as const, reason: "authored-flight-not-active" };
+  if (!["active", "installed-dormant"].includes(binding.lifecycle))
+    return { status: "invalid" as const, reason: "invalid-flight-lifecycle" };
   const rows: ConstructionFlightFittingRow[] = [];
   for (const row of db.fittings(shipId)) {
     if (rows.length >= 10)
@@ -120,7 +120,10 @@ export function resolveShipFlightDefinition(
     });
   }
   return {
-    status: "ready" as const,
+    status:
+      binding.lifecycle === "active"
+        ? ("ready" as const)
+        : ("dormant" as const),
     kind: "construction" as const,
     ...standard,
     stationId: binding.stationId,
@@ -129,7 +132,7 @@ export function resolveShipFlightDefinition(
       ...LAB_FLIGHT_COMPUTER,
       id: computer.id,
       installed: computer.installed,
-      powered: computer.powered,
+      powered: binding.lifecycle === "active" && computer.powered,
     },
     actuators,
   };
