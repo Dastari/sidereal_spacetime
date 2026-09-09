@@ -1,3 +1,4 @@
+import { planQualifiedWayfarerFunctionalSeeds } from "../../sim/src/construction-functional-instances";
 import { readFileSync } from "node:fs";
 import { expect, it, vi } from "vitest";
 import { Identity } from "spacetimedb";
@@ -8,7 +9,12 @@ vi.mock("spacetimedb/server", () => ({
     {},
     {
       get: () => () => ({
-        primaryKey() { return this; }, unique() { return this; },
+        primaryKey() {
+          return this;
+        },
+        unique() {
+          return this;
+        },
       }),
     },
   ),
@@ -361,4 +367,48 @@ it("preserves nested liquid payloads, projects their actual contents and rejects
     amountLitres: 2,
     liquidType: "fuel",
   });
+});
+
+it("trusted functional batch preserves all planned cargo UUIDs without allocating again", () => {
+  const f = fixture();
+  let serial = 8000;
+  const seeds = planQualifiedWayfarerFunctionalSeeds(
+    f.plan,
+    () =>
+      `00000000-0000-4000-8000-${(++serial).toString(16).padStart(12, "0")}`,
+  );
+  const ctx = {
+    ...f.ctx,
+    newUuidV4: () => {
+      throw Error("No allocation expected");
+    },
+  };
+  installQualifiedInstanceCargo(ctx, f.plan, seeds);
+  expect(
+    [...f.db.instanceInventoryBinding.rows.values()].map(
+      (r: any) => r.containerId,
+    ),
+  ).toEqual(seeds.containers.map((s) => s.id));
+});
+it("tampered or reused trusted cargo IDs reject before a single batch write", () => {
+  for (const kind of ["capacity", "instance", "identity"]) {
+    const f = fixture();
+    let serial = 9000;
+    const seeds = planQualifiedWayfarerFunctionalSeeds(
+      f.plan,
+      () =>
+        `00000000-0000-4000-8000-${(++serial).toString(16).padStart(12, "0")}`,
+    );
+    if (kind === "capacity") seeds.containers[0].columns++;
+    if (kind === "instance") seeds.containers[0].instanceId = "foreign";
+    if (kind === "identity")
+      f.db.inventoryContainer.insert({
+        ...f.db.inventoryContainer.id.find("pockets"),
+        id: seeds.containers[0].id,
+      });
+    const before = f.db.inventoryContainer.rows.size;
+    expect(() => installQualifiedInstanceCargo(f.ctx, f.plan, seeds)).toThrow();
+    expect(f.db.instanceInventoryBinding.rows.size).toBe(0);
+    expect(f.db.inventoryContainer.rows.size).toBe(before);
+  }
 });

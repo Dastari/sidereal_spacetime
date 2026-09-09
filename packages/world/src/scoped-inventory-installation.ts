@@ -25,14 +25,42 @@ export const QUALIFIED_CARGO_APPROACHES: Readonly<
 export function installQualifiedInstanceCargo(
   ctx: Context,
   plan: ConstructionInstancePlan,
+  providedSeeds?: ReturnType<typeof planQualifiedWayfarerFunctionalSeeds>,
 ) {
   if (plan.blueprintSha256 !== QUALIFIED_WAYFARER_SHA256) return;
   const instance = ctx.db.constructionInstance.id.find(plan.instanceId);
   if (!instance)
     throw new SenderError("Cargo installation requires the spawned instance");
-  const seeds = planQualifiedWayfarerFunctionalSeeds(plan, () =>
-    ctx.newUuidV4().toString(),
-  );
+  let seeds: ReturnType<typeof planQualifiedWayfarerFunctionalSeeds>;
+  if (providedSeeds) {
+    if (
+      providedSeeds.containers.length !== 4 ||
+      providedSeeds.interactions.length !== 4
+    )
+      throw new SenderError("Cargo functional batch size mismatch");
+    const ids = [
+      ...providedSeeds.containers,
+      ...providedSeeds.interactions,
+    ].map((s) => s.id);
+    let cursor = 0;
+    const rebuilt = planQualifiedWayfarerFunctionalSeeds(
+      plan,
+      () => ids[cursor++],
+    );
+    const serialize = (value: unknown) =>
+      JSON.stringify(value, (_key, v) =>
+        typeof v === "bigint" ? v.toString() : v,
+      );
+    if (
+      cursor !== ids.length ||
+      serialize(rebuilt) !== serialize(providedSeeds)
+    )
+      throw new SenderError("Cargo functional seed reconstruction mismatch");
+    seeds = rebuilt;
+  } else
+    seeds = planQualifiedWayfarerFunctionalSeeds(plan, () =>
+      ctx.newUuidV4().toString(),
+    );
   const sourceByPlaced = new Map(
     plan.mappings.objects.map((m) => [m.instanceId, m.sourceId]),
   );
@@ -48,6 +76,11 @@ export function installQualifiedInstanceCargo(
       (f) => f.placementId === sourceByPlaced.get(seed.placedObjectId),
     );
     if (!fixture) throw new SenderError("Cargo source placement missing");
+    if (
+      ctx.db.inventoryContainer.id.find(seed.id) ||
+      ctx.db.inventoryItem.id.find(seed.id)
+    )
+      throw new SenderError("Cargo identity already exists");
     if (
       ctx.db.instanceInventoryBinding.placedObjectId.find(seed.placedObjectId)
     )
