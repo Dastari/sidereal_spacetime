@@ -1,6 +1,6 @@
 # Trusted personal Wayfarer starter and gameplay access
 
-2026-09-10 — registered in the working candidate and verified with two ordinary Dastari accounts in an isolated database. The public9388/a561 cargo release remains unchanged; normal client browser acceptance and matched deployment are pending.
+2026-09-10 — deployed and verified in the normal public game. Exacta962 world/2f5c client artifacts, real first-character UI, seven-item persistence, actual process restart and final public acceptance are recorded in [the native starter release ledger](native_starter_release_20260910.md). Earlier candidate evidence below remains historical. Existing-ship conversion is separate work.
 
 ## Exact source and allocation
 
@@ -44,7 +44,7 @@ Both accounts were created fresh and received independent exact native ships, pe
 
 Fresh creation was observed in the initial run; the retained logs cover the subsequent full replay journeys. Evidence: `.runtime/wayfarer-starter-provider-proof.log` (cargo/flight/reconnect), `.runtime/wayfarer-starter-provider-proof-final.log` (full repeated journey), and `.runtime/wayfarer-starter-provider-summary.json`. An intermediate harness incorrectly looked up a light by the old source placement ID; selecting its actual independently allocated placement fixed the harness without an authority change.
 
-## Remaining acceptance boundaries
+## Original candidate acceptance boundaries (subsequently satisfied by the release ledger)
 
 The latest focused integration run passed54 tests across8 files, including6 actual-adapter tests and the public-kit replay regression. These include exact source equivalence, independent allocations, scope denial, old-account no-op, receipt recovery, pre-write validation and emulated transaction rollback. The late-write rollback unit test is explicitly a table emulator, not proof of restored server state.
 

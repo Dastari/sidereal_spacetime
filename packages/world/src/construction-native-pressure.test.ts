@@ -4,7 +4,10 @@ import { Identity } from "spacetimedb";
 vi.mock("spacetimedb/server", () => ({
   SenderError: class extends Error {},
   table: () => ({}),
-  t: new Proxy({}, { get: () => () => ({ primaryKey: () => ({}), unique: () => ({}) }) }),
+  t: new Proxy(
+    {},
+    { get: () => () => ({ primaryKey: () => ({}), unique: () => ({}) }) },
+  ),
 }));
 import { createNativePressureRoomDocument } from "@sidereal/sim/construction-pressure-document";
 import { createNativePressureRoomCompiler } from "@sidereal/sim/construction-native-room";
@@ -67,11 +70,12 @@ function table(indexes: Record<string, string> = {}, primary = "id") {
 }
 function fixture() {
   const db: any = {
+    wayfarerRefitAttachment: table({ by_instance: "instanceId" }),
     constructionNativePressure: table({ by_owner: "owner", by_door: "doorId" }),
     constructionAtmosphereClock: table(),
     constructionAtmosphere: table({ by_owner: "owner" }),
     constructionInstance: table({ by_owner: "owner" }),
-    constructionAirlock: table({by_owner:"owner",by_active:"active"}),
+    constructionAirlock: table({ by_owner: "owner", by_active: "active" }),
     constructionDoor: table({
       by_instance: "instanceId",
       by_deck: "deckId",

@@ -1065,6 +1065,12 @@ export type OwnSpaceBodies = __Infer<typeof OwnSpaceBodies>;
 export const OwnStations = __t.object("OwnStations", {});
 export type OwnStations = __Infer<typeof OwnStations>;
 
+export const OwnWayfarerRefitAttachments = __t.object("OwnWayfarerRefitAttachments", {});
+export type OwnWayfarerRefitAttachments = __Infer<typeof OwnWayfarerRefitAttachments>;
+
+export const OwnWayfarerRefitOffer = __t.object("OwnWayfarerRefitOffer", {});
+export type OwnWayfarerRefitOffer = __Infer<typeof OwnWayfarerRefitOffer>;
+
 export const OwnWorldAdmission = __t.object("OwnWorldAdmission", {});
 export type OwnWorldAdmission = __Infer<typeof OwnWorldAdmission>;
 
@@ -1363,6 +1369,66 @@ export type VisibleShipDescriptions = __Infer<typeof VisibleShipDescriptions>;
 
 export const VisibleShipMotion = __t.object("VisibleShipMotion", {});
 export type VisibleShipMotion = __Infer<typeof VisibleShipMotion>;
+
+export const WayfarerLiquidReceipt = __t.object("WayfarerLiquidReceipt", {
+  id: __t.string(),
+  actorId: __t.string(),
+  request: __t.string(),
+  sourceId: __t.string(),
+  destinationId: __t.string(),
+  litres: __t.f64(),
+});
+export type WayfarerLiquidReceipt = __Infer<typeof WayfarerLiquidReceipt>;
+
+export const WayfarerRefitAttachment = __t.object("WayfarerRefitAttachment", {
+  id: __t.string(),
+  instanceId: __t.string(),
+  deckId: __t.string(),
+  containerId: __t.string(),
+  assetId: __t.string(),
+  assetSha256: __t.string(),
+  x: __t.f64(),
+  y: __t.f64(),
+  z: __t.f64(),
+  revision: __t.u64(),
+});
+export type WayfarerRefitAttachment = __Infer<typeof WayfarerRefitAttachment>;
+
+export const WayfarerRefitAttachmentStatus = __t.object("WayfarerRefitAttachmentStatus", {
+  id: __t.string(),
+  instanceId: __t.string(),
+  deckId: __t.string(),
+  containerId: __t.string(),
+  assetId: __t.string(),
+  assetSha256: __t.string(),
+  x: __t.f64(),
+  y: __t.f64(),
+  z: __t.f64(),
+  revision: __t.u64(),
+});
+export type WayfarerRefitAttachmentStatus = __Infer<typeof WayfarerRefitAttachmentStatus>;
+
+export const WayfarerRefitOffer = __t.object("WayfarerRefitOffer", {
+  shipId: __t.string(),
+  characterId: __t.string(),
+  expectedShipRevision: __t.u64(),
+  expectedInventoryRevision: __t.u64(),
+  fingerprint: __t.string(),
+  status: __t.string(),
+});
+export type WayfarerRefitOffer = __Infer<typeof WayfarerRefitOffer>;
+
+export const WayfarerRefitReceipt = __t.object("WayfarerRefitReceipt", {
+  shipId: __t.string(),
+  owner: __t.identity(),
+  characterId: __t.string(),
+  operationId: __t.string(),
+  request: __t.string(),
+  deckId: __t.string(),
+  templateSha256: __t.string(),
+  completedMicros: __t.u64(),
+});
+export type WayfarerRefitReceipt = __Infer<typeof WayfarerRefitReceipt>;
 
 export const WeaponEnergy = __t.object("WeaponEnergy", {
   itemId: __t.string(),

@@ -1,6 +1,14 @@
-import { requestNativeAirlockDoor, acceptedNativeAirlockCollision, ownNativeAirlocks } from "./construction-airlock";
+import { addWayfarerRefitCollision } from "./wayfarer-refit-collision";
+import {
+  requestNativeAirlockDoor,
+  acceptedNativeAirlockCollision,
+  ownNativeAirlocks,
+} from "./construction-airlock";
 import { compilePublishedNativeExternalAirlock } from "@sidereal/sim/construction-airlock-published";
-import { qualifiedWayfarerInstanceObstacles, QUALIFIED_WAYFARER_SHA256 } from "../../sim/src/wayfarer-walking-bindings";
+import {
+  qualifiedWayfarerInstanceObstacles,
+  QUALIFIED_WAYFARER_SHA256,
+} from "../../sim/src/wayfarer-walking-bindings";
 import { nativeStairRoomCollision } from "@sidereal/sim/construction-stairs-document";
 import {
   validateNativePressureRoomDocument,
@@ -92,40 +100,56 @@ export function constructionCollision(
   deckId: string,
 ) {
   if ((JSON.parse(instance.documentJson) as ConstructionDocument).airlockRoom)
-    return acceptedNativeAirlockCollision(ctx,instance,deckId,compilePublishedNativeExternalAirlock);
+    return acceptedNativeAirlockCollision(
+      ctx,
+      instance,
+      deckId,
+      compilePublishedNativeExternalAirlock,
+    );
   const key = instance.id + ":" + instance.revision + ":" + deckId;
   let base = baseCache.get(key);
   if (!base) {
     if (baseCache.size >= 32) baseCache.clear();
     const document = JSON.parse(instance.documentJson) as ConstructionDocument;
     const width = document.boundaryKit?.revision === "r001" ? 0.0625 : 0;
-    const wayfarer = document.layout.source?.blueprintRevision === QUALIFIED_WAYFARER_SHA256
-      ? ctx.db.constructionInstance.id.find(instance.id) : undefined;
-    if (document.layout.source?.blueprintRevision === QUALIFIED_WAYFARER_SHA256 && !wayfarer)
+    const wayfarer =
+      document.layout.source?.blueprintRevision === QUALIFIED_WAYFARER_SHA256
+        ? ctx.db.constructionInstance.id.find(instance.id)
+        : undefined;
+    if (
+      document.layout.source?.blueprintRevision === QUALIFIED_WAYFARER_SHA256 &&
+      !wayfarer
+    )
       throw new Error("Qualified Wayfarer instance record required");
     base = compileDeckCollision(document.layout, deckId, {
       shipId: instance.id,
       perimeterHalfWidthM: width,
       partitionHalfWidthM: document.pressureRoom ? 0.0625 : width,
-      obstacles: wayfarer ? qualifiedWayfarerInstanceObstacles(wayfarer, deckId)
+      obstacles: wayfarer
+        ? qualifiedWayfarerInstanceObstacles(wayfarer, deckId)
         : document.stairRoom
-        ? nativeStairRoomCollision(document, deckId)
-        : document.traversalRoom
-        ? nativeTraversalRoomCollision(document, deckId)
-        : document.pressureRoom
-          ? nativePressureRoomCollision(document, deckId)
-          : document.boundaryKit?.revision === "r004"
-            ? pinnedFamilyCollision(document.layout, deckId)
-            : [],
+          ? nativeStairRoomCollision(document, deckId)
+          : document.traversalRoom
+            ? nativeTraversalRoomCollision(document, deckId)
+            : document.pressureRoom
+              ? nativePressureRoomCollision(document, deckId)
+              : document.boundaryKit?.revision === "r004"
+                ? pinnedFamilyCollision(document.layout, deckId)
+                : [],
     });
     baseCache.set(key, base);
   }
   const doors = [...ctx.db.constructionDoor.by_deck.filter(deckId)].filter(
     (d) => d.instanceId === instance.id,
   );
-  const frame = resolveDeckCollision(
-    base,
-    doors.map((d) => ({ openingId: d.id, passable: d.fraction === 1 })),
+  const frame = addWayfarerRefitCollision(
+    ctx,
+    instance,
+    deckId,
+    resolveDeckCollision(
+      base,
+      doors.map((d) => ({ openingId: d.id, passable: d.fraction === 1 })),
+    ),
   );
   const obstacles = doors.map((d) =>
     doorLeafObstacle(
@@ -160,7 +184,10 @@ export function requestDoor(
     operationId: string;
   },
 ) {
-  if(requestNativeAirlockDoor(ctx,args,compilePublishedNativeExternalAirlock))return;
+  if (
+    requestNativeAirlockDoor(ctx, args, compilePublishedNativeExternalAirlock)
+  )
+    return;
   const actor = [...ctx.db.character.by_owner.filter(ctx.sender)][0],
     visit = actor && ctx.db.constructionLocation.characterId.find(actor.id),
     door = ctx.db.constructionDoor.id.find(args.openingId);
@@ -238,7 +265,7 @@ export function requestDoor(
 }
 export function stepDoors(ctx: Context) {
   for (const door of ctx.db.constructionDoor.by_moving.filter(true)) {
-    if(ctx.db.constructionAirlock.id.find(door.instanceId))continue;
+    if (ctx.db.constructionAirlock.id.find(door.instanceId)) continue;
     // This controller cannot move a native pressure leaf through a deployed gasket.
     if (
       ctx.db.constructionNativePressure.id.find(door.instanceId)?.doorId ===
@@ -287,9 +314,13 @@ export const doorProjection = t.row("ConstructionDoorStatus", {
   revision: t.u64(),
 });
 export function ownDoors(ctx: ReadContext) {
-  const acceptedAirlocks=new Set(ownNativeAirlocks(ctx).map(a=>a.id));
-  return [...ctx.db.constructionInstance.by_owner.filter(ctx.sender)].filter(i=>!ctx.db.constructionAirlock.id.find(i.id)||acceptedAirlocks.has(i.id)).flatMap(
-    (i) =>
+  const acceptedAirlocks = new Set(ownNativeAirlocks(ctx).map((a) => a.id));
+  return [...ctx.db.constructionInstance.by_owner.filter(ctx.sender)]
+    .filter(
+      (i) =>
+        !ctx.db.constructionAirlock.id.find(i.id) || acceptedAirlocks.has(i.id),
+    )
+    .flatMap((i) =>
       [...ctx.db.constructionDoor.by_instance.filter(i.id)].map(
         ({
           id,
@@ -311,5 +342,5 @@ export function ownDoors(ctx: ReadContext) {
           revision,
         }),
       ),
-  );
+    );
 }

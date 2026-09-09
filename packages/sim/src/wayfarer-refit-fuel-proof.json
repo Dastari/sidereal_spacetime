@@ -1,0 +1,63 @@
+{
+  "schema": "sidereal.refit-fuel-layout-proof.v1",
+  "baseSha256": "362f37217f63a44a470676f104c8368bd0973ca03f5e29eab190bc4d6df71340",
+  "assetSha256": "a2f9fca902c7df08f3e8bad348d09034df8f26d9c248d0d912558886aa2eecf6",
+  "positionM": [
+    -3,
+    7,
+    0.1875
+  ],
+  "reservationM": [
+    1,
+    1
+  ],
+  "approachM": [
+    -1.875,
+    7
+  ],
+  "nativeHeightRangeM": [
+    0.1875,
+    1.0514999628067017
+  ],
+  "checkedNativeGroups": 1047,
+  "nativeVolumeSeparation": true,
+  "nominalFloorCoverage": true,
+  "artifacts": {
+    "assets/art-library/designs/cargo.fluid-fuel.medium/revisions/r001/appearances/fuel/glb.glb": "a2f9fca902c7df08f3e8bad348d09034df8f26d9c248d0d912558886aa2eecf6",
+    "assets/runtime/assembly/floor/r002/kit.glb": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+    "assets/runtime/assembly/parts.glb": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+    "assets/runtime/assembly/equipment/part-c0b6b036f5b3dd8bd2f3/glb.glb": "da38770d060f4c5397b2d0ae8ab01258d42ea1f12884cac3ed628c3b110c5a9c",
+    "assets/runtime/assembly/equipment/part-d9f37a5f7ea6e8d13254/glb.glb": "713d8a83c902d24bb59e278eb2436b087ebdf06fbbbbbd5daa7d2340fc782a49",
+    "assets/runtime/assembly/equipment/part-c03ec0260cd7329050a8/glb.glb": "f527af1e44fc1570355c2268055b7b31343c45849a807b40993cf516c263093a",
+    "assets/runtime/assembly/side-hull/r003/kit.glb": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+    "assets/runtime/assembly/equipment/part-77728ecc8ad36b0ff45f/glb.glb": "02ada2cf811e7893ffd98d8b6231974d111238e2dddf0ecd96739ff6b68a2cd3",
+    "assets/runtime/assembly/equipment/part-acbbef7209c4ef100693/glb.glb": "1e96a18539191ea08d48b4134c2820043674f2c3b0960ce583ae1620ba5a81a8",
+    "assets/runtime/assembly/cargo/part-c06e4f5f6f6dace38e41/glb.glb": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+    "assets/runtime/assembly/cargo/part-5382f8dbbeb54e663d33/glb.glb": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+    "assets/runtime/assembly/equipment/part-c41467ac46f6b350df24/r006/glb.glb": "a5b58c4707df1e37aa70fa40e7d052e63be141df7703cd75337abe0e7610b4c7",
+    "assets/runtime/assembly/equipment/part-cc610ba071b8eb38ab8c/glb.glb": "a8e5d2fa478e42723ffc82a845b223051a8f8878ece3c9ea80eb75e4a5021a3b",
+    "assets/runtime/assembly/equipment/part-73df516feb786d73fc5e/glb.glb": "3692ffd29f75026ef856af18a0a59538814b4836e8315d98c48e3c76d00735a8",
+    "assets/runtime/assembly/equipment/part-75910d7a0d27dfc17aaf/glb.glb": "be3a73faed7b4a2c9e4c7b89477df3c1424284dd3e71ca84438fb049a8b3b5a8",
+    "assets/runtime/assembly/equipment/part-0f14bf002f4c11854337/glb.glb": "5bbe40f3637bc640bc26557c3c20e3d9e452587395b0ca7c05d45793ef5e014a",
+    "assets/runtime/assembly/roof/r004/kit.glb": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+    "assets/runtime/assembly/hull/finish-r004/part-4c25a5fd9da0bce537f5/clean.glb": "59dd466fd25f5555fd8d29bd4183c2e5c7dd99884586bc7f251a2736fbe396d1",
+    "assets/runtime/assembly/hull/finish-r004/part-48cf8b9cf29d0b226ec4/clean.glb": "65195aefcb5bf72da62839db8fec6123188af9f5ac17024cbe7d6d2cf8959b79",
+    "assets/runtime/assembly/hull/finish-r004/part-624989ddf1192dceee75/clean.glb": "9dcf37d5a749a152be66657b100a8d83c59856b4c3b4dc967387bf000723e792",
+    "assets/runtime/assembly/hull/finish-r004/part-540c83fc49ee792d9a4a/clean.glb": "118f1f2406b0c699517be811d77e585f49d5b9c7d650013f873885dbe74329a5",
+    "assets/runtime/assembly/hull/finish-r004/part-b70713e9836547941e3f/clean.glb": "9495f6771dbeafaa24530562acd95a744414674853d7a13e45d2866f59e42526",
+    "assets/runtime/assembly/hull/finish-r004/part-ecd751f76e602db806a3/clean.glb": "29ef84b9b36290094d9053f7635fe160ca5a1767af14eecc2d965ae7405f5f1d",
+    "assets/runtime/assembly/hull/finish-r004/part-4a1d28344c5ee632b249/clean.glb": "d6859439499041ad474afd3d07b4fa1a67512eb7d90fb99720edfbfe5301a5f4",
+    "assets/runtime/assembly/hull/finish-r004/part-9f79f3a40a72f9b7ad4a/clean.glb": "1b787888f92e9a7691337c02b297a8895703544003ddcec8eb655ff1ffe91af3",
+    "assets/runtime/assembly/hull/finish-r004/part-70c422bca2d395c35ecb/clean.glb": "825a836cb96f74363c83c1d5be4efc1a11df0ef71bbdafff8b2abb222cebdad6",
+    "assets/runtime/assembly/hull/finish-r004/part-e965a5502d9fe4c25406/clean.glb": "e34ba9c660088550058053cf9dff5a93bdc1b198d9262ba9f6f3acc05644a2fa",
+    "assets/runtime/assembly/hull/finish-r004/part-437732483fa4d7acbcbc/clean.glb": "6992c7d5fb25376f3d12d881f66ab002108ed275a63661ca84025968ca3cadfe",
+    "assets/runtime/assembly/hull/finish-r004/part-63a0c40bbb71cfeba4dd/clean.glb": "3d0fd05cf021b3b5badf68e2e9f1011b5b621e64355390f61508a18a5e4cf61d",
+    "assets/runtime/assembly/hull/finish-r004/part-e7dddd4628bd6be8efb7/clean.glb": "53d58e142047665409aadeb232a83f0c5a1901da705234f2ffc8bda4f211e5c9"
+  },
+  "pending": [
+    "mount/support load interface",
+    "authoritative liquid attachment and transfer",
+    "actual browser placement/reach review"
+  ],
+  "doesNotAuthorizeLiveRefit": true
+}

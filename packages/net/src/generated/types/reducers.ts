@@ -30,6 +30,7 @@ import LeaveAuthoredPilotReducer from "../leave_authored_pilot_reducer";
 import LeaveConstructionReviewReducer from "../leave_construction_review_reducer";
 import MoveInventoryItemReducer from "../move_inventory_item_reducer";
 import PublishConstructionBlueprintReducer from "../publish_construction_blueprint_reducer";
+import RefitExistingWayfarerReducer from "../refit_existing_wayfarer_reducer";
 import ReleaseInputControlReducer from "../release_input_control_reducer";
 import RenameShipReducer from "../rename_ship_reducer";
 import RequestIdentityLinkReducer from "../request_identity_link_reducer";
@@ -45,6 +46,7 @@ import StoreAllInventoryItemsReducer from "../store_all_inventory_items_reducer"
 import TakeAllInventoryItemsReducer from "../take_all_inventory_items_reducer";
 import TransferInventoryItemReducer from "../transfer_inventory_item_reducer";
 import TransferScopedCargoItemReducer from "../transfer_scoped_cargo_item_reducer";
+import TransferWayfarerLiquidReducer from "../transfer_wayfarer_liquid_reducer";
 import UseStationReducer from "../use_station_reducer";
 
 export type AcceptIdentityLinkParams = __Infer<typeof AcceptIdentityLinkReducer>;
@@ -71,6 +73,7 @@ export type LeaveAuthoredPilotParams = __Infer<typeof LeaveAuthoredPilotReducer>
 export type LeaveConstructionReviewParams = __Infer<typeof LeaveConstructionReviewReducer>;
 export type MoveInventoryItemParams = __Infer<typeof MoveInventoryItemReducer>;
 export type PublishConstructionBlueprintParams = __Infer<typeof PublishConstructionBlueprintReducer>;
+export type RefitExistingWayfarerParams = __Infer<typeof RefitExistingWayfarerReducer>;
 export type ReleaseInputControlParams = __Infer<typeof ReleaseInputControlReducer>;
 export type RenameShipParams = __Infer<typeof RenameShipReducer>;
 export type RequestIdentityLinkParams = __Infer<typeof RequestIdentityLinkReducer>;
@@ -86,5 +89,6 @@ export type StoreAllInventoryItemsParams = __Infer<typeof StoreAllInventoryItems
 export type TakeAllInventoryItemsParams = __Infer<typeof TakeAllInventoryItemsReducer>;
 export type TransferInventoryItemParams = __Infer<typeof TransferInventoryItemReducer>;
 export type TransferScopedCargoItemParams = __Infer<typeof TransferScopedCargoItemReducer>;
+export type TransferWayfarerLiquidParams = __Infer<typeof TransferWayfarerLiquidReducer>;
 export type UseStationParams = __Infer<typeof UseStationReducer>;
 

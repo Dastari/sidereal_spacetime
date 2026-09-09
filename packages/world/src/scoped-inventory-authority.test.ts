@@ -103,6 +103,7 @@ function fixture() {
     uuid,
   );
   const db: any = {
+    wayfarerRefitAttachment: table("id", { by_instance: ["instanceId"] }),
     character: table("id", { by_owner: ["owner"] }),
     constructionLocation: table("characterId"),
     constructionInstance: table(),

@@ -38,7 +38,13 @@
     "./construction-airlock-document": "./src/construction-airlock-document.ts",
     "./wayfarer-starter": "./src/wayfarer-starter.ts",
     "./game-ship-access": "./src/game-ship-access.ts",
-    "./construction-flight": "./src/construction-flight.ts"
+    "./construction-flight": "./src/construction-flight.ts",
+    "./construction-pilot": "./src/construction-pilot.ts",
+    "./wayfarer-threshold": "./src/wayfarer-threshold.ts",
+    "./construction-airlock-published": "./src/construction-airlock-published.ts",
+    "./wayfarer-refit-audit": "./src/wayfarer-refit-audit.ts",
+    "./wayfarer-refit": "./src/wayfarer-refit.ts",
+    "./wayfarer-refit-mount": "./src/wayfarer-refit-mount.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",

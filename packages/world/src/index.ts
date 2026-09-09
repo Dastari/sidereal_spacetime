@@ -1,3 +1,16 @@
+import {
+  wayfarerRefitReceipt,
+  wayfarerRefitAttachment,
+  wayfarerLiquidReceipt,
+  wayfarerRefitOfferProjection,
+  wayfarerRefitAttachmentProjection,
+} from "./wayfarer-refit-tables";
+import {
+  refitExistingWayfarer as applyWayfarerRefit,
+  ownWayfarerRefitOffer as readWayfarerRefitOffer,
+  ownWayfarerRefitAttachments as readWayfarerRefitAttachments,
+} from "./wayfarer-refit-authority";
+import { transferWayfarerLiquid as applyWayfarerLiquid } from "./wayfarer-liquid-transfer";
 import { constructionReviewOrigin } from "./construction-review-origin";
 import * as nativeAirlock from "./construction-airlock";
 import { compilePublishedNativeExternalAirlock } from "@sidereal/sim/construction-airlock-published";
@@ -225,6 +238,9 @@ const movementTimer = table(
   { scheduledId: t.u64().primaryKey().autoInc(), scheduledAt: t.scheduleAt() },
 );
 const db = schema({
+  wayfarerRefitReceipt,
+  wayfarerRefitAttachment,
+  wayfarerLiquidReceipt,
   personalStarterReceipt,
   gameShipAccess,
   constructionFlightBinding,
@@ -1259,4 +1275,37 @@ export const ownNativeAirlocks = db.view(
   { name: "own_native_airlocks", public: true },
   t.array(nativeAirlock.nativeAirlockProjection),
   auth.gameView(nativeAirlock.ownNativeAirlocks),
+);
+
+export const refitExistingWayfarer = db.reducer(
+  {
+    shipId: t.string(),
+    expectedShipRevision: t.u64(),
+    expectedInventoryRevision: t.u64(),
+    fingerprint: t.string(),
+    operationId: t.string(),
+  },
+  auth.gameAction(applyWayfarerRefit, true),
+);
+export const ownWayfarerRefitOffer = db.view(
+  { name: "own_wayfarer_refit_offer", public: true },
+  t.array(wayfarerRefitOfferProjection),
+  auth.gameView(readWayfarerRefitOffer),
+);
+export const ownWayfarerRefitAttachments = db.view(
+  { name: "own_wayfarer_refit_attachments", public: true },
+  t.array(wayfarerRefitAttachmentProjection),
+  auth.gameView(readWayfarerRefitAttachments),
+);
+export const transferWayfarerLiquid = db.reducer(
+  {
+    sourceId: t.string(),
+    destinationId: t.string(),
+    litres: t.f64(),
+    expectedSourceRevision: t.u64(),
+    expectedDestinationRevision: t.u64(),
+    expectedInventoryRevision: t.u64(),
+    operationId: t.string(),
+  },
+  auth.gameAction(applyWayfarerLiquid, true),
 );

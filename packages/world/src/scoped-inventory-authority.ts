@@ -126,7 +126,7 @@ export function synchronizeLegacyInventory(
 function actorFor(ctx: ReadContext) {
   return [...ctx.db.character.by_owner.filter(ctx.sender)][0];
 }
-function readCargo(ctx: ReadContext, nowMicros = 0n): CargoInventoryReader {
+export function readCargo(ctx: ReadContext, nowMicros = 0n): CargoInventoryReader {
   const principal = ctx.sender.toHexString();
   const geometry = (instanceId: string, deckId: string) => {
     const a = actorFor(ctx),

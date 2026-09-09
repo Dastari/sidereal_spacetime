@@ -58,6 +58,7 @@ import LeaveAuthoredPilotReducer from "./leave_authored_pilot_reducer";
 import LeaveConstructionReviewReducer from "./leave_construction_review_reducer";
 import MoveInventoryItemReducer from "./move_inventory_item_reducer";
 import PublishConstructionBlueprintReducer from "./publish_construction_blueprint_reducer";
+import RefitExistingWayfarerReducer from "./refit_existing_wayfarer_reducer";
 import ReleaseInputControlReducer from "./release_input_control_reducer";
 import RenameShipReducer from "./rename_ship_reducer";
 import RequestIdentityLinkReducer from "./request_identity_link_reducer";
@@ -73,6 +74,7 @@ import StoreAllInventoryItemsReducer from "./store_all_inventory_items_reducer";
 import TakeAllInventoryItemsReducer from "./take_all_inventory_items_reducer";
 import TransferInventoryItemReducer from "./transfer_inventory_item_reducer";
 import TransferScopedCargoItemReducer from "./transfer_scoped_cargo_item_reducer";
+import TransferWayfarerLiquidReducer from "./transfer_wayfarer_liquid_reducer";
 import UseStationReducer from "./use_station_reducer";
 
 // Import all procedure arg schemas
@@ -113,6 +115,8 @@ import OwnReachableCargoItemsRow from "./own_reachable_cargo_items_table";
 import OwnShipsRow from "./own_ships_table";
 import OwnSpaceBodiesRow from "./own_space_bodies_table";
 import OwnStationsRow from "./own_stations_table";
+import OwnWayfarerRefitAttachmentsRow from "./own_wayfarer_refit_attachments_table";
+import OwnWayfarerRefitOfferRow from "./own_wayfarer_refit_offer_table";
 import OwnWorldAdmissionRow from "./own_world_admission_table";
 import VisibleBodyDescriptionsRow from "./visible_body_descriptions_table";
 import VisibleBodyMotionRow from "./visible_body_motion_table";
@@ -368,6 +372,20 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnStationsRow),
+  ownWayfarerRefitAttachments: __table({
+    name: 'own_wayfarer_refit_attachments',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnWayfarerRefitAttachmentsRow),
+  ownWayfarerRefitOffer: __table({
+    name: 'own_wayfarer_refit_offer',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnWayfarerRefitOfferRow),
   ownWorldAdmission: __table({
     name: 'own_world_admission',
     indexes: [
@@ -431,6 +449,7 @@ const reducersSchema = __reducers(
   __reducerSchema("leave_construction_review", LeaveConstructionReviewReducer),
   __reducerSchema("move_inventory_item", MoveInventoryItemReducer),
   __reducerSchema("publish_construction_blueprint", PublishConstructionBlueprintReducer),
+  __reducerSchema("refit_existing_wayfarer", RefitExistingWayfarerReducer),
   __reducerSchema("release_input_control", ReleaseInputControlReducer),
   __reducerSchema("rename_ship", RenameShipReducer),
   __reducerSchema("request_identity_link", RequestIdentityLinkReducer),
@@ -446,6 +465,7 @@ const reducersSchema = __reducers(
   __reducerSchema("take_all_inventory_items", TakeAllInventoryItemsReducer),
   __reducerSchema("transfer_inventory_item", TransferInventoryItemReducer),
   __reducerSchema("transfer_scoped_cargo_item", TransferScopedCargoItemReducer),
+  __reducerSchema("transfer_wayfarer_liquid", TransferWayfarerLiquidReducer),
   __reducerSchema("use_station", UseStationReducer),
 );
 

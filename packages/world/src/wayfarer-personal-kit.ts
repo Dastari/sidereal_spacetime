@@ -143,7 +143,25 @@ export function issueWayfarerPersonalKit(ctx: Context, characterId: string) {
  * storage/uniform initializer when the public kit command is replayed. */
 export function preserveWayfarerStarterKit(ctx: Context): boolean {
   const receipt = ctx.db.personalStarterReceipt.owner.find(ctx.sender);
-  if (!receipt) return false;
+  if (!receipt) {
+    const actors = [...ctx.db.character.by_owner.filter(ctx.sender)];
+    const actor = actors[0];
+    const access = actor && ctx.db.gameShipAccess.shipId.find(actor.shipId);
+    if (!access) return false;
+    // Conversion grants no starter entitlement. Even an empty historical kit
+    // must not fall through to laboratory storage creation after conversion.
+    if (
+      actors.length !== 1 ||
+      !actor?.owner.isEqual(ctx.sender) ||
+      !actor.connected ||
+      !access.owner.isEqual(ctx.sender) ||
+      access.characterId !== actor.id ||
+      access.instanceId !== actor.shipId ||
+      access.lifecycle !== "active"
+    )
+      throw Error("Converted inventory requires explicit recovery");
+    return true;
+  }
   const actor = ctx.db.character.id.find(receipt.characterId);
   const state = ctx.db.inventoryState.characterId.find(receipt.characterId);
   if (

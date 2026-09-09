@@ -57,6 +57,10 @@ function table(primary = "id") {
         rows.set(row[primary], { ...row });
       },
     },
+    by_instance: {
+      filter: (instanceId: string) =>
+        [...rows.values()].filter((r) => r.instanceId === instanceId),
+    },
     by_ship: {
       filter: (shipId: string) =>
         [...rows.values()].filter((r) => r.shipId === shipId),
@@ -92,6 +96,7 @@ function fixture() {
     uuid,
   );
   const db: any = {
+    wayfarerRefitAttachment: table(),
     constructionInstance: table(),
     ship: table(),
     station: table(),

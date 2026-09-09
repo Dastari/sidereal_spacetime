@@ -50,8 +50,8 @@ export const REFIT_FUEL_ATTACHMENT = Object.freeze({
   nativeDimensionsM: [
     0.5520000457763672, 0.5479999780654907, 0.8639999628067017,
   ] as const,
-  // This is a conservative layout preflight, never an approved load/support interface.
-  nativeAttachmentQualified: false as const,
+  // Geometry pins only. Authority additionally requires the preserved fuel mount
+  // certificate from wayfarer-refit-mount; this constant grants no installation.
 });
 
 /** Read-only plan. The future atomic adapter must reread revisions and run the
