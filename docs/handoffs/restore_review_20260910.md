@@ -26,8 +26,8 @@ Preparation intentionally refuses to overwrite an existing recovery directory. P
 
 ```sh
 python3 scripts/dev.py restore-review-prepare \
-  --archive .runtime/recovery-20260910-001924.tar \
-  --expected-sha256 a76a1f0cb1670ea736acb6b549976f122e3a58f002a5af79257abad4be2dd21f
+  --archive .runtime/recovery-20260910-001924.tar.gz \
+  --expected-sha256 288c8b83a4128a633855e9a235dfafe5c15d2812ee1f299c2ea42828a9fd7b0f
 python3 scripts/dev.py restore-review-up
 python3 scripts/dev.py restore-review-restart
 python3 scripts/dev.py restore-review-stop
@@ -46,3 +46,12 @@ This verifies restoring a cold archive into an isolated same-host2.10 server and
 The owner-authorized coordinator removed only `/root/sidereal_spacetime/.runtime/recovery-review` after checking that its managed process was inactive, loopback port3190 had no listener, and no process argument referenced its database directory. Both original archives were re-read in full and matched their recorded SHA-256 values: `a76a1f0cb1670ea736acb6b549976f122e3a58f002a5af79257abad4be2dd21f` for00:19 and `81e5f0e3b3935da15b35ddf6c45ed0f0dc923b85513ef36517bfb86eefe5ae03` for03:13. Archive member validation retained the required database, signing keys and configuration; the original acceptance evidence and recovery manifest were retained separately.
 
 Private disposal evidence is `.runtime/releases/world-network-20260910/restore-copy-disposal.json`. No backup archive, source or immutable client release was removed. Repeating the recovery test now requires the managed prepare command to extract a new isolated copy. The03:13 archive has not itself been restore-tested; its full digest/member checks are distinct from the00:19 archive's actual boot/restart proof.
+
+
+## Lossless archive compaction before native-starter release
+
+The00:19 recovery set is now stored as `.runtime/recovery-20260910-001924.tar.gz`, SHA-256 `288c8b83a4128a633855e9a235dfafe5c15d2812ee1f299c2ea42828a9fd7b0f`,12,059,916,422 bytes. Its full decompressed stream was rehashed and exactly matches the original raw archive SHA-256 `a76a1f0cb1670ea736acb6b549976f122e3a58f002a5af79257abad4be2dd21f` and24,977,530,880 bytes. All6,983 members, required signing keys/configuration and safe internal hard links were validated before the redundant raw representation was removed. The original historical metadata and all restore evidence remain; the additional0600 manifest is `.runtime/recovery-20260910-001924.tar.gz.json`.
+
+`scripts/compress_recovery.py` never operates a service or edits live database data. It creates a new0600 artifact exclusively, bounds output size and free-space reserve, hashes the original stream, rereads the complete decompressed stream, validates recovery members and fsyncs the compressed artifact and manifest before an explicitly requested raw replacement. Hash/budget/disk failures preserve the raw source and remove partial output. The initial8GiB cap was too small for this data; it aborted safely. A16GiB cap with4GiB reserve succeeded in300.929seconds.
+
+`restore-review-prepare` now accepts compressed tar input with the same exact artifact-hash, member-safety and extraction-space checks. A focused test restores the verified compressed fixture and confirms private key-file permissions. Together with the existing recovery tests, ten focused Python tests pass. This is lossless representation verification and restore-helper coverage, not a repeat server boot of the production-sized compressed artifact. The earlier actual same-host boot/restart proof remains attached to the identical decompressed bytes.

@@ -74,7 +74,7 @@ def prepare(lifecycle, archive_path, expected_sha256):
     if actual != expected_sha256:
         raise RuntimeError('Recovery archive SHA256 mismatch')
     started = time.monotonic()
-    with tarfile.open(archive_path, 'r:') as archive:
+    with tarfile.open(archive_path, 'r:*') as archive:
         members = archive.getmembers()
         total = validate_members(members)
         free = shutil.disk_usage(lifecycle.STATE).free
