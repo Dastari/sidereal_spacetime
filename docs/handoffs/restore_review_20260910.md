@@ -1,6 +1,6 @@
 # Isolated cold-backup recovery verification — 2026-09-10
 
-Status: passed for the archived normal database and its stable gameplay records. The recovery instance is stopped. The live server, data directory, module, public client and provider routes were not replaced, reset or restarted by this exercise.
+Status: passed for the archived normal database and its stable gameplay records. The recovery instance was stopped; its disposable extracted working copy was removed after verification on 2026-09-10. The live server, data directory, module, public client and provider routes were not replaced, reset or restarted by this exercise.
 
 ## Recovery set and isolation
 
@@ -8,7 +8,7 @@ Restored the exact private archive `.runtime/recovery-20260910-001924.tar`, SHA2
 
 The recovery helper rehashed the entire archive before extraction, required the signing keys/control database, rejected unsafe paths, symlinks and special files, and permitted internal hard links only to archived regular files. It refused an existing destination and required enough free space for the full logical file payload plus an8GiB reserve. About53GiB was available before extraction; the separate copy remained within that budget. Extraction took20.163seconds after hash verification.
 
-All restored data and keys are under private `.runtime/recovery-review/`. The pinned2.10.0 standalone binary was started only through the managed lifecycle on `127.0.0.1:3190`, with the restored signing keys and a512MiB page pool. The recovered operator CLI configuration was also used for privileged verification queries; no new operator credential or identity reassignment was required. The historical matching client `2affa484dc8bc4cf457ad4f7baa68f756ae0919e986ade98ae87d3497b88f048` remains available and hash-valid, but was not served publicly or exercised in a browser during recovery.
+During the exercise, restored data and keys were held under private `.runtime/recovery-review/`. The pinned2.10.0 standalone binary was started only through the managed lifecycle on `127.0.0.1:3190`, with the restored signing keys and a512MiB page pool. The recovered operator CLI configuration was also used for privileged verification queries; no new operator credential or identity reassignment was required. The historical matching client `2affa484dc8bc4cf457ad4f7baa68f756ae0919e986ade98ae87d3497b88f048` remains available and hash-valid, but was not served publicly or exercised in a browser during recovery.
 
 ## Verified results
 
@@ -37,6 +37,12 @@ The review address comes from `[restore_review]` in `dev.toml`; the helper requi
 
 ## Evidence and limits
 
-Private evidence: `.runtime/releases/world-network-20260910/restore-acceptance.json`, initial/restart SQL snapshots and comparisons, schema/privacy probes, extraction/start/restart/stop logs and the recovered operator-client query. The source archive and stopped recovery copy remain preserved. `npm run test:python` passed27 lifecycle/publication tests plus nine art tests, including seven recovery-helper tests; documentation/provenance checks also passed.
+Private evidence: `.runtime/releases/world-network-20260910/restore-acceptance.json`, initial/restart SQL snapshots and comparisons, schema/privacy probes, extraction/start/restart/stop logs and the recovered operator-client query. The source archive and original proof evidence remain preserved. The stopped extracted copy was subsequently removed as recorded below. `npm run test:python` passed27 lifecycle/publication tests plus nine art tests, including seven recovery-helper tests; documentation/provenance checks also passed.
 
 This verifies restoring a cold archive into an isolated same-host2.10 server and reading/restarting its normal database. Other archived review databases were retained but not individually exercised. It does not establish off-host disaster recovery, point-in-time recovery, replication/failover, restoration onto a different server version, browser acceptance of the historical game client, or reapplication of subsequent authority migrations. Later production writes are outside this backup and must never be silently discarded by an application rollback.
+
+## Disposable copy cleanup before the next release
+
+The owner-authorized coordinator removed only `/root/sidereal_spacetime/.runtime/recovery-review` after checking that its managed process was inactive, loopback port3190 had no listener, and no process argument referenced its database directory. Both original archives were re-read in full and matched their recorded SHA-256 values: `a76a1f0cb1670ea736acb6b549976f122e3a58f002a5af79257abad4be2dd21f` for00:19 and `81e5f0e3b3935da15b35ddf6c45ed0f0dc923b85513ef36517bfb86eefe5ae03` for03:13. Archive member validation retained the required database, signing keys and configuration; the original acceptance evidence and recovery manifest were retained separately.
+
+Private disposal evidence is `.runtime/releases/world-network-20260910/restore-copy-disposal.json`. No backup archive, source or immutable client release was removed. Repeating the recovery test now requires the managed prepare command to extract a new isolated copy. The03:13 archive has not itself been restore-tested; its full digest/member checks are distinct from the00:19 archive's actual boot/restart proof.
