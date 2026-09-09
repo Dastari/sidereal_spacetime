@@ -60,17 +60,34 @@ describe("authoritative once-per-system adapter", () => {
     expect(f.db.spaceBody.writes).toBe(old);
     expect(f.db.ship.writes).toBe(shipWrites);
   });
-  it("a resting system writes no rows and inserts no empty actuator rows", () => {
+  it("initializes the complete engine telemetry once then keeps resting samples write-free", () => {
     const f = setup();
     rest(f);
-    const before = f.writes();
     expect(stepSharedWorld(f.physics())).toMatchObject({
-      status: "idle",
       changedMotions: 0,
-      changedOutputs: 0,
+      changedOutputs: 18,
     });
+    expect(f.db.actuatorOutput.rows.size).toBe(18);
+    expect(
+      [...f.db.actuatorOutput.rows.values()].every(
+        (row: any) => row.throttle === 0,
+      ),
+    ).toBe(true);
+    const before = f.writes();
+    for (let i = 1; i <= 100; i++) {
+      expect(
+        stepSharedWorld({
+          ...f.physics(),
+          timestamp: { microsSinceUnixEpoch: 100_000n + BigInt(i) * 50_000n },
+        }),
+      ).toMatchObject({
+        status: "idle",
+        changedMotions: 0,
+        changedOutputs: 0,
+      });
+    }
     expect(f.writes()).toBe(before);
-    expect(f.db.actuatorOutput.rows.size).toBe(0);
+    expect(f.db.actuatorOutput.rows.size).toBe(18);
   });
   it("only the occupied operational station and current admitted input-holder connection supply thrust", () => {
     const f = setup();

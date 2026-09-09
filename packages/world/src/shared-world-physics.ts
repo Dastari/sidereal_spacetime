@@ -242,8 +242,9 @@ export function stepSharedWorld(
         old = ctx.db.actuatorOutput.id.find(id),
         motion = shipRows.get(command.bodyId)!;
       if (old && old.throttle === actuator.throttle) continue;
-      // Missing zero outputs are already visually off: do not seed nine idle rows.
-      if (!old && actuator.throttle === 0) continue;
+      // Engine-status views promise the complete installed actuator set. Backfill
+      // each missing row once (including zero), then preserve steady idle silence.
+      // This also repairs ships admitted before automatic shared entry existed.
       const row = {
         id,
         shipId: command.bodyId,

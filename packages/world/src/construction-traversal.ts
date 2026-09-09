@@ -832,6 +832,7 @@ export function stepConstructionTraversals(
     rows.length <= TRAVERSAL_AUTHORITY_LIMITS.active,
     "active work budget exceeded",
   );
+  let changed = false;
   for (const row of rows) {
     const stored = ctx.db.constructionTraversalLink.id.find(row.linkId);
     let link: CompiledTraversalLink;
@@ -839,20 +840,25 @@ export function stepConstructionTraversals(
       demand(stored, "installed link missing");
       link = compiled(stored, registry);
     } catch {
-      ctx.db.constructionTraversal.characterId.update({
-        ...row,
-        phase: "blocked",
-        interruption: "geometry-changed",
-        revision: row.revision + 1n,
-        lastTick: tick,
-        stateJson: encode({
-          ...state(row),
+      // Read-only installation validation failed. Persist the first fail-closed
+      // outcome, then keep checking without rewriting the same blocked state.
+      if (row.phase !== "blocked" || row.interruption !== "geometry-changed") {
+        ctx.db.constructionTraversal.characterId.update({
+          ...row,
           phase: "blocked",
           interruption: "geometry-changed",
           revision: row.revision + 1n,
           lastTick: tick,
-        }),
-      });
+          stateJson: encode({
+            ...state(row),
+            phase: "blocked",
+            interruption: "geometry-changed",
+            revision: row.revision + 1n,
+            lastTick: tick,
+          }),
+        });
+        changed = true;
+      }
       continue;
     }
     const prior = state(row),
@@ -925,6 +931,7 @@ export function stepConstructionTraversals(
     const updated = activeRow(row, next, link),
       placement = traversalPlacement(link, next);
     if (placement.releaseReservation) {
+      changed = true;
       demand(validActor && actor && visit, "terminal actor/location missing");
       ctx.db.character.id.update({
         ...actor,
@@ -955,10 +962,23 @@ export function stepConstructionTraversals(
       ctx.db.constructionTraversalReservation.linkId.delete(row.linkId);
       clearInputs(ctx, row.characterId);
     } else {
-      ctx.db.constructionTraversal.characterId.update(updated);
+      // Tick/revision alone are not a state change. Still re-evaluate occupancy,
+      // permission and reservation every sample; the next physical step always
+      // uses fixedSeconds, never the elapsed blocked interval.
+      const equivalent =
+        encode({
+          ...next,
+          revision: prior.revision,
+          lastTick: prior.lastTick,
+        }) === encode(prior);
+      if (!equivalent) {
+        ctx.db.constructionTraversal.characterId.update(updated);
+        changed = true;
+      }
       clearInputs(ctx, row.characterId);
     }
   }
+  if (!changed) return false;
   const nextClock = { id: CLOCK, tick, lastScheduleMicros: now };
   if (clock) ctx.db.constructionTraversalClock.id.update(nextClock);
   else ctx.db.constructionTraversalClock.insert(nextClock);

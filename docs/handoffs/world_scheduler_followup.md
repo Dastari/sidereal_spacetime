@@ -127,3 +127,47 @@ Final isolated validation passed:
   large JavaScript chunk warnings remain. No normal database/public release was
   changed by this validation, and the parent's provider browser database was
   preserved.
+
+## Persistently blocked traversal correction
+
+The follow-up in `packages/world/src/construction-traversal.ts` compares the
+accepted traversal state while excluding tick/revision metadata. An unchanged
+blocked outcome no longer rewrites its JSON, revision or lastTick. The first
+blocked outcome, a changed interruption reason, any accepted distance/phase
+change and completion still persist normally. Missing native registry validation
+also writes its fail-closed geometry-change status once instead of each sample.
+If every active journey is semantically unchanged, no traversal clock is written.
+
+Every scheduled invocation still rechecks native linkage, owner admission,
+reservation and physical obstruction. Inputs continue to be cleared as required.
+On resumption the solver consumes one fixed movement sample, not accumulated
+wall time; duplicate/substep delivery remains guarded after a changed sample.
+The read-only validation catch does not swallow mutation failures, and terminal
+placement, deck transition, audit and reservation release remain atomic.
+
+Regressions cover 100 unchanged samples for reservation loss and physical
+obstruction, one write for a new failure reason, restored native registry and
+reservation, single-step resumption after a day, subsequent physical completion,
+and an unchanged blocked actor while a second actor advances the common clock.
+These are logical write-count/authority tests, not measured multiplayer bandwidth.
+
+The normal-entry standard smoke also found an engine-status compatibility gap:
+shared physics reported achieved commands but omitted absent zero output rows.
+The existing engine-status view expects all nine installed devices, so it had no
+baseline immediately after automatic admission. `shared-world-physics.ts` now
+backfills each missing installed output once; actual solved commands and control-
+loss zeroing remain unchanged. A two-ship regression verifies exactly 18 initial
+rows and no further writes over 100 resting samples. This deliberate initial
+allocation is separate from steady-state idle write suppression.
+
+Traversal/telemetry combined validation: 44 focused shared-physics and pure/world
+traversal tests pass. The combined check before telemetry backfill passed 920 tests
+across 157 files. Standard managed `traversal-idle-final` authority smoke then
+passed the telemetry baseline, actual IFCS acceleration/braking and control-loss
+checks, plus existing inventory/combat/interaction/persistence checks. The earlier
+`traversal-idle` attempt exposed a stale sequence number in the generic smoke's
+unseated-command probe; that probe was corrected to remain monotonic, without
+changing the server's deliberate harmless rejection of stale input. Parent's
+coordinated aggregate release gate covers the final combined build. Detailed
+outputs: `.runtime/traversal-telemetry-focused.log`,
+`.runtime/traversal-idle-check.log`, `.runtime/traversal-idle-final-smoke.log`.

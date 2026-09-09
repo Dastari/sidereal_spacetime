@@ -961,3 +961,122 @@ test("active traversal does not rewrite already cleared input and link view keys
   f.tick(10);
   expect(inputUpdate).not.toHaveBeenCalled();
 });
+
+test("blocked traversal writes only first state/reason changes and resumes one fixed step after idle", () => {
+  const f = fixture();
+  f.install();
+  f.actor();
+  f.begin();
+  f.tick(35);
+  const before = f.active(),
+    held = f.db().constructionTraversalReservation.linkId.find(before.linkId);
+  f.db().constructionTraversalReservation.linkId.delete(before.linkId);
+  f.tick();
+  expect(f.active()).toMatchObject({
+    phase: "blocked",
+    interruption: "reservation-lost",
+    revision: before.revision + 1n,
+  });
+  const blocked = { ...f.active() };
+  const update = vi.spyOn(f.db().constructionTraversal.characterId, "update");
+  const clock = vi.spyOn(f.db().constructionTraversalClock.id, "update");
+  const input = vi.spyOn(f.db().input.characterId, "update");
+  f.tick(100);
+  expect(f.active()).toEqual(blocked);
+  for (const spy of [update, clock, input]) expect(spy).not.toHaveBeenCalled();
+  f.db().constructionTraversalReservation.insert(held);
+  f.ctx.timestamp.microsSinceUnixEpoch += 50_000n;
+  stepConstructionTraversals(f.ctx, new Map());
+  expect(f.active()).toMatchObject({
+    phase: "blocked",
+    interruption: "geometry-changed",
+    revision: blocked.revision + 1n,
+  });
+  expect(update).toHaveBeenCalledTimes(1);
+  expect(clock).toHaveBeenCalledTimes(1);
+  for (let i = 0; i < 100; i++) {
+    f.ctx.timestamp.microsSinceUnixEpoch += 50_000n;
+    stepConstructionTraversals(f.ctx, new Map());
+  }
+  expect(update).toHaveBeenCalledTimes(1);
+  expect(clock).toHaveBeenCalledTimes(1);
+  const stoppedDistance = JSON.parse(f.active().stateJson).distanceM;
+  const linkSpeed = JSON.parse(
+    f.db().constructionTraversalLink.id.find(before.linkId).installationJson,
+  ).policy.metresPerSecond;
+  f.ctx.timestamp.microsSinceUnixEpoch += 86_400_000_000n;
+  f.tick();
+  expect(f.active().phase).toBe("returning");
+  expect(
+    stoppedDistance - JSON.parse(f.active().stateJson).distanceM,
+  ).toBeCloseTo(linkSpeed * 0.05, 12);
+  expect(update).toHaveBeenCalledTimes(2);
+  expect(clock).toHaveBeenCalledTimes(2);
+  const resumed = { ...f.active() };
+  expect(stepConstructionTraversals(f.ctx, registry)).toBe(false);
+  expect(f.active()).toEqual(resumed);
+});
+
+test("unchanged physical obstruction keeps reservation without writes and removal resumes return", () => {
+  const f = fixture();
+  f.install();
+  f.actor();
+  f.actor("actor-b", "instance-a", owner, "lower", 0, 0);
+  f.begin();
+  f.tick(45);
+  const before = f.active(),
+    blocker = f.db().character.id.find("actor-b");
+  f.db().character.id.update({
+    ...blocker,
+    localX: before.acceptedX,
+    localY: before.acceptedY,
+  });
+  f.tick();
+  expect(f.active().phase).toBe("blocked");
+  const stopped = { ...f.active() };
+  const writes = vi.spyOn(f.db().constructionTraversal.characterId, "update");
+  const clock = vi.spyOn(f.db().constructionTraversalClock.id, "update");
+  f.tick(100);
+  expect(f.active()).toEqual(stopped);
+  expect(writes).not.toHaveBeenCalled();
+  expect(clock).not.toHaveBeenCalled();
+  expect([...f.db().constructionTraversalReservation.iter()]).toHaveLength(1);
+  f.db().character.id.update(blocker);
+  f.tick();
+  expect(f.active().phase).toBe("returning");
+  expect(writes).toHaveBeenCalledTimes(1);
+  f.tick(60);
+  expect(f.active()).toBeUndefined();
+  expect([...f.db().constructionTraversalAudit.iter()]).toHaveLength(1);
+});
+
+test("one blocked journey stays unchanged while another journey advances the shared sample clock", () => {
+  const f = fixture();
+  f.install();
+  f.actor();
+  f.begin();
+  f.tick(20);
+  f.db().constructionTraversalReservation.linkId.delete(f.active().linkId);
+  f.tick();
+  const blocked = { ...f.active() };
+  f.install("instance-b");
+  f.actor("actor-b", "instance-b");
+  f.begin("actor-b");
+  const before = JSON.parse(f.active("actor-b").stateJson).distanceM;
+  const update = vi.spyOn(f.db().constructionTraversal.characterId, "update");
+  f.tick(10);
+  expect(f.active()).toEqual(blocked);
+  expect(JSON.parse(f.active("actor-b").stateJson).distanceM).toBeGreaterThan(
+    before,
+  );
+  expect(
+    update.mock.calls.filter(
+      ([row]) => (row as { characterId: string }).characterId === "actor-a",
+    ),
+  ).toHaveLength(0);
+  expect(
+    update.mock.calls.filter(
+      ([row]) => (row as { characterId: string }).characterId === "actor-b",
+    ),
+  ).toHaveLength(10);
+});

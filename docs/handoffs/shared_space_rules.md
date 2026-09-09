@@ -201,7 +201,9 @@ fresh/nonfuture input, the exact input-holder connection and current installed/
 powered lab flight computer. No caller-provided force or transform is accepted.
 It runs all stock ships and dynamic rocks through the common three-substep solver,
 then writes only `changedBodyIds`; changed cell keys are part of those same writes.
-Missing zero actuator outputs are not inserted. Existing nonzero output is cleared
+The complete installed actuator output set is initialized once, including zero
+rows, so existing engine-status views retain their contract after automatic entry.
+Subsequent identical outputs are not rewritten; existing nonzero output is cleared
 when actuation ceases. Planet/star descriptors are excluded from planar collision.
 Neither old ship motion nor legacy body rows receive physics updates.
 
