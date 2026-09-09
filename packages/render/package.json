@@ -8,7 +8,8 @@
     "./assembly-editor": "./src/assembly-editor.ts",
     "./equipment": "./src/equipment/index.ts",
     "./crew/appearance": "./src/crew/appearance.ts",
-    "./native-stair-scene": "./src/native-stair-scene.ts"
+    "./native-stair-scene": "./src/native-stair-scene.ts",
+    "./layout-native-floors": "./src/layout-native-floors.ts"
   },
   "dependencies": {
     "@babylonjs/core": "9.25.0",

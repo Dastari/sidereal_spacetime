@@ -765,6 +765,7 @@ export default function LayoutEditor() {
           blocked={blocked}
           result={result}
           projection={view.projection}
+          deckId={view.deckId}
           commit={commit}
           adopt={(d) => editor.adopt(d, false, true)}
           error={editor.setError}

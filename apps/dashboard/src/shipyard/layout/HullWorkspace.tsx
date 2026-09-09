@@ -1,5 +1,6 @@
+import { layoutNativeFloors } from "@sidereal/render/layout-native-floors";
 import { HullDecalPanel } from "../HullDecalPanel";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Box,
   Move,
@@ -43,6 +44,7 @@ interface Props {
   blocked: boolean;
   result?: CompiledLayout;
   projection: string;
+  deckId: string;
   commit: (change: (d: LayoutDocument) => LayoutDocument) => void;
   adopt: (d: LayoutDocument) => void;
   error: (s: string) => void;
@@ -90,8 +92,33 @@ export default function HullWorkspace(props: Props) {
     move: (_id: string, _p: [number, number, number], _copy: boolean) => {},
     place: (_id: string, _p: [number, number, number]) => {},
   });
+  const nativeFloors = useMemo(
+    () =>
+      catalog
+        ? layoutNativeFloors(doc, catalog, props.deckId, visible.has("floor"))
+        : { parts: [], unmatched: [] },
+    [doc, catalog, props.deckId, visible],
+  );
+  const contextOnly = new Set(nativeFloors.parts.map((p) => p.id));
+  const previewParts = [...parts, ...nativeFloors.parts];
+  const unmatched = new Set(nativeFloors.unmatched);
+  const floorGuide = props.result
+    ? {
+        ...props.result,
+        fingerprint: `${props.result.fingerprint}:${props.deckId}:${visible.has("floor")}:${nativeFloors.unmatched.join(",")}`,
+        tiles: props.result.tiles.filter(
+          (t) => t.deckId === props.deckId && unmatched.has(t.id),
+        ),
+      }
+    : undefined;
+  useEffect(() => {
+    setHeight(
+      (doc.decks.find((d) => d.id === props.deckId)?.elevation ?? 0) / 32,
+    );
+  }, [props.deckId]);
   const state = useRef<HullViewState>({
-    parts,
+    parts: previewParts,
+    contextOnly,
     selected: selection,
     visible,
     tool,
@@ -100,10 +127,11 @@ export default function HullWorkspace(props: Props) {
     snap,
     blocked,
     projection: props.projection,
-    floor: props.result,
+    floor: floorGuide,
   });
   state.current = {
-    parts,
+    parts: previewParts,
+    contextOnly,
     selected: selection,
     visible,
     tool,
@@ -112,7 +140,7 @@ export default function HullWorkspace(props: Props) {
     snap,
     blocked,
     projection: props.projection,
-    floor: props.result,
+    floor: floorGuide,
   };
   function mutate(part: PartPlacement) {
     if (blocked || !catalog) return;
@@ -292,6 +320,7 @@ export default function HullWorkspace(props: Props) {
     doc,
     props.result,
     props.projection,
+    props.deckId,
     selection,
     visible,
     tool,
@@ -792,7 +821,9 @@ export default function HullWorkspace(props: Props) {
               onClick={(event) => {
                 select(p.id);
                 setTool("select");
-                event.currentTarget.closest('.hull-inspector')?.scrollTo({top:0});
+                event.currentTarget
+                  .closest(".hull-inspector")
+                  ?.scrollTo({ top: 0 });
               }}
             >
               <span>

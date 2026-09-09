@@ -128,6 +128,7 @@ export default function LayoutCanvas(props: Props) {
               p.view.layers.roof,
               p.view.projection,
               p.catalog,
+              p.view.layers.floor,
             );
         })
         .catch((e) =>
@@ -159,6 +160,7 @@ export default function LayoutCanvas(props: Props) {
             p.view.layers.roof,
             p.view.projection,
             p.catalog,
+            p.view.layers.floor,
           );
       })
       .catch((e) =>
@@ -179,12 +181,14 @@ export default function LayoutCanvas(props: Props) {
         view.layers.roof,
         view.projection,
         props.catalog,
+        view.layers.floor,
       );
   }, [
     doc,
     result,
     view.deckId,
     view.layers.roof,
+    view.layers.floor,
     view.projection,
     props.catalog,
   ]);
@@ -412,7 +416,9 @@ export default function LayoutCanvas(props: Props) {
           {doc.decks.find((d) => d.id === view.deckId)?.name} ·{" "}
           {view.projection === "Top"
             ? "Floorplan schematic"
-            : "Enclosure proxy preview"}
+            : doc.assembly
+              ? "Native assembly preview"
+              : "Enclosure proxy preview"}
         </span>
       </div>
       {view.projection !== "Top" ? (
@@ -425,7 +431,9 @@ export default function LayoutCanvas(props: Props) {
           <div className="layout-render-stats">
             {stats}
             <br />
-            Draft proxies · drag to orbit; no approved construction kit assigned
+            {doc.assembly
+              ? "Native visuals · drag to orbit; local authoring preview"
+              : "Draft proxies · drag to orbit; no approved construction kit assigned"}
           </div>
         </>
       ) : (

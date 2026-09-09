@@ -97,8 +97,17 @@ export function createLayoutPreview(
     showRoof: boolean,
     projection: string,
     catalog?: PartCatalog,
+    showFloor = true,
   ) {
-    lastRequest = [doc, result, deckId, showRoof, projection, catalog];
+    lastRequest = [
+      doc,
+      result,
+      deckId,
+      showRoof,
+      projection,
+      catalog,
+      showFloor,
+    ];
     placedNodes.forEach((n) => n.dispose());
     placedNodes = [];
     nativePlacements = 0;
@@ -165,7 +174,10 @@ export function createLayoutPreview(
     roof.diffuseColor = Color3.FromHexString(doc.appearance.accent);
     batch(
       "draft-floor",
-      tiles.map((t) => ({ p: t.vertices, z: t.vertices.map(() => 0) })),
+      (showFloor ? tiles : []).map((t) => ({
+        p: t.vertices,
+        z: t.vertices.map(() => 0),
+      })),
       floor,
     );
     batch(

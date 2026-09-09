@@ -38,6 +38,8 @@ export interface HullViewState {
   blocked: boolean;
   projection: string;
   floor?: CompiledLayout;
+  /** Native structural context cannot be selected or dragged as an assembly object. */
+  contextOnly?: ReadonlySet<string>;
 }
 export interface HullCameraState {
   alpha: number;
@@ -432,6 +434,8 @@ export function createHullViewport(
         entry = { assetId: p.assetId, node };
         nodes.set(p.id, entry);
       }
+      for (const mesh of entry.node.getChildMeshes())
+        mesh.isPickable = !next.contextOnly?.has(p.id);
       updateHullDecals(scene, entry.node, p.decals, p.flipped);
       const category = catalog.assets.find((a) => a.id === p.assetId)?.category;
       entry.node.setEnabled(!!category && next.visible.has(category));
@@ -479,7 +483,11 @@ export function createHullViewport(
     canvas.dataset.placements = String(nodes.size);
     canvas.dataset.expectedPlacements = String(next.parts.length);
     if (nodes.size === next.parts.length)
-      callbacks.status(`${nodes.size} editable components ready`);
+      callbacks.status(
+        next.contextOnly?.size
+          ? `${nodes.size - next.contextOnly.size} editable components ready · ${next.contextOnly.size} native context floors`
+          : `${nodes.size} editable components ready`,
+      );
   }
   function fit(id?: string) {
     requestRender();
