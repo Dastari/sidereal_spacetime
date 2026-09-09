@@ -1,3 +1,4 @@
+import { bindGameSessionProof } from "./game-session-proof";
 import {
   createConnectionResources,
   subscriptionErrorMessage,
@@ -27,6 +28,8 @@ export function connect(
   auth?: { token: string; kind: "oidc" },
 ): DbConnection {
   const resources = createConnectionResources();
+  const proofAbort = new AbortController();
+  resources.listen(() => proofAbort.abort());
   const url = new URL(window.location.href);
   url.protocol = url.protocol === "https:" ? "wss:" : "ws:";
   const builder = DbConnection.builder()
@@ -35,8 +38,36 @@ export function connect(
     .withToken(
       auth?.token ?? localStorage.getItem("sidereal.lab.token") ?? undefined,
     )
-    .onConnect((connection, _identity, token) => {
-      if (!auth) localStorage.setItem("sidereal.lab.token", token);
+    .onConnect(async (connection, _identity, token) => {
+      // Preserve the original development credential: browser reconnects may
+      // return only a short-lived host WebSocket ticket.
+      if (!auth && !localStorage.getItem("sidereal.lab.token"))
+        localStorage.setItem("sidereal.lab.token", token);
+      if (auth) {
+        const timeout = setTimeout(() => proofAbort.abort(), 10_000);
+        try {
+          await bindGameSessionProof({
+            origin: url.origin,
+            database: import.meta.env.VITE_DATABASE,
+            connectionId: connection.connectionId!.toHexString(),
+            token: auth.token,
+            signal: proofAbort.signal,
+          });
+        } catch (error) {
+          if (connection.isActive)
+            onStatus(
+              "offline",
+              error instanceof Error
+                ? error.message
+                : "Game session verification failed",
+            );
+          connection.disconnect();
+          return;
+        } finally {
+          clearTimeout(timeout);
+        }
+      }
+      if (proofAbort.signal.aborted || !connection.isActive) return;
       const subscription = connection
         .subscriptionBuilder()
         .onApplied(() => {
