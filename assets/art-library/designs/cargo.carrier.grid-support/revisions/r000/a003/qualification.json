@@ -1,0 +1,1887 @@
+{
+  "schema": "sidereal.carrier-qualification.v1",
+  "approvedCargoManifestSha256": "512ea3056138b3da315bb92e681c01ba5d758d54928f74d986b58bd9b001e4dd",
+  "sourceSha256": "96729a9622d1071cc3e458cd3447a243bc3c07c89e6fa9dfd89e39aa8b6bc7b3",
+  "fixtureSourceSha256": "dad1bbb644cc76471f5ad39a5eb7ca5fcd0d9dfcdac287853470ef298b8dc318",
+  "assets": [
+    {
+      "assetId": "carrier-1m",
+      "glbSha256": "faa8a7b7786c4e92cfeb6ec5b25d43739ad070e202d4e2f1ee1dc98ca6877f78",
+      "interfaceSha256": "979dbca660e223f51be0cedb331d29a2470ce018c94cc3c12abf6f8ca8788f69",
+      "boundsM": {
+        "min": [
+          0.0,
+          -0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          0.6875
+        ]
+      },
+      "triangles": 3048,
+      "materialCount": 6,
+      "bearingEvidence": [
+        {
+          "patchId": "cell-0-0",
+          "side": "bottom",
+          "triangleCount": 2,
+          "actualAreaM2": 0.5625,
+          "planeM": 0
+        },
+        {
+          "patchId": "cell-0-0",
+          "side": "top",
+          "triangleCount": 2,
+          "actualAreaM2": 0.5625,
+          "planeM": 0.6875
+        }
+      ],
+      "contactGeometryQualified": true,
+      "collisionRepresentation": "Conservative component boxes; bevel clearance is intentionally not walkable.",
+      "loadApproval": false
+    },
+    {
+      "assetId": "carrier-2m",
+      "glbSha256": "5e42e6ab46b00674129ffafe136affefa6586325c1149e838bf9ff693b9769fd",
+      "interfaceSha256": "0beb36d25b5bf6566eb664cfd3e689debc2105467b70d21ffdb5160f4cf94c79",
+      "boundsM": {
+        "min": [
+          0.0,
+          -0.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          2.0,
+          0.6875
+        ]
+      },
+      "triangles": 4200,
+      "materialCount": 6,
+      "bearingEvidence": [
+        {
+          "patchId": "cell-0-0",
+          "side": "bottom",
+          "triangleCount": 2,
+          "actualAreaM2": 0.5625,
+          "planeM": 0
+        },
+        {
+          "patchId": "cell-0-0",
+          "side": "top",
+          "triangleCount": 2,
+          "actualAreaM2": 0.5625,
+          "planeM": 0.6875
+        },
+        {
+          "patchId": "cell-0-1",
+          "side": "bottom",
+          "triangleCount": 2,
+          "actualAreaM2": 0.5625,
+          "planeM": 0
+        },
+        {
+          "patchId": "cell-0-1",
+          "side": "top",
+          "triangleCount": 2,
+          "actualAreaM2": 0.5625,
+          "planeM": 0.6875
+        },
+        {
+          "patchId": "cell-1-0",
+          "side": "bottom",
+          "triangleCount": 2,
+          "actualAreaM2": 0.5625,
+          "planeM": 0
+        },
+        {
+          "patchId": "cell-1-0",
+          "side": "top",
+          "triangleCount": 2,
+          "actualAreaM2": 0.5625,
+          "planeM": 0.6875
+        },
+        {
+          "patchId": "cell-1-1",
+          "side": "bottom",
+          "triangleCount": 2,
+          "actualAreaM2": 0.5625,
+          "planeM": 0
+        },
+        {
+          "patchId": "cell-1-1",
+          "side": "top",
+          "triangleCount": 2,
+          "actualAreaM2": 0.5625,
+          "planeM": 0.6875
+        }
+      ],
+      "contactGeometryQualified": true,
+      "collisionRepresentation": "Conservative component boxes; bevel clearance is intentionally not walkable.",
+      "loadApproval": false
+    }
+  ],
+  "payloadCellM": [
+    0.8125,
+    0.8125,
+    0.53125
+  ],
+  "compatibleAssetCount": 13,
+  "payloads": [
+    {
+      "assetId": "part-c06e4f5f6f6dace38e41",
+      "appearance": "standard-small",
+      "revision": 3,
+      "glbSha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+      "blendSha256": "5cf90a4af3373549cbc97701b32754bfa6eef63dc996dcfc4b74af17c2215493",
+      "dimensionsM": [
+        0.6610000133514404,
+        0.4855000078678131,
+        0.5114999413490295
+      ],
+      "closedEnvelopeFits": true,
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "heightExcessM": 0,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.037749990820884705
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-abb5fe4af40225b7eae4",
+      "appearance": "standard-medium",
+      "revision": 3,
+      "glbSha256": "b206e9ca51fff669848037ab6288882df033293d535c4f31e96034e1bde7db2c",
+      "blendSha256": "645ed047c59cdd8a296a9e75c06a729d564256706c4cb4c85e492234452f00bc",
+      "dimensionsM": [
+        1.0609999895095825,
+        0.7963500022888184,
+        0.9514999985694885
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.4202499985694885,
+      "footprintExcessM": 0.24849998950958252,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.05232501029968262
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-f12452ef26700fa33271",
+      "appearance": "standard-large",
+      "revision": 2,
+      "glbSha256": "c5327211a125e711f907a41691a5bacf5253f9dc9398ed1484891f947691ced8",
+      "blendSha256": "77214bcfdd20ceb52aa7f84bd5915ddb3e5377316a6e83fe40e4544c8101afce",
+      "dimensionsM": [
+        1.940999984741211,
+        1.3161000609397888,
+        1.7200000286102295
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 1.1887500286102295,
+      "footprintExcessM": 1.128499984741211,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.06895002722740173
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-b3ba935a9fdc172d4b05",
+      "appearance": "standard-oversized",
+      "revision": 2,
+      "glbSha256": "cabf3570fc40613b8476ade9627f78033963e691ddd385a996bcf548ce7a5985",
+      "blendSha256": "43ffef9453511923460fb69a1c7a9144899a16c6a081567fe87a1342f4caf367",
+      "dimensionsM": [
+        1.940999984741211,
+        3.9160999059677124,
+        1.9199999570846558
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 1.3887499570846558,
+      "footprintExcessM": 3.1035999059677124,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.06894999742507935
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-7b3c579c1281fc95571e",
+      "appearance": "reinforced-medium",
+      "revision": 3,
+      "glbSha256": "d0c38b77acee4430c023a003a1e8bc536d39a401064724fd586f9499c2fe5bb6",
+      "blendSha256": "86d58cae92f9eecd5ad7398fd1e7b32b382731d62a468748ab7acaa40198ab3f",
+      "dimensionsM": [
+        1.0609999895095825,
+        0.8088499903678894,
+        0.9514999985694885
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.4202499985694885,
+      "footprintExcessM": 0.24849998950958252,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.05857500433921814
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-7c2f338895b10331d945",
+      "appearance": "reinforced-large",
+      "revision": 2,
+      "glbSha256": "662494d06bd0bb22b221f171e5c154808fdcf2e7198aea086b234755fc833188",
+      "blendSha256": "b9d28e31d1e952b5aa13f3b5dd12ab742c42b2dd8014e87f9ae5af2be55cad71",
+      "dimensionsM": [
+        1.940999984741211,
+        1.4111000299453735,
+        1.7200000286102295
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 1.1887500286102295,
+      "footprintExcessM": 1.128499984741211,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.11645001173019409
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-988451da35483981368a",
+      "appearance": "reinforced-oversized",
+      "revision": 2,
+      "glbSha256": "f1120e09b195eae7c347c77c529c53dd2df448431c79cd8e50640e62f02e79ae",
+      "blendSha256": "ad014ef3faab889b9582f9c883a04ca384acc1218d902e50c5db056d5fabaa12",
+      "dimensionsM": [
+        1.940999984741211,
+        4.011100172996521,
+        1.9199999570846558
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 1.3887499570846558,
+      "footprintExcessM": 3.198600172996521,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.11645013093948364
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-ba8af622916752a9337b",
+      "appearance": "refrigerated-medium",
+      "revision": 2,
+      "glbSha256": "0119364ddd193ae12fa5288498d3dadbc34809d63ff0bf5d1f6062e82e94e886",
+      "blendSha256": "04c8189fd16c30fd40b11545a528d7482a602e95bf849d3d604bf454c52dcd9b",
+      "dimensionsM": [
+        0.9160000085830688,
+        1.3324999809265137,
+        0.6800000071525574
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.14875000715255737,
+      "footprintExcessM": 0.5199999809265137,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.06624996662139893
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-a35ecc5e892707a10931",
+      "appearance": "refrigerated-large",
+      "revision": 2,
+      "glbSha256": "1abde7fc69cb70837bcbfa31a3c92e76020bc2d545739ddf10ea88455c37afe6",
+      "blendSha256": "cfeef967b116f920956d21f9aae6d302e0a7c17da06800b357addd30556da10b",
+      "dimensionsM": [
+        1.3960000276565552,
+        1.9325000047683716,
+        1.159999966621399
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.6287499666213989,
+      "footprintExcessM": 1.1200000047683716,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.0662500262260437
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-3e4990bfd3cff3c322a6",
+      "appearance": "vacuum-medium",
+      "revision": 2,
+      "glbSha256": "c8fc1355219f88600dd3391a2b805ae25100d4bdf08f2f09b3b4fdda4949bb2f",
+      "blendSha256": "1d36122e65102d47c67ff42c132c8cafc6c0f43a5fa1738f12c895993bf396ff",
+      "dimensionsM": [
+        0.8610000014305115,
+        1.3640000224113464,
+        0.6800000071525574
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.14875000715255737,
+      "footprintExcessM": 0.5515000224113464,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.08199998736381531
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-78c27f9eba15730f6e16",
+      "appearance": "vacuum-large",
+      "revision": 2,
+      "glbSha256": "978718994a5323bb1b794065029bf2f9f6b50a9a50534bc8502a7acf3e85a4c3",
+      "blendSha256": "201c07f9749d5423283c1e77b28c340d3e1c5ac1082745451509dc81126e1c6d",
+      "dimensionsM": [
+        1.340999960899353,
+        1.96399986743927,
+        1.159999966621399
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.6287499666213989,
+      "footprintExcessM": 1.15149986743927,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.08199995756149292
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-b9296fc370e00c573edb",
+      "appearance": "salvage-large",
+      "revision": 2,
+      "glbSha256": "bc35466888b7ef8fbd077aeb4656ee9591aba7c5bfffae40f258582ff3d443f1",
+      "blendSha256": "0821e500f0d57f37f00a6373546c53b74726f4ef7b53714d0ec0a7274bfd4586",
+      "dimensionsM": [
+        1.340999960899353,
+        1.9325000047683716,
+        1.2540000677108765
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.7227500677108765,
+      "footprintExcessM": 1.1200000047683716,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.0662500262260437
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-6bb94c053cd8cf77c986",
+      "appearance": "salvage-oversized",
+      "revision": 2,
+      "glbSha256": "034bc87366c86c39589d5a05754205c5c44b17164849572fe7c54b9c1fd90238",
+      "blendSha256": "b9d69b0416626c54d6432ed8332f80e62ea3e6c89f9331dbd4a91c5e30bedd5a",
+      "dimensionsM": [
+        1.940999984741211,
+        3.932500123977661,
+        1.8540000915527344
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 1.3227500915527344,
+      "footprintExcessM": 3.120000123977661,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.06624996662139893
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-91ea0f7d9a898641e10a",
+      "appearance": "medical-small",
+      "revision": 3,
+      "glbSha256": "98a665e309e5b136f7658b0a7588b15971f94f9d82af85075f50d8253eeb5998",
+      "blendSha256": "c5ec606f05e5593a0273aa105e3f7a8e00a34e0614402126526fd045a412b190",
+      "dimensionsM": [
+        0.6610000133514404,
+        0.4855000078678131,
+        0.3915000259876251
+      ],
+      "closedEnvelopeFits": true,
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "heightExcessM": 0,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.037749990820884705
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-30f4da34f1916e0c5c3f",
+      "appearance": "medical-medium",
+      "revision": 3,
+      "glbSha256": "e73ec71e8699877088c1ee182106e1738d737159f97a960650b2cdf7c032be5e",
+      "blendSha256": "be88f2fd2521b646334806f9c2f790e458b0a56f2c08431a9986369918800fb6",
+      "dimensionsM": [
+        1.0609999895095825,
+        0.7963500022888184,
+        0.6315000057220459
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.1002500057220459,
+      "footprintExcessM": 0.24849998950958252,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.05232501029968262
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-a4d1c1ae60720fcbe403",
+      "appearance": "high-value-small",
+      "revision": 3,
+      "glbSha256": "91962c400f4cfd41907a0b8702f772d394e976b4f5f7cbc0a50b3759e4a03c89",
+      "blendSha256": "335f395e1ac5c92956e36c7602e2848adee92f2c2980f290b16f5db69df02649",
+      "dimensionsM": [
+        0.6610000133514404,
+        0.6554999947547913,
+        0.4714999794960022
+      ],
+      "closedEnvelopeFits": true,
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "heightExcessM": 0,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.08274999260902405
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-73d0f3a802c4cb9166c1",
+      "appearance": "high-value-medium",
+      "revision": 3,
+      "glbSha256": "35a4471f701d9882797a53c43efa9ab1a46dce8fca2c0d45da640184517b92d0",
+      "blendSha256": "1006809489076ccec8ac8ce8bea251ae52e2dba1e05c3c3c8314bfb4e4ce8181",
+      "dimensionsM": [
+        1.0609999895095825,
+        1.0863500237464905,
+        0.7914999723434448
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.2602499723434448,
+      "footprintExcessM": 0.2738500237464905,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.09732499718666077
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-3b7ca37c50e723c351a6",
+      "appearance": "fluid-medium",
+      "revision": 2,
+      "glbSha256": "93def67d6bdde3e7c7062995a8086063b26eb9c42a44c74b6692c2bb9bb97b35",
+      "blendSha256": "924d5c93e48e74e798ee86d3e9f32db12e921a0177deb0d2d4fb11b943417db7",
+      "dimensionsM": [
+        0.8610000014305115,
+        1.1600000858306885,
+        0.6800000071525574
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.14875000715255737,
+      "footprintExcessM": 0.3475000858306885,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-e925d94b0d7fa47fbedb",
+      "appearance": "fluid-large",
+      "revision": 2,
+      "glbSha256": "3a27abd17b594b46f58c68d5b983a35974dcbb088090785677b7589e545e1f40",
+      "blendSha256": "eb31d1298d4e6cf77fef6b1f0a081cf2b3b04315d660ffcc929444f2c5253c98",
+      "dimensionsM": [
+        1.340999960899353,
+        1.7599999904632568,
+        1.159999966621399
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.6287499666213989,
+      "footprintExcessM": 0.9474999904632568,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-fbd7255612b311847eb2",
+      "appearance": "cryo",
+      "revision": 1,
+      "glbSha256": "c63384726bd7b7891283bc72fbfab66de94e803618bd6d0a9ef9b8d093d51c66",
+      "blendSha256": "94cba39bd64adc59c743198c4173bcc3b1ab6d8171754539cadb02ce98653684",
+      "dimensionsM": [
+        0.6800000071525574,
+        0.6800000071525574,
+        1.3600000143051147
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.8287500143051147,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-81d226967abf2efefc20",
+      "appearance": "fuel",
+      "revision": 1,
+      "glbSha256": "a2f9fca902c7df08f3e8bad348d09034df8f26d9c248d0d912558886aa2eecf6",
+      "blendSha256": "cc5750b992d736e2a72c23bc07c02c3ac05d8dd3f79ecb2decd5cc10a6f03268",
+      "dimensionsM": [
+        0.5520000457763672,
+        0.5479999780654907,
+        0.8639999628067017
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.33274996280670166,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-392d51c57ab75c82dc9c",
+      "appearance": "chemical",
+      "revision": 1,
+      "glbSha256": "23d36657b742c2148682a6fd15e7e76e31434f997f1c7d51881b98fc0d579357",
+      "blendSha256": "e2b3a2acb6f62b5c9d397d0c09085a03c669c7a40021d8939a51978df602aa6a",
+      "dimensionsM": [
+        0.5479999780654907,
+        0.5479999780654907,
+        0.8639999628067017
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.33274996280670166,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-9e3dbcbc867202b08b48",
+      "appearance": "gas",
+      "revision": 1,
+      "glbSha256": "c3752988956571beaba2e3ee3e520c823bb040e5923a6c103191a33fc75eb484",
+      "blendSha256": "60961860b0aebdd02ad1838ac58e125575bf0a92840381666200b12c37bb744e",
+      "dimensionsM": [
+        0.8799999952316284,
+        0.6800000071525574,
+        0.8999999761581421
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.3687499761581421,
+      "footprintExcessM": 0.06749999523162842,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-66a83f73eef38512fd34",
+      "appearance": "water",
+      "revision": 1,
+      "glbSha256": "5dcd32b998180c78bb842c5e68e7bdb24a23a0f97dbab95de1e4e4be4db7b8f5",
+      "blendSha256": "f3cc44cfca8cfc80e0bd360f2650bdab51dc960b838bed053da622af34fda16c",
+      "dimensionsM": [
+        0.8799999952316284,
+        0.6890000104904175,
+        0.9070000052452087
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.37575000524520874,
+      "footprintExcessM": 0.06749999523162842,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.004500001668930054
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-bcd15c0ae99c611cd840",
+      "appearance": "narrow-blue",
+      "revision": 1,
+      "glbSha256": "b7706350f40b5da148da8bf14cc3d5b11066bdabc930ceb879f4ae5e2990e5c7",
+      "blendSha256": "644b85de43276691aec6247d1adf8271a67a89665164355aafcc6f55c4565f6c",
+      "dimensionsM": [
+        0.24199999868869781,
+        0.2510000020265579,
+        0.44200000166893005
+      ],
+      "closedEnvelopeFits": true,
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "heightExcessM": 0,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0015000030398368835
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-ddbf6661871ea40b586b",
+      "appearance": "tiny-magenta",
+      "revision": 1,
+      "glbSha256": "37765969cf2ac4d760dd189f718dc794ce923ecbeea0adac4a2914f2b3be6a2f",
+      "blendSha256": "7bd69b7162b53168a3bb1344393fa3d9c5d52baada96b1ded71000e3903c04fe",
+      "dimensionsM": [
+        0.19199999421834946,
+        0.21899999678134918,
+        0.17100000381469727
+      ],
+      "closedEnvelopeFits": true,
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "heightExcessM": 0,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.004999998956918716,
+        0.0015000030398368835
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-a0cc41ad3cc80d2c07a4",
+      "appearance": "standard-oversized-pale",
+      "revision": 2,
+      "glbSha256": "ab75deb1463f719934339f6029fb1b4260d54e26719ced47d1ab9937ed81280d",
+      "blendSha256": "840ab4da8185351b01551915bf55b474a74447c463fa69b987fd3e4f07b6530f",
+      "dimensionsM": [
+        1.940999984741211,
+        3.9160999059677124,
+        1.9199999570846558
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 1.3887499570846558,
+      "footprintExcessM": 3.1035999059677124,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.06894999742507935
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-e7e053b614f1a2ab5ef1",
+      "appearance": "standard-oversized-amber",
+      "revision": 2,
+      "glbSha256": "11d154af0b54789610d2f1b4be5dce3331c2e89bbf7e8995c4a0ba40575a7674",
+      "blendSha256": "e7f750df06e45a5c167aad3e7d46fe4cf3084b4e445ec9e8cee1203d38326c03",
+      "dimensionsM": [
+        1.940999984741211,
+        3.9160999059677124,
+        1.9199999570846558
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 1.3887499570846558,
+      "footprintExcessM": 3.1035999059677124,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.06894999742507935
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-41d3f8bf61743df8e351",
+      "appearance": "standard-oversized-blue",
+      "revision": 2,
+      "glbSha256": "2850e09c7d07c04ac7ba2d0c2f5ac6c1932704e20928278810c6ecbbf51fa3c1",
+      "blendSha256": "90dbeedc283cde5080eed8665fb6cbadb228fe85de4b61501c0e5a0c1127872f",
+      "dimensionsM": [
+        1.940999984741211,
+        3.9160999059677124,
+        1.9199999570846558
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 1.3887499570846558,
+      "footprintExcessM": 3.1035999059677124,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.06894999742507935
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-f897d81e4c69384df03b",
+      "appearance": "standard-oversized-red",
+      "revision": 2,
+      "glbSha256": "e601361679b0fe9deafe4caa0a863c53fceb9ce53840430a48106777789191df",
+      "blendSha256": "ffec0d2526b8da8e3e0e06db1bd72e10a1242c24ed5d0e1c491d0bc338152a36",
+      "dimensionsM": [
+        1.940999984741211,
+        3.9160999059677124,
+        1.9199999570846558
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 1.3887499570846558,
+      "footprintExcessM": 3.1035999059677124,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.06894999742507935
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-12743466dc1eeca3e482",
+      "appearance": "reinforced-large-blue",
+      "revision": 2,
+      "glbSha256": "ae395110aef810c6c0119aa7c149f8055cd35112178fdec1ad98a18c581cde75",
+      "blendSha256": "c2113ef0d01e398ff145196f072f72e596b80ae7e1564b2711f6d89411395624",
+      "dimensionsM": [
+        1.940999984741211,
+        1.4111000299453735,
+        1.7200000286102295
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 1.1887500286102295,
+      "footprintExcessM": 1.128499984741211,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.11645001173019409
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-6c94a694e1a91110e76f",
+      "appearance": "reinforced-large-red",
+      "revision": 2,
+      "glbSha256": "5fb50d1445e011342f8ef5fe994f8f27c7e8bf01518b902e65b1a56111fd74df",
+      "blendSha256": "c9bf2e394281da4708301b54696f8dfd34125078e5075379e1c860e509336eef",
+      "dimensionsM": [
+        1.940999984741211,
+        1.4111000299453735,
+        1.7200000286102295
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 1.1887500286102295,
+      "footprintExcessM": 1.128499984741211,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.11645001173019409
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-a82fc07c0f2cf57ffef8",
+      "appearance": "refrigerated-medium-green",
+      "revision": 2,
+      "glbSha256": "b9bced5b170f7035d0efc2fb50af90e4935c328e8aac2065978d9c034e330746",
+      "blendSha256": "395ba9658d8aff10b8fac9f556ca4f3de33f1cfc68ffa2b89fab29a82e04dbc9",
+      "dimensionsM": [
+        0.9160000085830688,
+        1.3324999809265137,
+        0.6800000071525574
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.14875000715255737,
+      "footprintExcessM": 0.5199999809265137,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.06624996662139893
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-be4057636f5003ee5fed",
+      "appearance": "refrigerated-medium-pale",
+      "revision": 2,
+      "glbSha256": "a0b28cf785212fb719ea3eee2e388b516804299c84374c9f069be4ab3501174e",
+      "blendSha256": "3a2f5f8a31628d28a7725d1a76675849e8bf68a279df414ccc30a8d8b9e25c0f",
+      "dimensionsM": [
+        0.9160000085830688,
+        1.3324999809265137,
+        0.6800000071525574
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.14875000715255737,
+      "footprintExcessM": 0.5199999809265137,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.06624996662139893
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-45eba046115a3166e3e6",
+      "appearance": "refrigerated-medium-red",
+      "revision": 2,
+      "glbSha256": "6729889a462e3a276c9975ade4c80769c2aa3fab43b76b0f8d2f0f5545453ef0",
+      "blendSha256": "7731f6d6a7f2690b7b7c4163d60c92ed59d0426177a3d2272ebe48c2f35d59c5",
+      "dimensionsM": [
+        0.9160000085830688,
+        1.3324999809265137,
+        0.6800000071525574
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.14875000715255737,
+      "footprintExcessM": 0.5199999809265137,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.06624996662139893
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-648c1308e0a5ccd4c749",
+      "appearance": "vacuum-medium-pale",
+      "revision": 2,
+      "glbSha256": "afe864ebafda474e0ffedeb3c58e3aba426661ef467fcf7c779cf47a911f0195",
+      "blendSha256": "6ff9f2bdab965993de352d1247f4da9b0b9577d778817ccaae7283349d9a4eb2",
+      "dimensionsM": [
+        0.8610000014305115,
+        1.3640000224113464,
+        0.6800000071525574
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.14875000715255737,
+      "footprintExcessM": 0.5515000224113464,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.08199998736381531
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-f54c717c38a363f7e658",
+      "appearance": "vacuum-medium-dark",
+      "revision": 2,
+      "glbSha256": "9a3450840436ff9f70c3844973e41cf9924dbd175b5f59b5a8cb780b963a1867",
+      "blendSha256": "41936b6d9f7b7f34729a36efb9ecf984bd49ff1cfa5e5c4cc232c475f892fcf8",
+      "dimensionsM": [
+        0.8610000014305115,
+        1.3640000224113464,
+        0.6800000071525574
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.14875000715255737,
+      "footprintExcessM": 0.5515000224113464,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.08199998736381531
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-c1ebb67dff29784e301a",
+      "appearance": "vacuum-medium-amber",
+      "revision": 2,
+      "glbSha256": "0ae108878ae42ad84468a0552acd2c5569f8932f4230e7154dae8b2aa8a0b9bc",
+      "blendSha256": "c357c36af280c0142520c1593308f4229b07c8ac473889cf0ddada1f5c46f7cc",
+      "dimensionsM": [
+        0.8610000014305115,
+        1.3640000224113464,
+        0.6800000071525574
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.14875000715255737,
+      "footprintExcessM": 0.5515000224113464,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.08199998736381531
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-a09eeadccb5c9982cac6",
+      "appearance": "salvage-large-red",
+      "revision": 2,
+      "glbSha256": "5d8c3aab6482782cbfbac5cf0cc6f5d11fd2946e89613f5afc2d7d37e6c98bf1",
+      "blendSha256": "2d0c06599b8bb7678cf594692b0e15ba4cf1e92a3e37c29cdc326736d9661a2a",
+      "dimensionsM": [
+        1.340999960899353,
+        1.9325000047683716,
+        1.2540000677108765
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.7227500677108765,
+      "footprintExcessM": 1.1200000047683716,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.0662500262260437
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-b2141c33d215edfc9f69",
+      "appearance": "salvage-large-pale",
+      "revision": 2,
+      "glbSha256": "df714234a94dd90e898e2568289f8d254f79d1eb8384cadc66f0c494a10c6891",
+      "blendSha256": "7fd62afd52a026733b027c453dc0274ebf5b38a033ba7517554ff67670bc594c",
+      "dimensionsM": [
+        1.340999960899353,
+        1.9325000047683716,
+        1.2540000677108765
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.7227500677108765,
+      "footprintExcessM": 1.1200000047683716,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.0662500262260437
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-5ec11cd63618cfba9ee6",
+      "appearance": "salvage-large-amber",
+      "revision": 2,
+      "glbSha256": "ea53a010cc578989dd6f6e7a274cc3a928116eaa9f842ff706770f52fb92f090",
+      "blendSha256": "736468d4b20605855a6a0c478188dc07b7f01bca4b63bfaddb87d7508ce5dbaa",
+      "dimensionsM": [
+        1.340999960899353,
+        1.9325000047683716,
+        1.2540000677108765
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.7227500677108765,
+      "footprintExcessM": 1.1200000047683716,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.0662500262260437
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-0c13b0afa67118c11465",
+      "appearance": "medical-small-red",
+      "revision": 3,
+      "glbSha256": "30adaac760feaf192873f432b87ffe7655565947d35e0858d257a8fbe537dbc7",
+      "blendSha256": "21d0d461a43cef646d32457c0ac0bb4a37114b4dceda957fcf91b0bd7ff4c3a0",
+      "dimensionsM": [
+        0.6610000133514404,
+        0.4855000078678131,
+        0.3915000259876251
+      ],
+      "closedEnvelopeFits": true,
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "heightExcessM": 0,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.037749990820884705
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-75a256627549b94938af",
+      "appearance": "medical-small-green",
+      "revision": 3,
+      "glbSha256": "313c58343a48b364378fc40fa89f87db0f012ab194ee9b24f19949290a4a8bc1",
+      "blendSha256": "70819206938754c152370f8c75597b33eb4fc3c7aeeced9716a892f2fb9e69a2",
+      "dimensionsM": [
+        0.6610000133514404,
+        0.4855000078678131,
+        0.3915000259876251
+      ],
+      "closedEnvelopeFits": true,
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "heightExcessM": 0,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.037749990820884705
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-70124a17eeed22f9fdf8",
+      "appearance": "medical-small-blue",
+      "revision": 3,
+      "glbSha256": "597dd4786249d9c853901d07791e9525c6fc8bc7106b57573a2f4b6582411211",
+      "blendSha256": "f45319a1c9e4752f27551a7425b00b30066cae245e3669c029c6752253c812f4",
+      "dimensionsM": [
+        0.6610000133514404,
+        0.4855000078678131,
+        0.3915000259876251
+      ],
+      "closedEnvelopeFits": true,
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "heightExcessM": 0,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.037749990820884705
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-41d39cecfe513b1a0885",
+      "appearance": "high-value-small-amber",
+      "revision": 3,
+      "glbSha256": "153c745e10390599a7bbd372bca850e466a3524bc4b0056083bc487e22fcced9",
+      "blendSha256": "9e5a2fcd724a40efa9f4fea6007a0fd02cbe27f7324c88feea818d288da2fe15",
+      "dimensionsM": [
+        0.6610000133514404,
+        0.6554999947547913,
+        0.4714999794960022
+      ],
+      "closedEnvelopeFits": true,
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "heightExcessM": 0,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.08274999260902405
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-47640f88de2e1065b623",
+      "appearance": "high-value-small-red",
+      "revision": 3,
+      "glbSha256": "bd671de55b8c0b1e97012cbd53996388cef0b5d49a522896f3613c5c2ab7a879",
+      "blendSha256": "c33a19cd4e85027496a8dc9a7b794f4a3410335700471ccdf67dd71645b11c7f",
+      "dimensionsM": [
+        0.6610000133514404,
+        0.6554999947547913,
+        0.4714999794960022
+      ],
+      "closedEnvelopeFits": true,
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "heightExcessM": 0,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.08274999260902405
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-0fbeb32a435ded59a627",
+      "appearance": "high-value-small-blue",
+      "revision": 3,
+      "glbSha256": "8fe6602f055114b8c30c36672c9e1e7807b3aec96f2d694b98b7cedc62ad6547",
+      "blendSha256": "655c926bdc20bb57ac920f1a43b6fe9101c3fc6c94df8a36a4f5de326656b8f5",
+      "dimensionsM": [
+        0.6610000133514404,
+        0.6554999947547913,
+        0.4714999794960022
+      ],
+      "closedEnvelopeFits": true,
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "heightExcessM": 0,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.08274999260902405
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-b447c4118a56a63180a8",
+      "appearance": "fluid-medium-covered",
+      "revision": 2,
+      "glbSha256": "9491b1f773ae848b2c5d3f434ae4da4d56f2a627bc739350070493e8a5e91646",
+      "blendSha256": "02b2f1b2e527ab261de82a4716c23a7aad283c6aacb33e5e279c0dc52e21bfda",
+      "dimensionsM": [
+        0.8610000014305115,
+        1.1600000858306885,
+        0.6800000071525574
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.14875000715255737,
+      "footprintExcessM": 0.3475000858306885,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-e9c7d5963786d1fec3e3",
+      "appearance": "fluid-medium-amber",
+      "revision": 2,
+      "glbSha256": "87c6c3b90dc447e6fd0bf18d6fc346bd6f15a334e80100364253bd97f5cbdf14",
+      "blendSha256": "90f8a4fb2165dc1a44f274865ac22ab167ee58179a711acaa90fb8bc1fd69a2a",
+      "dimensionsM": [
+        0.8610000014305115,
+        1.1600000858306885,
+        0.6800000071525574
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.14875000715255737,
+      "footprintExcessM": 0.3475000858306885,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-d0db8fa035dfee89aab0",
+      "appearance": "fluid-medium-glass-gauge",
+      "revision": 2,
+      "glbSha256": "186d101731c12f314cd7f5fbc324ba59519272fea1cd74a2073a7133c817f00b",
+      "blendSha256": "21f63f462fba82223ea03e3c8374f8511b742fce957a7d7cadfd49c5404f5e1a",
+      "dimensionsM": [
+        0.8980000019073486,
+        1.1600000858306885,
+        0.6800000071525574
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.14875000715255737,
+      "footprintExcessM": 0.3475000858306885,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-5382f8dbbeb54e663d33",
+      "appearance": "standard-small-red",
+      "revision": 3,
+      "glbSha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+      "blendSha256": "7c8541b2de044bebcc6206e56594be0f0ea8dae03944e4bebff5843862c0f1ce",
+      "dimensionsM": [
+        0.6610000133514404,
+        0.4855000078678131,
+        0.5114999413490295
+      ],
+      "closedEnvelopeFits": true,
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "heightExcessM": 0,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.037749990820884705
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-0e982ae6b34746506f67",
+      "appearance": "standard-medium-blue",
+      "revision": 3,
+      "glbSha256": "2219fbab29ca11caeda8036cdf4727af9bc072db6c9071a633de2682cdaaf010",
+      "blendSha256": "3e0be0f70438ab4ad2fbf93e74016fac9dd1af37259ba0f99ea7ffb977f2ad40",
+      "dimensionsM": [
+        1.0609999895095825,
+        0.7963500022888184,
+        0.9514999985694885
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.4202499985694885,
+      "footprintExcessM": 0.24849998950958252,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.05232501029968262
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-5d5d4a34049e170b1040",
+      "appearance": "cargo.fluid-cryo.medium.appearance-1",
+      "revision": 1,
+      "glbSha256": "cd894cff32132f45da2073749af3f79dab0d285ef5eb05567aa751b24711e611",
+      "blendSha256": "e5b396c021541894d8940a3c23ba84d9a9e073640bd02ff9a150f9d51b2f0712",
+      "dimensionsM": [
+        0.6800000071525574,
+        0.6800000071525574,
+        1.3600000143051147
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.8287500143051147,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-5d103ad6aa3172180976",
+      "appearance": "cargo.fluid-cryo.medium.appearance-2",
+      "revision": 1,
+      "glbSha256": "1b19771dd577a05f23ff65f1feca4f39946e8ad0cf4c42b35b51d7320f6dd435",
+      "blendSha256": "d8ceacc25df5fb992c5238455909cb3d1fe030cbb8c82344cdc13a68e3518c81",
+      "dimensionsM": [
+        0.6800000071525574,
+        0.6800000071525574,
+        1.3600000143051147
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.8287500143051147,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-8f848965775db332ad3b",
+      "appearance": "cargo.fluid-cryo.medium.appearance-3",
+      "revision": 1,
+      "glbSha256": "77e593e7453f0b0c16d3b61c6cbcdd6c7be53fb86fef0fe04a88ba8110033c47",
+      "blendSha256": "3637d134caee1923ad311190764d61269518948681417b1875cf9e83182412ee",
+      "dimensionsM": [
+        0.6800000071525574,
+        0.6800000071525574,
+        1.3600000143051147
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.8287500143051147,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-e8b348082816c379c3ad",
+      "appearance": "cargo.fluid-cryo.medium.appearance-4",
+      "revision": 1,
+      "glbSha256": "583a056b96b1459e3861eba33f46c52327a1ac5eb127ec80a5aa754598bf1db5",
+      "blendSha256": "b0f16a32f576bfb6b9b2c8c0b5e9ef03bacd8e954b69c0320359add64975bd98",
+      "dimensionsM": [
+        0.6800000071525574,
+        0.6800000071525574,
+        1.3600000143051147
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.8287500143051147,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-3cc2aaa47b61c3695a01",
+      "appearance": "cargo.fluid-fuel.medium.appearance-1",
+      "revision": 1,
+      "glbSha256": "88b545da34d02be1a0697e4a61949e4ab073191eeb2bd599425c5a98549dae64",
+      "blendSha256": "82eca1ebbc5ff796bafea2f771a631f27a5cd53abafecdc336bee06d65a51a4f",
+      "dimensionsM": [
+        0.5520000457763672,
+        0.5479999780654907,
+        0.8639999628067017
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.33274996280670166,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-ff4c81d16308982b5556",
+      "appearance": "cargo.fluid-fuel.medium.appearance-2",
+      "revision": 1,
+      "glbSha256": "b08fd66f120a2bca68053a75cc4f295e2513ca0ad8bbfde41fd8a4e16926c0a2",
+      "blendSha256": "ccc4f2687b641fb06e7a51caa018be569e5adc4ce63c8850ffdf6df15923eb8e",
+      "dimensionsM": [
+        0.5520000457763672,
+        0.5479999780654907,
+        0.8639999628067017
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.33274996280670166,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-8963649e2154815c6e0a",
+      "appearance": "cargo.fluid-fuel.medium.appearance-3",
+      "revision": 1,
+      "glbSha256": "60bacc18625011c465412692f01611064dd79e413a2224ea78b20548048779cf",
+      "blendSha256": "652a6d66677e889fef4ce93bfda8a73847bf3e012f19f8282292b548ada16116",
+      "dimensionsM": [
+        0.5520000457763672,
+        0.5479999780654907,
+        0.8639999628067017
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.33274996280670166,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-355fd132ec5fadfb1f66",
+      "appearance": "cargo.fluid-fuel.medium.appearance-4",
+      "revision": 1,
+      "glbSha256": "6323a87028232d82ee01a7f350ba478659794024d4149f76a1d3ff9c168a095d",
+      "blendSha256": "59bb45b7de7314a5f2e05521a8856aaa56be8d9ecc3e2095d8f388b304d35139",
+      "dimensionsM": [
+        0.5520000457763672,
+        0.5479999780654907,
+        0.8639999628067017
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.33274996280670166,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-0f76eb112155db5b4e8b",
+      "appearance": "cargo.fluid-chemical.medium.appearance-1",
+      "revision": 1,
+      "glbSha256": "eb59a94d0bd940d80736d002acd896c4653514c625032c93fe4f68cf7a400e0d",
+      "blendSha256": "0662e6465cec9f8bdb919340290ef28cd588534b10d873082815dec09a7e3c6d",
+      "dimensionsM": [
+        0.5479999780654907,
+        0.5479999780654907,
+        0.8639999628067017
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.33274996280670166,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-84891c854514b15139aa",
+      "appearance": "cargo.fluid-chemical.medium.appearance-2",
+      "revision": 1,
+      "glbSha256": "73c3930e2deda3541bcc5046c760ba0729cbca998a27eb5784a0aceed16fc05f",
+      "blendSha256": "47cff10f854cfe3c249c0bf38436cd2e9621f4ceb1d5ac5a526fc5e385c268db",
+      "dimensionsM": [
+        0.5479999780654907,
+        0.5479999780654907,
+        0.8639999628067017
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.33274996280670166,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-b215126fd8b9f5447d00",
+      "appearance": "cargo.fluid-chemical.medium.appearance-3",
+      "revision": 1,
+      "glbSha256": "edcab4ad0d252c3f05823cab7489c3c6b0ac0fa38b4539e06009a4f1a5f3f7f1",
+      "blendSha256": "4bf4162661937883219f22674011e1af329ea1ae7897588c4e885352d70a8b8c",
+      "dimensionsM": [
+        0.5479999780654907,
+        0.5479999780654907,
+        0.8639999628067017
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.33274996280670166,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-5377949ed91bc9fc3973",
+      "appearance": "cargo.fluid-chemical.medium.appearance-4",
+      "revision": 1,
+      "glbSha256": "152c548e2fcefc35a11fe7dc99ebb9405014c986ef90635cd835717fade2bf25",
+      "blendSha256": "07fafe1a7b3379543c2734681138836239854951bfda825447d25fc175256e6a",
+      "dimensionsM": [
+        0.5479999780654907,
+        0.5479999780654907,
+        0.8639999628067017
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.33274996280670166,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-8bcf56f5a154cbb954de",
+      "appearance": "cargo.fluid-gas.medium.appearance-1",
+      "revision": 1,
+      "glbSha256": "3a00c3838ead1c808c70e4fb1b1832bfc8945ae18ce7588a402866f70f6dad13",
+      "blendSha256": "9d4c988b8cba97857b769210461f024fcc46359979fdcbd34c0ec5c59beda3a3",
+      "dimensionsM": [
+        0.8799999952316284,
+        0.6800000071525574,
+        0.8999999761581421
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.3687499761581421,
+      "footprintExcessM": 0.06749999523162842,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-74fd36d0f31a11c97535",
+      "appearance": "cargo.fluid-gas.medium.appearance-2",
+      "revision": 1,
+      "glbSha256": "bd4daafa7b5a43ac052a526f9efdf14453c895bb8692e47fd31585a0eb4a98a3",
+      "blendSha256": "611bfb2d7dbb6b19ad71d8723631674b812bd9076cdb18b41129d3df758a5a7b",
+      "dimensionsM": [
+        0.8799999952316284,
+        0.6800000071525574,
+        0.8999999761581421
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.3687499761581421,
+      "footprintExcessM": 0.06749999523162842,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-96aa76d51e89c5278c25",
+      "appearance": "cargo.fluid-gas.medium.appearance-3",
+      "revision": 1,
+      "glbSha256": "8a0a7f8a075c2aabfc2dd8c01786afb88ac314ecb3bcc28ed569c3ee787bc677",
+      "blendSha256": "6ebd0e29df7f1087052fa587cf8508165de2bf56e37c60262979303d8de04774",
+      "dimensionsM": [
+        0.8799999952316284,
+        0.6800000071525574,
+        0.8999999761581421
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.3687499761581421,
+      "footprintExcessM": 0.06749999523162842,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-a8c9ac9eb43a547c76a7",
+      "appearance": "cargo.fluid-gas.medium.appearance-4",
+      "revision": 1,
+      "glbSha256": "40042759b8028894914c0edb6c30ad2d68e01e208da6c02b6a3a55bc41257ea0",
+      "blendSha256": "d8e427f9f4618025f108bf4e74f2b1c93bfd9073513f96d7842ebb3e9d84d02d",
+      "dimensionsM": [
+        0.8799999952316284,
+        0.6800000071525574,
+        0.8999999761581421
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.3687499761581421,
+      "footprintExcessM": 0.06749999523162842,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-38b95e9ee2941d12d072",
+      "appearance": "cargo.fluid-water.medium.appearance-1",
+      "revision": 1,
+      "glbSha256": "3c64e8b882606fa0131f0da467a0cdcf44af0f299262805a2bed5fc9fac877ca",
+      "blendSha256": "74625e4a4ce7a7fde50d759c7a056ed0583a839043e4d7fc0a4250451a31b58c",
+      "dimensionsM": [
+        0.8799999952316284,
+        0.6890000104904175,
+        0.9070000052452087
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.37575000524520874,
+      "footprintExcessM": 0.06749999523162842,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.004500001668930054
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-2b4c94f694595ac8fd1d",
+      "appearance": "cargo.fluid-water.medium.appearance-2",
+      "revision": 1,
+      "glbSha256": "5deea8cf44e1a75776dc388207f034fbbd61fe6fe4eb7b73f8ea888b476484bb",
+      "blendSha256": "9cc8f3e7ac569e414432558948349142acc649e6c0d79c43de0af0b823c28459",
+      "dimensionsM": [
+        0.8799999952316284,
+        0.6890000104904175,
+        0.9070000052452087
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.37575000524520874,
+      "footprintExcessM": 0.06749999523162842,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.004500001668930054
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-7858296690991b13320c",
+      "appearance": "cargo.fluid-water.medium.appearance-3",
+      "revision": 1,
+      "glbSha256": "6b3c29b0472a072325cf72a1c138e6585b7b287cff1df124a5adbcb887b2571b",
+      "blendSha256": "4af47283d9d3f0ba0593450f74fd1e8760ca1914cfe7f4e678abeefec993ae17",
+      "dimensionsM": [
+        0.8799999952316284,
+        0.6890000104904175,
+        0.9070000052452087
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.37575000524520874,
+      "footprintExcessM": 0.06749999523162842,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.004500001668930054
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-9d84eacfac58c57c012b",
+      "appearance": "cargo.fluid-water.medium.appearance-4",
+      "revision": 1,
+      "glbSha256": "a95d0bcdb784c857be886a9437c788c5d4785179eb8de6733c041b9cc25f2d09",
+      "blendSha256": "9244ff2aa3b6c883f35b09197908db1f50c2da67c91c3327518ea2c8f8a53889",
+      "dimensionsM": [
+        0.8799999952316284,
+        0.6890000104904175,
+        0.9070000052452087
+      ],
+      "closedEnvelopeFits": false,
+      "allowedQuarterTurns": [],
+      "heightExcessM": 0.37575000524520874,
+      "footprintExcessM": 0.06749999523162842,
+      "sourceCenterAuthorM": [
+        0.0,
+        -0.004500001668930054
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    },
+    {
+      "assetId": "part-091a05481726fc7ccac0",
+      "appearance": "narrow-red",
+      "revision": 1,
+      "glbSha256": "7a7ba27e84e4895e4b801c5fc578a1936620bfd14533fe4195218b76d016578c",
+      "blendSha256": "25ea08bc5c026da5b6376fc4f7c7a857391c2684292078df41649425e15e0e33",
+      "dimensionsM": [
+        0.24199999868869781,
+        0.2510000020265579,
+        0.44200000166893005
+      ],
+      "closedEnvelopeFits": true,
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "heightExcessM": 0,
+      "footprintExcessM": 0,
+      "sourceCenterAuthorM": [
+        0.0,
+        0.0015000030398368835
+      ],
+      "placementRule": "Rotate about measured closed-bounds XY center, translate center to carrier cell center; source bottom to payloadFloorM; scale exactly1.",
+      "restraintQualified": false,
+      "filledLoadApproved": false
+    }
+  ],
+  "fixtureClearancePassed": true,
+  "ownerArtApproval": false,
+  "gameplayLoadApproval": false,
+  "limitations": [
+    "Closed envelope fit does not qualify individual payload restraints.",
+    "Taller/oversized payloads need different-height or larger carriers.",
+    "No lid opening while covered by an upper carrier.",
+    "No live publication or cargo-grid registration."
+  ]
+}

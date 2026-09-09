@@ -1,0 +1,201 @@
+{
+  "schema": "sidereal.art-library.v1",
+  "id": "cargo.carrier.grid-support",
+  "asset_uuid": "061ed1ac-b03d-530b-a7d8-059854408680",
+  "reference_ids": [],
+  "mapping_status": "New native companion; references remain assigned to their original approved designs. Exact technical review only.",
+  "current_revision": 0,
+  "state": "awaiting-owner",
+  "owner_final_signoff": null,
+  "priority": 10,
+  "profile": "crate",
+  "assigned_to": "shared_space_rules",
+  "blocker": null,
+  "feedback": [],
+  "approvals": [],
+  "derived_from": {
+    "designs": [
+      "cargo.standard.small",
+      "cargo.reinforced.oversized"
+    ],
+    "reason": "Companion carrier and distinct fitting variant; original approved73 revisions unchanged."
+  },
+  "next_action": "Root integration review; gameplay rating/restraint qualification and owner artistic sign-off are separate. Promote staged ledger and regenerate shared index atomically after release freeze.",
+  "revisions": [
+    {
+      "revision": 0,
+      "created_at": "2026-09-09T21:36:13.211827+00:00",
+      "stage": "awaiting-owner",
+      "change": "Native candidate with preserved attempts and actual exported geometry validation.",
+      "hypothesis": "Explicit grid bearing interfaces enable supported mixed-size stacks without deforming approved payloads.",
+      "covered_reference_ids": [],
+      "evidence": [
+        {
+          "role": "author.log",
+          "path": "designs/cargo.carrier.grid-support/revisions/r000/a003/author.log",
+          "sha256": "43e3f03b129e90cfc91cf1fec2ecd6d714024274efdb0586aa37dc714112d86f",
+          "bytes": 329913,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        },
+        {
+          "role": "author.py",
+          "path": "designs/cargo.carrier.grid-support/revisions/r000/a003/author.py",
+          "sha256": "70fcf8bd8dd87759b07345c8e90eb81e7f2abcd2406bdf034d7c85cfa33afaf7",
+          "bytes": 11069,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        },
+        {
+          "role": "blender-source.blend",
+          "path": "designs/cargo.carrier.grid-support/revisions/r000/a003/blender-source.blend",
+          "sha256": "96729a9622d1071cc3e458cd3447a243bc3c07c89e6fa9dfd89e39aa8b6bc7b3",
+          "bytes": 1363532,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        },
+        {
+          "role": "carrier-1m-cutout.png",
+          "path": "designs/cargo.carrier.grid-support/revisions/r000/a003/carrier-1m-cutout.png",
+          "sha256": "5a4e81a49ee30a1e5721a3f7696b5a4dfef2e08e3e6059953bd440c6f762c422",
+          "bytes": 1134312,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": {
+            "renderer": "Blender4.3.2 Cycles CPU",
+            "threads": 2,
+            "samples": 64
+          },
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        },
+        {
+          "role": "carrier-1m-interface.json",
+          "path": "designs/cargo.carrier.grid-support/revisions/r000/a003/carrier-1m-interface.json",
+          "sha256": "979dbca660e223f51be0cedb331d29a2470ce018c94cc3c12abf6f8ca8788f69",
+          "bytes": 5734,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        },
+        {
+          "role": "carrier-1m.glb",
+          "path": "designs/cargo.carrier.grid-support/revisions/r000/a003/carrier-1m.glb",
+          "sha256": "faa8a7b7786c4e92cfeb6ec5b25d43739ad070e202d4e2f1ee1dc98ca6877f78",
+          "bytes": 220684,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        },
+        {
+          "role": "carrier-2m-cutout.png",
+          "path": "designs/cargo.carrier.grid-support/revisions/r000/a003/carrier-2m-cutout.png",
+          "sha256": "4ffa44c78a65e092dfc1277fab285f6d67ed6d998158dcfe63b856633002b056",
+          "bytes": 987390,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": {
+            "renderer": "Blender4.3.2 Cycles CPU",
+            "threads": 2,
+            "samples": 64
+          },
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        },
+        {
+          "role": "carrier-2m-interface.json",
+          "path": "designs/cargo.carrier.grid-support/revisions/r000/a003/carrier-2m-interface.json",
+          "sha256": "0beb36d25b5bf6566eb664cfd3e689debc2105467b70d21ffdb5160f4cf94c79",
+          "bytes": 8487,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        },
+        {
+          "role": "carrier-2m.glb",
+          "path": "designs/cargo.carrier.grid-support/revisions/r000/a003/carrier-2m.glb",
+          "sha256": "5e42e6ab46b00674129ffafe136affefa6586325c1149e838bf9ff693b9769fd",
+          "bytes": 307096,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        },
+        {
+          "role": "fixture.json",
+          "path": "designs/cargo.carrier.grid-support/revisions/r000/a003/fixture.json",
+          "sha256": "0f996215065412bfd51cb2bef6e9622fd27a8043539d3909b09fd50e2f10bd36",
+          "bytes": 3861,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        },
+        {
+          "role": "mixed-stack-top.png",
+          "path": "designs/cargo.carrier.grid-support/revisions/r000/a003/mixed-stack-top.png",
+          "sha256": "16bedbfd6b601f276eb6e9ea8ec73067e1d32b381d8321ab4fbc7acd394b76e5",
+          "bytes": 2240163,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": {
+            "renderer": "Blender4.3.2 Cycles CPU",
+            "threads": 2,
+            "samples": 64
+          },
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        },
+        {
+          "role": "mixed-stack.png",
+          "path": "designs/cargo.carrier.grid-support/revisions/r000/a003/mixed-stack.png",
+          "sha256": "0cec549af960a0abcb858dd9c815317da8bef3bbb5281d80170baf5418608c99",
+          "bytes": 2201835,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": {
+            "renderer": "Blender4.3.2 Cycles CPU",
+            "threads": 2,
+            "samples": 64
+          },
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        },
+        {
+          "role": "proposed-gameplay.json",
+          "path": "designs/cargo.carrier.grid-support/revisions/r000/a003/proposed-gameplay.json",
+          "sha256": "ee53fda9f6c4f48e833e617d207dcec98b5b6d526f5b7c299dba2437cadd3948",
+          "bytes": 581,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        },
+        {
+          "role": "qualification.json",
+          "path": "designs/cargo.carrier.grid-support/revisions/r000/a003/qualification.json",
+          "sha256": "c07a33c0c599de7320249c5347c67cf34965d571b3f54b0884efc9385f0b4fd7",
+          "bytes": 68179,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        },
+        {
+          "role": "stack-fixture.blend",
+          "path": "designs/cargo.carrier.grid-support/revisions/r000/a003/stack-fixture.blend",
+          "sha256": "dad1bbb644cc76471f5ad39a5eb7ca5fcd0d9dfcdac287853470ef298b8dc318",
+          "bytes": 14586440,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        },
+        {
+          "role": "stack-validation.json",
+          "path": "designs/cargo.carrier.grid-support/revisions/r000/a003/stack-validation.json",
+          "sha256": "8e6d0e9acebc50bcf9a14df6ed2132781b38f811a5bc3cf77a3b877422b3c849",
+          "bytes": 8839,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        }
+      ],
+      "review": {
+        "current_attempt": "a003",
+        "runtime_evidence": false,
+        "owner_approval": false
+      }
+    }
+  ]
+}

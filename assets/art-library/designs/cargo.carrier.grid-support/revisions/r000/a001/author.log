@@ -1,0 +1,224 @@
+ERROR Draco mesh compression is not available because library could not be found at /usr/bin/4.3/python/lib/python3.13/site-packages/libextern_draco.so
+07:18:54 | INFO: Starting glTF 2.0 export
+07:18:54 | INFO: Extracting primitive: Cube.003
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.004
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.007
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.009
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.011
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.013
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.008
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.010
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.012
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.014
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.015
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.021
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.016
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.022
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.018
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.024
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.017
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.023
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.019
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.025
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.001
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.027
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.029
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.028
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.030
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.020
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.026
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.005
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.006
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.002
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Finished glTF 2.0 export in 0.03392171859741211 s
+
+07:18:54 | INFO: Starting glTF 2.0 export
+07:18:54 | INFO: Extracting primitive: Cube.059
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.063
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.067
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.071
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.060
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.064
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.068
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.072
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.075
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.077
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.079
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.081
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.076
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.078
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.080
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.082
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.083
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.089
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.099
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.101
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.102
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.100
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.084
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.090
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.086
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.092
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.085
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.091
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.087
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.093
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.057
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.095
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.097
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.096
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.098
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.088
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.094
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.061
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.062
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.065
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.066
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.069
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.070
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.073
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.074
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Extracting primitive: Cube.058
+07:18:54 | INFO: Primitives created: 1
+07:18:54 | INFO: Finished glTF 2.0 export in 0.04084634780883789 s
+Blender 4.3.2
+Fra:1 Mem:18.58M (Peak 18.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-lower-deck
+Fra:1 Mem:18.60M (Peak 18.60M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-side-upper-rail-0.9375
+Fra:1 Mem:20.63M (Peak 20.63M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-upper-deck
+Fra:1 Mem:20.65M (Peak 20.65M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-side-lower-rail-0.9375
+Fra:1 Mem:20.63M (Peak 20.65M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-BEARING-bottom-0-0
+Fra:1 Mem:20.64M (Peak 20.65M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-BEARING-top-0-0
+Fra:1 Mem:20.65M (Peak 20.65M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-top-restraint-0-0-0.045
+Fra:1 Mem:20.66M (Peak 20.66M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-top-restraint-0-0-0.94
+Fra:1 Mem:20.66M (Peak 20.66M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-side-upper-rail-0
+Fra:1 Mem:20.68M (Peak 20.68M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-corner-post-0-0
+Fra:1 Mem:20.72M (Peak 20.72M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-side-lower-rail-0
+Fra:1 Mem:20.71M (Peak 20.72M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-corner-shell-0-0
+Fra:1 Mem:20.74M (Peak 20.74M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-status-0.9375
+Fra:1 Mem:20.73M (Peak 20.74M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-corner-post-0-0.90625
+Fra:1 Mem:20.75M (Peak 20.75M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-corner-shell-0-0.90625
+Fra:1 Mem:20.75M (Peak 20.75M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-latch-grip-0.65-0.9375
+Fra:1 Mem:20.79M (Peak 20.79M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-corner-post-0.90625-0
+Fra:1 Mem:20.79M (Peak 20.79M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-latch-0.65-0.9375
+Fra:1 Mem:20.81M (Peak 20.81M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-corner-shell-0.90625-0
+Fra:1 Mem:20.83M (Peak 20.83M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-latch-grip-0.15-0.9375
+Fra:1 Mem:20.85M (Peak 20.85M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-corner-post-0.90625-0.90625
+Fra:1 Mem:20.83M (Peak 20.85M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-latch-0.15-0.9375
+Fra:1 Mem:20.87M (Peak 20.87M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-front-rail-0.9375
+Fra:1 Mem:20.86M (Peak 20.87M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-corner-shell-0.90625-0.90625
+Fra:1 Mem:20.88M (Peak 20.88M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-status-0
+Fra:1 Mem:20.88M (Peak 20.88M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-front-rail-0
+Fra:1 Mem:20.91M (Peak 20.91M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-latch-0.15-0
+Fra:1 Mem:20.91M (Peak 20.91M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-latch-grip-0.65-0
+Fra:1 Mem:20.94M (Peak 20.94M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-latch-grip-0.15-0
+Fra:1 Mem:20.93M (Peak 20.94M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-carrier-1m-latch-0.65-0
+Fra:1 Mem:20.95M (Peak 20.95M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:19.17M (Peak 20.95M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Failed to denoise, build has no OpenImageDenoise support
+Fra:1 Mem:19.17M (Peak 20.95M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:19.17M (Peak 20.95M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:19.17M (Peak 20.95M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:19.26M (Peak 20.95M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading denoising kernels (may take a few minutes the first time)
+Fra:1 Mem:19.26M (Peak 20.95M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Failed to denoise, build has no OpenImageDenoise support
+Traceback (most recent call last):
+  File "/root/sidereal_spacetime/scripts/art_library/build_cargo_carriers.py", line 134, in <module>
+    scene.render.filepath=str(OUT/(tag+'-cutout.png'));bpy.ops.render.render(write_still=True)
+                                                       ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/usr/share/blender/scripts/modules/bpy/ops.py", line 109, in __call__
+    ret = _op_call(self.idname_py(), kw)
+RuntimeError: Error: Failed to denoise, build has no OpenImageDenoise support
+Error: Failed to denoise, build has no OpenImageDenoise support
+
+
+Error: script failed, file: '/root/sidereal_spacetime/scripts/art_library/build_cargo_carriers.py', exiting.
+
+Info: Saved "blender-source.blend"
+Error: Failed to denoise, build has no OpenImageDenoise support
+Error: Failed to denoise, build has no OpenImageDenoise support
+
+Blender quit
+Traceback (most recent call last):
+  File "/root/sidereal_spacetime/scripts/art_library/run_cargo_carriers.py", line 13, in <module>
+    subprocess.run([config['art']['blender'], '--background', '--threads', '2', '--python-exit-code', '1',
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                    '--python', str(ROOT/'scripts/art_library/build_cargo_carriers.py'), '--', str(out)], cwd=ROOT, env=env, check=True)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/usr/bin/blender', '--background', '--threads', '2', '--python-exit-code', '1', '--python', '/root/sidereal_spacetime/scripts/art_library/build_cargo_carriers.py', '--', '/root/sidereal_spacetime/assets/art-library/designs/cargo.carrier.grid-support/revisions/r000/a001']' returned non-zero exit status 1.

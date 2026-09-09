@@ -1,0 +1,49 @@
+{
+  "schema": "sidereal.cargo-variant-validation.v1",
+  "sourceOriginalSha256": "ad014ef3faab889b9582f9c883a04ca384acc1218d902e50c5db056d5fabaa12",
+  "sourceVariantSha256": "b3a97b45460d12a396372474fca941d6123901be494dfe1e055336a6c0f254bc",
+  "glbVariantSha256": "95895b8aad990670e36cc017eab6c615c248253a6f7dc4190dbd00c9241222c1",
+  "modifiedMeshes": [
+    "GEO-lock-lever--export",
+    "GEO-lock-lever.001--export"
+  ],
+  "worldDeltaM": [
+    0,
+    0.025,
+    0
+  ],
+  "maximumVertexDeviationFromSpecifiedChangeM": 9.536743163923722e-08,
+  "triangles": 19332,
+  "unchangedMeshCount": 133,
+  "preservedMaterialCount": 7,
+  "preservedSocketCount": 12,
+  "boundsAuthorM": {
+    "min": [
+      -0.9704999923706055,
+      -2.0989999771118164,
+      0.0
+    ],
+    "max": [
+      0.9704999923706055,
+      1.8890999555587769,
+      1.9199999570846558
+    ]
+  },
+  "dimensionsM": [
+    1.940999984741211,
+    3.9880999326705933,
+    1.9199999570846558
+  ],
+  "nominalReservationM": [
+    2,
+    4
+  ],
+  "oldSourcesUntouched": true,
+  "scaleApplied": false,
+  "ownerArtApproval": false,
+  "filledStackingApproved": false,
+  "limitations": [
+    "Closed envelope only. Door movement and authoritative occupancy require a separate qualification.",
+    "Does not fit the low cargo carrier height."
+  ]
+}

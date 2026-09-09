@@ -1,0 +1,108 @@
+{
+  "schema": "sidereal.art-library.v1",
+  "id": "cargo.reinforced.oversized.grid-fit",
+  "asset_uuid": "58f26520-4feb-5700-8a11-1177e26e503d",
+  "reference_ids": [],
+  "mapping_status": "New native companion; references remain assigned to their original approved designs. Exact technical review only.",
+  "current_revision": 0,
+  "state": "awaiting-owner",
+  "owner_final_signoff": null,
+  "priority": 10,
+  "profile": "crate",
+  "assigned_to": "shared_space_rules",
+  "blocker": null,
+  "feedback": [],
+  "approvals": [],
+  "derived_from": {
+    "designs": [
+      "cargo.standard.small",
+      "cargo.reinforced.oversized"
+    ],
+    "reason": "Companion carrier and distinct fitting variant; original approved73 revisions unchanged."
+  },
+  "next_action": "Root integration review; gameplay rating/restraint qualification and owner artistic sign-off are separate. Promote staged ledger and regenerate shared index atomically after release freeze.",
+  "revisions": [
+    {
+      "revision": 0,
+      "created_at": "2026-09-09T21:36:13.211827+00:00",
+      "stage": "awaiting-owner",
+      "change": "Native candidate with preserved attempts and actual exported geometry validation.",
+      "hypothesis": "Explicit grid bearing interfaces enable supported mixed-size stacks without deforming approved payloads.",
+      "covered_reference_ids": [],
+      "evidence": [
+        {
+          "role": "author.log",
+          "path": "designs/cargo.reinforced.oversized.grid-fit/revisions/r000/a002/author.log",
+          "sha256": "dad36e58fe8356fcef351945b1af755522b186e2b3555f7509c80983e4b64d78",
+          "bytes": 36460,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        },
+        {
+          "role": "author.py",
+          "path": "designs/cargo.reinforced.oversized.grid-fit/revisions/r000/a002/author.py",
+          "sha256": "7e368f7798ec90a0b88f0be0367a5d0fc703f763067272efc627a43fe30ac94f",
+          "bytes": 4361,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        },
+        {
+          "role": "blender-source.blend",
+          "path": "designs/cargo.reinforced.oversized.grid-fit/revisions/r000/a002/blender-source.blend",
+          "sha256": "b3a97b45460d12a396372474fca941d6123901be494dfe1e055336a6c0f254bc",
+          "bytes": 1933252,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        },
+        {
+          "role": "closed-cutout.png",
+          "path": "designs/cargo.reinforced.oversized.grid-fit/revisions/r000/a002/closed-cutout.png",
+          "sha256": "3cb4553bcdb66b047128cc32fba00f85c128920495798aa5599edc1c882a17ed",
+          "bytes": 831838,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": {
+            "renderer": "Blender4.3.2 Cycles CPU",
+            "threads": 2,
+            "samples": 64
+          },
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        },
+        {
+          "role": "fitting-review.json",
+          "path": "designs/cargo.reinforced.oversized.grid-fit/revisions/r000/a002/fitting-review.json",
+          "sha256": "aabe42b6c31d7933504e64bba20670fed6b0b6ca07cefbd836470f6b80e90fb6",
+          "bytes": 1850,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        },
+        {
+          "role": "glb.glb",
+          "path": "designs/cargo.reinforced.oversized.grid-fit/revisions/r000/a002/glb.glb",
+          "sha256": "95895b8aad990670e36cc017eab6c615c248253a6f7dc4190dbd00c9241222c1",
+          "bytes": 1278480,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        },
+        {
+          "role": "validation.json",
+          "path": "designs/cargo.reinforced.oversized.grid-fit/revisions/r000/a002/validation.json",
+          "sha256": "22a1af392ce48ab68fe6dbe2167ff4e9260a180d2021e61862e8b5dcc15d16d1",
+          "bytes": 1296,
+          "notes": "Native CPU review candidate; unpublished, no owner art sign-off.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T21:36:13.211827+00:00"
+        }
+      ],
+      "review": {
+        "current_attempt": "a002",
+        "runtime_evidence": false,
+        "owner_approval": false
+      }
+    }
+  ]
+}

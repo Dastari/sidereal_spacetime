@@ -1,0 +1,22 @@
+{
+  "status": "proposed-sandbox-gameplay-only",
+  "ownerApproved": false,
+  "basis": "Explicit game-balance proposal for deterministic mechanics testing. Not calculated from appearance, material properties, or engineering certification.",
+  "definitions": [
+    {
+      "id": "carrier-1m",
+      "tareMassKg": 20,
+      "maxGrossMassKg": 250,
+      "maxTopLoadKg": 1000,
+      "patchLoadKg": 1000
+    },
+    {
+      "id": "carrier-2m",
+      "tareMassKg": 60,
+      "maxGrossMassKg": 1000,
+      "maxTopLoadKg": 2000,
+      "patchLoadKg": 1000
+    }
+  ],
+  "gridMaxLoadKg": 5000
+}

@@ -1,0 +1,456 @@
+Info: Saved "blender-source.blend"
+ERROR Draco mesh compression is not available because library could not be found at /usr/bin/4.3/python/lib/python3.13/site-packages/libextern_draco.so
+07:33:55 | INFO: Starting glTF 2.0 export
+07:33:55 | INFO: Extracting primitive: Cube.001
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.002
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.003
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.004
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.005
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.006
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.007
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.008
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.009
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.010
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.011
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.012
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.013
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.014
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.015
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.016
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.017
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.018
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.019
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.020
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.021
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.022
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.023
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.024
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.025
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.026
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.027
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.028
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.029
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: door-leaf.001
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: door-dark-recess.001
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: door-service-plate.001
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.030
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.031
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cylinder.001
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cylinder.002
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cylinder.003
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cylinder.004
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cylinder.005
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cylinder.006
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: door-leaf.002
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: door-dark-recess.002
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: door-service-plate.002
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.032
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.033
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cylinder.007
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cylinder.008
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cylinder.009
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cylinder.010
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cylinder.011
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cylinder.012
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: side-inset-backing.001
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: fitted-side-panel.001
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.034
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: side-inset-backing.002
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: fitted-side-panel.002
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.035
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: side-inset-backing.003
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: fitted-side-panel.003
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.036
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: side-inset-backing.004
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: fitted-side-panel.004
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.037
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: side-inset-backing.005
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: fitted-side-panel.005
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.038
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.039
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.040
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cylinder.013
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.041
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: side-inset-backing.006
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: fitted-side-panel.006
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.042
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: side-inset-backing.007
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: fitted-side-panel.007
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.043
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: side-inset-backing.008
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: fitted-side-panel.008
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.044
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: side-inset-backing.009
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: fitted-side-panel.009
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.045
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: side-inset-backing.010
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: fitted-side-panel.010
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.046
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.047
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.048
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cylinder.014
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.049
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.050
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.051
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.052
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.053
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.054
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.055
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.056
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.057
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.058
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.059
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.060
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.061
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.062
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.063
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.064
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.065
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.066
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.067
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.068
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.070
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.071
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.072
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.073
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.074
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.075
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.076
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.077
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.078
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.079
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.080
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.081
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.082
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.083
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.085
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.086
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.087
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.088
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.089
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.090
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.091
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Text.001
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.092
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.093
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.094
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.095
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Extracting primitive: Cube.096
+07:33:55 | INFO: Primitives created: 1
+07:33:55 | INFO: Finished glTF 2.0 export in 0.1041707992553711 s
+Blender 4.3.2
+Read blend: "/root/sidereal_spacetime/assets/art-library/designs/cargo.reinforced.oversized/revisions/r002/blender-source.blend"
+Fra:1 Mem:30.26M (Peak 30.41M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-load-skid
+Fra:1 Mem:32.30M (Peak 32.30M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-door-meeting-gasket
+Fra:1 Mem:32.32M (Peak 32.32M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-connected-deep-horizontal-jamb.001
+Fra:1 Mem:32.33M (Peak 32.33M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-load-skid.001
+Fra:1 Mem:32.37M (Peak 32.37M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-connected-deep-horizontal-jamb
+Fra:1 Mem:32.36M (Peak 32.37M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crossmember
+Fra:1 Mem:32.38M (Peak 32.38M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-connected-deep-side-jamb.001
+Fra:1 Mem:32.39M (Peak 32.39M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crossmember.001
+Fra:1 Mem:32.40M (Peak 32.40M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-connected-deep-side-jamb
+Fra:1 Mem:32.43M (Peak 32.43M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-marking-REI / O
+Fra:1 Mem:32.48M (Peak 32.48M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-40mm-locating-foot
+Fra:1 Mem:32.54M (Peak 32.54M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.015
+Fra:1 Mem:32.54M (Peak 32.54M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-40mm-locating-foot.001
+Fra:1 Mem:32.55M (Peak 32.55M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.014
+Fra:1 Mem:32.56M (Peak 32.56M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-40mm-locating-foot.002
+Fra:1 Mem:32.57M (Peak 32.57M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.013
+Fra:1 Mem:32.59M (Peak 32.59M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-40mm-locating-foot.003
+Fra:1 Mem:32.60M (Peak 32.60M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.012
+Fra:1 Mem:32.63M (Peak 32.63M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-sealed-floor
+Fra:1 Mem:32.63M (Peak 32.63M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stack-receiver-base.003
+Fra:1 Mem:32.65M (Peak 32.65M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-closed-side-wall
+Fra:1 Mem:32.64M (Peak 32.65M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.011
+Fra:1 Mem:32.66M (Peak 32.66M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-closed-side-wall.001
+Fra:1 Mem:32.66M (Peak 32.66M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.010
+Fra:1 Mem:32.68M (Peak 32.68M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.009
+Fra:1 Mem:32.73M (Peak 32.73M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.008
+Fra:1 Mem:32.73M (Peak 32.73M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-fixed-roof
+Fra:1 Mem:32.74M (Peak 32.74M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stack-receiver-base.002
+Fra:1 Mem:32.77M (Peak 32.77M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-corner-load-column
+Fra:1 Mem:32.77M (Peak 32.77M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.007
+Fra:1 Mem:32.78M (Peak 32.78M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stepped-corner-armor
+Fra:1 Mem:32.81M (Peak 32.81M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.006
+Fra:1 Mem:32.79M (Peak 32.81M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stepped-corner-armor.001
+Fra:1 Mem:32.83M (Peak 32.83M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.005
+Fra:1 Mem:32.82M (Peak 32.83M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-corner-load-column.001
+Fra:1 Mem:32.85M (Peak 32.85M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.004
+Fra:1 Mem:32.85M (Peak 32.85M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stepped-corner-armor.002
+Fra:1 Mem:32.88M (Peak 32.88M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stack-receiver-base.001
+Fra:1 Mem:32.89M (Peak 32.89M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stepped-corner-armor.003
+Fra:1 Mem:32.91M (Peak 32.91M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.003
+Fra:1 Mem:32.92M (Peak 32.92M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-corner-load-column.002
+Fra:1 Mem:32.92M (Peak 32.92M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stepped-corner-armor.004
+Fra:1 Mem:32.92M (Peak 32.92M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.002
+Fra:1 Mem:32.94M (Peak 32.94M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stepped-corner-armor.005
+Fra:1 Mem:32.97M (Peak 32.97M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.001
+Fra:1 Mem:32.98M (Peak 32.98M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-corner-load-column.003
+Fra:1 Mem:33.00M (Peak 33.00M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver
+Fra:1 Mem:33.01M (Peak 33.01M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stepped-corner-armor.006
+Fra:1 Mem:33.01M (Peak 33.01M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stack-receiver-base
+Fra:1 Mem:33.02M (Peak 33.02M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stepped-corner-armor.007
+Fra:1 Mem:33.04M (Peak 33.04M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-hazard-split.007
+Fra:1 Mem:33.05M (Peak 33.05M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-door-perimeter-seal
+Fra:1 Mem:33.06M (Peak 33.06M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-hazard-split.006
+Fra:1 Mem:33.09M (Peak 33.09M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-door-perimeter-seal.001
+Fra:1 Mem:33.09M (Peak 33.09M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-amber-hazard-plate.003
+Fra:1 Mem:33.11M (Peak 33.11M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-door-perimeter-seal.002
+Fra:1 Mem:33.11M (Peak 33.11M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-hazard-split.005
+Fra:1 Mem:33.14M (Peak 33.14M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-door-perimeter-seal.003
+Fra:1 Mem:33.13M (Peak 33.14M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-hazard-split.004
+Fra:1 Mem:33.16M (Peak 33.16M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-door-leaf
+Fra:1 Mem:33.15M (Peak 33.16M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-amber-hazard-plate.002
+Fra:1 Mem:33.19M (Peak 33.19M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-heavy-front-armor-post.001
+Fra:1 Mem:33.21M (Peak 33.21M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-hazard-split.003
+Fra:1 Mem:33.20M (Peak 33.21M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-door-dark-recess
+Fra:1 Mem:33.25M (Peak 33.25M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-hazard-split.002
+Fra:1 Mem:33.26M (Peak 33.26M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-amber-hazard-plate.001
+Fra:1 Mem:33.26M (Peak 33.26M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-door-service-plate
+Fra:1 Mem:33.30M (Peak 33.30M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-hazard-split.001
+Fra:1 Mem:33.31M (Peak 33.31M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-hazard-split
+Fra:1 Mem:33.31M (Peak 33.31M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-vertical-lock-rod
+Fra:1 Mem:33.35M (Peak 33.35M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-amber-hazard-plate
+Fra:1 Mem:33.35M (Peak 33.35M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-lock-lever
+Fra:1 Mem:33.36M (Peak 33.36M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-heavy-front-armor-post
+Fra:1 Mem:33.37M (Peak 33.37M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-hinge-knuckle
+Fra:1 Mem:33.40M (Peak 33.40M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-reinforced-roof-band.001
+Fra:1 Mem:33.43M (Peak 33.43M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-reinforced-side-band.003
+Fra:1 Mem:33.42M (Peak 33.43M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-hinge-knuckle.001
+Fra:1 Mem:33.46M (Peak 33.46M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-reinforced-side-band.002
+Fra:1 Mem:33.46M (Peak 33.46M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-hinge-knuckle.002
+Fra:1 Mem:33.45M (Peak 33.46M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-reinforced-roof-band
+Fra:1 Mem:33.51M (Peak 33.51M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-reinforced-side-band.001
+Fra:1 Mem:33.50M (Peak 33.51M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-hinge-knuckle.003
+Fra:1 Mem:33.52M (Peak 33.52M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-reinforced-side-band
+Fra:1 Mem:33.54M (Peak 33.54M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-hinge-knuckle.004
+Fra:1 Mem:33.55M (Peak 33.55M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-service-cartridge.001
+Fra:1 Mem:33.58M (Peak 33.58M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-hinge-knuckle.005
+Fra:1 Mem:33.57M (Peak 33.58M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-glove-grip.001
+Fra:1 Mem:33.61M (Peak 33.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-door-leaf.001
+Fra:1 Mem:33.61M (Peak 33.61M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-grip-support.003
+Fra:1 Mem:33.65M (Peak 33.65M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-grip-support.002
+Fra:1 Mem:33.66M (Peak 33.66M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-grip-backing.001
+Fra:1 Mem:33.66M (Peak 33.66M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-door-dark-recess.001
+Fra:1 Mem:33.68M (Peak 33.68M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-fitted-side-panel.009
+Fra:1 Mem:33.70M (Peak 33.70M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-side-inset-backing.009
+Fra:1 Mem:33.73M (Peak 33.73M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-freight-intermediate-upright.007
+Fra:1 Mem:33.74M (Peak 33.74M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-fitted-side-panel.008
+Fra:1 Mem:33.77M (Peak 33.77M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-side-inset-backing.008
+Fra:1 Mem:33.80M (Peak 33.80M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-freight-intermediate-upright.006
+Fra:1 Mem:33.81M (Peak 33.81M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-fitted-side-panel.007
+Fra:1 Mem:33.83M (Peak 33.83M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-side-inset-backing.007
+Fra:1 Mem:33.86M (Peak 33.86M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-freight-intermediate-upright.005
+Fra:1 Mem:33.87M (Peak 33.87M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-fitted-side-panel.006
+Fra:1 Mem:33.95M (Peak 33.95M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-side-inset-backing.006
+Fra:1 Mem:33.95M (Peak 33.95M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-door-service-plate.001
+Fra:1 Mem:33.98M (Peak 33.98M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-vertical-lock-rod.001
+Fra:1 Mem:33.99M (Peak 33.99M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-lock-lever.001
+Fra:1 Mem:34.01M (Peak 34.01M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-hinge-knuckle.006
+Fra:1 Mem:34.03M (Peak 34.03M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-hinge-knuckle.007
+Fra:1 Mem:34.07M (Peak 34.07M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-hinge-knuckle.008
+Fra:1 Mem:34.08M (Peak 34.08M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-freight-intermediate-upright.004
+Fra:1 Mem:34.06M (Peak 34.08M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-hinge-knuckle.009
+Fra:1 Mem:34.12M (Peak 34.12M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-fitted-side-panel.005
+Fra:1 Mem:34.13M (Peak 34.13M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-hinge-knuckle.010
+Fra:1 Mem:34.14M (Peak 34.14M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-side-inset-backing.005
+Fra:1 Mem:34.14M (Peak 34.14M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-hinge-knuckle.011
+Fra:1 Mem:34.22M (Peak 34.22M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-side-inset-backing
+Fra:1 Mem:34.19M (Peak 34.22M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-service-cartridge
+Fra:1 Mem:34.26M (Peak 34.26M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-glove-grip
+Fra:1 Mem:34.25M (Peak 34.26M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-fitted-side-panel
+Fra:1 Mem:34.28M (Peak 34.28M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-grip-support.001
+Fra:1 Mem:34.29M (Peak 34.29M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-grip-support
+Fra:1 Mem:34.29M (Peak 34.29M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-freight-intermediate-upright
+Fra:1 Mem:34.32M (Peak 34.32M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-grip-backing
+Fra:1 Mem:34.32M (Peak 34.32M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-side-inset-backing.001
+Fra:1 Mem:34.36M (Peak 34.36M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-fitted-side-panel.004
+Fra:1 Mem:34.41M (Peak 34.41M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-fitted-side-panel.001
+Fra:1 Mem:34.40M (Peak 34.41M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-side-inset-backing.004
+Fra:1 Mem:34.43M (Peak 34.43M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-freight-intermediate-upright.001
+Fra:1 Mem:34.46M (Peak 34.46M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-side-inset-backing.002
+Fra:1 Mem:34.47M (Peak 34.47M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-freight-intermediate-upright.003
+Fra:1 Mem:34.50M (Peak 34.50M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-fitted-side-panel.003
+Fra:1 Mem:34.49M (Peak 34.50M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-fitted-side-panel.002
+Fra:1 Mem:34.56M (Peak 34.56M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-side-inset-backing.003
+Fra:1 Mem:34.53M (Peak 34.56M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-freight-intermediate-upright.002
+Fra:1 Mem:34.57M (Peak 34.57M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:27.58M (Peak 34.57M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:27.58M (Peak 34.57M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:27.58M (Peak 34.57M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:27.58M (Peak 34.57M) | Time:00:00.02 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:27.67M (Peak 34.57M) | Time:00:00.02 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:27.67M (Peak 34.57M) | Time:00:00.02 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:27.67M (Peak 34.57M) | Time:00:00.02 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:27.67M (Peak 34.57M) | Time:00:00.02 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:27.67M (Peak 34.57M) | Time:00:00.02 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:27.67M (Peak 34.57M) | Time:00:00.02 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:27.70M (Peak 34.57M) | Time:00:00.02 | Mem:0.04M, Peak:0.04M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:27.70M (Peak 34.57M) | Time:00:00.02 | Mem:0.04M, Peak:0.04M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:27.70M (Peak 34.57M) | Time:00:00.02 | Mem:0.04M, Peak:0.04M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:27.70M (Peak 34.57M) | Time:00:00.02 | Mem:0.04M, Peak:0.04M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:27.99M (Peak 34.57M) | Time:00:00.02 | Mem:0.04M, Peak:0.04M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:28.45M (Peak 34.57M) | Time:00:00.02 | Mem:0.04M, Peak:0.04M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:28.43M (Peak 34.57M) | Time:00:00.02 | Mem:0.47M, Peak:0.47M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:28.43M (Peak 34.57M) | Time:00:00.02 | Mem:0.47M, Peak:0.47M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:28.43M (Peak 34.57M) | Time:00:00.02 | Mem:1.06M, Peak:1.06M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:28.43M (Peak 34.57M) | Time:00:00.02 | Mem:1.77M, Peak:2.36M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:28.43M (Peak 34.57M) | Time:00:00.02 | Mem:1.77M, Peak:2.36M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:29.94M (Peak 34.57M) | Time:00:00.02 | Mem:1.77M, Peak:2.36M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:29.94M (Peak 34.57M) | Time:00:00.02 | Mem:3.28M, Peak:3.28M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:29.94M (Peak 34.57M) | Time:00:00.02 | Mem:3.28M, Peak:3.28M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:29.94M (Peak 34.57M) | Time:00:00.02 | Mem:3.28M, Peak:3.28M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:29.94M (Peak 34.57M) | Time:00:00.02 | Mem:3.28M, Peak:3.28M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:29.94M (Peak 34.57M) | Time:00:00.02 | Mem:3.28M, Peak:3.28M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:29.94M (Peak 34.57M) | Time:00:00.02 | Mem:3.36M, Peak:3.36M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:29.94M (Peak 34.57M) | Time:00:00.02 | Mem:3.36M, Peak:3.36M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:29.94M (Peak 34.57M) | Time:00:00.02 | Mem:3.36M, Peak:3.36M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:29.94M (Peak 34.57M) | Time:00:00.02 | Mem:3.36M, Peak:3.36M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:29.94M (Peak 34.57M) | Time:00:00.02 | Mem:3.28M, Peak:3.36M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:29.94M (Peak 34.57M) | Time:00:00.02 | Mem:3.36M, Peak:3.36M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:29.94M (Peak 34.57M) | Time:00:00.02 | Mem:3.36M, Peak:3.36M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:29.95M (Peak 34.57M) | Time:00:00.02 | Mem:3.36M, Peak:3.36M | Scene, ViewLayer | Sample 0/64
+Fra:1 Mem:63.94M (Peak 63.94M) | Time:00:00.31 | Remaining:00:18.49 | Mem:37.35M, Peak:37.35M | Scene, ViewLayer | Sample 1/64
+Fra:1 Mem:79.05M (Peak 109.26M) | Time:00:13.34 | Mem:37.35M, Peak:37.35M | Scene, ViewLayer | Sample 64/64
+Fra:1 Mem:79.05M (Peak 109.26M) | Time:00:13.34 | Mem:37.35M, Peak:37.35M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/assets/art-library/designs/cargo.reinforced.oversized.grid-fit/revisions/r000/a002/closed-cutout.png'
+Time: 00:13.58 (Saving: 00:00.22)
+
+
+{"dimensionsM": [1.940999984741211, 3.9880999326705933, 1.9199999570846558], "changedLeverCount": 2, "ownerArtApproval": false}
+
+Blender quit

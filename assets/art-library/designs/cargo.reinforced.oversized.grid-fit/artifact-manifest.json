@@ -1,0 +1,77 @@
+{
+  "schema": "sidereal.carrier-candidate-artifacts.v1",
+  "currentAttempt": "a002",
+  "ownerArtApproval": false,
+  "files": [
+    {
+      "path": "revisions/r000/a001/author.log",
+      "sha256": "3b488106415b4c781cb98e20c5c89ef52ed87c0d80b9fccca48fb2b7af301d4f",
+      "bytes": 36455
+    },
+    {
+      "path": "revisions/r000/a001/author.py",
+      "sha256": "af04330f7834fc0a0690f5ba00a47b22a27b6483ed32bbfb0fac6ca0465998d2",
+      "bytes": 4244
+    },
+    {
+      "path": "revisions/r000/a001/blender-source.blend",
+      "sha256": "6c7a4b1f4dc0ad1f5836ee3a1c7cbd20434e5a9c6dcd7869691cb6f7e14a2bd0",
+      "bytes": 1933252
+    },
+    {
+      "path": "revisions/r000/a001/closed-cutout.png",
+      "sha256": "71631a9fe3490ccdc1aeafa0f222a252870fb688b886fd5ca7fa688afe1c7537",
+      "bytes": 831838
+    },
+    {
+      "path": "revisions/r000/a001/fitting-review.json",
+      "sha256": "aabe42b6c31d7933504e64bba20670fed6b0b6ca07cefbd836470f6b80e90fb6",
+      "bytes": 1850
+    },
+    {
+      "path": "revisions/r000/a001/glb.glb",
+      "sha256": "001433b841360cbb8b0339f984f503a70a681bd44e3b743e5cb5235581e59951",
+      "bytes": 1276240
+    },
+    {
+      "path": "revisions/r000/a001/review.md",
+      "sha256": "fff11525f215912637f2f58cf2ee6722a4090f300b0456ba461c5ccb25450789",
+      "bytes": 155
+    },
+    {
+      "path": "revisions/r000/a002/author.log",
+      "sha256": "dad36e58fe8356fcef351945b1af755522b186e2b3555f7509c80983e4b64d78",
+      "bytes": 36460
+    },
+    {
+      "path": "revisions/r000/a002/author.py",
+      "sha256": "7e368f7798ec90a0b88f0be0367a5d0fc703f763067272efc627a43fe30ac94f",
+      "bytes": 4361
+    },
+    {
+      "path": "revisions/r000/a002/blender-source.blend",
+      "sha256": "b3a97b45460d12a396372474fca941d6123901be494dfe1e055336a6c0f254bc",
+      "bytes": 1933252
+    },
+    {
+      "path": "revisions/r000/a002/closed-cutout.png",
+      "sha256": "3cb4553bcdb66b047128cc32fba00f85c128920495798aa5599edc1c882a17ed",
+      "bytes": 831838
+    },
+    {
+      "path": "revisions/r000/a002/fitting-review.json",
+      "sha256": "aabe42b6c31d7933504e64bba20670fed6b0b6ca07cefbd836470f6b80e90fb6",
+      "bytes": 1850
+    },
+    {
+      "path": "revisions/r000/a002/glb.glb",
+      "sha256": "95895b8aad990670e36cc017eab6c615c248253a6f7dc4190dbd00c9241222c1",
+      "bytes": 1278480
+    },
+    {
+      "path": "revisions/r000/a002/validation.json",
+      "sha256": "22a1af392ce48ab68fe6dbe2167ff4e9260a180d2021e61862e8b5dcc15d16d1",
+      "bytes": 1296
+    }
+  ]
+}

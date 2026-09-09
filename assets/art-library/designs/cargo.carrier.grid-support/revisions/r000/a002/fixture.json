@@ -1,0 +1,195 @@
+{
+  "schema": "sidereal.carrier-fixture.v1",
+  "deckTopM": 0.1875,
+  "roofUndersideM": 2.5625,
+  "carrierHeightM": 0.6875,
+  "stackTopM": 2.25,
+  "handlingClearanceM": 0.15,
+  "placements": [
+    [
+      "base",
+      "carrier-2m",
+      [
+        0,
+        0,
+        0.1875
+      ]
+    ],
+    [
+      "middle-0-0",
+      "carrier-1m",
+      [
+        0,
+        0,
+        0.875
+      ]
+    ],
+    [
+      "middle-0-1",
+      "carrier-1m",
+      [
+        0,
+        1,
+        0.875
+      ]
+    ],
+    [
+      "middle-1-0",
+      "carrier-1m",
+      [
+        1,
+        0,
+        0.875
+      ]
+    ],
+    [
+      "middle-1-1",
+      "carrier-1m",
+      [
+        1,
+        1,
+        0.875
+      ]
+    ],
+    [
+      "top",
+      "carrier-2m",
+      [
+        0,
+        0,
+        1.5625
+      ]
+    ]
+  ],
+  "payloads": [
+    {
+      "instanceId": "base",
+      "assetId": "part-c06e4f5f6f6dace38e41",
+      "glbSha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+      "appearance": "standard-small",
+      "translationAuthorM": [
+        0.5,
+        0.5377500057220459,
+        0.28125
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualDimensionsM": [
+        0.6610000133514404,
+        0.4855000078678131,
+        0.5114999413490295
+      ]
+    },
+    {
+      "instanceId": "middle-0-0",
+      "assetId": "part-5382f8dbbeb54e663d33",
+      "glbSha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+      "appearance": "standard-small-red",
+      "translationAuthorM": [
+        0.5,
+        0.5377500057220459,
+        0.96875
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualDimensionsM": [
+        0.6610000133514404,
+        0.4855000078678131,
+        0.5114999413490295
+      ]
+    },
+    {
+      "instanceId": "middle-0-1",
+      "assetId": "part-c06e4f5f6f6dace38e41",
+      "glbSha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+      "appearance": "standard-small",
+      "translationAuthorM": [
+        0.5,
+        1.537750005722046,
+        0.96875
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualDimensionsM": [
+        0.6610000133514404,
+        0.4855000078678131,
+        0.5114999413490295
+      ]
+    },
+    {
+      "instanceId": "middle-1-0",
+      "assetId": "part-5382f8dbbeb54e663d33",
+      "glbSha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+      "appearance": "standard-small-red",
+      "translationAuthorM": [
+        1.5,
+        0.5377500057220459,
+        0.96875
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualDimensionsM": [
+        0.6610000133514404,
+        0.4855000078678131,
+        0.5114999413490295
+      ]
+    },
+    {
+      "instanceId": "middle-1-1",
+      "assetId": "part-c06e4f5f6f6dace38e41",
+      "glbSha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+      "appearance": "standard-small",
+      "translationAuthorM": [
+        1.5,
+        1.537750005722046,
+        0.96875
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualDimensionsM": [
+        0.6610000133514404,
+        0.4855000078678131,
+        0.5114999413490295
+      ]
+    },
+    {
+      "instanceId": "top",
+      "assetId": "part-5382f8dbbeb54e663d33",
+      "glbSha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+      "appearance": "standard-small-red",
+      "translationAuthorM": [
+        0.5,
+        0.5377500057220459,
+        1.65625
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualDimensionsM": [
+        0.6610000133514404,
+        0.4855000078678131,
+        0.5114999413490295
+      ]
+    }
+  ],
+  "reviewOnly": true,
+  "loadApproval": false,
+  "ownerArtApproval": false
+}

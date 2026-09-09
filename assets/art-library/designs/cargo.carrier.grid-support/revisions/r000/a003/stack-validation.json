@@ -1,0 +1,423 @@
+{
+  "status": "passed",
+  "assertions": 98,
+  "actualNativeInterfaces": true,
+  "proposedRatingsOnly": true,
+  "rootLoadKg": 800,
+  "contacts": [
+    {
+      "containerId": "retained-base-container",
+      "bottomPatchId": "cell-0-0",
+      "supportContainerId": null,
+      "supportPatchId": "qualified-review-floor",
+      "areaUnits2": 576,
+      "loadKg": 200
+    },
+    {
+      "containerId": "retained-base-container",
+      "bottomPatchId": "cell-0-1",
+      "supportContainerId": null,
+      "supportPatchId": "qualified-review-floor",
+      "areaUnits2": 576,
+      "loadKg": 200
+    },
+    {
+      "containerId": "retained-base-container",
+      "bottomPatchId": "cell-1-0",
+      "supportContainerId": null,
+      "supportPatchId": "qualified-review-floor",
+      "areaUnits2": 576,
+      "loadKg": 200
+    },
+    {
+      "containerId": "retained-base-container",
+      "bottomPatchId": "cell-1-1",
+      "supportContainerId": null,
+      "supportPatchId": "qualified-review-floor",
+      "areaUnits2": 576,
+      "loadKg": 200
+    },
+    {
+      "containerId": "retained-middle-0-0",
+      "bottomPatchId": "cell-0-0",
+      "supportContainerId": "retained-base-container",
+      "supportPatchId": "cell-0-0",
+      "areaUnits2": 576,
+      "loadKg": 160
+    },
+    {
+      "containerId": "retained-middle-0-1",
+      "bottomPatchId": "cell-0-0",
+      "supportContainerId": "retained-base-container",
+      "supportPatchId": "cell-0-1",
+      "areaUnits2": 576,
+      "loadKg": 160
+    },
+    {
+      "containerId": "retained-middle-1-0",
+      "bottomPatchId": "cell-0-0",
+      "supportContainerId": "retained-base-container",
+      "supportPatchId": "cell-1-0",
+      "areaUnits2": 576,
+      "loadKg": 160
+    },
+    {
+      "containerId": "retained-middle-1-1",
+      "bottomPatchId": "cell-0-0",
+      "supportContainerId": "retained-base-container",
+      "supportPatchId": "cell-1-1",
+      "areaUnits2": 576,
+      "loadKg": 160
+    },
+    {
+      "containerId": "retained-top-container",
+      "bottomPatchId": "cell-0-0",
+      "supportContainerId": "retained-middle-0-0",
+      "supportPatchId": "cell-0-0",
+      "areaUnits2": 576,
+      "loadKg": 40
+    },
+    {
+      "containerId": "retained-top-container",
+      "bottomPatchId": "cell-0-1",
+      "supportContainerId": "retained-middle-0-1",
+      "supportPatchId": "cell-0-0",
+      "areaUnits2": 576,
+      "loadKg": 40
+    },
+    {
+      "containerId": "retained-top-container",
+      "bottomPatchId": "cell-1-0",
+      "supportContainerId": "retained-middle-1-0",
+      "supportPatchId": "cell-0-0",
+      "areaUnits2": 576,
+      "loadKg": 40
+    },
+    {
+      "containerId": "retained-top-container",
+      "bottomPatchId": "cell-1-1",
+      "supportContainerId": "retained-middle-1-1",
+      "supportPatchId": "cell-0-0",
+      "areaUnits2": 576,
+      "loadKg": 40
+    }
+  ],
+  "loads": [
+    {
+      "containerId": "retained-base-container",
+      "grossMassKg": 160,
+      "supportedMassKg": 640,
+      "transmittedMassKg": 800
+    },
+    {
+      "containerId": "retained-middle-0-0",
+      "grossMassKg": 120,
+      "supportedMassKg": 40,
+      "transmittedMassKg": 160
+    },
+    {
+      "containerId": "retained-middle-0-1",
+      "grossMassKg": 120,
+      "supportedMassKg": 40,
+      "transmittedMassKg": 160
+    },
+    {
+      "containerId": "retained-middle-1-0",
+      "grossMassKg": 120,
+      "supportedMassKg": 40,
+      "transmittedMassKg": 160
+    },
+    {
+      "containerId": "retained-middle-1-1",
+      "grossMassKg": 120,
+      "supportedMassKg": 40,
+      "transmittedMassKg": 160
+    },
+    {
+      "containerId": "retained-top-container",
+      "grossMassKg": 160,
+      "supportedMassKg": 0,
+      "transmittedMassKg": 160
+    }
+  ],
+  "grid": {
+    "id": "review-cargo-only",
+    "deckId": "review-deck",
+    "footprint": [
+      [
+        0,
+        0
+      ],
+      [
+        64,
+        0
+      ],
+      [
+        64,
+        64
+      ],
+      [
+        0,
+        64
+      ]
+    ],
+    "baseZ": 6,
+    "roofZ": 82,
+    "horizontalStepUnits": 32,
+    "snapOrigin": [
+      0,
+      0
+    ],
+    "acceptedFamilies": [
+      "carrier-pad-075-grid1m-r000"
+    ],
+    "bearingPatches": [
+      {
+        "id": "qualified-review-floor",
+        "rect": [
+          0,
+          0,
+          64,
+          64
+        ],
+        "maxLoadKg": 5000
+      }
+    ],
+    "maxLoadKg": 5000,
+    "reservedVolumes": []
+  },
+  "catalog": [
+    {
+      "id": "carrier-1m",
+      "definitionId": "carrier-1m",
+      "revision": "r000-a003-proposed",
+      "kind": "cargo",
+      "size": [
+        32,
+        32,
+        22
+      ],
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "bearingFamily": "carrier-pad-075-grid1m-r000",
+      "tareMassKg": 20,
+      "maxGrossMassKg": 250,
+      "maxTopLoadKg": 1000,
+      "bottom": [
+        {
+          "id": "cell-0-0",
+          "rect": [
+            4,
+            4,
+            28,
+            28
+          ],
+          "maxLoadKg": 1000
+        }
+      ],
+      "top": [
+        {
+          "id": "cell-0-0",
+          "rect": [
+            4,
+            4,
+            28,
+            28
+          ],
+          "maxLoadKg": 1000
+        }
+      ],
+      "allowMultipleSupports": true,
+      "clearances": []
+    },
+    {
+      "id": "carrier-2m",
+      "definitionId": "carrier-2m",
+      "revision": "r000-a003-proposed",
+      "kind": "cargo",
+      "size": [
+        64,
+        64,
+        22
+      ],
+      "quarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "bearingFamily": "carrier-pad-075-grid1m-r000",
+      "tareMassKg": 60,
+      "maxGrossMassKg": 1000,
+      "maxTopLoadKg": 2000,
+      "bottom": [
+        {
+          "id": "cell-0-0",
+          "rect": [
+            4,
+            4,
+            28,
+            28
+          ],
+          "maxLoadKg": 1000
+        },
+        {
+          "id": "cell-0-1",
+          "rect": [
+            4,
+            36,
+            28,
+            60
+          ],
+          "maxLoadKg": 1000
+        },
+        {
+          "id": "cell-1-0",
+          "rect": [
+            36,
+            4,
+            60,
+            28
+          ],
+          "maxLoadKg": 1000
+        },
+        {
+          "id": "cell-1-1",
+          "rect": [
+            36,
+            36,
+            60,
+            60
+          ],
+          "maxLoadKg": 1000
+        }
+      ],
+      "top": [
+        {
+          "id": "cell-0-0",
+          "rect": [
+            4,
+            4,
+            28,
+            28
+          ],
+          "maxLoadKg": 1000
+        },
+        {
+          "id": "cell-0-1",
+          "rect": [
+            4,
+            36,
+            28,
+            60
+          ],
+          "maxLoadKg": 1000
+        },
+        {
+          "id": "cell-1-0",
+          "rect": [
+            36,
+            4,
+            60,
+            28
+          ],
+          "maxLoadKg": 1000
+        },
+        {
+          "id": "cell-1-1",
+          "rect": [
+            36,
+            36,
+            60,
+            60
+          ],
+          "maxLoadKg": 1000
+        }
+      ],
+      "allowMultipleSupports": true,
+      "clearances": []
+    }
+  ],
+  "placements": [
+    {
+      "containerId": "retained-base-container",
+      "interfaceId": "carrier-2m",
+      "origin": [
+        0,
+        0,
+        6
+      ],
+      "quarterTurns": 0,
+      "payloadMassKg": 100,
+      "secured": true
+    },
+    {
+      "containerId": "retained-middle-0-0",
+      "interfaceId": "carrier-1m",
+      "origin": [
+        0,
+        0,
+        28
+      ],
+      "quarterTurns": 0,
+      "payloadMassKg": 100,
+      "secured": true
+    },
+    {
+      "containerId": "retained-middle-0-1",
+      "interfaceId": "carrier-1m",
+      "origin": [
+        0,
+        32,
+        28
+      ],
+      "quarterTurns": 0,
+      "payloadMassKg": 100,
+      "secured": true
+    },
+    {
+      "containerId": "retained-middle-1-0",
+      "interfaceId": "carrier-1m",
+      "origin": [
+        32,
+        0,
+        28
+      ],
+      "quarterTurns": 0,
+      "payloadMassKg": 100,
+      "secured": true
+    },
+    {
+      "containerId": "retained-middle-1-1",
+      "interfaceId": "carrier-1m",
+      "origin": [
+        32,
+        32,
+        28
+      ],
+      "quarterTurns": 0,
+      "payloadMassKg": 100,
+      "secured": true
+    },
+    {
+      "containerId": "retained-top-container",
+      "interfaceId": "carrier-2m",
+      "origin": [
+        0,
+        0,
+        50
+      ],
+      "quarterTurns": 0,
+      "payloadMassKg": 100,
+      "secured": true
+    }
+  ],
+  "limitations": [
+    "Inventory objects are not instantiated by this pure fixture; runtime UUID/content preservation requires the staged world adapter.",
+    "Restraint qualification and gameplay rating approval remain separate gates."
+  ]
+}
