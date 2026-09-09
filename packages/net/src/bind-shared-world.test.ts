@@ -133,6 +133,19 @@ function fixture(seeded = false) {
   return { db, queries, resources, onError, ...binding };
 }
 describe("shared world SDK aggregate binding", () => {
+  it("signals applied empty baseline readiness and revokes it on disposal", async () => {
+    const f = fixture();
+    const changed = vi.fn();
+    f.readiness.subscribe(changed);
+    expect(f.readiness.getSnapshot()).toBe(false);
+    await flush();
+    expect(f.readiness.getSnapshot()).toBe(true);
+    expect(f.store.getSnapshot().admission).toEqual([]);
+    expect(changed).toHaveBeenCalledOnce();
+    f.dispose();
+    expect(f.readiness.getSnapshot()).toBe(false);
+    expect(changed).toHaveBeenCalledTimes(2);
+  });
   it("hydrates an existing cache and opens cells only from accepted own motion", async () => {
     const f = fixture(true);
     await flush();

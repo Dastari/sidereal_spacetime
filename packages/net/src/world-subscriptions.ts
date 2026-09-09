@@ -72,6 +72,8 @@ export function createWorldSubscriptions(options: {
   /** Rebind current socket's aggregate listeners to the new store epoch; callbacks
    * from an old socket must retain their old generation and must remain rejected. */
   onEpoch?: (epoch: number) => void;
+  /** An empty applied admission view still establishes absence authoritatively. */
+  onBaselineApplied?: () => void;
 }) {
   const { store, resources, transport } = options;
   const prefix = `shared-world-${++nextAdapterId}-`;
@@ -131,6 +133,7 @@ export function createWorldSubscriptions(options: {
               return;
             }
             scope.phase = "active";
+            if (kind === "baseline") options.onBaselineApplied?.();
             if (kind === "cells") {
               // Preserve the previous coverage until the replacement is applied.
               for (const old of scopes)

@@ -8,6 +8,10 @@ import {
 import { createWorldSubscriptions } from "./world-subscriptions";
 
 type Row<K extends SharedWorldTable> = SharedWorldSnapshot[K][number];
+export interface SharedWorldReadiness {
+  getSnapshot(): boolean;
+  subscribe(listener: () => void): () => void;
+}
 interface AggregateTable<R> {
   iter(): Iterable<R>;
   onInsert(fn: (context: unknown, row: R) => void): void;
@@ -29,6 +33,23 @@ export function bindSharedWorld(options: {
   const { connection, resources } = options;
   const store = new SharedWorldStore();
   let disposed = false;
+  let baselineApplied = false;
+  const readinessListeners = new Set<() => void>();
+  const readiness: SharedWorldReadiness = {
+    getSnapshot: () => baselineApplied,
+    subscribe(listener) {
+      if (disposed) return () => {};
+      readinessListeners.add(listener);
+      return () => {
+        readinessListeners.delete(listener);
+      };
+    },
+  };
+  function setReady(value: boolean) {
+    if (value === baselineApplied) return;
+    baselineApplied = value;
+    for (const listener of [...readinessListeners]) listener();
+  }
   let removers: (() => void)[] = [];
   const tables = {
     admission: connection.db.ownWorldAdmission,
@@ -41,6 +62,7 @@ export function bindSharedWorld(options: {
     store,
     resources,
     onError: options.onError,
+    onBaselineApplied: () => setReady(true),
     transport: {
       subscribe: (queries, callbacks) =>
         connection
@@ -50,6 +72,7 @@ export function bindSharedWorld(options: {
           .subscribe(queries),
     },
     onEpoch(epoch) {
+      setReady(false);
       // The adapter installs the new admission after this callback returns.
       // Rebind immediately, but defer hydration to avoid recursive context resets.
       rebind(epoch);
@@ -151,9 +174,11 @@ export function bindSharedWorld(options: {
     disposed = true;
     detach();
     subscriptions.dispose();
+    setReady(false);
+    readinessListeners.clear();
   }
   resources.listen(dispose);
   rebind(store.getEpoch());
   hydrate(store.getEpoch());
-  return { store, subscriptions, dispose };
+  return { store, subscriptions, readiness, dispose };
 }
