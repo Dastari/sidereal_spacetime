@@ -108,6 +108,7 @@ export function connect(
                 tables.ownConstructionInstances,
                 tables.ownConstructionDecks,
                 tables.ownConstructionLocation,
+                tables.ownConstructionSeat,
                 tables.ownConstructionDoors,
                 tables.ownConstructionNativePressure,
                 tables.ownConstructionTraversals,
@@ -131,6 +132,9 @@ export function connect(
           tables.ownInventoryItems,
           tables.ownInventoryContainers,
           tables.ownInventoryHotbar,
+          tables.ownReachableCargoContainers,
+          tables.ownReachableCargoItems,
+          tables.ownCarriedInventoryRevisions,
         ]);
       resources.retain("game", subscription);
     })
@@ -144,6 +148,7 @@ export function connect(
           connection.db.ownConstructionInstances,
           connection.db.ownConstructionDecks,
           connection.db.ownConstructionLocation,
+          connection.db.ownConstructionSeat,
           connection.db.ownConstructionDoors,
           connection.db.ownConstructionNativePressure,
           connection.db.ownConstructionTraversals,
@@ -167,6 +172,9 @@ export function connect(
     connection.db.ownInventoryItems,
     connection.db.ownInventoryContainers,
     connection.db.ownInventoryHotbar,
+    connection.db.ownReachableCargoContainers,
+    connection.db.ownReachableCargoItems,
+    connection.db.ownCarriedInventoryRevisions,
   ]) {
     table.onInsert(onChange);
     table.onUpdate(onChange);

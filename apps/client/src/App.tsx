@@ -1,9 +1,16 @@
+import {
+  readCargo,
+  usesScopedCargo,
+  moveScopedCargo,
+  moveCargoBatch,
+} from "./scoped-cargo";
 import { useSharedWorldEntry } from "./use-shared-world-entry";
 import { SharedWorldReview } from "./SharedWorldReview";
 import {
   sharedBodyPresentation,
   bodyDestinations,
 } from "./shared-body-presentation";
+import { constructionInspectionCatalog } from "./construction-inspection";
 import { constructionPresentation } from "./construction-presentation";
 import { createMovementControl } from "./movement-control";
 import { createIntentTransmitter } from "./intent-transmitter";
@@ -14,6 +21,7 @@ import { AccountPanel } from "./AccountPanel";
 import { createConnectionSession } from "./connection-session";
 import React, {
   useEffect,
+  useMemo,
   useRef,
   useState,
   useSyncExternalStore,
@@ -215,6 +223,20 @@ export default function App({
   );
   const constructionVisit = constructionScene.visit;
   const constructionInstance = constructionScene.instance;
+  const inspectionCatalog = useMemo(
+    () =>
+      constructionScene.active
+        ? constructionInspectionCatalog(
+            equipmentCatalog,
+            constructionInstance?.documentJson,
+          )
+        : equipmentCatalog,
+    [
+      equipmentCatalog,
+      constructionScene.active,
+      constructionInstance?.documentJson,
+    ],
+  );
   const station = (
     c && ship
       ? [...c.db.ownStations.iter()].find((row) => row.shipId === ship.id)
@@ -253,6 +275,15 @@ export default function App({
   const interactions =
     ready && actor?.connected && c ? [...c.db.ownInteractions.iter()] : [];
   const couch = interactions.find((row) => row.seatedByYou);
+  const constructionSeat =
+    c && ready && constructionVisit
+      ? [...c.db.ownConstructionSeat.iter()].find(
+          (row) =>
+            row.characterId === actor?.id &&
+            row.instanceId === constructionVisit.instanceId &&
+            row.deckId === constructionVisit.deckId,
+        )
+      : undefined;
   const nearStation =
     !!actor &&
     !!station &&
@@ -330,6 +361,7 @@ export default function App({
         .catch((e) => setError(String(e)));
   }, [actor?.connected, actor?.id, ready, c]);
   const uiState: GameUIState = {
+    accountKind: auth?.kind === "oidc" ? "oidc" : "development",
     sharedEntry: sharedEnabled ? sharedEntry.state : undefined,
     characterAppearance: cosmetics,
     graphics: view.current?.getGraphicsSettings(),
@@ -344,10 +376,10 @@ export default function App({
       capacity: combat?.capacity ?? 0,
       shotCost: combat?.shotCost ?? 0,
     },
-    resting: !!couch,
+    resting: !!couch || !!constructionSeat,
     objectDetails: objectDetails(
       selectedObject,
-      equipmentCatalog,
+      inspectionCatalog,
       interactions,
       actor,
       { seated, near: nearStation, occupied: !!station?.occupantId },
@@ -402,7 +434,7 @@ export default function App({
     pending,
     uiState,
     contextObject,
-    couch,
+    couch: couch ?? constructionSeat,
     combat,
     combatEnabled,
     constructionInstance,
@@ -414,7 +446,7 @@ export default function App({
     pending,
     uiState,
     contextObject,
-    couch,
+    couch: couch ?? constructionSeat,
     combat,
     combatEnabled,
     constructionInstance,
@@ -474,9 +506,7 @@ export default function App({
       connectionNow &&
       live.current.actor?.connected
     ) {
-      const container = [
-        ...connectionNow.db.ownInventoryContainers.iter(),
-      ].find(
+      const container = [...inventoryView(connectionNow, true).containers].find(
         (container) =>
           container.placementId === placementId && container.kind === "grid",
       );
@@ -660,33 +690,68 @@ export default function App({
                       ),
                     moveItem: (input) =>
                       void perform(() =>
-                        connection.current!.reducers.moveInventoryItem({
-                          ...input,
-                          ...inventoryCommand(),
-                        }),
+                        usesScopedCargo(
+                          readCargo(connection.current!),
+                          input.itemId,
+                          input.containerId,
+                        )
+                          ? moveScopedCargo(
+                              connection.current!,
+                              input.itemId,
+                              input.containerId,
+                              input,
+                            )
+                          : connection.current!.reducers.moveInventoryItem({
+                              ...input,
+                              ...inventoryCommand(),
+                            }),
                       ),
                     transferItem: (itemId, containerId) =>
                       void perform(() =>
-                        connection.current!.reducers.transferInventoryItem({
+                        usesScopedCargo(
+                          readCargo(connection.current!),
                           itemId,
                           containerId,
-                          ...inventoryCommand(),
-                        }),
+                        )
+                          ? moveScopedCargo(
+                              connection.current!,
+                              itemId,
+                              containerId,
+                            )
+                          : connection.current!.reducers.transferInventoryItem({
+                              itemId,
+                              containerId,
+                              ...inventoryCommand(),
+                            }),
                       ),
                     storeAll: (containerId, destinationId) =>
                       void perform(() =>
-                        connection.current!.reducers.storeAllInventoryItems({
-                          containerId,
-                          destinationId,
-                          ...inventoryCommand(),
-                        }),
+                        readCargo(connection.current!).containers.some(
+                          (c) => c.id === containerId || c.id === destinationId,
+                        )
+                          ? moveCargoBatch(
+                              connection.current!,
+                              containerId,
+                              destinationId,
+                            )
+                          : connection.current!.reducers.storeAllInventoryItems(
+                              {
+                                containerId,
+                                destinationId,
+                                ...inventoryCommand(),
+                              },
+                            ),
                       ),
                     takeAll: (containerId) =>
                       void perform(() =>
-                        connection.current!.reducers.takeAllInventoryItems({
-                          containerId,
-                          ...inventoryCommand(),
-                        }),
+                        readCargo(connection.current!).containers.some(
+                          (c) => c.id === containerId,
+                        )
+                          ? moveCargoBatch(connection.current!, containerId, "")
+                          : connection.current!.reducers.takeAllInventoryItems({
+                              containerId,
+                              ...inventoryCommand(),
+                            }),
                       ),
                     dropItem: (itemId) =>
                       void perform(() =>
@@ -743,9 +808,15 @@ export default function App({
               }
               if (
                 id &&
-                LAB_STORAGE_FIXTURES.some(
+                (LAB_STORAGE_FIXTURES.some(
                   (fixture) => fixture.placementId === id,
-                )
+                ) ||
+                  (connection.current &&
+                    inventoryView(connection.current, true).containers.some(
+                      (container) =>
+                        container.placementId === id &&
+                        container.kind === "grid",
+                    )))
               ) {
                 setSelectedObject(undefined);
                 objectCommand("open-storage", id);
@@ -846,6 +917,9 @@ export default function App({
         shotSequence: combat?.shotSequence,
       },
       constructionDeckId: constructionVisit?.deckId,
+      constructionSupportElevation: constructionInstance
+        ? constructionVisit?.standingElevationM
+        : undefined,
       constructionTraversal:
         constructionScene.acceptedStair ??
         (c && constructionVisit
@@ -874,14 +948,21 @@ export default function App({
                 };
               })
           : [],
-      objectLights: LAB_INTERACTIONS.filter((row) => row.kind === "light").map(
-        ({ placementId }) => ({
-          placementId,
-          enabled:
-            interactions.find((row) => row.placementId === placementId)
-              ?.enabled ?? false,
-        }),
-      ),
+      objectLights: constructionScene.active
+        ? interactions
+            .filter((row) => row.kind === "light")
+            .map((row) => ({
+              placementId: row.placementId,
+              enabled: row.enabled,
+            }))
+        : LAB_INTERACTIONS.filter((row) => row.kind === "light").map(
+            ({ placementId }) => ({
+              placementId,
+              enabled:
+                interactions.find((row) => row.placementId === placementId)
+                  ?.enabled ?? false,
+            }),
+          ),
       ...inventoryAppearance(inventory, cosmetics),
       vx: constructionScene.active ? 0 : (ship?.vx ?? 0),
       vy: constructionScene.active ? 0 : (ship?.vy ?? 0),
@@ -899,8 +980,11 @@ export default function App({
       interior,
       inspect: false,
       grid: false,
-      seated: seated || !!couch,
-      seatFacing: couch ? (Math.sign(couch.localX) * Math.PI) / 2 : 0,
+      seated: seated || !!couch || !!constructionSeat,
+      seatFacing:
+        couch || constructionSeat
+          ? (Math.sign((couch ?? constructionSeat)!.localX) * Math.PI) / 2
+          : 0,
       sprinting: actor?.sprinting ?? false,
       vistaId,
       reducedMotion,

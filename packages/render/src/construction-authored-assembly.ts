@@ -110,6 +110,7 @@ export async function loadConstructionAuthoredAssembly(
       node.metadata = {
         partId: p.id,
         assetId: a.id,
+        category: a.category,
         instanceId: document.layout.id,
         deckId,
         constructionRoof: a.category === "roof",
@@ -126,7 +127,7 @@ export async function loadConstructionAuthoredAssembly(
         matrix.decompose(mesh.scaling, q, mesh.position);
         mesh.rotationQuaternion = q;
         mesh.isVisible = true;
-        mesh.isPickable = false;
+        mesh.isPickable = true;
         mesh.receiveShadows = true;
         mesh.metadata = { ...node.metadata, nativeSourceName: source.name };
         return mesh;

@@ -23,12 +23,23 @@ export function inventoryView(
       ready && connection
         ? ([
             ...connection.db.ownInventoryItems.iter(),
+            ...[...connection.db.ownReachableCargoItems.iter()].map((item) => ({
+              ...item,
+              equipmentSlot: "" as const,
+            })),
           ] as InventoryState["items"])
         : [],
     containers:
       ready && connection
         ? ([
             ...connection.db.ownInventoryContainers.iter(),
+            ...[...connection.db.ownReachableCargoContainers.iter()].map(
+              (container) => ({
+                ...container,
+                placementId: container.placedObjectId,
+                carried: false,
+              }),
+            ),
           ] as InventoryState["containers"])
         : [],
     hotbar:

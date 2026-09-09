@@ -4,6 +4,7 @@ interface Visit {
   visitId: string;
   instanceId: string;
   deckId: string;
+  standingElevationM?: number;
 }
 interface Instance {
   id: string;

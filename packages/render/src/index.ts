@@ -95,6 +95,8 @@ export type SceneState = {
   selectedObject?: string;
   /** Accepted occupied deck; changing UI selection cannot supply this value. */
   constructionDeckId?: string;
+  /** Server-qualified standing support in metres, including the deck top. */
+  constructionSupportElevation?: number;
   /** Stair accepted poses share the existing construction movement channel;
    * the kind tag prevents a stale ladder pose from driving a stair fixture. */
   constructionTraversal?:
@@ -705,6 +707,13 @@ async function buildWorld(
       state.constructionTraversal,
     );
     if (traversalFrame) walkingElevation = traversalFrame.walkingElevation;
+    if (
+      options.construction &&
+      state.constructionDeckId &&
+      !traversalFrame?.inTransit &&
+      Number.isFinite(state.constructionSupportElevation)
+    )
+      walkingElevation = state.constructionSupportElevation!;
     const acceptedStair =
       state.constructionTraversal &&
       "kind" in state.constructionTraversal &&

@@ -72,7 +72,12 @@ test("all 211 authored objects load from 28 verified libraries with independent 
     expect(result!.placements.some((p) => p.category === "floor")).toBe(false);
     for (const p of result!.placements) {
       expect(p.meshes.length).toBeGreaterThan(0);
-      expect(p.meshes.every((m) => !!m.material && !m.isPickable)).toBe(true);
+      expect(
+        p.meshes.every(
+          (m) =>
+            !!m.material && m.isPickable && m.metadata.category === p.category,
+        ),
+      ).toBe(true);
       const original = a.document.layout.assembly!.parts.find(
         (o) => o.id === p.node.metadata.partId,
       )!;
