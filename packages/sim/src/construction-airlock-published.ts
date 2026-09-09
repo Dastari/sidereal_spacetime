@@ -1,4 +1,4 @@
-import { NATIVE_EXTERNAL_AIRLOCK_AUDIT_TEXT } from "../../content/src/construction-airlock-room";
+import { NATIVE_EXTERNAL_AIRLOCK_AUDIT_TEXT } from "@sidereal/content/construction-airlock-room";
 import { createPublishedNativeExternalAirlockCompiler } from "./construction-airlock-plan";
 export const compilePublishedNativeExternalAirlock =
   createPublishedNativeExternalAirlockCompiler(

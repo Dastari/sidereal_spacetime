@@ -101,6 +101,15 @@ function fixture() {
   db.constructionLocation = store("characterId", { by_instance: "instanceId" });
   db.character = store("id", { by_owner: "owner" });
   db.inputControl = store("characterId");
+  db.connectionPresence = store("connectionId");
+  db.connectionPresence.insert({ connectionId: "connection-a", owner });
+  db.authSession = store("connectionId", { by_owner: "owner" });
+  db.authSession.insert({
+    connectionId: "connection-a",
+    owner,
+    game: true,
+    expiresMicros: 18446744073709551615n,
+  });
   db.couchSeat = store("characterId");
   db.constructionTraversal = store("characterId");
   db.constructionStairWalk = store("characterId");
@@ -158,6 +167,7 @@ function fixture() {
   db.inputControl.insert({
     characterId: actor.id,
     connectionId: "connection-a",
+    owner,
   });
   const row = () => db.constructionAirlock.id.find(a.id),
     door = (side = "inner") =>
@@ -398,4 +408,124 @@ test("swept native door obstruction prevents service; blocked manual work expire
   expect(f.row().innerFraction).toBe(accepted);
   expect(f.row().driverActorId).toBe("");
   expect(f.door().blocked).toBe(true);
+});
+
+function makeDeniedGameFixture() {
+  const f = fixture();
+  f.db.constructionInstance.id.update({
+    ...f.db.constructionInstance.id.find(f.a.id),
+    workspaceId: "trusted-starter-templates",
+    revision: 1n,
+    blueprintSha256: "unqualified-native-airlock",
+  });
+  for (const g of f.db.constructionGrant.rows)
+    g.workspaceId = "trusted-starter-templates";
+  f.db.retiredIdentity = store("source");
+  f.db.authSession = store("id", { by_owner: "owner" });
+  f.db.authSession.insert({
+    id: "auth",
+    owner: f.ctx.sender,
+    game: true,
+    expiresMicros: 999999999n,
+  });
+  f.db.gameShipAccess = store("shipId");
+  f.db.ship = store();
+  f.db.shipWorldMotion = store("shipId");
+  f.db.constructionDeck = store();
+  f.db.worldAdmission = store("characterId");
+  return f;
+}
+test("reserved game namespace never falls back to valid review grants without a durable binding", () => {
+  const f = makeDeniedGameFixture();
+  expect(ownNativeAirlocks(f.ctx)).toEqual([]);
+  expect(() => f.request(true)).toThrow();
+  expect(f.row().active).toBe(false);
+});
+test("normal game policy rejects an unregistered airlock template even with matching forged relation rows", () => {
+  const f = makeDeniedGameFixture(),
+    instance = f.db.constructionInstance.id.find(f.a.id);
+  f.db.gameShipAccess.insert({
+    shipId: f.a.id,
+    instanceId: f.a.id,
+    characterId: f.actor.id,
+    owner: f.ctx.sender,
+    deckId: f.a.d.airlockRoom.deckId,
+    lifecycle: "active",
+    instanceRevision: 1n,
+    templateSha256: instance.blueprintSha256,
+  });
+  f.db.ship.insert({
+    id: f.a.id,
+    name: "Unregistered airlock",
+    owner: f.ctx.sender,
+  });
+  f.db.shipWorldMotion.insert({ shipId: f.a.id, systemId: "shared-system" });
+  f.db.constructionDeck.insert({
+    id: f.a.d.airlockRoom.deckId,
+    instanceId: f.a.id,
+  });
+  f.db.worldAdmission.insert({
+    characterId: f.actor.id,
+    shipId: f.a.id,
+    systemId: "shared-system",
+    owner: f.ctx.sender,
+  });
+  expect(ownNativeAirlocks(f.ctx)).toEqual([]);
+  expect(() => f.request(true)).toThrow();
+});
+
+test("service projection uses accepted support/approach and active control, without crossing closed doors", () => {
+  const f = fixture();
+  expect(ownNativeAirlocks(f.ctx)[0]).toMatchObject({
+    innerCanService: true,
+    outerCanService: false,
+  });
+  f.db.character.id.update({ ...f.actor, localX: 4, localY: 1 });
+  expect(ownNativeAirlocks(f.ctx)[0]).toMatchObject({
+    innerCanService: true,
+    outerCanService: true,
+  });
+  f.db.character.id.update({ ...f.actor, localX: 4, localY: 3 });
+  expect(ownNativeAirlocks(f.ctx)[0]).toMatchObject({
+    innerCanService: false,
+    outerCanService: false,
+  });
+  f.db.character.id.update(f.actor);
+  f.db.connectionPresence.connectionId.delete("connection-a");
+  expect(ownNativeAirlocks(f.ctx)[0]).toMatchObject({
+    innerCanService: false,
+    outerCanService: false,
+  });
+});
+
+test("chamber-side manual service remains reachable throughout native inner closure", () => {
+  const f = fixture();
+  f.request(true);
+  for (let n = 0; n < 35; n++) f.tick();
+  f.db.character.id.update({ ...f.actor, localX: 4, localY: 1 });
+  f.request(false);
+  for (let n = 0; n < 35; n++) f.tick();
+  expect(f.row()).toMatchObject({
+    innerFraction: 0,
+    innerSealRetraction: 0,
+    driverActorId: "",
+    active: false,
+  });
+});
+
+test("revoked current access cannot replay an earlier accepted manual-service receipt", () => {
+  const f = fixture();
+  const args = {
+    openingId: f.door().id,
+    expectedVisitId: "visit",
+    expectedRevision: 1n,
+    open: true,
+    operationId: "permission-replay",
+  };
+  requestNativeAirlockDoor(f.ctx, args, compile);
+  const grant = f.db.constructionGrant.id.find("draft.read");
+  f.db.constructionGrant.id.update({ ...grant, revoked: true });
+  expect(() => requestNativeAirlockDoor(f.ctx, args, compile)).toThrow(
+    "manual service",
+  );
 });

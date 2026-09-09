@@ -9,7 +9,10 @@ vi.mock("spacetimedb/server", () => ({
     { get: () => () => ({ primaryKey: () => ({}), unique: () => ({}) }) },
   ),
 }));
-vi.mock("./auth", () => ({ requireGame: () => ({ kind: "oidc" }) }));
+vi.mock("./auth", () => ({
+  requireGame: () => ({ kind: "oidc" }),
+  canReadGame: () => true,
+}));
 vi.mock("./combat", () => ({ clearAim: vi.fn() }));
 import {
   spawnBlueprint,
@@ -109,6 +112,8 @@ function fixture() {
     ),
     constructionTraversalClock: table(),
     constructionTraversalAudit: table({ by_owner: "owner" }),
+    constructionReviewOrigin: table({}, "characterId"),
+    constructionAirlock: table({ by_owner: "owner", by_active: "active" }),
     constructionDoor: table({
       by_instance: "instanceId",
       by_deck: "deckId",

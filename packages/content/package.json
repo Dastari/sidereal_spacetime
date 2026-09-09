@@ -25,7 +25,8 @@
     "./shared-system": "./src/shared-system.ts",
     "./space": "./src/space.ts",
     "./flight": "./src/flight.ts",
-    "./wayfarer-starter": "./src/wayfarer-starter.ts"
+    "./wayfarer-starter": "./src/wayfarer-starter.ts",
+    "./construction-airlock-room": "./src/construction-airlock-room.ts"
   },
   "dependencies": {}
 }

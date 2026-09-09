@@ -1,3 +1,4 @@
+import { scopedAtmosphereTable } from "./construction-atmosphere-scope";
 import { validateNativePressureRoomDocument } from "@sidereal/sim/construction-pressure-document";
 import type { ConstructionDocument } from "@sidereal/content/construction";
 import {
@@ -441,7 +442,7 @@ export function stepNativePressure(
     }
   }
   const gasChanges = stepAtmosphere(
-    ctx.db.constructionAtmosphere,
+    scopedAtmosphereTable(ctx.db.constructionAtmosphere, installations.map(i=>i.id)),
     tick,
     STEP_SECONDS,
   );

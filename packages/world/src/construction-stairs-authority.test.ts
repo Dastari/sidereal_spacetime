@@ -87,6 +87,7 @@ function fixture() {
     }),
     constructionStairAudit: table("id", { by_owner: "owner" }),
     constructionInstance: table(),
+    constructionReviewOrigin: table("characterId"),
     constructionLocation: table("characterId", { by_instance: "instanceId" }),
     constructionDeck: table(),
     character: table(),

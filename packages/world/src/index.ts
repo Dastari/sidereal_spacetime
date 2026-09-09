@@ -1,3 +1,6 @@
+import { constructionReviewOrigin } from "./construction-review-origin";
+import * as nativeAirlock from "./construction-airlock";
+import { compilePublishedNativeExternalAirlock } from "@sidereal/sim/construction-airlock-published";
 import { preserveWayfarerStarterKit } from "./wayfarer-personal-kit";
 import {
   personalStarterReceipt,
@@ -283,6 +286,8 @@ const db = schema({
   inventoryItemMembership,
   instanceInventoryBinding,
   scopedInventoryReceipt,
+  constructionReviewOrigin,
+  constructionAirlock: nativeAirlock.constructionAirlock,
   constructionInteractionBinding:
     constructionInteractions.constructionInteractionBinding,
   character,
@@ -600,6 +605,10 @@ export const stepWorld = db.reducer(
     recoverPendingConstructionPilots(ctx);
     constructionDoors.stepDoors(ctx);
     nativePressure.stepNativePressure(ctx, compilePublishedNativePressureRoom);
+    nativeAirlock.stepNativeAirlocks(
+      ctx,
+      compilePublishedNativeExternalAirlock,
+    );
     traversal.stepConstructionTraversals(ctx, nativeTraversalRegistry);
     stairs.stepConstructionStairs(ctx, createConstructionStairWorldHooks(ctx));
     combat.stepCombat(ctx);
@@ -1244,4 +1253,10 @@ export const ownGameShipAccess = db.view(
   { name: "own_game_ship_access", public: true },
   t.array(gameShipAccessProjection),
   auth.gameView(readGameShipAccess),
+);
+
+export const ownNativeAirlocks = db.view(
+  { name: "own_native_airlocks", public: true },
+  t.array(nativeAirlock.nativeAirlockProjection),
+  auth.gameView(nativeAirlock.ownNativeAirlocks),
 );

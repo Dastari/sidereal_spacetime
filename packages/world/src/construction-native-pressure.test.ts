@@ -71,6 +71,7 @@ function fixture() {
     constructionAtmosphereClock: table(),
     constructionAtmosphere: table({ by_owner: "owner" }),
     constructionInstance: table({ by_owner: "owner" }),
+    constructionAirlock: table({by_owner:"owner",by_active:"active"}),
     constructionDoor: table({
       by_instance: "instanceId",
       by_deck: "deckId",

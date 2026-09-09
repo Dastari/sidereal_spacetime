@@ -1,3 +1,8 @@
+import { compilePublishedNativeExternalAirlock } from "@sidereal/sim/construction-airlock-published";
+import {
+  ownedGameShipAccess,
+  GAME_OWNED_TEMPLATE_NAMESPACE,
+} from "./game-ship-access-authority";
 import {
   table,
   t,
@@ -392,19 +397,42 @@ function validDriver(
   )
     return false;
   try {
-    requireGrant(
-      { ...ctx, sender: row.owner },
-      instance!.workspaceId,
-      "draft.read",
-    );
-    requireGrant(
-      { ...ctx, sender: row.owner },
-      instance!.workspaceId,
-      "instance.spawn",
-    );
+    if (instance!.workspaceId === GAME_OWNED_TEMPLATE_NAMESPACE) {
+      if (
+        !ownedGameShipAccess(
+          { ...ctx, sender: row.owner },
+          row.id,
+          row.deckId,
+          ctx.timestamp.microsSinceUnixEpoch,
+        ).useObjects
+      )
+        return false;
+    } else {
+      requireGrant(
+        { ...ctx, sender: row.owner },
+        instance!.workspaceId,
+        "draft.read",
+      );
+      requireGrant(
+        { ...ctx, sender: row.owner },
+        instance!.workspaceId,
+        "instance.spawn",
+      );
+    }
   } catch {
     return false;
   }
+  return serviceReach(ctx, row, document, plan, actor, row.driveDoorId);
+}
+/** Same supported approach/obstruction test is used by command consumption and the view. */
+function serviceReach(
+  ctx: Pick<ReadContext, "db">,
+  row: ConstructionAirlockRow,
+  document: NativeAirlockDocument,
+  plan: NativeExternalAirlockPlan,
+  actor: { localX: number; localY: number },
+  doorId: string,
+) {
   const s = state(ctx, row),
     frame = nativeAirlockCollision(document, plan, [
       {
@@ -424,12 +452,14 @@ function validDriver(
     position: [actor.localX, actor.localY] as [number, number],
   };
   if (!canOccupyDeck(frame, current, 0.3)) return false;
-  const x = row.driveDoorId === row.innerDoorId ? 2 : 6;
+  const x = doorId === row.innerDoorId ? 2 : 6;
   // Existing native assets have no separately qualified service handle socket.
   // This is explicitly a nearby manual SERVICE operation, not a made-up handle.
+  // Keep the service stance outside the entire1.25m leaf sweep plus0.3m body,
+  // otherwise the closing door can invalidate its own service approach mid-motion.
   const target = {
     ...current,
-    position: [x + (actor.localX < x ? -0.7 : 0.7), 1] as [number, number],
+    position: [x + (actor.localX < x ? -1.6 : 1.6), 1] as [number, number],
   };
   return (
     Math.hypot(actor.localX - x, actor.localY - 1) <= 2.5 &&
@@ -509,18 +539,6 @@ export function requestNativeAirlockDoor(
       row.owner.isEqual(ctx.sender),
     "accepted owned visit required",
   );
-  const op = operation(
-    ctx,
-    args.operationId,
-    {
-      kind: "native-airlock-manual-service",
-      ...args,
-      expectedRevision: args.expectedRevision.toString(),
-    },
-    args.expectedRevision,
-    door!.revision,
-  );
-  if (op.replay) return true;
   const { document, plan } = verified(ctx, row, compile),
     lease = ctx.db.inputControl.characterId.find(actor!.id);
   requireAirlock(
@@ -542,6 +560,18 @@ export function requestNativeAirlockDoor(
     validDriver(ctx, driven, document, plan),
     "manual service requires supported nearby actor/control/access",
   );
+  const op = operation(
+    ctx,
+    args.operationId,
+    {
+      kind: "native-airlock-manual-service",
+      ...args,
+      expectedRevision: args.expectedRevision.toString(),
+    },
+    args.expectedRevision,
+    door!.revision,
+  );
+  if (op.replay) return true;
   const side = door!.id === row.innerDoorId ? "inner" : "outer",
     decision = requestNativeAirlock(
       state(ctx, row),
@@ -681,9 +711,14 @@ export const nativeAirlockProjection = t.row("NativeAirlockStatus", {
   chamberPressurePa: t.f64(),
   outerPressurePa: t.f64(),
   manualServiceActive: t.bool(),
+  innerCanService: t.bool(),
+  outerCanService: t.bool(),
   revision: t.u64(),
 });
-export function ownNativeAirlocks(ctx: ReadContext) {
+export function ownNativeAirlocks(
+  ctx: ReadContext,
+  compile: NativeAirlockCompiler = compilePublishedNativeExternalAirlock,
+) {
   if (!auth.canReadGame(ctx)) return [];
   const actor = ctx.db.character.by_owner
       .filter(ctx.sender)
@@ -700,8 +735,15 @@ export function ownNativeAirlocks(ctx: ReadContext) {
     visit!.deckId !== row.deckId
   )
     return [];
+  const gameAccess = ownedGameShipAccess(ctx, row.id, row.deckId);
+  if (
+    instance.workspaceId === GAME_OWNED_TEMPLATE_NAMESPACE &&
+    !gameAccess.readInterior
+  )
+    return [];
   const grants = [...ctx.db.constructionGrant.by_principal.filter(ctx.sender)];
   if (
+    !gameAccess.readInterior &&
     !["draft.read", "instance.spawn"].every((cap) =>
       grants.some(
         (g) =>
@@ -738,6 +780,26 @@ export function ownNativeAirlocks(ctx: ReadContext) {
       (c) => c.id === topology.cellCompartment.get(cell!.id),
     )!.pressurePa;
   };
+  const lease = ctx.db.inputControl.characterId.find(actor!.id),
+    presence =
+      lease && ctx.db.connectionPresence.connectionId.find(lease.connectionId),
+    session = lease && ctx.db.authSession.connectionId.find(lease.connectionId);
+  // Views use materialized admission/expiry; reducers revalidate time and the exact calling connection.
+  const controls = !!(
+    actor!.connected &&
+    lease?.owner.isEqual(ctx.sender) &&
+    presence?.owner.isEqual(ctx.sender) &&
+    session?.owner.isEqual(ctx.sender) &&
+    session.game &&
+    !ctx.db.couchSeat.characterId.find(actor!.id) &&
+    !ctx.db.constructionTraversal.characterId.find(actor!.id) &&
+    !ctx.db.constructionStairWalk.characterId.find(actor!.id)
+  );
+  const { document, plan } = verified(ctx, row, compile);
+  const canService = (doorId: string) =>
+    controls &&
+    (!row.driverActorId || row.driveDoorId === doorId) &&
+    serviceReach(ctx, row, document, plan, actor!, doorId);
   return [
     {
       id: row.id,
@@ -752,6 +814,8 @@ export function ownNativeAirlocks(ctx: ReadContext) {
       chamberPressurePa: pa("chamber"),
       outerPressurePa: 0,
       manualServiceActive: !!row.driverActorId,
+      innerCanService: canService(row.innerDoorId),
+      outerCanService: canService(row.outerDoorId),
       revision: row.revision,
     },
   ];

@@ -5,8 +5,8 @@ import{compileLayout}from"./layout-compiler";
 import{readConstructionDraft}from"./construction-transactions";
 test('two semantic doors anchor actual landing partition, roof keeps landing unroofed through explicit binding',()=>{
  const d=createNativeAirlockDocument();expect(compileLayout(d.layout).valid).toBe(true);expect(readNativeAirlockDocument(JSON.stringify(d))).toEqual(d);expect(d.airlockRoom.roofTileIds).toHaveLength(12);expect(d.airlockRoom.exteriorTileIds).toHaveLength(4);
- // Shared parser must reject until ALL matching authority/native adapters land.
- expect(()=>readConstructionDraft(JSON.stringify(d))).toThrow('Unsupported');
+ // Shared parser accepts only the exact bound native fixture.
+ expect(JSON.parse(readConstructionDraft(JSON.stringify(d)).canonical).airlockRoom).toEqual(d.airlockRoom);
 });
 test('two template spawns and JSON reload preserve independent exhaustive UUID mappings',()=>{
  const d=createNativeAirlockDocument(),ids=nativeAirlockDocumentIdentities(d),all:string[]=[];

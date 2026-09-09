@@ -357,7 +357,7 @@ export async function leaveTraversalReview(c: DbConnection) {
   await traversalWait(
     () =>
       ![...c.db.ownConstructionLocation.iter()].some(
-        (row) => row.characterId === v.characterId,
+        (row) => row.characterId === v.characterId && row.visitId === v.visitId,
       ),
     "review return",
   );

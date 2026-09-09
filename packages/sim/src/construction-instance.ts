@@ -1,3 +1,5 @@
+import { nativeAirlockCollision, readNativeAirlockDocument } from "./construction-airlock-document";
+import { compilePublishedNativeExternalAirlock } from "./construction-airlock-published";
 import {
   nativeStairRoomCollision,
   remapNativeStairRoomBinding,
@@ -220,7 +222,7 @@ export function planConstructionInstance(
     "Selected deck has insufficient standing clearance above native floor top",
   );
   assert(
-    !(source.traversalRoom || source.stairRoom) ||
+    !(source.traversalRoom || source.stairRoom || source.airlockRoom) ||
       (request.bodyRadiusM === 0.3 && request.bodyHeightM === 1.8),
     "Native traversal fixture requires its qualified standing body",
   );
@@ -281,7 +283,9 @@ export function planConstructionInstance(
           vertices: obstacle.vertices,
         });
   }
-  const collision = resolveDeckCollision(
+  const collision = source.airlockRoom
+    ? nativeAirlockCollision(readNativeAirlockDocument(verified.canonical), compilePublishedNativeExternalAirlock(source.layout.id), [])
+    : resolveDeckCollision(
     compileDeckCollision(source.layout, request.sourceDeckId, {
       shipId: "construction-spawn-validation",
       perimeterHalfWidthM: request.perimeterHalfWidthM,
@@ -331,6 +335,7 @@ export function planConstructionInstance(
     layout.nodes,
     layout.routes,
     layout.decks.flatMap((d) => d.holes),
+    source.airlockRoom?.parts ?? [],
     source.stairRoom
       ? [
           { id: source.stairRoom.stairId },
@@ -414,7 +419,7 @@ export function planConstructionInstance(
     ),
     nativeParts: map(
       "native-part",
-      source.traversalRoom?.parts ?? source.stairRoom?.parts ?? [],
+      source.traversalRoom?.parts ?? source.stairRoom?.parts ?? source.airlockRoom?.parts ?? [],
     ),
     traversalApertures: map(
       "traversal-aperture",
@@ -475,6 +480,11 @@ export function planConstructionInstance(
   for (const floor of spawned.floors) {
     floor.id = mapped(floor.id);
     floor.deckId = mapped(floor.deckId);
+  }
+  if (spawned.airlockRoom) {
+    const a=spawned.airlockRoom; a.deckId=mapped(a.deckId); a.innerDoorId=mapped(a.innerDoorId); a.outerDoorId=mapped(a.outerDoorId);
+    for(const p of a.parts)p.id=mapped(p.id);
+    a.roofTileIds=a.roofTileIds.map(mapped); a.exteriorTileIds=a.exteriorTileIds.map(mapped);
   }
   if (spawned.stairRoom)
     spawned.stairRoom = remapNativeStairRoomBinding(spawned.stairRoom, all);

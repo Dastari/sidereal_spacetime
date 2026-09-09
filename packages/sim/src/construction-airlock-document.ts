@@ -5,17 +5,9 @@ import { compileLayout } from "./layout-compiler";
 import { stableStringify } from "./layout-geometry";
 import { NATIVE_EXTERNAL_AIRLOCK_AUDIT_SHA256 } from "./construction-airlock-plan";
 
-/** Proposed additive discriminator. The shared construction parser deliberately
- * does NOT accept it until authority/renderer registration lands together. */
-export interface NativeAirlockBinding {
-  pin: { id: string; revision: string; sha256: string };
-  deckId: string;
-  innerDoorId: string;
-  outerDoorId: string;
-  parts: { id: string; sourcePartIndex: number }[];
-  roofTileIds: string[];
-  exteriorTileIds: string[];
-}
+/** Exact additive native binding, accepted only by its paired parser and authority. */
+export type { NativeAirlockBinding } from "@sidereal/content/construction";
+import type { NativeAirlockBinding } from "@sidereal/content/construction";
 export type NativeAirlockDocument = ConstructionDocument & { airlockRoom: NativeAirlockBinding };
 export function createNativeAirlockDocument(): NativeAirlockDocument {
   const layout = emptyLayout("native-external-airlock-r000-a007", "airlock-deck");

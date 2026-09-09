@@ -1,4 +1,14 @@
 import {
+  saveNativeReviewOrigin,
+  restoreNativeReviewOrigin,
+} from "./construction-review-origin";
+import { installNativeAirlock } from "./construction-airlock";
+import {
+  bindNativeAirlockPlan,
+  readNativeAirlockDocument,
+} from "@sidereal/sim/construction-airlock-document";
+import { compilePublishedNativeExternalAirlock } from "@sidereal/sim/construction-airlock-published";
+import {
   ownedGameShipAccess,
   GAME_OWNED_TEMPLATE_NAMESPACE,
 } from "./game-ship-access-authority";
@@ -128,6 +138,19 @@ export function spawnBlueprint(
     });
   }
   installDoors(ctx, plan.instanceId, plan.document);
+  if (plan.document.airlockRoom) {
+    const native = bindNativeAirlockPlan(
+      readNativeAirlockDocument(JSON.stringify(plan.document)),
+      compilePublishedNativeExternalAirlock,
+      plan.instanceId,
+    );
+    installNativeAirlock(
+      ctx,
+      plan.instanceId,
+      native.installation,
+      compilePublishedNativeExternalAirlock,
+    );
+  }
   installQualifiedInstanceCargo(ctx, plan);
   installQualifiedInstanceInteractions(ctx, plan);
   if (plan.document.stairRoom) installConstructionStair(ctx, plan.instanceId);
@@ -251,10 +274,7 @@ export function enterReview(
     0n,
   );
   if (op.replay) return;
-  if (
-    actor.shipId !== args.expectedShipId ||
-    ctx.db.constructionLocation.characterId.find(actor.id)
-  )
+  if (actor.shipId !== args.expectedShipId)
     throw new SenderError("Character location changed");
   if (
     ctx.db.station.shipId.find(actor.shipId)?.occupantId === actor.id ||
@@ -263,7 +283,8 @@ export function enterReview(
     throw new SenderError("Stand up before entering construction review");
   if (!ctx.db.ship.id.find(actor.shipId))
     throw new SenderError("Valid return ship required");
-  ctx.db.constructionLocation.insert({
+  const nativeOrigin = saveNativeReviewOrigin(ctx, actor.id, instance.id);
+  const reviewLocation = {
     characterId: actor.id,
     visitId: ctx.newUuidV4().toString(),
     instanceId: instance.id,
@@ -272,7 +293,10 @@ export function enterReview(
     returnX: actor.localX,
     returnY: actor.localY,
     revision: 1n,
-  });
+  };
+  if (nativeOrigin)
+    ctx.db.constructionLocation.characterId.update(reviewLocation);
+  else ctx.db.constructionLocation.insert(reviewLocation);
   ctx.db.character.id.update({
     ...actor,
     shipId: instance.id,
@@ -308,6 +332,27 @@ export function leaveReview(
     location?.revision ?? 0n,
   );
   if (op.replay) return;
+  if (ctx.db.couchSeat.characterId.find(actor.id))
+    throw new SenderError("Stand up before leaving construction review");
+  if (ctx.db.constructionPilotSeat.characterId.find(actor.id))
+    throw new SenderError("Stand up before leaving construction review");
+  if (ctx.db.constructionFlightReview.characterId.find(actor.id))
+    throw new SenderError("Use the saved flight-review return transition");
+  if (
+    location &&
+    location.visitId === args.expectedVisitId &&
+    restoreNativeReviewOrigin(ctx, actor.id)
+  ) {
+    clearControls(ctx, actor.id);
+    receipt(
+      ctx,
+      op.key,
+      op.request,
+      ctx.db.character.id.find(actor.id)!.shipId,
+      args.expectedRevision,
+    );
+    return;
+  }
   if (
     !location ||
     location.visitId !== args.expectedVisitId ||
@@ -315,12 +360,6 @@ export function leaveReview(
     !ctx.db.ship.id.find(location.returnShipId)
   )
     throw new SenderError("Valid review return location required");
-  if (ctx.db.couchSeat.characterId.find(actor.id))
-    throw new SenderError("Stand up before leaving construction review");
-  if (ctx.db.constructionPilotSeat.characterId.find(actor.id))
-    throw new SenderError("Stand up before leaving construction review");
-  if (ctx.db.constructionFlightReview.characterId.find(actor.id))
-    throw new SenderError("Use the saved flight-review return transition");
   // Returning must remain possible after a workspace grant expires.
   ctx.db.character.id.update({
     ...actor,

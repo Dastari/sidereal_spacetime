@@ -29,6 +29,15 @@ export interface ConstructionGrant {
 export interface ConstructionFloor extends InterfacePlacement {
   deckId: string;
 }
+export interface NativeAirlockBinding {
+  pin: { id: string; revision: string; sha256: string };
+  deckId: string;
+  innerDoorId: string;
+  outerDoorId: string;
+  parts: { id: string; sourcePartIndex: number }[];
+  roofTileIds: string[];
+  exteriorTileIds: string[];
+}
 export interface NativeStairRoomBinding {
   pin: { id: string; revision: string; sha256: string };
   lowerDeckId: string;
@@ -52,6 +61,8 @@ export interface ConstructionDocument {
   /** Exact bounded native enclosure review, not a generic pressure flag. */
   /** Exact supported-walking native stair fixture; no pressure qualification. */
   stairRoom?: NativeStairRoomBinding;
+  /** Exact two-door native composite, with separately accepted atmosphere and manual actuators. */
+  airlockRoom?: NativeAirlockBinding;
   pressureRoom?: { id: string; revision: string; sha256: string };
   /** Exact native two-deck manual traversal fixture; no pressure qualification. */
   traversalRoom?: {

@@ -148,6 +148,31 @@ export const ConnectionPresence = __t.object("ConnectionPresence", {
 });
 export type ConnectionPresence = __Infer<typeof ConnectionPresence>;
 
+export const ConstructionAirlock = __t.object("ConstructionAirlock", {
+  id: __t.string(),
+  owner: __t.identity(),
+  deckId: __t.string(),
+  innerDoorId: __t.string(),
+  outerDoorId: __t.string(),
+  documentHash: __t.string(),
+  auditSha256: __t.string(),
+  installationFingerprint: __t.string(),
+  installedPartsJson: __t.string(),
+  innerSealRetraction: __t.f64(),
+  outerSealRetraction: __t.f64(),
+  innerFraction: __t.f64(),
+  outerFraction: __t.f64(),
+  driverActorId: __t.string(),
+  driverConnectionId: __t.string(),
+  driveDoorId: __t.string(),
+  driveExpiresMicros: __t.u64(),
+  active: __t.bool(),
+  tick: __t.u64(),
+  lastScheduleMicros: __t.u64(),
+  revision: __t.u64(),
+});
+export type ConstructionAirlock = __Infer<typeof ConstructionAirlock>;
+
 export const ConstructionAtmosphere = __t.object("ConstructionAtmosphere", {
   id: __t.string(),
   owner: __t.identity(),
@@ -466,6 +491,24 @@ export const ConstructionReceipt = __t.object("ConstructionReceipt", {
   revision: __t.u64(),
 });
 export type ConstructionReceipt = __Infer<typeof ConstructionReceipt>;
+
+export const ConstructionReviewOrigin = __t.object("ConstructionReviewOrigin", {
+  characterId: __t.string(),
+  owner: __t.identity(),
+  reviewInstanceId: __t.string(),
+  visitId: __t.string(),
+  instanceId: __t.string(),
+  deckId: __t.string(),
+  returnShipId: __t.string(),
+  returnX: __t.f64(),
+  returnY: __t.f64(),
+  locationRevision: __t.u64(),
+  x: __t.f64(),
+  y: __t.f64(),
+  sourceRevision: __t.u64(),
+  sourceSha256: __t.string(),
+});
+export type ConstructionReviewOrigin = __Infer<typeof ConstructionReviewOrigin>;
 
 export const ConstructionStairAudit = __t.object("ConstructionStairAudit", {
   id: __t.string(),
@@ -886,6 +929,25 @@ export const MovementTimer = __t.object("MovementTimer", {
 });
 export type MovementTimer = __Infer<typeof MovementTimer>;
 
+export const NativeAirlockStatus = __t.object("NativeAirlockStatus", {
+  id: __t.string(),
+  deckId: __t.string(),
+  innerDoorId: __t.string(),
+  outerDoorId: __t.string(),
+  innerFraction: __t.f64(),
+  outerFraction: __t.f64(),
+  innerSealRetraction: __t.f64(),
+  outerSealRetraction: __t.f64(),
+  interiorPressurePa: __t.f64(),
+  chamberPressurePa: __t.f64(),
+  outerPressurePa: __t.f64(),
+  manualServiceActive: __t.bool(),
+  innerCanService: __t.bool(),
+  outerCanService: __t.bool(),
+  revision: __t.u64(),
+});
+export type NativeAirlockStatus = __Infer<typeof NativeAirlockStatus>;
+
 export const OwnActuatorOutputs = __t.object("OwnActuatorOutputs", {});
 export type OwnActuatorOutputs = __Infer<typeof OwnActuatorOutputs>;
 
@@ -984,6 +1046,9 @@ export type OwnInventoryItems = __Infer<typeof OwnInventoryItems>;
 
 export const OwnInventoryState = __t.object("OwnInventoryState", {});
 export type OwnInventoryState = __Infer<typeof OwnInventoryState>;
+
+export const OwnNativeAirlocks = __t.object("OwnNativeAirlocks", {});
+export type OwnNativeAirlocks = __Infer<typeof OwnNativeAirlocks>;
 
 export const OwnReachableCargoContainers = __t.object("OwnReachableCargoContainers", {});
 export type OwnReachableCargoContainers = __Infer<typeof OwnReachableCargoContainers>;

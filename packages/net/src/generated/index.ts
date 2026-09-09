@@ -107,6 +107,7 @@ import OwnInventoryContainersRow from "./own_inventory_containers_table";
 import OwnInventoryHotbarRow from "./own_inventory_hotbar_table";
 import OwnInventoryItemsRow from "./own_inventory_items_table";
 import OwnInventoryStateRow from "./own_inventory_state_table";
+import OwnNativeAirlocksRow from "./own_native_airlocks_table";
 import OwnReachableCargoContainersRow from "./own_reachable_cargo_containers_table";
 import OwnReachableCargoItemsRow from "./own_reachable_cargo_items_table";
 import OwnShipsRow from "./own_ships_table";
@@ -325,6 +326,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnInventoryStateRow),
+  ownNativeAirlocks: __table({
+    name: 'own_native_airlocks',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnNativeAirlocksRow),
   ownReachableCargoContainers: __table({
     name: 'own_reachable_cargo_containers',
     indexes: [

@@ -1,3 +1,4 @@
+import { readNativeAirlockDocument } from "./construction-airlock-document";
 import { validateNativeStairRoomDocument } from "./construction-stairs-document";
 import { validateNativeTraversalRoomDocument } from "./construction-traversal-document";
 import { validateNativePressureRoomDocument } from "./construction-pressure-document";
@@ -109,6 +110,7 @@ export function readConstructionDraft(raw: string): {
           "pressureRoom",
           "traversalRoom",
           "stairRoom",
+          "airlockRoom",
         ].includes(k),
     )
   )
@@ -175,6 +177,12 @@ export function readConstructionDraft(raw: string): {
   }
   // JSON.parse above already owns this data; SpacetimeDB has no structuredClone global.
   const normalized = input as unknown as ConstructionDocument;
+  if (input.airlockRoom !== undefined) {
+    readNativeAirlockDocument(JSON.stringify(normalized));
+    normalized.airlockRoom!.parts.sort((a,b)=>a.sourcePartIndex-b.sourcePartIndex);
+    normalized.airlockRoom!.roofTileIds.sort(compareText);
+    normalized.airlockRoom!.exteriorTileIds.sort(compareText);
+  }
   if (input.stairRoom !== undefined) {
     validateNativeStairRoomDocument(normalized);
     for (const bindings of [

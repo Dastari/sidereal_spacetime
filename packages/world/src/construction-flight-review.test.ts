@@ -98,6 +98,7 @@ function fixture() {
   const owner = Identity.fromString("1".repeat(64));
   const db: any = {
     character: table("id", "by_owner"),
+    constructionReviewOrigin: table("characterId"),
     constructionLocation: table("characterId"),
     worldAdmission: table("characterId"),
     constructionInstance: table(),

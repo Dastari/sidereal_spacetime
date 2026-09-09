@@ -1,3 +1,5 @@
+import { requestNativeAirlockDoor, acceptedNativeAirlockCollision, ownNativeAirlocks } from "./construction-airlock";
+import { compilePublishedNativeExternalAirlock } from "@sidereal/sim/construction-airlock-published";
 import { qualifiedWayfarerInstanceObstacles, QUALIFIED_WAYFARER_SHA256 } from "../../sim/src/wayfarer-walking-bindings";
 import { nativeStairRoomCollision } from "@sidereal/sim/construction-stairs-document";
 import {
@@ -42,6 +44,7 @@ export function installDoors(
   instanceId: string,
   document: ConstructionDocument,
 ) {
+  if (document.airlockRoom) return; // Exact two-door installation owns both frames.
   if (document.pressureRoom) {
     // Publication already validates the exact native room document. Its source
     // door is a full 2m module at this frame, not the narrower semantic aperture.
@@ -88,6 +91,8 @@ export function constructionCollision(
   instance: { id: string; revision: bigint; documentJson: string },
   deckId: string,
 ) {
+  if ((JSON.parse(instance.documentJson) as ConstructionDocument).airlockRoom)
+    return acceptedNativeAirlockCollision(ctx,instance,deckId,compilePublishedNativeExternalAirlock);
   const key = instance.id + ":" + instance.revision + ":" + deckId;
   let base = baseCache.get(key);
   if (!base) {
@@ -155,6 +160,7 @@ export function requestDoor(
     operationId: string;
   },
 ) {
+  if(requestNativeAirlockDoor(ctx,args,compilePublishedNativeExternalAirlock))return;
   const actor = [...ctx.db.character.by_owner.filter(ctx.sender)][0],
     visit = actor && ctx.db.constructionLocation.characterId.find(actor.id),
     door = ctx.db.constructionDoor.id.find(args.openingId);
@@ -232,6 +238,7 @@ export function requestDoor(
 }
 export function stepDoors(ctx: Context) {
   for (const door of ctx.db.constructionDoor.by_moving.filter(true)) {
+    if(ctx.db.constructionAirlock.id.find(door.instanceId))continue;
     // This controller cannot move a native pressure leaf through a deployed gasket.
     if (
       ctx.db.constructionNativePressure.id.find(door.instanceId)?.doorId ===
@@ -280,7 +287,8 @@ export const doorProjection = t.row("ConstructionDoorStatus", {
   revision: t.u64(),
 });
 export function ownDoors(ctx: ReadContext) {
-  return [...ctx.db.constructionInstance.by_owner.filter(ctx.sender)].flatMap(
+  const acceptedAirlocks=new Set(ownNativeAirlocks(ctx).map(a=>a.id));
+  return [...ctx.db.constructionInstance.by_owner.filter(ctx.sender)].filter(i=>!ctx.db.constructionAirlock.id.find(i.id)||acceptedAirlocks.has(i.id)).flatMap(
     (i) =>
       [...ctx.db.constructionDoor.by_instance.filter(i.id)].map(
         ({

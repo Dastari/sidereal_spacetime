@@ -159,7 +159,7 @@ def main():
     smoke_database = CFG['project']['database'] + '-smoke'
     if args.smoke_name is not None:
         import re
-        if command not in ('smoke', 'smoke-restart', 'smoke-auth-admission') or not re.fullmatch(r'[a-z0-9][a-z0-9-]{0,39}', args.smoke_name):
+        if command not in ('smoke', 'smoke-restart', 'smoke-auth-admission', 'smoke-update') or not re.fullmatch(r'[a-z0-9][a-z0-9-]{0,39}', args.smoke_name):
             parser.error('--smoke-name requires a smoke command and lowercase name of at most40 characters')
         smoke_database = CFG['project']['database'] + '-' + args.smoke_name + '-smoke'
     if args.fresh_smoke and (command != 'smoke' or not args.smoke_name or len(args.smoke_name) > 32):
@@ -209,7 +209,7 @@ def main():
         else:
             publish(CFG['project']['database'] + '-review-' + args.review_name, reset=False)
     elif command == 'smoke-update':
-        publish(CFG['project']['database'] + '-smoke', reset=False)
+        publish(smoke_database, reset=False)
     elif command == 'smoke-prepare':
         publish(CFG['project']['database'] + '-smoke', reset=True)
     elif command in ('smoke', 'smoke-restart', 'smoke-auth-admission'):

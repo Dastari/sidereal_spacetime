@@ -12,8 +12,8 @@
     "afterSha256": "8548ea867575a52528c9f8791415033c1c7ab2e530b30631019e6e02b5d873cc"
   },
   "packages/sim/package.json": {
-    "beforeSha256": "f97d06d52011a70d25d1cb73e2a77cb2080d2a7358f450ea17b95a61a4a693fc",
-    "afterSha256": "20d6601b52428b981ddb11153d765cd9dcf209efdbcad69d1033f606e7f479a4"
+    "beforeSha256": "f7378ecdbbfbe2492d03f9240454c7b3b1d215f4ff2b81a9794bb54184685e4b",
+    "afterSha256": "c70993ba7b7394a372bee88e63eb98866cf59dda8c8fbb63a14b7c7930f40a19"
   },
   "packages/sim/src/construction-airlock-published.ts": {
     "beforeSha256": "a47be9c931986bf4cda465cc9696e74496edb531d799c3c7e6d135677ad4c19d",
@@ -32,8 +32,8 @@
     "afterSha256": "e1e6a66d0fecca4d5a7553196e0ac9f66c313a6622957c42ed3a99aeff8215c7"
   },
   "packages/world/src/construction-instances.ts": {
-    "beforeSha256": "1368d1eb33178e639aef094ec39d2bc09e93128c9f56cf54bd5bd0daa71db423",
-    "afterSha256": "bc558a5d7a1e60cf4b2fa55f027e9fa1fd009f7e25d11f0d488a2ce3fcfa9b98"
+    "beforeSha256": "9156c36c4eea5ea0b8f1e22b055adc0eab3c67586be8d27a875dc8d1ec2bfa1e",
+    "afterSha256": "fd644e3da7c80d8af658a8c789024a8ac96271f6bcd27990fe3fc7661815f6e7"
   },
   "packages/world/src/construction-doors.ts": {
     "beforeSha256": "cc9f7480e4632ca937c7bce3aaf0850952b45d6fe8569a435946be31b8da25e0",
@@ -44,7 +44,11 @@
     "afterSha256": "e5bf2615eab2fbeb3bac2a8e80395dd49dd4d4d359fb7c391da5b7f4af627208"
   },
   "packages/world/src/index.ts": {
-    "beforeSha256": "ac61f2ad5fa6f9f683fe66c4be5622e00f777aed09f827818ced73fb764ee01a",
-    "afterSha256": "96caad3d65bd2f919bf88647f2db9c6304e7b46f5d87b202353545e408e11aca"
+    "beforeSha256": "16ba33ec033a7c63edfc4d97c8588604b14366e0b076e6bf62b478f016bbda5c",
+    "afterSha256": "4491c6e0614202c9c55ded7d78bb4d719f752a759496bddca3be0ba568459131"
+  },
+  "packages/world/src/construction-airlock.ts": {
+    "beforeSha256": "09d5c48dcd3f550f69babcb1edb324ba4e9d6e512cb8dcd8e763908a9f5a023f",
+    "afterSha256": "e4da3e9b296ed9206d822601ddfb2dd5633b975580c80451b677f04e05a5fc91"
   }
 }
