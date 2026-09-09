@@ -36,6 +36,32 @@ export const AuthSession = __t.object("AuthSession", {
 });
 export type AuthSession = __Infer<typeof AuthSession>;
 
+export const AuthoredFlightFitting = __t.object("AuthoredFlightFitting", {
+  id: __t.string(),
+  shipId: __t.string(),
+  placedObjectId: __t.string(),
+  sourceDeviceId: __t.string(),
+  kind: __t.string(),
+});
+export type AuthoredFlightFitting = __Infer<typeof AuthoredFlightFitting>;
+
+export const AuthoredFlightStatus = __t.object("AuthoredFlightStatus", {
+  shipId: __t.string(),
+  stationId: __t.string(),
+  stationRevision: __t.u64(),
+  deckId: __t.string(),
+  lifecycle: __t.string(),
+  revision: __t.u64(),
+  active: __t.bool(),
+  flightAdmitted: __t.bool(),
+  visitId: __t.string(),
+  visitRevision: __t.u64(),
+  admissionRevision: __t.u64(),
+  seatState: __t.string(),
+  seatRevision: __t.u64(),
+});
+export type AuthoredFlightStatus = __Infer<typeof AuthoredFlightStatus>;
+
 export const BodyWorldMotion = __t.object("BodyWorldMotion", {
   bodyId: __t.string(),
   systemId: __t.string(),
@@ -233,6 +259,69 @@ export const ConstructionDraftStatus = __t.object("ConstructionDraftStatus", {
 });
 export type ConstructionDraftStatus = __Infer<typeof ConstructionDraftStatus>;
 
+export const ConstructionFlightBinding = __t.object("ConstructionFlightBinding", {
+  shipId: __t.string(),
+  instanceId: __t.string(),
+  owner: __t.identity(),
+  deckId: __t.string(),
+  stationId: __t.string(),
+  instanceRevision: __t.u64(),
+  blueprintSha256: __t.string(),
+  definitionId: __t.string(),
+  definitionSha256: __t.string(),
+  lifecycle: __t.string(),
+  revision: __t.u64(),
+});
+export type ConstructionFlightBinding = __Infer<typeof ConstructionFlightBinding>;
+
+export const ConstructionFlightFitting = __t.object("ConstructionFlightFitting", {
+  id: __t.string(),
+  shipId: __t.string(),
+  placedObjectId: __t.string(),
+  sourceDeviceId: __t.string(),
+  definitionId: __t.string(),
+  kind: __t.string(),
+  installed: __t.bool(),
+  powered: __t.bool(),
+  availability: __t.f64(),
+  revision: __t.u64(),
+});
+export type ConstructionFlightFitting = __Infer<typeof ConstructionFlightFitting>;
+
+export const ConstructionFlightReceipt = __t.object("ConstructionFlightReceipt", {
+  id: __t.string(),
+  owner: __t.identity(),
+  requestJson: __t.string(),
+  instanceId: __t.string(),
+  shipId: __t.string(),
+  stationId: __t.string(),
+  revision: __t.u64(),
+});
+export type ConstructionFlightReceipt = __Infer<typeof ConstructionFlightReceipt>;
+
+export const ConstructionFlightReview = __t.object("ConstructionFlightReview", {
+  characterId: __t.string(),
+  owner: __t.identity(),
+  visitId: __t.string(),
+  instanceId: __t.string(),
+  deckId: __t.string(),
+  originalShipId: __t.string(),
+  originalSystemId: __t.string(),
+  originalAdmissionRevision: __t.u64(),
+  reviewAdmissionRevision: __t.u64(),
+});
+export type ConstructionFlightReview = __Infer<typeof ConstructionFlightReview>;
+
+export const ConstructionFlightStation = __t.object("ConstructionFlightStation", {
+  stationId: __t.string(),
+  shipId: __t.string(),
+  deckId: __t.string(),
+  seatPlacedObjectId: __t.string(),
+  consolePlacedObjectId: __t.string(),
+  revision: __t.u64(),
+});
+export type ConstructionFlightStation = __Infer<typeof ConstructionFlightStation>;
+
 export const ConstructionGrant = __t.object("ConstructionGrant", {
   id: __t.string(),
   principal: __t.identity(),
@@ -355,6 +444,19 @@ export const ConstructionNativePressureStatus = __t.object("ConstructionNativePr
   },
 });
 export type ConstructionNativePressureStatus = __Infer<typeof ConstructionNativePressureStatus>;
+
+export const ConstructionPilotSeat = __t.object("ConstructionPilotSeat", {
+  characterId: __t.string(),
+  owner: __t.identity(),
+  stationId: __t.string(),
+  shipId: __t.string(),
+  deckId: __t.string(),
+  instanceRevision: __t.u64(),
+  revision: __t.u64(),
+  recoveryRequested: __t.bool(),
+  recoveryReason: __t.string(),
+});
+export type ConstructionPilotSeat = __Infer<typeof ConstructionPilotSeat>;
 
 export const ConstructionReceipt = __t.object("ConstructionReceipt", {
   id: __t.string(),
@@ -767,6 +869,12 @@ export type OwnActuatorOutputs = __Infer<typeof OwnActuatorOutputs>;
 
 export const OwnAppearance = __t.object("OwnAppearance", {});
 export type OwnAppearance = __Infer<typeof OwnAppearance>;
+
+export const OwnAuthoredFlightFittings = __t.object("OwnAuthoredFlightFittings", {});
+export type OwnAuthoredFlightFittings = __Infer<typeof OwnAuthoredFlightFittings>;
+
+export const OwnAuthoredFlights = __t.object("OwnAuthoredFlights", {});
+export type OwnAuthoredFlights = __Infer<typeof OwnAuthoredFlights>;
 
 export const OwnCarriedInventoryRevisions = __t.object("OwnCarriedInventoryRevisions", {});
 export type OwnCarriedInventoryRevisions = __Infer<typeof OwnCarriedInventoryRevisions>;

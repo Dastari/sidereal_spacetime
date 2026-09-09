@@ -53,6 +53,9 @@ function table(
 }
 export function fixture() {
   const db: any = {
+    constructionFlightReview: table("characterId"),
+    constructionFlightBinding: table("shipId"),
+    constructionInstance: table("id"),
     worldSystem: table("id"),
     shipWorldMotion: table("shipId", {
       by_system: "systemId",

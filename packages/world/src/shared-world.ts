@@ -276,7 +276,7 @@ function caller(ctx: SharedJoinContext, args: JoinSharedSystemArgs) {
 }
 /** Deterministic server berth. Conservative hull bounding circles guarantee no
  * overlap without replacing the actual capsule contact representation. */
-function reserveBerth(db: SharedWorldDatabase, systemId: string) {
+export function reserveBerth(db: SharedWorldDatabase, systemId: string) {
   const ships = bounded(
     db.shipWorldMotion.by_system.filter(systemId),
     SHARED_SYSTEM_MAX_SHIPS,

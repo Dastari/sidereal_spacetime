@@ -9,7 +9,10 @@ import { Identity } from "spacetimedb";
 vi.mock("spacetimedb/server", () => ({
   SenderError: class extends Error {},
   table: () => ({}),
-  t: new Proxy({}, { get: () => () => ({ primaryKey: () => ({}), unique: () => ({}) }) }),
+  t: new Proxy(
+    {},
+    { get: () => () => ({ primaryKey: () => ({}), unique: () => ({}) }) },
+  ),
 }));
 import {
   createNativeStairRoomDocument,
@@ -69,6 +72,8 @@ function fixture() {
     egress = 0,
     combat = 0;
   const db: any = {
+    constructionPilotSeat: table("characterId", { by_owner: "owner" }),
+    constructionFlightReview: table("characterId"),
     constructionStairLink: table("id", {
       by_instance: "instanceId",
       by_owner: "owner",
@@ -548,7 +553,11 @@ function bindRealWorldHooks(f: ReturnType<typeof fixture>) {
     revoked: false,
     revision: 1n,
   });
-  db.constructionGrant.insert({ ...db.constructionGrant.id.find("spawn"), id: "read", capability: "draft.read" });
+  db.constructionGrant.insert({
+    ...db.constructionGrant.id.find("spawn"),
+    id: "read",
+    capability: "draft.read",
+  });
   db.ship.insert({ id: "safe-return-ship", owner });
   const visit = db.constructionLocation.characterId.find("actor");
   db.constructionLocation.characterId.update({
@@ -859,15 +868,19 @@ test("supported grant-loss egress does not rewrite its pose for idle input keepa
   expect(f.row().acceptedY).toBeGreaterThan(position[1]);
 });
 
-
 test("read-only grant loss denies ordinary walking while spawn permission survives", () => {
   const f = fixture();
   bindRealWorldHooks(f);
   expect(f.hooks.mayEnter(owner, "workspace")).toBe(true);
-  f.db.constructionGrant.id.update({ ...f.db.constructionGrant.id.find("read"), revoked: true });
+  f.db.constructionGrant.id.update({
+    ...f.db.constructionGrant.id.find("read"),
+    revoked: true,
+  });
   expect(f.db.constructionGrant.id.find("spawn").revoked).toBe(false);
   expect(f.hooks.mayEnter(owner, "workspace")).toBe(false);
   const before = { ...f.db.character.id.find("actor") };
-  expect(stepActor(f.ctx, before, { dx: 0, dy: 1, sprint: false }, f.hooks)).toBe(true);
+  expect(
+    stepActor(f.ctx, before, { dx: 0, dy: 1, sprint: false }, f.hooks),
+  ).toBe(true);
   expect(f.db.character.id.find("actor")).toEqual(before);
 });

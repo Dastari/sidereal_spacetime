@@ -1,4 +1,31 @@
 import {
+  constructionFlightBinding,
+  constructionFlightFitting,
+  constructionFlightStation,
+  constructionFlightReceipt,
+} from "./construction-flight-tables";
+import { constructionPilotSeat } from "./construction-pilot-tables";
+import { constructionFlightReview } from "./construction-flight-review-tables";
+import {
+  authoredFlightProjection,
+  authoredFlightFittingProjection,
+  ownAuthoredFlights as readAuthoredFlights,
+  ownAuthoredFlightFittings as readAuthoredFlightFittings,
+} from "./construction-flight-views";
+import {
+  beginConstructionFlightReview,
+  returnConstructionFlightReview,
+} from "./construction-flight-review";
+import { installConstructionFlightAuthority } from "./construction-flight-authority";
+import { activateConstructionFlight } from "./construction-flight-activation";
+import { resolveShipFlightDefinition } from "./construction-flight-resolver";
+import {
+  enterConstructionPilotAuthority,
+  canConsumeConstructionPilot,
+  recoverConstructionPilotAuthority,
+  recoverPendingConstructionPilots,
+} from "./construction-pilot-authority";
+import {
   worldSystem,
   shipWorldMotion,
   systemBody,
@@ -186,7 +213,19 @@ const movementTimer = table(
   { scheduledId: t.u64().primaryKey().autoInc(), scheduledAt: t.scheduleAt() },
 );
 const db = schema({
-  worldSystem, shipWorldMotion, systemBody, bodyWorldMotion, worldAdmission, worldJoinReceipt, legacyBodyAlias,
+  constructionFlightBinding,
+  constructionFlightFitting,
+  constructionFlightStation,
+  constructionFlightReceipt,
+  constructionPilotSeat,
+  constructionFlightReview,
+  worldSystem,
+  shipWorldMotion,
+  systemBody,
+  bodyWorldMotion,
+  worldAdmission,
+  worldJoinReceipt,
+  legacyBodyAlias,
   constructionStairLink,
   constructionStairWalk,
   constructionStairReservation,
@@ -233,7 +272,8 @@ const db = schema({
   inventoryItemMembership,
   instanceInventoryBinding,
   scopedInventoryReceipt,
-  constructionInteractionBinding: constructionInteractions.constructionInteractionBinding,
+  constructionInteractionBinding:
+    constructionInteractions.constructionInteractionBinding,
   character,
   ship,
   station,
@@ -274,9 +314,11 @@ export const ownSpaceBodies = db.view(
     !auth.canReadGame(ctx)
       ? []
       : [...ctx.db.ship.by_owner.filter(ctx.sender)].flatMap((s) =>
-          ctx.db.shipWorldMotion.shipId.find(s.id) ? [] : [...ctx.db.spaceBody.by_ship.filter(s.id)].filter((b) =>
-            bodyDiscoverable(b.kind, b.x, b.y, s.x, s.y),
-          ),
+          ctx.db.shipWorldMotion.shipId.find(s.id)
+            ? []
+            : [...ctx.db.spaceBody.by_ship.filter(s.id)].filter((b) =>
+                bodyDiscoverable(b.kind, b.x, b.y, s.x, s.y),
+              ),
         ),
 );
 export const ownCharacters = db.view(
@@ -475,17 +517,27 @@ export const setIntent = db.reducer(
     if (!actor?.connected) throw new SenderError("Enter the lab first");
     if (ctx.db.constructionTraversal.characterId.find(actor.id)) return;
     const command = ctx.db.input.characterId.find(actor.id);
-    if (!command || !inputControl.canRecordInput(ctx, actor.id, args.sequence)) return;
+    if (!command || !inputControl.canRecordInput(ctx, actor.id, args.sequence))
+      return;
     const seat = ctx.db.station.shipId.find(actor.shipId);
     const onStair = !!ctx.db.constructionStairWalk.characterId.find(actor.id);
-    const controlled = !onStair && seat?.operational && seat.occupantId === actor.id;
+    const controlled =
+      !onStair &&
+      seat?.operational &&
+      seat.occupantId === actor.id &&
+      (!ctx.db.constructionFlightBinding.shipId.find(actor.shipId) ||
+        canConsumeConstructionPilot(ctx, actor.id));
     if ((args.throttle !== 0 || args.turn !== 0) && !controlled)
       throw new SenderError("Occupy the control station to pilot");
     if (!inputControl.recordInput(ctx, actor.id, args.sequence)) return;
     ctx.db.input.characterId.update({
       ...command,
       ...args,
-      sprint: args.sprint && !controlled && !onStair && (args.dx !== 0 || args.dy !== 0),
+      sprint:
+        args.sprint &&
+        !controlled &&
+        !onStair &&
+        (args.dx !== 0 || args.dy !== 0),
       updatedMicros: ctx.timestamp.microsSinceUnixEpoch,
     });
   },
@@ -496,6 +548,8 @@ export const useStation = db.reducer((ctx) => {
   if (!actor?.connected) throw new SenderError("Character unavailable");
   traversal.requireStandingConstructionActor(ctx, actor.id);
   stairs.requireNoConstructionStair(ctx, actor.id);
+  if (ctx.db.constructionFlightBinding.shipId.find(actor.shipId))
+    throw new SenderError("Use the native construction pilot command");
   const seat = ctx.db.station.shipId.find(actor.shipId);
   if (!seat?.operational) throw new SenderError("Station unavailable");
   if (ctx.db.couchSeat.characterId.find(actor.id))
@@ -588,6 +642,7 @@ export const stepWorld = db.reducer(
     auth.expireSessions(ctx);
     construction.expireGrants(ctx);
     constructionInteractions.recoverConstructionSeats(ctx);
+    recoverPendingConstructionPilots(ctx);
     constructionDoors.stepDoors(ctx);
     nativePressure.stepNativePressure(ctx, compilePublishedNativePressureRoom);
     traversal.stepConstructionTraversals(ctx, nativeTraversalRegistry);
@@ -595,7 +650,29 @@ export const stepWorld = db.reducer(
     combat.stepCombat(ctx);
     // The canonical contact island advances once for all admitted ships/bodies,
     // never inside the legacy per-owner loop below.
-    stepSharedWorld(ctx);
+    stepSharedWorld(ctx, undefined, {
+      definitionForShip: (shipId) =>
+        resolveShipFlightDefinition(
+          {
+            binding: (id) => ctx.db.constructionFlightBinding.shipId.find(id),
+            constructionInstanceExists: (id) =>
+              !!ctx.db.constructionInstance.id.find(id),
+            currentInstanceRevision: (id) =>
+              ctx.db.constructionInstance.id.find(id)?.revision,
+            fittings: (id) =>
+              ctx.db.constructionFlightFitting.by_ship.filter(id),
+          },
+          shipId,
+        ),
+      canPilot: (characterId) => {
+        const actor = ctx.db.character.id.find(characterId);
+        return (
+          !!actor &&
+          (!ctx.db.constructionFlightBinding.shipId.find(actor.shipId) ||
+            canConsumeConstructionPilot(ctx, characterId))
+        );
+      },
+    });
     for (const target of ctx.db.ship.iter()) {
       if (ctx.db.shipWorldMotion.shipId.find(target.id)) continue;
       const seat = ctx.db.station.shipId.find(target.id);
@@ -732,7 +809,11 @@ export const stepWorld = db.reducer(
       const sprinting =
         command.sprint &&
         (point.x !== actor.localX || point.y !== actor.localY);
-      if (point.x !== actor.localX || point.y !== actor.localY || sprinting !== actor.sprinting)
+      if (
+        point.x !== actor.localX ||
+        point.y !== actor.localY ||
+        sprinting !== actor.sprinting
+      )
         ctx.db.character.id.update({
           ...actor,
           localX: point.x,
@@ -1061,11 +1142,13 @@ export const joinSharedSystem = db.reducer(
   auth.gameAction(sharedWorld.joinSharedSystem),
 );
 export const ownWorldAdmission = db.view(
-  { name: "own_world_admission", public: true }, t.array(sharedViews.ownWorldAdmissionProjection),
+  { name: "own_world_admission", public: true },
+  t.array(sharedViews.ownWorldAdmissionProjection),
   auth.gameView(sharedViews.ownWorldAdmission),
 );
 export const visibleShipMotion = db.view(
-  { name: "visible_ship_motion", public: true }, t.array(sharedViews.visibleShipMotionProjection),
+  { name: "visible_ship_motion", public: true },
+  t.array(sharedViews.visibleShipMotionProjection),
   auth.gameView(sharedViews.visibleShipMotion),
 );
 export const visibleShipDescriptions = db.view(
@@ -1083,11 +1166,13 @@ export const visibleShipDescriptions = db.view(
   ),
 );
 export const visibleBodyMotion = db.view(
-  { name: "visible_body_motion", public: true }, t.array(sharedViews.visibleBodyMotionProjection),
+  { name: "visible_body_motion", public: true },
+  t.array(sharedViews.visibleBodyMotionProjection),
   auth.gameView(sharedViews.visibleBodyMotion),
 );
 export const visibleBodyDescriptions = db.view(
-  { name: "visible_body_descriptions", public: true }, t.array(sharedViews.visibleBodyDescriptionProjection),
+  { name: "visible_body_descriptions", public: true },
+  t.array(sharedViews.visibleBodyDescriptionProjection),
   auth.gameView(sharedViews.visibleBodyDescriptions),
 );
 
@@ -1124,6 +1209,76 @@ export const transferScopedCargoItem = db.reducer(
 );
 
 export const ownConstructionSeat = db.view(
-  { name: "own_construction_seat", public: true }, t.array(constructionInteractions.constructionSeatProjection),
+  { name: "own_construction_seat", public: true },
+  t.array(constructionInteractions.constructionSeatProjection),
   auth.gameView(constructionInteractions.ownConstructionSeat),
+);
+
+// Explicit owner review membership switch; ordinary login never invokes these.
+export const beginAuthoredFlightReview = db.reducer(
+  {
+    expectedVisitId: t.string(),
+    expectedVisitRevision: t.u64(),
+    expectedAdmissionRevision: t.u64(),
+    operationId: t.string(),
+  },
+  auth.gameAction(beginConstructionFlightReview, true),
+);
+export const returnAuthoredFlightReview = db.reducer(
+  {
+    expectedVisitId: t.string(),
+    expectedVisitRevision: t.u64(),
+    expectedAdmissionRevision: t.u64(),
+    operationId: t.string(),
+  },
+  auth.gameAction(returnConstructionFlightReview, true),
+);
+// Explicit additive installation/activation. Neither boards nor moves an actor.
+export const installAuthoredShipFlight = db.reducer(
+  {
+    instanceId: t.string(),
+    expectedInstanceRevision: t.u64(),
+    operationId: t.string(),
+  },
+  auth.gameAction((ctx, args) => {
+    installConstructionFlightAuthority(ctx, args, {
+      reserveBerth: (current) => {
+        const system = sharedWorld.ensureCanonicalSystem(current.db);
+        return {
+          systemId: system.id,
+          ...sharedWorld.reserveBerth(current.db, system.id),
+          serverTick: current.timestamp.microsSinceUnixEpoch / 50_000n,
+        };
+      },
+    });
+  }),
+);
+export const activateAuthoredShipFlight = db.reducer(
+  { shipId: t.string(), expectedRevision: t.u64(), operationId: t.string() },
+  auth.gameAction(activateConstructionFlight),
+);
+export const enterAuthoredPilot = db.reducer(
+  {
+    stationId: t.string(),
+    expectedStationRevision: t.u64(),
+    operationId: t.string(),
+  },
+  auth.gameAction(enterConstructionPilotAuthority, true),
+);
+export const leaveAuthoredPilot = db.reducer(
+  auth.gameAction((ctx) => {
+    const actor = [...ctx.db.character.by_owner.filter(ctx.sender)][0];
+    if (!actor?.connected) throw new SenderError("Active character required");
+    recoverConstructionPilotAuthority(ctx, actor.id, "stand");
+  }, true),
+);
+export const ownAuthoredFlights = db.view(
+  { name: "own_authored_flights", public: true },
+  t.array(authoredFlightProjection),
+  auth.gameView(readAuthoredFlights),
+);
+export const ownAuthoredFlightFittings = db.view(
+  { name: "own_authored_flight_fittings", public: true },
+  t.array(authoredFlightFittingProjection),
+  auth.gameView(readAuthoredFlightFittings),
 );

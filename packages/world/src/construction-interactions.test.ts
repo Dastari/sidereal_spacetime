@@ -103,6 +103,7 @@ function fixture() {
     );
   const owner = Identity.fromString("1".repeat(64));
   const db: any = {
+    constructionPilotSeat: store("characterId", { by_owner: "owner" }),
     constructionInstance: store(),
     constructionDeck: store(),
     constructionLocation: store("characterId", { by_instance: "instanceId" }),
@@ -458,17 +459,28 @@ test("modified native source cannot reuse cached qualification for views or seat
   expect(f.db.couchSeat.rows).toHaveLength(0);
 });
 
-
 import { expireGrants } from "./construction";
 import { leaveCouch } from "./interactions";
-test("actual grant expiry hook releases a seated actor and legacy leaveCouch delegates bound seats",()=>{
- const f=fixture();interactWithConstructionObject(f.ctx,f.request());
- leaveCouch(f.ctx,"actor","disconnect");expect(f.db.couchSeat.rows).toHaveLength(0);
- expect(f.db.character.id.find("actor")).toMatchObject({localX:2.25,localY:3});
- interactWithConstructionObject(f.ctx,f.request());
- f.ctx.timestamp.microsSinceUnixEpoch=1000n;
- f.db.constructionGrant.by_expiry={filter:()=>f.db.constructionGrant.rows.filter((g:any)=>!g.revoked)};
- expireGrants(f.ctx);
- expect(f.db.couchSeat.rows).toHaveLength(0);expect(constructionInteractionView(f.ctx)).toEqual([]);
- expect(f.db.character.id.find("actor")).toMatchObject({localX:2.25,localY:3,shipId:f.plan.instanceId});
+test("actual grant expiry hook releases a seated actor and legacy leaveCouch delegates bound seats", () => {
+  const f = fixture();
+  interactWithConstructionObject(f.ctx, f.request());
+  leaveCouch(f.ctx, "actor", "disconnect");
+  expect(f.db.couchSeat.rows).toHaveLength(0);
+  expect(f.db.character.id.find("actor")).toMatchObject({
+    localX: 2.25,
+    localY: 3,
+  });
+  interactWithConstructionObject(f.ctx, f.request());
+  f.ctx.timestamp.microsSinceUnixEpoch = 1000n;
+  f.db.constructionGrant.by_expiry = {
+    filter: () => f.db.constructionGrant.rows.filter((g: any) => !g.revoked),
+  };
+  expireGrants(f.ctx);
+  expect(f.db.couchSeat.rows).toHaveLength(0);
+  expect(constructionInteractionView(f.ctx)).toEqual([]);
+  expect(f.db.character.id.find("actor")).toMatchObject({
+    localX: 2.25,
+    localY: 3,
+    shipId: f.plan.instanceId,
+  });
 });

@@ -71,6 +71,8 @@ function fixture() {
     JSON.stringify(bindConstructionLayout(layout).document),
   );
   const db: any = {
+    constructionPilotSeat: table({}, "characterId"),
+    constructionFlightReview: table({}, "characterId"),
     constructionStairLink: table({
       by_instance: "instanceId",
       by_owner: "owner",

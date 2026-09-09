@@ -13,6 +13,9 @@ vi.mock("spacetimedb/server", () => ({
     },
   ),
 }));
+vi.mock("./construction-pilot-authority", () => ({
+  recoverConstructionPilotAuthority: vi.fn(),
+}));
 vi.mock("./combat", () => ({ clearAim: vi.fn() }));
 vi.mock("./interactions", () => ({ leaveCouch: vi.fn() }));
 import {
@@ -61,6 +64,7 @@ function fixture() {
     return result;
   }
   const db: any = {
+    constructionPilotSeat: table("characterId", { by_owner: "owner" }),
     worldAdmission: table("characterId", { by_owner: "owner" }),
     constructionInstance: table("id", { by_owner: "owner" }),
     constructionGrant: table("id", { by_principal: "principal" }),

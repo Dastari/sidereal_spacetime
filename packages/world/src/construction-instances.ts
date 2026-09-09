@@ -313,6 +313,10 @@ export function leaveReview(
     throw new SenderError("Valid review return location required");
   if (ctx.db.couchSeat.characterId.find(actor.id))
     throw new SenderError("Stand up before leaving construction review");
+  if (ctx.db.constructionPilotSeat.characterId.find(actor.id))
+    throw new SenderError("Stand up before leaving construction review");
+  if (ctx.db.constructionFlightReview.characterId.find(actor.id))
+    throw new SenderError("Use the saved flight-review return transition");
   // Returning must remain possible after a workspace grant expires.
   ctx.db.character.id.update({
     ...actor,

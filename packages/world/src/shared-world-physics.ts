@@ -1,3 +1,4 @@
+import type { resolveShipFlightDefinition } from "./construction-flight-resolver";
 import type { Identity } from "spacetimedb";
 import {
   stepSystemSpace,
@@ -91,6 +92,12 @@ function limited<T>(rows: Iterable<T>, max: number): T[] | undefined {
 export function stepSharedWorld(
   ctx: SharedPhysicsContext,
   systemId = SHARED_SYSTEM_SEED.systemId,
+  hooks?: {
+    definitionForShip(
+      shipId: string,
+    ): ReturnType<typeof resolveShipFlightDefinition>;
+    canPilot(characterId: string): boolean;
+  },
 ): SharedPhysicsReport {
   const report: SharedPhysicsReport = {
     systemId,
@@ -130,13 +137,24 @@ export function stepSharedWorld(
   for (const ship of ships) {
     if (ship.systemId !== systemId || !ctx.db.ship.id.find(ship.shipId))
       return { ...report, status: "exhausted", reason: "invalid-system-ship" };
+    const definition = hooks?.definitionForShip(ship.shipId) ?? {
+      status: "ready" as const,
+      mass: LAB_FLIGHT_MASS,
+      hull: LAB_HULL,
+      profile: LAB_FLIGHT_PROFILE,
+      speed: LAB_FLIGHT_SPEED,
+      computer: LAB_FLIGHT_COMPUTER,
+      actuators: LAB_FLIGHT_ACTUATORS,
+    };
+    if (definition.status === "invalid")
+      return { ...report, status: "exhausted", reason: definition.reason };
     shipRows.set(ship.shipId, ship);
     bodies.push({
       ...ship,
       id: ship.shipId,
-      ...LAB_HULL,
-      massKg: LAB_FLIGHT_MASS.massKg,
-      inertia: LAB_FLIGHT_MASS.inertiaKgM2,
+      ...definition.hull,
+      massKg: definition.mass.massKg,
+      inertia: definition.mass.inertiaKgM2,
     });
     const station = ctx.db.station.shipId.find(ship.shipId);
     const actor = station?.occupantId
@@ -161,8 +179,9 @@ export function stepSharedWorld(
       age >= 0n &&
       age < 300000n &&
       consumeInputControl(ctx, actor.id) &&
-      LAB_FLIGHT_COMPUTER.installed &&
-      LAB_FLIGHT_COMPUTER.powered
+      definition.computer.installed &&
+      definition.computer.powered &&
+      (!hooks || hooks.canPilot(actor.id))
     );
     controls.push({
       bodyId: ship.shipId,
@@ -170,11 +189,11 @@ export function stepSharedWorld(
       intent: enabled
         ? { throttle: input!.throttle, turn: input!.turn }
         : { throttle: 0, turn: 0 },
-      mass: LAB_FLIGHT_MASS,
-      actuators: LAB_FLIGHT_ACTUATORS,
-      profile: LAB_FLIGHT_PROFILE,
-      maxForwardSpeed: LAB_FLIGHT_SPEED.forward,
-      maxReverseSpeed: LAB_FLIGHT_SPEED.reverse,
+      mass: definition.mass,
+      actuators: definition.actuators,
+      profile: definition.profile,
+      maxForwardSpeed: definition.speed.forward,
+      maxReverseSpeed: definition.speed.reverse,
     });
   }
   for (const body of descriptions) {

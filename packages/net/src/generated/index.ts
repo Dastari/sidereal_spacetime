@@ -35,8 +35,10 @@ import {
 
 // Import all reducer arg schemas
 import AcceptIdentityLinkReducer from "./accept_identity_link_reducer";
+import ActivateAuthoredShipFlightReducer from "./activate_authored_ship_flight_reducer";
 import ActivateInventoryHotbarReducer from "./activate_inventory_hotbar_reducer";
 import AssignInventoryHotbarReducer from "./assign_inventory_hotbar_reducer";
+import BeginAuthoredFlightReviewReducer from "./begin_authored_flight_review_reducer";
 import BeginConstructionTraversalReducer from "./begin_construction_traversal_reducer";
 import BindGameSessionReducer from "./bind_game_session_reducer";
 import CancelConstructionTraversalReducer from "./cancel_construction_traversal_reducer";
@@ -44,18 +46,22 @@ import ClaimCharacterArmoryReducer from "./claim_character_armory_reducer";
 import ClaimInputControlReducer from "./claim_input_control_reducer";
 import ClaimStarterKitReducer from "./claim_starter_kit_reducer";
 import DropInventoryItemReducer from "./drop_inventory_item_reducer";
+import EnterAuthoredPilotReducer from "./enter_authored_pilot_reducer";
 import EnterConstructionReviewReducer from "./enter_construction_review_reducer";
 import EnterLabReducer from "./enter_lab_reducer";
 import EquipInventoryItemReducer from "./equip_inventory_item_reducer";
 import FireWeaponReducer from "./fire_weapon_reducer";
+import InstallAuthoredShipFlightReducer from "./install_authored_ship_flight_reducer";
 import InteractObjectReducer from "./interact_object_reducer";
 import JoinSharedSystemReducer from "./join_shared_system_reducer";
+import LeaveAuthoredPilotReducer from "./leave_authored_pilot_reducer";
 import LeaveConstructionReviewReducer from "./leave_construction_review_reducer";
 import MoveInventoryItemReducer from "./move_inventory_item_reducer";
 import PublishConstructionBlueprintReducer from "./publish_construction_blueprint_reducer";
 import ReleaseInputControlReducer from "./release_input_control_reducer";
 import RenameShipReducer from "./rename_ship_reducer";
 import RequestIdentityLinkReducer from "./request_identity_link_reducer";
+import ReturnAuthoredFlightReviewReducer from "./return_authored_flight_review_reducer";
 import SaveConstructionDraftReducer from "./save_construction_draft_reducer";
 import SetCharacterAppearanceReducer from "./set_character_appearance_reducer";
 import SetCombatAimReducer from "./set_combat_aim_reducer";
@@ -74,6 +80,8 @@ import UseStationReducer from "./use_station_reducer";
 // Import all table schema definitions
 import OwnActuatorOutputsRow from "./own_actuator_outputs_table";
 import OwnAppearanceRow from "./own_appearance_table";
+import OwnAuthoredFlightFittingsRow from "./own_authored_flight_fittings_table";
+import OwnAuthoredFlightsRow from "./own_authored_flights_table";
 import OwnCarriedInventoryRevisionsRow from "./own_carried_inventory_revisions_table";
 import OwnCharactersRow from "./own_characters_table";
 import OwnCombatRow from "./own_combat_table";
@@ -127,6 +135,20 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnAppearanceRow),
+  ownAuthoredFlightFittings: __table({
+    name: 'own_authored_flight_fittings',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnAuthoredFlightFittingsRow),
+  ownAuthoredFlights: __table({
+    name: 'own_authored_flights',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnAuthoredFlightsRow),
   ownCarriedInventoryRevisions: __table({
     name: 'own_carried_inventory_revisions',
     indexes: [
@@ -370,8 +392,10 @@ const tablesSchema = __schema({
 /** The schema information for all reducers in this module. This is defined the same way as the reducers would have been defined in the server, except the body of the reducer is omitted in code generation. */
 const reducersSchema = __reducers(
   __reducerSchema("accept_identity_link", AcceptIdentityLinkReducer),
+  __reducerSchema("activate_authored_ship_flight", ActivateAuthoredShipFlightReducer),
   __reducerSchema("activate_inventory_hotbar", ActivateInventoryHotbarReducer),
   __reducerSchema("assign_inventory_hotbar", AssignInventoryHotbarReducer),
+  __reducerSchema("begin_authored_flight_review", BeginAuthoredFlightReviewReducer),
   __reducerSchema("begin_construction_traversal", BeginConstructionTraversalReducer),
   __reducerSchema("bind_game_session", BindGameSessionReducer),
   __reducerSchema("cancel_construction_traversal", CancelConstructionTraversalReducer),
@@ -379,18 +403,22 @@ const reducersSchema = __reducers(
   __reducerSchema("claim_input_control", ClaimInputControlReducer),
   __reducerSchema("claim_starter_kit", ClaimStarterKitReducer),
   __reducerSchema("drop_inventory_item", DropInventoryItemReducer),
+  __reducerSchema("enter_authored_pilot", EnterAuthoredPilotReducer),
   __reducerSchema("enter_construction_review", EnterConstructionReviewReducer),
   __reducerSchema("enter_lab", EnterLabReducer),
   __reducerSchema("equip_inventory_item", EquipInventoryItemReducer),
   __reducerSchema("fire_weapon", FireWeaponReducer),
+  __reducerSchema("install_authored_ship_flight", InstallAuthoredShipFlightReducer),
   __reducerSchema("interact_object", InteractObjectReducer),
   __reducerSchema("join_shared_system", JoinSharedSystemReducer),
+  __reducerSchema("leave_authored_pilot", LeaveAuthoredPilotReducer),
   __reducerSchema("leave_construction_review", LeaveConstructionReviewReducer),
   __reducerSchema("move_inventory_item", MoveInventoryItemReducer),
   __reducerSchema("publish_construction_blueprint", PublishConstructionBlueprintReducer),
   __reducerSchema("release_input_control", ReleaseInputControlReducer),
   __reducerSchema("rename_ship", RenameShipReducer),
   __reducerSchema("request_identity_link", RequestIdentityLinkReducer),
+  __reducerSchema("return_authored_flight_review", ReturnAuthoredFlightReviewReducer),
   __reducerSchema("save_construction_draft", SaveConstructionDraftReducer),
   __reducerSchema("set_character_appearance", SetCharacterAppearanceReducer),
   __reducerSchema("set_combat_aim", SetCombatAimReducer),

@@ -1,3 +1,4 @@
+import { recoverConstructionPilotAuthority } from "./construction-pilot-authority";
 import {
   SenderError,
   type ReducerCtx,
@@ -168,8 +169,14 @@ export function gameAction<A>(
 export function gameView<R>(view: (ctx: ReadContext) => R[]) {
   return (ctx: ReadContext): R[] => (canReadGame(ctx) ? view(ctx) : []);
 }
-export function clearOwner(ctx: Context, owner: Identity, reason: "disconnect" | "auth-loss" = "auth-loss") {
+export function clearOwner(
+  ctx: Context,
+  owner: Identity,
+  reason: "disconnect" | "auth-loss" = "auth-loss",
+) {
   for (const actor of ctx.db.character.by_owner.filter(owner)) {
+    if (ctx.db.constructionPilotSeat.characterId.find(actor.id))
+      recoverConstructionPilotAuthority(ctx, actor.id, reason);
     combat.clearAim(ctx, actor.id);
     interactions.leaveCouch(ctx, actor.id, reason);
     if (actor.connected || actor.sprinting)
@@ -179,7 +186,10 @@ export function clearOwner(ctx: Context, owner: Identity, reason: "disconnect" |
         sprinting: false,
       });
     const seat = ctx.db.station.shipId.find(actor.shipId);
-    if (seat?.occupantId === actor.id)
+    if (
+      seat?.occupantId === actor.id &&
+      !ctx.db.constructionPilotSeat.characterId.find(actor.id)
+    )
       ctx.db.station.id.update({ ...seat, occupantId: undefined });
     const input = ctx.db.input.characterId.find(actor.id);
     if (input)
@@ -260,7 +270,9 @@ export function requestIdentityLink(
     return;
   }
   if ([...ctx.db.worldAdmission.by_owner.filter(ctx.sender)].length)
-    throw new SenderError("Shared-world membership requires explicit identity migration review");
+    throw new SenderError(
+      "Shared-world membership requires explicit identity migration review",
+    );
   if (
     [...ctx.db.constructionInstance.by_owner.filter(ctx.sender)].length ||
     [...ctx.db.constructionGrant.by_principal.filter(ctx.sender)].length ||
@@ -353,9 +365,13 @@ export function acceptIdentityLink(
     throw new SenderError(
       "Target already has world state; merge requires review",
     );
-  if ([...ctx.db.worldAdmission.by_owner.filter(row.source)].length ||
-      [...ctx.db.worldAdmission.by_owner.filter(ctx.sender)].length)
-    throw new SenderError("Shared-world membership requires explicit identity migration review");
+  if (
+    [...ctx.db.worldAdmission.by_owner.filter(row.source)].length ||
+    [...ctx.db.worldAdmission.by_owner.filter(ctx.sender)].length
+  )
+    throw new SenderError(
+      "Shared-world membership requires explicit identity migration review",
+    );
   if (
     [...ctx.db.constructionInstance.by_owner.filter(row.source)].length ||
     [...ctx.db.constructionGrant.by_principal.filter(row.source)].length ||

@@ -1,3 +1,7 @@
+import {
+  hasAcceptedAuthoredFlight,
+  type AcceptedFlightContext,
+} from "./construction-flight-views";
 import { t } from "spacetimedb/server";
 import type { Identity } from "spacetimedb";
 import {
@@ -14,26 +18,34 @@ import type {
 } from "./shared-world";
 export interface SharedViewContext {
   sender: Identity;
-  db: SharedWorldReadDatabase & {
-    ship: {
-      id: { find(id: string): { id: string; name: string } | null | undefined };
-    };
-    character: {
-      id: {
-        find(
-          id: string,
-        ):
-          | { id: string; owner: Identity; shipId: string; connected: boolean }
-          | null
-          | undefined;
+  db: SharedWorldReadDatabase &
+    AcceptedFlightContext["db"] & {
+      ship: {
+        id: {
+          find(id: string): { id: string; name: string } | null | undefined;
+        };
       };
+      character: {
+        id: {
+          find(
+            id: string,
+          ):
+            | {
+                id: string;
+                owner: Identity;
+                shipId: string;
+                connected: boolean;
+              }
+            | null
+            | undefined;
+        };
+      };
+      constructionLocation: { characterId: { find(id: string): unknown } };
+      authSession: {
+        by_owner: { filter(owner: Identity): Iterable<{ game: boolean }> };
+      };
+      retiredIdentity: { source: { find(owner: Identity): unknown } };
     };
-    constructionLocation: { characterId: { find(id: string): unknown } };
-    authSession: {
-      by_owner: { filter(owner: Identity): Iterable<{ game: boolean }> };
-    };
-    retiredIdentity: { source: { find(owner: Identity): unknown } };
-  };
 }
 export type PublishedExteriorResolver = (
   shipId: string,
@@ -116,7 +128,8 @@ function admission(ctx: SharedViewContext): AdmissionRow | undefined {
     !actor?.connected ||
     !actor.owner.isEqual(ctx.sender) ||
     actor.shipId !== row.shipId ||
-    ctx.db.constructionLocation.characterId.find(actor.id) ||
+    (ctx.db.constructionLocation.characterId.find(actor.id) &&
+      !hasAcceptedAuthoredFlight(ctx, actor)) ||
     !ctx.db.worldSystem.id.find(row.systemId)
   )
     return undefined;
