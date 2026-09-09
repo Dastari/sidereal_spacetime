@@ -1,3 +1,4 @@
+import { NativeAirlockPanel } from "./NativeAirlockPanel";
 import { AuthoredFlightReview } from "./AuthoredFlightReview";
 import type { DbConnection } from "@sidereal/net";
 import { createOperationId } from "./operation-id";
@@ -9,25 +10,54 @@ export function ConstructionReview({
   connection: DbConnection | null;
   onError: (error: string) => void;
 }) {
-  if (
-    !connection ||
-    !new URLSearchParams(location.search).has("constructionReview")
-  )
-    return null;
+  if (!connection) return null;
   const actor = [...connection.db.ownCharacters.iter()][0],
-    visit = [...connection.db.ownConstructionLocation.iter()].find(
+    currentLocation = [...connection.db.ownConstructionLocation.iter()].find(
       (v) => v.characterId === actor?.id,
     ),
     instances = [...connection.db.ownConstructionInstances.iter()];
   if (!actor) return null;
-  // Permanent gameplay membership has no review return destination. A query
-  // flag must not expose authoring/review controls for a normal owned ship.
-  if (
-    [...connection.db.ownGameShipAccess.iter()].some(
-      (row) => row.characterId === actor.id && row.shipId === actor.shipId,
-    )
-  )
-    return null;
+  const atOwnedShip = [...connection.db.ownGameShipAccess.iter()].some(
+    (row) => row.characterId === actor.id && row.shipId === actor.shipId,
+  );
+  // A native home has a persistent location too. Only the temporary review
+  // visit offers Return; after return, keep the reviewed targets available.
+  const visit = atOwnedShip ? undefined : currentLocation;
+  const airlock =
+    currentLocation &&
+    [...connection.db.ownNativeAirlocks.iter()].find(
+      (row) =>
+        row.id === currentLocation.instanceId &&
+        row.deckId === currentLocation.deckId,
+    );
+  const doors = currentLocation
+    ? [...connection.db.ownConstructionDoors.iter()].filter(
+        (d) =>
+          d.instanceId === currentLocation.instanceId &&
+          d.deckId === currentLocation.deckId,
+      )
+    : [];
+  const airlockPanel =
+    airlock && currentLocation ? (
+      <NativeAirlockPanel
+        connection={connection}
+        airlock={airlock}
+        doors={doors}
+        visitId={currentLocation.visitId}
+        onError={onError}
+      />
+    ) : null;
+  // Gameplay mechanisms do not require a review query. Permanent membership
+  // never exposes authoring transit or a fabricated return destination.
+  if (!new URLSearchParams(location.search).has("constructionReview"))
+    return airlockPanel ? (
+      <aside
+        className="construction-review-controls"
+        aria-label="Airlock controls"
+      >
+        {airlockPanel}
+      </aside>
+    ) : null;
   const stair = [...connection.db.ownConstructionStairWalks.iter()].find(
     (s) =>
       s.characterId === actor.id &&
@@ -51,11 +81,6 @@ export function ConstructionReview({
   const flight = [...connection.db.ownAuthoredFlights.iter()].find(
     (row) => row.shipId === visit?.instanceId,
   );
-  const doors = visit
-    ? [...connection.db.ownConstructionDoors.iter()].filter(
-        (d) => d.instanceId === visit.instanceId && d.deckId === visit.deckId,
-      )
-    : [];
   const grants = [...connection.db.ownConstructionGrants.iter()];
   const traversal = [...connection.db.ownConstructionTraversals.iter()].find(
     (t) => t.characterId === actor.id && t.instanceId === visit?.instanceId,
@@ -88,7 +113,7 @@ export function ConstructionReview({
       <strong>Shipyard walking review</strong>
       <small>
         Authored rooms, stairs and ladders. Qualified ships can enter an
-        explicit flight review. Powered airlocks remain pending.
+        explicit flight review. Airlocks use nearby manual service.
       </small>
       {visit ? (
         <button
@@ -115,30 +140,32 @@ export function ConstructionReview({
           Return to original ship
         </button>
       ) : (
-        instances.map((i) => (
-          <button
-            key={i.id}
-            disabled={
-              !grants.some(
-                (g) =>
-                  g.workspaceId === i.workspaceId &&
-                  g.capability === "instance.spawn" &&
-                  !g.revoked,
-              )
-            }
-            onClick={() =>
-              act(() =>
-                connection.reducers.enterConstructionReview({
-                  instanceId: i.id,
-                  expectedShipId: actor.shipId,
-                  operationId: createOperationId(),
-                }),
-              )
-            }
-          >
-            Walk {i.name} · {i.id.slice(0, 8)}
-          </button>
-        ))
+        instances
+          .filter((i) => i.id !== actor.shipId)
+          .map((i) => (
+            <button
+              key={i.id}
+              disabled={
+                !grants.some(
+                  (g) =>
+                    g.workspaceId === i.workspaceId &&
+                    g.capability === "instance.spawn" &&
+                    !g.revoked,
+                )
+              }
+              onClick={() =>
+                act(() =>
+                  connection.reducers.enterConstructionReview({
+                    instanceId: i.id,
+                    expectedShipId: actor.shipId,
+                    operationId: createOperationId(),
+                  }),
+                )
+              }
+            >
+              Walk {i.name} · {i.id.slice(0, 8)}
+            </button>
+          ))
       )}
       {visit && (
         <AuthoredFlightReview
@@ -206,6 +233,7 @@ export function ConstructionReview({
           )}
         </section>
       )}
+      {airlockPanel}
       {pressure && (
         <section aria-label="Compartment pressure">
           <strong>Qualified pressure room</strong>
@@ -227,6 +255,7 @@ export function ConstructionReview({
         </section>
       )}
       {visit &&
+        !airlock &&
         doors.map((d) => (
           <button
             key={d.id}

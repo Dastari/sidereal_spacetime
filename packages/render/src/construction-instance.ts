@@ -1,3 +1,10 @@
+import {
+  bindNativeAirlockPlan,
+  type NativeAirlockDocument,
+} from "@sidereal/sim/construction-airlock-document";
+import { compilePublishedNativeExternalAirlock } from "@sidereal/sim/construction-airlock-published";
+import { NATIVE_EXTERNAL_AIRLOCK_SOURCES } from "@sidereal/content/construction-airlock-room";
+import { loadNativeAirlockScene } from "./native-airlock-scene";
 import { loadConstructionAuthoredAssembly } from "./construction-authored-assembly";
 import { NATIVE_TRAVERSAL_ROOM_SOURCES } from "@sidereal/content/construction-traversal-room";
 import { nativeTraversalRoomInstallation } from "@sidereal/sim/construction-traversal-document";
@@ -62,6 +69,25 @@ export async function loadConstructionInstance(
     !document.layout.decks.some((d) => d.id === input.deckId)
   )
     throw Error("Construction instance/deck mismatch");
+  if (document.airlockRoom) {
+    const native = bindNativeAirlockPlan(
+      document as NativeAirlockDocument,
+      compilePublishedNativeExternalAirlock,
+      input.instanceId,
+    );
+    return loadNativeAirlockScene(scene, parent, {
+      instanceId: input.instanceId,
+      deckId: input.deckId,
+      installation: native.installation,
+      doors: native.doors.map((d) => ({
+        openingId: d.id,
+        originM: d.originM,
+        quarterTurns: d.quarterTurns,
+      })),
+      elevationM: 0,
+      sources: NATIVE_EXTERNAL_AIRLOCK_SOURCES,
+    });
+  }
   if (document.traversalRoom) {
     const native = nativeTraversalRoomInstallation(document, 1n, 1n);
     return loadConstructionTraversal(scene, parent, {
@@ -149,7 +175,11 @@ export async function loadConstructionInstance(
     for (const m of result.meshes) {
       // Structural floors block the pick ray but are not selectable equipment.
       m.isPickable = true;
-      m.metadata = { ...m.metadata, ...result.node.metadata, category: "floor" };
+      m.metadata = {
+        ...m.metadata,
+        ...result.node.metadata,
+        category: "floor",
+      };
     }
     return result;
   });

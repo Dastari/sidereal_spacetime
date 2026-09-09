@@ -1025,7 +1025,20 @@ export default function App({
                 return {
                   openingId: d.id,
                   fraction: d.fraction,
-                  sealRetraction: seal?.sealRetraction,
+                  sealRetraction:
+                    seal?.sealRetraction ??
+                    (() => {
+                      const airlock = [...c.db.ownNativeAirlocks.iter()].find(
+                        (a) =>
+                          a.id === constructionVisit.instanceId &&
+                          a.deckId === constructionVisit.deckId,
+                      );
+                      return airlock?.innerDoorId === d.id
+                        ? airlock.innerSealRetraction
+                        : airlock?.outerDoorId === d.id
+                          ? airlock.outerSealRetraction
+                          : undefined;
+                    })(),
                 };
               })
           : [],
