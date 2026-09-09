@@ -488,3 +488,17 @@ const ordinaryHooks = {
   completeSafeEgress: () => {},
   otherAcceptedPosition: () => undefined,
 };
+
+import {readFileSync} from 'node:fs';
+import {WAYFARER_CONVERSION_PIN} from '../../content/src/wayfarer-conversion-candidate';
+import {createWayfarerConversionCandidate,type WayfarerPinnedInputs} from '../../sim/src/wayfarer-conversion-candidate';
+test('trusted full Wayfarer spawn retains qualified collision after UUID remap and reload',()=>{
+ const f=fixture(),c=createWayfarerConversionCandidate(Object.fromEntries(Object.keys(WAYFARER_CONVERSION_PIN.sources).map(p=>[p,readFileSync(p,'utf8')])) as WayfarerPinnedInputs);
+ let qualifiedId=0;f.ctx.newUuidV4=()=>({toString:()=>`11111111-0000-4000-8000-${(++qualifiedId).toString().padStart(12,'0')}`});
+ f.ctx.db.constructionBlueprint.id.update({...f.ctx.db.constructionBlueprint.id.find('blueprint'),...c.snapshot});
+ const args={...f.args,expectedSha256:c.snapshot.sha256,sourceDeckId:WAYFARER_CONVERSION_PIN.deckId};
+ spawnBlueprint(f.ctx,args);spawnBlueprint(f.ctx,{...args,operationId:'second-qualified'});
+ const instances=f.ctx.db.constructionInstance.rows;expect(instances).toHaveLength(2);
+ for(const instance of instances){const frame=constructionCollision(f.ctx,instance,instance.spawnDeckId);expect(frame.obstacles).toHaveLength(98);expect(canOccupyDeck(frame,{shipId:instance.id,deckId:instance.spawnDeckId,position:[-1.8,8.8]},.3)).toBe(false);expect(canOccupyDeck(frame,{shipId:instance.id,deckId:instance.spawnDeckId,position:[0,0]},.3)).toBe(true);}
+ expect(JSON.parse(instances[0].idMapJson).objects).toHaveLength(211);
+});

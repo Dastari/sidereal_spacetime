@@ -1,3 +1,4 @@
+import { loadConstructionAuthoredAssembly } from "./construction-authored-assembly";
 import { NATIVE_TRAVERSAL_ROOM_SOURCES } from "@sidereal/content/construction-traversal-room";
 import { nativeTraversalRoomInstallation } from "@sidereal/sim/construction-traversal-document";
 import { loadConstructionTraversal } from "./construction-traversal";
@@ -148,6 +149,12 @@ export async function loadConstructionInstance(
     for (const m of result.meshes) m.isPickable = false;
     return result;
   });
+  const authored = await loadConstructionAuthoredAssembly(
+    scene,
+    parent,
+    document,
+    input.deckId,
+  );
   const deck = document.layout.decks.find((d) => d.id === input.deckId)!;
   const vertices = document.layout.tiles
     .filter((t) => t.deckId === input.deckId)
@@ -232,7 +239,7 @@ export async function loadConstructionInstance(
     perimeterHalfWidthM: 0,
     partitionHalfWidthM: 0,
   });
-  for (const wall of boundaries
+  for (const wall of boundaries || authored
     ? []
     : [...collision.walls, ...collision.openings]) {
     const height = deck.elevation / 32 + 0.21;
@@ -258,11 +265,13 @@ export async function loadConstructionInstance(
     },
     placements: [
       ...placements,
+      ...(authored?.placements ?? []),
       ...(boundaries?.placements ?? []),
       ...(roofs?.placements ?? []),
     ],
     meshes: [
       ...placements.flatMap((p) => p.meshes),
+      ...(authored?.meshes ?? []),
       ...(boundaries?.meshes ?? []),
       ...(roofs?.meshes ?? []),
     ],
@@ -270,6 +279,10 @@ export async function loadConstructionInstance(
     setView(cameraPosition: Vector3, interior: boolean) {
       boundaries?.setView(cameraPosition, interior);
       roofs?.setVisible(!interior);
+      authored?.setView(cameraPosition, interior);
+    },
+    dispose() {
+      authored?.dispose();
     },
     walkingElevation:
       deck.elevation / 32 + PINNED_FLOOR_KIT.datums.floorTop / 32,

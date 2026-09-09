@@ -1,3 +1,4 @@
+import { qualifiedWayfarerWalkingBindings, QUALIFIED_WAYFARER_SHA256 } from "../../sim/src/wayfarer-walking-bindings";
 import {
   installConstructionStair,
   requireNoConstructionStair,
@@ -66,8 +67,9 @@ export function spawnBlueprint(
       ?.revision === "r001";
   let plan;
   try {
+    const snapshot = compileConstruction(blueprint.canonical);
     plan = planConstructionInstance(
-      compileConstruction(blueprint.canonical),
+      snapshot,
       {
         blueprintRevisionId: blueprint.id,
         expectedBlueprintSha256: args.expectedSha256,
@@ -76,7 +78,8 @@ export function spawnBlueprint(
         bodyHeightM: 1.8,
         perimeterHalfWidthM: legacyNativeBoundaries ? 0.0625 : 0,
         partitionHalfWidthM: legacyNativeBoundaries ? 0.0625 : 0,
-        objectCollisionBindings: [],
+        objectCollisionBindings: snapshot.sha256 === QUALIFIED_WAYFARER_SHA256
+          ? qualifiedWayfarerWalkingBindings(snapshot, 0.3, 1.8) : [],
       },
       () => ctx.newUuidV4().toString(),
     );

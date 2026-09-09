@@ -1,0 +1,128 @@
+import { readFileSync } from "node:fs";
+import { afterEach, expect, test, vi } from "vitest";
+import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
+import { Scene } from "@babylonjs/core/scene";
+import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
+import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { WAYFARER_CONVERSION_PIN as PIN } from "../../content/src/wayfarer-conversion-candidate";
+import {
+  createWayfarerConversionCandidate,
+  type WayfarerPinnedInputs,
+} from "../../sim/src/wayfarer-conversion-candidate";
+import { qualifiedWayfarerWalkingBindings } from "../../sim/src/wayfarer-walking-bindings";
+import { planConstructionInstance } from "../../sim/src/construction-instance";
+import { loadConstructionAuthoredAssembly } from "./construction-authored-assembly";
+afterEach(() => vi.unstubAllGlobals());
+const candidate = () =>
+  createWayfarerConversionCandidate(
+    Object.fromEntries(
+      Object.keys(PIN.sources).map((p) => [p, readFileSync(p, "utf8")]),
+    ) as WayfarerPinnedInputs,
+  );
+test("all 211 authored objects load from 28 verified libraries with independent IDs, retained materials, roof cutaway and safe disposal", async () => {
+  const e = new NullEngine(),
+    scene = new Scene(e);
+  scene.useRightHandedSystem = true;
+  const root = new TransformNode("instance", scene);
+  const fetcher = vi.fn(async (url: string) => {
+    const raw = readFileSync(
+      "assets/runtime/" + url.replace(/^\/assets\//, ""),
+    );
+    return {
+      ok: true,
+      text: async () => raw.toString("utf8"),
+      arrayBuffer: async () =>
+        raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.byteLength),
+    };
+  });
+  vi.stubGlobal("fetch", fetcher);
+  try {
+    const c = candidate();
+    let n = 0;
+    const a = planConstructionInstance(
+      c.snapshot,
+      {
+        blueprintRevisionId: "visual-review",
+        expectedBlueprintSha256: c.snapshot.sha256,
+        sourceDeckId: PIN.deckId,
+        bodyRadiusM: 0.3,
+        bodyHeightM: 1.8,
+        perimeterHalfWidthM: 0.05,
+        partitionHalfWidthM: 0.05,
+        objectCollisionBindings: qualifiedWayfarerWalkingBindings(
+          c.snapshot,
+          0.3,
+          1.8,
+        ),
+      },
+      () => `00000000-0000-4000-8000-${(++n).toString(16).padStart(12, "0")}`,
+    );
+    const result = await loadConstructionAuthoredAssembly(
+      scene,
+      root,
+      a.document,
+      a.spawn.deckId,
+    );
+    expect(result).not.toBeNull();
+    expect(result!.placements).toHaveLength(211);
+    expect(
+      new Set(result!.placements.map((p) => p.node.metadata.partId)).size,
+    ).toBe(211);
+    expect(fetcher).toHaveBeenCalledTimes(29);
+    expect(result!.placements.some((p) => p.category === "floor")).toBe(false);
+    for (const p of result!.placements) {
+      expect(p.meshes.length).toBeGreaterThan(0);
+      expect(p.meshes.every((m) => !!m.material && !m.isPickable)).toBe(true);
+      const original = a.document.layout.assembly!.parts.find(
+        (o) => o.id === p.node.metadata.partId,
+      )!;
+      expect(p.node.position.asArray()).toEqual([
+        original.position[0],
+        original.position[2],
+        -original.position[1],
+      ]);
+    }
+    const roofs = result!.placements.filter((p) => p.category === "roof");
+    expect(roofs).toHaveLength(73);
+    result!.setView(new Vector3(-10, 12, 10), true);
+    expect(roofs.every((p) => !p.node.isEnabled())).toBe(true);
+    result!.setView(new Vector3(-10, 12, 10), false);
+    expect(roofs.every((p) => p.node.isEnabled())).toBe(true);
+    const materials = result!.meshes.map((m) => m.material);
+    expect(
+      materials.some(
+        (m) => (m as any).alpha < 1 || (m as any).transparencyMode !== 0,
+      ),
+    ).toBe(true);
+    result!.dispose();
+    expect(root.isDisposed()).toBe(false);
+    expect(root.getChildMeshes()).toHaveLength(0);
+  } finally {
+    scene.dispose();
+    e.dispose();
+  }
+}, 30000);
+test("wrong catalog bytes reject before any native import", async () => {
+  const e = new NullEngine(),
+    scene = new Scene(e);
+  scene.useRightHandedSystem = true;
+  const root = new TransformNode("instance", scene);
+  const c = candidate();
+  c.document.layout.source = {
+    blueprintId: "review",
+    blueprintRevision: c.snapshot.sha256,
+  };
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(async () => ({ ok: true, text: async () => '{"assets":[]}' })),
+  );
+  try {
+    await expect(
+      loadConstructionAuthoredAssembly(scene, root, c.document, PIN.deckId),
+    ).rejects.toThrow("catalog pin");
+    expect(root.getChildMeshes()).toHaveLength(0);
+  } finally {
+    scene.dispose();
+    e.dispose();
+  }
+});

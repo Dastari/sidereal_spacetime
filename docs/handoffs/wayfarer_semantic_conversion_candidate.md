@@ -45,7 +45,7 @@ The 82-lattice-unit ceiling is a conservative DESIGN datum from the lowest curre
 
 New files are `packages/content/src/wayfarer-conversion-candidate.ts`, `packages/sim/src/wayfarer-conversion-candidate.ts`, its test, and `scripts/prepare_wayfarer_conversion.ts`. No shared catalog, renderer, server schema, app, live assembly or publication manifest was changed. Add package subpath exports only when the integration owner is ready to consume this API; this isolated candidate is not wired into product menus.
 
-The current compiler can compile and reload the complete visual/floor candidate. Its readiness remains geometry/native floor only; pressure, services, native damage and flight are false. The full candidate cannot yet be safely spawned by the current world adapter, which does not supply these 211 qualified collision bindings.
+The current compiler can compile and reload the complete visual/floor candidate. Its readiness remains geometry/native floor only; pressure, services, native damage and flight are false. The base candidate deliberately supplies no collision bindings. The subsequent exact-source walking qualifier now supplies all 211 bindings for isolated static review; see [Wayfarer walking integration](wayfarer_walking_integration.md). This does not establish functional equipment, complete clearances or live refit readiness.
 
 Use two separate authoritative operations in the eventual integration:
 

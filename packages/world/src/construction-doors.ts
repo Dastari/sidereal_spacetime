@@ -1,3 +1,4 @@
+import { qualifiedWayfarerInstanceObstacles, QUALIFIED_WAYFARER_SHA256 } from "../../sim/src/wayfarer-walking-bindings";
 import { nativeStairRoomCollision } from "@sidereal/sim/construction-stairs-document";
 import {
   validateNativePressureRoomDocument,
@@ -93,11 +94,16 @@ export function constructionCollision(
     if (baseCache.size >= 32) baseCache.clear();
     const document = JSON.parse(instance.documentJson) as ConstructionDocument;
     const width = document.boundaryKit?.revision === "r001" ? 0.0625 : 0;
+    const wayfarer = document.layout.source?.blueprintRevision === QUALIFIED_WAYFARER_SHA256
+      ? ctx.db.constructionInstance.id.find(instance.id) : undefined;
+    if (document.layout.source?.blueprintRevision === QUALIFIED_WAYFARER_SHA256 && !wayfarer)
+      throw new Error("Qualified Wayfarer instance record required");
     base = compileDeckCollision(document.layout, deckId, {
       shipId: instance.id,
       perimeterHalfWidthM: width,
       partitionHalfWidthM: document.pressureRoom ? 0.0625 : width,
-      obstacles: document.stairRoom
+      obstacles: wayfarer ? qualifiedWayfarerInstanceObstacles(wayfarer, deckId)
+        : document.stairRoom
         ? nativeStairRoomCollision(document, deckId)
         : document.traversalRoom
         ? nativeTraversalRoomCollision(document, deckId)
