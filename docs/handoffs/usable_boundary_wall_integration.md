@@ -2,6 +2,8 @@
 
 Status: 50-binding native candidate qualified locally (302 side/end/pocket checks); not installed. Whole-ship collision, pressure enclosure and final owner art approval remain outstanding.
 
+The latest bounded installation audit is [Exact50-ID wall candidate: installation readiness](usable_wall_readiness_20260910.md). It verifies current362f source compatibility, native standing-footprint coverage by existing accepted colliders, zero equipment overlap and real inherited roof leaks. It also identifies46 incompatible loader prefixes (safe dedicated-file selection is available) and152→570native mesh groups needing integration batching. These findings distinguish a scoped visual/collision release from still-absent whole-ship pressure; they do not install the candidate or waive source/refit gates.
+
 Current integration input: `assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/combined-replacement-mapping.json`, combining a006 sides, a009 ends and shoulder-construction-interface/r000/a003.
 
 The original representative geometry checkpoint is `assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a004/`. The versioned contract is `revisions/r000/interface-family.json`; exact GLB and material hashes are in `a004/delivery-manifest.json`, and `a004/native-qualification.json` records all 40 checks. Editable Blender source, native PBR/material textures, separate contact proxies and actual images accompany the manifest.
