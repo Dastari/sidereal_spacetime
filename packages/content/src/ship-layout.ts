@@ -81,6 +81,8 @@ export interface Partition {
   seal: "design-sealed" | "open-divider";
 }
 export interface Opening {
+  /** Opt-in structural jamb/corner reserve in integer units. */
+  setback?: number;
   id: string;
   deckId: string;
   partitionId: string;
@@ -145,6 +147,8 @@ export interface LayoutFitting {
   container: { columns: number; rows: number; contents: never[] } | null;
 }
 export interface LayoutDocument {
+  /** Opt-in structural authoring rules; absent in preserved v1 sources. */
+  structure?: import("./layout-structure").LayoutStructure;
   /** Optional backwards-compatible visual assembly, separate from floor topology and authority. */
   assembly?: import("./layout-assembly").LayoutAssembly;
   schema: typeof LAYOUT_SCHEMA;

@@ -1,3 +1,4 @@
+import { readLayoutStructure } from "./layout-structure-admission";
 import {
   LAYOUT_SCHEMA,
   LAYOUT_LIMITS as L,
@@ -190,7 +191,8 @@ export function readLayout(value: unknown): LayoutDocument {
       !point(o.b) ||
       !["door", "passage", "airlock"].includes(o.kind) ||
       !integer(o.clearance, 16, 128) ||
-      !integer(o.sill, 0, 128)
+      !integer(o.sill, 0, 128) ||
+      (o.setback !== undefined && !integer(o.setback, 1, 128))
     )
       fail("Invalid opening");
   for (const r of value.rooms)
@@ -267,5 +269,6 @@ export function readLayout(value: unknown): LayoutDocument {
       value.legacy.placements.length > L.fittings)
   )
     fail("Invalid preserved assembly source");
+  if (value.structure !== undefined) readLayoutStructure(value.structure);
   return value as unknown as LayoutDocument;
 }

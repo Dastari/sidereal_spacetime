@@ -28,7 +28,10 @@
     "./wayfarer-starter": "./src/wayfarer-starter.ts",
     "./construction-airlock-room": "./src/construction-airlock-room.ts",
     "./cargo-carriers": "./src/cargo-carriers.ts",
-    "./cargo-handling-fixture": "./src/cargo-handling-fixture.ts"
+    "./cargo-handling-fixture": "./src/cargo-handling-fixture.ts",
+    "./layout-structure": "./src/layout-structure.ts",
+    "./hull-size-catalog": "./src/hull-size-catalog.ts",
+    "./layout-assembly": "./src/layout-assembly.ts"
   },
   "dependencies": {}
 }

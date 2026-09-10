@@ -1,4 +1,9 @@
 import {
+  compileStructure,
+  structuralPartitionSupported,
+  type CompiledStructure,
+} from "./layout-structure";
+import {
   LAYOUT_COMPILER,
   LAYOUT_LIMITS as L,
   transformPoint,
@@ -57,6 +62,7 @@ export interface CompiledRoom {
   regionId: string;
 }
 export interface CompiledLayout {
+  structure?: CompiledStructure;
   compiler: string;
   fingerprint: string;
   valid: boolean;
@@ -215,7 +221,12 @@ export function compileLayout(input: unknown): CompiledLayout {
         [t.id],
         "Use a nonzero convex catalog polygon without repeated or crossing edges; named rectangles, right triangles and trapezoids retain their shape constraints.",
       );
-    else out.tiles.push(t);
+    else
+      out.tiles.push(
+        doc.structure?.tileStyles[t.id]?.material
+          ? { ...t, material: doc.structure.tileStyles[t.id].material! }
+          : t,
+      );
   }
   if (out.tiles.length !== doc.tiles.length) return finish();
   const all = out.tiles.flatMap((t) => t.vertices);
@@ -444,8 +455,10 @@ export function compileLayout(input: unknown): CompiledLayout {
     const length = (a: Point, b: Point) =>
       Math.abs(b[0] - a[0]) + Math.abs(b[1] - a[1]);
     if (
-      samePoint(p.a, p.b) ||
-      matches.reduce((s, e) => s + length(e.a, e.b), 0) !== length(p.a, p.b)
+      doc.structure
+        ? !structuralPartitionSupported(doc, out, p)
+        : samePoint(p.a, p.b) ||
+          matches.reduce((s, e) => s + length(e.a, e.b), 0) !== length(p.a, p.b)
     ) {
       diagnostic(
         "partition-anchor",
@@ -467,7 +480,7 @@ export function compileLayout(input: unknown): CompiledLayout {
     }
   }
   const validOpenings = new Set<string>();
-  for (const o of normalized.openings) {
+  for (const o of doc.structure ? [] : normalized.openings) {
     const p = doc.partitions.find(
       (p) => p.id === o.partitionId && p.deckId === o.deckId,
     );
@@ -575,6 +588,47 @@ export function compileLayout(input: unknown): CompiledLayout {
         "Airlock interlock, paired chamber and pressure behavior are not implemented.",
         "warning",
       );
+  }
+  if (doc.structure) {
+    out.structure = compileStructure(doc, out);
+    out.diagnostics.push(...out.structure.diagnostics);
+    for (const o of out.structure.openings)
+      if (
+        !out.structure.diagnostics.some(
+          (d) => d.severity === "error" && d.ids.includes(o.id),
+        )
+      )
+        validOpenings.add(o.id);
+    // Exterior apertures split the generated boundary; the wall itself stays derived.
+    out.walls = out.walls.flatMap((w) => {
+      const openings = doc.openings.filter(
+        (o) =>
+          validOpenings.has(o.id) &&
+          o.deckId === w.deckId &&
+          (o.partitionId === w.anchorId ||
+            (w.source === "perimeter" &&
+              out.structure!.openings.some(
+                (q) => q.id === o.id && q.exterior,
+              ) &&
+              cross(w.a, w.b, o.a) === 0 &&
+              cross(w.a, w.b, o.b) === 0)),
+      );
+      if (!openings.length) return [w];
+      const points = [
+        w.a,
+        w.b,
+        ...openings
+          .flatMap((o) => [o.a, o.b])
+          .filter((p) => onSegment(p, w.a, w.b)),
+      ].sort(comparePoint);
+      return points.slice(1).flatMap((b, i) => {
+        const a = points[i],
+          mid: Point = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+        return samePoint(a, b) || openings.some((o) => onSegment(mid, o.a, o.b))
+          ? []
+          : [{ ...w, key: `${w.key}:${segmentKey(a, b)}`, a, b }];
+      });
+    });
   }
   for (const p of normalized.partitions) {
     if (!partitionEdges.has(p.id)) continue;
