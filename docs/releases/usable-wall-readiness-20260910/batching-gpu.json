@@ -1,0 +1,31 @@
+{
+  "original": {
+    "glError": 0,
+    "drawCalls": 570,
+    "activeMeshes": 570,
+    "triangles": 102578
+  },
+  "batched": {
+    "glError": 0,
+    "drawCalls": 181,
+    "activeMeshes": 181,
+    "triangles": 102578,
+    "pixelComparison": {
+      "changedPixels": 0,
+      "totalPixels": 518400,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0
+    }
+  },
+  "scope": "Actual50SHA-pinned candidate wall placements in isolated WebGL2 software-GPU fixture; fixed camera/lights, no AA, no account or game authority. Exact whole-game and old-art GPU performance not claimed.",
+  "screenshots": [
+    {
+      "path": "output/playwright/native-wall-batching-review/original.png",
+      "sha256": "bc3babf3110f63529cd894c87e7cfeea0e6c1b334ace68cf889f33ec9091aa90"
+    },
+    {
+      "path": "output/playwright/native-wall-batching-review/batched.png",
+      "sha256": "ad2d6514b9609067453498ca66ca2698c6d49fb2d0e7e191bdf756b389b0dc64"
+    }
+  ]
+}

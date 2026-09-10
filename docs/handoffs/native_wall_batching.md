@@ -33,3 +33,9 @@ npx vitest run packages/render/src/native-wall-batches.test.ts packages/render/s
 ```
 
 The browser fixture `scripts/native-wall-batching-review.ts` loads only source-pinned wall assets with fixed camera/light settings, comparing original clones and the actual helper in the same scene. It imports no game, account or world code. Normal-game installed acceptance remains a later parent integration gate.
+
+## Actual GPU equivalence
+
+The named `native-wall-batching-review` browser loaded all50exact candidate placements in WebGL2 at960×540. With the same camera, lighting and native material objects, unbatched and batched images were pixel-identical: zero changed pixels of518,400, zero channel delta. Measured main-pass draw submissions fell570→181; both retained102,578triangles. GL errors were zero. The visible wall assembly screenshot was reviewed; these are actual native walls, not a blank-image comparison. Evidence: `docs/releases/usable-wall-readiness-20260910/batching-gpu.json`, with exact screenshot SHA256s.
+
+The browser intercepted only the explicitly pinned local review files; Vite’s private docs/art-library denial remained intact and no files were copied into public. The session was disposed, blanked and closed. This qualifies the helper’s surface-equivalent batching in the isolated native fixture. Parent still owns installed normal-game/roof/collision/source-version integration; no current ship was changed.
