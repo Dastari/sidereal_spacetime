@@ -37,7 +37,11 @@ test("one placed grow light can switch without mutating shared authored material
   const installed = meshes.map(mesh => ({node:mesh,meshes:[mesh],lighting:{lights:[]}})) as unknown as Parameters<typeof createObjectPresentation>[3];
   const canvas = new EventTarget() as HTMLCanvasElement;
   const visual = createObjectPresentation(canvas,scene,meshes,installed,()=>false);
+  source.freeze();
   visual.lights([{placementId:"one",enabled:false},{placementId:"two",enabled:true}]);
+  expect(source.isFrozen).toBe(false);
+  expect(source.metadata.mutableMaterial).toBe(true);
+  expect(meshes.every(mesh=>mesh.metadata.mutableMaterial && !mesh.material!.isFrozen)).toBe(true);
   const first=meshes[0].material as PBRMaterial, second=meshes[1].material as PBRMaterial;
   expect(first).not.toBe(second);expect(first).not.toBe(source);
   expect(first.emissiveColor.asArray()).toEqual([0,0,0]);

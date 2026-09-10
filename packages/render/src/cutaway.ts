@@ -7,8 +7,10 @@ import { setMeshRole } from "./mesh-roles";
 export function prepareCutawayMeshes(meshes: readonly AbstractMesh[]) {
   for (const mesh of meshes) {
     if (!mesh.metadata?.role) setMeshRole(mesh, "roof");
-    if (mesh.material && !mesh.metadata?.hullDecal)
+    if (mesh.material && !mesh.metadata?.hullDecal) {
+      mesh.material.unfreeze();
       mesh.material.transparencyMode = null;
+    }
   }
 }
 export function applyCutawayVisibility(mesh: AbstractMesh, visibility: number) {

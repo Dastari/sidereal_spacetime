@@ -13,7 +13,9 @@ test("retained cutaway walls leave alpha sorting and resume opaque depth renderi
   // Reproduce the previous state: fully visible geometry still classified transparent.
   material.transparencyMode=Material.MATERIAL_ALPHABLEND;
   expect(material.needAlphaBlendingForMesh(wall)).toBe(true);
+  material.freeze();
   prepareCutawayMeshes([wall]);
+  expect(material.isFrozen).toBe(false);
   applyCutawayVisibility(wall,1);
   expect(material.needAlphaBlendingForMesh(wall)).toBe(false);
   applyCutawayVisibility(wall,.5);

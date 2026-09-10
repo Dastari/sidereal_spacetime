@@ -72,6 +72,9 @@ export function createObjectPresentation(
         if (!mesh.metadata?.role) setMeshRole(mesh, "equipment");
         const source = sources.get(mesh) ?? mesh.material;
         if (!source || !("emissiveColor" in source)) continue;
+        source.unfreeze();
+        source.metadata = {...source.metadata,mutableMaterial:true};
+        mesh.metadata.mutableMaterial = true;
         sources.set(mesh, source);
         const color = (source as EmissiveMaterial).emissiveColor;
         if (state.enabled || (color.r === 0 && color.g === 0 && color.b === 0)) {
@@ -82,6 +85,8 @@ export function createObjectPresentation(
         if (!off) {
           off = source.clone(`${source.name}-switch-off`) ?? undefined;
           if (!off) continue;
+          off.unfreeze();
+          off.metadata = {...off.metadata,mutableMaterial:true};
           (off as EmissiveMaterial).emissiveColor.set(0, 0, 0);
           offMaterials.set(source, off);
         }

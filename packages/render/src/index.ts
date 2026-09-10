@@ -1,3 +1,4 @@
+import { createStaticMaterialFreeze, invalidateStaticMaterials } from "./static-material-freeze";
 import { createDebugVisibilityRevision } from "./debug-visibility-revision";
 import { createShipGlowOccluders } from './ship-glow-occluders';
 import { setMeshRole } from './mesh-roles';
@@ -723,6 +724,7 @@ async function buildWorld(
   const visibleBodies = (nowMs: number) =>
     options.sharedWorld?.bodies(nowMs) ?? state.bodies ?? [];
   const debugVisibilityRevision = createDebugVisibilityRevision();
+  const staticMaterials = createStaticMaterialFreeze(scene);
   let firstFrame = true;
   engine.runRenderLoop(() => {
     // A failed initial load stays covered by Retry/Sign out. Do not keep
@@ -956,6 +958,7 @@ async function buildWorld(
       { focus: camera.target },
     );
     const updateCpuMs = performance.now() - frameStarted;
+    staticMaterials.prepare();
     scene.render();
     diagnostics.recordFrameCpu(performance.now() - frameStarted, updateCpuMs);
     if (
@@ -1075,6 +1078,7 @@ async function buildWorld(
     getRenderBackend: () => backend.snapshot(),
     setRenderBackend: (value: RenderBackend) => backend.set(value),
     setAntialiasing(patch: Partial<AntialiasingSettings>) {
+      invalidateStaticMaterials(scene);
       antialiasing.set(patch);
     },
     getGraphicsSettings() {
@@ -1084,6 +1088,7 @@ async function buildWorld(
       graphics.set(patch);
     },
     resetGraphicsSettings() {
+      invalidateStaticMaterials(scene);
       graphics.reset();
       antialiasing.reset();
       localLights.reset();
@@ -1093,6 +1098,7 @@ async function buildWorld(
       return localLights.snapshot();
     },
     setLocalLightLimit(limit: LocalLightLimit) {
+      invalidateStaticMaterials(scene);
       localLights.setLimit(limit);
     },
     setAimPointer(x: number, y: number) {
@@ -1120,10 +1126,12 @@ async function buildWorld(
         : undefined;
     },
     toggleDebugFeature(key: DebugFeature) {
+      invalidateStaticMaterials(scene);
       debugFeatures.toggle(key);
       antialiasing.resetHistory();
     },
     resetDebugFeatures() {
+      invalidateStaticMaterials(scene);
       debugFeatures.reset();
       antialiasing.resetHistory();
     },
@@ -1178,6 +1186,7 @@ async function buildWorld(
     dispose() {
       if (disposed) return;
       disposed = true;
+      staticMaterials.dispose();
       updateConstructionTraversal = undefined;
       updateConstructionDoors = undefined;
       updateConstructionView = undefined;

@@ -1,0 +1,35 @@
+{
+  "scope": "Post-final-build isolated WebGPU compatibility; explicit frames, no gameplay/timing acceptance",
+  "phases": [
+    {
+      "effectReady": true,
+      "frozen": true,
+      "lightsEnabled": true,
+      "phase": "on",
+      "validationError": null
+    },
+    {
+      "effectReady": true,
+      "frozen": true,
+      "lightsEnabled": true,
+      "phase": "copy-added",
+      "validationError": null
+    },
+    {
+      "effectReady": true,
+      "frozen": true,
+      "lightsEnabled": false,
+      "phase": "lighting-off",
+      "validationError": null
+    },
+    {
+      "effectReady": true,
+      "frozen": true,
+      "lightsEnabled": true,
+      "phase": "lighting-on",
+      "validationError": null
+    }
+  ],
+  "status": "complete",
+  "webgpu": true
+}

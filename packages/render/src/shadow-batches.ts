@@ -55,7 +55,7 @@ export function createShadowBatches(root: TransformNode) {
           mesh.sideOrientation = group[0].sideOrientation;
           mesh.layerMask = 0x10000000;
           mesh.isPickable = false;
-          mesh.metadata = { role: "proxy", shadowRole: group[0].metadata.shadowRole,
+          mesh.metadata = { role: "proxy", staticMaterial: true, shadowRole: group[0].metadata.shadowRole,
             shadowCabin: group[0].metadata.shadowCabin, deckId: group[0].metadata.deckId,
             trianglePlacements: ranges };
         }

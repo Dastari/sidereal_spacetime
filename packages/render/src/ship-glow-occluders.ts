@@ -261,6 +261,7 @@ export function createShipGlowOccluders(
       const proxy = new Mesh("ship-glow-occluder", scene);
       proxy.metadata = {
         role: "proxy",
+        staticMaterial: true,
         structuralRole: source.metadata.role,
         deckId: source.metadata.deckId,
         trianglePlacements: ranges,
