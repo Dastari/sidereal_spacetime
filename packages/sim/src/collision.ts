@@ -1,3 +1,4 @@
+import { sweptContactCandidates } from "./collision-broadphase";
 /** Planar rigid capsule/circle contacts. All positions and impulse math stay f64.
  * Multiple capsules (ships) and circles (movable asteroids). No render mesh
  * participates in authority. Conservative advancement handles fast translation
@@ -159,13 +160,21 @@ function advance(body: RigidBody, dt: number) {
     heading: body.heading + body.omega * dt,
   };
 }
-function impactTime(a: RigidBody, b: RigidBody, dt: number) {
+export interface ContactWork {
+  eventPasses: number;
+  exhaustivePairs: number;
+  broadphaseAxisChecks: number;
+  narrowphasePairs: number;
+  conservativeIterations: number;
+}
+function impactTime(a: RigidBody, b: RigidBody, dt: number, work: ContactWork) {
   const bound =
     Math.hypot(b.vx - a.vx, b.vy - a.vy) +
     Math.abs(a.omega) * (a.halfLength + Math.abs(a.longitudinalOffset ?? 0)) +
     Math.abs(b.omega) * (b.halfLength + Math.abs(b.longitudinalOffset ?? 0));
   let t = 0;
   for (let i = 0; i < 64; i++) {
+    work.conservativeIterations++;
     const c = contact(advance(a, t), advance(b, t));
     if (c.distance < EPS) return { time: t, confirmed: true };
     if (bound < EPS) return undefined;
@@ -250,19 +259,30 @@ export function stepContacts(
       throw new Error("Invalid collider");
   let remaining = dt,
     impacts = 0;
+  const work: ContactWork = {
+    eventPasses: 0,
+    exhaustivePairs: 0,
+    broadphaseAxisChecks: 0,
+    narrowphasePairs: 0,
+    conservativeIterations: 0,
+  };
   for (let event = 0; event < 48 && remaining > 1e-9; event++) {
     let first = remaining + 1,
       pair: [number, number] | undefined,
       confirmed = false;
-    for (let i = 0; i < bodies.length; i++)
-      for (let j = i + 1; j < bodies.length; j++) {
-        const time = impactTime(bodies[i], bodies[j], remaining);
-        if (time && time.time < first) {
-          first = time.time;
-          pair = [i, j];
-          confirmed = time.confirmed;
-        }
+    const candidates = sweptContactCandidates(bodies, remaining);
+    work.eventPasses++;
+    work.exhaustivePairs += (bodies.length * (bodies.length - 1)) / 2;
+    work.broadphaseAxisChecks += candidates.axisChecks;
+    work.narrowphasePairs += candidates.pairs.length;
+    for (const [i, j] of candidates.pairs) {
+      const time = impactTime(bodies[i]!, bodies[j]!, remaining, work);
+      if (time && time.time < first) {
+        first = time.time;
+        pair = [i, j];
+        confirmed = time.confirmed;
       }
+    }
     if (!pair || first > remaining) {
       for (let i = 0; i < bodies.length; i++)
         bodies[i] = advance(bodies[i], remaining);
@@ -272,9 +292,9 @@ export function stepContacts(
     for (let i = 0; i < bodies.length; i++)
       bodies[i] = advance(bodies[i], first);
     remaining -= first;
-    if (!confirmed) return { bodies, impacts, exhausted: true };
+    if (!confirmed) return { bodies, impacts, exhausted: true, work };
     const [a, b] = pair;
     if (impulse(bodies[a], bodies[b], restitution) > EPS) impacts++;
   }
-  return { bodies, impacts, exhausted: remaining > 1e-9 };
+  return { bodies, impacts, exhausted: remaining > 1e-9, work };
 }

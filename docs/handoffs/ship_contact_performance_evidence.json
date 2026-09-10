@@ -1,0 +1,68 @@
+{
+  "baselineRevision": "26d9586c",
+  "baselineSourceSha256": "1f8c0dbdd36a00ac22f896e259c15e00e73c48b93827ce68d41e819a92f1eeb1",
+  "runtime": "v24.18.0",
+  "dt": 0.016666666666666666,
+  "scope": "Node CPU microbenchmark; not browser FPS or full server load",
+  "shipProxy": "one forward-offset capsule; native interior meshes never participate",
+  "results": [
+    {
+      "name": "16 separated ships",
+      "bodies": 16,
+      "baselineMedianMs": 0.09158780000000036,
+      "optimizedMedianMs": 0.007052850000000035,
+      "work": {
+        "eventPasses": 1,
+        "exhaustivePairs": 120,
+        "broadphaseAxisChecks": 0,
+        "narrowphasePairs": 0,
+        "conservativeIterations": 0
+      },
+      "exactBaselineMotionMatch": true
+    },
+    {
+      "name": "64 separated ships",
+      "bodies": 64,
+      "baselineMedianMs": 1.7717021499999999,
+      "optimizedMedianMs": 0.03395215999999891,
+      "work": {
+        "eventPasses": 1,
+        "exhaustivePairs": 2016,
+        "broadphaseAxisChecks": 0,
+        "narrowphasePairs": 0,
+        "conservativeIterations": 0
+      },
+      "exactBaselineMotionMatch": true
+    },
+    {
+      "name": "64 ships in eight spaced rows",
+      "bodies": 64,
+      "baselineMedianMs": 2.2050281300000005,
+      "optimizedMedianMs": 0.051154069999997775,
+      "work": {
+        "eventPasses": 1,
+        "exhaustivePairs": 2016,
+        "broadphaseAxisChecks": 224,
+        "narrowphasePairs": 0,
+        "conservativeIterations": 0
+      },
+      "exactBaselineMotionMatch": true
+    },
+    {
+      "name": "one fast contact among 64 ships",
+      "bodies": 64,
+      "baselineMedianMs": 3.1218099500000016,
+      "optimizedMedianMs": 0.08480745999999272,
+      "work": {
+        "eventPasses": 2,
+        "exhaustivePairs": 4032,
+        "broadphaseAxisChecks": 2,
+        "narrowphasePairs": 2,
+        "conservativeIterations": 70
+      },
+      "exactBaselineMotionMatch": true
+    }
+  ],
+  "differentialCases": 128,
+  "baselineExhaustedCases": 128
+}

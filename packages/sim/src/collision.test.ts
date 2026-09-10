@@ -61,20 +61,21 @@ describe("authoritative planar contacts", () => {
     expect(a.x).toBe(0);
     expect(r.impacts).toBe(0);
   });
-  it("freezes an unresolved grazing near-miss without inventing an impulse", () => {
+  it("rejects a separated grazing sweep before iterative narrow phase", () => {
     // The paths never intersect: closest center separation is 2.001 m for
-    // two 1 m circles. Conservative advancement reaches its iteration budget.
+    // two 1 m circles. Swept bounds prove the gap without iterative exhaustion.
     const a = body("a", -1, { vx: 1000 });
     const b = body("b", 0, { y: 2.001 });
     const result = stepContacts([a, b], 1 / 60);
-    expect(result.exhausted).toBe(true);
+    expect(result.exhausted).toBe(false);
     expect(result.impacts).toBe(0);
     const [moving, stationary] = result.bodies;
     expect(moving.vx).toBe(1000);
     expect(moving.vy).toBe(0);
     expect(moving.omega).toBe(0);
     expect(moving.x).toBeGreaterThan(a.x);
-    expect(moving.x).toBeLessThan(0); // stop before the unresolved closest pass
+    expect(moving.x).toBeCloseTo(-1 + 1000 / 60);
+    expect(result.work.narrowphasePairs).toBe(0);
     expect(moving.y).toBe(0);
     expect(stationary).toEqual(b);
     expect(a.x).toBe(-1);
@@ -97,25 +98,49 @@ describe("authoritative planar contacts", () => {
   });
 });
 
-describe('forward-offset capsule envelope',()=>{
-  const hull = {radius:5.4,halfLength:7.125,longitudinalOffset:1.125,inertia:120000};
-  it('contacts the extended nose at either heading without changing the aft reach',()=>{
-    for(const heading of [0,Math.PI/2]) {
-      const ux=-Math.sin(heading),uy=Math.cos(heading);
-      const r=stepContacts([body('a',0,{...hull,heading}),body('b',ux*14.6,{y:uy*14.6,vx:-ux*10,vy:-uy*10})],1/60);
+describe("forward-offset capsule envelope", () => {
+  const hull = {
+    radius: 5.4,
+    halfLength: 7.125,
+    longitudinalOffset: 1.125,
+    inertia: 120000,
+  };
+  it("contacts the extended nose at either heading without changing the aft reach", () => {
+    for (const heading of [0, Math.PI / 2]) {
+      const ux = -Math.sin(heading),
+        uy = Math.cos(heading);
+      const r = stepContacts(
+        [
+          body("a", 0, { ...hull, heading }),
+          body("b", ux * 14.6, { y: uy * 14.6, vx: -ux * 10, vy: -uy * 10 }),
+        ],
+        1 / 60,
+      );
       expect(r.impacts).toBeGreaterThan(0);
       expect(r.bodies[0].inertia).toBe(120000);
     }
-    const aft=stepContacts([body('a',0,hull),body('b',0,{y:-12.5})],1/60);
-    expect(aft.impacts).toBe(0); expect(aft.bodies[1].y).toBe(-12.5);
+    const aft = stepContacts(
+      [body("a", 0, hull), body("b", 0, { y: -12.5 })],
+      1 / 60,
+    );
+    expect(aft.impacts).toBe(0);
+    expect(aft.bodies[1].y).toBe(-12.5);
   });
-  it('uses canonical COM for off-axis torque and includes forward offset in rotational sweep',()=>{
-    const r=stepContacts([body('a',0,{...hull,omega:5}),body('b',-6.1,{y:8})],1/60);
+  it("uses canonical COM for off-axis torque and includes forward offset in rotational sweep", () => {
+    const r = stepContacts(
+      [body("a", 0, { ...hull, omega: 5 }), body("b", -6.1, { y: 8 })],
+      1 / 60,
+    );
     expect(r.impacts).toBeGreaterThan(0);
     expect(r.bodies[0].omega).toBeLessThan(5);
     expect(r.bodies[1].vx).toBeLessThan(0);
   });
-  it('rejects nonfinite offsets',()=>{
-    expect(()=>stepContacts([body('a',0,{...hull,longitudinalOffset:NaN})],1/60)).toThrow();
+  it("rejects nonfinite offsets", () => {
+    expect(() =>
+      stepContacts(
+        [body("a", 0, { ...hull, longitudinalOffset: NaN })],
+        1 / 60,
+      ),
+    ).toThrow();
   });
 });

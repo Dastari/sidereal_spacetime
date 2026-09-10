@@ -105,14 +105,22 @@ describe("once-per-system space stepping", () => {
   });
   it("freezes remaining time immediately on contact exhaustion without extra kicks", () => {
     const input = [
-      body("a", -1, { vx: 1000 }),
-      body("b", 0, { y: 2.001 }),
+      // Diagonal near miss keeps swept AABBs overlapping, exercising the real
+      // narrow-phase iteration cap even after broad-phase separation pruning.
+      body("a", -Math.SQRT1_2, {
+        y: -Math.SQRT1_2,
+        vx: 1000 * Math.SQRT1_2,
+        vy: 1000 * Math.SQRT1_2,
+      }),
+      body("b", -2.001 * Math.SQRT1_2, { y: 2.001 * Math.SQRT1_2 }),
       body("ship", 100),
     ];
     const result = stepSystemSpace(input, [control("ship")]);
     expect(result.reason).toBe("contact-budget");
     expect(result.completedSubsteps).toBe(0);
-    expect(result.bodies.find((b) => b.id === "a")!.vx).toBe(1000);
+    expect(result.bodies.find((b) => b.id === "a")!.vx).toBe(
+      1000 * Math.SQRT1_2,
+    );
     expect(result.bodies.find((b) => b.id === "ship")!.vy).toBeCloseTo(
       1 / 60,
       12,
