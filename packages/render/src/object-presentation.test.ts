@@ -47,9 +47,13 @@ test("one placed grow light can switch without mutating shared authored material
   visual.select("one");
   expect(scene.customRenderTargets).toHaveLength(1);
   visual.select("two");expect(scene.customRenderTargets).toHaveLength(1);
-  visual.lights([{placementId:"one",enabled:true}]);expect(first.emissiveColor.asArray()).toEqual([.2,.6,.9]);
-  visual.lights([]);expect(first.emissiveColor.asArray()).toEqual([0,0,0]);
-  visual.lights([{placementId:"one",enabled:true}]);expect(first.emissiveColor.asArray()).toEqual([.2,.6,.9]);
+  visual.lights([{placementId:"one",enabled:true}]);expect((meshes[0].material as PBRMaterial).emissiveColor.asArray()).toEqual([.2,.6,.9]);
+  visual.lights([]);expect((meshes[0].material as PBRMaterial).emissiveColor.asArray()).toEqual([0,0,0]);
+  visual.lights([{placementId:"one",enabled:true}]);expect((meshes[0].material as PBRMaterial).emissiveColor.asArray()).toEqual([.2,.6,.9]);
+  visual.lights([{placementId:"one",enabled:false},{placementId:"two",enabled:false}]);
+  expect(meshes[0].material).toBe(meshes[1].material);
+  expect(scene.materials.filter(m=>m.name.endsWith("-switch-off"))).toHaveLength(1);
+  expect(first.emissiveColor.asArray()).toEqual([0,0,0]);
   visual.dispose();expect(meshes.every(mesh=>mesh.material===source)).toBe(true);
   expect(scene.customRenderTargets).toHaveLength(0);
   scene.dispose();engine.dispose();

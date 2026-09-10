@@ -1,0 +1,111 @@
+{
+  "data": {
+    "activeIndices": 5712438,
+    "activeMeshes": 1031,
+    "allocatedShadowMaps": 2,
+    "cameraElevationDegrees": 89.14056330730376,
+    "cameraPostProcesses": [
+      "sidereal-aa-scene"
+    ],
+    "cameraRadius": 938.7152127085246,
+    "customRenderTargets": 0,
+    "debugFeatures": {
+      "characters": true,
+      "collision": false,
+      "equipment": true,
+      "globalIllumination": true,
+      "glow": true,
+      "lightBounds": false,
+      "lighting": true,
+      "planets": true,
+      "shadows": true,
+      "skeleton": false
+    },
+    "debugOverlays": {
+      "collisionFrames": 0,
+      "collisionScopes": [],
+      "lights": 0,
+      "skeletons": 0
+    },
+    "drawCalls": 4145,
+    "environmentTexturePresent": true,
+    "fps": 37.29487816978865,
+    "frameCpuMs": 26.645740773408953,
+    "frameMs": 26.81333333353176,
+    "hardwareScale": 1,
+    "lights": 4,
+    "localLightBudget": {
+      "eligibleLights": 0,
+      "enabledLights": 0,
+      "enabledShadowLights": 0,
+      "limit": "all"
+    },
+    "materials": 601,
+    "meshesByRole": {
+      "cargo": {
+        "active": 0,
+        "total": 372
+      },
+      "crew": {
+        "active": 0,
+        "total": 362
+      },
+      "effect": {
+        "active": 0,
+        "total": 30
+      },
+      "environment": {
+        "active": 4,
+        "total": 6
+      },
+      "equipment": {
+        "active": 24,
+        "total": 155
+      },
+      "floor": {
+        "active": 1,
+        "total": 127
+      },
+      "hull": {
+        "active": 314,
+        "total": 314
+      },
+      "planet": {
+        "active": 11,
+        "total": 48
+      },
+      "proxy": {
+        "active": 0,
+        "total": 4
+      },
+      "remote": {
+        "active": 75,
+        "total": 596
+      },
+      "roof": {
+        "active": 179,
+        "total": 179
+      },
+      "unclassified": {
+        "active": 0,
+        "total": 0
+      },
+      "wall": {
+        "active": 423,
+        "total": 423
+      }
+    },
+    "renderCpuMs": 26.43947368468109,
+    "renderHeight": 907,
+    "renderWidth": 1574,
+    "shadowMaps": 1,
+    "textures": 85,
+    "totalMeshes": 2616,
+    "transparentMeshes": 14,
+    "updateCpuMs": 0.1772443578356638
+  },
+  "focus": false,
+  "length": 242300,
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4080 Laptop GPU (0x000027E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "visibility": "visible"
+}

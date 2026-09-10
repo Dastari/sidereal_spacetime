@@ -1,7 +1,7 @@
 import { createDebugVisibilityRevision } from "./debug-visibility-revision";
 import { createShipGlowOccluders } from './ship-glow-occluders';
 import { setMeshRole } from './mesh-roles';
-import { legacyMeshRole } from './legacy-mesh-role';
+import { legacyMeshRole, legacyCutawayFade } from './legacy-mesh-role';
 import {
   loadNativeStairEgress,
   type NativeStairEgressGeometry,
@@ -55,7 +55,7 @@ import { loadInstalledHull } from "./installed-hull";
 import { loadInstalledModules } from "./installed-modules";
 import { loadInstalledEquipment } from "./installed-equipment";
 import { createObjectPresentation } from "./object-presentation";
-import { applyCutawayVisibility } from "./cutaway";
+import { applyCutawayVisibility, prepareCutawayMeshes } from "./cutaway";
 import { createShipLighting } from "./ship-lighting";
 import { createFlightEffects } from "./flight-effects";
 import { createRenderDiagnostics } from "./diagnostics";
@@ -417,16 +417,12 @@ async function buildWorld(
   }
   for (const mesh of imported.meshes) {
     if (!mesh.metadata?.role) setMeshRole(mesh, legacyMeshRole(mesh));
+    if (legacyCutawayFade(mesh)) mesh.metadata.cutawayFade = true;
   }
   const roof = imported.meshes.filter(
-    (m) => m.getTotalVertices() > 0 && /GEO-(roof|markings)/.test(m.name),
+    (m) => m.getTotalVertices() > 0 && m.metadata?.role === "roof" && m.metadata?.cutawayFade,
   );
-  for (const mesh of roof)
-    if (mesh.material && !mesh.metadata?.hullDecal) {
-      mesh.material = mesh.material.clone(mesh.name + "-cutaway-material");
-      if (mesh.material)
-        mesh.material.transparencyMode = Material.MATERIAL_OPAQUE;
-    }
+  prepareCutawayMeshes(roof);
   const lighting =
     options.construction || options.constructionEgress
       ? createConstructionLighting(scene, imported.meshes)

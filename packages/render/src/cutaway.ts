@@ -1,17 +1,18 @@
-import { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
-import { Material } from "@babylonjs/core/Materials/material";
+import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
+import { setMeshRole } from "./mesh-roles";
 
-/** Retained hulls are opaque solids and must write depth. Permanent alpha-blend
- * sorting can draw their rear faces over visible service panels even at alpha 1.
- * Only genuinely transitioning geometry belongs in the transparent queue. */
+/** Automatic transparency lets each mesh fade independently on a shared PBR
+ * material, while opaque settled surfaces still write depth. Authored paint
+ * keeps its alpha-mask mode. Configure once before rendering. */
+export function prepareCutawayMeshes(meshes: readonly AbstractMesh[]) {
+  for (const mesh of meshes) {
+    if (!mesh.metadata?.role) setMeshRole(mesh, "roof");
+    if (mesh.material && !mesh.metadata?.hullDecal)
+      mesh.material.transparencyMode = null;
+  }
+}
 export function applyCutawayVisibility(mesh: AbstractMesh, visibility: number) {
   const resolved = visibility >= .995 ? 1 : visibility <= .005 ? 0 : visibility;
   mesh.visibility = resolved;
   mesh.setEnabled(resolved > 0);
-  if (mesh.material) {
-    // Painted alpha masks remain transparent at full visibility. Their materials
-    // stay shared; per-mesh visibility carries the cutaway fade.
-    const mode = resolved === 1 && !mesh.metadata?.hullDecal ? Material.MATERIAL_OPAQUE : Material.MATERIAL_ALPHABLEND;
-    if (mesh.material.transparencyMode !== mode) mesh.material.transparencyMode = mode;
-  }
 }

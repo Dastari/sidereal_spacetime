@@ -1,3 +1,4 @@
+import { prepareCutawayMeshes } from "./cutaway";
 import { GlowLayer } from "@babylonjs/core/Layers/glowLayer";
 import { createShipGlowOccluders } from "./ship-glow-occluders";
 import { readFileSync } from "node:fs";
@@ -12,7 +13,7 @@ import { loadInstalledHull } from "./installed-hull";
 import { loadInstalledModules } from "./installed-modules";
 import { createShipLighting } from "./ship-lighting";
 import { setMeshRole } from "./mesh-roles";
-import { legacyMeshRole } from "./legacy-mesh-role";
+import { legacyMeshRole, legacyCutawayFade } from "./legacy-mesh-role";
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -76,7 +77,11 @@ test("installed ship loader resource budget", async () => {
       "wayfarer.glb",
       scene,
     );
-    for (const mesh of base.meshes) setMeshRole(mesh, legacyMeshRole(mesh));
+    for (const mesh of base.meshes) {
+      setMeshRole(mesh, legacyMeshRole(mesh));
+      if (mesh.getTotalVertices() > 0)
+        expect(legacyCutawayFade(mesh)).toBe(/GEO-(roof|markings)/.test(mesh.name));
+    }
     const equipment = await loadInstalledEquipment(scene, ship, base.meshes);
     const cargo = await loadInstalledModules(scene, ship, "cargo");
     const floor = await loadInstalledModules(scene, ship, "floor");
@@ -87,6 +92,11 @@ test("installed ship loader resource budget", async () => {
       ...floor.meshes,
       ...hull.meshes,
     ];
+    const fadeRoofs = meshes.filter(m => m.metadata?.role === "roof" && m.metadata?.cutawayFade);
+    expect(fadeRoofs.map(m => m.uniqueId).sort()).toEqual(meshes.filter(m => /GEO-(roof|markings)/.test(m.name) && m.getTotalVertices() > 0).map(m => m.uniqueId).sort());
+    const beforeFadeMaterials = scene.materials.length;
+    prepareCutawayMeshes(fadeRoofs);
+    expect(scene.materials.length).toBe(beforeFadeMaterials);
     createShipLighting(scene, ship, meshes);
     const glow = createShipGlowOccluders(
       scene,
@@ -103,7 +113,7 @@ test("installed ship loader resource budget", async () => {
     };
     // R0 inventory: 1,303 meshes, 182 materials, 45 lights, 8 generators.
     expect(counts.meshes).toBeLessThanOrEqual(1360);
-    expect(counts.materials).toBeLessThanOrEqual(190);
+    expect(counts.materials).toBeLessThanOrEqual(188);
     expect(counts.lights).toBeLessThanOrEqual(48);
     expect(counts.shadowGenerators).toBeLessThanOrEqual(8);
     expect(equipment.placements.length).toBeGreaterThan(0);

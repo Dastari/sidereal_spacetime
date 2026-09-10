@@ -180,6 +180,8 @@ Expected: Deck total meshes from about 2,660 to well under 1,000 before planets 
 
 ### R5. 636 materials
 
+Status: material sharing implemented with hardware Deck/TAB-Flight review (2026-09-10); seated acceptance and static freezing with R6 remain pending.
+
 Evidence: `index.ts:419` clones a material per roof and upper-wall mesh for cutaway fading; `object-presentation.ts:74` clones per material per switchable placement; `remote-exterior-glass.ts:16` clones per material; per-placement wall batching creates per-placement material copies. Each distinct material in a pass costs an effect bind and uniform upload, and defeats Babylon's material sorting.
 
 Fix:
@@ -355,3 +357,25 @@ Added NullEngine `debug-visibility-revision.test.ts` and `environment/dust-field
 `VITEST_MAX_WORKERS=2 npm run check` passed 251 files / 1,490 tests and documentation audit. `npm run build` passed with existing chunk-size warnings. Shared-tree unrelated work remains excluded from the commit. Evidence: `output/playwright/render-plan/R8/check.log`, `build.log`, `browser-blocker.json`.
 
 Before reference: R1 Deck 4,348 calls / 1,396 active / 2,693 total / 638 materials / 54.31 ms Render CPU; TAB-Flight 4,155 / 1,106 / 2,691 / 637 / 72.05 ms. Before isolation is preserved in R1 (Deck scale2 4,348, Glow off 2,769, Shadows off 1,395, Lighting off 1,395; TAB-Flight 3,083 / 3,041 / 2,106 / 2,106). After counters and isolation: **unmeasured**. RTX 4080 hardware compiled the dust shader without errors, but the clean normal-client load remained covered by “Preparing the first frame.” `opaqueSceneTexture.isReadyForRendering()` was false, with authored floor meshes failing readiness in that render pass; all queried shader compilation errors were empty. The preview also repeatedly reported a hidden document and rejected snapshots. No readiness gate or authority state was bypassed; no screenshot or timing acceptance is claimed. Seated Flight and R0/R1 occlusion acceptance remain pending. Continue R5 and retry hardware acceptance after the material work.
+
+
+### 2026-09-10 — R5 material sharing and R8 combined hardware retry
+
+Implemented shared immutable on/off emissive variants in `object-presentation.ts`: the authored source is the on state, and only one off clone per emitting source is allocated. Non-emitting materials need no clone; switching a placement swaps its material reference. Disposal restores source references and retains shared textures. Instances needing independent switches remain excluded from R4 until their per-placement material state is representable.
+
+Removed per-roof material clones and per-frame transparency-mode mutation. `cutaway.ts` configures automatic transparency once, then drives `mesh.visibility`; settled opaque meshes remain depth-writing, fading siblings blend independently, and authored hull paint retains its alpha mode. The new role-based selector also requires explicit `cutawayFade` metadata, assigned by `installed-hull.ts`, `hull-decals.ts` and the retained GLB extras adapter in `legacy-mesh-role.ts`. This preserves construction roofs' separate deck gate. `index.ts` consumes that metadata instead of the old name regex. Real-loader assertions prove the selected fade set is identical to the former names for both retained GLB and installed hull. Current native wall batching already shares source materials (`native-wall-batches.ts` / `remote-exterior-batches.ts`); the register's per-placement material-copy claim is stale. Cross-placement geometry batching stays in R4. Static material freezing stays with R6, after R4 determines final receiver/caster and visibility compatibility; no speculative freezing during a fade.
+
+NullEngine tests cover two independently fading roofs on one material, decal alpha preservation, shared on/off state across placements, authored optical properties and disposal. Real-loader budget now includes cutaway preparation without material growth and tightens installed material bound 190 → 188. `VITEST_MAX_WORKERS=2 npm run check` passed 251 files / 1,491 tests and docs; `npm run build` passed. An additional retained-GLB selector equivalence assertion passed the real-loader test afterward. Exact files are in the R5 commit; unrelated shared-tree changes remain excluded.
+
+The browser eventually became visible and passed first-frame readiness without a readiness bypass. R8's initial blocker is preserved as history. This is the first successful hardware capture of the combined R8/R5 state, not an isolated R8 timing comparison. The actual render canvas is 1574 × 907, MSAA4, F3 visibly open, nothing selected; Deck camera radius 70.008 m / elevation 35.264° / azimuth 3.591593; TAB-Flight 938.715 m / 89.141°. ANGLE NVIDIA RTX 4080 Laptop GPU / D3D11. Document visibility was visible, but document focus reported false. Preliminary captures without F3 were discarded. The dust and ship appear in the reviewed screenshots; original PBR surfaces and roof cutaway remain intact.
+
+| View | R1 reference → R8/R5 draw calls | Active / total meshes | Materials | Render CPU ms |
+| --- | --- | --- | --- | --- |
+| Deck | 4,348 → 4,348 | 1,396 / 2,693 → 1,396 / 2,618 | 638 → 602 | 54.31 → 21.57 |
+| TAB-Flight | 4,155 → 4,145 | 1,106 / 2,691 → 1,031 / 2,616 | 637 → 601 | 72.05 → 26.44 |
+
+Remote population changed independently: 671 → 596 total remote meshes; Flight active remote meshes 150 → 75. Do not attribute those 75 meshes or the 10-call Flight reduction to R5. Timing reflects different sessions/focus/population and is **not a controlled speedup claim**. Current Update CPU samples are 0.17/0.18 ms, but R8 likewise lacks an isolated before/after timing comparison.
+
+Isolation draw calls R1 → R8/R5: Deck scale2 4,348 → 4,348; Glow off 2,769 → 2,769; Shadows off 1,395 → 1,395; Lighting off 1,395 → 1,395. TAB-Flight scale2 3,083 → 3,078; Glow off 3,041 → 3,031; Shadows off 2,106 → 2,096; Lighting off 2,106 → 2,096. Scale restored before the sequential switches, and all switches restored afterward. Flight scale2 still changes planet LOD.
+
+Evidence: `output/playwright/render-plan/R5/{deck,flight-tab}.json` / `.jpg` and each view's `-scale2`, `-glow-off`, `-shadows-off`, `-lighting-off` JSON/JPEGs; check/build logs alongside. R8 retains its unmeasured-at-commit record, with this combined-state follow-up. Seated Flight, close-up R1 emitter occlusion/independently hidden decks, and static freezing remain outstanding; no final completion claim for those items. Material count is still far above the under-80 target and needs subsequent work.

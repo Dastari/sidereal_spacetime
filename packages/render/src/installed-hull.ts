@@ -11,7 +11,7 @@ export async function loadInstalledHull(scene:Scene,parent:TransformNode){
  const placements=entries.flatMap(e=>e.placements.map(p=>{
   const result=equipmentPlacement(scene,parent,e.asset,p,prototypes.get(e.asset.id)!);
   for(const mesh of result.meshes){
-   mesh.metadata={...mesh.metadata,publishedHull:true,category:e.asset.category};
+   mesh.metadata={...mesh.metadata,publishedHull:true,category:e.asset.category,cutawayFade:e.asset.category==='roof'};
    if(e.asset.category==='roof')mesh.name='GEO-roof-hull-'+p.id+'--'+mesh.name;
   }
   return result;

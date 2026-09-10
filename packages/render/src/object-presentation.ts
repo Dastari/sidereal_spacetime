@@ -1,3 +1,4 @@
+import { setMeshRole } from "./mesh-roles";
 import { LAB_FLIGHT_ACTUATORS } from "../../content/src/flight";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
@@ -26,7 +27,8 @@ export function createObjectPresentation(
   }
   let selected: string | undefined;
   let silhouette: ReturnType<typeof createSelectionSilhouette> | undefined;
-  const clones = new Map<Material, { source: Material; color: Color3 }>();
+  const offMaterials = new Map<Material, Material>();
+  const sources = new Map<AbstractMesh, Material>();
   const lightStates = new Map<string, boolean>();
   function select(id?: string) {
     if (id === selected) return;
@@ -63,22 +65,26 @@ export function createObjectPresentation(
       lightStates.set(state.placementId, state.enabled);
       if(placement.lighting.setPowered)placement.lighting.setPowered(state.enabled);
       else for(const light of placement.lighting.lights)light.setEnabled(state.enabled);
-      // Per-placement copies retain authored optical properties and shared textures.
-      // Toggling one grow tray never edits the prototype or another placed tray.
-      const materialCopies = new Map<Material, Material>();
+      // Shared immutable on/off variants preserve authored optical properties.
+      // Per-placement state is a reference swap, never a mutation of a variant.
       for (const mesh of placement.meshes) {
-        const material = mesh.material;
-        if (!material || !("emissiveColor" in material)) continue;
-        let local: Material = material;
-        if (!clones.has(material)) {
-          local = materialCopies.get(material) ?? material.clone(`${material.name}-${state.placementId}-switch`)!;
-          if (!local) continue;
-          materialCopies.set(material, local);
-          clones.set(local, { source: material, color: (material as EmissiveMaterial).emissiveColor.clone() });
-          mesh.material = local;
+        if (!mesh.metadata?.role) setMeshRole(mesh, "equipment");
+        const source = sources.get(mesh) ?? mesh.material;
+        if (!source || !("emissiveColor" in source)) continue;
+        sources.set(mesh, source);
+        const color = (source as EmissiveMaterial).emissiveColor;
+        if (state.enabled || (color.r === 0 && color.g === 0 && color.b === 0)) {
+          mesh.material = source;
+          continue;
         }
-        const saved = clones.get(local)!;
-        (local as EmissiveMaterial).emissiveColor.copyFrom(state.enabled ? saved.color : Color3.Black());
+        let off = offMaterials.get(source);
+        if (!off) {
+          off = source.clone(`${source.name}-switch-off`) ?? undefined;
+          if (!off) continue;
+          (off as EmissiveMaterial).emissiveColor.set(0, 0, 0);
+          offMaterials.set(source, off);
+        }
+        mesh.material = off;
       }
     }
   }
@@ -88,10 +94,10 @@ export function createObjectPresentation(
       canvas.removeEventListener("pointerdown", click);
       select(undefined);
       silhouette?.dispose();
-      for (const mesh of meshes) if (mesh.material && clones.has(mesh.material))
-        mesh.material = clones.get(mesh.material)!.source;
-      for (const material of clones.keys()) material.dispose(false, false);
-      clones.clear();
+      for (const [mesh, source] of sources) if (!mesh.isDisposed()) mesh.material = source;
+      for (const material of offMaterials.values()) material.dispose(false, false);
+      offMaterials.clear();
+      sources.clear();
     },
   };
 }

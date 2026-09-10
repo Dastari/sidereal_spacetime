@@ -57,7 +57,7 @@ export function updateHullDecals(scene: Scene, parent: TransformNode, decals: Hu
     data.indices = [0,1,2,0,2,3]; data.uvs = reflected && d.kind === 'text' ? [1,1,0,1,0,0,1,0] : [0,1,1,1,1,0,0,0]; data.applyToMesh(mesh);
     mesh.parent = parent; mesh.position.set(d.position[0],d.position[2],-d.position[1]);
     mesh.material = shared.material; mesh.isPickable = false;
-    mesh.metadata = { hullDecal: true, role: parent.metadata?.role ?? 'hull', partId: parent.metadata?.partId };
+    mesh.metadata = { hullDecal: true, cutawayFade: parent.metadata?.cutawayFade, role: parent.metadata?.role ?? 'hull', partId: parent.metadata?.partId };
     const held = shared;
     mesh.onDisposeObservable.addOnce(() => { if (--held.refs === 0) { held.material.dispose(false, true); cache!.delete(key); } });
     return mesh;
