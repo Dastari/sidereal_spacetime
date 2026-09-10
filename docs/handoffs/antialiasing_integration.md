@@ -31,3 +31,9 @@ The graphics display and selection passes can attach dynamically. The helper pre
 - Full aggregate check/build and matched publication: parent-coordinated after browser proof; not claimed by the focused tests above.
 
 Primary upstream references: [Babylon default pipeline AA](https://doc.babylonjs.com/features/featuresDeepDive/postProcesses/defaultRenderingPipeline/) and [Babylon temporal pipeline](https://doc.babylonjs.com/features/featuresDeepDive/postProcesses/TAARenderingPipeline/). Exact local9.25 `.pure.js` implementations were inspected in addition to these pages.
+
+## Game wiring checkpoint (parent)
+
+`7cf3d131` connects Graphics to the renderer and persists the device-local AA choice; Graphics Reset resets both color correction and AA. `0848c60a` coalesces new-mesh history invalidation once per rendered frame. The root integration opts into temporal history management for explicit focus/camera reset, Deck/Flight, inspected view, deck/seat/vista transitions, stale streams, discontinuous world/local teleports, debug visibility and appearance/equipment replacement. Continuous motion stays inside a velocity-aware envelope. Instance/document changes rebuild the renderer and therefore start fresh history. These are presentation operations only.
+
+Fifteen focused tests across settings, pipeline lifetime, menu and history boundaries pass. Full TypeScript check passed. The actual six-mode browser fixture reports real multisample targets, FXAA pass count and supersampled dimensions with no GL errors; the parent viewed `output/playwright/antialiasing-review/msaa-fxaa.png`. Native animated character and normal integrated game review remain required before publication. No public AA activation is claimed by these checkpoints.
