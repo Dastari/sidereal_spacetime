@@ -105,8 +105,8 @@ export function createLayoutStructuralGuides(scene: Scene) {
           },
           scene,
         );
-        mesh.color = new Color3(0.32, 0.82, 0.9);
-        mesh.alpha = 0.9;
+        mesh.color = new Color3(0.55, 0.88, 1);
+        mesh.alpha = 1;
         mesh.isPickable = false;
         mesh.metadata = {
           role: "effect",

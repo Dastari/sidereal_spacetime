@@ -1,87 +1,56 @@
-import { enterEditorMode, enterStructuralTool } from "./editor-mode-policy";
-import { placeStructuralOpening } from "./structural-edits";
+import { deleteLayoutSelection } from "./selection-deletion";
+import type { PartAsset, PartCatalog } from "@sidereal/content/assembly";
+import { assemblyMismatches } from "@sidereal/content/layout-assembly";
 import {
-  assertHullEnvelopeFits,
-  structuralPartitionSupported,
-} from "@sidereal/sim/layout-structure";
-import { wallEdgeSpan } from "./wall-edge-placement";
-import type { SharedLayoutViewport } from "./viewport-state";
+  type LayoutDocument,
+  type Point,
+  type ServiceChannel,
+  type Shape,
+} from "@sidereal/content/ship-layout";
+import { assertHullEnvelopeFits } from "@sidereal/sim/layout-structure";
+import { ModeTabs, PanelResizeHandle } from "@sidereal/ui/editor-controls";
+import { Box, Search } from "lucide-react";
+import {
+  lazy,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
+import { useEditorPanels } from "../../editor/useEditorPanels";
+import { DocumentBar } from "./DocumentBar";
+import { enterEditorMode, enterStructuralTool } from "./editor-mode-policy";
+import { applyLayoutGesture } from "./layout-gestures";
+import "./layout.css";
+import LayoutCanvas, { type Tool } from "./LayoutCanvas";
+import {
+  LayoutInspector,
+  LayoutPalette,
+  type LayoutPanelContext,
+} from "./LayoutPanels";
+import { LayoutToolbar } from "./LayoutToolbar";
+import { NewLayoutDialog } from "./NewLayoutDialog";
+import { transformTiles, type ViewState } from "./state";
 import wayfarerTemplate from "./templates/wayfarer-r001.json";
+import { useLayout, uuid } from "./useLayout";
+import type { SharedLayoutViewport } from "./viewport-state";
+import { ViewportDeckControl } from "./ViewportDeckControl";
 import {
   WAYFARER_TEMPLATE_HASH,
   WAYFARER_TEMPLATE_ID,
 } from "./wayfarer-template";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
-import {
-  Box,
-  Layers,
-  MousePointer2,
-  Hand,
-  Undo2,
-  Redo2,
-  RotateCw,
-  FlipHorizontal,
-  FlipVertical,
-  Trash2,
-  Copy,
-  Focus,
-  Download,
-  Save,
-  Plus,
-  PanelLeftClose,
-  PanelRightClose,
-  Search,
-} from "lucide-react";
-import {
-  FLOOR_SHAPES,
-  SERVICE_CHANNELS,
-  stampTile,
-  type LayoutDocument,
-  type Point,
-  type Shape,
-  type ServiceChannel,
-} from "../../../../../packages/content/src/ship-layout";
-import type {
-  PartCatalog,
-  PartAsset,
-} from "../../../../../packages/content/src/assembly";
-import {
-  onSegment,
-  samePoint,
-} from "../../../../../packages/sim/src/layout-geometry";
-import {
-  ModeTabs,
-  PropertyField,
-  EditorSection,
-  ValidationList,
-} from "../../../../../packages/ui/src/editor-controls";
-import LayoutCanvas, { type Gesture, type Tool } from "./LayoutCanvas";
-import { placeTiles, transformTiles, type ViewState } from "./state";
-import { useLayout, uuid } from "./useLayout";
-import "./layout.css";
-import HullWorkspace from "./HullWorkspace";
-import { assemblyMismatches } from "../../../../../packages/content/src/layout-assembly";
-import {
-  LayoutPalette,
-  LayoutInspector,
-  type LayoutPanelContext,
-} from "./LayoutPanels";
+import "./workbench.css";
+const HullWorkspace = lazy(() => import("./HullWorkspace"));
 const modes = ["Structure", "Rooms", "Objects", "Hull", "Systems"] as const;
 const projections = ["Top", "Side", "Front", "3D"] as const;
-const roomTypes = [
-  "Bridge",
-  "Crew quarters",
-  "Galley",
-  "Lounge",
-  "Medbay",
-  "Workshop",
-  "Storage",
-  "Utility",
-  "Cargo",
-  "Corridor",
-  "Custom",
-];
 export default function LayoutEditor() {
+  const {
+    left: showLeft,
+    right: showRight,
+    setLeft: toggleLeft,
+    setRight: toggleRight,
+  } = useEditorPanels();
   const editor = useLayout(),
     { doc, history, view, setView, result } = editor;
   const [selection, select] = useState<string[]>([]),
@@ -96,8 +65,6 @@ export default function LayoutEditor() {
     [asset, setAsset] = useState<PartAsset>(),
     [catalog, setCatalog] = useState<PartCatalog>(),
     [catalogError, setCatalogError] = useState(""),
-    [showLeft, toggleLeft] = useState(true),
-    [showRight, toggleRight] = useState(true),
     [inspector, setInspector] = useState<"Inspector" | "Layers" | "Validation">(
       "Inspector",
     ),
@@ -114,7 +81,10 @@ export default function LayoutEditor() {
     setNewDialog(false);
     select([]);
     setTool("select");
-    setInspectCabinet(true);
+    setInspectCabinet(false);
+    shell.current
+      ?.querySelector(".layout-source-context")
+      ?.removeAttribute("open");
     setView((v) => ({ ...v, mode: "Objects", projection: "3D" }));
   }
   const mismatches = catalog
@@ -140,8 +110,31 @@ export default function LayoutEditor() {
     });
   }
   const sharedViewport = useRef<SharedLayoutViewport>({});
-  const input = useRef<HTMLInputElement>(null),
-    shell = useRef<HTMLElement>(null);
+  const [canvasOnly, setCanvasOnly] = useState(false);
+  function resetWorkspace() {
+    select([]);
+    setTool("select");
+    setInspectCabinet(false);
+    sharedViewport.current = {};
+    setView((v) => ({
+      ...v,
+      mode: "Structure",
+      projection: "Top",
+      layers: {
+        ...v.layers,
+        floor: true,
+        walls: true,
+        roof: false,
+        objects: false,
+        exteriorHull: false,
+      },
+    }));
+  }
+  function redesignCurrent() {
+    if (editor.createFloorplanFromCurrent()) resetWorkspace();
+  }
+
+  const shell = useRef<HTMLElement>(null);
   useEffect(() => {
     let cancelled = false;
     fetch("/assets/assembly/catalog.json")
@@ -213,35 +206,26 @@ export default function LayoutEditor() {
     });
   }
   function remove() {
-    commit((d) => {
-      const removedPartitions = d.partitions
-        .filter((p) => selection.includes(p.id))
-        .map((p) => p.id);
-      d.tiles = d.tiles.filter((t) => !selection.includes(t.id));
-      d.partitions = d.partitions.filter((p) => !selection.includes(p.id));
-      d.openings = d.openings.filter(
-        (o) =>
-          !selection.includes(o.id) &&
-          !removedPartitions.includes(o.partitionId),
+    if (blocked || !selection.length) return;
+    const perimeterSelected = result?.walls.some(
+      (w) =>
+        w.source === "perimeter" &&
+        (selection.includes(w.anchorId) || selection.includes(w.key)),
+    );
+    if (perimeterSelected && selection.length === 1) {
+      editor.setError(
+        "Exterior walls follow the floorplan. Select floor tiles to change the outer boundary.",
       );
-      d.rooms = d.rooms
-        .filter((r) => !selection.includes(r.id))
-        .map((r) => ({
-          ...r,
-          boundaryIds: r.boundaryIds.filter(
-            (id) => !removedPartitions.includes(id),
-          ),
-        }));
-      d.fittings = d.fittings.filter((f) => !selection.includes(f.id));
-      d.routes = d.routes.filter((r) => !selection.includes(r.id));
-      const used = new Set(d.routes.flatMap((r) => [r.from, r.to]));
-      d.nodes = d.nodes.filter((n) => used.has(n.id));
-      d.decks = d.decks.map((deck) => ({
-        ...deck,
-        holes: deck.holes.filter((h) => !selection.includes(h.id)),
-      }));
-      return d;
-    });
+      return;
+    }
+    commit((d) =>
+      deleteLayoutSelection(
+        d,
+        result,
+        selection,
+        view.mode === "Systems" ? catalog : undefined,
+      ),
+    );
     select([]);
   }
   useEffect(() => {
@@ -253,6 +237,7 @@ export default function LayoutEditor() {
         newDialog
       )
         return;
+      if (e.key === "Escape") setCanvasOnly(false);
       const mod = e.ctrlKey || e.metaKey;
       if (
         (view.mode === "Hull" || view.mode === "Objects") &&
@@ -343,275 +328,6 @@ export default function LayoutEditor() {
       },
     });
   }
-  function gesture(g: Gesture) {
-    if (!doc) return;
-    const deckId = view.deckId,
-      shapeName = g.shape ?? shape;
-    if (g.tool === "select") {
-      const delta: Point = [g.end[0] - g.start[0], g.end[1] - g.start[1]];
-      if (selectedRoom) {
-        commit((d) => ({
-          ...d,
-          rooms: d.rooms.map((r) =>
-            r.id === selectedRoom.id
-              ? { ...r, seed: [r.seed[0] + delta[0], r.seed[1] + delta[1]] }
-              : r,
-          ),
-        }));
-      } else transform(g.copy ? "copy" : "move", delta);
-      return;
-    }
-    if (g.tool === "stamp" || g.tool === "fill") {
-      const at: Point[] = [];
-      if (g.tool === "fill") {
-        for (
-          let x = Math.min(g.start[0], g.end[0]);
-          x <= Math.max(g.start[0], g.end[0]) && at.length < 2049;
-          x += 64
-        )
-          for (
-            let y = Math.min(g.start[1], g.end[1]);
-            y <= Math.max(g.start[1], g.end[1]) && at.length < 2049;
-            y += 64
-          )
-            at.push([x, y]);
-      } else at.push(g.end);
-      commit((d) =>
-        placeTiles(d, at, shapeName, deckId, turns, mirrorX, mirrorY, uuid),
-      );
-      return;
-    }
-    if (g.tool === "partition") {
-      if (samePoint(g.start, g.end)) return;
-      if (
-        !result ||
-        !(doc.structure
-          ? structuralPartitionSupported(doc, result, {
-              id: "preview",
-              deckId,
-              a: g.start,
-              b: g.end,
-              seal: "design-sealed",
-            })
-          : wallEdgeSpan(result.edges, deckId, g.start, g.end))
-      ) {
-        editor.setError(
-          "Walls must follow connected shared floor edges. Drag along the grid lines between floor tiles; tile centres and unsupported spans cannot hold walls.",
-        );
-        return;
-      }
-      const id = uuid();
-      commit((d) => ({
-        ...d,
-        partitions: [
-          ...d.partitions,
-          { id, deckId, a: g.start, b: g.end, seal: "design-sealed" },
-        ],
-      }));
-      select([id]);
-      return;
-    }
-    if (g.tool === "door") {
-      if (!doc.structure || !result) {
-        editor.setError(
-          "Choose a hull size in Structure before placing doors.",
-        );
-        return;
-      }
-      const wall = result.structure?.walls.find(
-        (w) =>
-          w.deckId === deckId &&
-          (w.anchorId === g.entityId ||
-            w.id === g.entityId ||
-            onSegment(g.end, w.a, w.b)),
-      );
-      if (!wall) {
-        editor.setError("Choose an interior or exterior wall to place a door.");
-        return;
-      }
-      const id = uuid();
-      try {
-        const next = placeStructuralOpening(
-          doc,
-          result,
-          wall.anchorId,
-          g.end,
-          editor.structuralTools,
-          id,
-        );
-        commit(() => next);
-        select([id]);
-      } catch (e) {
-        editor.setError(String(e));
-      }
-      return;
-    }
-
-    if (g.tool === "room") {
-      const id = uuid();
-      commit((d) => ({
-        ...d,
-        rooms: [
-          ...d.rooms,
-          {
-            id,
-            deckId,
-            name: roomType,
-            type: roomType,
-            seed: g.start,
-            boundaryIds: [],
-            access: "crew",
-            floorTheme: "Unassigned",
-            wallTheme: "Unassigned",
-          },
-        ],
-      }));
-      select([id]);
-      setTool("select");
-      return;
-    }
-    if (g.tool === "hole") {
-      const id = uuid();
-      commit((d) => ({
-        ...d,
-        decks: d.decks.map((deck) =>
-          deck.id === deckId
-            ? { ...deck, holes: [...deck.holes, { id, seed: g.start }] }
-            : deck,
-        ),
-      }));
-      select([id]);
-      setTool("select");
-      return;
-    }
-    if (g.tool === "route") {
-      if (samePoint(g.start, g.end)) return;
-      commit((d) => {
-        const node = (p: Point, direction: "in" | "out") => {
-          const existing = reuseNodes
-            ? d.nodes.find(
-                (n) =>
-                  n.deckId === deckId &&
-                  n.channel === channel &&
-                  samePoint(n.point, p),
-              )
-            : undefined;
-          if (existing) {
-            existing.kind = "junction";
-            existing.direction = "both";
-            return existing.id;
-          }
-          const id = uuid();
-          d.nodes.push({
-            id,
-            deckId,
-            point: p,
-            channel,
-            kind: "endpoint",
-            direction,
-            medium: channel,
-          });
-          return id;
-        };
-        const from = node(g.start, "out"),
-          to = node(g.end, "in"),
-          path = [g.start, [g.end[0], g.start[1]] as Point, g.end].filter(
-            (p, i, a) => i === 0 || !samePoint(p, a[i - 1]),
-          );
-        d.routes.push({
-          id: uuid(),
-          deckId,
-          channel,
-          from,
-          to,
-          path,
-          capacity: null,
-        });
-        return d;
-      });
-      return;
-    }
-    if (g.tool === "object") {
-      const selected = g.assetId
-        ? catalog?.assets.find((a) => a.id === g.assetId)
-        : asset;
-      if (!selected) {
-        editor.setError("Choose a catalog visual reference first.");
-        return;
-      }
-      const id = uuid(),
-        footprint: Point = [
-          Math.max(
-            16,
-            Math.round((selected.bounds.max[0] - selected.bounds.min[0]) * 32),
-          ),
-          Math.max(
-            16,
-            Math.round((selected.bounds.max[1] - selected.bounds.min[1]) * 32),
-          ),
-        ],
-        container = /crate|cargo|container/i.test(selected.label);
-      commit((d) => ({
-        ...d,
-        fittings: [
-          ...d.fittings,
-          {
-            id,
-            deckId,
-            definitionId: selected.id,
-            revision: selected.visual?.sha256 ?? "legacy-visual-reference",
-            position: g.end,
-            quarterTurns: turns,
-            reflected: false,
-            footprint,
-            clearance: 16,
-            kind: container ? "container" : "equipment",
-            container: container ? { columns: 4, rows: 3, contents: [] } : null,
-          },
-        ],
-      }));
-      select([id]);
-    }
-  }
-  function resizePanel(side: "left" | "right", e: React.PointerEvent) {
-    e.currentTarget.setPointerCapture(e.pointerId);
-    const start = e.clientX,
-      width = side === "left" ? view.leftWidth : view.rightWidth;
-    const move = (event: PointerEvent) =>
-      setView((v) => ({
-        ...v,
-        [side === "left" ? "leftWidth" : "rightWidth"]: Math.max(
-          200,
-          Math.min(
-            380,
-            width + (event.clientX - start) * (side === "left" ? 1 : -1),
-          ),
-        ),
-      }));
-    const done = () => {
-      window.removeEventListener("pointermove", move);
-      window.removeEventListener("pointerup", done);
-    };
-    window.addEventListener("pointermove", move);
-    window.addEventListener("pointerup", done);
-  }
-  const button = (
-    label: string,
-    Icon: typeof Box,
-    onClick: () => void,
-    disabled = false,
-    active = false,
-  ) => (
-    <button
-      title={label}
-      aria-label={label}
-      disabled={disabled}
-      aria-pressed={active}
-      onClick={onClick}
-    >
-      <Icon size={17} />
-    </button>
-  );
   const changeSelected = (
     key: "rooms" | "partitions" | "openings" | "fittings" | "routes",
     change: Record<string, unknown>,
@@ -691,60 +407,19 @@ export default function LayoutEditor() {
       ref={shell}
       style={
         {
-          "--layout-left": showLeft ? `${view.leftWidth}px` : "0px",
-          "--layout-right": showRight ? `${view.rightWidth}px` : "0px",
+          "--layout-left": `${view.leftWidth}px`,
+          "--layout-right": `${view.rightWidth}px`,
         } as CSSProperties
       }
       data-layout-fingerprint={result?.fingerprint}
+      data-canvas-only={canvasOnly}
     >
-      <header className="layout-document-bar">
-        <div>
-          <h1>Ship layout planner</h1>
-          <span>
-            {doc?.kind === "station-module" ? "Station module" : "Ship"} · Local
-            design draft
-          </span>
-        </div>
-        <input
-          aria-label="Document name"
-          value={doc?.name ?? "Preserved recovery"}
-          disabled={blocked}
-          onChange={(e) => commit((d) => ({ ...d, name: e.target.value }))}
-        />
-        <span className="layout-save-status" role="status">
-          {editor.saved}
-        </span>
-        <div className="layout-document-actions">
-          {button("Undo", Undo2, editor.undo, blocked || !history?.past.length)}
-          {button(
-            "Redo",
-            Redo2,
-            editor.redo,
-            blocked || !history?.future.length,
-          )}
-          <button onClick={editor.save} disabled={blocked}>
-            <Save size={15} /> Save draft
-          </button>
-          <button className="layout-primary" onClick={editor.exportDraft}>
-            <Download size={15} /> Export
-          </button>
-          <button onClick={() => input.current?.click()}>Import</button>
-          <button onClick={() => setNewDialog(true)}>
-            <Plus size={16} /> New
-          </button>
-          <input
-            ref={input}
-            type="file"
-            accept=".json,application/json"
-            hidden
-            onChange={(e) => {
-              if (e.target.files?.[0])
-                void editor.importFile(e.target.files[0]);
-              e.target.value = "";
-            }}
-          />
-        </div>
-      </header>
+      <DocumentBar
+        editor={editor}
+        blocked={blocked}
+        commit={commit}
+        onNew={() => setNewDialog(true)}
+      />
       <div className="layout-mode-bar">
         <ModeTabs
           label="Layout modes"
@@ -752,6 +427,34 @@ export default function LayoutEditor() {
           value={view.mode}
           onChange={mode}
         />
+        <details className="layout-source-context">
+          <summary>
+            {fromCurrentWayfarer
+              ? "Wayfarer template · editable local copy"
+              : "Templates and source"}{" "}
+            <span>Local draft · saved game is unchanged</span>
+          </summary>
+          <div className="layout-legacy">
+            <button
+              onClick={inspectWayfarer}
+              disabled={editor.blocked}
+              title={
+                editor.blocked
+                  ? "Resolve or export the current recovery/conflict first"
+                  : "Preserve this draft and open a separate editable copy of the current game source template"
+              }
+            >
+              <Search size={16} /> Inspect current Wayfarer template
+            </button>
+            <span>
+              {fromCurrentWayfarer
+                ? `Source: Wayfarer template r001 · ${WAYFARER_TEMPLATE_HASH.slice(0, 12)}. Separate editable local draft.`
+                : "Open the current game source template in Objects/3D; your current draft is preserved."}{" "}
+              This is not a live ship capture. Saved game changes and additional
+              fuel attachments are not included.
+            </span>
+          </div>
+        </details>
         <div className="layout-projection">
           <ModeTabs
             label="Projection"
@@ -764,34 +467,17 @@ export default function LayoutEditor() {
           />
         </div>
       </div>
-      <details className="layout-source-context">
-        <summary>
-          {fromCurrentWayfarer
-            ? "Wayfarer template · editable local copy"
-            : "Templates and source"}{" "}
-          <span>Local draft · saved game is unchanged</span>
-        </summary>
-        <div className="layout-legacy">
-          <button
-            onClick={inspectWayfarer}
-            disabled={editor.blocked}
-            title={
-              editor.blocked
-                ? "Resolve or export the current recovery/conflict first"
-                : "Preserve this draft and open a separate editable copy of the current game source template"
-            }
-          >
-            <Search size={16} /> Inspect current Wayfarer template
-          </button>
+      {!!doc?.assembly?.parts.length && (
+        <div className="layout-model-notice">
           <span>
-            {fromCurrentWayfarer
-              ? `Source: Wayfarer template r001 · ${WAYFARER_TEMPLATE_HASH.slice(0, 12)}. Separate editable local draft.`
-              : "Open the current game source template in Objects/3D; your current draft is preserved."}{" "}
-            This is not a live ship capture. Saved game changes and additional
-            fuel attachments are not included.
+            This draft includes the old assembled ship. Its walls are separate
+            from the floorplan.
           </span>
+          <button disabled={blocked} onClick={redesignCurrent}>
+            Redesign this floorplan
+          </button>
         </div>
-      </details>
+      )}
       {(editor.error || editor.recovery || editor.conflict) && (
         <div className="layout-alert" role="alert">
           <span>{editor.error}</span>
@@ -818,161 +504,115 @@ export default function LayoutEditor() {
         </div>
       )}
       {editor.legacy && !doc?.legacy && (
-        <div className="layout-legacy">
-          <span>
-            Assembly-v1 draft found. Original data and history are preserved.
-          </span>
-          <button onClick={editor.migrate}>Migrate as visual references</button>
-          <button onClick={editor.exportLegacy}>Export original</button>
-          <a href="/shipyard?assembly=legacy">Open assembly editor</a>
-        </div>
+        <details className="layout-legacy-recovery">
+          <summary>Previous assembly draft available</summary>
+          <div className="layout-legacy">
+            <span>
+              Assembly-v1 draft found. Original data and history are preserved.
+            </span>
+            <button onClick={editor.migrate}>
+              Migrate as visual references
+            </button>
+            <button onClick={editor.exportLegacy}>Export original</button>
+            <a href="/shipyard?assembly=legacy">Open assembly editor</a>
+          </div>
+        </details>
       )}
       {(view.mode === "Hull" || view.mode === "Objects") && doc ? (
-        <HullWorkspace
-          sharedViewport={sharedViewport}
-          layers={view.layers}
-          onLayersChange={(layers) => updateView({ layers })}
-          grid={view.grid / 32}
-          onGridChange={(grid) => updateView({ grid: grid * 32 })}
-          initialRoofVisible={
-            inspectCabinet && fromCurrentWayfarer ? false : undefined
+        <Suspense
+          fallback={
+            <div className="workspace-loading" role="status">
+              Loading component tools…
+            </div>
           }
-          initialSelection={
-            inspectCabinet && fromCurrentWayfarer
-              ? "equipment-locker--4.7--6"
-              : undefined
-          }
-          mode={view.mode === "Objects" ? "Objects" : "Hull"}
-          doc={doc}
-          catalog={catalog}
-          catalogError={catalogError}
-          blocked={blocked}
-          result={result}
-          projection={view.projection}
-          deckId={view.deckId}
-          commit={commit}
-          adopt={(d) => editor.adopt(d, false, true)}
-          error={editor.setError}
-        />
+        >
+          <HullWorkspace
+            onDeckChange={(deckId) => updateView({ deckId })}
+            sharedViewport={sharedViewport}
+            layers={view.layers}
+            onLayersChange={(layers) => updateView({ layers })}
+            grid={view.grid / 32}
+            onGridChange={(grid) => updateView({ grid: grid * 32 })}
+            initialRoofVisible={
+              inspectCabinet && fromCurrentWayfarer ? false : undefined
+            }
+            mode={view.mode === "Objects" ? "Objects" : "Hull"}
+            doc={doc}
+            catalog={catalog}
+            catalogError={catalogError}
+            blocked={blocked}
+            result={result}
+            projection={view.projection}
+            deckId={view.deckId}
+            commit={commit}
+            adopt={(d) => editor.adopt(d, false, true)}
+            error={editor.setError}
+          />
+        </Suspense>
       ) : (
         <div
           className={`layout-workspace ${showLeft ? "" : "left-closed"} ${showRight ? "" : "right-closed"}`}
         >
           <LayoutPalette {...panelContext} />
-          <div
-            className="layout-resizer left"
-            role="separator"
-            aria-label="Resize palette"
-            aria-orientation="vertical"
-            tabIndex={0}
-            onPointerDown={(e) => resizePanel("left", e)}
-            onKeyDown={(e) => {
-              if (e.key.startsWith("Arrow"))
-                updateView({
-                  leftWidth: Math.max(
-                    200,
-                    Math.min(
-                      380,
-                      view.leftWidth + (e.key === "ArrowRight" ? 16 : -16),
-                    ),
-                  ),
-                });
-            }}
+          <PanelResizeHandle
+            side="left"
+            width={view.leftWidth}
+            onResize={(width) => updateView({ leftWidth: width })}
           />
           <section className="layout-center">
-            <div className="layout-toolbar">
-              {button("Toggle palette", PanelLeftClose, () => {
-                toggleLeft((v) => !v);
-                if (window.innerWidth < 1100) toggleRight(false);
-              })}
-              {button(
-                "Select (click / Shift-click / box)",
-                MousePointer2,
-                () => setTool("select"),
-                false,
-                tool === "select",
-              )}
-              {button(
-                "Pan (middle drag or Space)",
-                Hand,
-                () => setTool("pan"),
-                false,
-                tool === "pan",
-              )}
-              <span className="layout-toolbar-divider" />
-              {button(
-                "Rotate 90° (R)",
-                RotateCw,
-                () =>
-                  selection.length
-                    ? transform("rotate")
-                    : setTurns((t) => (t + 1) % 4),
-                blocked,
-              )}
-              {button(
-                "Mirror X (F)",
-                FlipHorizontal,
-                () => transform("mirror-x"),
-                blocked || !selection.length,
-              )}
-              {button(
-                "Mirror Y (Shift+F)",
-                FlipVertical,
-                () => transform("mirror-y"),
-                blocked || !selection.length,
-              )}
-              {button(
-                "Copy (Ctrl+D)",
-                Copy,
-                () => transform("copy", [64, 0]),
-                blocked || !selection.length,
-              )}
-              {button(
-                selectedPartition
-                  ? "Delete partition and its openings"
-                  : "Delete selection",
-                Trash2,
-                remove,
-                blocked || !selection.length,
-              )}
-              <span className="layout-toolbar-divider" />
-              {button("Fit floorplan", Focus, fit)}
-              <button
-                onClick={() =>
-                  sharedViewport.current.actions
-                    ? sharedViewport.current.actions.zoom(120)
-                    : updateView({
-                        camera: {
-                          ...view.camera,
-                          scale: Math.max(0.025, view.camera.scale / 1.2),
-                        },
-                      })
+            <LayoutToolbar
+              tool={tool}
+              blocked={blocked}
+              hasSelection={selection.length > 0}
+              partitionSelected={!!selectedPartition}
+              onTool={setTool}
+              onFit={fit}
+              onAction={(action) => {
+                if (action === "remove") remove();
+                else if (action === "rotate" && !selection.length)
+                  setTurns((t) => (t + 1) % 4);
+                else transform(action, action === "copy" ? [64, 0] : [0, 0]);
+              }}
+              onToggle={(side) => {
+                if (side === "left") {
+                  toggleLeft((v) => !v);
+                  if (innerWidth < 1100) toggleRight(false);
+                } else {
+                  toggleRight((v) => !v);
+                  if (innerWidth < 1100) toggleLeft(false);
                 }
-                aria-label="Zoom out"
-              >
-                −
-              </button>
-              <span className="layout-zoom">Shared view</span>
-              <button
-                onClick={() =>
-                  sharedViewport.current.actions
-                    ? sharedViewport.current.actions.zoom(-120)
-                    : updateView({
-                        camera: {
-                          ...view.camera,
-                          scale: Math.min(6, view.camera.scale * 1.2),
-                        },
-                      })
-                }
-                aria-label="Zoom in"
-              >
-                +
-              </button>
-              {button("Toggle inspector", PanelRightClose, () => {
-                toggleRight((v) => !v);
-                if (window.innerWidth < 1100) toggleLeft(false);
-              })}
-            </div>
+              }}
+              onZoom={(direction) => {
+                if (sharedViewport.current.actions)
+                  sharedViewport.current.actions.zoom(
+                    direction === "in" ? -120 : 120,
+                  );
+                else
+                  updateView({
+                    camera: {
+                      ...view.camera,
+                      scale: Math.max(
+                        0.025,
+                        Math.min(
+                          6,
+                          view.camera.scale *
+                            (direction === "in" ? 1.2 : 1 / 1.2),
+                        ),
+                      ),
+                    },
+                  });
+              }}
+            />
+            {doc && (
+              <ViewportDeckControl
+                doc={doc}
+                deckId={view.deckId}
+                onChange={(deckId) => {
+                  updateView({ deckId });
+                  select([]);
+                }}
+              />
+            )}
             {doc ? (
               <LayoutCanvas
                 sharedViewport={sharedViewport}
@@ -992,7 +632,7 @@ export default function LayoutEditor() {
                 shape={shape}
                 turns={turns}
                 blocked={blocked}
-                gesture={gesture}
+                gesture={(g) => applyLayoutGesture(g, panelContext)}
                 cancel={cancel}
                 channel={channel}
               />
@@ -1012,30 +652,23 @@ export default function LayoutEditor() {
               </div>
             )}
           </section>
-          <div
-            className="layout-resizer right"
-            role="separator"
-            aria-label="Resize inspector"
-            aria-orientation="vertical"
-            tabIndex={0}
-            onPointerDown={(e) => resizePanel("right", e)}
-            onKeyDown={(e) => {
-              if (e.key.startsWith("Arrow"))
-                updateView({
-                  rightWidth: Math.max(
-                    200,
-                    Math.min(
-                      380,
-                      view.rightWidth + (e.key === "ArrowLeft" ? 16 : -16),
-                    ),
-                  ),
-                });
-            }}
+          <PanelResizeHandle
+            side="right"
+            width={view.rightWidth}
+            onResize={(width) => updateView({ rightWidth: width })}
           />
           <LayoutInspector {...panelContext} />
         </div>
       )}
       <footer className="layout-statusbar">
+        <button
+          className="canvas-space-toggle"
+          aria-label={canvasOnly ? "Exit canvas focus" : "Maximize canvas"}
+          aria-pressed={canvasOnly}
+          onClick={() => setCanvasOnly((v) => !v)}
+        >
+          {canvasOnly ? "Exit focus" : "Focus canvas"}
+        </button>
         <span>
           {doc?.name ?? "Recovery"} <b>Local draft</b>
         </span>
@@ -1093,76 +726,12 @@ export default function LayoutEditor() {
         </button>
       </footer>
       {newDialog && (
-        <dialog
-          open
-          className="layout-dialog"
-          aria-label="Create a separate layout"
-        >
-          <h2>New local layout</h2>
-          <p>
-            Your current saved draft stays in browser recovery storage. Export
-            any unsaved or conflicting proposal first.
-          </p>
-          <button
-            onClick={() => {
-              editor.create("ship");
-              setNewDialog(false);
-              select([]);
-            }}
-          >
-            Empty ship
-          </button>
-          <button
-            onClick={() => {
-              editor.create("station-module");
-              setNewDialog(false);
-              select([]);
-            }}
-          >
-            Empty station module
-          </button>
-          <button
-            disabled={editor.blocked}
-            title={
-              editor.blocked
-                ? "Resolve or export the current recovery/conflict first"
-                : "Create a separate editable copy of the pinned native Wayfarer"
-            }
-            onClick={inspectWayfarer}
-          >
-            Wayfarer template · current native layout
-          </button>
-          <p>
-            One authored deck with the current cockpit, floors, roof and
-            objects. Creates a local draft; changes need fresh gameplay
-            qualification.
-          </p>
-          <button
-            onClick={() => {
-              editor.create("ship", true);
-              setNewDialog(false);
-              select([]);
-            }}
-          >
-            Pathfinder sample
-          </button>
-          <button onClick={() => setNewDialog(false)}>Cancel</button>
-          <h3>Saved local drafts</h3>
-          <div className="layout-saved-drafts">
-            {editor.savedDrafts().map((d) => (
-              <button
-                key={d.key}
-                onClick={() => {
-                  editor.openSaved(d.key);
-                  setNewDialog(false);
-                  select([]);
-                }}
-              >
-                {d.name}
-              </button>
-            ))}
-          </div>
-        </dialog>
+        <NewLayoutDialog
+          editor={editor}
+          onClose={() => setNewDialog(false)}
+          onResetSelection={resetWorkspace}
+          inspectWayfarer={inspectWayfarer}
+        />
       )}
     </main>
   );

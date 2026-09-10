@@ -47,8 +47,8 @@ describe("explicit editor view orientation", () => {
   });
   it("restores north-up only when explicitly switching back to Top", () => {
     expect(layoutViewOrientation("Top", "3D")).toEqual({
-      alpha: -Math.PI / 2.6,
-      beta: Math.PI / 3.2,
+      alpha: Math.PI / 10,
+      beta: Math.PI / 4,
     });
     expect(layoutViewOrientation("3D", "Top")).toEqual({
       alpha: Math.PI / 2,

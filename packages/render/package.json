@@ -14,7 +14,8 @@
     "./layout-hull": "./src/layout-hull.ts",
     "./antialiasing-settings": "./src/antialiasing-settings.ts",
     "./graphics-settings": "./src/graphics-settings.ts",
-    "./local-light-budget": "./src/local-light-budget.ts"
+    "./local-light-budget": "./src/local-light-budget.ts",
+    "./layout-assembly-preview": "./src/layout-assembly-preview.ts"
   },
   "dependencies": {
     "@babylonjs/core": "9.25.0",

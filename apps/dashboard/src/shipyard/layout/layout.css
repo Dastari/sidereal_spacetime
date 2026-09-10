@@ -53,8 +53,8 @@
   opacity: 0.45;
   cursor: not-allowed;
 }
-.layout-editor input:not([type="checkbox"]):not([type="color"]),
-.layout-editor select {
+.layout-editor
+  :where(input:not([type="checkbox"]):not([type="color"]), select) {
   color: var(--text);
   border: 1px solid var(--line);
   border-radius: 3px;

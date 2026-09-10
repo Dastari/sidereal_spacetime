@@ -10,7 +10,7 @@ export function layoutViewOrientation(previous: string, next: string) {
     case "Front":
       return { alpha: 0, beta: Math.PI / 2 };
     case "3D":
-      return { alpha: -Math.PI / 2.6, beta: Math.PI / 3.2 };
+      return { alpha: Math.PI / 10, beta: Math.PI / 4 };
     default:
       return undefined;
   }

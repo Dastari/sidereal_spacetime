@@ -5,10 +5,10 @@ import {
 import { layoutNativeFloors } from "./layout-native-floors";
 /** The other layout modes inspect the same editable assembly; Hull owns its gestures. */
 import { createHullViewport, type HullCameraState } from "./layout-hull";
-import { PART_CATEGORIES, type PartCatalog } from "../../content/src/assembly";
-import { layoutVisualParts } from "../../content/src/layout-assembly";
-import type { LayoutDocument } from "../../content/src/ship-layout";
-import type { CompiledLayout } from "../../sim/src/layout-compiler";
+import { PART_CATEGORIES, type PartCatalog } from "@sidereal/content/assembly";
+import { layoutVisualParts } from "@sidereal/content/layout-assembly";
+import type { LayoutDocument } from "@sidereal/content/ship-layout";
+import type { CompiledLayout } from "@sidereal/sim/layout-compiler";
 export function createAssemblyLayoutPreview(
   canvas: HTMLCanvasElement,
   catalog: PartCatalog,
@@ -86,6 +86,19 @@ export function createAssemblyLayoutPreview(
           : undefined,
         floor: {
           ...result,
+          bounds:
+            !result.tiles.some((tile) => tile.deckId === deck) && doc.structure
+              ? {
+                  min: [
+                    doc.structure.hull.origin[0],
+                    doc.structure.hull.origin[1],
+                  ],
+                  max: [
+                    doc.structure.hull.origin[0] + doc.structure.hull.width,
+                    doc.structure.hull.origin[1] + doc.structure.hull.length,
+                  ],
+                }
+              : result.bounds,
           fingerprint: `${result.fingerprint}:${deck}:${showFloor}:${native.unmatched.join(",")}`,
           tiles: result.tiles.filter(
             (t) => t.deckId === deck && unmatched.has(t.id),

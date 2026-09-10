@@ -1,0 +1,51 @@
+:root {
+  --creator-canvas: #06151f;
+  --creator-surface: #081c28;
+  --creator-raised: #0e2635;
+  --creator-input: #061923;
+  --creator-hover: #14394c;
+  --creator-active: #0b354a;
+  --line: #244657;
+  --text: #e5eff5;
+  --muted: #9eb9c9;
+  --accent: #32c5f3;
+  --viewport-background: #07131b;
+}
+:root[data-creator-theme="graphite"] {
+  --creator-canvas: #14171c;
+  --creator-surface: #1b2027;
+  --creator-raised: #262d36;
+  --creator-input: #14191f;
+  --creator-hover: #343f4d;
+  --creator-active: #273d50;
+  --line: #414d5c;
+  --text: #eef1f6;
+  --muted: #b2bccb;
+  --accent: #8cc9ff;
+  --viewport-background: #14171c;
+}
+.editor-theme {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+}
+.editor-theme select {
+  background: var(--creator-input);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 6px 8px;
+  font-size: 12px;
+}
+.workspace-loading {
+  flex: 1;
+  display: grid;
+  place-content: center;
+  gap: 16px;
+  color: var(--muted);
+}
+.workspace-loading button {
+  padding: 10px;
+  border: 1px solid var(--line);
+}

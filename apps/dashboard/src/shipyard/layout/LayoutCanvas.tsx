@@ -1,7 +1,5 @@
-import { systemsFootprints } from "./systems-footprints";
-import { layoutPreviewPolicy } from "./editor-mode-policy";
+import { mountEditorCanvas } from "../../editor/mountEditorCanvas";
 import { PINNED_FLOOR_KIT } from "@sidereal/sim/construction-transactions";
-import type { SharedLayoutViewport } from "./viewport-state";
 import type { RefObject } from "react";
 import {
   useEffect,
@@ -10,21 +8,23 @@ import {
   useState,
   type PointerEvent as ReactPointerEvent,
 } from "react";
+import type { PartCatalog } from "@sidereal/content/assembly";
 import {
-  FLOOR_SHAPES,
   SERVICE_CHANNELS,
   stampTile,
   type LayoutDocument,
   type Point,
-  type Shape,
   type ServiceChannel,
-} from "../../../../../packages/content/src/ship-layout";
+  type Shape,
+} from "@sidereal/content/ship-layout";
 import {
   fittingPolygon,
   type CompiledLayout,
-} from "../../../../../packages/sim/src/layout-compiler";
-import type { PartCatalog } from "../../../../../packages/content/src/assembly";
+} from "@sidereal/sim/layout-compiler";
+import { layoutPreviewPolicy } from "./editor-mode-policy";
 import type { ViewState } from "./state";
+import { systemsFootprints } from "./systems-footprints";
+import type { SharedLayoutViewport } from "./viewport-state";
 export type Tool =
   | "select"
   | "pan"
@@ -80,10 +80,12 @@ export default function LayoutCanvas(props: Props) {
     cancel,
   } = props;
   const svg = useRef<SVGSVGElement>(null),
+    overlay = useRef<SVGSVGElement>(null),
     holder = useRef<HTMLDivElement>(null),
-    gpu = useRef<HTMLCanvasElement>(null),
+    gpuHost = useRef<HTMLDivElement>(null),
+    gpu = useRef<HTMLCanvasElement | null>(null),
     preview = useRef<ReturnType<
-      (typeof import("../../../../../packages/render/src/layout-assembly-preview"))["createAssemblyLayoutPreview"]
+      (typeof import("@sidereal/render/layout-assembly-preview"))["createAssemblyLayoutPreview"]
     > | null>(null);
   const [menu, setMenu] = useState<{ x: number; y: number; id: string } | null>(
     null,
@@ -102,8 +104,7 @@ export default function LayoutCanvas(props: Props) {
       entityId?: string;
       camera: ViewState["camera"];
     } | null>(null),
-    [stats, setStats] = useState("Loading 3D preview…"),
-    [planeMatrix, setPlaneMatrix] = useState<string>();
+    [stats, setStats] = useState("Loading 3D preview…");
   const latest = useRef(props);
   latest.current = props;
   useEffect(() => {
@@ -122,11 +123,19 @@ export default function LayoutCanvas(props: Props) {
     PINNED_FLOOR_KIT.datums.floorTop / 32 +
     0.0025;
   useEffect(() => {
-    if (!gpu.current || !props.catalog) return;
+    if (!gpuHost.current || !props.catalog) return;
+    const canvas = mountEditorCanvas(
+      gpuHost.current,
+      "Shared ship layout viewport",
+    );
+    gpu.current = canvas;
     let disposed = false;
+    for (const element of [svg.current, overlay.current]) {
+      if (element) element.style.visibility = "hidden";
+    }
     const shared = props.sharedViewport.current;
     const initial = shared.documentId === doc.id ? shared.camera : undefined;
-    import("../../../../../packages/render/src/layout-assembly-preview")
+    import("@sidereal/render/layout-assembly-preview")
       .then(({ createAssemblyLayoutPreview }) => {
         if (disposed || !gpu.current || !latest.current.catalog) return;
         const viewport = createAssemblyLayoutPreview(
@@ -143,7 +152,13 @@ export default function LayoutCanvas(props: Props) {
             state.projection = latest.current.view.projection;
             const matrix = preview.current.planeTransform(planeElevation());
             const css = `matrix3d(${matrix.join(",")})`;
-            setPlaneMatrix((previous) => (previous === css ? previous : css));
+            // Camera projection is transient DOM state, not a React document edit.
+            for (const element of [svg.current, overlay.current]) {
+              if (element && element.style.transform !== css) {
+                element.style.transform = css;
+                element.style.visibility = "visible";
+              }
+            }
           },
         );
         preview.current = viewport;
@@ -179,6 +194,8 @@ export default function LayoutCanvas(props: Props) {
         preview.current.dispose();
         preview.current = null;
       }
+      canvas.remove();
+      if (gpu.current === canvas) gpu.current = null;
     };
   }, [props.catalog]);
   useEffect(() => {
@@ -240,7 +257,7 @@ export default function LayoutCanvas(props: Props) {
       return;
     e.preventDefault();
     setMenu(null);
-    e.currentTarget.focus();
+    e.currentTarget.focus({ preventScroll: true });
     e.currentTarget.setPointerCapture(e.pointerId);
     const p = local(e.clientX, e.clientY),
       id =
@@ -390,7 +407,15 @@ export default function LayoutCanvas(props: Props) {
                 ? "#425a68"
                 : "url(#layout-deck-surface)"
           }
-          fillOpacity={doc.assembly && view.mode !== "Systems" ? 0.16 : 1}
+          fillOpacity={
+            view.projection !== "Top"
+              ? selection.includes(t.id)
+                ? 0.12
+                : 0
+              : doc.assembly && view.mode !== "Systems"
+                ? 0.16
+                : 1
+          }
           stroke={selection.includes(t.id) ? "#45d8f5" : "#7793a0"}
           strokeWidth={
             selection.includes(t.id)
@@ -404,6 +429,7 @@ export default function LayoutCanvas(props: Props) {
       doc.tiles,
       view.deckId,
       view.layers.floor,
+      view.projection,
       view.mode,
       selection,
       delta[0],
@@ -425,10 +451,22 @@ export default function LayoutCanvas(props: Props) {
             ? "Floorplan schematic"
             : doc.assembly
               ? "Native assembly preview"
-              : "Enclosure proxy preview"}
+              : "Floorplan wall outlines"}
         </span>
       </div>
-      <canvas ref={gpu} aria-label="Shared ship layout viewport" tabIndex={0} />
+      <div className="editor-gpu-surface" ref={gpuHost} />
+      {!doc.tiles.some((tile) => tile.deckId === view.deckId) && (
+        <div className="layout-empty-guide">
+          <strong>Draw your first deck</strong>
+          <span>
+            Choose a floor shape on the left, then click to place it.
+            <br />
+            Use area fill to draw a larger floorplan. Exterior walls follow its
+            edges.
+          </span>
+        </div>
+      )}
+
       <div className="layout-render-stats">
         {stats} · Middle drag orbits · Right drag pans · Wheel zooms
       </div>
@@ -442,10 +480,8 @@ export default function LayoutCanvas(props: Props) {
           tabIndex={0}
           viewBox={`0 0 ${size.w} ${size.h}`}
           style={{
-            transform: planeMatrix,
             transformOrigin: "0 0",
             overflow: "visible",
-            visibility: planeMatrix ? "visible" : "hidden",
           }}
           onPointerDown={down}
           onPointerMove={move}
@@ -909,14 +945,13 @@ export default function LayoutCanvas(props: Props) {
           )}
         </svg>
         <svg
+          ref={overlay}
           className="layout-gesture-overlay"
           aria-hidden="true"
           viewBox={`0 0 ${size.w} ${size.h}`}
           style={{
-            transform: planeMatrix,
             transformOrigin: "0 0",
             overflow: "visible",
-            visibility: planeMatrix ? "visible" : "hidden",
           }}
         >
           <g transform="scale(1,-1)">

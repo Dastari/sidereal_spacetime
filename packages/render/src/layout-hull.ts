@@ -1,4 +1,16 @@
-import { setMeshRole } from './mesh-roles';
+import { layoutPickingCoordinates } from "./layout-picking-coordinates";
+import {
+  createLayoutStructuralGuides,
+  type LayoutStructuralGuide,
+} from "./layout-structural-guides";
+export type { LayoutStructuralGuide } from "./layout-structural-guides";
+import { setMeshRole } from "./mesh-roles";
+import {
+  editorFitRadius,
+  editorGuideStep,
+  editorRenderScale,
+} from "./editor-surface";
+import { FxaaPostProcess } from "@babylonjs/core/PostProcesses/fxaaPostProcess";
 import { layoutViewOrientation } from "./layout-view-orientation";
 import { snapLayoutPoint } from "./layout-placement-grid";
 import { layoutPlaneMatrix } from "./layout-plane-projection";
@@ -37,8 +49,8 @@ import type {
   PartCatalog,
   PartPlacement,
   PartCategory,
-} from "../../content/src/assembly";
-import type { CompiledLayout } from "../../sim/src/layout-compiler";
+} from "@sidereal/content/assembly";
+import type { CompiledLayout } from "@sidereal/sim/layout-compiler";
 export interface HullViewState {
   parts: PartPlacement[];
   selected: string;
@@ -51,6 +63,8 @@ export interface HullViewState {
   blocked: boolean;
   projection: string;
   floor?: CompiledLayout;
+  structuralGuide?: LayoutStructuralGuide;
+  showGrid?: boolean;
   /** Native structural context cannot be selected or dragged as an assembly object. */
   contextOnly?: ReadonlySet<string>;
 }
@@ -84,12 +98,13 @@ export function createHullViewport(
   scene.clearColor = new Color4(0.028, 0.075, 0.105, 1);
   const camera = new ArcRotateCamera(
     "hull-editor-camera",
-    -Math.PI / 2.6,
-    Math.PI / 3.2,
+    Math.PI / 10,
+    Math.PI / 4,
     45,
     Vector3.Zero(),
     scene,
   );
+  new FxaaPostProcess("editor-edge-antialiasing", 1, camera);
   camera.fov = 0.65;
   camera.minZ = 0.02;
   camera.maxZ = 2000;
@@ -133,6 +148,7 @@ export function createHullViewport(
   );
   scene.environmentIntensity = 0.6;
   const selection = createLayoutSelection(scene);
+  const structuralGuides = createLayoutStructuralGuides(scene);
   let activeUntil = performance.now() + 2000;
   const requestRender = () => {
     activeUntil = performance.now() + 1500;
@@ -174,7 +190,7 @@ export function createHullViewport(
     }
     const mesh = CreateLineSystem("hull-build-plane", { lines }, scene);
     setMeshRole(mesh, "effect");
-    mesh.color = new Color3(0.14, 0.31, 0.39);
+    mesh.color = new Color3(0.09, 0.21, 0.27);
     mesh.isPickable = false;
     return mesh;
   }
@@ -264,11 +280,22 @@ export function createHullViewport(
       pending.set(url, work);
     }
   }
+  function pickingCoordinates(x: number, y: number) {
+    return layoutPickingCoordinates(
+      x,
+      y,
+      canvas.getBoundingClientRect(),
+      engine.getRenderWidth(),
+      engine.getRenderHeight(),
+      engine.getHardwareScalingLevel(),
+    );
+  }
   function point(x: number, y: number, height: number) {
-    const r = canvas.getBoundingClientRect();
+    const coordinates = pickingCoordinates(x, y);
+    if (!coordinates) return null;
     const ray = scene.createPickingRay(
-      ((x - r.left) * engine.getRenderWidth()) / r.width,
-      ((y - r.top) * engine.getRenderHeight()) / r.height,
+      coordinates[0],
+      coordinates[1],
       Matrix.Identity(),
       camera,
     );
@@ -284,17 +311,19 @@ export function createHullViewport(
     );
   }
   const pick = (e: PointerEvent) => {
-    const r = canvas.getBoundingClientRect();
-    return scene.pick(
-      ((e.clientX - r.left) * engine.getRenderWidth()) / r.width,
-      ((e.clientY - r.top) * engine.getRenderHeight()) / r.height,
-      (m) => m.isPickable && m.isEnabled(),
-    );
+    const coordinates = pickingCoordinates(e.clientX, e.clientY);
+    return coordinates
+      ? scene.pick(
+          coordinates[0],
+          coordinates[1],
+          (m) => m.isPickable && m.isEnabled(),
+        )
+      : null;
   };
   const pointerDown = (e: PointerEvent) => {
     requestRender();
     if (!state || e.button !== 0) return;
-    canvas.focus();
+    canvas.focus({ preventScroll: true });
     down = { x: e.clientX, y: e.clientY };
     if (state.tool === "orbit") return;
     if (state.tool === "place") return;
@@ -389,8 +418,33 @@ export function createHullViewport(
   canvas.addEventListener("wheel", requestRender, { passive: true });
   window.addEventListener("blur", cancel);
   window.addEventListener("keydown", key);
-  const resize = new ResizeObserver(() => {
+  const syncSurface = () => {
+    engine.setHardwareScalingLevel(
+      editorRenderScale(
+        window.devicePixelRatio,
+        canvas.clientWidth,
+        canvas.clientHeight,
+      ),
+    );
     engine.resize();
+    const background = getComputedStyle(canvas)
+      .getPropertyValue("--viewport-background")
+      .trim();
+    if (/^#[0-9a-f]{6}$/i.test(background)) {
+      const color = Color3.FromHexString(background);
+      scene.clearColor = new Color4(color.r, color.g, color.b, 1);
+    }
+    requestRender();
+  };
+  syncSurface();
+  const themeObserver = new MutationObserver(syncSurface);
+  themeObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-creator-theme"],
+  });
+  document.addEventListener("visibilitychange", requestRender);
+  const resize = new ResizeObserver(() => {
+    syncSurface();
     requestRender();
   });
   resize.observe(canvas);
@@ -399,16 +453,16 @@ export function createHullViewport(
     if (disposed) return;
     state = next;
     if (
-      next.snap !== gridStep &&
+      editorGuideStep(next.snap) !== gridStep &&
       Number.isFinite(next.snap) &&
       next.snap >= 1 / 32
     ) {
       grid.dispose();
-      gridStep = next.snap;
+      gridStep = editorGuideStep(next.snap);
       grid = buildGrid(gridStep);
     }
-    grid.setEnabled(next.tool === "place");
-    grid.position.y = next.height - origin.y;
+    grid.setEnabled(next.showGrid === true || next.tool === "place");
+    grid.position.y = next.height - origin.y - 0.025;
     if (next.tool !== "place") hideGhost();
     loadNeeded(next.parts);
     pointerInput.buttons = next.tool === "orbit" ? [0, 1, 2] : [1, 2];
@@ -443,7 +497,11 @@ export function createHullViewport(
           mesh.parent = node;
           mesh.isVisible = true;
           mesh.isPickable = true;
-          mesh.metadata = { partId: p.id, assetId: p.assetId, role: source.metadata?.role ?? 'hull' };
+          mesh.metadata = {
+            partId: p.id,
+            assetId: p.assetId,
+            role: source.metadata?.role ?? "hull",
+          };
         }
         entry = { assetId: p.assetId, node };
         nodes.set(p.id, entry);
@@ -464,8 +522,10 @@ export function createHullViewport(
       entry.node.rotation.y = p.rotation;
       entry.node.scaling.x = p.flipped ? -1 : 1;
     }
-    if (next.floor?.fingerprint !== floorKey) {
-      floorKey = next.floor?.fingerprint ?? "";
+    const floorElevation = (next.structuralGuide?.elevationUnits ?? 0) / 32;
+    const nextFloorKey = `${next.floor?.fingerprint ?? ""}:${floorElevation}`;
+    if (nextFloorKey !== floorKey) {
+      floorKey = nextFloorKey;
       floor?.dispose();
       floor = undefined;
       if (next.floor?.tiles.length) {
@@ -476,7 +536,7 @@ export function createHullViewport(
           for (const p of tile.vertices)
             positions.push(
               p[0] / 32 - origin.x,
-              -0.02 - origin.y,
+              floorElevation - 0.02 - origin.y,
               -p[1] / 32 - origin.z,
             );
           for (let i = 1; i < tile.vertices.length - 1; i++)
@@ -495,6 +555,12 @@ export function createHullViewport(
       }
     }
     floor?.setEnabled(layoutPartVisible("floor", next.visible, next.preview));
+    structuralGuides.update(
+      next.structuralGuide,
+      layoutPartVisible("wall", next.visible, next.preview),
+      origin.asArray(),
+    );
+    canvas.dataset.structuralWallGuides = String(structuralGuides.count);
     selection.update(
       [...nodes.values()].flatMap((e) => e.node.getChildMeshes()),
       next.selected,
@@ -509,16 +575,22 @@ export function createHullViewport(
       );
   }
   function fit(id?: string) {
+    if (disposed) return;
     requestRender();
     const placed = [...nodes].filter(
       ([key, e]) => (!id || key === id) && e.node.isEnabled(),
     );
-    if (!placed.length) {
+    const guide =
+      !id && structuralGuides.mesh?.isEnabled()
+        ? structuralGuides.mesh
+        : undefined;
+    if (!placed.length && !guide) {
       if (state?.floor) {
         const bounds = state.floor.bounds;
         camera.target.set(
           (bounds.min[0] + bounds.max[0]) / 64 - origin.x,
-          state.height - origin.y,
+          (state.structuralGuide?.elevationUnits ?? state.height * 32) / 32 -
+            origin.y,
           -(bounds.min[1] + bounds.max[1]) / 64 - origin.z,
         );
         camera.radius = Math.max(
@@ -541,15 +613,27 @@ export function createHullViewport(
       min = Vector3.Minimize(min, b.min);
       max = Vector3.Maximize(max, b.max);
     }
+    if (guide) {
+      guide.computeWorldMatrix(true);
+      const box = guide.getBoundingInfo().boundingBox;
+      min = Vector3.Minimize(min, box.minimumWorld);
+      max = Vector3.Maximize(max, box.maximumWorld);
+    }
     const center = min.add(max).scale(0.5);
     camera.target.copyFrom(center);
-    camera.radius = Math.max(3, max.subtract(min).length() * 1.25);
+    camera.radius = editorFitRadius(
+      max.subtract(min).asArray(),
+      camera.alpha,
+      camera.beta,
+      canvas.clientWidth / Math.max(1, canvas.clientHeight),
+      camera.fov,
+    );
   }
   let last = 0;
   engine.runRenderLoop(() => {
     // Follow display refresh during input. Throttling scene.render also delays
     // camera input consumption and makes otherwise direct dragging feel sticky.
-    if (disposed || performance.now() > activeUntil) return;
+    if (disposed || document.hidden || performance.now() > activeUntil) return;
     scene.render();
     callbacks.viewChanged?.();
     if (performance.now() - last > 750) {
@@ -624,8 +708,11 @@ export function createHullViewport(
     dispose() {
       disposed = true;
       selection.dispose();
+      structuralGuides.dispose();
       cancel();
       resize.disconnect();
+      themeObserver.disconnect();
+      document.removeEventListener("visibilitychange", requestRender);
       canvas.removeEventListener("pointerdown", pointerDown);
       canvas.removeEventListener("pointermove", pointerMove);
       canvas.removeEventListener("pointerup", pointerUp);

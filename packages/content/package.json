@@ -32,7 +32,8 @@
     "./layout-structure": "./src/layout-structure.ts",
     "./hull-size-catalog": "./src/hull-size-catalog.ts",
     "./layout-assembly": "./src/layout-assembly.ts",
-    "./tileset-interfaces": "./src/tileset-interfaces.ts"
+    "./tileset-interfaces": "./src/tileset-interfaces.ts",
+    "./pilot-layout": "./src/pilot-layout.ts"
   },
   "dependencies": {}
 }
