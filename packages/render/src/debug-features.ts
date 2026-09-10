@@ -28,7 +28,7 @@ export function createDebugFeatures(
     shadows: scene.shadowsEnabled,
   };
   const hidden = new Map<EnabledNode, boolean>();
-  let frameKey: string | undefined;
+  let frameKey: string | number | undefined;
   const effects = new Map<
     { isEnabled: boolean; isDisposed?: boolean },
     boolean
@@ -70,7 +70,7 @@ export function createDebugFeatures(
       restoreEquipment();
       apply();
     },
-    beforeFrame(key?: string) {
+    beforeFrame(key?: string | number) {
       if (key === undefined || key !== frameKey) {
         restoreEquipment();
         frameKey = key;

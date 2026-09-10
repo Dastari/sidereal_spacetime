@@ -1,3 +1,4 @@
+import { createDustField } from "./dust-field";
 import { setMeshRole } from '../mesh-roles';
 import {loadNativeVolcanicKit,createNativeVolcanicCache,createNativeVolcanicWorldPlanet,canUseNativeVolcanic,NATIVE_VOLCANIC_REVISION} from "./native-volcanic-runtime";
 import {createPlanetAtmosphere} from "./planet-atmosphere";
@@ -18,22 +19,14 @@ import { TargetCamera } from "@babylonjs/core/Cameras/targetCamera";
 import { GlowLayer } from "@babylonjs/core/Layers/glowLayer";
 import { SceneLoader } from "@babylonjs/core/Loading/sceneLoader";
 import { Scene } from "@babylonjs/core/scene";
-import { Vector3, Matrix, Quaternion } from "@babylonjs/core/Maths/math.vector";
+import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { Constants } from "@babylonjs/core/Engines/constants";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { CreatePlane } from "@babylonjs/core/Meshes/Builders/planeBuilder";
 import { CreateGround } from "@babylonjs/core/Meshes/Builders/groundBuilder";
 import { CreateSphere } from "@babylonjs/core/Meshes/Builders/sphereBuilder";
-import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { createPlanetMesh, createPlanetLight } from "./planet-mesh";
-import {
-  dustMotion,
-  dustLayout,
-  dustCell,
-  dustDepthLayers,
-  DUST_COUNT,
-} from "./dust";
 import {
   planetRecipeForAppearance,
   planetEffects,
@@ -150,16 +143,7 @@ export function createSpaceEnvironment(scene: Scene) {
     t.wrapU = Texture.CLAMP_ADDRESSMODE;
     t.wrapV = Texture.CLAMP_ADDRESSMODE;
   }
-  const dust = CreateBox("volumetric-dust", { size: 1 }, scene);
-  setMeshRole(dust, "environment");
-  dust.parent = root;
-  dust.isPickable = false;
-  const dustMat = new StandardMaterial("dust-grains", scene);
-  dustMat.disableLighting = true;
-  dustMat.emissiveColor = new Color3(0.36, 0.57, 0.82);
-  dust.material = dustMat;
-  const dustMatrices = new Float32Array(DUST_COUNT * 16);
-  dust.thinInstanceSetBuffer("matrix", dustMatrices, 16, false);
+  const dustField = createDustField(scene, root);
   let prefab: TransformNode | undefined,
     rockRadius = 1,
     disposed = false,
@@ -622,118 +606,7 @@ export function createSpaceEnvironment(scene: Scene) {
         scene.activeCamera instanceof TargetCamera
           ? scene.activeCamera.getTarget()
           : Vector3.Zero();
-      const aspect =
-        options.aspect ??
-        (scene.activeCamera
-          ? scene.getEngine().getAspectRatio(scene.activeCamera)
-          : 1);
-      const depthLayers = options.dustParallax
-        ? dustDepthLayers(
-            camera,
-            target,
-            scene.activeCamera?.fov ?? 0.5,
-            aspect,
-          )
-        : [];
-      const layers = depthLayers.length
-        ? depthLayers
-        : [
-            {
-              height: null,
-              center: { x: target.x, z: target.z },
-              halfX: (options.viewHalfExtent ?? 55) * aspect,
-              halfZ: options.viewHalfExtent ?? 55,
-              thickness: 0,
-              sizeScale: 1,
-              depthDistance: 0,
-            },
-          ];
-      if (depthLayers.length && scene.activeCamera)
-        scene.activeCamera.maxZ = Math.max(
-          scene.activeCamera.maxZ,
-          depthLayers[2].depthDistance * 1.5,
-        );
-      const motion = dustMotion(
-        options.vx ?? 0,
-        options.vy ?? 0,
-        options.reducedMotion,
-      );
-      dustMat.emissiveColor.set(
-        0.36 * motion.intensity,
-        0.57 * motion.intensity,
-        0.82 * motion.intensity,
-      );
-      const rotation = Quaternion.RotationAxis(Vector3.Up(), motion.heading);
-      const position = Vector3.Zero(),
-        scale = Vector3.One();
-      const dustForward = target.subtract(camera).normalize();
-      const maxGrainPerDepth =
-        (6 * Math.tan((scene.activeCamera?.fov ?? 0.5) / 2)) /
-        Math.max(1, scene.getEngine().getRenderHeight());
-      let instance = 0;
-      const layerStats = [];
-      for (const layer of layers) {
-        const layout = dustLayout(
-          layer.halfZ,
-          layer.halfX / Math.max(1, layer.halfZ),
-          Math.floor(DUST_COUNT / layers.length),
-        );
-        layerStats.push({
-          height: layer.height,
-          distance: layer.depthDistance,
-          instances: layout.count,
-          spacing: layout.spacing,
-        });
-        for (let i = 0; i < layout.count; i++) {
-          const cell = dustCell(
-            i,
-            options.x + layer.center.x,
-            options.y - layer.center.z,
-            layout.spacing,
-            layout.columns,
-            layout.rows,
-          );
-          position.set(
-            cell.x + layer.center.x,
-            layer.height === null
-              ? cell.height
-              : layer.height + ((cell.height + 33) / 42) * layer.thickness,
-            -cell.y + layer.center.z,
-          );
-          let size = cell.size * layer.sizeScale;
-          if (depthLayers.length) {
-            // Cap the near layer at three pixels; perspective magnification
-            // must not turn a few grains into giant tiles while zooming.
-            const depth =
-              (position.x - camera.x) * dustForward.x +
-              (position.y - camera.y) * dustForward.y +
-              (position.z - camera.z) * dustForward.z;
-            size = Math.min(size, Math.max(0, depth) * maxGrainPerDepth);
-          }
-          scale.set(
-            size,
-            size,
-            size * (1 + (motion.streakRatio - 1) * cell.lengthVariation),
-          );
-          Matrix.Compose(scale, rotation, position).copyToArray(
-            dustMatrices,
-            instance++ * 16,
-          );
-        }
-      }
-      dust.metadata = {
-        worldAnchoredDust: true,
-        role: 'environment',
-        instances: instance,
-        depthLayers: layerStats,
-        streakRatio: motion.streakRatio,
-        warpBlend: motion.warpBlend,
-        speed: motion.speed,
-        streakLength: motion.length,
-      };
-      dust.thinInstanceCount = instance;
-      dust.thinInstanceBufferUpdated("matrix");
-      dust.thinInstanceRefreshBoundingInfo();
+      dustField.update(camera, target, options);
     },
     dispose() {
       disposed = true;

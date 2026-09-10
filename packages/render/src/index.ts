@@ -1,3 +1,4 @@
+import { createDebugVisibilityRevision } from "./debug-visibility-revision";
 import { createShipGlowOccluders } from './ship-glow-occluders';
 import { setMeshRole } from './mesh-roles';
 import { legacyMeshRole } from './legacy-mesh-role';
@@ -712,6 +713,7 @@ async function buildWorld(
   }
   const visibleBodies = (nowMs: number) =>
     options.sharedWorld?.bodies(nowMs) ?? state.bodies ?? [];
+  const debugVisibilityRevision = createDebugVisibilityRevision();
   let firstFrame = true;
   engine.runRenderLoop(() => {
     // A failed initial load stays covered by Retry/Sign out. Do not keep
@@ -721,10 +723,10 @@ async function buildWorld(
     // Reconcile overrides only when normal visibility/power intent changes.
     // Re-enabling every hidden fixture each frame defeats the performance probe.
     debugFeatures.beforeFrame(
-      JSON.stringify([
+      debugVisibilityRevision(
         cabinIsVisible(state.interior, blend, !!focusedBodyId),
         state.objectLights,
-      ]),
+      ),
     );
     if (resizePending) {
       resizePending = false;

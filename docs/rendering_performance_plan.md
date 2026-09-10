@@ -220,6 +220,8 @@ Expected: active meshes in Flight drop; Flight draw calls approach the ship-only
 
 ### R8. Remaining per-frame CPU (Phase 1c, 1d)
 
+Status: implemented, unmeasured (2026-09-10). Hardware acceptance blocked by first-frame readiness; see progress log.
+
 Evidence: debug-feature key via `JSON.stringify` each frame; dust recomposes 576 matrices and refreshes bounding info each frame.
 
 Fix: compare primitives for the debug key. For dust, set `alwaysSelectAsActiveMesh = true`, `doNotSyncBoundingInfo = true`, never refresh bounds, and move the streak animation into the shader so the CPU rebuild happens only on layout changes. Per the owner correction, constant velocity is not a stationary condition.
@@ -342,3 +344,14 @@ Isolation before → after draw counts: Deck scale2 5,539 → 4,348; Glow off 2,
 Evidence: `output/playwright/render-plan/R1/{deck,flight-tab}.json`, corresponding JPEGs, each view's `-scale2`, `-glow-off`, `-shadows-off`, `-lighting-off` JSON/JPEG files, plus a full-resolution `after-deck.png`. Prior-item evidence remains in `R0/`. JSON sampling and image rendering may straddle F3's 500 ms sample boundary, so timing rows can differ slightly.
 
 Left undone: seated control-station Flight acceptance remains outstanding. Ordinary walking inputs reached an interior collision boundary and did not seat the character; no authority state was edited. Roof-open/closed captures and NullEngine visibility regressions exist, but close-up emitter occlusion and independently hidden-deck hardware review still need acceptance. The separate planet glow layer still submits original occluders; planet visuals remain paused. Total Glow-off delta therefore remains 1,579 Deck / 1,114 TAB-Flight, rather than just emitter draws. R1 is implemented with partial hardware measurement, not marked done.
+
+
+### 2026-09-10 — R8 per-frame work implemented, unmeasured
+
+Re-verified the cited `index.ts` debug-key and `environment/index.ts` dust update paths. Added `debug-visibility-revision.ts` with scalar cabin/placement/power snapshots, including in-place mutations; `debug-features.ts` accepts its numeric revision while retaining legacy string callers. Extracted dust into `environment/dust-field.ts`: the original unlit StandardMaterial now has a vertex plugin for fractional world-origin translation, streak orientation/length and perspective grain-size cap. Seeded cell matrices and grain attributes upload only on cell-boundary or layout changes; dust remains active with bounding synchronization disabled and never refreshes instance bounds. Constant velocity still moves dust as the replicated origin changes. No authored PBR surface, simulation, authority or planet visual changed.
+
+Added NullEngine `debug-visibility-revision.test.ts` and `environment/dust-field.test.ts`. Tests cover stable override suppression, power/identity/cabin changes, constant-velocity motion without matrix uploads, world-cell crossings, reduced motion, depth cap and layout changes. Numerical vertex comparisons cover the old CPU Matrix.Compose placement and streak geometry. Existing population/material bounds are unchanged because this item removes per-frame CPU work, not scene resources.
+
+`VITEST_MAX_WORKERS=2 npm run check` passed 251 files / 1,490 tests and documentation audit. `npm run build` passed with existing chunk-size warnings. Shared-tree unrelated work remains excluded from the commit. Evidence: `output/playwright/render-plan/R8/check.log`, `build.log`, `browser-blocker.json`.
+
+Before reference: R1 Deck 4,348 calls / 1,396 active / 2,693 total / 638 materials / 54.31 ms Render CPU; TAB-Flight 4,155 / 1,106 / 2,691 / 637 / 72.05 ms. Before isolation is preserved in R1 (Deck scale2 4,348, Glow off 2,769, Shadows off 1,395, Lighting off 1,395; TAB-Flight 3,083 / 3,041 / 2,106 / 2,106). After counters and isolation: **unmeasured**. RTX 4080 hardware compiled the dust shader without errors, but the clean normal-client load remained covered by “Preparing the first frame.” `opaqueSceneTexture.isReadyForRendering()` was false, with authored floor meshes failing readiness in that render pass; all queried shader compilation errors were empty. The preview also repeatedly reported a hidden document and rejected snapshots. No readiness gate or authority state was bypassed; no screenshot or timing acceptance is claimed. Seated Flight and R0/R1 occlusion acceptance remain pending. Continue R5 and retry hardware acceptance after the material work.
