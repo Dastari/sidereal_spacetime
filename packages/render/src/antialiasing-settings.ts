@@ -103,6 +103,7 @@ export interface AntialiasingSnapshot {
   requested: AntialiasingSettings;
   effective: AntialiasingPlan;
   pending: boolean;
+  temporalBonePalettes?: { pending: boolean; qualified: number };
   error?: string;
 }
 /** Existing foreign effects retain identity and relative order; our FXAA is exactly once, last. */

@@ -1,0 +1,124 @@
+{
+  "baseline": {
+    "orange": 7513,
+    "glError": 0,
+    "texture": true,
+    "boneVelocityCount": 0,
+    "factor": null,
+    "warmMeshes": 0,
+    "snapshot": {
+      "requested": {
+        "mode": "msaa",
+        "samples": 4
+      },
+      "temporalBonePalettes": {
+        "pending": false,
+        "qualified": 0
+      },
+      "effective": {
+        "mode": "msaa",
+        "samples": 4,
+        "renderScale": 1,
+        "fxaa": false
+      },
+      "pending": false
+    }
+  },
+  "animated": {
+    "orange": 7376,
+    "glError": 0,
+    "texture": false,
+    "boneVelocityCount": 37,
+    "factor": 0.05000000074505806,
+    "warmMeshes": 0,
+    "snapshot": {
+      "requested": {
+        "mode": "taa",
+        "samples": 4
+      },
+      "temporalBonePalettes": {
+        "pending": false,
+        "qualified": 1
+      },
+      "effective": {
+        "mode": "taa",
+        "samples": 1,
+        "renderScale": 1,
+        "fxaa": false
+      },
+      "pending": false
+    }
+  },
+  "disabled": {
+    "orange": 7326,
+    "glError": 0,
+    "texture": true,
+    "boneVelocityCount": 0,
+    "factor": null,
+    "warmMeshes": 0,
+    "snapshot": {
+      "requested": {
+        "mode": "off",
+        "samples": 4
+      },
+      "temporalBonePalettes": {
+        "pending": false,
+        "qualified": 0
+      },
+      "effective": {
+        "mode": "off",
+        "samples": 1,
+        "renderScale": 1,
+        "fxaa": false
+      },
+      "pending": false
+    }
+  },
+  "warmup": {
+    "frames": 40,
+    "minimumOrangePixels": 7420,
+    "firstUniformFrame": 10,
+    "allGlErrorsZero": true
+  },
+  "animationAndDisposal": {
+    "result": {
+      "changedMatrixElements": 178,
+      "factors": [
+        0.05000000074505806, 0.05000000074505806, 0.05000000074505806,
+        0.05000000074505806, 0.05000000074505806, 0.05000000074505806,
+        0.05000000074505806, 0.05000000074505806, 0.05000000074505806,
+        0.05000000074505806, 0.05000000074505806, 0.05000000074505806
+      ],
+      "texture": false,
+      "snapshot": {
+        "requested": {
+          "mode": "taa",
+          "samples": 4
+        },
+        "temporalBonePalettes": {
+          "pending": false,
+          "qualified": 1
+        },
+        "effective": {
+          "mode": "taa",
+          "samples": 1,
+          "renderScale": 1,
+          "fxaa": false
+        },
+        "pending": false
+      },
+      "glError": 0
+    },
+    "disposed": {
+      "textureRestored": true,
+      "warmMeshes": 0,
+      "warmSkeletons": 0,
+      "passes": 0
+    }
+  },
+  "image": {
+    "path": "output/playwright/antialiasing-review/uniform-animated.png",
+    "sha256": "59da9c961a51ee496a56a71eae198acf32f336d6c325d367622b1a579aa5c35e"
+  },
+  "scope": "Actual native crew in isolated Babylon WebGL2 software-GPU fixture; no account or authority changes. Normal-game integrated follow-up review remains release-owned."
+}

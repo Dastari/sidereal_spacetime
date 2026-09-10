@@ -1,3 +1,4 @@
+import { createTemporalBonePalette } from "./temporal-bone-palette";
 import { createTemporalSkinHistory } from "./temporal-skin-history";
 import type { Scene } from "@babylonjs/core/scene";
 import type { Camera } from "@babylonjs/core/Cameras/camera";
@@ -42,6 +43,8 @@ export function createAntialiasing(
 ) {
   const engine = scene.getEngine();
   const skinHistory = createTemporalSkinHistory();
+  const bonePalettes = createTemporalBonePalette(scene);
+  let bonePaletteStatus = { changed: false, pending: false, qualified: 0 };
   let skinHistoryReset = false;
   let temporalResetPending = false;
   let storage = options.storage;
@@ -226,6 +229,8 @@ export function createAntialiasing(
   const cameraFrame = scene.onBeforeCameraRenderObservable.add(
     (renderingCamera) => {
       if (renderingCamera === camera) {
+        bonePaletteStatus = bonePalettes.update(!!active?.taa);
+        if (bonePaletteStatus.changed) resetHistory();
         if (active?.taa) {
           const palettes = function* () {
             const prepared = new Set<number>();
@@ -294,6 +299,10 @@ export function createAntialiasing(
     snapshot(): AntialiasingSnapshot {
       return {
         requested: { ...requested },
+        temporalBonePalettes: {
+          pending: bonePaletteStatus.pending,
+          qualified: bonePaletteStatus.qualified,
+        },
         effective: active
           ? {
               ...active.plan,
@@ -323,6 +332,7 @@ export function createAntialiasing(
       scene.onBeforeRenderObservable.remove(frame);
       scene.onBeforeCameraRenderObservable.remove(cameraFrame);
       engine.onResizeObservable.remove(resize);
+      bonePalettes.dispose();
       pending?.dispose();
       active?.dispose();
       pending = active = undefined;
