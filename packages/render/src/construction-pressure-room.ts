@@ -219,34 +219,6 @@ export async function loadConstructionPressureRoom(
       const mesh = p.nodePrefix === ringPrefix ? entry.ring : entry.seats;
       add(p, mesh, [mesh]);
     }
-    // Authored room footprint is fixed at 4 x 2m. Determine wall-facing normals
-    // from complete native mesh bounds, including elbow/T primitives.
-    const inverseParent = Matrix.Invert(parent.computeWorldMatrix(true));
-    const cuts = input.installation
-      .filter((p) => p.source === "wall")
-      .map((p) => {
-        const placement = byId.get(p.id)!;
-        const corners = placement.meshes.flatMap((mesh) => {
-          mesh.computeWorldMatrix(true);
-          return mesh
-            .getBoundingInfo()
-            .boundingBox.vectorsWorld.map((v) =>
-              Vector3.TransformCoordinates(v, inverseParent),
-            );
-        });
-        const minX = Math.min(...corners.map((v) => v.x)),
-          maxX = Math.max(...corners.map((v) => v.x));
-        const minY = Math.min(...corners.map((v) => -v.z)),
-          maxY = Math.max(...corners.map((v) => -v.z));
-        const x = (minX + maxX) / 2,
-          y = (minY + maxY) / 2;
-        const normals: [number, number][] = [];
-        if (maxX - minX < 0.6 && Math.abs(x) < 0.3) normals.push([-1, 0]);
-        if (maxX - minX < 0.6 && Math.abs(x - 4) < 0.3) normals.push([1, 0]);
-        if (maxY - minY < 0.6 && Math.abs(y) < 0.3) normals.push([0, -1]);
-        if (maxY - minY < 0.6 && Math.abs(y - 2) < 0.3) normals.push([0, 1]);
-        return { placement, x, y, normals };
-      });
     return {
       cameraFrame: { centerX: 2, centerY: 1, halfExtent: 2 },
       placements: input.installation.map((p) => byId.get(p.id)!),
@@ -273,21 +245,9 @@ export async function loadConstructionPressureRoom(
             : [],
         );
       },
-      setView(cameraPosition: Vector3, interior: boolean) {
-        const local = Vector3.TransformCoordinates(
-          cameraPosition,
-          Matrix.Invert(parent.computeWorldMatrix(true)),
-        );
+      setView(_cameraPosition: Vector3, interior: boolean) {
         for (const p of input.installation)
           if (p.source === "roof") byId.get(p.id)!.node.setEnabled(!interior);
-        for (const cut of cuts)
-          cut.placement.node.setEnabled(
-            !interior ||
-              !cut.normals.some(
-                ([x, y]) =>
-                  x * (local.x - cut.x) + y * (-local.z - cut.y) > 1e-6,
-              ),
-          );
       },
       dispose,
     };

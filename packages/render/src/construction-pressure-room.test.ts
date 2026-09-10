@@ -116,7 +116,7 @@ test("exact native room loads one GLB per source, preserves primitive geometry/m
     const walls = result.placements.filter(
       (p) => p.node.metadata.nativeSource === "wall",
     );
-    expect(walls.some((p) => !p.node.isEnabled())).toBe(true);
+    expect(walls.every((p) => p.node.isEnabled())).toBe(true);
     expect(walls.some((p) => p.node.isEnabled())).toBe(true);
     result.setView(new Vector3(8, 10, -6), false);
     expect(result.placements.every((p) => p.node.isEnabled())).toBe(true);

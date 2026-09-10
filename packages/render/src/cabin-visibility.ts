@@ -12,6 +12,14 @@ export function cabinIsVisible(
 export function isCabinMesh(name: string) {
   return /GEO-(deck|room(?:-|$)|partitions|equipment(?:-|$))/.test(name);
 }
+/** Native placements have stable UUID names; classify their authored role too. */
+export function isCabinVisual(node: Pick<TransformNode, "name" | "metadata">) {
+  const metadata = node.metadata;
+  return ["floor", "equipment", "cargo"].includes(metadata?.category) ||
+    isCabinMesh(node.name) ||
+    isCabinMesh(String(metadata?.nativeSourceName ?? "")) ||
+    isCabinMesh("GEO-" + String(metadata?.partId ?? ""));
+}
 /** Presentation-only visibility. Hull, roof, cutaway exterior walls and drives are separate. */
 export function createCabinVisibility(
   meshes: AbstractMesh[],
@@ -19,12 +27,12 @@ export function createCabinVisibility(
   placements: readonly { node: TransformNode; lighting: { lights: Light[]; setPowered?:(value:boolean)=>void; setCabinVisible?:(value:boolean)=>void } }[],
   controlledLights: ReadonlySet<string>,
 ) {
-  const interior = meshes.filter((mesh) => isCabinMesh(mesh.name));
+  const interior = meshes.filter(isCabinVisual);
   const enabled = new Map<TransformNode, boolean>(
     [...interior, actor].map((node) => [node, node.isEnabled()]),
   );
   const fixtureLights = placements.filter((p) =>
-    isCabinMesh("GEO-" + p.node.metadata?.partId),
+    isCabinVisual(p.node),
   );
   let visible = true;
   return {

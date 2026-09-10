@@ -79,7 +79,7 @@ test("actual native primitives preserve hinge bind transforms, complete aperture
     ).toBe(true);
     expect(scene.lights).toHaveLength(0);
     result.setView(new Vector3(1, 10, 10), true);
-    expect(result.placements[0].node.isEnabled()).toBe(false);
+    expect(result.placements[0].node.isEnabled()).toBe(true);
     expect(result.placements[1].node.isEnabled()).toBe(true);
     result.setView(new Vector3(1, 10, -10), true);
     expect(result.placements[0].node.isEnabled()).toBe(true);

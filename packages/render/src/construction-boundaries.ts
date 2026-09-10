@@ -137,22 +137,8 @@ export async function loadConstructionBoundaries(
   return {
     placements: results,
     meshes: results.flatMap((p) => p.meshes),
-    setView(cameraPosition: Vector3, interior: boolean) {
-      const local = Vector3.TransformCoordinates(
-        cameraPosition,
-        Matrix.Invert(parent.computeWorldMatrix(true)),
-      );
-      results.forEach((result, i) => {
-        const p = placements[i],
-          dx = local.x - p.origin[0] / 32,
-          dy = -local.z - p.origin[1] / 32;
-        const visible =
-          !interior ||
-          !(p.cutawayNormals ?? []).some(([x, y]) => x * dx + y * dy > 1e-6);
-        if (result.node.isEnabled() !== visible)
-          result.node.setEnabled(visible);
-      });
-    },
+    // Boundaries remain present throughout orbit; roof visibility is separate.
+    setView(_cameraPosition: Vector3, _interior: boolean) {},
     setDoors(states: readonly { openingId: string; fraction: number }[]) {
       const current = new Map(states.map((s) => [s.openingId, s.fraction]));
       for (const [id, hinge] of hinges) {

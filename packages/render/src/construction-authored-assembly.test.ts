@@ -93,6 +93,13 @@ test("all 211 authored objects load from 28 verified libraries with independent 
     expect(roofs.every((p) => !p.node.isEnabled())).toBe(true);
     result!.setView(new Vector3(-10, 12, 10), false);
     expect(roofs.every((p) => p.node.isEnabled())).toBe(true);
+    // All four orbit quadrants retain complete walls in deck view.
+    const walls = result!.placements.filter((p) => p.category !== "roof");
+    for (const x of [-10, 10]) for (const z of [-10, 10]) {
+      result!.setView(new Vector3(x, 12, z), true);
+      expect(walls.every((p) => p.node.isEnabled())).toBe(true);
+      expect(walls.every((p) => p.meshes.every((m) => m.isEnabled()))).toBe(true);
+    }
     const materials = result!.meshes.map((m) => m.material);
     expect(
       materials.some(

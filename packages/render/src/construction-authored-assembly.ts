@@ -155,27 +155,10 @@ export async function loadConstructionAuthoredAssembly(
       placements,
       meshes: placements.flatMap((p) => p.meshes),
       dispose,
-      setView(camera: Vector3, interior: boolean) {
-        const origin = parent.getAbsolutePosition();
-        for (const p of placements) {
+      setView(_camera: Vector3, interior: boolean) {
+        // Orbit never removes walls. Only the roof opens for the deck view.
+        for (const p of placements)
           p.node.setEnabled(!(interior && p.category === "roof"));
-          for (const mesh of p.meshes) {
-            const name = String(mesh.metadata.nativeSourceName);
-            const side = name.includes("cutaway-port")
-              ? -1
-              : name.includes("cutaway-starboard")
-                ? 1
-                : 0;
-            const aft = name.includes("cutaway-aft"),
-              bow = name.includes("cutaway-bow");
-            const hide =
-              interior &&
-              ((side !== 0 && (camera.x - origin.x) * side > 0) ||
-                (aft && camera.z - origin.z > 0) ||
-                (bow && camera.z - origin.z < 0));
-            mesh.setEnabled(!hide);
-          }
-        }
       },
     };
   } catch (error) {

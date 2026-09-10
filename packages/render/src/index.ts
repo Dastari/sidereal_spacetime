@@ -409,10 +409,7 @@ async function buildWorld(
   const roof = imported.meshes.filter(
     (m) => m.getTotalVertices() > 0 && /GEO-(roof|markings)/.test(m.name),
   );
-  const upperWalls = imported.meshes.filter(
-    (m) => m.getTotalVertices() > 0 && m.name.startsWith("GEO-cutaway"),
-  );
-  for (const mesh of [...roof, ...upperWalls])
+  for (const mesh of roof)
     if (mesh.material && !mesh.metadata?.hullDecal) {
       mesh.material = mesh.material.clone(mesh.name + "-cutaway-material");
       if (mesh.material)
@@ -833,26 +830,6 @@ async function buildWorld(
       applyCutawayVisibility(mesh, focusedBodyId ? 1 : 1 - blend);
     }
     const cameraLocal = camera.alpha + displayed.heading;
-    for (const mesh of upperWalls) {
-      const side = mesh.name.match(
-        /^GEO-cutaway-(port|starboard|aft|bow)/,
-      )?.[1];
-      const facing =
-        side === "port"
-          ? -Math.cos(cameraLocal)
-          : side === "starboard"
-            ? Math.cos(cameraLocal)
-            : side === "aft"
-              ? Math.sin(cameraLocal)
-              : -Math.sin(cameraLocal);
-      const target = focusedBodyId ? 1 : facing > 0 ? 1 - blend : 1;
-      applyCutawayVisibility(
-        mesh,
-        focusedBodyId
-          ? 1
-          : mesh.visibility + (target - mesh.visibility) * transition,
-      );
-    }
     labels.setEnabled(
       cabinVisible &&
         blend > 0.8 &&
