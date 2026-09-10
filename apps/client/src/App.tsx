@@ -976,7 +976,6 @@ export default function App({
               if (!disposed) {
                 setLoadFailure(text);
                 setModelStatus("Vessel unavailable");
-                setError(text);
               }
             },
           },

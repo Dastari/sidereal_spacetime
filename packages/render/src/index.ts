@@ -691,6 +691,9 @@ async function buildWorld(
     options.sharedWorld?.bodies(nowMs) ?? state.bodies ?? [];
   let firstFrame = true;
   engine.runRenderLoop(() => {
+    // A failed initial load stays covered by Retry/Sign out. Do not keep
+    // submitting the hidden scene while the user recovers from that failure.
+    if (assetFailure) return;
     const frameStarted = performance.now();
     // Reconcile overrides only when normal visibility/power intent changes.
     // Re-enabling every hidden fixture each frame defeats the performance probe.
