@@ -1,3 +1,4 @@
+import { setMeshRole } from '../mesh-roles';
 import { Scene } from "@babylonjs/core/scene";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
@@ -13,6 +14,7 @@ export function createLavaSpill(
 ) {
   const mesh = new Mesh(name + "-lava-spill", scene),
     data = new VertexData();
+  setMeshRole(mesh, "planet");
   data.positions = geometry.positions;
   data.colors = geometry.colors;
   data.indices = geometry.indices.map(
@@ -37,6 +39,6 @@ export function createLavaSpill(
   material.setFloat("time", 0);
   mesh.material = material;
   mesh.isPickable = false;
-  mesh.metadata = { planetLavaSpill: true, faces: geometry.faces };
+  mesh.metadata = { role: "planet", planetLavaSpill: true, faces: geometry.faces };
   return { mesh, material };
 }

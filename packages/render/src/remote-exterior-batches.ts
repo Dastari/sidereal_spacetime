@@ -1,3 +1,4 @@
+import { setMeshRole } from './mesh-roles';
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
 import { Matrix, Vector3 } from "@babylonjs/core/Maths/math.vector";
@@ -105,6 +106,7 @@ export function batchOpaqueExterior(
       merged.merge(data.slice(1), true, true);
       const source = group[0].source;
       const batch = new Mesh(`remote-exterior-batch-${batches.length}`, scene);
+      setMeshRole(batch, "remote");
       merged.applyToMesh(batch);
       batch.material = source.material;
       batch.sideOrientation = source.sideOrientation;
@@ -121,6 +123,7 @@ export function batchOpaqueExterior(
       ].sort();
       batch.metadata = {
         remoteExteriorBatch: true,
+        role: "remote",
         sourcePlacementIds: placementIds,
       };
       batches.push({ source: batch, matrix: Matrix.Identity(), placementIds });

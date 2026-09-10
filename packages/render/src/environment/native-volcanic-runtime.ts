@@ -48,6 +48,6 @@ export function createNativeVolcanicWorldPlanet(scene:Scene,name:string,recipe:P
  const geometry=cache.get(recipe.seed,nativeLod,coverage,recipe.mountains);
  const planet=createNativeVolcanicPlanet(scene,name,kit,recipe.seed,recipe.emission,{geometry,revision});
  const smoke=createPlanetSmoke(scene,name,recipe,nativeLod); if(smoke)smoke.parent=planet.root;
- planet.root.metadata={...planet.root.metadata,lod:nativeLod,actualCells:geometry.diagnostics?.actualCells,artApproval:"unapproved draft",smokeImplemented:true};
+ planet.root.metadata={ role: "planet",...planet.root.metadata,lod:nativeLod,actualCells:geometry.diagnostics?.actualCells,artApproval:"unapproved draft",smokeImplemented:true};
  return {...planet,clouds:undefined as TransformNode|undefined,smoke,animatedMaterials:[] as ShaderMaterial[],updateWeather(age:number,reducedMotion:boolean){planet.update(age,reducedMotion);return undefined as TransformNode|undefined;}};
 }

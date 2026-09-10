@@ -1,3 +1,4 @@
+import { setMeshRole } from './mesh-roles';
 import { SceneLoader } from "@babylonjs/core/Loading/sceneLoader";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
@@ -55,7 +56,7 @@ export async function loadConstructionBoundaries(
     undefined,
     ".glb",
   );
-  const sources = imported.meshes.filter(
+  const sources = imported.meshes.map(m => setMeshRole(m, "wall")).filter(
     (m): m is Mesh => m instanceof Mesh && m.getTotalVertices() > 0,
   );
   const matrices = new Map(
@@ -91,6 +92,7 @@ export async function loadConstructionBoundaries(
       partId: id,
       assetId: definition.assetUuid,
       constructionBoundary: true,
+        role: "wall",
       nativeRevision: runtimeKit.revision,
       openingId: p.openingId,
       semanticKey: p.key,

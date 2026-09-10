@@ -1,3 +1,4 @@
+import { setMeshRole } from './mesh-roles';
 import { SceneLoader } from "@babylonjs/core/Loading/sceneLoader";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
@@ -52,7 +53,7 @@ export async function loadConstructionDoorSeals(
     undefined,
     ".glb",
   );
-  const sources = imported.meshes.filter(
+  const sources = imported.meshes.map(m => setMeshRole(m, "wall")).filter(
     (m): m is Mesh => m instanceof Mesh && m.getTotalVertices() > 0,
   );
   const matrices = new Map(
@@ -94,6 +95,7 @@ export async function loadConstructionDoorSeals(
       mesh.isVisible = !moving;
       mesh.metadata = {
         constructionSeal: true,
+        role: "wall",
         openingId: binding.openingId,
         nativeRevision: "r002",
         pressureReady: false,

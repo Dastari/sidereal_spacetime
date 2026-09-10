@@ -1,3 +1,4 @@
+import { setMeshRole } from '../mesh-roles';
 import { Scene } from "@babylonjs/core/scene";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
@@ -17,6 +18,7 @@ export function createPlanetMesh(
 ) {
   const geometry = buildPlanetRecipe(recipe, clouds);
   const mesh = new Mesh(name, scene);
+  setMeshRole(mesh, "planet");
   const data = new VertexData();
   data.positions = geometry.positions;
   data.normals = geometry.normals;
@@ -25,7 +27,7 @@ export function createPlanetMesh(
   data.applyToMesh(mesh);
   mesh.hasVertexAlpha = false;
   mesh.isPickable = false;
-  mesh.metadata = {
+  mesh.metadata = { role: "planet",
     voxelPlanet: true,
     style: recipe.style,
     faces: geometry.faces,
@@ -54,7 +56,7 @@ export function createPlanetMesh(
       emitter.parent = mesh;
       emitter.hasVertexAlpha = false;
       emitter.isPickable = false;
-      emitter.metadata = { planetEmitter: true };
+      emitter.metadata = { role: "planet", planetEmitter: true };
       const glow = new StandardMaterial(name + "-emission", scene);
       glow.disableLighting = true;
       glow.emissiveColor = Color3.FromHexString("#" + recipe.palette[5]).scale(

@@ -1,3 +1,4 @@
+import { setMeshRole } from '../mesh-roles';
 import {loadNativeVolcanicKit,createNativeVolcanicCache,createNativeVolcanicWorldPlanet,canUseNativeVolcanic,NATIVE_VOLCANIC_REVISION} from "./native-volcanic-runtime";
 import {createPlanetAtmosphere} from "./planet-atmosphere";
 import {loadNativeIceKit} from "./native-planet-assets";
@@ -116,6 +117,7 @@ export function createSpaceEnvironment(scene: Scene) {
     { diameter: 1200, segments: 32, sideOrientation: Mesh.BACKSIDE },
     scene,
   );
+  setMeshRole(sky, "environment");
   sky.parent = root;
   sky.isPickable = false;
   sky.alwaysSelectAsActiveMesh = true;
@@ -149,6 +151,7 @@ export function createSpaceEnvironment(scene: Scene) {
     t.wrapV = Texture.CLAMP_ADDRESSMODE;
   }
   const dust = CreateBox("volumetric-dust", { size: 1 }, scene);
+  setMeshRole(dust, "environment");
   dust.parent = root;
   dust.isPickable = false;
   const dustMat = new StandardMaterial("dust-grains", scene);
@@ -172,6 +175,7 @@ export function createSpaceEnvironment(scene: Scene) {
       for (const mesh of imported.meshes) mesh.dispose();
       return;
     }
+    for (const mesh of imported.meshes) setMeshRole(mesh, 'environment');
     prefab = new TransformNode("asteroid-source", scene);
     for (const mesh of imported.meshes) if (!mesh.parent) mesh.parent = prefab;
     const bounds = prefab.getHierarchyBoundingVectors();
@@ -281,6 +285,7 @@ export function createSpaceEnvironment(scene: Scene) {
           { diameter: body.radius * 2, segments: 32 },
           scene,
         );
+        setMeshRole(surface, "environment");
         surface.parent = node;
         surface.isPickable = false;
         const mat = material(
@@ -304,6 +309,7 @@ export function createSpaceEnvironment(scene: Scene) {
             { diameter: body.radius * 2, segments: 48 },
             scene,
           );
+          setMeshRole(globe, "environment");
           spin = new TransformNode(body.id + "-axial-spin", scene);
           spin.parent = node;
           globe.parent = spin;
@@ -400,6 +406,7 @@ export function createSpaceEnvironment(scene: Scene) {
           { width: body.radius * 4.4, height: body.radius * 4.4 },
           scene,
         );
+        setMeshRole(halo, "environment");
         halo.position.y = -body.radius * 0.15;
         halo.parent = node;
         halo.isPickable = false;
@@ -428,6 +435,7 @@ export function createSpaceEnvironment(scene: Scene) {
           { width: body.radius * 3.6, height: body.radius * 3.6 },
           scene,
         );
+        setMeshRole(ring, "environment");
         ring.parent = node;
         ring.rotation.x = 0.42;
         ring.rotation.z = 0.25;
@@ -444,7 +452,9 @@ export function createSpaceEnvironment(scene: Scene) {
         materials.push(ringMat);
       }
     }
-    node.metadata = { bodyId: body.id, worldBody: true };
+    node.metadata = { bodyId: body.id, worldBody: true, role: body.kind === 'asteroid' ? 'environment' : 'planet' };
+    for (const mesh of node.getChildMeshes()) setMeshRole(mesh, node.metadata.role);
+    if (node instanceof Mesh) setMeshRole(node, node.metadata.role);
     const entry = {
       node,
       spin,
@@ -713,6 +723,7 @@ export function createSpaceEnvironment(scene: Scene) {
       }
       dust.metadata = {
         worldAnchoredDust: true,
+        role: 'environment',
         instances: instance,
         depthLayers: layerStats,
         streakRatio: motion.streakRatio,

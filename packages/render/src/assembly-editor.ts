@@ -1,3 +1,4 @@
+import { categoryMeshRole, setMeshRole } from './mesh-roles';
 import { updateHullDecals } from './hull-decals';
 import { loadEquipmentPrototypes } from './installed-equipment';
 import "@babylonjs/core/Culling/ray";
@@ -140,12 +141,13 @@ export async function createAssemblyEditor(
     for (const chunk of result) {
       if (!chunk.indices.length) continue;
       const mesh = new Mesh("damage-" + id + "-" + chunk.key, scene);
+      setMeshRole(mesh, "effect");
       const data = new VertexData();
       Object.assign(data, chunk);
       data.applyToMesh(mesh);
       mesh.material = previewMaterials.get(chunk.surface)!;
       mesh.parent = entry.node;
-      mesh.metadata = { damagePreview: true };
+      mesh.metadata = { damagePreview: true, role: 'effect' };
       mesh.isPickable = true;
     }
     entry.lighting.setMeshes(entry.node.getChildMeshes());
@@ -300,6 +302,7 @@ export async function createAssemblyEditor(
             // clone shares geometry but permits lights scoped to this placement.
             const name = part.id + "--" + source.name;
             const instance = fixtures?.length ? source.clone(name, node, true)! : source.createInstance(name);
+            instance.metadata = {...source.metadata, partId: part.id, role: categoryMeshRole(catalog.assets.find(a => a.id === part.assetId)?.category ?? 'equipment')};
             instance.parent = node;
             instance.isPickable = true;
             instance.isVisible = true;

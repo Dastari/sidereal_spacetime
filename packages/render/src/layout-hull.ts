@@ -1,3 +1,4 @@
+import { setMeshRole } from './mesh-roles';
 import { layoutViewOrientation } from "./layout-view-orientation";
 import { snapLayoutPoint } from "./layout-placement-grid";
 import { layoutPlaneMatrix } from "./layout-plane-projection";
@@ -172,6 +173,7 @@ export function createHullViewport(
       );
     }
     const mesh = CreateLineSystem("hull-build-plane", { lines }, scene);
+    setMeshRole(mesh, "effect");
     mesh.color = new Color3(0.14, 0.31, 0.39);
     mesh.isPickable = false;
     return mesh;
@@ -179,6 +181,7 @@ export function createHullViewport(
   let grid = buildGrid(gridStep);
   grid.setEnabled(false);
   const ghost = CreateBox("placement-bounds", { size: 1 }, scene);
+  setMeshRole(ghost, "effect");
   const ghostMaterial = new StandardMaterial(
     "placement-bounds-material",
     scene,
@@ -440,7 +443,7 @@ export function createHullViewport(
           mesh.parent = node;
           mesh.isVisible = true;
           mesh.isPickable = true;
-          mesh.metadata = { partId: p.id, assetId: p.assetId };
+          mesh.metadata = { partId: p.id, assetId: p.assetId, role: source.metadata?.role ?? 'hull' };
         }
         entry = { assetId: p.assetId, node };
         nodes.set(p.id, entry);

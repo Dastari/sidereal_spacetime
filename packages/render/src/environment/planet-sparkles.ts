@@ -1,3 +1,4 @@
+import { setMeshRole } from '../mesh-roles';
 import { Scene } from "@babylonjs/core/scene";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
@@ -46,6 +47,7 @@ export function createOceanGlints(
   const points = sampleOceanGlints(water, seed),
     mesh = new Mesh(name + "-water-glints", scene),
     data = new VertexData();
+setMeshRole(mesh, "planet");
   data.positions = points.flatMap((p) => p.position);
   data.normals = points.flatMap((p) => p.normal);
   data.indices = points.map((_, i) => i);
@@ -85,6 +87,6 @@ export function createOceanGlints(
   material.setFloat("sunIntensity", 2.1);
   mesh.material = material;
   mesh.isPickable = false;
-  mesh.metadata = { planetSparkles: true, count: points.length };
+  mesh.metadata = { role: "planet", planetSparkles: true, count: points.length };
   return { mesh, material };
 }

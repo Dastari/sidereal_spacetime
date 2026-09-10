@@ -161,6 +161,8 @@ export function createDiagnosticsUI(
         ],
         ["Draw calls", String(data.drawCalls)],
         ["Active / total meshes", `${data.activeMeshes} / ${data.totalMeshes}`],
+        ["Meshes by role", "Active / total"],
+        ...Object.entries(data.meshesByRole ?? {}).filter(([, count]) => count.total > 0).map(([role, count]): [string, string] => [role, `${count.active} / ${count.total}`]),
         ["Active indices", data.activeIndices.toLocaleString()],
         ["Materials / textures", `${data.materials} / ${data.textures}`],
         ["Lit lights / eligible maps", `${data.lights} / ${data.shadowMaps}`],

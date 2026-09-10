@@ -147,6 +147,7 @@ export function createShipLighting(
         true,
       );
       if (!proxy) continue;
+      proxy.metadata = {...mesh.metadata, role: 'proxy'};
       proxy.material = proxyMaterial;
       proxy.layerMask = 0x10000000;
       proxy.setEnabled(true);

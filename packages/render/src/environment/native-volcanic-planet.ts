@@ -1,3 +1,4 @@
+import { setMeshRole } from '../mesh-roles';
 import {Scene} from "@babylonjs/core/scene";
 import {TransformNode} from "@babylonjs/core/Meshes/transformNode";
 import {Mesh} from "@babylonjs/core/Meshes/mesh";
@@ -26,6 +27,7 @@ export function createNativeVolcanicPlanet(scene:Scene,name:string,kit:NativePla
  geometry.batches.forEach((batch,index)=>{
   if(!batch.indices.length)return;
   const mesh=new Mesh(name+"-"+kit.materials[index].name,scene),data=new VertexData(),colors:number[]=[],radiance:number[]=[],uvs:number[]=[];
+  setMeshRole(mesh, "planet");
   data.positions=batch.positions;data.normals=batch.normals;data.indices=batch.indices;
   for(let i=0;i<batch.positions.length;i+=3){
    const p=batch.positions.slice(i,i+3) as VolcanicVector,n=unit(p),normal=batch.normals.slice(i,i+3) as VolcanicVector,r=Math.hypot(...p);
@@ -44,8 +46,8 @@ export function createNativeVolcanicPlanet(scene:Scene,name:string,kit:NativePla
   }else{
    const {material,spill}=createNativeBasaltMaterial(scene,name+"-"+kit.materials[index].name+"-material");material.albedoColor=Color3.FromArray(kit.materials[index].linearColor).scale(index===2?1.8:1);mesh.material=material;plugins.push(spill);
   }
-  mesh.parent=root;mesh.isPickable=false;mesh.metadata={style:"volcanic",nativeRevision:options.revision??"volcanic-r018"};
+  mesh.parent=root;mesh.isPickable=false;mesh.metadata={ role: "planet",style:"volcanic",nativeRevision:options.revision??"volcanic-r018"};
  });
- root.metadata={nativePlanet:true,nativeRevision:options.revision??"volcanic-r018",seed,triangles:geometry.triangles,litVertices,minimumAO,maximumRadiance,...geometry.diagnostics};
+ root.metadata={ role: "planet",nativePlanet:true,nativeRevision:options.revision??"volcanic-r018",seed,triangles:geometry.triangles,litVertices,minimumAO,maximumRadiance,...geometry.diagnostics};
  return {root,emitters,geometry,stats:root.metadata,setSpillEnabled(enabled:boolean){for(const plugin of plugins)plugin.enabled=enabled;},update(age:number,reducedMotion:boolean){if(reducedMotion)return;for(const plugin of plugins)plugin.age=age;for(const {material,vent} of moltenMaterials){const gain=Math.min(4,Math.max(0,emission))*3*(.90+.10*Math.sin(age*.6));material.emissiveColor.set(gain,vent?gain*.12:gain,vent?gain*.002:gain);}},dispose(){root.dispose(false,true);moltenTexture.dispose();}};
 }

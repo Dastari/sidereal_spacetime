@@ -1,3 +1,4 @@
+import { setMeshRole } from './mesh-roles';
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { Matrix, Vector3, Quaternion } from "@babylonjs/core/Maths/math.vector";
@@ -247,7 +248,7 @@ export async function loadRemoteShipPrototype(
       for (const light of loaded.lights ?? []) light.dispose();
       for (const group of loaded.animationGroups ?? []) group.dispose();
       for (const skeleton of loaded.skeletons ?? []) skeleton.dispose();
-      const meshes = loaded.meshes.filter(
+      const meshes = loaded.meshes.map(m => setMeshRole(m, "remote")).filter(
         (m): m is Mesh => m instanceof Mesh && m.getTotalVertices() > 0,
       );
       for (const mesh of meshes) {
@@ -323,6 +324,7 @@ export async function loadRemoteShipPrototype(
         const root = new TransformNode("remote-ship-" + shipId, scene);
         root.metadata = {
           remoteShipId: shipId,
+              role: 'remote',
           publishedExteriorAssetId: manifest.assetId,
         };
         try {
@@ -338,6 +340,7 @@ export async function loadRemoteShipPrototype(
             mesh.isPickable = false;
             mesh.metadata = {
               remoteShipId: shipId,
+              role: 'remote',
               publishedExteriorAssetId: manifest.assetId,
               sourcePlacementIds: placementIds,
             };
@@ -360,7 +363,7 @@ export async function loadRemoteShipPrototype(
               p.flipped,
             )) {
               mesh.isPickable = false;
-              mesh.metadata = { ...mesh.metadata, remoteShipId: shipId };
+              mesh.metadata = { ...mesh.metadata, remoteShipId: shipId, role: 'remote' };
             }
           }
           return root;

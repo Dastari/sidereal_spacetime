@@ -1,3 +1,4 @@
+import { setMeshRole } from './mesh-roles';
 import type { RefitAttachmentVisual } from "./construction-refit-attachments";
 import {
   bindNativeAirlockPlan,
@@ -290,6 +291,7 @@ export async function loadConstructionInstance(
       },
       scene,
     );
+    setMeshRole(line, "effect");
     line.parent = parent;
     line.color = Color3.FromHexString("#e3b85c");
     line.isPickable = false;

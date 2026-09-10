@@ -1,3 +1,4 @@
+import { setMeshRole } from './mesh-roles';
 import type { Scene } from "@babylonjs/core/scene";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
@@ -57,9 +58,10 @@ export function createLayoutSelection(scene: Scene) {
             `layout-selection-mask-${source.uniqueId}`,
             scene,
           );
+          setMeshRole(proxy, "proxy");
           geometry?.applyToMesh(proxy);
           proxy.material = source.material;
-          proxy.metadata = { partId: source.metadata?.partId };
+          proxy.metadata = { partId: source.metadata?.partId, role: 'proxy' };
           proxy.layerMask = 0;
           proxy.isPickable = false;
           proxy.freezeWorldMatrix(source.computeWorldMatrix(true).clone());

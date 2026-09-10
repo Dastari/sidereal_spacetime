@@ -1,3 +1,4 @@
+import { categoryMeshRole, setMeshRole } from './mesh-roles';
 import { updateHullDecals } from './hull-decals';
 import { SceneLoader } from '@babylonjs/core/Loading/sceneLoader';
 import { Mesh } from '@babylonjs/core/Meshes/mesh';
@@ -19,6 +20,7 @@ export async function loadEquipmentPrototypes(scene:Scene,assets:readonly PartAs
   if(library&&library.sha256!==asset.visual.sha256)throw new Error('Conflicting visual revisions for shared GLB: '+url);
   if(!library){
    const imported=await SceneLoader.ImportMeshAsync('',url.slice(0,split+1),url.slice(split+1),scene);
+   for(const mesh of imported.meshes)setMeshRole(mesh,categoryMeshRole(asset.category));
    const meshes=imported.meshes.filter((m):m is Mesh=>m instanceof Mesh&&m.getTotalVertices()>0);
    for(const mesh of meshes){mesh.isVisible=false;mesh.isPickable=false;}
    library={sha256:asset.visual.sha256,meshes};libraries.set(url,library);
@@ -27,18 +29,19 @@ export async function loadEquipmentPrototypes(scene:Scene,assets:readonly PartAs
   let meshes=prefix?library.meshes.filter(m=>m.name===prefix||m.name.startsWith(prefix+'_')||m.name.startsWith(prefix+'.')):library.meshes;
   if(!meshes.length)throw new Error('Empty visual mesh group: '+asset.id+(prefix?' / '+prefix:''));
   if(asset.category==='cargo'||asset.visual?.designId==='shipyard.hull.pilot-section')meshes=batchStaticMaterials(meshes);
+  for(const mesh of meshes)setMeshRole(mesh,categoryMeshRole(asset.category));
   result.set(asset.id,meshes);
  }
  return result;
 }
 export function equipmentPlacement(scene:Scene,parent:TransformNode,asset:PartAsset,placement:PartPlacement,sources:Mesh[]) {
  const node=new TransformNode('placement-'+placement.id,scene);node.parent=parent;
- node.metadata={partId:placement.id,assetId:asset.id,designRevision:asset.visual?.revision};
+ node.metadata={partId:placement.id,assetId:asset.id,designRevision:asset.visual?.revision,role:categoryMeshRole(asset.category)};
  node.position.set(placement.position[0],placement.position[2],-placement.position[1]);
  node.rotation.y=placement.rotation;node.scaling.x=placement.flipped?-1:1;
  const meshes=sources.map(source=>{
   const mesh=source.clone('GEO-'+placement.id+'--native--'+source.name,node,true)!;
-  mesh.isVisible=true;mesh.isPickable=true;mesh.metadata={partId:placement.id,assetId:asset.id};return mesh;
+  mesh.isVisible=true;mesh.isPickable=true;mesh.metadata={partId:placement.id,assetId:asset.id,role:categoryMeshRole(asset.category)};return mesh;
  });
  meshes.push(...updateHullDecals(scene,node,placement.decals,placement.flipped));
  const lighting=createEquipmentLighting(scene,node,asset.lights);lighting.setMeshes(meshes);

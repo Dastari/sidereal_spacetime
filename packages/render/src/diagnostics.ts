@@ -1,8 +1,10 @@
+import { meshesByRole, type MeshRoleCounts } from "./mesh-roles";
 import type { Scene } from "@babylonjs/core/scene";
 import { SceneInstrumentation } from "@babylonjs/core/Instrumentation/sceneInstrumentation";
 import type { Observer } from "@babylonjs/core/Misc/observable";
 
 export type RenderDiagnostics = {
+  meshesByRole?: MeshRoleCounts;
   localLightBudget?: {
     limit: import("./local-light-budget").LocalLightLimit;
     eligibleLights: number;
@@ -92,6 +94,7 @@ export function createRenderDiagnostics(scene: Scene) {
         drawCalls: instrument.drawCallsCounter.current,
         activeMeshes: scene.getActiveMeshes().length,
         totalMeshes: scene.meshes.length,
+        meshesByRole: meshesByRole(scene),
         activeIndices: scene.getActiveIndices(),
         materials: scene.materials.length,
         textures: scene.textures.length,

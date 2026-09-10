@@ -85,7 +85,7 @@ export function createGroundItems(
             );
             placement.parent = owned.root;
             for (const mesh of placement.getChildMeshes())
-              mesh.metadata = { ...mesh.metadata, partId: "ground:" + row.id };
+              mesh.metadata = { ...mesh.metadata, partId: "ground:" + row.id, role: "equipment" };
           })
           .catch(() => {});
       }

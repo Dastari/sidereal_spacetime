@@ -1,3 +1,4 @@
+import { setMeshRole } from '../mesh-roles';
 import {Scene} from "@babylonjs/core/scene";
 import {TransformNode} from "@babylonjs/core/Meshes/transformNode";
 import {Mesh} from "@babylonjs/core/Meshes/mesh";
@@ -41,14 +42,15 @@ export function createNativeIcePlanet(scene:Scene,name:string,recipe:PlanetRecip
  geometry.batches.forEach((batch,index)=>{
   if(!batch.indices.length)return;
   const mesh=new Mesh(name+"-native-"+kit.materials[index].name,scene),data=new VertexData();
+  setMeshRole(mesh, "planet");
   data.positions=batch.positions;data.normals=batch.normals;data.indices=batch.indices;data.applyToMesh(mesh);
   const optics:number[]=[];
   for(let i=0;i<batch.positions.length;i+=3){const r=Math.hypot(...batch.positions.slice(i,i+3));optics.push(Math.max(0,Math.min(.65,(1-r)/.4)),Math.max(.15,Math.min(1,(r-.82)/.32)));}
   mesh.setVerticesData("iceOptics",optics,false,2);mesh.setVerticesData("nativeOptics",optics,false,2);
   const material=createNativeIceFinish(scene,name+"-"+kit.materials[index].name,index===0);
   material.albedoColor=Color3.FromArray(kit.materials[index].linearColor);material.metallic=0;material.indexOfRefraction=1.31;
-  mesh.material=material;mesh.parent=root;mesh.isPickable=false;mesh.metadata={style:"ice",nativeRevision:NATIVE_ICE_REVISION};
+  mesh.material=material;mesh.parent=root;mesh.isPickable=false;mesh.metadata={ role: "planet",style:"ice",nativeRevision:NATIVE_ICE_REVISION};
  });
- root.metadata={nativePlanet:true,nativeRevision:NATIVE_ICE_REVISION,lod:nativeLod,triangles:geometry.triangles,seed:recipe.seed,source:"Blender authored native forms",artApproval:"local review candidate, final art unapproved"};
+ root.metadata={ role: "planet",nativePlanet:true,nativeRevision:NATIVE_ICE_REVISION,lod:nativeLod,triangles:geometry.triangles,seed:recipe.seed,source:"Blender authored native forms",artApproval:"local review candidate, final art unapproved"};
  return {root,clouds:undefined as TransformNode|undefined,smoke:undefined as TransformNode|undefined,emitters:[] as Mesh[],animatedMaterials:[] as ShaderMaterial[],updateWeather:(_age:number,_reducedMotion:boolean)=>undefined as TransformNode|undefined,dispose:()=>root.dispose(false,true)};
 }

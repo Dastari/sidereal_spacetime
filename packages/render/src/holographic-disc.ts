@@ -1,3 +1,4 @@
+import { setMeshRole } from './mesh-roles';
 import type { Scene } from "@babylonjs/core/scene";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
@@ -97,9 +98,10 @@ export function createHolographicDisc(
     { width: radius * 2, height: radius * 2 },
     scene,
   );
+  setMeshRole(mesh, "effect");
   mesh.position.y = 0.004;
   mesh.isPickable = false;
-  mesh.metadata = { presentationOnly: true, holographicDisc: true };
+  mesh.metadata = { presentationOnly: true, holographicDisc: true, role: 'effect' };
   const mirror = new MirrorTexture(
     "portrait-floor-reflection",
     256,

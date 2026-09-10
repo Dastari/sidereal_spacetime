@@ -1,0 +1,24 @@
+--- a/packages/render/src/debug-overlays.ts
++++ b/packages/render/src/debug-overlays.ts
+@@ -1,3 +1,4 @@
++import { setMeshRole } from './mesh-roles';
+ import type { Scene } from "@babylonjs/core/scene";
+ import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
+ import type { LinesMesh } from "@babylonjs/core/Meshes/linesMesh";
+@@ -83,6 +84,7 @@
+         },
+         scene,
+       );
++      setMeshRole(mesh, "effect");
+       if (!current) {
+         mesh.isPickable = false;
+         mesh.alwaysSelectAsActiveMesh = true;
+@@ -94,7 +96,7 @@
+         meshes.set(id, { mesh, topology });
+       }
+       mesh.color.copyFrom(color);
+-      mesh.metadata = { debugOverlay: true, ...metadata };
++      mesh.metadata = { debugOverlay: true, ...metadata, role: 'effect' };
+     }
+     if (flags.skeleton) {
+       const roots = sources.characterRoots?.() ?? [];

@@ -1,3 +1,4 @@
+import { categoryMeshRole } from './mesh-roles';
 import {
   refitAttachmentPlacements,
   type RefitAttachmentVisual,
@@ -124,6 +125,7 @@ export async function loadConstructionAuthoredAssembly(
         partId: p.id,
         assetId: a.id,
         category: a.category,
+        role: categoryMeshRole(a.category),
         instanceId: document.layout.id,
         deckId,
         constructionRoof: a.category === "roof",

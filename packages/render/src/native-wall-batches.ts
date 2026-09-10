@@ -61,6 +61,7 @@ export function createNativeWallBatches(
   root.parent = parent;
   root.metadata = {
     ...identity,
+    role: identity.category,
     constructionRoof: identity.category === "roof",
     authoritativeEntity: false,
   };

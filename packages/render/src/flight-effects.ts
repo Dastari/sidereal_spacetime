@@ -1,3 +1,4 @@
+import { setMeshRole } from './mesh-roles';
 import { Scene } from "@babylonjs/core/scene";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
@@ -65,6 +66,7 @@ function bandMesh(
     indices.push(...Array.from(block.indices!, (index) => index + offset));
   }
   const mesh = new Mesh(name, scene);
+  setMeshRole(mesh, "effect");
   const data = new VertexData();
   data.positions = positions;
   data.normals = normals;
@@ -72,7 +74,7 @@ function bandMesh(
   data.applyToMesh(mesh);
   mesh.isPickable = false;
   mesh.receiveShadows = false;
-  mesh.metadata = { presentationOnly: true, role: "achieved-engine-exhaust" };
+  mesh.metadata = { presentationOnly: true, role: "effect", effectRole: "achieved-engine-exhaust" };
   return mesh;
 }
 

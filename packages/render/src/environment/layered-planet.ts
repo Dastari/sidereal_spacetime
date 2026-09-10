@@ -1,3 +1,4 @@
+import { setMeshRole } from '../mesh-roles';
 import { createPlanetSmoke } from "./planet-smoke";
 import { createOceanGlints } from "./planet-sparkles";
 import type { ShaderMaterial } from "@babylonjs/core/Materials/shaderMaterial";
@@ -44,6 +45,7 @@ function geometryMesh(
 ) {
   const mesh = new Mesh(name, scene),
     data = new VertexData();
+  setMeshRole(mesh, "planet");
   data.positions = geometry.positions;
   data.normals = geometry.normals;
   // Authored palettes and helper tints are sRGB; PBR vertex albedo is linear.
@@ -83,6 +85,7 @@ export function createLayeredPlanet(
     { diameter: water ? 1.898 : 1.8, segments: lod === 2 ? 24 : 64 },
     scene,
   );
+  setMeshRole(core, "planet");
   core.parent = root;
   core.isPickable = false;
   const coreMaterial = pbr(
@@ -165,7 +168,7 @@ export function createLayeredPlanet(
       glints.mesh.parent = root;
       animatedMaterials.push(glints.material);
     }
-    sea.metadata = {
+    sea.metadata = { role: "planet",
       planetOcean: true,
       faces: generated.water.faces,
       resolution: n,
@@ -183,7 +186,7 @@ export function createLayeredPlanet(
     terrainMaterial,
   );
   terrain.parent = root;
-  terrain.metadata = {
+  terrain.metadata = { role: "planet",
     voxelPlanet: true,
     layered: true,
     style: recipe.style,
@@ -203,7 +206,7 @@ export function createLayeredPlanet(
       iceMaterial,
     );
     ice.parent = root;
-    ice.metadata = { planetIce: true, faces: generated.ice.faces };
+    ice.metadata = { role: "planet", planetIce: true, faces: generated.ice.faces };
   }
   if (generated.spill.faces) {
     const spill = createLavaSpill(scene, name, generated.spill);
@@ -217,7 +220,7 @@ export function createLayeredPlanet(
     );
     const lava = geometryMesh(scene, name + "-lava", generated.lava, lavaMat);
     lava.parent = root;
-    lava.metadata = { planetEmitter: true };
+    lava.metadata = { role: "planet", planetEmitter: true };
     emitters.push(lava);
   }
   if (lod < 2 && generated.trees.length) {
@@ -232,7 +235,7 @@ export function createLayeredPlanet(
       pbr(scene, name + "-forest-material", 0.72),
     );
     forest.parent = root;
-    forest.metadata = { planetForest: true, trees: trees.treeCount };
+    forest.metadata = { role: "planet", planetForest: true, trees: trees.treeCount };
   }
   if (lod < 2 && generated.crystals.length) {
     const crystalData = buildPlanetCrystals(generated.crystals);
@@ -248,7 +251,7 @@ export function createLayeredPlanet(
       crystalMat,
     );
     crystals.parent = root;
-    crystals.metadata = {
+    crystals.metadata = { role: "planet",
       planetEmitter: true,
       crystals: crystalData.crystalCount,
     };
@@ -274,12 +277,12 @@ export function createLayeredPlanet(
       weatherMaterial,
     );
     cloud.parent = root;
-    cloud.metadata = { planetWeather: true, faces: geometry.faces };
+    cloud.metadata = { role: "planet", planetWeather: true, faces: geometry.faces };
     clouds = cloud;
   }
   smoke = createPlanetSmoke(scene, name, recipe, lod);
   if (smoke) smoke.parent = root;
-  root.metadata = {
+  root.metadata = { role: "planet",
     layeredPlanet: true,
     lod,
     resolution: n,
@@ -314,7 +317,7 @@ export function createLayeredPlanet(
           weatherMaterial,
         );
         next.parent = root;
-        next.metadata = { planetWeather: true, faces: data.faces };
+        next.metadata = { role: "planet", planetWeather: true, faces: data.faces };
         clouds?.dispose(false, false);
         clouds = next;
       }

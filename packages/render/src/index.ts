@@ -1,3 +1,5 @@
+import { setMeshRole } from './mesh-roles';
+import { legacyMeshRole } from './legacy-mesh-role';
 import {
   loadNativeStairEgress,
   type NativeStairEgressGeometry,
@@ -244,6 +246,7 @@ async function buildWorld(
     { diameter: 1.2, thickness: 0.035, tessellation: 32 },
     scene,
   );
+  setMeshRole(marker, "effect");
   const cyan = new StandardMaterial("crew-marker-mat", scene);
   cyan.emissiveColor = Color3.FromHexString("#68ded0");
   marker.material = cyan;
@@ -410,6 +413,9 @@ async function buildWorld(
     assembly.position.copyFrom(center.scale(-scale));
     avatar.setEnabled(false);
   }
+  for (const mesh of imported.meshes) {
+    if (!mesh.metadata?.role) setMeshRole(mesh, legacyMeshRole(mesh));
+  }
   const roof = imported.meshes.filter(
     (m) => m.getTotalVertices() > 0 && /GEO-(roof|markings)/.test(m.name),
   );
@@ -460,11 +466,12 @@ async function buildWorld(
       { width: 1.5, height: 0.25, sideOrientation: Mesh.FRONTSIDE },
       scene,
     );
+    setMeshRole(plate, "effect");
     plate.parent = labels;
     // Stand in front of the innermost service insert, facing into the room.
     plate.position.set(Math.sign(room.x) * 4.35, 2.0625, -room.y);
     plate.rotation.y = (Math.sign(room.x) * Math.PI) / 2;
-    plate.metadata = { side: Math.sign(room.x) };
+    plate.metadata = { side: Math.sign(room.x), role: 'equipment' };
     const texture = new DynamicTexture(
       "room-sign-" + room.id,
       { width: 512, height: 96 },
@@ -493,6 +500,7 @@ async function buildWorld(
       { width: 0.15, height: 0.08, depth: 1 },
       scene,
     );
+    setMeshRole(strip, "effect");
     strip.position.set(Math.sign(room.x) * 1.4, 1.46, -room.y);
     strip.parent = labels;
     strip.material = emissive;

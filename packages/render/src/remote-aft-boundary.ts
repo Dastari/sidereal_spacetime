@@ -1,3 +1,4 @@
+import { setMeshRole } from './mesh-roles';
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
 /** Exact pinned stock shell datum, renderer metres. Copy existing outward aft
@@ -32,6 +33,7 @@ export function extractStockAftBoundary(source: Mesh): Mesh | undefined {
   if (!indices.length) return;
   data.indices = indices;
   const result = new Mesh(`${source.name}--outward-aft`, source.getScene());
+  setMeshRole(result, "remote");
   data.applyToMesh(result);
   result.material = source.material;
   result.sideOrientation = source.sideOrientation;

@@ -1,3 +1,4 @@
+import { setMeshRole } from './mesh-roles';
 import {
   SceneLoader,
   type ISceneLoaderAsyncResult,
@@ -217,7 +218,7 @@ export async function loadNativeStairScene(
         ".glb",
       );
       imports.push(imported);
-      const meshes = imported.meshes.filter(
+      const meshes = imported.meshes.map(m => setMeshRole(m, "floor")).filter(
         (m): m is Mesh => m instanceof Mesh && m.getTotalVertices() > 0,
       );
       prototypes.set(sourceId, {
@@ -253,6 +254,7 @@ export async function loadNativeStairScene(
         nativeStair: true,
         egressPresentationOnly: !!input.egressOnly,
         stairRole: roles[i],
+        role: roles[i] === "lower-roof" ? "roof" : roles[i] === "enclosure" ? "wall" : "floor",
         deckId:
           roles[i] === "lower-floor" || roles[i] === "lower-roof"
             ? input.lowerDeckId

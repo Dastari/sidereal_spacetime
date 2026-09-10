@@ -1,3 +1,4 @@
+import { setMeshRole } from './mesh-roles';
 import {
   SceneLoader,
   type ISceneLoaderAsyncResult,
@@ -116,7 +117,7 @@ export async function loadNativeAirlockScene(
         ".glb",
       );
       imported.push(result);
-      const meshes = result.meshes.filter(
+      const meshes = result.meshes.map(m => setMeshRole(m, "wall")).filter(
         (m): m is Mesh => m instanceof Mesh && m.getTotalVertices() > 0,
       );
       prototypes.set(source, {
@@ -133,6 +134,7 @@ export async function loadNativeAirlockScene(
     const mechanisms = new Map<string, { openingId: string; frame: TransformNode; hinge: TransformNode }>();
     const metadata = (p: NativeRoomInstalledPart) => ({
       partId: p.id,
+      role: p.source === 'roof' ? 'roof' : p.source === 'floor' ? 'floor' : 'wall',
       instanceId: input.instanceId,
       deckId: input.deckId,
       nativeSource: p.source,

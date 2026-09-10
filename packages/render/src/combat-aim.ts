@@ -1,3 +1,4 @@
+import { setMeshRole } from './mesh-roles';
 import {tracePhysicalBeam} from './equipment/physical-beam';
 import type {Scene} from '@babylonjs/core/scene';
 import type {TransformNode} from '@babylonjs/core/Meshes/transformNode';
@@ -13,7 +14,9 @@ export function createCombatAim(scene:Scene,canvas:HTMLCanvasElement,ship:Transf
   let pointer:{x:number;y:number}|undefined;
   const blockers=new Set(occluders);
   const beam=CreateBox('rifle-laser-beam',{size:1},scene);
+  setMeshRole(beam, 'effect');
   const dot=CreateBox('rifle-laser-target',{size:.08},scene);
+  setMeshRole(dot, 'effect');
   const material=new StandardMaterial('rifle-laser-light',scene);
   material.disableLighting=true;material.emissiveColor=new Color3(.15,1,.35);material.diffuseColor=Color3.Black();
   for(const mesh of [beam,dot]){mesh.material=material;mesh.isPickable=false;mesh.setEnabled(false);}

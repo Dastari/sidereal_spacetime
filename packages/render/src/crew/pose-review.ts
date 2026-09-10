@@ -1,3 +1,4 @@
+import { setMeshRole } from '../mesh-roles';
 /** Standalone real-asset review. Run from the managed client origin; no app/router import. */
 import {Engine} from '@babylonjs/core/Engines/engine';
 import {Scene} from '@babylonjs/core/scene';
@@ -26,7 +27,8 @@ export async function startPoseReview(canvas:HTMLCanvasElement,options:{crewUrl?
  const camera=new ArcRotateCamera('pose-review-camera',-Math.PI*.7,1.28,3.6,new Vector3(0,1.05,0),scene);camera.attachControl(canvas,true);camera.minZ=.01;
  const ambient=new HemisphericLight('pose-review-fill',Vector3.Up(),scene);ambient.intensity=.75;
  const key=new DirectionalLight('pose-review-key',new Vector3(.4,-1,.5),scene);key.intensity=2;
- const ground=CreateGround('pose-review-ground',{width:8,height:8},scene),mat=new StandardMaterial('pose-review-ground-material',scene);mat.diffuseColor=new Color3(.13,.16,.19);ground.material=mat;
+ const ground=CreateGround('pose-review-ground',{width:8,height:8},scene),mat=new StandardMaterial('pose-review-ground-material',scene);
+ setMeshRole(ground, "effect");mat.diffuseColor=new Color3(.13,.16,.19);ground.material=mat;
  const ship=new TransformNode('pose-review-ship',scene),crew=await createCrewVisual(scene,ship,options.crewUrl);
  crew.customize({outfit:'marine',weapon:'rifle',weaponFixture:false,backpack:false});
  const solver=options.baseline?undefined:crew.createPoseController();
@@ -35,8 +37,10 @@ export async function startPoseReview(canvas:HTMLCanvasElement,options:{crewUrl?
  let intent:PoseIntent={yaw:0,pitch:0,facing:0,active:true,reducedMotion:true,profile:'RIFLE',itemId:'review-carbine',shotSequence:0n},debug=false,paused=false;
  let item:EQUIPMENT_ITEM=EQUIPMENT_POSE_ITEMS.carbine;
  type EQUIPMENT_ITEM=EquipmentPoseItem;
- let lines=CreateLineSystem('pose-review-debug',{lines:Array.from({length:256},()=>[Vector3.Zero(),Vector3.Zero()]),updatable:true},scene);lines.color=new Color3(.2,.9,.7);lines.isPickable=false;
- const beam=CreateLineSystem('physical-device-ray',{lines:[[Vector3.Zero(),Vector3.Zero()]],updatable:true},scene);beam.color=new Color3(.25,1,.3);beam.isPickable=false;
+ let lines=CreateLineSystem('pose-review-debug',{lines:Array.from({length:256},()=>[Vector3.Zero(),Vector3.Zero()]),updatable:true},scene);
+ setMeshRole(lines, "effect");lines.color=new Color3(.2,.9,.7);lines.isPickable=false;
+ const beam=CreateLineSystem('physical-device-ray',{lines:[[Vector3.Zero(),Vector3.Zero()]],updatable:true},scene);
+ setMeshRole(beam, "effect");beam.color=new Color3(.25,1,.3);beam.isPickable=false;
  async function equip(assetId:string,profile?:EquipmentPoseType,override?:EquipmentPoseItem){
   const ticket=++revision;solver?.bind(undefined);crew.bindHeldEquipment(undefined);gear?.dispose();placement?.dispose();legacy=undefined;
   item=override??(options.staged?POSE_REVIEW_ITEMS:EQUIPMENT_POSE_ITEMS)[assetId];if(!item)throw new Error(`Missing pose metadata: ${assetId}`);

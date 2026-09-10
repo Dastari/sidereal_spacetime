@@ -1,3 +1,4 @@
+import { setMeshRole } from '../mesh-roles';
 import { bindPoseEquipment } from './pose-anchors';
 import { EQUIPMENT_POSE_ITEMS, type EquipmentPoseItem } from '../../../content/src/equipment-poses';
 import { equipmentAimSource, validAnchors } from "./anchors";
@@ -54,6 +55,7 @@ export async function createEquipmentVisual(
   const root = new TransformNode(`equipment-placement:${asset}`, scene);
   root.parent = parent;
   container.addAllToScene();
+  for (const mesh of container.meshes) setMeshRole(mesh, 'equipment');
   for (const node of container.rootNodes) node.parent = root;
   const imported = container.rootNodes[0];
   const aim =
