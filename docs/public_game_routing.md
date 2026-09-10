@@ -46,9 +46,13 @@ Installed client `a561f80776db35587edfc28a3a760621eb6de6b6ef1babd78cf60ca41edce4
 
 The independently managed Shipyard at `https://sidereal.tail7a58a6.ts.net:8445/shipyard` already serves its reviewed editable Wayfarer template and complete native floor preview; it has its own build and current development-server lifecycle, not an immutable public-game artifact.
 
-### Current native personal starter release — 2026-09-10
+### Earlier native personal starter release — 2026-09-10
 
 Installed client `2f5c1bd48a34bcf149c73e5c69c62a10ca64e3d095228462e4fef644a7e61874`, directory `20260910-071131-2f5c1bd48a34`, entry `/assets/index-Dw3BRGSE.js`, pairs with additive world `a962f39a07aeff0d3baae7fe80f13862b64fe22572428b71abe566a63046c2f0`. Fresh characters receive the qualified native Wayfarer with independent empty cargo and existing personal kit. Durable gameplay access replaces any need for editor grants; existing accounts retain their current ships and inventory. Native pilot controls still require the occupied valid station. Exact HTTPS bytes and unchanged normal database identity/stable records were verified after activation. Isolated ordinary-account normal UI and actual managed process-restart persistence passed; final fresh public first-character browser acceptance is in progress. See [the native starter release record](handoffs/native_starter_release_20260910.md) for exact artifacts, backup and limits. This does not yet convert existing ships or complete arbitrary Shipyard refits.
+
+### Current refit, native airlock and loading release — 2026-09-10
+
+Installed client `f9e323997ab7319a1ec52b76cc703eb40c7d8813119977432c64d272a0d0ec67`, entry `/assets/index-DoFJkM_-.js`, pairs with additive world `2ade8d75a75f75e5d555c8f2c3a666c69c736300dff13611dd7964ea6984ac8c`. Existing eligible ships now have an explicit conserved refit action and mounted fuel-container transfer. The loading cover waits for complete accepted geometry and a ready frame; a failed initial asset load stops hidden rendering and exposes retry. No account is automatically refitted. Exact public entry bytes, installed client tree, actual module bytes and normal database identity were verified after activation; all stable character/inventory/container records were conserved. Final public browser review is in progress. See [the exact release and recovery record](handoffs/refit_airlock_release_20260910.md); historical releases above remain preserved.
 
 ## Verification and recovery
 
