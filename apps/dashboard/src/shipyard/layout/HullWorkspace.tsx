@@ -1,3 +1,4 @@
+import type { ViewState } from "./state";
 import { PINNED_FLOOR_KIT } from "@sidereal/sim/construction-transactions";
 import type { SharedLayoutViewport } from "./viewport-state";
 import type { RefObject } from "react";
@@ -41,6 +42,8 @@ type Handle = ReturnType<
 >;
 interface Props {
   sharedViewport?: RefObject<SharedLayoutViewport>;
+  layers?: ViewState["layers"];
+  onLayersChange?: (layers: ViewState["layers"]) => void;
   grid?: number;
   onGridChange?: (value: number) => void;
   initialSelection?: string;
@@ -63,7 +66,7 @@ export default function HullWorkspace(props: Props) {
     [assetId, setAsset] = useState(""),
     [tool, setTool] = useState<HullViewState["tool"]>("select"),
     [category, setCategory] = useState<PartCategory | "all">(
-      props.mode === "Objects" ? "equipment" : "wall",
+      props.mode === "Objects" ? "equipment" : "superstructure",
     ),
     [search, setSearch] = useState(""),
     [height, setHeight] = useState(0),
@@ -78,6 +81,26 @@ export default function HullWorkspace(props: Props) {
       ),
     ),
     [library, setLibrary] = useState<"current" | "all">("current");
+  const categoryLayer: Record<PartCategory, keyof ViewState["layers"]> = {
+    floor: "floor",
+    wall: "walls",
+    roof: "roof",
+    superstructure: "exteriorHull",
+    engine: "exteriorHull",
+    equipment: "objects",
+    cargo: "objects",
+    decoration: "objects",
+  };
+  useEffect(() => {
+    if (props.layers)
+      setVisible(
+        new Set(
+          PART_CATEGORIES.filter(
+            (c) => props.layers?.[categoryLayer[c]] !== false,
+          ),
+        ),
+      );
+  }, [props.mode]);
   const canvas = useRef<HTMLCanvasElement>(null),
     viewport = useRef<Handle | null>(null),
     latest = useRef(props),
@@ -98,7 +121,7 @@ export default function HullWorkspace(props: Props) {
     if (props.grid !== undefined) setSnap(props.grid);
   }, [props.grid]);
   useEffect(() => {
-    setCategory(props.mode === "Objects" ? "equipment" : "wall");
+    setCategory(props.mode === "Objects" ? "equipment" : "superstructure");
     setSearch("");
   }, [props.mode]);
 
@@ -120,7 +143,14 @@ export default function HullWorkspace(props: Props) {
         : { parts: [], unmatched: [] },
     [doc, catalog, props.deckId, visible],
   );
-  const contextOnly = new Set(nativeFloors.parts.map((p) => p.id));
+  const structural = (id: string) => {
+    const category = catalog?.assets.find((a) => a.id === id)?.category;
+    return category === "floor" || category === "wall" || category === "roof";
+  };
+  const contextOnly = new Set([
+    ...nativeFloors.parts.map((p) => p.id),
+    ...parts.filter((p) => structural(p.assetId)).map((p) => p.id),
+  ]);
   const previewParts = [...parts, ...nativeFloors.parts];
   const unmatched = new Set(nativeFloors.unmatched);
   const floorGuide = props.result
@@ -166,11 +196,17 @@ export default function HullWorkspace(props: Props) {
     floor: floorGuide,
   };
   function mutate(part: PartPlacement) {
-    if (blocked || !catalog) return;
+    if (blocked || !catalog || structural(part.assetId)) return;
     commit((d) => editVisualPart(d, part, catalog));
   }
   function add(id: string, p: [number, number, number]) {
-    if (blocked || !catalog || !catalog.assets.some((a) => a.id === id)) return;
+    if (
+      blocked ||
+      !catalog ||
+      structural(id) ||
+      !catalog.assets.some((a) => a.id === id)
+    )
+      return;
     const placement: PartPlacement = {
       id: uuid(),
       assetId: id,
@@ -201,6 +237,7 @@ export default function HullWorkspace(props: Props) {
     ],
   ) {
     if (blocked || !catalog) return;
+    if (structural(part.assetId)) return;
     const copy = { ...structuredClone(part), id: uuid(), position };
     commit((d) => {
       const existing = d.fittings.find((f) => f.id === part.id);
@@ -229,7 +266,7 @@ export default function HullWorkspace(props: Props) {
     select(copy.id);
   }
   function copySelected() {
-    if (!selected) return;
+    if (!selected || structural(selected.assetId)) return;
     clipboard.current = {
       part: structuredClone(selected),
       fitting: structuredClone(doc.fittings.find((f) => f.id === selected.id)),
@@ -240,6 +277,7 @@ export default function HullWorkspace(props: Props) {
   function paste() {
     if (blocked || !catalog || !clipboard.current) return;
     const saved = clipboard.current;
+    if (structural(saved.part.assetId)) return;
     saved.count++;
     const copy = {
       ...structuredClone(saved.part),
@@ -277,7 +315,7 @@ export default function HullWorkspace(props: Props) {
     setTool("select");
   }
   function remove() {
-    if (blocked) return;
+    if (blocked || !selected || structural(selected.assetId)) return;
     commit((d) => {
       if (d.assembly)
         d.assembly.parts = d.assembly.parts.filter((p) => p.id !== selection);
@@ -449,6 +487,7 @@ export default function HullWorkspace(props: Props) {
     catalog?.assets
       .filter(
         (a) =>
+          !structural(a.id) &&
           (category === "all" || a.category === category) &&
           a.label.toLowerCase().includes(search.toLowerCase()) &&
           (library === "all" || currentIds.has(a.id) || !!a.visual),
@@ -507,7 +546,9 @@ export default function HullWorkspace(props: Props) {
             onChange={(e) => setCategory(e.target.value as typeof category)}
           >
             <option value="all">All components</option>
-            {PART_CATEGORIES.map((c) => (
+            {PART_CATEGORIES.filter(
+              (c) => !["floor", "wall", "roof"].includes(c),
+            ).map((c) => (
               <option key={c} value={c}>
                 {c}
               </option>
@@ -801,7 +842,7 @@ export default function HullWorkspace(props: Props) {
           </>
         ) : (
           <p className="layout-note">
-            Select any panel, floor, engine or fitting in the viewport or
+            Select equipment, engines or exterior armor in the viewport or
             component list. Drag to move; Ctrl-drag to duplicate.
           </p>
         )}
@@ -823,40 +864,48 @@ export default function HullWorkspace(props: Props) {
                 type="checkbox"
                 aria-label={`Show ${c} components`}
                 checked={visible.has(c)}
-                onChange={() =>
-                  setVisible((v) => {
-                    const s = new Set(v);
-                    s.has(c) ? s.delete(c) : s.add(c);
-                    return s;
-                  })
-                }
+                onChange={() => {
+                  const next = new Set(visible);
+                  next.has(c) ? next.delete(c) : next.add(c);
+                  setVisible(next);
+                  if (props.layers)
+                    props.onLayersChange?.({
+                      ...props.layers,
+                      [categoryLayer[c]]: next.has(c),
+                    });
+                }}
               />
               {c}
             </label>
           ))}
         </div>
-        <h3>Placed components ({parts.length})</h3>
+        <h3>
+          Placed components (
+          {parts.filter((p) => !contextOnly.has(p.id)).length})
+        </h3>
         <div className="hull-components">
-          {parts.map((p) => (
-            <button
-              key={p.id}
-              aria-label={`Select component ${p.id}`}
-              aria-pressed={selection === p.id}
-              onClick={(event) => {
-                select(p.id);
-                setTool("select");
-                event.currentTarget
-                  .closest(".hull-inspector")
-                  ?.scrollTo({ top: 0 });
-              }}
-            >
-              <span>
-                {catalog?.assets.find((a) => a.id === p.assetId)?.label ??
-                  p.assetId}
-              </span>
-              <small>{p.id}</small>
-            </button>
-          ))}
+          {parts
+            .filter((p) => !contextOnly.has(p.id))
+            .map((p) => (
+              <button
+                key={p.id}
+                aria-label={`Select component ${p.id}`}
+                aria-pressed={selection === p.id}
+                onClick={(event) => {
+                  select(p.id);
+                  setTool("select");
+                  event.currentTarget
+                    .closest(".hull-inspector")
+                    ?.scrollTo({ top: 0 });
+                }}
+              >
+                <span>
+                  {catalog?.assets.find((a) => a.id === p.assetId)?.label ??
+                    p.assetId}
+                </span>
+                <small>{p.id}</small>
+              </button>
+            ))}
         </div>
         <p className="layout-note">
           Visual assembly only. Floor topology, collision and live installation

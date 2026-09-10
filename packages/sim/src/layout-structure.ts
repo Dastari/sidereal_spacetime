@@ -708,7 +708,8 @@ function edit(
   change(next);
   const result = compileLayout(next),
     errors = result.diagnostics.filter((d) => d.severity === "error");
-  if (errors.length) throw new Error(errors.map((d) => d.message).join(" "));
+  if (errors.length)
+    throw new Error([...new Set(errors.map((d) => d.message))].join(" "));
   return next;
 }
 export function setHullEnvelope(

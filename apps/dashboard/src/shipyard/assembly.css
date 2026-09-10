@@ -1,12 +1,5 @@
 .assembly-editor {
-  background-color: #dce4e8;
-  background-image: conic-gradient(
-    #eaf0f2 25%,
-    transparent 0 50%,
-    #eaf0f2 0 75%,
-    transparent 0
-  );
-  background-size: 24px 24px;
+  background: var(--creator-canvas);
   position: relative;
   min-height: 600px;
 }
@@ -14,7 +7,7 @@
   position: absolute;
   top: 22px;
   left: 28px;
-  color: #223847;
+  color: var(--text);
   pointer-events: none;
 }
 .assembly-title h1 {
@@ -23,7 +16,7 @@
 }
 .assembly-title span {
   font-size: 13px;
-  color: #526975;
+  color: var(--muted);
 }
 .assembly-tools {
   position: absolute;
@@ -32,13 +25,13 @@
   display: flex;
   flex-direction: column;
   padding: 5px;
-  background: #eff4f5;
-  border: 1px solid #a9bac4;
+  background: var(--creator-surface);
+  border: 1px solid var(--line);
   border-radius: 5px;
   gap: 3px;
 }
 .assembly-tools .tool-button {
-  color: #314c5c;
+  color: var(--text);
 }
 .assembly-tools .tool-button:disabled {
   opacity: 0.35;
@@ -57,11 +50,11 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  background: #f5f8f8;
-  border: 1px solid #9eafb9;
+  background: var(--creator-surface);
+  border: 1px solid var(--line);
   border-radius: 6px;
   box-shadow: 0 5px 22px #0b25362a;
-  color: #223847;
+  color: var(--text);
 }
 .palette-grip {
   display: flex;
@@ -70,20 +63,20 @@
   cursor: grab;
   touch-action: none;
   user-select: none;
-  border-bottom: 1px solid #bdcbd1;
+  border-bottom: 1px solid var(--line);
 }
 .palette-grip span {
   margin-left: auto;
   font-size: 10px;
-  color: #657f8c;
+  color: var(--muted);
 }
 .assembly-palette select {
   margin: 7px;
   width: calc(100% - 14px);
   padding: 5px;
-  background: white;
-  color: #29434f;
-  border: 1px solid #becbd2;
+  background: var(--creator-input);
+  color: var(--text);
+  border: 1px solid var(--line);
 }
 .part-icon-grid {
   overflow: auto;
@@ -98,16 +91,16 @@
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  background: #e4ecef;
-  color: #314d5e;
-  border: 1px solid #bccbd2;
+  background: var(--creator-raised);
+  color: var(--text);
+  border: 1px solid var(--line);
   border-radius: 3px;
   padding: 7px 2px;
   min-width: 0;
 }
 .part-icon-grid button:hover {
-  background: #d1e8ee;
-  border-color: #438799;
+  background: var(--creator-hover);
+  border-color: var(--accent);
 }
 .part-icon-grid span {
   font-size: 9px;
@@ -127,11 +120,11 @@
   width: 15px;
   height: 15px;
   margin: 0;
-  accent-color: #6cc8cd;
+  accent-color: var(--accent);
 }
 .assembly-layer span {
   margin-left: auto;
-  color: #8099a6;
+  color: var(--muted);
 }
 .part-position {
   display: grid;
@@ -151,7 +144,7 @@
   display: block;
   font-size: 10px;
   overflow-wrap: anywhere;
-  color: #7e9ba8;
+  color: var(--muted);
   margin-top: 6px;
 }
 .assembly-error {
@@ -167,13 +160,13 @@
   gap: 12px;
 }
 .assembly-editor .view-footer {
-  color: #405966;
+  color: var(--muted);
 }
 .assembly-editor canvas {
   touch-action: none;
 }
 .assembly-editor canvas:focus-visible {
-  outline: 2px solid #4095a7;
+  outline: 2px solid var(--accent);
   outline-offset: -2px;
 }
 @media (max-width: 800px) {

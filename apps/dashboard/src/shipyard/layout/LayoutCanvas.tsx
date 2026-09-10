@@ -1,3 +1,5 @@
+import { systemsFootprints } from "./systems-footprints";
+import { layoutPreviewPolicy } from "./editor-mode-policy";
 import { PINNED_FLOOR_KIT } from "@sidereal/sim/construction-transactions";
 import type { SharedLayoutViewport } from "./viewport-state";
 import type { RefObject } from "react";
@@ -159,6 +161,7 @@ export default function LayoutCanvas(props: Props) {
             p.view.projection,
             p.catalog,
             p.view.layers.floor,
+            layoutPreviewPolicy(p.view),
           );
       })
       .catch((e) =>
@@ -188,6 +191,7 @@ export default function LayoutCanvas(props: Props) {
         view.projection,
         props.catalog,
         view.layers.floor,
+        layoutPreviewPolicy(view),
       );
   }, [
     doc,
@@ -195,6 +199,10 @@ export default function LayoutCanvas(props: Props) {
     view.deckId,
     view.layers.roof,
     view.layers.floor,
+    view.layers.walls,
+    view.layers.objects,
+    view.layers.exteriorHull,
+    view.mode,
     view.projection,
     props.catalog,
   ]);
@@ -382,7 +390,7 @@ export default function LayoutCanvas(props: Props) {
                 ? "#425a68"
                 : "url(#layout-deck-surface)"
           }
-          fillOpacity={doc.assembly ? 0.16 : 1}
+          fillOpacity={doc.assembly && view.mode !== "Systems" ? 0.16 : 1}
           stroke={selection.includes(t.id) ? "#45d8f5" : "#7793a0"}
           strokeWidth={
             selection.includes(t.id)
@@ -538,6 +546,28 @@ export default function LayoutCanvas(props: Props) {
             fill="url(#layout-grid-major)"
           />
           <g transform="scale(1,-1)">
+            {doc.structure && (
+              <g pointerEvents="none" aria-label="Hull size boundary">
+                <rect
+                  x={doc.structure.hull.origin[0]}
+                  y={doc.structure.hull.origin[1]}
+                  width={doc.structure.hull.width}
+                  height={doc.structure.hull.length}
+                  fill="none"
+                  stroke="#36c8f4"
+                  strokeDasharray="8 5"
+                  strokeWidth="1.5"
+                />
+                <text
+                  transform={`translate(${doc.structure.hull.origin[0]},${doc.structure.hull.origin[1] - 10}) scale(1,-1)`}
+                  fill="#36c8f4"
+                  fontSize="9"
+                >
+                  {doc.structure.hull.name} · {doc.structure.hull.width / 32} ×{" "}
+                  {doc.structure.hull.length / 32} m
+                </text>
+              </g>
+            )}
             {floorGeometry}
             {(view.mode === "Rooms" || view.mode === "Objects") &&
               rooms.map((room, i) => (
@@ -577,12 +607,7 @@ export default function LayoutCanvas(props: Props) {
               ))}
             {view.layers.walls &&
               walls.map((w) => (
-                <g
-                  key={w.key}
-                  data-entity={
-                    w.source === "partition" ? w.anchorId : undefined
-                  }
-                >
+                <g key={w.key} data-entity={w.anchorId}>
                   <line
                     x1={w.a[0]}
                     y1={w.a[1]}
@@ -637,8 +662,10 @@ export default function LayoutCanvas(props: Props) {
             {doc.openings
               .filter((o) => o.deckId === view.deckId)
               .map((o) => {
-                const horizontal = o.a[1] === o.b[1],
-                  mid: Point = [(o.a[0] + o.b[0]) / 2, (o.a[1] + o.b[1]) / 2],
+                const width = Math.hypot(o.b[0] - o.a[0], o.b[1] - o.a[1]),
+                  angle =
+                    (Math.atan2(o.b[1] - o.a[1], o.b[0] - o.a[0]) * 180) /
+                    Math.PI,
                   selected = selection.includes(o.id);
                 return (
                   <g key={o.id} data-entity={o.id}>
@@ -651,45 +678,30 @@ export default function LayoutCanvas(props: Props) {
                       strokeWidth="6"
                     />
                     {(view.mode === "Rooms" || selected) && (
-                      <>
+                      <g
+                        transform={`translate(${o.a[0]},${o.a[1]}) rotate(${angle})`}
+                        pointerEvents="none"
+                      >
                         <rect
-                          x={
-                            horizontal
-                              ? Math.min(o.a[0], o.b[0])
-                              : mid[0] - o.clearance
-                          }
-                          y={
-                            horizontal
-                              ? mid[1] - o.clearance
-                              : Math.min(o.a[1], o.b[1])
-                          }
-                          width={
-                            horizontal
-                              ? Math.abs(o.b[0] - o.a[0])
-                              : o.clearance * 2
-                          }
-                          height={
-                            horizontal
-                              ? o.clearance * 2
-                              : Math.abs(o.b[1] - o.a[1])
-                          }
-                          fill="#f4b95f"
-                          fillOpacity=".09"
-                          stroke="#f4b95f"
+                          x="0"
+                          y={-o.clearance}
+                          width={width}
+                          height={o.clearance * 2}
+                          fill="#e9b769"
+                          fillOpacity=".08"
+                          stroke="#e9b769"
                           strokeWidth=".7"
                           strokeDasharray="3 3"
                         />
-                        <path
-                          d={
-                            horizontal
-                              ? `M${o.a[0]},${o.a[1]} l0,32 a32,32 0 0 0 32,-32`
-                              : `M${o.a[0]},${o.a[1]} l32,0 a32,32 0 0 1 -32,32`
-                          }
-                          fill="none"
-                          stroke="#f4b95f"
-                          strokeWidth="1"
-                        />
-                      </>
+                        {o.kind !== "passage" && (
+                          <path
+                            d={`M0,0 L0,${width} A${width},${width} 0 0 0 ${width},0`}
+                            fill="none"
+                            stroke="#e9b769"
+                            strokeWidth="1"
+                          />
+                        )}
+                      </g>
                     )}
                   </g>
                 );
@@ -714,7 +726,43 @@ export default function LayoutCanvas(props: Props) {
                     pointerEvents="none"
                   />
                 ))}
+            {view.mode === "Systems" &&
+              view.layers.objects &&
+              props.catalog &&
+              systemsFootprints(doc, props.catalog, view.deckId).map((f) => (
+                <g key={`system-${f.id}`} data-entity={f.id}>
+                  <polygon
+                    points={path(f.polygon)}
+                    fill="#081923"
+                    fillOpacity="0.88"
+                    stroke={selection.includes(f.id) ? "#36c8f4" : "#7395a6"}
+                    strokeWidth="1.5"
+                  />
+                  <text
+                    transform={`translate(${f.center[0]},${f.center[1]}) scale(1,-1)`}
+                    textAnchor="middle"
+                    dominantBaseline="middle"
+                    fontSize="14"
+                    fill="#e4eff7"
+                    paintOrder="stroke"
+                    stroke="#081923"
+                    strokeWidth="2"
+                  >
+                    <title>{f.name}</title>
+                    {f.name
+                      .replace(/^(equipment|room)\s+/i, "")
+                      .match(/.{1,18}(?:\s|$)|.{1,18}/g)
+                      ?.slice(0, 2)
+                      .map((line, i) => (
+                        <tspan key={i} x="0" dy={i ? 15 : -3}>
+                          {line.trim()}
+                        </tspan>
+                      ))}
+                  </text>
+                </g>
+              ))}
             {view.layers.objects &&
+              view.mode !== "Systems" &&
               doc.fittings
                 .filter((f) => f.deckId === view.deckId)
                 .map((f) => (

@@ -1,3 +1,9 @@
+import { enterEditorMode, enterStructuralTool } from "./editor-mode-policy";
+import { placeStructuralOpening } from "./structural-edits";
+import {
+  assertHullEnvelopeFits,
+  structuralPartitionSupported,
+} from "@sidereal/sim/layout-structure";
 import { wallEdgeSpan } from "./wall-edge-placement";
 import type { SharedLayoutViewport } from "./viewport-state";
 import wayfarerTemplate from "./templates/wayfarer-r001.json";
@@ -127,7 +133,11 @@ export default function LayoutEditor() {
     !!(doc && catalog && assemblyMismatches(doc, catalog).length);
   function commit(change: (d: LayoutDocument) => LayoutDocument) {
     if (blocked) return;
-    editor.commit(change);
+    editor.commit((current) => {
+      const next = change(current);
+      assertHullEnvelopeFits(next);
+      return next;
+    });
   }
   const sharedViewport = useRef<SharedLayoutViewport>({});
   const input = useRef<HTMLInputElement>(null),
@@ -301,7 +311,7 @@ export default function LayoutEditor() {
   const updateView = (change: Partial<ViewState>) =>
     setView({ ...view, ...change });
   function mode(value: ViewState["mode"]) {
-    updateView({ mode: value });
+    setView((current) => enterEditorMode(current, value));
     setTool("select");
     setSearch("");
     select([]);
@@ -373,7 +383,18 @@ export default function LayoutEditor() {
     }
     if (g.tool === "partition") {
       if (samePoint(g.start, g.end)) return;
-      if (!result || !wallEdgeSpan(result.edges, deckId, g.start, g.end)) {
+      if (
+        !result ||
+        !(doc.structure
+          ? structuralPartitionSupported(doc, result, {
+              id: "preview",
+              deckId,
+              a: g.start,
+              b: g.end,
+              seal: "design-sealed",
+            })
+          : wallEdgeSpan(result.edges, deckId, g.start, g.end))
+      ) {
         editor.setError(
           "Walls must follow connected shared floor edges. Drag along the grid lines between floor tiles; tile centres and unsupported spans cannot hold walls.",
         );
@@ -391,49 +412,41 @@ export default function LayoutEditor() {
       return;
     }
     if (g.tool === "door") {
-      const partition =
-        doc.partitions.find((p) => p.id === g.entityId) ??
-        doc.partitions.find(
-          (p) => p.deckId === deckId && onSegment(g.end, p.a, p.b),
+      if (!doc.structure || !result) {
+        editor.setError(
+          "Choose a hull size in Structure before placing doors.",
         );
-      if (!partition) {
-        editor.setError("Click an existing partition to reserve an opening.");
         return;
       }
-      const axis = partition.a[0] === partition.b[0] ? 1 : 0,
-        from = Math.max(
-          Math.min(partition.a[axis], partition.b[axis]),
-          Math.min(
-            g.end[axis] - 16,
-            Math.max(partition.a[axis], partition.b[axis]) - 32,
-          ),
-        );
-      const a: Point = [...g.end],
-        b: Point = [...g.end];
-      a[axis] = from;
-      b[axis] = from + 32;
-      a[1 - axis] = partition.a[1 - axis];
-      b[1 - axis] = partition.a[1 - axis];
+      const wall = result.structure?.walls.find(
+        (w) =>
+          w.deckId === deckId &&
+          (w.anchorId === g.entityId ||
+            w.id === g.entityId ||
+            onSegment(g.end, w.a, w.b)),
+      );
+      if (!wall) {
+        editor.setError("Choose an interior or exterior wall to place a door.");
+        return;
+      }
       const id = uuid();
-      commit((d) => ({
-        ...d,
-        openings: [
-          ...d.openings,
-          {
-            id,
-            deckId,
-            partitionId: partition.id,
-            a,
-            b,
-            kind: "door",
-            clearance: 32,
-            sill: 0,
-          },
-        ],
-      }));
-      select([id]);
+      try {
+        const next = placeStructuralOpening(
+          doc,
+          result,
+          wall.anchorId,
+          g.end,
+          editor.structuralTools,
+          id,
+        );
+        commit(() => next);
+        select([id]);
+      } catch (e) {
+        editor.setError(String(e));
+      }
       return;
     }
+
     if (g.tool === "room") {
       const id = uuid();
       commit((d) => ({
@@ -635,7 +648,11 @@ export default function LayoutEditor() {
     shape,
     setShape,
     tool,
-    setTool,
+    setTool: (next) => {
+      if (["stamp", "fill", "partition", "door", "hole"].includes(next))
+        setView((current) => enterStructuralTool(current));
+      setTool(next);
+    },
     roomType,
     setRoomType,
     channel,
@@ -651,6 +668,9 @@ export default function LayoutEditor() {
     selectedTile,
     selectedRoom,
     selectedPartition,
+    selectedWallKey: result?.walls.find(
+      (w) => selection.includes(w.anchorId) || selection.includes(w.key),
+    )?.anchorId,
     selectedOpening,
     selectedFitting,
     selectedRoute,
@@ -744,26 +764,34 @@ export default function LayoutEditor() {
           />
         </div>
       </div>
-      <div className="layout-legacy">
-        <button
-          onClick={inspectWayfarer}
-          disabled={editor.blocked}
-          title={
-            editor.blocked
-              ? "Resolve or export the current recovery/conflict first"
-              : "Preserve this draft and open a separate editable copy of the current game source template"
-          }
-        >
-          <Search size={16} /> Inspect current Wayfarer template
-        </button>
-        <span>
+      <details className="layout-source-context">
+        <summary>
           {fromCurrentWayfarer
-            ? `Source: Wayfarer template r001 · ${WAYFARER_TEMPLATE_HASH.slice(0, 12)}. Separate editable local draft.`
-            : "Open the current game source template in Objects/3D; your current draft is preserved."}{" "}
-          This is not a live ship capture. Saved game changes and additional
-          fuel attachments are not included.
-        </span>
-      </div>
+            ? "Wayfarer template · editable local copy"
+            : "Templates and source"}{" "}
+          <span>Local draft · saved game is unchanged</span>
+        </summary>
+        <div className="layout-legacy">
+          <button
+            onClick={inspectWayfarer}
+            disabled={editor.blocked}
+            title={
+              editor.blocked
+                ? "Resolve or export the current recovery/conflict first"
+                : "Preserve this draft and open a separate editable copy of the current game source template"
+            }
+          >
+            <Search size={16} /> Inspect current Wayfarer template
+          </button>
+          <span>
+            {fromCurrentWayfarer
+              ? `Source: Wayfarer template r001 · ${WAYFARER_TEMPLATE_HASH.slice(0, 12)}. Separate editable local draft.`
+              : "Open the current game source template in Objects/3D; your current draft is preserved."}{" "}
+            This is not a live ship capture. Saved game changes and additional
+            fuel attachments are not included.
+          </span>
+        </div>
+      </details>
       {(editor.error || editor.recovery || editor.conflict) && (
         <div className="layout-alert" role="alert">
           <span>{editor.error}</span>
@@ -802,6 +830,8 @@ export default function LayoutEditor() {
       {(view.mode === "Hull" || view.mode === "Objects") && doc ? (
         <HullWorkspace
           sharedViewport={sharedViewport}
+          layers={view.layers}
+          onLayersChange={(layers) => updateView({ layers })}
           grid={view.grid / 32}
           onGridChange={(grid) => updateView({ grid: grid * 32 })}
           initialRoofVisible={

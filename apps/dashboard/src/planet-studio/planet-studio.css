@@ -4,7 +4,7 @@
   flex: 1;
   min-width: 0;
   min-height: 0;
-  background: #080e20;
+  background: var(--creator-canvas);
 }
 .planet-view {
   position: relative;
@@ -38,13 +38,13 @@
 }
 .planet-heading p {
   margin: 2px 0;
-  color: #b7c8de;
+  color: var(--muted);
 }
 .planet-controls {
-  background: #111c2e;
+  background: var(--creator-surface);
   padding: 20px;
   overflow: auto;
-  border-left: 1px solid #314760;
+  border-left: 1px solid var(--line);
 }
 .planet-controls h2 {
   margin: 0 0 16px;
@@ -54,28 +54,28 @@
   display: grid;
   gap: 6px;
   margin-bottom: 14px;
-  color: #c9d5e5;
+  color: var(--text);
   font-size: 14px;
 }
 .planet-controls select,
 .planet-controls input[type="number"] {
   width: 100%;
-  background: #091427;
-  border: 1px solid #405773;
+  background: var(--creator-input);
+  border: 1px solid var(--line);
   border-radius: 4px;
   padding: 8px;
-  color: #edf5ff;
+  color: var(--text);
 }
 .planet-range span {
   display: flex;
   justify-content: space-between;
 }
 .planet-range output {
-  color: #a4ccf5;
+  color: var(--accent);
 }
 .planet-range input {
   width: 100%;
-  accent-color: #75baff;
+  accent-color: var(--accent);
 }
 .planet-seed-actions {
   display: flex;
@@ -103,7 +103,7 @@
 .planet-palette legend {
   padding: 0;
   margin-bottom: 8px;
-  color: #c9d5e5;
+  color: var(--text);
   font-size: 14px;
 }
 .planet-palette input {
@@ -123,7 +123,7 @@
   justify-content: space-between;
   gap: 12px;
   font-size: 12px;
-  color: #c4d1e7;
+  color: var(--muted);
   pointer-events: none;
 }
 .planet-family-key {
@@ -136,7 +136,7 @@
   gap: 8px;
 }
 .planet-family-key button {
-  border: 1px solid #405773;
+  border: 1px solid var(--line);
   background: #14223cd9;
   color: #dcecff;
   padding: 8px;
@@ -146,7 +146,7 @@
 .planet-controls :focus-visible,
 .planet-heading button:focus-visible,
 .planet-family-key button:focus-visible {
-  outline: 2px solid #8acbff;
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 @media (max-width: 900px) {
@@ -197,9 +197,9 @@
   max-width: 100%;
 }
 .planet-import input::file-selector-button {
-  background: #243b58;
-  border: 1px solid #52718e;
-  color: #edf5ff;
+  background: var(--creator-raised);
+  border: 1px solid var(--line);
+  color: var(--text);
   border-radius: 4px;
   padding: 6px;
   cursor: pointer;
