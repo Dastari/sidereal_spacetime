@@ -48,3 +48,21 @@ test("any animated, mutable or unclassified shared use keeps the original materi
   expect(meshes.every(mesh=>mesh.material===material)).toBe(true);
   owner.dispose();for(const mesh of meshes)mesh.subMeshes[0].setEffect(null);scene.dispose();engine.dispose();
 });
+
+
+test("instances use the source shader readiness even when the prototype is outside the scene mesh list", () => {
+  const engine=new NullEngine(),scene=new Scene(engine),material=new StandardMaterial("instanced",scene);
+  const source=CreateBox("prototype",{},scene);source.material=material;source.metadata={role:"hull"};scene.removeMesh(source);
+  const instance=source.createInstance("placed");instance.metadata={role:"hull",partId:"placed"};
+  const defines=new MaterialDefines();defines.markAsProcessed();source.subMeshes[0].setEffect({isReady:()=>true} as Effect,defines);
+  const owner=createStaticMaterialFreeze(scene);
+  owner.prepare();scene.onBeforeRenderObservable.notifyObservers(scene);scene.onAfterRenderObservable.notifyObservers(scene);
+  expect(instance.subMeshes[0].effect).toBeFalsy();expect(material.isFrozen).toBe(true);
+  scene.lightsEnabled=false;
+  // The engine does not visit a detached source's shader during this setter.
+  expect(defines.isDirty).toBe(false);
+  scene.onBeforeRenderObservable.notifyObservers(scene);expect(material.isFrozen).toBe(false);
+  expect(defines.isDirty).toBe(true);expect(source.subMeshes[0]._drawWrapper._forceRebindOnNextCall).toBe(true);
+  expect(instance.material).toBe(source.material);expect(instance.metadata.partId).toBe("placed");
+  owner.dispose();source.subMeshes[0].setEffect(null);source.dispose();scene.dispose();engine.dispose();
+});

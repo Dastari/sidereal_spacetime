@@ -1,0 +1,22 @@
+
+> sidereal-spacetime@0.1.0 check
+> npm run typecheck && npm test && python3 scripts/check_docs.py
+
+
+> sidereal-spacetime@0.1.0 typecheck
+> tsc --noEmit
+
+
+> sidereal-spacetime@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.11 /root/sidereal_spacetime
+
+
+ Test Files  265 passed (265)
+      Tests  1518 passed (1518)
+   Start at  23:07:42
+   Duration  20.23s (transform 10.13s, setup 0ms, import 34.84s, tests 79.89s, environment 15ms)
+
+Checked 77 project documents, all legacy document hashes and imported asset provenance.

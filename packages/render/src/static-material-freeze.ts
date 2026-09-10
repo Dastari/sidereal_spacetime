@@ -1,5 +1,7 @@
+import { InstancedMesh } from "@babylonjs/core/Meshes/instancedMesh";
 import type { Scene } from "@babylonjs/core/scene";
 import type { Material } from "@babylonjs/core/Materials/material";
+import type { SubMesh } from "@babylonjs/core/Meshes/subMesh";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { PBRBaseMaterial } from "@babylonjs/core/Materials/PBR/pbrBaseMaterial";
 
@@ -11,10 +13,18 @@ export function invalidateStaticMaterials(scene: Scene) {owners.get(scene)?.inva
 /** Freeze only fully compiled static material uses. A material shared with any
  * animated, switchable or unclassified use remains live. Geometry is untouched. */
 export function createStaticMaterialFreeze(scene: Scene) {
-  const entries=new Map<Material,{epoch:number;eligible:boolean;ready:boolean;used:boolean;dirty:boolean;owned:boolean}>();
+  const entries=new Map<Material,{epoch:number;eligible:boolean;ready:boolean;used:boolean;dirty:boolean;owned:boolean;bindings:Set<SubMesh>}>();
   let epoch=0, disposed=false;
   const sceneValues:unknown[]=[];
-  const invalidate=()=>{for(const [material,entry] of entries) if(entry.owned){material.unfreeze();entry.owned=false;}};
+  const invalidate=()=>{for(const [material,entry] of entries) {
+    if(entry.owned){material.unfreeze();entry.owned=false;}
+    // AssetContainer prototypes can be outside scene.meshes. Babylon's global
+    // material dirty scan then visits instances, but their effects live here.
+    for(const binding of entry.bindings)for(const wrapper of binding._drawWrappers)if(wrapper){
+      if(wrapper.defines && typeof wrapper.defines !== "string")wrapper.defines.markAllAsDirty();
+      wrapper._wasPreviouslyReady=false;wrapper._forceRebindOnNextCall=true;
+    }
+  }};
   const before=scene.onBeforeRenderObservable.add(()=>{
     epoch++;
     const values=[scene.lightsEnabled,scene.shadowsEnabled,scene.texturesEnabled,scene.environmentIntensity,
@@ -28,20 +38,22 @@ export function createStaticMaterialFreeze(scene: Scene) {
       for(const sub of mesh.subMeshes ?? []) {
         const material=sub.getMaterial();if(!material)continue;
         let entry=entries.get(material);
-        if(!entry){entry={epoch:0,eligible:true,ready:true,used:false,dirty:false,owned:false};entries.set(material,entry);}
+        if(!entry){entry={epoch:0,eligible:true,ready:true,used:false,dirty:false,owned:false,bindings:new Set()};entries.set(material,entry);}
         if(entry.epoch!==epoch){
-          entry.epoch=epoch;entry.ready=false;entry.used=false;entry.dirty=false;
+          entry.epoch=epoch;entry.ready=false;entry.used=false;entry.dirty=false;entry.bindings.clear();
           entry.eligible=!!eligible && (material instanceof StandardMaterial || material instanceof PBRBaseMaterial) &&
             !material.animations?.length && !material.metadata?.mutableMaterial &&
             !material.getActiveTextures().some(texture=>texture.animations.length>0 || texture.getClassName()==="VideoTexture");
         }
         entry.eligible &&= !!eligible;
+        const binding=mesh instanceof InstancedMesh ? mesh.sourceMesh.subMeshes[sub._id] ?? sub : sub;
+        if(mesh instanceof InstancedMesh)entry.bindings.add(binding);
         if(mesh.isEnabled() && mesh.isVisible && mesh.visibility>0) {
           entry.used=true;
           // A new/off-screen copy has no ready draw wrapper yet. Babylon still
           // compiles that first use while the shared material is frozen.
-          entry.ready ||= !!sub.effect?.isReady();
-          for(const wrapper of sub._drawWrappers)
+          entry.ready ||= !!binding.effect?.isReady();
+          for(const wrapper of binding._drawWrappers)
             if(wrapper?.defines && typeof wrapper.defines !== "string") entry.dirty ||= wrapper.defines.isDirty;
         }
       }
