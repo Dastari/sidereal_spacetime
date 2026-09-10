@@ -4,6 +4,8 @@ import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
+import { PointLight } from "@babylonjs/core/Lights/pointLight";
+import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { SceneLoader } from "@babylonjs/core/Loading/sceneLoader";
 import { constructionHash } from "@sidereal/sim/construction-transactions";
@@ -14,6 +16,7 @@ import {
   validateStockExteriorManifest,
   loadRemoteShipPrototype,
   STOCK_EXTERIOR_BASE_MESHES,
+  REMOTE_EXTERIOR_BASE_MESHES,
   type RemoteShipStore,
   type RemoteShipPrototype,
 } from "./remote-ships";
@@ -284,13 +287,34 @@ describe("remote ship lifecycle", () => {
             mesh.material = material;
             return mesh;
           });
-        return { meshes, transformNodes: [] } as unknown as Awaited<
-          ReturnType<typeof SceneLoader.ImportMeshAsync>
-        >;
+        return {
+          meshes,
+          transformNodes: [],
+          lights: [
+            new PointLight(
+              "unexpected imported cabin light",
+              Vector3.Zero(),
+              f.scene,
+            ),
+          ],
+        } as unknown as Awaited<ReturnType<typeof SceneLoader.ImportMeshAsync>>;
       });
     try {
       const p = await loadRemoteShipPrototype(f.scene, m, m.assetId);
       expect(importMock).toHaveBeenCalledTimes(14);
+      expect(importMock.mock.calls[0][0]).toEqual([
+        ...REMOTE_EXTERIOR_BASE_MESHES,
+        "GEO-walls",
+        "GEO-cutaway-aft",
+      ]);
+      expect(REMOTE_EXTERIOR_BASE_MESHES).not.toContain("GEO-walls");
+      expect(
+        REMOTE_EXTERIOR_BASE_MESHES.some((n) => n.startsWith("GEO-cutaway-")),
+      ).toBe(false);
+      expect(p.metrics!.outputPrimitives).toBeLessThan(
+        p.metrics!.inputPrimitives,
+      );
+
       const a = p.instantiate("a"),
         b = p.instantiate("b");
       const am = a.getChildMeshes()[0],
@@ -308,7 +332,18 @@ describe("remote ship lifecycle", () => {
               !/GEO-partitions|GEO-deck|storage-container/.test(mesh.name),
           ),
       ).toBe(true);
+      expect(
+        a
+          .getChildMeshes()
+          .flatMap((m) => m.metadata.sourcePlacementIds ?? [])
+          .some((id: string) =>
+            /GEO-walls|GEO-cutaway-|GEO-partitions|GEO-deck/.test(id),
+          ),
+      ).toBe(false);
       a.dispose();
+      expect(
+        b.getChildMeshes().every((m) => !m.isDisposed() && m.material),
+      ).toBe(true);
       b.dispose();
       p.dispose();
     } finally {

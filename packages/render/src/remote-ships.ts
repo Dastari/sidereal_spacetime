@@ -1,6 +1,6 @@
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
-import { Quaternion } from "@babylonjs/core/Maths/math.vector";
+import { Matrix, Vector3, Quaternion } from "@babylonjs/core/Maths/math.vector";
 import {
   SceneLoader,
   type ISceneLoaderAsyncResult,
@@ -14,6 +14,13 @@ import type {
 } from "@sidereal/content/assembly";
 import { constructionHash } from "@sidereal/sim/construction-transactions";
 import { updateHullDecals } from "./hull-decals";
+import {
+  batchOpaqueExterior,
+  type ExteriorPrimitive,
+} from "./remote-exterior-batches";
+import { extractStockAftBoundary } from "./remote-aft-boundary";
+import { cloneOpaqueRemoteGlass } from "./remote-exterior-glass";
+import type { Material } from "@babylonjs/core/Materials/material";
 
 /** Pinned existing public stock artifacts, never a player's private assembly. */
 export const STOCK_EXTERIOR_SOURCE_PINS = Object.freeze({
@@ -46,6 +53,11 @@ export const STOCK_EXTERIOR_BASE_MESHES = Object.freeze([
   "GEO-drives-retro--1",
   "GEO-drives-retro-1",
 ]);
+/** Legacy backing contains cabin linings and fixture geometry. Native exterior
+ * panels supply the remote silhouette; never instantiate the mixed backing. */
+export const REMOTE_EXTERIOR_BASE_MESHES = STOCK_EXTERIOR_BASE_MESHES.filter(
+  (name) => name !== "GEO-walls" && !name.startsWith("GEO-cutaway-"),
+);
 interface ExteriorPlacement {
   id: string;
   url: string;
@@ -167,6 +179,7 @@ export function validateStockExteriorManifest(
     throw Error("Exterior package whitelist mismatch");
 }
 export interface RemoteShipPrototype {
+  readonly metrics?: ReturnType<typeof batchOpaqueExterior>["metrics"];
   instantiate(shipId: string): TransformNode;
   dispose(): void;
 }
@@ -187,10 +200,14 @@ export async function loadRemoteShipPrototype(
   const imports: ISceneLoaderAsyncResult[] = [],
     sources = new Map<string, Mesh[]>(),
     matrices = new Map<Mesh, ReturnType<Mesh["computeWorldMatrix"]>>();
+  const batches: Mesh[] = [];
+  const glassClones = new Map<Material, Material>();
   let disposed = false;
   const dispose = () => {
     if (disposed) return;
     disposed = true;
+    for (const batch of batches) batch.dispose(false, false);
+    for (const material of glassClones.values()) material.dispose(false, false);
     for (const loaded of imports) {
       for (const mesh of loaded.meshes) mesh.dispose(false, true);
       for (const node of loaded.transformNodes) node.dispose();
@@ -214,7 +231,7 @@ export async function loadRemoteShipPrototype(
         throw Error("Exterior GLB hash mismatch: " + url);
       const loaded = await SceneLoader.ImportMeshAsync(
         url === manifest.payload.base.url
-          ? [...manifest.payload.base.meshNames]
+          ? [...REMOTE_EXTERIOR_BASE_MESHES, "GEO-walls", "GEO-cutaway-aft"]
           : "",
         "",
         bytes,
@@ -223,12 +240,25 @@ export async function loadRemoteShipPrototype(
         ".glb",
       );
       imports.push(loaded);
+      // A future published GLB must not add remote cabin lights or animation.
+      for (const light of loaded.lights ?? []) light.dispose();
+      for (const group of loaded.animationGroups ?? []) group.dispose();
+      for (const skeleton of loaded.skeletons ?? []) skeleton.dispose();
       const meshes = loaded.meshes.filter(
         (m): m is Mesh => m instanceof Mesh && m.getTotalVertices() > 0,
       );
       for (const mesh of meshes) {
         // Babylon instances inherit this material/shadow flag from their source.
         mesh.receiveShadows = true;
+        if (mesh.material) {
+          const original = mesh.material;
+          let opaque = glassClones.get(original);
+          if (!opaque) {
+            opaque = cloneOpaqueRemoteGlass(original);
+            if (opaque) glassClones.set(original, opaque);
+          }
+          if (opaque) mesh.material = opaque;
+        }
         matrices.set(mesh, mesh.computeWorldMatrix(true).clone());
       }
       for (const mesh of loaded.meshes) {
@@ -241,13 +271,18 @@ export async function loadRemoteShipPrototype(
     const base = sources
       .get(manifest.payload.base.url)!
       .filter((m) =>
-        manifest.payload.base.meshNames.some((prefix) =>
-          selector(m.name, prefix),
-        ),
+        REMOTE_EXTERIOR_BASE_MESHES.some((prefix) => selector(m.name, prefix)),
       );
-    for (const name of manifest.payload.base.meshNames)
+    for (const name of REMOTE_EXTERIOR_BASE_MESHES)
       if (!base.some((m) => selector(m.name, name)))
         throw Error("Missing exterior shell group: " + name);
+    for (const source of sources.get(manifest.payload.base.url)!) {
+      const boundary = extractStockAftBoundary(source);
+      if (!boundary) continue;
+      batches.push(boundary);
+      matrices.set(boundary, matrices.get(source)!);
+      base.push(boundary);
+    }
     const groups = manifest.payload.placements.map((p) => {
       const selected = sources
         .get(p.url)!
@@ -256,42 +291,56 @@ export async function loadRemoteShipPrototype(
         throw Error("Missing exterior native group: " + p.id);
       return { p, selected };
     });
+    const primitives: ExteriorPrimitive[] = base.map((source) => ({
+      source,
+      matrix: matrices.get(source)!,
+      placementIds: [source.name],
+    }));
+    for (const { p, selected } of groups) {
+      const placement = Matrix.Compose(
+        new Vector3(p.flipped ? -1 : 1, 1, 1),
+        Quaternion.RotationAxis(Vector3.Up(), p.rotation),
+        new Vector3(p.position[0], p.position[2], -p.position[1]),
+      );
+      for (const source of selected)
+        primitives.push({
+          source,
+          matrix: matrices.get(source)!.multiply(placement),
+          placementIds: [p.id],
+        });
+    }
+    const batched = batchOpaqueExterior(scene, primitives);
+    batches.push(...batched.batches);
     return {
       dispose,
+      metrics: batched.metrics,
       instantiate(shipId) {
         if (disposed || scene.isDisposed)
           throw Error("Exterior prototype disposed");
         const root = new TransformNode("remote-ship-" + shipId, scene);
-        const ownedDecals: Mesh[] = [];
-        root.onDisposeObservable.add(() => {
-          for (const decal of ownedDecals) decal.material?.dispose(false, true);
-        });
         root.metadata = {
           remoteShipId: shipId,
           publishedExteriorAssetId: manifest.assetId,
         };
-        const instance = (
-          source: Mesh,
-          parent: TransformNode,
-          name: string,
-        ) => {
-          const mesh = source.createInstance(name);
-          mesh.parent = parent;
-          const q = new Quaternion();
-          matrices.get(source)!.decompose(mesh.scaling, q, mesh.position);
-          mesh.rotationQuaternion = q;
-          mesh.isVisible = true;
-          mesh.isPickable = false;
-          mesh.metadata = {
-            remoteShipId: shipId,
-            publishedExteriorAssetId: manifest.assetId,
-          };
-          return mesh;
-        };
         try {
-          for (const mesh of base)
-            instance(mesh, root, `remote-${shipId}--${mesh.name}`);
-          for (const { p, selected } of groups) {
+          for (const { source, matrix, placementIds } of batched.primitives) {
+            const mesh = source.createInstance(
+              `remote-${shipId}--${source.name}`,
+            );
+            mesh.parent = root;
+            const rotation = new Quaternion();
+            matrix.decompose(mesh.scaling, rotation, mesh.position);
+            mesh.rotationQuaternion = rotation;
+            mesh.isVisible = true;
+            mesh.isPickable = false;
+            mesh.metadata = {
+              remoteShipId: shipId,
+              publishedExteriorAssetId: manifest.assetId,
+              sourcePlacementIds: placementIds,
+            };
+          }
+          for (const { p } of groups) {
+            if (!p.decals?.length) continue;
             const node = new TransformNode(
               `remote-${shipId}--part-${p.id}`,
               scene,
@@ -300,15 +349,13 @@ export async function loadRemoteShipPrototype(
             node.position.set(p.position[0], p.position[2], -p.position[1]);
             node.rotation.y = p.rotation;
             node.scaling.x = p.flipped ? -1 : 1;
-            for (const mesh of selected)
-              instance(mesh, node, `remote-${shipId}--${p.id}--${mesh.name}`);
+            // Decals own reference-counted material cleanup across ship roots.
             for (const mesh of updateHullDecals(
               scene,
               node,
               p.decals,
               p.flipped,
             )) {
-              ownedDecals.push(mesh);
               mesh.isPickable = false;
               mesh.metadata = { ...mesh.metadata, remoteShipId: shipId };
             }
