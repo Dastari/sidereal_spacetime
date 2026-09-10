@@ -1,3 +1,5 @@
+import { snapLayoutPoint } from "./layout-placement-grid";
+import { layoutPlaneMatrix } from "./layout-plane-projection";
 import { updateHullDecals } from "./hull-decals";
 /** Hull authoring viewport. Reuses exported surfaces; never remeshes or publishes art. */
 import "@babylonjs/core/Culling/ray";
@@ -55,8 +57,10 @@ export function createHullViewport(
     move: (id: string, p: [number, number, number], copy: boolean) => void;
     place: (id: string, p: [number, number, number]) => void;
     status: (message: string) => void;
+    viewChanged?: () => void;
   },
   initialCamera?: HullCameraState,
+  initialProjection?: string,
 ) {
   const engine = new Engine(canvas, true, { preserveDrawingBuffer: true }),
     scene = new Scene(engine);
@@ -127,7 +131,7 @@ export function createHullViewport(
   const nodes = new Map<string, { assetId: string; node: TransformNode }>();
   let disposed = false,
     state: HullViewState | undefined,
-    projection = "",
+    projection = initialCamera ? (initialProjection ?? "") : "",
     floor: Mesh | undefined,
     floorKey = "",
     origin = Vector3.Zero();
@@ -146,20 +150,22 @@ export function createHullViewport(
   material.diffuseColor = Color3.FromHexString("#3c6575");
   material.alpha = 0.35;
   material.backFaceCulling = false;
-  const guideLines: Vector3[][] = [];
-  for (let n = -24; n <= 24; n++) {
-    guideLines.push(
-      [new Vector3(n, 0, -24), new Vector3(n, 0, 24)],
-      [new Vector3(-24, 0, n), new Vector3(24, 0, n)],
-    );
+  let gridStep = 1;
+  function buildGrid(step: number) {
+    const lines: Vector3[][] = [];
+    for (let i = -Math.ceil(24 / step); i <= Math.ceil(24 / step); i++) {
+      const n = i * step;
+      lines.push(
+        [new Vector3(n, 0, -24), new Vector3(n, 0, 24)],
+        [new Vector3(-24, 0, n), new Vector3(24, 0, n)],
+      );
+    }
+    const mesh = CreateLineSystem("hull-build-plane", { lines }, scene);
+    mesh.color = new Color3(0.14, 0.31, 0.39);
+    mesh.isPickable = false;
+    return mesh;
   }
-  const grid = CreateLineSystem(
-    "hull-build-plane",
-    { lines: guideLines },
-    scene,
-  );
-  grid.color = new Color3(0.14, 0.31, 0.39);
-  grid.isPickable = false;
+  let grid = buildGrid(gridStep);
   grid.setEnabled(false);
   const ghost = CreateBox("placement-bounds", { size: 1 }, scene);
   const ghostMaterial = new StandardMaterial(
@@ -258,12 +264,10 @@ export function createHullViewport(
       : ray.origin.add(ray.direction.scale(distance));
   }
   function snap(p: Vector3): [number, number, number] {
-    const s = state!.snap;
-    return [
-      Math.round((p.x + origin.x) / s) * s,
-      Math.round((-p.z - origin.z) / s) * s,
-      Math.round((p.y + origin.y) / s) * s,
-    ];
+    return snapLayoutPoint(
+      [p.x + origin.x, -p.z - origin.z, p.y + origin.y],
+      state!.snap,
+    );
   }
   const pick = (e: PointerEvent) => {
     const r = canvas.getBoundingClientRect();
@@ -380,6 +384,15 @@ export function createHullViewport(
     requestRender();
     if (disposed) return;
     state = next;
+    if (
+      next.snap !== gridStep &&
+      Number.isFinite(next.snap) &&
+      next.snap >= 1 / 32
+    ) {
+      grid.dispose();
+      gridStep = next.snap;
+      grid = buildGrid(gridStep);
+    }
     grid.setEnabled(next.tool === "place");
     grid.position.y = next.height - origin.y;
     if (next.tool !== "place") hideGhost();
@@ -399,7 +412,7 @@ export function createHullViewport(
         camera.beta = Math.PI / 2;
         camera.alpha = 0;
       }
-      if (projection === "3D" && !initialCamera) {
+      if (projection === "3D") {
         camera.beta = Math.PI / 3.2;
         camera.alpha = -Math.PI / 2.6;
       }
@@ -494,7 +507,26 @@ export function createHullViewport(
     const placed = [...nodes].filter(
       ([key, e]) => (!id || key === id) && e.node.isEnabled(),
     );
-    if (!placed.length) return;
+    if (!placed.length) {
+      if (state?.floor) {
+        const bounds = state.floor.bounds;
+        camera.target.set(
+          (bounds.min[0] + bounds.max[0]) / 64 - origin.x,
+          state.height - origin.y,
+          -(bounds.min[1] + bounds.max[1]) / 64 - origin.z,
+        );
+        camera.radius = Math.max(
+          3,
+          (Math.hypot(
+            bounds.max[0] - bounds.min[0],
+            bounds.max[1] - bounds.min[1],
+          ) /
+            32) *
+            1.25,
+        );
+      }
+      return;
+    }
     let min = new Vector3(Infinity, Infinity, Infinity),
       max = new Vector3(-Infinity, -Infinity, -Infinity);
     for (const [, e] of placed) {
@@ -513,6 +545,7 @@ export function createHullViewport(
     // camera input consumption and makes otherwise direct dragging feel sticky.
     if (disposed || performance.now() > activeUntil) return;
     scene.render();
+    callbacks.viewChanged?.();
     if (performance.now() - last > 750) {
       last = performance.now();
       canvas.dataset.camera = JSON.stringify(getCamera());
@@ -532,6 +565,48 @@ export function createHullViewport(
     fit,
     cancel,
     getCamera,
+    planeTransform(elevation: number) {
+      camera.getViewMatrix();
+      const matrix = camera
+        .getViewMatrix()
+        .multiply(camera.getProjectionMatrix());
+      return layoutPlaneMatrix(
+        matrix.m,
+        origin.asArray(),
+        elevation,
+        canvas.clientWidth,
+        canvas.clientHeight,
+      );
+    },
+    floorPoint(
+      x: number,
+      y: number,
+      elevation: number,
+    ): [number, number] | null {
+      const hit = point(x, y, elevation - origin.y);
+      return hit ? [(hit.x + origin.x) * 32, (-hit.z - origin.z) * 32] : null;
+    },
+    zoom(delta: number) {
+      camera.radius = Math.max(
+        0.5,
+        Math.min(800, camera.radius * Math.exp(delta * 0.0015)),
+      );
+      requestRender();
+    },
+    orbit(dx: number, dy: number) {
+      camera.alpha -= dx * 0.005;
+      camera.beta = Math.max(
+        0.03,
+        Math.min(Math.PI - 0.03, camera.beta - dy * 0.005),
+      );
+      requestRender();
+    },
+    pan(x: number, y: number, dx: number, dy: number, elevation: number) {
+      const before = point(x - dx, y - dy, elevation - origin.y);
+      const after = point(x, y, elevation - origin.y);
+      if (before && after) camera.target.addInPlace(before.subtract(after));
+      requestRender();
+    },
     dropPoint(x: number, y: number) {
       const p = point(x, y, (state?.height ?? 0) - origin.y);
       return p ? snap(p) : null;

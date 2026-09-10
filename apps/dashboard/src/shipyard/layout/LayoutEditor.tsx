@@ -1,3 +1,5 @@
+import { wallEdgeSpan } from "./wall-edge-placement";
+import type { SharedLayoutViewport } from "./viewport-state";
 import wayfarerTemplate from "./templates/wayfarer-r001.json";
 import {
   WAYFARER_TEMPLATE_HASH,
@@ -127,6 +129,7 @@ export default function LayoutEditor() {
     if (blocked) return;
     editor.commit(change);
   }
+  const sharedViewport = useRef<SharedLayoutViewport>({});
   const input = useRef<HTMLInputElement>(null),
     shell = useRef<HTMLElement>(null);
   useEffect(() => {
@@ -242,8 +245,7 @@ export default function LayoutEditor() {
         return;
       const mod = e.ctrlKey || e.metaKey;
       if (
-        (view.mode === "Hull" ||
-          (view.mode === "Objects" && view.projection !== "Top")) &&
+        (view.mode === "Hull" || view.mode === "Objects") &&
         !(mod && ["s", "z", "y"].includes(e.key.toLowerCase()))
       )
         return;
@@ -299,15 +301,16 @@ export default function LayoutEditor() {
   const updateView = (change: Partial<ViewState>) =>
     setView({ ...view, ...change });
   function mode(value: ViewState["mode"]) {
-    updateView({
-      mode: value,
-      projection: value === "Hull" || value === "Objects" ? "3D" : "Top",
-    });
+    updateView({ mode: value });
     setTool("select");
     setSearch("");
     select([]);
   }
   function fit() {
+    if (sharedViewport.current.actions) {
+      sharedViewport.current.actions.fit();
+      return;
+    }
     if (!result) return;
     updateView({
       camera: {
@@ -370,6 +373,12 @@ export default function LayoutEditor() {
     }
     if (g.tool === "partition") {
       if (samePoint(g.start, g.end)) return;
+      if (!result || !wallEdgeSpan(result.edges, deckId, g.start, g.end)) {
+        editor.setError(
+          "Walls must follow connected shared floor edges. Drag along the grid lines between floor tiles; tile centres and unsupported spans cannot hold walls.",
+        );
+        return;
+      }
       const id = uuid();
       commit((d) => ({
         ...d,
@@ -600,9 +609,7 @@ export default function LayoutEditor() {
         selection.includes(x.id) ? { ...x, ...change } : x,
       ),
     }));
-  const componentMode =
-    view.mode === "Hull" ||
-    (view.mode === "Objects" && view.projection !== "Top");
+  const componentMode = view.mode === "Hull" || view.mode === "Objects";
   const metrics = result
     ? {
         length: (result.bounds.max[0] - result.bounds.min[0]) / 32,
@@ -792,10 +799,11 @@ export default function LayoutEditor() {
           <a href="/shipyard?assembly=legacy">Open assembly editor</a>
         </div>
       )}
-      {(view.mode === "Hull" ||
-        (view.mode === "Objects" && view.projection !== "Top")) &&
-      doc ? (
+      {(view.mode === "Hull" || view.mode === "Objects") && doc ? (
         <HullWorkspace
+          sharedViewport={sharedViewport}
+          grid={view.grid / 32}
+          onGridChange={(grid) => updateView({ grid: grid * 32 })}
           initialRoofVisible={
             inspectCabinet && fromCurrentWayfarer ? false : undefined
           }
@@ -901,28 +909,30 @@ export default function LayoutEditor() {
               {button("Fit floorplan", Focus, fit)}
               <button
                 onClick={() =>
-                  updateView({
-                    camera: {
-                      ...view.camera,
-                      scale: Math.max(0.025, view.camera.scale / 1.2),
-                    },
-                  })
+                  sharedViewport.current.actions
+                    ? sharedViewport.current.actions.zoom(120)
+                    : updateView({
+                        camera: {
+                          ...view.camera,
+                          scale: Math.max(0.025, view.camera.scale / 1.2),
+                        },
+                      })
                 }
                 aria-label="Zoom out"
               >
                 −
               </button>
-              <span className="layout-zoom">
-                {Math.round(view.camera.scale * 100)}%
-              </span>
+              <span className="layout-zoom">Shared view</span>
               <button
                 onClick={() =>
-                  updateView({
-                    camera: {
-                      ...view.camera,
-                      scale: Math.min(6, view.camera.scale * 1.2),
-                    },
-                  })
+                  sharedViewport.current.actions
+                    ? sharedViewport.current.actions.zoom(-120)
+                    : updateView({
+                        camera: {
+                          ...view.camera,
+                          scale: Math.min(6, view.camera.scale * 1.2),
+                        },
+                      })
                 }
                 aria-label="Zoom in"
               >
@@ -935,6 +945,7 @@ export default function LayoutEditor() {
             </div>
             {doc ? (
               <LayoutCanvas
+                sharedViewport={sharedViewport}
                 actions={{
                   copy: () => transform("copy", [64, 0]),
                   rotate: () => transform("rotate"),

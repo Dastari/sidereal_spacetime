@@ -1,3 +1,6 @@
+import { PINNED_FLOOR_KIT } from "@sidereal/sim/construction-transactions";
+import type { SharedLayoutViewport } from "./viewport-state";
+import type { RefObject } from "react";
 import { layoutNativeFloors } from "@sidereal/render/layout-native-floors";
 import { HullDecalPanel } from "../HullDecalPanel";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -37,6 +40,9 @@ type Handle = ReturnType<
   (typeof import("../../../../../packages/render/src/layout-hull"))["createHullViewport"]
 >;
 interface Props {
+  sharedViewport?: RefObject<SharedLayoutViewport>;
+  grid?: number;
+  onGridChange?: (value: number) => void;
   initialSelection?: string;
   initialRoofVisible?: boolean;
   mode: "Hull" | "Objects";
@@ -61,9 +67,8 @@ export default function HullWorkspace(props: Props) {
     ),
     [search, setSearch] = useState(""),
     [height, setHeight] = useState(0),
-    [snap, setSnap] = useState(0.03125),
+    [snap, setSnap] = useState(props.grid ?? 1),
     [status, setStatus] = useState("Loading workbench…"),
-    [loading, setLoading] = useState(false),
     [visible, setVisible] = useState(
       new Set<PartCategory>(
         PART_CATEGORIES.filter(
@@ -76,7 +81,11 @@ export default function HullWorkspace(props: Props) {
   const canvas = useRef<HTMLCanvasElement>(null),
     viewport = useRef<Handle | null>(null),
     latest = useRef(props),
-    camera = useRef<HullCameraState | undefined>(undefined),
+    camera = useRef<HullCameraState | undefined>(
+      props.sharedViewport?.current.documentId === doc.id
+        ? props.sharedViewport.current.camera
+        : undefined,
+    ),
     lastDoc = useRef(doc.id);
   latest.current = props;
   const clipboard = useRef<{
@@ -85,6 +94,9 @@ export default function HullWorkspace(props: Props) {
     count: number;
   } | null>(null);
   const [copiedLabel, setCopiedLabel] = useState("");
+  useEffect(() => {
+    if (props.grid !== undefined) setSnap(props.grid);
+  }, [props.grid]);
   useEffect(() => {
     setCategory(props.mode === "Objects" ? "equipment" : "wall");
     setSearch("");
@@ -122,9 +134,11 @@ export default function HullWorkspace(props: Props) {
     : undefined;
   useEffect(() => {
     setHeight(
-      (doc.decks.find((d) => d.id === props.deckId)?.elevation ?? 0) / 32,
+      ((doc.decks.find((d) => d.id === props.deckId)?.elevation ?? 0) +
+        (props.mode === "Objects" ? PINNED_FLOOR_KIT.datums.floorTop : 0)) /
+        32,
     );
-  }, [props.deckId]);
+  }, [props.deckId, props.mode]);
   const state = useRef<HullViewState>({
     parts: previewParts,
     contextOnly,
@@ -296,10 +310,25 @@ export default function HullWorkspace(props: Props) {
             move: (...args) => callback.current.move(...args),
             place: (...args) => callback.current.place(...args),
             status: setStatus,
+            viewChanged: () => {
+              if (viewport.current && props.sharedViewport) {
+                props.sharedViewport.current.documentId = latest.current.doc.id;
+                props.sharedViewport.current.camera =
+                  viewport.current.getCamera();
+                props.sharedViewport.current.projection =
+                  latest.current.projection;
+              }
+            },
           },
           camera.current,
+          props.sharedViewport?.current.projection,
         );
         viewport.current = v;
+        if (props.sharedViewport)
+          props.sharedViewport.current.actions = {
+            fit: () => v.fit(),
+            zoom: (delta) => v.zoom(delta),
+          };
         v.update(state.current);
         v.ready().then(() => {
           if (!disposed && !camera.current) v.fit();
@@ -313,6 +342,12 @@ export default function HullWorkspace(props: Props) {
       disposed = true;
       if (viewport.current) {
         camera.current = viewport.current.getCamera();
+        if (props.sharedViewport) {
+          props.sharedViewport.current.camera = camera.current;
+          props.sharedViewport.current.documentId = lastDoc.current;
+          props.sharedViewport.current.projection = latest.current.projection;
+          props.sharedViewport.current.actions = undefined;
+        }
         viewport.current.dispose();
         viewport.current = null;
       }
@@ -409,27 +444,6 @@ export default function HullWorkspace(props: Props) {
     window.addEventListener("keydown", key);
     return () => window.removeEventListener("keydown", key);
   });
-  async function loadWayfarer() {
-    if (!catalog || loading) return;
-    setLoading(true);
-    try {
-      const response = await fetch("/assets/assembly/wayfarer.json", {
-        cache: "no-cache",
-      });
-      if (!response.ok) throw Error("Wayfarer assembly unavailable");
-      const draft = importShipAssembly(
-        await response.json(),
-        catalog,
-        uuid(),
-        uuid(),
-      );
-      latest.current.adopt(draft);
-    } catch (e) {
-      props.error(`${String(e)}. Your current draft is preserved.`);
-    } finally {
-      setLoading(false);
-    }
-  }
   const currentIds = new Set(parts.map((p) => p.assetId));
   const palette =
     catalog?.assets
@@ -452,17 +466,6 @@ export default function HullWorkspace(props: Props) {
             ? "Objects & equipment"
             : "Ship building blocks"}
         </h2>
-        <button
-          className="layout-primary hull-load"
-          disabled={loading || !catalog || props.blocked}
-          onClick={loadWayfarer}
-        >
-          {loading ? "Loading ship…" : "Load existing Wayfarer"}
-        </button>
-        <p className="layout-note">
-          Opens a separate editable copy of the game’s authored ship. Your
-          current draft stays saved.
-        </p>
         {doc.legacy && (
           <button
             disabled={blocked}
@@ -597,9 +600,13 @@ export default function HullWorkspace(props: Props) {
             <select
               aria-label="Hull snap"
               value={snap}
-              onChange={(e) => setSnap(Number(e.target.value))}
+              onChange={(e) => {
+                const value = Number(e.target.value);
+                setSnap(value);
+                props.onGridChange?.(value);
+              }}
             >
-              {[0.03125, 0.125, 0.25, 0.5, 1, 2].map((n) => (
+              {[0.03125, 0.5, 1, 2].map((n) => (
                 <option value={n} key={n}>
                   {n} m
                 </option>

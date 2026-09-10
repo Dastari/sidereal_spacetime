@@ -1,6 +1,6 @@
 import { layoutNativeFloors } from "./layout-native-floors";
 /** The other layout modes inspect the same editable assembly; Hull owns its gestures. */
-import { createHullViewport } from "./layout-hull";
+import { createHullViewport, type HullCameraState } from "./layout-hull";
 import { PART_CATEGORIES, type PartCatalog } from "../../content/src/assembly";
 import { layoutVisualParts } from "../../content/src/layout-assembly";
 import type { LayoutDocument } from "../../content/src/ship-layout";
@@ -9,16 +9,33 @@ export function createAssemblyLayoutPreview(
   canvas: HTMLCanvasElement,
   catalog: PartCatalog,
   report: (s: string) => void,
+  initialCamera?: HullCameraState,
+  initialProjection?: string,
+  viewChanged?: () => void,
 ) {
   let floorStatus = "Native floors pending";
-  const view = createHullViewport(canvas, catalog, {
-    select: () => {},
-    move: () => {},
-    place: () => {},
-    status: (message) => report(`${message} · ${floorStatus}`),
-  });
+  const view = createHullViewport(
+    canvas,
+    catalog,
+    {
+      select: () => {},
+      move: () => {},
+      place: () => {},
+      status: (message) => report(`${message} · ${floorStatus}`),
+      viewChanged,
+    },
+    initialCamera,
+    initialProjection,
+  );
   let lastId = "";
   return {
+    getCamera: view.getCamera,
+    planeTransform: view.planeTransform,
+    floorPoint: view.floorPoint,
+    fit: view.fit,
+    zoom: view.zoom,
+    orbit: view.orbit,
+    pan: view.pan,
     update(
       doc: LayoutDocument,
       result: CompiledLayout,
@@ -34,6 +51,7 @@ export function createAssemblyLayoutPreview(
       view.update({
         parts: [...layoutVisualParts(doc, catalog), ...native.parts],
         selected: "",
+        contextOnly: new Set(native.parts.map((p) => p.id)),
         visible: new Set(PART_CATEGORIES.filter((c) => c !== "roof" || roof)),
         tool: "orbit",
         assetId: "",
@@ -50,8 +68,9 @@ export function createAssemblyLayoutPreview(
         },
       });
       if (lastId !== doc.id) {
+        const first = !lastId;
         lastId = doc.id;
-        void view.ready().then(() => view.fit());
+        if (!first || !initialCamera) void view.ready().then(() => view.fit());
       }
     },
     dispose: () => view.dispose(),

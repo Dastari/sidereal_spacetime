@@ -11,6 +11,7 @@
     "./native-stair-scene": "./src/native-stair-scene.ts",
     "./layout-native-floors": "./src/layout-native-floors.ts",
     "./construction-refit-attachments": "./src/construction-refit-attachments.ts",
+    "./layout-hull": "./src/layout-hull.ts",
     "./antialiasing-settings": "./src/antialiasing-settings.ts",
     "./graphics-settings": "./src/graphics-settings.ts",
     "./local-light-budget": "./src/local-light-budget.ts"
