@@ -49,6 +49,20 @@ def command(action):
   print('Dedicated provider runtime cache directory repaired; no restart or account changes.')
  elif action=='status':
   owned();print(capture(['pct','status',str(CT)]).strip());print(capture(['pct','exec',str(CT),'--','hostname','-I']).strip());print(capture(['pct','exec',str(CT),'--','systemctl','is-active','keycloak']).strip());print('Issuer: https://auth.dastari.net/realms/dastari')
+ elif action == 'rotate-review-password':
+  owned();ssh(['mkdir','-p',REMOTE]);ssh(['chmod','700',REMOTE])
+  source=ROOT/'ops/keycloak/rotate-review-password.py'
+  subprocess.run(['scp','-q',str(source),f'{HOST}:{REMOTE}/{source.name}'],check=True)
+  remote='/root/dastari-keycloak/'+source.name
+  ssh(['pct','push',str(CT),f'{REMOTE}/{source.name}',remote,'--perms','0600'])
+  ssh(['pct','exec',str(CT),'--','python3',remote])
+  payload=capture(['pct','exec',str(CT),'--','cat','/root/dastari-keycloak/sidereal-review.json'])
+  import os,tempfile
+  fd,tmp=tempfile.mkstemp(prefix='sidereal-review-rotated-',dir='/tmp')
+  with os.fdopen(fd,'w') as stream:stream.write(payload)
+  destination=Path('/tmp/sidereal-auth-review.json')
+  os.replace(tmp,destination);destination.chmod(0o600)
+  print('Updated private review credential file (0600); no values printed.')
  elif action in ('shared-review-account', 'native-public-review-account'):
   owned();ssh(['mkdir','-p',REMOTE]);ssh(['chmod','700',REMOTE])
   source=ROOT/'ops/keycloak'/(action+'.py')
