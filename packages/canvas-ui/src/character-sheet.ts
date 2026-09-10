@@ -8,7 +8,6 @@ import {
 } from "../../content/src/inventory";
 import { CanvasUI, palette } from "./toolkit";
 import type { Rect } from "./layout";
-import { createCrewPortrait } from "./crew-portrait";
 
 import { CHARACTER_PREVIEW, STAT_GROUPS, itemRarity } from "./character-data";
 import {
@@ -93,10 +92,20 @@ export function createCharacterSheet(
     equipmentHit?: (slot: EquipmentSlot, box: Rect) => void;
   },
 ) {
-  const fallback = createCrewPortrait(ui);
+  // An outfit proof PNG cannot represent this actor's body, cosmetics or gear.
+  const placeholder = (r: Rect, failed = false) =>
+    ui.text(
+      failed ? "Character preview unavailable" : "Loading character…",
+      r.x + 8,
+      r.y + r.h / 2,
+      12,
+      palette.muted,
+      r.w - 16,
+    );
   let preview: ReturnType<typeof createCharacterPreview> | undefined;
   let loading = false,
     disposed = false,
+    previewFailed = false,
     rotation = -0.3,
     statsTab = "Overview",
     page = "Equipment";
@@ -118,7 +127,10 @@ export function createCharacterSheet(
           .catch(() => ui.invalidate());
         ui.invalidate();
       })
-      .catch(() => ui.invalidate());
+      .catch(() => {
+        previewFailed = true;
+        ui.invalidate();
+      });
   };
   function identity(r: Rect, name: string, state: InventoryState) {
     section(ui, { ...r, h: 142 }, "CREW MEMBER");
@@ -195,15 +207,15 @@ export function createCharacterSheet(
         performance.now() / 1000,
         options.cosmetics?.reducedMotion?.() ?? false,
       );
-      if (preview.status === "ready")
+      if (preview.presentationStatus === "ready")
         ui.ctx.drawImage(preview.canvas, view.x, view.y, view.w, view.h);
-      else fallback(preset, { ...view, h: view.h - 24 });
+      else placeholder(view, preview.presentationStatus === "error");
       if (
-        preview.status !== "error" &&
+        preview.presentationStatus !== "error" &&
         (!options.cosmetics?.reducedMotion?.() || preview.needsRender)
       )
         ui.invalidate();
-    } else fallback(preset, { ...view, h: view.h - 24 });
+    } else placeholder(view, previewFailed);
     ui.drag("character-rotate", "Rotate character preview", view, (dx) => {
       rotation += dx * 0.015;
       preview?.setRotation(rotation);

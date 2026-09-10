@@ -1,3 +1,4 @@
+import { characterPresentationStatus } from "./character-preview-state";
 import { MODULAR_CREW_ASSET_URL } from "@sidereal/content/character-components";
 import { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
@@ -126,6 +127,8 @@ export function createCharacterPreview(
   let preset = "engineer",
     appearance: CharacterPreviewAppearance = {};
   let selectedEquipment: string | undefined;
+  let frameReady = false,
+    equipmentFailed = false;
   let previousFrame = -Infinity,
     previousReducedMotion: boolean | undefined;
   let aspect = 360 / 560,
@@ -147,6 +150,7 @@ export function createCharacterPreview(
   }
   function applyAppearance() {
     if (!crew || disposed) return;
+    frameReady = false;
     const outfit = (
       preset in CREW_OUTFITS || preset === "crew" || preset === "explorer"
         ? preset
@@ -163,6 +167,7 @@ export function createCharacterPreview(
       : undefined;
     if (asset === selectedEquipment) return;
     selectedEquipment = asset;
+    equipmentFailed = false;
     const revision = ++gearRevision;
     pose?.bind(undefined);
     crew.bindHeldEquipment(undefined);
@@ -199,6 +204,7 @@ export function createCharacterPreview(
       .catch((reason) => {
         if (!disposed && revision === gearRevision) {
           // A held-item failure does not blank the successfully loaded character.
+          equipmentFailed = true;
           error = `Held item preview unavailable: ${String(reason)}`;
           invalidate();
         }
@@ -293,6 +299,16 @@ export function createCharacterPreview(
     get status() {
       return status;
     },
+    get presentationStatus() {
+      return characterPresentationStatus({
+        status,
+        frameReady,
+        pending,
+        equipmentRequested: !!selectedEquipment,
+        equipmentReady: !!gear,
+        equipmentFailed,
+      });
+    },
     get error() {
       return error;
     },
@@ -372,6 +388,7 @@ export function createCharacterPreview(
       dirty =
         !scene.isReady() ||
         scene.effectLayers.some((layer) => !layer.isLayerReady());
+      frameReady = !dirty;
       return true;
     },
     dispose() {
