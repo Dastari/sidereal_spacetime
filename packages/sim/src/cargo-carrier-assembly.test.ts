@@ -177,3 +177,34 @@ test("six actual native assemblies support mixed stacks, rotations and removal p
     ).valid,
   ).toBe(false);
 });
+
+test("native mesh translations rotate both carrier sizes inside their unchanged reservation", () => {
+  for (const carrierSize of ["oneMetre", "twoMetre"] as const) {
+    const a = { ...assembly(), carrierSize };
+    const width = carrierSize === "oneMetre" ? 1 : 2;
+    for (const turns of [0, 1, 2, 3]) {
+      const result = cargoAssemblyTransforms(a, [-64, 32, 6], turns);
+      const angle = (turns * Math.PI) / 2;
+      const corners = [
+        [0, 0],
+        [width, 0],
+        [width, width],
+        [0, width],
+      ].map(([x, y]) => [
+        result.carrierMeshOriginM[0] +
+          x! * Math.cos(angle) -
+          y! * Math.sin(angle),
+        result.carrierMeshOriginM[1] +
+          x! * Math.sin(angle) +
+          y! * Math.cos(angle),
+      ]);
+      expect(Math.min(...corners.map((p) => p[0]!))).toBeCloseTo(-2);
+      expect(Math.max(...corners.map((p) => p[0]!))).toBeCloseTo(-2 + width);
+      expect(Math.min(...corners.map((p) => p[1]!))).toBeCloseTo(1);
+      expect(Math.max(...corners.map((p) => p[1]!))).toBeCloseTo(1 + width);
+      expect(result.carrierOriginM).toEqual([-2, 1, 0.1875]);
+      expect(result.receiverMeshOriginM).toEqual(result.carrierMeshOriginM);
+      expect(result.carrierPivotLocalM).toEqual([width / 2, width / 2, 0]);
+    }
+  }
+});

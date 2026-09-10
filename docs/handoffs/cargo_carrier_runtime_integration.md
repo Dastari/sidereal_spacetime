@@ -70,3 +70,28 @@ The six Python reserved-envelope tests include the actual pinned native exports
 and rejection of oversized geometry, a protruding foot, a triangle's empty half,
 an incorrect pivot and invalid metadata. These checks and the source-only
 clearance correction do not register cargo runtime or change the pinned release.
+
+
+## Exact native rotation and assembled envelope
+
+`cargoAssemblyTransforms` now distinguishes the unchanged nominal lower-left
+`carrierOriginM` from `carrierMeshOriginM` / `receiverMeshOriginM`. Apply the latter
+translation plus `quarterTurns` to native GLB coordinates. `carrierPivotLocalM`
+is the explicitly declared reservation center. This is ordinary rotation around
+an authored pivot; no mesh-bounds recentering, rescaling or oversized-asset repair
+occurs. The payload keeps its exact qualified receiver socket and rotates with
+the assembly. Independent container/placed/carrier IDs are unchanged.
+
+`scripts/art_library/qualify_cargo_assembly_envelope.py` checks all 16 combinations
+(two carrier sizes × two secured payload variants × four quarter turns). It
+verifies the exact source hashes, complete native geometry, receiver socket,
+reserved payload cell and whole assembled volume. All pass with no source model
+changes. Evidence: `docs/handoffs/cargo_assembled_envelope_qualification.json`.
+This does not extend securing approval to the other 11 envelope-compatible cargo
+variants or the 60 taller/larger variants.
+
+The staged registration keeps a base inventory reader for geometry-independent
+mass calculations. Only normal inspection/interaction reads derive a dynamic
+walking approach; mass validation must never depend on where the caller stands.
+The isolated proof preparation is under `.runtime/cargo-carrier-review`; its
+current scripts are staged and have not yet executed against a registered world.

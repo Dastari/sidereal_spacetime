@@ -116,11 +116,24 @@ export function cargoAssemblyTransforms(
           ? [width - x, width - y]
           : [y, width - x];
   const p = rotate(offset[0], offset[1]);
+  const meshOrigin = rotate(0, 0);
+  const meshOriginM: CargoPoint = [
+    origin[0] / 32 + meshOrigin[0],
+    origin[1] / 32 + meshOrigin[1],
+    origin[2] / 32,
+  ];
   return {
     carrierId: assembly.carrierId,
     payloadPlacedObjectId: assembly.placedObjectId,
     containerId: assembly.containerId,
+    /** Nominal lower-left placement stays unchanged by a quarter turn. */
     carrierOriginM: origin.map((n) => n / 32) as CargoPoint,
+    /** Apply this translation then quarterTurns to unchanged native coordinates.
+     * It implements rotation about the declared reservation center, never a
+     * measured-mesh recentering or a repair for oversized geometry. */
+    carrierMeshOriginM: meshOriginM,
+    receiverMeshOriginM: [...meshOriginM] as CargoPoint,
+    carrierPivotLocalM: [width / 2, width / 2, 0] as CargoPoint,
     quarterTurns: turns,
     payloadOriginM: [
       origin[0] / 32 + p[0],

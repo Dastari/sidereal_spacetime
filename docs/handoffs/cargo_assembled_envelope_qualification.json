@@ -1,0 +1,1828 @@
+{
+  "schema": "sidereal.secured-cargo-envelope.v1",
+  "sourceGeometryModified": false,
+  "automaticScaleOrRecenter": false,
+  "envelopeQualified": true,
+  "relativePayloadQuarterTurns": [
+    0
+  ],
+  "assemblyQuarterTurns": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "engineeringCertification": false,
+  "ownerArtSignoff": false,
+  "runtimeRegistered": false,
+  "assemblies": [
+    {
+      "carrierWidthM": 1,
+      "payloadAssetId": "part-c06e4f5f6f6dace38e41",
+      "payloadGlbSha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+      "carrierGlbSha256": "faa8a7b7786c4e92cfeb6ec5b25d43739ad070e202d4e2f1ee1dc98ca6877f78",
+      "receiverGlbSha256": "dac3fd3c6cca793929f9deaae8030b867ad214081cd5719cbc21778133d83044",
+      "quarterTurns": 0,
+      "reservedFootprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "reservedBottomM": 0,
+      "reservedTopM": 0.6875,
+      "declaredPivotLocalM": [
+        0.5,
+        0.5,
+        0
+      ],
+      "declaredPayloadSocketTranslationM": [
+        0.5,
+        0.5377499908208847,
+        0.09375
+      ],
+      "payloadSourceReservationM": {
+        "footprint": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "bottom": 0.0,
+        "top": 0.53125
+      },
+      "payloadSourceEvidence": {
+        "verticesChecked": 35940,
+        "nativeBoundsM": {
+          "min": [
+            -0.3305000066757202,
+            -0.28049999475479126,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.20500001311302185,
+            0.5114999413490295
+          ]
+        },
+        "glbSha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+        "reservedFootprintM": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "reservedBottomM": 0.0,
+        "reservedTopM": 0.53125,
+        "coordinateFrame": "native author XY deck/Z up; unchanged pivot",
+        "placementRepairApplied": false,
+        "encodingToleranceM": 1e-06,
+        "entireDefaultSceneQualified": true
+      },
+      "verticesChecked": 45660,
+      "nativeBoundsM": {
+        "min": [
+          0.0,
+          -0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          0.6875
+        ]
+      }
+    },
+    {
+      "carrierWidthM": 1,
+      "payloadAssetId": "part-c06e4f5f6f6dace38e41",
+      "payloadGlbSha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+      "carrierGlbSha256": "faa8a7b7786c4e92cfeb6ec5b25d43739ad070e202d4e2f1ee1dc98ca6877f78",
+      "receiverGlbSha256": "dac3fd3c6cca793929f9deaae8030b867ad214081cd5719cbc21778133d83044",
+      "quarterTurns": 1,
+      "reservedFootprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "reservedBottomM": 0,
+      "reservedTopM": 0.6875,
+      "declaredPivotLocalM": [
+        0.5,
+        0.5,
+        0
+      ],
+      "declaredPayloadSocketTranslationM": [
+        0.5,
+        0.5377499908208847,
+        0.09375
+      ],
+      "payloadSourceReservationM": {
+        "footprint": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "bottom": 0.0,
+        "top": 0.53125
+      },
+      "payloadSourceEvidence": {
+        "verticesChecked": 35940,
+        "nativeBoundsM": {
+          "min": [
+            -0.3305000066757202,
+            -0.28049999475479126,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.20500001311302185,
+            0.5114999413490295
+          ]
+        },
+        "glbSha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+        "reservedFootprintM": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "reservedBottomM": 0.0,
+        "reservedTopM": 0.53125,
+        "coordinateFrame": "native author XY deck/Z up; unchanged pivot",
+        "placementRepairApplied": false,
+        "encodingToleranceM": 1e-06,
+        "entireDefaultSceneQualified": true
+      },
+      "verticesChecked": 45660,
+      "nativeBoundsM": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          0.6875
+        ]
+      }
+    },
+    {
+      "carrierWidthM": 1,
+      "payloadAssetId": "part-c06e4f5f6f6dace38e41",
+      "payloadGlbSha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+      "carrierGlbSha256": "faa8a7b7786c4e92cfeb6ec5b25d43739ad070e202d4e2f1ee1dc98ca6877f78",
+      "receiverGlbSha256": "dac3fd3c6cca793929f9deaae8030b867ad214081cd5719cbc21778133d83044",
+      "quarterTurns": 2,
+      "reservedFootprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "reservedBottomM": 0,
+      "reservedTopM": 0.6875,
+      "declaredPivotLocalM": [
+        0.5,
+        0.5,
+        0
+      ],
+      "declaredPayloadSocketTranslationM": [
+        0.5,
+        0.5377499908208847,
+        0.09375
+      ],
+      "payloadSourceReservationM": {
+        "footprint": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "bottom": 0.0,
+        "top": 0.53125
+      },
+      "payloadSourceEvidence": {
+        "verticesChecked": 35940,
+        "nativeBoundsM": {
+          "min": [
+            -0.3305000066757202,
+            -0.28049999475479126,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.20500001311302185,
+            0.5114999413490295
+          ]
+        },
+        "glbSha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+        "reservedFootprintM": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "reservedBottomM": 0.0,
+        "reservedTopM": 0.53125,
+        "coordinateFrame": "native author XY deck/Z up; unchanged pivot",
+        "placementRepairApplied": false,
+        "encodingToleranceM": 1e-06,
+        "entireDefaultSceneQualified": true
+      },
+      "verticesChecked": 45660,
+      "nativeBoundsM": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          0.6875
+        ]
+      }
+    },
+    {
+      "carrierWidthM": 1,
+      "payloadAssetId": "part-c06e4f5f6f6dace38e41",
+      "payloadGlbSha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+      "carrierGlbSha256": "faa8a7b7786c4e92cfeb6ec5b25d43739ad070e202d4e2f1ee1dc98ca6877f78",
+      "receiverGlbSha256": "dac3fd3c6cca793929f9deaae8030b867ad214081cd5719cbc21778133d83044",
+      "quarterTurns": 3,
+      "reservedFootprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "reservedBottomM": 0,
+      "reservedTopM": 0.6875,
+      "declaredPivotLocalM": [
+        0.5,
+        0.5,
+        0
+      ],
+      "declaredPayloadSocketTranslationM": [
+        0.5,
+        0.5377499908208847,
+        0.09375
+      ],
+      "payloadSourceReservationM": {
+        "footprint": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "bottom": 0.0,
+        "top": 0.53125
+      },
+      "payloadSourceEvidence": {
+        "verticesChecked": 35940,
+        "nativeBoundsM": {
+          "min": [
+            -0.3305000066757202,
+            -0.28049999475479126,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.20500001311302185,
+            0.5114999413490295
+          ]
+        },
+        "glbSha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+        "reservedFootprintM": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "reservedBottomM": 0.0,
+        "reservedTopM": 0.53125,
+        "coordinateFrame": "native author XY deck/Z up; unchanged pivot",
+        "placementRepairApplied": false,
+        "encodingToleranceM": 1e-06,
+        "entireDefaultSceneQualified": true
+      },
+      "verticesChecked": 45660,
+      "nativeBoundsM": {
+        "min": [
+          -0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          0.6875
+        ]
+      }
+    },
+    {
+      "carrierWidthM": 1,
+      "payloadAssetId": "part-5382f8dbbeb54e663d33",
+      "payloadGlbSha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+      "carrierGlbSha256": "faa8a7b7786c4e92cfeb6ec5b25d43739ad070e202d4e2f1ee1dc98ca6877f78",
+      "receiverGlbSha256": "dac3fd3c6cca793929f9deaae8030b867ad214081cd5719cbc21778133d83044",
+      "quarterTurns": 0,
+      "reservedFootprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "reservedBottomM": 0,
+      "reservedTopM": 0.6875,
+      "declaredPivotLocalM": [
+        0.5,
+        0.5,
+        0
+      ],
+      "declaredPayloadSocketTranslationM": [
+        0.5,
+        0.5377499908208847,
+        0.09375
+      ],
+      "payloadSourceReservationM": {
+        "footprint": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "bottom": 0.0,
+        "top": 0.53125
+      },
+      "payloadSourceEvidence": {
+        "verticesChecked": 35940,
+        "nativeBoundsM": {
+          "min": [
+            -0.3305000066757202,
+            -0.28049999475479126,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.20500001311302185,
+            0.5114999413490295
+          ]
+        },
+        "glbSha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+        "reservedFootprintM": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "reservedBottomM": 0.0,
+        "reservedTopM": 0.53125,
+        "coordinateFrame": "native author XY deck/Z up; unchanged pivot",
+        "placementRepairApplied": false,
+        "encodingToleranceM": 1e-06,
+        "entireDefaultSceneQualified": true
+      },
+      "verticesChecked": 45660,
+      "nativeBoundsM": {
+        "min": [
+          0.0,
+          -0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          0.6875
+        ]
+      }
+    },
+    {
+      "carrierWidthM": 1,
+      "payloadAssetId": "part-5382f8dbbeb54e663d33",
+      "payloadGlbSha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+      "carrierGlbSha256": "faa8a7b7786c4e92cfeb6ec5b25d43739ad070e202d4e2f1ee1dc98ca6877f78",
+      "receiverGlbSha256": "dac3fd3c6cca793929f9deaae8030b867ad214081cd5719cbc21778133d83044",
+      "quarterTurns": 1,
+      "reservedFootprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "reservedBottomM": 0,
+      "reservedTopM": 0.6875,
+      "declaredPivotLocalM": [
+        0.5,
+        0.5,
+        0
+      ],
+      "declaredPayloadSocketTranslationM": [
+        0.5,
+        0.5377499908208847,
+        0.09375
+      ],
+      "payloadSourceReservationM": {
+        "footprint": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "bottom": 0.0,
+        "top": 0.53125
+      },
+      "payloadSourceEvidence": {
+        "verticesChecked": 35940,
+        "nativeBoundsM": {
+          "min": [
+            -0.3305000066757202,
+            -0.28049999475479126,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.20500001311302185,
+            0.5114999413490295
+          ]
+        },
+        "glbSha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+        "reservedFootprintM": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "reservedBottomM": 0.0,
+        "reservedTopM": 0.53125,
+        "coordinateFrame": "native author XY deck/Z up; unchanged pivot",
+        "placementRepairApplied": false,
+        "encodingToleranceM": 1e-06,
+        "entireDefaultSceneQualified": true
+      },
+      "verticesChecked": 45660,
+      "nativeBoundsM": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          0.6875
+        ]
+      }
+    },
+    {
+      "carrierWidthM": 1,
+      "payloadAssetId": "part-5382f8dbbeb54e663d33",
+      "payloadGlbSha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+      "carrierGlbSha256": "faa8a7b7786c4e92cfeb6ec5b25d43739ad070e202d4e2f1ee1dc98ca6877f78",
+      "receiverGlbSha256": "dac3fd3c6cca793929f9deaae8030b867ad214081cd5719cbc21778133d83044",
+      "quarterTurns": 2,
+      "reservedFootprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "reservedBottomM": 0,
+      "reservedTopM": 0.6875,
+      "declaredPivotLocalM": [
+        0.5,
+        0.5,
+        0
+      ],
+      "declaredPayloadSocketTranslationM": [
+        0.5,
+        0.5377499908208847,
+        0.09375
+      ],
+      "payloadSourceReservationM": {
+        "footprint": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "bottom": 0.0,
+        "top": 0.53125
+      },
+      "payloadSourceEvidence": {
+        "verticesChecked": 35940,
+        "nativeBoundsM": {
+          "min": [
+            -0.3305000066757202,
+            -0.28049999475479126,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.20500001311302185,
+            0.5114999413490295
+          ]
+        },
+        "glbSha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+        "reservedFootprintM": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "reservedBottomM": 0.0,
+        "reservedTopM": 0.53125,
+        "coordinateFrame": "native author XY deck/Z up; unchanged pivot",
+        "placementRepairApplied": false,
+        "encodingToleranceM": 1e-06,
+        "entireDefaultSceneQualified": true
+      },
+      "verticesChecked": 45660,
+      "nativeBoundsM": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          0.6875
+        ]
+      }
+    },
+    {
+      "carrierWidthM": 1,
+      "payloadAssetId": "part-5382f8dbbeb54e663d33",
+      "payloadGlbSha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+      "carrierGlbSha256": "faa8a7b7786c4e92cfeb6ec5b25d43739ad070e202d4e2f1ee1dc98ca6877f78",
+      "receiverGlbSha256": "dac3fd3c6cca793929f9deaae8030b867ad214081cd5719cbc21778133d83044",
+      "quarterTurns": 3,
+      "reservedFootprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "reservedBottomM": 0,
+      "reservedTopM": 0.6875,
+      "declaredPivotLocalM": [
+        0.5,
+        0.5,
+        0
+      ],
+      "declaredPayloadSocketTranslationM": [
+        0.5,
+        0.5377499908208847,
+        0.09375
+      ],
+      "payloadSourceReservationM": {
+        "footprint": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "bottom": 0.0,
+        "top": 0.53125
+      },
+      "payloadSourceEvidence": {
+        "verticesChecked": 35940,
+        "nativeBoundsM": {
+          "min": [
+            -0.3305000066757202,
+            -0.28049999475479126,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.20500001311302185,
+            0.5114999413490295
+          ]
+        },
+        "glbSha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+        "reservedFootprintM": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "reservedBottomM": 0.0,
+        "reservedTopM": 0.53125,
+        "coordinateFrame": "native author XY deck/Z up; unchanged pivot",
+        "placementRepairApplied": false,
+        "encodingToleranceM": 1e-06,
+        "entireDefaultSceneQualified": true
+      },
+      "verticesChecked": 45660,
+      "nativeBoundsM": {
+        "min": [
+          -0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          0.6875
+        ]
+      }
+    },
+    {
+      "carrierWidthM": 2,
+      "payloadAssetId": "part-c06e4f5f6f6dace38e41",
+      "payloadGlbSha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+      "carrierGlbSha256": "5e42e6ab46b00674129ffafe136affefa6586325c1149e838bf9ff693b9769fd",
+      "receiverGlbSha256": "dac3fd3c6cca793929f9deaae8030b867ad214081cd5719cbc21778133d83044",
+      "quarterTurns": 0,
+      "reservedFootprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "reservedBottomM": 0,
+      "reservedTopM": 0.6875,
+      "declaredPivotLocalM": [
+        1.0,
+        1.0,
+        0
+      ],
+      "declaredPayloadSocketTranslationM": [
+        0.5,
+        0.5377499908208847,
+        0.09375
+      ],
+      "payloadSourceReservationM": {
+        "footprint": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "bottom": 0.0,
+        "top": 0.53125
+      },
+      "payloadSourceEvidence": {
+        "verticesChecked": 35940,
+        "nativeBoundsM": {
+          "min": [
+            -0.3305000066757202,
+            -0.28049999475479126,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.20500001311302185,
+            0.5114999413490295
+          ]
+        },
+        "glbSha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+        "reservedFootprintM": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "reservedBottomM": 0.0,
+        "reservedTopM": 0.53125,
+        "coordinateFrame": "native author XY deck/Z up; unchanged pivot",
+        "placementRepairApplied": false,
+        "encodingToleranceM": 1e-06,
+        "entireDefaultSceneQualified": true
+      },
+      "verticesChecked": 49116,
+      "nativeBoundsM": {
+        "min": [
+          0.0,
+          -0.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          2.0,
+          0.6875
+        ]
+      }
+    },
+    {
+      "carrierWidthM": 2,
+      "payloadAssetId": "part-c06e4f5f6f6dace38e41",
+      "payloadGlbSha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+      "carrierGlbSha256": "5e42e6ab46b00674129ffafe136affefa6586325c1149e838bf9ff693b9769fd",
+      "receiverGlbSha256": "dac3fd3c6cca793929f9deaae8030b867ad214081cd5719cbc21778133d83044",
+      "quarterTurns": 1,
+      "reservedFootprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "reservedBottomM": 0,
+      "reservedTopM": 0.6875,
+      "declaredPivotLocalM": [
+        1.0,
+        1.0,
+        0
+      ],
+      "declaredPayloadSocketTranslationM": [
+        0.5,
+        0.5377499908208847,
+        0.09375
+      ],
+      "payloadSourceReservationM": {
+        "footprint": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "bottom": 0.0,
+        "top": 0.53125
+      },
+      "payloadSourceEvidence": {
+        "verticesChecked": 35940,
+        "nativeBoundsM": {
+          "min": [
+            -0.3305000066757202,
+            -0.28049999475479126,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.20500001311302185,
+            0.5114999413490295
+          ]
+        },
+        "glbSha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+        "reservedFootprintM": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "reservedBottomM": 0.0,
+        "reservedTopM": 0.53125,
+        "coordinateFrame": "native author XY deck/Z up; unchanged pivot",
+        "placementRepairApplied": false,
+        "encodingToleranceM": 1e-06,
+        "entireDefaultSceneQualified": true
+      },
+      "verticesChecked": 49116,
+      "nativeBoundsM": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          2.0,
+          0.6875
+        ]
+      }
+    },
+    {
+      "carrierWidthM": 2,
+      "payloadAssetId": "part-c06e4f5f6f6dace38e41",
+      "payloadGlbSha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+      "carrierGlbSha256": "5e42e6ab46b00674129ffafe136affefa6586325c1149e838bf9ff693b9769fd",
+      "receiverGlbSha256": "dac3fd3c6cca793929f9deaae8030b867ad214081cd5719cbc21778133d83044",
+      "quarterTurns": 2,
+      "reservedFootprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "reservedBottomM": 0,
+      "reservedTopM": 0.6875,
+      "declaredPivotLocalM": [
+        1.0,
+        1.0,
+        0
+      ],
+      "declaredPayloadSocketTranslationM": [
+        0.5,
+        0.5377499908208847,
+        0.09375
+      ],
+      "payloadSourceReservationM": {
+        "footprint": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "bottom": 0.0,
+        "top": 0.53125
+      },
+      "payloadSourceEvidence": {
+        "verticesChecked": 35940,
+        "nativeBoundsM": {
+          "min": [
+            -0.3305000066757202,
+            -0.28049999475479126,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.20500001311302185,
+            0.5114999413490295
+          ]
+        },
+        "glbSha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+        "reservedFootprintM": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "reservedBottomM": 0.0,
+        "reservedTopM": 0.53125,
+        "coordinateFrame": "native author XY deck/Z up; unchanged pivot",
+        "placementRepairApplied": false,
+        "encodingToleranceM": 1e-06,
+        "entireDefaultSceneQualified": true
+      },
+      "verticesChecked": 49116,
+      "nativeBoundsM": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          2.0,
+          0.6875
+        ]
+      }
+    },
+    {
+      "carrierWidthM": 2,
+      "payloadAssetId": "part-c06e4f5f6f6dace38e41",
+      "payloadGlbSha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+      "carrierGlbSha256": "5e42e6ab46b00674129ffafe136affefa6586325c1149e838bf9ff693b9769fd",
+      "receiverGlbSha256": "dac3fd3c6cca793929f9deaae8030b867ad214081cd5719cbc21778133d83044",
+      "quarterTurns": 3,
+      "reservedFootprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "reservedBottomM": 0,
+      "reservedTopM": 0.6875,
+      "declaredPivotLocalM": [
+        1.0,
+        1.0,
+        0
+      ],
+      "declaredPayloadSocketTranslationM": [
+        0.5,
+        0.5377499908208847,
+        0.09375
+      ],
+      "payloadSourceReservationM": {
+        "footprint": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "bottom": 0.0,
+        "top": 0.53125
+      },
+      "payloadSourceEvidence": {
+        "verticesChecked": 35940,
+        "nativeBoundsM": {
+          "min": [
+            -0.3305000066757202,
+            -0.28049999475479126,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.20500001311302185,
+            0.5114999413490295
+          ]
+        },
+        "glbSha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+        "reservedFootprintM": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "reservedBottomM": 0.0,
+        "reservedTopM": 0.53125,
+        "coordinateFrame": "native author XY deck/Z up; unchanged pivot",
+        "placementRepairApplied": false,
+        "encodingToleranceM": 1e-06,
+        "entireDefaultSceneQualified": true
+      },
+      "verticesChecked": 49116,
+      "nativeBoundsM": {
+        "min": [
+          -0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          2.0,
+          0.6875
+        ]
+      }
+    },
+    {
+      "carrierWidthM": 2,
+      "payloadAssetId": "part-5382f8dbbeb54e663d33",
+      "payloadGlbSha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+      "carrierGlbSha256": "5e42e6ab46b00674129ffafe136affefa6586325c1149e838bf9ff693b9769fd",
+      "receiverGlbSha256": "dac3fd3c6cca793929f9deaae8030b867ad214081cd5719cbc21778133d83044",
+      "quarterTurns": 0,
+      "reservedFootprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "reservedBottomM": 0,
+      "reservedTopM": 0.6875,
+      "declaredPivotLocalM": [
+        1.0,
+        1.0,
+        0
+      ],
+      "declaredPayloadSocketTranslationM": [
+        0.5,
+        0.5377499908208847,
+        0.09375
+      ],
+      "payloadSourceReservationM": {
+        "footprint": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "bottom": 0.0,
+        "top": 0.53125
+      },
+      "payloadSourceEvidence": {
+        "verticesChecked": 35940,
+        "nativeBoundsM": {
+          "min": [
+            -0.3305000066757202,
+            -0.28049999475479126,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.20500001311302185,
+            0.5114999413490295
+          ]
+        },
+        "glbSha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+        "reservedFootprintM": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "reservedBottomM": 0.0,
+        "reservedTopM": 0.53125,
+        "coordinateFrame": "native author XY deck/Z up; unchanged pivot",
+        "placementRepairApplied": false,
+        "encodingToleranceM": 1e-06,
+        "entireDefaultSceneQualified": true
+      },
+      "verticesChecked": 49116,
+      "nativeBoundsM": {
+        "min": [
+          0.0,
+          -0.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          2.0,
+          0.6875
+        ]
+      }
+    },
+    {
+      "carrierWidthM": 2,
+      "payloadAssetId": "part-5382f8dbbeb54e663d33",
+      "payloadGlbSha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+      "carrierGlbSha256": "5e42e6ab46b00674129ffafe136affefa6586325c1149e838bf9ff693b9769fd",
+      "receiverGlbSha256": "dac3fd3c6cca793929f9deaae8030b867ad214081cd5719cbc21778133d83044",
+      "quarterTurns": 1,
+      "reservedFootprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "reservedBottomM": 0,
+      "reservedTopM": 0.6875,
+      "declaredPivotLocalM": [
+        1.0,
+        1.0,
+        0
+      ],
+      "declaredPayloadSocketTranslationM": [
+        0.5,
+        0.5377499908208847,
+        0.09375
+      ],
+      "payloadSourceReservationM": {
+        "footprint": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "bottom": 0.0,
+        "top": 0.53125
+      },
+      "payloadSourceEvidence": {
+        "verticesChecked": 35940,
+        "nativeBoundsM": {
+          "min": [
+            -0.3305000066757202,
+            -0.28049999475479126,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.20500001311302185,
+            0.5114999413490295
+          ]
+        },
+        "glbSha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+        "reservedFootprintM": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "reservedBottomM": 0.0,
+        "reservedTopM": 0.53125,
+        "coordinateFrame": "native author XY deck/Z up; unchanged pivot",
+        "placementRepairApplied": false,
+        "encodingToleranceM": 1e-06,
+        "entireDefaultSceneQualified": true
+      },
+      "verticesChecked": 49116,
+      "nativeBoundsM": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          2.0,
+          0.6875
+        ]
+      }
+    },
+    {
+      "carrierWidthM": 2,
+      "payloadAssetId": "part-5382f8dbbeb54e663d33",
+      "payloadGlbSha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+      "carrierGlbSha256": "5e42e6ab46b00674129ffafe136affefa6586325c1149e838bf9ff693b9769fd",
+      "receiverGlbSha256": "dac3fd3c6cca793929f9deaae8030b867ad214081cd5719cbc21778133d83044",
+      "quarterTurns": 2,
+      "reservedFootprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "reservedBottomM": 0,
+      "reservedTopM": 0.6875,
+      "declaredPivotLocalM": [
+        1.0,
+        1.0,
+        0
+      ],
+      "declaredPayloadSocketTranslationM": [
+        0.5,
+        0.5377499908208847,
+        0.09375
+      ],
+      "payloadSourceReservationM": {
+        "footprint": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "bottom": 0.0,
+        "top": 0.53125
+      },
+      "payloadSourceEvidence": {
+        "verticesChecked": 35940,
+        "nativeBoundsM": {
+          "min": [
+            -0.3305000066757202,
+            -0.28049999475479126,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.20500001311302185,
+            0.5114999413490295
+          ]
+        },
+        "glbSha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+        "reservedFootprintM": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "reservedBottomM": 0.0,
+        "reservedTopM": 0.53125,
+        "coordinateFrame": "native author XY deck/Z up; unchanged pivot",
+        "placementRepairApplied": false,
+        "encodingToleranceM": 1e-06,
+        "entireDefaultSceneQualified": true
+      },
+      "verticesChecked": 49116,
+      "nativeBoundsM": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          2.0,
+          0.6875
+        ]
+      }
+    },
+    {
+      "carrierWidthM": 2,
+      "payloadAssetId": "part-5382f8dbbeb54e663d33",
+      "payloadGlbSha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+      "carrierGlbSha256": "5e42e6ab46b00674129ffafe136affefa6586325c1149e838bf9ff693b9769fd",
+      "receiverGlbSha256": "dac3fd3c6cca793929f9deaae8030b867ad214081cd5719cbc21778133d83044",
+      "quarterTurns": 3,
+      "reservedFootprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "reservedBottomM": 0,
+      "reservedTopM": 0.6875,
+      "declaredPivotLocalM": [
+        1.0,
+        1.0,
+        0
+      ],
+      "declaredPayloadSocketTranslationM": [
+        0.5,
+        0.5377499908208847,
+        0.09375
+      ],
+      "payloadSourceReservationM": {
+        "footprint": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "bottom": 0.0,
+        "top": 0.53125
+      },
+      "payloadSourceEvidence": {
+        "verticesChecked": 35940,
+        "nativeBoundsM": {
+          "min": [
+            -0.3305000066757202,
+            -0.28049999475479126,
+            0.0
+          ],
+          "max": [
+            0.3305000066757202,
+            0.20500001311302185,
+            0.5114999413490295
+          ]
+        },
+        "glbSha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+        "reservedFootprintM": [
+          [
+            -0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            -0.4439999908208847
+          ],
+          [
+            0.40625,
+            0.3685000091791153
+          ],
+          [
+            -0.40625,
+            0.3685000091791153
+          ]
+        ],
+        "reservedBottomM": 0.0,
+        "reservedTopM": 0.53125,
+        "coordinateFrame": "native author XY deck/Z up; unchanged pivot",
+        "placementRepairApplied": false,
+        "encodingToleranceM": 1e-06,
+        "entireDefaultSceneQualified": true
+      },
+      "verticesChecked": 49116,
+      "nativeBoundsM": {
+        "min": [
+          -0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          2.0,
+          0.6875
+        ]
+      }
+    }
+  ]
+}

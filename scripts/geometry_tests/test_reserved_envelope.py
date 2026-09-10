@@ -12,6 +12,14 @@ class ReservedEnvelopeTests(unittest.TestCase):
             report=qualify_glb(base/f'carrier-{size}m.glb',[[0,0],[size,0],[size,size],[0,size]],0,.6875)
             self.assertGreater(report['verticesChecked'],9000)
             self.assertFalse(report['placementRepairApplied'])
+    def test_actual_secured_payloads_fit_every_declared_quarter_turn(self):
+        from qualify_cargo_assembly_envelope import qualify
+        report=qualify()
+        self.assertEqual(len(report['assemblies']),16)
+        self.assertFalse(report['automaticScaleOrRecenter'])
+        self.assertFalse(report['sourceGeometryModified'])
+        for row in report['assemblies']:
+            self.assertEqual(row['nativeBoundsM']['max'],[row['carrierWidthM'],row['carrierWidthM'],.6875])
     def test_two_metres_cannot_mean_two_point_zero_four(self):
         with self.assertRaisesRegex(ValueError,'footprint'):
             qualify_points([[2.04,1,.1]],[[0,0],[2,0],[2,2],[0,2]],0,.2)
