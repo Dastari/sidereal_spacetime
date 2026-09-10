@@ -63,6 +63,7 @@ export function createAssemblyLayoutPreview(
       );
       floorStatus = `${native.parts.length} native floors${native.unmatched.length ? ` · ${native.unmatched.length} unmatched draft floors` : ""}`;
       const unmatched = new Set(native.unmatched);
+      const activeDeck = doc.decks.find((d) => d.id === deck);
       view.update({
         parts: [...layoutVisualParts(doc, catalog), ...native.parts],
         selected: "",
@@ -75,6 +76,14 @@ export function createAssemblyLayoutPreview(
         snap: 1 / 32,
         blocked: true,
         projection,
+        structuralGuide: activeDeck
+          ? {
+              walls: result.walls,
+              deckId: deck,
+              elevationUnits: activeDeck.elevation,
+              heightUnits: activeDeck.ceiling,
+            }
+          : undefined,
         floor: {
           ...result,
           fingerprint: `${result.fingerprint}:${deck}:${showFloor}:${native.unmatched.join(",")}`,
