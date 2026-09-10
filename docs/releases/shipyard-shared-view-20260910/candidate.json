@@ -1,0 +1,150 @@
+{
+  "schema": "sidereal.dashboard-release-candidate.v1",
+  "status": "built and pinned; editor source already on managed review service; immutable dashboard activation unsupported by current lifecycle",
+  "date": "2026-09-10",
+  "source_baseline": ".runtime/release-checkouts/remote-exterior-20260910",
+  "source_baseline_tree_sha256": "3cf1511d366182c2ba0562789fea2ba4b713b2da355a76bc15403aa7225e3193",
+  "source_tree_sha256": "e1280662b9d5e9e1d8ac517194c0df52b425b84e0aec77225157ee897b634d11",
+  "editor_commits": [
+    "0157b507",
+    "5853a5da"
+  ],
+  "independent_test_commit": "e8a95e8b (layout-placement-contract.test.ts only)",
+  "source_delta": [
+    {
+      "path": "apps/dashboard/src/shipyard/layout/HullWorkspace.tsx",
+      "bytes": 27729,
+      "sha256": "e2f8c71c9eed6a2207acdc6141af8b0e2a15fa1b1b4909d574b94a851f207ae9",
+      "baseline_sha256": "26d59171b8cc8f8a961612ed9dcedeb246b311a1cfc092c4e8b688c0c68636b1"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/LayoutCanvas.tsx",
+      "bytes": 32035,
+      "sha256": "3a554d2e6293abd0be4475f645f3e886e2616db10faaf9b891a30d60fc2141b8",
+      "baseline_sha256": "af2613337e86f057e3070bdd5af40942caa82588f5db879cf4d002ad283b5119"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/LayoutEditor.tsx",
+      "bytes": 35758,
+      "sha256": "aca313d7ccf325b398554cbaa78a6586396c4ffd6aa5e706c0d3b6aa3ea60644",
+      "baseline_sha256": "39da1f67f78c03663b8759f6463c257dff6798776aebb6531ded0e920d09293d"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/layout-placement-contract.test.ts",
+      "bytes": 3983,
+      "sha256": "8a85abbe0cc31408c46eecde6bec54fa806c2b9a8b52ef751a0809ae2ce1ec89",
+      "baseline_sha256": null
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/viewport-state.ts",
+      "bytes": 325,
+      "sha256": "4e00f07fc6f2bcd80bd412ebfa509a3bc48bd3f0df003df3c27f7b593ffe6287",
+      "baseline_sha256": null
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/wall-edge-placement.test.ts",
+      "bytes": 1541,
+      "sha256": "0102a07c10d1eebef7f4594c02fb326fad62ecaf8f9428867a7cbaee3b520efd",
+      "baseline_sha256": null
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/wall-edge-placement.ts",
+      "bytes": 904,
+      "sha256": "ffcab524df8409c573f66a831068b1388290e97206dd3a73d40607c53c5d0114",
+      "baseline_sha256": null
+    },
+    {
+      "path": "packages/render/package.json",
+      "bytes": 700,
+      "sha256": "5900ca543e479cde6fdc7c5c92457675f44ce29ba7a482d13f9ebc2bd91a58ca",
+      "baseline_sha256": "4a754f09b86bd685be805871d714eb0768d167657bee4739b8581ac48567ee9d"
+    },
+    {
+      "path": "packages/render/src/layout-assembly-preview.ts",
+      "bytes": 2621,
+      "sha256": "d42413012a97fba11f0185a6be7df3ae4471f020ae0b22b789c4771c12bd1eb9",
+      "baseline_sha256": "073e888c10987ccb0fcc46179f4d977e327af1e30787c970ad4e7c2f699b9f36"
+    },
+    {
+      "path": "packages/render/src/layout-hull.ts",
+      "bytes": 22238,
+      "sha256": "1ac75a53d55c65fad758f74a554b163eccbb46e87145d68bad8a2da6f3ed034d",
+      "baseline_sha256": "f292f5292c89c47338739f2f3655a880bc13309c52937e8c9cd762af5e293a0b"
+    },
+    {
+      "path": "packages/render/src/layout-placement-grid.test.ts",
+      "bytes": 618,
+      "sha256": "21e0faa3d597747cd32b536ecf4c22cebe6e4979ca5b27ce5f4a8aebd885bf9b",
+      "baseline_sha256": null
+    },
+    {
+      "path": "packages/render/src/layout-placement-grid.ts",
+      "bytes": 484,
+      "sha256": "f7fda374c3ece02350540c6dce8207ebb7c8425ca304742805942aec5a76dd51",
+      "baseline_sha256": null
+    },
+    {
+      "path": "packages/render/src/layout-plane-projection.test.ts",
+      "bytes": 1846,
+      "sha256": "571725cf7643ef368b2076f468ccd8eda0907b6b5120196d9e5fe16dcbc61f96",
+      "baseline_sha256": null
+    },
+    {
+      "path": "packages/render/src/layout-plane-projection.ts",
+      "bytes": 869,
+      "sha256": "0a1a3c440d55fa62180721dc978102463fec19e5df412ef9f8fc074d7b9ae924",
+      "baseline_sha256": null
+    }
+  ],
+  "package_export_reconciliation": "baseline exports plus ./layout-hull only; no unrelated AA exports",
+  "artifact": {
+    "path": ".runtime/releases/shipyard-shared-view-20260910/dashboard-3d2e1b20fd36313ad40611c63884d27cb10a72f5b11690d2c11d1df78cc168de",
+    "sha256": "3d2e1b20fd36313ad40611c63884d27cb10a72f5b11690d2c11d1df78cc168de",
+    "files": 1600,
+    "bytes": 362238428
+  },
+  "runtime_assets": {
+    "source": ".runtime/release-checkouts/remote-exterior-20260910/assets/runtime",
+    "sha256": "44a25871b3501a2662578fd3836068ec20d6bb96a38321fe25a30b92871c673d",
+    "files": 1249,
+    "bytes": 356454989,
+    "exact_baseline_match": true,
+    "native_wall_candidate_installed": false
+  },
+  "build_environment": {
+    "VITE_CLIENT_URL": "https://sidereal.dastari.net",
+    "VITE_DASHBOARD_URL": "https://sidereal.tail7a58a6.ts.net:8445",
+    "auth_origin": "https://sidereal.tail7a58a6.ts.net:8445",
+    "issuer": "https://auth.dastari.net/realms/dastari",
+    "authoring_client": "sidereal-shipyard"
+  },
+  "validation": {
+    "dashboard_typecheck": "passed",
+    "focused_tests": "16 passed across5files",
+    "dashboard_build": "passed; existing >500kB chunk warning",
+    "artifact_internal_docs_gate": "passed",
+    "browser": "source commits passed actual UI review; this isolated artifact not opened because GPU reserved",
+    "evidence": "output/playwright/wayfarer-shared-view/acceptance.json"
+  },
+  "served_endpoints": [
+    {
+      "url": "http://127.0.0.1:5174/shipyard",
+      "http_status": 200,
+      "served_mode": "managed Vite source, not this immutable artifact"
+    },
+    {
+      "url": "http://sidereal.tail7a58a6.ts.net:5174/shipyard",
+      "http_status": 200,
+      "served_mode": "managed Vite source, not this immutable artifact"
+    },
+    {
+      "url": "https://sidereal.tail7a58a6.ts.net:8445/shipyard",
+      "http_status": 200,
+      "served_mode": "managed Vite source, not this immutable artifact"
+    }
+  ],
+  "authority": "No world module, generated bindings, live database, refit, public client or provider settings changed",
+  "activation": "No managed immutable dashboard activation command exists. up-dashboard serves repository Vite source; it does not activate this dist. Do not pass dashboard artifact to public-client-stage.",
+  "hash_method": "SHA256 of sorted relative UTF8 paths, NUL, then binary file SHA256 digests; identical to scripts/public_client.validate_build",
+  "private_file_inventories": ".runtime/releases/shipyard-shared-view-20260910"
+}
