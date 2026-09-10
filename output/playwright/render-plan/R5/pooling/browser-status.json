@@ -1,0 +1,16 @@
+{
+  "body": "Account\n◒\nSidereal\n\nWayfarer\n\nPreparing to board\n\nPreparing the first frame\n\nYour ship and equipment will be ready before you enter.\n\nWASD to move · TAB to change view\nSign out",
+  "capturedAt": "2026-09-10T14:21:29.366Z",
+  "focus": false,
+  "frame": 0,
+  "materials": 475,
+  "meshes": 1388,
+  "note": "No manually submitted game frames. First-frame gate blocks settled Deck/seated Flight and isolation measurements. Preview reopen reports visible but snapshot failed.",
+  "ready": false,
+  "renderHeight": 800,
+  "renderWidth": 1280,
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4080 Laptop GPU (0x000027E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "scene": 1,
+  "url": "https://sidereal.tail7a58a6.ts.net:8444/",
+  "visibility": "visible"
+}

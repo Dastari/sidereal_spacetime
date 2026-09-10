@@ -1,3 +1,4 @@
+import { poolAuthoredMaterials } from "./authored-material-pool";
 import { withMaterialSetup } from "./material-setup";
 import { batchStaticMaterials } from "./static-material-batches";
 import { cacheStaticTransforms } from "./static-transform-cache";
@@ -59,6 +60,7 @@ export async function loadConstructionAuthoredAssembly(
   const roots: TransformNode[] = [];
   const cargoPrototypes = new Map<string, Mesh[]>();
   let staticTransforms: ReturnType<typeof cacheStaticTransforms> | undefined;
+  let materialPool: ReturnType<typeof poolAuthoredMaterials> | undefined;
   const dispose = () => {
     staticTransforms?.dispose();
     for (const p of placements) p.lighting.dispose();
@@ -67,6 +69,7 @@ export async function loadConstructionAuthoredAssembly(
     placements.length = 0;
     for (const library of libraries.values()) library.container.dispose();
     libraries.clear();
+    materialPool?.dispose();
   };
   try {
     const base = document.layout.assembly?.parts ?? [];
@@ -115,7 +118,7 @@ export async function loadConstructionAuthoredAssembly(
       requests.push({p,a,library});
     }
     return withMaterialSetup(scene, () => {
-    for (const {p,a,library} of requests) {
+    const prepared = requests.map(({p,a,library}) => {
       const prefix = a.visual?.nodePrefix;
       let selected = library.sources.filter((m) =>
         a.visual
@@ -133,6 +136,16 @@ export async function loadConstructionAuthoredAssembly(
       );
       if (!selected.length)
         throw Error("Missing exact authored mesh selector " + a.id);
+      for (const source of selected)
+        source.metadata = { ...source.metadata, role: categoryMeshRole(a.category) };
+      return {p,a,library,selected};
+    });
+    // These static visuals have no functional fixture or per-placement switches.
+    // Pool before instances/batches capture their source material references.
+    const immutableSources = new Set(prepared.filter(r => ["equipment", "cargo"].includes(categoryMeshRole(r.a.category))).flatMap(r => r.selected));
+    materialPool = poolAuthoredMaterials(scene, [...libraries.values()].map(l => l.container), immutableSources);
+    for (const {p,a,library,selected: originalSelection} of prepared) {
+      let selected = originalSelection;
       if (a.category === "cargo") {
         let cached = cargoPrototypes.get(a.id);
         if (!cached) {

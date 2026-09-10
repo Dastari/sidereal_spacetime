@@ -1,0 +1,463 @@
+{
+  "note": "Read-only live inventory while normal rendering remains behind the first-frame gate. Candidate grouping is not a settled F3 acceptance measurement; graph populations may change independently.",
+  "before": {
+    "duplicates": [
+      {
+        "containers": 8,
+        "count": 8,
+        "name": "MAT-steel",
+        "roles": [
+          "equipment"
+        ],
+        "sourceBindingCounts": [
+          1,
+          1,
+          6,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "containers": 9,
+        "count": 9,
+        "name": "MAT-indigo frame",
+        "roles": [
+          "equipment"
+        ],
+        "sourceBindingCounts": [
+          1,
+          1,
+          6,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "containers": 9,
+        "count": 9,
+        "name": "MAT-pale enamel",
+        "roles": [
+          "equipment"
+        ],
+        "sourceBindingCounts": [
+          1,
+          1,
+          6,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "containers": 9,
+        "count": 9,
+        "name": "MAT-rubber",
+        "roles": [
+          "equipment"
+        ],
+        "sourceBindingCounts": [
+          1,
+          1,
+          6,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "containers": 6,
+        "count": 6,
+        "name": "MAT-cyan instruments",
+        "roles": [
+          "equipment"
+        ],
+        "sourceBindingCounts": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "containers": 6,
+        "count": 6,
+        "name": "MAT-copper",
+        "roles": [
+          "equipment"
+        ],
+        "sourceBindingCounts": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "containers": 8,
+        "count": 8,
+        "name": "MAT-burgundy service",
+        "roles": [
+          "equipment"
+        ],
+        "sourceBindingCounts": [
+          1,
+          6,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "containers": 5,
+        "count": 5,
+        "name": "MAT-display dark",
+        "roles": [
+          "equipment"
+        ],
+        "sourceBindingCounts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "containers": 5,
+        "count": 5,
+        "name": "MAT-warm cushion",
+        "roles": [
+          "equipment"
+        ],
+        "sourceBindingCounts": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "containers": 2,
+        "count": 2,
+        "name": "Cargo | indigo frame",
+        "roles": [
+          "cargo"
+        ],
+        "sourceBindingCounts": [
+          6,
+          6
+        ]
+      },
+      {
+        "containers": 2,
+        "count": 2,
+        "name": "Cargo | titanium",
+        "roles": [
+          "cargo"
+        ],
+        "sourceBindingCounts": [
+          3,
+          3
+        ]
+      },
+      {
+        "containers": 2,
+        "count": 2,
+        "name": "Cargo | pale enamel",
+        "roles": [
+          "cargo"
+        ],
+        "sourceBindingCounts": [
+          6,
+          3
+        ]
+      },
+      {
+        "containers": 2,
+        "count": 2,
+        "name": "Cargo | burgundy service",
+        "roles": [
+          "cargo"
+        ],
+        "sourceBindingCounts": [
+          3,
+          3
+        ]
+      },
+      {
+        "containers": 2,
+        "count": 2,
+        "name": "Cargo | ivory marking",
+        "roles": [
+          "cargo"
+        ],
+        "sourceBindingCounts": [
+          3,
+          3
+        ]
+      },
+      {
+        "containers": 2,
+        "count": 2,
+        "name": "Cargo | gasket",
+        "roles": [
+          "cargo"
+        ],
+        "sourceBindingCounts": [
+          3,
+          3
+        ]
+      },
+      {
+        "containers": 2,
+        "count": 2,
+        "name": "MAT-warm light",
+        "roles": [
+          "equipment"
+        ],
+        "sourceBindingCounts": [
+          1,
+          1
+        ]
+      },
+      {
+        "containers": 2,
+        "count": 2,
+        "name": "MAT-red upholstery",
+        "roles": [
+          "equipment"
+        ],
+        "sourceBindingCounts": [
+          1,
+          1
+        ]
+      },
+      {
+        "containers": 13,
+        "count": 13,
+        "name": "Graphite seals",
+        "roles": [
+          "wall",
+          "hull"
+        ],
+        "sourceBindingCounts": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "containers": 8,
+        "count": 8,
+        "name": "Amber marker",
+        "roles": [
+          "wall",
+          "hull"
+        ],
+        "sourceBindingCounts": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "containers": 9,
+        "count": 9,
+        "name": "Canopy marker emitter",
+        "roles": [
+          "wall",
+          "hull"
+        ],
+        "sourceBindingCounts": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "containers": 9,
+        "count": 9,
+        "name": "Titanium hardware",
+        "roles": [
+          "wall",
+          "hull"
+        ],
+        "sourceBindingCounts": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "eligible": 135,
+    "groups": 36,
+    "kind": "Read-only candidate audit; serialization equality is not a sharing proof",
+    "materials": 548,
+    "potentialReduction": 99,
+    "reasons": {
+      "mutable material": 12,
+      "non-PBR": 10,
+      "optical queue": 4,
+      "other roles": 326,
+      "textures": 57,
+      "unreferenced": 4
+    }
+  },
+  "after": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"duplicates\":[{\"containers\":13,\"count\":13,\"name\":\"Graphite seals\",\"roles\":[\"wall\",\"hull\"],\"sourceBindingCounts\":[1,1,1,1,1,1,1,1,1,1,1,1,1]},{\"containers\":8,\"count\":8,\"name\":\"Amber marker\",\"roles\":[\"wall\",\"hull\"],\"sourceBindingCounts\":[1,1,1,1,1,1,1,1]},{\"containers\":9,\"count\":9,\"name\":\"Canopy marker emitter\",\"roles\":[\"wall\",\"hull\"],\"sourceBindingCounts\":[1,1,1,1,1,1,1,1,1]},{\"containers\":9,\"count\":9,\"name\":\"Titanium hardware\",\"roles\":[\"wall\",\"hull\"],\"sourceBindingCounts\":[1,1,1,1,1,1,1,1,1]}],\"eligible\":62,\"groups\":27,\"kind\":\"Read-only candidate audit; serialization equality is not a sharing proof\",\"materials\":475,\"potentialReduction\":35,\"reasons\":{\"mutable material\":12,\"non-PBR\":10,\"optical queue\":4,\"other roles\":326,\"textures\":57,\"unreferenced\":4}}"
+      }
+    ],
+    "structuredContent": {
+      "duplicates": [
+        {
+          "containers": 13,
+          "count": 13,
+          "name": "Graphite seals",
+          "roles": [
+            "wall",
+            "hull"
+          ],
+          "sourceBindingCounts": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "containers": 8,
+          "count": 8,
+          "name": "Amber marker",
+          "roles": [
+            "wall",
+            "hull"
+          ],
+          "sourceBindingCounts": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "containers": 9,
+          "count": 9,
+          "name": "Canopy marker emitter",
+          "roles": [
+            "wall",
+            "hull"
+          ],
+          "sourceBindingCounts": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "containers": 9,
+          "count": 9,
+          "name": "Titanium hardware",
+          "roles": [
+            "wall",
+            "hull"
+          ],
+          "sourceBindingCounts": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        }
+      ],
+      "eligible": 62,
+      "groups": 27,
+      "kind": "Read-only candidate audit; serialization equality is not a sharing proof",
+      "materials": 475,
+      "potentialReduction": 35,
+      "reasons": {
+        "mutable material": 12,
+        "non-PBR": 10,
+        "optical queue": 4,
+        "other roles": 326,
+        "textures": 57,
+        "unreferenced": 4
+      }
+    },
+    "isError": false
+  }
+}

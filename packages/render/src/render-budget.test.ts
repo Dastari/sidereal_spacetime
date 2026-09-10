@@ -210,8 +210,13 @@ test("current semantic Wayfarer loader resource budget and complete role attribu
       new GlowLayer("budget", scene),
     );
     glow.set(ship.meshes);
+    console.info("Semantic Wayfarer render budget", {
+      meshes: scene.meshes.length,
+      materials: scene.materials.length,
+    });
     expect(scene.meshes.length).toBeLessThanOrEqual(430);
-    expect(scene.materials.length).toBeLessThanOrEqual(181);
+    // R5: exact static equipment/cargo materials shared across owned libraries.
+    expect(scene.materials.length).toBeLessThanOrEqual(120);
     expect(scene.lights.length).toBeLessThanOrEqual(2);
     expect(
       scene.lights.filter((l) => l.getShadowGenerator()).length,
