@@ -28,7 +28,10 @@ def validate_build(folder):
     return digest.hexdigest()
 
 
-def command(action, cfg, lifecycle):
+def command(action, cfg, lifecycle, *, artifact=None, artifact_sha256=None):
+    if artifact is not None or artifact_sha256 is not None:
+        if action != 'stage' or not artifact or not artifact_sha256:
+            raise RuntimeError('Prebuilt client path and digest require stage only')
     if action == 'proxy':
         host = 'toby@10.0.1.248'
         container = 'nginx-proxy-manager-app-1'
@@ -43,9 +46,16 @@ def command(action, cfg, lifecycle):
     home = ROOT / '.runtime/public-client'
     current = home / 'current'
     if action in ('deploy', 'stage'):
-        lifecycle.run(['npm', 'run', 'build:client'])
-        source = ROOT / 'apps/client/dist'
+        if artifact is None:
+            lifecycle.run(['npm', 'run', 'build:client'])
+            source = ROOT / 'apps/client/dist'
+        else:
+            source = Path(artifact).absolute()
+            if source.is_symlink() or not source.is_dir():
+                raise RuntimeError('Prebuilt client must be a regular directory')
         digest = validate_build(source)
+        if artifact is not None and digest != artifact_sha256:
+            raise RuntimeError('Prebuilt client digest mismatch')
         release = home / 'releases' / (time.strftime('%Y%m%d-%H%M%S') + '-' + digest[:12])
         shutil.copytree(source, release)
         if validate_build(release) != digest:

@@ -63,3 +63,39 @@ class PublicBuildTests(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError, 'verification'):
                     command('activate', cfg, lifecycle)
             self.assertEqual(calls, [])
+
+
+class PrebuiltClientTests(unittest.TestCase):
+    def test_exact_prebuilt_stage_never_builds_or_stops_and_rejects_tampering(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            source = root / 'isolated/dist'
+            source.mkdir(parents=True)
+            (source / 'index.html').write_text('pinned isolated client')
+            digest = validate_build(source)
+            calls = []
+            lifecycle = SimpleNamespace(run=lambda _: calls.append('build'), down=lambda _: calls.append('stop'))
+            cfg = {'public_client': {}, 'auth': {'client_origin': 'https://example.test'}}
+            with patch('public_client.ROOT', root):
+                command('stage', cfg, lifecycle, artifact=source, artifact_sha256=digest)
+                self.assertEqual(calls, [])
+                self.assertFalse((root / '.runtime/public-client/current').exists())
+                staged = (root / '.runtime/public-client/staged.json').read_text()
+                (source / 'index.html').write_text('later edit')
+                with self.assertRaisesRegex(RuntimeError, 'digest mismatch'):
+                    command('stage', cfg, lifecycle, artifact=source, artifact_sha256=digest)
+                self.assertEqual((root / '.runtime/public-client/staged.json').read_text(), staged)
+                with self.assertRaisesRegex(RuntimeError, 'stage only'):
+                    command('activate', cfg, lifecycle, artifact=source, artifact_sha256=digest)
+                self.assertEqual(calls, [])
+
+    def test_prebuilt_symlink_directory_rejected(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            source = root / 'source'
+            source.mkdir()
+            (source / 'index.html').write_text('client')
+            alias = root / 'alias'
+            alias.symlink_to(source, target_is_directory=True)
+            with patch('public_client.ROOT', root), self.assertRaisesRegex(RuntimeError, 'regular directory'):
+                command('stage', {'public_client': {}}, SimpleNamespace(), artifact=alias, artifact_sha256=validate_build(source))

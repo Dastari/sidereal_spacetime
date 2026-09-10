@@ -146,6 +146,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('command', choices=['restore-review-prepare', 'restore-review-up', 'restore-review-restart', 'restore-review-stop', 'backup-database', 'public-client-stage', 'public-client-activate', 'public-client-deploy', 'public-client-up', 'public-client-stop', 'public-client-proxy', 'auth-https-setup', 'auth-https-status', 'auth-https-stop', 'keycloak-setup', 'keycloak-start', 'keycloak-stop', 'keycloak-status', 'keycloak-bootstrap', 'keycloak-authoring', 'keycloak-game-origin', 'keycloak-repair-cache', 'keycloak-review-grant', 'keycloak-review-revoke', 'keycloak-shared-review-account', 'keycloak-native-public-review-account', 'setup', 'up', 'up-client', 'up-dashboard', 'down', 'stop-client', 'stop-dashboard', 'status', 'build-world', 'generate', 'publish', 'publish-review', 'export-art', 'export-voxels', 'export-engine', 'export-assembly', 'export-bulkheads', 'export-crew', 'export-equipment', 'export-inventory-icons', 'mcp', 'smoke-prepare', 'smoke-update', 'smoke', 'smoke-restart', 'smoke-auth-admission', 'restart-database', 'backup'])
     parser.add_argument('--review-name', help='Named additive test database suffix; publish-review only')
+    parser.add_argument('--client-artifact', help='Pinned prebuilt client directory; public-client-stage only')
+    parser.add_argument('--client-artifact-sha256', help='Required complete tree digest with --client-artifact')
     parser.add_argument('--module-artifact', help='Pinned compiled JS/WASM; publish-review only')
     parser.add_argument('--artifact-sha256', help='Required digest with --module-artifact')
     parser.add_argument('--smoke-name', help='Separate named smoke database; additive publication, never reset')
@@ -167,6 +169,9 @@ def main():
     if args.module_artifact is not None or args.artifact_sha256 is not None:
         if command != 'publish-review' or not args.module_artifact or not args.artifact_sha256:
             parser.error('Pinned module artifact and SHA-256 are paired publish-review-only arguments')
+    if args.client_artifact is not None or args.client_artifact_sha256 is not None:
+        if command != 'public-client-stage' or not args.client_artifact or not args.client_artifact_sha256:
+            parser.error('Prebuilt client path and SHA-256 are paired public-client-stage-only arguments')
     if args.review_name is not None and command != 'publish-review':
         parser.error('--review-name is valid only for publish-review')
     if command.startswith('restore-review-'):
@@ -177,7 +182,7 @@ def main():
             down('public-client')
         else:
             from public_client import command as public_command
-            public_command(command.removeprefix('public-client-'), CFG, sys.modules[__name__])
+            public_command(command.removeprefix('public-client-'), CFG, sys.modules[__name__], artifact=args.client_artifact, artifact_sha256=args.client_artifact_sha256)
     elif command.startswith('auth-https-'):
         from auth_https import command as auth_https_command
         auth_https_command(command.removeprefix('auth-https-'), CFG)

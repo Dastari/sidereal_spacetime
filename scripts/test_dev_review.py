@@ -78,5 +78,19 @@ class ReviewDatabaseTests(unittest.TestCase):
         publish.assert_not_called()
 
 
+    def test_prebuilt_client_flags_cannot_activate_or_publish(self):
+        with patch('public_client.command') as public, patch.object(dev, 'publish') as publish, contextlib.redirect_stderr(io.StringIO()):
+            for args in [('public-client-activate','--client-artifact','dist','--client-artifact-sha256','a'*64),('publish','--client-artifact','dist','--client-artifact-sha256','a'*64),('public-client-stage','--client-artifact','dist'),('public-client-stage','--client-artifact-sha256','a'*64)]:
+                with self.subTest(args=args), self.assertRaises(SystemExit): self.invoke(*args)
+        public.assert_not_called();publish.assert_not_called()
+
+    def test_prebuilt_client_stage_passes_exact_artifact_contract(self):
+        with patch('public_client.command') as public, patch.object(dev, 'publish') as publish:
+            self.invoke('public-client-stage','--client-artifact','/private/candidate/dist','--client-artifact-sha256','a'*64)
+        self.assertEqual(public.call_args.args[0],'stage')
+        self.assertEqual(public.call_args.kwargs, {'artifact':'/private/candidate/dist','artifact_sha256':'a'*64})
+        publish.assert_not_called()
+
+
 if __name__ == "__main__":
     unittest.main()
