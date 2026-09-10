@@ -1,0 +1,27 @@
+{
+  "packages/world": {
+    "identical": true,
+    "files": 120,
+    "differences": []
+  },
+  "packages/sim": {
+    "identical": true,
+    "files": 122,
+    "differences": []
+  },
+  "packages/content": {
+    "identical": true,
+    "files": 59,
+    "differences": []
+  },
+  "packages/net": {
+    "identical": true,
+    "files": 104,
+    "differences": []
+  },
+  "assets": {
+    "identical": true,
+    "files": 19740,
+    "differences": []
+  }
+}

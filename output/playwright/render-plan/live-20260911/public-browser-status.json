@@ -1,0 +1,8 @@
+{
+  "body": "DASTARI\nSign in to your account\nUsername or email\nPassword\nRemember me\nSign In\nNew user? Register",
+  "capturedAt": "2026-09-10T15:38:48.702Z",
+  "focus": false,
+  "origin": "https://auth.dastari.net",
+  "path": "/realms/dastari/protocol/openid-connect/auth",
+  "visibility": "visible"
+}
