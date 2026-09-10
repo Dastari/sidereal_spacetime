@@ -1,3 +1,4 @@
+import { createFlightActiveSet } from "./flight-active-set";
 import { createStaticMaterialFreeze, invalidateStaticMaterials } from "./static-material-freeze";
 import { createDebugVisibilityRevision } from "./debug-visibility-revision";
 import { createShipGlowOccluders } from './ship-glow-occluders';
@@ -725,6 +726,7 @@ async function buildWorld(
     options.sharedWorld?.bodies(nowMs) ?? state.bodies ?? [];
   const debugVisibilityRevision = createDebugVisibilityRevision();
   const staticMaterials = createStaticMaterialFreeze(scene);
+  const flightActiveSet = createFlightActiveSet(scene);
   let firstFrame = true;
   engine.runRenderLoop(() => {
     // A failed initial load stays covered by Retry/Sign out. Do not keep
@@ -959,6 +961,7 @@ async function buildWorld(
     );
     const updateCpuMs = performance.now() - frameStarted;
     staticMaterials.prepare();
+    flightActiveSet.prepare(!firstFrame && !!state.seated && !state.interior && !state.inspect && !focusedBodyId && blend < .001);
     scene.render();
     diagnostics.recordFrameCpu(performance.now() - frameStarted, updateCpuMs);
     if (
@@ -1078,6 +1081,7 @@ async function buildWorld(
     getRenderBackend: () => backend.snapshot(),
     setRenderBackend: (value: RenderBackend) => backend.set(value),
     setAntialiasing(patch: Partial<AntialiasingSettings>) {
+      flightActiveSet.invalidate();
       invalidateStaticMaterials(scene);
       antialiasing.set(patch);
     },
@@ -1088,6 +1092,7 @@ async function buildWorld(
       graphics.set(patch);
     },
     resetGraphicsSettings() {
+      flightActiveSet.invalidate();
       invalidateStaticMaterials(scene);
       graphics.reset();
       antialiasing.reset();
@@ -1098,6 +1103,7 @@ async function buildWorld(
       return localLights.snapshot();
     },
     setLocalLightLimit(limit: LocalLightLimit) {
+      flightActiveSet.invalidate();
       invalidateStaticMaterials(scene);
       localLights.setLimit(limit);
     },
@@ -1126,11 +1132,13 @@ async function buildWorld(
         : undefined;
     },
     toggleDebugFeature(key: DebugFeature) {
+      flightActiveSet.invalidate();
       invalidateStaticMaterials(scene);
       debugFeatures.toggle(key);
       antialiasing.resetHistory();
     },
     resetDebugFeatures() {
+      flightActiveSet.invalidate();
       invalidateStaticMaterials(scene);
       debugFeatures.reset();
       antialiasing.resetHistory();
@@ -1142,6 +1150,7 @@ async function buildWorld(
       remoteShipIds: remoteShips?.getRootIds() ?? [],
     }),
     update(next: SceneState) {
+      if (next.interior !== state.interior || next.inspect !== state.inspect || next.seated !== state.seated) flightActiveSet.invalidate();
       const temporalNow = performance.now();
       if (invalidatesTemporalHistory(state, next, temporalNow - temporalStateAt))
         antialiasing.resetHistory();
@@ -1186,6 +1195,7 @@ async function buildWorld(
     dispose() {
       if (disposed) return;
       disposed = true;
+      flightActiveSet.dispose();
       staticMaterials.dispose();
       updateConstructionTraversal = undefined;
       updateConstructionDoors = undefined;

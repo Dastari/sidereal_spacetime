@@ -1,0 +1,10 @@
+{
+  "body": "Account\n◒\nSidereal\n\nWayfarer\n\nPreparing to board\n\nPreparing the first frame\n\nYour ship and equipment will be ready before you enter.\n\nWASD to move · TAB to change view\nSign out",
+  "frame": 4,
+  "sceneId": 25,
+  "sceneReady": false,
+  "visibility": "visible",
+  "snapshotError": "Preview snapshot failed",
+  "acceptance": "No settled seated Flight or isolation sequence. Current construction review retained; no authority mutation for measurement.",
+  "reference": "R5/instance-readiness contains current construction Deck counts with pre-final-cleanup R6 code; not an R6 Flight comparison."
+}
