@@ -1,4 +1,5 @@
 import { batchStaticMaterials } from "./static-material-batches";
+import { cacheStaticTransforms } from "./static-transform-cache";
 import { mergeStructuralPlacements } from "./structural-batches";
 import { canInstancePlacement } from "./placement-instance";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
@@ -56,7 +57,9 @@ export async function loadConstructionAuthoredAssembly(
   }[] = [];
   const roots: TransformNode[] = [];
   const cargoPrototypes = new Map<string, Mesh[]>();
+  let staticTransforms: ReturnType<typeof cacheStaticTransforms> | undefined;
   const dispose = () => {
+    staticTransforms?.dispose();
     for (const p of placements) p.lighting.dispose();
     for (const node of roots) node.dispose(false, false);
     roots.length = 0;
@@ -185,9 +188,11 @@ export async function loadConstructionAuthoredAssembly(
       p.meshes = [...retained, ...batches];
       p.lighting.setMeshes(p.meshes);
     }
+    const meshes = [...new Set(placements.flatMap((p) => p.meshes))];
+    staticTransforms = cacheStaticTransforms(parent, meshes);
     return {
       placements,
-      meshes: [...new Set(placements.flatMap((p) => p.meshes))],
+      meshes,
       dispose,
       setView(_camera: Vector3, interior: boolean) {
         // Orbit never removes walls. Only the roof opens for the deck view.
