@@ -3,6 +3,17 @@ import {
   preserveBeforeTemplate,
 } from "./wayfarer-template";
 import { useEffect, useRef, useState } from "react";
+import { HULL_SIZE_CATALOG } from "@sidereal/content/hull-size-catalog";
+import {
+  readHullCatalogue,
+  writeHullCatalogue,
+  type HullSizeDefinition,
+} from "./hull-catalogue";
+import {
+  readStructuralTools,
+  structuralTools,
+  type StructuralToolSettings,
+} from "./structural-tools";
 import {
   emptyLayout,
   withRequiredShapeDependency,
@@ -102,6 +113,28 @@ function boot() {
 }
 export function useLayout() {
   const [initial] = useState(boot),
+    [hullInitial] = useState(() => {
+      try {
+        const raw = localStorage.getItem(
+          `sidereal.layout.hull-catalogue.v1:${initial.identity}`,
+        );
+        return {
+          raw,
+          entries: raw
+            ? readHullCatalogue(raw)
+            : HULL_SIZE_CATALOG.map(({ origin: _origin, ...entry }) => entry),
+          error: "",
+        };
+      } catch (e) {
+        return {
+          raw: null,
+          entries: [] as HullSizeDefinition[],
+          error: String(e),
+        };
+      }
+    }),
+    [hullCatalogue, setHullCatalogue] = useState(hullInitial.entries),
+    [hullCatalogueError, setHullCatalogueError] = useState(hullInitial.error),
     [history, setHistory] = useState<History | null>(initial.history),
     [view, setView] = useState<ViewState>(initial.view),
     [error, setError] = useState(initial.error),
@@ -119,6 +152,7 @@ export function useLayout() {
     }
   });
   const expected = useRef(initial.raw),
+    hullExpected = useRef(hullInitial.raw),
     sequence = useRef(initial.sequence),
     writer = useRef(uuid()),
     worker = useRef<Worker | null>(null),
@@ -266,6 +300,70 @@ export function useLayout() {
     history,
     view,
     setView,
+    hullCatalogue,
+    hullCatalogueError,
+    saveHullSize: (entry: HullSizeDefinition) => {
+      try {
+        const next = hullCatalogue.some((h) => h.id === entry.id)
+          ? hullCatalogue.map((h) => (h.id === entry.id ? entry : h))
+          : [...hullCatalogue, entry];
+        hullExpected.current = writeHullCatalogue(
+          localStorage,
+          `sidereal.layout.hull-catalogue.v1:${initial.identity}`,
+          hullExpected.current,
+          next,
+        );
+        setHullCatalogue(next);
+        setHullCatalogueError("");
+        return true;
+      } catch (e) {
+        setHullCatalogueError(String(e));
+        return false;
+      }
+    },
+    exportHullCatalogue: () =>
+      download(
+        localStorage.getItem(
+          `sidereal.layout.hull-catalogue.v1:${initial.identity}`,
+        ) ??
+          JSON.stringify(
+            { schema: "sidereal.hull-size-catalogue.v1", sizes: hullCatalogue },
+            null,
+            2,
+          ),
+        "hull-size-catalogue.json",
+      ),
+    importHullCatalogue: async (file: File) => {
+      try {
+        if (file.size > 65536) throw Error("Hull catalogue exceeds64KiB");
+        const entries = readHullCatalogue(await file.text());
+        const key = `sidereal.layout.hull-catalogue.v1:${initial.identity}`,
+          old = localStorage.getItem(key);
+        if (old) localStorage.setItem(`${key}:preserved:${uuid()}`, old);
+        hullExpected.current = writeHullCatalogue(
+          localStorage,
+          key,
+          old,
+          entries,
+        );
+        setHullCatalogue(entries);
+        setHullCatalogueError("");
+      } catch (e) {
+        setHullCatalogueError(String(e));
+      }
+    },
+    structuralTools: structuralTools(view.structuralTools),
+    setStructuralTools: (patch: Partial<StructuralToolSettings>) => {
+      try {
+        const next = readStructuralTools({
+          ...structuralTools(view.structuralTools),
+          ...patch,
+        });
+        setView((v) => ({ ...v, structuralTools: next }));
+      } catch (e) {
+        setError(String(e));
+      }
+    },
     error,
     setError,
     recovery,

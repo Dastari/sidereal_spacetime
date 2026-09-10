@@ -6,12 +6,17 @@ import {
   transformPoint,
 } from "../../../../../packages/content/src/ship-layout";
 import { readLayout } from "../../../../../packages/sim/src/layout-validation";
+import {
+  readStructuralTools,
+  type StructuralToolSettings,
+} from "./structural-tools";
 export interface History {
   past: LayoutDocument[];
   present: LayoutDocument;
   future: LayoutDocument[];
 }
 export interface ViewState {
+  structuralTools?: StructuralToolSettings;
   deckId: string;
   mode: "Structure" | "Rooms" | "Objects" | "Hull" | "Systems";
   projection: "Top" | "Side" | "Front" | "3D";
@@ -24,6 +29,7 @@ export interface ViewState {
     labels: boolean;
     routes: boolean;
     objects: boolean;
+    exteriorHull?: boolean;
   };
   leftWidth: number;
   rightWidth: number;
@@ -48,6 +54,7 @@ export const DEFAULT_VIEW: ViewState = {
     labels: true,
     routes: true,
     objects: true,
+    exteriorHull: true,
   },
   leftWidth: 248,
   rightWidth: 280,
@@ -111,6 +118,8 @@ export function readCheckpoint(raw: string): Checkpoint {
       "Recovery history crosses document or live-reference identities",
     );
   const view = v.view;
+  if (view?.structuralTools !== undefined)
+    readStructuralTools(view.structuralTools);
   if (
     !view ||
     !["Structure", "Rooms", "Objects", "Hull", "Systems"].includes(view.mode) ||
@@ -127,12 +136,23 @@ export function readCheckpoint(raw: string): Checkpoint {
     view.camera.scale > 8 ||
     ![1, 16, 32, 64].includes(view.grid) ||
     !view.layers ||
+    (view.layers.exteriorHull !== undefined &&
+      typeof view.layers.exteriorHull !== "boolean") ||
     ["floor", "walls", "roof", "labels", "routes", "objects"].some(
       (k) => typeof view.layers[k as keyof ViewState["layers"]] !== "boolean",
     )
   )
     throw new Error("Unsupported saved camera/layers");
-  return v;
+  return {
+    ...v,
+    view: {
+      ...view,
+      layers: {
+        ...view.layers,
+        exteriorHull: view.layers.exteriorHull ?? true,
+      },
+    },
+  };
 }
 export function writeCheckpoint(
   storage: Pick<Storage, "getItem" | "setItem">,

@@ -23,6 +23,14 @@ import {
 import type { Tool } from "./LayoutCanvas";
 import type { ViewState } from "./state";
 import { useLayout, uuid } from "./useLayout";
+import { HullSizePanel } from "./HullSizePanel";
+import {
+  setHullEnvelope,
+  setWallFace,
+  setFloorStyle,
+} from "@sidereal/sim/layout-structure";
+import { DOOR_WIDTHS, changeStructuralOpening } from "./structural-edits";
+import { floorModelOptions } from "@sidereal/sim/layout-native-floor";
 const roomTypes = [
   "Bridge",
   "Crew quarters",
@@ -67,6 +75,7 @@ export interface LayoutPanelContext {
   inspector: "Inspector" | "Layers" | "Validation";
   setInspector: (value: "Inspector" | "Layers" | "Validation") => void;
   selectedTile: LayoutDocument["tiles"][number] | undefined;
+  selectedWallKey?: string;
   selectedRoom: LayoutDocument["rooms"][number] | undefined;
   selectedPartition: LayoutDocument["partitions"][number] | undefined;
   selectedOpening: LayoutDocument["openings"][number] | undefined;
@@ -144,6 +153,14 @@ export function LayoutPalette(props: LayoutPanelContext) {
       aria-label="Decks and asset palette"
       hidden={!showLeft}
     >
+      {view.mode === "Structure" && doc && (
+        <HullSizePanel
+          editor={editor}
+          doc={doc}
+          blocked={blocked}
+          apply={(hull) => commit((d) => setHullEnvelope(d, hull))}
+        />
+      )}
       <EditorSection title="Decks">
         {doc?.decks.map((deck) => (
           <button
@@ -307,19 +324,81 @@ export function LayoutPalette(props: LayoutPanelContext) {
               aria-pressed={tool === "partition"}
               onClick={() => setTool("partition")}
             >
-              Draw partition
+              Draw internal wall
             </button>
             <button
               className="layout-wide"
-              disabled={blocked}
+              disabled={blocked || !doc?.structure}
               aria-pressed={tool === "door"}
               onClick={() => setTool("door")}
             >
-              Reserve door opening
+              Place door opening
             </button>
+            <PropertyField label="Door width" unit="m">
+              <select
+                aria-label="New door width"
+                value={editor.structuralTools.doorWidth}
+                onChange={(e) =>
+                  editor.setStructuralTools({
+                    doorWidth: Number(e.target.value),
+                  })
+                }
+              >
+                {DOOR_WIDTHS.map((w) => (
+                  <option value={w} key={w}>
+                    {w / 32}
+                  </option>
+                ))}
+              </select>
+            </PropertyField>
+            <PropertyField label="Door type">
+              <select
+                aria-label="New door type"
+                value={editor.structuralTools.doorKind}
+                onChange={(e) =>
+                  editor.setStructuralTools({
+                    doorKind: e.target.value as "door" | "passage" | "airlock",
+                  })
+                }
+              >
+                <option value="door">Sealing door</option>
+                <option value="passage">Open passage</option>
+                <option value="airlock">Airlock opening</option>
+              </select>
+            </PropertyField>
+            {doc?.structure && (
+              <PropertyField label="Wall edge subdivision" unit="m">
+                <select
+                  aria-label="Wall edge subdivision"
+                  disabled={blocked}
+                  value={doc.structure.grid}
+                  onChange={(e) =>
+                    commit((d) =>
+                      setHullEnvelope(
+                        {
+                          ...d,
+                          structure: {
+                            ...d.structure!,
+                            grid: Number(e.target.value) as 16 | 32 | 64,
+                          },
+                        },
+                        d.structure!.hull,
+                      ),
+                    )
+                  }
+                >
+                  {[16, 32, 64].map((g) => (
+                    <option key={g} value={g}>
+                      {g / 32}
+                    </option>
+                  ))}
+                </select>
+              </PropertyField>
+            )}
             <p className="layout-note">
-              Draw partitions along tile boundaries. Room seeds select connected
-              floor regions; door sweeps reserve both approaches.
+              Internal walls follow grid edges. Doors snap to wall slots with
+              space for their jambs and approaches. Exterior walls follow the
+              floor plan and cannot be deleted separately.
             </p>
           </>
         )}
@@ -444,7 +523,7 @@ export function LayoutPalette(props: LayoutPanelContext) {
         )}
       </EditorSection>
       <EditorSection title="Separate workflows">
-        <ConstructionPanel doc={doc} onLoad={d=>editor.adoptServer(d)} />
+        <ConstructionPanel doc={doc} onLoad={(d) => editor.adoptServer(d)} />
         <button
           className="layout-wide"
           onClick={editor.save}
@@ -452,20 +531,19 @@ export function LayoutPalette(props: LayoutPanelContext) {
         >
           Save local draft
         </button>
-        {["Apply live refit", "Capture live to draft"].map(
-          (t) => (
-            <button
-              key={t}
-              className="layout-wide"
-              disabled
-              title="Requires future private authority service and capability checks"
-            >
-              {t} · unavailable
-            </button>
-          ),
-        )}
+        {["Apply live refit", "Capture live to draft"].map((t) => (
+          <button
+            key={t}
+            className="layout-wide"
+            disabled
+            title="Requires future private authority service and capability checks"
+          >
+            {t} · unavailable
+          </button>
+        ))}
         <p className="layout-note">
-          Blueprint publication is separate from installation. Live refit and capture require their own authorized transactions.
+          Blueprint publication is separate from installation. Live refit and
+          capture require their own authorized transactions.
         </p>
       </EditorSection>
     </aside>
@@ -520,6 +598,21 @@ export function LayoutInspector(props: LayoutPanelContext) {
     errors,
     transform,
   } = props;
+  const wallKey = props.selectedWallKey ?? selection[0];
+  const wallAnchor =
+    result?.walls.find((w) => w.key === wallKey)?.anchorId ?? wallKey;
+  const selectedWall = result?.structure?.walls.find(
+    (w) => w.id === wallKey || w.anchorId === wallAnchor,
+  );
+  const floorStyle = selectedTile
+    ? doc?.structure?.tileStyles[selectedTile.id]
+    : undefined;
+  const floorOptions = selectedTile
+    ? floorModelOptions(
+        selectedTile,
+        doc?.decks.find((d) => d.id === selectedTile.deckId)?.elevation ?? 0,
+      )
+    : [];
   return (
     <aside
       className="layout-right"
@@ -570,7 +663,7 @@ export function LayoutInspector(props: LayoutPanelContext) {
               (selectedOpening
                 ? "Opening reservation"
                 : selectedPartition
-                  ? "Partition"
+                  ? "Internal wall"
                   : selectedFitting
                     ? "Visual placement"
                     : selectedRoute
@@ -579,7 +672,11 @@ export function LayoutInspector(props: LayoutPanelContext) {
                         ? "Floor tile"
                         : view.mode === "Hull"
                           ? "Exterior appearance"
-                          : "Placement settings")
+                          : selectedWall
+                            ? selectedWall.source === "perimeter"
+                              ? "Exterior wall"
+                              : "Internal wall"
+                            : "Placement settings")
             }
           >
             {selection.length > 0 && (
@@ -588,6 +685,54 @@ export function LayoutInspector(props: LayoutPanelContext) {
                   ? selection[0]
                   : `${selection.length} selected identities`}
               </p>
+            )}
+            {selectedWall && (
+              <>
+                <p className="layout-note">
+                  {selectedWall.source === "perimeter"
+                    ? "Generated from the floor plan. Edit the floor boundary to change this wall."
+                    : "An internal wall edge. Its two faces can use different finishes."}
+                </p>
+                {(["left", "right"] as const).map((side) => (
+                  <PropertyField
+                    key={side}
+                    label={`${side === "left" ? "Left" : "Right"} face finish`}
+                  >
+                    <input
+                      key={`${selectedWall.anchorId}:${side}:${selectedWall.faces[side] ?? ""}`}
+                      aria-label={`${side} wall face finish`}
+                      disabled={blocked}
+                      defaultValue={selectedWall.faces[side] ?? "standard"}
+                      maxLength={128}
+                      onBlur={(e) => {
+                        if (
+                          e.target.value !==
+                          (selectedWall.faces[side] ?? "standard")
+                        )
+                          commit((d) =>
+                            setWallFace(
+                              d,
+                              selectedWall.anchorId,
+                              side,
+                              e.target.value,
+                            ),
+                          );
+                      }}
+                    />
+                  </PropertyField>
+                ))}
+                <p className="layout-note">
+                  Left and right follow the wall's A→B direction, independent of
+                  the camera.
+                </p>
+                <button
+                  className="layout-wide"
+                  disabled={blocked}
+                  onClick={() => setTool("door")}
+                >
+                  Place a door in this wall
+                </button>
+              </>
             )}
             {selectedRoom && (
               <>
@@ -661,11 +806,58 @@ export function LayoutInspector(props: LayoutPanelContext) {
             )}
             {selectedOpening && (
               <>
+                {doc?.structure && (
+                  <PropertyField label="Door grid span" unit="m">
+                    <select
+                      aria-label="Selected door width"
+                      disabled={blocked}
+                      value={Math.max(
+                        Math.abs(selectedOpening.b[0] - selectedOpening.a[0]),
+                        Math.abs(selectedOpening.b[1] - selectedOpening.a[1]),
+                      )}
+                      onChange={(e) =>
+                        commit((d) =>
+                          changeStructuralOpening(d, selectedOpening.id, {
+                            width: Number(e.target.value),
+                          }),
+                        )
+                      }
+                    >
+                      {[
+                        ...new Set([
+                          ...DOOR_WIDTHS,
+                          Math.max(
+                            Math.abs(
+                              selectedOpening.b[0] - selectedOpening.a[0],
+                            ),
+                            Math.abs(
+                              selectedOpening.b[1] - selectedOpening.a[1],
+                            ),
+                          ),
+                        ]),
+                      ]
+                        .sort((a, b) => a - b)
+                        .map((w) => (
+                          <option key={w} value={w}>
+                            {w / 32}
+                          </option>
+                        ))}
+                    </select>
+                  </PropertyField>
+                )}
+
                 <PropertyField label="Opening kind">
                   <select
                     value={selectedOpening.kind}
                     onChange={(e) =>
-                      changeSelected("openings", { kind: e.target.value })
+                      doc?.structure
+                        ? commit((d) =>
+                            changeStructuralOpening(d, selectedOpening.id, {
+                              kind: e.target.value as
+                                "door" | "passage" | "airlock",
+                            }),
+                          )
+                        : changeSelected("openings", { kind: e.target.value })
                     }
                   >
                     <option value="door">Interior door</option>
@@ -682,12 +874,41 @@ export function LayoutInspector(props: LayoutPanelContext) {
                     step=".25"
                     value={selectedOpening.clearance / 32}
                     onChange={(e) =>
-                      changeSelected("openings", {
-                        clearance: Math.round(Number(e.target.value) * 32),
-                      })
+                      doc?.structure
+                        ? commit((d) =>
+                            changeStructuralOpening(d, selectedOpening.id, {
+                              clearance: Math.round(
+                                Number(e.target.value) * 32,
+                              ),
+                            }),
+                          )
+                        : changeSelected("openings", {
+                            clearance: Math.round(Number(e.target.value) * 32),
+                          })
                     }
                   />
                 </PropertyField>
+                {doc?.structure && (
+                  <p className="layout-note">
+                    Width is the grid span; diagonal openings have the longer
+                    clear width shown below. Corner, junction and approach
+                    clearance are checked on every edit.
+                  </p>
+                )}
+                <button
+                  className="layout-wide"
+                  disabled={blocked}
+                  onClick={() =>
+                    commit((d) => ({
+                      ...d,
+                      openings: d.openings.filter(
+                        (o) => o.id !== selectedOpening.id,
+                      ),
+                    }))
+                  }
+                >
+                  Remove door opening
+                </button>
                 <dl>
                   <dt>Reserved width</dt>
                   <dd>
@@ -697,7 +918,7 @@ export function LayoutInspector(props: LayoutPanelContext) {
                     ) / 32}{" "}
                     m
                   </dd>
-                  <dt>Parent partition</dt>
+                  <dt>Parent wall</dt>
                   <dd>{selectedOpening.partitionId}</dd>
                   <dt>Door / seal state</dt>
                   <dd>Not simulated</dd>
@@ -846,6 +1067,109 @@ export function LayoutInspector(props: LayoutPanelContext) {
             )}
             {selectedTile && (
               <>
+                {doc?.structure && (
+                  <>
+                    <PropertyField label="Floor finish">
+                      <input
+                        key={`${selectedTile.id}:${floorStyle?.material ?? selectedTile.material}`}
+                        aria-label="Floor finish"
+                        disabled={blocked}
+                        defaultValue={
+                          floorStyle?.material ?? selectedTile.material
+                        }
+                        maxLength={128}
+                        onBlur={(e) => {
+                          if (
+                            e.target.value !==
+                            (floorStyle?.material ?? selectedTile.material)
+                          )
+                            commit((d) =>
+                              setFloorStyle(d, selectedTile.id, {
+                                ...d.structure?.tileStyles[selectedTile.id],
+                                material: e.target.value,
+                              }),
+                            );
+                        }}
+                      />
+                    </PropertyField>
+                    <PropertyField label="Floor model override">
+                      <select
+                        aria-label="Floor model override"
+                        disabled={blocked}
+                        value={
+                          floorStyle?.model
+                            ? JSON.stringify([
+                                floorStyle.model.assetId,
+                                floorStyle.model.revision,
+                              ])
+                            : ""
+                        }
+                        onChange={(e) => {
+                          const model = floorOptions.find(
+                            (a) =>
+                              JSON.stringify([a.assetId, a.revision]) ===
+                              e.target.value,
+                          );
+                          if (e.target.value && !model) {
+                            editor.setError(
+                              "Choose an available pinned floor model or the generated default.",
+                            );
+                            return;
+                          }
+                          commit((d) => {
+                            const { model: _old, ...style } =
+                              d.structure?.tileStyles[selectedTile.id] ?? {};
+                            return setFloorStyle(
+                              d,
+                              selectedTile.id,
+                              model
+                                ? {
+                                    ...style,
+                                    model: {
+                                      assetId: model.assetId,
+                                      revision: model.revision,
+                                    },
+                                  }
+                                : style,
+                            );
+                          });
+                        }}
+                      >
+                        <option value="">Generated floor model</option>
+                        {floorStyle?.model &&
+                          !floorOptions.some(
+                            (a) =>
+                              a.assetId === floorStyle.model?.assetId &&
+                              a.revision === floorStyle.model.revision,
+                          ) && (
+                            <option
+                              value={JSON.stringify([
+                                floorStyle.model.assetId,
+                                floorStyle.model.revision,
+                              ])}
+                            >
+                              Saved model unavailable · retained
+                            </option>
+                          )}
+                        {floorOptions.map((a) => (
+                          <option
+                            key={`${a.assetId}:${a.revision}`}
+                            value={JSON.stringify([a.assetId, a.revision])}
+                          >
+                            {catalog?.assets.find(
+                              (asset) => asset.id === a.assetId,
+                            )?.label ?? a.partId}
+                          </option>
+                        ))}
+                      </select>
+                    </PropertyField>
+                    <p className="layout-note">
+                      Finishes and native model choices keep the floor tile
+                      identity and footprint.
+                    </p>
+                  </>
+                )}
+
                 <PropertyField label="Replace tile shape">
                   <select
                     aria-label="Replace tile shape"
