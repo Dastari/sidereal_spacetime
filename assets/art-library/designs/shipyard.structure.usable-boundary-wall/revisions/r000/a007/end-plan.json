@@ -1,0 +1,704 @@
+{
+  "schema": "sidereal.usable-wall-end-plan.v1",
+  "sourceMappingSha256": "7b6be86b42e904def098f1a70a36bff08c18773e3efbc9337667af6da3f86e2e",
+  "entries": [
+    {
+      "sourcePlacedId": "wall--3--4",
+      "originalPlacement": {
+        "id": "wall--3--4",
+        "assetId": "part-070229a9a22dcd1fc3e1",
+        "position": [
+          -5.1875,
+          -8,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "body",
+          "anchorWorldM": [
+            -5,
+            -7,
+            0
+          ],
+          "quarterTurns": -1,
+          "sourceTranslationM": [
+            0.1875,
+            1,
+            0
+          ]
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "sourcePlacedId": "wall--2--4",
+      "originalPlacement": {
+        "id": "wall--2--4",
+        "assetId": "part-a086c1f719d417b167f3",
+        "position": [
+          -4,
+          -8,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "facing",
+          "anchorWorldM": [
+            -5,
+            -7,
+            0
+          ],
+          "quarterTurns": -1,
+          "sourceTranslationM": [
+            -1,
+            1,
+            0
+          ]
+        },
+        {
+          "source": "straight-2m",
+          "selection": "facing",
+          "anchorWorldM": [
+            -5,
+            -9,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceTranslationM": [
+            -1,
+            -1,
+            0
+          ]
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "sourcePlacedId": "wall--3-4",
+      "originalPlacement": {
+        "id": "wall--3-4",
+        "assetId": "part-46db5c6ab5c468a19a1b",
+        "position": [
+          -5.1875,
+          8,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "body",
+          "anchorWorldM": [
+            -5,
+            9,
+            0
+          ],
+          "quarterTurns": -1,
+          "sourceTranslationM": [
+            0.1875,
+            1,
+            0
+          ]
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "sourcePlacedId": "wall--2-4",
+      "originalPlacement": {
+        "id": "wall--2-4",
+        "assetId": "part-47fe7106f6e495b8869c",
+        "position": [
+          -4,
+          8,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "facing",
+          "anchorWorldM": [
+            -5,
+            9,
+            0
+          ],
+          "quarterTurns": -1,
+          "sourceTranslationM": [
+            -1,
+            1,
+            0
+          ]
+        },
+        {
+          "source": "straight-2m",
+          "selection": "all",
+          "anchorWorldM": [
+            -3,
+            9,
+            0
+          ],
+          "quarterTurns": 2,
+          "sourceTranslationM": [
+            1,
+            1,
+            0
+          ]
+        },
+        {
+          "source": "outer-corner",
+          "selection": "all",
+          "anchorWorldM": [
+            -5,
+            9,
+            0
+          ],
+          "quarterTurns": -1,
+          "sourceTranslationM": [
+            -1,
+            1,
+            0
+          ]
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "sourcePlacedId": "wall--3--5",
+      "originalPlacement": {
+        "id": "wall--3--5",
+        "assetId": "part-f4b0cfbfdcdfd800e350",
+        "position": [
+          -5.125,
+          -9.125,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "outer-corner",
+          "selection": "all",
+          "anchorWorldM": [
+            -5,
+            -9,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceTranslationM": [
+            0.125,
+            0.125,
+            0
+          ]
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "sourcePlacedId": "wall-3--4",
+      "originalPlacement": {
+        "id": "wall-3--4",
+        "assetId": "part-915dc23e886f070d75c4",
+        "position": [
+          5.125,
+          -8,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "body",
+          "anchorWorldM": [
+            5,
+            -9,
+            0
+          ],
+          "quarterTurns": 1,
+          "sourceTranslationM": [
+            -0.125,
+            -1,
+            0
+          ]
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "sourcePlacedId": "wall-2--4",
+      "originalPlacement": {
+        "id": "wall-2--4",
+        "assetId": "part-262364013153b9117f95",
+        "position": [
+          4,
+          -8,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "facing",
+          "anchorWorldM": [
+            5,
+            -9,
+            0
+          ],
+          "quarterTurns": 1,
+          "sourceTranslationM": [
+            1,
+            -1,
+            0
+          ]
+        },
+        {
+          "source": "straight-2m",
+          "selection": "facing",
+          "anchorWorldM": [
+            3,
+            -9,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceTranslationM": [
+            -1,
+            -1,
+            0
+          ]
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "sourcePlacedId": "wall-3-4",
+      "originalPlacement": {
+        "id": "wall-3-4",
+        "assetId": "part-da5b65baa0bb652537e3",
+        "position": [
+          5.125,
+          8,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "body",
+          "anchorWorldM": [
+            5,
+            7,
+            0
+          ],
+          "quarterTurns": 1,
+          "sourceTranslationM": [
+            -0.125,
+            -1,
+            0
+          ]
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "sourcePlacedId": "wall-2-4",
+      "originalPlacement": {
+        "id": "wall-2-4",
+        "assetId": "part-7b9d7425f1a0c9d1b49d",
+        "position": [
+          4,
+          8,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "facing",
+          "anchorWorldM": [
+            5,
+            7,
+            0
+          ],
+          "quarterTurns": 1,
+          "sourceTranslationM": [
+            1,
+            -1,
+            0
+          ]
+        },
+        {
+          "source": "straight-2m",
+          "selection": "all",
+          "anchorWorldM": [
+            5,
+            9,
+            0
+          ],
+          "quarterTurns": 2,
+          "sourceTranslationM": [
+            1,
+            1,
+            0
+          ]
+        },
+        {
+          "source": "outer-corner",
+          "selection": "all",
+          "anchorWorldM": [
+            5,
+            9,
+            0
+          ],
+          "quarterTurns": 2,
+          "sourceTranslationM": [
+            1,
+            1,
+            0
+          ]
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "sourcePlacedId": "wall-3--5",
+      "originalPlacement": {
+        "id": "wall-3--5",
+        "assetId": "part-305bece95974253b0fbc",
+        "position": [
+          5.125,
+          -9.125,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "outer-corner",
+          "selection": "all",
+          "anchorWorldM": [
+            5,
+            -9,
+            0
+          ],
+          "quarterTurns": 1,
+          "sourceTranslationM": [
+            -0.125,
+            0.125,
+            0
+          ]
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "sourcePlacedId": "wall--2--5",
+      "originalPlacement": {
+        "id": "wall--2--5",
+        "assetId": "part-9a74ad0724eb741a2b63",
+        "position": [
+          -4,
+          -9.1875,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "body",
+          "anchorWorldM": [
+            -5,
+            -9,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceTranslationM": [
+            -1,
+            0.1875,
+            0
+          ]
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "sourcePlacedId": "wall--1--5",
+      "originalPlacement": {
+        "id": "wall--1--5",
+        "assetId": "part-4d2655e20be90a6b2257",
+        "position": [
+          -2,
+          -9.125,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "body",
+          "anchorWorldM": [
+            -3,
+            -9,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceTranslationM": [
+            -1,
+            0.125,
+            0
+          ]
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "sourcePlacedId": "wall--1--4",
+      "originalPlacement": {
+        "id": "wall--1--4",
+        "assetId": "part-8a552b558b8807293eed",
+        "position": [
+          -2,
+          -8,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "facing",
+          "anchorWorldM": [
+            -3,
+            -9,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceTranslationM": [
+            -1,
+            -1,
+            0
+          ]
+        }
+      ],
+      "preservePartitionNodes": [
+        "GEO-part-8a552b558b8807293eed--partitions"
+      ]
+    },
+    {
+      "sourcePlacedId": "wall-0--5",
+      "originalPlacement": {
+        "id": "wall-0--5",
+        "assetId": "part-b4de51cd37611d574002",
+        "position": [
+          0,
+          -9.125,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "body",
+          "anchorWorldM": [
+            -1,
+            -9,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceTranslationM": [
+            -1,
+            0.125,
+            0
+          ]
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "sourcePlacedId": "wall-0--4",
+      "originalPlacement": {
+        "id": "wall-0--4",
+        "assetId": "part-494f1ec5dcdcd3375a1a",
+        "position": [
+          0,
+          -8.875,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "facing",
+          "anchorWorldM": [
+            -1,
+            -9,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceTranslationM": [
+            -1,
+            -0.125,
+            0
+          ]
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "sourcePlacedId": "wall-1--5",
+      "originalPlacement": {
+        "id": "wall-1--5",
+        "assetId": "part-4d2655e20be90a6b2257",
+        "position": [
+          2,
+          -9.125,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "body",
+          "anchorWorldM": [
+            1,
+            -9,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceTranslationM": [
+            -1,
+            0.125,
+            0
+          ]
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "sourcePlacedId": "wall-1--4",
+      "originalPlacement": {
+        "id": "wall-1--4",
+        "assetId": "part-422bf815cc05a72270f8",
+        "position": [
+          2,
+          -8,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "facing",
+          "anchorWorldM": [
+            1,
+            -9,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceTranslationM": [
+            -1,
+            -1,
+            0
+          ]
+        }
+      ],
+      "preservePartitionNodes": [
+        "GEO-part-422bf815cc05a72270f8--partitions"
+      ]
+    },
+    {
+      "sourcePlacedId": "wall-2--5",
+      "originalPlacement": {
+        "id": "wall-2--5",
+        "assetId": "part-a7c31e5a4591741723d0",
+        "position": [
+          4,
+          -9.1875,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "body",
+          "anchorWorldM": [
+            3,
+            -9,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceTranslationM": [
+            -1,
+            0.1875,
+            0
+          ]
+        }
+      ],
+      "preservePartitionNodes": []
+    }
+  ],
+  "originalPlacementCount": 262,
+  "originalIdsRemoved": [],
+  "placedTransformsChanged": 0,
+  "installed": false,
+  "status": "native-source-plan-awaiting-export-and-qualification",
+  "limits": [
+    "Keep exact original R006 cockpit and armor sources.",
+    "Front pressure/corner surfaces use existing front composite identity; preserve cutaway roles at node level.",
+    "Geometry and support/collision/material joins must pass before template admission."
+  ]
+}

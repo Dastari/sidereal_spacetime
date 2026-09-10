@@ -1,0 +1,295 @@
+{
+  "schema": "sidereal.usable-wall-current-template-compatibility.v1",
+  "pass": true,
+  "currentDocumentPath": "packages/content/src/wayfarer-starter-r001.json",
+  "currentDocumentSha256": "362f37217f63a44a470676f104c8368bd0973ca03f5e29eab190bc4d6df71340",
+  "currentWalkingProofSha256": "99b9f964e7b80775b7a034a874b741e22aa4ce64fe95285745c0241527cdac02",
+  "sourceMappingSha256": "7b6be86b42e904def098f1a70a36bff08c18773e3efbc9337667af6da3f86e2e",
+  "preservedSourcePlacementCount": 262,
+  "nativeAssemblyPlacementCount": 211,
+  "semanticFloorPlacementCount": 51,
+  "replacementMappingPath": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/combined-replacement-mapping.json",
+  "replacementMappingSha256": "b352a401b5b2018338dc307dad9a0dde9fee221376ccf82fca5a7695dcd8c637",
+  "replacementSourcePlacedIds": [
+    "pilot-r005-outer-roof-collar-port",
+    "pilot-r005-outer-roof-collar-starboard",
+    "pilot-r005-outer-shoulder-transition-port",
+    "pilot-r005-outer-shoulder-transition-starboard",
+    "wall--1--4",
+    "wall--1--5",
+    "wall--2--1",
+    "wall--2--2",
+    "wall--2--3",
+    "wall--2--4",
+    "wall--2--5",
+    "wall--2-0",
+    "wall--2-1",
+    "wall--2-2",
+    "wall--2-3",
+    "wall--2-4",
+    "wall--3--1",
+    "wall--3--2",
+    "wall--3--3",
+    "wall--3--4",
+    "wall--3--5",
+    "wall--3-0",
+    "wall--3-1",
+    "wall--3-2",
+    "wall--3-3",
+    "wall--3-4",
+    "wall-0--4",
+    "wall-0--5",
+    "wall-1--4",
+    "wall-1--5",
+    "wall-2--1",
+    "wall-2--2",
+    "wall-2--3",
+    "wall-2--4",
+    "wall-2--5",
+    "wall-2-0",
+    "wall-2-1",
+    "wall-2-2",
+    "wall-2-3",
+    "wall-2-4",
+    "wall-3--1",
+    "wall-3--2",
+    "wall-3--3",
+    "wall-3--4",
+    "wall-3--5",
+    "wall-3-0",
+    "wall-3-1",
+    "wall-3-2",
+    "wall-3-3",
+    "wall-3-4"
+  ],
+  "sourceTransformsChanged": 0,
+  "cabinetFindings": [
+    {
+      "cabinetSourcePlacedId": "equipment-locker--4.7--6",
+      "wallSourcePlacedId": "wall--2--3",
+      "cabinetAssetId": "part-c03ec0260cd7329050a8",
+      "cabinetNativeSource": {
+        "path": "assets/runtime/assembly/equipment/part-c03ec0260cd7329050a8/glb.glb",
+        "sha256": "f527af1e44fc1570355c2268055b7b31343c45849a807b40993cf516c263093a",
+        "nodePrefix": null
+      },
+      "currentWallNativeSource": {
+        "path": "assets/runtime/assembly/parts.glb",
+        "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+        "nodePrefix": "GEO-part-6e64c7b0aa0165cbe846--"
+      },
+      "unchangedCabinetPlacement": {
+        "assetId": "part-c03ec0260cd7329050a8",
+        "flipped": false,
+        "id": "equipment-locker--4.7--6",
+        "position": [
+          -4.6875,
+          -6,
+          0.1875
+        ],
+        "removedCells": [],
+        "rotation": 0
+      },
+      "currentIntersectionM3": 0.0004417465042662192,
+      "candidateIntersectionM3": 0.0,
+      "candidateGapM": 0.06550000000000011,
+      "candidateWallVisual": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay00-interior.glb",
+        "sha256": "a123c2a59e6e64e269d8915eb87fb65572b85c980d9b42cae023f88d32ff6a64",
+        "nodePrefix": "GEO-bay00-interior--"
+      },
+      "diagnosis": "Legacy wall composite consumes declared usable floor; complete locker and floor exports fit their own reserved envelopes. Correct the wall authoring interface, not the cabinet placement."
+    },
+    {
+      "cabinetSourcePlacedId": "equipment-locker--4.7--2",
+      "wallSourcePlacedId": "wall--2--1",
+      "cabinetAssetId": "part-c03ec0260cd7329050a8",
+      "cabinetNativeSource": {
+        "path": "assets/runtime/assembly/equipment/part-c03ec0260cd7329050a8/glb.glb",
+        "sha256": "f527af1e44fc1570355c2268055b7b31343c45849a807b40993cf516c263093a",
+        "nodePrefix": null
+      },
+      "currentWallNativeSource": {
+        "path": "assets/runtime/assembly/parts.glb",
+        "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+        "nodePrefix": "GEO-part-8027121656ac690dd209--"
+      },
+      "unchangedCabinetPlacement": {
+        "assetId": "part-c03ec0260cd7329050a8",
+        "flipped": false,
+        "id": "equipment-locker--4.7--2",
+        "position": [
+          -4.6875,
+          -2,
+          0.1875
+        ],
+        "removedCells": [],
+        "rotation": 0
+      },
+      "currentIntersectionM3": 0.0004417465042662168,
+      "candidateIntersectionM3": 0.0,
+      "candidateGapM": 0.06550000000000011,
+      "candidateWallVisual": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay02-interior.glb",
+        "sha256": "f3c3fab9c443b96057205085a8d8fab75f18b8da5e269c0e2f0e92a401c80572",
+        "nodePrefix": "GEO-bay02-interior--"
+      },
+      "diagnosis": "Legacy wall composite consumes declared usable floor; complete locker and floor exports fit their own reserved envelopes. Correct the wall authoring interface, not the cabinet placement."
+    },
+    {
+      "cabinetSourcePlacedId": "equipment-locker--4.7-2",
+      "wallSourcePlacedId": "wall--2-1",
+      "cabinetAssetId": "part-c03ec0260cd7329050a8",
+      "cabinetNativeSource": {
+        "path": "assets/runtime/assembly/equipment/part-c03ec0260cd7329050a8/glb.glb",
+        "sha256": "f527af1e44fc1570355c2268055b7b31343c45849a807b40993cf516c263093a",
+        "nodePrefix": null
+      },
+      "currentWallNativeSource": {
+        "path": "assets/runtime/assembly/parts.glb",
+        "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+        "nodePrefix": "GEO-part-6c3fb1c92331674881a0--"
+      },
+      "unchangedCabinetPlacement": {
+        "assetId": "part-c03ec0260cd7329050a8",
+        "flipped": false,
+        "id": "equipment-locker--4.7-2",
+        "position": [
+          -4.6875,
+          2,
+          0.1875
+        ],
+        "removedCells": [],
+        "rotation": 0
+      },
+      "currentIntersectionM3": 0.0004417465042662181,
+      "candidateIntersectionM3": 0.0,
+      "candidateGapM": 0.06550000000000011,
+      "candidateWallVisual": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay04-interior.glb",
+        "sha256": "fdc4f8e2a5ca880bb81a710e6a667a291c335405703df7bcd348f7c994aef805",
+        "nodePrefix": "GEO-bay04-interior--"
+      },
+      "diagnosis": "Legacy wall composite consumes declared usable floor; complete locker and floor exports fit their own reserved envelopes. Correct the wall authoring interface, not the cabinet placement."
+    },
+    {
+      "cabinetSourcePlacedId": "equipment-locker-4.7--6",
+      "wallSourcePlacedId": "wall-2--3",
+      "cabinetAssetId": "part-c03ec0260cd7329050a8",
+      "cabinetNativeSource": {
+        "path": "assets/runtime/assembly/equipment/part-c03ec0260cd7329050a8/glb.glb",
+        "sha256": "f527af1e44fc1570355c2268055b7b31343c45849a807b40993cf516c263093a",
+        "nodePrefix": null
+      },
+      "currentWallNativeSource": {
+        "path": "assets/runtime/assembly/parts.glb",
+        "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+        "nodePrefix": "GEO-part-c8b14cc871b1aad06c36--"
+      },
+      "unchangedCabinetPlacement": {
+        "assetId": "part-c03ec0260cd7329050a8",
+        "flipped": false,
+        "id": "equipment-locker-4.7--6",
+        "position": [
+          4.6875,
+          -6,
+          0.1875
+        ],
+        "removedCells": [],
+        "rotation": 0
+      },
+      "currentIntersectionM3": 0.00044174650426621697,
+      "candidateIntersectionM3": 0.0,
+      "candidateGapM": 0.06550000000000011,
+      "candidateWallVisual": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay07-interior.glb",
+        "sha256": "3d7391610a427f44bc2b1a459dba9b018a5d1dfdabc758d9ba4bea9e86a20e9c",
+        "nodePrefix": "GEO-bay07-interior--"
+      },
+      "diagnosis": "Legacy wall composite consumes declared usable floor; complete locker and floor exports fit their own reserved envelopes. Correct the wall authoring interface, not the cabinet placement."
+    },
+    {
+      "cabinetSourcePlacedId": "equipment-locker-4.7--2",
+      "wallSourcePlacedId": "wall-2--1",
+      "cabinetAssetId": "part-c03ec0260cd7329050a8",
+      "cabinetNativeSource": {
+        "path": "assets/runtime/assembly/equipment/part-c03ec0260cd7329050a8/glb.glb",
+        "sha256": "f527af1e44fc1570355c2268055b7b31343c45849a807b40993cf516c263093a",
+        "nodePrefix": null
+      },
+      "currentWallNativeSource": {
+        "path": "assets/runtime/assembly/parts.glb",
+        "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+        "nodePrefix": "GEO-part-16ad11623e8457b9fa65--"
+      },
+      "unchangedCabinetPlacement": {
+        "assetId": "part-c03ec0260cd7329050a8",
+        "flipped": false,
+        "id": "equipment-locker-4.7--2",
+        "position": [
+          4.6875,
+          -2,
+          0.1875
+        ],
+        "removedCells": [],
+        "rotation": 0
+      },
+      "currentIntersectionM3": 0.00044174650426621697,
+      "candidateIntersectionM3": 0.0,
+      "candidateGapM": 0.06550000000000011,
+      "candidateWallVisual": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay09-interior.glb",
+        "sha256": "1147cabae655cbf1c3a3f93b618da22223abff9336599b7e5472904703676bf0",
+        "nodePrefix": "GEO-bay09-interior--"
+      },
+      "diagnosis": "Legacy wall composite consumes declared usable floor; complete locker and floor exports fit their own reserved envelopes. Correct the wall authoring interface, not the cabinet placement."
+    },
+    {
+      "cabinetSourcePlacedId": "equipment-locker-4.7-2",
+      "wallSourcePlacedId": "wall-2-1",
+      "cabinetAssetId": "part-c03ec0260cd7329050a8",
+      "cabinetNativeSource": {
+        "path": "assets/runtime/assembly/equipment/part-c03ec0260cd7329050a8/glb.glb",
+        "sha256": "f527af1e44fc1570355c2268055b7b31343c45849a807b40993cf516c263093a",
+        "nodePrefix": null
+      },
+      "currentWallNativeSource": {
+        "path": "assets/runtime/assembly/parts.glb",
+        "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+        "nodePrefix": "GEO-part-c561706cce53aba7f13e--"
+      },
+      "unchangedCabinetPlacement": {
+        "assetId": "part-c03ec0260cd7329050a8",
+        "flipped": false,
+        "id": "equipment-locker-4.7-2",
+        "position": [
+          4.6875,
+          2,
+          0.1875
+        ],
+        "removedCells": [],
+        "rotation": 0
+      },
+      "currentIntersectionM3": 0.00044174650426621735,
+      "candidateIntersectionM3": 0.0,
+      "candidateGapM": 0.06550000000000011,
+      "candidateWallVisual": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay11-interior.glb",
+        "sha256": "db1928fd27baae484df8fa16f8f2ef3deaee1c16f4abc1fb84c932a337fec040",
+        "nodePrefix": "GEO-bay11-interior--"
+      },
+      "diagnosis": "Legacy wall composite consumes declared usable floor; complete locker and floor exports fit their own reserved envelopes. Correct the wall authoring interface, not the cabinet placement."
+    }
+  ],
+  "installed": false,
+  "wholeTemplateAdmissible": false,
+  "liveMigrationContract": [
+    "Server validates exact original canonical SHA, current expected instance revision and authoritative operation ID.",
+    "Resolve each of the50 sourcePlacedIds through that instance existing identity mapping; preserve all mapped UUIDs.",
+    "Change only qualified structural/armor visual and separately requalified collider bindings. Never copy the full review assembly over live state.",
+    "Keep all51 floor IDs, equipment/item/fitting/container UUIDs, inventories, appearance, health and transforms unchanged.",
+    "Reject unknown source revisions or mutated frames; this offline report is not a live refit authorization validator.",
+    "Full walking/support, finite enclosure, damage binding and installed renderer qualification remain prerequisites."
+  ],
+  "scope": "Current362f source artifact compatibility, not proof of arbitrary edited live instance state or final owner art approval."
+}

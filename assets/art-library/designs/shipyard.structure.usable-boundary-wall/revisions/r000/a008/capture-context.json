@@ -1,0 +1,203 @@
+{
+  "schema": "sidereal.native-side-bay-render.v1",
+  "sourcePins": [
+    {
+      "placedId": "floor--2-4",
+      "path": "assets/runtime/assembly/floor/r002/kit.glb",
+      "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originalPlacement": {
+        "id": "floor--2-4",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -5,
+          7,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-ce04d53853da84dd9d81",
+          "offset": [
+            1,
+            1,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      }
+    },
+    {
+      "placedId": "wall--2-4",
+      "path": "assets/runtime/assembly/parts.glb",
+      "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+      "nodePrefix": "GEO-part-47fe7106f6e495b8869c--",
+      "originalPlacement": {
+        "id": "wall--2-4",
+        "assetId": "part-47fe7106f6e495b8869c",
+        "position": [
+          -4,
+          8,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "placedId": "wall--3-4",
+      "path": "assets/runtime/assembly/parts.glb",
+      "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+      "nodePrefix": "GEO-part-46db5c6ab5c468a19a1b--",
+      "originalPlacement": {
+        "id": "wall--3-4",
+        "assetId": "part-46db5c6ab5c468a19a1b",
+        "position": [
+          -5.1875,
+          8,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "placedId": "superstructure--3-4",
+      "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+      "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+      "nodePrefix": "GEO-part-b351480b6386fb131dc0--surface",
+      "originalPlacement": {
+        "id": "superstructure--3-4",
+        "assetId": "part-b351480b6386fb131dc0",
+        "position": [
+          -5.5,
+          8,
+          -0.25
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "placedId": "pilot-r004-corner-buttress-18",
+      "path": "assets/runtime/assembly/hull/finish-r004/part-9f79f3a40a72f9b7ad4a/clean.glb",
+      "sha256": "1b787888f92e9a7691337c02b297a8895703544003ddcec8eb655ff1ffe91af3",
+      "nodePrefix": null,
+      "originalPlacement": {
+        "id": "pilot-r004-corner-buttress-18",
+        "assetId": "part-9f79f3a40a72f9b7ad4a",
+        "position": [
+          -3,
+          9,
+          0.1875
+        ],
+        "rotation": 0,
+        "flipped": true,
+        "removedCells": []
+      }
+    },
+    {
+      "placedId": "pilot-r005-outer-shoulder-transition-port",
+      "path": "assets/runtime/assembly/hull/finish-r004/part-e965a5502d9fe4c25406/clean.glb",
+      "sha256": "e34ba9c660088550058053cf9dff5a93bdc1b198d9262ba9f6f3acc05644a2fa",
+      "nodePrefix": null,
+      "originalPlacement": {
+        "id": "pilot-r005-outer-shoulder-transition-port",
+        "assetId": "part-e965a5502d9fe4c25406",
+        "position": [
+          -5,
+          9,
+          -0.25
+        ],
+        "rotation": 0,
+        "flipped": true,
+        "removedCells": []
+      }
+    },
+    {
+      "placedId": "pilot-r005-outer-roof-collar-port",
+      "path": "assets/runtime/assembly/roof/r004/kit.glb",
+      "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+      "nodePrefix": "GEO-outer-roof-collar--surface",
+      "originalPlacement": {
+        "id": "pilot-r005-outer-roof-collar-port",
+        "assetId": "part-b3a1decd8a0336ac2030",
+        "position": [
+          -5,
+          9,
+          -0.25
+        ],
+        "rotation": 0,
+        "flipped": true,
+        "removedCells": []
+      }
+    },
+    {
+      "placedId": "pilot-r004-floor-square-00",
+      "path": "assets/runtime/assembly/floor/r002/kit.glb",
+      "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originalPlacement": {
+        "id": "pilot-r004-floor-square-00",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -3,
+          9,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-7a1a34a2a908f8ff455b",
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "maxZ": 0.1875
+        }
+      }
+    },
+    {
+      "placedId": "pilot-r004-hull-straight-09",
+      "path": "assets/runtime/assembly/hull/finish-r004/part-4c25a5fd9da0bce537f5/clean.glb",
+      "sha256": "59dd466fd25f5555fd8d29bd4183c2e5c7dd99884586bc7f251a2736fbe396d1",
+      "nodePrefix": null,
+      "originalPlacement": {
+        "id": "pilot-r004-hull-straight-09",
+        "assetId": "part-4c25a5fd9da0bce537f5",
+        "position": [
+          -3,
+          11,
+          0.1875
+        ],
+        "rotation": -1.5707963267948966,
+        "flipped": false,
+        "removedCells": []
+      }
+    }
+  ],
+  "reviewOriginM": [
+    -5.0,
+    8.0,
+    0.0
+  ],
+  "cameraM": [
+    6.0,
+    -6.0,
+    5.0
+  ],
+  "lookAtM": [
+    1,
+    0.7,
+    1.2
+  ],
+  "orthoScaleM": 6.2,
+  "sourcePlacementChanges": 0,
+  "evidence": "Actual native Blender context; no installed-game claim; roofs omitted only for inspection."
+}

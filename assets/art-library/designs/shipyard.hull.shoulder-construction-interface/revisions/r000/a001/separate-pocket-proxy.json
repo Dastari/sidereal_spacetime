@@ -1,0 +1,15 @@
+{
+  "reservedVolume": {
+    "min": [
+      0,
+      0,
+      0.25
+    ],
+    "max": [
+      0.25,
+      0.25,
+      3.0
+    ]
+  },
+  "role": "Structural corner accommodation; no inferred seal/strength/damage rating"
+}

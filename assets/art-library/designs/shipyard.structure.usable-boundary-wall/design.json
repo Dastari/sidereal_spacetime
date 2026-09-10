@@ -13,7 +13,7 @@
   "priority": 1,
   "profile": "native-outward-wall-family",
   "assigned_to": "stair_document",
-  "blocker": "End/cockpit shoulder groups, internal partition interfaces, mounting spacers, whole enclosure and installed browser review remain.",
+  "blocker": "Combined full-hull enclosure/support/collision, retained interior partition mating, authority/damage bindings and installed-game review remain.",
   "approvals": [],
   "feedback": [
     {
@@ -40,6 +40,16 @@
       "source": "a006 actual native side-bay qualification",
       "recorded_at": "2026-09-10T01:40:38.932426+00:00",
       "notes": "Fourteen side bays,28 unchanged IDs;173 checks pass including all six lockers, exact preserved partition triangles/materials, floor/roof contacts, armor and12 closed seams with positive2mm-gap controls. Actual three-bay before/after native PNGs recorded; not installed or owner-approved. Partial-height retained partitions remain unqualified for pressure."
+    },
+    {
+      "source": "Native end/shoulder expansion failed controls",
+      "recorded_at": "2026-09-10T02:02:24.991471+00:00",
+      "notes": "a007 six real armor conflicts. a008 clears armor, but stronger107gates fail2side-to-R006 buttress seams. Preserve failure; author new shoulder armor structural-corner pocket rather than overlap or placement compensation. Parent authorizes next native correction, not final art sign-off."
+    },
+    {
+      "source": "a009 native shoulder mating qualification",
+      "recorded_at": "2026-09-10T02:25:46.508779+00:00",
+      "notes": "113end gates +16pocket gates pass; both exact native shoulder seams close and2mm actual openings remain open. Two structural buttress overlaps are bounded by explicit native mating regions, no general overlap exemption.50 proposed visual bindings preserve262 IDs/frames; full enclosure/partition/authority/browser qualification remains."
     }
   ],
   "revisions": [
@@ -950,6 +960,717 @@
           "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
           "capture_context": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/capture-context.json",
           "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "editable-blender",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/blender-source.blend",
+          "sha256": "9957bb1618dfe4ac70196d5ac32b647ad6e21621260950c742d0ec4e132a2266",
+          "bytes": 4478801,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/delivery-manifest.json",
+          "sha256": "dad474daa118b373e46eb640dfb971ab7cc9a34c66bf7679b231f5787d51caaf",
+          "bytes": 30393,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end-plan.json",
+          "sha256": "12b59006054d11f44599062bd28f5ede30e3059bc58e81cafd173c25510b7e71",
+          "bytes": 14705,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end00.glb",
+          "sha256": "9e739b8295d77709e5bb98db0f2616c041d2dfa2fd2abd77f78255abd771a850",
+          "bytes": 331100,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end01.glb",
+          "sha256": "28586b0f9381601e87af03846fe038651d94b0de88ca1ebb7d09458694b04f63",
+          "bytes": 1380840,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end02.glb",
+          "sha256": "10f13543e976edea5630029d19748870c1f12e9b16bf10d74bfe454f9158fc5f",
+          "bytes": 331100,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end03.glb",
+          "sha256": "16d446c385803b1137a9f5ce434a1f67d510d8144af6240d126fccb901a99f34",
+          "bytes": 1470900,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end04.glb",
+          "sha256": "e3464b3aefaafbbe41a36f02a09344b207b71e7d8dd5d97743c2f9f043d0f145",
+          "bytes": 646396,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end05.glb",
+          "sha256": "97ec82cb8be22bcadfd662252a9eb7339e8f61a5183e6951043b1df953a6d55f",
+          "bytes": 331100,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end06.glb",
+          "sha256": "168e33d054a86859b0addfacfb26f7ea55a2fd38c6aa512acc72586cc7177ac0",
+          "bytes": 1380752,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end07.glb",
+          "sha256": "63a1a1a27165a54f5d87a34bb7d052be5244ddc0a6e070dd6189a937d454a2f7",
+          "bytes": 331100,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end08.glb",
+          "sha256": "2491a564ed3a8daa258724e95bb495c70bf5cc9a6da7e6ab86f13d80f6e52d88",
+          "bytes": 1470736,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end09.glb",
+          "sha256": "83e809e640528edcec1498897540b08f2f00eb43cfa02cffe3e37c2d53d17b28",
+          "bytes": 646680,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end10.glb",
+          "sha256": "6710381dfdac3f4aaa350fbc68725685dbe4d09ab29a6269cba459722b81c708",
+          "bytes": 331048,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end11.glb",
+          "sha256": "20c62f7ec3543b516e9159b84219c4afec8cf392800de90158ce0ee6cbc665c1",
+          "bytes": 331048,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end12.glb",
+          "sha256": "19f6bd5c364262ae0e717df7f3460d40a260111fe0ea169de1c50eba34c39408",
+          "bytes": 1011688,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end13.glb",
+          "sha256": "885d3c8048b31de22112cd90813f71af25a78ec57d91d4e642949705b7e33e4b",
+          "bytes": 331048,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end14.glb",
+          "sha256": "3d94a9f7ce8d7b4dfb1eea5563ed6f0b4c0f27e0580fdad8061da827519ed750",
+          "bytes": 973048,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end15.glb",
+          "sha256": "96c3d95c1a43da05a31e5fada48b9bae4649e126873df0e02627509e7a212425",
+          "bytes": 331048,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end16.glb",
+          "sha256": "801d5ff6ab53cc07e59b91f81ae37082e6dc732e936977eec8ffd6fb0db51f65",
+          "bytes": 1011292,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/end17.glb",
+          "sha256": "c4364f3d79a46efb6f51271b0a7d87f2724cb300c684ae06ef9c7360ec9221aa",
+          "bytes": 331048,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a007/qualification-a001.json",
+          "sha256": "e2fbe45830d07de8eec987c0a19eacd09c8b4eeb88e5da8892a07618145b1a05",
+          "bytes": 16056,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "editable-blender",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/blender-source.blend",
+          "sha256": "aabea1824c50f602c3c733971df2938e2e2244ac7e99b8bac5d09fad99d4ac90",
+          "bytes": 4191801,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/capture-context.json",
+          "sha256": "889488d5b29fa72b8da5d8cd5c2541412ff624da50d7ad33c01072187107e523",
+          "bytes": 5599,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/delivery-manifest.json",
+          "sha256": "7047f3440112a3a7f67c9f8d256db6f4fbeda56d9d848bea0da1f470039753df",
+          "bytes": 27061,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end-plan.json",
+          "sha256": "aaac0326542d2ced1d069d502535d4846682f90580d16d80c2c18a1a66535380",
+          "bytes": 13600,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end00.glb",
+          "sha256": "a067d76f03f6a045092932e391d9564f16f275da97ca68305f5e364fd187699a",
+          "bytes": 331100,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end01.glb",
+          "sha256": "340ac594b11b60989bc94e37a08d21f59c7db9b66d7900d5f87413aa3433d58a",
+          "bytes": 1380840,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end02.glb",
+          "sha256": "469a7da6d8ec5b69518d3b5dc019b9cfc4984de3be69b3e1b6224a9aba54d140",
+          "bytes": 331100,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end03.glb",
+          "sha256": "c0f9eeda8312e129f27ef5244ec298e3238b09f50cdf2307838ad53783909768",
+          "bytes": 974232,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end04.glb",
+          "sha256": "8087b73f1a6661245884a9f65e7a7a838fc0ccbc6bfda4bfd0790533248d28ef",
+          "bytes": 607396,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end05.glb",
+          "sha256": "d61db5c8769693da7df5fcf4d8a0265b33665a9707c4f5300a9da5c56be15317",
+          "bytes": 331100,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end06.glb",
+          "sha256": "d29f53e239229e8140d628d469c3144a4643062ec597d18fdfd077011d358246",
+          "bytes": 1380752,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end07.glb",
+          "sha256": "31ef9a430c78273ad4ef510f1854c841b3fbd7d91e674d96bce9fd6fef437149",
+          "bytes": 331100,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end08.glb",
+          "sha256": "b2717f64917875be8f16461f4222a31c00a3e75d603364d17e4d8f28b69660fc",
+          "bytes": 974144,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end09.glb",
+          "sha256": "5cbb2df0070cc42339e31effda699ae333d43188dbca0109006d55348f60bfc3",
+          "bytes": 608840,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end10.glb",
+          "sha256": "2429573c81021dd02f4b6204f723338b9c8065ec86111687a9eb3cf800b87db7",
+          "bytes": 331048,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end11.glb",
+          "sha256": "db035d3402b48c03e9af190cdf52bdd4f9bc32bfa7103ea83bd6fe1ae466c3c7",
+          "bytes": 331048,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end12.glb",
+          "sha256": "480352f94b94cc63f3305bcabd126330d159f40545a0dcc9c22d29188e5f5d42",
+          "bytes": 1011688,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end13.glb",
+          "sha256": "5524e33eda339bebbcf1cdf13e88498b49446a95cddef14b2ebc686a207f64dd",
+          "bytes": 331048,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end14.glb",
+          "sha256": "6d5c50ade65223ab596277aa01026031c78d930d277cd62c65fe0d991f4aa2d9",
+          "bytes": 973048,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end15.glb",
+          "sha256": "1253b5e7255920642cced9c448e0edc97bf358a05484d16fae1f4b34b496fb6c",
+          "bytes": 331048,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end16.glb",
+          "sha256": "949d7590d78b19b2335d58694bb68532389f31f614cc1408cec110a73e7f9cbf",
+          "bytes": 1011292,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/end17.glb",
+          "sha256": "60d1112e532c42fecbb9bc730643f37a94dc9b5d68b7e22ab25556004d9b90c5",
+          "bytes": 331048,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/qualification-a001.json",
+          "sha256": "479755bfe20b9d7ac9da6301fe3638a95d5526c988a050c502d3a3300e39ba2e",
+          "bytes": 11020,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/qualification-a002.json",
+          "sha256": "18aac9aa189e8eba009aeffbdbd569b509917a49583bcfa058c6ccfbaa3fb5ba",
+          "bytes": 18485,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "render",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/shoulder-corrected.png",
+          "sha256": "6f759490769adb43c13fcb0c0e5ca7ed57c07bef6708599f88eb130a6f700037",
+          "bytes": 2248304,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/capture-context.json",
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "render",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/shoulder-original.png",
+          "sha256": "84d6972860c5af16ead2e62fec0b9a45f1767d708be0b059089b837d5a6c76d6",
+          "bytes": 2293922,
+          "notes": "Preserved end/shoulder iteration. Not installable: actual remaining seam failures recorded; sources and placements preserved.",
+          "capture_context": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/capture-context.json",
+          "recorded_at": "2026-09-10T02:02:24.991471+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/capture-context-a002.json",
+          "sha256": "889488d5b29fa72b8da5d8cd5c2541412ff624da50d7ad33c01072187107e523",
+          "bytes": 5599,
+          "notes": "a008 failed seam revision. Earlier shoulder-original/corrected framing ignored port mirror; shoulder-a002 captures correct it. No installed-game/art acceptance.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "render",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/shoulder-a002-corrected.png",
+          "sha256": "9d6702aa1f9be232d766168dec4fd4f881dfc8e0e4c289731b03fa64f47bbc3d",
+          "bytes": 2213903,
+          "notes": "a008 failed seam revision. Earlier shoulder-original/corrected framing ignored port mirror; shoulder-a002 captures correct it. No installed-game/art acceptance.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "render",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a008/shoulder-a002-original.png",
+          "sha256": "f94870282c452172e4e43c0ea40e349c3262d92da366099f1611f6f1ec150641",
+          "bytes": 2291091,
+          "notes": "a008 failed seam revision. Earlier shoulder-original/corrected framing ignored port mirror; shoulder-a002 captures correct it. No installed-game/art acceptance.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "editable-blender",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/blender-source.blend",
+          "sha256": "3249cd447d318b0fbe2e27853144c3d853a14be678a088e1c1b58fbcd3699db4",
+          "bytes": 4262465,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/capture-context-a003.json",
+          "sha256": "2388d5e8aaf82b98e04042c3732059363fd2d7740e1d6a6e287e9b6b52452a98",
+          "bytes": 6871,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/combined-replacement-mapping.json",
+          "sha256": "b352a401b5b2018338dc307dad9a0dde9fee221376ccf82fca5a7695dcd8c637",
+          "bytes": 59009,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/delivery-manifest.json",
+          "sha256": "6df4f0edcab17e8672deb89d74c2a4788ac4ad0aa35f2ed762a28055e4b56cdb",
+          "bytes": 28735,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end-plan.json",
+          "sha256": "68131f03274d3336f06edd2a4995d025fc54a5b408f14a1519200cb21818d6ae",
+          "bytes": 14222,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end00.glb",
+          "sha256": "a067d76f03f6a045092932e391d9564f16f275da97ca68305f5e364fd187699a",
+          "bytes": 331100,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end01.glb",
+          "sha256": "340ac594b11b60989bc94e37a08d21f59c7db9b66d7900d5f87413aa3433d58a",
+          "bytes": 1380840,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end02.glb",
+          "sha256": "469a7da6d8ec5b69518d3b5dc019b9cfc4984de3be69b3e1b6224a9aba54d140",
+          "bytes": 331100,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end03.glb",
+          "sha256": "de3b9c6eb170ba76aadbbb3a479b0e294fd054a849787f829e802d0dbe8e75a5",
+          "bytes": 1059048,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end04.glb",
+          "sha256": "2dbad9bd7dadf9232db5c6f1d366cffebc2ac3a156058e0f3036fdb0b2c95460",
+          "bytes": 607396,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end05.glb",
+          "sha256": "493908edb106d7ef3d70a96dac2774841fb65250c6cf4f66ad176ec1e3129c2e",
+          "bytes": 331100,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end06.glb",
+          "sha256": "35dce1837b222c770ceb307b58eef02fedbde56c972add8d610f28a7b6f59fe3",
+          "bytes": 1380752,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end07.glb",
+          "sha256": "6a6d00119d11ec973c1635080f8f6d8286652f1f41b4074b591343156f2cc94c",
+          "bytes": 331100,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end08.glb",
+          "sha256": "98e566084a4eec5a99b18eff4e325c4af70d03befb3a0d8dfb3daf8c95ed284a",
+          "bytes": 1058880,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end09.glb",
+          "sha256": "2fe72c3fbdfee0864bed40f18e9a21feb3c14448e5533446b484decb842bc1c0",
+          "bytes": 608840,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end10.glb",
+          "sha256": "d0fc59e376c92a6fe1057b4fc85cd52a9f4a4fe6164d8b8287a361dd322daadd",
+          "bytes": 331048,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end11.glb",
+          "sha256": "bad46c1755e257f698c42159668efae29f93484aaa7db3b460515075cfe0d0ee",
+          "bytes": 331048,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end12.glb",
+          "sha256": "939baab7c7b06ede8a2890b112dd857d6d0eca1861adb11df2d7a2ed393d7b00",
+          "bytes": 1011688,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end13.glb",
+          "sha256": "b50492ba732a6b8351f1bd3644cb1865581ac028692432b31ca23dc736ceba36",
+          "bytes": 331048,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end14.glb",
+          "sha256": "74b414a838e23e31d2bd1d477e0e17a9ae980976f90478678f217b4f215461c4",
+          "bytes": 973048,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end15.glb",
+          "sha256": "58f4c7d35fcd39834632ad2227a30d1cdb9a567f9ec28dd9b91da55e959d9011",
+          "bytes": 331048,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end16.glb",
+          "sha256": "8b68b6c82a5d8d145e3c261f07a338e025ae367f5ed9ca723e8186d1954b2e23",
+          "bytes": 1011292,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end17.glb",
+          "sha256": "037a4cb5ec2aed52118b8ed2b4b644ea4336f0df5220e96686c81147b9b03fa4",
+          "bytes": 331048,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/qualification-a001.json",
+          "sha256": "b4844bf11c325b45130cd6d204738b71e58e4e6510b5cea17be4151d67995131",
+          "bytes": 19934,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/qualification-a002.json",
+          "sha256": "3342381299d3c3e8c6557592d95c929ad260b1964acea40ee976031a672da9c6",
+          "bytes": 21548,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "render",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/shoulder-a003-corrected.png",
+          "sha256": "dd2988fcd463e50de58fe67c7d23d46ff00b5c0650b3a8fb0396e108f341b289",
+          "bytes": 2215406,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "render",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/shoulder-a003-original.png",
+          "sha256": "39b47671190064a80403111ee6d478a3b4795ce5ce642537debd258c6df41bec",
+          "bytes": 2291091,
+          "notes": "a009 corrected structural-corner/pocket composition.113 native gates pass; full hull remains unqualified. Exact mirrors and unchanged frames used in final captures.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/current-template-compatibility.json",
+          "sha256": "5ff8b6f1e5dbdcfab51db5747e500b7590408571c2fe094a127cca34243fe96e",
+          "bytes": 12350,
+          "notes": "Exact current362f source verification, six native cabinet intersections eliminated by unchanged-frame wall replacements.50IDs pinned; no live install.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:37:03.320500+00:00"
         }
       ]
     }

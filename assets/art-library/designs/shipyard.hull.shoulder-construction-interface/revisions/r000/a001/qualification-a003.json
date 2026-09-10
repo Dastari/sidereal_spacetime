@@ -1,0 +1,131 @@
+{
+  "schema": "sidereal.shoulder-structural-pocket-qualification.v1",
+  "pass": false,
+  "checks": [
+    {
+      "name": "Editable baseline matches actual published native shoulder",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Raw native surfaces preserved outside explicit pocket shoulder",
+      "pass": false,
+      "detail": {
+        "csgSymmetricDifferenceM3": 1.2107690850354497e-07,
+        "maximumRawSurfaceSampleErrorM": 0.25,
+        "rawEncodingToleranceM": 1e-06,
+        "samples": "Every raw GLB vertex and triangle centroid; new faces must lie on original raw surfaces or declared pocket planes. No geometry is moved. CSG-only weld/triangulation slivers are separately volume-bounded."
+      }
+    },
+    {
+      "name": "No native armor occupies reserved structural pocket shoulder",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Actual removed collision is positive shoulder",
+      "pass": true,
+      "detail": 0.16338190353320495
+    },
+    {
+      "name": "Native material roles remain shoulder",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "No source proxy exported shoulder",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Complete native authored armor reservation shoulder",
+      "pass": true,
+      "detail": {
+        "verticesChecked": 984,
+        "nativeBoundsM": {
+          "min": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "max": [
+            0.8080669641494751,
+            2.0,
+            2.9375
+          ]
+        }
+      }
+    },
+    {
+      "name": "Native normal maps retained shoulder",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Editable baseline matches actual published native collar",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Raw native surfaces preserved outside explicit pocket collar",
+      "pass": false,
+      "detail": {
+        "csgSymmetricDifferenceM3": 2.1001647319914033e-08,
+        "maximumRawSurfaceSampleErrorM": "nonfinite diagnostic: NaN",
+        "rawEncodingToleranceM": 1e-06,
+        "samples": "Every raw GLB vertex and triangle centroid; new faces must lie on original raw surfaces or declared pocket planes. No geometry is moved. CSG-only weld/triangulation slivers are separately volume-bounded."
+      }
+    },
+    {
+      "name": "No native armor occupies reserved structural pocket collar",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Actual removed collision is positive collar",
+      "pass": true,
+      "detail": 0.008567194173142898
+    },
+    {
+      "name": "Native material roles remain collar",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "No source proxy exported collar",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Complete native authored armor reservation collar",
+      "pass": true,
+      "detail": {
+        "verticesChecked": 66,
+        "nativeBoundsM": {
+          "min": [
+            0.0,
+            -0.0,
+            2.59375
+          ],
+          "max": [
+            0.375,
+            0.5,
+            3.3125
+          ]
+        }
+      }
+    },
+    {
+      "name": "Native normal maps retained collar",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "placedTransformsChanged": 0,
+  "installed": false,
+  "wholeHullSealed": false,
+  "remaining": [
+    "Actual structural-corner composition and seam negative controls, physical support, native render comparison and owner art sign-off remain."
+  ],
+  "formatNote": "Original diagnostic containing NaN preserved as qualification-a003.raw.txt; this failed comparison is not an acceptance proof."
+}

@@ -1,0 +1,767 @@
+{
+  "schema": "sidereal.usable-wall-end-qualification.v1",
+  "pass": true,
+  "checks": [
+    {
+      "name": "Original placed frame retained end00",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Complete native component reservation GEO-end00--c00-native-",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New source component leaves usable side clear GEO-end00--c00-native-",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placed frame retained end01",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Complete native component reservation GEO-end01--c00-native-",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New source component leaves usable side clear GEO-end01--c00-native-",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Complete native component reservation GEO-end01--c01-native-",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New source component leaves usable side clear GEO-end01--c01-native-",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placed frame retained end02",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Complete native component reservation GEO-end02--c00-native-",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New source component leaves usable side clear GEO-end02--c00-native-",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placed frame retained end03",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Complete native component reservation GEO-end03--c00-native-",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New source component leaves usable side clear GEO-end03--c00-native-",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Complete native component reservation GEO-end03--c01-native-",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New source component leaves usable side clear GEO-end03--c01-native-",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placed frame retained end04",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Complete native component reservation GEO-end04--c00-native-",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New source component leaves usable side clear GEO-end04--c00-native-",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placed frame retained end05",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Complete native component reservation GEO-end05--c00-native-",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New source component leaves usable side clear GEO-end05--c00-native-",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placed frame retained end06",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Complete native component reservation GEO-end06--c00-native-",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New source component leaves usable side clear GEO-end06--c00-native-",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Complete native component reservation GEO-end06--c01-native-",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New source component leaves usable side clear GEO-end06--c01-native-",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placed frame retained end07",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Complete native component reservation GEO-end07--c00-native-",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New source component leaves usable side clear GEO-end07--c00-native-",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placed frame retained end08",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Complete native component reservation GEO-end08--c00-native-",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New source component leaves usable side clear GEO-end08--c00-native-",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Complete native component reservation GEO-end08--c01-native-",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New source component leaves usable side clear GEO-end08--c01-native-",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placed frame retained end09",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Complete native component reservation GEO-end09--c00-native-",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New source component leaves usable side clear GEO-end09--c00-native-",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placed frame retained end10",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Complete native component reservation GEO-end10--c00-native-",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New source component leaves usable side clear GEO-end10--c00-native-",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placed frame retained end11",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Complete native component reservation GEO-end11--c00-native-",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New source component leaves usable side clear GEO-end11--c00-native-",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placed frame retained end12",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Complete native component reservation GEO-end12--c00-native-",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New source component leaves usable side clear GEO-end12--c00-native-",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Historical interior partition geometry unchanged end12",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Original placed frame retained end13",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Complete native component reservation GEO-end13--c00-native-",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New source component leaves usable side clear GEO-end13--c00-native-",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placed frame retained end14",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Complete native component reservation GEO-end14--c00-native-",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New source component leaves usable side clear GEO-end14--c00-native-",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placed frame retained end15",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Complete native component reservation GEO-end15--c00-native-",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New source component leaves usable side clear GEO-end15--c00-native-",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placed frame retained end16",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Complete native component reservation GEO-end16--c00-native-",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New source component leaves usable side clear GEO-end16--c00-native-",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Historical interior partition geometry unchanged end16",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Original placed frame retained end17",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Complete native component reservation GEO-end17--c00-native-",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New source component leaves usable side clear GEO-end17--c00-native-",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "All new outer geometry outside nominal main usable floor",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Unchanged equipment equipment-control-seat clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Unchanged equipment equipment-control-console clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Unchanged equipment equipment-locker--4.7--6 clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Unchanged equipment equipment-locker--4.7--2 clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Unchanged equipment equipment-locker--4.7-2 clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Unchanged equipment equipment-locker-4.7--6 clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Unchanged equipment equipment-locker-4.7--2 clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Unchanged equipment equipment-locker-4.7-2 clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Unchanged armor superstructure--3--5 clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Unchanged armor superstructure--2--5 clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Unchanged armor superstructure-2--5 clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Unchanged armor superstructure-3--5 clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Unchanged armor superstructure--1--5 clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Unchanged armor superstructure-0--5 clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Unchanged armor superstructure-1--5 clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Unchanged equipment equipment-bridge-bank--1.3 clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Unchanged equipment equipment-bridge-bank-1.3 clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Native structural contact confined to declared shoulder mate pilot-r004-corner-buttress-17",
+      "pass": true,
+      "detail": {
+        "nativeOverlapM3": 0.024830449444464168,
+        "outsideMateM3": 0.0,
+        "mateMinM": [
+          4.9375,
+          9,
+          0.1875
+        ],
+        "mateMaxM": [
+          5.115,
+          9.25,
+          2.75
+        ],
+        "allowedRoles": [
+          "outward-structural-corner",
+          "native-R006-structural-buttress"
+        ],
+        "strengthRating": null
+      }
+    },
+    {
+      "name": "Native structural contact confined to declared shoulder mate pilot-r004-corner-buttress-18",
+      "pass": true,
+      "detail": {
+        "nativeOverlapM3": 0.02483044944446427,
+        "outsideMateM3": 0.0,
+        "mateMinM": [
+          -5.115,
+          9,
+          0.1875
+        ],
+        "mateMaxM": [
+          -4.9375,
+          9.25,
+          2.75
+        ],
+        "allowedRoles": [
+          "outward-structural-corner",
+          "native-R006-structural-buttress"
+        ],
+        "strengthRating": null
+      }
+    },
+    {
+      "name": "Candidate armor at unchanged frame pilot-r005-outer-shoulder-transition-starboard clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Candidate armor at unchanged frame pilot-r005-outer-shoulder-transition-port clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Candidate armor at unchanged frame pilot-r005-outer-roof-collar-starboard clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Candidate armor at unchanged frame pilot-r005-outer-roof-collar-port clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Candidate armor at unchanged frame pilot-r005-outer-diagonal-cheek-starboard clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Candidate armor at unchanged frame pilot-r005-outer-diagonal-cheek-port clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Candidate armor at unchanged frame pilot-r005-outer-bow-bumper-center clear",
+      "pass": true,
+      "detail": 0.0
+    },
+    {
+      "name": "Actual unchanged floor bearing floor--2--4",
+      "pass": true,
+      "detail": {
+        "nativeOverlapM3": 0.023069970562499847,
+        "sourcePin": {
+          "path": "assets/runtime/assembly/floor/r002/kit.glb",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor"
+        }
+      }
+    },
+    {
+      "name": "Actual unchanged roof bearing roof--2--4",
+      "pass": true,
+      "detail": {
+        "nativeOverlapM3": 0.01152971296874999,
+        "sourcePin": {
+          "path": "assets/runtime/assembly/roof/r004/kit.glb",
+          "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+          "nodePrefix": "GEO-shoulder-vent--surface"
+        }
+      }
+    },
+    {
+      "name": "Actual unchanged floor bearing floor-2--4",
+      "pass": true,
+      "detail": {
+        "nativeOverlapM3": 0.02306997056249994,
+        "sourcePin": {
+          "path": "assets/runtime/assembly/floor/r002/kit.glb",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor"
+        }
+      }
+    },
+    {
+      "name": "Actual unchanged roof bearing roof-2--4",
+      "pass": true,
+      "detail": {
+        "nativeOverlapM3": 0.011529712968750017,
+        "sourcePin": {
+          "path": "assets/runtime/assembly/roof/r004/kit.glb",
+          "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+          "nodePrefix": "GEO-shoulder-vent--surface"
+        }
+      }
+    },
+    {
+      "name": "Actual unchanged floor bearing floor--2-4",
+      "pass": true,
+      "detail": {
+        "nativeOverlapM3": 0.011717871000000012,
+        "sourcePin": {
+          "path": "assets/runtime/assembly/floor/r002/kit.glb",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor"
+        }
+      }
+    },
+    {
+      "name": "Actual unchanged roof bearing roof--2-4",
+      "pass": true,
+      "detail": {
+        "nativeOverlapM3": 0.005855420625000001,
+        "sourcePin": {
+          "path": "assets/runtime/assembly/roof/r004/kit.glb",
+          "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+          "nodePrefix": "GEO-shoulder-vent-fore-datum--surface"
+        }
+      }
+    },
+    {
+      "name": "Actual unchanged floor bearing floor-2-4",
+      "pass": true,
+      "detail": {
+        "nativeOverlapM3": 0.01171787099999999,
+        "sourcePin": {
+          "path": "assets/runtime/assembly/floor/r002/kit.glb",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor"
+        }
+      }
+    },
+    {
+      "name": "Actual unchanged roof bearing roof-2-4",
+      "pass": true,
+      "detail": {
+        "nativeOverlapM3": 0.005855420624999998,
+        "sourcePin": {
+          "path": "assets/runtime/assembly/roof/r004/kit.glb",
+          "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+          "nodePrefix": "GEO-shoulder-vent-fore-datum--surface"
+        }
+      }
+    },
+    {
+      "name": "Actual unchanged floor bearing floor--1--4",
+      "pass": true,
+      "detail": {
+        "nativeOverlapM3": 0.011717871000000015,
+        "sourcePin": {
+          "path": "assets/runtime/assembly/floor/r002/kit.glb",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor"
+        }
+      }
+    },
+    {
+      "name": "Actual unchanged roof bearing roof--1--4",
+      "pass": true,
+      "detail": {
+        "nativeOverlapM3": 0.0058576177499999995,
+        "sourcePin": {
+          "path": "assets/runtime/assembly/roof/r004/kit.glb",
+          "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+          "nodePrefix": "GEO-transition-service-aft-port--surface"
+        }
+      }
+    },
+    {
+      "name": "Actual unchanged floor bearing floor-0--4",
+      "pass": true,
+      "detail": {
+        "nativeOverlapM3": 0.011717871000000015,
+        "sourcePin": {
+          "path": "assets/runtime/assembly/floor/r002/kit.glb",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor"
+        }
+      }
+    },
+    {
+      "name": "Actual unchanged roof bearing roof-0--4",
+      "pass": true,
+      "detail": {
+        "nativeOverlapM3": 0.005857617749999999,
+        "sourcePin": {
+          "path": "assets/runtime/assembly/roof/r004/kit.glb",
+          "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+          "nodePrefix": "GEO-center-service-aft--surface"
+        }
+      }
+    },
+    {
+      "name": "Actual unchanged floor bearing floor-1--4",
+      "pass": true,
+      "detail": {
+        "nativeOverlapM3": 0.011717871000000015,
+        "sourcePin": {
+          "path": "assets/runtime/assembly/floor/r002/kit.glb",
+          "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+          "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor"
+        }
+      }
+    },
+    {
+      "name": "Actual unchanged roof bearing roof-1--4",
+      "pass": true,
+      "detail": {
+        "nativeOverlapM3": 0.005857617749999972,
+        "sourcePin": {
+          "path": "assets/runtime/assembly/roof/r004/kit.glb",
+          "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+          "nodePrefix": "GEO-transition-service-aft-starboard--surface"
+        }
+      }
+    },
+    {
+      "name": "Exact unchanged R006 shoulder closes front boundary pilot-r004-corner-buttress-17",
+      "pass": true,
+      "detail": {
+        "sourcePin": {
+          "path": "assets/runtime/assembly/hull/finish-r004/part-9f79f3a40a72f9b7ad4a/clean.glb",
+          "sha256": "1b787888f92e9a7691337c02b297a8895703544003ddcec8eb655ff1ffe91af3",
+          "nodePrefix": null
+        }
+      }
+    },
+    {
+      "name": "Removing R006 shoulder leaves genuine opening pilot-r004-corner-buttress-17",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Corrected side joins exact R006 shoulder pilot-r004-corner-buttress-17",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Actual2mm gap through shoulder connector remains open pilot-r004-corner-buttress-17",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Exact unchanged R006 shoulder closes front boundary pilot-r004-corner-buttress-18",
+      "pass": true,
+      "detail": {
+        "sourcePin": {
+          "path": "assets/runtime/assembly/hull/finish-r004/part-9f79f3a40a72f9b7ad4a/clean.glb",
+          "sha256": "1b787888f92e9a7691337c02b297a8895703544003ddcec8eb655ff1ffe91af3",
+          "nodePrefix": null
+        }
+      }
+    },
+    {
+      "name": "Removing R006 shoulder leaves genuine opening pilot-r004-corner-buttress-18",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Corrected side joins exact R006 shoulder pilot-r004-corner-buttress-18",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Actual2mm gap through shoulder connector remains open pilot-r004-corner-buttress-18",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "conflicts": [],
+  "pilotContacts": [
+    {
+      "sourcePlacedId": "pilot-r004-corner-buttress-17",
+      "overlapM3": 0.024830449444464168,
+      "sourcePin": {
+        "path": "assets/runtime/assembly/hull/finish-r004/part-9f79f3a40a72f9b7ad4a/clean.glb",
+        "sha256": "1b787888f92e9a7691337c02b297a8895703544003ddcec8eb655ff1ffe91af3",
+        "nodePrefix": null
+      },
+      "status": "Qualified geometric contact for these exact native source pins only; no general overlap exemption or strength rating.",
+      "mateMinM": [
+        4.9375,
+        9,
+        0.1875
+      ],
+      "mateMaxM": [
+        5.115,
+        9.25,
+        2.75
+      ]
+    },
+    {
+      "sourcePlacedId": "pilot-r004-corner-buttress-18",
+      "overlapM3": 0.02483044944446427,
+      "sourcePin": {
+        "path": "assets/runtime/assembly/hull/finish-r004/part-9f79f3a40a72f9b7ad4a/clean.glb",
+        "sha256": "1b787888f92e9a7691337c02b297a8895703544003ddcec8eb655ff1ffe91af3",
+        "nodePrefix": null
+      },
+      "status": "Qualified geometric contact for these exact native source pins only; no general overlap exemption or strength rating.",
+      "mateMinM": [
+        -5.115,
+        9,
+        0.1875
+      ],
+      "mateMaxM": [
+        -4.9375,
+        9.25,
+        2.75
+      ]
+    }
+  ],
+  "placedTransformsChanged": 0,
+  "wholeHullSealed": false,
+  "installed": false,
+  "remaining": [
+    "Qualify floor/roof/corner/end surface joins and all reported native pilot contacts.",
+    "Retained partial-height partitions remain separate closure work."
+  ]
+}

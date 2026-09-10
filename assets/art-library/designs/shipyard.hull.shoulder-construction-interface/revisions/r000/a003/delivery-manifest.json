@@ -1,0 +1,175 @@
+{
+  "schema": "sidereal.shoulder-structural-pocket.v1",
+  "sourcePins": [
+    {
+      "role": "shoulder",
+      "path": "assets/art-library/shipyard-hull/material-studies/native-r006-polymer-04/candidate.blend",
+      "sha256": "05671f26a6f04b249e0986fe7c3a5e34a2f7d8c465b871c18c088e5f351a8c02"
+    },
+    {
+      "role": "collar",
+      "path": "assets/art-library/designs/shipyard.roof.frontier/revisions/r004/blender-source.blend",
+      "sha256": "d9230a4e0359b7b551c4ea45604b4850c04a515fec1b985fc0132050c0ee31d2"
+    },
+    {
+      "role": "published-native-shoulder",
+      "path": "assets/runtime/assembly/hull/finish-r004/part-e965a5502d9fe4c25406/clean.glb",
+      "sha256": "e34ba9c660088550058053cf9dff5a93bdc1b198d9262ba9f6f3acc05644a2fa",
+      "nodePrefix": null
+    },
+    {
+      "role": "published-native-collar",
+      "path": "assets/runtime/assembly/roof/r004/kit.glb",
+      "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+      "nodePrefix": "GEO-outer-roof-collar--surface"
+    }
+  ],
+  "exports": [
+    {
+      "id": "baseline-shoulder",
+      "file": "baseline-shoulder.glb",
+      "sha256": "3ce322c5a6dfad1755fd8a643ec66450ba93fef720260f6f315f66b94bcdcbc6"
+    },
+    {
+      "id": "baseline-collar",
+      "file": "baseline-collar.glb",
+      "sha256": "7e7cf9c4a4e3903bebb5af78395b47d0a2119963735d1f2b4a5065a172514901"
+    },
+    {
+      "id": "shoulder",
+      "file": "shoulder.glb",
+      "sha256": "32983b595bb4376344feb8f2da5a51aa071a4143978aa727b0459cb2e12aa86a"
+    },
+    {
+      "id": "collar",
+      "file": "collar.glb",
+      "sha256": "023fed1f045d2d26cb9f16346d95929ef83bd03a070aeeedac7be4a82ab68e3f"
+    }
+  ],
+  "changedNativeModifiers": [
+    {
+      "component": "shoulder",
+      "node": "GEO-Shoulder pale vertical rib.002",
+      "modifier": "Reserved structural corner pocket"
+    },
+    {
+      "component": "shoulder",
+      "node": "GEO-Shoulder service vent rib.006",
+      "modifier": "Reserved structural corner pocket"
+    },
+    {
+      "component": "shoulder",
+      "node": "GEO-Lower external structure.001",
+      "modifier": "Reserved structural corner pocket"
+    },
+    {
+      "component": "shoulder",
+      "node": "GEO-Shoulder amber marker.001",
+      "modifier": "Reserved structural corner pocket"
+    },
+    {
+      "component": "shoulder",
+      "node": "GEO-Shoulder service vent rib.009",
+      "modifier": "Reserved structural corner pocket"
+    },
+    {
+      "component": "shoulder",
+      "node": "GEO-Tapered upper structural spine.001",
+      "modifier": "Reserved structural corner pocket"
+    },
+    {
+      "component": "shoulder",
+      "node": "GEO-Upper taper pale surround.001",
+      "modifier": "Reserved structural corner pocket"
+    },
+    {
+      "component": "shoulder",
+      "node": "GEO-Shoulder lower pale surround.001",
+      "modifier": "Reserved structural corner pocket"
+    },
+    {
+      "component": "shoulder",
+      "node": "GEO-Shoulder service vent rib.010",
+      "modifier": "Reserved structural corner pocket"
+    },
+    {
+      "component": "shoulder",
+      "node": "GEO-Shoulder upper dark service inset.001",
+      "modifier": "Reserved structural corner pocket"
+    },
+    {
+      "component": "shoulder",
+      "node": "GEO-Shoulder cyan fixture box.001",
+      "modifier": "Reserved structural corner pocket"
+    },
+    {
+      "component": "shoulder",
+      "node": "GEO-Shoulder dark inset service well.001",
+      "modifier": "Reserved structural corner pocket"
+    },
+    {
+      "component": "shoulder",
+      "node": "GEO-Shoulder recessed cyan lens.001",
+      "modifier": "Reserved structural corner pocket"
+    },
+    {
+      "component": "shoulder",
+      "node": "GEO-Shoulder service vent rib.011",
+      "modifier": "Reserved structural corner pocket"
+    },
+    {
+      "component": "shoulder",
+      "node": "GEO-Shoulder pale vertical rib.003",
+      "modifier": "Reserved structural corner pocket"
+    },
+    {
+      "component": "shoulder",
+      "node": "GEO-Shoulder service vent rib.007",
+      "modifier": "Reserved structural corner pocket"
+    },
+    {
+      "component": "shoulder",
+      "node": "GEO-Shoulder taper top skin.001",
+      "modifier": "Reserved structural corner pocket"
+    },
+    {
+      "component": "shoulder",
+      "node": "GEO-Shoulder service vent rib.008",
+      "modifier": "Reserved structural corner pocket"
+    },
+    {
+      "component": "collar",
+      "node": "GEO-outer-roof-collar--surface",
+      "modifier": "Reserved structural corner pocket"
+    }
+  ],
+  "reservedStructuralPocketSourceM": {
+    "min": [
+      0,
+      0,
+      0.25
+    ],
+    "max": [
+      0.25,
+      0.25,
+      3.0
+    ]
+  },
+  "originalPlacedOffsetM": [
+    0,
+    0,
+    -0.25
+  ],
+  "preservePlacedIds": [
+    "pilot-r005-outer-shoulder-transition-starboard",
+    "pilot-r005-outer-shoulder-transition-port",
+    "pilot-r005-outer-roof-collar-starboard",
+    "pilot-r005-outer-roof-collar-port"
+  ],
+  "originalSourcesModified": false,
+  "placedTransformsChanged": 0,
+  "installed": false,
+  "ownerFinalSignoff": null,
+  "status": "Native pocket candidate awaiting complete geometry/material/seam qualification",
+  "capabilities": null
+}

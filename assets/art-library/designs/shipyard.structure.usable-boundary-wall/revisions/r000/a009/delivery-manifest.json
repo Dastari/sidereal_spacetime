@@ -1,0 +1,1338 @@
+{
+  "schema": "sidereal.usable-wall-end-exports.v1",
+  "parts": [
+    {
+      "id": "end00",
+      "file": "end00.glb",
+      "sha256": "a067d76f03f6a045092932e391d9564f16f275da97ca68305f5e364fd187699a",
+      "nodePrefix": "GEO-end00--",
+      "sourcePlacedId": "wall--3--4",
+      "originalPlacement": {
+        "id": "wall--3--4",
+        "assetId": "part-070229a9a22dcd1fc3e1",
+        "position": [
+          -5.1875,
+          -8,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "body",
+          "anchorWorldM": [
+            -5,
+            -7,
+            0
+          ],
+          "quarterTurns": -1,
+          "sourceTranslationM": [
+            0.1875,
+            1,
+            0
+          ],
+          "sourceFrame": [
+            [
+              -4.371138828673793e-08,
+              1.0,
+              0.0,
+              0.1875
+            ],
+            [
+              -1.0,
+              -4.371138828673793e-08,
+              0.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "nodePrefix": "GEO-end00--c00-native-"
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "id": "end01",
+      "file": "end01.glb",
+      "sha256": "340ac594b11b60989bc94e37a08d21f59c7db9b66d7900d5f87413aa3433d58a",
+      "nodePrefix": "GEO-end01--",
+      "sourcePlacedId": "wall--2--4",
+      "originalPlacement": {
+        "id": "wall--2--4",
+        "assetId": "part-a086c1f719d417b167f3",
+        "position": [
+          -4,
+          -8,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "facing",
+          "anchorWorldM": [
+            -5,
+            -7,
+            0
+          ],
+          "quarterTurns": -1,
+          "sourceTranslationM": [
+            -1,
+            1,
+            0
+          ],
+          "sourceFrame": [
+            [
+              -4.371138828673793e-08,
+              1.0,
+              0.0,
+              -1.0
+            ],
+            [
+              -1.0,
+              -4.371138828673793e-08,
+              0.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "nodePrefix": "GEO-end01--c00-native-"
+        },
+        {
+          "source": "straight-2m",
+          "selection": "facing",
+          "anchorWorldM": [
+            -5,
+            -9,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceTranslationM": [
+            -1,
+            -1,
+            0
+          ],
+          "sourceFrame": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -1.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -1.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "nodePrefix": "GEO-end01--c01-native-"
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "id": "end02",
+      "file": "end02.glb",
+      "sha256": "469a7da6d8ec5b69518d3b5dc019b9cfc4984de3be69b3e1b6224a9aba54d140",
+      "nodePrefix": "GEO-end02--",
+      "sourcePlacedId": "wall--3-4",
+      "originalPlacement": {
+        "id": "wall--3-4",
+        "assetId": "part-46db5c6ab5c468a19a1b",
+        "position": [
+          -5.1875,
+          8,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "body",
+          "anchorWorldM": [
+            -5,
+            9,
+            0
+          ],
+          "quarterTurns": -1,
+          "sourceTranslationM": [
+            0.1875,
+            1,
+            0
+          ],
+          "sourceFrame": [
+            [
+              -4.371138828673793e-08,
+              1.0,
+              0.0,
+              0.1875
+            ],
+            [
+              -1.0,
+              -4.371138828673793e-08,
+              0.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "nodePrefix": "GEO-end02--c00-native-"
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "id": "end03",
+      "file": "end03.glb",
+      "sha256": "de3b9c6eb170ba76aadbbb3a479b0e294fd054a849787f829e802d0dbe8e75a5",
+      "nodePrefix": "GEO-end03--",
+      "sourcePlacedId": "wall--2-4",
+      "originalPlacement": {
+        "id": "wall--2-4",
+        "assetId": "part-47fe7106f6e495b8869c",
+        "position": [
+          -4,
+          8,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "facing",
+          "anchorWorldM": [
+            -5,
+            9,
+            0
+          ],
+          "quarterTurns": -1,
+          "sourceTranslationM": [
+            -1,
+            1,
+            0
+          ],
+          "sourceFrame": [
+            [
+              -4.371138828673793e-08,
+              1.0,
+              0.0,
+              -1.0
+            ],
+            [
+              -1.0,
+              -4.371138828673793e-08,
+              0.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "nodePrefix": "GEO-end03--c00-native-"
+        },
+        {
+          "source": "outer-corner",
+          "selection": "all",
+          "anchorWorldM": [
+            -5,
+            9,
+            0
+          ],
+          "quarterTurns": -1,
+          "sourceTranslationM": [
+            -1,
+            1,
+            0
+          ],
+          "sourceFrame": [
+            [
+              -4.371138828673793e-08,
+              1.0,
+              0.0,
+              -1.0
+            ],
+            [
+              -1.0,
+              -4.371138828673793e-08,
+              0.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "nodePrefix": "GEO-end03--c01-native-"
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "id": "end04",
+      "file": "end04.glb",
+      "sha256": "2dbad9bd7dadf9232db5c6f1d366cffebc2ac3a156058e0f3036fdb0b2c95460",
+      "nodePrefix": "GEO-end04--",
+      "sourcePlacedId": "wall--3--5",
+      "originalPlacement": {
+        "id": "wall--3--5",
+        "assetId": "part-f4b0cfbfdcdfd800e350",
+        "position": [
+          -5.125,
+          -9.125,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "aft-corner-port",
+          "selection": "all",
+          "anchorWorldM": [
+            -5,
+            -9,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceTranslationM": [
+            0.125,
+            0.125,
+            0
+          ],
+          "sourceFrame": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.125
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.125
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "nodePrefix": "GEO-end04--c00-native-"
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "id": "end05",
+      "file": "end05.glb",
+      "sha256": "493908edb106d7ef3d70a96dac2774841fb65250c6cf4f66ad176ec1e3129c2e",
+      "nodePrefix": "GEO-end05--",
+      "sourcePlacedId": "wall-3--4",
+      "originalPlacement": {
+        "id": "wall-3--4",
+        "assetId": "part-915dc23e886f070d75c4",
+        "position": [
+          5.125,
+          -8,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "body",
+          "anchorWorldM": [
+            5,
+            -9,
+            0
+          ],
+          "quarterTurns": 1,
+          "sourceTranslationM": [
+            -0.125,
+            -1,
+            0
+          ],
+          "sourceFrame": [
+            [
+              7.549790126404332e-08,
+              -1.0,
+              0.0,
+              -0.125
+            ],
+            [
+              1.0,
+              7.549790126404332e-08,
+              0.0,
+              -1.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "nodePrefix": "GEO-end05--c00-native-"
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "id": "end06",
+      "file": "end06.glb",
+      "sha256": "35dce1837b222c770ceb307b58eef02fedbde56c972add8d610f28a7b6f59fe3",
+      "nodePrefix": "GEO-end06--",
+      "sourcePlacedId": "wall-2--4",
+      "originalPlacement": {
+        "id": "wall-2--4",
+        "assetId": "part-262364013153b9117f95",
+        "position": [
+          4,
+          -8,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "facing",
+          "anchorWorldM": [
+            5,
+            -9,
+            0
+          ],
+          "quarterTurns": 1,
+          "sourceTranslationM": [
+            1,
+            -1,
+            0
+          ],
+          "sourceFrame": [
+            [
+              7.549790126404332e-08,
+              -1.0,
+              0.0,
+              1.0
+            ],
+            [
+              1.0,
+              7.549790126404332e-08,
+              0.0,
+              -1.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "nodePrefix": "GEO-end06--c00-native-"
+        },
+        {
+          "source": "straight-2m",
+          "selection": "facing",
+          "anchorWorldM": [
+            3,
+            -9,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceTranslationM": [
+            -1,
+            -1,
+            0
+          ],
+          "sourceFrame": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -1.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -1.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "nodePrefix": "GEO-end06--c01-native-"
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "id": "end07",
+      "file": "end07.glb",
+      "sha256": "6a6d00119d11ec973c1635080f8f6d8286652f1f41b4074b591343156f2cc94c",
+      "nodePrefix": "GEO-end07--",
+      "sourcePlacedId": "wall-3-4",
+      "originalPlacement": {
+        "id": "wall-3-4",
+        "assetId": "part-da5b65baa0bb652537e3",
+        "position": [
+          5.125,
+          8,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "body",
+          "anchorWorldM": [
+            5,
+            7,
+            0
+          ],
+          "quarterTurns": 1,
+          "sourceTranslationM": [
+            -0.125,
+            -1,
+            0
+          ],
+          "sourceFrame": [
+            [
+              7.549790126404332e-08,
+              -1.0,
+              0.0,
+              -0.125
+            ],
+            [
+              1.0,
+              7.549790126404332e-08,
+              0.0,
+              -1.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "nodePrefix": "GEO-end07--c00-native-"
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "id": "end08",
+      "file": "end08.glb",
+      "sha256": "98e566084a4eec5a99b18eff4e325c4af70d03befb3a0d8dfb3daf8c95ed284a",
+      "nodePrefix": "GEO-end08--",
+      "sourcePlacedId": "wall-2-4",
+      "originalPlacement": {
+        "id": "wall-2-4",
+        "assetId": "part-7b9d7425f1a0c9d1b49d",
+        "position": [
+          4,
+          8,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "facing",
+          "anchorWorldM": [
+            5,
+            7,
+            0
+          ],
+          "quarterTurns": 1,
+          "sourceTranslationM": [
+            1,
+            -1,
+            0
+          ],
+          "sourceFrame": [
+            [
+              7.549790126404332e-08,
+              -1.0,
+              0.0,
+              1.0
+            ],
+            [
+              1.0,
+              7.549790126404332e-08,
+              0.0,
+              -1.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "nodePrefix": "GEO-end08--c00-native-"
+        },
+        {
+          "source": "outer-corner",
+          "selection": "all",
+          "anchorWorldM": [
+            5,
+            9,
+            0
+          ],
+          "quarterTurns": 2,
+          "sourceTranslationM": [
+            1,
+            1,
+            0
+          ],
+          "sourceFrame": [
+            [
+              -1.0,
+              -8.742277657347586e-08,
+              0.0,
+              1.0
+            ],
+            [
+              8.742277657347586e-08,
+              -1.0,
+              0.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "nodePrefix": "GEO-end08--c01-native-"
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "id": "end09",
+      "file": "end09.glb",
+      "sha256": "2fe72c3fbdfee0864bed40f18e9a21feb3c14448e5533446b484decb842bc1c0",
+      "nodePrefix": "GEO-end09--",
+      "sourcePlacedId": "wall-3--5",
+      "originalPlacement": {
+        "id": "wall-3--5",
+        "assetId": "part-305bece95974253b0fbc",
+        "position": [
+          5.125,
+          -9.125,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "aft-corner-starboard",
+          "selection": "all",
+          "anchorWorldM": [
+            5,
+            -9,
+            0
+          ],
+          "quarterTurns": 1,
+          "sourceTranslationM": [
+            -0.125,
+            0.125,
+            0
+          ],
+          "sourceFrame": [
+            [
+              7.549790126404332e-08,
+              -1.0,
+              0.0,
+              -0.125
+            ],
+            [
+              1.0,
+              7.549790126404332e-08,
+              0.0,
+              0.125
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "nodePrefix": "GEO-end09--c00-native-"
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "id": "end10",
+      "file": "end10.glb",
+      "sha256": "d0fc59e376c92a6fe1057b4fc85cd52a9f4a4fe6164d8b8287a361dd322daadd",
+      "nodePrefix": "GEO-end10--",
+      "sourcePlacedId": "wall--2--5",
+      "originalPlacement": {
+        "id": "wall--2--5",
+        "assetId": "part-9a74ad0724eb741a2b63",
+        "position": [
+          -4,
+          -9.1875,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "body",
+          "anchorWorldM": [
+            -5,
+            -9,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceTranslationM": [
+            -1,
+            0.1875,
+            0
+          ],
+          "sourceFrame": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -1.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.1875
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "nodePrefix": "GEO-end10--c00-native-"
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "id": "end11",
+      "file": "end11.glb",
+      "sha256": "bad46c1755e257f698c42159668efae29f93484aaa7db3b460515075cfe0d0ee",
+      "nodePrefix": "GEO-end11--",
+      "sourcePlacedId": "wall--1--5",
+      "originalPlacement": {
+        "id": "wall--1--5",
+        "assetId": "part-4d2655e20be90a6b2257",
+        "position": [
+          -2,
+          -9.125,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "body",
+          "anchorWorldM": [
+            -3,
+            -9,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceTranslationM": [
+            -1,
+            0.125,
+            0
+          ],
+          "sourceFrame": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -1.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.125
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "nodePrefix": "GEO-end11--c00-native-"
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "id": "end12",
+      "file": "end12.glb",
+      "sha256": "939baab7c7b06ede8a2890b112dd857d6d0eca1861adb11df2d7a2ed393d7b00",
+      "nodePrefix": "GEO-end12--",
+      "sourcePlacedId": "wall--1--4",
+      "originalPlacement": {
+        "id": "wall--1--4",
+        "assetId": "part-8a552b558b8807293eed",
+        "position": [
+          -2,
+          -8,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "facing",
+          "anchorWorldM": [
+            -3,
+            -9,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceTranslationM": [
+            -1,
+            -1,
+            0
+          ],
+          "sourceFrame": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -1.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -1.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "nodePrefix": "GEO-end12--c00-native-"
+        }
+      ],
+      "preservePartitionNodes": [
+        "GEO-part-8a552b558b8807293eed--partitions"
+      ]
+    },
+    {
+      "id": "end13",
+      "file": "end13.glb",
+      "sha256": "b50492ba732a6b8351f1bd3644cb1865581ac028692432b31ca23dc736ceba36",
+      "nodePrefix": "GEO-end13--",
+      "sourcePlacedId": "wall-0--5",
+      "originalPlacement": {
+        "id": "wall-0--5",
+        "assetId": "part-b4de51cd37611d574002",
+        "position": [
+          0,
+          -9.125,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "body",
+          "anchorWorldM": [
+            -1,
+            -9,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceTranslationM": [
+            -1,
+            0.125,
+            0
+          ],
+          "sourceFrame": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -1.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.125
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "nodePrefix": "GEO-end13--c00-native-"
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "id": "end14",
+      "file": "end14.glb",
+      "sha256": "74b414a838e23e31d2bd1d477e0e17a9ae980976f90478678f217b4f215461c4",
+      "nodePrefix": "GEO-end14--",
+      "sourcePlacedId": "wall-0--4",
+      "originalPlacement": {
+        "id": "wall-0--4",
+        "assetId": "part-494f1ec5dcdcd3375a1a",
+        "position": [
+          0,
+          -8.875,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "facing",
+          "anchorWorldM": [
+            -1,
+            -9,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceTranslationM": [
+            -1,
+            -0.125,
+            0
+          ],
+          "sourceFrame": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -1.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -0.125
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "nodePrefix": "GEO-end14--c00-native-"
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "id": "end15",
+      "file": "end15.glb",
+      "sha256": "58f4c7d35fcd39834632ad2227a30d1cdb9a567f9ec28dd9b91da55e959d9011",
+      "nodePrefix": "GEO-end15--",
+      "sourcePlacedId": "wall-1--5",
+      "originalPlacement": {
+        "id": "wall-1--5",
+        "assetId": "part-4d2655e20be90a6b2257",
+        "position": [
+          2,
+          -9.125,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "body",
+          "anchorWorldM": [
+            1,
+            -9,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceTranslationM": [
+            -1,
+            0.125,
+            0
+          ],
+          "sourceFrame": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -1.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.125
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "nodePrefix": "GEO-end15--c00-native-"
+        }
+      ],
+      "preservePartitionNodes": []
+    },
+    {
+      "id": "end16",
+      "file": "end16.glb",
+      "sha256": "8b68b6c82a5d8d145e3c261f07a338e025ae367f5ed9ca723e8186d1954b2e23",
+      "nodePrefix": "GEO-end16--",
+      "sourcePlacedId": "wall-1--4",
+      "originalPlacement": {
+        "id": "wall-1--4",
+        "assetId": "part-422bf815cc05a72270f8",
+        "position": [
+          2,
+          -8,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "facing",
+          "anchorWorldM": [
+            1,
+            -9,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceTranslationM": [
+            -1,
+            -1,
+            0
+          ],
+          "sourceFrame": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -1.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              -1.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "nodePrefix": "GEO-end16--c00-native-"
+        }
+      ],
+      "preservePartitionNodes": [
+        "GEO-part-422bf815cc05a72270f8--partitions"
+      ]
+    },
+    {
+      "id": "end17",
+      "file": "end17.glb",
+      "sha256": "037a4cb5ec2aed52118b8ed2b4b644ea4336f0df5220e96686c81147b9b03fa4",
+      "nodePrefix": "GEO-end17--",
+      "sourcePlacedId": "wall-2--5",
+      "originalPlacement": {
+        "id": "wall-2--5",
+        "assetId": "part-a7c31e5a4591741723d0",
+        "position": [
+          4,
+          -9.1875,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "components": [
+        {
+          "source": "straight-2m",
+          "selection": "body",
+          "anchorWorldM": [
+            3,
+            -9,
+            0
+          ],
+          "quarterTurns": 0,
+          "sourceTranslationM": [
+            -1,
+            0.1875,
+            0
+          ],
+          "sourceFrame": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              -1.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.1875
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "nodePrefix": "GEO-end17--c00-native-"
+        }
+      ],
+      "preservePartitionNodes": []
+    }
+  ],
+  "sourceMappingSha256": "7b6be86b42e904def098f1a70a36bff08c18773e3efbc9337667af6da3f86e2e",
+  "sourceBlend": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/blender-source.blend",
+  "sourceBlendSha256": "c085df609ca7af71efc50d92fbdfadd41ce7c5c345e87a9d6a8940a2aaf82815",
+  "legacySourceSha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+  "originalPlacementCount": 262,
+  "placedTransformsChanged": 0,
+  "installed": false,
+  "ownerFinalSignoff": null,
+  "status": "awaiting-native-qualification"
+}

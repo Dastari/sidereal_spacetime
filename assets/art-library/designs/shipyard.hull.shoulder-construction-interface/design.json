@@ -1,0 +1,289 @@
+{
+  "schema": "sidereal.art-library.v1",
+  "reference_ids": [],
+  "inspiration_reference_ids": [
+    "3d-rpg-after--wayfarer-exterior-red-service-panel"
+  ],
+  "current_revision": 0,
+  "state": "in-progress",
+  "owner_final_signoff": null,
+  "priority": 1,
+  "approvals": [],
+  "id": "shipyard.hull.shoulder-construction-interface",
+  "asset_uuid": "15e14396-cbc2-5fb7-891c-e2f8ecf0b106",
+  "mapping_status": "Native R006 polymer shoulder +r004 roof collar derivation: reserve an internal structural corner pocket, preserving exact outer surfaces, materials, source frames and originals.",
+  "profile": "native-shoulder-structural-interface",
+  "assigned_to": "stair_document",
+  "blocker": "Full combined hull and installed-game qualification pending; no owner final artistic sign-off.",
+  "feedback": [
+    {
+      "source": "Parent implementation authorization",
+      "recorded_at": "2026-09-10T02:25:46.508779+00:00",
+      "notes": "Owner construction-authoring requirements authorize new shoulder armor/interface revision. Preserve original R006 sources and stable IDs. Technical implementation approval is separate from owner artistic sign-off."
+    }
+  ],
+  "revisions": [
+    {
+      "revision": 0,
+      "created_at": "2026-09-10T02:25:46.508779+00:00",
+      "stage": "in-progress",
+      "change": "Native pocket and separate reserved-volume operand in exact published Blender-derived surfaces; original editable masters retained in new source. Three attempts preserve tessellation diagnosis and final source-preserving derivation.",
+      "hypothesis": "Reserve structural outside-corner volume without per-placement compensation or changing outward armor details.",
+      "covered_reference_ids": [],
+      "evidence": [
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a001/baseline-collar.glb",
+          "sha256": "beb7fde687637ff8c033ab231b2f67eed67feff6a6da6179325e3bf6f29832b5",
+          "bytes": 331740,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a001/baseline-shoulder.glb",
+          "sha256": "fd3e6688069957b69f8bfbe430111410469cdebab88952124f20e477081cad81",
+          "bytes": 56044,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "editable-blender",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a001/blender-source.blend",
+          "sha256": "42a2de95a3e301bce2a0f7f77826aed397c3bbf1df541447404964297d174073",
+          "bytes": 1088528,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a001/collar.glb",
+          "sha256": "1c9f27314d976c6ec836280795501544b03870bdfd83cc1316955115f129efdc",
+          "bytes": 329076,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a001/delivery-manifest.json",
+          "sha256": "0c12222259ded4c5a8da846d4828c241d93c91131fd7d9963d153ddf3abb0ada",
+          "bytes": 4672,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a001/qualification-a001.json",
+          "sha256": "e6056f352352854dcbba50ae01e0907c8db7edc48b4673dc77fb9f56422f4c40",
+          "bytes": 2788,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a001/qualification-a002.json",
+          "sha256": "956cd9ea1e57a1338d87b2e9a7267a907750c57c4890665bd4e9d8e14f33d20a",
+          "bytes": 3372,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a001/qualification-a003.json",
+          "sha256": "8f4d0f8b5e5e640b67b7da31c77799a073bbb85aee5189fb77c1dd0cc1c61230",
+          "bytes": 3713,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a001/qualification-a003.raw.txt",
+          "sha256": "c7c5cbf0cebd79d87907fdbefea9f890a9e4249c6bdd98cbcb933ff00c02f2b7",
+          "bytes": 3543,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a001/qualification-a004.json",
+          "sha256": "3653a0c2b3d4ff25cb29bb592dca6cbe09a50e4ae7157e27dc5add2226c8e242",
+          "bytes": 3578,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a001/separate-pocket-proxy.json",
+          "sha256": "2a90513406e07dd4afac9fc40719a1d1ae6cdb3ba903006246ea31cbbe847a3b",
+          "bytes": 218,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a001/shoulder.glb",
+          "sha256": "2fdc309ecee5a7c4c8f32558dc29b583a54c30f5c8fed3193ac1215874e14b57",
+          "bytes": 63828,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a002/baseline-collar.glb",
+          "sha256": "beb7fde687637ff8c033ab231b2f67eed67feff6a6da6179325e3bf6f29832b5",
+          "bytes": 331740,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a002/baseline-shoulder.glb",
+          "sha256": "e3ffccfeac1b5bc1ae72e2e61aff538d5c46d6616075b0d7e924d0f993dd7696",
+          "bytes": 58024,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "editable-blender",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a002/blender-source.blend",
+          "sha256": "31a365882d73f74c77a47a845c7f33116d1f376788e09855b028a63fd7d84461",
+          "bytes": 1091568,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a002/collar.glb",
+          "sha256": "1c9f27314d976c6ec836280795501544b03870bdfd83cc1316955115f129efdc",
+          "bytes": 329076,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a002/delivery-manifest.json",
+          "sha256": "56805542baa9be293e39893bffe773d9504599a473bdaacf193f35dbcbde6e9e",
+          "bytes": 4672,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a002/qualification-a001.json",
+          "sha256": "030bb8a197011122b753f03694fbe9826a1f83914676f5820c965b156526a4ac",
+          "bytes": 3578,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a002/separate-pocket-proxy.json",
+          "sha256": "2a90513406e07dd4afac9fc40719a1d1ae6cdb3ba903006246ea31cbbe847a3b",
+          "bytes": 218,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a002/shoulder.glb",
+          "sha256": "d0d458055ea98157fa3c33f57e622243d0d0ca3e27c49a51f64bd60881618f4c",
+          "bytes": 67076,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a003/baseline-collar.glb",
+          "sha256": "7e7cf9c4a4e3903bebb5af78395b47d0a2119963735d1f2b4a5065a172514901",
+          "bytes": 331752,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a003/baseline-shoulder.glb",
+          "sha256": "3ce322c5a6dfad1755fd8a643ec66450ba93fef720260f6f315f66b94bcdcbc6",
+          "bytes": 57172,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "editable-blender",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a003/blender-source.blend",
+          "sha256": "c4dd32b6bca8f5c5f9c63824663dfd7e764f7f743f74477c9fb6e1128da0d2f3",
+          "bytes": 2203114,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a003/collar.glb",
+          "sha256": "023fed1f045d2d26cb9f16346d95929ef83bd03a070aeeedac7be4a82ab68e3f",
+          "bytes": 329088,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a003/delivery-manifest.json",
+          "sha256": "088cbadbb239a502335d81016939ce2a7b75503965b659ad208c687fbfa8f3af",
+          "bytes": 5226,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a003/qualification-a001.json",
+          "sha256": "34e607a2884bad74adbc714cfd439b59142f80e2db95eb316ad4a6dace860a0c",
+          "bytes": 3576,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a003/separate-pocket-proxy.json",
+          "sha256": "2a90513406e07dd4afac9fc40719a1d1ae6cdb3ba903006246ea31cbbe847a3b",
+          "bytes": 218,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a003/shoulder.glb",
+          "sha256": "32983b595bb4376344feb8f2da5a51aa071a4143978aa727b0459cb2e12aa86a",
+          "bytes": 58364,
+          "notes": "a003passes16native checks with exact raw surfaces outside pocket; a001/a002 preserve failed tessellation comparisons. No installed-game, whole-hull or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T02:25:46.508779+00:00"
+        }
+      ]
+    }
+  ]
+}

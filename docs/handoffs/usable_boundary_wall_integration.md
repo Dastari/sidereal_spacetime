@@ -1,8 +1,10 @@
 # Corrected native exterior wall family
 
-Status: representative source/interface qualification passes; candidate only. No installation, whole-Wayfarer completion, pressure allocation or final owner art approval.
+Status: 50-binding native candidate qualified locally (302 side/end/pocket checks); not installed. Whole-ship collision, pressure enclosure and final owner art approval remain outstanding.
 
-Current exact attempt: `assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a004/`. The versioned contract is `revisions/r000/interface-family.json`; exact GLB and material hashes are in `a004/delivery-manifest.json`, and `a004/native-qualification.json` records all 40 checks. Editable Blender source, native PBR/material textures, separate contact proxies and actual images accompany the manifest.
+Current integration input: `assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/combined-replacement-mapping.json`, combining a006 sides, a009 ends and shoulder-construction-interface/r000/a003.
+
+The original representative geometry checkpoint is `assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a004/`. The versioned contract is `revisions/r000/interface-family.json`; exact GLB and material hashes are in `a004/delivery-manifest.json`, and `a004/native-qualification.json` records all 40 checks. Editable Blender source, native PBR/material textures, separate contact proxies and actual images accompany the manifest.
 
 The four exports are:
 
@@ -73,3 +75,39 @@ Mixed legacy groups are separated by their actual named native `--partitions` me
 `a006/qualification-a002.json` passes 173 native checks: all 28 source identities/frames, complete new exterior/facing surface reservations, exact retained partition triangles/material roles, all six unchanged lockers, armor separation, actual floor and roof bearing contacts, and twelve adjacent straight-side seams. All twelve deliberate positive 2 mm seam gaps remain open in the negative controls. `qualification-a001.json` preserves the earlier 149-check result before those seam controls were added.
 
 Reproduce with `scripts/qualify_usable_wall_side_bays.py` and `scripts/geometry_tests/test_usable_wall_side_bays.py`. The batch remains offline. Actual native `a006/three-bays-original.png` and `three-bays-corrected.png` use the same camera, unchanged floors/lockers/armor and retained partition; `capture-context.json` pins every contextual source. Both were visually inspected. A geometry or agent visual pass does not supply final owner art sign-off. End groups, shoulder/cockpit transitions, room-partition interfaces, mechanical armor mounting and the whole-hull gas volume still need qualification before an admissible template or authoritative refit is installed.
+
+## End/shoulder attempts a007–a008: rejected joins preserved
+
+Eighteen additional unchanged identities now have native end/corner export candidates. a007 passes ordinary source reservation checks but intersects six existing armor/collar pieces; its failed report is preserved. a008 narrows the rear corner's authored X reservation to the actual armor inner datum at X=±5.1875, clearing those rear armor conflicts without moving either model instance. At the front, R006's unchanged buttress already closes the Y=9 shoulder boundary; a007's additional full shoulder wall duplicated approximately 1.23 m³ per side. a008 uses those existing native boundary faces instead.
+
+The stronger a008 combined proof is **not accepted**: 107 checks fail exactly the two side-to-buttress seam tests. Actual floor/roof bearing, equipment, armor separation and the existing buttress front plane pass. A small positive opening remains between the side core and buttress; the existing exterior shoulder armor occupies the volume a structural corner would need. Diagnostic fins overlap armor and do not contact the buttress. This requires a new authored shoulder armor/interface revision with a reserved structural-corner pocket, preserving the original R006 sources and stable placed identities. Do not plug that gap through overlapping equipment/armor, shift placements or call the whole ship sealed.
+
+The first `a008/shoulder-original.png` and `shoulder-corrected.png` context omitted the port mirror and are preserved as failed framing. Corrected `shoulder-a002-original.png` / `shoulder-a002-corrected.png` and `capture-context-a002.json` honor the original flipped flags. Context images do not prove microscopic seam acceptance. `scripts/geometry_tests/test_usable_wall_end_bays.py` retains both the real six-armor-conflict control and the two unresolved seam failures, preventing a misleading passing whole-end claim while revision work proceeds.
+
+
+## a009 combined interface candidate and exact handoff
+
+The native shoulder correction is tracked separately as [shipyard.hull.shoulder-construction-interface](../../assets/art-library/designs/shipyard.hull.shoulder-construction-interface/design.json), r000/a003. Original R006 and roof r004 editable masters remain preserved, including in the new source. An editable derived mesh uses the exact published native triangulation before the Blender Boolean pocket; this avoids flipping a diagonal on an almost-planar original loft face. This is an authored native GLB derivation, not a voxel/occupancy reconstruction. Earlier tessellation failures are preserved.
+
+The shoulder and collar retain their source origins and mirror behavior. Their native inward pocket reserves source X/Y=0..0.25 m, Z=0.25..3.00 m for a separate structural corner (the original placed Z offset is −0.25 m). The normal maps/material roles and raw outside surfaces pass the original 1 µm export tolerance. All raw points remain within the declared armor reservations. Sixteen pocket checks pass; no strength, HP or damage rating is inferred.
+
+`a009/qualification-a002.json` passes 113 end/corner checks with the pocket candidates. Both buttress contacts are explicit, source-pinned structural mating regions at Y=9..9.25 m, Z=0.1875..2.75 m and X=4.9375..5.115 m / −5.115..−4.9375 m. The approximately0.02483045m³ contact per side stays within those regions, closes the tested corner seam and has no overlap with candidate armor or equipment. Actual2mm openings through the connector remain open in negative controls. This permission applies only to the two qualified structural roles and exact source pins.
+
+The actual final context is `a009/shoulder-a003-original.png` / `shoulder-a003-corrected.png`, with exact transforms/mirrors and both old/candidate visual pins in `capture-context-a003.json`. Both images were inspected. They show the corrected wall boundary and retained cockpit at unchanged floor positions. Agent technical review does not constitute final owner art approval.
+
+`a009/combined-replacement-mapping.json` is the exact next integration input:28 side-bay bindings +18 end bindings +4 shoulder/collar bindings =50 distinct existing placed IDs. All262 original IDs remain; no transforms or item/container state are changed. The three immutable proof records total302 checks. Reproduce the mapping with `scripts/qualify_usable_wall_combined_mapping.py`.
+
+For integration, publish only these pinned native visuals through the existing managed asset path, retaining node-prefix selection, independent placed UUIDs, native materials and roof/cutaway roles. Do not also draw the old outer strip or full prototype beside its split replacement. Regenerate separate trusted collision/support/pressure/damage bindings after the complete candidate passes; a visual GLB must not silently become an authoritative damage proxy. Update the trusted template source revision, then perform a distinct expected-revision authoritative refit preserving all existing state. No live installation occurred here.
+
+Remaining before template admission: full assembled collision/support and walking checks, exact retained partial-height partition interfaces, whole-hull gas-boundary/finite-volume proof, visual coplanarity across the complete ship, performance measurement and actual installed browser review. Local side/end seam proofs do not establish a sealed whole ship or complete pressure compartments. This candidate is separate from the already-live Dastari conversion.
+
+
+## Current canonical template compatibility and cabinet diagnosis
+
+The executable `scripts/qualify_usable_wall_current_template.py` verifies exact canonical document `362f37217f63a44a470676f104c8368bd0973ca03f5e29eab190bc4d6df71340`: all211 authored placements retain the audited native asset IDs and frames, all51 semantic floor IDs are preserved, and every current walking-proof asset hash verifies. This is source compatibility; an edited live instance still requires authoritative revision/frame validation.
+
+The six affected cabinet source IDs are `equipment-locker--4.7--6`, `equipment-locker--4.7--2`, `equipment-locker--4.7-2`, `equipment-locker-4.7--6`, `equipment-locker-4.7--2`, and `equipment-locker-4.7-2`. Their matching wall IDs are respectively `wall--2--3`, `wall--2--1`, `wall--2-1`, `wall-2--3`, `wall-2--1`, and `wall-2-1`. Complete cabinet geometry fits its reserved envelope; the legacy exterior wall composites extend inward into usable floor and intersect these cabinets. The candidate corrects the wall assets at unchanged transforms: all six actual native intersections become zero. There is no cabinet translation or inventory migration in this candidate.
+
+Exact native paths/hashes, per-cabinet measured intersections and clearances, and the50-ID mapping hash are in [current-template-compatibility.json](../../assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/current-template-compatibility.json). Future refit resolves these source IDs through each existing instance identity map, preserves every item/container/fitting UUID and current state, and changes only the qualified structural/armor asset and separately requalified authority bindings. The current public conversion does not contain these wall corrections. Whole-template admission and final owner artistic acceptance remain outstanding.
+
+Current focused native checks pass. The aggregate art gate is presently blocked by unrelated external pose r003 publication receipt validation (`Unexpected/incomplete r003 publication receipt set`); the art catalog inventory check separately reports changed source inventory. These are not claimed as passing candidate evidence.
