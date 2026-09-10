@@ -58,6 +58,9 @@ def _command(action, cfg, lifecycle, *, artifact=None, artifact_sha256=None, exp
         ):
             lifecycle.run(['ssh', '-o', 'BatchMode=yes', host, shlex.join(args)])
         return
+    if action.startswith('delivery-'):
+        from public_delivery import command as delivery_command
+        return delivery_command(action, ROOT, cfg, lifecycle, validate_build, lambda: _command('up', cfg, lifecycle))
     settings = cfg['public_client']
     home = ROOT / '.runtime/public-client'
     current = home / 'current'
@@ -102,10 +105,12 @@ def _command(action, cfg, lifecycle, *, artifact=None, artifact_sha256=None, exp
         existing = lifecycle.load().get('public-client')
         if not existing or not lifecycle.alive(existing):
             lifecycle.port_free(settings['host'], settings['port'])
+        from public_delivery import launch_options
+        preview_config, preview_env = launch_options(ROOT, cfg)
         lifecycle.launch('public-client', [
             'node', 'node_modules/vite/bin/vite.js', 'preview',
-            '--config', 'apps/client/vite.config.ts', '--host', settings['host'],
+            '--config', preview_config, '--host', settings['host'],
             '--port', str(settings['port']), '--strictPort', '--outDir', str(current.resolve()),
-        ], os.environ.copy())
+        ], preview_env)
         lifecycle.ready(f"http://127.0.0.1:{settings['port']}", 'public-client')
         print('Public game:', cfg['auth']['client_origin'])
