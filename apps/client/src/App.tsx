@@ -471,6 +471,7 @@ export default function App({
     sharedEntry: sharedEnabled ? sharedEntry.state : undefined,
     characterAppearance: cosmetics,
     graphics: view.current?.getGraphicsSettings(),
+    antialiasing: view.current?.getAntialiasing(),
     localLightLimit: view.current?.getLocalLightBudget().limit,
     combat: {
       enabled: combatEnabled,
@@ -814,6 +815,10 @@ export default function App({
                   crew: saveAppearance,
                   graphics: (patch) => {
                     view.current?.setGraphicsSettings(patch);
+                    refresh((v) => v + 1);
+                  },
+                  antialiasing: (patch) => {
+                    view.current?.setAntialiasing(patch);
                     refresh((v) => v + 1);
                   },
                   graphicsReset: () => {

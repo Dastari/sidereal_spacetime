@@ -9,7 +9,11 @@ import { drawGroundLoot } from "./ground-loot";
 import type { GroundItemLabel } from "../../render/src/ground-items";
 import type { LocalLightLimit } from "../../render/src/local-light-budget";
 import { topHudLayout } from "./system-menu-layout";
-import { drawGraphicsMenu } from "./graphics-menu";
+import { drawGraphicsMenu, GRAPHICS_MENU_HEIGHT } from "./graphics-menu";
+import type {
+  AntialiasingSettings,
+  AntialiasingSnapshot,
+} from "@sidereal/render/antialiasing-settings";
 import type { GraphicsSettings } from "../../render/src/graphics-settings";
 import {
   createObjectDetailsUI,
@@ -51,6 +55,7 @@ export type GameUIState = {
   sharedEntry?: SharedEntryState;
   characterAppearance?: CrewAppearance;
   graphics?: GraphicsSettings;
+  antialiasing?: AntialiasingSnapshot;
   localLightLimit?: LocalLightLimit;
   combat?: {
     enabled: boolean;
@@ -98,6 +103,7 @@ export type GameUIActions = {
   groundItems?: () => readonly GroundItemLabel[];
   graphics?: (patch: Partial<GraphicsSettings>) => void;
   graphicsReset?: () => void;
+  antialiasing?: (patch: Partial<AntialiasingSettings>) => void;
   localLightLimit?: (limit: LocalLightLimit) => void;
   combat?: () => void;
   inventory?: InventoryActions;
@@ -710,7 +716,7 @@ export function createGameUI(
       };
       const contentHeight =
         tab === "Graphics"
-          ? 570
+          ? GRAPHICS_MENU_HEIGHT
           : tab === "Crew"
             ? 600
             : tab === "Controls"
@@ -733,6 +739,9 @@ export function createGameUI(
           actions.graphicsReset,
           state.localLightLimit,
           actions.localLightLimit,
+          state.antialiasing && actions.antialiasing
+            ? { state: state.antialiasing, set: actions.antialiasing }
+            : undefined,
         );
       } else if (tab === "Display") {
         ui.slider(

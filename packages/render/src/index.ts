@@ -27,6 +27,9 @@ import {
   createLocalLightBudget,
   type LocalLightLimit,
 } from "./local-light-budget";
+import { createAntialiasing } from "./antialiasing-pipeline";
+import { invalidatesTemporalHistory } from "./antialiasing-history";
+import type { AntialiasingSettings } from "./antialiasing-settings";
 import { maintainSceneTransmission } from "./transmission-lifecycle";
 import {
   createGraphicsSettings,
@@ -533,6 +536,16 @@ async function buildWorld(
   );
   const groundItems = createGroundItems(scene, shipRoot, options.equipmentPose);
   const graphics = createGraphicsSettings(scene);
+  const antialiasing = createAntialiasing(scene, camera, {
+    temporalResetIntegrated: true,
+  });
+  // A reconstructed scene starts with fresh history. Newly loaded geometry also
+  // invalidates samples; this covers remote exteriors and async equipment.
+  const temporalMeshObserver = scene.onNewMeshAddedObservable.add(() =>
+    antialiasing.resetHistory(),
+  );
+  let temporalStateAt = performance.now();
+  let temporalAppearance = "";
   const localLights = createLocalLightBudget();
   const combatAim = createCombatAim(scene, canvas, shipRoot, imported.meshes);
   for (const mesh of combatAim.meshes) glow.addIncludedOnlyMesh(mesh);
@@ -947,6 +960,11 @@ async function buildWorld(
   let selectedAsset: EquipmentAsset | null = null;
   function customizeCrew(next: CrewAppearance) {
     if (disposed || !crew) return;
+    const appearanceKey = JSON.stringify(next);
+    if (appearanceKey !== temporalAppearance) {
+      temporalAppearance = appearanceKey;
+      antialiasing.resetHistory();
+    }
     crew.customize({ ...next, weaponFixture: !equipment });
     const asset =
       state.equippedAsset !== undefined
@@ -981,6 +999,7 @@ async function buildWorld(
           return;
         }
         equipment = visual;
+        antialiasing.resetHistory();
         equipmentPending = false;
         if (firstFrame) options.onLoadStage?.("finishing");
         const poseItem = options.equipmentPose?.items[selectedAsset!];
@@ -1026,6 +1045,12 @@ async function buildWorld(
     );
   });
   return {
+    getAntialiasing() {
+      return antialiasing.snapshot();
+    },
+    setAntialiasing(patch: Partial<AntialiasingSettings>) {
+      antialiasing.set(patch);
+    },
     getGraphicsSettings() {
       return graphics.snapshot();
     },
@@ -1034,6 +1059,7 @@ async function buildWorld(
     },
     resetGraphicsSettings() {
       graphics.reset();
+      antialiasing.reset();
       localLights.reset();
     },
     getLocalLightBudget() {
@@ -1066,9 +1092,11 @@ async function buildWorld(
     },
     toggleDebugFeature(key: DebugFeature) {
       debugFeatures.toggle(key);
+      antialiasing.resetHistory();
     },
     resetDebugFeatures() {
       debugFeatures.reset();
+      antialiasing.resetHistory();
     },
     groundItemLabels: () => groundItems.labels(),
     getSharedWorldDiagnostics: () => ({
@@ -1077,6 +1105,10 @@ async function buildWorld(
       remoteShipIds: remoteShips?.getRootIds() ?? [],
     }),
     update(next: SceneState) {
+      const temporalNow = performance.now();
+      if (invalidatesTemporalHistory(state, next, temporalNow - temporalStateAt))
+        antialiasing.resetHistory();
+      temporalStateAt = temporalNow;
       if (!initialStateApplied) {
         initialStateApplied = true;
         initialized = false;
@@ -1101,10 +1133,12 @@ async function buildWorld(
           ? id
           : undefined;
       if (next && next !== focusedBodyId) observation.reset();
+      if (next !== focusedBodyId) antialiasing.resetHistory();
       focusedBodyId = next;
       up();
     },
     resetCamera() {
+      antialiasing.resetHistory();
       focusedBodyId = undefined;
       observation.reset();
       up();
@@ -1123,6 +1157,8 @@ async function buildWorld(
       remoteShips?.dispose();
       combatAim.dispose();
       localLights.dispose();
+      scene.onNewMeshAddedObservable.remove(temporalMeshObserver);
+      antialiasing.dispose();
       graphics.dispose();
       transmissionLifecycle.dispose();
       objects.dispose();
