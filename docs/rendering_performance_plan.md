@@ -589,3 +589,21 @@ Final whole-scene targets are not proven: Deck <900 calls / Flight <600, <500 me
 The shared RTX browser (`tab_b`) is visible but unfocused, has one registered render loop, and remains at engine frame 0 / scene ID 1 with an unready scene and the first-frame cover. Reopening the pane has not restored snapshots or normal animation. This equivalent hardware blocker recurred through the R10 follow-up, R5 pooling and this goal continuation. No live measurement job is being awaited. The existing construction visit is preserved; no gameplay state or readiness gate was bypassed. Completing acceptance requires an externally restored, normally advancing hardware session and access to the required seated-Flight review context. Completing the stopped batching scopes also requires the approved identity inputs already described in their conflict entries. The goal is blocked on those conditions, not achieved.
 
 This is a documentation-only audit. The unchanged implementation's latest validation is R5 pooling's passing `npm run check` (266 files / 1,523 tests) and `npm run build`; the updated document passes `scripts/check_docs.py`. No new behavior or optimization measurement is claimed.
+
+### 2026-09-11 — Owner-requested hardware retry: normal rendering restored, partial Deck evidence
+
+The former `tab_b` no longer exists. Reopening created `tab_d`; the normal game was loaded and its saved development character resumed. The RTX 4080 Laptop WebGL engine now advances normally (334 frames at the first readiness check), `scene.isReady()` is true, and an independent requestAnimationFrame callback fires. The previous first-frame rendering blocker is therefore cleared for this session. Preview snapshots still fail and the page reports hidden/unfocused despite the tool reporting a visible pane; actual normally rendered canvas readback succeeds. No manual game frames or authority/readiness bypasses were used.
+
+Captured the existing construction Deck at actual 1574 × 907, MSAA4, F3 visibly open, nothing selected, radius 46.9958 m. The construction visit remains unchanged. Before reference is R5's earlier partial construction Deck (not the original 70 m owner baseline):
+
+| Counter | Earlier partial Deck | Retry Deck |
+| --- | --- | --- |
+| Draw calls | 656 | 656 |
+| Active meshes | 393 | 393 |
+| Total meshes | 1,422 | 1,420 |
+| Materials | 580 | 505 |
+| Scale2 / GlowOff / ShadowsOff / LightingOff calls | 656 / 533 / 277 / 277 | 656 / 533 / 277 / 277 |
+
+The current frame rate is approximately 60 FPS, with an initial Render CPU sample of 15.4 ms. These timings are not accepted as a controlled improvement: visibility/focus and the earlier throttled session differ. The two-mesh population change also prevents attributing the entire material delta solely to pooling. Scale2 temporarily has 1,419 meshes / 504 materials, consistent with existing resolution-dependent environment population; full resolution is restored before the sequential visual switches. All switches and hardware scale were restored afterward.
+
+Evidence: `output/playwright/render-plan/hardware-retry-20260911/deck*.{json,jpg}`. Each JPEG is the full normally rendered canvas. Seated Flight, its isolation sequence, detailed R1 occlusion acceptance, R3 comparison, full-game WebGPU qualification and matched timing remain outstanding, as do the R2/R4 input identity conflicts. This retry makes further hardware review possible; it does not complete a register item or the goal. No implementation code changed, so this entry reuses the last passing implementation checks and adds only the documentation check.
