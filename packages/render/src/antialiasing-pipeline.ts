@@ -1,5 +1,6 @@
 import type { Scene } from "@babylonjs/core/scene";
 import type { Camera } from "@babylonjs/core/Cameras/camera";
+import type { Material } from "@babylonjs/core/Materials/material";
 import type { PostProcess } from "@babylonjs/core/PostProcesses/postProcess";
 import { PassPostProcess } from "@babylonjs/core/PostProcesses/passPostProcess";
 import { FxaaPostProcess } from "@babylonjs/core/PostProcesses/fxaaPostProcess";
@@ -86,6 +87,22 @@ export function createAntialiasing(
         camera,
       ]);
       taa.reprojectHistory = true;
+      // Babylon registers its jitter factory globally; scope new material
+      // assignment to this scene so inventory/portrait preview scenes stay neutral.
+      const manager = (
+        taa as unknown as {
+          _taaThinPostProcess: {
+            _taaMaterialManager?: {
+              _getPlugin(material: Material): unknown;
+            };
+          };
+        }
+      )._taaThinPostProcess._taaMaterialManager;
+      if (manager) {
+        const getPlugin = manager._getPlugin.bind(manager);
+        manager._getPlugin = (material) =>
+          material.getScene() === scene ? getPlugin(material) : null;
+      }
       taa.clampHistory = true;
       taa.disableOnCameraMove = true;
       taa.samples = 8;

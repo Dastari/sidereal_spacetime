@@ -143,6 +143,10 @@ it("resets temporal history and releases its material jitter owner across repeat
       "TAAJitter",
     ) as unknown as { isEnabled: boolean; manager: unknown };
     expect(plugin.isEnabled).toBe(true);
+    const previewScene = new Scene(engine);
+    const preview = new StandardMaterial("inventory-preview", previewScene);
+    expect(preview.pluginManager?.getPlugin("TAAJitter")).toBeFalsy();
+    previewScene.dispose();
     aa.resetHistory();
     expect(camera._postProcesses.length).toBeLessThanOrEqual(4);
     expect(camera._postProcesses.filter(Boolean).map((p) => p!.name)).toEqual([
