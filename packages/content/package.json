@@ -26,7 +26,9 @@
     "./space": "./src/space.ts",
     "./flight": "./src/flight.ts",
     "./wayfarer-starter": "./src/wayfarer-starter.ts",
-    "./construction-airlock-room": "./src/construction-airlock-room.ts"
+    "./construction-airlock-room": "./src/construction-airlock-room.ts",
+    "./cargo-carriers": "./src/cargo-carriers.ts",
+    "./cargo-handling-fixture": "./src/cargo-handling-fixture.ts"
   },
   "dependencies": {}
 }

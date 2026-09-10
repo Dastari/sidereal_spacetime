@@ -1,0 +1,31 @@
+{
+  "schema": "sidereal.art-library.v1",
+  "id": "cargo.handling.fixture",
+  "asset_uuid": "12a3c235-ca1b-51af-a90e-a9c24ae74adb",
+  "reference_ids": [],
+  "mapping_status": "Technical assembly using unchanged approved small/red cargo, new native carriers and retained native floor kit",
+  "current_revision": 1,
+  "state": "awaiting-owner",
+  "owner_final_signoff": null,
+  "assigned_to": "shared_space_rules",
+  "feedback": [
+    {
+      "source": "parent technical review",
+      "message": "Stacked and unstacked native floor PNGs clearly demonstrate supported mixed stack and required staging layout; not owner artistic sign-off."
+    }
+  ],
+  "approvals": [],
+  "revisions": [
+    {
+      "revision": 1,
+      "stage": "technical-qualification",
+      "current_attempt": "a002",
+      "preserved_attempts": [
+        "a001",
+        "a002"
+      ],
+      "evidence_manifest": "artifact-manifest.json"
+    }
+  ],
+  "next_action": "Isolated registered authority/browser handling proof, then matched publication under integration owner."
+}

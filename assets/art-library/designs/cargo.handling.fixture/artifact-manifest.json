@@ -1,0 +1,84 @@
+{
+  "schema": "sidereal.native-cargo-handling-artifacts.v1",
+  "designId": "cargo.handling.fixture",
+  "currentAttempt": "r001/a002",
+  "ownerFinalSignoff": null,
+  "constructionSha256": "b2b413fa0e924cd72cde266a2e72525c78bfa199d53f799751ce5b4f9eba3ea0",
+  "artifacts": [
+    {
+      "path": "revisions/r001/a001/author.log",
+      "sha256": "db6ef710012d870f46f954ab5f49eb15d6e7495f06fe7391059d41cfe390e352",
+      "bytes": 312571
+    },
+    {
+      "path": "revisions/r001/a001/author.py",
+      "sha256": "bea231e50c309291f455057e0e3645c8ebb777f5ed5f6b798d22db50e081dcac",
+      "bytes": 3904
+    },
+    {
+      "path": "revisions/r001/a001/evidence.json",
+      "sha256": "f30893565e1662b8a53be16fa1b98f51bcbc5066c3703b14bf75d9edcf46b394",
+      "bytes": 1687
+    },
+    {
+      "path": "revisions/r001/a001/review.md",
+      "sha256": "1ff2f8c1c05007e82619607baf0aaecb4e118dd246d4f97c0f051ea6023d2f9d",
+      "bytes": 256
+    },
+    {
+      "path": "revisions/r001/a001/stacked-fixture.blend",
+      "sha256": "eb79a711f34bba7089026fb6269776930caefd3114be11fc71e80ac8c8709d4a",
+      "bytes": 16167718
+    },
+    {
+      "path": "revisions/r001/a001/stacked-native-floor.png",
+      "sha256": "1547f23f32c7890451279376fc5747021555e39db73eb077e7118433c2c6a52c",
+      "bytes": 1282059
+    },
+    {
+      "path": "revisions/r001/a001/unstacked-fixture.blend",
+      "sha256": "380d623c858026c55b26a1ce49589748160e5cfbc703485845868eed7b5a4193",
+      "bytes": 16167718
+    },
+    {
+      "path": "revisions/r001/a001/unstacked-native-floor.png",
+      "sha256": "6afb9b7e36c3f2ef2fcb5f91a5e55a6bd2d595852ff31d1c8f56497ce3bc8e02",
+      "bytes": 1357908
+    },
+    {
+      "path": "revisions/r001/a002/author.log",
+      "sha256": "802cb4b83cf956394c62248cfbbcbced61400550ebff267501361155328ceebd",
+      "bytes": 311302
+    },
+    {
+      "path": "revisions/r001/a002/author.py",
+      "sha256": "c6b8363f3b7147395a7ecdb6718a6f02093e12d2de39b8ded4904f1a7aa852a9",
+      "bytes": 3916
+    },
+    {
+      "path": "revisions/r001/a002/evidence.json",
+      "sha256": "f30893565e1662b8a53be16fa1b98f51bcbc5066c3703b14bf75d9edcf46b394",
+      "bytes": 1687
+    },
+    {
+      "path": "revisions/r001/a002/stacked-fixture.blend",
+      "sha256": "395fd8a4b41b2c48edca42973a9c3fa62ce468a3760df3cd6c88c74929323652",
+      "bytes": 16167718
+    },
+    {
+      "path": "revisions/r001/a002/stacked-native-floor.png",
+      "sha256": "d0e826b8ab82834298abc1e158c013c1bcaad41eadbfcabf5ed7a0877a37233a",
+      "bytes": 1013276
+    },
+    {
+      "path": "revisions/r001/a002/unstacked-fixture.blend",
+      "sha256": "d33c15022b453c854cc2b4e0e285d4f8555721c48d47f906b81b291cee992c5a",
+      "bytes": 16167718
+    },
+    {
+      "path": "revisions/r001/a002/unstacked-native-floor.png",
+      "sha256": "830e3a603a3eef33af5f0f35a3a0218ec87900a189644f0b0749f2000c91335d",
+      "bytes": 1069615
+    }
+  ]
+}

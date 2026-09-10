@@ -1,0 +1,118 @@
+{
+  "schema": "sidereal.art-library.v1",
+  "id": "cargo.restraint.standard-small",
+  "asset_uuid": "a459b5b4-ea49-52de-bb68-96a32257e5d1",
+  "reference_ids": [],
+  "mapping_status": "New native securing companion for exact approved small/red feet; source references remain on original designs.",
+  "current_revision": 0,
+  "state": "awaiting-owner",
+  "owner_final_signoff": null,
+  "priority": 10,
+  "profile": "crate",
+  "assigned_to": "shared_space_rules",
+  "blocker": null,
+  "feedback": [],
+  "approvals": [],
+  "derived_from": {
+    "designs": [
+      "cargo.standard.small",
+      "cargo.carrier.grid-support"
+    ],
+    "reason": "44mm receivers retaining existing40mm feet; no payload model change."
+  },
+  "next_action": "Register provisional gameplay after actual authority tests; keep owner artistic approval separate.",
+  "revisions": [
+    {
+      "revision": 0,
+      "created_at": "2026-09-09T22:08:20.089742+00:00",
+      "stage": "awaiting-owner",
+      "change": "Four exact44mm clear receiver cups with28mm retaining walls.",
+      "hypothesis": "Positive locating-foot retention beneath locked upper frame preserves exact approved cargo geometry.",
+      "covered_reference_ids": [],
+      "evidence": [
+        {
+          "role": "author.log",
+          "path": "designs/cargo.restraint.standard-small/revisions/r000/a001/author.log",
+          "sha256": "4966ef4d21d2eaed55101d9dfec37f75cb09165e85698ecaacb38483577120e1",
+          "bytes": 28074,
+          "notes": "Fixed-orientation locked small/red transport proof; unpublished art.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T22:08:20.089742+00:00"
+        },
+        {
+          "role": "author.py",
+          "path": "designs/cargo.restraint.standard-small/revisions/r000/a001/author.py",
+          "sha256": "4071628eefc17b94034618201e6cf52a341f19602d3db9334c2e80bbae8b352e",
+          "bytes": 6027,
+          "notes": "Fixed-orientation locked small/red transport proof; unpublished art.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T22:08:20.089742+00:00"
+        },
+        {
+          "role": "blender-source.blend",
+          "path": "designs/cargo.restraint.standard-small/revisions/r000/a001/blender-source.blend",
+          "sha256": "84e14cd46cb51e8f3df7fa7e0532cbb996d42411b6e7d67b79f5d53f4c793a33",
+          "bytes": 644316,
+          "notes": "Fixed-orientation locked small/red transport proof; unpublished art.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T22:08:20.089742+00:00"
+        },
+        {
+          "role": "exploded-receiver-proof.png",
+          "path": "designs/cargo.restraint.standard-small/revisions/r000/a001/exploded-receiver-proof.png",
+          "sha256": "e038122bafc78f97371da2823552fba11f95e9203bab3f8d474e5dc44112424b",
+          "bytes": 864288,
+          "notes": "Fixed-orientation locked small/red transport proof; unpublished art.",
+          "capture_context": {
+            "renderer": "Blender4.3.2 Cycles CPU",
+            "threads": 2,
+            "samples": 48,
+            "pose": "exploded evidence only"
+          },
+          "recorded_at": "2026-09-09T22:08:20.089742+00:00"
+        },
+        {
+          "role": "exploded-review.blend",
+          "path": "designs/cargo.restraint.standard-small/revisions/r000/a001/exploded-review.blend",
+          "sha256": "003d5754a788f5ad8146be246d3f2aed713f3eae5b186143a3cafff471266dc5",
+          "bytes": 2639604,
+          "notes": "Fixed-orientation locked small/red transport proof; unpublished art.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T22:08:20.089742+00:00"
+        },
+        {
+          "role": "interface.json",
+          "path": "designs/cargo.restraint.standard-small/revisions/r000/a001/interface.json",
+          "sha256": "77ffa63fe0b265c109efa723467cd56a67cf4410f85c75c9376bda8fe95a83e8",
+          "bytes": 5171,
+          "notes": "Fixed-orientation locked small/red transport proof; unpublished art.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T22:08:20.089742+00:00"
+        },
+        {
+          "role": "qualification.json",
+          "path": "designs/cargo.restraint.standard-small/revisions/r000/a001/qualification.json",
+          "sha256": "66be029610841db7777c85d03d7c37e44d72dd8df1cefe0ef1269a484f1860b9",
+          "bytes": 4244,
+          "notes": "Fixed-orientation locked small/red transport proof; unpublished art.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T22:08:20.089742+00:00"
+        },
+        {
+          "role": "receiver-set.glb",
+          "path": "designs/cargo.restraint.standard-small/revisions/r000/a001/receiver-set.glb",
+          "sha256": "dac3fd3c6cca793929f9deaae8030b867ad214081cd5719cbc21778133d83044",
+          "bytes": 26236,
+          "notes": "Fixed-orientation locked small/red transport proof; unpublished art.",
+          "capture_context": null,
+          "recorded_at": "2026-09-09T22:08:20.089742+00:00"
+        }
+      ],
+      "review": {
+        "actualExportVerified": true,
+        "runtimeEvidence": false,
+        "ownerApproval": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "schema": "sidereal.small-receiver-qualification.v1",
+  "receiverGlbSha256": "dac3fd3c6cca793929f9deaae8030b867ad214081cd5719cbc21778133d83044",
+  "receiverSourceSha256": "84e14cd46cb51e8f3df7fa7e0532cbb996d42411b6e7d67b79f5d53f4c793a33",
+  "payloads": [
+    {
+      "appearance": "standard-small",
+      "assetId": "part-c06e4f5f6f6dace38e41",
+      "glbSha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+      "feet": [
+        {
+          "actualFootMinM": [
+            0.27000001072883606,
+            0.3477499932050705,
+            0.09375
+          ],
+          "actualFootMaxM": [
+            0.3100000023841858,
+            0.3877499848604202,
+            0.1197500005364418
+          ],
+          "lateralGapPerSideM": 0.002,
+          "verticalRetentionMarginM": 0.008249941349029542
+        },
+        {
+          "actualFootMinM": [
+            0.27000001072883606,
+            0.6877499967813492,
+            0.09375
+          ],
+          "actualFootMaxM": [
+            0.3100000023841858,
+            0.7277499884366989,
+            0.1197500005364418
+          ],
+          "lateralGapPerSideM": 0.002,
+          "verticalRetentionMarginM": 0.008249941349029542
+        },
+        {
+          "actualFootMinM": [
+            0.6899999976158142,
+            0.3477499932050705,
+            0.09375
+          ],
+          "actualFootMaxM": [
+            0.7299999892711639,
+            0.3877499848604202,
+            0.1197500005364418
+          ],
+          "lateralGapPerSideM": 0.002,
+          "verticalRetentionMarginM": 0.008249941349029542
+        },
+        {
+          "actualFootMinM": [
+            0.6899999976158142,
+            0.6877499967813492,
+            0.09375
+          ],
+          "actualFootMaxM": [
+            0.7299999892711639,
+            0.7277499884366989,
+            0.1197500005364418
+          ],
+          "lateralGapPerSideM": 0.002,
+          "verticalRetentionMarginM": 0.008249941349029542
+        }
+      ]
+    },
+    {
+      "appearance": "standard-small-red",
+      "assetId": "part-5382f8dbbeb54e663d33",
+      "glbSha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+      "feet": [
+        {
+          "actualFootMinM": [
+            0.27000001072883606,
+            0.3477499932050705,
+            0.09375
+          ],
+          "actualFootMaxM": [
+            0.3100000023841858,
+            0.3877499848604202,
+            0.1197500005364418
+          ],
+          "lateralGapPerSideM": 0.002,
+          "verticalRetentionMarginM": 0.008249941349029542
+        },
+        {
+          "actualFootMinM": [
+            0.27000001072883606,
+            0.6877499967813492,
+            0.09375
+          ],
+          "actualFootMaxM": [
+            0.3100000023841858,
+            0.7277499884366989,
+            0.1197500005364418
+          ],
+          "lateralGapPerSideM": 0.002,
+          "verticalRetentionMarginM": 0.008249941349029542
+        },
+        {
+          "actualFootMinM": [
+            0.6899999976158142,
+            0.3477499932050705,
+            0.09375
+          ],
+          "actualFootMaxM": [
+            0.7299999892711639,
+            0.3877499848604202,
+            0.1197500005364418
+          ],
+          "lateralGapPerSideM": 0.002,
+          "verticalRetentionMarginM": 0.008249941349029542
+        },
+        {
+          "actualFootMinM": [
+            0.6899999976158142,
+            0.6877499967813492,
+            0.09375
+          ],
+          "actualFootMaxM": [
+            0.7299999892711639,
+            0.7277499884366989,
+            0.1197500005364418
+          ],
+          "lateralGapPerSideM": 0.002,
+          "verticalRetentionMarginM": 0.008249941349029542
+        }
+      ]
+    }
+  ],
+  "fixedOrientationClosedRetention": true,
+  "unlockedUpperFrameAllowsRemoval": true,
+  "otherEnvelopeFitsSecured": false,
+  "engineeringCertification": false,
+  "ownerArtApproval": false,
+  "limitations": [
+    "Relative cargo tilt/free6DOF is not simulated.",
+    "Upper frame must be unlocked/removed only after unsupported dependent stacks are absent.",
+    "Runtime inventory access is separate from a lid animation; transport restraint remains locked for item transactions."
+  ]
+}

@@ -1,0 +1,260 @@
+{
+  "schema": "sidereal.standard-small-restraint.v1",
+  "payloadAppearances": [
+    "standard-small",
+    "standard-small-red"
+  ],
+  "payloadGlbSha256": [
+    "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+    "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6"
+  ],
+  "carrierCellOriginM": [
+    0,
+    0,
+    0
+  ],
+  "payloadTranslationM": [
+    0.5,
+    0.5377499908208847,
+    0.09375
+  ],
+  "footCentersM": [
+    [
+      0.29000000000000004,
+      0.36774999082088466
+    ],
+    [
+      0.29000000000000004,
+      0.7077499908208847
+    ],
+    [
+      0.71,
+      0.36774999082088466
+    ],
+    [
+      0.71,
+      0.7077499908208847
+    ]
+  ],
+  "clearOpeningM": 0.044,
+  "footWidthM": 0.04,
+  "receiverWallHeightM": 0.028,
+  "floorM": 0.09375,
+  "ceilingM": 0.625,
+  "payloadHeightM": 0.5114999413490295,
+  "maximumUpwardTravelM": 0.01975005865097046,
+  "closedRetentionRule": "At fixed relative orientation, payload feet cannot rise above receiver walls while upper frame is locked. Positive2mm lateral clearance per side; no free6DOF cargo simulation.",
+  "installationRule": "Offload any upper carriers; unlock/remove upper frame for payload installation/removal; then lock it. No side loading claim.",
+  "provisionalGameplayAuthorization": "Parent instruction permitting proposed numeric gameplay balance; not engineering certification or owner art signoff.",
+  "collisionBoxes": [
+    {
+      "id": "GEO-receiver--0.21--0.17-left",
+      "min": [
+        0.263,
+        0.34074999082088464,
+        0.09375
+      ],
+      "max": [
+        0.268,
+        0.3947499908208847,
+        0.12175
+      ]
+    },
+    {
+      "id": "GEO-receiver--0.21--0.17-right",
+      "min": [
+        0.31200000000000006,
+        0.34074999082088464,
+        0.09375
+      ],
+      "max": [
+        0.31700000000000006,
+        0.3947499908208847,
+        0.12175
+      ]
+    },
+    {
+      "id": "GEO-receiver--0.21--0.17-front",
+      "min": [
+        0.268,
+        0.34074999082088464,
+        0.09375
+      ],
+      "max": [
+        0.31200000000000006,
+        0.34574999082088465,
+        0.12175
+      ]
+    },
+    {
+      "id": "GEO-receiver--0.21--0.17-rear",
+      "min": [
+        0.268,
+        0.3897499908208847,
+        0.09375
+      ],
+      "max": [
+        0.31200000000000006,
+        0.3947499908208847,
+        0.12175
+      ]
+    },
+    {
+      "id": "GEO-receiver--0.21-0.17-left",
+      "min": [
+        0.263,
+        0.6807499908208847,
+        0.09375
+      ],
+      "max": [
+        0.268,
+        0.7347499908208848,
+        0.12175
+      ]
+    },
+    {
+      "id": "GEO-receiver--0.21-0.17-right",
+      "min": [
+        0.31200000000000006,
+        0.6807499908208847,
+        0.09375
+      ],
+      "max": [
+        0.31700000000000006,
+        0.7347499908208848,
+        0.12175
+      ]
+    },
+    {
+      "id": "GEO-receiver--0.21-0.17-front",
+      "min": [
+        0.268,
+        0.6807499908208847,
+        0.09375
+      ],
+      "max": [
+        0.31200000000000006,
+        0.6857499908208847,
+        0.12175
+      ]
+    },
+    {
+      "id": "GEO-receiver--0.21-0.17-rear",
+      "min": [
+        0.268,
+        0.7297499908208848,
+        0.09375
+      ],
+      "max": [
+        0.31200000000000006,
+        0.7347499908208848,
+        0.12175
+      ]
+    },
+    {
+      "id": "GEO-receiver-0.21--0.17-left",
+      "min": [
+        0.6829999999999999,
+        0.34074999082088464,
+        0.09375
+      ],
+      "max": [
+        0.688,
+        0.3947499908208847,
+        0.12175
+      ]
+    },
+    {
+      "id": "GEO-receiver-0.21--0.17-right",
+      "min": [
+        0.732,
+        0.34074999082088464,
+        0.09375
+      ],
+      "max": [
+        0.737,
+        0.3947499908208847,
+        0.12175
+      ]
+    },
+    {
+      "id": "GEO-receiver-0.21--0.17-front",
+      "min": [
+        0.688,
+        0.34074999082088464,
+        0.09375
+      ],
+      "max": [
+        0.732,
+        0.34574999082088465,
+        0.12175
+      ]
+    },
+    {
+      "id": "GEO-receiver-0.21--0.17-rear",
+      "min": [
+        0.688,
+        0.3897499908208847,
+        0.09375
+      ],
+      "max": [
+        0.732,
+        0.3947499908208847,
+        0.12175
+      ]
+    },
+    {
+      "id": "GEO-receiver-0.21-0.17-left",
+      "min": [
+        0.6829999999999999,
+        0.6807499908208847,
+        0.09375
+      ],
+      "max": [
+        0.688,
+        0.7347499908208848,
+        0.12175
+      ]
+    },
+    {
+      "id": "GEO-receiver-0.21-0.17-right",
+      "min": [
+        0.732,
+        0.6807499908208847,
+        0.09375
+      ],
+      "max": [
+        0.737,
+        0.7347499908208848,
+        0.12175
+      ]
+    },
+    {
+      "id": "GEO-receiver-0.21-0.17-front",
+      "min": [
+        0.688,
+        0.6807499908208847,
+        0.09375
+      ],
+      "max": [
+        0.732,
+        0.6857499908208847,
+        0.12175
+      ]
+    },
+    {
+      "id": "GEO-receiver-0.21-0.17-rear",
+      "min": [
+        0.688,
+        0.7297499908208848,
+        0.09375
+      ],
+      "max": [
+        0.732,
+        0.7347499908208848,
+        0.12175
+      ]
+    }
+  ],
+  "ownerArtApproval": false
+}

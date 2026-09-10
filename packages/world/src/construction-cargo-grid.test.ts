@@ -14,7 +14,7 @@ import {
 import type {
   CargoGrid,
   CargoInterface,
-} from "../../sim/src/construction-cargo";
+} from "@sidereal/sim/construction-cargo";
 
 // Ratings here are explicit synthetic test fixtures, never native model approvals.
 function fixture() {

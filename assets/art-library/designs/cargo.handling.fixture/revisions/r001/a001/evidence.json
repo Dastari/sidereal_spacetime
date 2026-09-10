@@ -1,0 +1,103 @@
+{
+  "schema": "sidereal.cargo-handling-native-evidence.v1",
+  "sourceStack": "assets/art-library/designs/cargo.carrier.grid-support/revisions/r000/a003/stack-fixture.blend",
+  "sourceStackSha256": "dad1bbb644cc76471f5ad39a5eb7ca5fcd0d9dfcdac287853470ef298b8dc318",
+  "floorKitSha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+  "receiverSha256": "dac3fd3c6cca793929f9deaae8030b867ad214081cd5719cbc21778133d83044",
+  "floorRectangleM": [
+    -1,
+    -1,
+    7,
+    5
+  ],
+  "cargoZoneM": [
+    0,
+    0,
+    6,
+    4
+  ],
+  "nativeFloorModules": 12,
+  "nativeFloorTopM": 0.1875,
+  "pairedRoofUndersideM": 3,
+  "roofRender": "cutaway; paired native roof is pinned in construction document",
+  "stackTopM": 2.25,
+  "payloadScaling": "none",
+  "stacked": [
+    [
+      "base",
+      [
+        0,
+        0,
+        0.1875
+      ]
+    ],
+    [
+      "middle-0-0",
+      [
+        0,
+        0,
+        0.875
+      ]
+    ],
+    [
+      "middle-1-0",
+      [
+        1,
+        0,
+        0.875
+      ]
+    ],
+    [
+      "middle-0-1",
+      [
+        0,
+        1,
+        0.875
+      ]
+    ],
+    [
+      "middle-1-1",
+      [
+        1,
+        1,
+        0.875
+      ]
+    ],
+    [
+      "top",
+      [
+        0,
+        0,
+        1.5625
+      ]
+    ]
+  ],
+  "unstacked": {
+    "top": [
+      3,
+      0,
+      0.1875
+    ],
+    "middle-0-0": [
+      0,
+      3,
+      0.1875
+    ],
+    "middle-1-0": [
+      1,
+      3,
+      0.1875
+    ],
+    "middle-0-1": [
+      2,
+      3,
+      0.1875
+    ],
+    "middle-1-1": [
+      3,
+      3,
+      0.1875
+    ]
+  },
+  "notApproval": "Technical handling evidence, not art approval or engineered load certification"
+}

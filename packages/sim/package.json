@@ -44,7 +44,13 @@
     "./construction-airlock-published": "./src/construction-airlock-published.ts",
     "./wayfarer-refit-audit": "./src/wayfarer-refit-audit.ts",
     "./wayfarer-refit": "./src/wayfarer-refit.ts",
-    "./wayfarer-refit-mount": "./src/wayfarer-refit-mount.ts"
+    "./wayfarer-refit-mount": "./src/wayfarer-refit-mount.ts",
+    "./cargo-carrier-access": "./src/cargo-carrier-access.ts",
+    "./cargo-carrier-assembly": "./src/cargo-carrier-assembly.ts",
+    "./cargo-carrier-collision": "./src/cargo-carrier-collision.ts",
+    "./cargo-carrier-handling": "./src/cargo-carrier-handling.ts",
+    "./construction-cargo": "./src/construction-cargo.ts",
+    "./construction-instance": "./src/construction-instance.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",

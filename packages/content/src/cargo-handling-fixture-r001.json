@@ -1,0 +1,308 @@
+{
+  "compiler": "construction-1",
+  "floorKit": {
+    "id": "shipyard.floor.mapped-deck-kit",
+    "revision": "r002-interface-1",
+    "sha256": "25ede9372bc0d62eb1fb9c2f0ec03209bf49b0df5c78bbcafc5e902985ef0c04"
+  },
+  "floors": [
+    {
+      "deckId": "cargo-handling-deck",
+      "id": "cargo-floor--32--32",
+      "origin": [-32, -32, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "cargo-handling-deck",
+      "id": "cargo-floor--32-32",
+      "origin": [-32, 32, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "cargo-handling-deck",
+      "id": "cargo-floor--32-96",
+      "origin": [-32, 96, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "cargo-handling-deck",
+      "id": "cargo-floor-160--32",
+      "origin": [160, -32, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "cargo-handling-deck",
+      "id": "cargo-floor-160-32",
+      "origin": [160, 32, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "cargo-handling-deck",
+      "id": "cargo-floor-160-96",
+      "origin": [160, 96, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "cargo-handling-deck",
+      "id": "cargo-floor-32--32",
+      "origin": [32, -32, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "cargo-handling-deck",
+      "id": "cargo-floor-32-32",
+      "origin": [32, 32, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "cargo-handling-deck",
+      "id": "cargo-floor-32-96",
+      "origin": [32, 96, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "cargo-handling-deck",
+      "id": "cargo-floor-96--32",
+      "origin": [96, -32, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "cargo-handling-deck",
+      "id": "cargo-floor-96-32",
+      "origin": [96, 32, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "cargo-handling-deck",
+      "id": "cargo-floor-96-96",
+      "origin": [96, 96, 0],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    }
+  ],
+  "layout": {
+    "appearance": {
+      "accent": "#45d8f5",
+      "kit": "Unassigned / draft proxy",
+      "primary": "#6d8795"
+    },
+    "compiler": "floorplan-1",
+    "decks": [
+      {
+        "ceiling": 96,
+        "elevation": 0,
+        "holes": [],
+        "id": "cargo-handling-deck",
+        "name": "Deck A",
+        "order": 0,
+        "roof": true
+      }
+    ],
+    "dependencies": [
+      {
+        "id": "floor-shapes",
+        "revision": "lattice-shapes-1"
+      }
+    ],
+    "fittings": [],
+    "id": "cargo-handling-qualification-r001",
+    "kind": "station-module",
+    "legacy": null,
+    "name": "Cargo handling qualification",
+    "nodes": [],
+    "openings": [],
+    "partitions": [],
+    "playableDeckId": "cargo-handling-deck",
+    "rooms": [],
+    "routes": [],
+    "schema": "sidereal.layout-draft.v1",
+    "source": null,
+    "tiles": [
+      {
+        "deckId": "cargo-handling-deck",
+        "id": "cargo-floor--32--32",
+        "material": "mapped-deck",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, -32],
+          [32, -32],
+          [32, 32],
+          [-32, 32]
+        ]
+      },
+      {
+        "deckId": "cargo-handling-deck",
+        "id": "cargo-floor--32-32",
+        "material": "mapped-deck",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, 32],
+          [32, 32],
+          [32, 96],
+          [-32, 96]
+        ]
+      },
+      {
+        "deckId": "cargo-handling-deck",
+        "id": "cargo-floor--32-96",
+        "material": "mapped-deck",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, 96],
+          [32, 96],
+          [32, 160],
+          [-32, 160]
+        ]
+      },
+      {
+        "deckId": "cargo-handling-deck",
+        "id": "cargo-floor-160--32",
+        "material": "mapped-deck",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [160, -32],
+          [224, -32],
+          [224, 32],
+          [160, 32]
+        ]
+      },
+      {
+        "deckId": "cargo-handling-deck",
+        "id": "cargo-floor-160-32",
+        "material": "mapped-deck",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [160, 32],
+          [224, 32],
+          [224, 96],
+          [160, 96]
+        ]
+      },
+      {
+        "deckId": "cargo-handling-deck",
+        "id": "cargo-floor-160-96",
+        "material": "mapped-deck",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [160, 96],
+          [224, 96],
+          [224, 160],
+          [160, 160]
+        ]
+      },
+      {
+        "deckId": "cargo-handling-deck",
+        "id": "cargo-floor-32--32",
+        "material": "mapped-deck",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, -32],
+          [96, -32],
+          [96, 32],
+          [32, 32]
+        ]
+      },
+      {
+        "deckId": "cargo-handling-deck",
+        "id": "cargo-floor-32-32",
+        "material": "mapped-deck",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, 32],
+          [96, 32],
+          [96, 96],
+          [32, 96]
+        ]
+      },
+      {
+        "deckId": "cargo-handling-deck",
+        "id": "cargo-floor-32-96",
+        "material": "mapped-deck",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, 96],
+          [96, 96],
+          [96, 160],
+          [32, 160]
+        ]
+      },
+      {
+        "deckId": "cargo-handling-deck",
+        "id": "cargo-floor-96--32",
+        "material": "mapped-deck",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [96, -32],
+          [160, -32],
+          [160, 32],
+          [96, 32]
+        ]
+      },
+      {
+        "deckId": "cargo-handling-deck",
+        "id": "cargo-floor-96-32",
+        "material": "mapped-deck",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [96, 32],
+          [160, 32],
+          [160, 96],
+          [96, 96]
+        ]
+      },
+      {
+        "deckId": "cargo-handling-deck",
+        "id": "cargo-floor-96-96",
+        "material": "mapped-deck",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [96, 96],
+          [160, 96],
+          [160, 160],
+          [96, 160]
+        ]
+      }
+    ]
+  },
+  "roofKit": {
+    "id": "shipyard.structure.roof-kit",
+    "revision": "r001",
+    "sha256": "ffa320a5edc5b99a45ff50a4d33f94c0346fe87972358a73a4fee8375de68a57"
+  },
+  "schema": "sidereal.construction.v1"
+}

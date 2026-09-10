@@ -1,0 +1,287 @@
+ERROR Draco mesh compression is not available because library could not be found at /usr/bin/4.3/python/lib/python3.13/site-packages/libextern_draco.so
+07:48:10 | INFO: Starting glTF 2.0 export
+07:48:10 | INFO: Extracting primitive: MESH-GEO-receiver--0.21--0.17-front
+07:48:10 | INFO: Primitives created: 1
+07:48:10 | INFO: Extracting primitive: MESH-GEO-receiver--0.21--0.17-left
+07:48:10 | INFO: Primitives created: 1
+07:48:10 | INFO: Extracting primitive: MESH-GEO-receiver--0.21--0.17-rear
+07:48:10 | INFO: Primitives created: 1
+07:48:10 | INFO: Extracting primitive: MESH-GEO-receiver--0.21--0.17-right
+07:48:10 | INFO: Primitives created: 1
+07:48:10 | INFO: Extracting primitive: MESH-GEO-receiver--0.21-0.17-front
+07:48:10 | INFO: Primitives created: 1
+07:48:10 | INFO: Extracting primitive: MESH-GEO-receiver--0.21-0.17-left
+07:48:10 | INFO: Primitives created: 1
+07:48:10 | INFO: Extracting primitive: MESH-GEO-receiver--0.21-0.17-rear
+07:48:10 | INFO: Primitives created: 1
+07:48:10 | INFO: Extracting primitive: MESH-GEO-receiver--0.21-0.17-right
+07:48:10 | INFO: Primitives created: 1
+07:48:10 | INFO: Extracting primitive: MESH-GEO-receiver-0.21--0.17-front
+07:48:10 | INFO: Primitives created: 1
+07:48:10 | INFO: Extracting primitive: MESH-GEO-receiver-0.21--0.17-left
+07:48:10 | INFO: Primitives created: 1
+07:48:10 | INFO: Extracting primitive: MESH-GEO-receiver-0.21--0.17-rear
+07:48:10 | INFO: Primitives created: 1
+07:48:10 | INFO: Extracting primitive: MESH-GEO-receiver-0.21--0.17-right
+07:48:10 | INFO: Primitives created: 1
+07:48:10 | INFO: Extracting primitive: MESH-GEO-receiver-0.21-0.17-front
+07:48:10 | INFO: Primitives created: 1
+07:48:10 | INFO: Extracting primitive: MESH-GEO-receiver-0.21-0.17-left
+07:48:10 | INFO: Primitives created: 1
+07:48:10 | INFO: Extracting primitive: MESH-GEO-receiver-0.21-0.17-rear
+07:48:10 | INFO: Primitives created: 1
+07:48:10 | INFO: Extracting primitive: MESH-GEO-receiver-0.21-0.17-right
+07:48:10 | INFO: Primitives created: 1
+07:48:10 | INFO: Finished glTF 2.0 export in 0.013065099716186523 s
+
+Info: Saved "blender-source.blend"
+07:48:10 | INFO: Data are loaded, start creating Blender stuff
+07:48:10 | INFO: Blender create Mesh node Cube.089
+07:48:10 | INFO: Blender create Mesh node Cube.090
+07:48:10 | INFO: Blender create Mesh node Cube.091
+07:48:10 | INFO: Blender create Mesh node Cube.092
+07:48:10 | INFO: Blender create Mesh node Cube.093
+07:48:10 | INFO: Blender create Mesh node Cube.094
+07:48:10 | INFO: Blender create Mesh node Cube.095
+07:48:10 | INFO: Blender create Mesh node Cube.096
+07:48:10 | INFO: Blender create Mesh node Cube.097
+07:48:10 | INFO: Blender create Mesh node Cube.098
+07:48:10 | INFO: Blender create Mesh node Cube.099
+07:48:10 | INFO: Blender create Mesh node Cube.100
+07:48:10 | INFO: Blender create Mesh node Cube.101
+07:48:10 | INFO: Blender create Mesh node Cube.102
+07:48:10 | INFO: Blender create Mesh node Cube.103
+07:48:10 | INFO: Blender create Mesh node Cube.104
+07:48:10 | INFO: Blender create Mesh node Cube.105
+07:48:10 | INFO: Blender create Mesh node Cube.106
+07:48:10 | INFO: Blender create Mesh node Cube.107
+07:48:10 | INFO: Blender create Mesh node Cube.108
+07:48:10 | INFO: Blender create Mesh node Cube.109
+07:48:10 | INFO: Blender create Mesh node Cube.110
+07:48:10 | INFO: Blender create Mesh node Cube.111
+07:48:10 | INFO: Blender create Mesh node Cube.112
+07:48:10 | INFO: Blender create Mesh node Cube.113
+07:48:10 | INFO: Blender create Mesh node Cube.114
+07:48:10 | INFO: Blender create Mesh node Cube.115
+07:48:10 | INFO: Blender create Mesh node Cube.116
+07:48:10 | INFO: Blender create Mesh node Cube.117
+07:48:10 | INFO: Blender create Mesh node Cube.118
+07:48:10 | INFO: Blender create Mesh node Cube.119
+07:48:10 | INFO: Blender create Mesh node Cube.120
+07:48:10 | INFO: Blender create Mesh node Cube.121
+07:48:10 | INFO: Blender create Mesh node Cube.122
+07:48:10 | INFO: Blender create Mesh node Cube.123
+07:48:10 | INFO: Blender create Mesh node Cube.124
+07:48:10 | INFO: Blender create Mesh node Cylinder.004
+07:48:10 | INFO: Blender create Mesh node Cylinder.005
+07:48:10 | INFO: Blender create Mesh node side-inset-backing.002
+07:48:10 | INFO: Blender create Mesh node fitted-side-panel.002
+07:48:10 | INFO: Blender create Mesh node Cube.125
+07:48:10 | INFO: Blender create Mesh node Cube.126
+07:48:10 | INFO: Blender create Mesh node Cube.127
+07:48:10 | INFO: Blender create Mesh node Cylinder.006
+07:48:10 | INFO: Blender create Mesh node Cube.128
+07:48:10 | INFO: Blender create Mesh node side-inset-backing.003
+07:48:10 | INFO: Blender create Mesh node fitted-side-panel.003
+07:48:10 | INFO: Blender create Mesh node Cube.129
+07:48:10 | INFO: Blender create Mesh node Cube.130
+07:48:10 | INFO: Blender create Mesh node Cube.131
+07:48:10 | INFO: Blender create Mesh node Cylinder.007
+07:48:10 | INFO: Blender create Mesh node Cube.132
+07:48:10 | INFO: Blender create Mesh node front-inset.001
+07:48:10 | INFO: Blender create Mesh node front-fitted-panel.001
+07:48:10 | INFO: Blender create Mesh node Cube.133
+07:48:10 | INFO: Blender create Mesh node Cube.134
+07:48:10 | INFO: Blender create Mesh node Cube.135
+07:48:10 | INFO: Blender create Mesh node Cube.136
+07:48:10 | INFO: Blender create Mesh node Cube.137
+07:48:10 | INFO: Blender create Mesh node Cube.138
+07:48:10 | INFO: Blender create Mesh node Cube.139
+07:48:10 | INFO: Blender create Mesh node Cube.140
+07:48:10 | INFO: Blender create Mesh node Cube.141
+07:48:10 | INFO: Blender create Mesh node Cube.142
+07:48:10 | INFO: Blender create Mesh node Cube.143
+07:48:10 | INFO: Blender create Mesh node Cube.144
+07:48:10 | INFO: Blender create Mesh node Cube.145
+07:48:10 | INFO: Blender create Mesh node Cube.146
+07:48:10 | INFO: Blender create Mesh node Cube.147
+07:48:10 | INFO: Blender create Mesh node Cube.148
+07:48:10 | INFO: Blender create Mesh node Cube.149
+07:48:10 | INFO: Blender create Mesh node Cube.150
+07:48:10 | INFO: Blender create Mesh node Cube.151
+07:48:10 | INFO: Blender create Mesh node Cube.152
+07:48:10 | INFO: Blender create Mesh node Text.001
+07:48:10 | INFO: Blender create Mesh node Cube.153
+07:48:10 | INFO: Blender create Mesh node Cube.154
+07:48:10 | INFO: Blender create Mesh node Cube.155
+07:48:10 | INFO: Blender create Mesh node Cube.156
+07:48:10 | INFO: Blender create Mesh node Cube.157
+07:48:10 | INFO: Blender create Mesh node Cube.158
+07:48:10 | INFO: Blender create Mesh node Cube.159
+07:48:10 | INFO: Blender create Mesh node Cube.160
+07:48:10 | INFO: Blender create Mesh node Cube.161
+07:48:10 | INFO: Blender create Mesh node Cube.162
+07:48:10 | INFO: Blender create Mesh node Cube.163
+07:48:10 | INFO: Blender create Mesh node Cube.164
+07:48:10 | INFO: Blender create Mesh node Cube.165
+07:48:10 | INFO: Blender create Mesh node Cube.166
+07:48:10 | INFO: Blender create Mesh node Cube.167
+07:48:10 | INFO: Blender create Mesh node Cube.168
+07:48:10 | INFO: Blender create Mesh node Cube.169
+07:48:10 | INFO: Blender create Mesh node Cube.170
+07:48:10 | INFO: glTF import finished in 0.05s
+Blender 4.3.2
+Fra:1 Mem:21.58M (Peak 21.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-receiver--0.21--0.17-left
+Fra:1 Mem:21.59M (Peak 21.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-receiver--0.21--0.17-right
+Fra:1 Mem:21.59M (Peak 21.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-receiver--0.21--0.17-front
+Fra:1 Mem:21.59M (Peak 21.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-receiver--0.21--0.17-rear
+Fra:1 Mem:21.59M (Peak 21.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-receiver--0.21-0.17-left
+Fra:1 Mem:21.59M (Peak 21.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-receiver--0.21-0.17-right
+Fra:1 Mem:21.60M (Peak 21.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-receiver--0.21-0.17-front
+Fra:1 Mem:21.60M (Peak 21.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-receiver--0.21-0.17-rear
+Fra:1 Mem:21.60M (Peak 21.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-receiver-0.21--0.17-left
+Fra:1 Mem:21.60M (Peak 21.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-receiver-0.21--0.17-right
+Fra:1 Mem:21.60M (Peak 21.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-receiver-0.21--0.17-front
+Fra:1 Mem:21.60M (Peak 21.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-receiver-0.21--0.17-rear
+Fra:1 Mem:21.60M (Peak 21.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-receiver-0.21-0.17-left
+Fra:1 Mem:21.60M (Peak 21.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-receiver-0.21-0.17-right
+Fra:1 Mem:21.61M (Peak 21.61M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-receiver-0.21-0.17-front
+Fra:1 Mem:21.61M (Peak 21.61M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-receiver-0.21-0.17-rear
+Fra:1 Mem:21.61M (Peak 21.61M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-load-skid--export
+Fra:1 Mem:23.63M (Peak 23.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-fixed-rear-hinge-saddle.003--export
+Fra:1 Mem:23.67M (Peak 23.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-load-skid.001--export
+Fra:1 Mem:23.70M (Peak 23.70M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-fixed-rear-hinge-saddle.002--export
+Fra:1 Mem:23.71M (Peak 23.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crossmember--export
+Fra:1 Mem:23.72M (Peak 23.72M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-fixed-rear-hinge-saddle.001--export
+Fra:1 Mem:23.74M (Peak 23.74M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crossmember.001--export
+Fra:1 Mem:23.75M (Peak 23.75M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-fixed-rear-hinge-saddle--export
+Fra:1 Mem:23.79M (Peak 23.79M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-40mm-locating-foot--export
+Fra:1 Mem:23.79M (Peak 23.79M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-lid-latch-connecting-bridge.001--export
+Fra:1 Mem:23.81M (Peak 23.81M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-40mm-locating-foot.001--export
+Fra:1 Mem:23.81M (Peak 23.81M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-lid-latch-connecting-bridge--export
+Fra:1 Mem:23.86M (Peak 23.86M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-40mm-locating-foot.002--export
+Fra:1 Mem:23.84M (Peak 23.86M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-inset-lid-gasket.003--export
+Fra:1 Mem:23.89M (Peak 23.89M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-lid-support-ledge.003--export
+Fra:1 Mem:23.87M (Peak 23.89M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-40mm-locating-foot.003--export
+Fra:1 Mem:23.93M (Peak 23.93M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-inset-lid-gasket.002--export
+Fra:1 Mem:23.91M (Peak 23.93M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-sealed-floor--export
+Fra:1 Mem:23.96M (Peak 23.96M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-lid-support-ledge.002--export
+Fra:1 Mem:23.97M (Peak 23.97M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-closed-side-wall--export
+Fra:1 Mem:23.98M (Peak 23.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-inset-lid-gasket.001--export
+Fra:1 Mem:24.00M (Peak 24.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-closed-side-wall.001--export
+Fra:1 Mem:24.01M (Peak 24.01M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-lid-support-ledge.001--export
+Fra:1 Mem:24.03M (Peak 24.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-closed-rear-wall--export
+Fra:1 Mem:24.06M (Peak 24.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-inset-lid-gasket--export
+Fra:1 Mem:24.08M (Peak 24.08M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-closed-front-wall--export
+Fra:1 Mem:24.10M (Peak 24.10M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-lid-support-ledge--export
+Fra:1 Mem:24.08M (Peak 24.10M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-corner-load-column--export
+Fra:1 Mem:24.13M (Peak 24.13M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stepped-corner-armor--export
+Fra:1 Mem:24.14M (Peak 24.14M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-fixed-top-frame.003--export
+Fra:1 Mem:24.16M (Peak 24.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stepped-corner-armor.001--export
+Fra:1 Mem:24.15M (Peak 24.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-fixed-top-frame.002--export
+Fra:1 Mem:24.18M (Peak 24.18M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-fixed-top-frame.001--export
+Fra:1 Mem:24.18M (Peak 24.18M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-corner-load-column.001--export
+Fra:1 Mem:24.24M (Peak 24.24M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-fixed-top-frame--export
+Fra:1 Mem:24.24M (Peak 24.24M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stepped-corner-armor.002--export
+Fra:1 Mem:24.26M (Peak 24.26M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-marking-STA / S--export
+Fra:1 Mem:24.27M (Peak 24.27M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stepped-corner-armor.003--export
+Fra:1 Mem:24.50M (Peak 24.50M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-corner-load-column.002--export
+Fra:1 Mem:24.58M (Peak 24.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stepped-corner-armor.004--export
+Fra:1 Mem:24.48M (Peak 24.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stepped-corner-armor.005--export
+Fra:1 Mem:24.55M (Peak 24.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-corner-load-column.003--export
+Fra:1 Mem:24.67M (Peak 24.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stepped-corner-armor.006--export
+Fra:1 Mem:24.68M (Peak 24.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stepped-corner-armor.007--export
+Fra:1 Mem:24.61M (Peak 24.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-opening-layered-lid--export
+Fra:1 Mem:24.54M (Peak 24.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.015--export
+Fra:1 Mem:24.54M (Peak 24.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-lid-shoulder-band--export
+Fra:1 Mem:24.58M (Peak 24.68M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.014--export
+Fra:1 Mem:24.59M (Peak 24.68M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-lid-shoulder-band.001--export
+Fra:1 Mem:24.60M (Peak 24.68M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.013--export
+Fra:1 Mem:24.62M (Peak 24.68M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-lid-recess-base--export
+Fra:1 Mem:24.64M (Peak 24.68M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.012--export
+Fra:1 Mem:24.66M (Peak 24.68M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-lid-fitted-cap--export
+Fra:1 Mem:24.68M (Peak 24.68M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stack-receiver-base.003--export
+Fra:1 Mem:24.66M (Peak 24.68M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-lid-cap-end-step--export
+Fra:1 Mem:24.72M (Peak 24.72M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.011--export
+Fra:1 Mem:24.73M (Peak 24.73M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-lid-cap-end-step.001--export
+Fra:1 Mem:24.75M (Peak 24.75M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.010--export
+Fra:1 Mem:24.75M (Peak 24.75M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-lid-latch-leaf--export
+Fra:1 Mem:24.77M (Peak 24.77M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.009--export
+Fra:1 Mem:24.79M (Peak 24.79M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-lid-toggle--export
+Fra:1 Mem:24.81M (Peak 24.81M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.008--export
+Fra:1 Mem:24.82M (Peak 24.82M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-lid-latch-leaf.001--export
+Fra:1 Mem:24.84M (Peak 24.84M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stack-receiver-base.002--export
+Fra:1 Mem:24.86M (Peak 24.86M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-lid-toggle.001--export
+Fra:1 Mem:24.89M (Peak 24.89M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.007--export
+Fra:1 Mem:24.89M (Peak 24.89M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-rear-hinge-pin--export
+Fra:1 Mem:24.96M (Peak 24.96M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.006--export
+Fra:1 Mem:24.95M (Peak 24.96M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.005--export
+Fra:1 Mem:24.97M (Peak 24.97M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-rear-hinge-pin.001--export
+Fra:1 Mem:25.00M (Peak 25.00M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-side-inset-backing--export
+Fra:1 Mem:25.03M (Peak 25.03M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.004--export
+Fra:1 Mem:25.05M (Peak 25.05M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stack-receiver-base.001--export
+Fra:1 Mem:25.07M (Peak 25.07M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.003--export
+Fra:1 Mem:25.08M (Peak 25.08M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-fitted-side-panel--export
+Fra:1 Mem:25.08M (Peak 25.08M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.002--export
+Fra:1 Mem:25.17M (Peak 25.17M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver.001--export
+Fra:1 Mem:25.14M (Peak 25.17M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-grip-backing--export
+Fra:1 Mem:25.14M (Peak 25.17M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-44mm-clear-stack-receiver--export
+Fra:1 Mem:25.20M (Peak 25.20M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-stack-receiver-base--export
+Fra:1 Mem:25.18M (Peak 25.20M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-grip-support--export
+Fra:1 Mem:25.23M (Peak 25.23M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-front-fitted-panel--export
+Fra:1 Mem:25.22M (Peak 25.23M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-grip-support.001--export
+Fra:1 Mem:25.28M (Peak 25.28M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-glove-grip--export
+Fra:1 Mem:25.30M (Peak 25.30M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-front-inset--export
+Fra:1 Mem:25.34M (Peak 25.34M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-service-cartridge--export
+Fra:1 Mem:25.35M (Peak 25.35M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-side-inset-backing.001--export
+Fra:1 Mem:25.35M (Peak 25.35M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-service-cartridge.001--export
+Fra:1 Mem:25.42M (Peak 25.42M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-glove-grip.001--export
+Fra:1 Mem:25.44M (Peak 25.44M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-fitted-side-panel.001--export
+Fra:1 Mem:25.51M (Peak 25.51M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-grip-support.003--export
+Fra:1 Mem:25.51M (Peak 25.51M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-grip-backing.001--export
+Fra:1 Mem:25.52M (Peak 25.52M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-grip-support.002--export
+Fra:1 Mem:25.52M (Peak 25.52M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:21.44M (Peak 25.52M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:21.44M (Peak 25.52M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:21.44M (Peak 25.52M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:21.44M (Peak 25.52M) | Time:00:00.01 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:21.53M (Peak 25.52M) | Time:00:00.01 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:21.53M (Peak 25.52M) | Time:00:00.01 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:21.53M (Peak 25.52M) | Time:00:00.01 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:21.53M (Peak 25.52M) | Time:00:00.01 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:21.53M (Peak 25.52M) | Time:00:00.01 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:21.53M (Peak 25.52M) | Time:00:00.01 | Mem:0.01M, Peak:0.01M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:21.56M (Peak 25.52M) | Time:00:00.01 | Mem:0.03M, Peak:0.03M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:21.56M (Peak 25.52M) | Time:00:00.01 | Mem:0.03M, Peak:0.03M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:21.56M (Peak 25.52M) | Time:00:00.01 | Mem:0.03M, Peak:0.03M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:21.56M (Peak 25.52M) | Time:00:00.01 | Mem:0.03M, Peak:0.03M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:21.74M (Peak 25.52M) | Time:00:00.01 | Mem:0.03M, Peak:0.03M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:22.11M (Peak 25.52M) | Time:00:00.01 | Mem:0.04M, Peak:0.04M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:22.09M (Peak 25.52M) | Time:00:00.01 | Mem:0.38M, Peak:0.38M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:22.10M (Peak 25.52M) | Time:00:00.01 | Mem:0.38M, Peak:0.38M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:22.10M (Peak 25.52M) | Time:00:00.01 | Mem:0.75M, Peak:0.75M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:22.10M (Peak 25.52M) | Time:00:00.09 | Mem:1.20M, Peak:1.57M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:22.10M (Peak 25.52M) | Time:00:00.09 | Mem:1.20M, Peak:1.57M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:23.25M (Peak 25.52M) | Time:00:00.09 | Mem:1.20M, Peak:1.57M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:23.25M (Peak 25.52M) | Time:00:00.09 | Mem:2.35M, Peak:2.35M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:23.25M (Peak 25.52M) | Time:00:00.09 | Mem:2.35M, Peak:2.35M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:23.25M (Peak 25.52M) | Time:00:00.09 | Mem:2.35M, Peak:2.35M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:23.25M (Peak 25.52M) | Time:00:00.09 | Mem:2.35M, Peak:2.35M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:23.25M (Peak 25.52M) | Time:00:00.09 | Mem:2.35M, Peak:2.35M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:23.25M (Peak 25.52M) | Time:00:00.09 | Mem:2.43M, Peak:2.43M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:23.25M (Peak 25.52M) | Time:00:00.09 | Mem:2.43M, Peak:2.43M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:23.25M (Peak 25.52M) | Time:00:00.09 | Mem:2.44M, Peak:2.44M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:23.25M (Peak 25.52M) | Time:00:00.09 | Mem:2.44M, Peak:2.44M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:23.25M (Peak 25.52M) | Time:00:00.09 | Mem:2.35M, Peak:2.44M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:23.25M (Peak 25.52M) | Time:00:00.09 | Mem:2.44M, Peak:2.44M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:23.25M (Peak 25.52M) | Time:00:00.09 | Mem:2.44M, Peak:2.44M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:23.26M (Peak 25.52M) | Time:00:00.09 | Mem:2.44M, Peak:2.44M | Scene, ViewLayer | Sample 0/48
+Fra:1 Mem:57.25M (Peak 57.25M) | Time:00:00.33 | Remaining:00:11.27 | Mem:36.43M, Peak:36.43M | Scene, ViewLayer | Sample 1/48
+Fra:1 Mem:72.36M (Peak 102.57M) | Time:00:09.90 | Mem:36.43M, Peak:36.43M | Scene, ViewLayer | Sample 48/48
+Fra:1 Mem:72.36M (Peak 102.57M) | Time:00:09.90 | Mem:36.43M, Peak:36.43M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/assets/art-library/designs/cargo.restraint.standard-small/revisions/r000/a001/exploded-receiver-proof.png'
+Time: 00:10.16 (Saving: 00:00.25)
+
+Info: Saved "exploded-review.blend"
+
+Blender quit

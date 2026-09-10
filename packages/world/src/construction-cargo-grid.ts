@@ -9,7 +9,7 @@ import {
   type CargoInterface,
   type CargoPlacement,
   type CargoPoint,
-} from "../../sim/src/construction-cargo";
+} from "@sidereal/sim/construction-cargo";
 
 export interface CargoGridRow {
   id: string;
@@ -115,6 +115,13 @@ export interface CargoGridHooks {
     id: string,
     root: QualifiedCargoRoot,
   ): CargoStagingAnchor | undefined;
+  /** Final authoritative pose checks (occupants, accepted collision overlays)
+   * run after whole-stack validation and before any placement/receipt write. */
+  beforeCommit?(
+    ctx: CargoGridContext,
+    grid: CargoGridRow,
+    placements: readonly CargoPlacementRow[],
+  ): void;
 }
 type EditBase = {
   containerId: string;
@@ -409,6 +416,7 @@ export function editConstructionCargoGrid(
     "Invalid cargo placement: " +
       validation.diagnostics.map((d) => d.code).join(", "),
   );
+  hooks.beforeCommit?.(ctx, row, [...planned.values()]);
   // Do not evict receipts and allow an old operation ID to perform another edit.
   // First slice has an explicit per-principal durable operation quota.
   check(
