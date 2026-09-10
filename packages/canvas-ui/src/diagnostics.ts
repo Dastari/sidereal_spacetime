@@ -176,6 +176,10 @@ export function createDiagnosticsUI(
         ["Scene IBL texture", data.environmentTexturePresent === undefined ? "—" : data.environmentTexturePresent ? "Present" : "None"],
         ["Attached camera passes", String(data.cameraPostProcesses?.length ?? "—")],
         ["Camera pass names", data.cameraPostProcesses?.join(", ") || "None"],
+        ["Scene capture", data.sceneCapture?.name ?? "None"],
+        ["Capture size / MSAA", !data.sceneCapture ? "None" : data.sceneCapture.width === undefined
+          ? "Awaiting allocation"
+          : `${data.sceneCapture.width} × ${data.sceneCapture.height} / ${data.sceneCapture.samples}×`],
         ["Custom targets", String(data.customRenderTargets ?? "—")],
         ["Camera radius / elev", data.cameraRadius === undefined || data.cameraElevationDegrees === undefined ? "—" : `${data.cameraRadius.toFixed(1)} m / ${data.cameraElevationDegrees.toFixed(1)}°`],
       ];

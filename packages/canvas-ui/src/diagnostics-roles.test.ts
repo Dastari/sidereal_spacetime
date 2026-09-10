@@ -6,12 +6,18 @@ import { createRenderDiagnostics } from "../../render/src/diagnostics";
 import { setMeshRole } from "../../render/src/mesh-roles";
 import { createDiagnosticsUI } from "./diagnostics";
 import type { CanvasUI } from "./toolkit";
+import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
+import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { PassPostProcess } from "@babylonjs/core/PostProcesses/passPostProcess";
 
 test("F3 presents role counts and keeps the full inventory scrollable", () => {
   const engine = new NullEngine(),
     scene = new Scene(engine),
     diagnostics = createRenderDiagnostics(scene);
   setMeshRole(CreateBox("no-name-classification", {}, scene), "floor");
+  const camera = new FreeCamera("camera", Vector3.Zero(), scene);
+  const capture = new PassPostProcess("capture", 1, camera);
+  capture.activate(camera);
   diagnostics.read(true);
   scene.onAfterRenderObservable.notifyObservers(scene);
   const text = vi.fn();
@@ -38,6 +44,8 @@ test("F3 presents role counts and keeps the full inventory scrollable", () => {
   try {
     panel.toggle();
     panel.draw();
+    expect(text.mock.calls.some(c => c[0] === "Capture size / MSAA")).toBe(true);
+    expect(text.mock.calls.some(c => c[0] === `${capture.inputTexture.width} × ${capture.inputTexture.height} / ${capture.inputTexture.samples}×`)).toBe(true);
     expect(text.mock.calls.some((c) => c[0] === "Meshes by role")).toBe(true);
     expect(text.mock.calls.some((c) => c[0] === "floor")).toBe(true);
     expect(text.mock.calls.some((c) => c[0] === "0 / 1")).toBe(true);

@@ -164,6 +164,8 @@ Expected: Shadows off delta becomes tens of calls, not hundreds.
 
 ### R3. Antialiasing capture cost
 
+Status: capture diagnostics implemented, hardware comparison unmeasured (2026-09-10). Default unchanged.
+
 Evidence: `antialiasing-pipeline.ts:136-143` renders the scene into a `PassPostProcess` with up to 8 MSAA samples, then TAA at `samples = 8`. This is GPU cost, not draw-call cost, so it is not the current bottleneck, but it will be once submission is fixed.
 
 Fix: none now. Add an F3 row for the capture's actual target size and sample count. When R1 to R6 have landed, re-measure with the capture at 4 samples and at 1 sample plus FXAA, and pick the default by measurement. Do not stack a second MSAA target in Phase 4.
@@ -446,3 +448,16 @@ NullEngine `body-visibility.test.ts` checks actual camera far-plane geometry, su
 Before reference: last partial hardware Deck probe in R4 was 896 calls / 393 active / 1,439 total / 597 materials; R6/R2 and seated Flight remain unmeasured. After Deck/Flight counters and both isolation sequences: **unmeasured**. Normal lab entry was retried after preview reload/sign-out. The visible, focused browser still did not advance its animation-frame callback (scene frame ID 1). One diagnostic-only render-loop invocation completed without exception and advanced scene passes to ID 7; subsequent normal frames still did not advance. Background/context-loss flags were false, and requestAnimationFrame was wrapped by the browser environment. The first-frame readiness cover remained. That manual diagnostic is not a timing or acceptance measurement, and no readiness check was bypassed. A request to resume the preview animation was sent to the owner while independent work continues.
 
 Evidence: `output/playwright/render-plan/R7/{check.log,build.log,browser-blocker.json}`. R7 is implemented, unmeasured, not finally accepted. R3's capture diagnostics can proceed; its hardware default comparison and R10 snapshot acceptance still require the outstanding scene/hardware gates.
+
+
+### 2026-09-10 — R3 actual capture diagnostics, hardware comparison unmeasured
+
+Added `capture-diagnostics.ts`, sampled by `diagnostics.ts`, with F3 “Scene capture” and “Capture size / MSAA” rows in CanvasUI. The values come from allocated Babylon render-target wrappers, not requested settings. The helper reads the enabled scene-default prepass target when present, otherwise the first camera pass's shared/forced/own input target according to Babylon 9.25 activation order. Detached passes report no capture; unallocated targets report “Awaiting allocation.” No rendering settings, geometry, materials, or authority change.
+
+Source correction: current `TAARenderingPipeline.samples = 8` counts accumulated temporal history samples; MSAA has a separate `msaaSamples` property. It is not evidence of eight-sample MSAA. The F3 row reports the actual wrapper sample count, including the scene prepass used for temporal reprojection. The existing MSAA4 preference/default remains unchanged; no unmeasured default selection.
+
+NullEngine `capture-diagnostics.test.ts` exercises real postprocess allocations, requested versus actual samples, forced target dimensions, diagnostics sampling, disposal and enabled prepass precedence. Extended CanvasUI `diagnostics-roles.test.ts` verifies the actual target row while retaining role inventory scrolling. `VITEST_MAX_WORKERS=2 npm run check` passed 258 files / 1,503 tests and docs, then `npm run build` passed. Ship budget bounds remain unchanged because this item adds on-demand counters, not resources. Only the new diagnostic hunks are included from shared F3 files.
+
+Hardware MSAA4 versus single-sample FXAA comparison, Deck/seated Flight counters and both isolation sequences: **unmeasured**. Existing `tab_b` remained stalled; a fresh `tab_c` at the same development URL also stopped at scene render ID 1 under “Preparing the first frame.” Both use wrapped browser animation-frame callbacks. Normal lab entry was used; no first-frame gate or authority state was bypassed. Fresh-tab replication strengthens the evidence that a ready hardware measurement is unavailable; it does not establish a renderer timing regression or its cause. Browser UI review of the new rows remains outstanding.
+
+Evidence: `output/playwright/render-plan/R3/{check.log,build.log,browser-blocker.json}`. Before reference remains R4's partial Deck 896 calls / 393 active / 1,439 total / 597 materials, with no accepted timing comparison. R3 is not complete: hardware default choice awaits the measurement gate and remaining R6 qualification. R10 backend compatibility can be prepared without claiming snapshot acceptance.

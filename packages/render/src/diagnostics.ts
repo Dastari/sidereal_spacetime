@@ -1,9 +1,11 @@
+import { readSceneCapture, type CaptureDiagnostics } from "./capture-diagnostics";
 import { meshesByRole, type MeshRoleCounts } from "./mesh-roles";
 import type { Scene } from "@babylonjs/core/scene";
 import { SceneInstrumentation } from "@babylonjs/core/Instrumentation/sceneInstrumentation";
 import type { Observer } from "@babylonjs/core/Misc/observable";
 
 export type RenderDiagnostics = {
+  sceneCapture?: CaptureDiagnostics;
   meshesByRole?: MeshRoleCounts;
   localLightBudget?: {
     limit: import("./local-light-budget").LocalLightLimit;
@@ -122,6 +124,7 @@ export function createRenderDiagnostics(scene: Scene) {
           camera?._postProcesses
             .filter((pass) => pass !== null)
             .map((pass) => pass.name) ?? [],
+        sceneCapture: readSceneCapture(scene),
         customRenderTargets: scene.customRenderTargets.length,
         cameraRadius:
           typeof orbit?.radius === "number" ? orbit.radius : undefined,
