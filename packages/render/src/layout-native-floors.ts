@@ -35,6 +35,8 @@ export function layoutNativeFloors(
       !asset?.visual ||
       asset.category !== "floor" ||
       asset.visual.sha256 !== native.sha256 ||
+      `r${String(asset.visual.revision).padStart(3, "0")}` !==
+        native.revision ||
       asset.visual.nodePrefix !== native.nodePrefix ||
       floor.reflected ||
       source.reflected

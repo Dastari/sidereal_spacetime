@@ -57,6 +57,24 @@ describe("native semantic floor preview", () => {
     expect(result.unmatched.length).toBeGreaterThan(0);
     expect(result.parts.every((p) => p.assetId !== asset.id)).toBe(true);
   });
+  it("rejects a substituted native revision even when GLB bytes and selector match", () => {
+    const changed = structuredClone(catalog);
+    const native = PINNED_FLOOR_KIT.parts[0].native;
+    const asset = changed.assets.find((a) => a.id === native.assetId)!;
+    const expected = layoutNativeFloors(doc, catalog, doc.playableDeckId)
+      .parts.filter((p) => p.assetId === asset.id)
+      .map((p) => p.id);
+    expect(expected.length).toBeGreaterThan(0);
+    expect(asset.visual!.sha256).toBe(native.sha256);
+    expect(asset.visual!.nodePrefix).toBe(native.nodePrefix);
+    asset.visual!.revision += 1;
+    const result = layoutNativeFloors(doc, changed, doc.playableDeckId);
+    expect(result.unmatched).toEqual(expect.arrayContaining(expected));
+    expect(result.parts.every((p) => p.assetId !== asset.id)).toBe(true);
+    expect(
+      catalog.assets.find((a) => a.id === native.assetId)!.visual!.revision,
+    ).toBe(Number(native.revision.slice(1)));
+  });
   it("does not manufacture native geometry for unsupported shapes or duplicate identities", () => {
     const d = structuredClone(doc);
     d.tiles[0].vertices[0][0] += 1;

@@ -1,3 +1,4 @@
+import { layoutViewOrientation } from "./layout-view-orientation";
 import { snapLayoutPoint } from "./layout-placement-grid";
 import { layoutPlaneMatrix } from "./layout-plane-projection";
 import { updateHullDecals } from "./hull-decals";
@@ -408,24 +409,11 @@ export function createHullViewport(
     if (next.tool !== "place") hideGhost();
     loadNeeded(next.parts);
     pointerInput.buttons = next.tool === "orbit" ? [0, 1, 2] : [1, 2];
-    if (projection !== next.projection) {
-      projection = next.projection;
-      if (projection === "Top") {
-        camera.beta = 0.03;
-        camera.alpha = -Math.PI / 2;
-      }
-      if (projection === "Side") {
-        camera.beta = Math.PI / 2;
-        camera.alpha = -Math.PI / 2;
-      }
-      if (projection === "Front") {
-        camera.beta = Math.PI / 2;
-        camera.alpha = 0;
-      }
-      if (projection === "3D") {
-        camera.beta = Math.PI / 3.2;
-        camera.alpha = -Math.PI / 2.6;
-      }
+    const orientation = layoutViewOrientation(projection, next.projection);
+    projection = next.projection;
+    if (orientation) {
+      camera.alpha = orientation.alpha;
+      camera.beta = orientation.beta;
     }
     const ids = new Set(next.parts.map((p) => p.id));
     for (const [id, e] of nodes)
@@ -513,7 +501,7 @@ export function createHullViewport(
     if (nodes.size === next.parts.length)
       callbacks.status(
         next.contextOnly?.size
-          ? `${nodes.size - next.contextOnly.size} editable components ready · ${next.contextOnly.size} native context floors`
+          ? `${nodes.size - next.contextOnly.size} editable components ready · ${next.contextOnly.size} structural context parts`
           : `${nodes.size} editable components ready`,
       );
   }
