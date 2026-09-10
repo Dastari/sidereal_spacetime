@@ -10,6 +10,23 @@ export function easeCameraZoom(current: number, target: number, dt: number) {
   return current + (target - current) * -Math.expm1(-12 * Math.max(0, dt));
 }
 
+/** Preserve the ship overview at normal zoom, but frame the actor at close zoom.
+ * Multiply by the existing Deck/Flight blend; this never changes accepted poses,
+ * orbit, elevation, or zoom. Use displayed (already eased) zoom, not wheel intent.
+ */
+export function deckCameraActorWeight(
+  displayedHalfExtentM: number,
+  overviewHalfExtentM = 12,
+) {
+  const overview = Math.max(3, overviewHalfExtentM);
+  const t = Math.max(
+    0,
+    Math.min(1, (displayedHalfExtentM - 2) / (overview - 2)),
+  );
+  // Smoothstep gives zero slope at both ends without another stateful camera lag.
+  return 1 - 0.4 * t * t * (3 - 2 * t);
+}
+
 /** Convert screen intent into the authoritative deck frame using the displayed camera.
  * During a camera transition this remains correct; orbit never rotates the actor/ship. */
 export function screenToDeck(

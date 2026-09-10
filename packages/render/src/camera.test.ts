@@ -1,4 +1,5 @@
 import { expect, test } from "vitest";
+import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
 import {
   NullEngine,
   Scene,
@@ -15,6 +16,7 @@ import {
   RPG_BETA,
   easeCameraZoom,
   createObservationCamera,
+  deckCameraActorWeight,
 } from "./camera";
 test("wheel zoom converges consistently across frame rates and reverses without overshoot", () => {
   const results = [30, 60, 144].map((fps) => {
@@ -167,4 +169,119 @@ test("Observe wheel targets converge consistently and preserve orbit through smo
   });
   expect(results[0]).toBeCloseTo(results[1], 8);
   expect(results[1]).toBeCloseTo(results[2], 8);
+});
+
+test("Deck close framing converges to the actor while normal overview remains unchanged", () => {
+  expect(deckCameraActorWeight(2)).toBe(1);
+  expect(deckCameraActorWeight(12)).toBe(0.6);
+  expect(deckCameraActorWeight(55)).toBe(0.6);
+  expect(deckCameraActorWeight(7)).toBeCloseTo(0.8);
+  expect(deckCameraActorWeight(6, 6)).toBe(0.6);
+  expect(deckCameraActorWeight(2, 6)).toBe(1);
+  let previous = 1;
+  for (let half = 2; half <= 12; half += 0.01) {
+    const weight = deckCameraActorWeight(half);
+    expect(weight).toBeLessThanOrEqual(previous);
+    expect(weight).toBeGreaterThanOrEqual(0.6);
+    previous = weight;
+  }
+  expect(deckCameraActorWeight(2 + 0.001)).toBeCloseTo(1, 7);
+  expect(deckCameraActorWeight(12 - 0.001)).toBeCloseTo(0.6, 7);
+});
+
+test("valid native cockpit approach can leave the close viewport under fixed overview targeting", () => {
+  // Current canonical Wayfarer deck bounds are [-5,-9]..[5,13] m. These two
+  // central approach points pass the actual native collision/threshold tests.
+  // No wall mesh is present: this proves framing, not ordinary depth occlusion.
+  const document = JSON.parse(WAYFARER_STARTER.documentJson) as {
+    layout: { tiles: { vertices: [number, number][] }[] };
+  };
+  const vertices = document.layout.tiles.flatMap((tile) => tile.vertices);
+  const center = [0, 1].map(
+    (axis) =>
+      (Math.min(...vertices.map((point) => point[axis])) +
+        Math.max(...vertices.map((point) => point[axis]))) /
+      64,
+  );
+  expect(center).toEqual([0, 2]);
+  const evidence: { before: Vector3[]; after: Vector3[] }[] = [];
+  for (const [width, height] of [
+    [1600, 900],
+    [1600, 1000],
+    [900, 1600],
+    [2744, 986],
+  ]) {
+    // NullEngine.setSize does not change its backing dimensions. A fresh engine
+    // is necessary to test the real aspect-dependent Babylon projection.
+    const engine = new NullEngine({
+      renderWidth: width,
+      renderHeight: height,
+      textureSize: 512,
+      deterministicLockstep: false,
+      lockstepMaxSteps: 4,
+    });
+    const scene = new Scene(engine);
+    scene.useRightHandedSystem = true;
+    const camera = new ArcRotateCamera(
+      "close-deck",
+      0,
+      RPG_BETA,
+      1,
+      Vector3.Zero(),
+      scene,
+    );
+    camera.fov = 0.5;
+    camera.mode = Camera.PERSPECTIVE_CAMERA;
+    try {
+      expect(engine.getAspectRatio(camera)).toBeCloseTo(width / height);
+      for (const north of [8.8, 9.35])
+        for (const half of [2, 4, 7, 12])
+          for (const heading of [0, 0.6, 2.9])
+            for (const orbit of [0, 0.45, Math.PI / 2, Math.PI, -Math.PI / 2]) {
+              const elevation = north === 8.8 ? 0.21875 : 0.1875;
+              camera.alpha = cameraAlpha(heading, true, orbit);
+              camera.beta = RPG_BETA;
+              camera.radius = half / Math.tan(camera.fov / 2);
+              camera.minZ = Math.max(0.1, camera.radius * 0.02);
+              camera.maxZ = Math.max(1600, camera.radius + 1600);
+              const project = (weight: number) => {
+                const y = center[1] * (1 - weight) + north * weight;
+                camera.target.set(
+                  -y * Math.sin(heading),
+                  elevation + 0.8,
+                  -y * Math.cos(heading),
+                );
+                camera.getViewMatrix(true);
+                scene.updateTransformMatrix(true);
+                return [0, 0.9, 1.8].map((heightM) =>
+                  Vector3.Project(
+                    new Vector3(0, elevation + heightM, -north),
+                    Matrix.RotationY(heading),
+                    scene.getTransformMatrix(),
+                    new Viewport(0, 0, 1, 1),
+                  ),
+                );
+              };
+              const before = project(0.6),
+                after = project(deckCameraActorWeight(half));
+              for (const point of after) {
+                expect(point.x).toBeGreaterThan(0);
+                expect(point.x).toBeLessThan(1);
+                expect(point.y).toBeGreaterThan(0);
+                expect(point.y).toBeLessThan(1);
+                expect(point.z).toBeGreaterThan(0);
+                expect(point.z).toBeLessThan(1);
+              }
+              evidence.push({ before, after });
+            }
+    } finally {
+      scene.dispose();
+      engine.dispose();
+    }
+  }
+  expect(
+    evidence.some(({ before }) =>
+      before.every((p) => p.x < 0 || p.x > 1 || p.y < 0 || p.y > 1),
+    ),
+  ).toBe(true);
 });
