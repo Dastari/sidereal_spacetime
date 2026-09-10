@@ -65,8 +65,8 @@ test("storage opens only from its server-projected placement binding and liquids
       undefined,
       [],
       [{ ...container, kind: "liquid" }],
-    )?.actions[0].enabled,
-  ).toBe(false);
+    )?.actions,
+  ).toEqual([]);
   expect(
     objectDetails(
       placementId,

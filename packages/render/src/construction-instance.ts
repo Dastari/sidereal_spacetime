@@ -1,3 +1,4 @@
+import type { RefitAttachmentVisual } from "./construction-refit-attachments";
 import {
   bindNativeAirlockPlan,
   type NativeAirlockDocument,
@@ -52,6 +53,7 @@ import type { ManagedLocalLight } from "./local-light-budget";
 export interface ConstructionRenderInput {
   instanceId: string;
   documentJson: string;
+  attachments?: readonly RefitAttachmentVisual[];
   deckId: string;
 }
 /** Native authored floors use exact server placement IDs. No Wayfarer fallback. */
@@ -188,6 +190,7 @@ export async function loadConstructionInstance(
     parent,
     document,
     input.deckId,
+    input.attachments,
   );
   const deck = document.layout.decks.find((d) => d.id === input.deckId)!;
   const vertices = document.layout.tiles

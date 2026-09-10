@@ -1,3 +1,6 @@
+import { GameLoadingScreen } from "./GameLoadingScreen";
+import { ShipRefitPanel } from "./ShipRefitPanel";
+import { MountedFuelPanel } from "./MountedFuelPanel";
 import {
   QUALIFIED_FLIGHT_PREVIEW_SHA256,
   authoredFlightPresentation,
@@ -108,6 +111,10 @@ export default function App({
   const [reducedMotion, setReducedMotion] = useState(
     () => matchMedia("(prefers-reduced-motion: reduce)").matches,
   );
+  const [loadedSceneKey, setLoadedSceneKey] = useState<string>();
+  const [loadStage, setLoadStage] = useState("connecting");
+  const [loadFailure, setLoadFailure] = useState<string>();
+  const loadingRef = useRef(true);
   const [modelStatus, setModelStatus] = useState("Loading vessel"),
     [pending, setPending] = useState(false);
   const connection = useRef<DbConnection | null>(null);
@@ -232,6 +239,48 @@ export default function App({
   );
   const constructionVisit = constructionScene.visit;
   const constructionInstance = constructionScene.instance;
+  const refitAttachmentKey = JSON.stringify(
+    c && constructionVisit
+      ? [...c.db.ownWayfarerRefitAttachments.iter()]
+          .filter(
+            (a) =>
+              a.instanceId === constructionVisit.instanceId &&
+              a.deckId === constructionVisit.deckId,
+          )
+          .map(({ revision, containerId, ...visual }) => visual)
+          .sort((a, b) => a.id.localeCompare(b.id))
+      : [],
+  );
+  const refitAttachments = useMemo(
+    () =>
+      JSON.parse(
+        refitAttachmentKey,
+      ) as import("@sidereal/render/construction-refit-attachments").RefitAttachmentVisual[],
+    [refitAttachmentKey],
+  );
+  const sceneDocument = useRef({
+    json: undefined as string | undefined,
+    version: 0,
+  });
+  if (sceneDocument.current.json !== constructionInstance?.documentJson) {
+    sceneDocument.current = {
+      json: constructionInstance?.documentJson,
+      version: sceneDocument.current.version + 1,
+    };
+  }
+  const sceneKey = JSON.stringify([
+    // Token renewal replaces the socket, not the account or accepted geometry.
+    // Rebuilding here would download/compile the whole ship on every refresh.
+    c?.identity?.toHexString(),
+    constructionInstance?.id,
+    sceneDocument.current.version,
+    constructionVisit?.visitId,
+    refitAttachmentKey,
+    constructionScene.egress?.proofHash,
+    constructionScene.egress?.stairId,
+    gameShipAccess?.shipId,
+  ]);
+  loadingRef.current = loadedSceneKey !== sceneKey || status !== "ready";
   const authoredFlight = authoredFlightPresentation(
     actor,
     constructionVisit,
@@ -267,12 +316,16 @@ export default function App({
         ? constructionInspectionCatalog(
             equipmentCatalog,
             constructionInstance?.documentJson,
+            refitAttachments,
+            constructionVisit?.deckId,
           )
         : equipmentCatalog,
     [
       equipmentCatalog,
       constructionScene.active,
       constructionInstance?.documentJson,
+      refitAttachments,
+      constructionVisit?.deckId,
     ],
   );
   const station = (
@@ -648,6 +701,8 @@ export default function App({
     gameShipAccess?.shipId,
   ]);
   useEffect(() => {
+    setLoadFailure(undefined);
+    setLoadStage(ready ? "ship" : "connecting");
     if (!ready || (gameShipAccess && !constructionVisit)) return;
     // A visit can arrive before its authorized geometry in another keyed view.
     // Dispose the previous world and wait; never substitute the stock ship or a
@@ -669,10 +724,16 @@ export default function App({
         return createWorld(
           element,
           (text) => {
-            if (!disposed) setModelStatus(text);
+            if (!disposed) {
+              setModelStatus(text);
+              setLoadedSceneKey(sceneKey);
+            }
           },
           {
             signal: abort.signal,
+            onLoadStage: (stage) => {
+              if (!disposed) setLoadStage(stage);
+            },
             equipmentPose,
             sharedWorld: sharedEnabled
               ? {
@@ -686,7 +747,12 @@ export default function App({
                       : undefined,
                 }
               : undefined,
-            construction: constructionScene.construction,
+            construction: constructionScene.construction
+              ? {
+                  ...constructionScene.construction,
+                  attachments: refitAttachments,
+                }
+              : undefined,
             authoredFlightEffects:
               constructionInstance?.blueprintSha256 ===
               QUALIFIED_FLIGHT_PREVIEW_SHA256,
@@ -874,8 +940,10 @@ export default function App({
             onPreviewError: (text) => {
               if (!disposed) setError(text);
             },
-            blocksCameraInput: () => gui.current?.pointerBlocked() ?? false,
-            blocksObjectSelection: () => live.current.combatEnabled,
+            blocksCameraInput: () =>
+              loadingRef.current || (gui.current?.pointerBlocked() ?? false),
+            blocksObjectSelection: () =>
+              loadingRef.current || live.current.combatEnabled,
             onObjectSelected: (id) => {
               if (disposed) return;
               if (id?.startsWith("ground:")) {
@@ -906,6 +974,7 @@ export default function App({
             },
             onLoadError: (text) => {
               if (!disposed) {
+                setLoadFailure(text);
                 setModelStatus("Vessel unavailable");
                 setError(text);
               }
@@ -924,6 +993,7 @@ export default function App({
       .catch((e) => {
         if (disposed) return;
         setError(String(e));
+        setLoadFailure(String(e));
         setRendererFailed(true);
       });
     return () => {
@@ -935,8 +1005,10 @@ export default function App({
       view.current = null;
     };
   }, [
+    sceneKey,
     constructionInstance?.id,
     constructionInstance?.documentJson,
+    refitAttachmentKey,
     constructionVisit?.visitId,
     constructionScene.egress?.proofHash,
     constructionScene.egress?.stairId,
@@ -1122,6 +1194,7 @@ export default function App({
       control?.activate(active ? c : null);
       if (!active || !c || !control?.canSend(c)) return;
       const blocked =
+        loadingRef.current ||
         (gui.current?.blocked() ?? true) ||
         document.hidden ||
         !!live.current.couch;
@@ -1140,7 +1213,13 @@ export default function App({
       });
     };
     const down = (e: KeyboardEvent) => {
-      if (gui.current?.blocked() || !actor?.connected || !ready) return;
+      if (
+        loadingRef.current ||
+        gui.current?.blocked() ||
+        !actor?.connected ||
+        !ready
+      )
+        return;
       if (e.code === "Tab") {
         e.preventDefault();
         keys.clear();
@@ -1215,6 +1294,7 @@ export default function App({
             !liveState.couch &&
             liveState.uiState.interior,
           blocked:
+            loadingRef.current ||
             !focused ||
             document.hidden ||
             (gui.current?.blocked() ?? true) ||
@@ -1290,33 +1370,50 @@ export default function App({
   }, []);
   return (
     <>
-      <canvas
-        key={rendererFailed ? "fallback" : "webgl"}
-        className="game-canvas"
-        ref={canvas}
-        tabIndex={0}
-        aria-label={
-          rendererFailed
-            ? "Graphics renderer failed. Enable WebGL, then press Enter to retry."
-            : "Sidereal game. WASD moves. Tab changes view. E uses the control seat. Escape opens the console. F6 focuses interface controls."
-        }
-      />
-      <ConstructionReview connection={c} onError={setError} />
-      {sharedReview && (
-        <SharedWorldReview
+      <div className="game-surface" inert={loadingRef.current}>
+        <canvas
+          key={rendererFailed ? "fallback" : "webgl"}
+          className="game-canvas"
+          ref={canvas}
+          tabIndex={loadingRef.current ? -1 : 0}
+          aria-hidden={loadingRef.current}
+          aria-label={
+            rendererFailed
+              ? "Graphics renderer failed. Enable WebGL, then press Enter to retry."
+              : "Sidereal game. WASD moves. Tab changes view. E uses the control seat. Escape opens the console. F6 focuses interface controls."
+          }
+        />
+        <ConstructionReview connection={c} onError={setError} />
+        <ShipRefitPanel connection={c} onError={setError} />
+        <MountedFuelPanel
           connection={c}
-          source={sharedBinding?.store}
-          readiness={sharedBinding?.readiness}
+          selectedObject={selectedObject}
           onError={setError}
         />
+        {sharedReview && (
+          <SharedWorldReview
+            connection={c}
+            source={sharedBinding?.store}
+            readiness={sharedBinding?.readiness}
+            onError={setError}
+          />
+        )}
+        <AccountPanel
+          connection={c}
+          characterId={actor?.id}
+          name={accountName}
+          oidc={!!auth}
+          onSignOut={onSignOut}
+        />
+      </div>
+      {loadingRef.current && (
+        <GameLoadingScreen
+          stage={status === "ready" ? loadStage : "connecting"}
+          shipName={ship?.name ?? ""}
+          failure={loadFailure}
+          onSignOut={onSignOut}
+        />
       )}
-      <AccountPanel
-        connection={c}
-        characterId={actor?.id}
-        name={accountName}
-        oidc={!!auth}
-        onSignOut={onSignOut}
-      />
     </>
   );
 }

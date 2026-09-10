@@ -1,3 +1,7 @@
+import {
+  refitAttachmentPlacements,
+  type RefitAttachmentVisual,
+} from "@sidereal/render/construction-refit-attachments";
 import type { ConstructionDocument } from "@sidereal/content/construction";
 import type { EquipmentCatalog } from "./objects";
 
@@ -6,6 +10,8 @@ import type { EquipmentCatalog } from "./objects";
 export function constructionInspectionCatalog(
   catalog: EquipmentCatalog | undefined,
   documentJson: string | undefined,
+  attachments: readonly RefitAttachmentVisual[] = [],
+  deckId = "",
 ): EquipmentCatalog | undefined {
   if (!catalog || !documentJson) return undefined;
   let document: ConstructionDocument;
@@ -21,7 +27,19 @@ export function constructionInspectionCatalog(
   );
   const entries: EquipmentCatalog["entries"] = [];
   const seen = new Set<string>();
-  for (const placement of parts) {
+  let extras;
+  try {
+    extras = refitAttachmentPlacements(
+      attachments,
+      document.layout.id,
+      deckId,
+      [...assets.values()],
+      parts.map((p) => p.id),
+    );
+  } catch {
+    return undefined;
+  }
+  for (const placement of [...parts, ...extras]) {
     if (
       !placement ||
       typeof placement.id !== "string" ||

@@ -73,6 +73,14 @@ export function objectDetails(
             { label: "Payload limit", value: `${storage.maxMassKg} kg` },
           ]
         : []),
+      ...(storage?.kind === "liquid"
+        ? [
+            {
+              label: storage.liquidType || "Liquid",
+              value: `${storage.amountLitres.toFixed(1)} / ${storage.capacityLitres.toFixed(1)} L`,
+            },
+          ]
+        : []),
       ...(drive
         ? [
             {
@@ -129,13 +137,15 @@ export function objectDetails(
           },
         ]
       : knownStorage
-        ? [
-            {
-              id: "open-storage",
-              label: "Open storage",
-              enabled: storage?.kind === "grid",
-            },
-          ]
+        ? storage?.kind === "liquid"
+          ? []
+          : [
+              {
+                id: "open-storage",
+                label: "Open storage",
+                enabled: storage?.kind === "grid",
+              },
+            ]
         : isHelm && helm
           ? [
               {

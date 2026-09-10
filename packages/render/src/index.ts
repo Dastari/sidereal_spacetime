@@ -148,6 +148,9 @@ export interface WorldOptions {
   blocksCameraInput?: () => boolean;
   blocksObjectSelection?: () => boolean;
   onLoadError?: (message: string) => void;
+  onLoadStage?: (
+    stage: "ship" | "environment" | "crew" | "equipment" | "finishing",
+  ) => void;
   onPreviewError?: (message: string) => void;
   signal?: AbortSignal;
 }
@@ -179,6 +182,9 @@ async function buildWorld(
   onReady: (text: string) => void,
   options: WorldOptions,
 ) {
+  options.onLoadStage?.("ship");
+  let initialStateApplied = false;
+  let equipmentPending = false;
   const engine = new Engine(canvas, true, {
     preserveDrawingBuffer: true,
     stencil: true,
@@ -215,8 +221,10 @@ async function buildWorld(
   camera.minZ = 0.1;
   camera.maxZ = 1600;
   options.onScene?.(scene);
-  const loadingFrame = () => scene.render();
-  engine.runRenderLoop(loadingFrame);
+  // The DOM loading screen covers startup. Rendering each partial GLB assembly
+  // compiles transient material/effect combinations before the final lighting
+  // and visibility state exists, competing with asset decoding on slower GPUs.
+  // Start rendering only once the scene's loaders and wiring are assembled.
   const shipRoot = new TransformNode("ship-frame", scene);
   const environment = createSpaceEnvironment(scene);
   let crew: Awaited<ReturnType<typeof createCrewVisual>> | undefined;
@@ -358,7 +366,9 @@ async function buildWorld(
         };
       }
     }
+    options.onLoadStage?.("environment");
     await environment.ready;
+    options.onLoadStage?.("crew");
     if (!options.source || options.source === "voxel") {
       crew = await createCrewVisual(
         scene,
@@ -660,18 +670,26 @@ async function buildWorld(
           sharedExteriorReady = true;
           return prototype;
         },
-        onError: (error) =>
-          options.onPreviewError?.(
+        onError: (error) => {
+          const message =
             error instanceof Error
               ? error.message
-              : "Shared ship exterior unavailable",
-          ),
+              : "Shared ship exterior unavailable";
+          assetFailure = true;
+          options.onLoadError?.(message);
+        },
       })
     : undefined;
+  if (remoteShips) {
+    options.onLoadStage?.("environment");
+    // Import the shared exterior before drawing too: otherwise its sequential
+    // GLB imports contend with full ship shadow/refraction passes during startup.
+    // onError above records the failure and keeps the loading cover in place.
+    await remoteShips.ready.catch(() => undefined);
+  }
   const visibleBodies = (nowMs: number) =>
     options.sharedWorld?.bodies(nowMs) ?? state.bodies ?? [];
   let firstFrame = true;
-  engine.stopRenderLoop(loadingFrame);
   engine.runRenderLoop(() => {
     const frameStarted = performance.now();
     // Reconcile overrides only when normal visibility/power intent changes.
@@ -922,7 +940,14 @@ async function buildWorld(
     const updateCpuMs = performance.now() - frameStarted;
     scene.render();
     diagnostics.recordFrameCpu(performance.now() - frameStarted, updateCpuMs);
-    if (firstFrame && scene.isReady() && !assetFailure) {
+    if (
+      firstFrame &&
+      initialStateApplied &&
+      !equipmentPending &&
+      (!remoteShips || sharedExteriorReady) &&
+      scene.isReady() &&
+      !assetFailure
+    ) {
       firstFrame = false;
       onReady(
         engineStudy
@@ -931,7 +956,7 @@ async function buildWorld(
             : "Voxel engine · 7 materials preserved"
           : options.source === "original"
             ? "Original Blender study loaded"
-            : "Voxel Wayfarer loaded",
+            : "Vessel ready",
       );
     }
   });
@@ -953,6 +978,8 @@ async function buildWorld(
             : null;
     if (asset === selectedAsset) return;
     selectedAsset = asset;
+    equipmentPending = !!asset;
+    if (firstFrame) options.onLoadStage?.(asset ? "equipment" : "finishing");
     const revision = ++equipmentRevision;
     equipmentPose?.bind(undefined);
     crew.bindHeldEquipment(undefined);
@@ -974,6 +1001,8 @@ async function buildWorld(
           return;
         }
         equipment = visual;
+        equipmentPending = false;
+        if (firstFrame) options.onLoadStage?.("finishing");
         const poseItem = options.equipmentPose?.items[selectedAsset!];
         if (equipmentPose && crew && poseItem)
           equipmentPose.bind(visual.createPoseBinding(crew.root, poseItem));
@@ -988,10 +1017,14 @@ async function buildWorld(
         crew?.customize({ weaponFixture: false });
       })
       .catch((error) => {
-        if (!disposed && revision === equipmentRevision)
-          options.onPreviewError?.(
-            "Equipment preview could not load: " + String(error),
-          );
+        if (!disposed && revision === equipmentRevision) {
+          equipmentPending = false;
+          const message = "Equipment preview could not load: " + String(error);
+          if (firstFrame) {
+            assetFailure = true;
+            options.onLoadError?.(message);
+          } else options.onPreviewError?.(message);
+        }
       });
   }
   const combatObserver = scene.onAfterAnimationsObservable.add(() => {
@@ -1064,6 +1097,14 @@ async function buildWorld(
       remoteShipIds: remoteShips?.getRootIds() ?? [],
     }),
     update(next: SceneState) {
+      if (!initialStateApplied) {
+        initialStateApplied = true;
+        initialized = false;
+        blend = next.interior ? 1 : 0;
+        camera.alpha = cameraAlpha(next.heading, next.interior, orbit);
+        camera.beta = next.interior ? RPG_BETA : next.inspect ? 0.6 : 0.015;
+        options.onLoadStage?.("finishing");
+      }
       state = next;
       objects.select(next.selectedObject);
       objects.lights(next.objectLights ?? []);

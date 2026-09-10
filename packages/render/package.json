@@ -9,7 +9,8 @@
     "./equipment": "./src/equipment/index.ts",
     "./crew/appearance": "./src/crew/appearance.ts",
     "./native-stair-scene": "./src/native-stair-scene.ts",
-    "./layout-native-floors": "./src/layout-native-floors.ts"
+    "./layout-native-floors": "./src/layout-native-floors.ts",
+    "./construction-refit-attachments": "./src/construction-refit-attachments.ts"
   },
   "dependencies": {
     "@babylonjs/core": "9.25.0",

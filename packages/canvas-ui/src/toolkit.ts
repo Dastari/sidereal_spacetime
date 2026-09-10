@@ -274,6 +274,9 @@ export class CanvasUI {
     this.invalidate();
   }
   private key = (e: KeyboardEvent) => {
+    // The DOM loading/error layer owns input while the game surface is inert.
+    // Window listeners still receive keys even when their canvas is inert.
+    if (this.canvas.closest("[inert]")) return;
     if (!this.keyboard && !e.repeat && this.shortcut(e.code)) {
       e.preventDefault();
       e.stopImmediatePropagation();

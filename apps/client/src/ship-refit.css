@@ -1,0 +1,73 @@
+.ship-refit-toggle {
+  position: fixed;
+  right: 6rem;
+  bottom: 1rem;
+  z-index: 8;
+  padding: 0.5rem 0.9rem;
+  background: #061a30;
+  color: #d8efff;
+  border: 1px solid #40cdeb;
+  cursor: pointer;
+}
+.ship-service-panel {
+  position: fixed;
+  right: 1rem;
+  top: 6rem;
+  z-index: 9;
+  width: min(22rem, calc(100vw - 2rem));
+  max-height: calc(100vh - 8rem);
+  overflow: auto;
+  padding: 1rem;
+  display: grid;
+  gap: 0.65rem;
+  background: #06182bf5;
+  color: #d8efff;
+  border: 1px solid #43d9fc;
+  box-shadow: 0 0 15px #21c6ff44;
+}
+.ship-service-panel h2,
+.ship-service-panel p {
+  margin: 0;
+}
+.ship-service-panel h2 {
+  font-family: "Barlow Condensed", sans-serif;
+  text-transform: uppercase;
+  color: #8feaff;
+}
+.ship-service-panel p,
+.ship-service-panel small {
+  line-height: 1.4;
+}
+.ship-service-panel label {
+  display: grid;
+  gap: 0.35rem;
+}
+.ship-service-panel button,
+.ship-service-panel input,
+.ship-service-panel select {
+  padding: 0.55rem;
+  font: inherit;
+  background: #0c2c49;
+  border: 1px solid #40cdeb;
+  color: #e2f6ff;
+}
+.ship-service-panel button {
+  cursor: pointer;
+}
+.ship-service-panel button:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+.ship-service-panel button:focus-visible {
+  outline: 2px solid white;
+  box-shadow: 0 0 12px #30c7ff;
+}
+.ship-service-panel .service-close {
+  justify-self: end;
+  padding: 0.1rem 0.5rem;
+}
+.fuel-service-panel {
+  top: 5.5rem;
+  left: 1rem;
+  right: auto;
+}

@@ -1,3 +1,7 @@
+import {
+  refitAttachmentPlacements,
+  type RefitAttachmentVisual,
+} from "./construction-refit-attachments";
 import { SceneLoader } from "@babylonjs/core/Loading/sceneLoader";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
@@ -20,6 +24,7 @@ export async function loadConstructionAuthoredAssembly(
   parent: TransformNode,
   document: ConstructionDocument,
   deckId: string,
+  attachments: readonly RefitAttachmentVisual[] = [],
 ) {
   if (document.layout.source?.blueprintRevision !== proof.documentSha256)
     return null;
@@ -54,7 +59,15 @@ export async function loadConstructionAuthoredAssembly(
     libraries.clear();
   };
   try {
-    for (const p of document.layout.assembly?.parts ?? []) {
+    const base = document.layout.assembly?.parts ?? [];
+    const extra = refitAttachmentPlacements(
+      attachments,
+      document.layout.id,
+      deckId,
+      catalog.assets,
+      base.map((p) => p.id),
+    );
+    for (const p of [...base, ...extra]) {
       const a = catalog.assets.find((a) => a.id === p.assetId);
       if (!a || a.category === "floor" || p.removedCells.length)
         throw Error("Unsupported authored placement or damage");
