@@ -1,6 +1,6 @@
 # Planar ship contacts: conservative proxy and swept broad phase
 
-Status: implemented in source; isolated acceptance pending. No public activation.
+Status: algorithm-only server update is live. Exact publication and persistence evidence: [2026-09-10 release](ship_contact_public_release_20260910.md).
 
 The authoritative ship-to-ship path already used one forward-offset capsule for each ship, plus one circle per asteroid. `LAB_HULL` in `packages/content/src/space.ts` declares radius 5.4 m, spine half-length 7.125 m and longitudinal offset 1.125 m. The current approved flight definition carries that proxy into shared physics. It is independent of native visual meshes, detailed interior walking collision, ray picking, cargo collision, roof visibility and eventual destruction proxies. Changing the camera cannot change this authoritative shape.
 
