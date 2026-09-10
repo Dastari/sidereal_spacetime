@@ -1,0 +1,2807 @@
+{
+  "schema": "sidereal.native-wall-batching.v1",
+  "status": "actual Babylon NullEngine loader and per-placement helper; GPU comparison pending; not installed",
+  "sourceComparison": {
+    "path": "docs/releases/usable-wall-readiness-20260910/geometry-comparison.json",
+    "sha256": "b662f65d87a5e21072b39f91f3f59b92ae2700821acf15bef39b5df537427daa"
+  },
+  "canonicalSha256": "362f37217f63a44a470676f104c8368bd0973ca03f5e29eab190bc4d6df71340",
+  "uniqueNativeFiles": 48,
+  "placements": 50,
+  "summary": {
+    "oldNativeGroups": 152,
+    "oldLoadedMeshes": 262,
+    "oldSubMeshes": 262,
+    "oldTriangles": 57434,
+    "candidateGroups": 570,
+    "batchedGroups": 181,
+    "triangles": 102578,
+    "orderedPrimitives": 0,
+    "allMaterialIdentitiesAndPerMaterialTrianglesVerticesLayoutsPreserved": true,
+    "allSourceBuffersUnchanged": true,
+    "allIndependentDisposalPassed": true
+  },
+  "rows": [
+    {
+      "sourcePlacedId": "wall--3--3",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay00-exterior.glb",
+        "sha256": "8f13403efba4183d8ba74997c4719867c0590fef9330ee8efc975b6834f646a2",
+        "nodePrefix": "GEO-bay00-exterior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 3,
+      "oldSubMeshes": 3,
+      "oldTriangles": 370,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 1315,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall--2--3",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay00-interior.glb",
+        "sha256": "a123c2a59e6e64e269d8915eb87fb65572b85c980d9b42cae023f88d32ff6a64",
+        "nodePrefix": "GEO-bay00-interior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 5,
+      "oldSubMeshes": 5,
+      "oldTriangles": 1914,
+      "inputGroups": 21,
+      "outputGroups": 6,
+      "inputSubMeshes": 21,
+      "outputSubMeshes": 6,
+      "triangles": 3948,
+      "materialIdentities": 6,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 1324,
+          "name": "MAT-Frontier-side-hull-pale",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1329,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 1316,
+          "vertices": 2688,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1348,
+          "name": "MAT-Frontier-side-hull-black",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1353,
+          "name": "MAT-Frontier-side-hull-cyan",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1356,
+          "name": "MAT-Frontier-side-hull-red",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1363,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 1504,
+          "vertices": 3072,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall--3--2",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay01-exterior.glb",
+        "sha256": "5cc011b84a33755d78355ea3c9cd2cbe741862febebe0d9c2e7cd13b504dcc21",
+        "nodePrefix": "GEO-bay01-exterior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 3,
+      "oldLoadedMeshes": 5,
+      "oldSubMeshes": 5,
+      "oldTriangles": 748,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 1396,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall--2--2",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay01-interior.glb",
+        "sha256": "5d0cf4644602ee3a854167c7025f060a9b3a38c63daf7d43182c0ce6a030edcc",
+        "nodePrefix": "GEO-bay01-interior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 3,
+      "oldLoadedMeshes": 7,
+      "oldSubMeshes": 7,
+      "oldTriangles": 3334,
+      "inputGroups": 22,
+      "outputGroups": 7,
+      "inputSubMeshes": 22,
+      "outputSubMeshes": 7,
+      "triangles": 4922,
+      "materialIdentities": 7,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 1405,
+          "name": "MAT-Frontier-side-hull-pale",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1410,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 1316,
+          "vertices": 2688,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1429,
+          "name": "MAT-Frontier-side-hull-black",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1434,
+          "name": "MAT-Frontier-side-hull-cyan",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1437,
+          "name": "MAT-Frontier-side-hull-red",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1444,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 1504,
+          "vertices": 3072,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1463,
+          "name": "MAT-structural-polymer",
+          "triangles": 974,
+          "vertices": 1383,
+          "layouts": [
+            "color,normal,position,tangent,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall--3--1",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay02-exterior.glb",
+        "sha256": "e522b1147d96ca6d1a2672f8ed9a0378c2fbe52b463f9861e59c6bb27cf10d20",
+        "nodePrefix": "GEO-bay02-exterior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 3,
+      "oldSubMeshes": 3,
+      "oldTriangles": 370,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 1482,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall--2--1",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay02-interior.glb",
+        "sha256": "f3c3fab9c443b96057205085a8d8fab75f18b8da5e269c0e2f0e92a401c80572",
+        "nodePrefix": "GEO-bay02-interior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 6,
+      "oldSubMeshes": 6,
+      "oldTriangles": 1818,
+      "inputGroups": 21,
+      "outputGroups": 6,
+      "inputSubMeshes": 21,
+      "outputSubMeshes": 6,
+      "triangles": 3948,
+      "materialIdentities": 6,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 1491,
+          "name": "MAT-Frontier-side-hull-pale",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1496,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 1316,
+          "vertices": 2688,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1515,
+          "name": "MAT-Frontier-side-hull-black",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1520,
+          "name": "MAT-Frontier-side-hull-cyan",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1523,
+          "name": "MAT-Frontier-side-hull-red",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1530,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 1504,
+          "vertices": 3072,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall--3-0",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay03-exterior.glb",
+        "sha256": "dc7ee10cdd1aa3c6b12bb63284ad932df4f6484816209259e93ae9703a27e2bc",
+        "nodePrefix": "GEO-bay03-exterior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 3,
+      "oldLoadedMeshes": 5,
+      "oldSubMeshes": 5,
+      "oldTriangles": 724,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 1563,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall--2-0",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay03-interior.glb",
+        "sha256": "1e5a654308c021473ca01e9b237ea430699c35c403c63681c0feed88a25a2aa6",
+        "nodePrefix": "GEO-bay03-interior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 3,
+      "oldLoadedMeshes": 7,
+      "oldSubMeshes": 7,
+      "oldTriangles": 2924,
+      "inputGroups": 22,
+      "outputGroups": 7,
+      "inputSubMeshes": 22,
+      "outputSubMeshes": 7,
+      "triangles": 4842,
+      "materialIdentities": 7,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 1572,
+          "name": "MAT-Frontier-side-hull-pale",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1577,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 1316,
+          "vertices": 2688,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1596,
+          "name": "MAT-Frontier-side-hull-black",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1601,
+          "name": "MAT-Frontier-side-hull-cyan",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1604,
+          "name": "MAT-Frontier-side-hull-red",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1611,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 1504,
+          "vertices": 3072,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1630,
+          "name": "MAT-structural-polymer",
+          "triangles": 894,
+          "vertices": 1489,
+          "layouts": [
+            "color,normal,position,tangent,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall--3-1",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay04-exterior.glb",
+        "sha256": "f043cc123911058368d0124728b4e2ed43662fae9c688c0f198319d4a38b502a",
+        "nodePrefix": "GEO-bay04-exterior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 3,
+      "oldSubMeshes": 3,
+      "oldTriangles": 370,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 1649,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall--2-1",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay04-interior.glb",
+        "sha256": "fdc4f8e2a5ca880bb81a710e6a667a291c335405703df7bcd348f7c994aef805",
+        "nodePrefix": "GEO-bay04-interior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 3,
+      "oldLoadedMeshes": 7,
+      "oldSubMeshes": 7,
+      "oldTriangles": 1748,
+      "inputGroups": 22,
+      "outputGroups": 7,
+      "inputSubMeshes": 22,
+      "outputSubMeshes": 7,
+      "triangles": 4004,
+      "materialIdentities": 7,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 1658,
+          "name": "MAT-Frontier-side-hull-pale",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1663,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 1316,
+          "vertices": 2688,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1682,
+          "name": "MAT-Frontier-side-hull-black",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1687,
+          "name": "MAT-Frontier-side-hull-cyan",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1690,
+          "name": "MAT-Frontier-side-hull-red",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1697,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 1504,
+          "vertices": 3072,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1716,
+          "name": "MAT-structural-polymer",
+          "triangles": 56,
+          "vertices": 96,
+          "layouts": [
+            "color,normal,position,tangent,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall--3-2",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay05-exterior.glb",
+        "sha256": "273ac115520c633fba915f969edcc6aca6b4106fb050e051e716501eb332396d",
+        "nodePrefix": "GEO-bay05-exterior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 4,
+      "oldSubMeshes": 4,
+      "oldTriangles": 636,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 1735,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall--2-2",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay05-interior.glb",
+        "sha256": "29d063e4c11edc2ba9d8d8da3fe733396edba274673e1e863202e477f8f5ffe4",
+        "nodePrefix": "GEO-bay05-interior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 6,
+      "oldSubMeshes": 6,
+      "oldTriangles": 2052,
+      "inputGroups": 21,
+      "outputGroups": 6,
+      "inputSubMeshes": 21,
+      "outputSubMeshes": 6,
+      "triangles": 3948,
+      "materialIdentities": 6,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 1744,
+          "name": "MAT-Frontier-side-hull-pale",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1749,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 1316,
+          "vertices": 2688,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1768,
+          "name": "MAT-Frontier-side-hull-black",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1773,
+          "name": "MAT-Frontier-side-hull-cyan",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1776,
+          "name": "MAT-Frontier-side-hull-red",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1783,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 1504,
+          "vertices": 3072,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall--3-3",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay06-exterior.glb",
+        "sha256": "f73b9132630f4b1c3ef80e228a5b5846c45b138a0db45c1e196dcc6a861203bf",
+        "nodePrefix": "GEO-bay06-exterior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 3,
+      "oldLoadedMeshes": 4,
+      "oldSubMeshes": 4,
+      "oldTriangles": 458,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 1816,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall--2-3",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay06-interior.glb",
+        "sha256": "165c2453e93dc7fef74419e0971230ec2513acd0ab8b680e8ce2e4299eb43c17",
+        "nodePrefix": "GEO-bay06-interior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 3,
+      "oldLoadedMeshes": 6,
+      "oldSubMeshes": 6,
+      "oldTriangles": 2510,
+      "inputGroups": 22,
+      "outputGroups": 7,
+      "inputSubMeshes": 22,
+      "outputSubMeshes": 7,
+      "triangles": 4916,
+      "materialIdentities": 7,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 1825,
+          "name": "MAT-Frontier-side-hull-pale",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1830,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 1316,
+          "vertices": 2688,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1849,
+          "name": "MAT-Frontier-side-hull-black",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1854,
+          "name": "MAT-Frontier-side-hull-cyan",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1857,
+          "name": "MAT-Frontier-side-hull-red",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1864,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 1504,
+          "vertices": 3072,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1883,
+          "name": "MAT-structural-polymer",
+          "triangles": 968,
+          "vertices": 1582,
+          "layouts": [
+            "color,normal,position,tangent,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-3--3",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay07-exterior.glb",
+        "sha256": "69c21bb53f1b00d8bb21cf32229fb2ddec22934cc2590872a75429fea99a9627",
+        "nodePrefix": "GEO-bay07-exterior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 3,
+      "oldSubMeshes": 3,
+      "oldTriangles": 370,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 1902,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-2--3",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay07-interior.glb",
+        "sha256": "3d7391610a427f44bc2b1a459dba9b018a5d1dfdabc758d9ba4bea9e86a20e9c",
+        "nodePrefix": "GEO-bay07-interior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 5,
+      "oldSubMeshes": 5,
+      "oldTriangles": 1896,
+      "inputGroups": 21,
+      "outputGroups": 6,
+      "inputSubMeshes": 21,
+      "outputSubMeshes": 6,
+      "triangles": 3948,
+      "materialIdentities": 6,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 1911,
+          "name": "MAT-Frontier-side-hull-pale",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1916,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 1316,
+          "vertices": 2688,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1935,
+          "name": "MAT-Frontier-side-hull-black",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1940,
+          "name": "MAT-Frontier-side-hull-cyan",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1943,
+          "name": "MAT-Frontier-side-hull-red",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1950,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 1504,
+          "vertices": 3072,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-3--2",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay08-exterior.glb",
+        "sha256": "c370ebd56eeecf2c0a56152aee79c20bec81197d287887301593365cb7910d9b",
+        "nodePrefix": "GEO-bay08-exterior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 3,
+      "oldLoadedMeshes": 5,
+      "oldSubMeshes": 5,
+      "oldTriangles": 784,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 1983,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-2--2",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay08-interior.glb",
+        "sha256": "b1b840da96a87b9f87e07a4ca8d4f0c3ddc837de1e02fbc820f839b3630ac5be",
+        "nodePrefix": "GEO-bay08-interior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 3,
+      "oldLoadedMeshes": 7,
+      "oldSubMeshes": 7,
+      "oldTriangles": 3368,
+      "inputGroups": 22,
+      "outputGroups": 7,
+      "inputSubMeshes": 22,
+      "outputSubMeshes": 7,
+      "triangles": 4960,
+      "materialIdentities": 7,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 1992,
+          "name": "MAT-Frontier-side-hull-pale",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 1997,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 1316,
+          "vertices": 2688,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2016,
+          "name": "MAT-Frontier-side-hull-black",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2021,
+          "name": "MAT-Frontier-side-hull-cyan",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2024,
+          "name": "MAT-Frontier-side-hull-red",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2031,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 1504,
+          "vertices": 3072,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2050,
+          "name": "MAT-structural-polymer",
+          "triangles": 1012,
+          "vertices": 1458,
+          "layouts": [
+            "color,normal,position,tangent,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-3--1",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay09-exterior.glb",
+        "sha256": "f9fc8311745c51b31eb881fc838b346a8909d45862210cf5fc0aca46752fcff6",
+        "nodePrefix": "GEO-bay09-exterior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 3,
+      "oldSubMeshes": 3,
+      "oldTriangles": 370,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2069,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-2--1",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay09-interior.glb",
+        "sha256": "1147cabae655cbf1c3a3f93b618da22223abff9336599b7e5472904703676bf0",
+        "nodePrefix": "GEO-bay09-interior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 6,
+      "oldSubMeshes": 6,
+      "oldTriangles": 1880,
+      "inputGroups": 21,
+      "outputGroups": 6,
+      "inputSubMeshes": 21,
+      "outputSubMeshes": 6,
+      "triangles": 3948,
+      "materialIdentities": 6,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2078,
+          "name": "MAT-Frontier-side-hull-pale",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2083,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 1316,
+          "vertices": 2688,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2102,
+          "name": "MAT-Frontier-side-hull-black",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2107,
+          "name": "MAT-Frontier-side-hull-cyan",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2110,
+          "name": "MAT-Frontier-side-hull-red",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2117,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 1504,
+          "vertices": 3072,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-3-0",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay10-exterior.glb",
+        "sha256": "6bff81d41884bf9e2423ac684d8cc6616962ac17226c38a0b49652537327adf4",
+        "nodePrefix": "GEO-bay10-exterior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 3,
+      "oldLoadedMeshes": 5,
+      "oldSubMeshes": 5,
+      "oldTriangles": 760,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2150,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-2-0",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay10-interior.glb",
+        "sha256": "75add13729ef7b7b6c84ebe00eab015821456b61628db8cff0721b0bf084e00b",
+        "nodePrefix": "GEO-bay10-interior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 3,
+      "oldLoadedMeshes": 7,
+      "oldSubMeshes": 7,
+      "oldTriangles": 2914,
+      "inputGroups": 22,
+      "outputGroups": 7,
+      "inputSubMeshes": 22,
+      "outputSubMeshes": 7,
+      "triangles": 4860,
+      "materialIdentities": 7,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2159,
+          "name": "MAT-Frontier-side-hull-pale",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2164,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 1316,
+          "vertices": 2688,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2183,
+          "name": "MAT-Frontier-side-hull-black",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2188,
+          "name": "MAT-Frontier-side-hull-cyan",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2191,
+          "name": "MAT-Frontier-side-hull-red",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2198,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 1504,
+          "vertices": 3072,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2217,
+          "name": "MAT-structural-polymer",
+          "triangles": 912,
+          "vertices": 1503,
+          "layouts": [
+            "color,normal,position,tangent,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-3-1",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay11-exterior.glb",
+        "sha256": "cae642d9589fca635db3de17160d7e8ecdfd91120bf06471227d53edef55f635",
+        "nodePrefix": "GEO-bay11-exterior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 3,
+      "oldSubMeshes": 3,
+      "oldTriangles": 370,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2236,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-2-1",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay11-interior.glb",
+        "sha256": "db1928fd27baae484df8fa16f8f2ef3deaee1c16f4abc1fb84c932a337fec040",
+        "nodePrefix": "GEO-bay11-interior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 3,
+      "oldLoadedMeshes": 7,
+      "oldSubMeshes": 7,
+      "oldTriangles": 1762,
+      "inputGroups": 22,
+      "outputGroups": 7,
+      "inputSubMeshes": 22,
+      "outputSubMeshes": 7,
+      "triangles": 4036,
+      "materialIdentities": 7,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2245,
+          "name": "MAT-Frontier-side-hull-pale",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2250,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 1316,
+          "vertices": 2688,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2269,
+          "name": "MAT-Frontier-side-hull-black",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2274,
+          "name": "MAT-Frontier-side-hull-cyan",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2277,
+          "name": "MAT-Frontier-side-hull-red",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2284,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 1504,
+          "vertices": 3072,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2303,
+          "name": "MAT-structural-polymer",
+          "triangles": 88,
+          "vertices": 144,
+          "layouts": [
+            "color,normal,position,tangent,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-3-2",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay12-exterior.glb",
+        "sha256": "220e8d4b737d734f5032413f9805cf10117480ec37a00406ccc4d601ec9353ce",
+        "nodePrefix": "GEO-bay12-exterior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 4,
+      "oldSubMeshes": 4,
+      "oldTriangles": 672,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2322,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-2-2",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay12-interior.glb",
+        "sha256": "cd2e7d557d1351c5dd3f2ae20fe9d92c859797739c5ab4a63e4f14241187a1e5",
+        "nodePrefix": "GEO-bay12-interior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 6,
+      "oldSubMeshes": 6,
+      "oldTriangles": 2086,
+      "inputGroups": 21,
+      "outputGroups": 6,
+      "inputSubMeshes": 21,
+      "outputSubMeshes": 6,
+      "triangles": 3948,
+      "materialIdentities": 6,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2331,
+          "name": "MAT-Frontier-side-hull-pale",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2336,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 1316,
+          "vertices": 2688,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2355,
+          "name": "MAT-Frontier-side-hull-black",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2360,
+          "name": "MAT-Frontier-side-hull-cyan",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2363,
+          "name": "MAT-Frontier-side-hull-red",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2370,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 1504,
+          "vertices": 3072,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-3-3",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay13-exterior.glb",
+        "sha256": "8b7f3663ceb3f0aeb33d41b7800888d78693863646b97041b889d01df2be1132",
+        "nodePrefix": "GEO-bay13-exterior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 3,
+      "oldLoadedMeshes": 4,
+      "oldSubMeshes": 4,
+      "oldTriangles": 458,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2403,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-2-3",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay13-interior.glb",
+        "sha256": "958fc95302f1cf9ccc03fec322eb7432da063cde7f95cbb102a31c9b0c6a2706",
+        "nodePrefix": "GEO-bay13-interior--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 3,
+      "oldLoadedMeshes": 6,
+      "oldSubMeshes": 6,
+      "oldTriangles": 2474,
+      "inputGroups": 22,
+      "outputGroups": 7,
+      "inputSubMeshes": 22,
+      "outputSubMeshes": 7,
+      "triangles": 4960,
+      "materialIdentities": 7,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2412,
+          "name": "MAT-Frontier-side-hull-pale",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2417,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 1316,
+          "vertices": 2688,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2436,
+          "name": "MAT-Frontier-side-hull-black",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2441,
+          "name": "MAT-Frontier-side-hull-cyan",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2444,
+          "name": "MAT-Frontier-side-hull-red",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2451,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 1504,
+          "vertices": 3072,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2470,
+          "name": "MAT-structural-polymer",
+          "triangles": 1012,
+          "vertices": 1654,
+          "layouts": [
+            "color,normal,position,tangent,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall--3--4",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end00.glb",
+        "sha256": "a067d76f03f6a045092932e391d9564f16f275da97ca68305f5e364fd187699a",
+        "nodePrefix": "GEO-end00--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 4,
+      "oldSubMeshes": 4,
+      "oldTriangles": 636,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2489,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall--2--4",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end01.glb",
+        "sha256": "340ac594b11b60989bc94e37a08d21f59c7db9b66d7900d5f87413aa3433d58a",
+        "nodePrefix": "GEO-end01--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 3,
+      "oldLoadedMeshes": 8,
+      "oldSubMeshes": 8,
+      "oldTriangles": 2046,
+      "inputGroups": 42,
+      "outputGroups": 6,
+      "inputSubMeshes": 42,
+      "outputSubMeshes": 6,
+      "triangles": 7896,
+      "materialIdentities": 6,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2498,
+          "name": "MAT-Frontier-side-hull-pale",
+          "triangles": 752,
+          "vertices": 1536,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2503,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 2632,
+          "vertices": 5376,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2522,
+          "name": "MAT-Frontier-side-hull-black",
+          "triangles": 752,
+          "vertices": 1536,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2527,
+          "name": "MAT-Frontier-side-hull-cyan",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2530,
+          "name": "MAT-Frontier-side-hull-red",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2537,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 3008,
+          "vertices": 6144,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall--3-4",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end02.glb",
+        "sha256": "469a7da6d8ec5b69518d3b5dc019b9cfc4984de3be69b3e1b6224a9aba54d140",
+        "nodePrefix": "GEO-end02--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 4,
+      "oldSubMeshes": 4,
+      "oldTriangles": 964,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2612,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall--2-4",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end03.glb",
+        "sha256": "de3b9c6eb170ba76aadbbb3a479b0e294fd054a849787f829e802d0dbe8e75a5",
+        "nodePrefix": "GEO-end03--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 3,
+      "oldLoadedMeshes": 7,
+      "oldSubMeshes": 7,
+      "oldTriangles": 1738,
+      "inputGroups": 26,
+      "outputGroups": 7,
+      "inputSubMeshes": 26,
+      "outputSubMeshes": 7,
+      "triangles": 4812,
+      "materialIdentities": 6,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2621,
+          "name": "MAT-Frontier-side-hull-pale",
+          "triangles": 752,
+          "vertices": 1536,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2626,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 1692,
+          "vertices": 3456,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2645,
+          "name": "MAT-Frontier-side-hull-black",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2650,
+          "name": "MAT-Frontier-side-hull-cyan",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2653,
+          "name": "MAT-Frontier-side-hull-red",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2660,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 1616,
+          "vertices": 3248,
+          "layouts": [
+            "normal,position,tangent,uv",
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall--3--5",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end04.glb",
+        "sha256": "2dbad9bd7dadf9232db5c6f1d366cffebc2ac3a156058e0f3036fdb0b2c95460",
+        "nodePrefix": "GEO-end04--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 3,
+      "oldSubMeshes": 3,
+      "oldTriangles": 370,
+      "inputGroups": 3,
+      "outputGroups": 2,
+      "inputSubMeshes": 3,
+      "outputSubMeshes": 2,
+      "triangles": 488,
+      "materialIdentities": 2,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2705,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2712,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 112,
+          "vertices": 176,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-3--4",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end05.glb",
+        "sha256": "493908edb106d7ef3d70a96dac2774841fb65250c6cf4f66ad176ec1e3129c2e",
+        "nodePrefix": "GEO-end05--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 4,
+      "oldSubMeshes": 4,
+      "oldTriangles": 672,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2723,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-2--4",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end06.glb",
+        "sha256": "35dce1837b222c770ceb307b58eef02fedbde56c972add8d610f28a7b6f59fe3",
+        "nodePrefix": "GEO-end06--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 3,
+      "oldLoadedMeshes": 8,
+      "oldSubMeshes": 8,
+      "oldTriangles": 2152,
+      "inputGroups": 42,
+      "outputGroups": 6,
+      "inputSubMeshes": 42,
+      "outputSubMeshes": 6,
+      "triangles": 7896,
+      "materialIdentities": 6,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2732,
+          "name": "MAT-Frontier-side-hull-pale",
+          "triangles": 752,
+          "vertices": 1536,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2737,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 2632,
+          "vertices": 5376,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2756,
+          "name": "MAT-Frontier-side-hull-black",
+          "triangles": 752,
+          "vertices": 1536,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2761,
+          "name": "MAT-Frontier-side-hull-cyan",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2764,
+          "name": "MAT-Frontier-side-hull-red",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2771,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 3008,
+          "vertices": 6144,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-3-4",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end07.glb",
+        "sha256": "6a6d00119d11ec973c1635080f8f6d8286652f1f41b4074b591343156f2cc94c",
+        "nodePrefix": "GEO-end07--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 4,
+      "oldSubMeshes": 4,
+      "oldTriangles": 904,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2846,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-2-4",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end08.glb",
+        "sha256": "98e566084a4eec5a99b18eff4e325c4af70d03befb3a0d8dfb3daf8c95ed284a",
+        "nodePrefix": "GEO-end08--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 3,
+      "oldLoadedMeshes": 7,
+      "oldSubMeshes": 7,
+      "oldTriangles": 1644,
+      "inputGroups": 26,
+      "outputGroups": 7,
+      "inputSubMeshes": 26,
+      "outputSubMeshes": 7,
+      "triangles": 4812,
+      "materialIdentities": 6,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2855,
+          "name": "MAT-Frontier-side-hull-pale",
+          "triangles": 752,
+          "vertices": 1536,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2860,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 1692,
+          "vertices": 3456,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2879,
+          "name": "MAT-Frontier-side-hull-black",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2884,
+          "name": "MAT-Frontier-side-hull-cyan",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2887,
+          "name": "MAT-Frontier-side-hull-red",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2894,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 1616,
+          "vertices": 3248,
+          "layouts": [
+            "normal,position,tangent,uv",
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-3--5",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end09.glb",
+        "sha256": "2fe72c3fbdfee0864bed40f18e9a21feb3c14448e5533446b484decb842bc1c0",
+        "nodePrefix": "GEO-end09--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 3,
+      "oldSubMeshes": 3,
+      "oldTriangles": 370,
+      "inputGroups": 3,
+      "outputGroups": 2,
+      "inputSubMeshes": 3,
+      "outputSubMeshes": 2,
+      "triangles": 488,
+      "materialIdentities": 2,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2939,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2946,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 112,
+          "vertices": 176,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall--2--5",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end10.glb",
+        "sha256": "d0fc59e376c92a6fe1057b4fc85cd52a9f4a4fe6164d8b8287a361dd322daadd",
+        "nodePrefix": "GEO-end10--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 3,
+      "oldLoadedMeshes": 5,
+      "oldSubMeshes": 5,
+      "oldTriangles": 928,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2957,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall--1--5",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end11.glb",
+        "sha256": "bad46c1755e257f698c42159668efae29f93484aaa7db3b460515075cfe0d0ee",
+        "nodePrefix": "GEO-end11--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 3,
+      "oldSubMeshes": 3,
+      "oldTriangles": 370,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2966,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall--1--4",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end12.glb",
+        "sha256": "939baab7c7b06ede8a2890b112dd857d6d0eca1861adb11df2d7a2ed393d7b00",
+        "nodePrefix": "GEO-end12--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 3,
+      "oldLoadedMeshes": 4,
+      "oldSubMeshes": 4,
+      "oldTriangles": 732,
+      "inputGroups": 22,
+      "outputGroups": 7,
+      "inputSubMeshes": 22,
+      "outputSubMeshes": 7,
+      "triangles": 4320,
+      "materialIdentities": 7,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 2975,
+          "name": "MAT-Frontier-side-hull-pale",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2980,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 1316,
+          "vertices": 2688,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 2999,
+          "name": "MAT-Frontier-side-hull-black",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3004,
+          "name": "MAT-Frontier-side-hull-cyan",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3007,
+          "name": "MAT-Frontier-side-hull-red",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3014,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 1504,
+          "vertices": 3072,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3033,
+          "name": "MAT-structural-polymer",
+          "triangles": 372,
+          "vertices": 585,
+          "layouts": [
+            "color,normal,position,tangent,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-0--5",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end13.glb",
+        "sha256": "b50492ba732a6b8351f1bd3644cb1865581ac028692432b31ca23dc736ceba36",
+        "nodePrefix": "GEO-end13--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 3,
+      "oldSubMeshes": 3,
+      "oldTriangles": 536,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 3052,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-0--4",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end14.glb",
+        "sha256": "74b414a838e23e31d2bd1d477e0e17a9ae980976f90478678f217b4f215461c4",
+        "nodePrefix": "GEO-end14--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 3,
+      "oldSubMeshes": 3,
+      "oldTriangles": 386,
+      "inputGroups": 21,
+      "outputGroups": 6,
+      "inputSubMeshes": 21,
+      "outputSubMeshes": 6,
+      "triangles": 3948,
+      "materialIdentities": 6,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 3061,
+          "name": "MAT-Frontier-side-hull-pale",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3066,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 1316,
+          "vertices": 2688,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3085,
+          "name": "MAT-Frontier-side-hull-black",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3090,
+          "name": "MAT-Frontier-side-hull-cyan",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3093,
+          "name": "MAT-Frontier-side-hull-red",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3100,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 1504,
+          "vertices": 3072,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-1--5",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end15.glb",
+        "sha256": "58f4c7d35fcd39834632ad2227a30d1cdb9a567f9ec28dd9b91da55e959d9011",
+        "nodePrefix": "GEO-end15--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 2,
+      "oldLoadedMeshes": 3,
+      "oldSubMeshes": 3,
+      "oldTriangles": 370,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 3133,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-1--4",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end16.glb",
+        "sha256": "8b68b6c82a5d8d145e3c261f07a338e025ae367f5ed9ca723e8186d1954b2e23",
+        "nodePrefix": "GEO-end16--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 3,
+      "oldLoadedMeshes": 4,
+      "oldSubMeshes": 4,
+      "oldTriangles": 734,
+      "inputGroups": 22,
+      "outputGroups": 7,
+      "inputSubMeshes": 22,
+      "outputSubMeshes": 7,
+      "triangles": 4322,
+      "materialIdentities": 7,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 3142,
+          "name": "MAT-Frontier-side-hull-pale",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3147,
+          "name": "MAT-Frontier-side-hull-dark",
+          "triangles": 1316,
+          "vertices": 2688,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3166,
+          "name": "MAT-Frontier-side-hull-black",
+          "triangles": 376,
+          "vertices": 768,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3171,
+          "name": "MAT-Frontier-side-hull-cyan",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3174,
+          "name": "MAT-Frontier-side-hull-red",
+          "triangles": 188,
+          "vertices": 384,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3181,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 1504,
+          "vertices": 3072,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3200,
+          "name": "MAT-structural-polymer",
+          "triangles": 374,
+          "vertices": 578,
+          "layouts": [
+            "color,normal,position,tangent,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "wall-2--5",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a009/end17.glb",
+        "sha256": "037a4cb5ec2aed52118b8ed2b4b644ea4336f0df5220e96686c81147b9b03fa4",
+        "nodePrefix": "GEO-end17--"
+      },
+      "category": "wall",
+      "oldNativeGroups": 3,
+      "oldLoadedMeshes": 5,
+      "oldSubMeshes": 5,
+      "oldTriangles": 994,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 72,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 3219,
+          "name": "MAT-Frontier-side-hull-steel",
+          "triangles": 72,
+          "vertices": 95,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "pilot-r005-outer-shoulder-transition-starboard",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a003/shoulder.glb",
+        "sha256": "32983b595bb4376344feb8f2da5a51aa071a4143978aa727b0459cb2e12aa86a",
+        "nodePrefix": null
+      },
+      "category": "superstructure",
+      "oldNativeGroups": 18,
+      "oldLoadedMeshes": 18,
+      "oldSubMeshes": 18,
+      "oldTriangles": 294,
+      "inputGroups": 18,
+      "outputGroups": 7,
+      "inputSubMeshes": 18,
+      "outputSubMeshes": 7,
+      "triangles": 354,
+      "materialIdentities": 5,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 3273,
+          "name": "Graphite seals.001",
+          "triangles": 70,
+          "vertices": 125,
+          "layouts": [
+            "normal,position,tangent,uv",
+            "normal,position,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3278,
+          "name": "clean hull paint.001",
+          "triangles": 176,
+          "vertices": 344,
+          "layouts": [
+            "normal,position,tangent,uv",
+            "normal,position,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3286,
+          "name": "Titanium hardware.001",
+          "triangles": 84,
+          "vertices": 168,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3303,
+          "name": "Amber marker.001",
+          "triangles": 12,
+          "vertices": 24,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3312,
+          "name": "Canopy marker emitter.001",
+          "triangles": 12,
+          "vertices": 24,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "pilot-r005-outer-shoulder-transition-port",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a003/shoulder.glb",
+        "sha256": "32983b595bb4376344feb8f2da5a51aa071a4143978aa727b0459cb2e12aa86a",
+        "nodePrefix": null
+      },
+      "category": "superstructure",
+      "oldNativeGroups": 18,
+      "oldLoadedMeshes": 18,
+      "oldSubMeshes": 18,
+      "oldTriangles": 294,
+      "inputGroups": 18,
+      "outputGroups": 7,
+      "inputSubMeshes": 18,
+      "outputSubMeshes": 7,
+      "triangles": 354,
+      "materialIdentities": 5,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 3273,
+          "name": "Graphite seals.001",
+          "triangles": 70,
+          "vertices": 125,
+          "layouts": [
+            "normal,position,tangent,uv",
+            "normal,position,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3278,
+          "name": "clean hull paint.001",
+          "triangles": 176,
+          "vertices": 344,
+          "layouts": [
+            "normal,position,tangent,uv",
+            "normal,position,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3286,
+          "name": "Titanium hardware.001",
+          "triangles": 84,
+          "vertices": 168,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3303,
+          "name": "Amber marker.001",
+          "triangles": 12,
+          "vertices": 24,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        },
+        {
+          "materialIdentity": 3312,
+          "name": "Canopy marker emitter.001",
+          "triangles": 12,
+          "vertices": 24,
+          "layouts": [
+            "normal,position,tangent,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "pilot-r005-outer-roof-collar-starboard",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a003/collar.glb",
+        "sha256": "023fed1f045d2d26cb9f16346d95929ef83bd03a070aeeedac7be4a82ab68e3f",
+        "nodePrefix": null
+      },
+      "category": "roof",
+      "oldNativeGroups": 1,
+      "oldLoadedMeshes": 1,
+      "oldSubMeshes": 1,
+      "oldTriangles": 80,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 22,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 3541,
+          "name": "MAT-Frontier-roof-pale.001",
+          "triangles": 22,
+          "vertices": 46,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    },
+    {
+      "sourcePlacedId": "pilot-r005-outer-roof-collar-port",
+      "source": {
+        "path": "assets/art-library/designs/shipyard.hull.shoulder-construction-interface/revisions/r000/a003/collar.glb",
+        "sha256": "023fed1f045d2d26cb9f16346d95929ef83bd03a070aeeedac7be4a82ab68e3f",
+        "nodePrefix": null
+      },
+      "category": "roof",
+      "oldNativeGroups": 1,
+      "oldLoadedMeshes": 1,
+      "oldSubMeshes": 1,
+      "oldTriangles": 80,
+      "inputGroups": 1,
+      "outputGroups": 1,
+      "inputSubMeshes": 1,
+      "outputSubMeshes": 1,
+      "triangles": 22,
+      "materialIdentities": 1,
+      "orderedPrimitives": 0,
+      "materials": [
+        {
+          "materialIdentity": 3541,
+          "name": "MAT-Frontier-roof-pale.001",
+          "triangles": 22,
+          "vertices": 46,
+          "layouts": [
+            "normal,position,uv"
+          ]
+        }
+      ],
+      "sourceBuffersUnchanged": true,
+      "independentDispose": true
+    }
+  ]
+}
