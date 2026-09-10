@@ -611,3 +611,28 @@ Evidence: `output/playwright/render-plan/hardware-retry-20260911/deck*.{json,jpg
 ### 2026-09-11 — Owner-authorized rendering client publication
 
 Public client `5a4c31c994c91bb6eb2fe667c2bee058dc3c666f0d6d975392d2b6b335012c75` now includes the implemented rendering register changes, integrated forward from current live client20b3025f. Published camera, character, backpack/drop, AA and F3 behavior is preserved. Exact HTTPS entry bytes and unchanged independent delivery are verified. Isolated check passes241files/1,389tests/77documents and full build passes. No world module or authored asset was published. The stopped existing database was recovered with a tested managed start-only command, and the stopped development frontend was restored after database readiness. See [the exact live release record](handoffs/render_plan_live_20260911.md) for hashes, scope, recovery and evidence. Public browser authentication currently awaits owner sign-in; settled live Deck/seated Flight and performance acceptance remain outstanding. Publication is not a claim that the plan's targets or stopped R2/R4 identity scopes are complete.
+
+### 2026-09-11 — R0–R10 live authenticated Deck and seated Flight hardware evidence
+
+Owner sign-in restored the public review context on tab_e. The deployed index-DKNHMjt4.js client renders on the RTX 4080 Laptop WebGL backend. Both settled views were captured at 1574 × 907, MSAA4, F3 open and nothing selected, using normal animation frames and canvas readback. Flight was genuinely seated, with the roof closed; Deck was on foot with the roof open. No manual game frames, authentication bypass or direct authority writes were used. The owner reports that the game looks better; this feedback is not acceptance of all remaining plan gates.
+
+| Counter | Original Deck reference | Live Deck | Original Flight reference | Live seated Flight |
+| --- | --- | --- | --- | --- |
+| Draw calls | 7,304 | 964 | 4,920 | 400 |
+| Active / total meshes | 1,448 / 2,663 | 413 / 1,372 | 1,033 / 2,662 | 110 / 1,447 |
+| Materials | 637 | 528 | 636 | 532 |
+| Render CPU (unqualified live sample) | 37.36 ms | 8.86 ms | 26.96 ms | 14.30 ms |
+| Camera radius | 70 m | 47.00 m | 936 m | 64.62 m |
+
+This is an aggregate deployed result, not a matched per-item before/after comparison. The owner reports two ships and all planets in the world. No population switch was disabled for either baseline, but ordinary frustum/range admission remains active: the saved baselines have zero active remote meshes, with 521 allocated in Deck and 596 in Flight. They do not establish two simultaneously visible ships' submission cost. During Flight isolation 75 remote meshes departed and active planet meshes varied between three and four. The different camera framing and population prevent attributing the full delta to rendering changes.
+
+| View | Scale 2.0 | Glow Off | then Shadows Off | then Lighting Off |
+| --- | --- | --- | --- | --- |
+| Deck | 968 | 576 | 298 | 298 |
+| Seated Flight | 399 | 208 | 110 | 111 |
+
+Full resolution was restored before the sequential visual switches. Scale2 captures are 787 × 453. Small draw-count changes include population and shadow-refresh variation. All three switches were restored on, hardware scale restored to 1, and the user left on foot in Deck. Timing remains unqualified: the shared preview repeatedly hid/throttled, with approximately 1–4 FPS scheduling in these captures despite the hardware renderer. No FPS improvement, GPU attribution or final CPU target is claimed.
+
+A sticky WebGL INVALID_OPERATION (1282) was observed after Flight; its original age was unknown. An after-render probe subsequently observed one occurrence at engine frame6192. Repeating resize and visual-switch sequences with temporary per-call GL tracing did not reproduce it (107,155 traced calls; no recorded errors); canvas readback also reported no error. The trace wrappers and observer were removed. A later read at frame16373 reported GL error0. This remains an unresolved transient, not a claimed fix or clean acceptance pass.
+
+Files added: ten JSON counter captures and ten JPEG screenshots under output/playwright/render-plan/live-measurement-20260911/, plus validation-status.json; this log and the live handoff were updated. No implementation changed and no new behavior test was needed. Reused the deployed candidate's passing check (241 files / 1,389 tests / 77 documents) and full build; documentation check rerun for this entry. R0's seated-view count evidence is now available. R1 still needs detailed emitter occlusion, cutaway and independently hidden-deck acceptance; per-item attribution, R3 AA comparison, R6 profiling, full-game WebGPU qualification and timing remain open. R2/R4 identity conflicts and deferred work remain unchanged. Flight meets the draw-count target in this captured context; Deck, whole-scene mesh/material counts and timing targets are not accepted as complete.
