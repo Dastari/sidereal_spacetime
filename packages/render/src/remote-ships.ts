@@ -212,6 +212,9 @@ export async function loadRemoteShipPrototype(
       for (const mesh of loaded.meshes) mesh.dispose(false, true);
       for (const node of loaded.transformNodes) node.dispose();
     }
+    // Replaced source glasses no longer belong to a mesh. Release their own
+    // imported texture references too; no local ship material is in this map.
+    for (const original of glassClones.keys()) original.dispose(false, true);
   };
   try {
     const pins = new Map<string, string>([

@@ -278,7 +278,7 @@ describe("remote ship lifecycle", () => {
       .spyOn(SceneLoader, "ImportMeshAsync")
       .mockImplementation(async (_selector, _root, data) => {
         const parsed = byHash.get(constructionHash(data as Uint8Array))!;
-        const material = new PBRMaterial("native-preserved", f.scene);
+        const material = new PBRMaterial("Blue laminated glazing", f.scene);
         material.roughness = 0.24;
         const meshes = (parsed.nodes ?? [])
           .filter((n) => n.mesh !== undefined)
@@ -346,6 +346,11 @@ describe("remote ship lifecycle", () => {
       ).toBe(true);
       b.dispose();
       p.dispose();
+      expect(
+        f.scene.materials.filter((m) =>
+          m.name.includes("Blue laminated glazing"),
+        ),
+      ).toHaveLength(0);
     } finally {
       fetchMock.mockRestore();
       importMock.mockRestore();
