@@ -168,6 +168,8 @@ Fix: none now. Add an F3 row for the capture's actual target size and sample cou
 
 ### R4. Static geometry is cloned per placement, not merged or instanced (Phase 2a, 2b)
 
+Status: implemented, unmeasured for acceptance (2026-09-10). Partial hardware evidence below.
+
 Evidence: `installed-equipment.ts:39` clones every prototype mesh per placement. Hull manifest alone yields several hundred meshes; the floor kit is dozens of copies of one asset; native walls batch per placement only; construction authored assembly clones per placement (`construction-authored-assembly.ts:135`). Remote ships already use `createInstance` (`remote-ships.ts:330`) and are the model.
 
 Fix, in this order:
@@ -379,3 +381,25 @@ Remote population changed independently: 671 → 596 total remote meshes; Flight
 Isolation draw calls R1 → R8/R5: Deck scale2 4,348 → 4,348; Glow off 2,769 → 2,769; Shadows off 1,395 → 1,395; Lighting off 1,395 → 1,395. TAB-Flight scale2 3,083 → 3,078; Glow off 3,041 → 3,031; Shadows off 2,106 → 2,096; Lighting off 2,106 → 2,096. Scale restored before the sequential switches, and all switches restored afterward. Flight scale2 still changes planet LOD.
 
 Evidence: `output/playwright/render-plan/R5/{deck,flight-tab}.json` / `.jpg` and each view's `-scale2`, `-glow-off`, `-shadows-off`, `-lighting-off` JSON/JPEGs; check/build logs alongside. R8 retains its unmeasured-at-commit record, with this combined-state follow-up. Seated Flight, close-up R1 emitter occlusion/independently hidden decks, and static freezing remain outstanding; no final completion claim for those items. Material count is still far above the under-80 target and needs subsequent work.
+
+
+### 2026-09-10 — R4 placement instances and structural batches, implemented, unmeasured
+
+Added a renderer-owned `instanceable-assets.json` opt-in manifest pinned to exact floor/cargo asset IDs and visual hashes. The content floor catalog participates in the construction blueprint hash, so adding flags there would change accepted construction identity. The presentation manifest avoids that conflict without changing content, simulation, authority or assets. `placement-instance.ts` permits only unchanged opaque, non-emitting, non-animated single-material sources without fixture-local lights. Installed and semantic authored loaders create ordinary instances with independent `metadata.partId`, semantic role and unchanged source material. Switchable/transparent/unsupported sources remain clones.
+
+`static-material-batches.ts` preserves authored vertex channels, normals, tangents, winding, actual submaterial membership and transparent/decal separation. Cargo prototypes are batched once per asset; placement identities are bound on each instance or clone. `structural-batches.ts` merges compatible opaque hull/wall/roof material groups inside explicit deck, instance, visibility and receiver-light policies before lighting/glow capture their lists. Triangle ranges retain every placement UUID; roots remain separate and construction roofs retain their deck gate. Native doors and independently controlled fixtures stay outside the merge. No authored Blender surfaces or PBR materials are replaced. `object-presentation.ts` resolves picked triangle ranges; `selection-silhouette.ts` isolates instance and merged-placement selection masks without changing shared source material or index buffers.
+
+NullEngine tests in `placement-instance.test.ts`, `structural-batches.test.ts`, and `static-material-batches.test.ts` cover independent identity/material/transform/selection, mirrored nonuniform geometry, UV/tangent preservation, mixed submaterials, ray-pick triangle boundaries, independently hidden decks and disposal. Real-loader `render-budget.test.ts` tightens semantic mesh bound **1,630 → 430**, retaining placement-map assertions and existing material/light bounds. Installed material bound remains 188. Full `VITEST_MAX_WORKERS=2 npm run check` and `npm run build` passed; logs are included. Validation covers the shared working tree, with unrelated construction/art/character changes excluded from this commit.
+
+Partial hardware probe, ANGLE RTX 4080 Laptop GPU / D3D11, actual canvas 1574 × 907, MSAA4, Deck roof open and F3 visible:
+
+| Counter | R5 Deck reference | R4 initial Deck probe |
+| --- | --- | --- |
+| Draw calls | 4,348 | 896 |
+| Active / total meshes | 1,396 / 2,618 | 393 / 1,439 |
+| Materials | 602 | 597 |
+| Render CPU | 21.57 ms | Not accepted: preview throttled near 1 FPS |
+
+Role totals fell cargo 372 → 34, hull 314 → 25, wall 423 → 47 and roof 179 → 7. Remote population stayed 596. Initial full-resolution screenshot shows intact authored ship surfaces and cutaway. A subsequent focused probe ran at 137.8 FPS / 6.50 ms Render CPU / 896 calls, but radius was 70.494 m and no matched timing capture completed. Camera movement then invalidated the attempted Deck/scale2 capture (radius 17.38 m, changed azimuth), and preview evaluation became intermittent/reloaded. Those files are explicitly named `exploratory-*`; they are not baseline acceptance or a timing speedup claim.
+
+Evidence: `output/playwright/render-plan/R4/deck-initial.{json,jpg}`, `exploratory-*`, `measurement-status.json`, check/build logs. **After Flight and complete isolation sequences remain unmeasured.** Prior R5 isolation references are Deck 4,348 / 2,769 / 1,395 / 1,395; TAB-Flight 3,078 / 3,031 / 2,096 / 2,096 (scale2, Glow off, Shadows off, Lighting off). Seated Flight, hardware selected-instance/mapped-placement review and R1 close-up occlusion/deck acceptance remain outstanding. R4 is implemented, unmeasured for acceptance; continue R6 and retry the shared hardware browser.

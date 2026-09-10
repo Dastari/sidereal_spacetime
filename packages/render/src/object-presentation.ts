@@ -1,3 +1,4 @@
+import { placementAtFace } from "./structural-batches";
 import { setMeshRole } from "./mesh-roles";
 import { LAB_FLIGHT_ACTUATORS } from "../../content/src/flight";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
@@ -34,7 +35,7 @@ export function createObjectPresentation(
     if (id === selected) return;
     selected = id;
     if (silhouette) silhouette.select(id);
-    else if (id && meshes.some(mesh => mesh instanceof Mesh && mesh.metadata?.partId === id))
+    else if (id && meshes.some(mesh => mesh.getTotalVertices() > 0 && (mesh.metadata?.partId === id || mesh.metadata?.trianglePlacements?.some((r: { placementId: string }) => r.placementId === id))))
       silhouette = createSelectionSilhouette(scene, meshes, id);
   }
   const click = (event: PointerEvent) => {
@@ -45,7 +46,7 @@ export function createObjectPresentation(
     // Pick all visible geometry first: an opaque wall must block objects behind it.
     const hit = scene.pick(event.clientX - rect.left, event.clientY - rect.top);
     const picked=hit?.pickedMesh;
-    const candidate = picked?.metadata?.partId as string | undefined;
+    const candidate = picked ? placementAtFace(picked, hit!.faceId) as string | undefined : undefined;
     // Individual structure cells belong to construction mode, not normal play.
     const structural = ['floor','roof','wall','superstructure','decoration'].includes(picked?.metadata?.category)
       || /^(floor|roof|superstructure|bulkhead)-/.test(candidate ?? '');

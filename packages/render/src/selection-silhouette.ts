@@ -1,3 +1,6 @@
+import { placementTriangleIndices } from "./structural-batches";
+import { Mesh } from "@babylonjs/core/Meshes/mesh";
+import { InstancedMesh } from "@babylonjs/core/Meshes/instancedMesh";
 import type { Scene } from '@babylonjs/core/scene';
 import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh';
 import { ShaderMaterial } from '@babylonjs/core/Materials/shaderMaterial';
@@ -43,7 +46,43 @@ export function createSelectionSilhouette(scene: Scene, meshes: AbstractMesh[], 
     undefined, false, Texture.NEAREST_SAMPLINGMODE);
   mask.clearColor = new Color4(0,0,0,1);
   mask.renderParticles = false;
-  mask.renderList = meshes;
+  // Each selected instance needs its own black/white mask state. Offscreen
+  // geometry-sharing proxies avoid per-instance material overrides on a shared
+  // source and keep the authored material untouched.
+  const proxies: { source: InstancedMesh; mesh: Mesh }[] = [];
+  const maskMeshes = meshes.map(source => {
+    if (!(source instanceof InstancedMesh)) return source;
+    const mesh = new Mesh("selection-instance-mask", scene);
+    source.sourceMesh.geometry?.applyToMesh(mesh);
+    mesh.parent = source;
+    mesh.layerMask = 0;
+    mesh.isPickable = false;
+    mesh.metadata = { role: "proxy", partId: source.metadata?.partId };
+    proxies.push({ source, mesh });
+    return mesh;
+  });
+  const batchProxies: { source: Mesh; mesh: Mesh }[] = [];
+  for (const source of meshes) {
+    if (!(source instanceof Mesh) || !source.metadata?.trianglePlacements || source.metadata?.partId) continue;
+    const mesh = new Mesh("selection-placement-mask", scene);
+    source.geometry?.applyToMesh(mesh);
+    mesh.makeGeometryUnique();
+    mesh.parent = source;
+    mesh.layerMask = 0;
+    mesh.isPickable = false;
+    mesh.renderingGroupId = source.renderingGroupId;
+    mesh.metadata = { role: "proxy" };
+    batchProxies.push({ source, mesh });
+    maskMeshes.push(mesh);
+  }
+  mask.renderList = maskMeshes;
+  const allProxies = [...proxies, ...batchProxies];
+  const syncInstances = scene.onBeforeRenderObservable.add(() => {
+    for (const { source, mesh } of allProxies) {
+      mesh.isVisible = !source.isDisposed() && source.isVisible;
+      mesh.visibility = source.visibility;
+    }
+  });
   mask.activeCamera = scene.activeCamera;
   const materials = [0,1].map(selected => {
     const material = new ShaderMaterial(`selection-mask-${selected}`, scene,
@@ -67,7 +106,13 @@ export function createSelectionSilhouette(scene: Scene, meshes: AbstractMesh[], 
   mask.onAfterRenderObservable.add(()=>{maskRendered=true;});
   function select(id?:string) {
     selected=id;
-    for (const mesh of meshes) mask.setMaterialForRendering(mesh,
+    for (const { source, mesh } of batchProxies) {
+      const indices = id ? placementTriangleIndices(source, id) : [];
+      mesh.setEnabled(indices.length > 0);
+      if (indices.length) mesh.setIndices(indices);
+      mesh.metadata.partId = id;
+    }
+    for (const mesh of maskMeshes) mask.setMaterialForRendering(mesh,
       id ? materials[mesh.metadata?.partId===id?1:0] : undefined);
     if (id) {
       if (!scene.customRenderTargets.includes(mask)) scene.customRenderTargets.push(mask);
@@ -81,7 +126,7 @@ export function createSelectionSilhouette(scene: Scene, meshes: AbstractMesh[], 
   // camera for a frame. Warm both effects first, then attach on a frame boundary.
   const ready=scene.onBeforeRenderObservable.add(()=>{
     if (!selected || attached || !camera || !maskRendered || !edge.isReady()) return;
-    const sample=meshes.find(mesh=>mesh.metadata?.partId===selected);
+    const sample=maskMeshes.find(mesh=>mesh.metadata?.partId===selected);
     if (!sample || !materials.every(material=>material.isReady(sample))) return;
     camera.attachPostProcess(edge);attached=true;
   });
@@ -91,12 +136,14 @@ export function createSelectionSilhouette(scene: Scene, meshes: AbstractMesh[], 
     dispose() {
       select(undefined);
       scene.onBeforeRenderObservable.remove(ready);
+      scene.onBeforeRenderObservable.remove(syncInstances);
       engine.onResizeObservable.remove(resize);
       edge.dispose(camera ?? undefined);
       const index = scene.customRenderTargets.indexOf(mask);
       if (index >= 0) scene.customRenderTargets.splice(index,1);
-      for (const mesh of meshes) mask.setMaterialForRendering(mesh);
+      for (const mesh of maskMeshes) mask.setMaterialForRendering(mesh);
       mask.dispose();
+      for (const { mesh } of [...proxies, ...batchProxies]) mesh.dispose(false, false);
       for (const material of materials) material.dispose();
     },
   };

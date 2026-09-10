@@ -1,3 +1,4 @@
+import { canInstancePlacement } from "./placement-instance";
 import { categoryMeshRole, setMeshRole } from './mesh-roles';
 import { updateHullDecals } from './hull-decals';
 import { SceneLoader } from '@babylonjs/core/Loading/sceneLoader';
@@ -28,7 +29,7 @@ export async function loadEquipmentPrototypes(scene:Scene,assets:readonly PartAs
   const prefix=asset.visual.nodePrefix;
   let meshes=prefix?library.meshes.filter(m=>m.name===prefix||m.name.startsWith(prefix+'_')||m.name.startsWith(prefix+'.')):library.meshes;
   if(!meshes.length)throw new Error('Empty visual mesh group: '+asset.id+(prefix?' / '+prefix:''));
-  if(asset.category==='cargo'||asset.visual?.designId==='shipyard.hull.pilot-section')meshes=batchStaticMaterials(meshes);
+  if(asset.category==='cargo'||asset.visual?.designId==='shipyard.hull.pilot-section')meshes=batchStaticMaterials(meshes,categoryMeshRole(asset.category));
   for(const mesh of meshes)setMeshRole(mesh,categoryMeshRole(asset.category));
   result.set(asset.id,meshes);
  }
@@ -39,9 +40,15 @@ export function equipmentPlacement(scene:Scene,parent:TransformNode,asset:PartAs
  node.metadata={partId:placement.id,assetId:asset.id,designRevision:asset.visual?.revision,role:categoryMeshRole(asset.category)};
  node.position.set(placement.position[0],placement.position[2],-placement.position[1]);
  node.rotation.y=placement.rotation;node.scaling.x=placement.flipped?-1:1;
- const meshes=sources.map(source=>{
-  const mesh=source.clone('GEO-'+placement.id+'--native--'+source.name,node,true)!;
-  mesh.isVisible=true;mesh.isPickable=true;mesh.metadata={partId:placement.id,assetId:asset.id,role:categoryMeshRole(asset.category)};return mesh;
+ const meshes:AbstractMesh[]=sources.map(source=>{
+  const name='GEO-'+placement.id+'--native--'+source.name;
+  const instanceable=canInstancePlacement(asset,source);
+  // Ship lighting uses the same receiver policy for these pinned opaque kits.
+  // Babylon instances inherit this flag from the source.
+  if(instanceable){source.receiveShadows=true;source.metadata={...source.metadata,role:categoryMeshRole(asset.category),materialRole:"opaque"};}
+  const mesh=instanceable?source.createInstance(name):source.clone(name,node,true)!;
+  mesh.parent=node;
+  mesh.isVisible=true;mesh.isPickable=true;mesh.metadata={partId:placement.id,assetId:asset.id,role:categoryMeshRole(asset.category),...(instanceable?{materialRole:"opaque"}:{}),...(source.metadata?.prototypeBatch&&!instanceable?{trianglePlacements:[{start:0,count:mesh.getTotalIndices()/3,placementId:placement.id}]}:{})};return mesh;
  });
  meshes.push(...updateHullDecals(scene,node,placement.decals,placement.flipped));
  const lighting=createEquipmentLighting(scene,node,asset.lights);lighting.setMeshes(meshes);

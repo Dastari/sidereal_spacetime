@@ -1,3 +1,7 @@
+import { batchStaticMaterials } from "./static-material-batches";
+import { mergeStructuralPlacements } from "./structural-batches";
+import { canInstancePlacement } from "./placement-instance";
+import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import { categoryMeshRole } from './mesh-roles';
 import {
   refitAttachmentPlacements,
@@ -46,11 +50,12 @@ export async function loadConstructionAuthoredAssembly(
   >();
   const placements: {
     node: TransformNode;
-    meshes: Mesh[];
+    meshes: AbstractMesh[];
     lighting: ReturnType<typeof createEquipmentLighting>;
     category: string;
   }[] = [];
   const roots: TransformNode[] = [];
+  const cargoPrototypes = new Map<string, Mesh[]>();
   const dispose = () => {
     for (const p of placements) p.lighting.dispose();
     for (const node of roots) node.dispose(false, false);
@@ -99,7 +104,7 @@ export async function loadConstructionAuthoredAssembly(
         libraries.set(url, library);
       }
       const prefix = a.visual?.nodePrefix;
-      const selected = library.sources.filter((m) =>
+      let selected = library.sources.filter((m) =>
         a.visual
           ? prefix
             ? m.name === prefix ||
@@ -115,6 +120,18 @@ export async function loadConstructionAuthoredAssembly(
       );
       if (!selected.length)
         throw Error("Missing exact authored mesh selector " + a.id);
+      if (a.category === "cargo") {
+        let cached = cargoPrototypes.get(a.id);
+        if (!cached) {
+          cached = batchStaticMaterials(selected, "cargo", false);
+          for (const prototype of cached) if (!selected.includes(prototype)) {
+            scene.removeMesh(prototype);
+            library.container.meshes.push(prototype);
+          }
+          cargoPrototypes.set(a.id, cached);
+        }
+        selected = cached;
+      }
       const node = new TransformNode("placement-" + p.id, scene);
       roots.push(node);
       node.parent = parent;
@@ -133,18 +150,18 @@ export async function loadConstructionAuthoredAssembly(
       };
       const meshes = selected.map((source) => {
         const matrix = source.computeWorldMatrix(true).clone();
-        const mesh = source.clone(
-          "GEO-" + p.id + "--authored--" + source.name,
-          node,
-          true,
-        )!;
+        const name = "GEO-" + p.id + "--authored--" + source.name;
+        const instanceable = canInstancePlacement(a, source);
+        if (instanceable) { source.receiveShadows = true; source.metadata = { ...source.metadata, role: categoryMeshRole(a.category), materialRole: "opaque" }; }
+        const mesh = instanceable ? source.createInstance(name) : source.clone(name, node, true)!;
+        mesh.parent = node;
         const q = new Quaternion();
         matrix.decompose(mesh.scaling, q, mesh.position);
         mesh.rotationQuaternion = q;
         mesh.isVisible = true;
         mesh.isPickable = true;
         mesh.receiveShadows = true;
-        mesh.metadata = { ...node.metadata, nativeSourceName: source.name };
+        mesh.metadata = { ...node.metadata, nativeSourceName: source.name, ...(instanceable ? {materialRole:"opaque"} : {}), ...(source.metadata?.prototypeBatch && !instanceable ? { trianglePlacements: [{start:0,count:mesh.getTotalIndices()/3,placementId:p.id}] } : {}) };
         return mesh;
       });
       // Materials preserve native emission; no unbudgeted functional fixture lights
@@ -153,14 +170,31 @@ export async function loadConstructionAuthoredAssembly(
       lighting.setMeshes(meshes);
       placements.push({ node, meshes, lighting, category: a.category });
     }
+    const structuralRoot = new TransformNode("authored-structural-batches", scene);
+    structuralRoot.parent = parent;
+    roots.push(structuralRoot);
+    const candidates = placements.flatMap(p => p.meshes).filter((m): m is Mesh => m instanceof Mesh && ["hull", "roof", "wall"].includes(m.metadata?.role));
+    for (const mesh of candidates) {
+      mesh.metadata.visibilityGroup = mesh.metadata.role === "roof" ? "authored-roof" : "authored-exterior";
+      mesh.metadata.lightGroup = "construction-star-fill";
+    }
+    const structural = mergeStructuralPlacements(structuralRoot, candidates);
+    for (const p of placements) {
+      const retained = p.meshes.filter(m => !m.isDisposed());
+      const batches = structural.batches.filter(m => m.metadata.trianglePlacements.some((r: { placementId: string }) => r.placementId === p.node.metadata.partId));
+      p.meshes = [...retained, ...batches];
+      p.lighting.setMeshes(p.meshes);
+    }
     return {
       placements,
-      meshes: placements.flatMap((p) => p.meshes),
+      meshes: [...new Set(placements.flatMap((p) => p.meshes))],
       dispose,
       setView(_camera: Vector3, interior: boolean) {
         // Orbit never removes walls. Only the roof opens for the deck view.
         for (const p of placements)
           p.node.setEnabled(!(interior && p.category === "roof"));
+        for (const mesh of structural.batches)
+          mesh.setEnabled(!(interior && mesh.metadata.role === "roof"));
       },
     };
   } catch (error) {

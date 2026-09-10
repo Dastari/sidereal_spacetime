@@ -205,7 +205,7 @@ test("current semantic Wayfarer loader resource budget and complete role attribu
       new GlowLayer("budget", scene),
     );
     glow.set(ship.meshes);
-    expect(scene.meshes.length).toBeLessThanOrEqual(1630);
+    expect(scene.meshes.length).toBeLessThanOrEqual(430);
     expect(scene.materials.length).toBeLessThanOrEqual(181);
     expect(scene.lights.length).toBeLessThanOrEqual(2);
     expect(
@@ -214,7 +214,7 @@ test("current semantic Wayfarer loader resource budget and complete role attribu
     expect(meshesByRole(scene).unclassified.total).toBe(0);
     for (const placement of ship.placements)
       for (const mesh of placement.meshes)
-        expect(mesh.metadata.partId).toBe(placement.node.metadata.partId);
+        expect(mesh.metadata.partId === placement.node.metadata.partId || mesh.metadata.trianglePlacements?.some((r: { placementId: string }) => r.placementId === placement.node.metadata.partId)).toBe(true);
   } finally {
     scene.dispose();
     engine.dispose();

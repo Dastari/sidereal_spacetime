@@ -1,0 +1,113 @@
+{
+  "cameraAlpha": 3.5915926535897933,
+  "data": {
+    "activeIndices": 5191320,
+    "activeMeshes": 393,
+    "allocatedShadowMaps": 2,
+    "cameraElevationDegrees": 35.264389682754654,
+    "cameraPostProcesses": [
+      "sidereal-aa-scene"
+    ],
+    "cameraRadius": 70.00792250152229,
+    "customRenderTargets": 0,
+    "debugFeatures": {
+      "characters": true,
+      "collision": false,
+      "equipment": true,
+      "globalIllumination": true,
+      "glow": true,
+      "lightBounds": false,
+      "lighting": true,
+      "planets": true,
+      "shadows": true,
+      "skeleton": false
+    },
+    "debugOverlays": {
+      "collisionFrames": 0,
+      "collisionScopes": [],
+      "lights": 0,
+      "skeletons": 0
+    },
+    "drawCalls": 896,
+    "environmentTexturePresent": true,
+    "fps": 0.9970619906673028,
+    "frameCpuMs": 9.637660563248076,
+    "frameMs": 1002.9466666668648,
+    "hardwareScale": 1,
+    "lights": 4,
+    "localLightBudget": {
+      "eligibleLights": 0,
+      "enabledLights": 0,
+      "enabledShadowLights": 0,
+      "limit": "all"
+    },
+    "materials": 597,
+    "meshesByRole": {
+      "cargo": {
+        "active": 34,
+        "total": 34
+      },
+      "crew": {
+        "active": 21,
+        "total": 362
+      },
+      "effect": {
+        "active": 1,
+        "total": 30
+      },
+      "environment": {
+        "active": 4,
+        "total": 6
+      },
+      "equipment": {
+        "active": 155,
+        "total": 155
+      },
+      "floor": {
+        "active": 103,
+        "total": 127
+      },
+      "hull": {
+        "active": 25,
+        "total": 25
+      },
+      "planet": {
+        "active": 3,
+        "total": 49
+      },
+      "proxy": {
+        "active": 0,
+        "total": 1
+      },
+      "remote": {
+        "active": 0,
+        "total": 596
+      },
+      "roof": {
+        "active": 0,
+        "total": 7
+      },
+      "unclassified": {
+        "active": 0,
+        "total": 0
+      },
+      "wall": {
+        "active": 47,
+        "total": 47
+      }
+    },
+    "renderCpuMs": 12.899999991059303,
+    "renderHeight": 907,
+    "renderWidth": 1574,
+    "shadowMaps": 1,
+    "textures": 85,
+    "totalMeshes": 1439,
+    "transparentMeshes": 14,
+    "updateCpuMs": 0.28359994494695967
+  },
+  "description": "Vessel ready. Connection ready. Wayfarer. Deck view. On foot. ",
+  "focus": false,
+  "length": 296384,
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4080 Laptop GPU (0x000027E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "visibility": "visible"
+}

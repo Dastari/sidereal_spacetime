@@ -1,3 +1,5 @@
+import { MultiMaterial } from "@babylonjs/core/Materials/multiMaterial";
+import { SubMesh } from "@babylonjs/core/Meshes/subMesh";
 import {expect,test} from 'vitest';
 import {NullEngine} from '@babylonjs/core/Engines/nullEngine';
 import {Scene} from '@babylonjs/core/scene';
@@ -51,5 +53,17 @@ test('same-material cargo preserves UV-less, UV and tangent channels in separate
  const textured=result.find(mesh=>mesh!==flat&&mesh!==mapped)!;
  expect(textured.getVerticesDataKinds().sort()).toEqual(['normal','position','uv']);
  expect(Array.from(textured.getVerticesData(VertexBuffer.UVKind)!)).toEqual(uv);
+ scene.dispose();engine.dispose();
+});
+
+
+test("opaque MultiMaterial prototypes split by authored submesh material and retain source ranges",()=>{
+ const engine=new NullEngine(),scene=new Scene(engine),mesh=CreateBox("multi",{},scene);
+ const a=new PBRMaterial("a",scene),b=new PBRMaterial("b",scene),multi=new MultiMaterial("multi",scene);
+ multi.subMaterials=[a,b];mesh.material=multi;mesh.subMeshes=[];
+ new SubMesh(0,0,mesh.getTotalVertices(),0,18,mesh);new SubMesh(1,0,mesh.getTotalVertices(),18,18,mesh);
+ const id=mesh.uniqueId, result=batchStaticMaterials([mesh],"cargo");
+ expect(result).toHaveLength(2);expect(result.map(m=>m.material)).toEqual([a,b]);
+ for(const m of result){expect(m.getTotalIndices()).toBe(18);expect(m.metadata.role).toBe("cargo");expect(m.metadata.triangleSources).toEqual([{start:0,count:6,sourceMeshId:id}]);}
  scene.dispose();engine.dispose();
 });
