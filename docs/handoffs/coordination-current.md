@@ -2,6 +2,19 @@
 
 This checkpoint distinguishes deployed behavior, isolated acceptance and unfinished work. The owner authorizes continued implementation and deployment after validation; this does not grant final artistic sign-off or permit loss of existing state.
 
+## Latest verified release and current ownership
+
+As of the 2026-09-10 refit/loading release, public world is `2ade8d75a75f75e5d555c8f2c3a666c69c736300dff13611dd7964ea6984ac8c`. Root accepted client `f9e323997ab7319a1ec52b76cc703eb40c7d8813119977432c64d272a0d0ec67` with real public login, complete loading and explicit refit UI. A subsequent external character/F3 release is now public client `8246fafc6e13048bd1eaabd5a63d6c06dc9ca1ba983de4bdb6e466de676c4a35`; preserve that newer release and its own acceptance record. Older hashes below are retained milestone history, not the current activation target.
+
+The 11:33 cold backup/restart preserved all 610 pre-existing items and 172 containers. Dastari Shared Beta's first legacy inventory issuance added 99 items/18 containers separately; it was not an automatic refit. Root's public browser was signed out, blanked and closed. The additional collaborative review tab was cleared and blanked; the software GPU slot is free.
+
+- Root: the owner has now explicitly requested converting their own character **Dastari**, actor `eb9eeb1d-adac-4c78-aff7-7a176f13d650`, existing ship `a2300549-da8d-45c8-b8f4-aa832718c2cc`. Read-only baseline has 99 items/18 containers. Shared admission and authenticated-owner refit are still pending; do not describe the ship as converted until its authoritative receipt and conservation comparison pass. Root also owns paired client/render/UI integration for the next construction slices.
+- `shared_space_rules`: exclusive next cargo-carrier world/index/collision/inventory registration and generated bindings. Actual isolated provider movement/rollback/privacy/persistence proof is underway. No cargo-carrier public publication yet.
+- `stair_document`: exact native boundary-wall/armor interfaces, preserved placement identities, end/shoulder joins and enclosure qualification. Fourteen side bays clear all six unchanged lockers; remaining end/shoulder geometry is not yet installed or whole-hull pressure-qualified.
+- `release_rollout`: delivery-only GLB compression staged and tested; activation held while the owner's requested conversion is coordinated. Also supports read-only owner-state verification. Do not rebuild or replace the newer external client when activating delivery tooling.
+
+Generic floor-fitting authoring rules are in [the tileset interface contract](../ship_tileset_interface_contract.md). Models may be smaller or irregular, but complete exported geometry must fit the declared footprint/height. Catalog-wide enforcement, general Shipyard-to-live editing, complete multi-deck utilities/elevators and native structural destruction remain unfinished; fixed native fixtures are not proof of those general features.
+
 | Work | Owner | Current state and next gate |
 | --- | --- | --- |
 | Dedicated Keycloak and public game | Root + release_rollout | Live auth.dastari.net provider and sidereal.dastari.net game. Current native-starter client2f5c1bd4/worlda962f39a installed without reset; full hashes below. Fresh login, keyboard movement and 100-second admission continuity passed. Original provider proof fixes the host's 60-second re-signed socket-ticket expiry. |
