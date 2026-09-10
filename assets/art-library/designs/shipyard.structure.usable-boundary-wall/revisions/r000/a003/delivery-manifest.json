@@ -1,0 +1,141 @@
+{
+  "schema": "sidereal.usable-boundary-wall.v1",
+  "status": "awaiting-native-qualification",
+  "ownerFinalSignoff": null,
+  "parts": [
+    {
+      "id": "straight-2m",
+      "file": "straight-2m.glb",
+      "sha256": "abdd69bd588e2496e9eb11052c6d5f0b31d5c06cb984436120e6acc34ccd54b4",
+      "nodePrefix": "GEO-usable-wall-straight-2m--",
+      "editableComponents": 22,
+      "canonicalSourceTransform": null
+    },
+    {
+      "id": "outer-corner",
+      "file": "outer-corner.glb",
+      "sha256": "51c5280a87cb3a5b4b18fc1dd3fe349f8c7dfdfec13d8d7de16247de0c0052c2",
+      "nodePrefix": "GEO-usable-wall-outer-corner--",
+      "editableComponents": 5,
+      "canonicalSourceTransform": null
+    },
+    {
+      "id": "straight-port-legacy",
+      "file": "straight-port-legacy.glb",
+      "sha256": "e3cf967f5e0af05c0d8dc95356618609c8180974594ba5f7f124248b9a8b2ccd",
+      "nodePrefix": "GEO-usable-wall-straight-port-legacy--",
+      "editableComponents": 22,
+      "canonicalSourceTransform": [
+        [
+          -4.371138828673793e-08,
+          1.0,
+          0.0,
+          -0.3125
+        ],
+        [
+          -1.0,
+          -4.371138828673793e-08,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": "straight-starboard-legacy",
+      "file": "straight-starboard-legacy.glb",
+      "sha256": "3d46a6ebdd276ca9d933af16d9c55d95ffd1f74d0f63dc86e8b940a1fe0eaa00",
+      "nodePrefix": "GEO-usable-wall-straight-starboard-legacy--",
+      "editableComponents": 22,
+      "canonicalSourceTransform": [
+        [
+          7.549790126404332e-08,
+          -1.0,
+          0.0,
+          0.3125
+        ],
+        [
+          1.0,
+          7.549790126404332e-08,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "sourceMaterialBlend": "assets/art-library/designs/shipyard.hull.side-armor/revisions/r003/blender-source.blend",
+  "sourceMaterialSha256": "70c57b06a2c170c28840e0566f077d3561e0b40c4f5e978d36940273ceec1abd",
+  "floorTopM": 0.1875,
+  "roofUndersideM": 2.6875,
+  "usableInterior": "CanonicalY>=0 above floor top and below roof underside; cornerX>=0 andY>=0",
+  "structuralEnvelopeM": {
+    "runLength": 2,
+    "outwardThickness": 0.625,
+    "height": 2.75
+  },
+  "bearingContacts": [
+    {
+      "minZ": 0.03125,
+      "maxZ": 0.125
+    },
+    {
+      "minZ": 2.703125,
+      "maxZ": 2.75
+    }
+  ],
+  "armorMounts": [
+    {
+      "positionM": [
+        0.25,
+        -0.625,
+        1.35
+      ],
+      "outwardNormal": [
+        0,
+        -1,
+        0
+      ],
+      "family": "outward-structural-armor.v1",
+      "rating": null
+    },
+    {
+      "positionM": [
+        1.75,
+        -0.625,
+        1.35
+      ],
+      "outwardNormal": [
+        0,
+        -1,
+        0
+      ],
+      "family": "outward-structural-armor.v1",
+      "rating": null
+    }
+  ],
+  "originalPlacementChanges": 0,
+  "installed": false
+}

@@ -1,0 +1,443 @@
+{
+  "schema": "sidereal.usable-boundary-wall-native-qualification.v1",
+  "pass": true,
+  "checks": [
+    {
+      "name": "Complete raw reserved export straight-2m",
+      "pass": true,
+      "detail": {
+        "verticesChecked": 12054,
+        "nativeBoundsM": {
+          "min": [
+            0.0,
+            -0.625,
+            0.0
+          ],
+          "max": [
+            2.0,
+            0.0625,
+            2.75
+          ]
+        }
+      }
+    },
+    {
+      "name": "No native surface intrudes usable floor straight-2m",
+      "pass": true,
+      "detail": {
+        "forbiddenSurfaceAreaM2": 0
+      }
+    },
+    {
+      "name": "No proxy exported straight-2m",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native material separation straight-2m",
+      "pass": true,
+      "detail": [
+        "MAT-Frontier-side-hull-black",
+        "MAT-Frontier-side-hull-cyan",
+        "MAT-Frontier-side-hull-dark",
+        "MAT-Frontier-side-hull-pale",
+        "MAT-Frontier-side-hull-red",
+        "MAT-Frontier-side-hull-steel"
+      ]
+    },
+    {
+      "name": "Closed native export straight-2m",
+      "pass": true,
+      "detail": {
+        "nativeTriangles": 4018
+      }
+    },
+    {
+      "name": "Complete raw reserved export outer-corner",
+      "pass": true,
+      "detail": {
+        "verticesChecked": 2592,
+        "nativeBoundsM": {
+          "min": [
+            -0.6250000223517418,
+            -0.6250000223517418,
+            0.0
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            2.75
+          ]
+        }
+      }
+    },
+    {
+      "name": "No native surface intrudes usable floor outer-corner",
+      "pass": true,
+      "detail": {
+        "forbiddenSurfaceAreaM2": 0
+      }
+    },
+    {
+      "name": "No proxy exported outer-corner",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native material separation outer-corner",
+      "pass": true,
+      "detail": [
+        "MAT-Frontier-side-hull-dark",
+        "MAT-Frontier-side-hull-pale",
+        "MAT-Frontier-side-hull-steel"
+      ]
+    },
+    {
+      "name": "Closed native export outer-corner",
+      "pass": true,
+      "detail": {
+        "nativeTriangles": 864
+      }
+    },
+    {
+      "name": "Complete raw reserved export straight-port-legacy",
+      "pass": true,
+      "detail": {
+        "verticesChecked": 12054,
+        "nativeBoundsM": {
+          "min": [
+            -4.709456968843284e-08,
+            -0.6250002521520002,
+            0.0
+          ],
+          "max": [
+            2.0000000539358385,
+            0.06250021737049027,
+            2.75
+          ]
+        }
+      }
+    },
+    {
+      "name": "No native surface intrudes usable floor straight-port-legacy",
+      "pass": true,
+      "detail": {
+        "forbiddenSurfaceAreaM2": 0
+      }
+    },
+    {
+      "name": "No proxy exported straight-port-legacy",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native material separation straight-port-legacy",
+      "pass": true,
+      "detail": [
+        "MAT-Frontier-side-hull-black",
+        "MAT-Frontier-side-hull-cyan",
+        "MAT-Frontier-side-hull-dark",
+        "MAT-Frontier-side-hull-pale",
+        "MAT-Frontier-side-hull-red",
+        "MAT-Frontier-side-hull-steel"
+      ]
+    },
+    {
+      "name": "Closed native export straight-port-legacy",
+      "pass": true,
+      "detail": {
+        "nativeTriangles": 4018
+      }
+    },
+    {
+      "name": "Complete raw reserved export straight-starboard-legacy",
+      "pass": true,
+      "detail": {
+        "verticesChecked": 12054,
+        "nativeBoundsM": {
+          "min": [
+            -3.00062589220218e-08,
+            -0.6250002697435737,
+            0.0
+          ],
+          "max": [
+            2.0000001049716056,
+            0.06250029853509345,
+            2.75
+          ]
+        }
+      }
+    },
+    {
+      "name": "No native surface intrudes usable floor straight-starboard-legacy",
+      "pass": true,
+      "detail": {
+        "forbiddenSurfaceAreaM2": 0
+      }
+    },
+    {
+      "name": "No proxy exported straight-starboard-legacy",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native material separation straight-starboard-legacy",
+      "pass": true,
+      "detail": [
+        "MAT-Frontier-side-hull-black",
+        "MAT-Frontier-side-hull-cyan",
+        "MAT-Frontier-side-hull-dark",
+        "MAT-Frontier-side-hull-pale",
+        "MAT-Frontier-side-hull-red",
+        "MAT-Frontier-side-hull-steel"
+      ]
+    },
+    {
+      "name": "Closed native export straight-starboard-legacy",
+      "pass": true,
+      "detail": {
+        "nativeTriangles": 4018
+      }
+    },
+    {
+      "name": "Native union contains declared contact GEO-usable-wall-straight-2m--pressure-body",
+      "pass": true,
+      "detail": {
+        "missingM3": 0.0
+      }
+    },
+    {
+      "name": "Native union contains declared contact GEO-usable-wall-straight-2m--floor-bearing",
+      "pass": true,
+      "detail": {
+        "missingM3": 0.0
+      }
+    },
+    {
+      "name": "Native union contains declared contact GEO-usable-wall-straight-2m--roof-bearing",
+      "pass": true,
+      "detail": {
+        "missingM3": 0.0
+      }
+    },
+    {
+      "name": "Native union contains declared contact GEO-usable-wall-outer-corner--corner-core",
+      "pass": true,
+      "detail": {
+        "missingM3": 0.0
+      }
+    },
+    {
+      "name": "Native union contains declared contact GEO-usable-wall-outer-corner--run-x-contact",
+      "pass": true,
+      "detail": {
+        "missingM3": 0.0
+      }
+    },
+    {
+      "name": "Native union contains declared contact GEO-usable-wall-outer-corner--run-y-contact",
+      "pass": true,
+      "detail": {
+        "missingM3": 0.0
+      }
+    },
+    {
+      "name": "Native union contains declared contact GEO-usable-wall-outer-corner--floor-corner-bearing",
+      "pass": true,
+      "detail": {
+        "missingM3": 0.0
+      }
+    },
+    {
+      "name": "Native union contains declared contact GEO-usable-wall-outer-corner--roof-corner-bearing",
+      "pass": true,
+      "detail": {
+        "missingM3": 0.0
+      }
+    },
+    {
+      "name": "Original unchanged locker intersection is a real negative control",
+      "pass": true,
+      "detail": {
+        "nativeM3": 0.0004417465042662192
+      }
+    },
+    {
+      "name": "Corrected source clears unchanged locker",
+      "pass": true,
+      "detail": {
+        "nativeM3": 0.0,
+        "minimumNativeGapM": 0.06550000000000011
+      }
+    },
+    {
+      "name": "Corrected source leaves entire declared usable prism free",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Original unchanged floor has positive bearing contact",
+      "pass": true,
+      "detail": {
+        "nativeM3": 0.011717871000000008
+      }
+    },
+    {
+      "name": "Original unchanged roof has positive bearing contact",
+      "pass": true,
+      "detail": {
+        "nativeM3": 0.005855420624999997
+      }
+    },
+    {
+      "name": "Native floor bearing closes actual edge void",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Removing authored floor bearing opens edge negative control",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Exterior corner overlaps both straight native cores",
+      "pass": true,
+      "detail": {
+        "firstM3": 0.048614501953125,
+        "secondM3": 0.048614501953125
+      }
+    },
+    {
+      "name": "Two-wall corner union preserves full usable quadrant",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Separate modules have no overlapping visible top faces",
+      "pass": true,
+      "detail": {
+        "samePlaneSameFacingOverlapM2": 0.0
+      }
+    },
+    {
+      "name": "Armor sockets remain outward with unresolved ratings",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "candidatePins": [
+    {
+      "id": "straight-2m",
+      "file": "straight-2m.glb",
+      "sha256": "abdd69bd588e2496e9eb11052c6d5f0b31d5c06cb984436120e6acc34ccd54b4",
+      "nodePrefix": "GEO-usable-wall-straight-2m--",
+      "editableComponents": 22,
+      "canonicalSourceTransform": null
+    },
+    {
+      "id": "outer-corner",
+      "file": "outer-corner.glb",
+      "sha256": "51c5280a87cb3a5b4b18fc1dd3fe349f8c7dfdfec13d8d7de16247de0c0052c2",
+      "nodePrefix": "GEO-usable-wall-outer-corner--",
+      "editableComponents": 5,
+      "canonicalSourceTransform": null
+    },
+    {
+      "id": "straight-port-legacy",
+      "file": "straight-port-legacy.glb",
+      "sha256": "e3cf967f5e0af05c0d8dc95356618609c8180974594ba5f7f124248b9a8b2ccd",
+      "nodePrefix": "GEO-usable-wall-straight-port-legacy--",
+      "editableComponents": 22,
+      "canonicalSourceTransform": [
+        [
+          -4.371138828673793e-08,
+          1.0,
+          0.0,
+          -0.3125
+        ],
+        [
+          -1.0,
+          -4.371138828673793e-08,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": "straight-starboard-legacy",
+      "file": "straight-starboard-legacy.glb",
+      "sha256": "3d46a6ebdd276ca9d933af16d9c55d95ffd1f74d0f63dc86e8b940a1fe0eaa00",
+      "nodePrefix": "GEO-usable-wall-straight-starboard-legacy--",
+      "editableComponents": 22,
+      "canonicalSourceTransform": [
+        [
+          7.549790126404332e-08,
+          -1.0,
+          0.0,
+          0.3125
+        ],
+        [
+          1.0,
+          7.549790126404332e-08,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "originalSourcePins": {
+    "floor": {
+      "path": "assets/runtime/assembly/floor/r002/kit.glb",
+      "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor"
+    },
+    "roof": {
+      "path": "assets/runtime/assembly/roof/r004/kit.glb",
+      "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+      "nodePrefix": "GEO-shoulder-red--surface"
+    },
+    "wall": {
+      "path": "assets/runtime/assembly/parts.glb",
+      "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+      "nodePrefix": "GEO-part-6e64c7b0aa0165cbe846--"
+    },
+    "locker": {
+      "path": "assets/runtime/assembly/equipment/part-c03ec0260cd7329050a8/glb.glb",
+      "sha256": "f527af1e44fc1570355c2268055b7b31343c45849a807b40993cf516c263093a",
+      "nodePrefix": null
+    }
+  },
+  "sourceMappingSha256": "7b6be86b42e904def098f1a70a36bff08c18773e3efbc9337667af6da3f86e2e",
+  "originalPlacementChanges": 0,
+  "nativeSourceRevisionsChanged": 0,
+  "limits": [
+    "Representative straight/corner source family only, not entire Wayfarer rebuild or all21 mixed groups.",
+    "No approved armor/strength/load/power rating or qualified mechanical locker attachment.",
+    "No runtime install, pressure allocation or final owner artistic approval.",
+    "Raw surfaces use1micrometre GLB encoding tolerance; native CSG uses separately recorded normalization."
+  ]
+}

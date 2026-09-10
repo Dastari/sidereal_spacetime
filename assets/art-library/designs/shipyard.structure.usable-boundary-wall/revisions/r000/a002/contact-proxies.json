@@ -1,0 +1,117 @@
+{
+  "cores": [
+    {
+      "part": "straight-2m",
+      "node": "GEO-usable-wall-straight-2m--pressure-body",
+      "minM": [
+        0,
+        -0.625,
+        0
+      ],
+      "maxM": [
+        2,
+        -0.025,
+        2.75
+      ]
+    },
+    {
+      "part": "straight-2m",
+      "node": "GEO-usable-wall-straight-2m--floor-bearing",
+      "minM": [
+        0,
+        -0.0625,
+        0.03125
+      ],
+      "maxM": [
+        2,
+        0.0625,
+        0.125
+      ]
+    },
+    {
+      "part": "straight-2m",
+      "node": "GEO-usable-wall-straight-2m--roof-bearing",
+      "minM": [
+        0,
+        -0.0625,
+        2.703125
+      ],
+      "maxM": [
+        2,
+        0.0625,
+        2.75
+      ]
+    },
+    {
+      "part": "outer-corner",
+      "node": "GEO-usable-wall-outer-corner--corner-core",
+      "minM": [
+        -0.59375,
+        -0.59375,
+        0
+      ],
+      "maxM": [
+        0,
+        0,
+        2.75
+      ]
+    },
+    {
+      "part": "outer-corner",
+      "node": "GEO-usable-wall-outer-corner--run-x-contact",
+      "minM": [
+        0,
+        -0.59375,
+        0
+      ],
+      "maxM": [
+        0.03125,
+        -0.025,
+        2.75
+      ]
+    },
+    {
+      "part": "outer-corner",
+      "node": "GEO-usable-wall-outer-corner--run-y-contact",
+      "minM": [
+        -0.59375,
+        0,
+        0
+      ],
+      "maxM": [
+        -0.025,
+        0.03125,
+        2.75
+      ]
+    },
+    {
+      "part": "outer-corner",
+      "node": "GEO-usable-wall-outer-corner--floor-corner-bearing",
+      "minM": [
+        -0.0625,
+        -0.0625,
+        0.03125
+      ],
+      "maxM": [
+        0.0625,
+        0.0625,
+        0.125
+      ]
+    },
+    {
+      "part": "outer-corner",
+      "node": "GEO-usable-wall-outer-corner--roof-corner-bearing",
+      "minM": [
+        -0.0625,
+        -0.0625,
+        2.703125
+      ],
+      "maxM": [
+        0.0625,
+        0.0625,
+        2.75
+      ]
+    }
+  ],
+  "status": "Compare native export before authority use"
+}

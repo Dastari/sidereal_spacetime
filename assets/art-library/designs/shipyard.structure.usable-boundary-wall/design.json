@@ -1,0 +1,488 @@
+{
+  "schema": "sidereal.art-library.v1",
+  "id": "shipyard.structure.usable-boundary-wall",
+  "asset_uuid": "ca189928-e4dd-583a-9f26-2372a0d75de9",
+  "reference_ids": [],
+  "inspiration_reference_ids": [
+    "3d-rpg-after--wayfarer-exterior-red-service-panel"
+  ],
+  "mapping_status": "New owner-required usable-boundary interface family; existing side-hull source materials/theme preserved, not an exact crop reconstruction.",
+  "current_revision": 0,
+  "state": "in-progress",
+  "owner_final_signoff": null,
+  "priority": 1,
+  "profile": "native-outward-wall-family",
+  "assigned_to": "stair_document",
+  "blocker": "Full boundary and shoulder expansion, mixed partition separation, mounting spacers, whole enclosure and actual installed browser review remain.",
+  "approvals": [],
+  "feedback": [
+    {
+      "source": "owner correction via root",
+      "recorded_at": "2026-09-10T01:03:48.085236+00:00",
+      "notes": "Entire model must fit reserved shape/height; structural walls stay outside usable floor. Correct models before placements. Keep floor/locker and originalR006/IDs unchanged."
+    },
+    {
+      "source": "parent actual a003 same-placement PNG review",
+      "recorded_at": "2026-09-10T01:03:48.085236+00:00",
+      "notes": "Parent confirmed clear improvement and unobstructed unchanged locker; representative integration review passed, explicitly not final owner art approval."
+    },
+    {
+      "source": "expanded actual native armor test",
+      "recorded_at": "2026-09-10T01:03:48.085236+00:00",
+      "notes": "a003625mm body intersects unchanged armor by3.298675m3. a004250mm native body leaves62.5mm separation and restores layer ordering; no armor move or runtime scale.40nativegates pass."
+    }
+  ],
+  "revisions": [
+    {
+      "revision": 0,
+      "created_at": "2026-09-10T01:03:48.085236+00:00",
+      "stage": "in-progress",
+      "change": "Four preserved native attempts culminating in250mmoutward structural body, continuous Blender-unioned contacts, independent corner and stable source-frame exports.",
+      "hypothesis": "A corrected source reservation restores full usable interior and unchanged equipment fit without moving originals.",
+      "covered_reference_ids": [],
+      "evidence": [
+        {
+          "role": "editable-blender",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a001/blender-source.blend",
+          "sha256": "df233bb3a404c21128f21c5d84870d3e277028cade925b047e754ac4d5135afb",
+          "bytes": 1765300,
+          "notes": "Preserved initial source with coplanar contact-core faces and clipped comparison framing.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a001/capture-context.json",
+          "sha256": "a0203aaa6ea758d0021b7770a602f70a89a23e2bb9f1ec68e85f618a553e4a7a",
+          "bytes": 2950,
+          "notes": "Preserved initial source with coplanar contact-core faces and clipped comparison framing.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a001/contact-proxies.json",
+          "sha256": "25fcd506becda0d4a9d2e5bf1de66291e06a6b16e6d609e3e8422304621935cb",
+          "bytes": 1988,
+          "notes": "Preserved initial source with coplanar contact-core faces and clipped comparison framing.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a001/delivery-manifest.json",
+          "sha256": "9e5aa6d52f5f87da3a7f96bb96bf7e9d8331c9342843a055ca5998b8958b3ed3",
+          "bytes": 3189,
+          "notes": "Preserved initial source with coplanar contact-core faces and clipped comparison framing.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a001/outer-corner.glb",
+          "sha256": "8e6806cf73b6e912a705aa13d2aeef49dd4959b66c5f3299abfc41804773d33c",
+          "bytes": 649484,
+          "notes": "Preserved initial source with coplanar contact-core faces and clipped comparison framing.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "blender-render",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a001/same-placement-corrected.png",
+          "sha256": "2cd9191a488e7321af1e737d157a0689c6916071fbd04327da80b95a43536339",
+          "bytes": 1864534,
+          "notes": "Preserved initial source with coplanar contact-core faces and clipped comparison framing.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "blender-render",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a001/same-placement-original.png",
+          "sha256": "d9a5d1f97ebcf5eebf8a890cdf3c2a77cc4caa6ca6c87c79238b69a2614e87fc",
+          "bytes": 1870309,
+          "notes": "Preserved initial source with coplanar contact-core faces and clipped comparison framing.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a001/straight-2m.glb",
+          "sha256": "7c92e8faf140aad5f3807c706f89a542ec9c2b13828e29648fb5cdb1aaf547a0",
+          "bytes": 1018380,
+          "notes": "Preserved initial source with coplanar contact-core faces and clipped comparison framing.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "blender-render",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a001/straight-and-corner.png",
+          "sha256": "e9f7847fed20748492a6d91d652d2118cded16fac38dee44d9c9381232e65c0d",
+          "bytes": 1589689,
+          "notes": "Preserved initial source with coplanar contact-core faces and clipped comparison framing.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a001/straight-port-legacy.glb",
+          "sha256": "0493de6db8e5762f83c0662f7097983c3ec88e83f0006b5cee71e4a5df4df063",
+          "bytes": 1020096,
+          "notes": "Preserved initial source with coplanar contact-core faces and clipped comparison framing.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a001/straight-starboard-legacy.glb",
+          "sha256": "538bda02bc476ee506c0f6dafcde1fad89fc521ae8ed6f9c2d5207c00c1dcaa4",
+          "bytes": 1020096,
+          "notes": "Preserved initial source with coplanar contact-core faces and clipped comparison framing.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "editable-blender",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a002/blender-source.blend",
+          "sha256": "c165aa14b4594b8b393626b7af85fba6663198172fe68d262a10458221e50c1a",
+          "bytes": 1728508,
+          "notes": "Preserved internal-union correction; corner upper contact still has measured coplanar overlap.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a002/capture-context.json",
+          "sha256": "d31fa653b803791e3f054b573b3c4f2ffb05c6878a765bf38795d8f932d282e9",
+          "bytes": 2948,
+          "notes": "Preserved internal-union correction; corner upper contact still has measured coplanar overlap.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a002/contact-proxies.json",
+          "sha256": "6e647aca394ece11a527236978406bc7c173db9f37714d01571a35d4699a30e3",
+          "bytes": 1996,
+          "notes": "Preserved internal-union correction; corner upper contact still has measured coplanar overlap.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a002/delivery-manifest.json",
+          "sha256": "b77e357125c17e194245777954022aaf06f38e274edf9a41b3a2ce0a7b42fce0",
+          "bytes": 3189,
+          "notes": "Preserved internal-union correction; corner upper contact still has measured coplanar overlap.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a002/native-qualification.json",
+          "sha256": "1276381c7e6e334901e30907b47d95a1063b5e366aaddb87f4a42e51d45b8179",
+          "bytes": 11155,
+          "notes": "Preserved internal-union correction; corner upper contact still has measured coplanar overlap.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a002/outer-corner.glb",
+          "sha256": "9604f4ddaab1a717333b301571c8904b4b75417ff549c6edd6222217731489e4",
+          "bytes": 646516,
+          "notes": "Preserved internal-union correction; corner upper contact still has measured coplanar overlap.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "blender-render",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a002/same-placement-corrected.png",
+          "sha256": "6dd88c093346af31e688d5ad02bd08b09c09f995ef107f5d6c72af170ad56913",
+          "bytes": 1703324,
+          "notes": "Preserved internal-union correction; corner upper contact still has measured coplanar overlap.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "blender-render",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a002/same-placement-original.png",
+          "sha256": "d787c0a0dcce9ba8075e0c1c7ba97d3dc23a51398771d5a1203418ef8d015b14",
+          "bytes": 1680017,
+          "notes": "Preserved internal-union correction; corner upper contact still has measured coplanar overlap.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a002/straight-2m.glb",
+          "sha256": "abdd69bd588e2496e9eb11052c6d5f0b31d5c06cb984436120e6acc34ccd54b4",
+          "bytes": 977828,
+          "notes": "Preserved internal-union correction; corner upper contact still has measured coplanar overlap.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "blender-render",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a002/straight-and-corner.png",
+          "sha256": "5b853f1388883fb224347b6b418f51e3fad401cea31af72fcd1ede6562a050ec",
+          "bytes": 1581408,
+          "notes": "Preserved internal-union correction; corner upper contact still has measured coplanar overlap.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a002/straight-port-legacy.glb",
+          "sha256": "e3cf967f5e0af05c0d8dc95356618609c8180974594ba5f7f124248b9a8b2ccd",
+          "bytes": 979244,
+          "notes": "Preserved internal-union correction; corner upper contact still has measured coplanar overlap.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a002/straight-starboard-legacy.glb",
+          "sha256": "3d46a6ebdd276ca9d933af16d9c55d95ffd1f74d0f63dc86e8b940a1fe0eaa00",
+          "bytes": 979208,
+          "notes": "Preserved internal-union correction; corner upper contact still has measured coplanar overlap.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "editable-blender",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a003/blender-source.blend",
+          "sha256": "a00911ce08dbfcdbdd3cc1ef77056dc7de7bd01392660318afe82f87db1dc427",
+          "bytes": 1728356,
+          "notes": "Representative floor/locker proof reviewed by parent; expanded armor check later found excessive structural thickness.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a003/capture-context.json",
+          "sha256": "d31fa653b803791e3f054b573b3c4f2ffb05c6878a765bf38795d8f932d282e9",
+          "bytes": 2948,
+          "notes": "Representative floor/locker proof reviewed by parent; expanded armor check later found excessive structural thickness.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a003/contact-proxies.json",
+          "sha256": "1e860019645e95f3a096920878ac0544bdc4d0d781154247d6760db7bebd59f7",
+          "bytes": 2018,
+          "notes": "Representative floor/locker proof reviewed by parent; expanded armor check later found excessive structural thickness.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a003/delivery-manifest.json",
+          "sha256": "bfb798654cbe2f4d16a244e2b581106d48dc9f0c343b11f8d367c9ed4458db6f",
+          "bytes": 3189,
+          "notes": "Representative floor/locker proof reviewed by parent; expanded armor check later found excessive structural thickness.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a003/native-qualification.json",
+          "sha256": "098266c3cfb767177324aea107b06d0409433f71caf757252e5ea98fc90da5dc",
+          "bytes": 11330,
+          "notes": "Representative floor/locker proof reviewed by parent; expanded armor check later found excessive structural thickness.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a003/outer-corner.glb",
+          "sha256": "51c5280a87cb3a5b4b18fc1dd3fe349f8c7dfdfec13d8d7de16247de0c0052c2",
+          "bytes": 646504,
+          "notes": "Representative floor/locker proof reviewed by parent; expanded armor check later found excessive structural thickness.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "blender-render",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a003/same-placement-corrected.png",
+          "sha256": "8ae6b7fbaffeae88b8547cbb574cc68c2376ec904ddfcf33f5386d71078aff8d",
+          "bytes": 1703324,
+          "notes": "Representative floor/locker proof reviewed by parent; expanded armor check later found excessive structural thickness.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "blender-render",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a003/same-placement-original.png",
+          "sha256": "a94b7be9941892ca5402663d322f071f14a8b3069b8a7a64a2a112af1d24cad2",
+          "bytes": 1680017,
+          "notes": "Representative floor/locker proof reviewed by parent; expanded armor check later found excessive structural thickness.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a003/straight-2m.glb",
+          "sha256": "abdd69bd588e2496e9eb11052c6d5f0b31d5c06cb984436120e6acc34ccd54b4",
+          "bytes": 977828,
+          "notes": "Representative floor/locker proof reviewed by parent; expanded armor check later found excessive structural thickness.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "blender-render",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a003/straight-and-corner.png",
+          "sha256": "6fe348e76d4a0a5ac0bbad51563fb1521e3727e39785dd7558a967490865e9a2",
+          "bytes": 1581413,
+          "notes": "Representative floor/locker proof reviewed by parent; expanded armor check later found excessive structural thickness.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a003/straight-port-legacy.glb",
+          "sha256": "e3cf967f5e0af05c0d8dc95356618609c8180974594ba5f7f124248b9a8b2ccd",
+          "bytes": 979244,
+          "notes": "Representative floor/locker proof reviewed by parent; expanded armor check later found excessive structural thickness.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a003/straight-starboard-legacy.glb",
+          "sha256": "3d46a6ebdd276ca9d933af16d9c55d95ffd1f74d0f63dc86e8b940a1fe0eaa00",
+          "bytes": 979208,
+          "notes": "Representative floor/locker proof reviewed by parent; expanded armor check later found excessive structural thickness.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "editable-blender",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a004/blender-source.blend",
+          "sha256": "0fadf2687669694a2b1fc04acc70bbb3d441628826b560ea20f9a3b9a0341f99",
+          "bytes": 1728524,
+          "notes": "Native candidate evidence; no installation, whole-Wayfarer qualification or final artistic approval.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a004/capture-context.json",
+          "sha256": "e4a47fe22d8a1cbaef4840e23458de027044f50d722a4ac0f48e41fcde341cb5",
+          "bytes": 3777,
+          "notes": "Native candidate evidence; no installation, whole-Wayfarer qualification or final artistic approval.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a004/contact-proxies.json",
+          "sha256": "1566dc8f9e7b472c048c7f5fe23a67d22ae4c4e787d1299e4ca79f88f57cd8e5",
+          "bytes": 2017,
+          "notes": "Native candidate evidence; no installation, whole-Wayfarer qualification or final artistic approval.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a004/delivery-manifest.json",
+          "sha256": "118102c2a3caecb0bbeab2b09df2184515e64dc15de26943d2f85326b634a51b",
+          "bytes": 3186,
+          "notes": "Native candidate evidence; no installation, whole-Wayfarer qualification or final artistic approval.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a004/native-qualification.json",
+          "sha256": "4c61b72530f8dd3d2a801d223ac3849a54cae155371ef02ed233826662fbf8c3",
+          "bytes": 11794,
+          "notes": "Native candidate evidence; no installation, whole-Wayfarer qualification or final artistic approval.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a004/outer-corner.glb",
+          "sha256": "062ddea776bd9fb5bca7677668a60c319112d313be9aa709b20d8b132f92c238",
+          "bytes": 646512,
+          "notes": "Native candidate evidence; no installation, whole-Wayfarer qualification or final artistic approval.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "blender-render",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a004/same-placement-corrected.png",
+          "sha256": "95182bc66e177ce07680528f9f947980ba9b01f159ac1ee4fc5b69f26a231dea",
+          "bytes": 1658871,
+          "notes": "Native candidate evidence; no installation, whole-Wayfarer qualification or final artistic approval.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "blender-render",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a004/same-placement-original.png",
+          "sha256": "2534f89e2612023bffbb57e334329960c7b603de94ba3f4031706cb8fef90521",
+          "bytes": 1680017,
+          "notes": "Native candidate evidence; no installation, whole-Wayfarer qualification or final artistic approval.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "blender-render",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a004/same-placement-with-armor.png",
+          "sha256": "90e6d81f2d6a252de06f61f916f64610b8370471a665c6488f9790af2e0f2b35",
+          "bytes": 1703095,
+          "notes": "Native candidate evidence; no installation, whole-Wayfarer qualification or final artistic approval.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a004/straight-2m.glb",
+          "sha256": "479f546b875389e2c726a42c9af4db027d4780066634009c600193ae2b6b08e8",
+          "bytes": 977904,
+          "notes": "Native candidate evidence; no installation, whole-Wayfarer qualification or final artistic approval.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "blender-render",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a004/straight-and-corner.png",
+          "sha256": "0b4fe8f82ef36bf21170f3ec1cc13feda6ec29eda3d42e088f6599139d08ea0d",
+          "bytes": 1506779,
+          "notes": "Native candidate evidence; no installation, whole-Wayfarer qualification or final artistic approval.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a004/straight-port-legacy.glb",
+          "sha256": "204874ad4825b97b68016798cb69a37d7e39750a30dd12733a7c6c3176fa7664",
+          "bytes": 979320,
+          "notes": "Native candidate evidence; no installation, whole-Wayfarer qualification or final artistic approval.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a004/straight-starboard-legacy.glb",
+          "sha256": "bf70723a8a68d34c5c60288559e6f37b1fefba611c4f04c582cce261343ed241",
+          "bytes": 979284,
+          "notes": "Native candidate evidence; no installation, whole-Wayfarer qualification or final artistic approval.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/interface-family.json",
+          "sha256": "cd4124aa460b4eb4bd71f7a8904c2073de660879c1d275a3326749399e26e7cd",
+          "bytes": 2742,
+          "notes": "Native candidate evidence; no installation, whole-Wayfarer qualification or final artistic approval.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        }
+      ]
+    }
+  ]
+}

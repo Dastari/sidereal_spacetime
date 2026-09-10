@@ -1,0 +1,131 @@
+{
+  "captures": [
+    {
+      "file": "same-placement-original.png",
+      "cameraM": [
+        4,
+        -4,
+        3.5
+      ],
+      "targetM": [
+        0.4,
+        0,
+        1.2
+      ],
+      "scaleM": 3.65,
+      "evidence": "Actual Blender native source; not installed-game review"
+    },
+    {
+      "file": "same-placement-corrected.png",
+      "cameraM": [
+        4,
+        -4,
+        3.5
+      ],
+      "targetM": [
+        0.4,
+        0,
+        1.2
+      ],
+      "scaleM": 3.65,
+      "evidence": "Actual Blender native source; not installed-game review"
+    },
+    {
+      "file": "straight-and-corner.png",
+      "cameraM": [
+        4,
+        5,
+        4
+      ],
+      "targetM": [
+        0.55,
+        -0.15,
+        1.3
+      ],
+      "scaleM": 4.5,
+      "evidence": "Actual Blender native source; not installed-game review"
+    }
+  ],
+  "sourcePins": [
+    {
+      "placedId": "floor--2--3",
+      "path": "assets/runtime/assembly/floor/r002/kit.glb",
+      "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originalPlacement": {
+        "id": "floor--2--3",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -5,
+          -7,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-7b265b4d073afc9bf127",
+          "offset": [
+            1,
+            1,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      }
+    },
+    {
+      "placedId": "wall--2--3",
+      "path": "assets/runtime/assembly/parts.glb",
+      "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+      "nodePrefix": "GEO-part-6e64c7b0aa0165cbe846--",
+      "originalPlacement": {
+        "id": "wall--2--3",
+        "assetId": "part-6e64c7b0aa0165cbe846",
+        "position": [
+          -4.6875,
+          -6,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "placedId": "equipment-locker--4.7--6",
+      "path": "assets/runtime/assembly/equipment/part-c03ec0260cd7329050a8/glb.glb",
+      "sha256": "f527af1e44fc1570355c2268055b7b31343c45849a807b40993cf516c263093a",
+      "nodePrefix": null,
+      "originalPlacement": {
+        "id": "equipment-locker--4.7--6",
+        "assetId": "part-c03ec0260cd7329050a8",
+        "position": [
+          -4.6875,
+          -6,
+          0.1875
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    }
+  ],
+  "sourcePlacementChanges": 0,
+  "reviewOriginM": [
+    -5.0,
+    -6.0,
+    0.0
+  ],
+  "replacement": {
+    "sourcePlacedId": "wall--2--3",
+    "sourceOriginM": [
+      -4.6875,
+      -6,
+      0
+    ],
+    "candidate": "straight-port-legacy",
+    "rotationUnchanged": 0,
+    "flippedUnchanged": false
+  }
+}
