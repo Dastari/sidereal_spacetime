@@ -541,9 +541,15 @@ async function buildWorld(
   });
   // A reconstructed scene starts with fresh history. Newly loaded geometry also
   // invalidates samples; this covers remote exteriors and async equipment.
-  const temporalMeshObserver = scene.onNewMeshAddedObservable.add(() =>
-    antialiasing.resetHistory(),
-  );
+  let temporalGeometryDirty = false;
+  const temporalMeshObserver = scene.onNewMeshAddedObservable.add(() => {
+    temporalGeometryDirty = true;
+  });
+  const temporalGeometryObserver = scene.onBeforeRenderObservable.add(() => {
+    if (!temporalGeometryDirty) return;
+    temporalGeometryDirty = false;
+    antialiasing.resetHistory();
+  });
   let temporalStateAt = performance.now();
   let temporalAppearance = "";
   const localLights = createLocalLightBudget();
@@ -1158,6 +1164,7 @@ async function buildWorld(
       combatAim.dispose();
       localLights.dispose();
       scene.onNewMeshAddedObservable.remove(temporalMeshObserver);
+      scene.onBeforeRenderObservable.remove(temporalGeometryObserver);
       antialiasing.dispose();
       graphics.dispose();
       transmissionLifecycle.dispose();
