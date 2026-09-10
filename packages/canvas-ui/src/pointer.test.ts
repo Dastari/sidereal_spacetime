@@ -22,7 +22,10 @@ function setup() {
     removeEventListener() {},
   });
   vi.stubGlobal("document", { fonts: { ready: Promise.resolve() } });
+  let inert = false;
   const canvas = {
+    closest: (selector: string) =>
+      selector === "[inert]" && inert ? canvas : null,
     addEventListener: (name: string, handler: Function) =>
       handlers.set(name, handler),
     removeEventListener() {},
@@ -85,7 +88,19 @@ function setup() {
       preventDefault() {},
       stopImmediatePropagation() {},
     });
-  return { ui, pointer, key, wheel, action, drag, drop, context };
+  return {
+    ui,
+    pointer,
+    key,
+    wheel,
+    action,
+    drag,
+    drop,
+    context,
+    setInert: (value: boolean) => {
+      inert = value;
+    },
+  };
 }
 test("trackpad and Shift-wheel preserve the horizontal scroll axis", () => {
   const f = setup();
@@ -150,4 +165,15 @@ test("click jitter remains a click, Shift is retained and right-click opens acti
     button: 2,
     shiftKey: false,
   });
+});
+
+test("loading surface blocks window keyboard shortcuts until inert is cleared", () => {
+  const f = setup();
+  f.ui.shortcut = vi.fn(() => true);
+  f.setInert(true);
+  f.key("v", "KeyV");
+  expect(f.ui.shortcut).not.toHaveBeenCalled();
+  f.setInert(false);
+  f.key("v", "KeyV");
+  expect(f.ui.shortcut).toHaveBeenCalledExactlyOnceWith("KeyV");
 });
