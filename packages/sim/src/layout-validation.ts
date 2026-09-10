@@ -186,7 +186,7 @@ export function readLayout(value: unknown): LayoutDocument {
       fail("Invalid partition");
   for (const o of value.openings)
     if (
-      !string(o.partitionId) ||
+      !string(o.partitionId, value.structure ? 512 : 160) ||
       !point(o.a) ||
       !point(o.b) ||
       !["door", "passage", "airlock"].includes(o.kind) ||

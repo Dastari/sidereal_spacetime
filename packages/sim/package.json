@@ -51,7 +51,8 @@
     "./cargo-carrier-handling": "./src/cargo-carrier-handling.ts",
     "./construction-cargo": "./src/construction-cargo.ts",
     "./construction-instance": "./src/construction-instance.ts",
-    "./layout-structure": "./src/layout-structure.ts"
+    "./layout-structure": "./src/layout-structure.ts",
+    "./layout-native-floor": "./src/layout-native-floor.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",

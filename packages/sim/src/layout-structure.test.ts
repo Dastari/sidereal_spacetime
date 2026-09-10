@@ -1,3 +1,4 @@
+import { floorModelOptions } from "./layout-native-floor";
 import { describe, it, expect } from "vitest";
 import {
   emptyLayout,
@@ -9,6 +10,7 @@ import {
 import { HULL_SIZE_CATALOG } from "@sidereal/content/hull-size-catalog";
 import { compileLayout } from "./layout-compiler";
 import {
+  assertHullEnvelopeFits,
   setHullEnvelope,
   setWallFace,
   setFloorStyle,
@@ -189,7 +191,8 @@ describe("opt-in structural authoring contract", () => {
     expect(
       compiled.walls
         .filter(
-          (w) => w.anchorId === w.anchorId && w.a[1] === 0 && w.b[1] === 0,
+          (span) =>
+            span.anchorId === w.anchorId && span.a[1] === 0 && span.b[1] === 0,
         )
         .some((w) => w.a[0] === 16 && w.b[0] === 48),
     ).toBe(false);
@@ -317,7 +320,10 @@ describe("opt-in structural authoring contract", () => {
   it("keeps floor styles attached to derived tile identity and refuses stale anchors", () => {
     const d = setFloorStyle(fixture(), "t00", {
       material: "paint-blue",
-      model: { assetId: "native-floor", revision: "r2" },
+      model: {
+        assetId: floorModelOptions(fixture().tiles[0], 0)[0].assetId,
+        revision: "r002",
+      },
     });
     expect(d.structure!.tileStyles.t00.material).toBe("paint-blue");
     expect(compileLayout(d).tiles.find((t) => t.id === "t00")?.material).toBe(
@@ -387,6 +393,35 @@ describe("opt-in structural authoring contract", () => {
         sill: 0,
       }),
     ).toThrow("sweep");
+  });
+  it("supports derived boundary references for the longest admitted deck identity", () => {
+    let d = fixture();
+    const deckId = "d".repeat(160);
+    d.decks[0].id = deckId;
+    d.playableDeckId = deckId;
+    d.tiles.forEach((t) => (t.deckId = deckId));
+    const wall = compileLayout(d).structure!.walls.find(
+      (w) => w.a[1] === 0 && w.b[1] === 0,
+    )!;
+    d = setWallFace(d, wall.anchorId, "left", "standard");
+    d = proposeWallOpening(d, {
+      id: "long-anchor-door",
+      deckId,
+      partitionId: wall.anchorId,
+      slot: [32, 0],
+      width: 32,
+      kind: "door",
+      clearance: 16,
+      sill: 0,
+    });
+    expect(errors(d)).toEqual([]);
+  });
+  it("guards hull edits independently of unrelated recoverable style diagnostics", () => {
+    const d = fixture();
+    d.structure!.wallFaces.missing = { left: "preserved" };
+    expect(() => assertHullEnvelopeFits(d)).not.toThrow();
+    d.structure!.hull.width = 191;
+    expect(() => assertHullEnvelopeFits(d)).toThrow("width");
   });
   it("rejects armor inside usable floors but admits an exterior reservation as unqualified intent", () => {
     const d = fixture(),

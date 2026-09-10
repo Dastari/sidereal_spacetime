@@ -1,8 +1,8 @@
 import type { LayoutStructure } from "@sidereal/content/layout-structure";
 const object = (v: unknown): v is Record<string, unknown> =>
   !!v && typeof v === "object" && !Array.isArray(v);
-const text = (v: unknown) =>
-  typeof v === "string" && v.length > 0 && v.length <= 160;
+const text = (v: unknown, max = 160) =>
+  typeof v === "string" && v.length > 0 && v.length <= max;
 const integer = (v: unknown, min = -8192, max = 8192) =>
   Number.isSafeInteger(v) && Number(v) >= min && Number(v) <= max;
 /** Bounded admission before any geometry allocation. Unknown future semantics fail closed. */
@@ -52,7 +52,7 @@ export function readLayoutStructure(value: unknown): LayoutStructure {
     fail();
   for (const [id, f] of Object.entries(v.wallFaces as Record<string, unknown>))
     if (
-      !text(id) ||
+      !text(id, 512) ||
       !object(f) ||
       Object.keys(f).some((k) => !["left", "right"].includes(k)) ||
       Object.values(f).some((x) => !text(x))
@@ -84,7 +84,7 @@ export function readLayoutStructure(value: unknown): LayoutStructure {
       !object(a) ||
       !text(a.id) ||
       !text(a.deckId) ||
-      !text(a.boundaryId) ||
+      !text(a.boundaryId, 512) ||
       !integer(a.bottom) ||
       !integer(a.top) ||
       Number(a.top) <= Number(a.bottom) ||

@@ -179,7 +179,9 @@ export function readConstructionDraft(raw: string): {
   const normalized = input as unknown as ConstructionDocument;
   if (input.airlockRoom !== undefined) {
     readNativeAirlockDocument(JSON.stringify(normalized));
-    normalized.airlockRoom!.parts.sort((a,b)=>a.sourcePartIndex-b.sourcePartIndex);
+    normalized.airlockRoom!.parts.sort(
+      (a, b) => a.sourcePartIndex - b.sourcePartIndex,
+    );
     normalized.airlockRoom!.roofTileIds.sort(compareText);
     normalized.airlockRoom!.exteriorTileIds.sort(compareText);
   }
@@ -248,6 +250,21 @@ export function compileConstruction(raw: string): ConstructionSnapshot {
       stableStringify(canonicalPolygon(tiles.get(p.id)!.vertices))
     )
       throw Error("Semantic floor differs from native nominal interface");
+  for (const floor of input.floors) {
+    const selected = layout.structure?.tileStyles[floor.id]?.model;
+    const nominal = PINNED_FLOOR_KIT.parts.find(
+      (part) => part.id === floor.partId,
+    );
+    if (
+      selected &&
+      (!nominal ||
+        nominal.native.assetId !== selected.assetId ||
+        nominal.native.revision !== selected.revision)
+    )
+      throw Error(
+        "Native floor placement differs from its explicit model selection",
+      );
+  }
   const compiled = compileLayout(layout);
   if (!compiled.valid)
     throw Error(

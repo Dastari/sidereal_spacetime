@@ -1,3 +1,4 @@
+import { matchNativeFloorTile } from "./layout-native-floor";
 import type {
   HullEnvelope,
   FloorStyle,
@@ -458,6 +459,21 @@ export function compileStructure(
         [id],
         "Floor style references a missing derived floor tile.",
       );
+  for (const [id, style] of Object.entries(config.tileStyles)) {
+    const tile = doc.tiles.find((t) => t.id === id),
+      deck = tile && doc.decks.find((d) => d.id === tile.deckId);
+    if (
+      style.model &&
+      tile &&
+      deck &&
+      !matchNativeFloorTile(tile, deck.elevation, style.model)
+    )
+      issue(
+        "floor-model-interface",
+        [id],
+        "Selected floor model/revision has no pinned native interface matching this exact tile polygon and floor datum.",
+      );
+  }
   for (const o of doc.openings) {
     const anchor = base.find(
       (w) => w.anchorId === o.partitionId && w.deckId === o.deckId,
@@ -796,4 +812,29 @@ export function proposeWallOpening(
       opening,
     ];
   });
+}
+
+/** Immediate editing guard: only selected hull W/L/height limits, independent of
+ * unrelated unresolved drafts, room diagnostics or stale finish anchors. */
+export function assertHullEnvelopeFits(doc: LayoutDocument): void {
+  if (!doc.structure) return;
+  const h = readLayoutStructure(doc.structure).hull;
+  for (const d of doc.decks)
+    if (
+      d.elevation < h.origin[2] ||
+      d.elevation + d.ceiling > h.origin[2] + h.height
+    )
+      throw new Error("Deck floor/ceiling exceeds the selected hull height.");
+  for (const t of doc.tiles) {
+    if (
+      t.vertices.some((p) => p[0] < h.origin[0] || p[0] > h.origin[0] + h.width)
+    )
+      throw new Error("Floor exceeds the selected hull width.");
+    if (
+      t.vertices.some(
+        (p) => p[1] < h.origin[1] || p[1] > h.origin[1] + h.length,
+      )
+    )
+      throw new Error("Floor exceeds the selected hull length.");
+  }
 }

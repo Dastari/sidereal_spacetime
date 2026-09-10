@@ -31,7 +31,8 @@
     "./cargo-handling-fixture": "./src/cargo-handling-fixture.ts",
     "./layout-structure": "./src/layout-structure.ts",
     "./hull-size-catalog": "./src/hull-size-catalog.ts",
-    "./layout-assembly": "./src/layout-assembly.ts"
+    "./layout-assembly": "./src/layout-assembly.ts",
+    "./tileset-interfaces": "./src/tileset-interfaces.ts"
   },
   "dependencies": {}
 }
