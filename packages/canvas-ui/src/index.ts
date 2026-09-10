@@ -104,6 +104,7 @@ export type GameUIActions = {
   graphics?: (patch: Partial<GraphicsSettings>) => void;
   graphicsReset?: () => void;
   antialiasing?: (patch: Partial<AntialiasingSettings>) => void;
+  readAntialiasing?: () => AntialiasingSnapshot | undefined;
   localLightLimit?: (limit: LocalLightLimit) => void;
   combat?: () => void;
   inventory?: InventoryActions;
@@ -731,6 +732,7 @@ export function createGameUI(
       ui.ctx.rect(viewport.x, viewport.y, viewport.w, viewport.h);
       ui.ctx.clip();
       if (tab === "Graphics") {
+        const antialiasingState = actions.readAntialiasing?.() ?? state.antialiasing;
         drawGraphicsMenu(
           ui,
           inner,
@@ -739,8 +741,8 @@ export function createGameUI(
           actions.graphicsReset,
           state.localLightLimit,
           actions.localLightLimit,
-          state.antialiasing && actions.antialiasing
-            ? { state: state.antialiasing, set: actions.antialiasing }
+          antialiasingState && actions.antialiasing
+            ? { state: antialiasingState, set: actions.antialiasing }
             : undefined,
         );
       } else if (tab === "Display") {

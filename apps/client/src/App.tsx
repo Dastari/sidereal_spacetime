@@ -817,6 +817,7 @@ export default function App({
                     view.current?.setGraphicsSettings(patch);
                     refresh((v) => v + 1);
                   },
+                  readAntialiasing: () => view.current?.getAntialiasing(),
                   antialiasing: (patch) => {
                     view.current?.setAntialiasing(patch);
                     refresh((v) => v + 1);
