@@ -1,3 +1,5 @@
+import { GlowLayer } from "@babylonjs/core/Layers/glowLayer";
+import { createShipGlowOccluders } from "./ship-glow-occluders";
 import { readFileSync } from "node:fs";
 import { afterEach, expect, test, vi } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
@@ -86,6 +88,12 @@ test("installed ship loader resource budget", async () => {
       ...hull.meshes,
     ];
     createShipLighting(scene, ship, meshes);
+    const glow = createShipGlowOccluders(
+      scene,
+      ship,
+      new GlowLayer("budget", scene),
+    );
+    glow.set(meshes);
     const counts = {
       meshes: scene.meshes.length,
       materials: scene.materials.length,
@@ -181,6 +189,12 @@ test("current semantic Wayfarer loader resource budget and complete role attribu
       documentJson: JSON.stringify(plan.document),
     });
     createConstructionLighting(scene, ship.meshes);
+    const glow = createShipGlowOccluders(
+      scene,
+      root,
+      new GlowLayer("budget", scene),
+    );
+    glow.set(ship.meshes);
     expect(scene.meshes.length).toBeLessThanOrEqual(1630);
     expect(scene.materials.length).toBeLessThanOrEqual(181);
     expect(scene.lights.length).toBeLessThanOrEqual(2);

@@ -144,6 +144,8 @@ Acceptance: role row visible in F3, budget test passes, baseline JSON committed.
 
 ### R1. Glow layer re-renders the entire ship (Phase 1b)
 
+Status: implemented with hardware Deck and TAB-Flight measurements (2026-09-10); seated Flight and detailed occlusion acceptance remain outstanding.
+
 Evidence: `packages/render/src/index.ts:544` adds every imported mesh to the glow layer's include list, and `:541` adds every crew mesh, so opaque geometry is drawn a second time into the 512 px glow target purely to occlude bloom. This is roughly one full extra pass.
 
 Fix: build one merged, invisible, black unlit occluder mesh per structural group (hull shell, partitions, roof when closed, deck floor) and include only those plus the true emitters. `glow-occluders.ts` already implements this shape for the planet layer. Keep the cutaway relationship: when the roof is open, the roof occluder must be excluded exactly as the roof meshes are hidden; when a deck is hidden its occluder is hidden.
@@ -318,3 +320,25 @@ Isolation draw calls were identical before/after: Deck scale2 **5,539**, Glow of
 Evidence: `output/playwright/render-plan/00-baseline/hardware-2026-09-10.json` preserves the owner-provided baseline; `output/playwright/render-plan/R0/before.json`, `after.json`, `before-{deck,flight}.png`, and `after-*.png` contain fresh hardware captures and isolation results. The initial local SwiftShader probe was abandoned once hardware became available; no software timing is used here. R1 source re-verification also found `glow-occluders.ts` registers existing meshes rather than implementing the merged proxy described in the register; R1 needs a new implementation.
 
 Commit isolation note: pre-existing construction, character/F3 and editor changes remain unstaged. `packages/render/src/debug-overlays.ts` was already an untracked file owned by the other F3 work; its small role-tag delta remains in the working tree and is preserved as `output/playwright/render-plan/R0/untracked-overlay-role.patch`, rather than committing the unrelated file. Validation above covers the shared working tree, not a claim that its unrelated pending changes are included in this commit.
+
+
+### 2026-09-10 — R1 merged local glow occluders, partial hardware acceptance
+
+Implemented `ship-glow-occluders.ts`, integrated its lifecycle and held-equipment refresh in `index.ts`, added `ship-glow-occluders.test.ts`, and included the helper in both real-loader `render-budget.test.ts` scenes. Opaque static placement geometry is copied into black offscreen-only proxies grouped by explicit structural role, deck, rendering group, orientation and compatible material/depth state. Every proxy has `metadata.role = proxy` and triangle ranges resolving the original placement and source mesh. Original surfaces, materials, picking and shadow membership are retained. No instances or authored asset changes. Animated crew, actual emitters, glass, fading and unsupported material states retain their original glow draws. Visibility, geometry, local transforms and material-state changes invalidate the proxies; ship-root motion and moving nonmergeable crew do not rebuild them. NullEngine regressions exercise these boundaries, identity lookup, deck/cutaway changes and disposal. Existing scene mesh/material bounds remain appropriate because R1 adds proxy resources; it reduces pass submissions rather than original mesh population.
+
+Validation: `VITEST_MAX_WORKERS=2 npm run check` passed 246 files / 1,467 tests and documentation audit; `npm run build` passed. Default-concurrency runs encountered the pre-existing planet terrain timeout; the limit was not changed. An unrelated editor test failure was fixed by its owning workstream. Validation covers the shared working tree, with unrelated construction/art/editor changes excluded from this commit.
+
+Hardware: visible, focused t3 `tab_b`, ANGLE NVIDIA RTX 4080 Laptop GPU / D3D11, actual canvas 1574 × 907, MSAA4, F3 open and nothing selected. The preview service still reported hidden/rejected snapshots after reopen, although the document reported visible and accepted keyboard actions. Evidence therefore uses the actual canvas export (including F3) rather than preview snapshots. These are hardware captures, not SwiftShader. Camera radii and elevations match R0. R0 after-counters are the immediate prior-item reference; sessions differ, so timing is not a controlled speedup result.
+
+| View | Draw calls R0 → R1 | Active / total meshes R0 → R1 | Materials R0 → R1 | Render CPU ms R0 → R1 |
+| --- | --- | --- | --- | --- |
+| Deck, radius 70.008 m | 5,539 → 4,348 | 1,396 / 2,688 → 1,396 / 2,693 | 632 → 638 | 43.82 → 54.31 |
+| TAB-Flight, radius 938.715 m | 4,926 → 4,155 | 1,106 / 2,687 → 1,106 / 2,691 | 631 → 637 | 56.12 → 72.05 |
+
+Draw reductions: Deck 1,191 (21.5%), TAB-Flight 771 (15.7%). No CPU timing improvement is claimed. All F3 counter fields are in the JSON files. Proxy totals are five in Deck and four in Flight, with zero active in the main pass and zero unclassified meshes.
+
+Isolation before → after draw counts: Deck scale2 5,539 → 4,348; Glow off 2,769 → 2,769; then Shadows off 1,395 → 1,395; then Lighting off 1,395 → 1,395. TAB-Flight scale2 3,854 → 3,083; Glow off 3,041 → 3,041; then Shadows off 2,106 → 2,106; then Lighting off 2,106 → 2,106. Scale restored to 1 before the sequential switches. Flight scale2 still changes planet LOD, so it is not a pure pixel-cost comparison. All switches were restored afterward.
+
+Evidence: `output/playwright/render-plan/R1/{deck,flight-tab}.json`, corresponding JPEGs, each view's `-scale2`, `-glow-off`, `-shadows-off`, `-lighting-off` JSON/JPEG files, plus a full-resolution `after-deck.png`. Prior-item evidence remains in `R0/`. JSON sampling and image rendering may straddle F3's 500 ms sample boundary, so timing rows can differ slightly.
+
+Left undone: seated control-station Flight acceptance remains outstanding. Ordinary walking inputs reached an interior collision boundary and did not seat the character; no authority state was edited. Roof-open/closed captures and NullEngine visibility regressions exist, but close-up emitter occlusion and independently hidden-deck hardware review still need acceptance. The separate planet glow layer still submits original occluders; planet visuals remain paused. Total Glow-off delta therefore remains 1,579 Deck / 1,114 TAB-Flight, rather than just emitter draws. R1 is implemented with partial hardware measurement, not marked done.

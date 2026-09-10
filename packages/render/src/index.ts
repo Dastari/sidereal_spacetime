@@ -1,3 +1,4 @@
+import { createShipGlowOccluders } from './ship-glow-occluders';
 import { setMeshRole } from './mesh-roles';
 import { legacyMeshRole } from './legacy-mesh-role';
 import {
@@ -520,15 +521,12 @@ async function buildWorld(
           dispose() {},
         }
       : createFlightEffects(scene, shipRoot);
-  for (const mesh of flightEffects.meshes) glow.addIncludedOnlyMesh(mesh);
-  for (const mesh of emitters) glow.addIncludedOnlyMesh(mesh);
-  // Opaque crew parts also write black/depth into the glow mask, so lenses
-  // cannot shine through the rear helmet shell. Only emissive materials glow.
-  for (const mesh of crew?.root.getChildMeshes() ?? [])
-    glow.addIncludedOnlyMesh(mesh as Mesh);
-  // Walls must contribute black/depth to the glow mask as well as emitters;
-  // otherwise a hidden fixture blooms straight through an opaque bulkhead.
-  for (const mesh of imported.meshes) glow.addIncludedOnlyMesh(mesh as Mesh);
+  const localGlowOcclusion = createShipGlowOccluders(scene, shipRoot, glow);
+  const refreshLocalGlow = () => localGlowOcclusion.set([
+    ...flightEffects.meshes, ...emitters, ...imported.meshes,
+    ...(crew?.root.getChildMeshes() ?? []),
+  ]);
+  refreshLocalGlow();
   environment.setOccluders([
     ...imported.meshes,
     ...(crew?.root.getChildMeshes() ?? []),
@@ -1022,8 +1020,7 @@ async function buildWorld(
         if (equipmentPose && crew && poseItem)
           equipmentPose.bind(visual.createPoseBinding(crew.root, poseItem));
         else crew?.bindHeldEquipment(visual);
-        for (const mesh of visual.root.getChildMeshes())
-          glow.addIncludedOnlyMesh(mesh as Mesh);
+        refreshLocalGlow();
         environment.setOccluders([
           ...imported.meshes,
           ...(crew?.root.getChildMeshes() ?? []),
@@ -1193,6 +1190,7 @@ async function buildWorld(
       equipmentPose?.bind(undefined);
       equipment?.dispose();
       crew?.dispose();
+      localGlowOcclusion.dispose();
       flightEffects.dispose();
       environment.dispose();
       diagnostics.dispose();
