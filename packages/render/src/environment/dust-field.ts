@@ -3,6 +3,7 @@ import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { MaterialPluginBase } from "@babylonjs/core/Materials/materialPluginBase";
+import { ShaderLanguage } from "@babylonjs/core/Materials/shaderLanguage";
 import type { UniformBuffer } from "@babylonjs/core/Materials/uniformBuffer";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { setMeshRole } from "../mesh-roles";
@@ -32,10 +33,13 @@ class DustMotionPlugin extends MaterialPluginBase {
   override getAttributes(attributes: string[]) {
     attributes.push("dustGrain");
   }
-  override getUniforms() {
+  override isCompatible(language: ShaderLanguage) {
+    return language === ShaderLanguage.GLSL || language === ShaderLanguage.WGSL;
+  }
+  override getUniforms(language = ShaderLanguage.GLSL) {
     return {
       ubo: names.map((name) => ({ name, size: 4, type: "vec4" })),
-      vertex: names.map((name) => `uniform vec4 ${name};`).join("\n"),
+      vertex: language === ShaderLanguage.GLSL ? names.map((name) => `uniform vec4 ${name};`).join("\n") : "",
     };
   }
   override bindForSubMesh(buffer: UniformBuffer) {
@@ -44,7 +48,24 @@ class DustMotionPlugin extends MaterialPluginBase {
       buffer.updateFloat4(name, v[0], v[1], v[2], v[3]);
     });
   }
-  override getCustomCode(type: string) {
+  override getCustomCode(type: string, language = ShaderLanguage.GLSL) {
+    if (type === "vertex" && language === ShaderLanguage.WGSL) return {
+      CUSTOM_VERTEX_DEFINITIONS: "attribute dustGrain: vec4f;",
+      CUSTOM_VERTEX_UPDATE_WORLDPOS: `
+var dustOffset: vec3f = uniforms.dustOffset2.xyz;
+if (vertexInputs.dustGrain.y < 0.5) { dustOffset = uniforms.dustOffset0.xyz; }
+else if (vertexInputs.dustGrain.y < 1.5) { dustOffset = uniforms.dustOffset1.xyz; }
+let dustCenter = finalWorld[3].xyz + dustOffset;
+var dustSize = vertexInputs.dustGrain.z;
+if (uniforms.dustCamera.w > 0.0) { dustSize = min(dustSize, max(0.0, dot(dustCenter - uniforms.dustCamera.xyz, uniforms.dustForward.xyz)) * uniforms.dustCamera.w); }
+var dustVertex = positionUpdated * dustSize;
+dustVertex.z *= 1.0 + (uniforms.dustStreak.z - 1.0) * vertexInputs.dustGrain.x;
+let dustRotated = vec2f(uniforms.dustStreak.x * dustVertex.x + uniforms.dustStreak.y * dustVertex.z, -uniforms.dustStreak.y * dustVertex.x + uniforms.dustStreak.x * dustVertex.z);
+dustVertex.x = dustRotated.x; dustVertex.z = dustRotated.y;
+worldPos = finalWorld * vec4f(dustVertex, 1.0);
+worldPos = vec4f(worldPos.xyz + dustOffset, worldPos.w);
+`,
+    };
     return type === "vertex"
       ? {
           CUSTOM_VERTEX_DEFINITIONS: "attribute vec4 dustGrain;",
@@ -94,6 +115,8 @@ export function createDustField(scene: Scene, root: TransformNode) {
     [];
   const forward = Vector3.Zero();
   let rebuilds = 0;
+  let snapshotRevision = 0;
+  const previousUniforms: number[] = [];
   return {
     mesh,
     get rebuilds() {
@@ -204,6 +227,9 @@ export function createDustField(scene: Scene, root: TransformNode) {
           }
         });
         mesh.thinInstanceSetBuffer("matrix", matrices, 16, true);
+        // Static cell matrices also seed TAA before its first draw. Babylon's
+        // automatic previous buffer is created after drawing, too late for WebGPU.
+        mesh.thinInstanceSetBuffer("previousMatrix", matrices, 16, true);
         mesh.thinInstanceSetBuffer("dustGrain", grains, 4, true);
         mesh.thinInstanceCount = count;
         rebuilds++;
@@ -255,6 +281,13 @@ export function createDustField(scene: Scene, root: TransformNode) {
         speed: motion.speed,
         streakLength: motion.length,
       });
+      let uniformChanged = rebuild, cursor = 0;
+      for (const uniform of plugin.values) for (const value of uniform) {
+        if (previousUniforms[cursor] !== value) uniformChanged = true;
+        previousUniforms[cursor++] = value;
+      }
+      if (uniformChanged) snapshotRevision++;
+      mesh.metadata.snapshotRevision = snapshotRevision;
     },
   };
 }

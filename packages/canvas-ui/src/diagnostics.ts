@@ -177,6 +177,9 @@ export function createDiagnosticsUI(
         ["Attached camera passes", String(data.cameraPostProcesses?.length ?? "—")],
         ["Camera pass names", data.cameraPostProcesses?.join(", ") || "None"],
         ["Scene capture", data.sceneCapture?.name ?? "None"],
+        ["Renderer", data.renderBackend === "webgpu" ? "WebGPU" : "WebGL"],
+        ["Snapshot rendering", !data.snapshotRendering ? "Unavailable" : data.snapshotRendering.enabled
+          ? "Enabled" : data.snapshotRendering.armed ? "Preparing" : data.snapshotRendering.reason],
         ["Capture size / MSAA", !data.sceneCapture ? "None" : data.sceneCapture.width === undefined
           ? "Awaiting allocation"
           : `${data.sceneCapture.width} × ${data.sceneCapture.height} / ${data.sceneCapture.samples}×`],

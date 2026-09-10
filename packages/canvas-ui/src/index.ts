@@ -15,6 +15,7 @@ import type {
   AntialiasingSnapshot,
 } from "@sidereal/render/antialiasing-settings";
 import type { GraphicsSettings } from "../../render/src/graphics-settings";
+import type { RenderBackend, RenderBackendSnapshot } from "../../render/src/render-backend";
 import {
   createObjectDetailsUI,
   type ObjectDetailsState,
@@ -105,6 +106,9 @@ export type GameUIActions = {
   graphicsReset?: () => void;
   antialiasing?: (patch: Partial<AntialiasingSettings>) => void;
   readAntialiasing?: () => AntialiasingSnapshot | undefined;
+  readRenderBackend?: () => RenderBackendSnapshot | undefined;
+  renderBackend?: (value: RenderBackend) => void;
+  applyRenderBackend?: () => void;
   localLightLimit?: (limit: LocalLightLimit) => void;
   combat?: () => void;
   inventory?: InventoryActions;
@@ -733,6 +737,7 @@ export function createGameUI(
       ui.ctx.clip();
       if (tab === "Graphics") {
         const antialiasingState = actions.readAntialiasing?.() ?? state.antialiasing;
+        const backendState = actions.readRenderBackend?.();
         drawGraphicsMenu(
           ui,
           inner,
@@ -744,6 +749,8 @@ export function createGameUI(
           antialiasingState && actions.antialiasing
             ? { state: antialiasingState, set: actions.antialiasing }
             : undefined,
+          backendState && actions.renderBackend && actions.applyRenderBackend
+            ? {state:backendState,set:actions.renderBackend,apply:actions.applyRenderBackend} : undefined,
         );
       } else if (tab === "Display") {
         ui.slider(

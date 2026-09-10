@@ -1,0 +1,70 @@
+{
+  "instances": 560,
+  "results": [
+    {
+      "aa": {
+        "effective": {
+          "fxaa": false,
+          "mode": "msaa",
+          "renderScale": 1,
+          "samples": 4
+        },
+        "pending": false,
+        "requested": {
+          "mode": "msaa",
+          "samples": 4
+        },
+        "temporalBonePalettes": {
+          "pending": false,
+          "qualified": 0
+        }
+      },
+      "mode": "msaa",
+      "validationError": null
+    },
+    {
+      "aa": {
+        "effective": {
+          "fxaa": false,
+          "mode": "taa",
+          "renderScale": 1,
+          "samples": 1
+        },
+        "pending": false,
+        "requested": {
+          "mode": "taa",
+          "samples": 4
+        },
+        "temporalBonePalettes": {
+          "pending": false,
+          "qualified": 0
+        }
+      },
+      "mode": "taa",
+      "validationError": "Vertex attribute slot 8 used in ([ShaderModule \"vertex\"], [EntryPoint \"main\"]) is not present in the VertexState.\n - While validating vertex state.\n - While calling [Device \"BabylonWebGPUDevice0\"].CreateRenderPipeline([RenderPipelineDescriptor \"\"RenderPipeline_rgba16float_depth24plus-stencil8_samples1_textureState0\"\"]).\n"
+    },
+    {
+      "aa": {
+        "effective": {
+          "fxaa": true,
+          "mode": "fxaa",
+          "renderScale": 1,
+          "samples": 1
+        },
+        "pending": false,
+        "requested": {
+          "mode": "fxaa",
+          "samples": 4
+        },
+        "temporalBonePalettes": {
+          "pending": false,
+          "qualified": 0
+        }
+      },
+      "mode": "fxaa",
+      "validationError": null
+    }
+  ],
+  "status": "complete",
+  "webgpu": true
+}

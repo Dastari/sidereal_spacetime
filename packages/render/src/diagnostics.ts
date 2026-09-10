@@ -5,6 +5,8 @@ import { SceneInstrumentation } from "@babylonjs/core/Instrumentation/sceneInstr
 import type { Observer } from "@babylonjs/core/Misc/observable";
 
 export type RenderDiagnostics = {
+  renderBackend?: import("./render-backend").RenderBackend;
+  snapshotRendering?: {enabled:boolean;armed:boolean;reason:string};
   sceneCapture?: CaptureDiagnostics;
   meshesByRole?: MeshRoleCounts;
   localLightBudget?: {

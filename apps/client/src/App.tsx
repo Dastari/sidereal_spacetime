@@ -818,6 +818,16 @@ export default function App({
                     refresh((v) => v + 1);
                   },
                   readAntialiasing: () => view.current?.getAntialiasing(),
+                  readRenderBackend: () => view.current?.getRenderBackend(),
+                  renderBackend: (value) => {
+                    view.current?.setRenderBackend(value);
+                    refresh((v) => v + 1);
+                  },
+                  applyRenderBackend: () => {
+                    const url = new URL(window.location.href);
+                    url.searchParams.delete("rendererFallback");
+                    window.location.assign(url);
+                  },
                   antialiasing: (patch) => {
                     view.current?.setAntialiasing(patch);
                     refresh((v) => v + 1);

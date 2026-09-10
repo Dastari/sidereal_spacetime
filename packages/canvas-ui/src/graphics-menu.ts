@@ -15,6 +15,7 @@ import {
 import type { CanvasUI } from "./toolkit";
 import { palette } from "./toolkit";
 import type { Rect } from "./layout";
+import { drawRenderBackendMenu, RENDER_BACKEND_MENU_HEIGHT, type RenderBackendControls } from "./render-backend-menu";
 export function drawGraphicsMenu(
   ui: CanvasUI,
   r: Rect,
@@ -24,6 +25,7 @@ export function drawGraphicsMenu(
   localLimit: LocalLightLimit = "all",
   setLocalLimit?: (limit: LocalLightLimit) => void,
   antialiasing?: AntialiasingControls,
+  backend?: RenderBackendControls,
 ) {
   ui.text("Graphics", r.x, r.y, 22, palette.blue);
   ui.paragraph(
@@ -62,16 +64,17 @@ export function drawGraphicsMenu(
     13,
   );
   drawAntialiasingMenu(ui, { ...r, y: r.y + 505 }, antialiasing);
+  drawRenderBackendMenu(ui, {...r,y:r.y+505+ANTIALIASING_MENU_HEIGHT}, backend);
   ui.button(
     "graphics-reset",
     "Reset graphics",
-    { ...r, y: r.y + 505 + ANTIALIASING_MENU_HEIGHT, h: 38 },
+    { ...r, y: r.y + 505 + ANTIALIASING_MENU_HEIGHT + RENDER_BACKEND_MENU_HEIGHT, h: 38 },
     () => reset?.(),
     {
       disabled:
         !reset ||
         (Object.values(value).every((v) => v === 1) &&
-          localLimit === "all" &&
+          localLimit === "all" && (!backend || backend.state.requested === "webgl") &&
           (!antialiasing ||
             (antialiasing.state.requested.mode === "msaa" &&
               antialiasing.state.requested.samples === 4))),
@@ -88,4 +91,4 @@ export function drawGraphicsMenu(
     );
 }
 
-export const GRAPHICS_MENU_HEIGHT = 570 + ANTIALIASING_MENU_HEIGHT;
+export const GRAPHICS_MENU_HEIGHT = 570 + ANTIALIASING_MENU_HEIGHT + RENDER_BACKEND_MENU_HEIGHT;

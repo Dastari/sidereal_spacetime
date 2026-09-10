@@ -1,3 +1,4 @@
+import { createTemporalInstanceAttributes } from "./temporal-instance-attributes";
 import { createTemporalBonePalette } from "./temporal-bone-palette";
 import { createTemporalSkinHistory } from "./temporal-skin-history";
 import type { Scene } from "@babylonjs/core/scene";
@@ -42,6 +43,7 @@ export function createAntialiasing(
   options: { storage?: Store; temporalResetIntegrated?: boolean } = {},
 ) {
   const engine = scene.getEngine();
+  const instanceAttributes = engine.isWebGPU ? createTemporalInstanceAttributes(scene) : undefined;
   const skinHistory = createTemporalSkinHistory();
   const bonePalettes = createTemporalBonePalette(scene);
   let bonePaletteStatus = { changed: false, pending: false, qualified: 0 };
@@ -333,6 +335,7 @@ export function createAntialiasing(
       scene.onBeforeCameraRenderObservable.remove(cameraFrame);
       engine.onResizeObservable.remove(resize);
       bonePalettes.dispose();
+      instanceAttributes?.dispose();
       pending?.dispose();
       active?.dispose();
       pending = active = undefined;

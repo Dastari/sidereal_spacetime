@@ -32,6 +32,8 @@ import {
   type LocalLightLimit,
 } from "./local-light-budget";
 import { createAntialiasing } from "./antialiasing-pipeline";
+import { createRenderEngine } from "./render-engine";
+import { readRenderBackend, createRenderBackendPreference, type RenderBackend } from "./render-backend";
 import { invalidatesTemporalHistory } from "./antialiasing-history";
 import type { AntialiasingSettings } from "./antialiasing-settings";
 import { maintainSceneTransmission } from "./transmission-lifecycle";
@@ -62,7 +64,6 @@ import { createRenderDiagnostics } from "./diagnostics";
 import { createEquipmentVisual, type EquipmentAsset } from "./equipment";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { createCrewVisual, type CrewAppearance } from "./crew";
-import { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
 import { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
 import { Camera } from "@babylonjs/core/Cameras/camera";
@@ -193,10 +194,22 @@ async function buildWorld(
   options.onLoadStage?.("ship");
   let initialStateApplied = false;
   let equipmentPending = false;
-  const engine = new Engine(canvas, true, {
-    preserveDrawingBuffer: true,
-    stencil: true,
-  });
+  let backendStorage: Storage | undefined;
+  try { backendStorage = globalThis.localStorage; } catch { /* Device storage can be blocked. */ }
+  const requestedBackend = readRenderBackend(backendStorage);
+  const pageUrl = typeof window === "undefined" ? undefined : new URL(window.location.href);
+  const recoveringWebGL = pageUrl?.searchParams.get("rendererFallback") === "webgl";
+  const createdEngine = await createRenderEngine(canvas, recoveringWebGL ? "webgl" : requestedBackend);
+  if (!createdEngine.engine) {
+    if (pageUrl) {
+      pageUrl.searchParams.set("rendererFallback", "webgl");
+      window.location.replace(pageUrl);
+    }
+    throw Error("Reloading with WebGL after WebGPU initialization failed.");
+  }
+  const engine = createdEngine.engine;
+  const backend = createRenderBackendPreference(createdEngine.active, requestedBackend, backendStorage,
+    recoveringWebGL ? "WebGL recovery mode." : createdEngine.reason);
   const scene = new Scene(engine);
   const transmissionLifecycle = maintainSceneTransmission(scene);
   // Object selection performs one explicit click ray; camera/HUD use DOM input.
@@ -1059,6 +1072,8 @@ async function buildWorld(
     getAntialiasing() {
       return antialiasing.snapshot();
     },
+    getRenderBackend: () => backend.snapshot(),
+    setRenderBackend: (value: RenderBackend) => backend.set(value),
     setAntialiasing(patch: Partial<AntialiasingSettings>) {
       antialiasing.set(patch);
     },
@@ -1072,6 +1087,7 @@ async function buildWorld(
       graphics.reset();
       antialiasing.reset();
       localLights.reset();
+      if (backend.snapshot().requested !== "webgl") backend.set("webgl");
     },
     getLocalLightBudget() {
       return localLights.snapshot();
@@ -1096,6 +1112,8 @@ async function buildWorld(
       return snapshot
         ? {
             ...snapshot,
+            renderBackend: createdEngine.active,
+            snapshotRendering: engine.isWebGPU ? {enabled:false,armed:false,reason:"Awaiting R6 qualification"} : undefined,
             debugFeatures: debugFeatures.snapshot(),
             localLightBudget: localLights.snapshot(),
           }
