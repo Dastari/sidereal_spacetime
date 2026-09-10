@@ -1,4 +1,5 @@
 import { createFlightActiveSet } from "./flight-active-set";
+import { createFastSnapshot } from "./fast-snapshot";
 import { createStaticMaterialFreeze, invalidateStaticMaterials } from "./static-material-freeze";
 import { createDebugVisibilityRevision } from "./debug-visibility-revision";
 import { createShipGlowOccluders } from './ship-glow-occluders';
@@ -727,6 +728,7 @@ async function buildWorld(
   const debugVisibilityRevision = createDebugVisibilityRevision();
   const staticMaterials = createStaticMaterialFreeze(scene);
   const flightActiveSet = createFlightActiveSet(scene);
+  const fastSnapshot = engine.isWebGPU ? createFastSnapshot(scene) : undefined;
   let firstFrame = true;
   engine.runRenderLoop(() => {
     // A failed initial load stays covered by Retry/Sign out. Do not keep
@@ -961,7 +963,9 @@ async function buildWorld(
     );
     const updateCpuMs = performance.now() - frameStarted;
     staticMaterials.prepare();
-    flightActiveSet.prepare(!firstFrame && !!state.seated && !state.interior && !state.inspect && !focusedBodyId && blend < .001);
+    const snapshotCandidate = fastSnapshot?.prepare({ready:!firstFrame && !state.inspect && !focusedBodyId,
+      reducedMotion:!!state.reducedMotion,temporal:antialiasing.snapshot().effective.mode === "taa",displayRevision:0}) ?? false;
+    flightActiveSet.prepare(!snapshotCandidate && !firstFrame && !!state.seated && !state.interior && !state.inspect && !focusedBodyId && blend < .001);
     scene.render();
     diagnostics.recordFrameCpu(performance.now() - frameStarted, updateCpuMs);
     if (
@@ -1081,6 +1085,7 @@ async function buildWorld(
     getRenderBackend: () => backend.snapshot(),
     setRenderBackend: (value: RenderBackend) => backend.set(value),
     setAntialiasing(patch: Partial<AntialiasingSettings>) {
+      fastSnapshot?.invalidate();
       flightActiveSet.invalidate();
       invalidateStaticMaterials(scene);
       antialiasing.set(patch);
@@ -1089,9 +1094,11 @@ async function buildWorld(
       return graphics.snapshot();
     },
     setGraphicsSettings(patch: Partial<GraphicsSettings>) {
+      fastSnapshot?.invalidate();
       graphics.set(patch);
     },
     resetGraphicsSettings() {
+      fastSnapshot?.invalidate();
       flightActiveSet.invalidate();
       invalidateStaticMaterials(scene);
       graphics.reset();
@@ -1103,6 +1110,7 @@ async function buildWorld(
       return localLights.snapshot();
     },
     setLocalLightLimit(limit: LocalLightLimit) {
+      fastSnapshot?.invalidate();
       flightActiveSet.invalidate();
       invalidateStaticMaterials(scene);
       localLights.setLimit(limit);
@@ -1124,20 +1132,23 @@ async function buildWorld(
       return snapshot
         ? {
             ...snapshot,
+            ...fastSnapshot?.activeStats(),
             renderBackend: createdEngine.active,
-            snapshotRendering: engine.isWebGPU ? {enabled:false,armed:false,reason:"Awaiting R6 qualification"} : undefined,
+            snapshotRendering: fastSnapshot?.snapshot(),
             debugFeatures: debugFeatures.snapshot(),
             localLightBudget: localLights.snapshot(),
           }
         : undefined;
     },
     toggleDebugFeature(key: DebugFeature) {
+      fastSnapshot?.invalidate();
       flightActiveSet.invalidate();
       invalidateStaticMaterials(scene);
       debugFeatures.toggle(key);
       antialiasing.resetHistory();
     },
     resetDebugFeatures() {
+      fastSnapshot?.invalidate();
       flightActiveSet.invalidate();
       invalidateStaticMaterials(scene);
       debugFeatures.reset();
@@ -1150,7 +1161,9 @@ async function buildWorld(
       remoteShipIds: remoteShips?.getRootIds() ?? [],
     }),
     update(next: SceneState) {
-      if (next.interior !== state.interior || next.inspect !== state.inspect || next.seated !== state.seated) flightActiveSet.invalidate();
+      if (next.interior !== state.interior || next.inspect !== state.inspect || next.seated !== state.seated) {
+        fastSnapshot?.invalidate();flightActiveSet.invalidate();
+      }
       const temporalNow = performance.now();
       if (invalidatesTemporalHistory(state, next, temporalNow - temporalStateAt))
         antialiasing.resetHistory();
@@ -1195,6 +1208,7 @@ async function buildWorld(
     dispose() {
       if (disposed) return;
       disposed = true;
+      fastSnapshot?.dispose();
       flightActiveSet.dispose();
       staticMaterials.dispose();
       updateConstructionTraversal = undefined;

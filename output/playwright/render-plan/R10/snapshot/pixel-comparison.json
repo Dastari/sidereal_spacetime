@@ -1,0 +1,87 @@
+{
+  "pixels": {
+    "equal": true,
+    "phases": [
+      {
+        "bytes": 307200,
+        "enabled": false,
+        "hash": "e91af856",
+        "snapshot": {
+          "armed": false,
+          "enabled": false,
+          "reason": "Loading scene"
+        }
+      },
+      {
+        "bytes": 307200,
+        "enabled": true,
+        "hash": "e91af856",
+        "snapshot": {
+          "armed": true,
+          "enabled": true,
+          "reason": ""
+        },
+        "stats": {
+          "activeIndices": 180,
+          "activeMeshes": 2,
+          "drawCalls": 9,
+          "meshesByRole": {
+            "cargo": {
+              "active": 0,
+              "total": 0
+            },
+            "crew": {
+              "active": 0,
+              "total": 0
+            },
+            "effect": {
+              "active": 0,
+              "total": 0
+            },
+            "environment": {
+              "active": 0,
+              "total": 0
+            },
+            "equipment": {
+              "active": 0,
+              "total": 0
+            },
+            "floor": {
+              "active": 0,
+              "total": 0
+            },
+            "hull": {
+              "active": 2,
+              "total": 2
+            },
+            "planet": {
+              "active": 0,
+              "total": 0
+            },
+            "proxy": {
+              "active": 0,
+              "total": 0
+            },
+            "remote": {
+              "active": 0,
+              "total": 0
+            },
+            "roof": {
+              "active": 0,
+              "total": 0
+            },
+            "unclassified": {
+              "active": 0,
+              "total": 0
+            },
+            "wall": {
+              "active": 0,
+              "total": 0
+            }
+          }
+        }
+      }
+    ],
+    "status": "complete"
+  }
+}

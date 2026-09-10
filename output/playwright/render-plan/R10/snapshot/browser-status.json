@@ -1,0 +1,14 @@
+{
+  "body": "Account\n◒\nSidereal\n\nWayfarer\n\nPreparing to board\n\nPreparing the first frame\n\nYour ship and equipment will be ready before you enter.\n\nWASD to move · TAB to change view\nSign out",
+  "frame": 0,
+  "loops": 1,
+  "meshes": 1408,
+  "pending": 0,
+  "ready": false,
+  "sceneId": 1,
+  "visibility": "visible",
+  "webgpu": true,
+  "snapshotError": "Preview snapshot failed after explicitly reopening tab_b",
+  "restoration": "Requested backend restored through the normal renderer setting to webgl, then reloaded.",
+  "acceptance": "No accepted Deck/seated Flight or isolation sequences; no normal-game frames manually submitted."
+}
