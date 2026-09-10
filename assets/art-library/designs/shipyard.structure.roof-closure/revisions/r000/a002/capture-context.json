@@ -1,0 +1,187 @@
+{
+  "captures": [
+    {
+      "path": "native-kit.png",
+      "cameraM": [
+        5,
+        -6,
+        4
+      ],
+      "targetM": [
+        1,
+        0.8,
+        0.7
+      ],
+      "orthographicScaleM": 4.7,
+      "renderer": "Cycles CPU24samples",
+      "kind": "actual native Blender source; not installed-game evidence"
+    },
+    {
+      "path": "joint-original.png",
+      "cameraM": [
+        0.55,
+        -0.7,
+        -0.7
+      ],
+      "targetM": [
+        0,
+        0,
+        0
+      ],
+      "orthographicScaleM": 0.38,
+      "renderer": "Cycles CPU24samples",
+      "kind": "actual native Blender source; not installed-game evidence"
+    },
+    {
+      "path": "joint-with-native-plug.png",
+      "cameraM": [
+        0.55,
+        -0.7,
+        -0.7
+      ],
+      "targetM": [
+        0,
+        0,
+        0
+      ],
+      "orthographicScaleM": 0.38,
+      "renderer": "Cycles CPU24samples",
+      "kind": "actual native Blender source; not installed-game evidence"
+    }
+  ],
+  "sourcePanels": [
+    {
+      "sourcePlacedId": "roof--2--1",
+      "url": "/assets/assembly/roof/r004/kit.glb",
+      "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+      "designId": "shipyard.roof.frontier",
+      "revision": 4,
+      "bounds": {
+        "min": [
+          -1,
+          -1,
+          0
+        ],
+        "max": [
+          1,
+          1,
+          0.9035106897354126
+        ]
+      },
+      "nodePrefix": "GEO-shoulder-lamp--surface",
+      "damagePreview": "unsupported",
+      "transform": {
+        "id": "roof--2--1",
+        "assetId": "part-9c1ccfb3902a1e19de44",
+        "position": [
+          -4,
+          -2,
+          2.6875
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "sourcePlacedId": "roof--1--1",
+      "url": "/assets/assembly/roof/r004/kit.glb",
+      "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+      "designId": "shipyard.roof.frontier",
+      "revision": 4,
+      "bounds": {
+        "min": [
+          -1,
+          -1,
+          0
+        ],
+        "max": [
+          1,
+          1,
+          0.8600000143051147
+        ]
+      },
+      "nodePrefix": "GEO-transition-port--surface",
+      "damagePreview": "unsupported",
+      "transform": {
+        "id": "roof--1--1",
+        "assetId": "part-2353952b313ac7582770",
+        "position": [
+          -2,
+          -2,
+          2.6875
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "sourcePlacedId": "roof--2-0",
+      "url": "/assets/assembly/roof/r004/kit.glb",
+      "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+      "designId": "shipyard.roof.frontier",
+      "revision": 4,
+      "bounds": {
+        "min": [
+          -1,
+          -1,
+          0
+        ],
+        "max": [
+          1,
+          1,
+          0.5199999809265137
+        ]
+      },
+      "nodePrefix": "GEO-shoulder-plain--surface",
+      "damagePreview": "unsupported",
+      "transform": {
+        "id": "roof--2-0",
+        "assetId": "part-9fe552c6f9293ec26860",
+        "position": [
+          -4,
+          0,
+          2.6875
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "sourcePlacedId": "roof--1-0",
+      "url": "/assets/assembly/roof/r004/kit.glb",
+      "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+      "designId": "shipyard.roof.frontier",
+      "revision": 4,
+      "bounds": {
+        "min": [
+          -1,
+          -1,
+          0
+        ],
+        "max": [
+          1,
+          1,
+          0.8600000143051147
+        ]
+      },
+      "nodePrefix": "GEO-transition-port--surface",
+      "damagePreview": "unsupported",
+      "transform": {
+        "id": "roof--1-0",
+        "assetId": "part-61e4ccf651374ea0d773",
+        "position": [
+          -2,
+          0,
+          2.6875
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    }
+  ],
+  "sourceTransformsUnchanged": true
+}

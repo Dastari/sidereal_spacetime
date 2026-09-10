@@ -1,0 +1,23 @@
+{
+  "diagnosticOnly": true,
+  "surfacePathNotFreeBodyRoute": true,
+  "faceCount": 0,
+  "pointsM": [],
+  "sourceTriangle": [
+    [
+      -0.996,
+      -0.996,
+      0.1875
+    ],
+    [
+      -0.996,
+      0.996,
+      0.1875
+    ],
+    [
+      0.996,
+      -0.996,
+      0.1875
+    ]
+  ]
+}

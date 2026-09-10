@@ -1,0 +1,82 @@
+{
+  "schema": "sidereal.roof-closure-contact-proxies.v1",
+  "frame": "Blender XYZ metres; nominal roof underside Z0",
+  "boxes": [
+    {
+      "part": "rail-2m",
+      "sourceObject": "GEO-roof-closure-rail-2m--continuous-contact",
+      "minM": [
+        0,
+        -0.05,
+        -0.015625
+      ],
+      "maxM": [
+        2,
+        0.05,
+        0.03125
+      ],
+      "kind": "actual-authored-continuous-contact-core"
+    },
+    {
+      "part": "step-rail-2m",
+      "sourceObject": "GEO-roof-closure-step-rail-2m--continuous-contact",
+      "minM": [
+        0,
+        -0.05,
+        -0.078125
+      ],
+      "maxM": [
+        2,
+        0.05,
+        0.03125
+      ],
+      "kind": "actual-authored-continuous-contact-core"
+    },
+    {
+      "part": "junction-square",
+      "sourceObject": "GEO-roof-closure-junction-square--continuous-contact",
+      "minM": [
+        -0.08,
+        -0.08,
+        -0.015625
+      ],
+      "maxM": [
+        0.08,
+        0.08,
+        0.03125
+      ],
+      "kind": "actual-authored-continuous-contact-core"
+    },
+    {
+      "part": "wall-seam-2p5m",
+      "sourceObject": "GEO-roof-closure-wall-seam-2p5m--continuous-contact",
+      "minM": [
+        -0.0625,
+        -0.09375,
+        -0.03125
+      ],
+      "maxM": [
+        0.0625,
+        0.09375,
+        2.53125
+      ],
+      "kind": "actual-authored-continuous-contact-core"
+    },
+    {
+      "part": "shoulder-panel-0p5m",
+      "sourceObject": "GEO-roof-closure-shoulder-panel-0p5m--continuous-contact",
+      "minM": [
+        -0.25,
+        -0.09375,
+        -0.03125
+      ],
+      "maxM": [
+        0.25,
+        0.09375,
+        2.53125
+      ],
+      "kind": "actual-authored-continuous-contact-core"
+    }
+  ],
+  "qualification": "Compare exact exported source before using as pressure/collision representation"
+}

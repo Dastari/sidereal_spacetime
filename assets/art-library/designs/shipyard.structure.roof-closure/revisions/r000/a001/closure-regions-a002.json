@@ -1,0 +1,61 @@
+{
+  "diagnosticOnly": true,
+  "syntheticCapsNotAnAuthoredAssetOrAirtightQualification": true,
+  "results": {
+    "control-all-caps": [
+      {
+        "volumeM3": 285.24279090124674,
+        "probes": [
+          "main",
+          "rear"
+        ],
+        "bounds": [
+          -4.8,
+          -8.5,
+          0.2,
+          4.8,
+          5.5,
+          2.5
+        ]
+      }
+    ],
+    "native-roof": [],
+    "native-floor": [],
+    "native-front": [],
+    "native-rear": [
+      {
+        "volumeM3": 292.04282972572605,
+        "probes": [
+          "main",
+          "rear"
+        ],
+        "bounds": [
+          -4.8,
+          -9.145,
+          0.2,
+          4.8,
+          5.5,
+          2.5
+        ]
+      }
+    ],
+    "native-left": [
+      {
+        "volumeM3": 285.7562088699967,
+        "probes": [
+          "main",
+          "rear"
+        ],
+        "bounds": [
+          -5.0,
+          -8.5,
+          0.2,
+          4.8,
+          5.5,
+          2.5
+        ]
+      }
+    ],
+    "native-right": []
+  }
+}

@@ -1,0 +1,304 @@
+{
+  "schema": "sidereal.roof-closure-native-qualification.v1",
+  "pass": true,
+  "checks": [
+    {
+      "name": "Native closed exported rail-2m",
+      "pass": true,
+      "detail": {
+        "triangles": 764,
+        "volumeM3": 0.01124619008386301
+      }
+    },
+    {
+      "name": "Native closed exported junction-square",
+      "pass": true,
+      "detail": {
+        "triangles": 952,
+        "volumeM3": 0.0014983893899388242
+      }
+    },
+    {
+      "name": "Native closed exported step-rail-2m",
+      "pass": true,
+      "detail": {
+        "triangles": 764,
+        "volumeM3": 0.02374619008386301
+      }
+    },
+    {
+      "name": "Separate proxy equals authored native core rail-2m",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Separate proxy equals authored native core step-rail-2m",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Separate proxy equals authored native core junction-square",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Four actual roof panels overlap native junction core",
+      "pass": true,
+      "detail": [
+        0.0001924289639600002,
+        0.0001965621034640006,
+        0.00019242896395999982,
+        0.00019656210346400037
+      ]
+    },
+    {
+      "name": "Original native four-panel corner has a continuous leak path",
+      "pass": true,
+      "detail": [
+        0.000786811224327817
+      ]
+    },
+    {
+      "name": "New native junction closes local continuous leak path",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "Native corner contact atZ2.687499",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native corner contact atZ2.69",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native corner contact atZ2.7",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native step rail contacts actual62.5mm roof datum change",
+      "pass": true,
+      "detail": {
+        "oldM3": 0.0030847598869279914,
+        "lowerM3": 0.008965238837599934
+      }
+    },
+    {
+      "name": "Minimum new underside remains above1.8m body on highest50mm threshold",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "sourcePins": [
+    {
+      "id": "roof--2--1",
+      "url": "/assets/assembly/roof/r004/kit.glb",
+      "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+      "designId": "shipyard.roof.frontier",
+      "revision": 4,
+      "bounds": {
+        "min": [
+          -1,
+          -1,
+          0
+        ],
+        "max": [
+          1,
+          1,
+          0.9035106897354126
+        ]
+      },
+      "nodePrefix": "GEO-shoulder-lamp--surface",
+      "damagePreview": "unsupported",
+      "transform": {
+        "id": "roof--2--1",
+        "assetId": "part-9c1ccfb3902a1e19de44",
+        "position": [
+          -4,
+          -2,
+          2.6875
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "id": "roof--1--1",
+      "url": "/assets/assembly/roof/r004/kit.glb",
+      "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+      "designId": "shipyard.roof.frontier",
+      "revision": 4,
+      "bounds": {
+        "min": [
+          -1,
+          -1,
+          0
+        ],
+        "max": [
+          1,
+          1,
+          0.8600000143051147
+        ]
+      },
+      "nodePrefix": "GEO-transition-port--surface",
+      "damagePreview": "unsupported",
+      "transform": {
+        "id": "roof--1--1",
+        "assetId": "part-2353952b313ac7582770",
+        "position": [
+          -2,
+          -2,
+          2.6875
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "id": "roof--2-0",
+      "url": "/assets/assembly/roof/r004/kit.glb",
+      "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+      "designId": "shipyard.roof.frontier",
+      "revision": 4,
+      "bounds": {
+        "min": [
+          -1,
+          -1,
+          0
+        ],
+        "max": [
+          1,
+          1,
+          0.5199999809265137
+        ]
+      },
+      "nodePrefix": "GEO-shoulder-plain--surface",
+      "damagePreview": "unsupported",
+      "transform": {
+        "id": "roof--2-0",
+        "assetId": "part-9fe552c6f9293ec26860",
+        "position": [
+          -4,
+          0,
+          2.6875
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "id": "roof--1-0",
+      "url": "/assets/assembly/roof/r004/kit.glb",
+      "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+      "designId": "shipyard.roof.frontier",
+      "revision": 4,
+      "bounds": {
+        "min": [
+          -1,
+          -1,
+          0
+        ],
+        "max": [
+          1,
+          1,
+          0.8600000143051147
+        ]
+      },
+      "nodePrefix": "GEO-transition-port--surface",
+      "damagePreview": "unsupported",
+      "transform": {
+        "id": "roof--1-0",
+        "assetId": "part-61e4ccf651374ea0d773",
+        "position": [
+          -2,
+          0,
+          2.6875
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "id": "roof--1-3",
+      "url": "/assets/assembly/roof/r004/kit.glb",
+      "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+      "designId": "shipyard.roof.frontier",
+      "revision": 4,
+      "bounds": {
+        "min": [
+          -1,
+          -1,
+          0
+        ],
+        "max": [
+          1,
+          1,
+          1.2350000143051147
+        ]
+      },
+      "nodePrefix": "GEO-transition-service-port--surface",
+      "damagePreview": "unsupported",
+      "transform": {
+        "id": "roof--1-3",
+        "assetId": "part-16c015c4cd41f2332a37",
+        "position": [
+          -2,
+          6,
+          2.6875
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "id": "pilot-context-vestibule-roof-0",
+      "url": "/assets/assembly/roof/r004/kit.glb",
+      "sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+      "designId": "shipyard.roof.frontier",
+      "revision": 4,
+      "bounds": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          2,
+          2,
+          0.30000001192092896
+        ]
+      },
+      "nodePrefix": "GEO-vestibule-name--surface",
+      "damagePreview": "unsupported",
+      "transform": {
+        "id": "pilot-context-vestibule-roof-0",
+        "assetId": "part-14404bc85f3a72ad3ab8",
+        "position": [
+          -3,
+          7,
+          2.625
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    }
+  ],
+  "nativeKitManifestSha256": "43ea166655c8457383239072ac3f9aed9432a1f990f82d9d0e1137a0104d3ef5",
+  "originalMappingSha256": "7b6be86b42e904def098f1a70a36bff08c18773e3efbc9337667af6da3f86e2e",
+  "roundingM": 1e-06,
+  "limits": [
+    "Local positive-area/native-connected-void interfaces only; no entire Wayfarer gas-volume authority claimed.",
+    "Old four-panel leak is an explicit negative control; no added or repaired old triangles.",
+    "Original roof/cockpit/armor/floor/equipment placements remain unchanged.",
+    "Damage/pressure ratings and final owner artistic signoff remain separate."
+  ]
+}

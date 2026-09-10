@@ -1,0 +1,10 @@
+{
+  "diagnosticOnly": true,
+  "syntheticCapsNotAnAuthoredAssetOrAirtightQualification": true,
+  "results": {
+    "cap-cockpit-y6": [],
+    "cap-main-roof": [],
+    "cap-main-floor": [],
+    "cap-roof-floor-cockpit": []
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "schema": "sidereal.native-roof-closure-candidate.v1",
+  "status": "awaiting-native-interface-qualification",
+  "ownerFinalSignoff": null,
+  "sourceMaterialBlend": "assets/art-library/designs/shipyard.hull.side-armor/revisions/r003/blender-source.blend",
+  "sourceMaterialSha256": "70c57b06a2c170c28840e0566f077d3561e0b40c4f5e978d36940273ceec1abd",
+  "parts": [
+    {
+      "id": "rail-2m",
+      "file": "rail-2m.glb",
+      "sha256": "c9b9827f4870407c0f8c7879668c5c7ae09a3a471bbecb0eb53d9fbb5f171494",
+      "nodePrefix": "GEO-roof-closure-rail-2m--",
+      "editableComponents": 5,
+      "nominalLengthM": 2
+    },
+    {
+      "id": "junction-square",
+      "file": "junction-square.glb",
+      "sha256": "688895af2916b81fdeb49a1ea0b62e619f4e3669fcc8f1e0628fbebcb3420515",
+      "nodePrefix": "GEO-roof-closure-junction-square--",
+      "editableComponents": 6,
+      "nominalLengthM": 0.16
+    },
+    {
+      "id": "step-rail-2m",
+      "file": "step-rail-2m.glb",
+      "sha256": "85b341ed5737b2b6a864130237637e382c99a438fa3dce3b7f089862a3c37326",
+      "nodePrefix": "GEO-roof-closure-step-rail-2m--",
+      "editableComponents": 5,
+      "nominalLengthM": 2
+    },
+    {
+      "id": "wall-seam-2p5m",
+      "file": "wall-seam-2p5m.glb",
+      "sha256": "da12929941b5704ca01b4ba51971af5f9b77e4fc17aede95eb779176734f759c",
+      "nodePrefix": "GEO-roof-closure-wall-seam-2p5m--",
+      "editableComponents": 6,
+      "nominalLengthM": 2.5
+    }
+  ],
+  "nominalGridM": 2,
+  "mainRoofUndersideM": 2.6875,
+  "cockpitRoofUndersideM": 2.625,
+  "originalPlacementChanges": 0,
+  "scope": "New structural joint overlays only; original visible panels/source transforms unchanged; no strength/gas approval"
+}

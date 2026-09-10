@@ -1,0 +1,2352 @@
+{
+  "schema": "sidereal.wayfarer-native-closure-paths.v1",
+  "scope": "Known rectangular main-body interior only; excludes ambiguous sloped canopy exterior samples",
+  "results": {
+    "roof": {
+      "tested": 1075,
+      "clear": []
+    },
+    "floor": {
+      "tested": 1075,
+      "clear": [
+        {
+          "fromM": [
+            -3.002,
+            -7.0,
+            0.35
+          ],
+          "toM": [
+            -3.002,
+            -7.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2--4",
+            "floor--2--3",
+            "wall--2--4"
+          ]
+        },
+        {
+          "fromM": [
+            -3.002,
+            -5.0,
+            0.35
+          ],
+          "toM": [
+            -3.002,
+            -5.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2--3",
+            "floor--2--2",
+            "wall--2--2"
+          ]
+        },
+        {
+          "fromM": [
+            -3.002,
+            -3.0,
+            0.35
+          ],
+          "toM": [
+            -3.002,
+            -3.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2--2",
+            "floor--2--1",
+            "wall--2--2"
+          ]
+        },
+        {
+          "fromM": [
+            -3.002,
+            -1.0,
+            0.35
+          ],
+          "toM": [
+            -3.002,
+            -1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2--1",
+            "floor--2-0",
+            "wall--2-0"
+          ]
+        },
+        {
+          "fromM": [
+            -3.002,
+            1.0,
+            0.35
+          ],
+          "toM": [
+            -3.002,
+            1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2-0",
+            "floor--2-1",
+            "wall--2-0",
+            "wall--2-1"
+          ]
+        },
+        {
+          "fromM": [
+            -3.002,
+            3.0,
+            0.35
+          ],
+          "toM": [
+            -3.002,
+            3.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2-1",
+            "floor--2-2",
+            "wall--2-1"
+          ]
+        },
+        {
+          "fromM": [
+            -3.002,
+            5.0,
+            0.35
+          ],
+          "toM": [
+            -3.002,
+            5.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2-2",
+            "floor--2-3",
+            "wall--2-3"
+          ]
+        },
+        {
+          "fromM": [
+            -3.0,
+            -7.002,
+            0.35
+          ],
+          "toM": [
+            -3.0,
+            -7.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2--4",
+            "floor--1--4",
+            "wall--2--4",
+            "wall--1--4"
+          ]
+        },
+        {
+          "fromM": [
+            -3.0,
+            -7.0,
+            0.35
+          ],
+          "toM": [
+            -3.0,
+            -7.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2--4",
+            "floor--1--4",
+            "floor--2--3",
+            "floor--1--3",
+            "wall--2--4",
+            "wall--1--4"
+          ]
+        },
+        {
+          "fromM": [
+            -3.0,
+            -6.998,
+            0.35
+          ],
+          "toM": [
+            -3.0,
+            -6.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2--3",
+            "floor--1--3"
+          ]
+        },
+        {
+          "fromM": [
+            -3.0,
+            -5.002,
+            0.35
+          ],
+          "toM": [
+            -3.0,
+            -5.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2--3",
+            "floor--1--3"
+          ]
+        },
+        {
+          "fromM": [
+            -3.0,
+            -5.0,
+            0.35
+          ],
+          "toM": [
+            -3.0,
+            -5.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2--3",
+            "floor--1--3",
+            "floor--2--2",
+            "floor--1--2",
+            "wall--2--2",
+            "wall--1--2"
+          ]
+        },
+        {
+          "fromM": [
+            -3.0,
+            -4.998,
+            0.35
+          ],
+          "toM": [
+            -3.0,
+            -4.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2--2",
+            "floor--1--2",
+            "wall--2--2",
+            "wall--1--2"
+          ]
+        },
+        {
+          "fromM": [
+            -3.0,
+            -3.002,
+            0.35
+          ],
+          "toM": [
+            -3.0,
+            -3.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2--2",
+            "floor--1--2",
+            "wall--2--2",
+            "wall--1--2"
+          ]
+        },
+        {
+          "fromM": [
+            -3.0,
+            -3.0,
+            0.35
+          ],
+          "toM": [
+            -3.0,
+            -3.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2--2",
+            "floor--1--2",
+            "floor--2--1",
+            "floor--1--1",
+            "wall--2--2",
+            "wall--1--2"
+          ]
+        },
+        {
+          "fromM": [
+            -3.0,
+            -2.998,
+            0.35
+          ],
+          "toM": [
+            -3.0,
+            -2.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2--1",
+            "floor--1--1"
+          ]
+        },
+        {
+          "fromM": [
+            -3.0,
+            -1.002,
+            0.35
+          ],
+          "toM": [
+            -3.0,
+            -1.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2--1",
+            "floor--1--1"
+          ]
+        },
+        {
+          "fromM": [
+            -3.0,
+            -1.0,
+            0.35
+          ],
+          "toM": [
+            -3.0,
+            -1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2--1",
+            "floor--1--1",
+            "floor--2-0",
+            "floor--1-0",
+            "wall--2-0",
+            "wall--1-0"
+          ]
+        },
+        {
+          "fromM": [
+            -3.0,
+            -0.998,
+            0.35
+          ],
+          "toM": [
+            -3.0,
+            -0.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2-0",
+            "floor--1-0",
+            "wall--2-0",
+            "wall--1-0"
+          ]
+        },
+        {
+          "fromM": [
+            -3.0,
+            0.998,
+            0.35
+          ],
+          "toM": [
+            -3.0,
+            0.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2-0",
+            "floor--1-0",
+            "wall--2-0",
+            "wall--1-0"
+          ]
+        },
+        {
+          "fromM": [
+            -3.0,
+            1.0,
+            0.35
+          ],
+          "toM": [
+            -3.0,
+            1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2-0",
+            "floor--1-0",
+            "floor--2-1",
+            "floor--1-1",
+            "wall--2-0",
+            "wall--2-1",
+            "wall--1-0",
+            "wall--1-1"
+          ]
+        },
+        {
+          "fromM": [
+            -3.0,
+            1.002,
+            0.35
+          ],
+          "toM": [
+            -3.0,
+            1.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2-1",
+            "floor--1-1",
+            "wall--2-1",
+            "wall--1-1"
+          ]
+        },
+        {
+          "fromM": [
+            -3.0,
+            2.998,
+            0.35
+          ],
+          "toM": [
+            -3.0,
+            2.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2-1",
+            "floor--1-1",
+            "wall--2-1"
+          ]
+        },
+        {
+          "fromM": [
+            -3.0,
+            3.0,
+            0.35
+          ],
+          "toM": [
+            -3.0,
+            3.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2-1",
+            "floor--1-1",
+            "floor--2-2",
+            "floor--1-2",
+            "wall--2-1"
+          ]
+        },
+        {
+          "fromM": [
+            -3.0,
+            3.002,
+            0.35
+          ],
+          "toM": [
+            -3.0,
+            3.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2-2",
+            "floor--1-2"
+          ]
+        },
+        {
+          "fromM": [
+            -3.0,
+            4.998,
+            0.35
+          ],
+          "toM": [
+            -3.0,
+            4.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2-2",
+            "floor--1-2"
+          ]
+        },
+        {
+          "fromM": [
+            -3.0,
+            5.0,
+            0.35
+          ],
+          "toM": [
+            -3.0,
+            5.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2-2",
+            "floor--1-2",
+            "floor--2-3",
+            "floor--1-3",
+            "wall--2-3",
+            "wall--1-3"
+          ]
+        },
+        {
+          "fromM": [
+            -3.0,
+            5.002,
+            0.35
+          ],
+          "toM": [
+            -3.0,
+            5.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--2-3",
+            "floor--1-3",
+            "wall--2-3",
+            "wall--1-3"
+          ]
+        },
+        {
+          "fromM": [
+            -2.998,
+            -7.0,
+            0.35
+          ],
+          "toM": [
+            -2.998,
+            -7.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1--4",
+            "floor--1--3",
+            "wall--1--4"
+          ]
+        },
+        {
+          "fromM": [
+            -2.998,
+            -5.0,
+            0.35
+          ],
+          "toM": [
+            -2.998,
+            -5.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1--3",
+            "floor--1--2",
+            "wall--1--2"
+          ]
+        },
+        {
+          "fromM": [
+            -2.998,
+            -3.0,
+            0.35
+          ],
+          "toM": [
+            -2.998,
+            -3.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1--2",
+            "floor--1--1",
+            "wall--1--2"
+          ]
+        },
+        {
+          "fromM": [
+            -2.998,
+            -1.0,
+            0.35
+          ],
+          "toM": [
+            -2.998,
+            -1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1--1",
+            "floor--1-0",
+            "wall--1-0"
+          ]
+        },
+        {
+          "fromM": [
+            -2.998,
+            1.0,
+            0.35
+          ],
+          "toM": [
+            -2.998,
+            1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1-0",
+            "floor--1-1",
+            "wall--1-0",
+            "wall--1-1"
+          ]
+        },
+        {
+          "fromM": [
+            -2.998,
+            3.0,
+            0.35
+          ],
+          "toM": [
+            -2.998,
+            3.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1-1",
+            "floor--1-2"
+          ]
+        },
+        {
+          "fromM": [
+            -2.998,
+            5.0,
+            0.35
+          ],
+          "toM": [
+            -2.998,
+            5.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1-2",
+            "floor--1-3",
+            "wall--1-3"
+          ]
+        },
+        {
+          "fromM": [
+            -1.002,
+            -7.0,
+            0.35
+          ],
+          "toM": [
+            -1.002,
+            -7.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1--4",
+            "floor--1--3",
+            "wall--1--4"
+          ]
+        },
+        {
+          "fromM": [
+            -1.002,
+            -5.0,
+            0.35
+          ],
+          "toM": [
+            -1.002,
+            -5.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1--3",
+            "floor--1--2"
+          ]
+        },
+        {
+          "fromM": [
+            -1.002,
+            -3.0,
+            0.35
+          ],
+          "toM": [
+            -1.002,
+            -3.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1--2",
+            "floor--1--1"
+          ]
+        },
+        {
+          "fromM": [
+            -1.002,
+            -1.0,
+            0.35
+          ],
+          "toM": [
+            -1.002,
+            -1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1--1",
+            "floor--1-0"
+          ]
+        },
+        {
+          "fromM": [
+            -1.002,
+            1.0,
+            0.35
+          ],
+          "toM": [
+            -1.002,
+            1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1-0",
+            "floor--1-1"
+          ]
+        },
+        {
+          "fromM": [
+            -1.002,
+            3.0,
+            0.35
+          ],
+          "toM": [
+            -1.002,
+            3.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1-1",
+            "floor--1-2"
+          ]
+        },
+        {
+          "fromM": [
+            -1.002,
+            5.0,
+            0.35
+          ],
+          "toM": [
+            -1.002,
+            5.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1-2",
+            "floor--1-3"
+          ]
+        },
+        {
+          "fromM": [
+            -1.0,
+            -7.002,
+            0.35
+          ],
+          "toM": [
+            -1.0,
+            -7.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1--4",
+            "floor-0--4",
+            "wall--1--4"
+          ]
+        },
+        {
+          "fromM": [
+            -1.0,
+            -7.0,
+            0.35
+          ],
+          "toM": [
+            -1.0,
+            -7.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1--4",
+            "floor-0--4",
+            "floor--1--3",
+            "floor-0--3",
+            "wall--1--4"
+          ]
+        },
+        {
+          "fromM": [
+            -1.0,
+            -6.998,
+            0.35
+          ],
+          "toM": [
+            -1.0,
+            -6.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1--3",
+            "floor-0--3"
+          ]
+        },
+        {
+          "fromM": [
+            -1.0,
+            -5.002,
+            0.35
+          ],
+          "toM": [
+            -1.0,
+            -5.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1--3",
+            "floor-0--3"
+          ]
+        },
+        {
+          "fromM": [
+            -1.0,
+            -5.0,
+            0.35
+          ],
+          "toM": [
+            -1.0,
+            -5.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1--3",
+            "floor-0--3",
+            "floor--1--2",
+            "floor-0--2"
+          ]
+        },
+        {
+          "fromM": [
+            -1.0,
+            -4.998,
+            0.35
+          ],
+          "toM": [
+            -1.0,
+            -4.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1--2",
+            "floor-0--2"
+          ]
+        },
+        {
+          "fromM": [
+            -1.0,
+            -3.002,
+            0.35
+          ],
+          "toM": [
+            -1.0,
+            -3.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1--2",
+            "floor-0--2"
+          ]
+        },
+        {
+          "fromM": [
+            -1.0,
+            -3.0,
+            0.35
+          ],
+          "toM": [
+            -1.0,
+            -3.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1--2",
+            "floor-0--2",
+            "floor--1--1",
+            "floor-0--1"
+          ]
+        },
+        {
+          "fromM": [
+            -1.0,
+            -2.998,
+            0.35
+          ],
+          "toM": [
+            -1.0,
+            -2.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1--1",
+            "floor-0--1"
+          ]
+        },
+        {
+          "fromM": [
+            -1.0,
+            -1.002,
+            0.35
+          ],
+          "toM": [
+            -1.0,
+            -1.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1--1",
+            "floor-0--1"
+          ]
+        },
+        {
+          "fromM": [
+            -1.0,
+            -1.0,
+            0.35
+          ],
+          "toM": [
+            -1.0,
+            -1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1--1",
+            "floor-0--1",
+            "floor--1-0",
+            "floor-0-0"
+          ]
+        },
+        {
+          "fromM": [
+            -1.0,
+            -0.998,
+            0.35
+          ],
+          "toM": [
+            -1.0,
+            -0.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1-0",
+            "floor-0-0"
+          ]
+        },
+        {
+          "fromM": [
+            -1.0,
+            0.998,
+            0.35
+          ],
+          "toM": [
+            -1.0,
+            0.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1-0",
+            "floor-0-0"
+          ]
+        },
+        {
+          "fromM": [
+            -1.0,
+            1.0,
+            0.35
+          ],
+          "toM": [
+            -1.0,
+            1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1-0",
+            "floor-0-0",
+            "floor--1-1",
+            "floor-0-1"
+          ]
+        },
+        {
+          "fromM": [
+            -1.0,
+            1.002,
+            0.35
+          ],
+          "toM": [
+            -1.0,
+            1.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1-1",
+            "floor-0-1"
+          ]
+        },
+        {
+          "fromM": [
+            -1.0,
+            2.998,
+            0.35
+          ],
+          "toM": [
+            -1.0,
+            2.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1-1",
+            "floor-0-1"
+          ]
+        },
+        {
+          "fromM": [
+            -1.0,
+            3.0,
+            0.35
+          ],
+          "toM": [
+            -1.0,
+            3.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1-1",
+            "floor-0-1",
+            "floor--1-2",
+            "floor-0-2"
+          ]
+        },
+        {
+          "fromM": [
+            -1.0,
+            3.002,
+            0.35
+          ],
+          "toM": [
+            -1.0,
+            3.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1-2",
+            "floor-0-2"
+          ]
+        },
+        {
+          "fromM": [
+            -1.0,
+            4.998,
+            0.35
+          ],
+          "toM": [
+            -1.0,
+            4.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1-2",
+            "floor-0-2"
+          ]
+        },
+        {
+          "fromM": [
+            -1.0,
+            5.0,
+            0.35
+          ],
+          "toM": [
+            -1.0,
+            5.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1-2",
+            "floor-0-2",
+            "floor--1-3",
+            "floor-0-3"
+          ]
+        },
+        {
+          "fromM": [
+            -1.0,
+            5.002,
+            0.35
+          ],
+          "toM": [
+            -1.0,
+            5.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor--1-3",
+            "floor-0-3"
+          ]
+        },
+        {
+          "fromM": [
+            -0.998,
+            -7.0,
+            0.35
+          ],
+          "toM": [
+            -0.998,
+            -7.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0--4",
+            "floor-0--3"
+          ]
+        },
+        {
+          "fromM": [
+            -0.998,
+            -5.0,
+            0.35
+          ],
+          "toM": [
+            -0.998,
+            -5.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0--3",
+            "floor-0--2"
+          ]
+        },
+        {
+          "fromM": [
+            -0.998,
+            -3.0,
+            0.35
+          ],
+          "toM": [
+            -0.998,
+            -3.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0--2",
+            "floor-0--1"
+          ]
+        },
+        {
+          "fromM": [
+            -0.998,
+            -1.0,
+            0.35
+          ],
+          "toM": [
+            -0.998,
+            -1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0--1",
+            "floor-0-0"
+          ]
+        },
+        {
+          "fromM": [
+            -0.998,
+            1.0,
+            0.35
+          ],
+          "toM": [
+            -0.998,
+            1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0-0",
+            "floor-0-1"
+          ]
+        },
+        {
+          "fromM": [
+            -0.998,
+            3.0,
+            0.35
+          ],
+          "toM": [
+            -0.998,
+            3.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0-1",
+            "floor-0-2"
+          ]
+        },
+        {
+          "fromM": [
+            -0.998,
+            5.0,
+            0.35
+          ],
+          "toM": [
+            -0.998,
+            5.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0-2",
+            "floor-0-3"
+          ]
+        },
+        {
+          "fromM": [
+            0.998,
+            -7.0,
+            0.35
+          ],
+          "toM": [
+            0.998,
+            -7.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0--4",
+            "floor-0--3"
+          ]
+        },
+        {
+          "fromM": [
+            0.998,
+            -5.0,
+            0.35
+          ],
+          "toM": [
+            0.998,
+            -5.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0--3",
+            "floor-0--2"
+          ]
+        },
+        {
+          "fromM": [
+            0.998,
+            -3.0,
+            0.35
+          ],
+          "toM": [
+            0.998,
+            -3.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0--2",
+            "floor-0--1"
+          ]
+        },
+        {
+          "fromM": [
+            0.998,
+            -1.0,
+            0.35
+          ],
+          "toM": [
+            0.998,
+            -1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0--1",
+            "floor-0-0"
+          ]
+        },
+        {
+          "fromM": [
+            0.998,
+            1.0,
+            0.35
+          ],
+          "toM": [
+            0.998,
+            1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0-0",
+            "floor-0-1"
+          ]
+        },
+        {
+          "fromM": [
+            0.998,
+            3.0,
+            0.35
+          ],
+          "toM": [
+            0.998,
+            3.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0-1",
+            "floor-0-2"
+          ]
+        },
+        {
+          "fromM": [
+            0.998,
+            5.0,
+            0.35
+          ],
+          "toM": [
+            0.998,
+            5.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0-2",
+            "floor-0-3"
+          ]
+        },
+        {
+          "fromM": [
+            1.0,
+            -7.002,
+            0.35
+          ],
+          "toM": [
+            1.0,
+            -7.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0--4",
+            "floor-1--4",
+            "wall-1--4"
+          ]
+        },
+        {
+          "fromM": [
+            1.0,
+            -7.0,
+            0.35
+          ],
+          "toM": [
+            1.0,
+            -7.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0--4",
+            "floor-1--4",
+            "floor-0--3",
+            "floor-1--3",
+            "wall-1--4"
+          ]
+        },
+        {
+          "fromM": [
+            1.0,
+            -6.998,
+            0.35
+          ],
+          "toM": [
+            1.0,
+            -6.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0--3",
+            "floor-1--3"
+          ]
+        },
+        {
+          "fromM": [
+            1.0,
+            -5.002,
+            0.35
+          ],
+          "toM": [
+            1.0,
+            -5.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0--3",
+            "floor-1--3"
+          ]
+        },
+        {
+          "fromM": [
+            1.0,
+            -5.0,
+            0.35
+          ],
+          "toM": [
+            1.0,
+            -5.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0--3",
+            "floor-1--3",
+            "floor-0--2",
+            "floor-1--2"
+          ]
+        },
+        {
+          "fromM": [
+            1.0,
+            -4.998,
+            0.35
+          ],
+          "toM": [
+            1.0,
+            -4.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0--2",
+            "floor-1--2"
+          ]
+        },
+        {
+          "fromM": [
+            1.0,
+            -3.002,
+            0.35
+          ],
+          "toM": [
+            1.0,
+            -3.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0--2",
+            "floor-1--2"
+          ]
+        },
+        {
+          "fromM": [
+            1.0,
+            -3.0,
+            0.35
+          ],
+          "toM": [
+            1.0,
+            -3.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0--2",
+            "floor-1--2",
+            "floor-0--1",
+            "floor-1--1"
+          ]
+        },
+        {
+          "fromM": [
+            1.0,
+            -2.998,
+            0.35
+          ],
+          "toM": [
+            1.0,
+            -2.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0--1",
+            "floor-1--1"
+          ]
+        },
+        {
+          "fromM": [
+            1.0,
+            -1.002,
+            0.35
+          ],
+          "toM": [
+            1.0,
+            -1.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0--1",
+            "floor-1--1"
+          ]
+        },
+        {
+          "fromM": [
+            1.0,
+            -1.0,
+            0.35
+          ],
+          "toM": [
+            1.0,
+            -1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0--1",
+            "floor-1--1",
+            "floor-0-0",
+            "floor-1-0"
+          ]
+        },
+        {
+          "fromM": [
+            1.0,
+            -0.998,
+            0.35
+          ],
+          "toM": [
+            1.0,
+            -0.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0-0",
+            "floor-1-0"
+          ]
+        },
+        {
+          "fromM": [
+            1.0,
+            0.998,
+            0.35
+          ],
+          "toM": [
+            1.0,
+            0.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0-0",
+            "floor-1-0"
+          ]
+        },
+        {
+          "fromM": [
+            1.0,
+            1.0,
+            0.35
+          ],
+          "toM": [
+            1.0,
+            1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0-0",
+            "floor-1-0",
+            "floor-0-1",
+            "floor-1-1"
+          ]
+        },
+        {
+          "fromM": [
+            1.0,
+            1.002,
+            0.35
+          ],
+          "toM": [
+            1.0,
+            1.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0-1",
+            "floor-1-1"
+          ]
+        },
+        {
+          "fromM": [
+            1.0,
+            2.998,
+            0.35
+          ],
+          "toM": [
+            1.0,
+            2.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0-1",
+            "floor-1-1"
+          ]
+        },
+        {
+          "fromM": [
+            1.0,
+            3.0,
+            0.35
+          ],
+          "toM": [
+            1.0,
+            3.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0-1",
+            "floor-1-1",
+            "floor-0-2",
+            "floor-1-2"
+          ]
+        },
+        {
+          "fromM": [
+            1.0,
+            3.002,
+            0.35
+          ],
+          "toM": [
+            1.0,
+            3.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0-2",
+            "floor-1-2"
+          ]
+        },
+        {
+          "fromM": [
+            1.0,
+            4.998,
+            0.35
+          ],
+          "toM": [
+            1.0,
+            4.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0-2",
+            "floor-1-2"
+          ]
+        },
+        {
+          "fromM": [
+            1.0,
+            5.0,
+            0.35
+          ],
+          "toM": [
+            1.0,
+            5.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0-2",
+            "floor-1-2",
+            "floor-0-3",
+            "floor-1-3"
+          ]
+        },
+        {
+          "fromM": [
+            1.0,
+            5.002,
+            0.35
+          ],
+          "toM": [
+            1.0,
+            5.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-0-3",
+            "floor-1-3"
+          ]
+        },
+        {
+          "fromM": [
+            1.002,
+            -7.0,
+            0.35
+          ],
+          "toM": [
+            1.002,
+            -7.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1--4",
+            "floor-1--3",
+            "wall-1--4"
+          ]
+        },
+        {
+          "fromM": [
+            1.002,
+            -5.0,
+            0.35
+          ],
+          "toM": [
+            1.002,
+            -5.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1--3",
+            "floor-1--2"
+          ]
+        },
+        {
+          "fromM": [
+            1.002,
+            -3.0,
+            0.35
+          ],
+          "toM": [
+            1.002,
+            -3.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1--2",
+            "floor-1--1"
+          ]
+        },
+        {
+          "fromM": [
+            1.002,
+            -1.0,
+            0.35
+          ],
+          "toM": [
+            1.002,
+            -1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1--1",
+            "floor-1-0"
+          ]
+        },
+        {
+          "fromM": [
+            1.002,
+            1.0,
+            0.35
+          ],
+          "toM": [
+            1.002,
+            1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1-0",
+            "floor-1-1"
+          ]
+        },
+        {
+          "fromM": [
+            1.002,
+            3.0,
+            0.35
+          ],
+          "toM": [
+            1.002,
+            3.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1-1",
+            "floor-1-2"
+          ]
+        },
+        {
+          "fromM": [
+            1.002,
+            5.0,
+            0.35
+          ],
+          "toM": [
+            1.002,
+            5.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1-2",
+            "floor-1-3"
+          ]
+        },
+        {
+          "fromM": [
+            2.998,
+            -7.0,
+            0.35
+          ],
+          "toM": [
+            2.998,
+            -7.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1--4",
+            "floor-1--3",
+            "wall-1--4"
+          ]
+        },
+        {
+          "fromM": [
+            2.998,
+            -5.0,
+            0.35
+          ],
+          "toM": [
+            2.998,
+            -5.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1--3",
+            "floor-1--2",
+            "wall-1--2"
+          ]
+        },
+        {
+          "fromM": [
+            2.998,
+            -3.0,
+            0.35
+          ],
+          "toM": [
+            2.998,
+            -3.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1--2",
+            "floor-1--1",
+            "wall-1--2"
+          ]
+        },
+        {
+          "fromM": [
+            2.998,
+            -1.0,
+            0.35
+          ],
+          "toM": [
+            2.998,
+            -1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1--1",
+            "floor-1-0",
+            "wall-1-0"
+          ]
+        },
+        {
+          "fromM": [
+            2.998,
+            1.0,
+            0.35
+          ],
+          "toM": [
+            2.998,
+            1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1-0",
+            "floor-1-1",
+            "wall-1-0"
+          ]
+        },
+        {
+          "fromM": [
+            2.998,
+            3.0,
+            0.35
+          ],
+          "toM": [
+            2.998,
+            3.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1-1",
+            "floor-1-2"
+          ]
+        },
+        {
+          "fromM": [
+            2.998,
+            5.0,
+            0.35
+          ],
+          "toM": [
+            2.998,
+            5.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1-2",
+            "floor-1-3",
+            "wall-1-3"
+          ]
+        },
+        {
+          "fromM": [
+            3.0,
+            -7.002,
+            0.35
+          ],
+          "toM": [
+            3.0,
+            -7.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1--4",
+            "floor-2--4",
+            "wall-2--4",
+            "wall-1--4"
+          ]
+        },
+        {
+          "fromM": [
+            3.0,
+            -7.0,
+            0.35
+          ],
+          "toM": [
+            3.0,
+            -7.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1--4",
+            "floor-2--4",
+            "floor-1--3",
+            "floor-2--3",
+            "wall-2--4",
+            "wall-1--4"
+          ]
+        },
+        {
+          "fromM": [
+            3.0,
+            -6.998,
+            0.35
+          ],
+          "toM": [
+            3.0,
+            -6.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1--3",
+            "floor-2--3"
+          ]
+        },
+        {
+          "fromM": [
+            3.0,
+            -5.002,
+            0.35
+          ],
+          "toM": [
+            3.0,
+            -5.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1--3",
+            "floor-2--3"
+          ]
+        },
+        {
+          "fromM": [
+            3.0,
+            -2.998,
+            0.35
+          ],
+          "toM": [
+            3.0,
+            -2.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1--1",
+            "floor-2--1"
+          ]
+        },
+        {
+          "fromM": [
+            3.0,
+            -1.002,
+            0.35
+          ],
+          "toM": [
+            3.0,
+            -1.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1--1",
+            "floor-2--1"
+          ]
+        },
+        {
+          "fromM": [
+            3.0,
+            -1.0,
+            0.35
+          ],
+          "toM": [
+            3.0,
+            -1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1--1",
+            "floor-2--1",
+            "floor-1-0",
+            "floor-2-0",
+            "wall-2-0",
+            "wall-1-0"
+          ]
+        },
+        {
+          "fromM": [
+            3.0,
+            -0.998,
+            0.35
+          ],
+          "toM": [
+            3.0,
+            -0.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1-0",
+            "floor-2-0",
+            "wall-2-0",
+            "wall-1-0"
+          ]
+        },
+        {
+          "fromM": [
+            3.0,
+            0.998,
+            0.35
+          ],
+          "toM": [
+            3.0,
+            0.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1-0",
+            "floor-2-0",
+            "wall-2-0",
+            "wall-1-0"
+          ]
+        },
+        {
+          "fromM": [
+            3.0,
+            1.0,
+            0.35
+          ],
+          "toM": [
+            3.0,
+            1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1-0",
+            "floor-2-0",
+            "floor-1-1",
+            "floor-2-1",
+            "wall-2-0",
+            "wall-1-0"
+          ]
+        },
+        {
+          "fromM": [
+            3.0,
+            1.002,
+            0.35
+          ],
+          "toM": [
+            3.0,
+            1.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1-1",
+            "floor-2-1"
+          ]
+        },
+        {
+          "fromM": [
+            3.0,
+            2.998,
+            0.35
+          ],
+          "toM": [
+            3.0,
+            2.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1-1",
+            "floor-2-1"
+          ]
+        },
+        {
+          "fromM": [
+            3.0,
+            3.0,
+            0.35
+          ],
+          "toM": [
+            3.0,
+            3.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1-1",
+            "floor-2-1",
+            "floor-1-2",
+            "floor-2-2"
+          ]
+        },
+        {
+          "fromM": [
+            3.0,
+            3.002,
+            0.35
+          ],
+          "toM": [
+            3.0,
+            3.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1-2",
+            "floor-2-2"
+          ]
+        },
+        {
+          "fromM": [
+            3.0,
+            4.998,
+            0.35
+          ],
+          "toM": [
+            3.0,
+            4.998,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1-2",
+            "floor-2-2"
+          ]
+        },
+        {
+          "fromM": [
+            3.0,
+            5.0,
+            0.35
+          ],
+          "toM": [
+            3.0,
+            5.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1-2",
+            "floor-2-2",
+            "floor-1-3",
+            "floor-2-3",
+            "wall-2-3",
+            "wall-1-3"
+          ]
+        },
+        {
+          "fromM": [
+            3.0,
+            5.002,
+            0.35
+          ],
+          "toM": [
+            3.0,
+            5.002,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-1-3",
+            "floor-2-3",
+            "wall-2-3",
+            "wall-1-3"
+          ]
+        },
+        {
+          "fromM": [
+            3.002,
+            -7.0,
+            0.35
+          ],
+          "toM": [
+            3.002,
+            -7.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-2--4",
+            "floor-2--3",
+            "wall-2--4"
+          ]
+        },
+        {
+          "fromM": [
+            3.002,
+            -1.0,
+            0.35
+          ],
+          "toM": [
+            3.002,
+            -1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-2--1",
+            "floor-2-0",
+            "wall-2-0"
+          ]
+        },
+        {
+          "fromM": [
+            3.002,
+            1.0,
+            0.35
+          ],
+          "toM": [
+            3.002,
+            1.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-2-0",
+            "floor-2-1",
+            "wall-2-0"
+          ]
+        },
+        {
+          "fromM": [
+            3.002,
+            3.0,
+            0.35
+          ],
+          "toM": [
+            3.002,
+            3.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-2-1",
+            "floor-2-2"
+          ]
+        },
+        {
+          "fromM": [
+            3.002,
+            5.0,
+            0.35
+          ],
+          "toM": [
+            3.002,
+            5.0,
+            -1
+          ],
+          "sourceCandidates": [
+            "floor-2-2",
+            "floor-2-3",
+            "wall-2-3"
+          ]
+        }
+      ]
+    },
+    "side-wall": {
+      "tested": 430,
+      "clear": [
+        {
+          "fromM": [
+            4.5,
+            -4.0,
+            0.35
+          ],
+          "toM": [
+            7,
+            -4.0,
+            0.35
+          ],
+          "sourceCandidates": [
+            "wall-2--2",
+            "wall-3--2",
+            "candidate-extended-new-vestibule-native-35",
+            "candidate-extended-new-vestibule-native-36"
+          ]
+        },
+        {
+          "fromM": [
+            4.5,
+            -4.0,
+            1
+          ],
+          "toM": [
+            7,
+            -4.0,
+            1
+          ],
+          "sourceCandidates": [
+            "wall-2--2",
+            "wall-3--2",
+            "candidate-extended-new-vestibule-native-35",
+            "candidate-extended-new-vestibule-native-36"
+          ]
+        },
+        {
+          "fromM": [
+            4.5,
+            -4.0,
+            1.8
+          ],
+          "toM": [
+            7,
+            -4.0,
+            1.8
+          ],
+          "sourceCandidates": [
+            "wall-2--2",
+            "wall-3--2",
+            "candidate-extended-new-vestibule-native-35",
+            "candidate-extended-new-vestibule-native-36"
+          ]
+        }
+      ]
+    },
+    "rear-wall": {
+      "tested": 125,
+      "clear": []
+    }
+  },
+  "qualification": "Native triangle path witnesses; not a substitute for finite connected volume"
+}

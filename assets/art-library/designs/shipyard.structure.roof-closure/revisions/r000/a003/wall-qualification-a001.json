@@ -1,0 +1,195 @@
+{
+  "schema": "sidereal.native-wall-closure-qualification.v1",
+  "pass": false,
+  "checks": [
+    {
+      "name": "Native closed authored wall-seam-2p5m",
+      "pass": true,
+      "detail": {
+        "triangles": 952,
+        "volumeM3": 0.0633832203001755
+      }
+    },
+    {
+      "name": "Separate proxy exactly matches native core wall-seam-2p5m",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Wall seam overlaps both original staggered rear panels",
+      "pass": true,
+      "detail": [
+        0.014486949629190013,
+        0.01483154296875
+      ]
+    },
+    {
+      "name": "Original native rear seam has a positive-volume cross-wall path",
+      "pass": false,
+      "detail": []
+    },
+    {
+      "name": "Native wall companion closes that local path",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "Native closed authored shoulder-panel-0p5m",
+      "pass": true,
+      "detail": {
+        "triangles": 1140,
+        "volumeM3": 0.25446021474084357
+      }
+    },
+    {
+      "name": "Separate proxy exactly matches native core shoulder-panel-0p5m",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Shoulder overlaps original neighbors -1",
+      "pass": true,
+      "detail": [
+        0.014487999407550158,
+        0.016357206854456133
+      ]
+    },
+    {
+      "name": "Shoulder overlaps original neighbors 1",
+      "pass": true,
+      "detail": [
+        0.01448799932812439,
+        0.01635720685445613
+      ]
+    },
+    {
+      "name": "Central future doorway remains unobstructed",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "pins": [
+    {
+      "newPart": "wall-seam-2p5m",
+      "path": "assets/art-library/designs/shipyard.structure.roof-closure/revisions/r000/a002/wall-seam-2p5m.glb",
+      "sha256": "da12929941b5704ca01b4ba51971af5f9b77e4fc17aede95eb779176734f759c"
+    },
+    {
+      "id": "wall-1--5",
+      "path": "assets/runtime/assembly/parts.glb",
+      "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+      "prefix": "GEO-part-4d2655e20be90a6b2257--",
+      "transform": {
+        "id": "wall-1--5",
+        "assetId": "part-4d2655e20be90a6b2257",
+        "position": [
+          2,
+          -9.125,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "id": "wall-2--5",
+      "path": "assets/runtime/assembly/parts.glb",
+      "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+      "prefix": "GEO-part-a7c31e5a4591741723d0--",
+      "transform": {
+        "id": "wall-2--5",
+        "assetId": "part-a7c31e5a4591741723d0",
+        "position": [
+          4,
+          -9.1875,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "newPart": "shoulder-panel-0p5m",
+      "path": "assets/art-library/designs/shipyard.structure.roof-closure/revisions/r000/a003/shoulder-panel-0p5m.glb",
+      "sha256": "56c6ecdca5a1fa3b592df5cf77f41817a5ca58238306a901b828cf2150b4aa4f"
+    },
+    {
+      "id": "pilot-r004-rear-partition-23",
+      "path": "assets/runtime/assembly/hull/finish-r004/part-e7dddd4628bd6be8efb7/clean.glb",
+      "sha256": "53d58e142047665409aadeb232a83f0c5a1901da705234f2ffc8bda4f211e5c9",
+      "prefix": null,
+      "transform": {
+        "id": "pilot-r004-rear-partition-23",
+        "assetId": "part-e7dddd4628bd6be8efb7",
+        "position": [
+          -2.625,
+          8.625,
+          0.1875
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "id": "pilot-r004-corner-buttress-18",
+      "path": "assets/runtime/assembly/hull/finish-r004/part-9f79f3a40a72f9b7ad4a/clean.glb",
+      "sha256": "1b787888f92e9a7691337c02b297a8895703544003ddcec8eb655ff1ffe91af3",
+      "prefix": null,
+      "transform": {
+        "id": "pilot-r004-corner-buttress-18",
+        "assetId": "part-9f79f3a40a72f9b7ad4a",
+        "position": [
+          -3,
+          9,
+          0.1875
+        ],
+        "rotation": 0,
+        "flipped": true,
+        "removedCells": []
+      }
+    },
+    {
+      "id": "pilot-r004-rear-partition-24",
+      "path": "assets/runtime/assembly/hull/finish-r004/part-e7dddd4628bd6be8efb7/clean.glb",
+      "sha256": "53d58e142047665409aadeb232a83f0c5a1901da705234f2ffc8bda4f211e5c9",
+      "prefix": null,
+      "transform": {
+        "id": "pilot-r004-rear-partition-24",
+        "assetId": "part-e7dddd4628bd6be8efb7",
+        "position": [
+          1,
+          8.625,
+          0.1875
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "id": "pilot-r004-corner-buttress-17",
+      "path": "assets/runtime/assembly/hull/finish-r004/part-9f79f3a40a72f9b7ad4a/clean.glb",
+      "sha256": "1b787888f92e9a7691337c02b297a8895703544003ddcec8eb655ff1ffe91af3",
+      "prefix": null,
+      "transform": {
+        "id": "pilot-r004-corner-buttress-17",
+        "assetId": "part-9f79f3a40a72f9b7ad4a",
+        "position": [
+          3,
+          9,
+          0.1875
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    }
+  ],
+  "limits": [
+    "Local exact native overlap only; whole ship still requires finite closure validation.",
+    "Existing source placements and doorway preserved; no final art approval, ratings or runtime collision installation."
+  ]
+}

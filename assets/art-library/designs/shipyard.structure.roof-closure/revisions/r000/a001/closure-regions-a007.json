@@ -1,0 +1,93 @@
+{
+  "diagnosticOnly": true,
+  "syntheticCapsNotAnAuthoredAssetOrAirtightQualification": true,
+  "results": {
+    "control-all-caps": [
+      {
+        "volumeM3": 285.993914908198,
+        "probes": [
+          "main",
+          "rear"
+        ],
+        "bounds": [
+          -4.8,
+          -8.5,
+          0.2,
+          4.8,
+          5.5,
+          2.5
+        ]
+      }
+    ],
+    "native-roof": [],
+    "native-floor": [
+      {
+        "volumeM3": 287.55143599093583,
+        "probes": [
+          "main",
+          "rear"
+        ],
+        "bounds": [
+          -4.8,
+          -8.5,
+          0.046875,
+          4.8,
+          5.5,
+          2.5
+        ]
+      }
+    ],
+    "native-front": [],
+    "native-rear": [
+      {
+        "volumeM3": 292.7939537326774,
+        "probes": [
+          "main",
+          "rear"
+        ],
+        "bounds": [
+          -4.8,
+          -9.145,
+          0.2,
+          4.8,
+          5.5,
+          2.5
+        ]
+      }
+    ],
+    "native-left": [
+      {
+        "volumeM3": 286.507332876948,
+        "probes": [
+          "main",
+          "rear"
+        ],
+        "bounds": [
+          -5.0,
+          -8.5,
+          0.2,
+          4.8,
+          5.5,
+          2.5
+        ]
+      }
+    ],
+    "native-right": [
+      {
+        "volumeM3": 295.5755521348793,
+        "probes": [
+          "main",
+          "rear"
+        ],
+        "bounds": [
+          -4.8,
+          -8.5,
+          0.046875,
+          7.0625,
+          5.5,
+          2.5
+        ]
+      }
+    ]
+  }
+}

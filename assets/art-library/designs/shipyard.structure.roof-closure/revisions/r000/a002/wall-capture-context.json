@@ -1,0 +1,89 @@
+{
+  "captures": [
+    {
+      "path": "native-kit-framed.png",
+      "cameraM": [
+        5,
+        6,
+        5
+      ],
+      "targetM": [
+        0.8,
+        0.8,
+        1.1
+      ],
+      "scaleM": 6.1,
+      "renderer": "Cycles CPU32samples"
+    },
+    {
+      "path": "rear-seam-original.png",
+      "cameraM": [
+        1.4,
+        3.2,
+        2.1
+      ],
+      "targetM": [
+        0,
+        0,
+        1.25
+      ],
+      "scaleM": 3.2,
+      "renderer": "Cycles CPU32samples"
+    },
+    {
+      "path": "rear-seam-with-native-closure.png",
+      "cameraM": [
+        1.4,
+        3.2,
+        2.1
+      ],
+      "targetM": [
+        0,
+        0,
+        1.25
+      ],
+      "scaleM": 3.2,
+      "renderer": "Cycles CPU32samples"
+    }
+  ],
+  "sourcePanels": [
+    {
+      "sourcePlacedId": "wall-2--5",
+      "path": "assets/runtime/assembly/parts.glb",
+      "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+      "nodePrefix": "GEO-part-a7c31e5a4591741723d0--",
+      "transform": {
+        "id": "wall-2--5",
+        "assetId": "part-a7c31e5a4591741723d0",
+        "position": [
+          4,
+          -9.1875,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "sourcePlacedId": "wall-1--5",
+      "path": "assets/runtime/assembly/parts.glb",
+      "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+      "nodePrefix": "GEO-part-4d2655e20be90a6b2257--",
+      "transform": {
+        "id": "wall-1--5",
+        "assetId": "part-4d2655e20be90a6b2257",
+        "position": [
+          2,
+          -9.125,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    }
+  ],
+  "sourceTransformsUnchanged": true,
+  "originalNativeKitImage": "native-kit.png remains preserved; it clipped the vertical rail and is superseded for framing only"
+}

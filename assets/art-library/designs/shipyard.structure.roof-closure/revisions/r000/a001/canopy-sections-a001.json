@@ -1,0 +1,374 @@
+{
+  "diagnosticOnly": true,
+  "reports": [
+    {
+      "heightM": 0.02,
+      "mainRegions": []
+    },
+    {
+      "heightM": 0.1,
+      "mainRegions": []
+    },
+    {
+      "heightM": 0.18,
+      "mainRegions": []
+    },
+    {
+      "heightM": 0.2,
+      "mainRegions": [
+        {
+          "areaM2": 163.1609912688228,
+          "boundsM": [
+            -4.875,
+            -8.832500003278255,
+            7.0625,
+            8.90625
+          ],
+          "outsideConnected": false
+        }
+      ]
+    },
+    {
+      "heightM": 0.5,
+      "mainRegions": [
+        {
+          "areaM2": 174.00754166882953,
+          "boundsM": [
+            -4.875,
+            -8.832500003278255,
+            7.0625,
+            12.649999998509884
+          ],
+          "outsideConnected": false
+        }
+      ]
+    },
+    {
+      "heightM": 0.98,
+      "mainRegions": [
+        {
+          "areaM2": 175.6095041268333,
+          "boundsM": [
+            -4.875,
+            -8.832500003278255,
+            7.0625,
+            12.649999998509884
+          ],
+          "outsideConnected": false
+        }
+      ]
+    },
+    {
+      "heightM": 1,
+      "mainRegions": [
+        {
+          "areaM2": 177.42205038355698,
+          "boundsM": [
+            -5.0,
+            -8.894249998033047,
+            7.0625,
+            12.649999998509884
+          ],
+          "outsideConnected": false
+        }
+      ]
+    },
+    {
+      "heightM": 1.02,
+      "mainRegions": [
+        {
+          "areaM2": 177.11646356904708,
+          "boundsM": [
+            -4.875,
+            -8.832500003278255,
+            7.0625,
+            12.649999998509884
+          ],
+          "outsideConnected": false
+        }
+      ]
+    },
+    {
+      "heightM": 1.2,
+      "mainRegions": [
+        {
+          "areaM2": 175.1436954151499,
+          "boundsM": [
+            -4.875,
+            -8.832500003278255,
+            7.0625,
+            12.649999998509884
+          ],
+          "outsideConnected": false
+        }
+      ]
+    },
+    {
+      "heightM": 1.24,
+      "mainRegions": [
+        {
+          "areaM2": 175.12092741278136,
+          "boundsM": [
+            -4.875,
+            -8.832500003278255,
+            7.0625,
+            12.649999998509884
+          ],
+          "outsideConnected": false
+        }
+      ]
+    },
+    {
+      "heightM": 1.25,
+      "mainRegions": [
+        {
+          "areaM2": 174.94316226387892,
+          "boundsM": [
+            -4.875,
+            -8.832500003278255,
+            7.0625,
+            12.64455722272396
+          ],
+          "outsideConnected": false
+        }
+      ]
+    },
+    {
+      "heightM": 1.28,
+      "mainRegions": [
+        {
+          "areaM2": 174.92523172071273,
+          "boundsM": [
+            -4.875,
+            -8.832500003278255,
+            7.0625,
+            12.644408024847507
+          ],
+          "outsideConnected": false
+        }
+      ]
+    },
+    {
+      "heightM": 1.31,
+      "mainRegions": [
+        {
+          "areaM2": 175.039908117972,
+          "boundsM": [
+            -4.875,
+            -8.832500003278255,
+            7.0625,
+            12.658567637205124
+          ],
+          "outsideConnected": false
+        }
+      ]
+    },
+    {
+      "heightM": 1.35,
+      "mainRegions": [
+        {
+          "areaM2": 171.75427471403896,
+          "boundsM": [
+            -4.9375,
+            -8.832500003278255,
+            7.0625,
+            12.747500002384186
+          ],
+          "outsideConnected": false
+        }
+      ]
+    },
+    {
+      "heightM": 1.5,
+      "mainRegions": [
+        {
+          "areaM2": 182.25689261307764,
+          "boundsM": [
+            -4.8125,
+            -8.832500003278255,
+            7.0625,
+            12.698293693363667
+          ],
+          "outsideConnected": false
+        }
+      ]
+    },
+    {
+      "heightM": 1.8,
+      "mainRegions": [
+        {
+          "areaM2": 180.587810624134,
+          "boundsM": [
+            -4.8125,
+            -8.832500003278255,
+            7.0625,
+            12.55543665587902
+          ],
+          "outsideConnected": false
+        }
+      ]
+    },
+    {
+      "heightM": 2,
+      "mainRegions": [
+        {
+          "areaM2": 180.05077902699858,
+          "boundsM": [
+            -4.8125,
+            -8.832500003278255,
+            7.0625,
+            12.460198633372784
+          ],
+          "outsideConnected": false
+        }
+      ]
+    },
+    {
+      "heightM": 2.3,
+      "mainRegions": [
+        {
+          "areaM2": 179.18643470597328,
+          "boundsM": [
+            -4.8125,
+            -8.832500003278255,
+            7.0625,
+            12.317341603338718
+          ],
+          "outsideConnected": false
+        }
+      ]
+    },
+    {
+      "heightM": 2.5,
+      "mainRegions": [
+        {
+          "areaM2": 164.6576619032876,
+          "boundsM": [
+            -5.0,
+            -8.770000003278255,
+            5.0,
+            8.90625
+          ],
+          "outsideConnected": false
+        }
+      ]
+    },
+    {
+      "heightM": 2.59,
+      "mainRegions": [
+        {
+          "areaM2": 164.2614406368916,
+          "boundsM": [
+            -4.75,
+            -8.770000003278255,
+            4.875,
+            8.90625
+          ],
+          "outsideConnected": false
+        }
+      ]
+    },
+    {
+      "heightM": 2.61,
+      "mainRegions": [
+        {
+          "areaM2": 153.79810940003154,
+          "boundsM": [
+            -4.75,
+            -8.770000003278255,
+            4.875,
+            8.75
+          ],
+          "outsideConnected": false
+        }
+      ]
+    },
+    {
+      "heightM": 2.625,
+      "mainRegions": [
+        {
+          "areaM2": 153.91846485477114,
+          "boundsM": [
+            -4.75,
+            -8.770000003278255,
+            4.875,
+            8.75
+          ],
+          "outsideConnected": false
+        }
+      ]
+    },
+    {
+      "heightM": 2.64,
+      "mainRegions": [
+        {
+          "areaM2": 153.89804966700498,
+          "boundsM": [
+            -4.75,
+            -8.770000003278255,
+            4.875,
+            8.75
+          ],
+          "outsideConnected": false
+        }
+      ]
+    },
+    {
+      "heightM": 2.66,
+      "mainRegions": [
+        {
+          "areaM2": 151.294360045562,
+          "boundsM": [
+            -4.75,
+            -8.755012437701225,
+            4.875,
+            8.75
+          ],
+          "outsideConnected": false
+        }
+      ]
+    },
+    {
+      "heightM": 2.68,
+      "mainRegions": [
+        {
+          "areaM2": 3.6064000223636627,
+          "boundsM": [
+            -0.9500000029802322,
+            -0.9500000029802322,
+            0.9500000029802322,
+            0.9500000029802322
+          ],
+          "outsideConnected": false
+        }
+      ]
+    },
+    {
+      "heightM": 2.69,
+      "mainRegions": []
+    },
+    {
+      "heightM": 2.72,
+      "mainRegions": []
+    },
+    {
+      "heightM": 2.8,
+      "mainRegions": []
+    },
+    {
+      "heightM": 2.9,
+      "mainRegions": [
+        {
+          "areaM2": 444.4208218614633,
+          "boundsM": [
+            -7.0,
+            -11.0,
+            15.0,
+            15.0
+          ],
+          "outsideConnected": true
+        }
+      ]
+    }
+  ]
+}
