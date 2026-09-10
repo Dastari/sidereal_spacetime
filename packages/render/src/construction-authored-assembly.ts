@@ -1,3 +1,4 @@
+import { withMaterialSetup } from "./material-setup";
 import { batchStaticMaterials } from "./static-material-batches";
 import { cacheStaticTransforms } from "./static-transform-cache";
 import { mergeStructuralPlacements } from "./structural-batches";
@@ -76,6 +77,11 @@ export async function loadConstructionAuthoredAssembly(
       catalog.assets,
       base.map((p) => p.id),
     );
+    const requests: {
+      p: (typeof base)[number];
+      a: PartCatalog["assets"][number];
+      library: NonNullable<ReturnType<typeof libraries.get>>;
+    }[] = [];
     for (const p of [...base, ...extra]) {
       const a = catalog.assets.find((a) => a.id === p.assetId);
       if (!a || a.category === "floor" || p.removedCells.length)
@@ -106,6 +112,10 @@ export async function loadConstructionAuthoredAssembly(
         library = { container, sources, sha256: sha };
         libraries.set(url, library);
       }
+      requests.push({p,a,library});
+    }
+    return withMaterialSetup(scene, () => {
+    for (const {p,a,library} of requests) {
       const prefix = a.visual?.nodePrefix;
       let selected = library.sources.filter((m) =>
         a.visual
@@ -202,6 +212,7 @@ export async function loadConstructionAuthoredAssembly(
           mesh.setEnabled(!(interior && mesh.metadata.role === "roof"));
       },
     };
+    });
   } catch (error) {
     dispose();
     throw error;

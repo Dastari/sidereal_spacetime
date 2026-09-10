@@ -24,7 +24,14 @@ test("all 211 authored objects load from 28 verified libraries with independent 
     scene = new Scene(e);
   scene.useRightHandedSystem = true;
   const root = new TransformNode("instance", scene);
+  const addedWhileBlocked: boolean[] = [];
+  const addMesh = scene.addMesh.bind(scene);
+  vi.spyOn(scene,"addMesh").mockImplementation((mesh,recursive) => {
+    addedWhileBlocked.push(scene.blockMaterialDirtyMechanism);
+    return addMesh(mesh,recursive);
+  });
   const fetcher = vi.fn(async (url: string) => {
+    expect(scene.blockMaterialDirtyMechanism).toBe(false);
     const raw = readFileSync(
       "assets/runtime/" + url.replace(/^\/assets\//, ""),
     );
@@ -64,6 +71,8 @@ test("all 211 authored objects load from 28 verified libraries with independent 
       a.spawn.deckId,
     );
     expect(result).not.toBeNull();
+    expect(scene.blockMaterialDirtyMechanism).toBe(false);
+    expect(addedWhileBlocked).toContain(true);
     expect(result!.placements).toHaveLength(211);
     expect(
       new Set(result!.placements.map((p) => p.node.metadata.partId)).size,
