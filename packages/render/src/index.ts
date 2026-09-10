@@ -81,6 +81,7 @@ import {
   screenToDeck,
   RPG_BETA,
   easeCameraZoom,
+  deckCameraActorWeight,
   createObservationCamera,
 } from "./camera";
 import { createSpaceEnvironment, type SpaceBodyState } from "./environment";
@@ -871,12 +872,13 @@ async function buildWorld(
       transition;
     const c = Math.cos(displayed.heading),
       s = Math.sin(displayed.heading);
+    const actorBlend = blend * deckCameraActorWeight(displayedZoom, initialDeckZoom);
     const targetLocalX =
-      (constructionFrame?.centerX ?? 0) * (1 - blend * 0.6) +
-      avatar.position.x * blend * 0.6;
+      (constructionFrame?.centerX ?? 0) * (1 - actorBlend) +
+      avatar.position.x * actorBlend;
     const targetLocalY =
-      (constructionFrame?.centerY ?? 0) * (1 - blend * 0.6) +
-      -avatar.position.z * blend * 0.6;
+      (constructionFrame?.centerY ?? 0) * (1 - actorBlend) +
+      -avatar.position.z * actorBlend;
     camera.target.set(
       targetLocalX * c - targetLocalY * s,
       0.8 * blend +
