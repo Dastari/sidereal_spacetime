@@ -1,3 +1,4 @@
+import { createTemporalSkinHistory } from "./temporal-skin-history";
 import type { Scene } from "@babylonjs/core/scene";
 import type { Camera } from "@babylonjs/core/Cameras/camera";
 import type { Material } from "@babylonjs/core/Materials/material";
@@ -40,6 +41,9 @@ export function createAntialiasing(
   options: { storage?: Store; temporalResetIntegrated?: boolean } = {},
 ) {
   const engine = scene.getEngine();
+  const skinHistory = createTemporalSkinHistory();
+  let skinHistoryReset = false;
+  let temporalResetPending = false;
   let storage = options.storage;
   if (!storage)
     try {
@@ -221,7 +225,50 @@ export function createAntialiasing(
   // Enforce the final order after those observers, immediately before camera rendering.
   const cameraFrame = scene.onBeforeCameraRenderObservable.add(
     (renderingCamera) => {
-      if (renderingCamera === camera) order();
+      if (renderingCamera === camera) {
+        if (active?.taa) {
+          const palettes = function* () {
+            const prepared = new Set<number>();
+            for (const mesh of scene.meshes) {
+              const skeleton = mesh.skeleton;
+              if (
+                !skeleton?.isUsingTextureForMatrices ||
+                !mesh.isEnabled() ||
+                !mesh.isVisible ||
+                mesh.visibility <= 0
+              )
+                continue;
+              if (
+                skeleton.needInitialSkinMatrix &&
+                !prepared.has(skeleton.uniqueId)
+              ) {
+                skeleton.prepare(true);
+                prepared.add(skeleton.uniqueId);
+              }
+              yield {
+                id:
+                  skeleton.uniqueId +
+                  (skeleton.needInitialSkinMatrix ? ":" + mesh.uniqueId : ""),
+                values: skeleton.getTransformMatrices(mesh),
+              };
+            }
+          };
+          skinHistoryReset = skinHistory.sample(palettes());
+          if (skinHistoryReset) resetHistory();
+        } else {
+          skinHistory.clear();
+          skinHistoryReset = false;
+        }
+        if (temporalResetPending && active?.taa) {
+          // One history invalidation at the render boundary, without toggling
+          // material defines or pipeline attachments during animated skin frames.
+          (
+            active.taa as unknown as { _taaThinPostProcess: { _reset(): void } }
+          )._taaThinPostProcess._reset();
+        }
+        temporalResetPending = false;
+        order();
+      }
     },
   );
   const resize = engine.onResizeObservable.add(() => {
@@ -230,9 +277,7 @@ export function createAntialiasing(
   });
   function resetHistory() {
     if (disposed || !active?.taa) return;
-    active.taa.isEnabled = false;
-    active.taa.isEnabled = true;
-    order();
+    temporalResetPending = true;
   }
   function set(patch: Partial<AntialiasingSettings>) {
     if (disposed) return;
@@ -249,12 +294,22 @@ export function createAntialiasing(
     snapshot(): AntialiasingSnapshot {
       return {
         requested: { ...requested },
-        effective: active?.plan ?? {
-          mode: "off",
-          samples: 1,
-          renderScale: 1,
-          fxaa: false,
-        },
+        effective: active
+          ? {
+              ...active.plan,
+              ...(skinHistoryReset
+                ? {
+                    reason:
+                      "TAA history reset while visible character skin changes; per-bone motion vectors are unavailable.",
+                  }
+                : {}),
+            }
+          : {
+              mode: "off",
+              samples: 1,
+              renderScale: 1,
+              fxaa: false,
+            },
         pending: !!pending,
         ...(error ? { error } : {}),
       };

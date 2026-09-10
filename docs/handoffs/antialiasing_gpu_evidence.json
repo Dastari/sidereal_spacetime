@@ -1,0 +1,1082 @@
+{
+  "modes": [
+    {
+      "requested": {
+        "mode": "off",
+        "samples": 4
+      },
+      "effective": {
+        "mode": "off",
+        "samples": 1,
+        "renderScale": 1,
+        "fxaa": false
+      },
+      "pending": false,
+      "hardwareScale": 1,
+      "renderWidth": 960,
+      "renderHeight": 540,
+      "passes": [
+        {
+          "name": "sidereal-aa-scene",
+          "samples": 1,
+          "width": 960,
+          "height": 540
+        }
+      ],
+      "materials": 1,
+      "postProcesses": 0,
+      "pixels": {
+        "visible": 7407,
+        "blended": 0,
+        "shades": 1
+      },
+      "glError": 0
+    },
+    {
+      "requested": {
+        "mode": "msaa",
+        "samples": 4
+      },
+      "effective": {
+        "mode": "msaa",
+        "samples": 4,
+        "renderScale": 1,
+        "fxaa": false
+      },
+      "pending": false,
+      "hardwareScale": 1,
+      "renderWidth": 960,
+      "renderHeight": 540,
+      "passes": [
+        {
+          "name": "sidereal-aa-scene",
+          "samples": 4,
+          "width": 960,
+          "height": 540
+        }
+      ],
+      "materials": 1,
+      "postProcesses": 0,
+      "pixels": {
+        "visible": 9046,
+        "blended": 3288,
+        "shades": 4
+      },
+      "glError": 0
+    },
+    {
+      "requested": {
+        "mode": "fxaa",
+        "samples": 4
+      },
+      "effective": {
+        "mode": "fxaa",
+        "samples": 1,
+        "renderScale": 1,
+        "fxaa": true
+      },
+      "pending": false,
+      "hardwareScale": 1,
+      "renderWidth": 960,
+      "renderHeight": 540,
+      "passes": [
+        {
+          "name": "sidereal-aa-scene",
+          "samples": 1,
+          "width": 960,
+          "height": 540
+        },
+        {
+          "name": "sidereal-aa-fxaa",
+          "samples": 1,
+          "width": 960,
+          "height": 540
+        }
+      ],
+      "materials": 1,
+      "postProcesses": 0,
+      "pixels": {
+        "visible": 9492,
+        "blended": 5325,
+        "shades": 15
+      },
+      "glError": 0
+    },
+    {
+      "requested": {
+        "mode": "msaa-fxaa",
+        "samples": 4
+      },
+      "effective": {
+        "mode": "msaa-fxaa",
+        "samples": 4,
+        "renderScale": 1,
+        "fxaa": true
+      },
+      "pending": false,
+      "hardwareScale": 1,
+      "renderWidth": 960,
+      "renderHeight": 540,
+      "passes": [
+        {
+          "name": "sidereal-aa-scene",
+          "samples": 4,
+          "width": 960,
+          "height": 540
+        },
+        {
+          "name": "sidereal-aa-fxaa",
+          "samples": 1,
+          "width": 960,
+          "height": 540
+        }
+      ],
+      "materials": 1,
+      "postProcesses": 0,
+      "pixels": {
+        "visible": 9877,
+        "blended": 7402,
+        "shades": 73
+      },
+      "glError": 0
+    },
+    {
+      "requested": {
+        "mode": "ssaa",
+        "samples": 4
+      },
+      "effective": {
+        "mode": "ssaa",
+        "samples": 1,
+        "renderScale": 2,
+        "fxaa": false
+      },
+      "pending": false,
+      "hardwareScale": 1,
+      "renderWidth": 960,
+      "renderHeight": 540,
+      "passes": [
+        {
+          "name": "sidereal-aa-scene",
+          "samples": 1,
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "name": "sidereal-aa-downsample",
+          "samples": 1,
+          "width": 960,
+          "height": 540
+        }
+      ],
+      "materials": 1,
+      "postProcesses": 0,
+      "pixels": {
+        "visible": 9042,
+        "blended": 3260,
+        "shades": 6
+      },
+      "glError": 0
+    },
+    {
+      "requested": {
+        "mode": "taa",
+        "samples": 4
+      },
+      "effective": {
+        "mode": "taa",
+        "samples": 1,
+        "renderScale": 1,
+        "fxaa": false
+      },
+      "pending": false,
+      "hardwareScale": 1,
+      "renderWidth": 960,
+      "renderHeight": 540,
+      "passes": [
+        {
+          "name": "TAA",
+          "samples": 1,
+          "width": 960,
+          "height": 540
+        },
+        {
+          "name": "TAAPass",
+          "samples": 1,
+          "width": 960,
+          "height": 540
+        }
+      ],
+      "materials": 1,
+      "postProcesses": 0,
+      "pixels": {
+        "visible": 8687,
+        "blended": 3133,
+        "shades": 53
+      },
+      "glError": 0
+    }
+  ],
+  "historyReset": {
+    "before": [
+      229,
+      242,
+      255,
+      255
+    ],
+    "afterReset": [
+      4,
+      6,
+      11,
+      255
+    ],
+    "afterMotion": [
+      4,
+      6,
+      11,
+      255
+    ],
+    "pixel": {
+      "x": 448.5302179348842,
+      "y": 403.9095207508081
+    },
+    "capture": {
+      "requested": {
+        "mode": "taa",
+        "samples": 4
+      },
+      "effective": {
+        "mode": "taa",
+        "samples": 1,
+        "renderScale": 1,
+        "fxaa": false
+      },
+      "pending": false,
+      "hardwareScale": 1,
+      "renderWidth": 960,
+      "renderHeight": 540,
+      "passes": [
+        {
+          "name": "TAA",
+          "samples": 1,
+          "width": 960,
+          "height": 540
+        },
+        {
+          "name": "TAAPass",
+          "samples": 1,
+          "width": 960,
+          "height": 540
+        }
+      ],
+      "materials": 1,
+      "postProcesses": 0
+    }
+  },
+  "animatedAndStaticSkin": {
+    "animated": {
+      "factor": 1,
+      "snapshot": {
+        "requested": {
+          "mode": "taa",
+          "samples": 4
+        },
+        "effective": {
+          "mode": "taa",
+          "samples": 1,
+          "renderScale": 1,
+          "fxaa": false,
+          "reason": "TAA history reset while visible character skin changes; per-bone motion vectors are unavailable."
+        },
+        "pending": false
+      }
+    },
+    "still": {
+      "factor": 0.05000000074505806,
+      "snapshot": {
+        "requested": {
+          "mode": "taa",
+          "samples": 4
+        },
+        "effective": {
+          "mode": "taa",
+          "samples": 1,
+          "renderScale": 1,
+          "fxaa": false
+        },
+        "pending": false
+      }
+    },
+    "glError": 0
+  },
+  "uniformExperiment": {
+    "maxVertexUniformVectors": 4096,
+    "bones": 16,
+    "before": {
+      "orange": 7417,
+      "glError": 0,
+      "velocity": [
+        {
+          "name": "GEO-base-male-core_primitive0",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-core_primitive1",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-core_primitive2",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-core_primitive3",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-core_primitive4",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-modesty_primitive0",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-modesty_primitive1",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-back_primitive0",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-back_primitive1",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-back_primitive2",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-belt_primitive0",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-belt_primitive1",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-belt_primitive2",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-boots_primitive0",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-boots_primitive1",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-boots_primitive2",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-chest_primitive0",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-chest_primitive1",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-chest_primitive2",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-chest_primitive3",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-chest_primitive4",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-gloves_primitive0",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-gloves_primitive1",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-gloves_primitive2",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-helmet_primitive0",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-helmet_primitive1",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-helmet_primitive2",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-helmet_primitive3",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-legs_primitive0",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-legs_primitive1",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-legs_primitive2",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-legs_primitive3",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-shoulders_primitive0",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-shoulders_primitive1",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-visor_primitive0",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-visor_primitive1",
+          "bones": false,
+          "ready": true
+        },
+        {
+          "name": "GEO-hair-helmet-liner",
+          "bones": false,
+          "ready": true
+        }
+      ]
+    },
+    "first": {
+      "orange": 7417,
+      "glError": 0,
+      "velocity": [
+        {
+          "name": "GEO-base-male-core_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-core_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-core_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-core_primitive3",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-core_primitive4",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-modesty_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-modesty_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-back_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-back_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-back_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-belt_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-belt_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-belt_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-boots_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-boots_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-boots_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-chest_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-chest_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-chest_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-chest_primitive3",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-chest_primitive4",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-gloves_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-gloves_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-gloves_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-helmet_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-helmet_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-helmet_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-helmet_primitive3",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-legs_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-legs_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-legs_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-legs_primitive3",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-shoulders_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-shoulders_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-visor_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-visor_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-hair-helmet-liner",
+          "bones": true,
+          "ready": true
+        }
+      ]
+    },
+    "moving": {
+      "orange": 7561,
+      "glError": 0,
+      "velocity": [
+        {
+          "name": "GEO-base-male-core_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-core_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-core_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-core_primitive3",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-core_primitive4",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-modesty_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-modesty_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-back_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-back_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-back_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-belt_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-belt_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-belt_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-boots_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-boots_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-boots_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-chest_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-chest_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-chest_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-chest_primitive3",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-chest_primitive4",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-gloves_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-gloves_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-gloves_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-helmet_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-helmet_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-helmet_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-helmet_primitive3",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-legs_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-legs_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-legs_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-legs_primitive3",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-shoulders_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-shoulders_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-visor_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-visor_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-hair-helmet-liner",
+          "bones": true,
+          "ready": true
+        }
+      ]
+    },
+    "restored": {
+      "orange": 7412,
+      "glError": 0,
+      "velocity": [
+        {
+          "name": "GEO-base-male-core_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-core_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-core_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-core_primitive3",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-core_primitive4",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-modesty_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-base-male-modesty_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-back_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-back_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-back_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-belt_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-belt_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-belt_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-boots_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-boots_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-boots_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-chest_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-chest_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-chest_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-chest_primitive3",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-chest_primitive4",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-gloves_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-gloves_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-gloves_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-helmet_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-helmet_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-helmet_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-helmet_primitive3",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-legs_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-legs_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-legs_primitive2",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-legs_primitive3",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-shoulders_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-shoulders_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-visor_primitive0",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-engineer-visor_primitive1",
+          "bones": true,
+          "ready": true
+        },
+        {
+          "name": "GEO-hair-helmet-liner",
+          "bones": true,
+          "ready": true
+        }
+      ]
+    }
+  },
+  "scope": "Isolated960x540softwareGPU fixture; no account/world connection. Native crew checked, full normal-game material/cutaway review pending.",
+  "cleanupLog": "output/playwright/antialiasing-review/cleanup.log"
+}

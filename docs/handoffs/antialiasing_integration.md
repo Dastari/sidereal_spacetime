@@ -1,6 +1,6 @@
 # Antialiasing integration
 
-Status: source implemented; spatial and temporal GPU acceptance pending. No public release in this handoff.
+Status: source and isolated GPU fixture passed; normal-game integration acceptance pending. No public release in this handoff.
 
 The render preference is device-local, separate from graphics color correction, account state and gameplay. `sidereal.antialiasing.v1` stores `{mode,samples}`; default is enabled4× MSAA, with bounded2/4/8 choices. Invalid modes/sample counts preserve defaults. Existing `sidereal.graphics.v1` is unchanged.
 
@@ -37,3 +37,13 @@ Primary upstream references: [Babylon default pipeline AA](https://doc.babylonjs
 `7cf3d131` connects Graphics to the renderer and persists the device-local AA choice; Graphics Reset resets both color correction and AA. `0848c60a` coalesces new-mesh history invalidation once per rendered frame. The root integration opts into temporal history management for explicit focus/camera reset, Deck/Flight, inspected view, deck/seat/vista transitions, stale streams, discontinuous world/local teleports, debug visibility and appearance/equipment replacement. Continuous motion stays inside a velocity-aware envelope. Instance/document changes rebuild the renderer and therefore start fresh history. These are presentation operations only.
 
 Fifteen focused tests across settings, pipeline lifetime, menu and history boundaries pass. Full TypeScript check passed. The actual six-mode browser fixture reports real multisample targets, FXAA pass count and supersampled dimensions with no GL errors; the parent viewed `output/playwright/antialiasing-review/msaa-fxaa.png`. Native animated character and normal integrated game review remain required before publication. No public AA activation is claimed by these checkpoints.
+
+## 2026-09-10 isolated GPU qualification
+
+All six modes produced actual target/sample behavior at960×540 with zero WebGL errors. MSAA used4samples; SSAA rendered1920×1080 and downsampled without changing hardware scale1. Off had zero blended pixels in the monochrome geometry ROI; MSAA3288, FXAA5325, MSAA+FXAA7402, SSAA3260, TAA3133. These are image probe counts, not FPS or visual quality scores. Exact data: `antialiasing_gpu_evidence.json`; screenshots: `output/playwright/antialiasing-review/`.
+
+Temporal teleport/reset changed the previously white sphere centre from[229,242,255,255] to exact background[4,6,11,255] immediately and through subsequent motion. Actual current native crew uses16texture-backed bones; its visible GPU materials have linear object velocity but no per-bone velocity. The bounded palette guard samples after scene/pose observers, immediately before the owning camera draws. Changed visible unsupported skin resets history once before that draw without recompiling material defines. Actual shader factor was1during animation, returning to0.05when the character was paused/static; the UI explains the temporary history reset. Source tests also cover same-frame late pose changes, hidden/removed rigs, static accumulation and bounded malformed/oversized palette handling.
+
+A separate uniform-palette experiment succeeded only with explicit attribute define invalidation:37/37 current native shaders exposed bone velocity, no missing first-frame character pixels, and zero WebGL errors. Bare palette assignment without define invalidation made the character invisible. A qualified prewarm/restore adapter for the small-rig uniform path is being implemented separately; these experiment results do not claim it is already enabled.
+
+The named antialiasing-review session disposed scene/postprocesses, navigated toabout:blank and closed; GPU slot released. Full normal-game cutaways/appearance/graphics-menu/reload acceptance belongs to the combined candidate reviewer.

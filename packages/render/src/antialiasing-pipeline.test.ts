@@ -162,3 +162,49 @@ it("resets temporal history and releases its material jitter owner across repeat
   scene.dispose();
   engine.dispose();
 });
+it("samples skin changes after later scene observers and coalesces one reset before the actual camera draw", async () => {
+  const { Skeleton } = await import("@babylonjs/core/Bones/skeleton");
+  const { Mesh } = await import("@babylonjs/core/Meshes/mesh");
+  const { ThinTAAPostProcess } =
+    await import("@babylonjs/core/PostProcesses/thinTAAPostProcess");
+  const engine = new NullEngine(),
+    scene = new Scene(engine),
+    camera = new FreeCamera("camera", Vector3.Zero(), scene);
+  scene.activeCamera = camera;
+  Object.assign(engine.getCaps(), {
+    texelFetch: true,
+    drawBuffersExtension: true,
+    textureHalfFloatRender: true,
+    textureHalfFloatLinearFiltering: true,
+  });
+  vi.spyOn(PostProcess.prototype, "isReady").mockReturnValue(true);
+  const aa = createAntialiasing(scene, camera, {
+    temporalResetIntegrated: true,
+    storage: { getItem: () => '{"mode":"taa","samples":4}', setItem: () => {} },
+  });
+  const skeleton = new Skeleton("skin", "skin", scene),
+    mesh = new Mesh("skin", scene);
+  mesh.skeleton = skeleton;
+  const palette = new Float32Array([1, 0, 0, 1]);
+  vi.spyOn(skeleton, "isUsingTextureForMatrices", "get").mockReturnValue(true);
+  vi.spyOn(skeleton, "getTransformMatrices").mockReturnValue(palette);
+  const reset = vi.spyOn(ThinTAAPostProcess.prototype, "_reset");
+  scene.onBeforeRenderObservable.notifyObservers(scene);
+  scene.onBeforeCameraRenderObservable.notifyObservers(camera);
+  reset.mockClear();
+  scene.onBeforeRenderObservable.add(() => {
+    palette[1] = 0.5;
+    aa.resetHistory();
+    aa.resetHistory();
+  });
+  scene.onBeforeRenderObservable.notifyObservers(scene);
+  expect(reset).not.toHaveBeenCalled();
+  scene.onBeforeCameraRenderObservable.notifyObservers(camera);
+  expect(reset).toHaveBeenCalledTimes(1);
+  expect(aa.snapshot().effective.reason).toContain("skin changes");
+  scene.onBeforeCameraRenderObservable.notifyObservers(camera);
+  expect(reset).toHaveBeenCalledTimes(1);
+  aa.dispose();
+  scene.dispose();
+  engine.dispose();
+});

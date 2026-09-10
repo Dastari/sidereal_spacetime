@@ -2,7 +2,7 @@
 import { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
 import { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
-import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { Vector3, Matrix } from "@babylonjs/core/Maths/math.vector";
 import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
@@ -43,6 +43,7 @@ export function createAntialiasingReview(canvas: HTMLCanvasElement) {
   );
   moving.material = material;
   moving.position.z = -1;
+  moving.position.y = -2.6;
   const aa = createAntialiasing(scene, camera, {
     temporalResetIntegrated: true,
   });
@@ -69,21 +70,31 @@ export function createAntialiasingReview(canvas: HTMLCanvasElement) {
     engine,
     camera,
     aa,
+    moving,
     frame,
+    screenPoint() {
+      return Vector3.Project(
+        moving.position,
+        Matrix.Identity(),
+        scene.getTransformMatrix(),
+        camera.viewport.toGlobal(
+          engine.getRenderWidth(),
+          engine.getRenderHeight(),
+        ),
+      );
+    },
     capture() {
       return {
         ...aa.snapshot(),
         hardwareScale: engine.getHardwareScalingLevel(),
         renderWidth: engine.getRenderWidth(),
         renderHeight: engine.getRenderHeight(),
-        passes: camera._postProcesses
-          .filter(Boolean)
-          .map((p) => ({
-            name: p!.name,
-            samples: p!.samples,
-            width: p!.width,
-            height: p!.height,
-          })),
+        passes: camera._postProcesses.filter(Boolean).map((p) => ({
+          name: p!.name,
+          samples: p!.samples,
+          width: p!.width,
+          height: p!.height,
+        })),
         materials: scene.materials.length,
         postProcesses: scene.postProcesses.length,
       };
