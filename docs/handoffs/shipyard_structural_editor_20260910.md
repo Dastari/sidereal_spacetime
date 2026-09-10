@@ -20,3 +20,9 @@ npx tsc --noEmit
 ```
 
 Eleven focused tests passed before the combined browser gate. The new helper files pass the package-boundary lint rule. The narrow `@sidereal/ui/editor-controls` export preserves the existing root UI export.
+
+## Compact workspace follow-up
+
+The extracted `LayoutPalette` and `LayoutInspector` now prioritize active-deck selection and drawing. Hull limits have a compact current-name/dimensions summary with an explicit **Edit sizes** disclosure after the tools. Rooms exposes internal-wall drawing, selection, deletion and room-label deletion; the room-type list is a compact selector. The equipment library appears in Objects only. Selection UUIDs, door settings, wall rules, dimensions, deck properties and technical validation details no longer occupy the inspector/palette continuously. Parent owns the matching CSS and viewport redesign.
+
+`panel-deletion.ts` resolves actual partition identity from compiled wall keys/anchors rather than parsing string prefixes. Internal-wall removal deletes its dependent openings, room-boundary references and wall-face metadata in one undoable edit, preserving floors, objects and unrelated metadata. Room-label removal changes only the room-label collection. Generated perimeter deletion rejects and directs the author to change the floor plan. Three new tests cover these behaviors with actual compiled geometry, immutable input and undo restoration; the related six-test gate, full TypeScript check and changed-file lint passed. Browser review and aggregate build/check are coordinated by the parent alongside the shell changes; this panel checkpoint alone is not their completion claim.
