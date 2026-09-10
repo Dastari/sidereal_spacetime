@@ -6,6 +6,7 @@ import os
 import shutil
 import shlex
 import time
+import fcntl
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -28,7 +29,22 @@ def validate_build(folder):
     return digest.hexdigest()
 
 
-def command(action, cfg, lifecycle, *, artifact=None, artifact_sha256=None):
+def command(action, cfg, lifecycle, *, artifact=None, artifact_sha256=None, expected_live_sha256=None, expected_staged_sha256=None):
+    # Managed publishers share this lock through validation and activation, so a
+    # second release cannot replace the live/staged metadata between the guards
+    # and the symlink switch. Staging still leaves the running service alone.
+    home = ROOT / '.runtime/public-client'
+    home.mkdir(parents=True, exist_ok=True)
+    with (home / '.release.lock').open('a') as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        return _command(action, cfg, lifecycle, artifact=artifact, artifact_sha256=artifact_sha256,
+            expected_live_sha256=expected_live_sha256, expected_staged_sha256=expected_staged_sha256)
+
+
+def _command(action, cfg, lifecycle, *, artifact=None, artifact_sha256=None, expected_live_sha256=None, expected_staged_sha256=None):
+    if expected_live_sha256 is not None or expected_staged_sha256 is not None:
+        if action != 'activate' or not expected_live_sha256 or not expected_staged_sha256:
+            raise RuntimeError('Expected live and staged digests require activate only')
     if artifact is not None or artifact_sha256 is not None:
         if action != 'stage' or not artifact or not artifact_sha256:
             raise RuntimeError('Prebuilt client path and digest require stage only')
@@ -64,6 +80,12 @@ def command(action, cfg, lifecycle, *, artifact=None, artifact_sha256=None):
         print('Public build staged:', digest)
     if action in ('deploy', 'activate'):
         staged = json.loads((home / 'staged.json').read_text())
+        if expected_staged_sha256 is not None:
+            live = json.loads((home / 'release.json').read_text())
+            if live['sha256'] != expected_live_sha256 or staged['sha256'] != expected_staged_sha256:
+                raise RuntimeError('Public release changed since review; reconcile before activation')
+            if current.resolve() != Path(live['release']).resolve() or validate_build(current.resolve()) != expected_live_sha256:
+                raise RuntimeError('Current public artifact differs from expected live digest')
         release = Path(staged['release'])
         if release.resolve().parent != (home / 'releases').resolve() or validate_build(release) != staged['sha256']:
             raise RuntimeError('Staged public release failed verification')

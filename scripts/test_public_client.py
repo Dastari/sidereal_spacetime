@@ -1,6 +1,7 @@
 from pathlib import Path
 import tempfile
 import unittest
+import json
 from types import SimpleNamespace
 from unittest.mock import patch
 from public_client import command, validate_build
@@ -66,6 +67,49 @@ class PublicBuildTests(unittest.TestCase):
 
 
 class PrebuiltClientTests(unittest.TestCase):
+    def test_expected_release_guards_reject_concurrent_change_before_stop(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            home = root / '.runtime/public-client'
+            live = home / 'releases/live'
+            staged = home / 'releases/staged'
+            for path, content in [(live, 'old'), (staged, 'reviewed')]:
+                path.mkdir(parents=True)
+                (path / 'index.html').write_text(content)
+            live_digest, staged_digest = validate_build(live), validate_build(staged)
+            (home / 'current').symlink_to(live, target_is_directory=True)
+            live_record = {'sha256': live_digest, 'release': str(live)}
+            staged_record = {'sha256': staged_digest, 'release': str(staged)}
+            (home / 'release.json').write_text(json.dumps(live_record))
+            (home / 'staged.json').write_text(json.dumps(staged_record))
+            calls = []
+            lifecycle = SimpleNamespace(down=lambda _: calls.append('stop'))
+            cfg = {'public_client': {}}
+            with patch('public_client.ROOT', root):
+                for expected_live, expected_staged in [('changed', staged_digest), (live_digest, 'changed')]:
+                    with self.assertRaisesRegex(RuntimeError, 'changed since review'):
+                        command('activate', cfg, lifecycle, expected_live_sha256=expected_live, expected_staged_sha256=expected_staged)
+                (live / 'index.html').write_text('unexpected edit')
+                with self.assertRaisesRegex(RuntimeError, 'differs from expected'):
+                    command('activate', cfg, lifecycle, expected_live_sha256=live_digest, expected_staged_sha256=staged_digest)
+            self.assertEqual(calls, [])
+            self.assertEqual((home / 'current').resolve(), live)
+            self.assertEqual(json.loads((home / 'release.json').read_text()), live_record)
+            # A matching review promotes exactly its staged artifact after the
+            # mismatch cases left the previous release and service untouched.
+            (live / 'index.html').write_text('old')
+            lifecycle.load = lambda: {'public-client': {}}
+            lifecycle.alive = lambda _: True
+            lifecycle.port_free = lambda *_: None
+            lifecycle.launch = lambda *_: calls.append('launch')
+            lifecycle.ready = lambda *_: None
+            cfg = {'public_client': {'host': '127.0.0.1', 'port': 9999}, 'auth': {'client_origin': 'https://example.test'}}
+            with patch('public_client.ROOT', root):
+                command('activate', cfg, lifecycle, expected_live_sha256=live_digest, expected_staged_sha256=staged_digest)
+            self.assertEqual(calls, ['stop', 'launch'])
+            self.assertEqual((home / 'current').resolve(), staged)
+            self.assertEqual(json.loads((home / 'release.json').read_text()), staged_record)
+
     def test_exact_prebuilt_stage_never_builds_or_stops_and_rejects_tampering(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)

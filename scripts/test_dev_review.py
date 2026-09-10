@@ -91,6 +91,16 @@ class ReviewDatabaseTests(unittest.TestCase):
         self.assertEqual(public.call_args.kwargs, {'artifact':'/private/candidate/dist','artifact_sha256':'a'*64})
         publish.assert_not_called()
 
+    def test_activation_guards_are_paired_and_cannot_publish(self):
+        with patch('public_client.command') as public, patch.object(dev, 'publish') as publish, contextlib.redirect_stderr(io.StringIO()):
+            for args in [('publish','--expected-live-client-sha256','a','--expected-staged-client-sha256','b'),('public-client-stage','--expected-live-client-sha256','a','--expected-staged-client-sha256','b'),('public-client-activate','--expected-live-client-sha256','a')]:
+                with self.subTest(args=args), self.assertRaises(SystemExit): self.invoke(*args)
+        public.assert_not_called();publish.assert_not_called()
+        with patch('public_client.command') as public:
+            self.invoke('public-client-activate','--expected-live-client-sha256','a'*64,'--expected-staged-client-sha256','b'*64)
+        self.assertEqual(public.call_args.kwargs['expected_live_sha256'],'a'*64)
+        self.assertEqual(public.call_args.kwargs['expected_staged_sha256'],'b'*64)
+
 
 if __name__ == "__main__":
     unittest.main()

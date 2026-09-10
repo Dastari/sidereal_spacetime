@@ -148,6 +148,8 @@ def main():
     parser.add_argument('--review-name', help='Named additive test database suffix; publish-review only')
     parser.add_argument('--client-artifact', help='Pinned prebuilt client directory; public-client-stage only')
     parser.add_argument('--client-artifact-sha256', help='Required complete tree digest with --client-artifact')
+    parser.add_argument('--expected-live-client-sha256', help='Required live digest together with expected staged digest; public-client-activate only')
+    parser.add_argument('--expected-staged-client-sha256', help='Exact reviewed staged digest; public-client-activate only')
     parser.add_argument('--module-artifact', help='Pinned compiled JS/WASM; publish-review only')
     parser.add_argument('--artifact-sha256', help='Required digest with --module-artifact')
     parser.add_argument('--smoke-name', help='Separate named smoke database; additive publication, never reset')
@@ -172,6 +174,9 @@ def main():
     if args.client_artifact is not None or args.client_artifact_sha256 is not None:
         if command != 'public-client-stage' or not args.client_artifact or not args.client_artifact_sha256:
             parser.error('Prebuilt client path and SHA-256 are paired public-client-stage-only arguments')
+    if args.expected_live_client_sha256 is not None or args.expected_staged_client_sha256 is not None:
+        if command != 'public-client-activate' or not args.expected_live_client_sha256 or not args.expected_staged_client_sha256:
+            parser.error('Expected live and staged digests are paired public-client-activate-only arguments')
     if args.review_name is not None and command != 'publish-review':
         parser.error('--review-name is valid only for publish-review')
     if command.startswith('restore-review-'):
@@ -182,7 +187,8 @@ def main():
             down('public-client')
         else:
             from public_client import command as public_command
-            public_command(command.removeprefix('public-client-'), CFG, sys.modules[__name__], artifact=args.client_artifact, artifact_sha256=args.client_artifact_sha256)
+            expected = {} if args.expected_live_client_sha256 is None else {'expected_live_sha256': args.expected_live_client_sha256, 'expected_staged_sha256': args.expected_staged_client_sha256}
+            public_command(command.removeprefix('public-client-'), CFG, sys.modules[__name__], artifact=args.client_artifact, artifact_sha256=args.client_artifact_sha256, **expected)
     elif command.startswith('auth-https-'):
         from auth_https import command as auth_https_command
         auth_https_command(command.removeprefix('auth-https-'), CFG)
