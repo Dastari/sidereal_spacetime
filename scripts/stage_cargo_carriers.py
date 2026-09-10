@@ -8,6 +8,10 @@ import argparse
 import hashlib
 import json
 import shutil
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parent/"art_library"))
+from validate_reserved_envelope import qualify_glb
 
 ROOT = Path(__file__).resolve().parents[1]
 INPUTS = [
@@ -24,11 +28,15 @@ def stage(output):
         raise ValueError('Stage only under private .runtime/release-inputs; activation belongs to release owner')
     output.mkdir(parents=True, exist_ok=True)
     rows = []
+    qualifications = []
     for name, relative, expected in INPUTS:
         source = ROOT/relative
         actual = hashlib.sha256(source.read_bytes()).hexdigest()
         if actual != expected:
             raise ValueError('Pinned native asset changed: '+relative)
+        width = 2 if name == 'carrier-2m.glb' else 1
+        qualification = qualify_glb(source, [[0,0],[width,0],[width,width],[0,width]], 0, .6875)
+        qualifications.append({'file':name, **qualification})
         target = output/name
         if target.exists() and hashlib.sha256(target.read_bytes()).hexdigest() != expected:
             raise ValueError('Preserve prior staged package; choose a new output')
@@ -37,7 +45,7 @@ def stage(output):
                      'publicUrl':'/assets/assembly/cargo-carriers/r000-a003/'+name})
     manifest = {'schema':'sidereal.native-cargo-carrier-package.v1','revision':'r000-a003-small-receiver-a001',
                 'runtimeDestination':'assets/runtime/assembly/cargo-carriers/r000-a003',
-                'files':rows,'ownerArtApproval':False,'provisionalGameplayAuthorization':'Parent task authorizes implementation/deployment using explicit provisional balance.',
+                'files':rows,'reservedEnvelopeQualifications':qualifications,'ownerArtApproval':False,'provisionalGameplayAuthorization':'Parent task authorizes implementation/deployment using explicit provisional balance.',
                 'activationStatus':'staged-only','sourceAndEvidencePublic':False,
                 'qualifiedPayloads': []}
     # Resolve the payload pins from the reviewed report, avoiding a second hand-maintained mapping.

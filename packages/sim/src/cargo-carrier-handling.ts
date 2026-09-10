@@ -1,5 +1,8 @@
 import type { DeckCollisionFrame } from "./construction-collision";
-import { qualifyCargoRectangle } from "./cargo-carrier-collision";
+import {
+  qualifyCargoRectangle,
+  CARGO_STRUCTURE_CLEARANCE_M,
+} from "./cargo-carrier-collision";
 import {
   validateCargoStack,
   type CargoGrid,
@@ -132,12 +135,11 @@ export function planCargoCarrierHandling(input: {
       ].every((p) => inside(p as [number, number], grid.footprint))
     )
       return false;
-    return qualifyCargoRectangle(structure, [
-      box[0]! / 32,
-      box[1]! / 32,
-      box[3]! / 32,
-      box[4]! / 32,
-    ]);
+    return qualifyCargoRectangle(
+      structure,
+      [box[0]! / 32, box[1]! / 32, box[3]! / 32, box[4]! / 32],
+      CARGO_STRUCTURE_CLEARANCE_M,
+    );
   };
   for (const path of paths) {
     const full = [source.origin, ...path, target.origin];

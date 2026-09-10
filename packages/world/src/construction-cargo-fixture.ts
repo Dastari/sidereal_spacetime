@@ -18,6 +18,7 @@ import {
 import {
   applyCargoCarrierCollision,
   qualifyCargoRectangle,
+  CARGO_STRUCTURE_CLEARANCE_M,
 } from "@sidereal/sim/cargo-carrier-collision";
 import {
   validateCargoStack,
@@ -109,7 +110,7 @@ export function installCargoHandlingFixture(
   )
     throw new SenderError("Cargo grid source pin mismatch");
   const frame = constructionCollision(ctx, instance, deckId);
-  if (!qualifyCargoRectangle(frame, [0, 0, 6, 4]))
+  if (!qualifyCargoRectangle(frame, [0, 0, 6, 4], CARGO_STRUCTURE_CLEARANCE_M))
     throw new SenderError("Cargo floor/staging space has changed");
   const coordinates: readonly (readonly [
     "oneMetre" | "twoMetre",

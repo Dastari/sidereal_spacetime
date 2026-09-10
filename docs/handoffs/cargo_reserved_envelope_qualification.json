@@ -1,0 +1,83 @@
+{
+  "schema": "sidereal.authored-reserved-envelope.v1",
+  "status": "Technical qualification; runtime registration pending; no owner art sign-off",
+  "gridModuleM": 2,
+  "subdivisionM": 1,
+  "declaredBeforeQualification": true,
+  "entireExportIncludes": ["bevels", "handles", "latches", "feet", "rails"],
+  "rejectedCorrections": [
+    "automatic scaling",
+    "automatic recentering",
+    "placement offset to conceal oversized geometry"
+  ],
+  "separateInterfaces": [
+    "floor bearing patches",
+    "payload retention sockets",
+    "non-mount wall clearance"
+  ],
+  "assets": [
+    {
+      "file": "carrier-1m.glb",
+      "verticesChecked": 9144,
+      "nativeBoundsM": {
+        "min": [0.0, -0.0, 0.0],
+        "max": [1.0, 1.0, 0.6875]
+      },
+      "glbSha256": "faa8a7b7786c4e92cfeb6ec5b25d43739ad070e202d4e2f1ee1dc98ca6877f78",
+      "reservedFootprintM": [
+        [0, 0],
+        [1, 0],
+        [1, 1],
+        [0, 1]
+      ],
+      "reservedBottomM": 0,
+      "reservedTopM": 0.6875,
+      "coordinateFrame": "native author XY deck/Z up; unchanged pivot",
+      "placementRepairApplied": false,
+      "encodingToleranceM": 1e-6,
+      "entireDefaultSceneQualified": true
+    },
+    {
+      "file": "carrier-2m.glb",
+      "verticesChecked": 12600,
+      "nativeBoundsM": {
+        "min": [0.0, -0.0, 0.0],
+        "max": [2.0, 2.0, 0.6875]
+      },
+      "glbSha256": "5e42e6ab46b00674129ffafe136affefa6586325c1149e838bf9ff693b9769fd",
+      "reservedFootprintM": [
+        [0, 0],
+        [2, 0],
+        [2, 2],
+        [0, 2]
+      ],
+      "reservedBottomM": 0,
+      "reservedTopM": 0.6875,
+      "coordinateFrame": "native author XY deck/Z up; unchanged pivot",
+      "placementRepairApplied": false,
+      "encodingToleranceM": 1e-6,
+      "entireDefaultSceneQualified": true
+    },
+    {
+      "file": "receiver-set.glb",
+      "verticesChecked": 576,
+      "nativeBoundsM": {
+        "min": [0.26300000911578536, 0.3407499766908586, 0.09374999813735485],
+        "max": [0.7369999908842146, 0.7347499751485884, 0.1217499990016222]
+      },
+      "glbSha256": "dac3fd3c6cca793929f9deaae8030b867ad214081cd5719cbc21778133d83044",
+      "reservedFootprintM": [
+        [0, 0],
+        [1, 0],
+        [1, 1],
+        [0, 1]
+      ],
+      "reservedBottomM": 0,
+      "reservedTopM": 0.6875,
+      "coordinateFrame": "native author XY deck/Z up; unchanged pivot",
+      "placementRepairApplied": false,
+      "encodingToleranceM": 1e-6,
+      "entireDefaultSceneQualified": true
+    }
+  ]
+}

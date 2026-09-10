@@ -115,15 +115,46 @@ export function applyCargoCarrierCollision(
 }
 export const CARRIER_COLLISION_REVISION =
   "carrier-continuous-base-footprint-r001";
+/** Equipment is floor-bearing, not wall-mounted. Touching a structural wall is
+ * not a permitted mount; reserve one nominal lattice unit beside the envelope. */
+export const CARGO_STRUCTURE_CLEARANCE_M = 1 / 32;
+
+function pointSegmentDistance(p: Point, a: Point, b: Point) {
+  const x = b[0] - a[0],
+    y = b[1] - a[1],
+    length = x * x + y * y;
+  const t = length
+    ? Math.max(0, Math.min(1, ((p[0] - a[0]) * x + (p[1] - a[1]) * y) / length))
+    : 0;
+  return Math.hypot(p[0] - a[0] - t * x, p[1] - a[1] - t * y);
+}
+function segmentDistance(a: Point, b: Point, c: Point, d: Point) {
+  if (properCross(a, b, c, d)) return 0;
+  return Math.min(
+    pointSegmentDistance(a, c, d),
+    pointSegmentDistance(b, c, d),
+    pointSegmentDistance(c, a, b),
+    pointSegmentDistance(d, a, b),
+  );
+}
 
 /** Rectangle must have supported corners and no remaining boundary/obstacle
  * crossing or enclosed in its interior. This excludes floor holes and machinery. */
 export function qualifyCargoRectangle(
   frame: DeckCollisionFrame,
   rectangle: readonly [number, number, number, number],
+  structureClearanceM = 0,
 ) {
   const [x0, y0, x1, y1] = rectangle;
-  if (!rectangle.every(Number.isFinite) || x0 >= x1 || y0 >= y1) return false;
+  if (
+    !rectangle.every(Number.isFinite) ||
+    x0 >= x1 ||
+    y0 >= y1 ||
+    !Number.isFinite(structureClearanceM) ||
+    structureClearanceM < 0 ||
+    structureClearanceM > 1
+  )
+    return false;
   const corners: Point[] = [
     [x0, y0],
     [x1, y0],
@@ -135,7 +166,7 @@ export function qualifyCargoRectangle(
       canOccupyDeck(
         frame,
         { shipId: frame.shipId, deckId: frame.deckId, position },
-        0.000001,
+        Math.max(0.000001, structureClearanceM),
       ),
     )
   )
@@ -145,9 +176,15 @@ export function qualifyCargoRectangle(
   if (
     frame.segments.some(
       (s) =>
+        !Number.isFinite(s.halfWidthM) ||
+        s.halfWidthM < 0 ||
         strictInside(s.a) ||
         strictInside(s.b) ||
-        corners.some((a, i) => properCross(a, corners[(i + 1) % 4]!, s.a, s.b)),
+        corners.some(
+          (a, i) =>
+            segmentDistance(a, corners[(i + 1) % 4]!, s.a, s.b) <
+            s.halfWidthM + structureClearanceM + 1e-8,
+        ),
     )
   )
     return false;
@@ -155,7 +192,19 @@ export function qualifyCargoRectangle(
     frame.obstacles.some(
       (o) =>
         o.vertices.some(strictInside) ||
-        corners.some((p) => inside(p, o.vertices)),
+        corners.some((p) => inside(p, o.vertices)) ||
+        o.vertices.some((a, i) =>
+          corners.some(
+            (b, j) =>
+              segmentDistance(
+                a,
+                o.vertices[(i + 1) % o.vertices.length]!,
+                b,
+                corners[(j + 1) % 4]!,
+              ) <
+              structureClearanceM + 1e-8,
+          ),
+        ),
     )
   )
     return false;

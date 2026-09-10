@@ -44,3 +44,29 @@ UI exposes the explicit fixture installation and cargo-grid placement mode, sele
 Focused tests cover actual paired native floor compilation, fresh six-root installation, grant/occupant rejection, replay, actual ctx.db moves, full unload/rebuild from supported reachable actor positions, retained item IDs and private documents, actual nested-liquid mass, carrier overload, support/removal rules, rotation/ceiling/wall sweeps, collision identity preservation and admitted/revoked/deck projection filtering. The test table adapter proves preflight and writes; it is not the SpacetimeDB transaction engine.
 
 Required before activation: combined check/build/art gates; fresh isolated publication; real-provider explicit fixture creation/entry; item store/move/reload/reconnect/unload/rebuild; deliberately overloaded transfer proving **actual database rollback including receipt/revisions**; second-account privacy and revoked access; root browser review and draw-call measurement; matched immutable release manifest. Parent owns browser GPU and final client integration. Current release owner controls world/index and generation until the refit candidate is pinned.
+
+## Reserved authored envelope and structural clearance correction
+
+The owner requires the entire exported asset to fit its declared footprint and
+height at a consistent authored pivot. A 2 m reservation cannot admit a 2.04 m
+mesh. Handles, feet, latches and bevels count. `scripts/art_library/validate_reserved_envelope.py`
+now enforces that contract on every cargo carrier staging operation, before any
+copy. The exact three inputs pass; their declared polygons, heights, measured
+native bounds and hashes are retained in
+`docs/handoffs/cargo_reserved_envelope_qualification.json`. Qualification applies
+to convex declared footprints; concave shapes must use a separately validated
+convex decomposition. No automatic scaling, recentering or placement repair is
+performed. The 1e-6 m tolerance only accommodates GLB float32 encoding.
+
+Placement validation separately permits the explicit floor bearing interface and
+requires 1/32 m clearance from non-mount structure in the handling fixture.
+It now checks the full wall segment thickness and polygon edge intersections;
+checking only wall centerlines or contained vertices missed real penetrations.
+Three regressions cover those cases. This clearance is not a remedy for oversized
+art. Walls belong outside usable floor envelopes, while approved equipment mounts
+need their own explicit mating and clearance contract.
+
+The six Python reserved-envelope tests include the actual pinned native exports
+and rejection of oversized geometry, a protruding foot, a triangle's empty half,
+an incorrect pivot and invalid metadata. These checks and the source-only
+clearance correction do not register cargo runtime or change the pinned release.
