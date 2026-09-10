@@ -96,6 +96,7 @@ function fixture() {
     uuid,
   );
   const db: any = {
+    constructionCargoAssembly: table("containerId"),
     wayfarerRefitAttachment: table(),
     constructionInstance: table(),
     ship: table(),

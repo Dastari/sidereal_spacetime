@@ -70,6 +70,10 @@ function table(indexes: Record<string, string> = {}, primary = "id") {
 }
 function fixture() {
   const db: any = {
+    constructionCargoAssembly: table(
+      { by_instance: "instanceId" },
+      "containerId",
+    ),
     wayfarerRefitAttachment: table({ by_instance: "instanceId" }),
     constructionNativePressure: table({ by_owner: "owner", by_door: "doorId" }),
     constructionAtmosphereClock: table(),

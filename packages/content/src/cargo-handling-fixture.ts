@@ -3,6 +3,8 @@ import document from "./cargo-handling-fixture-r001.json";
 export const CARGO_HANDLING_FIXTURE = {
   id: "cargo-handling-qualification-r001",
   sourceDeckId: "cargo-handling-deck",
+  /** Reserved perimeter entry socket; the cargo grid starts at (0,0). */
+  entryPointM: [-0.5, -0.5] as const,
   sha256: "b2b413fa0e924cd72cde266a2e72525c78bfa199d53f799751ce5b4f9eba3ea0",
   documentJson: JSON.stringify(document),
   gridDefinitionSha256:

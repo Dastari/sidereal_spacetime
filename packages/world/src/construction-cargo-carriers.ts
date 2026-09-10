@@ -17,14 +17,21 @@ import {
   withoutAdoptedCargo,
   type CargoCollisionBinding,
 } from "@sidereal/sim/cargo-carrier-collision";
-import { planCargoCarrierHandling } from "@sidereal/sim/cargo-carrier-handling";
+import {
+  CargoHandlingRejection,
+  planCargoCarrierHandling,
+} from "@sidereal/sim/cargo-carrier-handling";
 import {
   validateCargoStack,
   type CargoGrid,
   type CargoPlacement,
   type CargoPoint,
 } from "@sidereal/sim/construction-cargo";
-import { readCargo, type moveScopedCargo } from "./scoped-inventory-authority";
+import {
+  readCargo,
+  readCargoBase,
+  type moveScopedCargo,
+} from "./scoped-inventory-authority";
 import {
   inspectScopedCargo,
   qualifyCargoAccessPoint,
@@ -32,6 +39,7 @@ import {
 } from "./scoped-inventory";
 import {
   editConstructionCargoGrid,
+  CargoGridRejection,
   type CargoGridDatabase,
   type CargoGridHooks,
   type CargoGridRequest,
@@ -41,7 +49,6 @@ import {
 import type { DeckCollisionFrame } from "@sidereal/sim/construction-collision";
 import { cargoCarrierAccessPoint } from "@sidereal/sim/cargo-carrier-access";
 export { cargoCarrierAccessPoint } from "@sidereal/sim/cargo-carrier-access";
-import { withCargoCarrierApproaches } from "./construction-cargo-access";
 import { requireGame } from "./auth";
 import { CARGO_HANDLING_FIXTURE } from "@sidereal/content/cargo-handling-fixture";
 import { stableStringify } from "@sidereal/sim/layout-geometry";
@@ -136,7 +143,7 @@ export function cargoCarrierPayloadMass(
   ctx: CargoCarrierReadContext,
   containerId: string,
 ) {
-  const reader = readCargo(ctx),
+  const reader = readCargoBase(ctx),
     containers = bounded(reader.containersForRoot(containerId), 152),
     items = bounded(reader.itemsForRoot(containerId), 128);
   if (!containers.some((c) => c.id === containerId && !c.parentItemId))
@@ -268,10 +275,7 @@ export function moveCargoCarriers(
     fail(
       "Move one secured carrier at a time; unload its supported cargo first",
     );
-  const reader = withCargoCarrierApproaches(
-      ctx,
-      readCargo(ctx, ctx.timestamp.microsSinceUnixEpoch),
-    ),
+  const reader = readCargo(ctx, ctx.timestamp.microsSinceUnixEpoch),
     access = resolveCargoAccess(reader);
   if ("ok" in access) fail(access.error.message);
   const actor = ctx.db.character.id.find(access.actorId),
@@ -406,18 +410,24 @@ export function moveCargoCarriers(
         old.originY !== next.originY ||
         old.originZ !== next.originZ ||
         old.quarterTurns !== next.quarterTurns
-      )
-        planCargoCarrierHandling({
-          grid: JSON.parse(row.gridJson) as CargoGrid,
-          interfaces: [
-            carrierInterface("oneMetre"),
-            carrierInterface("twoMetre"),
-          ],
-          placements: previous.map((p) => placement(ctx, p)),
-          containerId: edit.containerId,
-          target: placement(ctx, next),
-          structure,
-        });
+      ) {
+        try {
+          planCargoCarrierHandling({
+            grid: JSON.parse(row.gridJson) as CargoGrid,
+            interfaces: [
+              carrierInterface("oneMetre"),
+              carrierInterface("twoMetre"),
+            ],
+            placements: previous.map((p) => placement(ctx, p)),
+            containerId: edit.containerId,
+            target: placement(ctx, next),
+            structure,
+          });
+        } catch (error) {
+          if (error instanceof CargoHandlingRejection) fail(error.message);
+          throw error;
+        }
+      }
       const finalFrame = applyCargoCarrierCollision(
         structure,
         planned.map((p) => ({
@@ -478,7 +488,13 @@ export function moveCargoCarriers(
   const replay = !!ctx.db.constructionCargoOperation.id.find(
     JSON.stringify([ctx.sender.toHexString(), request.operationId]),
   );
-  const result = editConstructionCargoGrid(ctx, hooks, request);
+  let result: ReturnType<typeof editConstructionCargoGrid>;
+  try {
+    result = editConstructionCargoGrid(ctx, hooks, request);
+  } catch (error) {
+    if (error instanceof CargoGridRejection) fail(error.message);
+    throw error;
+  }
   if (replay) return result;
   for (const id of result.changedContainerIds) {
     const s = source(ctx, id)!,

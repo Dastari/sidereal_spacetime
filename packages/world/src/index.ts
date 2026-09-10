@@ -1,3 +1,17 @@
+import { constructionCargoAssembly } from "./construction-cargo-assembly-tables";
+import {
+  constructionCargoGrid,
+  constructionCargoPlacement,
+  constructionCargoOperation,
+} from "./construction-cargo-grid-tables";
+import { installCargoHandlingFixture as installCarrierFixture } from "./construction-cargo-fixture";
+import { moveCargoCarriers } from "./construction-cargo-carriers";
+import {
+  ownCargoCarriers as readCargoCarriers,
+  ownCargoGrids as readCargoGrids,
+  cargoCarrierProjection,
+  cargoGridProjection,
+} from "./construction-cargo-carrier-views";
 import {
   wayfarerRefitReceipt,
   wayfarerRefitAttachment,
@@ -238,6 +252,10 @@ const movementTimer = table(
   { scheduledId: t.u64().primaryKey().autoInc(), scheduledAt: t.scheduleAt() },
 );
 const db = schema({
+  constructionCargoAssembly,
+  constructionCargoGrid,
+  constructionCargoPlacement,
+  constructionCargoOperation,
   wayfarerRefitReceipt,
   wayfarerRefitAttachment,
   wayfarerLiquidReceipt,
@@ -1308,4 +1326,56 @@ export const transferWayfarerLiquid = db.reducer(
     operationId: t.string(),
   },
   auth.gameAction(applyWayfarerLiquid, true),
+);
+
+export const ownCargoCarriers = db.view(
+  { name: "own_cargo_carriers", public: true },
+  t.array(cargoCarrierProjection),
+  auth.gameView(readCargoCarriers),
+);
+export const ownCargoGrids = db.view(
+  { name: "own_cargo_grids", public: true },
+  t.array(cargoGridProjection),
+  auth.gameView(readCargoGrids),
+);
+export const installCargoHandlingFixture = db.reducer(
+  {
+    instanceId: t.string(),
+    expectedInstanceRevision: t.u64(),
+    operationId: t.string(),
+  },
+  auth.gameAction((ctx, args) => {
+    installCarrierFixture(ctx, args);
+  }, true),
+);
+export const moveCargoCarrier = db.reducer(
+  {
+    gridId: t.string(),
+    expectedGridRevision: t.u64(),
+    operationId: t.string(),
+    containerId: t.string(),
+    expectedPlacementRevision: t.u64(),
+    expectedInventoryRevision: t.u64(),
+    originX: t.i32(),
+    originY: t.i32(),
+    originZ: t.i32(),
+    quarterTurns: t.u8(),
+  },
+  auth.gameAction((ctx, args) => {
+    moveCargoCarriers(ctx, {
+      gridId: args.gridId,
+      expectedGridRevision: args.expectedGridRevision,
+      operationId: args.operationId,
+      edits: [
+        {
+          kind: "move",
+          containerId: args.containerId,
+          expectedPlacementRevision: args.expectedPlacementRevision,
+          expectedInventoryRevision: args.expectedInventoryRevision,
+          origin: [args.originX, args.originY, args.originZ],
+          quarterTurns: args.quarterTurns,
+        },
+      ],
+    });
+  }, true),
 );

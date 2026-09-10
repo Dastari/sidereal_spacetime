@@ -1,3 +1,4 @@
+import { cargoCarrierCollision } from "./construction-cargo-carriers";
 import { addWayfarerRefitCollision } from "./wayfarer-refit-collision";
 import {
   requestNativeAirlockDoor,
@@ -158,7 +159,7 @@ export function constructionCollision(
     ),
   );
   // Leaf collision persists when the aperture becomes passable; it does not vanish at90°.
-  return {
+  return cargoCarrierCollision(ctx, {
     ...frame,
     obstacles: [...frame.obstacles, ...obstacles],
     segments: [
@@ -172,7 +173,7 @@ export function constructionCollision(
         })),
       ),
     ],
-  };
+  });
 }
 export function requestDoor(
   ctx: Context,

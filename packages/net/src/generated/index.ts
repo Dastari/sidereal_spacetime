@@ -52,10 +52,12 @@ import EnterLabReducer from "./enter_lab_reducer";
 import EquipInventoryItemReducer from "./equip_inventory_item_reducer";
 import FireWeaponReducer from "./fire_weapon_reducer";
 import InstallAuthoredShipFlightReducer from "./install_authored_ship_flight_reducer";
+import InstallCargoHandlingFixtureReducer from "./install_cargo_handling_fixture_reducer";
 import InteractObjectReducer from "./interact_object_reducer";
 import JoinSharedSystemReducer from "./join_shared_system_reducer";
 import LeaveAuthoredPilotReducer from "./leave_authored_pilot_reducer";
 import LeaveConstructionReviewReducer from "./leave_construction_review_reducer";
+import MoveCargoCarrierReducer from "./move_cargo_carrier_reducer";
 import MoveInventoryItemReducer from "./move_inventory_item_reducer";
 import PublishConstructionBlueprintReducer from "./publish_construction_blueprint_reducer";
 import RefitExistingWayfarerReducer from "./refit_existing_wayfarer_reducer";
@@ -84,6 +86,8 @@ import OwnActuatorOutputsRow from "./own_actuator_outputs_table";
 import OwnAppearanceRow from "./own_appearance_table";
 import OwnAuthoredFlightFittingsRow from "./own_authored_flight_fittings_table";
 import OwnAuthoredFlightsRow from "./own_authored_flights_table";
+import OwnCargoCarriersRow from "./own_cargo_carriers_table";
+import OwnCargoGridsRow from "./own_cargo_grids_table";
 import OwnCarriedInventoryRevisionsRow from "./own_carried_inventory_revisions_table";
 import OwnCharactersRow from "./own_characters_table";
 import OwnCombatRow from "./own_combat_table";
@@ -155,6 +159,20 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnAuthoredFlightsRow),
+  ownCargoCarriers: __table({
+    name: 'own_cargo_carriers',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnCargoCarriersRow),
+  ownCargoGrids: __table({
+    name: 'own_cargo_grids',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnCargoGridsRow),
   ownCarriedInventoryRevisions: __table({
     name: 'own_carried_inventory_revisions',
     indexes: [
@@ -443,10 +461,12 @@ const reducersSchema = __reducers(
   __reducerSchema("equip_inventory_item", EquipInventoryItemReducer),
   __reducerSchema("fire_weapon", FireWeaponReducer),
   __reducerSchema("install_authored_ship_flight", InstallAuthoredShipFlightReducer),
+  __reducerSchema("install_cargo_handling_fixture", InstallCargoHandlingFixtureReducer),
   __reducerSchema("interact_object", InteractObjectReducer),
   __reducerSchema("join_shared_system", JoinSharedSystemReducer),
   __reducerSchema("leave_authored_pilot", LeaveAuthoredPilotReducer),
   __reducerSchema("leave_construction_review", LeaveConstructionReviewReducer),
+  __reducerSchema("move_cargo_carrier", MoveCargoCarrierReducer),
   __reducerSchema("move_inventory_item", MoveInventoryItemReducer),
   __reducerSchema("publish_construction_blueprint", PublishConstructionBlueprintReducer),
   __reducerSchema("refit_existing_wayfarer", RefitExistingWayfarerReducer),

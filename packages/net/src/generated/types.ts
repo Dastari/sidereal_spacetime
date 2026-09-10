@@ -77,6 +77,48 @@ export const BodyWorldMotion = __t.object("BodyWorldMotion", {
 });
 export type BodyWorldMotion = __Infer<typeof BodyWorldMotion>;
 
+export const CargoCarrierProjection = __t.object("CargoCarrierProjection", {
+  carrierId: __t.string(),
+  containerId: __t.string(),
+  placedObjectId: __t.string(),
+  instanceId: __t.string(),
+  deckId: __t.string(),
+  gridId: __t.string(),
+  carrierSize: __t.string(),
+  payloadAssetId: __t.string(),
+  carrierGlbSha256: __t.string(),
+  receiverGlbSha256: __t.string(),
+  payloadGlbSha256: __t.string(),
+  originX: __t.i32(),
+  originY: __t.i32(),
+  originZ: __t.i32(),
+  quarterTurns: __t.u8(),
+  placementRevision: __t.u64(),
+  assemblyRevision: __t.u64(),
+  inventoryRevision: __t.u64(),
+  gridRevision: __t.u64(),
+  secured: __t.bool(),
+  payloadMassKg: __t.f64(),
+  maxGrossMassKg: __t.f64(),
+});
+export type CargoCarrierProjection = __Infer<typeof CargoCarrierProjection>;
+
+export const CargoGridProjection = __t.object("CargoGridProjection", {
+  gridId: __t.string(),
+  instanceId: __t.string(),
+  deckId: __t.string(),
+  definitionSha256: __t.string(),
+  footprintUnitsJson: __t.string(),
+  baseZ: __t.i32(),
+  roofZ: __t.i32(),
+  horizontalStepUnits: __t.i32(),
+  snapOriginX: __t.i32(),
+  snapOriginY: __t.i32(),
+  maxLoadKg: __t.f64(),
+  revision: __t.u64(),
+});
+export type CargoGridProjection = __Infer<typeof CargoGridProjection>;
+
 export const Character = __t.object("Character", {
   id: __t.string(),
   owner: __t.identity(),
@@ -217,6 +259,59 @@ export const ConstructionBlueprintStatus = __t.object("ConstructionBlueprintStat
   readinessJson: __t.string(),
 });
 export type ConstructionBlueprintStatus = __Infer<typeof ConstructionBlueprintStatus>;
+
+export const ConstructionCargoAssembly = __t.object("ConstructionCargoAssembly", {
+  containerId: __t.string(),
+  id: __t.string(),
+  carrierId: __t.string(),
+  placedObjectId: __t.string(),
+  instanceId: __t.string(),
+  deckId: __t.string(),
+  carrierSize: __t.string(),
+  payloadAssetId: __t.string(),
+  payloadGlbSha256: __t.string(),
+  interfaceRevision: __t.string(),
+  retentionRevision: __t.string(),
+  upperFrameLocked: __t.bool(),
+  lifecycle: __t.string(),
+  revision: __t.u64(),
+});
+export type ConstructionCargoAssembly = __Infer<typeof ConstructionCargoAssembly>;
+
+export const ConstructionCargoGrid = __t.object("ConstructionCargoGrid", {
+  id: __t.string(),
+  instanceId: __t.string(),
+  deckId: __t.string(),
+  definitionSha256: __t.string(),
+  gridJson: __t.string(),
+  revision: __t.u64(),
+});
+export type ConstructionCargoGrid = __Infer<typeof ConstructionCargoGrid>;
+
+export const ConstructionCargoOperation = __t.object("ConstructionCargoOperation", {
+  id: __t.string(),
+  principal: __t.identity(),
+  requestJson: __t.string(),
+  resultJson: __t.string(),
+});
+export type ConstructionCargoOperation = __Infer<typeof ConstructionCargoOperation>;
+
+export const ConstructionCargoPlacement = __t.object("ConstructionCargoPlacement", {
+  containerId: __t.string(),
+  instanceId: __t.string(),
+  deckId: __t.string(),
+  gridId: __t.string(),
+  interfaceId: __t.string(),
+  interfaceRevision: __t.string(),
+  originX: __t.i32(),
+  originY: __t.i32(),
+  originZ: __t.i32(),
+  quarterTurns: __t.u8(),
+  secured: __t.bool(),
+  custodyAnchorId: __t.string(),
+  revision: __t.u64(),
+});
+export type ConstructionCargoPlacement = __Infer<typeof ConstructionCargoPlacement>;
 
 export const ConstructionDeck = __t.object("ConstructionDeck", {
   id: __t.string(),
@@ -959,6 +1054,12 @@ export type OwnAuthoredFlightFittings = __Infer<typeof OwnAuthoredFlightFittings
 
 export const OwnAuthoredFlights = __t.object("OwnAuthoredFlights", {});
 export type OwnAuthoredFlights = __Infer<typeof OwnAuthoredFlights>;
+
+export const OwnCargoCarriers = __t.object("OwnCargoCarriers", {});
+export type OwnCargoCarriers = __Infer<typeof OwnCargoCarriers>;
+
+export const OwnCargoGrids = __t.object("OwnCargoGrids", {});
+export type OwnCargoGrids = __Infer<typeof OwnCargoGrids>;
 
 export const OwnCarriedInventoryRevisions = __t.object("OwnCarriedInventoryRevisions", {});
 export type OwnCarriedInventoryRevisions = __Infer<typeof OwnCarriedInventoryRevisions>;

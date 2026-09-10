@@ -17,8 +17,9 @@ export interface CargoHandlingPlan {
   quarterTurns: number;
   clearanceUnits: number;
 }
+export class CargoHandlingRejection extends Error {}
 function requireCondition(ok: unknown, message: string): asserts ok {
-  if (!ok) throw Error(message);
+  if (!ok) throw new CargoHandlingRejection(message);
 }
 const overlap = (a: readonly number[], b: readonly number[]) =>
   a[0]! < b[3]! &&

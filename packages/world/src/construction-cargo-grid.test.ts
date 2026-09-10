@@ -2,6 +2,7 @@ import { expect, test } from "vitest";
 import { Identity } from "spacetimedb";
 import {
   editConstructionCargoGrid,
+  CargoGridRejection,
   type CargoGridContext,
   type CargoGridHooks,
   type CargoGridRow,
@@ -430,4 +431,22 @@ test("oversized mutation, duplicate identity, nonfinite coordinate and oversized
   const before = f.writes.length;
   expect(() => f.run([f.place("box", [0, 0, 0])])).toThrow("byte budget");
   expect(f.writes).toHaveLength(before);
+});
+
+test("expected rejection is classified while storage failures propagate unchanged", () => {
+  const f = fixture();
+  f.add("box");
+  expect(() => f.run([f.place("box", [NaN, 0, 0])])).toThrow(
+    CargoGridRejection,
+  );
+  const failure = new Error("database unavailable");
+  f.ctx.db.constructionCargoPlacement.insert = () => {
+    throw failure;
+  };
+  try {
+    f.run([f.place("box", [0, 0, 0])]);
+    throw new Error("must fail");
+  } catch (error) {
+    expect(error).toBe(failure);
+  }
 });

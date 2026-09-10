@@ -1,3 +1,4 @@
+import { qualifiedConstructionReviewEntry } from "./construction-review-entry";
 import {
   saveNativeReviewOrigin,
   restoreNativeReviewOrigin,
@@ -283,6 +284,10 @@ export function enterReview(
     throw new SenderError("Stand up before entering construction review");
   if (!ctx.db.ship.id.find(actor.shipId))
     throw new SenderError("Valid return ship required");
+  const entry = qualifiedConstructionReviewEntry(
+    constructionCollision(ctx, instance, instance.spawnDeckId),
+    instance,
+  );
   const nativeOrigin = saveNativeReviewOrigin(ctx, actor.id, instance.id);
   const reviewLocation = {
     characterId: actor.id,
@@ -300,8 +305,8 @@ export function enterReview(
   ctx.db.character.id.update({
     ...actor,
     shipId: instance.id,
-    localX: instance.spawnX,
-    localY: instance.spawnY,
+    localX: entry[0],
+    localY: entry[1],
     sprinting: false,
   });
   clearControls(ctx, actor.id);

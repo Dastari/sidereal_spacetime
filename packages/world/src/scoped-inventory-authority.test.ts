@@ -103,6 +103,12 @@ function fixture() {
     uuid,
   );
   const db: any = {
+    constructionCargoAssembly: table("containerId", {
+      by_instance: ["instanceId"],
+    }),
+    constructionCargoGrid: table("id", { by_instance: ["instanceId"] }),
+    constructionCargoPlacement: table("containerId", { by_grid: ["gridId"] }),
+    constructionCargoOperation: table("id", { by_principal: ["principal"] }),
     wayfarerRefitAttachment: table("id", { by_instance: ["instanceId"] }),
     character: table("id", { by_owner: ["owner"] }),
     constructionLocation: table("characterId"),

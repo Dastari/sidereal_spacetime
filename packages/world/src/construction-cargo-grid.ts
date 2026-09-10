@@ -145,8 +145,9 @@ export interface CargoGridResult {
   changedContainerIds: string[];
   detachedContainerIds: string[];
 }
+export class CargoGridRejection extends Error {}
 function check(value: unknown, message: string): asserts value {
-  if (!value) throw Error(message);
+  if (!value) throw new CargoGridRejection(message);
 }
 function bounded<T>(rows: Iterable<T>, limit: number): T[] {
   const result: T[] = [];

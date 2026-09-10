@@ -105,6 +105,9 @@ function fixture() {
     );
   const owner = Identity.fromString("1".repeat(64));
   const db: any = {
+    constructionCargoAssembly: store("containerId", {
+      by_instance: "instanceId",
+    }),
     wayfarerRefitAttachment: store("id", { by_instance: "instanceId" }),
     constructionPilotSeat: store("characterId", { by_owner: "owner" }),
     constructionInstance: store(),

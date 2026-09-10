@@ -1,0 +1,171 @@
+{
+  "publication": {
+    "database": "sidereal-spacetime-dev-review-cargo-carriers-r001-smoke",
+    "moduleSha256": "ac3cabcdb2ee8a7d882336ca0c3d82d4168a760e2f556564bbbf2f8ac8e7ff67",
+    "seedReducerPresent": false,
+    "normalMoveReducerPresent": false,
+    "verifiedActiveProgramBytes": true
+  },
+  "overload": {
+    "database": "sidereal-spacetime-dev-review-cargo-carriers-r001-smoke",
+    "moduleSha256": "ac3cabcdb2ee8a7d882336ca0c3d82d4168a760e2f556564bbbf2f8ac8e7ff67",
+    "actorId": "1ea18462-25c1-42fc-a76c-0b764faf9a9e",
+    "instanceId": "7ae7fc10-79a3-4a18-9bc8-03f6ec81800a",
+    "targetId": "a0158b04-7c3b-4bd7-82c3-aa9cbbf8c890",
+    "fixedPayloadMassKg": 229.9999999999998,
+    "ordinaryProvider": true,
+    "normalReducerOverloadDenied": true,
+    "itemAndRevisionsRolledBack": true,
+    "failedReceiptAbsent": true,
+    "medkitUuidPreserved": "4ada69c3-944e-4c14-9962-26e890142a0f"
+  },
+  "privacy": {
+    "database": "sidereal-spacetime-dev-review-cargo-carriers-r001-smoke",
+    "secondaryActorId": "edc26de9-2071-4f79-b631-e626745d3c4d",
+    "primaryInstanceId": "7ae7fc10-79a3-4a18-9bc8-03f6ec81800a",
+    "privateCarrierAndGridViewsEmpty": true,
+    "foreignInstanceAndContentsHidden": true,
+    "foreignEntryAndMoveDenied": true,
+    "fourPrivateBaseSubscriptionsDenied": true
+  },
+  "persistence": {
+    "database": "sidereal-spacetime-dev-review-cargo-carriers-r001-smoke",
+    "actorId": "1ea18462-25c1-42fc-a76c-0b764faf9a9e",
+    "instanceId": "7ae7fc10-79a3-4a18-9bc8-03f6ec81800a",
+    "sixCarrierAndContainerIdentitiesPreserved": true,
+    "restackedCoordinatesPreserved": true,
+    "threeStaleRevisionKindsDeniedWithoutWrites": true,
+    "nestedLiquidCount": 50,
+    "nestedLitresEach": 5,
+    "fixedPayloadMassKg": 230,
+    "storedPistolUuid": "46c3b21c-9c56-4a0c-9df9-17b1d80110d5",
+    "reconnectStoredContentsPreserved": true,
+    "appearancePreserved": true,
+    "samePistolRetrieved": true,
+    "serverProcessRestarted": false
+  },
+  "fixture": {
+    "instanceId": "7ae7fc10-79a3-4a18-9bc8-03f6ec81800a",
+    "templateSha256": "b2b413fa0e924cd72cde266a2e72525c78bfa199d53f799751ce5b4f9eba3ea0",
+    "normalWayfarerModified": false,
+    "unloadRebuildMoves": 10,
+    "replayPreservesIds": true,
+    "ballastWasIsolatedFixturePreparation": true,
+    "publicDeployment": false
+  },
+  "loadedMoves": {
+    "database": "sidereal-spacetime-dev-review-cargo-carriers-r001-smoke",
+    "moduleSha256": "ac3cabcdb2ee8a7d882336ca0c3d82d4168a760e2f556564bbbf2f8ac8e7ff67",
+    "instanceId": "7ae7fc10-79a3-4a18-9bc8-03f6ec81800a",
+    "loadedPayloadMassKg": 229.9999999999998,
+    "moves": [
+      {
+        "containerId": "c7973601-b787-4f8f-8786-9acc217d3c1f",
+        "origin": [
+          96,
+          0,
+          6
+        ]
+      },
+      {
+        "containerId": "a0158b04-7c3b-4bd7-82c3-aa9cbbf8c890",
+        "origin": [
+          0,
+          96,
+          6
+        ]
+      },
+      {
+        "containerId": "1b103b7f-a7ee-4b5e-b840-d04e649c8fa5",
+        "origin": [
+          32,
+          96,
+          6
+        ]
+      },
+      {
+        "containerId": "8d373a95-22be-4713-992c-44c1872725f8",
+        "origin": [
+          64,
+          96,
+          6
+        ]
+      },
+      {
+        "containerId": "80adfe73-bb5e-4eab-b138-b58be9304f99",
+        "origin": [
+          96,
+          96,
+          6
+        ]
+      },
+      {
+        "containerId": "80adfe73-bb5e-4eab-b138-b58be9304f99",
+        "origin": [
+          32,
+          32,
+          28
+        ]
+      },
+      {
+        "containerId": "8d373a95-22be-4713-992c-44c1872725f8",
+        "origin": [
+          0,
+          32,
+          28
+        ]
+      },
+      {
+        "containerId": "1b103b7f-a7ee-4b5e-b840-d04e649c8fa5",
+        "origin": [
+          32,
+          0,
+          28
+        ]
+      },
+      {
+        "containerId": "a0158b04-7c3b-4bd7-82c3-aa9cbbf8c890",
+        "origin": [
+          0,
+          0,
+          28
+        ]
+      },
+      {
+        "containerId": "c7973601-b787-4f8f-8786-9acc217d3c1f",
+        "origin": [
+          0,
+          0,
+          50
+        ]
+      }
+    ],
+    "eachReplayAccepted": true,
+    "personalInventoryPreserved": true
+  },
+  "checks": {
+    "npmCheck": {
+      "passed": true,
+      "tests": 1235,
+      "testFiles": 206,
+      "projectDocuments": 77
+    },
+    "npmBuild": {
+      "passed": true,
+      "registeredModuleSha256": "ac3cabcdb2ee8a7d882336ca0c3d82d4168a760e2f556564bbbf2f8ac8e7ff67"
+    },
+    "freshGenericAuthoritySmoke": {
+      "passed": true,
+      "database": "sidereal-spacetime-dev-review-cargo-carriers-final-r001-smoke"
+    },
+    "nativeEnvelopeAndBearingTests": {
+      "passed": true,
+      "tests": 13
+    },
+    "artCheck": {
+      "passed": false,
+      "reason": "External character pose r003 publication receipt set: Unexpected/incomplete r003 publication receipt set",
+      "cargoAndNativeArtifactHashChecksPassed": true
+    }
+  }
+}

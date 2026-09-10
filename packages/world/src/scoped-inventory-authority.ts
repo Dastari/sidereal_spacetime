@@ -1,3 +1,5 @@
+import { withCargoCarrierApproaches } from "./construction-cargo-access";
+import { assertCargoStackMass } from "./construction-cargo-carriers";
 import {
   ownedGameShipAccess,
   GAME_OWNED_TEMPLATE_NAMESPACE,
@@ -126,7 +128,11 @@ export function synchronizeLegacyInventory(
 function actorFor(ctx: ReadContext) {
   return [...ctx.db.character.by_owner.filter(ctx.sender)][0];
 }
-export function readCargo(ctx: ReadContext, nowMicros = 0n): CargoInventoryReader {
+/** Storage reader for bounded mass calculations; no dynamic walking approach lookup. */
+export function readCargoBase(
+  ctx: ReadContext,
+  nowMicros = 0n,
+): CargoInventoryReader {
   const principal = ctx.sender.toHexString();
   const geometry = (instanceId: string, deckId: string) => {
     const a = actorFor(ctx),
@@ -277,6 +283,12 @@ export function readCargo(ctx: ReadContext, nowMicros = 0n): CargoInventoryReade
     liquidDensity: LIQUID_DENSITY_KG_PER_LITRE,
   };
 }
+export function readCargo(
+  ctx: ReadContext,
+  nowMicros = 0n,
+): CargoInventoryReader {
+  return withCargoCarrierApproaches(ctx, readCargoBase(ctx, nowMicros));
+}
 export function moveScopedCargo(ctx: Context, request: ScopedTransferRequest) {
   const reader = readCargo(ctx, ctx.timestamp.microsSinceUnixEpoch);
   const repo: CargoRepository = {
@@ -355,8 +367,14 @@ export function moveScopedCargo(ctx: Context, request: ScopedTransferRequest) {
         id: JSON.stringify([r.actorId, r.operationId]),
       }),
   };
+  const affectedRoots = [
+    reader.rootForContainer(request.sourceContainerId),
+    reader.rootForContainer(request.destinationContainerId),
+  ].filter((id): id is string => !!id);
   const result = transferScopedCargo(repo, request);
   if (!result.ok) fail(result.error.code + ": " + result.error.message);
+  // Throws propagate through the enclosing transaction, including its receipt.
+  if (!result.replay) assertCargoStackMass(ctx, affectedRoots);
 }
 /** Bounded server-derived reachable roots, not client query authorization. */
 function reachableCargo(ctx: ReadContext) {
