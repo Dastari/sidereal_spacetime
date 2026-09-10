@@ -5,7 +5,39 @@ import { SceneLoader } from "@babylonjs/core/Loading/sceneLoader";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { createSpaceEnvironment, type SpaceBodyState } from "./index";
 import { planetRecipe } from "../../../content/src/environment";
+import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
+import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 afterEach(() => {vi.restoreAllMocks();vi.unstubAllGlobals();});
+it("disables out-of-range cached bodies and applies in-place recipe edits on re-entry", async () => {
+  const engine = new NullEngine(), scene = new Scene(engine);
+  const camera = new FreeCamera("range-camera", Vector3.Zero(), scene);
+  camera.maxZ = 100;
+  vi.spyOn(SceneLoader, "ImportMeshAsync").mockResolvedValue({meshes:[CreateBox("source",{},scene)],particleSystems:[],skeletons:[],animationGroups:[],transformNodes:[],geometries:[],lights:[],spriteManagers:[]});
+  vi.stubGlobal("fetch", vi.fn(async () => new Response("unavailable", {status:404})));
+  const environment = createSpaceEnvironment(scene);
+  await environment.ready;
+  const body: SpaceBodyState = {id:"range-body",kind:"planet",appearance:"temperate",seed:1,radius:1,
+    x:0,y:-50,height:0,vx:0,vy:0,heading:0,omega:0,
+    recipe:{...planetRecipe("temperate",1),resolution:12,cloudCoverage:0}};
+  const options = {id:"orion-veil",x:0,y:0,dt:0,enabled:true,reducedMotion:true,bodies:[body]};
+  environment.update(options);
+  const node = scene.getTransformNodeByName("world-body-range-body")!;
+  const meshes = node.getChildMeshes();
+  body.y = -120;
+  environment.update(options);
+  expect(node.isEnabled()).toBe(false);
+  expect(meshes.every(m => !m.isEnabled() && !m.isDisposed())).toBe(true);
+  body.y = -50;
+  environment.update(options);
+  expect(node.isEnabled()).toBe(true);
+  expect(node.getChildMeshes()).toEqual(meshes);
+  body.recipe!.seaLevel += 0.2;
+  environment.update(options);
+  expect(node.isDisposed()).toBe(true);
+  expect(scene.getTransformNodeByName("world-body-range-body")).toBeTruthy();
+  expect(body.y).toBe(-50);
+  environment.dispose(); scene.dispose(); engine.dispose();
+});
 describe("world planet admission and local origin", () => {
   it("keeps authoritative world placement, rebuilds changed same-id recipes and releases removed meshes", async () => {
     const engine = new NullEngine();

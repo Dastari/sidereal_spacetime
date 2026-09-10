@@ -1,0 +1,21 @@
+{
+  "status": "implemented, unmeasured",
+  "documentVisibility": "visible",
+  "documentFocus": true,
+  "normalFrameProgress": false,
+  "renderIdBeforeDiagnostic": 1,
+  "singleManualDiagnostic": {
+    "error": null,
+    "renderIdAfter": 7,
+    "timingEvidence": false
+  },
+  "subsequentRenderId": 7,
+  "sceneReady": false,
+  "engineBackground": false,
+  "renderEvenInBackground": true,
+  "contextLost": false,
+  "requestAnimationFrameWrapped": true,
+  "overlay": "Preparing the first frame",
+  "afterCounters": null,
+  "isolation": null
+}

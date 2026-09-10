@@ -1,3 +1,6 @@
+import { Plane } from "@babylonjs/core/Maths/math.plane";
+import { bodyWithinRenderRange, setBodyRenderEnabled, updateBodyRangePlane } from "./body-visibility";
+import { createBodyVisualRevision } from "./body-visual-revision";
 import { createDustField } from "./dust-field";
 import { setMeshRole } from '../mesh-roles';
 import {loadNativeVolcanicKit,createNativeVolcanicCache,createNativeVolcanicWorldPlanet,canUseNativeVolcanic,NATIVE_VOLCANIC_REVISION} from "./native-volcanic-runtime";
@@ -184,6 +187,7 @@ export function createSpaceEnvironment(scene: Scene) {
   let rotationPaused = false;
   const visibilityRotation = () => rotationClock.step(performance.now(), rotationPaused || document.hidden);
   if (typeof document !== "undefined") document.addEventListener("visibilitychange", visibilityRotation);
+  const farPlane = new Plane(0, 0, 1, 0);
   const entries = new Map<
     string,
     {
@@ -197,7 +201,8 @@ export function createSpaceEnvironment(scene: Scene) {
       cloud?: TransformNode;
       smoke?: TransformNode;
       lod: PlanetLOD;
-      signature: string;
+      signature: number;
+      visualRevision: ReturnType<typeof createBodyVisualRevision>;
       ownsMaterials: boolean;
       cloudSpeed: number;
       radius: number;
@@ -439,7 +444,9 @@ export function createSpaceEnvironment(scene: Scene) {
     node.metadata = { bodyId: body.id, worldBody: true, role: body.kind === 'asteroid' ? 'environment' : 'planet' };
     for (const mesh of node.getChildMeshes()) setMeshRole(mesh, node.metadata.role);
     if (node instanceof Mesh) setMeshRole(node, node.metadata.role);
+    const visualRevision = createBodyVisualRevision();
     const entry = {
+      visualRevision,
       node,
       spin,
       seed: body.seed,
@@ -455,16 +462,10 @@ export function createSpaceEnvironment(scene: Scene) {
       updateWeather,
       radius: body.radius,
       ownsMaterials: body.kind !== "asteroid",
-      signature: JSON.stringify([
-        body.kind,
-        body.appearance,
-        body.seed,
-        body.radius,
-        body.recipe,
-        lod,
+      signature: visualRevision(body, lod,
         !!nativeIceKit && (body.appearance === "ice" || body.recipe?.style === "ice"),
         !!nativeVolcanicKit && (body.appearance === "volcanic" || body.recipe?.style === "volcanic"),
-      ]),
+      ),
     };
     entries.set(body.id, entry);
     return entry;
@@ -519,14 +520,14 @@ export function createSpaceEnvironment(scene: Scene) {
           entry.node.dispose(false, entry.ownsMaterials);
           entries.delete(id);
         }
+      const rangePlane = updateBodyRangePlane(scene.activeCamera, farPlane);
       const blend = 1 - Math.exp(-Math.min(options.dt, 0.1) * 18);
       for (const body of options.bodies) {
         let entry = entries.get(body.id);
         if (body.kind === "planet" && options.planetsEnabled === false) {
-          entry?.node.setEnabled(false);
+          setBodyRenderEnabled(entry?.node, false);
           continue;
         }
-        entry?.node.setEnabled(true);
         const center = new Vector3(
           body.x - options.x,
           body.height,
@@ -539,21 +540,20 @@ export function createSpaceEnvironment(scene: Scene) {
         const projected =
           (body.radius * scene.getEngine().getRenderHeight()) /
           (distance * 2 * Math.tan((scene.activeCamera?.fov ?? 0.5) / 2));
+        if (!bodyWithinRenderRange(center, body.radius, projected, rangePlane)) {
+          setBodyRenderEnabled(entry?.node, false);
+          continue;
+        }
+        setBodyRenderEnabled(entry?.node, true);
         const lod: PlanetLOD =
           body.kind === "planet" ? planetLOD(projected, entry?.lod) : 2;
         if (
           entry &&
           entry.signature !==
-            JSON.stringify([
-              body.kind,
-              body.appearance,
-              body.seed,
-              body.radius,
-              body.recipe,
-              lod,
+            entry.visualRevision(body, lod,
               !!nativeIceKit && (body.appearance === "ice" || body.recipe?.style === "ice"),
         !!nativeVolcanicKit && (body.appearance === "volcanic" || body.recipe?.style === "volcanic"),
-            ])
+            )
         ) {
           entry.node.dispose(false, entry.ownsMaterials);
           entries.delete(body.id);
