@@ -566,3 +566,26 @@ Ownership transfers explicitly from the containers to the assembly pool. All eli
 Before reference remains the last partial construction Deck: 656 calls / 393 active / 1,422 total meshes / 580 materials, with scale2/GlowOff/ShadowsOff/LightingOff = 656/533/277/277 and no accepted timing. Required after Deck/seated Flight and both isolation sequences are unavailable while the normal preview remains behind its first-frame gate. Read-only startup candidate audits report 548 then 475 scene materials, but the graph is unsettled and these are not F3 acceptance counters or an attributable material reduction. No draw-call or timing improvement is claimed from them. The <80 whole-scene material target is still unmet. Evidence is under `output/playwright/render-plan/R5/pooling/`; this remains implemented, unmeasured for acceptance.
 
 Final R5 pooling validation: `npm run build` passes (existing bundle-size warnings remain). The post-build RTX preview still has engine frame 0 / scene ID 1, visible but unfocused, with the first-frame cover present. Its snapshot fails even after an explicit preview reopen. No game frames were submitted manually and no screenshot was fabricated. Baseline-resolution F3 Deck/seated Flight, the isolation sequences and timing remain outstanding; the startup inventory in `final-browser-status.json` is diagnostic only.
+
+### 2026-09-11 — R0–R10 acceptance audit: goal blocked, not complete
+
+Revalidated after `b19e54c5`. The previous goal turn made implementation progress (R5 pooling); this audit does not constitute another optimization. Source and existing artifacts support the following remaining gates:
+
+| Item | Evidence present | Still required |
+| --- | --- | --- |
+| R0 | Role inventory, real-loader budgets, baseline JSON, Deck/TAB-Flight captures | Settled **seated** Flight and its isolation sequence |
+| R1 | Mapped local glow proxies, NullEngine visibility/identity tests, partial hardware reductions | Seated Flight; hardware close-up emitter occlusion, cutaway and independently hidden-deck review |
+| R8 | Scalar debug revision, shader dust, tests; combined R8/R5 captures | Matched hardware attribution and settled-view isolation acceptance |
+| R5 | Shared emissive variants, clone-free cutaway, static readiness/invalidation, owned static material pooling; semantic material bound 120 | Matched Deck/seated Flight and isolation captures; whole-scene <80-material target remains unmet |
+| R4 | Local instances, structural triangle maps, source-material submesh splitting, tests | Hardware mapped-placement selection and visibility review; remote expansion stopped until approved stable base placement IDs and deck/structural/material roles exist |
+| R6 | Static moving-root cache, culling/bulk setup and stable seated-Flight active list | Hardware Flight qualification and profiler evidence of reduced CPU work |
+| R2 | Semantic shadow policy/batches, Lighting Off fix, tests | Hardware map/isolation acceptance; retained proxy merging stopped on missing deck/placement identity |
+| R7 | Range admission and numeric visual revision with tests | Settled Flight population/isolation measurement; planet visuals remain paused |
+| R3 | Actual capture dimensions/sample diagnostics | Hardware 4×MSAA versus 1×+FXAA comparison and measured default selection |
+| R10 | Experimental backend/fallback, conservative FAST integration, shader/AA compatibility tests and bounded GPU probes | Full normal-game Deck/seated Flight appearance, isolation and CPU comparison; reduced-motion/morph/TAA exclusions remain explicitly limited compatibility, not blanket replay qualification |
+
+Final whole-scene targets are not proven: Deck <900 calls / Flight <600, <500 meshes, <80 materials, and Render CPU <6/<4 ms. The latest accepted scope of partial counts is still the construction Deck described above, with no comparable seated Flight or timing result. Narrow NullEngine budgets and explicit-frame GPU probes do not prove these whole-game targets. Deferred R9 experiments and R11–R14 remain unopened.
+
+The shared RTX browser (`tab_b`) is visible but unfocused, has one registered render loop, and remains at engine frame 0 / scene ID 1 with an unready scene and the first-frame cover. Reopening the pane has not restored snapshots or normal animation. This equivalent hardware blocker recurred through the R10 follow-up, R5 pooling and this goal continuation. No live measurement job is being awaited. The existing construction visit is preserved; no gameplay state or readiness gate was bypassed. Completing acceptance requires an externally restored, normally advancing hardware session and access to the required seated-Flight review context. Completing the stopped batching scopes also requires the approved identity inputs already described in their conflict entries. The goal is blocked on those conditions, not achieved.
+
+This is a documentation-only audit. The unchanged implementation's latest validation is R5 pooling's passing `npm run check` (266 files / 1,523 tests) and `npm run build`; the updated document passes `scripts/check_docs.py`. No new behavior or optimization measurement is claimed.
