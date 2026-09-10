@@ -1,0 +1,321 @@
+{
+  "schema": "sidereal.native-side-bay-render.v1",
+  "sourcePins": [
+    {
+      "placedId": "floor--2--1",
+      "path": "assets/runtime/assembly/floor/r002/kit.glb",
+      "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originalPlacement": {
+        "id": "floor--2--1",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -5,
+          -3,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-a561ef19a47095f7af9b",
+          "offset": [
+            1,
+            1,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      }
+    },
+    {
+      "placedId": "floor--2-0",
+      "path": "assets/runtime/assembly/floor/r002/kit.glb",
+      "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originalPlacement": {
+        "id": "floor--2-0",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -5,
+          -1,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-df324c9b4e916c78412f",
+          "offset": [
+            1,
+            1,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      }
+    },
+    {
+      "placedId": "floor--2-1",
+      "path": "assets/runtime/assembly/floor/r002/kit.glb",
+      "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+      "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "originalPlacement": {
+        "id": "floor--2-1",
+        "assetId": "part-a3f5c1c3caa171a94d6c",
+        "position": [
+          -5,
+          1,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "fittingProxy": {
+          "assetId": "part-d5094b4fbaf77ad6ebeb",
+          "offset": [
+            1,
+            1,
+            -0.375
+          ],
+          "maxZ": 0.5625
+        }
+      }
+    },
+    {
+      "placedId": "wall--2--1",
+      "path": "assets/runtime/assembly/parts.glb",
+      "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+      "nodePrefix": "GEO-part-8027121656ac690dd209--",
+      "originalPlacement": {
+        "id": "wall--2--1",
+        "assetId": "part-8027121656ac690dd209",
+        "position": [
+          -4.6875,
+          -2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "placedId": "wall--2-0",
+      "path": "assets/runtime/assembly/parts.glb",
+      "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+      "nodePrefix": "GEO-part-96878a6d75e5c294b532--",
+      "originalPlacement": {
+        "id": "wall--2-0",
+        "assetId": "part-96878a6d75e5c294b532",
+        "position": [
+          -4,
+          0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "placedId": "wall--2-1",
+      "path": "assets/runtime/assembly/parts.glb",
+      "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+      "nodePrefix": "GEO-part-6c3fb1c92331674881a0--",
+      "originalPlacement": {
+        "id": "wall--2-1",
+        "assetId": "part-6c3fb1c92331674881a0",
+        "position": [
+          -4,
+          2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "placedId": "wall--3--1",
+      "path": "assets/runtime/assembly/parts.glb",
+      "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+      "nodePrefix": "GEO-part-328e6e9149ea347b95d7--",
+      "originalPlacement": {
+        "id": "wall--3--1",
+        "assetId": "part-328e6e9149ea347b95d7",
+        "position": [
+          -5.125,
+          -2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "placedId": "wall--3-0",
+      "path": "assets/runtime/assembly/parts.glb",
+      "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+      "nodePrefix": "GEO-part-0e4aefe72a90960922e9--",
+      "originalPlacement": {
+        "id": "wall--3-0",
+        "assetId": "part-0e4aefe72a90960922e9",
+        "position": [
+          -5.1875,
+          0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "placedId": "wall--3-1",
+      "path": "assets/runtime/assembly/parts.glb",
+      "sha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+      "nodePrefix": "GEO-part-328e6e9149ea347b95d7--",
+      "originalPlacement": {
+        "id": "wall--3-1",
+        "assetId": "part-328e6e9149ea347b95d7",
+        "position": [
+          -5.125,
+          2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "placedId": "superstructure--3--1",
+      "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+      "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+      "nodePrefix": "GEO-part-e21a69be0c5b6a98e812--surface",
+      "originalPlacement": {
+        "id": "superstructure--3--1",
+        "assetId": "part-e21a69be0c5b6a98e812",
+        "position": [
+          -5.5,
+          -2,
+          -0.25
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "placedId": "superstructure--3-0",
+      "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+      "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+      "nodePrefix": "GEO-part-91c8f3d728f25c968810--surface",
+      "originalPlacement": {
+        "id": "superstructure--3-0",
+        "assetId": "part-91c8f3d728f25c968810",
+        "position": [
+          -5.5,
+          0,
+          -0.25
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": [],
+        "decals": [
+          {
+            "id": "side-registration--1",
+            "kind": "text",
+            "text": "WF-01",
+            "face": "left",
+            "position": [
+              -0.5270000000000001,
+              0,
+              1.42
+            ],
+            "size": [
+              1.45,
+              0.58
+            ],
+            "rotation": 0,
+            "color": "#d2d5e0"
+          }
+        ]
+      }
+    },
+    {
+      "placedId": "superstructure--3-1",
+      "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+      "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+      "nodePrefix": "GEO-part-0fe602115d20ec950357--surface",
+      "originalPlacement": {
+        "id": "superstructure--3-1",
+        "assetId": "part-0fe602115d20ec950357",
+        "position": [
+          -5.625,
+          2,
+          -0.25
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "placedId": "equipment-locker--4.7--2",
+      "path": "assets/runtime/assembly/equipment/part-c03ec0260cd7329050a8/glb.glb",
+      "sha256": "f527af1e44fc1570355c2268055b7b31343c45849a807b40993cf516c263093a",
+      "nodePrefix": null,
+      "originalPlacement": {
+        "id": "equipment-locker--4.7--2",
+        "assetId": "part-c03ec0260cd7329050a8",
+        "position": [
+          -4.6875,
+          -2,
+          0.1875
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    {
+      "placedId": "equipment-locker--4.7-2",
+      "path": "assets/runtime/assembly/equipment/part-c03ec0260cd7329050a8/glb.glb",
+      "sha256": "f527af1e44fc1570355c2268055b7b31343c45849a807b40993cf516c263093a",
+      "nodePrefix": null,
+      "originalPlacement": {
+        "id": "equipment-locker--4.7-2",
+        "assetId": "part-c03ec0260cd7329050a8",
+        "position": [
+          -4.6875,
+          2,
+          0.1875
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    }
+  ],
+  "reviewOriginM": [
+    -5.0,
+    0.0,
+    0.0
+  ],
+  "cameraM": [
+    6.0,
+    -6.0,
+    5.0
+  ],
+  "lookAtM": [
+    0.5,
+    0,
+    1.2
+  ],
+  "orthoScaleM": 7.6,
+  "sourcePlacementChanges": 0,
+  "evidence": "Actual native Blender context; no installed-game claim; roofs omitted only for inspection."
+}

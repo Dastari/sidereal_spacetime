@@ -1,0 +1,856 @@
+{
+  "schema": "sidereal.usable-wall-side-qualification.v1",
+  "pass": true,
+  "checks": [
+    {
+      "name": "New complete surfaces fit reserved source frame bay00-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay00-exterior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay00-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay00-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay00-interior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay00-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay01-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay01-exterior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay01-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay01-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay01-interior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Exact historical partition triangles retained bay01-interior",
+      "pass": true,
+      "detail": {
+        "original": 974,
+        "new": 974
+      }
+    },
+    {
+      "name": "Historical partition material roles retained bay01-interior",
+      "pass": true,
+      "detail": {
+        "original": [
+          "MAT-structural-polymer"
+        ],
+        "new": [
+          "MAT-structural-polymer"
+        ]
+      }
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay01-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay02-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay02-exterior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay02-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay02-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay02-interior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay02-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay03-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay03-exterior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay03-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay03-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay03-interior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Exact historical partition triangles retained bay03-interior",
+      "pass": true,
+      "detail": {
+        "original": 894,
+        "new": 894
+      }
+    },
+    {
+      "name": "Historical partition material roles retained bay03-interior",
+      "pass": true,
+      "detail": {
+        "original": [
+          "MAT-structural-polymer"
+        ],
+        "new": [
+          "MAT-structural-polymer"
+        ]
+      }
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay03-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay04-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay04-exterior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay04-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay04-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay04-interior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Exact historical partition triangles retained bay04-interior",
+      "pass": true,
+      "detail": {
+        "original": 56,
+        "new": 56
+      }
+    },
+    {
+      "name": "Historical partition material roles retained bay04-interior",
+      "pass": true,
+      "detail": {
+        "original": [
+          "MAT-structural-polymer"
+        ],
+        "new": [
+          "MAT-structural-polymer"
+        ]
+      }
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay04-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay05-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay05-exterior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay05-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay05-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay05-interior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay05-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay06-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay06-exterior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay06-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay06-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay06-interior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Exact historical partition triangles retained bay06-interior",
+      "pass": true,
+      "detail": {
+        "original": 968,
+        "new": 968
+      }
+    },
+    {
+      "name": "Historical partition material roles retained bay06-interior",
+      "pass": true,
+      "detail": {
+        "original": [
+          "MAT-structural-polymer"
+        ],
+        "new": [
+          "MAT-structural-polymer"
+        ]
+      }
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay06-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay07-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay07-exterior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay07-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay07-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay07-interior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay07-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay08-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay08-exterior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay08-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay08-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay08-interior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Exact historical partition triangles retained bay08-interior",
+      "pass": true,
+      "detail": {
+        "original": 1012,
+        "new": 1012
+      }
+    },
+    {
+      "name": "Historical partition material roles retained bay08-interior",
+      "pass": true,
+      "detail": {
+        "original": [
+          "MAT-structural-polymer"
+        ],
+        "new": [
+          "MAT-structural-polymer"
+        ]
+      }
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay08-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay09-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay09-exterior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay09-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay09-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay09-interior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay09-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay10-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay10-exterior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay10-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay10-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay10-interior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Exact historical partition triangles retained bay10-interior",
+      "pass": true,
+      "detail": {
+        "original": 912,
+        "new": 912
+      }
+    },
+    {
+      "name": "Historical partition material roles retained bay10-interior",
+      "pass": true,
+      "detail": {
+        "original": [
+          "MAT-structural-polymer"
+        ],
+        "new": [
+          "MAT-structural-polymer"
+        ]
+      }
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay10-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay11-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay11-exterior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay11-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay11-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay11-interior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Exact historical partition triangles retained bay11-interior",
+      "pass": true,
+      "detail": {
+        "original": 88,
+        "new": 88
+      }
+    },
+    {
+      "name": "Historical partition material roles retained bay11-interior",
+      "pass": true,
+      "detail": {
+        "original": [
+          "MAT-structural-polymer"
+        ],
+        "new": [
+          "MAT-structural-polymer"
+        ]
+      }
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay11-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay12-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay12-exterior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay12-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay12-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay12-interior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay12-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay13-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay13-exterior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay13-exterior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New complete surfaces fit reserved source frame bay13-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "New native faces leave usable floor clear bay13-interior",
+      "pass": true,
+      "detail": 0
+    },
+    {
+      "name": "Exact historical partition triangles retained bay13-interior",
+      "pass": true,
+      "detail": {
+        "original": 1012,
+        "new": 1012
+      }
+    },
+    {
+      "name": "Historical partition material roles retained bay13-interior",
+      "pass": true,
+      "detail": {
+        "original": [
+          "MAT-structural-polymer"
+        ],
+        "new": [
+          "MAT-structural-polymer"
+        ]
+      }
+    },
+    {
+      "name": "Original placement identity/frame unchanged bay13-interior",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native floor contact wall--3--3",
+      "pass": true,
+      "detail": 0.011717870999999987
+    },
+    {
+      "name": "Native roof contact wall--3--3",
+      "pass": true,
+      "detail": 0.0058554206249999945
+    },
+    {
+      "name": "Unchanged armor clear wall--3--3",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Unchanged complete locker clear equipment-locker--4.7--6",
+      "pass": true,
+      "detail": {
+        "overlapM3": 0.0,
+        "gapM": 0.06550000000000011
+      }
+    },
+    {
+      "name": "Native floor contact wall--3--2",
+      "pass": true,
+      "detail": 0.011717870999999946
+    },
+    {
+      "name": "Native roof contact wall--3--2",
+      "pass": true,
+      "detail": 0.005855420624999983
+    },
+    {
+      "name": "Unchanged armor clear wall--3--2",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native floor contact wall--3--1",
+      "pass": true,
+      "detail": 0.011717870999999975
+    },
+    {
+      "name": "Native roof contact wall--3--1",
+      "pass": true,
+      "detail": 0.005855420625000004
+    },
+    {
+      "name": "Unchanged armor clear wall--3--1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Unchanged complete locker clear equipment-locker--4.7--2",
+      "pass": true,
+      "detail": {
+        "overlapM3": 0.0,
+        "gapM": 0.06550000000000011
+      }
+    },
+    {
+      "name": "Native floor contact wall--3-0",
+      "pass": true,
+      "detail": 0.011717870999999975
+    },
+    {
+      "name": "Native roof contact wall--3-0",
+      "pass": true,
+      "detail": 0.005855420625000004
+    },
+    {
+      "name": "Unchanged armor clear wall--3-0",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native floor contact wall--3-1",
+      "pass": true,
+      "detail": 0.011717870999999973
+    },
+    {
+      "name": "Native roof contact wall--3-1",
+      "pass": true,
+      "detail": 0.005855420625000017
+    },
+    {
+      "name": "Unchanged armor clear wall--3-1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Unchanged complete locker clear equipment-locker--4.7-2",
+      "pass": true,
+      "detail": {
+        "overlapM3": 0.0,
+        "gapM": 0.06550000000000011
+      }
+    },
+    {
+      "name": "Native floor contact wall--3-2",
+      "pass": true,
+      "detail": 0.01171787099999996
+    },
+    {
+      "name": "Native roof contact wall--3-2",
+      "pass": true,
+      "detail": 0.005855420625000001
+    },
+    {
+      "name": "Unchanged armor clear wall--3-2",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native floor contact wall--3-3",
+      "pass": true,
+      "detail": 0.011717870999999987
+    },
+    {
+      "name": "Native roof contact wall--3-3",
+      "pass": true,
+      "detail": 0.0058554206249999945
+    },
+    {
+      "name": "Unchanged armor clear wall--3-3",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native floor contact wall-3--3",
+      "pass": true,
+      "detail": 0.011717871
+    },
+    {
+      "name": "Native roof contact wall-3--3",
+      "pass": true,
+      "detail": 0.00585542062499999
+    },
+    {
+      "name": "Unchanged armor clear wall-3--3",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Unchanged complete locker clear equipment-locker-4.7--6",
+      "pass": true,
+      "detail": {
+        "overlapM3": 0.0,
+        "gapM": 0.06550000000000011
+      }
+    },
+    {
+      "name": "Native floor contact wall-3--2",
+      "pass": true,
+      "detail": 0.011717870999999958
+    },
+    {
+      "name": "Native roof contact wall-3--2",
+      "pass": true,
+      "detail": 0.005855420624999988
+    },
+    {
+      "name": "Unchanged armor clear wall-3--2",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native floor contact wall-3--1",
+      "pass": true,
+      "detail": 0.011717870999999972
+    },
+    {
+      "name": "Native roof contact wall-3--1",
+      "pass": true,
+      "detail": 0.005855420625000004
+    },
+    {
+      "name": "Unchanged armor clear wall-3--1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Unchanged complete locker clear equipment-locker-4.7--2",
+      "pass": true,
+      "detail": {
+        "overlapM3": 0.0,
+        "gapM": 0.06550000000000011
+      }
+    },
+    {
+      "name": "Native floor contact wall-3-0",
+      "pass": true,
+      "detail": 0.011717870999999972
+    },
+    {
+      "name": "Native roof contact wall-3-0",
+      "pass": true,
+      "detail": 0.005855420625000004
+    },
+    {
+      "name": "Unchanged armor clear wall-3-0",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native floor contact wall-3-1",
+      "pass": true,
+      "detail": 0.011717870999999972
+    },
+    {
+      "name": "Native roof contact wall-3-1",
+      "pass": true,
+      "detail": 0.005855420625000004
+    },
+    {
+      "name": "Unchanged armor clear wall-3-1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Unchanged complete locker clear equipment-locker-4.7-2",
+      "pass": true,
+      "detail": {
+        "overlapM3": 0.0,
+        "gapM": 0.06550000000000011
+      }
+    },
+    {
+      "name": "Native floor contact wall-3-2",
+      "pass": true,
+      "detail": 0.011717870999999958
+    },
+    {
+      "name": "Native roof contact wall-3-2",
+      "pass": true,
+      "detail": 0.005855420624999979
+    },
+    {
+      "name": "Unchanged armor clear wall-3-2",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native floor contact wall-3-3",
+      "pass": true,
+      "detail": 0.011717871
+    },
+    {
+      "name": "Native roof contact wall-3-3",
+      "pass": true,
+      "detail": 0.00585542062499999
+    },
+    {
+      "name": "Unchanged armor clear wall-3-3",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "28 unique replacement identities retain262 originals",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "installed": false,
+  "ownerFinalSignoff": null,
+  "wholeShipPressureQualified": false,
+  "remaining": [
+    "End groups, shoulder junctions, native internal partition interfaces and full closure remain required.",
+    "No gameplay collision or damage registration; retained partition geometry remains historical."
+  ]
+}

@@ -1,0 +1,1517 @@
+{
+  "schema": "sidereal.usable-wall-side-bays.v1",
+  "parts": [
+    {
+      "id": "bay00-exterior",
+      "file": "bay00-exterior.glb",
+      "sha256": "8f13403efba4183d8ba74997c4719867c0590fef9330ee8efc975b6834f646a2",
+      "nodePrefix": "GEO-bay00-exterior--",
+      "sourcePlacedId": "wall--3--3",
+      "originalPlacement": {
+        "id": "wall--3--3",
+        "assetId": "part-328e6e9149ea347b95d7",
+        "position": [
+          -5.125,
+          -6,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [],
+      "sourceFrame": [
+        [
+          -4.371138828673793e-08,
+          1.0,
+          0.0,
+          0.125
+        ],
+        [
+          -1.0,
+          -4.371138828673793e-08,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-structure",
+      "pressureReady": false
+    },
+    {
+      "id": "bay00-interior",
+      "file": "bay00-interior.glb",
+      "sha256": "a123c2a59e6e64e269d8915eb87fb65572b85c980d9b42cae023f88d32ff6a64",
+      "nodePrefix": "GEO-bay00-interior--",
+      "sourcePlacedId": "wall--2--3",
+      "originalPlacement": {
+        "id": "wall--2--3",
+        "assetId": "part-6e64c7b0aa0165cbe846",
+        "position": [
+          -4.6875,
+          -6,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [],
+      "sourceFrame": [
+        [
+          -4.371138828673793e-08,
+          1.0,
+          0.0,
+          -0.3125
+        ],
+        [
+          -1.0,
+          -4.371138828673793e-08,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-facing",
+      "pressureReady": false
+    },
+    {
+      "id": "bay01-exterior",
+      "file": "bay01-exterior.glb",
+      "sha256": "5cc011b84a33755d78355ea3c9cd2cbe741862febebe0d9c2e7cd13b504dcc21",
+      "nodePrefix": "GEO-bay01-exterior--",
+      "sourcePlacedId": "wall--3--2",
+      "originalPlacement": {
+        "id": "wall--3--2",
+        "assetId": "part-f198db40cdb355118c21",
+        "position": [
+          -5.1875,
+          -4,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [],
+      "sourceFrame": [
+        [
+          -4.371138828673793e-08,
+          1.0,
+          0.0,
+          0.1875
+        ],
+        [
+          -1.0,
+          -4.371138828673793e-08,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-structure",
+      "pressureReady": false
+    },
+    {
+      "id": "bay01-interior",
+      "file": "bay01-interior.glb",
+      "sha256": "5d0cf4644602ee3a854167c7025f060a9b3a38c63daf7d43182c0ce6a030edcc",
+      "nodePrefix": "GEO-bay01-interior--",
+      "sourcePlacedId": "wall--2--2",
+      "originalPlacement": {
+        "id": "wall--2--2",
+        "assetId": "part-1f4f2ce23a20dba31e8b",
+        "position": [
+          -4,
+          -4,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [
+        {
+          "sourceNode": "GEO-part-1f4f2ce23a20dba31e8b--partitions",
+          "sourceSha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+          "nativeTriangles": 974,
+          "nativeVolumeM3": 0.8178710937500001,
+          "nativeBoundsM": [
+            -5.0,
+            -4.0,
+            0.1875,
+            -3.0,
+            -3.4375,
+            1.4375
+          ],
+          "role": "preserved-interior-partition",
+          "pressureReady": false,
+          "geometryRule": "Retain exact historical native mesh and local transform; do not relabel it as newly authored or full-height sealed structure.",
+          "exportNode": "GEO-bay01-interior--retained-partition-00"
+        }
+      ],
+      "sourceFrame": [
+        [
+          -4.371138828673793e-08,
+          1.0,
+          0.0,
+          -1.0
+        ],
+        [
+          -1.0,
+          -4.371138828673793e-08,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-facing",
+      "pressureReady": false
+    },
+    {
+      "id": "bay02-exterior",
+      "file": "bay02-exterior.glb",
+      "sha256": "e522b1147d96ca6d1a2672f8ed9a0378c2fbe52b463f9861e59c6bb27cf10d20",
+      "nodePrefix": "GEO-bay02-exterior--",
+      "sourcePlacedId": "wall--3--1",
+      "originalPlacement": {
+        "id": "wall--3--1",
+        "assetId": "part-328e6e9149ea347b95d7",
+        "position": [
+          -5.125,
+          -2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [],
+      "sourceFrame": [
+        [
+          -4.371138828673793e-08,
+          1.0,
+          0.0,
+          0.125
+        ],
+        [
+          -1.0,
+          -4.371138828673793e-08,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-structure",
+      "pressureReady": false
+    },
+    {
+      "id": "bay02-interior",
+      "file": "bay02-interior.glb",
+      "sha256": "f3c3fab9c443b96057205085a8d8fab75f18b8da5e269c0e2f0e92a401c80572",
+      "nodePrefix": "GEO-bay02-interior--",
+      "sourcePlacedId": "wall--2--1",
+      "originalPlacement": {
+        "id": "wall--2--1",
+        "assetId": "part-8027121656ac690dd209",
+        "position": [
+          -4.6875,
+          -2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [],
+      "sourceFrame": [
+        [
+          -4.371138828673793e-08,
+          1.0,
+          0.0,
+          -0.3125
+        ],
+        [
+          -1.0,
+          -4.371138828673793e-08,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-facing",
+      "pressureReady": false
+    },
+    {
+      "id": "bay03-exterior",
+      "file": "bay03-exterior.glb",
+      "sha256": "dc7ee10cdd1aa3c6b12bb63284ad932df4f6484816209259e93ae9703a27e2bc",
+      "nodePrefix": "GEO-bay03-exterior--",
+      "sourcePlacedId": "wall--3-0",
+      "originalPlacement": {
+        "id": "wall--3-0",
+        "assetId": "part-0e4aefe72a90960922e9",
+        "position": [
+          -5.1875,
+          0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [],
+      "sourceFrame": [
+        [
+          -4.371138828673793e-08,
+          1.0,
+          0.0,
+          0.1875
+        ],
+        [
+          -1.0,
+          -4.371138828673793e-08,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-structure",
+      "pressureReady": false
+    },
+    {
+      "id": "bay03-interior",
+      "file": "bay03-interior.glb",
+      "sha256": "1e5a654308c021473ca01e9b237ea430699c35c403c63681c0feed88a25a2aa6",
+      "nodePrefix": "GEO-bay03-interior--",
+      "sourcePlacedId": "wall--2-0",
+      "originalPlacement": {
+        "id": "wall--2-0",
+        "assetId": "part-96878a6d75e5c294b532",
+        "position": [
+          -4,
+          0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [
+        {
+          "sourceNode": "GEO-part-96878a6d75e5c294b532--partitions",
+          "sourceSha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+          "nativeTriangles": 894,
+          "nativeVolumeM3": 0.81787109375,
+          "nativeBoundsM": [
+            -5.0,
+            0.5,
+            0.1875,
+            -3.0,
+            1.0,
+            1.4375
+          ],
+          "role": "preserved-interior-partition",
+          "pressureReady": false,
+          "geometryRule": "Retain exact historical native mesh and local transform; do not relabel it as newly authored or full-height sealed structure.",
+          "exportNode": "GEO-bay03-interior--retained-partition-00"
+        }
+      ],
+      "sourceFrame": [
+        [
+          -4.371138828673793e-08,
+          1.0,
+          0.0,
+          -1.0
+        ],
+        [
+          -1.0,
+          -4.371138828673793e-08,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-facing",
+      "pressureReady": false
+    },
+    {
+      "id": "bay04-exterior",
+      "file": "bay04-exterior.glb",
+      "sha256": "f043cc123911058368d0124728b4e2ed43662fae9c688c0f198319d4a38b502a",
+      "nodePrefix": "GEO-bay04-exterior--",
+      "sourcePlacedId": "wall--3-1",
+      "originalPlacement": {
+        "id": "wall--3-1",
+        "assetId": "part-328e6e9149ea347b95d7",
+        "position": [
+          -5.125,
+          2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [],
+      "sourceFrame": [
+        [
+          -4.371138828673793e-08,
+          1.0,
+          0.0,
+          0.125
+        ],
+        [
+          -1.0,
+          -4.371138828673793e-08,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-structure",
+      "pressureReady": false
+    },
+    {
+      "id": "bay04-interior",
+      "file": "bay04-interior.glb",
+      "sha256": "fdc4f8e2a5ca880bb81a710e6a667a291c335405703df7bcd348f7c994aef805",
+      "nodePrefix": "GEO-bay04-interior--",
+      "sourcePlacedId": "wall--2-1",
+      "originalPlacement": {
+        "id": "wall--2-1",
+        "assetId": "part-6c3fb1c92331674881a0",
+        "position": [
+          -4,
+          2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [
+        {
+          "sourceNode": "GEO-part-6c3fb1c92331674881a0--partitions",
+          "sourceSha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+          "nativeTriangles": 56,
+          "nativeVolumeM3": 0.0008886924999999999,
+          "nativeBoundsM": [
+            -4.1875,
+            1.0,
+            0.625,
+            -3.0,
+            1.0625,
+            0.6875
+          ],
+          "role": "preserved-interior-partition",
+          "pressureReady": false,
+          "geometryRule": "Retain exact historical native mesh and local transform; do not relabel it as newly authored or full-height sealed structure.",
+          "exportNode": "GEO-bay04-interior--retained-partition-00"
+        }
+      ],
+      "sourceFrame": [
+        [
+          -4.371138828673793e-08,
+          1.0,
+          0.0,
+          -1.0
+        ],
+        [
+          -1.0,
+          -4.371138828673793e-08,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-facing",
+      "pressureReady": false
+    },
+    {
+      "id": "bay05-exterior",
+      "file": "bay05-exterior.glb",
+      "sha256": "273ac115520c633fba915f969edcc6aca6b4106fb050e051e716501eb332396d",
+      "nodePrefix": "GEO-bay05-exterior--",
+      "sourcePlacedId": "wall--3-2",
+      "originalPlacement": {
+        "id": "wall--3-2",
+        "assetId": "part-070229a9a22dcd1fc3e1",
+        "position": [
+          -5.1875,
+          4,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [],
+      "sourceFrame": [
+        [
+          -4.371138828673793e-08,
+          1.0,
+          0.0,
+          0.1875
+        ],
+        [
+          -1.0,
+          -4.371138828673793e-08,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-structure",
+      "pressureReady": false
+    },
+    {
+      "id": "bay05-interior",
+      "file": "bay05-interior.glb",
+      "sha256": "29d063e4c11edc2ba9d8d8da3fe733396edba274673e1e863202e477f8f5ffe4",
+      "nodePrefix": "GEO-bay05-interior--",
+      "sourcePlacedId": "wall--2-2",
+      "originalPlacement": {
+        "id": "wall--2-2",
+        "assetId": "part-2adc55eddecec9617cf7",
+        "position": [
+          -4.6875,
+          4,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [],
+      "sourceFrame": [
+        [
+          -4.371138828673793e-08,
+          1.0,
+          0.0,
+          -0.3125
+        ],
+        [
+          -1.0,
+          -4.371138828673793e-08,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-facing",
+      "pressureReady": false
+    },
+    {
+      "id": "bay06-exterior",
+      "file": "bay06-exterior.glb",
+      "sha256": "f73b9132630f4b1c3ef80e228a5b5846c45b138a0db45c1e196dcc6a861203bf",
+      "nodePrefix": "GEO-bay06-exterior--",
+      "sourcePlacedId": "wall--3-3",
+      "originalPlacement": {
+        "id": "wall--3-3",
+        "assetId": "part-489c21ef5238f76ea87b",
+        "position": [
+          -5.125,
+          6,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [],
+      "sourceFrame": [
+        [
+          -4.371138828673793e-08,
+          1.0,
+          0.0,
+          0.125
+        ],
+        [
+          -1.0,
+          -4.371138828673793e-08,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-structure",
+      "pressureReady": false
+    },
+    {
+      "id": "bay06-interior",
+      "file": "bay06-interior.glb",
+      "sha256": "165c2453e93dc7fef74419e0971230ec2513acd0ab8b680e8ce2e4299eb43c17",
+      "nodePrefix": "GEO-bay06-interior--",
+      "sourcePlacedId": "wall--2-3",
+      "originalPlacement": {
+        "id": "wall--2-3",
+        "assetId": "part-6c1c5c2e0e3161fd9cdb",
+        "position": [
+          -4,
+          6,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [
+        {
+          "sourceNode": "GEO-part-6c1c5c2e0e3161fd9cdb--partitions",
+          "sourceSha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+          "nativeTriangles": 968,
+          "nativeVolumeM3": 0.81884765625,
+          "nativeBoundsM": [
+            -5.0,
+            5.0,
+            0.1875,
+            -3.0,
+            5.5625,
+            1.4375
+          ],
+          "role": "preserved-interior-partition",
+          "pressureReady": false,
+          "geometryRule": "Retain exact historical native mesh and local transform; do not relabel it as newly authored or full-height sealed structure.",
+          "exportNode": "GEO-bay06-interior--retained-partition-00"
+        }
+      ],
+      "sourceFrame": [
+        [
+          -4.371138828673793e-08,
+          1.0,
+          0.0,
+          -1.0
+        ],
+        [
+          -1.0,
+          -4.371138828673793e-08,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-facing",
+      "pressureReady": false
+    },
+    {
+      "id": "bay07-exterior",
+      "file": "bay07-exterior.glb",
+      "sha256": "69c21bb53f1b00d8bb21cf32229fb2ddec22934cc2590872a75429fea99a9627",
+      "nodePrefix": "GEO-bay07-exterior--",
+      "sourcePlacedId": "wall-3--3",
+      "originalPlacement": {
+        "id": "wall-3--3",
+        "assetId": "part-29a2b4f5499e93c9edca",
+        "position": [
+          5.125,
+          -6,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [],
+      "sourceFrame": [
+        [
+          7.549790126404332e-08,
+          -1.0,
+          0.0,
+          -0.125
+        ],
+        [
+          1.0,
+          7.549790126404332e-08,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-structure",
+      "pressureReady": false
+    },
+    {
+      "id": "bay07-interior",
+      "file": "bay07-interior.glb",
+      "sha256": "3d7391610a427f44bc2b1a459dba9b018a5d1dfdabc758d9ba4bea9e86a20e9c",
+      "nodePrefix": "GEO-bay07-interior--",
+      "sourcePlacedId": "wall-2--3",
+      "originalPlacement": {
+        "id": "wall-2--3",
+        "assetId": "part-c8b14cc871b1aad06c36",
+        "position": [
+          4.6875,
+          -6,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [],
+      "sourceFrame": [
+        [
+          7.549790126404332e-08,
+          -1.0,
+          0.0,
+          0.3125
+        ],
+        [
+          1.0,
+          7.549790126404332e-08,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-facing",
+      "pressureReady": false
+    },
+    {
+      "id": "bay08-exterior",
+      "file": "bay08-exterior.glb",
+      "sha256": "c370ebd56eeecf2c0a56152aee79c20bec81197d287887301593365cb7910d9b",
+      "nodePrefix": "GEO-bay08-exterior--",
+      "sourcePlacedId": "wall-3--2",
+      "originalPlacement": {
+        "id": "wall-3--2",
+        "assetId": "part-386f7415c520e22bd6b6",
+        "position": [
+          5.125,
+          -4,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [],
+      "sourceFrame": [
+        [
+          7.549790126404332e-08,
+          -1.0,
+          0.0,
+          -0.125
+        ],
+        [
+          1.0,
+          7.549790126404332e-08,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-structure",
+      "pressureReady": false
+    },
+    {
+      "id": "bay08-interior",
+      "file": "bay08-interior.glb",
+      "sha256": "b1b840da96a87b9f87e07a4ca8d4f0c3ddc837de1e02fbc820f839b3630ac5be",
+      "nodePrefix": "GEO-bay08-interior--",
+      "sourcePlacedId": "wall-2--2",
+      "originalPlacement": {
+        "id": "wall-2--2",
+        "assetId": "part-0bf0c79e5a52a9cee388",
+        "position": [
+          4,
+          -4,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [
+        {
+          "sourceNode": "GEO-part-0bf0c79e5a52a9cee388--partitions",
+          "sourceSha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+          "nativeTriangles": 1012,
+          "nativeVolumeM3": 0.8300781250000001,
+          "nativeBoundsM": [
+            3.0,
+            -4.0,
+            0.1875,
+            5.0,
+            -3.4375,
+            1.4375
+          ],
+          "role": "preserved-interior-partition",
+          "pressureReady": false,
+          "geometryRule": "Retain exact historical native mesh and local transform; do not relabel it as newly authored or full-height sealed structure.",
+          "exportNode": "GEO-bay08-interior--retained-partition-00"
+        }
+      ],
+      "sourceFrame": [
+        [
+          7.549790126404332e-08,
+          -1.0,
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          7.549790126404332e-08,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-facing",
+      "pressureReady": false
+    },
+    {
+      "id": "bay09-exterior",
+      "file": "bay09-exterior.glb",
+      "sha256": "f9fc8311745c51b31eb881fc838b346a8909d45862210cf5fc0aca46752fcff6",
+      "nodePrefix": "GEO-bay09-exterior--",
+      "sourcePlacedId": "wall-3--1",
+      "originalPlacement": {
+        "id": "wall-3--1",
+        "assetId": "part-29a2b4f5499e93c9edca",
+        "position": [
+          5.125,
+          -2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [],
+      "sourceFrame": [
+        [
+          7.549790126404332e-08,
+          -1.0,
+          0.0,
+          -0.125
+        ],
+        [
+          1.0,
+          7.549790126404332e-08,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-structure",
+      "pressureReady": false
+    },
+    {
+      "id": "bay09-interior",
+      "file": "bay09-interior.glb",
+      "sha256": "1147cabae655cbf1c3a3f93b618da22223abff9336599b7e5472904703676bf0",
+      "nodePrefix": "GEO-bay09-interior--",
+      "sourcePlacedId": "wall-2--1",
+      "originalPlacement": {
+        "id": "wall-2--1",
+        "assetId": "part-16ad11623e8457b9fa65",
+        "position": [
+          4.6875,
+          -2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [],
+      "sourceFrame": [
+        [
+          7.549790126404332e-08,
+          -1.0,
+          0.0,
+          0.3125
+        ],
+        [
+          1.0,
+          7.549790126404332e-08,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-facing",
+      "pressureReady": false
+    },
+    {
+      "id": "bay10-exterior",
+      "file": "bay10-exterior.glb",
+      "sha256": "6bff81d41884bf9e2423ac684d8cc6616962ac17226c38a0b49652537327adf4",
+      "nodePrefix": "GEO-bay10-exterior--",
+      "sourcePlacedId": "wall-3-0",
+      "originalPlacement": {
+        "id": "wall-3-0",
+        "assetId": "part-23d5284bc8c7e3ad49d7",
+        "position": [
+          5.125,
+          0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [],
+      "sourceFrame": [
+        [
+          7.549790126404332e-08,
+          -1.0,
+          0.0,
+          -0.125
+        ],
+        [
+          1.0,
+          7.549790126404332e-08,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-structure",
+      "pressureReady": false
+    },
+    {
+      "id": "bay10-interior",
+      "file": "bay10-interior.glb",
+      "sha256": "75add13729ef7b7b6c84ebe00eab015821456b61628db8cff0721b0bf084e00b",
+      "nodePrefix": "GEO-bay10-interior--",
+      "sourcePlacedId": "wall-2-0",
+      "originalPlacement": {
+        "id": "wall-2-0",
+        "assetId": "part-3b538ddb00f4d1a7d749",
+        "position": [
+          4,
+          0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [
+        {
+          "sourceNode": "GEO-part-3b538ddb00f4d1a7d749--partitions",
+          "sourceSha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+          "nativeTriangles": 912,
+          "nativeVolumeM3": 0.83154296875,
+          "nativeBoundsM": [
+            3.0,
+            0.5,
+            0.1875,
+            5.0,
+            1.0,
+            1.4375
+          ],
+          "role": "preserved-interior-partition",
+          "pressureReady": false,
+          "geometryRule": "Retain exact historical native mesh and local transform; do not relabel it as newly authored or full-height sealed structure.",
+          "exportNode": "GEO-bay10-interior--retained-partition-00"
+        }
+      ],
+      "sourceFrame": [
+        [
+          7.549790126404332e-08,
+          -1.0,
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          7.549790126404332e-08,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-facing",
+      "pressureReady": false
+    },
+    {
+      "id": "bay11-exterior",
+      "file": "bay11-exterior.glb",
+      "sha256": "cae642d9589fca635db3de17160d7e8ecdfd91120bf06471227d53edef55f635",
+      "nodePrefix": "GEO-bay11-exterior--",
+      "sourcePlacedId": "wall-3-1",
+      "originalPlacement": {
+        "id": "wall-3-1",
+        "assetId": "part-29a2b4f5499e93c9edca",
+        "position": [
+          5.125,
+          2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [],
+      "sourceFrame": [
+        [
+          7.549790126404332e-08,
+          -1.0,
+          0.0,
+          -0.125
+        ],
+        [
+          1.0,
+          7.549790126404332e-08,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-structure",
+      "pressureReady": false
+    },
+    {
+      "id": "bay11-interior",
+      "file": "bay11-interior.glb",
+      "sha256": "db1928fd27baae484df8fa16f8f2ef3deaee1c16f4abc1fb84c932a337fec040",
+      "nodePrefix": "GEO-bay11-interior--",
+      "sourcePlacedId": "wall-2-1",
+      "originalPlacement": {
+        "id": "wall-2-1",
+        "assetId": "part-c561706cce53aba7f13e",
+        "position": [
+          4.1875,
+          2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [
+        {
+          "sourceNode": "GEO-part-c561706cce53aba7f13e--partitions",
+          "sourceSha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+          "nativeTriangles": 88,
+          "nativeVolumeM3": 0.0012891037500000005,
+          "nativeBoundsM": [
+            3.375,
+            1.0,
+            0.625,
+            4.6875,
+            1.0625,
+            0.6875
+          ],
+          "role": "preserved-interior-partition",
+          "pressureReady": false,
+          "geometryRule": "Retain exact historical native mesh and local transform; do not relabel it as newly authored or full-height sealed structure.",
+          "exportNode": "GEO-bay11-interior--retained-partition-00"
+        }
+      ],
+      "sourceFrame": [
+        [
+          7.549790126404332e-08,
+          -1.0,
+          0.0,
+          0.8125
+        ],
+        [
+          1.0,
+          7.549790126404332e-08,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-facing",
+      "pressureReady": false
+    },
+    {
+      "id": "bay12-exterior",
+      "file": "bay12-exterior.glb",
+      "sha256": "220e8d4b737d734f5032413f9805cf10117480ec37a00406ccc4d601ec9353ce",
+      "nodePrefix": "GEO-bay12-exterior--",
+      "sourcePlacedId": "wall-3-2",
+      "originalPlacement": {
+        "id": "wall-3-2",
+        "assetId": "part-915dc23e886f070d75c4",
+        "position": [
+          5.125,
+          4,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [],
+      "sourceFrame": [
+        [
+          7.549790126404332e-08,
+          -1.0,
+          0.0,
+          -0.125
+        ],
+        [
+          1.0,
+          7.549790126404332e-08,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-structure",
+      "pressureReady": false
+    },
+    {
+      "id": "bay12-interior",
+      "file": "bay12-interior.glb",
+      "sha256": "cd2e7d557d1351c5dd3f2ae20fe9d92c859797739c5ab4a63e4f14241187a1e5",
+      "nodePrefix": "GEO-bay12-interior--",
+      "sourcePlacedId": "wall-2-2",
+      "originalPlacement": {
+        "id": "wall-2-2",
+        "assetId": "part-3b10a5b6237f977755ea",
+        "position": [
+          4.6875,
+          4,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [],
+      "sourceFrame": [
+        [
+          7.549790126404332e-08,
+          -1.0,
+          0.0,
+          0.3125
+        ],
+        [
+          1.0,
+          7.549790126404332e-08,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-facing",
+      "pressureReady": false
+    },
+    {
+      "id": "bay13-exterior",
+      "file": "bay13-exterior.glb",
+      "sha256": "8b7f3663ceb3f0aeb33d41b7800888d78693863646b97041b889d01df2be1132",
+      "nodePrefix": "GEO-bay13-exterior--",
+      "sourcePlacedId": "wall-3-3",
+      "originalPlacement": {
+        "id": "wall-3-3",
+        "assetId": "part-7f90173a1eca4acb88bc",
+        "position": [
+          5.125,
+          6,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [],
+      "sourceFrame": [
+        [
+          7.549790126404332e-08,
+          -1.0,
+          0.0,
+          -0.125
+        ],
+        [
+          1.0,
+          7.549790126404332e-08,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-structure",
+      "pressureReady": false
+    },
+    {
+      "id": "bay13-interior",
+      "file": "bay13-interior.glb",
+      "sha256": "958fc95302f1cf9ccc03fec322eb7432da063cde7f95cbb102a31c9b0c6a2706",
+      "nodePrefix": "GEO-bay13-interior--",
+      "sourcePlacedId": "wall-2-3",
+      "originalPlacement": {
+        "id": "wall-2-3",
+        "assetId": "part-f8984ad617033cbb9b07",
+        "position": [
+          4,
+          6,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "preservedPartitions": [
+        {
+          "sourceNode": "GEO-part-f8984ad617033cbb9b07--partitions",
+          "sourceSha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+          "nativeTriangles": 1012,
+          "nativeVolumeM3": 0.8330078125,
+          "nativeBoundsM": [
+            3.0,
+            5.0,
+            0.1875,
+            5.0,
+            5.5625,
+            1.4375
+          ],
+          "role": "preserved-interior-partition",
+          "pressureReady": false,
+          "geometryRule": "Retain exact historical native mesh and local transform; do not relabel it as newly authored or full-height sealed structure.",
+          "exportNode": "GEO-bay13-interior--retained-partition-00"
+        }
+      ],
+      "sourceFrame": [
+        [
+          7.549790126404332e-08,
+          -1.0,
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          7.549790126404332e-08,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "newSurfaceRole": "outward-facing",
+      "pressureReady": false
+    }
+  ],
+  "sourceBlend": "assets/art-library/designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/blender-source.blend",
+  "sourceBlendSha256": "c085df609ca7af71efc50d92fbdfadd41ce7c5c345e87a9d6a8940a2aaf82815",
+  "legacyPartitionsSource": "assets/runtime/assembly/parts.glb",
+  "legacyPartitionsSha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+  "sourceMappingSha256": "7b6be86b42e904def098f1a70a36bff08c18773e3efbc9337667af6da3f86e2e",
+  "originalPlacementCount": 262,
+  "placedTransformsChanged": 0,
+  "originalIdsRemoved": [],
+  "installed": false,
+  "ownerFinalSignoff": null,
+  "status": "native-export-awaiting-qualification",
+  "limits": [
+    "14straight side bays only; aft/front combined groups and shoulder/cockpit joins remain separate.",
+    "Preserved partitions keep their exact native occupancy; they may be partial-height and confer no seal qualification.",
+    "New source-frame exports, complete asset reservations, neighbor joins and full template validation remain required."
+  ]
+}

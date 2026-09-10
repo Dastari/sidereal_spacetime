@@ -13,7 +13,7 @@
   "priority": 1,
   "profile": "native-outward-wall-family",
   "assigned_to": "stair_document",
-  "blocker": "Full boundary and shoulder expansion, mixed partition separation, mounting spacers, whole enclosure and actual installed browser review remain.",
+  "blocker": "End/cockpit shoulder groups, internal partition interfaces, mounting spacers, whole enclosure and installed browser review remain.",
   "approvals": [],
   "feedback": [
     {
@@ -35,6 +35,11 @@
       "source": "actual paired-identity expansion",
       "recorded_at": "2026-09-10T01:16:47.675500+00:00",
       "notes": "a005 splits pressure body and interior-facing exports across four actual legacy source pairs, eight unchanged IDs.81nativegatespass, every4020native surface triangle/material retained; old outer strip would duplicate volume if not explicitly replaced. No additional render claim; a004geometryequivalence allows reusing clearly identified earlier image evidence. Mixed groups and fulladmissibility remain unfinished."
+    },
+    {
+      "source": "a006 actual native side-bay qualification",
+      "recorded_at": "2026-09-10T01:40:38.932426+00:00",
+      "notes": "Fourteen side bays,28 unchanged IDs;173 checks pass including all six lockers, exact preserved partition triangles/materials, floor/roof contacts, armor and12 closed seams with positive2mm-gap controls. Actual three-bay before/after native PNGs recorded; not installed or owner-approved. Partial-height retained partitions remain unqualified for pressure."
     }
   ],
   "revisions": [
@@ -621,6 +626,330 @@
           "notes": "Additive paired export interface contract; previous a004 geometry contract preserved byte-identically.",
           "capture_context": null,
           "recorded_at": "2026-09-10T01:17:37.521454+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay00-exterior.glb",
+          "sha256": "8f13403efba4183d8ba74997c4719867c0590fef9330ee8efc975b6834f646a2",
+          "bytes": 331108,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay00-interior.glb",
+          "sha256": "a123c2a59e6e64e269d8915eb87fb65572b85c980d9b42cae023f88d32ff6a64",
+          "bytes": 974344,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay01-exterior.glb",
+          "sha256": "5cc011b84a33755d78355ea3c9cd2cbe741862febebe0d9c2e7cd13b504dcc21",
+          "bytes": 331108,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay01-interior.glb",
+          "sha256": "5d0cf4644602ee3a854167c7025f060a9b3a38c63daf7d43182c0ce6a030edcc",
+          "bytes": 1064508,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay02-exterior.glb",
+          "sha256": "e522b1147d96ca6d1a2672f8ed9a0378c2fbe52b463f9861e59c6bb27cf10d20",
+          "bytes": 331108,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay02-interior.glb",
+          "sha256": "f3c3fab9c443b96057205085a8d8fab75f18b8da5e269c0e2f0e92a401c80572",
+          "bytes": 974344,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay03-exterior.glb",
+          "sha256": "dc7ee10cdd1aa3c6b12bb63284ad932df4f6484816209259e93ae9703a27e2bc",
+          "bytes": 331108,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay03-interior.glb",
+          "sha256": "1e5a654308c021473ca01e9b237ea430699c35c403c63681c0feed88a25a2aa6",
+          "bytes": 1070392,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay04-exterior.glb",
+          "sha256": "f043cc123911058368d0124728b4e2ed43662fae9c688c0f198319d4a38b502a",
+          "bytes": 331108,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay04-interior.glb",
+          "sha256": "fdc4f8e2a5ca880bb81a710e6a667a291c335405703df7bcd348f7c994aef805",
+          "bytes": 981752,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay05-exterior.glb",
+          "sha256": "273ac115520c633fba915f969edcc6aca6b4106fb050e051e716501eb332396d",
+          "bytes": 331108,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay05-interior.glb",
+          "sha256": "29d063e4c11edc2ba9d8d8da3fe733396edba274673e1e863202e477f8f5ffe4",
+          "bytes": 974344,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay06-exterior.glb",
+          "sha256": "f73b9132630f4b1c3ef80e228a5b5846c45b138a0db45c1e196dcc6a861203bf",
+          "bytes": 331108,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay06-interior.glb",
+          "sha256": "165c2453e93dc7fef74419e0971230ec2513acd0ab8b680e8ce2e4299eb43c17",
+          "bytes": 1076412,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay07-exterior.glb",
+          "sha256": "69c21bb53f1b00d8bb21cf32229fb2ddec22934cc2590872a75429fea99a9627",
+          "bytes": 331104,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay07-interior.glb",
+          "sha256": "3d7391610a427f44bc2b1a459dba9b018a5d1dfdabc758d9ba4bea9e86a20e9c",
+          "bytes": 974260,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay08-exterior.glb",
+          "sha256": "c370ebd56eeecf2c0a56152aee79c20bec81197d287887301593365cb7910d9b",
+          "bytes": 331104,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay08-interior.glb",
+          "sha256": "b1b840da96a87b9f87e07a4ca8d4f0c3ddc837de1e02fbc820f839b3630ac5be",
+          "bytes": 1069152,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay09-exterior.glb",
+          "sha256": "f9fc8311745c51b31eb881fc838b346a8909d45862210cf5fc0aca46752fcff6",
+          "bytes": 331104,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay09-interior.glb",
+          "sha256": "1147cabae655cbf1c3a3f93b618da22223abff9336599b7e5472904703676bf0",
+          "bytes": 974260,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay10-exterior.glb",
+          "sha256": "6bff81d41884bf9e2423ac684d8cc6616962ac17226c38a0b49652537327adf4",
+          "bytes": 331104,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay10-interior.glb",
+          "sha256": "75add13729ef7b7b6c84ebe00eab015821456b61628db8cff0721b0bf084e00b",
+          "bytes": 1071252,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay11-exterior.glb",
+          "sha256": "cae642d9589fca635db3de17160d7e8ecdfd91120bf06471227d53edef55f635",
+          "bytes": 331104,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay11-interior.glb",
+          "sha256": "db1928fd27baae484df8fa16f8f2ef3deaee1c16f4abc1fb84c932a337fec040",
+          "bytes": 984748,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay12-exterior.glb",
+          "sha256": "220e8d4b737d734f5032413f9805cf10117480ec37a00406ccc4d601ec9353ce",
+          "bytes": 331104,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay12-interior.glb",
+          "sha256": "cd2e7d557d1351c5dd3f2ae20fe9d92c859797739c5ab4a63e4f14241187a1e5",
+          "bytes": 974260,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay13-exterior.glb",
+          "sha256": "8b7f3663ceb3f0aeb33d41b7800888d78693863646b97041b889d01df2be1132",
+          "bytes": 331104,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/bay13-interior.glb",
+          "sha256": "958fc95302f1cf9ccc03fec322eb7432da063cde7f95cbb102a31c9b0c6a2706",
+          "bytes": 1080912,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "editable-blender",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/blender-source.blend",
+          "sha256": "c83d4681b3f6e7527d8ba2a59aabb0dcf99e43cf1d0e112c50dc2738fa6b5c34",
+          "bytes": 5505705,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/capture-context.json",
+          "sha256": "7ad382f2ba3602c763068fdc203bbbe87269c17c59e8a8f171f1d8aff8ea6a55",
+          "bytes": 8620,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/delivery-manifest.json",
+          "sha256": "370ab9bd5f568f91c829cda668d499d981ad051819d0b83fd08546daad1312e9",
+          "bytes": 35106,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/qualification-a001.json",
+          "sha256": "7164c64e6cb80a4cbfc080bee18f36a217c2d0198167a96cdc3d0c9482bb6c75",
+          "bytes": 20884,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/qualification-a002.json",
+          "sha256": "30c7e01e9a528141fc4b292185bc8eafe9c0f880bfd8008e8a15be399247f59c",
+          "bytes": 23692,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/side-bay-plan.json",
+          "sha256": "ea1021db7efaaa4be77f9a935d39428ba00068cd300cac84c511cca52bc4713d",
+          "bytes": 28971,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "render",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/three-bays-corrected.png",
+          "sha256": "bcfdf366a59578e9c489bfdbef0ad5b626863707cc7e38416131d4b1f55f95f6",
+          "bytes": 2036769,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/capture-context.json",
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
+        },
+        {
+          "role": "render",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/three-bays-original.png",
+          "sha256": "cca4115d3f09f8a675f6d06dbfa93d103d52e21633f329e268dbc779aade32ed",
+          "bytes": 2098139,
+          "notes": "a00614sidebay native candidate; fixed source identities, exact historical partition retention, separate new exterior reservations. No installed-game or final art approval claim.",
+          "capture_context": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a006/capture-context.json",
+          "recorded_at": "2026-09-10T01:40:38.932426+00:00"
         }
       ]
     }

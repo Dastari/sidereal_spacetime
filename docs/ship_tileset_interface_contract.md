@@ -77,7 +77,7 @@ The Shipyard library displays interface compatibility and dimensions. Snapping p
 
 An external asset agent must be able to build a second visual tileset from the specification without editing Shipyard snapping/compiler code. Both kits must assemble the same square/triangle/taper test layout, form matching floor/wall/roof closures and preserve functional interfaces. Then use certified adapters to rebuild Wayfarer and prove two independently spawned instances as required by the construction plan. Unsupported curved families remain explicit future extensions.
 
-Implementation owner: `integration_continuation`, coordinated with `authoritative_ifcs` for pure/compiler and authoritative validation. Native asset revisions remain with their art owners. This contract is a prerequisite for broad new tileset production, not a request to redesign every approved asset now.
+Implementation ownership: the parent integration agent coordinates compiler, catalog and authoritative runtime validation; `stair_document` owns the current native wall/interface qualification, and `shared_space_rules` owns the cargo envelope checks. Native asset revisions remain with their art owners. These current audits do not imply that every future catalog-admission gate is registered. This contract is a prerequisite for broad new tileset production, not a request to redesign every approved asset now.
 
 ## Owner authoring correction — 2026-09-10
 

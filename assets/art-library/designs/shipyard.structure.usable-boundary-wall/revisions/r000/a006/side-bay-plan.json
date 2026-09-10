@@ -1,0 +1,977 @@
+{
+  "schema": "sidereal.usable-wall-side-expansion-inspection.v1",
+  "sourceMappingSha256": "7b6be86b42e904def098f1a70a36bff08c18773e3efbc9337667af6da3f86e2e",
+  "pairs": [
+    {
+      "exteriorId": "wall--3--3",
+      "interiorId": "wall--2--3",
+      "originalExteriorPlacement": {
+        "id": "wall--3--3",
+        "assetId": "part-328e6e9149ea347b95d7",
+        "position": [
+          -5.125,
+          -6,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "originalInteriorPlacement": {
+        "id": "wall--2--3",
+        "assetId": "part-6e64c7b0aa0165cbe846",
+        "position": [
+          -4.6875,
+          -6,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "canonicalSourceAnchorWorldM": [
+        -5,
+        -5,
+        0
+      ],
+      "canonicalSourceQuarterTurns": -1,
+      "nativeSourceFrameExteriorTranslationM": [
+        0.125,
+        1,
+        0
+      ],
+      "nativeSourceFrameInteriorTranslationM": [
+        -0.3125,
+        1,
+        0
+      ],
+      "unchangedFloor": "floor--2--3",
+      "unchangedRoof": "roof--2--3",
+      "unchangedArmor": "superstructure--3--3",
+      "armorSource": {
+        "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+        "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "nodePrefix": "GEO-part-a754ceb1ebef9f1395d9--surface"
+      },
+      "preservedPartitionNodes": [],
+      "floorContactM3": 0.011717870999999987,
+      "roofContactM3": 0.0058554206249999945,
+      "armorIntersectionM3": 0.0,
+      "newOuterFamilyUsableIntrusionM3": 0.0,
+      "exportState": "Exact source-frame plan; these composite GLBs are not yet authored/exported or game-admissible."
+    },
+    {
+      "exteriorId": "wall--3--2",
+      "interiorId": "wall--2--2",
+      "originalExteriorPlacement": {
+        "id": "wall--3--2",
+        "assetId": "part-f198db40cdb355118c21",
+        "position": [
+          -5.1875,
+          -4,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "originalInteriorPlacement": {
+        "id": "wall--2--2",
+        "assetId": "part-1f4f2ce23a20dba31e8b",
+        "position": [
+          -4,
+          -4,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "canonicalSourceAnchorWorldM": [
+        -5,
+        -3,
+        0
+      ],
+      "canonicalSourceQuarterTurns": -1,
+      "nativeSourceFrameExteriorTranslationM": [
+        0.1875,
+        1,
+        0
+      ],
+      "nativeSourceFrameInteriorTranslationM": [
+        -1,
+        1,
+        0
+      ],
+      "unchangedFloor": "floor--2--2",
+      "unchangedRoof": "roof--2--2",
+      "unchangedArmor": "superstructure--3--2",
+      "armorSource": {
+        "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+        "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "nodePrefix": "GEO-part-3da4aef9b526b104b324--surface"
+      },
+      "preservedPartitionNodes": [
+        {
+          "sourceNode": "GEO-part-1f4f2ce23a20dba31e8b--partitions",
+          "sourceSha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+          "nativeTriangles": 974,
+          "nativeVolumeM3": 0.8178710937500001,
+          "nativeBoundsM": [
+            -5.0,
+            -4.0,
+            0.1875,
+            -3.0,
+            -3.4375,
+            1.4375
+          ],
+          "role": "preserved-interior-partition",
+          "pressureReady": false,
+          "geometryRule": "Retain exact historical native mesh and local transform; do not relabel it as newly authored or full-height sealed structure."
+        }
+      ],
+      "floorContactM3": 0.011717870999999946,
+      "roofContactM3": 0.005855420624999983,
+      "armorIntersectionM3": 0.0,
+      "newOuterFamilyUsableIntrusionM3": 0.0,
+      "exportState": "Exact source-frame plan; these composite GLBs are not yet authored/exported or game-admissible."
+    },
+    {
+      "exteriorId": "wall--3--1",
+      "interiorId": "wall--2--1",
+      "originalExteriorPlacement": {
+        "id": "wall--3--1",
+        "assetId": "part-328e6e9149ea347b95d7",
+        "position": [
+          -5.125,
+          -2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "originalInteriorPlacement": {
+        "id": "wall--2--1",
+        "assetId": "part-8027121656ac690dd209",
+        "position": [
+          -4.6875,
+          -2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "canonicalSourceAnchorWorldM": [
+        -5,
+        -1,
+        0
+      ],
+      "canonicalSourceQuarterTurns": -1,
+      "nativeSourceFrameExteriorTranslationM": [
+        0.125,
+        1,
+        0
+      ],
+      "nativeSourceFrameInteriorTranslationM": [
+        -0.3125,
+        1,
+        0
+      ],
+      "unchangedFloor": "floor--2--1",
+      "unchangedRoof": "roof--2--1",
+      "unchangedArmor": "superstructure--3--1",
+      "armorSource": {
+        "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+        "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "nodePrefix": "GEO-part-e21a69be0c5b6a98e812--surface"
+      },
+      "preservedPartitionNodes": [],
+      "floorContactM3": 0.011717870999999975,
+      "roofContactM3": 0.005855420625000004,
+      "armorIntersectionM3": 0.0,
+      "newOuterFamilyUsableIntrusionM3": 0.0,
+      "exportState": "Exact source-frame plan; these composite GLBs are not yet authored/exported or game-admissible."
+    },
+    {
+      "exteriorId": "wall--3-0",
+      "interiorId": "wall--2-0",
+      "originalExteriorPlacement": {
+        "id": "wall--3-0",
+        "assetId": "part-0e4aefe72a90960922e9",
+        "position": [
+          -5.1875,
+          0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "originalInteriorPlacement": {
+        "id": "wall--2-0",
+        "assetId": "part-96878a6d75e5c294b532",
+        "position": [
+          -4,
+          0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "canonicalSourceAnchorWorldM": [
+        -5,
+        1,
+        0
+      ],
+      "canonicalSourceQuarterTurns": -1,
+      "nativeSourceFrameExteriorTranslationM": [
+        0.1875,
+        1,
+        0
+      ],
+      "nativeSourceFrameInteriorTranslationM": [
+        -1,
+        1,
+        0
+      ],
+      "unchangedFloor": "floor--2-0",
+      "unchangedRoof": "roof--2-0",
+      "unchangedArmor": "superstructure--3-0",
+      "armorSource": {
+        "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+        "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "nodePrefix": "GEO-part-91c8f3d728f25c968810--surface"
+      },
+      "preservedPartitionNodes": [
+        {
+          "sourceNode": "GEO-part-96878a6d75e5c294b532--partitions",
+          "sourceSha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+          "nativeTriangles": 894,
+          "nativeVolumeM3": 0.81787109375,
+          "nativeBoundsM": [
+            -5.0,
+            0.5,
+            0.1875,
+            -3.0,
+            1.0,
+            1.4375
+          ],
+          "role": "preserved-interior-partition",
+          "pressureReady": false,
+          "geometryRule": "Retain exact historical native mesh and local transform; do not relabel it as newly authored or full-height sealed structure."
+        }
+      ],
+      "floorContactM3": 0.011717870999999975,
+      "roofContactM3": 0.005855420625000004,
+      "armorIntersectionM3": 0.0,
+      "newOuterFamilyUsableIntrusionM3": 0.0,
+      "exportState": "Exact source-frame plan; these composite GLBs are not yet authored/exported or game-admissible."
+    },
+    {
+      "exteriorId": "wall--3-1",
+      "interiorId": "wall--2-1",
+      "originalExteriorPlacement": {
+        "id": "wall--3-1",
+        "assetId": "part-328e6e9149ea347b95d7",
+        "position": [
+          -5.125,
+          2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "originalInteriorPlacement": {
+        "id": "wall--2-1",
+        "assetId": "part-6c3fb1c92331674881a0",
+        "position": [
+          -4,
+          2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "canonicalSourceAnchorWorldM": [
+        -5,
+        3,
+        0
+      ],
+      "canonicalSourceQuarterTurns": -1,
+      "nativeSourceFrameExteriorTranslationM": [
+        0.125,
+        1,
+        0
+      ],
+      "nativeSourceFrameInteriorTranslationM": [
+        -1,
+        1,
+        0
+      ],
+      "unchangedFloor": "floor--2-1",
+      "unchangedRoof": "roof--2-1",
+      "unchangedArmor": "superstructure--3-1",
+      "armorSource": {
+        "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+        "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "nodePrefix": "GEO-part-0fe602115d20ec950357--surface"
+      },
+      "preservedPartitionNodes": [
+        {
+          "sourceNode": "GEO-part-6c3fb1c92331674881a0--partitions",
+          "sourceSha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+          "nativeTriangles": 56,
+          "nativeVolumeM3": 0.0008886924999999999,
+          "nativeBoundsM": [
+            -4.1875,
+            1.0,
+            0.625,
+            -3.0,
+            1.0625,
+            0.6875
+          ],
+          "role": "preserved-interior-partition",
+          "pressureReady": false,
+          "geometryRule": "Retain exact historical native mesh and local transform; do not relabel it as newly authored or full-height sealed structure."
+        }
+      ],
+      "floorContactM3": 0.011717870999999973,
+      "roofContactM3": 0.005855420625000017,
+      "armorIntersectionM3": 0.0,
+      "newOuterFamilyUsableIntrusionM3": 0.0,
+      "exportState": "Exact source-frame plan; these composite GLBs are not yet authored/exported or game-admissible."
+    },
+    {
+      "exteriorId": "wall--3-2",
+      "interiorId": "wall--2-2",
+      "originalExteriorPlacement": {
+        "id": "wall--3-2",
+        "assetId": "part-070229a9a22dcd1fc3e1",
+        "position": [
+          -5.1875,
+          4,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "originalInteriorPlacement": {
+        "id": "wall--2-2",
+        "assetId": "part-2adc55eddecec9617cf7",
+        "position": [
+          -4.6875,
+          4,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "canonicalSourceAnchorWorldM": [
+        -5,
+        5,
+        0
+      ],
+      "canonicalSourceQuarterTurns": -1,
+      "nativeSourceFrameExteriorTranslationM": [
+        0.1875,
+        1,
+        0
+      ],
+      "nativeSourceFrameInteriorTranslationM": [
+        -0.3125,
+        1,
+        0
+      ],
+      "unchangedFloor": "floor--2-2",
+      "unchangedRoof": "roof--2-2",
+      "unchangedArmor": "superstructure--3-2",
+      "armorSource": {
+        "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+        "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "nodePrefix": "GEO-part-0ac1e39dec34655a366f--surface"
+      },
+      "preservedPartitionNodes": [],
+      "floorContactM3": 0.01171787099999996,
+      "roofContactM3": 0.005855420625000001,
+      "armorIntersectionM3": 0.0,
+      "newOuterFamilyUsableIntrusionM3": 0.0,
+      "exportState": "Exact source-frame plan; these composite GLBs are not yet authored/exported or game-admissible."
+    },
+    {
+      "exteriorId": "wall--3-3",
+      "interiorId": "wall--2-3",
+      "originalExteriorPlacement": {
+        "id": "wall--3-3",
+        "assetId": "part-489c21ef5238f76ea87b",
+        "position": [
+          -5.125,
+          6,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "originalInteriorPlacement": {
+        "id": "wall--2-3",
+        "assetId": "part-6c1c5c2e0e3161fd9cdb",
+        "position": [
+          -4,
+          6,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "canonicalSourceAnchorWorldM": [
+        -5,
+        7,
+        0
+      ],
+      "canonicalSourceQuarterTurns": -1,
+      "nativeSourceFrameExteriorTranslationM": [
+        0.125,
+        1,
+        0
+      ],
+      "nativeSourceFrameInteriorTranslationM": [
+        -1,
+        1,
+        0
+      ],
+      "unchangedFloor": "floor--2-3",
+      "unchangedRoof": "roof--2-3",
+      "unchangedArmor": "superstructure--3-3",
+      "armorSource": {
+        "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+        "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "nodePrefix": "GEO-part-dd83177cdf0e1d968cb7--surface"
+      },
+      "preservedPartitionNodes": [
+        {
+          "sourceNode": "GEO-part-6c1c5c2e0e3161fd9cdb--partitions",
+          "sourceSha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+          "nativeTriangles": 968,
+          "nativeVolumeM3": 0.81884765625,
+          "nativeBoundsM": [
+            -5.0,
+            5.0,
+            0.1875,
+            -3.0,
+            5.5625,
+            1.4375
+          ],
+          "role": "preserved-interior-partition",
+          "pressureReady": false,
+          "geometryRule": "Retain exact historical native mesh and local transform; do not relabel it as newly authored or full-height sealed structure."
+        }
+      ],
+      "floorContactM3": 0.011717870999999987,
+      "roofContactM3": 0.0058554206249999945,
+      "armorIntersectionM3": 0.0,
+      "newOuterFamilyUsableIntrusionM3": 0.0,
+      "exportState": "Exact source-frame plan; these composite GLBs are not yet authored/exported or game-admissible."
+    },
+    {
+      "exteriorId": "wall-3--3",
+      "interiorId": "wall-2--3",
+      "originalExteriorPlacement": {
+        "id": "wall-3--3",
+        "assetId": "part-29a2b4f5499e93c9edca",
+        "position": [
+          5.125,
+          -6,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "originalInteriorPlacement": {
+        "id": "wall-2--3",
+        "assetId": "part-c8b14cc871b1aad06c36",
+        "position": [
+          4.6875,
+          -6,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "canonicalSourceAnchorWorldM": [
+        5,
+        -7,
+        0
+      ],
+      "canonicalSourceQuarterTurns": 1,
+      "nativeSourceFrameExteriorTranslationM": [
+        -0.125,
+        -1,
+        0
+      ],
+      "nativeSourceFrameInteriorTranslationM": [
+        0.3125,
+        -1,
+        0
+      ],
+      "unchangedFloor": "floor-2--3",
+      "unchangedRoof": "roof-2--3",
+      "unchangedArmor": "superstructure-3--3",
+      "armorSource": {
+        "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+        "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "nodePrefix": "GEO-part-3cb4b658b677f06829b6--surface"
+      },
+      "preservedPartitionNodes": [],
+      "floorContactM3": 0.011717871,
+      "roofContactM3": 0.00585542062499999,
+      "armorIntersectionM3": 0.0,
+      "newOuterFamilyUsableIntrusionM3": 0.0,
+      "exportState": "Exact source-frame plan; these composite GLBs are not yet authored/exported or game-admissible."
+    },
+    {
+      "exteriorId": "wall-3--2",
+      "interiorId": "wall-2--2",
+      "originalExteriorPlacement": {
+        "id": "wall-3--2",
+        "assetId": "part-386f7415c520e22bd6b6",
+        "position": [
+          5.125,
+          -4,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "originalInteriorPlacement": {
+        "id": "wall-2--2",
+        "assetId": "part-0bf0c79e5a52a9cee388",
+        "position": [
+          4,
+          -4,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "canonicalSourceAnchorWorldM": [
+        5,
+        -5,
+        0
+      ],
+      "canonicalSourceQuarterTurns": 1,
+      "nativeSourceFrameExteriorTranslationM": [
+        -0.125,
+        -1,
+        0
+      ],
+      "nativeSourceFrameInteriorTranslationM": [
+        1,
+        -1,
+        0
+      ],
+      "unchangedFloor": "floor-2--2",
+      "unchangedRoof": "roof-2--2",
+      "unchangedArmor": "superstructure-3--2",
+      "armorSource": {
+        "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+        "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "nodePrefix": "GEO-part-0558bcda4ab0cb8c9f70--surface"
+      },
+      "preservedPartitionNodes": [
+        {
+          "sourceNode": "GEO-part-0bf0c79e5a52a9cee388--partitions",
+          "sourceSha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+          "nativeTriangles": 1012,
+          "nativeVolumeM3": 0.8300781250000001,
+          "nativeBoundsM": [
+            3.0,
+            -4.0,
+            0.1875,
+            5.0,
+            -3.4375,
+            1.4375
+          ],
+          "role": "preserved-interior-partition",
+          "pressureReady": false,
+          "geometryRule": "Retain exact historical native mesh and local transform; do not relabel it as newly authored or full-height sealed structure."
+        }
+      ],
+      "floorContactM3": 0.011717870999999958,
+      "roofContactM3": 0.005855420624999988,
+      "armorIntersectionM3": 0.0,
+      "newOuterFamilyUsableIntrusionM3": 0.0,
+      "exportState": "Exact source-frame plan; these composite GLBs are not yet authored/exported or game-admissible."
+    },
+    {
+      "exteriorId": "wall-3--1",
+      "interiorId": "wall-2--1",
+      "originalExteriorPlacement": {
+        "id": "wall-3--1",
+        "assetId": "part-29a2b4f5499e93c9edca",
+        "position": [
+          5.125,
+          -2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "originalInteriorPlacement": {
+        "id": "wall-2--1",
+        "assetId": "part-16ad11623e8457b9fa65",
+        "position": [
+          4.6875,
+          -2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "canonicalSourceAnchorWorldM": [
+        5,
+        -3,
+        0
+      ],
+      "canonicalSourceQuarterTurns": 1,
+      "nativeSourceFrameExteriorTranslationM": [
+        -0.125,
+        -1,
+        0
+      ],
+      "nativeSourceFrameInteriorTranslationM": [
+        0.3125,
+        -1,
+        0
+      ],
+      "unchangedFloor": "floor-2--1",
+      "unchangedRoof": "roof-2--1",
+      "unchangedArmor": "superstructure-3--1",
+      "armorSource": {
+        "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+        "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "nodePrefix": "GEO-part-8ddb637a40bd23dfd03a--surface"
+      },
+      "preservedPartitionNodes": [],
+      "floorContactM3": 0.011717870999999972,
+      "roofContactM3": 0.005855420625000004,
+      "armorIntersectionM3": 0.0,
+      "newOuterFamilyUsableIntrusionM3": 0.0,
+      "exportState": "Exact source-frame plan; these composite GLBs are not yet authored/exported or game-admissible."
+    },
+    {
+      "exteriorId": "wall-3-0",
+      "interiorId": "wall-2-0",
+      "originalExteriorPlacement": {
+        "id": "wall-3-0",
+        "assetId": "part-23d5284bc8c7e3ad49d7",
+        "position": [
+          5.125,
+          0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "originalInteriorPlacement": {
+        "id": "wall-2-0",
+        "assetId": "part-3b538ddb00f4d1a7d749",
+        "position": [
+          4,
+          0,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "canonicalSourceAnchorWorldM": [
+        5,
+        -1,
+        0
+      ],
+      "canonicalSourceQuarterTurns": 1,
+      "nativeSourceFrameExteriorTranslationM": [
+        -0.125,
+        -1,
+        0
+      ],
+      "nativeSourceFrameInteriorTranslationM": [
+        1,
+        -1,
+        0
+      ],
+      "unchangedFloor": "floor-2-0",
+      "unchangedRoof": "roof-2-0",
+      "unchangedArmor": "superstructure-3-0",
+      "armorSource": {
+        "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+        "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "nodePrefix": "GEO-part-1c0570cdd9d7bc9d67da--surface"
+      },
+      "preservedPartitionNodes": [
+        {
+          "sourceNode": "GEO-part-3b538ddb00f4d1a7d749--partitions",
+          "sourceSha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+          "nativeTriangles": 912,
+          "nativeVolumeM3": 0.83154296875,
+          "nativeBoundsM": [
+            3.0,
+            0.5,
+            0.1875,
+            5.0,
+            1.0,
+            1.4375
+          ],
+          "role": "preserved-interior-partition",
+          "pressureReady": false,
+          "geometryRule": "Retain exact historical native mesh and local transform; do not relabel it as newly authored or full-height sealed structure."
+        }
+      ],
+      "floorContactM3": 0.011717870999999972,
+      "roofContactM3": 0.005855420625000004,
+      "armorIntersectionM3": 0.0,
+      "newOuterFamilyUsableIntrusionM3": 0.0,
+      "exportState": "Exact source-frame plan; these composite GLBs are not yet authored/exported or game-admissible."
+    },
+    {
+      "exteriorId": "wall-3-1",
+      "interiorId": "wall-2-1",
+      "originalExteriorPlacement": {
+        "id": "wall-3-1",
+        "assetId": "part-29a2b4f5499e93c9edca",
+        "position": [
+          5.125,
+          2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "originalInteriorPlacement": {
+        "id": "wall-2-1",
+        "assetId": "part-c561706cce53aba7f13e",
+        "position": [
+          4.1875,
+          2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "canonicalSourceAnchorWorldM": [
+        5,
+        1,
+        0
+      ],
+      "canonicalSourceQuarterTurns": 1,
+      "nativeSourceFrameExteriorTranslationM": [
+        -0.125,
+        -1,
+        0
+      ],
+      "nativeSourceFrameInteriorTranslationM": [
+        0.8125,
+        -1,
+        0
+      ],
+      "unchangedFloor": "floor-2-1",
+      "unchangedRoof": "roof-2-1",
+      "unchangedArmor": "superstructure-3-1",
+      "armorSource": {
+        "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+        "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "nodePrefix": "GEO-part-505abaccb2279cad2d0f--surface"
+      },
+      "preservedPartitionNodes": [
+        {
+          "sourceNode": "GEO-part-c561706cce53aba7f13e--partitions",
+          "sourceSha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+          "nativeTriangles": 88,
+          "nativeVolumeM3": 0.0012891037500000005,
+          "nativeBoundsM": [
+            3.375,
+            1.0,
+            0.625,
+            4.6875,
+            1.0625,
+            0.6875
+          ],
+          "role": "preserved-interior-partition",
+          "pressureReady": false,
+          "geometryRule": "Retain exact historical native mesh and local transform; do not relabel it as newly authored or full-height sealed structure."
+        }
+      ],
+      "floorContactM3": 0.011717870999999972,
+      "roofContactM3": 0.005855420625000004,
+      "armorIntersectionM3": 0.0,
+      "newOuterFamilyUsableIntrusionM3": 0.0,
+      "exportState": "Exact source-frame plan; these composite GLBs are not yet authored/exported or game-admissible."
+    },
+    {
+      "exteriorId": "wall-3-2",
+      "interiorId": "wall-2-2",
+      "originalExteriorPlacement": {
+        "id": "wall-3-2",
+        "assetId": "part-915dc23e886f070d75c4",
+        "position": [
+          5.125,
+          4,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "originalInteriorPlacement": {
+        "id": "wall-2-2",
+        "assetId": "part-3b10a5b6237f977755ea",
+        "position": [
+          4.6875,
+          4,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "canonicalSourceAnchorWorldM": [
+        5,
+        3,
+        0
+      ],
+      "canonicalSourceQuarterTurns": 1,
+      "nativeSourceFrameExteriorTranslationM": [
+        -0.125,
+        -1,
+        0
+      ],
+      "nativeSourceFrameInteriorTranslationM": [
+        0.3125,
+        -1,
+        0
+      ],
+      "unchangedFloor": "floor-2-2",
+      "unchangedRoof": "roof-2-2",
+      "unchangedArmor": "superstructure-3-2",
+      "armorSource": {
+        "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+        "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "nodePrefix": "GEO-part-f307639bad50377eba7b--surface"
+      },
+      "preservedPartitionNodes": [],
+      "floorContactM3": 0.011717870999999958,
+      "roofContactM3": 0.005855420624999979,
+      "armorIntersectionM3": 0.0,
+      "newOuterFamilyUsableIntrusionM3": 0.0,
+      "exportState": "Exact source-frame plan; these composite GLBs are not yet authored/exported or game-admissible."
+    },
+    {
+      "exteriorId": "wall-3-3",
+      "interiorId": "wall-2-3",
+      "originalExteriorPlacement": {
+        "id": "wall-3-3",
+        "assetId": "part-7f90173a1eca4acb88bc",
+        "position": [
+          5.125,
+          6,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "originalInteriorPlacement": {
+        "id": "wall-2-3",
+        "assetId": "part-f8984ad617033cbb9b07",
+        "position": [
+          4,
+          6,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "canonicalSourceAnchorWorldM": [
+        5,
+        5,
+        0
+      ],
+      "canonicalSourceQuarterTurns": 1,
+      "nativeSourceFrameExteriorTranslationM": [
+        -0.125,
+        -1,
+        0
+      ],
+      "nativeSourceFrameInteriorTranslationM": [
+        1,
+        -1,
+        0
+      ],
+      "unchangedFloor": "floor-2-3",
+      "unchangedRoof": "roof-2-3",
+      "unchangedArmor": "superstructure-3-3",
+      "armorSource": {
+        "path": "assets/runtime/assembly/side-hull/r003/kit.glb",
+        "sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+        "nodePrefix": "GEO-part-66a37b7990899a620125--surface"
+      },
+      "preservedPartitionNodes": [
+        {
+          "sourceNode": "GEO-part-f8984ad617033cbb9b07--partitions",
+          "sourceSha256": "e45b79a8d40ca46124a51e4d5e24f89d0b00a0361989766e54b64deb8ad6999f",
+          "nativeTriangles": 1012,
+          "nativeVolumeM3": 0.8330078125,
+          "nativeBoundsM": [
+            3.0,
+            5.0,
+            0.1875,
+            5.0,
+            5.5625,
+            1.4375
+          ],
+          "role": "preserved-interior-partition",
+          "pressureReady": false,
+          "geometryRule": "Retain exact historical native mesh and local transform; do not relabel it as newly authored or full-height sealed structure."
+        }
+      ],
+      "floorContactM3": 0.011717871,
+      "roofContactM3": 0.00585542062499999,
+      "armorIntersectionM3": 0.0,
+      "newOuterFamilyUsableIntrusionM3": 0.0,
+      "exportState": "Exact source-frame plan; these composite GLBs are not yet authored/exported or game-admissible."
+    }
+  ],
+  "candidateNativeSource": {
+    "id": "straight-2m",
+    "file": "straight-2m.glb",
+    "sha256": "479f546b875389e2c726a42c9af4db027d4780066634009c600193ae2b6b08e8",
+    "nodePrefix": "GEO-usable-wall-straight-2m--",
+    "editableComponents": 22,
+    "canonicalSourceTransform": null
+  },
+  "placedTransformsChanged": 0,
+  "renderedOrInstalled": false,
+  "limits": [
+    "14straight side bays only; aft/front combined groups and shoulder/cockpit joins remain separate.",
+    "Preserved partitions keep their exact native occupancy; they may be partial-height and confer no seal qualification.",
+    "New source-frame exports, complete asset reservations, neighbor joins and full template validation remain required."
+  ]
+}
