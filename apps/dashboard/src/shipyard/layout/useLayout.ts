@@ -1,4 +1,14 @@
 import {
+  createBlankLayout,
+  createWayfarerFloorplanDraft,
+  floorplanOnlyCopy,
+  clearLayoutProposal,
+  detachLegacyStructureProposal,
+  type RedesignProposal,
+} from "./redesign-document";
+import type { HullEnvelope } from "@sidereal/content/layout-structure";
+import type { PartCatalog } from "@sidereal/content/assembly";
+import {
   createWayfarerTemplateDraft,
   preserveBeforeTemplate,
 } from "./wayfarer-template";
@@ -88,8 +98,13 @@ function boot() {
           : "",
       };
     }
-    const doc = layoutFixture();
-    doc.id = uuid();
+    const doc = createBlankLayout(
+      "ship",
+      "Untitled ship",
+      HULL_SIZE_CATALOG[0],
+      uuid(),
+      uuid(),
+    );
     return {
       identity,
       raw: null,
@@ -247,7 +262,7 @@ export function useLayout() {
     return () => window.removeEventListener("storage", changed);
   }, []);
   function commit(change: (d: LayoutDocument) => LayoutDocument) {
-    if (blocked || !history) return;
+    if (blocked || !history) return false;
     try {
       const next = push(
         history,
@@ -256,8 +271,10 @@ export function useLayout() {
       setHistory(next);
       setError("");
       setSaved("Saving locally…");
+      return true;
     } catch (e) {
       setError(String(e));
+      return false;
     }
   }
   function adopt(
@@ -288,6 +305,53 @@ export function useLayout() {
       }));
       setError("");
       return true;
+    } catch (e) {
+      setError(String(e));
+      return false;
+    }
+  }
+  /** New/forked designs save the current proposal with CAS before changing identity. */
+  function adoptPreservingCurrent(next: LayoutDocument): boolean {
+    try {
+      const current = latest.current;
+      if (!current.history)
+        throw Error(
+          "Keep or export the current recovery document before starting a redesign.",
+        );
+      readLayout(next);
+      if (localStorage.getItem(recoveryKey(initial.identity, next)) !== null)
+        throw Error("The new draft identity is already in use.");
+      const checkpoint: Checkpoint = {
+        schema: "sidereal.layout-recovery.v1",
+        sequence: sequence.current + 1,
+        writer: writer.current,
+        history: current.history,
+        view: current.view,
+      };
+      expected.current = preserveBeforeTemplate(
+        localStorage,
+        initial.identity,
+        expected.current,
+        checkpoint,
+        blocked,
+      );
+      sequence.current = checkpoint.sequence;
+      return adopt(next);
+    } catch (e) {
+      setError(String(e));
+      return false;
+    }
+  }
+  function redesign(make: (doc: LayoutDocument) => RedesignProposal): boolean {
+    try {
+      if (blocked || !latest.current.history)
+        throw Error(
+          "Resolve the current recovery/conflict before redesigning.",
+        );
+      const next = make(latest.current.history.present);
+      return next.mode === "fork"
+        ? adoptPreservingCurrent(next.document)
+        : commit(() => next.document);
     } catch (e) {
       setError(String(e));
       return false;
@@ -460,6 +524,52 @@ export function useLayout() {
         setRecovery(raw);
       }
     },
+    createBlank: (
+      kind: LayoutDocument["kind"],
+      hull: HullEnvelope,
+      name = "Untitled ship",
+    ) => {
+      try {
+        return adoptPreservingCurrent(
+          createBlankLayout(kind, name, hull, uuid(), uuid()),
+        );
+      } catch (e) {
+        setError(String(e));
+        return false;
+      }
+    },
+    createFloorplanFromWayfarer: (template: unknown, hull?: HullEnvelope) => {
+      try {
+        return adoptPreservingCurrent(
+          createWayfarerFloorplanDraft(template, uuid(), hull),
+        );
+      } catch (e) {
+        setError(String(e));
+        return false;
+      }
+    },
+    createFloorplanFromCurrent: (hull?: HullEnvelope) => {
+      try {
+        if (!latest.current.history)
+          throw Error("No current floorplan to redesign.");
+        return adoptPreservingCurrent(
+          floorplanOnlyCopy(latest.current.history.present, uuid(), hull),
+        );
+      } catch (e) {
+        setError(String(e));
+        return false;
+      }
+    },
+    clearCurrentLayout: () =>
+      redesign((d) =>
+        clearLayoutProposal(d, { forkId: d.source ? uuid() : undefined }),
+      ),
+    detachCurrentStructure: (catalog: PartCatalog) =>
+      redesign((d) =>
+        detachLegacyStructureProposal(d, catalog, {
+          forkId: d.source ? uuid() : undefined,
+        }),
+      ),
     createFromWayfarer: (template: unknown) => {
       try {
         if (!latest.current.history)
