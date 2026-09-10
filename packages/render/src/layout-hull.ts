@@ -4,7 +4,15 @@ import { updateHullDecals } from "./hull-decals";
 /** Hull authoring viewport. Reuses exported surfaces; never remeshes or publishes art. */
 import "@babylonjs/core/Culling/ray";
 import "@babylonjs/loaders/glTF";
-import "@babylonjs/core/Rendering/boundingBoxRenderer";
+import { createLayoutSelection } from "./layout-selection";
+import {
+  layoutPartVisible,
+  type LayoutPreviewPolicy,
+} from "./layout-preview-policy";
+export type {
+  LayoutPreviewPolicy,
+  LayoutPreviewLayers,
+} from "./layout-preview-policy";
 import { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
 import { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
@@ -33,6 +41,7 @@ export interface HullViewState {
   parts: PartPlacement[];
   selected: string;
   visible: ReadonlySet<PartCategory>;
+  preview?: LayoutPreviewPolicy;
   tool: "select" | "orbit" | "place";
   assetId: string;
   height: number;
@@ -121,6 +130,7 @@ export function createHullViewport(
     true,
   );
   scene.environmentIntensity = 0.6;
+  const selection = createLayoutSelection(scene);
   let activeUntil = performance.now() + 2000;
   const requestRender = () => {
     activeUntil = performance.now() + 1500;
@@ -451,7 +461,9 @@ export function createHullViewport(
         mesh.isPickable = !next.contextOnly?.has(p.id);
       updateHullDecals(scene, entry.node, p.decals, p.flipped);
       const category = catalog.assets.find((a) => a.id === p.assetId)?.category;
-      entry.node.setEnabled(!!category && next.visible.has(category));
+      entry.node.setEnabled(
+        layoutPartVisible(category, next.visible, next.preview),
+      );
       if (drag?.id !== p.id)
         entry.node.position.set(
           p.position[0] - origin.x,
@@ -460,8 +472,6 @@ export function createHullViewport(
         );
       entry.node.rotation.y = p.rotation;
       entry.node.scaling.x = p.flipped ? -1 : 1;
-      for (const mesh of entry.node.getChildMeshes())
-        mesh.showBoundingBox = p.id === next.selected;
     }
     if (next.floor?.fingerprint !== floorKey) {
       floorKey = next.floor?.fingerprint ?? "";
@@ -493,6 +503,11 @@ export function createHullViewport(
         floor.isPickable = false;
       }
     }
+    floor?.setEnabled(layoutPartVisible("floor", next.visible, next.preview));
+    selection.update(
+      [...nodes.values()].flatMap((e) => e.node.getChildMeshes()),
+      next.selected,
+    );
     canvas.dataset.placements = String(nodes.size);
     canvas.dataset.expectedPlacements = String(next.parts.length);
     if (nodes.size === next.parts.length)
@@ -617,6 +632,7 @@ export function createHullViewport(
     },
     dispose() {
       disposed = true;
+      selection.dispose();
       cancel();
       resize.disconnect();
       canvas.removeEventListener("pointerdown", pointerDown);

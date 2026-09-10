@@ -1,3 +1,7 @@
+import {
+  layoutPartVisible,
+  type LayoutPreviewPolicy,
+} from "./layout-preview-policy";
 import { layoutNativeFloors } from "./layout-native-floors";
 /** The other layout modes inspect the same editable assembly; Hull owns its gestures. */
 import { createHullViewport, type HullCameraState } from "./layout-hull";
@@ -44,15 +48,27 @@ export function createAssemblyLayoutPreview(
       projection: string,
       _catalog?: PartCatalog,
       showFloor = true,
+      preview?: LayoutPreviewPolicy,
     ) {
-      const native = layoutNativeFloors(doc, catalog, deck, showFloor);
+      const visible = new Set(
+        PART_CATEGORIES.filter(
+          (c) => (c !== "roof" || roof) && (c !== "floor" || showFloor),
+        ),
+      );
+      const native = layoutNativeFloors(
+        doc,
+        catalog,
+        deck,
+        layoutPartVisible("floor", visible, preview),
+      );
       floorStatus = `${native.parts.length} native floors${native.unmatched.length ? ` · ${native.unmatched.length} unmatched draft floors` : ""}`;
       const unmatched = new Set(native.unmatched);
       view.update({
         parts: [...layoutVisualParts(doc, catalog), ...native.parts],
         selected: "",
         contextOnly: new Set(native.parts.map((p) => p.id)),
-        visible: new Set(PART_CATEGORIES.filter((c) => c !== "roof" || roof)),
+        visible,
+        preview,
         tool: "orbit",
         assetId: "",
         height: 0,
