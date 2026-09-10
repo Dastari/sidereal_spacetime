@@ -1,5 +1,5 @@
 import { Matrix } from "@babylonjs/core/Maths/math.vector";
-import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
+import { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 
 /** Immutable authored placements only. Their common parent can move or be hidden;
@@ -12,7 +12,10 @@ export function cacheStaticTransforms(root: TransformNode, meshes: readonly Abst
     local: mesh.computeWorldMatrix(true).multiply(inverse),
     world: Matrix.Identity(),
     syncBounds: mesh.doNotSyncBoundingInfo,
+    cullingStrategy: mesh.cullingStrategy,
   }));
+  for (const entry of entries)
+    entry.mesh.cullingStrategy = AbstractMesh.CULLINGSTRATEGY_BOUNDINGSPHERE_ONLY;
   let previous: Matrix | undefined;
   const refresh = () => {
     const world = root.computeWorldMatrix(true);
@@ -36,6 +39,7 @@ export function cacheStaticTransforms(root: TransformNode, meshes: readonly Abst
       scene.onBeforeRenderObservable.remove(observer);
       for (const entry of entries) if (!entry.mesh.isDisposed()) {
         entry.mesh.doNotSyncBoundingInfo = entry.syncBounds;
+        entry.mesh.cullingStrategy = entry.cullingStrategy;
         entry.mesh.unfreezeWorldMatrix();
       }
     },
