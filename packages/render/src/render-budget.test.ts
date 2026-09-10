@@ -1,4 +1,5 @@
 import { prepareCutawayMeshes } from "./cutaway";
+import { prepareShadowPolicy, isStructuralShadowSource } from "./shadow-policy";
 import { GlowLayer } from "@babylonjs/core/Layers/glowLayer";
 import { createShipGlowOccluders } from "./ship-glow-occluders";
 import { readFileSync } from "node:fs";
@@ -97,6 +98,10 @@ test("installed ship loader resource budget", async () => {
     const beforeFadeMaterials = scene.materials.length;
     prepareCutawayMeshes(fadeRoofs);
     expect(scene.materials.length).toBe(beforeFadeMaterials);
+    for (const mesh of meshes) {
+      prepareShadowPolicy(mesh);
+      expect(isStructuralShadowSource(mesh), mesh.name).toBe(/GEO-(walls|partitions|cutaway|roof)/.test(mesh.name));
+    }
     createShipLighting(scene, ship, meshes);
     const glow = createShipGlowOccluders(
       scene,

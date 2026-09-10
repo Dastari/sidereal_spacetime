@@ -1,4 +1,6 @@
 import type { Light } from "@babylonjs/core/Lights/light";
+import { prepareShadowPolicy, isStructuralShadowSource } from "./shadow-policy";
+import { createShadowBatches } from "./shadow-batches";
 import type { ManagedLocalLight } from "./local-light-budget";
 import { isCabinMesh } from "./cabin-visibility";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
@@ -57,8 +59,9 @@ export function createShipLighting(
   exteriorShadows.bias = 0.0035;
   exteriorShadows.normalBias = 0.015;
   for (const mesh of meshes) {
+    prepareShadowPolicy(mesh);
     mesh.receiveShadows = true;
-    if (mesh.getTotalVertices() > 0 && !mesh.metadata?.hullDecal && !/GEO-markings/.test(mesh.name)) exteriorShadows.addShadowCaster(mesh);
+    if (mesh.getTotalVertices() > 0 && !mesh.metadata?.hullDecal && !mesh.metadata?.shadowExcluded) exteriorShadows.addShadowCaster(mesh);
     if (mesh.material && "maxSimultaneousLights" in mesh.material)
       mesh.material.maxSimultaneousLights = 8;
     if (mesh.material && "enableSpecularAntiAliasing" in mesh.material)
@@ -137,8 +140,8 @@ export function createShipLighting(
   const proxySources = new Map<AbstractMesh, AbstractMesh>();
   const occluders: AbstractMesh[] = [];
   for (const mesh of meshes) {
-    if (!mesh.getTotalVertices() || mesh.metadata?.hullDecal || /GEO-markings/.test(mesh.name)) continue;
-    const structural = /GEO-(walls|partitions|cutaway|roof)/.test(mesh.name);
+    if (!mesh.getTotalVertices() || mesh.metadata?.hullDecal || mesh.metadata?.shadowExcluded) continue;
+    const structural = isStructuralShadowSource(mesh);
     if (structural) {
       // Sibling clone shares immutable geometry, not its visibility or material.
       const proxy = mesh.clone(
@@ -147,7 +150,7 @@ export function createShipLighting(
         true,
       );
       if (!proxy) continue;
-      proxy.metadata = {...mesh.metadata, role: 'proxy'};
+      proxy.metadata = {...mesh.metadata, role: 'proxy', shadowRole: mesh.metadata.role};
       proxy.material = proxyMaterial;
       proxy.layerMask = 0x10000000;
       proxy.setEnabled(true);
@@ -209,6 +212,14 @@ export function createShipLighting(
   const exteriorCasters = [
     ...(exteriorShadows.getShadowMap()!.renderList ?? []),
   ];
+  const sunBatches = createShadowBatches(root);
+  const sunPlacementCache = createShadowPlacementCache(root);
+  const spotBatches = spots.map(() => createShadowBatches(root));
+  const refreshExteriorBatches = () => {
+    exteriorShadows.getShadowMap()!.renderList = sunBatches.rebuild(
+      exteriorCasters.filter(mesh => !mesh.isDisposed() && (cabinVisible || !isCabinMesh(mesh.name))),
+    );
+  };
   function setMembership(
     light: Light,
     key: "includedOnlyMeshes" | "excludedMeshes",
@@ -325,10 +336,11 @@ export function createShipLighting(
     }
     const dirty = placementCache.update(liveOccluders, geometryRevision);
     if (dirty) {
+      refreshExteriorBatches();
       root.computeWorldMatrix(true);
       const inverse = Matrix.Invert(root.getWorldMatrix());
-      staticLists = spots.map((light) =>
-        liveOccluders.filter((mesh) => {
+      staticLists = spots.map((light, i) =>
+        spotBatches[i].rebuild(liveOccluders.filter((mesh) => {
           if (!mesh.isEnabled() || !mesh.isVisible) return false;
           mesh.computeWorldMatrix(true);
           const sphere = mesh.getBoundingInfo().boundingSphere;
@@ -340,7 +352,7 @@ export function createShipLighting(
             light.range,
             light.angle,
           );
-        }),
+        })),
       );
     }
     const alive = actorMeshes.filter(
@@ -378,7 +390,11 @@ export function createShipLighting(
     }
   }
   function update(_interiorBlend: number, localX: number, localY: number) {
-    if (!cabinVisible) return;
+    if (!cabinVisible) {
+      // Parent deck visibility stays live even while local spot maps are paused.
+      if (sunPlacementCache.update(exteriorCasters, geometryRevision)) refreshExteriorBatches();
+      return;
+    }
     pruneDisposedActors();
     const nearest = roomLights
       .map(({ room }, i) => ({
@@ -425,6 +441,9 @@ export function createShipLighting(
   }
   refreshShadowCache(0, 0);
   scene.onDisposeObservable.addOnce(() => {
+    sunBatches.dispose();
+    sunPlacementCache.clear();
+    for (const batches of spotBatches) batches.dispose();
     placementCache.clear();
     for (const [geometry, { previous, observer }] of geometryObservers)
       if (geometry.onGeometryUpdated === observer)
@@ -438,9 +457,7 @@ export function createShipLighting(
     setCabinVisible(visible: boolean) {
       if (visible === cabinVisible) return;
       cabinVisible = visible;
-      exteriorShadows.getShadowMap()!.renderList = exteriorCasters.filter(
-        (mesh) => !mesh.isDisposed() && (visible || !isCabinMesh(mesh.name)),
-      );
+      refreshExteriorBatches();
       syncReceiverLights();
     },
     update,

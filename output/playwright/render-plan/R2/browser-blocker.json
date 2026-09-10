@@ -1,0 +1,24 @@
+{
+  "status": "unmeasured",
+  "tab": "tab_b",
+  "url": "https://sidereal.tail7a58a6.ts.net:8444/",
+  "documentVisibility": "visible",
+  "documentFocus": false,
+  "renderId": 1,
+  "sceneReady": false,
+  "meshCountDuringLoading": 1388,
+  "shaderCompilationErrors": [],
+  "notReadyExamples": [
+    "crew.face.age",
+    "crew.face.detail",
+    "crew.face.facialHair",
+    "crew.face.eyes"
+  ],
+  "targetsNotReady": [
+    "opaqueSceneTexture",
+    "EffectLayerMainRTT"
+  ],
+  "overlay": "Preparing the first frame",
+  "afterCounters": null,
+  "isolation": null
+}
