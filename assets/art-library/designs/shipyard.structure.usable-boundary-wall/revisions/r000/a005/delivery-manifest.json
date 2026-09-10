@@ -1,0 +1,273 @@
+{
+  "schema": "sidereal.usable-boundary-wall.v1",
+  "status": "awaiting-native-qualification",
+  "ownerFinalSignoff": null,
+  "parts": [
+    {
+      "id": "straight-2m",
+      "file": "straight-2m.glb",
+      "sha256": "479f546b875389e2c726a42c9af4db027d4780066634009c600193ae2b6b08e8",
+      "nodePrefix": "GEO-usable-wall-straight-2m--",
+      "editableComponents": 22,
+      "canonicalSourceTransform": null
+    },
+    {
+      "id": "outer-corner",
+      "file": "outer-corner.glb",
+      "sha256": "062ddea776bd9fb5bca7677668a60c319112d313be9aa709b20d8b132f92c238",
+      "nodePrefix": "GEO-usable-wall-outer-corner--",
+      "editableComponents": 5,
+      "canonicalSourceTransform": null
+    },
+    {
+      "id": "straight-port-legacy",
+      "file": "straight-port-legacy.glb",
+      "sha256": "204874ad4825b97b68016798cb69a37d7e39750a30dd12733a7c6c3176fa7664",
+      "nodePrefix": "GEO-usable-wall-straight-port-legacy--",
+      "editableComponents": 22,
+      "canonicalSourceTransform": [
+        [
+          -4.371138828673793e-08,
+          1.0,
+          0.0,
+          -0.3125
+        ],
+        [
+          -1.0,
+          -4.371138828673793e-08,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": "straight-starboard-legacy",
+      "file": "straight-starboard-legacy.glb",
+      "sha256": "bf70723a8a68d34c5c60288559e6f37b1fefba611c4f04c582cce261343ed241",
+      "nodePrefix": "GEO-usable-wall-straight-starboard-legacy--",
+      "editableComponents": 22,
+      "canonicalSourceTransform": [
+        [
+          7.549790126404332e-08,
+          -1.0,
+          0.0,
+          0.3125
+        ],
+        [
+          1.0,
+          7.549790126404332e-08,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": "port-pressure-body",
+      "file": "port-pressure-body.glb",
+      "sha256": "a753a692306c8093527b523d7fc9f821716417a5ee54b8da35c7bb7ff342fded",
+      "nodePrefix": "GEO-usable-wall-port-pressure-body--",
+      "editableComponents": 1,
+      "canonicalSourceTransform": [
+        [
+          -4.371138828673793e-08,
+          1.0,
+          0.0,
+          0.125
+        ],
+        [
+          -1.0,
+          -4.371138828673793e-08,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": "port-inner-facing",
+      "file": "port-inner-facing.glb",
+      "sha256": "7b5266aae6c742504a317ca57e62a797f6088296fc3a448fc95f30f081574d7f",
+      "nodePrefix": "GEO-usable-wall-port-inner-facing--",
+      "editableComponents": 21,
+      "canonicalSourceTransform": [
+        [
+          -4.371138828673793e-08,
+          1.0,
+          0.0,
+          -0.3125
+        ],
+        [
+          -1.0,
+          -4.371138828673793e-08,
+          0.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": "starboard-pressure-body",
+      "file": "starboard-pressure-body.glb",
+      "sha256": "b8059b3203a2cc186bb0bb46fc16f0ba4f438e00b238c247afc54662ab04bafc",
+      "nodePrefix": "GEO-usable-wall-starboard-pressure-body--",
+      "editableComponents": 1,
+      "canonicalSourceTransform": [
+        [
+          7.549790126404332e-08,
+          -1.0,
+          0.0,
+          -0.125
+        ],
+        [
+          1.0,
+          7.549790126404332e-08,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "id": "starboard-inner-facing",
+      "file": "starboard-inner-facing.glb",
+      "sha256": "7c505906e461a77f110327c707c86c1ac2200e499ae202b2c3a812085176fd07",
+      "nodePrefix": "GEO-usable-wall-starboard-inner-facing--",
+      "editableComponents": 21,
+      "canonicalSourceTransform": [
+        [
+          7.549790126404332e-08,
+          -1.0,
+          0.0,
+          0.3125
+        ],
+        [
+          1.0,
+          7.549790126404332e-08,
+          0.0,
+          -1.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "sourceMaterialBlend": "assets/art-library/designs/shipyard.hull.side-armor/revisions/r003/blender-source.blend",
+  "sourceMaterialSha256": "70c57b06a2c170c28840e0566f077d3561e0b40c4f5e978d36940273ceec1abd",
+  "floorTopM": 0.1875,
+  "roofUndersideM": 2.6875,
+  "usableInterior": "CanonicalY>=0 above floor top and below roof underside; cornerX>=0 andY>=0",
+  "structuralEnvelopeM": {
+    "runLength": 2,
+    "outwardThickness": 0.25,
+    "height": 2.75
+  },
+  "bearingContacts": [
+    {
+      "minZ": 0.03125,
+      "maxZ": 0.125
+    },
+    {
+      "minZ": 2.703125,
+      "maxZ": 2.75
+    }
+  ],
+  "armorMounts": [
+    {
+      "positionM": [
+        0.25,
+        -0.25,
+        1.35
+      ],
+      "outwardNormal": [
+        0,
+        -1,
+        0
+      ],
+      "family": "outward-structural-armor.v1",
+      "rating": null
+    },
+    {
+      "positionM": [
+        1.75,
+        -0.25,
+        1.35
+      ],
+      "outwardNormal": [
+        0,
+        -1,
+        0
+      ],
+      "family": "outward-structural-armor.v1",
+      "rating": null
+    }
+  ],
+  "originalPlacementChanges": 0,
+  "installed": false
+}

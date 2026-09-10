@@ -30,6 +30,11 @@
       "source": "expanded actual native armor test",
       "recorded_at": "2026-09-10T01:03:48.085236+00:00",
       "notes": "a003625mm body intersects unchanged armor by3.298675m3. a004250mm native body leaves62.5mm separation and restores layer ordering; no armor move or runtime scale.40nativegates pass."
+    },
+    {
+      "source": "actual paired-identity expansion",
+      "recorded_at": "2026-09-10T01:16:47.675500+00:00",
+      "notes": "a005 splits pressure body and interior-facing exports across four actual legacy source pairs, eight unchanged IDs.81nativegatespass, every4020native surface triangle/material retained; old outer strip would duplicate volume if not explicitly replaced. No additional render claim; a004geometryequivalence allows reusing clearly identified earlier image evidence. Mixed groups and fulladmissibility remain unfinished."
     }
   ],
   "revisions": [
@@ -481,6 +486,141 @@
           "notes": "Native candidate evidence; no installation, whole-Wayfarer qualification or final artistic approval.",
           "capture_context": null,
           "recorded_at": "2026-09-10T01:03:48.085236+00:00"
+        },
+        {
+          "role": "editable-blender",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/blender-source.blend",
+          "sha256": "c085df609ca7af71efc50d92fbdfadd41ce7c5c345e87a9d6a8940a2aaf82815",
+          "bytes": 2014988,
+          "notes": "Source pair/export proof only; a004render evidence retained by proved triangle/material equivalence. No live install or fullship qualification.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:16:47.675500+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/contact-proxies.json",
+          "sha256": "1566dc8f9e7b472c048c7f5fe23a67d22ae4c4e787d1299e4ca79f88f57cd8e5",
+          "bytes": 2017,
+          "notes": "Source pair/export proof only; a004render evidence retained by proved triangle/material equivalence. No live install or fullship qualification.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:16:47.675500+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/delivery-manifest.json",
+          "sha256": "02c7cb3bff87329cecd8725384c11ca24c9f9fe85c65e71e8c9589e49d4c7fb2",
+          "bytes": 5878,
+          "notes": "Source pair/export proof only; a004render evidence retained by proved triangle/material equivalence. No live install or fullship qualification.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:16:47.675500+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/outer-corner.glb",
+          "sha256": "062ddea776bd9fb5bca7677668a60c319112d313be9aa709b20d8b132f92c238",
+          "bytes": 646512,
+          "notes": "Source pair/export proof only; a004render evidence retained by proved triangle/material equivalence. No live install or fullship qualification.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:16:47.675500+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/pair-qualification-a002.json",
+          "sha256": "be92f87fded3a2eb3ef24bd3ea1f9217d21b27bb27584afe1b74bb048e0681b4",
+          "bytes": 26974,
+          "notes": "Source pair/export proof only; a004render evidence retained by proved triangle/material equivalence. No live install or fullship qualification.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:16:47.675500+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/pair-qualification-a003.json",
+          "sha256": "a36ddf9f3681c66d5b6aba8c9f1c2ef54d80a0a12bbe80d0661b4cb578784ff6",
+          "bytes": 26969,
+          "notes": "Source pair/export proof only; a004render evidence retained by proved triangle/material equivalence. No live install or fullship qualification.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:16:47.675500+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/pair-qualification.json",
+          "sha256": "4f638e1195f64d4ae656bcab4b2f4ff3be08f7c5e21fcbcec50d312960d6f205",
+          "bytes": 26095,
+          "notes": "Source pair/export proof only; a004render evidence retained by proved triangle/material equivalence. No live install or fullship qualification.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:16:47.675500+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/port-inner-facing.glb",
+          "sha256": "7b5266aae6c742504a317ca57e62a797f6088296fc3a448fc95f30f081574d7f",
+          "bytes": 974904,
+          "notes": "Source pair/export proof only; a004render evidence retained by proved triangle/material equivalence. No live install or fullship qualification.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:16:47.675500+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/port-pressure-body.glb",
+          "sha256": "a753a692306c8093527b523d7fc9f821716417a5ee54b8da35c7bb7ff342fded",
+          "bytes": 331132,
+          "notes": "Source pair/export proof only; a004render evidence retained by proved triangle/material equivalence. No live install or fullship qualification.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:16:47.675500+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/starboard-inner-facing.glb",
+          "sha256": "7c505906e461a77f110327c707c86c1ac2200e499ae202b2c3a812085176fd07",
+          "bytes": 974896,
+          "notes": "Source pair/export proof only; a004render evidence retained by proved triangle/material equivalence. No live install or fullship qualification.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:16:47.675500+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/starboard-pressure-body.glb",
+          "sha256": "b8059b3203a2cc186bb0bb46fc16f0ba4f438e00b238c247afc54662ab04bafc",
+          "bytes": 331132,
+          "notes": "Source pair/export proof only; a004render evidence retained by proved triangle/material equivalence. No live install or fullship qualification.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:16:47.675500+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/straight-2m.glb",
+          "sha256": "479f546b875389e2c726a42c9af4db027d4780066634009c600193ae2b6b08e8",
+          "bytes": 977904,
+          "notes": "Source pair/export proof only; a004render evidence retained by proved triangle/material equivalence. No live install or fullship qualification.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:16:47.675500+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/straight-port-legacy.glb",
+          "sha256": "204874ad4825b97b68016798cb69a37d7e39750a30dd12733a7c6c3176fa7664",
+          "bytes": 979320,
+          "notes": "Source pair/export proof only; a004render evidence retained by proved triangle/material equivalence. No live install or fullship qualification.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:16:47.675500+00:00"
+        },
+        {
+          "role": "runtime-candidate",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/straight-starboard-legacy.glb",
+          "sha256": "bf70723a8a68d34c5c60288559e6f37b1fefba611c4f04c582cce261343ed241",
+          "bytes": 979284,
+          "notes": "Source pair/export proof only; a004render evidence retained by proved triangle/material equivalence. No live install or fullship qualification.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:16:47.675500+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/shipyard.structure.usable-boundary-wall/revisions/r000/a005/interface-family.json",
+          "sha256": "e6b2a6ed1410b5d753a057d1dbb542950e774cb62b149431f14e89cf24ce8f1a",
+          "bytes": 2993,
+          "notes": "Additive paired export interface contract; previous a004 geometry contract preserved byte-identically.",
+          "capture_context": null,
+          "recorded_at": "2026-09-10T01:17:37.521454+00:00"
         }
       ]
     }

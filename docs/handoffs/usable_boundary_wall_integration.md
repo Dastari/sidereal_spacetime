@@ -44,3 +44,22 @@ The current representative uses one simple straight source group. Next apply the
 Qualify each floor/roof/shoulder/cockpit neighbor with the unchanged source hashes, source support and complete reserved envelopes. R006 cockpit remains preserved. Exterior corner and shoulder adapters must mate actual profiles and support surfaces, with real aperture/gap negative controls. Check armor, equipment access and visible face overlaps across modules as well as within each export.
 
 Only a complete admissible candidate should update the trusted template's source hash, native visual mapping and independently qualified walking/pressure/damage bindings. Existing source SHA gates must not be weakened or accept client-provided collision data. Publication and a state-preserving live refit remain distinct operations. The previous standalone airlock authority proof does not certify this unfinished full ship enclosure.
+
+## First actual source-pair expansion: a005
+
+Wayfarer's old inner-facing and outer-structure strips have separate placed IDs. Installing the entire prototype in the inner-facing slot while retaining the old outer strip duplicates structure. Attempt a005 therefore exports separate pressure-body and inner-facing parts at their respective unchanged source origins. Full canonical/legacy prototypes remain comparison/library artifacts and must not also be installed beside those split parts.
+
+`a005/pair-qualification-a003.json` passes 81 native checks and records eight exact replacement mappings across four real source pairs:
+
+| Exterior structure ID | Interior-facing ID | Unchanged locker |
+| --- | --- | --- |
+| `wall--3--3` | `wall--2--3` | `equipment-locker--4.7--6` |
+| `wall--3--1` | `wall--2--1` | `equipment-locker--4.7--2` |
+| `wall-3--3` | `wall-2--3` | `equipment-locker-4.7--6` |
+| `wall-3--1` | `wall-2--1` | `equipment-locker-4.7--2` |
+
+Every original record/transform stays intact, with only proposed native asset bindings changing. All 4,020 native surface triangles and materials match the complete qualified wall when the split parts are assembled at the recorded origins. Retaining the old exterior strip produces a measured positive-volume duplicate and fails the intended installation contract. Unchanged lockers and armor remain clear.
+
+The current report compares complete triangle/material multisets at the 1 µm export-encoding precision. An earlier comparator incorrectly included display labels truncated differently by Blender's name limit; its failed report is preserved as `pair-qualification-a002.json`. That comparison fix did not modify geometry. a005 is an export/binding iteration with equivalent surfaces, so it reuses the explicitly identified a004 actual native render evidence; no new screenshot is falsely claimed.
+
+Reproduce with `scripts/qualify_usable_wall_pairs.py` and `scripts/geometry_tests/test_usable_wall_pairs.py`. This batch is not yet an admissible whole-ship rebuild: mixed partition groups, neighboring old strip junctions, shoulders/cockpit adapters and full closure remain required. No database or runtime catalog changes accompany the candidate.

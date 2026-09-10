@@ -1,0 +1,114 @@
+{
+  "schema": "sidereal.native-wall-interface.v1",
+  "designId": "shipyard.structure.usable-boundary-wall",
+  "revision": 0,
+  "currentAttempt": "a005",
+  "units": "metres; authored XY deck/Z up",
+  "moduleRunM": 2,
+  "canonicalOrigin": "Start of usable floor boundary at floor structural bottom; run+X, interior+Y",
+  "floorTopM": 0.1875,
+  "roofUndersideM": 2.6875,
+  "reservedHeightM": [
+    0,
+    2.75
+  ],
+  "bodyReservationM": {
+    "min": [
+      0,
+      -0.25,
+      0
+    ],
+    "max": [
+      2,
+      0,
+      2.75
+    ]
+  },
+  "allowedBearingReservationsM": [
+    {
+      "min": [
+        0,
+        -0.0625,
+        0.03125
+      ],
+      "max": [
+        2,
+        0.0625,
+        0.125
+      ]
+    },
+    {
+      "min": [
+        0,
+        -0.0625,
+        2.703125
+      ],
+      "max": [
+        2,
+        0.0625,
+        2.75
+      ]
+    }
+  ],
+  "usablePrismRule": "No native triangle area or collision volume atY>0 betweenZ.1875and2.6875; floor/roof bearing contact exceptions exist only within declared slab heights.",
+  "completeExportRule": "Every exported triangle fits declared reserved footprint and height, including handles, trim and native joined contacts; no recentering/scaling/placement compensation.",
+  "cornerReservationM": {
+    "min": [
+      -0.25,
+      -0.25,
+      0
+    ],
+    "max": [
+      0.0625,
+      0.0625,
+      2.75
+    ]
+  },
+  "cornerUsableRule": "No native triangle area or collision volume atX>0ANDY>0 betweenZ.1875and2.6875. Corner contact ears are recessed from visible top planes.",
+  "structuralOutwardPlaneM": -0.25,
+  "existingArmorInnerPlaneM": -0.3125,
+  "separationM": 0.0625,
+  "armorMountRule": "Named outward normals and surface positions; a future qualified62.5mm mate/spacer must be separately authored. No automatic strength, fastening or armor rating.",
+  "preservedContextIds": [
+    "floor--2--3",
+    "roof--2--3",
+    "wall--2--3",
+    "equipment-locker--4.7--6",
+    "superstructure--3--3"
+  ],
+  "legacySourceAdapters": {
+    "port": {
+      "translationM": [
+        -0.3125,
+        1,
+        0
+      ],
+      "quarterTurns": -1,
+      "existingSourceOriginM": [
+        -4.6875,
+        -6,
+        0
+      ]
+    },
+    "starboard": {
+      "translationM": [
+        0.3125,
+        -1,
+        0
+      ],
+      "quarterTurns": 1,
+      "existingSourceOriginM": [
+        4.6875,
+        -6,
+        0
+      ]
+    }
+  },
+  "collisionRepresentation": "Separate source contact proxies and actual native CSG qualification; no automatic runtime collider/damage installation.",
+  "damageMode": "structural voxel damage required but not implemented by these visual assets",
+  "strengthApproval": null,
+  "ownerArtApproval": null,
+  "wholeWayfarerReady": false,
+  "currentGeometryAttempt": "a004",
+  "pairedLegacyIdentityRule": "Replace matching exterior pressure-body and inner-facing IDs together; never install fullprototype alongside splitexports. Exact eight bindings in a005/pair-qualification-a003.json."
+}

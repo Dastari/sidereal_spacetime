@@ -1,0 +1,1098 @@
+{
+  "schema": "sidereal.usable-wall-pair-candidate.v1",
+  "pass": true,
+  "checks": [
+    {
+      "name": "Complete raw reserved export straight-2m",
+      "pass": true,
+      "detail": {
+        "verticesChecked": 12060,
+        "nativeBoundsM": {
+          "min": [
+            0.0,
+            -0.25,
+            0.0
+          ],
+          "max": [
+            2.0,
+            0.0625,
+            2.75
+          ]
+        }
+      }
+    },
+    {
+      "name": "No native surface intrudes usable floor straight-2m",
+      "pass": true,
+      "detail": {
+        "forbiddenSurfaceAreaM2": 0
+      }
+    },
+    {
+      "name": "No proxy exported straight-2m",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native material separation straight-2m",
+      "pass": true,
+      "detail": [
+        "MAT-Frontier-side-hull-black",
+        "MAT-Frontier-side-hull-cyan",
+        "MAT-Frontier-side-hull-dark",
+        "MAT-Frontier-side-hull-pale",
+        "MAT-Frontier-side-hull-red",
+        "MAT-Frontier-side-hull-steel"
+      ]
+    },
+    {
+      "name": "Closed native export straight-2m",
+      "pass": true,
+      "detail": {
+        "nativeTriangles": 4020
+      }
+    },
+    {
+      "name": "Complete raw reserved export outer-corner",
+      "pass": true,
+      "detail": {
+        "verticesChecked": 2592,
+        "nativeBoundsM": {
+          "min": [
+            -0.2500000037252903,
+            -0.24999999441206455,
+            0.0
+          ],
+          "max": [
+            0.0625,
+            0.0625,
+            2.75
+          ]
+        }
+      }
+    },
+    {
+      "name": "No native surface intrudes usable floor outer-corner",
+      "pass": true,
+      "detail": {
+        "forbiddenSurfaceAreaM2": 0
+      }
+    },
+    {
+      "name": "No proxy exported outer-corner",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native material separation outer-corner",
+      "pass": true,
+      "detail": [
+        "MAT-Frontier-side-hull-dark",
+        "MAT-Frontier-side-hull-pale",
+        "MAT-Frontier-side-hull-steel"
+      ]
+    },
+    {
+      "name": "Closed native export outer-corner",
+      "pass": true,
+      "detail": {
+        "nativeTriangles": 864
+      }
+    },
+    {
+      "name": "Complete raw reserved export straight-port-legacy",
+      "pass": true,
+      "detail": {
+        "verticesChecked": 12060,
+        "nativeBoundsM": {
+          "min": [
+            -9.066587369765955e-09,
+            -0.25000024366869483,
+            0.0
+          ],
+          "max": [
+            1.9999999995160782,
+            0.06250023868950555,
+            2.75
+          ]
+        }
+      }
+    },
+    {
+      "name": "No native surface intrudes usable floor straight-port-legacy",
+      "pass": true,
+      "detail": {
+        "forbiddenSurfaceAreaM2": 0
+      }
+    },
+    {
+      "name": "No proxy exported straight-port-legacy",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native material separation straight-port-legacy",
+      "pass": true,
+      "detail": [
+        "MAT-Frontier-side-hull-black",
+        "MAT-Frontier-side-hull-cyan",
+        "MAT-Frontier-side-hull-dark",
+        "MAT-Frontier-side-hull-pale",
+        "MAT-Frontier-side-hull-red",
+        "MAT-Frontier-side-hull-steel"
+      ]
+    },
+    {
+      "name": "Closed native export straight-port-legacy",
+      "pass": true,
+      "detail": {
+        "nativeTriangles": 4020
+      }
+    },
+    {
+      "name": "Complete raw reserved export straight-starboard-legacy",
+      "pass": true,
+      "detail": {
+        "verticesChecked": 12060,
+        "nativeBoundsM": {
+          "min": [
+            1.1320153259219978e-08,
+            -0.2500002910625894,
+            0.0
+          ],
+          "max": [
+            2.000000035333494,
+            0.06250029005178337,
+            2.75
+          ]
+        }
+      }
+    },
+    {
+      "name": "No native surface intrudes usable floor straight-starboard-legacy",
+      "pass": true,
+      "detail": {
+        "forbiddenSurfaceAreaM2": 0
+      }
+    },
+    {
+      "name": "No proxy exported straight-starboard-legacy",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native material separation straight-starboard-legacy",
+      "pass": true,
+      "detail": [
+        "MAT-Frontier-side-hull-black",
+        "MAT-Frontier-side-hull-cyan",
+        "MAT-Frontier-side-hull-dark",
+        "MAT-Frontier-side-hull-pale",
+        "MAT-Frontier-side-hull-red",
+        "MAT-Frontier-side-hull-steel"
+      ]
+    },
+    {
+      "name": "Closed native export straight-starboard-legacy",
+      "pass": true,
+      "detail": {
+        "nativeTriangles": 4020
+      }
+    },
+    {
+      "name": "Complete raw reserved export port-pressure-body",
+      "pass": true,
+      "detail": {
+        "verticesChecked": 216,
+        "nativeBoundsM": {
+          "min": [
+            -9.066587480788257e-09,
+            -0.2500002427373722,
+            0.0
+          ],
+          "max": [
+            1.9999999995160782,
+            0.0625002396208281,
+            2.75
+          ]
+        }
+      }
+    },
+    {
+      "name": "No native surface intrudes usable floor port-pressure-body",
+      "pass": true,
+      "detail": {
+        "forbiddenSurfaceAreaM2": 0
+      }
+    },
+    {
+      "name": "No proxy exported port-pressure-body",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native material separation port-pressure-body",
+      "pass": true,
+      "detail": [
+        "MAT-Frontier-side-hull-steel"
+      ]
+    },
+    {
+      "name": "Closed native export port-pressure-body",
+      "pass": true,
+      "detail": {
+        "nativeTriangles": 72
+      }
+    },
+    {
+      "name": "Complete raw reserved export port-inner-facing",
+      "pass": true,
+      "detail": {
+        "verticesChecked": 11844,
+        "nativeBoundsM": {
+          "min": [
+            0.012000056764022493,
+            -0.049000072457544286,
+            0.1874999962747097
+          ],
+          "max": [
+            1.9879999454215462,
+            -0.0010000028437282538,
+            2.6399999037384987
+          ]
+        }
+      }
+    },
+    {
+      "name": "No native surface intrudes usable floor port-inner-facing",
+      "pass": true,
+      "detail": {
+        "forbiddenSurfaceAreaM2": 0
+      }
+    },
+    {
+      "name": "No proxy exported port-inner-facing",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native material separation port-inner-facing",
+      "pass": true,
+      "detail": [
+        "MAT-Frontier-side-hull-black",
+        "MAT-Frontier-side-hull-cyan",
+        "MAT-Frontier-side-hull-dark",
+        "MAT-Frontier-side-hull-pale",
+        "MAT-Frontier-side-hull-red",
+        "MAT-Frontier-side-hull-steel"
+      ]
+    },
+    {
+      "name": "Closed native export port-inner-facing",
+      "pass": true,
+      "detail": {
+        "nativeTriangles": 3948
+      }
+    },
+    {
+      "name": "Complete raw reserved export starboard-pressure-body",
+      "pass": true,
+      "detail": {
+        "verticesChecked": 216,
+        "nativeBoundsM": {
+          "min": [
+            1.1320153259219978e-08,
+            -0.25000029199391194,
+            0.0
+          ],
+          "max": [
+            2.000000035333494,
+            0.06250028912046082,
+            2.75
+          ]
+        }
+      }
+    },
+    {
+      "name": "No native surface intrudes usable floor starboard-pressure-body",
+      "pass": true,
+      "detail": {
+        "forbiddenSurfaceAreaM2": 0
+      }
+    },
+    {
+      "name": "No proxy exported starboard-pressure-body",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native material separation starboard-pressure-body",
+      "pass": true,
+      "detail": [
+        "MAT-Frontier-side-hull-steel"
+      ]
+    },
+    {
+      "name": "Closed native export starboard-pressure-body",
+      "pass": true,
+      "detail": {
+        "nativeTriangles": 72
+      }
+    },
+    {
+      "name": "Complete raw reserved export starboard-inner-facing",
+      "pass": true,
+      "detail": {
+        "verticesChecked": 11844,
+        "nativeBoundsM": {
+          "min": [
+            0.012000057064892378,
+            -0.049000068118917106,
+            0.1874999962747097
+          ],
+          "max": [
+            1.9879999467100014,
+            -0.0009999797693130974,
+            2.6399999037384987
+          ]
+        }
+      }
+    },
+    {
+      "name": "No native surface intrudes usable floor starboard-inner-facing",
+      "pass": true,
+      "detail": {
+        "forbiddenSurfaceAreaM2": 0
+      }
+    },
+    {
+      "name": "No proxy exported starboard-inner-facing",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Native material separation starboard-inner-facing",
+      "pass": true,
+      "detail": [
+        "MAT-Frontier-side-hull-black",
+        "MAT-Frontier-side-hull-cyan",
+        "MAT-Frontier-side-hull-dark",
+        "MAT-Frontier-side-hull-pale",
+        "MAT-Frontier-side-hull-red",
+        "MAT-Frontier-side-hull-steel"
+      ]
+    },
+    {
+      "name": "Closed native export starboard-inner-facing",
+      "pass": true,
+      "detail": {
+        "nativeTriangles": 3948
+      }
+    },
+    {
+      "name": "Native union contains declared contact GEO-usable-wall-straight-2m--pressure-body",
+      "pass": true,
+      "detail": {
+        "missingM3": -1.8465318250143747e-19
+      }
+    },
+    {
+      "name": "Native union contains declared contact GEO-usable-wall-straight-2m--floor-bearing",
+      "pass": true,
+      "detail": {
+        "missingM3": 0.0
+      }
+    },
+    {
+      "name": "Native union contains declared contact GEO-usable-wall-straight-2m--roof-bearing",
+      "pass": true,
+      "detail": {
+        "missingM3": 0.0
+      }
+    },
+    {
+      "name": "Native union contains declared contact GEO-usable-wall-outer-corner--corner-core",
+      "pass": true,
+      "detail": {
+        "missingM3": 0.0
+      }
+    },
+    {
+      "name": "Native union contains declared contact GEO-usable-wall-outer-corner--run-x-contact",
+      "pass": true,
+      "detail": {
+        "missingM3": -5.421010862427522e-20
+      }
+    },
+    {
+      "name": "Native union contains declared contact GEO-usable-wall-outer-corner--run-y-contact",
+      "pass": true,
+      "detail": {
+        "missingM3": 0.0
+      }
+    },
+    {
+      "name": "Native union contains declared contact GEO-usable-wall-outer-corner--floor-corner-bearing",
+      "pass": true,
+      "detail": {
+        "missingM3": 0.0
+      }
+    },
+    {
+      "name": "Native union contains declared contact GEO-usable-wall-outer-corner--roof-corner-bearing",
+      "pass": true,
+      "detail": {
+        "missingM3": 0.0
+      }
+    },
+    {
+      "name": "Original unchanged locker intersection is a real negative control",
+      "pass": true,
+      "detail": {
+        "nativeM3": 0.0004417465042662192
+      }
+    },
+    {
+      "name": "Corrected source clears unchanged locker",
+      "pass": true,
+      "detail": {
+        "nativeM3": 0.0,
+        "minimumNativeGapM": 0.06550000000000011
+      }
+    },
+    {
+      "name": "Unchanged outer armor has separate nonoverlapping reservation",
+      "pass": true,
+      "detail": {
+        "nativeM3": 0.0,
+        "minimumGapM": 0.0625
+      }
+    },
+    {
+      "name": "Corrected source leaves entire declared usable prism free",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Original unchanged floor has positive bearing contact",
+      "pass": true,
+      "detail": {
+        "nativeM3": 0.011717871000000008
+      }
+    },
+    {
+      "name": "Original unchanged roof has positive bearing contact",
+      "pass": true,
+      "detail": {
+        "nativeM3": 0.005855420624999997
+      }
+    },
+    {
+      "name": "Native floor bearing closes actual edge void",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Removing authored floor bearing opens edge negative control",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Exterior corner overlaps both straight native cores",
+      "pass": true,
+      "detail": {
+        "firstM3": 0.017120361328125,
+        "secondM3": 0.017120361328125
+      }
+    },
+    {
+      "name": "Two-wall corner union preserves full usable quadrant",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Separate modules have no overlapping visible top faces",
+      "pass": true,
+      "detail": {
+        "samePlaneSameFacingOverlapM2": 0.0
+      }
+    },
+    {
+      "name": "Armor sockets remain outward with unresolved ratings",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Split source pair matches qualified native visual wall--2--3",
+      "pass": true,
+      "detail": {
+        "symmetricDifferenceM3": 0.0
+      }
+    },
+    {
+      "name": "Every native surface triangle and material survives split wall--2--3",
+      "pass": true,
+      "detail": {
+        "nativeTriangleCount": 4020,
+        "encodingComparisonM": 1e-06
+      }
+    },
+    {
+      "name": "Retaining old outer wall would duplicate native structure wall--3--3",
+      "pass": true,
+      "detail": {
+        "forbiddenDuplicateM3": 0.9819296260764844
+      }
+    },
+    {
+      "name": "Both replacement IDs clear unchanged locker equipment-locker--4.7--6",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Both replacement IDs clear unchanged armor superstructure--3--3",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Split source pair matches qualified native visual wall--2--1",
+      "pass": true,
+      "detail": {
+        "symmetricDifferenceM3": 0.0
+      }
+    },
+    {
+      "name": "Every native surface triangle and material survives split wall--2--1",
+      "pass": true,
+      "detail": {
+        "nativeTriangleCount": 4020,
+        "encodingComparisonM": 1e-06
+      }
+    },
+    {
+      "name": "Retaining old outer wall would duplicate native structure wall--3--1",
+      "pass": true,
+      "detail": {
+        "forbiddenDuplicateM3": 0.9819296260764844
+      }
+    },
+    {
+      "name": "Both replacement IDs clear unchanged locker equipment-locker--4.7--2",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Both replacement IDs clear unchanged armor superstructure--3--1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Split source pair matches qualified native visual wall-2--3",
+      "pass": true,
+      "detail": {
+        "symmetricDifferenceM3": 0.0
+      }
+    },
+    {
+      "name": "Every native surface triangle and material survives split wall-2--3",
+      "pass": true,
+      "detail": {
+        "nativeTriangleCount": 4020,
+        "encodingComparisonM": 1e-06
+      }
+    },
+    {
+      "name": "Retaining old outer wall would duplicate native structure wall-3--3",
+      "pass": true,
+      "detail": {
+        "forbiddenDuplicateM3": 0.9819295978471146
+      }
+    },
+    {
+      "name": "Both replacement IDs clear unchanged locker equipment-locker-4.7--6",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Both replacement IDs clear unchanged armor superstructure-3--3",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Split source pair matches qualified native visual wall-2--1",
+      "pass": true,
+      "detail": {
+        "symmetricDifferenceM3": 0.0
+      }
+    },
+    {
+      "name": "Every native surface triangle and material survives split wall-2--1",
+      "pass": true,
+      "detail": {
+        "nativeTriangleCount": 4020,
+        "encodingComparisonM": 1e-06
+      }
+    },
+    {
+      "name": "Retaining old outer wall would duplicate native structure wall-3--1",
+      "pass": true,
+      "detail": {
+        "forbiddenDuplicateM3": 0.9819295978471148
+      }
+    },
+    {
+      "name": "Both replacement IDs clear unchanged locker equipment-locker-4.7--2",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Both replacement IDs clear unchanged armor superstructure-3--1",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "Eight distinct IDs replaced once",
+      "pass": true,
+      "detail": null
+    }
+  ],
+  "sourceMappingSha256": "7b6be86b42e904def098f1a70a36bff08c18773e3efbc9337667af6da3f86e2e",
+  "originalPlacementCount": 262,
+  "pairs": [
+    {
+      "exteriorId": "wall--3--3",
+      "interiorId": "wall--2--3",
+      "unchangedLocker": "equipment-locker--4.7--6",
+      "unchangedArmor": "superstructure--3--3"
+    },
+    {
+      "exteriorId": "wall--3--1",
+      "interiorId": "wall--2--1",
+      "unchangedLocker": "equipment-locker--4.7--2",
+      "unchangedArmor": "superstructure--3--1"
+    },
+    {
+      "exteriorId": "wall-3--3",
+      "interiorId": "wall-2--3",
+      "unchangedLocker": "equipment-locker-4.7--6",
+      "unchangedArmor": "superstructure-3--3"
+    },
+    {
+      "exteriorId": "wall-3--1",
+      "interiorId": "wall-2--1",
+      "unchangedLocker": "equipment-locker-4.7--2",
+      "unchangedArmor": "superstructure-3--1"
+    }
+  ],
+  "replacements": [
+    {
+      "sourcePlacedId": "wall--3--3",
+      "originalPlacement": {
+        "id": "wall--3--3",
+        "assetId": "part-328e6e9149ea347b95d7",
+        "position": [
+          -5.125,
+          -6,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "candidateNativeAsset": {
+        "id": "port-pressure-body",
+        "file": "port-pressure-body.glb",
+        "sha256": "a753a692306c8093527b523d7fc9f821716417a5ee54b8da35c7bb7ff342fded",
+        "nodePrefix": "GEO-usable-wall-port-pressure-body--",
+        "editableComponents": 1,
+        "canonicalSourceTransform": [
+          [
+            -4.371138828673793e-08,
+            1.0,
+            0.0,
+            0.125
+          ],
+          [
+            -1.0,
+            -4.371138828673793e-08,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "sourceOriginUnchanged": true,
+      "semanticRole": "outward-pressure-structure"
+    },
+    {
+      "sourcePlacedId": "wall--2--3",
+      "originalPlacement": {
+        "id": "wall--2--3",
+        "assetId": "part-6e64c7b0aa0165cbe846",
+        "position": [
+          -4.6875,
+          -6,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "candidateNativeAsset": {
+        "id": "port-inner-facing",
+        "file": "port-inner-facing.glb",
+        "sha256": "7b5266aae6c742504a317ca57e62a797f6088296fc3a448fc95f30f081574d7f",
+        "nodePrefix": "GEO-usable-wall-port-inner-facing--",
+        "editableComponents": 21,
+        "canonicalSourceTransform": [
+          [
+            -4.371138828673793e-08,
+            1.0,
+            0.0,
+            -0.3125
+          ],
+          [
+            -1.0,
+            -4.371138828673793e-08,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "sourceOriginUnchanged": true,
+      "semanticRole": "interior-facing-within-outward-reservation"
+    },
+    {
+      "sourcePlacedId": "wall--3--1",
+      "originalPlacement": {
+        "id": "wall--3--1",
+        "assetId": "part-328e6e9149ea347b95d7",
+        "position": [
+          -5.125,
+          -2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "candidateNativeAsset": {
+        "id": "port-pressure-body",
+        "file": "port-pressure-body.glb",
+        "sha256": "a753a692306c8093527b523d7fc9f821716417a5ee54b8da35c7bb7ff342fded",
+        "nodePrefix": "GEO-usable-wall-port-pressure-body--",
+        "editableComponents": 1,
+        "canonicalSourceTransform": [
+          [
+            -4.371138828673793e-08,
+            1.0,
+            0.0,
+            0.125
+          ],
+          [
+            -1.0,
+            -4.371138828673793e-08,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "sourceOriginUnchanged": true,
+      "semanticRole": "outward-pressure-structure"
+    },
+    {
+      "sourcePlacedId": "wall--2--1",
+      "originalPlacement": {
+        "id": "wall--2--1",
+        "assetId": "part-8027121656ac690dd209",
+        "position": [
+          -4.6875,
+          -2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "candidateNativeAsset": {
+        "id": "port-inner-facing",
+        "file": "port-inner-facing.glb",
+        "sha256": "7b5266aae6c742504a317ca57e62a797f6088296fc3a448fc95f30f081574d7f",
+        "nodePrefix": "GEO-usable-wall-port-inner-facing--",
+        "editableComponents": 21,
+        "canonicalSourceTransform": [
+          [
+            -4.371138828673793e-08,
+            1.0,
+            0.0,
+            -0.3125
+          ],
+          [
+            -1.0,
+            -4.371138828673793e-08,
+            0.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "sourceOriginUnchanged": true,
+      "semanticRole": "interior-facing-within-outward-reservation"
+    },
+    {
+      "sourcePlacedId": "wall-3--3",
+      "originalPlacement": {
+        "id": "wall-3--3",
+        "assetId": "part-29a2b4f5499e93c9edca",
+        "position": [
+          5.125,
+          -6,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "candidateNativeAsset": {
+        "id": "starboard-pressure-body",
+        "file": "starboard-pressure-body.glb",
+        "sha256": "b8059b3203a2cc186bb0bb46fc16f0ba4f438e00b238c247afc54662ab04bafc",
+        "nodePrefix": "GEO-usable-wall-starboard-pressure-body--",
+        "editableComponents": 1,
+        "canonicalSourceTransform": [
+          [
+            7.549790126404332e-08,
+            -1.0,
+            0.0,
+            -0.125
+          ],
+          [
+            1.0,
+            7.549790126404332e-08,
+            0.0,
+            -1.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "sourceOriginUnchanged": true,
+      "semanticRole": "outward-pressure-structure"
+    },
+    {
+      "sourcePlacedId": "wall-2--3",
+      "originalPlacement": {
+        "id": "wall-2--3",
+        "assetId": "part-c8b14cc871b1aad06c36",
+        "position": [
+          4.6875,
+          -6,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "candidateNativeAsset": {
+        "id": "starboard-inner-facing",
+        "file": "starboard-inner-facing.glb",
+        "sha256": "7c505906e461a77f110327c707c86c1ac2200e499ae202b2c3a812085176fd07",
+        "nodePrefix": "GEO-usable-wall-starboard-inner-facing--",
+        "editableComponents": 21,
+        "canonicalSourceTransform": [
+          [
+            7.549790126404332e-08,
+            -1.0,
+            0.0,
+            0.3125
+          ],
+          [
+            1.0,
+            7.549790126404332e-08,
+            0.0,
+            -1.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "sourceOriginUnchanged": true,
+      "semanticRole": "interior-facing-within-outward-reservation"
+    },
+    {
+      "sourcePlacedId": "wall-3--1",
+      "originalPlacement": {
+        "id": "wall-3--1",
+        "assetId": "part-29a2b4f5499e93c9edca",
+        "position": [
+          5.125,
+          -2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "candidateNativeAsset": {
+        "id": "starboard-pressure-body",
+        "file": "starboard-pressure-body.glb",
+        "sha256": "b8059b3203a2cc186bb0bb46fc16f0ba4f438e00b238c247afc54662ab04bafc",
+        "nodePrefix": "GEO-usable-wall-starboard-pressure-body--",
+        "editableComponents": 1,
+        "canonicalSourceTransform": [
+          [
+            7.549790126404332e-08,
+            -1.0,
+            0.0,
+            -0.125
+          ],
+          [
+            1.0,
+            7.549790126404332e-08,
+            0.0,
+            -1.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "sourceOriginUnchanged": true,
+      "semanticRole": "outward-pressure-structure"
+    },
+    {
+      "sourcePlacedId": "wall-2--1",
+      "originalPlacement": {
+        "id": "wall-2--1",
+        "assetId": "part-16ad11623e8457b9fa65",
+        "position": [
+          4.6875,
+          -2,
+          0
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "candidateNativeAsset": {
+        "id": "starboard-inner-facing",
+        "file": "starboard-inner-facing.glb",
+        "sha256": "7c505906e461a77f110327c707c86c1ac2200e499ae202b2c3a812085176fd07",
+        "nodePrefix": "GEO-usable-wall-starboard-inner-facing--",
+        "editableComponents": 21,
+        "canonicalSourceTransform": [
+          [
+            7.549790126404332e-08,
+            -1.0,
+            0.0,
+            0.3125
+          ],
+          [
+            1.0,
+            7.549790126404332e-08,
+            0.0,
+            -1.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "sourceOriginUnchanged": true,
+      "semanticRole": "interior-facing-within-outward-reservation"
+    }
+  ],
+  "originalTransformsChanged": 0,
+  "originalIdsRemoved": [],
+  "authorityChanges": false,
+  "fullWayfarerAdmissible": false,
+  "remaining": [
+    "Mixed exterior/partition groups and their junctions remain unresolved; do not erase partitions.",
+    "Current retained neighboring strips require compatible seam adapters or corrected source pairs.",
+    "No full pressure enclosure, damage-ready surfaces, fitted spacer strength or game install qualification."
+  ]
+}

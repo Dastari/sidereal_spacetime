@@ -67,7 +67,7 @@ def qualify(directory=DIRECTORY):
         check('No native surface intrudes usable floor '+part['id'], area < 1e-12, {'forbiddenSurfaceAreaM2': area})
         check('No proxy exported '+part['id'], not any('PROXY' in name for name,_ in faces))
         material_roles = {material['name'] for material in doc['materials']}
-        check('Native material separation '+part['id'], len(material_roles)>=2, sorted(material_roles))
+        check('Native material separation '+part['id'], len(material_roles)>=(1 if part['id'].endswith('pressure-body') else 2), sorted(material_roles))
         body, count = native_parts(path)
         solids[part['id']] = body
         check('Closed native export '+part['id'], body.status()==m.Error.NoError and body.volume()>0, {'nativeTriangles': count})

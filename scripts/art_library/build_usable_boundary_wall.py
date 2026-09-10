@@ -125,6 +125,28 @@ for name, transform in adapters.items():
         obj.matrix_world = transform @ original.matrix_world
         parts[name].append(obj)
 
+# Existing Wayfarer has separate exterior structure and interior-facing IDs.
+# These exports partition the already-qualified visual source; never draw both
+# the full legacy prototype and its split parts in an installed candidate.
+splits = {
+    'port-pressure-body': (Matrix.Translation(Vector((.125,1,0))) @ Matrix.Rotation(-math.pi/2,4,'Z'), True),
+    'port-inner-facing': (adapters['straight-port-legacy'], False),
+    'starboard-pressure-body': (Matrix.Translation(Vector((-.125,-1,0))) @ Matrix.Rotation(math.pi/2,4,'Z'), True),
+    'starboard-inner-facing': (adapters['straight-starboard-legacy'], False),
+}
+for name, (transform, pressure) in splits.items():
+    adapters[name] = transform
+    parts[name] = []
+    for original in parts['straight-2m']:
+        if original.name.endswith('--continuous-body') != pressure:
+            continue
+        obj = original.copy()
+        obj.data = original.data.copy()
+        obj.name = original.name.replace('straight-2m', name)
+        scene.collection.objects.link(obj)
+        obj.matrix_world = transform @ original.matrix_world
+        parts[name].append(obj)
+
 for name, objects in parts.items():
     collection = bpy.data.collections.new('NATIVE-'+name)
     scene.collection.children.link(collection)
@@ -167,6 +189,10 @@ for name, objects in parts.items():
                      'family': 'outward-structural-armor.v1', 'rating': None} for x in [.25,1.75]],
     'originalPlacementChanges': 0, 'installed': False,
 }, indent=2)+'\n')
+
+if '--exports-only' in sys.argv:
+    print(json.dumps({'output': str(OUT), 'parts': len(parts), 'renderEvidence': 'Previous a004 actual native image; split exports require equivalence proof'}))
+    sys.exit(0)
 
 for objects in parts.values():
     for obj in objects:
