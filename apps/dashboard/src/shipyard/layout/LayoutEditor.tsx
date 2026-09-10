@@ -1,4 +1,8 @@
 import wayfarerTemplate from "./templates/wayfarer-r001.json";
+import {
+  WAYFARER_TEMPLATE_HASH,
+  WAYFARER_TEMPLATE_ID,
+} from "./wayfarer-template";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import {
   Box,
@@ -90,7 +94,21 @@ export default function LayoutEditor() {
       "Inspector",
     ),
     [newDialog, setNewDialog] = useState(false),
-    [reuseNodes, setReuseNodes] = useState(false);
+    [reuseNodes, setReuseNodes] = useState(false),
+    [inspectCabinet, setInspectCabinet] = useState(false);
+  const fromCurrentWayfarer = doc?.dependencies.some(
+    (d) =>
+      d.id === `template-origin:${WAYFARER_TEMPLATE_ID}` &&
+      d.revision === WAYFARER_TEMPLATE_HASH,
+  );
+  function inspectWayfarer() {
+    if (!editor.createFromWayfarer(wayfarerTemplate)) return;
+    setNewDialog(false);
+    select([]);
+    setTool("select");
+    setInspectCabinet(true);
+    setView((v) => ({ ...v, mode: "Objects", projection: "3D" }));
+  }
   const mismatches = catalog
     ? (doc?.fittings ?? []).filter((f) => {
         const definition = catalog.assets.find((a) => a.id === f.definitionId);
@@ -719,6 +737,26 @@ export default function LayoutEditor() {
           />
         </div>
       </div>
+      <div className="layout-legacy">
+        <button
+          onClick={inspectWayfarer}
+          disabled={editor.blocked}
+          title={
+            editor.blocked
+              ? "Resolve or export the current recovery/conflict first"
+              : "Preserve this draft and open a separate editable copy of the current game source template"
+          }
+        >
+          <Search size={16} /> Inspect current Wayfarer template
+        </button>
+        <span>
+          {fromCurrentWayfarer
+            ? `Source: Wayfarer template r001 · ${WAYFARER_TEMPLATE_HASH.slice(0, 12)}. Separate editable local draft.`
+            : "Open the current game source template in Objects/3D; your current draft is preserved."}{" "}
+          This is not a live ship capture. Saved game changes and additional
+          fuel attachments are not included.
+        </span>
+      </div>
       {(editor.error || editor.recovery || editor.conflict) && (
         <div className="layout-alert" role="alert">
           <span>{editor.error}</span>
@@ -758,6 +796,14 @@ export default function LayoutEditor() {
         (view.mode === "Objects" && view.projection !== "Top")) &&
       doc ? (
         <HullWorkspace
+          initialRoofVisible={
+            inspectCabinet && fromCurrentWayfarer ? false : undefined
+          }
+          initialSelection={
+            inspectCabinet && fromCurrentWayfarer
+              ? "equipment-locker--4.7--6"
+              : undefined
+          }
           mode={view.mode === "Objects" ? "Objects" : "Hull"}
           doc={doc}
           catalog={catalog}
@@ -1041,12 +1087,7 @@ export default function LayoutEditor() {
                 ? "Resolve or export the current recovery/conflict first"
                 : "Create a separate editable copy of the pinned native Wayfarer"
             }
-            onClick={() => {
-              if (editor.createFromWayfarer(wayfarerTemplate)) {
-                setNewDialog(false);
-                select([]);
-              }
-            }}
+            onClick={inspectWayfarer}
           >
             Wayfarer template · current native layout
           </button>

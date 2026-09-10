@@ -37,6 +37,8 @@ type Handle = ReturnType<
   (typeof import("../../../../../packages/render/src/layout-hull"))["createHullViewport"]
 >;
 interface Props {
+  initialSelection?: string;
+  initialRoofVisible?: boolean;
   mode: "Hull" | "Objects";
   doc: LayoutDocument;
   catalog?: PartCatalog;
@@ -51,7 +53,7 @@ interface Props {
 }
 export default function HullWorkspace(props: Props) {
   const { doc, catalog, commit } = props;
-  const [selection, select] = useState(""),
+  const [selection, select] = useState(props.initialSelection ?? ""),
     [assetId, setAsset] = useState(""),
     [tool, setTool] = useState<HullViewState["tool"]>("select"),
     [category, setCategory] = useState<PartCategory | "all">(
@@ -62,7 +64,14 @@ export default function HullWorkspace(props: Props) {
     [snap, setSnap] = useState(0.03125),
     [status, setStatus] = useState("Loading workbench…"),
     [loading, setLoading] = useState(false),
-    [visible, setVisible] = useState(new Set<PartCategory>(PART_CATEGORIES)),
+    [visible, setVisible] = useState(
+      new Set<PartCategory>(
+        PART_CATEGORIES.filter(
+          (category) =>
+            props.initialRoofVisible !== false || category !== "roof",
+        ),
+      ),
+    ),
     [library, setLibrary] = useState<"current" | "all">("current");
   const canvas = useRef<HTMLCanvasElement>(null),
     viewport = useRef<Handle | null>(null),
@@ -313,7 +322,13 @@ export default function HullWorkspace(props: Props) {
     viewport.current?.update(state.current);
     if (lastDoc.current !== doc.id) {
       lastDoc.current = doc.id;
-      select("");
+      select(props.initialSelection ?? "");
+      if (props.initialRoofVisible === false) {
+        setVisible(
+          (current) =>
+            new Set([...current].filter((category) => category !== "roof")),
+        );
+      }
       viewport.current?.ready().then(() => viewport.current?.fit());
     }
   }, [
@@ -321,6 +336,8 @@ export default function HullWorkspace(props: Props) {
     props.result,
     props.projection,
     props.deckId,
+    props.initialSelection,
+    props.initialRoofVisible,
     selection,
     visible,
     tool,
