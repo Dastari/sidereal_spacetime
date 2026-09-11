@@ -1137,6 +1137,7 @@ async function buildWorld(
             snapshotRendering: fastSnapshot?.snapshot(),
             debugFeatures: debugFeatures.snapshot(),
             localLightBudget: localLights.snapshot(),
+            planetBuild: environment.planetBuildSnapshot(),
           }
         : undefined;
     },

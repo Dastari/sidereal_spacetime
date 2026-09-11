@@ -1,0 +1,26 @@
+[
+  {
+    "path": "/",
+    "status": 200,
+    "sha256": "5c50e9c1443e2594853d587bbf90bdc0423371596a3aff0b987299acad73a723",
+    "matchesArtifact": true
+  },
+  {
+    "path": "/assets/index-CMhPFBTJ.js",
+    "status": 200,
+    "sha256": "907927f719a26b888d23000c85d9b21494cbde65eb444ca31ad8826e937185bd",
+    "matchesArtifact": true
+  },
+  {
+    "path": "/assets/planet-worker-CxaZcxgh.js",
+    "status": 200,
+    "sha256": "22fb19c9008a9dec3bcc03fc030c0291a0c32f4008e3d3d7f32aee73d16a579d",
+    "matchesArtifact": true
+  },
+  {
+    "path": "/v1/ping",
+    "status": 200,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "matchesArtifact": null
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "packages/world/src": {
+    "files": 118,
+    "changed": [],
+    "added": []
+  },
+  "packages/sim/src": {
+    "files": 121,
+    "changed": [],
+    "added": []
+  },
+  "packages/content/src": {
+    "files": 58,
+    "changed": [],
+    "added": []
+  },
+  "packages/net/src": {
+    "files": 103,
+    "changed": [],
+    "added": []
+  },
+  "assets": {
+    "files": 19740,
+    "changed": [],
+    "added": []
+  },
+  "clientSha256": "7f11e0430c3edbc34a322d8c453507e3553327834ba6b30febd8c82846a1bd8c"
+}

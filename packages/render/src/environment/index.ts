@@ -1,3 +1,5 @@
+import { createPlanetWorkerClient } from "./planet-worker-client";
+import { createPlanetLODRuntime } from "./planet-lod-runtime";
 import { Plane } from "@babylonjs/core/Maths/math.plane";
 import { bodyWithinRenderRange, setBodyRenderEnabled, updateBodyRangePlane } from "./body-visibility";
 import { createBodyVisualRevision } from "./body-visual-revision";
@@ -105,6 +107,7 @@ function material(
  * Only the sky follows the camera. World bodies subtract the f64 render origin.
  */
 export function createSpaceEnvironment(scene: Scene) {
+  const planetWorker = createPlanetWorkerClient();
   const heroShadows = createPlanetShadows(scene);
   let primaryLight: DirectionalLight | undefined;
   const root = new TransformNode("space-environment", scene);
@@ -192,6 +195,7 @@ export function createSpaceEnvironment(scene: Scene) {
     string,
     {
       node: TransformNode;
+      lodRuntime?: ReturnType<typeof createPlanetLODRuntime>;
       spin?: TransformNode;
       seed: number;
       materials: ShaderMaterial[];
@@ -214,6 +218,7 @@ export function createSpaceEnvironment(scene: Scene) {
     }
   >();
   function add(body: SpaceBodyState, lod: PlanetLOD) {
+    let lodRuntime: ReturnType<typeof createPlanetLODRuntime> | undefined;
     let node: TransformNode;
     let spin: TransformNode | undefined;
     const materials: ShaderMaterial[] = [];
@@ -330,7 +335,11 @@ export function createSpaceEnvironment(scene: Scene) {
             ? createNativeIcePlanet(scene,body.id,recipe,lod,nativeIceKit!,nativeIceCache!)
             : nativeVolcanic
               ? createNativeVolcanicWorldPlanet(scene,body.id,recipe,lod,nativeVolcanicKit!,nativeVolcanicCache!,NATIVE_VOLCANIC_REVISION)
-              : createLayeredPlanet(scene, body.id, recipe, lod);
+              : typeof Worker !== "undefined"
+                ? (lodRuntime = createPlanetLODRuntime(scene, body.id, structuredClone(recipe), planetWorker, () => {
+                  for (const light of scene.lights) if (light.metadata?.role === "planet-radiance") light.includedOnlyMeshes = root.getChildMeshes();
+                }))
+                : createLayeredPlanet(scene, body.id, recipe, lod);
           layered.root.parent = node;
           layered.root.scaling.setAll(body.radius);
           if(!native){layered.root.rotation.x = 1.05;layered.root.rotation.z = 0.16;}
@@ -341,7 +350,7 @@ export function createSpaceEnvironment(scene: Scene) {
           const surfaceSpin = spin;
           updateWeather = (age, reducedMotion) => {
             const next = layered.updateWeather(age, reducedMotion);
-            if (next) next.parent = surfaceSpin;
+            if (next && !lodRuntime) next.parent = surfaceSpin;
             return next;
           };
           materials.push(...layered.animatedMaterials);
@@ -366,7 +375,7 @@ export function createSpaceEnvironment(scene: Scene) {
           [...entries.values()].filter((e) =>
             e.node
               .getChildren()
-              .some((c) => c.name.endsWith("-local-radiance")),
+              .some((c) => c.metadata?.role === "planet-radiance"),
           ).length < 2
         ) {
           const effects = planetEffects(recipe);
@@ -384,6 +393,7 @@ export function createSpaceEnvironment(scene: Scene) {
             body.radius,
           );
           if (light) {
+            light.metadata = {role:"planet-radiance",bodyId:body.id};
             light.parent = node;
             light.includedOnlyMeshes = root.getChildMeshes();
           }
@@ -447,6 +457,7 @@ export function createSpaceEnvironment(scene: Scene) {
     const visualRevision = createBodyVisualRevision();
     const entry = {
       visualRevision,
+      lodRuntime,
       node,
       spin,
       seed: body.seed,
@@ -462,7 +473,7 @@ export function createSpaceEnvironment(scene: Scene) {
       updateWeather,
       radius: body.radius,
       ownsMaterials: body.kind !== "asteroid",
-      signature: visualRevision(body, lod,
+      signature: visualRevision(body, lodRuntime ? 2 : lod,
         !!nativeIceKit && (body.appearance === "ice" || body.recipe?.style === "ice"),
         !!nativeVolcanicKit && (body.appearance === "volcanic" || body.recipe?.style === "volcanic"),
       ),
@@ -472,6 +483,7 @@ export function createSpaceEnvironment(scene: Scene) {
   }
   return {
     ready,
+    planetBuildSnapshot() { return { ...planetWorker.snapshot(), pendingBuilds: planetWorker.snapshot().pendingWeatherBuilds + [...entries.values()].reduce((n,e)=>n+(e.lodRuntime?.snapshot().pendingBuilds ?? 0),0) }; },
     setOccluders(meshes: readonly AbstractMesh[]) {
       planetOccluders.set(meshes);
     },
@@ -517,6 +529,7 @@ export function createSpaceEnvironment(scene: Scene) {
       const visible = new Set(options.bodies.map((b) => b.id));
       for (const [id, entry] of entries)
         if (!visible.has(id)) {
+          entry.lodRuntime?.dispose();
           entry.node.dispose(false, entry.ownsMaterials);
           entries.delete(id);
         }
@@ -550,17 +563,29 @@ export function createSpaceEnvironment(scene: Scene) {
         if (
           entry &&
           entry.signature !==
-            entry.visualRevision(body, lod,
+            entry.visualRevision(body, entry.lodRuntime ? 2 : lod,
               !!nativeIceKit && (body.appearance === "ice" || body.recipe?.style === "ice"),
         !!nativeVolcanicKit && (body.appearance === "volcanic" || body.recipe?.style === "volcanic"),
             )
         ) {
+          entry.lodRuntime?.dispose();
           entry.node.dispose(false, entry.ownsMaterials);
           entries.delete(body.id);
           entry = undefined;
         }
         entry ??= add(body, lod);
         if (!entry) continue;
+        if (entry.lodRuntime) {
+          const changedLOD = entry.lodRuntime.updateLOD(lod, projected);
+          entry.lod = lod;
+          entry.smoke = entry.lodRuntime.smoke;
+          for (const mat of entry.lodRuntime.animatedMaterials) if (!entry.materials.includes(mat)) entry.materials.push(mat);
+          if (changedLOD && entry.lodRuntime.emitters.length) {
+            for (const mesh of entry.lodRuntime.root.getChildMeshes())
+              if (mesh instanceof Mesh && !(mesh.material instanceof ShaderMaterial) && mesh.material?.alpha === 1) planetGlow.addIncludedOnlyMesh(mesh);
+            planetGlow.isEnabled = true;
+          }
+        }
         entry.x += (body.x - entry.x) * blend;
         entry.y += (body.y - entry.y) * blend;
         entry.heading +=
@@ -610,6 +635,8 @@ export function createSpaceEnvironment(scene: Scene) {
     },
     dispose() {
       disposed = true;
+      for (const entry of entries.values()) entry.lodRuntime?.dispose();
+      planetWorker.dispose();
       if (typeof document !== "undefined") document.removeEventListener("visibilitychange", visibilityRotation);
       nativeIceCache?.clear();
       nativeVolcanicCache?.clear();

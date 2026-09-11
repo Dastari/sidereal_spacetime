@@ -1,0 +1,22 @@
+
+> sidereal-spacetime@0.1.0 check
+> npm run typecheck && npm test && python3 scripts/check_docs.py
+
+
+> sidereal-spacetime@0.1.0 typecheck
+> tsc --noEmit
+
+
+> sidereal-spacetime@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.11 /root/sidereal_spacetime/.runtime/release-checkouts/render-plan-r15-20260911
+
+
+ Test Files  244 passed (244)
+      Tests  1393 passed (1393)
+   Start at  10:31:50
+   Duration  50.30s (transform 5.21s, setup 0ms, import 20.88s, tests 61.97s, environment 13ms)
+
+Checked 77 project documents, all legacy document hashes and imported asset provenance.

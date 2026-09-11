@@ -5,6 +5,7 @@ import { SceneInstrumentation } from "@babylonjs/core/Instrumentation/sceneInstr
 import type { Observer } from "@babylonjs/core/Misc/observable";
 
 export type RenderDiagnostics = {
+  planetBuild?: {lastBuildMs?:number;pendingBuilds:number};
   renderBackend?: import("./render-backend").RenderBackend;
   snapshotRendering?: {enabled:boolean;armed:boolean;reason:string};
   sceneCapture?: CaptureDiagnostics;

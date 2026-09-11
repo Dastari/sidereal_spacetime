@@ -160,6 +160,8 @@ export function createDiagnosticsUI(
             : `${data.gpuFrameMs.toFixed(2)} ms`,
         ],
         ["Draw calls", String(data.drawCalls)],
+        ["Last planet build", data.planetBuild?.lastBuildMs === undefined ? "—" : `${data.planetBuild.lastBuildMs.toFixed(2)} ms`],
+        ["Pending planet builds", String(data.planetBuild?.pendingBuilds ?? 0)],
         ["Active / total meshes", `${data.activeMeshes} / ${data.totalMeshes}`],
         ["Meshes by role", "Active / total"],
         ...Object.entries(data.meshesByRole ?? {}).filter(([, count]) => count.total > 0).map(([role, count]): [string, string] => [role, `${count.active} / ${count.total}`]),

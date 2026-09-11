@@ -1,3 +1,4 @@
+import type { PackedPlanetGeometry } from "./planet-build";
 import { setMeshRole } from '../mesh-roles';
 import { Scene } from "@babylonjs/core/scene";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
@@ -11,13 +12,14 @@ export function createLavaSpill(
   scene: Scene,
   name: string,
   geometry: SurfaceGeometry,
+  prepared?: PackedPlanetGeometry,
 ) {
   const mesh = new Mesh(name + "-lava-spill", scene),
     data = new VertexData();
   setMeshRole(mesh, "planet");
-  data.positions = geometry.positions;
-  data.colors = geometry.colors;
-  data.indices = geometry.indices.map(
+  data.positions = prepared?.positions ?? geometry.positions;
+  data.colors = prepared?.colors ?? geometry.colors;
+  data.indices = prepared?.indices ?? geometry.indices.map(
     (_, i) => geometry.indices[i % 3 === 1 ? i + 1 : i % 3 === 2 ? i - 1 : i],
   );
   data.applyToMesh(mesh);
