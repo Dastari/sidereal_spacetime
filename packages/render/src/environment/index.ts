@@ -1,15 +1,31 @@
+import { createNativeVolcanicLODRuntime } from "./native-volcanic-lod-runtime";
 import { createPlanetWorkerClient } from "./planet-worker-client";
 import { createPlanetLODRuntime } from "./planet-lod-runtime";
 import { Plane } from "@babylonjs/core/Maths/math.plane";
-import { bodyWithinRenderRange, setBodyRenderEnabled, updateBodyRangePlane } from "./body-visibility";
+import {
+  bodyWithinRenderRange,
+  setBodyRenderEnabled,
+  updateBodyRangePlane,
+} from "./body-visibility";
 import { createBodyVisualRevision } from "./body-visual-revision";
 import { createDustField } from "./dust-field";
-import { setMeshRole } from '../mesh-roles';
-import {loadNativeVolcanicKit,createNativeVolcanicCache,createNativeVolcanicWorldPlanet,canUseNativeVolcanic,NATIVE_VOLCANIC_REVISION} from "./native-volcanic-runtime";
-import {createPlanetAtmosphere} from "./planet-atmosphere";
-import {loadNativeIceKit} from "./native-planet-assets";
-import {createNativeIcePlanet,createNativePlanetCache,canUseNativeIce,type NativePlanetCache} from "./native-planet";
-import type {NativePlanetKit} from "./native-planet-composition";
+import { setMeshRole } from "../mesh-roles";
+import {
+  loadNativeVolcanicKit,
+  createNativeVolcanicCache,
+  createNativeVolcanicWorldPlanet,
+  canUseNativeVolcanic,
+  NATIVE_VOLCANIC_REVISION,
+} from "./native-volcanic-runtime";
+import { createPlanetAtmosphere } from "./planet-atmosphere";
+import { loadNativeIceKit } from "./native-planet-assets";
+import {
+  createNativeIcePlanet,
+  createNativePlanetCache,
+  canUseNativeIce,
+  type NativePlanetCache,
+} from "./native-planet";
+import type { NativePlanetKit } from "./native-planet-composition";
 import { createGlowOccluders } from "../glow-occluders";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import { createPlanetRotationClock, planetAxialAngle } from "./planet-rotation";
@@ -165,7 +181,7 @@ export function createSpaceEnvironment(scene: Scene) {
       for (const mesh of imported.meshes) mesh.dispose();
       return;
     }
-    for (const mesh of imported.meshes) setMeshRole(mesh, 'environment');
+    for (const mesh of imported.meshes) setMeshRole(mesh, "environment");
     prefab = new TransformNode("asteroid-source", scene);
     for (const mesh of imported.meshes) if (!mesh.parent) mesh.parent = prefab;
     const bounds = prefab.getHierarchyBoundingVectors();
@@ -173,29 +189,52 @@ export function createSpaceEnvironment(scene: Scene) {
     prefab.parent = root;
     prefab.setEnabled(false);
   });
-  let nativeIceKit:NativePlanetKit|undefined;
-  let nativeIceCache:NativePlanetCache|undefined;
-  const nativeReady=loadNativeIceKit().then(kit=>{
-    if(disposed)return;
-    nativeIceKit=kit;nativeIceCache=createNativePlanetCache(kit);
-  }).catch(error=>{console.warn("Native ice candidate unavailable; retaining existing ice renderer",error);});
-  let nativeVolcanicKit:NativePlanetKit|undefined;
-  let nativeVolcanicCache:ReturnType<typeof createNativeVolcanicCache>|undefined;
-  const volcanicReady=loadNativeVolcanicKit().then(kit=>{
-    if(disposed)return;
-    nativeVolcanicKit=kit;nativeVolcanicCache=createNativeVolcanicCache(kit);
-  }).catch(error=>{console.warn("Native volcanic candidate unavailable; retaining existing volcanic renderer",error);});
-  const ready=Promise.all([rocksReady,nativeReady,volcanicReady]).then(()=>undefined);
+  let nativeIceKit: NativePlanetKit | undefined;
+  let nativeIceCache: NativePlanetCache | undefined;
+  const nativeReady = loadNativeIceKit()
+    .then((kit) => {
+      if (disposed) return;
+      nativeIceKit = kit;
+      nativeIceCache = createNativePlanetCache(kit);
+    })
+    .catch((error) => {
+      console.warn(
+        "Native ice candidate unavailable; retaining existing ice renderer",
+        error,
+      );
+    });
+  let nativeVolcanicKit: NativePlanetKit | undefined;
+  let nativeVolcanicCache:
+    ReturnType<typeof createNativeVolcanicCache> | undefined;
+  const volcanicReady = loadNativeVolcanicKit()
+    .then((kit) => {
+      if (disposed) return;
+      nativeVolcanicKit = kit;
+      nativeVolcanicCache = createNativeVolcanicCache(kit);
+    })
+    .catch((error) => {
+      console.warn(
+        "Native volcanic candidate unavailable; retaining existing volcanic renderer",
+        error,
+      );
+    });
+  const ready = Promise.all([rocksReady, nativeReady, volcanicReady]).then(
+    () => undefined,
+  );
   const rotationClock = createPlanetRotationClock();
   let rotationPaused = false;
-  const visibilityRotation = () => rotationClock.step(performance.now(), rotationPaused || document.hidden);
-  if (typeof document !== "undefined") document.addEventListener("visibilitychange", visibilityRotation);
+  const visibilityRotation = () =>
+    rotationClock.step(performance.now(), rotationPaused || document.hidden);
+  if (typeof document !== "undefined")
+    document.addEventListener("visibilitychange", visibilityRotation);
   const farPlane = new Plane(0, 0, 1, 0);
   const entries = new Map<
     string,
     {
       node: TransformNode;
-      lodRuntime?: ReturnType<typeof createPlanetLODRuntime>;
+      lodRuntime?:
+        | ReturnType<typeof createPlanetLODRuntime>
+        | ReturnType<typeof createNativeVolcanicLODRuntime>;
       spin?: TransformNode;
       seed: number;
       materials: ShaderMaterial[];
@@ -218,7 +257,10 @@ export function createSpaceEnvironment(scene: Scene) {
     }
   >();
   function add(body: SpaceBodyState, lod: PlanetLOD) {
-    let lodRuntime: ReturnType<typeof createPlanetLODRuntime> | undefined;
+    let lodRuntime:
+      | ReturnType<typeof createPlanetLODRuntime>
+      | ReturnType<typeof createNativeVolcanicLODRuntime>
+      | undefined;
     let node: TransformNode;
     let spin: TransformNode | undefined;
     const materials: ShaderMaterial[] = [];
@@ -328,21 +370,65 @@ export function createSpaceEnvironment(scene: Scene) {
           materials.push(gasMaterial);
           gas = globe;
         } else {
-          const nativeIce=!!nativeIceKit && !!nativeIceCache && canUseNativeIce(recipe);
-          const nativeVolcanic=!!nativeVolcanicKit && !!nativeVolcanicCache && canUseNativeVolcanic(recipe);
-          const native=nativeIce||nativeVolcanic;
+          const nativeIce =
+            !!nativeIceKit && !!nativeIceCache && canUseNativeIce(recipe);
+          const nativeVolcanic =
+            !!nativeVolcanicKit &&
+            !!nativeVolcanicCache &&
+            canUseNativeVolcanic(recipe);
+          const native = nativeIce || nativeVolcanic;
           const layered = nativeIce
-            ? createNativeIcePlanet(scene,body.id,recipe,lod,nativeIceKit!,nativeIceCache!)
+            ? createNativeIcePlanet(
+                scene,
+                body.id,
+                recipe,
+                lod,
+                nativeIceKit!,
+                nativeIceCache!,
+              )
             : nativeVolcanic
-              ? createNativeVolcanicWorldPlanet(scene,body.id,recipe,lod,nativeVolcanicKit!,nativeVolcanicCache!,NATIVE_VOLCANIC_REVISION)
+              ? typeof Worker !== "undefined"
+                ? (lodRuntime = createNativeVolcanicLODRuntime(
+                    scene,
+                    body.id,
+                    structuredClone(recipe),
+                    nativeVolcanicKit!,
+                    NATIVE_VOLCANIC_REVISION,
+                    planetWorker,
+                    () => {
+                      for (const light of scene.lights)
+                        if (light.metadata?.role === "planet-radiance")
+                          light.includedOnlyMeshes = root.getChildMeshes();
+                    },
+                  ))
+                : createNativeVolcanicWorldPlanet(
+                    scene,
+                    body.id,
+                    recipe,
+                    lod,
+                    nativeVolcanicKit!,
+                    nativeVolcanicCache!,
+                    NATIVE_VOLCANIC_REVISION,
+                  )
               : typeof Worker !== "undefined"
-                ? (lodRuntime = createPlanetLODRuntime(scene, body.id, structuredClone(recipe), planetWorker, () => {
-                  for (const light of scene.lights) if (light.metadata?.role === "planet-radiance") light.includedOnlyMeshes = root.getChildMeshes();
-                }))
+                ? (lodRuntime = createPlanetLODRuntime(
+                    scene,
+                    body.id,
+                    structuredClone(recipe),
+                    planetWorker,
+                    () => {
+                      for (const light of scene.lights)
+                        if (light.metadata?.role === "planet-radiance")
+                          light.includedOnlyMeshes = root.getChildMeshes();
+                    },
+                  ))
                 : createLayeredPlanet(scene, body.id, recipe, lod);
           layered.root.parent = node;
           layered.root.scaling.setAll(body.radius);
-          if(!native){layered.root.rotation.x = 1.05;layered.root.rotation.z = 0.16;}
+          if (!native) {
+            layered.root.rotation.x = 1.05;
+            layered.root.rotation.z = 0.16;
+          }
           spin = new TransformNode(body.id + "-axial-spin", scene);
           for (const child of layered.root.getChildren()) child.parent = spin;
           spin.parent = layered.root;
@@ -393,7 +479,7 @@ export function createSpaceEnvironment(scene: Scene) {
             body.radius,
           );
           if (light) {
-            light.metadata = {role:"planet-radiance",bodyId:body.id};
+            light.metadata = { role: "planet-radiance", bodyId: body.id };
             light.parent = node;
             light.includedOnlyMeshes = root.getChildMeshes();
           }
@@ -424,8 +510,14 @@ export function createSpaceEnvironment(scene: Scene) {
           ? planetEffects(authoredRecipe).atmosphere > 0
           : !["rock", "moon"].includes(appearance.kind)
       ) {
-        const {mesh:shell,material:atmosphere}=createPlanetAtmosphere(scene,body.id,body.radius,air,authoredRecipe?planetEffects(authoredRecipe).atmosphere:.65);
-        shell.parent=node;
+        const { mesh: shell, material: atmosphere } = createPlanetAtmosphere(
+          scene,
+          body.id,
+          body.radius,
+          air,
+          authoredRecipe ? planetEffects(authoredRecipe).atmosphere : 0.65,
+        );
+        shell.parent = node;
         materials.push(atmosphere);
       }
       if (authoredRecipe?.rings ?? appearance.rings) {
@@ -451,8 +543,13 @@ export function createSpaceEnvironment(scene: Scene) {
         materials.push(ringMat);
       }
     }
-    node.metadata = { bodyId: body.id, worldBody: true, role: body.kind === 'asteroid' ? 'environment' : 'planet' };
-    for (const mesh of node.getChildMeshes()) setMeshRole(mesh, node.metadata.role);
+    node.metadata = {
+      bodyId: body.id,
+      worldBody: true,
+      role: body.kind === "asteroid" ? "environment" : "planet",
+    };
+    for (const mesh of node.getChildMeshes())
+      setMeshRole(mesh, node.metadata.role);
     if (node instanceof Mesh) setMeshRole(node, node.metadata.role);
     const visualRevision = createBodyVisualRevision();
     const entry = {
@@ -473,9 +570,13 @@ export function createSpaceEnvironment(scene: Scene) {
       updateWeather,
       radius: body.radius,
       ownsMaterials: body.kind !== "asteroid",
-      signature: visualRevision(body, lodRuntime ? 2 : lod,
-        !!nativeIceKit && (body.appearance === "ice" || body.recipe?.style === "ice"),
-        !!nativeVolcanicKit && (body.appearance === "volcanic" || body.recipe?.style === "volcanic"),
+      signature: visualRevision(
+        body,
+        lodRuntime ? 2 : lod,
+        !!nativeIceKit &&
+          (body.appearance === "ice" || body.recipe?.style === "ice"),
+        !!nativeVolcanicKit &&
+          (body.appearance === "volcanic" || body.recipe?.style === "volcanic"),
       ),
     };
     entries.set(body.id, entry);
@@ -483,7 +584,17 @@ export function createSpaceEnvironment(scene: Scene) {
   }
   return {
     ready,
-    planetBuildSnapshot() { return { ...planetWorker.snapshot(), pendingBuilds: planetWorker.snapshot().pendingWeatherBuilds + [...entries.values()].reduce((n,e)=>n+(e.lodRuntime?.snapshot().pendingBuilds ?? 0),0) }; },
+    planetBuildSnapshot() {
+      return {
+        ...planetWorker.snapshot(),
+        pendingBuilds:
+          planetWorker.snapshot().pendingWeatherBuilds +
+          [...entries.values()].reduce(
+            (n, e) => n + (e.lodRuntime?.snapshot().pendingBuilds ?? 0),
+            0,
+          ),
+      };
+    },
     setOccluders(meshes: readonly AbstractMesh[]) {
       planetOccluders.set(meshes);
     },
@@ -506,8 +617,14 @@ export function createSpaceEnvironment(scene: Scene) {
       aspect?: number;
       bodies: readonly SpaceBodyState[];
     }) {
-      rotationPaused = options.reducedMotion || !options.enabled || options.planetsEnabled === false;
-      const rotationAge = rotationClock.step(performance.now(), rotationPaused || (typeof document !== "undefined" && document.hidden));
+      rotationPaused =
+        options.reducedMotion ||
+        !options.enabled ||
+        options.planetsEnabled === false;
+      const rotationAge = rotationClock.step(
+        performance.now(),
+        rotationPaused || (typeof document !== "undefined" && document.hidden),
+      );
       root.setEnabled(options.enabled);
       if (!options.enabled) {
         heroShadows.update([]);
@@ -553,7 +670,9 @@ export function createSpaceEnvironment(scene: Scene) {
         const projected =
           (body.radius * scene.getEngine().getRenderHeight()) /
           (distance * 2 * Math.tan((scene.activeCamera?.fov ?? 0.5) / 2));
-        if (!bodyWithinRenderRange(center, body.radius, projected, rangePlane)) {
+        if (
+          !bodyWithinRenderRange(center, body.radius, projected, rangePlane)
+        ) {
           setBodyRenderEnabled(entry?.node, false);
           continue;
         }
@@ -563,9 +682,14 @@ export function createSpaceEnvironment(scene: Scene) {
         if (
           entry &&
           entry.signature !==
-            entry.visualRevision(body, entry.lodRuntime ? 2 : lod,
-              !!nativeIceKit && (body.appearance === "ice" || body.recipe?.style === "ice"),
-        !!nativeVolcanicKit && (body.appearance === "volcanic" || body.recipe?.style === "volcanic"),
+            entry.visualRevision(
+              body,
+              entry.lodRuntime ? 2 : lod,
+              !!nativeIceKit &&
+                (body.appearance === "ice" || body.recipe?.style === "ice"),
+              !!nativeVolcanicKit &&
+                (body.appearance === "volcanic" ||
+                  body.recipe?.style === "volcanic"),
             )
         ) {
           entry.lodRuntime?.dispose();
@@ -579,10 +703,16 @@ export function createSpaceEnvironment(scene: Scene) {
           const changedLOD = entry.lodRuntime.updateLOD(lod, projected);
           entry.lod = lod;
           entry.smoke = entry.lodRuntime.smoke;
-          for (const mat of entry.lodRuntime.animatedMaterials) if (!entry.materials.includes(mat)) entry.materials.push(mat);
+          for (const mat of entry.lodRuntime.animatedMaterials)
+            if (!entry.materials.includes(mat)) entry.materials.push(mat);
           if (changedLOD && entry.lodRuntime.emitters.length) {
             for (const mesh of entry.lodRuntime.root.getChildMeshes())
-              if (mesh instanceof Mesh && !(mesh.material instanceof ShaderMaterial) && mesh.material?.alpha === 1) planetGlow.addIncludedOnlyMesh(mesh);
+              if (
+                mesh instanceof Mesh &&
+                !(mesh.material instanceof ShaderMaterial) &&
+                mesh.material?.alpha === 1
+              )
+                planetGlow.addIncludedOnlyMesh(mesh);
             planetGlow.isEnabled = true;
           }
         }
@@ -599,7 +729,8 @@ export function createSpaceEnvironment(scene: Scene) {
           -(entry.y - options.y),
         );
         entry.node.rotation.y = entry.heading;
-        if (entry.spin) entry.spin.rotation.y = planetAxialAngle(entry.seed, rotationAge);
+        if (entry.spin)
+          entry.spin.rotation.y = planetAxialAngle(entry.seed, rotationAge);
         if (entry.updateWeather)
           entry.cloud = entry.updateWeather(age, options.reducedMotion);
         // Local weather rotation plus independently evolving bounded cloud geometry.
@@ -620,11 +751,16 @@ export function createSpaceEnvironment(scene: Scene) {
               "lightDirection",
               primaryLight.direction.negate().normalize(),
             );
-            mat.setFloat("sunIntensity", scene.lightsEnabled ? primaryLight.intensity : 0);
+            mat.setFloat(
+              "sunIntensity",
+              scene.lightsEnabled ? primaryLight.intensity : 0,
+            );
           }
         }
       }
-      heroShadows.update([...entries.values()].filter((entry) => entry.node.isEnabled()));
+      heroShadows.update(
+        [...entries.values()].filter((entry) => entry.node.isEnabled()),
+      );
       // Bounded seeded world-cell field with snapped spacing LOD. As the viewport
       // expands, cells cover it without pinning individual particles to the camera.
       const target =
@@ -637,7 +773,8 @@ export function createSpaceEnvironment(scene: Scene) {
       disposed = true;
       for (const entry of entries.values()) entry.lodRuntime?.dispose();
       planetWorker.dispose();
-      if (typeof document !== "undefined") document.removeEventListener("visibilitychange", visibilityRotation);
+      if (typeof document !== "undefined")
+        document.removeEventListener("visibilitychange", visibilityRotation);
       nativeIceCache?.clear();
       nativeVolcanicCache?.clear();
       heroShadows.dispose();

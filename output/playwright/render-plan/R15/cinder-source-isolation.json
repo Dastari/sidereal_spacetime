@@ -1,0 +1,22 @@
+{
+  "packages/world/src": {
+    "files": 118,
+    "identical": true
+  },
+  "packages/sim/src": {
+    "files": 121,
+    "identical": true
+  },
+  "packages/content/src": {
+    "files": 58,
+    "identical": true
+  },
+  "packages/net/src": {
+    "files": 103,
+    "identical": true
+  },
+  "assets": {
+    "files": 19740,
+    "identical": true
+  }
+}

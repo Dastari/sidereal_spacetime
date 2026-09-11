@@ -24,7 +24,11 @@ it("precompiles retained levels with shared body materials and disposes ownershi
     cloudCoverage: 0,
   };
   const worker = {
-    nextFrame:()=>new Promise<void>(resolve=>requestAnimationFrame(()=>resolve())),
+    nativeVolcanic: async () => {
+      throw new Error("not used");
+    },
+    nextFrame: () =>
+      new Promise<void>((resolve) => requestAnimationFrame(() => resolve())),
     build: async (_: unknown, lod: 0 | 1 | 2) => buildPlanetData(recipe, lod),
     weather: async (_: unknown, lod: 0 | 1 | 2, phase: number) =>
       buildPlanetWeather(recipe, lod, phase),

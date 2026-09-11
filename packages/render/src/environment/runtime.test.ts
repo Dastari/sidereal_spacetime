@@ -7,26 +7,66 @@ import { createSpaceEnvironment, type SpaceBodyState } from "./index";
 import { planetRecipe } from "../../../content/src/environment";
 import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
-afterEach(() => {vi.restoreAllMocks();vi.unstubAllGlobals();});
+afterEach(() => {
+  vi.restoreAllMocks();
+  vi.unstubAllGlobals();
+});
 it("disables out-of-range cached bodies and applies in-place recipe edits on re-entry", async () => {
-  const engine = new NullEngine(), scene = new Scene(engine);
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
   const camera = new FreeCamera("range-camera", Vector3.Zero(), scene);
   camera.maxZ = 100;
-  vi.spyOn(SceneLoader, "ImportMeshAsync").mockResolvedValue({meshes:[CreateBox("source",{},scene)],particleSystems:[],skeletons:[],animationGroups:[],transformNodes:[],geometries:[],lights:[],spriteManagers:[]});
-  vi.stubGlobal("fetch", vi.fn(async () => new Response("unavailable", {status:404})));
+  vi.spyOn(SceneLoader, "ImportMeshAsync").mockResolvedValue({
+    meshes: [CreateBox("source", {}, scene)],
+    particleSystems: [],
+    skeletons: [],
+    animationGroups: [],
+    transformNodes: [],
+    geometries: [],
+    lights: [],
+    spriteManagers: [],
+  });
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(async () => new Response("unavailable", { status: 404 })),
+  );
   const environment = createSpaceEnvironment(scene);
   await environment.ready;
-  const body: SpaceBodyState = {id:"range-body",kind:"planet",appearance:"temperate",seed:1,radius:1,
-    x:0,y:-50,height:0,vx:0,vy:0,heading:0,omega:0,
-    recipe:{...planetRecipe("temperate",1),resolution:12,cloudCoverage:0}};
-  const options = {id:"orion-veil",x:0,y:0,dt:0,enabled:true,reducedMotion:true,bodies:[body]};
+  const body: SpaceBodyState = {
+    id: "range-body",
+    kind: "planet",
+    appearance: "temperate",
+    seed: 1,
+    radius: 1,
+    x: 0,
+    y: -50,
+    height: 0,
+    vx: 0,
+    vy: 0,
+    heading: 0,
+    omega: 0,
+    recipe: {
+      ...planetRecipe("temperate", 1),
+      resolution: 12,
+      cloudCoverage: 0,
+    },
+  };
+  const options = {
+    id: "orion-veil",
+    x: 0,
+    y: 0,
+    dt: 0,
+    enabled: true,
+    reducedMotion: true,
+    bodies: [body],
+  };
   environment.update(options);
   const node = scene.getTransformNodeByName("world-body-range-body")!;
   const meshes = node.getChildMeshes();
   body.y = -120;
   environment.update(options);
   expect(node.isEnabled()).toBe(false);
-  expect(meshes.every(m => !m.isEnabled() && !m.isDisposed())).toBe(true);
+  expect(meshes.every((m) => !m.isEnabled() && !m.isDisposed())).toBe(true);
   body.y = -50;
   environment.update(options);
   expect(node.isEnabled()).toBe(true);
@@ -36,7 +76,9 @@ it("disables out-of-range cached bodies and applies in-place recipe edits on re-
   expect(node.isDisposed()).toBe(true);
   expect(scene.getTransformNodeByName("world-body-range-body")).toBeTruthy();
   expect(body.y).toBe(-50);
-  environment.dispose(); scene.dispose(); engine.dispose();
+  environment.dispose();
+  scene.dispose();
+  engine.dispose();
 });
 describe("world planet admission and local origin", () => {
   it("keeps authoritative world placement, rebuilds changed same-id recipes and releases removed meshes", async () => {
@@ -89,16 +131,28 @@ describe("world planet admission and local origin", () => {
     environment.update({ ...options, x: 1e12 + 5 });
     expect(node.position.asArray()).toEqual([5, -45, -30]);
     expect(scene.getMeshByName(first.name)).toBe(first);
-    const resourceCounts = [scene.meshes.length, scene.materials.length, scene.geometries.length];
+    const resourceCounts = [
+      scene.meshes.length,
+      scene.materials.length,
+      scene.geometries.length,
+    ];
     environment.update({ ...options, planetsEnabled: false });
     expect(node.isEnabled()).toBe(false);
     expect(first.isEnabled()).toBe(false);
     expect(first.isDisposed()).toBe(false);
-    expect([scene.meshes.length, scene.materials.length, scene.geometries.length]).toEqual(resourceCounts);
+    expect([
+      scene.meshes.length,
+      scene.materials.length,
+      scene.geometries.length,
+    ]).toEqual(resourceCounts);
     environment.update({ ...options, planetsEnabled: true });
     expect(node.isEnabled()).toBe(true);
     expect(scene.getMeshByName(first.name)).toBe(first);
-    expect([scene.meshes.length, scene.materials.length, scene.geometries.length]).toEqual(resourceCounts);
+    expect([
+      scene.meshes.length,
+      scene.materials.length,
+      scene.geometries.length,
+    ]).toEqual(resourceCounts);
     environment.update({
       ...options,
       bodies: [{ ...body, recipe: { ...body.recipe!, seaLevel: 0.8 } }],
@@ -114,46 +168,281 @@ describe("world planet admission and local origin", () => {
   });
 });
 
-it("replaces same-ID fallback ice when native assets finish loading without moving the admitted body",async()=>{
- const engine=new NullEngine(),scene=new Scene(engine);
- vi.spyOn(SceneLoader,"ImportMeshAsync").mockResolvedValue({meshes:[CreateBox("source",{size:1},scene)],particleSystems:[],skeletons:[],animationGroups:[],transformNodes:[],geometries:[],lights:[],spriteManagers:[]});
- let resolveKit!:(value:Response)=>void;
- vi.stubGlobal("fetch",vi.fn((url:string)=>url.includes("ice-r015")?new Promise<Response>(resolve=>{resolveKit=resolve;}):Promise.resolve(new Response("unavailable",{status:404}))));
- const environment=createSpaceEnvironment(scene),recipe={...planetRecipe("ice",47),resolution:12};
- const body:SpaceBodyState={id:"frost",kind:"planet",appearance:"ice",seed:47,x:100,y:200,height:-180,radius:70,vx:0,vy:0,heading:0,omega:0,recipe};
- const options={id:"orion-veil",x:90,y:190,dt:0,enabled:true,reducedMotion:true,bodies:[body]};
- environment.update(options);const old=scene.getTransformNodeByName("world-body-frost")!;
- const form={positions:[-.5,-.5,-.4,.5,-.5,-.4,.5,.5,.4,-.5,.5,.4],indices:[0,1,2,0,2,3],triangleMaterials:[0,0]};
- resolveKit(new Response(JSON.stringify({schema:"sidereal.native-planet-kit.v1",layout:"glacial-interior",materials:[{name:"snow",linearColor:[1,1,1],roughness:.83}],variants:["snow-a","snow-b","snow-c","ice-a","ice-b","floor","sealing-core"].map(name=>({...form,name}))})));
- await environment.ready;environment.update(options);
- const current=scene.getTransformNodeByName("world-body-frost")!;
- expect(old.isDisposed()).toBe(true);expect(current.position.asArray()).toEqual([10,-180,-10]);
- expect(scene.getTransformNodeByName("frost-native-ice")?.metadata.nativeRevision).toBe("ice-r015");
- const meshes=current.getChildMeshes();environment.update({...options,planetsEnabled:false});environment.update(options);
- expect(current.getChildMeshes()).toEqual(meshes);expect(body.x).toBe(100);expect(body.y).toBe(200);
- environment.dispose();scene.dispose();engine.dispose();
+it("replaces same-ID fallback ice when native assets finish loading without moving the admitted body", async () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  vi.spyOn(SceneLoader, "ImportMeshAsync").mockResolvedValue({
+    meshes: [CreateBox("source", { size: 1 }, scene)],
+    particleSystems: [],
+    skeletons: [],
+    animationGroups: [],
+    transformNodes: [],
+    geometries: [],
+    lights: [],
+    spriteManagers: [],
+  });
+  let resolveKit!: (value: Response) => void;
+  vi.stubGlobal(
+    "fetch",
+    vi.fn((url: string) =>
+      url.includes("ice-r015")
+        ? new Promise<Response>((resolve) => {
+            resolveKit = resolve;
+          })
+        : Promise.resolve(new Response("unavailable", { status: 404 })),
+    ),
+  );
+  const environment = createSpaceEnvironment(scene),
+    recipe = { ...planetRecipe("ice", 47), resolution: 12 };
+  const body: SpaceBodyState = {
+    id: "frost",
+    kind: "planet",
+    appearance: "ice",
+    seed: 47,
+    x: 100,
+    y: 200,
+    height: -180,
+    radius: 70,
+    vx: 0,
+    vy: 0,
+    heading: 0,
+    omega: 0,
+    recipe,
+  };
+  const options = {
+    id: "orion-veil",
+    x: 90,
+    y: 190,
+    dt: 0,
+    enabled: true,
+    reducedMotion: true,
+    bodies: [body],
+  };
+  environment.update(options);
+  const old = scene.getTransformNodeByName("world-body-frost")!;
+  const form = {
+    positions: [
+      -0.5, -0.5, -0.4, 0.5, -0.5, -0.4, 0.5, 0.5, 0.4, -0.5, 0.5, 0.4,
+    ],
+    indices: [0, 1, 2, 0, 2, 3],
+    triangleMaterials: [0, 0],
+  };
+  resolveKit(
+    new Response(
+      JSON.stringify({
+        schema: "sidereal.native-planet-kit.v1",
+        layout: "glacial-interior",
+        materials: [{ name: "snow", linearColor: [1, 1, 1], roughness: 0.83 }],
+        variants: [
+          "snow-a",
+          "snow-b",
+          "snow-c",
+          "ice-a",
+          "ice-b",
+          "floor",
+          "sealing-core",
+        ].map((name) => ({ ...form, name })),
+      }),
+    ),
+  );
+  await environment.ready;
+  environment.update(options);
+  const current = scene.getTransformNodeByName("world-body-frost")!;
+  expect(old.isDisposed()).toBe(true);
+  expect(current.position.asArray()).toEqual([10, -180, -10]);
+  expect(
+    scene.getTransformNodeByName("frost-native-ice")?.metadata.nativeRevision,
+  ).toBe("ice-r015");
+  const meshes = current.getChildMeshes();
+  environment.update({ ...options, planetsEnabled: false });
+  environment.update(options);
+  expect(current.getChildMeshes()).toEqual(meshes);
+  expect(body.x).toBe(100);
+  expect(body.y).toBe(200);
+  environment.dispose();
+  scene.dispose();
+  engine.dispose();
 });
 
+it("replaces same-ID volcanic fallback after its own kit arrives and preserves presentation resources", async () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  vi.spyOn(SceneLoader, "ImportMeshAsync").mockResolvedValue({
+    meshes: [CreateBox("source", { size: 1 }, scene)],
+    particleSystems: [],
+    skeletons: [],
+    animationGroups: [],
+    transformNodes: [],
+    geometries: [],
+    lights: [],
+    spriteManagers: [],
+  });
+  let resolveKit!: (value: Response) => void;
+  vi.stubGlobal(
+    "fetch",
+    vi.fn((url: string) =>
+      url.includes("volcanic-r018")
+        ? new Promise<Response>((resolve) => {
+            resolveKit = resolve;
+          })
+        : Promise.resolve(new Response("unavailable", { status: 404 })),
+    ),
+  );
+  const environment = createSpaceEnvironment(scene),
+    recipe = { ...planetRecipe("volcanic", 89), resolution: 12 };
+  const body: SpaceBodyState = {
+    id: "cinder",
+    kind: "planet",
+    appearance: "volcanic",
+    seed: 89,
+    x: 1700,
+    y: -3800,
+    height: -155,
+    radius: 62,
+    vx: 0,
+    vy: 0,
+    heading: 0,
+    omega: 0,
+    recipe,
+  };
+  const options = {
+    id: "orion-veil",
+    x: 1690,
+    y: -3820,
+    dt: 0,
+    enabled: true,
+    reducedMotion: true,
+    bodies: [body],
+  };
+  environment.update(options);
+  const old = scene.getTransformNodeByName("world-body-cinder")!;
+  const names = [
+    "a",
+    "b",
+    "c",
+    "pillar",
+    "crater",
+    "molten-core",
+    "sealing-core",
+    "fall",
+    "macro-a",
+    "macro-b",
+    "basin",
+  ];
+  const kit = {
+    schema: "sidereal.native-planet-kit.v1",
+    layout: "volcanic-geology",
+    materials: Array.from({ length: 6 }, (_, i) => ({
+      name: `role${i}`,
+      linearColor: [0.1, 0.04, 0.02],
+      roughness: 0.4,
+    })),
+    variants: names.map((name, i) => ({
+      name,
+      positions: [0, 0, 0.5, 0.4, 0, -0.5, 0, 0.4, -0.5],
+      indices: [0, 1, 2],
+      triangleMaterials: [i === 5 ? 3 : i === 10 ? 5 : 0],
+    })),
+  };
+  resolveKit(new Response(JSON.stringify(kit)));
+  await environment.ready;
+  environment.update(options);
+  const current = scene.getTransformNodeByName("world-body-cinder")!;
+  expect(old.isDisposed()).toBe(true);
+  expect(current.position.asArray()).toEqual([10, -155, -20]);
+  expect(
+    scene.getTransformNodeByName("cinder-native-volcanic")?.metadata
+      .nativeRevision,
+  ).toBe("volcanic-r018");
+  const meshes = current.getChildMeshes(),
+    counts = [
+      scene.meshes.length,
+      scene.materials.length,
+      scene.geometries.length,
+    ];
+  environment.update({ ...options, planetsEnabled: false });
+  environment.update(options);
+  expect(current.getChildMeshes()).toEqual(meshes);
+  expect([
+    scene.meshes.length,
+    scene.materials.length,
+    scene.geometries.length,
+  ]).toEqual(counts);
+  expect([body.x, body.y, body.height, body.radius]).toEqual([
+    1700, -3800, -155, 62,
+  ]);
+  environment.update({ ...options, bodies: [] });
+  expect(current.isDisposed()).toBe(true);
+  environment.dispose();
+  scene.dispose();
+  engine.dispose();
+});
 
-it("replaces same-ID volcanic fallback after its own kit arrives and preserves presentation resources",async()=>{
- const engine=new NullEngine(),scene=new Scene(engine);
- vi.spyOn(SceneLoader,"ImportMeshAsync").mockResolvedValue({meshes:[CreateBox("source",{size:1},scene)],particleSystems:[],skeletons:[],animationGroups:[],transformNodes:[],geometries:[],lights:[],spriteManagers:[]});
- let resolveKit!:(value:Response)=>void;
- vi.stubGlobal("fetch",vi.fn((url:string)=>url.includes("volcanic-r018")?new Promise<Response>(resolve=>{resolveKit=resolve;}):Promise.resolve(new Response("unavailable",{status:404}))));
- const environment=createSpaceEnvironment(scene),recipe={...planetRecipe("volcanic",89),resolution:12};
- const body:SpaceBodyState={id:"cinder",kind:"planet",appearance:"volcanic",seed:89,x:1700,y:-3800,height:-155,radius:62,vx:0,vy:0,heading:0,omega:0,recipe};
- const options={id:"orion-veil",x:1690,y:-3820,dt:0,enabled:true,reducedMotion:true,bodies:[body]};
- environment.update(options);const old=scene.getTransformNodeByName("world-body-cinder")!;
- const names=["a","b","c","pillar","crater","molten-core","sealing-core","fall","macro-a","macro-b","basin"];
- const kit={schema:"sidereal.native-planet-kit.v1",layout:"volcanic-geology",materials:Array.from({length:6},(_,i)=>({name:`role${i}`,linearColor:[.1,.04,.02],roughness:.4})),variants:names.map((name,i)=>({name,positions:[0,0,.5,.4,0,-.5,0,.4,-.5],indices:[0,1,2],triangleMaterials:[i===5?3:i===10?5:0]}))};
- resolveKit(new Response(JSON.stringify(kit)));await environment.ready;environment.update(options);
- const current=scene.getTransformNodeByName("world-body-cinder")!;
- expect(old.isDisposed()).toBe(true);expect(current.position.asArray()).toEqual([10,-155,-20]);
- expect(scene.getTransformNodeByName("cinder-native-volcanic")?.metadata.nativeRevision).toBe("volcanic-r018");
- const meshes=current.getChildMeshes(),counts=[scene.meshes.length,scene.materials.length,scene.geometries.length];
- environment.update({...options,planetsEnabled:false});environment.update(options);
- expect(current.getChildMeshes()).toEqual(meshes);expect([scene.meshes.length,scene.materials.length,scene.geometries.length]).toEqual(counts);
- expect([body.x,body.y,body.height,body.radius]).toEqual([1700,-3800,-155,62]);
- environment.update({...options,bodies:[]});expect(current.isDisposed()).toBe(true);
- environment.dispose();scene.dispose();engine.dispose();
+it("selects full planet detail from an Observe camera while ship origin and authority stay distant", async () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  const camera = new FreeCamera("observe-camera", Vector3.Zero(), scene);
+  camera.maxZ = 20000;
+  vi.spyOn(SceneLoader, "ImportMeshAsync").mockResolvedValue({
+    meshes: [CreateBox("source", {}, scene)],
+    particleSystems: [],
+    skeletons: [],
+    animationGroups: [],
+    transformNodes: [],
+    geometries: [],
+    lights: [],
+    spriteManagers: [],
+  });
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(async () => new Response("unavailable", { status: 404 })),
+  );
+  const environment = createSpaceEnvironment(scene);
+  await environment.ready;
+  const body: SpaceBodyState = {
+    id: "observe-target",
+    kind: "planet",
+    appearance: "temperate",
+    seed: 17,
+    radius: 36,
+    x: 0,
+    y: -5000,
+    height: 0,
+    vx: 0,
+    vy: 0,
+    heading: 0,
+    omega: 0,
+    recipe: {
+      ...planetRecipe("temperate", 17),
+      resolution: 12,
+      cloudCoverage: 0,
+    },
+  };
+  const original = structuredClone(body);
+  const options = {
+    id: "orion-veil",
+    x: 0,
+    y: 0,
+    dt: 0,
+    enabled: true,
+    reducedMotion: true,
+    bodies: [body],
+  };
+  camera.getViewMatrix(true);
+  environment.update(options);
+  expect(
+    scene.getTransformNodeByName("observe-target-layers")?.metadata.lod,
+  ).toBe(2);
+  camera.position.z = 4960;
+  camera.getViewMatrix(true);
+  environment.update(options);
+  expect(
+    scene.getTransformNodeByName("observe-target-layers")?.metadata.lod,
+  ).toBe(0);
+  expect(body).toEqual(original);
+  expect(options.x).toBe(0);
+  expect(options.y).toBe(0);
+  environment.dispose();
+  scene.dispose();
+  engine.dispose();
 });
