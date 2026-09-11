@@ -245,7 +245,7 @@ export function planLayoutNativeWalls(
     if (!matched)
       issue(
         `span:${key}`,
-        "No exact native span length/end pairing. Wireframe retained; authored panels are not stretched.",
+        `No exact native span for delta [${s.b[0] - s.a[0]}, ${s.b[1] - s.a[1]}] units with ${nodes.get(pkey(s.a))!.cutback} / ${nodes.get(pkey(s.b))!.cutback} m end cutbacks. Wireframe retained; authored panels are not stretched.`,
       );
   }
   plan.placements.sort((a, b) => a.key.localeCompare(b.key));
@@ -388,11 +388,18 @@ export function createLayoutNativeWalls(
       clear();
       if (!next.placements.length) {
         pending = Promise.resolve();
+        report(
+          `0 native wall pieces${next.issues.length ? ` · ${next.issues.length} wall fit notes` : ""}`,
+        );
         return;
       }
       pending = rebuild(next);
     },
-    ready: () => pending,
+    // Clearing the draft can replace `pending` while the shared GLB is still
+    // importing. Keep viewport teardown waiting for that import as well.
+    ready: async () => {
+      await Promise.allSettled([pending, ...(library ? [library] : [])]);
+    },
     dispose() {
       if (disposed) return;
       disposed = true;

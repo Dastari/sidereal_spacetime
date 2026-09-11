@@ -123,7 +123,7 @@ export function LayoutInspector(props: LayoutPanelContext) {
                   })
                 }
               />
-              {name}
+              {name === "pressure" ? "Pressure areas (Rooms)" : name}
             </label>
           ))}
           <p className="layout-note">
@@ -928,6 +928,30 @@ export function LayoutInspector(props: LayoutPanelContext) {
                       }
                     />
                   </PropertyField>
+                  <label className="layout-check">
+                    <input
+                      type="checkbox"
+                      disabled={blocked}
+                      checked={
+                        doc.decks.find((d) => d.id === view.deckId)?.roof ??
+                        false
+                      }
+                      onChange={(e) => {
+                        const roof = e.target.checked;
+                        commit((d) => ({
+                          ...d,
+                          decks: d.decks.map((deck) =>
+                            deck.id === view.deckId ? { ...deck, roof } : deck,
+                          ),
+                        }));
+                      }}
+                    />
+                    Include roof in design
+                  </label>
+                  <p className="layout-note">
+                    Changes enclosure coverage. Use Layers to hide the roof
+                    without removing it.
+                  </p>
                   <button
                     className="layout-wide"
                     disabled={blocked || doc.playableDeckId === view.deckId}

@@ -16,6 +16,7 @@ export function createAssemblyLayoutPreview(
   initialCamera?: HullCameraState,
   initialProjection?: string,
   viewChanged?: () => void,
+  wallFit?: (notes: string[]) => void,
 ) {
   let floorStatus = "Native floors pending";
   const view = createHullViewport(
@@ -27,6 +28,7 @@ export function createAssemblyLayoutPreview(
       place: () => {},
       status: (message) => report(`${message} · ${floorStatus}`),
       viewChanged,
+      wallFit,
     },
     initialCamera,
     initialProjection,
@@ -76,6 +78,13 @@ export function createAssemblyLayoutPreview(
         snap: 1 / 32,
         blocked: true,
         projection,
+        suppressNativeWalls:
+          !doc.structure &&
+          layoutVisualParts(doc, catalog).some(
+            (p) =>
+              catalog.assets.find((a) => a.id === p.assetId)?.category ===
+              "wall",
+          ),
         structuralGuide: activeDeck
           ? {
               walls: result.walls,

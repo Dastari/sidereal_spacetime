@@ -4,8 +4,8 @@ import {
   type Shape,
   stampTile,
   transformPoint,
-} from "../../../../../packages/content/src/ship-layout";
-import { readLayout } from "../../../../../packages/sim/src/layout-validation";
+} from "@sidereal/content/ship-layout";
+import { readLayout } from "@sidereal/sim/layout-validation";
 import {
   readStructuralTools,
   type StructuralToolSettings,
@@ -30,6 +30,7 @@ export interface ViewState {
     routes: boolean;
     objects: boolean;
     exteriorHull?: boolean;
+    pressure?: boolean;
   };
   leftWidth: number;
   rightWidth: number;
@@ -55,6 +56,7 @@ export const DEFAULT_VIEW: ViewState = {
     routes: true,
     objects: true,
     exteriorHull: true,
+    pressure: true,
   },
   leftWidth: 248,
   rightWidth: 280,
@@ -136,6 +138,8 @@ export function readCheckpoint(raw: string): Checkpoint {
     view.camera.scale > 8 ||
     ![1, 16, 32, 64].includes(view.grid) ||
     !view.layers ||
+    (view.layers.pressure !== undefined &&
+      typeof view.layers.pressure !== "boolean") ||
     (view.layers.exteriorHull !== undefined &&
       typeof view.layers.exteriorHull !== "boolean") ||
     ["floor", "walls", "roof", "labels", "routes", "objects"].some(
@@ -150,6 +154,7 @@ export function readCheckpoint(raw: string): Checkpoint {
       layers: {
         ...view.layers,
         exteriorHull: view.layers.exteriorHull ?? true,
+        pressure: view.layers.pressure ?? true,
       },
     },
   };

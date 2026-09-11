@@ -1,3 +1,4 @@
+import { WallFitNotes } from "./WallFitNotes";
 import { mountEditorCanvas } from "../../editor/mountEditorCanvas";
 import { useEditorPanels } from "../../editor/useEditorPanels";
 import { layoutNativeFloors } from "@sidereal/render/layout-native-floors";
@@ -76,6 +77,7 @@ export default function HullWorkspace(props: Props) {
     setLeft: setShowLibrary,
     setRight: setShowInspector,
   } = useEditorPanels();
+  const [wallNotes, setWallNotes] = useState<string[]>([]);
   const [inspectorTab, setInspectorTab] = useState("Properties");
   const [selection, select] = useState(props.initialSelection ?? ""),
     [assetId, setAsset] = useState(""),
@@ -198,6 +200,12 @@ export default function HullWorkspace(props: Props) {
     projection: props.projection,
     showGrid: true,
     floor: floorGuide,
+    suppressNativeWalls:
+      !doc.structure &&
+      parts.some(
+        (p) =>
+          catalog?.assets.find((a) => a.id === p.assetId)?.category === "wall",
+      ),
     structuralGuide: props.result
       ? {
           walls: props.result.walls,
@@ -222,6 +230,12 @@ export default function HullWorkspace(props: Props) {
     projection: props.projection,
     showGrid: true,
     floor: floorGuide,
+    suppressNativeWalls:
+      !doc.structure &&
+      parts.some(
+        (p) =>
+          catalog?.assets.find((a) => a.id === p.assetId)?.category === "wall",
+      ),
     structuralGuide: props.result
       ? {
           walls: props.result.walls,
@@ -392,6 +406,7 @@ export default function HullWorkspace(props: Props) {
             move: (...args) => callback.current.move(...args),
             place: (...args) => callback.current.place(...args),
             status: setStatus,
+            wallFit: setWallNotes,
             viewChanged: () => {
               if (viewport.current && props.sharedViewport) {
                 props.sharedViewport.current.documentId = latest.current.doc.id;
@@ -765,6 +780,7 @@ export default function HullWorkspace(props: Props) {
           }}
         >
           <div className="editor-gpu-surface" ref={canvasHost} />
+          {visible.has("wall") && <WallFitNotes notes={wallNotes} />}
           <div className="hull-caption">
             <strong>{doc.name}</strong>
             <span>
@@ -948,6 +964,21 @@ export default function HullWorkspace(props: Props) {
                 component list. Drag to move; Ctrl-drag to duplicate.
               </p>
             </>
+          )}
+          {props.mode === "Hull" && (
+            <aside className="hull-mount-note">
+              <strong>Free placement · origin-to-grid</strong>
+              <p>
+                Grid snapping aligns the part origin, not its attachment face.
+                Height is set separately. Wall contact and armor clearance are
+                not validated.
+              </p>
+              <p>
+                Visible r004 walls: 125 mm envelope centred on the boundary; 3 m
+                authored top. Exterior walls ultimately need outward-only
+                thickness.
+              </p>
+            </aside>
           )}
           {asset && (
             <button

@@ -3,7 +3,7 @@ import {
   emptyLayout,
   stampTile,
   migrateAssembly,
-} from "../../../../../packages/content/src/ship-layout";
+} from "@sidereal/content/ship-layout";
 import {
   DEFAULT_VIEW,
   push,
@@ -74,6 +74,15 @@ it("scopes recovery by local identity, document and original live revision, and 
     writeCheckpoint(storage, key, null, { ...c, writer: "b" }),
   ).toThrow("Another editor");
   expect(storage.getItem(key)).toBe(raw);
+  const legacyLayers = JSON.parse(raw);
+  delete legacyLayers.view.layers.pressure;
+  expect(
+    readCheckpoint(JSON.stringify(legacyLayers)).view.layers.pressure,
+  ).toBe(true);
+  legacyLayers.view.layers.pressure = false;
+  expect(
+    readCheckpoint(JSON.stringify(legacyLayers)).view.layers.pressure,
+  ).toBe(false);
   const stale = JSON.parse(raw);
   stale.history.present.compiler = "future";
   expect(() => readCheckpoint(JSON.stringify(stale))).toThrow("Unsupported");

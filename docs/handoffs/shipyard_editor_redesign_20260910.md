@@ -3,6 +3,11 @@
 2026-09-10. Implemented and browser-reviewed in the independently managed dashboard at
 https://sidereal.tail7a58a6.ts.net:8445/shipyard (source review server, not a new game/world release).
 
+2026-09-11 follow-up: exact native wall fit previews and the design-enclosure
+overlay now supplement the original wireframe guides; see
+[wall and pressure preview](shipyard_wall_pressure_preview_20260911.md).
+The outline-only description below records the original release scope.
+
 ## Problem and resulting workflow
 
 The earlier editor combined semantic floor tiles with the retained native Wayfarer

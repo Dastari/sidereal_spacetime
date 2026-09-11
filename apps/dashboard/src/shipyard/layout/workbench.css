@@ -825,3 +825,89 @@
 .layout-editor .hull-viewport {
   overflow: clip;
 }
+
+.pressure-areas {
+  border-block: 1px solid var(--line);
+  margin: 14px 0;
+  padding: 12px 0;
+}
+.pressure-areas > ul {
+  list-style: none;
+  margin: 10px 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.pressure-areas > ul > li {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.pressure-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: 0 0 8px;
+  margin-top: 5px;
+}
+.pressure-areas strong {
+  font-size: 12px;
+  font-weight: 500;
+}
+.pressure-areas small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.pressure-areas details {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.pressure-areas details > summary {
+  cursor: pointer;
+  padding: 5px 0;
+}
+.pressure-areas details ul {
+  padding-left: 16px;
+  margin: 3px 0;
+}
+.hull-mount-note {
+  padding: 12px;
+  border: 1px solid var(--line);
+  margin: 16px 0;
+  font-size: 12px;
+}
+.hull-mount-note p {
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 8px 0 0;
+}
+.wall-fit-notes {
+  position: absolute;
+  top: 56px;
+  right: 16px;
+  z-index: 4;
+  max-width: min(370px, calc(100% - 32px));
+  background: var(--creator-input);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.wall-fit-notes > summary {
+  padding: 7px 10px;
+  cursor: pointer;
+  color: #edc38c;
+}
+.wall-fit-notes ul {
+  margin: 0;
+  padding: 0 14px 12px 26px;
+  max-height: 240px;
+  overflow: auto;
+  line-height: 1.55;
+}
+.wall-fit-notes li + li {
+  margin-top: 6px;
+}

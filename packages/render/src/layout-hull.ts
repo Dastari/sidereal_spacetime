@@ -1,3 +1,4 @@
+import { createLayoutNativeWalls } from "./layout-native-walls";
 import { layoutPickingCoordinates } from "./layout-picking-coordinates";
 import {
   createLayoutStructuralGuides,
@@ -64,6 +65,7 @@ export interface HullViewState {
   projection: string;
   floor?: CompiledLayout;
   structuralGuide?: LayoutStructuralGuide;
+  suppressNativeWalls?: boolean;
   showGrid?: boolean;
   /** Native structural context cannot be selected or dragged as an assembly object. */
   contextOnly?: ReadonlySet<string>;
@@ -83,6 +85,7 @@ export function createHullViewport(
     place: (id: string, p: [number, number, number]) => void;
     status: (message: string) => void;
     viewChanged?: () => void;
+    wallFit?: (notes: string[]) => void;
   },
   initialCamera?: HullCameraState,
   initialProjection?: string,
@@ -153,6 +156,22 @@ export function createHullViewport(
   const requestRender = () => {
     activeUntil = performance.now() + 1500;
   };
+  let wallStatus = "";
+  const nativeWalls = createLayoutNativeWalls(scene, (message) => {
+    wallStatus = message;
+    canvas.dataset.nativeWallPieces = String(
+      nativeWalls.plan?.placements.length ?? 0,
+    );
+    canvas.dataset.nativeWallMeshes = String(nativeWalls.meshes.length);
+    canvas.dataset.nativeWallIssues = JSON.stringify(
+      nativeWalls.plan?.issues ?? [],
+    );
+    requestRender();
+    callbacks.wallFit?.(
+      (nativeWalls.plan?.issues ?? []).map((issue) => issue.message),
+    );
+    callbacks.status(message);
+  });
   const prototypes = new Map<string, Mesh[]>(),
     pending = new Map<string, Promise<void>>(),
     failed = new Set<string>();
@@ -560,6 +579,11 @@ export function createHullViewport(
       layoutPartVisible("wall", next.visible, next.preview),
       origin.asArray(),
     );
+    nativeWalls.update(
+      next.suppressNativeWalls ? undefined : next.structuralGuide,
+      layoutPartVisible("wall", next.visible, next.preview),
+      origin.asArray(),
+    );
     canvas.dataset.structuralWallGuides = String(structuralGuides.count);
     selection.update(
       [...nodes.values()].flatMap((e) => e.node.getChildMeshes()),
@@ -571,7 +595,7 @@ export function createHullViewport(
       callbacks.status(
         next.contextOnly?.size
           ? `${nodes.size - next.contextOnly.size} editable components ready · ${next.contextOnly.size} structural context parts`
-          : `${nodes.size} editable components ready`,
+          : `${nodes.size} editable components ready${wallStatus ? ` · ${wallStatus}` : ""}`,
       );
   }
   function fit(id?: string) {
@@ -584,7 +608,10 @@ export function createHullViewport(
       !id && structuralGuides.mesh?.isEnabled()
         ? structuralGuides.mesh
         : undefined;
-    if (!placed.length && !guide) {
+    const wallMeshes = id
+      ? []
+      : nativeWalls.meshes.filter((m) => m.isEnabled());
+    if (!placed.length && !guide && !wallMeshes.length) {
       if (state?.floor) {
         const bounds = state.floor.bounds;
         camera.target.set(
@@ -612,6 +639,12 @@ export function createHullViewport(
       const b = e.node.getHierarchyBoundingVectors(true);
       min = Vector3.Minimize(min, b.min);
       max = Vector3.Maximize(max, b.max);
+    }
+    for (const mesh of wallMeshes) {
+      mesh.computeWorldMatrix(true);
+      const b = mesh.getBoundingInfo().boundingBox;
+      min = Vector3.Minimize(min, b.minimumWorld);
+      max = Vector3.Maximize(max, b.maximumWorld);
     }
     if (guide) {
       guide.computeWorldMatrix(true);
@@ -702,13 +735,14 @@ export function createHullViewport(
       return p ? snap(p) : null;
     },
     async ready() {
-      await Promise.all(pending.values());
+      await Promise.all([...pending.values(), nativeWalls.ready()]);
       if (!disposed) await scene.whenReadyAsync();
     },
     dispose() {
       disposed = true;
       selection.dispose();
       structuralGuides.dispose();
+      nativeWalls.dispose();
       cancel();
       resize.disconnect();
       themeObserver.disconnect();
@@ -726,7 +760,7 @@ export function createHullViewport(
       // Let in-flight GLB/BRDF texture work finish before releasing its engine.
       // Switching editor modes during a load must not execute a shader callback
       // against an already disposed WebGL program.
-      void Promise.allSettled([...pending.values()])
+      void Promise.allSettled([...pending.values(), nativeWalls.ready()])
         .then(() => scene.whenReadyAsync())
         .finally(() => {
           scene.dispose();

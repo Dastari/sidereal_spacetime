@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
+import type { LayoutDocument } from "@sidereal/content/ship-layout";
 import { constructionHash } from "@sidereal/sim/construction-transactions";
 import { CONSTRUCTION_BOUNDARY_FAMILY_GLB_SHA } from "@sidereal/content/construction-boundary-family";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
@@ -38,6 +39,34 @@ function library(scene: Scene) {
   return container;
 }
 describe("native authoring wall fit preview", () => {
+  it("identifies the two Wayfarer bow profiles missing from the exact native grammar", () => {
+    const layout = JSON.parse(
+      readFileSync("packages/content/src/wayfarer-starter-r001.json", "utf8"),
+    ).layout as LayoutDocument;
+    const plan = planLayoutNativeWalls({
+      walls: compileLayout(layout).walls,
+      deckId: layout.decks[0].id,
+      elevationUnits: 0,
+      heightUnits: 82,
+    });
+    const missing = plan.issues.filter((i) => i.key.startsWith("span:"));
+    expect(missing.map((i) => i.key)).toEqual([
+      "span:-96,352:-32,416",
+      "span:32,416:96,352",
+    ]);
+    for (const issue of missing)
+      expect(issue.message).toContain("0.0625 / 0.0625 m end cutbacks");
+    // The one-metre diagonal cannot simply be doubled: its required diagonal
+    // straight junction does not exist in this quarter-turn-only native grammar.
+    expect(
+      kit.grammar.nodeSignatures.some(
+        (n) =>
+          n.rays.length === 2 &&
+          n.rays.every((p) => Math.abs(p[0]) === Math.abs(p[1])),
+      ),
+    ).toBe(false);
+  });
+
   it("uses the exact installed native GLB and selectors for the pinned profile family", () => {
     const bytes = readFileSync(
       "assets/runtime/construction/boundary-r004/kit.glb",
@@ -171,9 +200,10 @@ describe("native authoring wall fit preview", () => {
       scene = new Scene(engine);
     scene.useRightHandedSystem = true;
     let loads = 0;
+    const reports: string[] = [];
     const view = createLayoutNativeWalls(
       scene,
-      () => {},
+      (message) => reports.push(message),
       async (s) => {
         loads++;
         return library(s);
@@ -199,12 +229,13 @@ describe("native authoring wall fit preview", () => {
     view.update(undefined, true);
     expect(view.meshes).toHaveLength(0);
     expect(mesh.isDisposed()).toBe(true);
+    expect(reports.at(-1)).toBe("0 native wall pieces");
     view.dispose();
     view.dispose();
     scene.dispose();
     engine.dispose();
   });
-  it("drops an import that completes after viewport disposal", async () => {
+  it("waits for and drops an import after clearing the draft and disposing the viewport", async () => {
     const engine = new NullEngine(),
       scene = new Scene(engine);
     scene.useRightHandedSystem = true;
@@ -220,9 +251,16 @@ describe("native authoring wall fit preview", () => {
     view.update(fixture(), true);
     const loaded = library(scene),
       source = loaded.meshes[0];
+    view.update(undefined, true);
     view.dispose();
+    let ready = false;
+    const completed = view.ready().then(() => {
+      ready = true;
+    });
+    await Promise.resolve();
+    expect(ready).toBe(false);
     resolve(loaded);
-    await view.ready();
+    await completed;
     expect(source.isDisposed()).toBe(true);
     expect(view.meshes).toHaveLength(0);
     scene.dispose();

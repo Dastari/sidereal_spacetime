@@ -1,3 +1,6 @@
+import { WallFitNotes } from "./WallFitNotes";
+import { previewPressureAreas } from "./pressure-preview";
+import { PRESSURE_COLORS, PRESSURE_LABELS } from "./PressureAreas";
 import { mountEditorCanvas } from "../../editor/mountEditorCanvas";
 import { PINNED_FLOOR_KIT } from "@sidereal/sim/construction-transactions";
 import type { RefObject } from "react";
@@ -87,6 +90,7 @@ export default function LayoutCanvas(props: Props) {
     preview = useRef<ReturnType<
       (typeof import("@sidereal/render/layout-assembly-preview"))["createAssemblyLayoutPreview"]
     > | null>(null);
+  const [wallNotes, setWallNotes] = useState<string[]>([]);
   const [menu, setMenu] = useState<{ x: number; y: number; id: string } | null>(
     null,
   );
@@ -160,6 +164,7 @@ export default function LayoutCanvas(props: Props) {
               }
             }
           },
+          setWallNotes,
         );
         preview.current = viewport;
         shared.actions = {
@@ -387,6 +392,13 @@ export default function LayoutCanvas(props: Props) {
           snap(drag.end)[1] - snap(drag.start)[1],
         ]
       : [0, 0];
+  const pressure = useMemo(
+    () =>
+      result && view.mode === "Rooms" && view.layers.pressure !== false
+        ? previewPressureAreas(doc, result)
+        : undefined,
+    [doc, result, view.mode, view.layers.pressure],
+  );
   const floorGeometry = useMemo(
     () =>
       view.layers.floor &&
@@ -451,10 +463,11 @@ export default function LayoutCanvas(props: Props) {
             ? "Floorplan schematic"
             : doc.assembly
               ? "Native assembly preview"
-              : "Floorplan wall outlines"}
+              : "Native walls · fit preview"}
         </span>
       </div>
       <div className="editor-gpu-surface" ref={gpuHost} />
+      {view.layers.walls && <WallFitNotes notes={wallNotes} />}
       {!doc.tiles.some((tile) => tile.deckId === view.deckId) && (
         <div className="layout-empty-guide">
           <strong>Draw your first deck</strong>
@@ -605,6 +618,28 @@ export default function LayoutCanvas(props: Props) {
               </g>
             )}
             {floorGeometry}
+            {pressure?.areas
+              .filter((a) => a.deckId === view.deckId)
+              .map((a, i) => (
+                <g
+                  key={a.id}
+                  aria-label={`${a.roomNames.join(", ") || `Area ${i + 1}`}: ${PRESSURE_LABELS[a.status]}`}
+                  pointerEvents="none"
+                >
+                  {tiles
+                    .filter((t) => a.tileIds.includes(t.id))
+                    .map((t) => (
+                      <polygon
+                        key={t.id}
+                        points={path(t.vertices)}
+                        fill={PRESSURE_COLORS[a.status]}
+                        fillOpacity={view.projection === "Top" ? 0.26 : 0.12}
+                        stroke={PRESSURE_COLORS[a.status]}
+                        strokeWidth="0.6"
+                      />
+                    ))}
+                </g>
+              ))}
             {(view.mode === "Rooms" || view.mode === "Objects") &&
               rooms.map((room, i) => (
                 <g key={room.id} data-entity={room.id}>
@@ -617,7 +652,13 @@ export default function LayoutCanvas(props: Props) {
                         fill={
                           ["#43767b", "#516c8f", "#6b6684", "#706e53"][i % 4]
                         }
-                        opacity={selection.includes(room.id) ? 0.6 : 0.22}
+                        opacity={
+                          pressure
+                            ? 0
+                            : selection.includes(room.id)
+                              ? 0.6
+                              : 0.22
+                        }
                       />
                     ))}
                   {selection.includes(room.id) &&
@@ -650,7 +691,7 @@ export default function LayoutCanvas(props: Props) {
                     x2={w.b[0]}
                     y2={w.b[1]}
                     stroke="#06131c"
-                    strokeWidth={w.source === "perimeter" ? 11 : 7}
+                    strokeWidth={4}
                   />
                   <line
                     x1={w.a[0]}
@@ -664,7 +705,7 @@ export default function LayoutCanvas(props: Props) {
                           ? "#9ab0ba"
                           : "#6f8997"
                     }
-                    strokeWidth={w.source === "perimeter" ? 7 : 4}
+                    strokeWidth={3}
                   />
                   <line
                     x1={w.a[0]}

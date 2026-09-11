@@ -1,3 +1,4 @@
+import { PressureAreas } from "./PressureAreas";
 import {
   FLOOR_SHAPES,
   SERVICE_CHANNELS,
@@ -337,6 +338,17 @@ export function LayoutPalette(props: LayoutPanelContext) {
                 </select>
               </PropertyField>
             </details>
+            {doc && result && (
+              <PressureAreas
+                doc={doc}
+                result={result}
+                deckId={view.deckId}
+                enabled={view.layers.pressure !== false}
+                onToggle={(pressure) =>
+                  updateView({ layers: { ...view.layers, pressure } })
+                }
+              />
+            )}
             <PropertyField label="Room label">
               <select
                 aria-label="Room label type"
@@ -388,10 +400,13 @@ export function LayoutPalette(props: LayoutPanelContext) {
                 </PropertyField>
               )}
               <p className="layout-note">
-                Internal walls follow grid edges. Doors snap to wall slots with
-                space for their jambs and approaches. Exterior walls follow the
-                floor plan and cannot be deleted separately. Room labels do not
-                remove floors, walls or objects.
+                Rendered r004 walls are centred: 93.75 mm core, 125 mm
+                decorative envelope. Exterior outward-only walls and qualified
+                armor mounts are a separate fitting requirement. Internal walls
+                follow grid edges. Doors snap to wall slots with space for their
+                jambs and approaches. Exterior walls follow the floor plan and
+                cannot be deleted separately. Room labels do not remove floors,
+                walls or objects.
               </p>
             </details>
           </>
