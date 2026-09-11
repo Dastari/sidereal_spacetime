@@ -55,6 +55,13 @@ in source commits `42ae336b` and `3062d447`; these are baseline landmarks, not a
 to reset the tree to either commit. This is a shared working tree; no blanket add,
 reset, clean, stale patch application or restoration over another owner's work.
 
+Operational follow-up: read `docs/handoffs/shipyard_hmr_database_recovery_20260911.md`.
+The database recently stopped during extreme disk pressure; recovery left only about
+3.2 GB headroom. Before builds, asset exports or release snapshots, measure required
+peak space and resolve storage capacity safely. Do not duplicate entire art libraries
+into each candidate or delete player databases/recovery archives to make room. Use
+atomic source-file replacement; dashboard HMR now waits for writes to stabilize.
+
 ## 3. Verified starting point and important gaps
 
 | Area | Existing foundation | Work still required |

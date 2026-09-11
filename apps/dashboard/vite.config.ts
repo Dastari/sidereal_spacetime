@@ -42,6 +42,11 @@ export default defineConfig({
   },
   server: {
     allowedHosts: config.allowedHosts,
+    // Shared-tree tools may truncate then rewrite a source file. Do not cache
+    // its transient empty contents as a valid ESM module during hot reload.
+    watch: {
+      awaitWriteFinish: { stabilityThreshold: 200, pollInterval: 50 },
+    },
     // A workspace dev server must not expose private repository inputs via /@fs.
     fs: {
       deny: [
