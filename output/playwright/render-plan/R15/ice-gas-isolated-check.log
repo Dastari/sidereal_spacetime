@@ -1,0 +1,22 @@
+
+> sidereal-spacetime@0.1.0 check
+> npm run typecheck && npm test && python3 scripts/check_docs.py
+
+
+> sidereal-spacetime@0.1.0 typecheck
+> tsc --noEmit
+
+
+> sidereal-spacetime@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.11 /root/sidereal_spacetime/.runtime/release-checkouts/render-plan-r15-ice-gas-20260911
+
+
+ Test Files  248 passed (248)
+      Tests  1400 passed (1400)
+   Start at  12:16:29
+   Duration  49.94s (transform 4.04s, setup 0ms, import 20.39s, tests 60.26s, environment 14ms)
+
+Checked 77 project documents, all legacy document hashes and imported asset provenance.

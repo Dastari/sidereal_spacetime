@@ -1,3 +1,4 @@
+import { createNativeIceLODRuntime } from "./native-ice-lod-runtime";
 import { createNativeVolcanicLODRuntime } from "./native-volcanic-lod-runtime";
 import { createPlanetWorkerClient } from "./planet-worker-client";
 import { createPlanetLODRuntime } from "./planet-lod-runtime";
@@ -233,6 +234,7 @@ export function createSpaceEnvironment(scene: Scene) {
     {
       node: TransformNode;
       lodRuntime?:
+        | ReturnType<typeof createNativeIceLODRuntime>
         | ReturnType<typeof createPlanetLODRuntime>
         | ReturnType<typeof createNativeVolcanicLODRuntime>;
       spin?: TransformNode;
@@ -258,6 +260,7 @@ export function createSpaceEnvironment(scene: Scene) {
   >();
   function add(body: SpaceBodyState, lod: PlanetLOD) {
     let lodRuntime:
+      | ReturnType<typeof createNativeIceLODRuntime>
       | ReturnType<typeof createPlanetLODRuntime>
       | ReturnType<typeof createNativeVolcanicLODRuntime>
       | undefined;
@@ -378,14 +381,27 @@ export function createSpaceEnvironment(scene: Scene) {
             canUseNativeVolcanic(recipe);
           const native = nativeIce || nativeVolcanic;
           const layered = nativeIce
-            ? createNativeIcePlanet(
-                scene,
-                body.id,
-                recipe,
-                lod,
-                nativeIceKit!,
-                nativeIceCache!,
-              )
+            ? typeof Worker !== "undefined"
+              ? (lodRuntime = createNativeIceLODRuntime(
+                  scene,
+                  body.id,
+                  structuredClone(recipe),
+                  nativeIceKit!,
+                  planetWorker,
+                  () => {
+                    for (const light of scene.lights)
+                      if (light.metadata?.role === "planet-radiance")
+                        light.includedOnlyMeshes = root.getChildMeshes();
+                  },
+                ))
+              : createNativeIcePlanet(
+                  scene,
+                  body.id,
+                  recipe,
+                  lod,
+                  nativeIceKit!,
+                  nativeIceCache!,
+                )
             : nativeVolcanic
               ? typeof Worker !== "undefined"
                 ? (lodRuntime = createNativeVolcanicLODRuntime(
@@ -572,7 +588,7 @@ export function createSpaceEnvironment(scene: Scene) {
       ownsMaterials: body.kind !== "asteroid",
       signature: visualRevision(
         body,
-        lodRuntime ? 2 : lod,
+        lodRuntime || gas ? 2 : lod,
         !!nativeIceKit &&
           (body.appearance === "ice" || body.recipe?.style === "ice"),
         !!nativeVolcanicKit &&
@@ -684,7 +700,7 @@ export function createSpaceEnvironment(scene: Scene) {
           entry.signature !==
             entry.visualRevision(
               body,
-              entry.lodRuntime ? 2 : lod,
+              entry.lodRuntime || entry.gas ? 2 : lod,
               !!nativeIceKit &&
                 (body.appearance === "ice" || body.recipe?.style === "ice"),
               !!nativeVolcanicKit &&

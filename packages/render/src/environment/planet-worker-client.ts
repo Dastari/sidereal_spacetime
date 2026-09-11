@@ -1,4 +1,8 @@
 import {
+  buildNativeIceData,
+  type NativeIceBuildData,
+} from "./native-ice-build";
+import {
   buildNativeVolcanicData,
   type NativeVolcanicBuildData,
 } from "./native-volcanic-build";
@@ -18,7 +22,11 @@ export function createPlanetWorkerClient() {
     serial = 0,
     disposed = false,
     lastBuildMs: number | undefined;
-  type Result = PlanetBuildData | PlanetWeatherData | NativeVolcanicBuildData;
+  type Result =
+    | PlanetBuildData
+    | PlanetWeatherData
+    | NativeVolcanicBuildData
+    | NativeIceBuildData;
   const jobs = new Map<
     number,
     {
@@ -41,7 +49,9 @@ export function createPlanetWorkerClient() {
     if (typeof window === "undefined" && typeof Worker === "undefined")
       return Promise.resolve(
         nativeKit
-          ? buildNativeVolcanicData(nativeKit, recipe, lod)
+          ? nativeKit.layout === "glacial-interior"
+            ? buildNativeIceData(nativeKit, recipe, lod)
+            : buildNativeVolcanicData(nativeKit, recipe, lod)
           : phase === undefined
             ? buildPlanetData(recipe, lod)
             : buildPlanetWeather(recipe, lod, phase),
@@ -93,6 +103,8 @@ export function createPlanetWorkerClient() {
     }),
     build: (recipe: PlanetRecipe, lod: 0 | 1 | 2) =>
       request(recipe, lod) as Promise<PlanetBuildData>,
+    nativeIce: (kit: NativePlanetKit, recipe: PlanetRecipe, lod: 0 | 1 | 2) =>
+      request(recipe, lod, undefined, kit) as Promise<NativeIceBuildData>,
     nativeVolcanic: (
       kit: NativePlanetKit,
       recipe: PlanetRecipe,

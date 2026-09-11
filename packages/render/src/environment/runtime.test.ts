@@ -446,3 +446,75 @@ it("selects full planet detail from an Observe camera while ship origin and auth
   scene.dispose();
   engine.dispose();
 });
+
+it("retains gas geometry and materials across Observe LOD thresholds", async () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  const camera = new FreeCamera("observe-camera", Vector3.Zero(), scene);
+  camera.maxZ = 20000;
+  vi.spyOn(SceneLoader, "ImportMeshAsync").mockResolvedValue({
+    meshes: [CreateBox("source", {}, scene)],
+    particleSystems: [],
+    skeletons: [],
+    animationGroups: [],
+    transformNodes: [],
+    geometries: [],
+    lights: [],
+    spriteManagers: [],
+  });
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(async () => new Response("unavailable", { status: 404 })),
+  );
+  const environment = createSpaceEnvironment(scene);
+  await environment.ready;
+  const body: SpaceBodyState = {
+    id: "observe-target",
+    kind: "planet",
+    appearance: "gas",
+    seed: 17,
+    radius: 36,
+    x: 0,
+    y: -5000,
+    height: 0,
+    vx: 0,
+    vy: 0,
+    heading: 0,
+    omega: 0,
+    recipe: {
+      ...planetRecipe("gas", 17),
+      resolution: 12,
+      cloudCoverage: 0,
+    },
+  };
+  const original = structuredClone(body);
+  const options = {
+    id: "orion-veil",
+    x: 0,
+    y: 0,
+    dt: 0,
+    enabled: true,
+    reducedMotion: true,
+    bodies: [body],
+  };
+  camera.getViewMatrix(true);
+  environment.update(options);
+  const mesh = scene.getMeshByName("observe-target-gas-surface")!,
+    material = mesh.material;
+  const counts = [scene.meshes.length, scene.materials.length];
+  camera.position.z = 4960;
+  camera.getViewMatrix(true);
+  environment.update(options);
+  expect(scene.getMeshByName(mesh.name)).toBe(mesh);
+  expect(mesh.isDisposed()).toBe(false);
+  expect(mesh.material).toBe(material);
+  expect([scene.meshes.length, scene.materials.length]).toEqual(counts);
+  body.recipe!.seed++;
+  environment.update(options);
+  expect(mesh.isDisposed()).toBe(true);
+  expect(body.x).toBe(original.x);
+  expect(body.y).toBe(original.y);
+  environment.dispose();
+  scene.dispose();
+  engine.dispose();
+});

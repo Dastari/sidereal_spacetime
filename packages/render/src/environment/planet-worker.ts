@@ -1,3 +1,4 @@
+import { buildNativeIceData } from "./native-ice-build";
 import { buildNativeVolcanicData } from "./native-volcanic-build";
 import type { NativePlanetKit } from "./native-planet-composition";
 import { buildPlanetData, buildPlanetWeather } from "./planet-build";
@@ -15,7 +16,9 @@ self.onmessage = (
   const { id, recipe, lod, phase, nativeKit } = event.data;
   try {
     const result = nativeKit
-      ? buildNativeVolcanicData(nativeKit, recipe, lod)
+      ? nativeKit.layout === "glacial-interior"
+        ? buildNativeIceData(nativeKit, recipe, lod)
+        : buildNativeVolcanicData(nativeKit, recipe, lod)
       : phase === undefined
         ? buildPlanetData(recipe, lod)
         : buildPlanetWeather(recipe, lod, phase);

@@ -24,6 +24,9 @@ it("precompiles retained levels with shared body materials and disposes ownershi
     cloudCoverage: 0,
   };
   const worker = {
+    nativeIce: async () => {
+      throw new Error("not used");
+    },
     nativeVolcanic: async () => {
       throw new Error("not used");
     },
