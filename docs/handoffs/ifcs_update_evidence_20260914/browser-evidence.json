@@ -1,0 +1,153 @@
+{
+  "forward": {
+    "sampleCount": 54,
+    "maxRetroThrottle": 0,
+    "maxMainThrottle": 1,
+    "mounts": [
+      {
+        "id": "056c3753-475a-4e81-baca-2d135e6a38b3",
+        "shipId": "51649a09-8f6a-4078-bea6-d283f0b7bc13",
+        "placedObjectId": "ddf46c50-593d-4920-961d-7a5e64453903",
+        "x": 6.875,
+        "y": -6.5,
+        "nozzleX": 6.875,
+        "nozzleY": -6.5,
+        "height": 0.75,
+        "exhaustX": 1,
+        "exhaustY": 0,
+        "throttle": 0
+      },
+      {
+        "id": "2260aa15-3206-4be8-9b2a-8419cd0c59cd",
+        "shipId": "51649a09-8f6a-4078-bea6-d283f0b7bc13",
+        "placedObjectId": "509becf1-e2b1-46e1-bfae-d8972fda67c0",
+        "x": 5.5,
+        "y": 8.5,
+        "nozzleX": 5.5,
+        "nozzleY": 8.5,
+        "height": 0.75,
+        "exhaustX": 0,
+        "exhaustY": 1,
+        "throttle": 0
+      },
+      {
+        "id": "2d15c8f3-b377-4f3e-a336-de2363e35478",
+        "shipId": "51649a09-8f6a-4078-bea6-d283f0b7bc13",
+        "placedObjectId": "e7b78a95-c497-4b36-9332-646309204f91",
+        "x": 6.875,
+        "y": 6.5,
+        "nozzleX": 6.875,
+        "nozzleY": 6.5,
+        "height": 0.75,
+        "exhaustX": 1,
+        "exhaustY": 0,
+        "throttle": 0
+      },
+      {
+        "id": "346a6c55-7281-4cc8-b175-06c56e84b07e",
+        "shipId": "51649a09-8f6a-4078-bea6-d283f0b7bc13",
+        "placedObjectId": "541c9f10-f60e-44c9-b54b-b69b0976f310",
+        "x": 3.6,
+        "y": -14,
+        "nozzleX": 3.6,
+        "nozzleY": -14,
+        "height": 1.375,
+        "exhaustX": 0,
+        "exhaustY": -1,
+        "throttle": 0
+      },
+      {
+        "id": "9b8dc30d-45a9-4df9-be4c-5ea08813421a",
+        "shipId": "51649a09-8f6a-4078-bea6-d283f0b7bc13",
+        "placedObjectId": "bfb20bf3-4dd7-415b-8a5e-99d14fcd15dd",
+        "x": -3.6,
+        "y": -14,
+        "nozzleX": -3.6,
+        "nozzleY": -14,
+        "height": 1.375,
+        "exhaustX": 0,
+        "exhaustY": -1,
+        "throttle": 0
+      },
+      {
+        "id": "aaee6ec8-ddb3-453a-ac61-91566c4ee31c",
+        "shipId": "51649a09-8f6a-4078-bea6-d283f0b7bc13",
+        "placedObjectId": "ae3fe1fd-f0c3-4771-ba13-d7f276772ffa",
+        "x": 0,
+        "y": -12.875,
+        "nozzleX": 0,
+        "nozzleY": -12.875,
+        "height": 1.375,
+        "exhaustX": 0,
+        "exhaustY": -1,
+        "throttle": 0
+      },
+      {
+        "id": "c7f6fdc7-292e-477d-928f-f33e98673f2a",
+        "shipId": "51649a09-8f6a-4078-bea6-d283f0b7bc13",
+        "placedObjectId": "0c14f3a8-ec33-4a57-afc4-2f30c9ea16cf",
+        "x": -6.875,
+        "y": -6.5,
+        "nozzleX": -6.875,
+        "nozzleY": -6.5,
+        "height": 0.75,
+        "exhaustX": -1,
+        "exhaustY": 0,
+        "throttle": 0
+      },
+      {
+        "id": "cc7783f7-a140-43cb-947e-3dab3e3c9d89",
+        "shipId": "51649a09-8f6a-4078-bea6-d283f0b7bc13",
+        "placedObjectId": "7d589c62-4b84-4650-a188-35b45fb1e25a",
+        "x": -6.875,
+        "y": 6.5,
+        "nozzleX": -6.875,
+        "nozzleY": 6.5,
+        "height": 0.75,
+        "exhaustX": -1,
+        "exhaustY": 0,
+        "throttle": 0
+      },
+      {
+        "id": "d3ae4240-1818-425a-9a22-7fe16331ac50",
+        "shipId": "51649a09-8f6a-4078-bea6-d283f0b7bc13",
+        "placedObjectId": "42f051c4-fa40-41c2-9c30-83a269344920",
+        "x": -5.5,
+        "y": 8.5,
+        "nozzleX": -5.5,
+        "nozzleY": 8.5,
+        "height": 0.75,
+        "exhaustX": 0,
+        "exhaustY": 1,
+        "throttle": 0
+      }
+    ]
+  },
+  "removed": {
+    "removed": {
+      "id": "9b8dc30d-45a9-4df9-be4c-5ea08813421a",
+      "nozzleX": -3.6,
+      "nozzleY": -14,
+      "beforeMass": 12089.69999999995,
+      "afterMass": 11885.782956815168,
+      "remaining": 8
+    },
+    "samples": 75,
+    "removedInAnySample": false,
+    "activeIds": [
+      "056c3753-475a-4e81-baca-2d135e6a38b3",
+      "2260aa15-3206-4be8-9b2a-8419cd0c59cd",
+      "2d15c8f3-b377-4f3e-a336-de2363e35478",
+      "346a6c55-7281-4cc8-b175-06c56e84b07e",
+      "aaee6ec8-ddb3-453a-ac61-91566c4ee31c",
+      "c7f6fdc7-292e-477d-928f-f33e98673f2a",
+      "cc7783f7-a140-43cb-947e-3dab3e3c9d89",
+      "d3ae4240-1818-425a-9a22-7fe16331ac50"
+    ]
+  },
+  "turn": {
+    "heading": -0.696795431410048,
+    "omega": 0.0882293741789711,
+    "speed": 26.17471353769418
+  }
+}

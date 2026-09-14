@@ -1,4 +1,4 @@
-import type { InventoryDefinition } from "../../content/src/inventory";
+import type { InventoryDefinition } from "@sidereal/content/inventory";
 import { itemRarity } from "./character-data";
 import { drawItemFrame, ITEM_RARITY_PALETTES } from "./item-frame";
 import type { CanvasUI } from "./toolkit";

@@ -1,9 +1,9 @@
 import { SenderError } from "spacetimedb/server";
-import { QUALIFIED_WAYFARER_SHA256 } from "../../sim/src/wayfarer-walking-bindings";
-import { wayfarerThresholdElevation } from "../../sim/src/wayfarer-threshold";
-import { planQualifiedWayfarerFunctionalSeeds } from "../../sim/src/construction-functional-instances";
-import type { ConstructionInstancePlan } from "../../sim/src/construction-instance";
-import { LAB_STORAGE_FIXTURES } from "../../content/src/storage-fixtures";
+import { isQualifiedWayfarerBlueprint } from "@sidereal/sim/wayfarer-walking-bindings";
+import { wayfarerThresholdElevation } from "@sidereal/sim/wayfarer-threshold";
+import { planQualifiedWayfarerFunctionalSeeds } from "@sidereal/sim/construction-functional-instances";
+import type { ConstructionInstancePlan } from "@sidereal/sim/construction-instance";
+import { LAB_STORAGE_FIXTURES } from "@sidereal/content/storage-fixtures";
 import { constructionCollision } from "./construction-doors";
 import { qualifyCargoAccessPoint } from "./scoped-inventory";
 import type { synchronizeLegacyInventory } from "./scoped-inventory-authority";
@@ -27,7 +27,7 @@ export function installQualifiedInstanceCargo(
   plan: ConstructionInstancePlan,
   providedSeeds?: ReturnType<typeof planQualifiedWayfarerFunctionalSeeds>,
 ) {
-  if (plan.blueprintSha256 !== QUALIFIED_WAYFARER_SHA256) return;
+  if (!isQualifiedWayfarerBlueprint(plan.blueprintSha256)) return;
   const instance = ctx.db.constructionInstance.id.find(plan.instanceId);
   if (!instance)
     throw new SenderError("Cargo installation requires the spawned instance");

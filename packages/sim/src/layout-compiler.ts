@@ -1,4 +1,8 @@
 import {
+  resolveBoundaryTreatments,
+  type ResolvedBoundaryTreatment,
+} from "./layout-boundary-treatments";
+import {
   compileStructure,
   structuralPartitionSupported,
   type CompiledStructure,
@@ -10,8 +14,9 @@ import {
   type LayoutDocument,
   type Point,
   type FloorTile,
-} from "../../content/src/ship-layout";
+} from "@sidereal/content/ship-layout";
 import {
+  segmentSupported,
   area2,
   canonicalPolygon,
   comparePoint,
@@ -48,6 +53,7 @@ export interface LayoutLoop {
   declarationId: string | null;
 }
 export interface LayoutWall {
+  treatment?: ResolvedBoundaryTreatment;
   key: string;
   deckId: string;
   a: Point;
@@ -133,7 +139,18 @@ export function compileLayout(input: unknown): CompiledLayout {
       message,
       severity,
     });
+  let boundaryTreatmentModel = false;
   const finish = () => {
+    if (boundaryTreatmentModel)
+      for (const wall of out.walls)
+        wall.treatment ??= {
+          schema: "sidereal.boundary-treatment-resolution.v1",
+          intent: "auto",
+          overrideId: null,
+          heightUnits: 0,
+          floorThicknessUnits: 0,
+          qualification: "pending",
+        };
     out.diagnostics.sort(
       (a, b) =>
         compareText(a.code, b.code) ||
@@ -145,6 +162,8 @@ export function compileLayout(input: unknown): CompiledLayout {
   let doc: LayoutDocument;
   try {
     doc = readLayout(input);
+    boundaryTreatmentModel =
+      doc.structure?.schema === "sidereal.layout-structure.v2";
   } catch (e) {
     diagnostic("admission", [], String(e));
     return finish();
@@ -167,9 +186,15 @@ export function compileLayout(input: unknown): CompiledLayout {
     })),
     partitions: sorted(doc.partitions),
     openings: sorted(doc.openings),
-    rooms: sorted(doc.rooms),
+    rooms: sorted(doc.rooms).map((room) => ({
+      ...room,
+      ...(room.tileIds ? { tileIds: [...room.tileIds].sort(compareText) } : {}),
+    })),
     nodes: sorted(doc.nodes),
     routes: sorted(doc.routes),
+    ...(doc.serviceConnections
+      ? { serviceConnections: sorted(doc.serviceConnections) }
+      : {}),
     fittings: sorted(doc.fittings),
     dependencies: [...doc.dependencies].sort((a, b) => compareText(a.id, b.id)),
   };
@@ -668,8 +693,24 @@ export function compileLayout(input: unknown): CompiledLayout {
     if (e.tileIds.length === 2 && !occupiedEdges.has(e.key))
       regions.join(e.tileIds[0], e.tileIds[1]);
   for (const r of normalized.rooms) {
+    const chosen = r.tileIds
+      ? out.tiles.filter(
+          (tile) => r.tileIds!.includes(tile.id) && tile.deckId === r.deckId,
+        )
+      : undefined;
+    if (chosen && chosen.length !== r.tileIds!.length) {
+      diagnostic(
+        "room-tiles",
+        [r.id],
+        "Room area references missing tiles or tiles on another deck.",
+      );
+      continue;
+    }
     const t = out.tiles.find(
-      (t) => t.deckId === r.deckId && inside(r.seed, t.vertices, false),
+      (t) =>
+        t.deckId === r.deckId &&
+        (!r.tileIds || r.tileIds.includes(t.id)) &&
+        inside(r.seed, t.vertices, false),
     );
     if (!t) {
       diagnostic(
@@ -680,7 +721,8 @@ export function compileLayout(input: unknown): CompiledLayout {
       continue;
     }
     const regionId = regions.root(t.id),
-      members = out.tiles.filter((t) => regions.root(t.id) === regionId);
+      members =
+        chosen ?? out.tiles.filter((t) => regions.root(t.id) === regionId);
     out.rooms.push({
       id: r.id,
       regionId,
@@ -858,6 +900,7 @@ export function compileLayout(input: unknown): CompiledLayout {
     "Enclosure and roof are draft proxies. Approved polygon floor/wall/corner Blender adapters are not yet assigned.",
     "warning",
   );
+  resolveBoundaryTreatments(doc, out);
   out.walls.sort((a, b) => compareText(a.key, b.key));
   out.loops.sort(
     (a, b) =>
@@ -873,49 +916,4 @@ export function fittingPolygon(f: LayoutDocument["fittings"][number]): Point[] {
     return [q[0] + f.position[0], q[1] + f.position[1]];
   });
 }
-/** Exact segment support: convex clipping intervals represented as rational pairs. */
-export function segmentSupported(
-  a: Point,
-  b: Point,
-  tiles: FloorTile[],
-): boolean {
-  type Ratio = [number, number];
-  const cmp = (a: Ratio, b: Ratio) =>
-    BigInt(a[0]) * BigInt(b[1]) - BigInt(b[0]) * BigInt(a[1]);
-  const intervals: { lo: Ratio; hi: Ratio }[] = [];
-  for (const t of tiles) {
-    let lo: Ratio = [0, 1],
-      hi: Ratio = [1, 1],
-      valid = true;
-    for (let i = 0; i < t.vertices.length; i++) {
-      const p = t.vertices[i],
-        q = t.vertices[(i + 1) % t.vertices.length],
-        ca = cross(p, q, a),
-        cb = cross(p, q, b),
-        delta = cb - ca;
-      if (delta === 0) {
-        if (ca < 0) {
-          valid = false;
-          break;
-        }
-        continue;
-      }
-      const r: Ratio = delta > 0 ? [-ca, delta] : [ca, -delta];
-      if (delta > 0 && cmp(r, lo) > 0) lo = r;
-      if (delta < 0 && cmp(r, hi) < 0) hi = r;
-      if (cmp(lo, hi) > 0) {
-        valid = false;
-        break;
-      }
-    }
-    if (valid) intervals.push({ lo, hi });
-  }
-  intervals.sort((a, b) => Number(cmp(a.lo, b.lo)));
-  let end: Ratio = [0, 1];
-  for (const i of intervals) {
-    if (cmp(i.lo, end) > 0) return false;
-    if (cmp(i.hi, end) > 0) end = i.hi;
-    if (cmp(end, [1, 1]) >= 0) return true;
-  }
-  return false;
-}
+export { segmentSupported } from "./layout-geometry";

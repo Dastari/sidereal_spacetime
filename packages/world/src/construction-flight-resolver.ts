@@ -6,16 +6,21 @@ import type {
 import {
   CONSTRUCTION_FLIGHT_DEFINITION,
   CONSTRUCTION_FLIGHT_DEFINITION_SHA256,
-} from "../../sim/src/construction-flight";
-import { QUALIFIED_WAYFARER_SHA256 } from "../../sim/src/wayfarer-walking-bindings";
+} from "@sidereal/sim/construction-flight";
+import { isQualifiedWayfarerBlueprint } from "@sidereal/sim/wayfarer-walking-bindings";
 import {
-  LAB_FLIGHT_ACTUATORS,
-  LAB_FLIGHT_COMPUTER,
-  LAB_FLIGHT_MASS,
-  LAB_FLIGHT_PROFILE,
-  LAB_FLIGHT_SPEED,
-} from "@sidereal/content/flight";
-import { LAB_HULL } from "@sidereal/content/space";
+  WAYFARER_FLIGHT_PROFILE,
+  WAYFARER_FLIGHT_SPEED,
+  WAYFARER_PHYSICAL_CATALOG,
+} from "@sidereal/content/physical-definitions";
+import {
+  flightDefinitionCatalogHash,
+  type CompiledFlightActuator,
+  type CompiledFlightComputer,
+  type CompiledFlightHull,
+} from "@sidereal/sim/flight-definition";
+import type { FlightEnvelope } from "@sidereal/sim/ifcs";
+import type { CompiledFlightRow } from "./construction-flight-compilation";
 export type ConstructionFlightBindingRow = Infer<
   typeof constructionFlightBinding.rowType
 >;
@@ -24,116 +29,197 @@ export type ConstructionFlightFittingRow = Infer<
 >;
 export interface FlightDefinitionReader {
   binding(shipId: string): ConstructionFlightBindingRow | undefined | null;
-  /** Distinguishes legacy stock from a broken/missing authored binding. */
   constructionInstanceExists(shipId: string): boolean;
   currentInstanceRevision(instanceId: string): bigint | undefined;
   fittings(shipId: string): Iterable<ConstructionFlightFittingRow>;
+  compiled(shipId: string): CompiledFlightRow | undefined | null;
+  dirty(shipId: string): boolean;
 }
-/** Called once per ship/tick, independent of observers. Uses bounded scalar rows,
- * not document reconstruction each frame. Installation pins the source; refit
- * must increment instance revision and recompile before flight can resume. */
+const catalogHash = flightDefinitionCatalogHash(WAYFARER_PHYSICAL_CATALOG);
+/** Current binding and compiled state are both required. A missing authored
+ * installation can be migrated explicitly; it never selects a stock fixture. */
 export function resolveShipFlightDefinition(
   db: FlightDefinitionReader,
   shipId: string,
 ) {
-  const binding = db.binding(shipId);
-  const standard = {
-    mass: LAB_FLIGHT_MASS,
-    hull: LAB_HULL,
-    profile: LAB_FLIGHT_PROFILE,
-    speed: LAB_FLIGHT_SPEED,
-  };
-  if (!binding)
-    return db.constructionInstanceExists(shipId)
-      ? {
-          status: "invalid" as const,
-          reason: "missing-authored-flight-binding",
-        }
-      : {
-          status: "ready" as const,
-          kind: "legacy-stock" as const,
-          ...standard,
-          computer: LAB_FLIGHT_COMPUTER,
-          actuators: LAB_FLIGHT_ACTUATORS,
-        };
-  if (
+  const binding = db.binding(shipId),
+    compiled = db.compiled(shipId);
+  let reason = "";
+  if (!binding) reason = "missing-authored-flight-binding";
+  else if (
     binding.shipId !== shipId ||
     binding.instanceId !== shipId ||
     binding.instanceRevision !== db.currentInstanceRevision(shipId) ||
-    binding.blueprintSha256 !== QUALIFIED_WAYFARER_SHA256 ||
+    !isQualifiedWayfarerBlueprint(binding.blueprintSha256) ||
     binding.definitionId !== CONSTRUCTION_FLIGHT_DEFINITION ||
     binding.definitionSha256 !== CONSTRUCTION_FLIGHT_DEFINITION_SHA256
   )
+    reason = "authored-flight-definition-mismatch";
+  else if (!["active", "installed-dormant"].includes(binding.lifecycle))
+    reason = "invalid-flight-lifecycle";
+  if (!compiled)
     return {
       status: "invalid" as const,
-      reason: "authored-flight-definition-mismatch",
+      reason: reason || "flight-compilation-pending",
     };
-  if (!["active", "installed-dormant"].includes(binding.lifecycle))
-    return { status: "invalid" as const, reason: "invalid-flight-lifecycle" };
   const rows: ConstructionFlightFittingRow[] = [];
   for (const row of db.fittings(shipId)) {
-    if (rows.length >= 10)
-      return { status: "invalid" as const, reason: "flight-fitting-budget" };
+    if (rows.length === 256) {
+      reason = "flight-fitting-budget";
+      break;
+    }
     rows.push(row);
   }
   if (
-    rows.length !== 10 ||
-    new Set(rows.map((r) => r.id)).size !== 10 ||
-    new Set(rows.map((r) => r.sourceDeviceId)).size !== 10 ||
-    new Set(rows.map((r) => r.placedObjectId)).size !== 10 ||
+    new Set(rows.map((r) => r.id)).size !== rows.length ||
+    new Set(rows.map((r) => r.placedObjectId)).size !== rows.length ||
+    new Set(rows.map((r) => r.sourceDeviceId)).size !== rows.length ||
     rows.some(
       (r) =>
         r.shipId !== shipId ||
         !r.id ||
         !r.placedObjectId ||
+        !r.sourceDeviceId ||
         !Number.isFinite(r.availability) ||
         r.availability < 0 ||
-        r.availability > 1,
+        r.availability > 1 ||
+        !Number.isInteger(r.definitionRevision) ||
+        r.definitionRevision < 1,
     )
   )
-    return { status: "invalid" as const, reason: "incomplete-flight-fittings" };
-  const computer = rows.find(
-    (r) => r.sourceDeviceId === LAB_FLIGHT_COMPUTER.id,
-  );
+    reason = "invalid-flight-fittings";
+  if (db.dirty(shipId)) reason = reason || "flight-compilation-pending";
+  if (compiled.status !== "ready")
+    reason = reason || compiled.reason || "flight-compilation-rejected";
+  if (compiled.definitionHash !== catalogHash)
+    reason = reason || "physical-definition-catalog-mismatch";
   if (
-    !computer ||
-    computer.kind !== "computer" ||
-    computer.definitionId !== LAB_FLIGHT_COMPUTER.definitionId
+    compiled.shipId !== shipId ||
+    ![
+      compiled.massKg,
+      compiled.centerX,
+      compiled.centerY,
+      compiled.inertiaKgM2,
+    ].every(Number.isFinite) ||
+    compiled.massKg <= 0 ||
+    compiled.inertiaKgM2 <= 0
   )
-    return { status: "invalid" as const, reason: "invalid-flight-computer" };
-  const actuators = [];
-  for (const source of LAB_FLIGHT_ACTUATORS) {
-    const actual = rows.find((r) => r.sourceDeviceId === source.id);
+    return {
+      status: "invalid" as const,
+      reason: reason || "missing-valid-flight-inertia",
+    };
+  try {
+    const hull = JSON.parse(compiled.hullJson) as CompiledFlightHull;
     if (
-      !actual ||
-      actual.kind !== "actuator" ||
-      actual.definitionId !== source.definitionId
+      !hull ||
+      ![
+        hull.radius,
+        hull.halfLength,
+        hull.lateralOffset,
+        hull.longitudinalOffset,
+        hull.authoredMidpointX,
+        hull.authoredMidpointY,
+      ].every(Number.isFinite) ||
+      hull.lateralOffset !== hull.authoredMidpointX - compiled.centerX ||
+      hull.longitudinalOffset !== hull.authoredMidpointY - compiled.centerY
     )
-      return { status: "invalid" as const, reason: "invalid-flight-actuator" };
-    actuators.push({
-      ...source,
-      id: actual.id,
-      sourceDeviceId: source.id,
-      placedObjectId: actual.placedObjectId,
-      availability:
-        actual.installed && actual.powered ? actual.availability : 0,
-    });
+      throw Error("invalid-compiled-flight-hull");
+    let actuators = reason
+      ? []
+      : (JSON.parse(compiled.actuatorsJson) as CompiledFlightActuator[]);
+    let computers = reason
+      ? []
+      : (JSON.parse(compiled.computersJson) as CompiledFlightComputer[]);
+    const byId = new Map(rows.map((r) => [r.id, r]));
+    if (
+      !Array.isArray(actuators) ||
+      !Array.isArray(computers) ||
+      actuators.length > 256 ||
+      computers.length > 256
+    )
+      throw Error("invalid-compiled-flight-devices");
+    for (const device of [...actuators, ...computers]) {
+      const fitting = byId.get(device.id);
+      const physical = WAYFARER_PHYSICAL_CATALOG.definitions.find(
+        (d) =>
+          d.id === device.definitionId &&
+          d.revision === device.definitionRevision,
+      );
+      if (
+        !physical ||
+        !("fittingDefinitionId" in physical) ||
+        physical.fittingDefinitionId !== fitting?.definitionId ||
+        !fitting ||
+        fitting.placedObjectId !== device.placedObjectId ||
+        fitting.definitionRevision !== device.definitionRevision ||
+        !fitting.installed
+      ) {
+        reason = "stale-compiled-flight-device";
+        break;
+      }
+      if (
+        "availability" in device &&
+        device.availability !== (fitting.powered ? fitting.availability : 0)
+      ) {
+        reason = "stale-compiled-flight-availability";
+        break;
+      }
+    }
+    if (reason) {
+      actuators = [];
+      computers = [];
+    }
+    const computer =
+      computers.find(
+        (c) => c.installed && c.powered && byId.get(c.id)?.powered,
+      ) ?? computers.find((c) => c.installed);
+    return {
+      status: reason
+        ? ("rejected" as const)
+        : binding?.lifecycle === "active"
+          ? ("ready" as const)
+          : ("dormant" as const),
+      reason,
+      kind: "construction" as const,
+      mass: {
+        massKg: compiled.massKg,
+        centerX: compiled.centerX,
+        centerY: compiled.centerY,
+        inertiaKgM2: compiled.inertiaKgM2,
+      },
+      hull,
+      profile: WAYFARER_FLIGHT_PROFILE,
+      speed: WAYFARER_FLIGHT_SPEED,
+      envelope: reason
+        ? {
+            forward: 0,
+            reverse: 0,
+            left: 0,
+            right: 0,
+            angularPositive: 0,
+            angularNegative: 0,
+          }
+        : (JSON.parse(compiled.envelopeJson) as FlightEnvelope),
+      stationId: binding?.stationId ?? "",
+      deckId: binding?.deckId ?? "",
+      computer: {
+        id: computer?.id ?? "",
+        installed: !!computer,
+        powered:
+          !reason &&
+          binding?.lifecycle === "active" &&
+          !!computer?.powered &&
+          !!byId.get(computer.id)?.powered,
+      },
+      actuators: actuators.map((a) => ({
+        ...a,
+        sourceDeviceId: byId.get(a.id)!.sourceDeviceId,
+      })),
+    };
+  } catch (error) {
+    return {
+      status: "invalid" as const,
+      reason: String(error instanceof Error ? error.message : error),
+    };
   }
-  return {
-    status:
-      binding.lifecycle === "active"
-        ? ("ready" as const)
-        : ("dormant" as const),
-    kind: "construction" as const,
-    ...standard,
-    stationId: binding.stationId,
-    deckId: binding.deckId,
-    computer: {
-      ...LAB_FLIGHT_COMPUTER,
-      id: computer.id,
-      installed: computer.installed,
-      powered: binding.lifecycle === "active" && computer.powered,
-    },
-    actuators,
-  };
 }

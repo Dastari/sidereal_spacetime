@@ -2,6 +2,8 @@ import { stepContacts, type RigidBody } from "./collision";
 import { DT, type Intent } from "./index";
 import {
   pilotDesiredMotion,
+  deriveEnvelope,
+  type FlightEnvelope,
   desiredWrench,
   actuatorWrench,
   solveFlight,
@@ -36,6 +38,8 @@ export interface SystemFlightControl {
   intent: Intent;
   mass: MassProperties;
   actuators: readonly Actuator[];
+  /** Compiled availability envelope; derive once per tick for older callers. */
+  envelope?: FlightEnvelope;
   profile: FlightProfile;
   maxForwardSpeed: number;
   maxReverseSpeed: number;
@@ -44,12 +48,18 @@ export interface SystemSpaceStep {
   bodies: readonly RigidBody[];
   changedBodyIds: string[];
   commands: { bodyId: string; actuators: { id: string; throttle: number }[] }[];
+  /** Actual accepted force kicks, summed per actuator over this invocation. */
+  consumption: SystemActuatorConsumption[];
   impacts: number;
   exhausted: boolean;
   reason?:
     "body-budget" | "actuator-budget" | "contact-budget" | "coordinate-bound";
   /** Whole 60Hz substeps completed, not wall-clock elapsed time. Never catch up. */
   completedSubsteps: number;
+}
+export interface SystemActuatorConsumption {
+  bodyId: string;
+  actuators: { id: string; newtonSeconds: number }[];
 }
 const compareIds = (a: { id: string }, b: { id: string }) =>
   a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
@@ -68,6 +78,9 @@ function bodyValid(body: RigidBody): void {
       body.radius,
       body.halfLength,
       body.longitudinalOffset ?? 0,
+      body.lateralOffset ?? 0,
+      body.authoredMidpointX ?? 0,
+      body.authoredMidpointY ?? 0,
     ].every(Number.isFinite) ||
     Math.min(body.massKg, body.inertia, body.radius) <= 0 ||
     body.halfLength < 0 ||
@@ -79,6 +92,9 @@ function bodyValid(body: RigidBody): void {
       body.radius,
       body.halfLength,
       Math.abs(body.longitudinalOffset ?? 0),
+      Math.abs(body.lateralOffset ?? 0),
+      Math.abs(body.authoredMidpointX ?? 0),
+      Math.abs(body.authoredMidpointY ?? 0),
     ) > 1e6
   )
     throw new Error("Invalid bounded system body");
@@ -113,6 +129,7 @@ export function stepSystemSpace(
     bodies: input,
     changedBodyIds: [],
     commands: [],
+    consumption: [],
     impacts: 0,
     exhausted: true,
     reason,
@@ -144,7 +161,12 @@ export function stepSystemSpace(
       throw new Error("Missing or duplicate controlled body");
     if (
       control.mass.massKg !== body.massKg ||
-      control.mass.inertiaKgM2 !== body.inertia
+      control.mass.inertiaKgM2 !== body.inertia ||
+      (body.lateralOffset ?? 0) !==
+        (body.authoredMidpointX ?? 0) - control.mass.centerX ||
+      (body.longitudinalOffset ?? 0) !==
+        (body.authoredMidpointY ?? body.longitudinalOffset ?? 0) -
+          control.mass.centerY
     )
       throw new Error("Flight/contact inertial properties differ");
     // Exercise existing validation even when disabled: malformed trusted content
@@ -169,15 +191,22 @@ export function stepSystemSpace(
       actuatorIds.add(actuator.id);
       actuatorWrench(actuator, control.mass);
     }
-    controlMap.set(control.bodyId, control);
+    controlMap.set(control.bodyId, {
+      ...control,
+      envelope:
+        control.envelope ?? deriveEnvelope(control.actuators, control.mass),
+    });
   }
   let bodies = input.map((body) => ({ ...body })).sort(compareIds);
   let impacts = 0,
     completedSubsteps = 0;
   let reason: SystemSpaceStep["reason"];
-  const commandMap = new Map<string, { id: string; throttle: number }[]>();
+  let commandMap = new Map<string, { id: string; throttle: number }[]>();
+  const consumption = new Map<string, Map<string, number>>();
   for (let step = 0; step < SYSTEM_SPACE_LIMITS.substeps; step++) {
     const beforeKick = bodies;
+    const beforeCommands = new Map(commandMap);
+    const attemptedConsumption = new Map<string, Map<string, number>>();
     const kicked = bodies.map((body) => {
       const control = controlMap.get(body.id);
       if (!control) return { ...body };
@@ -189,18 +218,36 @@ export function stepSystemSpace(
           control.maxForwardSpeed,
           control.maxReverseSpeed,
           control.profile.maxAngularSpeed,
+          control.envelope,
+          control.profile,
         ),
         control.mass,
         control.actuators,
         control.enabled,
         control.profile,
+        control.envelope,
+      );
+      const achievedCommands = new Map(
+        flight.commands.map((c) => [c.id, c.throttle]),
+      );
+      attemptedConsumption.set(
+        body.id,
+        new Map(
+          control.actuators.map((a) => [
+            a.id,
+            a.maxThrustN *
+              a.availability *
+              (achievedCommands.get(a.id) ?? 0) *
+              DT,
+          ]),
+        ),
       );
       commandMap.set(
         body.id,
         control.actuators
           .map((a) => ({
             id: a.id,
-            throttle: flight.commands.find((c) => c.id === a.id)?.throttle ?? 0,
+            throttle: achievedCommands.get(a.id) ?? 0,
           }))
           .sort(compareIds),
       );
@@ -242,6 +289,7 @@ export function stepSystemSpace(
       }
     } catch {
       bodies = beforeKick;
+      commandMap = beforeCommands;
       reason = "coordinate-bound";
       break;
     }
@@ -251,10 +299,19 @@ export function stepSystemSpace(
       for (const body of result.bodies) bodyValid(body);
     } catch {
       bodies = beforeKick;
+      commandMap = beforeCommands;
       reason = "coordinate-bound";
       break;
     }
     bodies = result.bodies;
+    // Coordinate rollback discards the attempted kick. Contact exhaustion keeps
+    // its accepted velocity kick, even if no complete drift substep is counted.
+    for (const [bodyId, values] of attemptedConsumption) {
+      let total = consumption.get(bodyId);
+      if (!total) consumption.set(bodyId, (total = new Map()));
+      for (const [id, value] of values)
+        total.set(id, (total.get(id) ?? 0) + value);
+    }
     impacts += result.impacts;
     if (result.exhausted) {
       reason = "contact-budget";
@@ -271,6 +328,14 @@ export function stepSystemSpace(
       bodyId,
       actuators,
     })),
+    consumption: [...consumption]
+      .map(([bodyId, values]) => ({
+        bodyId,
+        actuators: [...values]
+          .map(([id, newtonSeconds]) => ({ id, newtonSeconds }))
+          .sort(compareIds),
+      }))
+      .sort((a, b) => (a.bodyId < b.bodyId ? -1 : a.bodyId > b.bodyId ? 1 : 0)),
     impacts,
     exhausted: reason !== undefined,
     ...(reason ? { reason } : {}),

@@ -1,8 +1,10 @@
+import { compileShipFlight } from "./construction-flight-compilation";
+import { readConstructionFlightInput } from "./construction-flight-input";
 import type { ConstructionPilotContext } from "./construction-pilot-authority";
 import { requireGame } from "./auth";
 import { requireGrant } from "./construction";
-import { qualifyPilotGeometry } from "../../sim/src/construction-pilot";
-import { wayfarerThresholdElevation } from "../../sim/src/wayfarer-threshold";
+import { qualifyPilotGeometry } from "@sidereal/sim/construction-pilot";
+import { wayfarerThresholdElevation } from "@sidereal/sim/wayfarer-threshold";
 import { constructionCollision } from "./construction-doors";
 import { resolveShipFlightDefinition } from "./construction-flight-resolver";
 export interface ActivateConstructionFlightArgs {
@@ -62,6 +64,9 @@ export function activateConstructionFlight(
     throw Error(
       "Complete empty pilot installation and canonical motion required",
     );
+  compileShipFlight(ctx.db, b.shipId, (id) =>
+    readConstructionFlightInput(ctx, id),
+  );
   const definition = resolveShipFlightDefinition(
     {
       binding: () => b,
@@ -69,6 +74,8 @@ export function activateConstructionFlight(
       currentInstanceRevision: () => i.revision,
       fittings: (shipId) =>
         ctx.db.constructionFlightFitting.by_ship.filter(shipId),
+      compiled: (id) => ctx.db.constructionFlightCompiled.shipId.find(id),
+      dirty: (id) => !!ctx.db.constructionFlightDirty.shipId.find(id),
     },
     b.shipId,
   );

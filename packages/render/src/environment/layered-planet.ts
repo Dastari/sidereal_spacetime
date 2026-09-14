@@ -1,7 +1,11 @@
 import type { Material } from "@babylonjs/core/Materials/material";
-import type { PlanetBuildData, PackedPlanetGeometry, PlanetWeatherData } from "./planet-build";
+import type {
+  PlanetBuildData,
+  PackedPlanetGeometry,
+  PlanetWeatherData,
+} from "./planet-build";
 import { terrainResolution } from "./planet-terrain";
-import { setMeshRole } from '../mesh-roles';
+import { setMeshRole } from "../mesh-roles";
 import { createPlanetSmoke } from "./planet-smoke";
 import { createOceanGlints } from "./planet-sparkles";
 import type { ShaderMaterial } from "@babylonjs/core/Materials/shaderMaterial";
@@ -26,7 +30,12 @@ import {
   type PlanetRecipe,
 } from "../../../content/src/environment";
 export type PlanetLOD = 0 | 1 | 2;
-function makePbr(scene: Scene, name: string, roughness: number, color = "#ffffff") {
+function makePbr(
+  scene: Scene,
+  name: string,
+  roughness: number,
+  color = "#ffffff",
+) {
   const m = new PBRMaterial(name, scene);
   m.albedoColor = Color3.FromHexString(color).toLinearSpace();
   m.metallic = 0;
@@ -40,10 +49,9 @@ function makePbr(scene: Scene, name: string, roughness: number, color = "#ffffff
 function geometryMesh(
   scene: Scene,
   name: string,
-  geometry: Pick<
-    SurfaceGeometry,
-    "positions" | "normals" | "colors" | "indices"
-  > | PackedPlanetGeometry,
+  geometry:
+    | Pick<SurfaceGeometry, "positions" | "normals" | "colors" | "indices">
+    | PackedPlanetGeometry,
   material: PBRMaterial,
 ) {
   const mesh = new Mesh(name, scene),
@@ -52,17 +60,24 @@ function geometryMesh(
   data.positions = geometry.positions;
   data.normals = geometry.normals;
   // Authored palettes and helper tints are sRGB; PBR vertex albedo is linear.
-  data.colors = "prepared" in geometry ? geometry.colors : geometry.colors.map((v, i) =>
-    i % 4 === 3
-      ? v
-      : v <= 0.04045
-        ? v / 12.92
-        : Math.pow((v + 0.055) / 1.055, 2.4),
-  );
+  data.colors =
+    "prepared" in geometry
+      ? geometry.colors
+      : geometry.colors.map((v, i) =>
+          i % 4 === 3
+            ? v
+            : v <= 0.04045
+              ? v / 12.92
+              : Math.pow((v + 0.055) / 1.055, 2.4),
+        );
   // Pure helpers use mathematical outward CCW; Babylon's builders use reverse.
-  data.indices = "prepared" in geometry ? geometry.indices : geometry.indices.map(
-    (_, i) => geometry.indices[i % 3 === 1 ? i + 1 : i % 3 === 2 ? i - 1 : i],
-  );
+  data.indices =
+    "prepared" in geometry
+      ? geometry.indices
+      : geometry.indices.map(
+          (_, i) =>
+            geometry.indices[i % 3 === 1 ? i + 1 : i % 3 === 2 ? i - 1 : i],
+        );
   data.applyToMesh(mesh);
   if ("iceOptics" in geometry && geometry.iceOptics)
     mesh.setVerticesData("iceOptics", geometry.iceOptics, false, 2);
@@ -77,16 +92,19 @@ export function* stageLayeredPlanet(
   recipe: PlanetRecipe,
   lod: PlanetLOD,
   prepared?: PlanetBuildData,
-  shared?: <T extends Material>(key:string,create:()=>T)=>T,
-  weatherBuilder?: (phase:number)=>Promise<PlanetWeatherData>,
+  shared?: <T extends Material>(key: string, create: () => T) => T,
+  weatherBuilder?: (phase: number) => Promise<PlanetWeatherData>,
 ) {
-  const pbr = (s:Scene,key:string,roughness:number,color?:string) => shared ? shared(key,()=>makePbr(s,key,roughness,color)) : makePbr(s,key,roughness,color);
+  const pbr = (s: Scene, key: string, roughness: number, color?: string) =>
+    shared
+      ? shared(key, () => makePbr(s, key, roughness, color))
+      : makePbr(s, key, roughness, color);
   const root = new TransformNode(name + "-layers", scene),
     effects = planetEffects(recipe),
     emitters: Mesh[] = [],
     animatedMaterials: ShaderMaterial[] = [],
     textures: Texture[] = [];
-  root.metadata={role:"planet",layeredPlanet:true,lod};
+  root.metadata = { role: "planet", layeredPlanet: true, lod };
   if (prepared) root.setEnabled(false);
   const water = ["temperate", "ocean"].includes(recipe.style);
   const core = CreateSphere(
@@ -135,8 +153,13 @@ export function* stageLayeredPlanet(
   let weatherStep = 0;
   let weatherPending = false;
   let weatherReady: PlanetWeatherData | undefined;
-  const requestedResolution = prepared?.requested ?? (lod === 0 ? Math.min(96, Math.max(12, recipe.resolution)) : Math.min(lod === 1 ? 32 : 16, recipe.resolution));
-  const n = prepared?.resolution ?? terrainResolution(recipe, requestedResolution);
+  const requestedResolution =
+    prepared?.requested ??
+    (lod === 0
+      ? Math.min(96, Math.max(12, recipe.resolution))
+      : Math.min(lod === 1 ? 32 : 16, recipe.resolution));
+  const n =
+    prepared?.resolution ?? terrainResolution(recipe, requestedResolution);
   const generated = prepared?.generated ?? buildLayeredTerrain(recipe, n);
   yield root;
   if (generated.water.faces) {
@@ -161,7 +184,8 @@ export function* stageLayeredPlanet(
       glints.mesh.parent = root;
       animatedMaterials.push(glints.material);
     }
-    sea.metadata = { role: "planet",
+    sea.metadata = {
+      role: "planet",
       planetOcean: true,
       faces: generated.water.faces,
       resolution: n,
@@ -180,7 +204,8 @@ export function* stageLayeredPlanet(
     terrainMaterial,
   );
   terrain.parent = root;
-  terrain.metadata = { role: "planet",
+  terrain.metadata = {
+    role: "planet",
     voxelPlanet: true,
     layered: true,
     style: recipe.style,
@@ -190,7 +215,11 @@ export function* stageLayeredPlanet(
   };
   yield root;
   if (generated.ice.faces) {
-    const iceMaterial = shared ? shared(name+"-exposed-ice-material",()=>createIceMaterial(scene,name+"-exposed-ice-material")) : createIceMaterial(scene,name+"-exposed-ice-material");
+    const iceMaterial = shared
+      ? shared(name + "-exposed-ice-material", () =>
+          createIceMaterial(scene, name + "-exposed-ice-material"),
+        )
+      : createIceMaterial(scene, name + "-exposed-ice-material");
     const ice = geometryMesh(
       scene,
       name + "-exposed-ice",
@@ -198,11 +227,20 @@ export function* stageLayeredPlanet(
       iceMaterial,
     );
     ice.parent = root;
-    ice.metadata = { role: "planet", planetIce: true, faces: generated.ice.faces };
+    ice.metadata = {
+      role: "planet",
+      planetIce: true,
+      faces: generated.ice.faces,
+    };
   }
   yield root;
   if (generated.spill.faces) {
-    const spill = createLavaSpill(scene, name, generated.spill, prepared?.geometry.spill);
+    const spill = createLavaSpill(
+      scene,
+      name,
+      generated.spill,
+      prepared?.geometry.spill,
+    );
     spill.mesh.parent = root;
     animatedMaterials.push(spill.material);
   }
@@ -212,17 +250,24 @@ export function* stageLayeredPlanet(
     lavaMat.emissiveColor = new Color3(1.8, 0.16, 0.012).scale(
       Math.max(0.6, recipe.emission),
     );
-    const lava = geometryMesh(scene, name + "-lava", prepared?.geometry.lava ?? generated.lava, lavaMat);
+    const lava = geometryMesh(
+      scene,
+      name + "-lava",
+      prepared?.geometry.lava ?? generated.lava,
+      lavaMat,
+    );
     lava.parent = root;
     lava.metadata = { role: "planet", planetEmitter: true };
     emitters.push(lava);
   }
   yield root;
   if (lod < 2 && generated.trees.length) {
-    const trees = prepared ? { ...prepared.geometry.forest, treeCount: prepared.forestCount } : buildPlanetTrees(
-      generated.trees.filter((_, i) => i % (lod === 0 ? 6 : 2) === 0),
-      { scale: lod === 0 ? 4 : 1, puffy: lod === 0 },
-    );
+    const trees = prepared
+      ? { ...prepared.geometry.forest, treeCount: prepared.forestCount }
+      : buildPlanetTrees(
+          generated.trees.filter((_, i) => i % (lod === 0 ? 6 : 2) === 0),
+          { scale: lod === 0 ? 4 : 1, puffy: lod === 0 },
+        );
     const forest = geometryMesh(
       scene,
       name + "-forest",
@@ -230,11 +275,17 @@ export function* stageLayeredPlanet(
       pbr(scene, name + "-forest-material", 0.72),
     );
     forest.parent = root;
-    forest.metadata = { role: "planet", planetForest: true, trees: trees.treeCount };
+    forest.metadata = {
+      role: "planet",
+      planetForest: true,
+      trees: trees.treeCount,
+    };
   }
   yield root;
   if (lod < 2 && generated.crystals.length) {
-    const crystalData = prepared ? { ...prepared.geometry.crystals, crystalCount: prepared.crystalCount } : buildPlanetCrystals(generated.crystals);
+    const crystalData = prepared
+      ? { ...prepared.geometry.crystals, crystalCount: prepared.crystalCount }
+      : buildPlanetCrystals(generated.crystals);
     const crystalMat = pbr(scene, name + "-crystal-material", 0.23);
     crystalMat.metallic = 0.05;
     crystalMat.emissiveColor = new Color3(0.43, 0.025, 0.7).scale(
@@ -247,7 +298,8 @@ export function* stageLayeredPlanet(
       crystalMat,
     );
     crystals.parent = root;
-    crystals.metadata = { role: "planet",
+    crystals.metadata = {
+      role: "planet",
       planetEmitter: true,
       crystals: crystalData.crystalCount,
     };
@@ -255,13 +307,15 @@ export function* stageLayeredPlanet(
   }
   yield root;
   if (lod < 2 && recipe.cloudCoverage > 0) {
-    const geometry = prepared ? { ...prepared.geometry.clouds, faces: prepared.cloudFaces } : buildPlanetClouds({
-      seed: recipe.seed,
-      coverage: recipe.cloudCoverage,
-      tint: recipe.style === "toxic" ? [0.62, 0.85, 0.18] : undefined,
-      radius: 1.08,
-      detail: lod === 0 ? 96 : 48,
-    });
+    const geometry = prepared
+      ? { ...prepared.geometry.clouds, faces: prepared.cloudFaces }
+      : buildPlanetClouds({
+          seed: recipe.seed,
+          coverage: recipe.cloudCoverage,
+          tint: recipe.style === "toxic" ? [0.62, 0.85, 0.18] : undefined,
+          radius: 1.08,
+          detail: lod === 0 ? 96 : 48,
+        });
     weatherMaterial = pbr(scene, name + "-cloud-material", 0.95);
     weatherMaterial.directIntensity = 2.4;
     weatherMaterial.subSurface.isTranslucencyEnabled = true;
@@ -274,13 +328,18 @@ export function* stageLayeredPlanet(
       weatherMaterial,
     );
     cloud.parent = root;
-    cloud.metadata = { role: "planet", planetWeather: true, faces: geometry.faces };
+    cloud.metadata = {
+      role: "planet",
+      planetWeather: true,
+      faces: geometry.faces,
+    };
     clouds = cloud;
   }
   yield root;
   smoke = createPlanetSmoke(scene, name, recipe, lod, prepared?.geometry.smoke);
   if (smoke) smoke.parent = root;
-  root.metadata = { role: "planet",
+  root.metadata = {
+    role: "planet",
     layeredPlanet: true,
     lod,
     resolution: n,
@@ -300,14 +359,36 @@ export function* stageLayeredPlanet(
       const step = Math.floor(age / 8);
       if (weatherBuilder && weatherMaterial && !root.isDisposed()) {
         if (weatherReady && !reducedMotion) {
-          const data=weatherReady;weatherReady=undefined;
-          const next=geometryMesh(scene,name+"-weather",data.geometry,weatherMaterial);
-          next.parent=root;next.metadata={role:"planet",planetWeather:true,faces:data.faces};
-          clouds?.dispose(false,false);clouds=next;
+          const data = weatherReady;
+          weatherReady = undefined;
+          const next = geometryMesh(
+            scene,
+            name + "-weather",
+            data.geometry,
+            weatherMaterial,
+          );
+          next.parent = root;
+          next.metadata = {
+            role: "planet",
+            planetWeather: true,
+            faces: data.faces,
+          };
+          clouds?.dispose(false, false);
+          clouds = next;
         }
-        if (!reducedMotion && step!==weatherStep && !weatherPending) {
-          weatherPending=true;weatherStep=step;
-          void weatherBuilder(step*8).then(data=>{if(!root.isDisposed())weatherReady=data;}).catch(()=>{weatherStep=-1;}).finally(()=>{weatherPending=false;});
+        if (!reducedMotion && step !== weatherStep && !weatherPending) {
+          weatherPending = true;
+          weatherStep = step;
+          void weatherBuilder(step * 8)
+            .then((data) => {
+              if (!root.isDisposed()) weatherReady = data;
+            })
+            .catch(() => {
+              weatherStep = -1;
+            })
+            .finally(() => {
+              weatherPending = false;
+            });
         }
         return clouds;
       }
@@ -328,7 +409,11 @@ export function* stageLayeredPlanet(
           weatherMaterial,
         );
         next.parent = root;
-        next.metadata = { role: "planet", planetWeather: true, faces: data.faces };
+        next.metadata = {
+          role: "planet",
+          planetWeather: true,
+          faces: data.faces,
+        };
         clouds?.dispose(false, false);
         clouds = next;
       }
@@ -352,7 +437,14 @@ export function planetLOD(
 }
 
 /** Synchronous authoring/NullEngine entry; browser LOD changes use the staged worker path. */
-export function createLayeredPlanet(scene:Scene,name:string,recipe:PlanetRecipe,lod:PlanetLOD) {
-  const build=stageLayeredPlanet(scene,name,recipe,lod);
-  let step=build.next(); while(!step.done)step=build.next(); return step.value;
+export function createLayeredPlanet(
+  scene: Scene,
+  name: string,
+  recipe: PlanetRecipe,
+  lod: PlanetLOD,
+) {
+  const build = stageLayeredPlanet(scene, name, recipe, lod);
+  let step = build.next();
+  while (!step.done) step = build.next();
+  return step.value;
 }

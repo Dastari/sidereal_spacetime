@@ -1,3 +1,5 @@
+import { acceptedPassengerAccess } from "./construction-passenger-access";
+import { commitFlightCharacter } from "./construction-flight-dirty";
 import {
   ownedGameShipAccess,
   GAME_OWNED_TEMPLATE_NAMESPACE,
@@ -15,21 +17,21 @@ import { requireGame } from "./auth";
 import { requireGrant } from "./construction";
 import { clearAim } from "./combat";
 import { consumeInputControl } from "./input-control";
-import { LAB_INTERACTIONS } from "../../content/src/interactions";
-import { validateInteraction } from "../../sim/src/interactions";
-import { planQualifiedWayfarerFunctionalSeeds } from "../../sim/src/construction-functional-instances";
-import type { ConstructionInstancePlan } from "../../sim/src/construction-instance";
+import { LAB_INTERACTIONS } from "@sidereal/content/interactions";
+import { validateInteraction } from "@sidereal/sim/interactions";
+import { planQualifiedWayfarerFunctionalSeeds } from "@sidereal/sim/construction-functional-instances";
+import type { ConstructionInstancePlan } from "@sidereal/sim/construction-instance";
 import {
-  QUALIFIED_WAYFARER_SHA256,
+  isQualifiedWayfarerBlueprint,
   qualifiedWayfarerInstanceObstacles,
-} from "../../sim/src/wayfarer-walking-bindings";
+} from "@sidereal/sim/wayfarer-walking-bindings";
 import {
   canOccupyDeck,
   sweepDeckCircle,
   type DeckCollisionFrame,
-} from "../../sim/src/construction-collision";
+} from "@sidereal/sim/construction-collision";
 import { constructionCollision } from "./construction-doors";
-import { stableStringify } from "../../sim/src/layout-geometry";
+import { stableStringify } from "@sidereal/sim/layout-geometry";
 
 /** Private binding only. Canonical interaction state and unique seat occupancy
  * continue to use interactionObject/couchSeat, never a second occupancy store. */
@@ -102,7 +104,7 @@ function qualified(ctx: ReadContext, binding: ConstructionInteractionBinding) {
     !deck ||
     deck.instanceId !== instance.id ||
     deck.elevation !== 0 ||
-    instance.blueprintSha256 !== QUALIFIED_WAYFARER_SHA256 ||
+    !isQualifiedWayfarerBlueprint(instance.blueprintSha256) ||
     instance.revision !== binding.instanceRevision ||
     object.shipId !== instance.id ||
     object.placementId !== binding.placedObjectId
@@ -236,7 +238,7 @@ export function installQualifiedInstanceInteractions(
   /** Trusted server factory output only; never a reducer argument. */
   suppliedSeeds?: ReturnType<typeof planQualifiedWayfarerFunctionalSeeds>,
 ) {
-  if (plan.blueprintSha256 !== QUALIFIED_WAYFARER_SHA256) return;
+  if (!isQualifiedWayfarerBlueprint(plan.blueprintSha256)) return;
   const instance = ctx.db.constructionInstance.id.find(plan.instanceId);
   if (!instance)
     throw new SenderError("Interaction installation requires spawned instance");
@@ -366,12 +368,16 @@ export function releaseConstructionSeat(
     return { handled: true, released: false };
   }
   ctx.db.couchSeat.characterId.delete(characterId);
-  ctx.db.character.id.update({
-    ...actor,
-    localX: exit[0],
-    localY: exit[1],
-    sprinting: false,
-  });
+  commitFlightCharacter(
+    ctx,
+    {
+      ...actor,
+      localX: exit[0],
+      localY: exit[1],
+      sprinting: false,
+    },
+    (row) => ctx.db.character.id.update(row),
+  );
   ctx.db.interactionObject.id.update({
     ...q.object,
     revision: q.object.revision + 1n,
@@ -518,12 +524,16 @@ export function interactWithConstructionObject(
         characterId: actor.id,
         objectId: args.objectId,
       });
-      ctx.db.character.id.update({
-        ...actor,
-        localX: q.definition.seatX,
-        localY: q.definition.seatY,
-        sprinting: false,
-      });
+      commitFlightCharacter(
+        ctx,
+        {
+          ...actor,
+          localX: q.definition.seatX,
+          localY: q.definition.seatY,
+          sprinting: false,
+        },
+        (row) => ctx.db.character.id.update(row),
+      );
       ctx.db.interactionObject.id.update({
         ...q.object,
         revision: q.object.revision + 1n,
@@ -567,19 +577,25 @@ export function constructionInteractionView(ctx: ReadContext) {
     ...ctx.db.constructionGrant.by_principal.filter(ctx.sender),
   ].filter((g) => !g.revoked && g.workspaceId === instance.workspaceId);
   const gameAccess = ownedGameShipAccess(ctx, instance.id, visit.deckId);
+  const passenger =
+    !instance.owner.isEqual(ctx.sender) &&
+    acceptedPassengerAccess(ctx, actor.id).readInterior;
   if (
     instance.workspaceId === GAME_OWNED_TEMPLATE_NAMESPACE &&
-    !gameAccess.readInterior
+    !gameAccess.readInterior &&
+    !passenger
   )
     return [];
   if (
     !gameAccess.readInterior &&
+    !passenger &&
     !grants.some((g) => g.capability === "draft.read")
   )
     return [];
   const canInteract =
-    gameAccess.useObjects ||
-    grants.some((g) => g.capability === "instance.spawn");
+    !passenger &&
+    (gameAccess.useObjects ||
+      grants.some((g) => g.capability === "instance.spawn"));
   return [
     ...ctx.db.constructionInteractionBinding.by_instance.filter(instance.id),
   ].flatMap((binding) => {

@@ -27,7 +27,10 @@ function setup() {
   const input: NativeAirlockRenderInput = {
     instanceId: "room-a",
     deckId: "deck-a",
-    doors: [{ openingId: "door-a", originM: [2,0,0], quarterTurns: 1 }, { openingId: "door-b", originM: [6,2,0], quarterTurns: 3 }],
+    doors: [
+      { openingId: "door-a", originM: [2, 0, 0], quarterTurns: 1 },
+      { openingId: "door-b", originM: [6, 2, 0], quarterTurns: 3 },
+    ],
     elevationM: 3,
     installation: audit.placements.map(
       (p: object & { source: string }, i: number) => ({
@@ -75,11 +78,7 @@ afterEach(() => vi.unstubAllGlobals());
 test("exact native room loads one GLB per source, preserves primitive geometry/materials and installs every unique placement", async () => {
   const s = setup();
   try {
-    const result = await loadNativeAirlockScene(
-      s.scene,
-      s.parent,
-      s.input,
-    );
+    const result = await loadNativeAirlockScene(s.scene, s.parent, s.input);
     expect(s.fetcher).toHaveBeenCalledTimes(7);
     expect(s.fetcher.mock.calls.flat()).not.toContain("/strip.glb");
     expect(result.placements).toHaveLength(s.input.installation.length);
@@ -133,11 +132,7 @@ test("exact native room loads one GLB per source, preserves primitive geometry/m
 test("accepted hinge and seal states share the native bind and unknown state cannot display a deployed gasket", async () => {
   const s = setup();
   try {
-    const result = await loadNativeAirlockScene(
-      s.scene,
-      s.parent,
-      s.input,
-    );
+    const result = await loadNativeAirlockScene(s.scene, s.parent, s.input);
     const leaf = result.placements.find(
       (p) => p.node.metadata.nativeNodePrefix === "GEO-door-leaf--surface",
     )!;
@@ -182,9 +177,18 @@ test("accepted hinge and seal states share the native bind and unknown state can
     expect(ring.isVisible).toBe(false);
     result.setDoors([{ openingId: "door-a", fraction: 0 }]);
     expect(ring.isVisible).toBe(false);
-    const outerRing = result.placements.find(p => p.node.metadata.openingId === "door-b" && p.node.metadata.nativeNodePrefix === "GEO-door-perimeter-seal--surface")!.meshes[0];
-    result.setDoors([{ openingId: "door-a", fraction: 0, sealRetraction: 0 }, { openingId: "door-b", fraction: .75, sealRetraction: 1 }]);
-    expect((outerRing.parent as TransformNode).rotation.y).toBe(-3*Math.PI/8);
+    const outerRing = result.placements.find(
+      (p) =>
+        p.node.metadata.openingId === "door-b" &&
+        p.node.metadata.nativeNodePrefix === "GEO-door-perimeter-seal--surface",
+    )!.meshes[0];
+    result.setDoors([
+      { openingId: "door-a", fraction: 0, sealRetraction: 0 },
+      { openingId: "door-b", fraction: 0.75, sealRetraction: 1 },
+    ]);
+    expect((outerRing.parent as TransformNode).rotation.y).toBe(
+      (-3 * Math.PI) / 8,
+    );
     expect(hinge.rotation.y).toBeCloseTo(0);
     expect(outerRing.morphTargetManager).not.toBe(ring.morphTargetManager);
     expect(ring.morphTargetManager!.getTarget(0).influence).toBe(0);
@@ -225,4 +229,3 @@ test("changed source bytes, malformed door frame and missing exact native select
     s.dispose();
   }
 });
-

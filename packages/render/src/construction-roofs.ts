@@ -1,4 +1,4 @@
-import { setMeshRole } from './mesh-roles';
+import { setMeshRole } from "./mesh-roles";
 import { SceneLoader } from "@babylonjs/core/Loading/sceneLoader";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
@@ -35,9 +35,9 @@ export async function loadConstructionRoofs(
     undefined,
     ".glb",
   );
-  const sources = imported.meshes.map(m => setMeshRole(m, "roof")).filter(
-    (m): m is Mesh => m instanceof Mesh && m.getTotalVertices() > 0,
-  );
+  const sources = imported.meshes
+    .map((m) => setMeshRole(m, "roof"))
+    .filter((m): m is Mesh => m instanceof Mesh && m.getTotalVertices() > 0);
   const matrices = new Map(
     sources.map((m) => [m, m.computeWorldMatrix(true).clone()]),
   );
@@ -70,7 +70,7 @@ export async function loadConstructionRoofs(
       partId: id,
       assetId: definition.assetUuid,
       constructionRoof: true,
-        role: "roof",
+      role: "roof",
       floorId: p.floorId,
       semanticKey: p.key,
       damageMode: "voxel",

@@ -1,3 +1,8 @@
+import { WAYFARER_REBUILD_SHA256 } from "./wayfarer-rebuild-contract";
+import {
+  qualifyWayfarerRebuildFuelMount,
+  WAYFARER_REBUILD_FUEL_MOUNT,
+} from "./wayfarer-rebuild-fuel";
 import proof from "./wayfarer-refit-fuel-proof.json";
 import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
 import {
@@ -20,6 +25,7 @@ export const PRESERVED_FUEL_MOUNT = Object.freeze({
     "native-separation-supported-static-floor-and-conserved-load-limit" as const,
 });
 let layoutChecked = false;
+let rebuiltLayoutChecked = false;
 export function requireQualifiedPreservedFuelMount(input: {
   baseSha256: string;
   assetId: string;
@@ -30,6 +36,24 @@ export function requireQualifiedPreservedFuelMount(input: {
   capacityLitres: number;
   maxMassKg: number;
 }) {
+  if (input.baseSha256 === WAYFARER_REBUILD_SHA256) {
+    const d = WAYFARER_REBUILD_FUEL_MOUNT;
+    if (
+      input.assetId !== d.assetId ||
+      input.assetSha256 !== d.assetSha256 ||
+      input.x !== -3 ||
+      input.y !== 7 ||
+      input.z !== 0.1875 ||
+      input.capacityLitres !== 100 ||
+      input.maxMassKg !== 80
+    )
+      throw Error("Exact rebuilt preserved fuel floor mount required");
+    if (!rebuiltLayoutChecked) {
+      qualifyWayfarerRebuildFuelMount();
+      rebuiltLayoutChecked = true;
+    }
+    return d;
+  }
   const d = PRESERVED_FUEL_MOUNT;
   if (
     proof.baseSha256 !== d.baseSha256 ||

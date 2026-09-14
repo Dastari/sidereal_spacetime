@@ -284,7 +284,8 @@ try {
       "Parent browser review remains separate; this harness uses no GPU",
   };
   writeFileSync(
-    process.env.SIDEREAL_PROVIDER_SUMMARY_FILE ?? ".runtime/shared-world-provider-summary.json",
+    process.env.SIDEREAL_PROVIDER_SUMMARY_FILE ??
+      ".runtime/shared-world-provider-summary.json",
     JSON.stringify(result, null, 2),
   );
   console.log("Actual two-provider shared-world acceptance passed", result);

@@ -1,4 +1,8 @@
 import {
+  acceptedPassengerAccess,
+  type PassengerAccessDatabase,
+} from "./construction-passenger-access";
+import {
   hasAcceptedAuthoredFlight,
   type AcceptedFlightContext,
 } from "./construction-flight-views";
@@ -19,6 +23,7 @@ import type {
 export interface SharedViewContext {
   sender: Identity;
   db: SharedWorldReadDatabase &
+    PassengerAccessDatabase &
     AcceptedFlightContext["db"] & {
       ship: {
         id: {
@@ -27,9 +32,7 @@ export interface SharedViewContext {
       };
       character: {
         id: {
-          find(
-            id: string,
-          ):
+          find(id: string):
             | {
                 id: string;
                 owner: Identity;
@@ -129,7 +132,8 @@ function admission(ctx: SharedViewContext): AdmissionRow | undefined {
     !actor.owner.isEqual(ctx.sender) ||
     actor.shipId !== row.shipId ||
     (ctx.db.constructionLocation.characterId.find(actor.id) &&
-      !hasAcceptedAuthoredFlight(ctx, actor)) ||
+      !hasAcceptedAuthoredFlight(ctx, actor) &&
+      !acceptedPassengerAccess(ctx, actor.id).readInterior) ||
     !ctx.db.worldSystem.id.find(row.systemId)
   )
     return undefined;

@@ -1,3 +1,4 @@
+import { wrapFlightHeading } from "./flight-angle";
 import { sweptContactCandidates } from "./collision-broadphase";
 /** Planar rigid capsule/circle contacts. All positions and impulse math stay f64.
  * Multiple capsules (ships) and circles (movable asteroids). No render mesh
@@ -18,6 +19,11 @@ export interface RigidBody {
   halfLength: number;
   /** Capsule midpoint offset along local +Y; x/y remain the physical COM. */
   longitudinalOffset?: number;
+  /** Capsule midpoint offset along local +X, relative to the physical COM. */
+  lateralOffset?: number;
+  /** Pinned capsule midpoint in authored coordinates; compiled bodies carry both. */
+  authoredMidpointX?: number;
+  authoredMidpointY?: number;
 }
 const EPS = 1e-5;
 /** Closest points of two finite planar capsule spines. Parallel overlapping
@@ -28,8 +34,14 @@ function capsuleContact(a: RigidBody, b: RigidBody) {
       uy = Math.cos(body.heading);
     const offset = body.longitudinalOffset ?? 0;
     return {
-      x: body.x + ux * (offset - body.halfLength),
-      y: body.y + uy * (offset - body.halfLength),
+      x:
+        body.x +
+        Math.cos(body.heading) * (body.lateralOffset ?? 0) +
+        ux * (offset - body.halfLength),
+      y:
+        body.y +
+        Math.sin(body.heading) * (body.lateralOffset ?? 0) +
+        uy * (offset - body.halfLength),
       dx: ux * 2 * body.halfLength,
       dy: uy * 2 * body.halfLength,
     };
@@ -132,15 +144,26 @@ function contact(a: RigidBody, b: RigidBody) {
   }
   const ux = -Math.sin(a.heading),
     uy = Math.cos(a.heading);
-  const offset = a.longitudinalOffset ?? 0;
+  const center = (body: RigidBody) => ({
+    x:
+      body.x +
+      Math.cos(body.heading) * (body.lateralOffset ?? 0) -
+      Math.sin(body.heading) * (body.longitudinalOffset ?? 0),
+    y:
+      body.y +
+      Math.sin(body.heading) * (body.lateralOffset ?? 0) +
+      Math.cos(body.heading) * (body.longitudinalOffset ?? 0),
+  });
+  const ac = center(a),
+    bc = center(b);
   const t = Math.max(
-    offset - a.halfLength,
-    Math.min(offset + a.halfLength, (b.x - a.x) * ux + (b.y - a.y) * uy),
+    -a.halfLength,
+    Math.min(a.halfLength, (bc.x - ac.x) * ux + (bc.y - ac.y) * uy),
   );
-  const ax = a.x + ux * t,
-    ay = a.y + uy * t,
-    dx = b.x - ax,
-    dy = b.y - ay,
+  const ax = ac.x + ux * t,
+    ay = ac.y + uy * t,
+    dx = bc.x - ax,
+    dy = bc.y - ay,
     d = Math.hypot(dx, dy);
   const nx = d > EPS ? dx / d : uy,
     ny = d > EPS ? dy / d : -ux;
@@ -157,7 +180,7 @@ function advance(body: RigidBody, dt: number) {
     ...body,
     x: body.x + body.vx * dt,
     y: body.y + body.vy * dt,
-    heading: body.heading + body.omega * dt,
+    heading: wrapFlightHeading(body.heading + body.omega * dt),
   };
 }
 export interface ContactWork {
@@ -170,8 +193,16 @@ export interface ContactWork {
 function impactTime(a: RigidBody, b: RigidBody, dt: number, work: ContactWork) {
   const bound =
     Math.hypot(b.vx - a.vx, b.vy - a.vy) +
-    Math.abs(a.omega) * (a.halfLength + Math.abs(a.longitudinalOffset ?? 0)) +
-    Math.abs(b.omega) * (b.halfLength + Math.abs(b.longitudinalOffset ?? 0));
+    Math.abs(a.omega) *
+      Math.hypot(
+        a.lateralOffset ?? 0,
+        a.halfLength + Math.abs(a.longitudinalOffset ?? 0),
+      ) +
+    Math.abs(b.omega) *
+      Math.hypot(
+        b.lateralOffset ?? 0,
+        b.halfLength + Math.abs(b.longitudinalOffset ?? 0),
+      );
   let t = 0;
   for (let i = 0; i < 64; i++) {
     work.conservativeIterations++;
@@ -237,7 +268,7 @@ export function stepContacts(
     throw new Error("Invalid contact body set");
   const bodies = input
     .map((b) => ({ ...b }))
-    .sort((a, b) => a.id.localeCompare(b.id));
+    .sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
   for (const b of bodies)
     if (
       ![
@@ -252,6 +283,9 @@ export function stepContacts(
         b.radius,
         b.halfLength,
         b.longitudinalOffset ?? 0,
+        b.lateralOffset ?? 0,
+        b.authoredMidpointX ?? 0,
+        b.authoredMidpointY ?? 0,
       ].every(Number.isFinite) ||
       Math.min(b.massKg, b.inertia, b.radius) <= 0 ||
       b.halfLength < 0

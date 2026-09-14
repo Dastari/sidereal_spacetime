@@ -4,13 +4,13 @@ import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
-import { WAYFARER_CONVERSION_PIN as PIN } from "../../content/src/wayfarer-conversion-candidate";
+import { WAYFARER_CONVERSION_PIN as PIN } from "@sidereal/content/wayfarer-conversion-candidate";
 import {
   createWayfarerConversionCandidate,
   type WayfarerPinnedInputs,
-} from "../../sim/src/wayfarer-conversion-candidate";
-import { qualifiedWayfarerWalkingBindings } from "../../sim/src/wayfarer-walking-bindings";
-import { planConstructionInstance } from "../../sim/src/construction-instance";
+} from "@sidereal/sim/wayfarer-conversion-candidate";
+import { qualifiedWayfarerWalkingBindings } from "@sidereal/sim/wayfarer-walking-bindings";
+import { planConstructionInstance } from "@sidereal/sim/construction-instance";
 import { loadConstructionAuthoredAssembly } from "./construction-authored-assembly";
 afterEach(() => vi.unstubAllGlobals());
 const candidate = () =>
@@ -26,9 +26,9 @@ test("all 211 authored objects load from 28 verified libraries with independent 
   const root = new TransformNode("instance", scene);
   const addedWhileBlocked: boolean[] = [];
   const addMesh = scene.addMesh.bind(scene);
-  vi.spyOn(scene,"addMesh").mockImplementation((mesh,recursive) => {
+  vi.spyOn(scene, "addMesh").mockImplementation((mesh, recursive) => {
     addedWhileBlocked.push(scene.blockMaterialDirtyMechanism);
-    return addMesh(mesh,recursive);
+    return addMesh(mesh, recursive);
   });
   const fetcher = vi.fn(async (url: string) => {
     expect(scene.blockMaterialDirtyMechanism).toBe(false);
@@ -104,11 +104,14 @@ test("all 211 authored objects load from 28 verified libraries with independent 
     expect(roofs.every((p) => p.node.isEnabled())).toBe(true);
     // All four orbit quadrants retain complete walls in deck view.
     const walls = result!.placements.filter((p) => p.category !== "roof");
-    for (const x of [-10, 10]) for (const z of [-10, 10]) {
-      result!.setView(new Vector3(x, 12, z), true);
-      expect(walls.every((p) => p.node.isEnabled())).toBe(true);
-      expect(walls.every((p) => p.meshes.every((m) => m.isEnabled()))).toBe(true);
-    }
+    for (const x of [-10, 10])
+      for (const z of [-10, 10]) {
+        result!.setView(new Vector3(x, 12, z), true);
+        expect(walls.every((p) => p.node.isEnabled())).toBe(true);
+        expect(walls.every((p) => p.meshes.every((m) => m.isEnabled()))).toBe(
+          true,
+        );
+      }
     const materials = result!.meshes.map((m) => m.material);
     expect(
       materials.some(

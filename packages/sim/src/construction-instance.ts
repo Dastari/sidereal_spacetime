@@ -1,4 +1,12 @@
-import { nativeAirlockCollision, readNativeAirlockDocument } from "./construction-airlock-document";
+import {
+  planWayfarerExteriorGame,
+  type WayfarerExteriorDocument,
+} from "./wayfarer-exterior-qualification";
+import { planWayfarerRebuildGame } from "./wayfarer-rebuild-game";
+import {
+  nativeAirlockCollision,
+  readNativeAirlockDocument,
+} from "./construction-airlock-document";
 import { compilePublishedNativeExternalAirlock } from "./construction-airlock-published";
 import {
   nativeStairRoomCollision,
@@ -51,7 +59,10 @@ export type ConstructionInstanceIdKind =
   | "traversal-aperture"
   | "stair-link"
   | "stair-support"
-  | "stair-aperture";
+  | "stair-aperture"
+  | "boundary-treatment"
+  | "navigation-reservation"
+  | "service-connection";
 export interface ConstructionIdentityMapping {
   sourceId: string;
   instanceId: string;
@@ -73,6 +84,9 @@ export interface ConstructionInstanceMappings {
   stairLinks: ConstructionIdentityMapping[];
   stairSupports: ConstructionIdentityMapping[];
   stairApertures: ConstructionIdentityMapping[];
+  boundaryTreatments: ConstructionIdentityMapping[];
+  navigationReservations?: ConstructionIdentityMapping[];
+  serviceConnections?: ConstructionIdentityMapping[];
   cargoGrids: [];
 }
 export interface SpawnObjectCollisionBinding {
@@ -222,7 +236,13 @@ export function planConstructionInstance(
     "Selected deck has insufficient standing clearance above native floor top",
   );
   assert(
-    !(source.traversalRoom || source.stairRoom || source.airlockRoom) ||
+    !(
+      source.traversalRoom ||
+      source.stairRoom ||
+      source.airlockRoom ||
+      source.wayfarerRebuild ||
+      source.wayfarerExterior
+    ) ||
       (request.bodyRadiusM === 0.3 && request.bodyHeightM === 1.8),
     "Native traversal fixture requires its qualified standing body",
   );
@@ -237,15 +257,21 @@ export function planConstructionInstance(
     "Every object requires explicit collision coverage before safe spawn",
   );
   const coverage = new Set<string>(),
-    obstacles: DeckObstacle[] = source.stairRoom
-      ? nativeStairRoomCollision(source, request.sourceDeckId)
-      : source.traversalRoom
-        ? nativeTraversalRoomCollision(source, request.sourceDeckId)
-        : source.pressureRoom
-          ? nativePressureRoomCollision(source, request.sourceDeckId)
-          : source.boundaryKit?.revision === "r004"
-            ? pinnedFamilyCollision(source.layout, request.sourceDeckId)
-            : [];
+    obstacles: DeckObstacle[] =
+      source.wayfarerRebuild || source.wayfarerExterior
+        ? (source.wayfarerExterior
+            ? planWayfarerExteriorGame(source as WayfarerExteriorDocument)
+            : planWayfarerRebuildGame(source)
+          ).sourceObstacles.filter((o) => o.id.startsWith("rebuild-"))
+        : source.stairRoom
+          ? nativeStairRoomCollision(source, request.sourceDeckId)
+          : source.traversalRoom
+            ? nativeTraversalRoomCollision(source, request.sourceDeckId)
+            : source.pressureRoom
+              ? nativePressureRoomCollision(source, request.sourceDeckId)
+              : source.boundaryKit?.revision === "r004"
+                ? pinnedFamilyCollision(source.layout, request.sourceDeckId)
+                : [];
   for (const [i, binding] of [...request.objectCollisionBindings]
     .sort((a, b) => compareText(a.sourceObjectId, b.sourceObjectId))
     .entries()) {
@@ -284,16 +310,20 @@ export function planConstructionInstance(
         });
   }
   const collision = source.airlockRoom
-    ? nativeAirlockCollision(readNativeAirlockDocument(verified.canonical), compilePublishedNativeExternalAirlock(source.layout.id), [])
+    ? nativeAirlockCollision(
+        readNativeAirlockDocument(verified.canonical),
+        compilePublishedNativeExternalAirlock(source.layout.id),
+        [],
+      )
     : resolveDeckCollision(
-    compileDeckCollision(source.layout, request.sourceDeckId, {
-      shipId: "construction-spawn-validation",
-      perimeterHalfWidthM: request.perimeterHalfWidthM,
-      partitionHalfWidthM: request.partitionHalfWidthM,
-      obstacles,
-    }),
-    [],
-  );
+        compileDeckCollision(source.layout, request.sourceDeckId, {
+          shipId: "construction-spawn-validation",
+          perimeterHalfWidthM: request.perimeterHalfWidthM,
+          partitionHalfWidthM: request.partitionHalfWidthM,
+          obstacles,
+        }),
+        [],
+      );
   let positionM: Point | undefined,
     candidatesChecked = 0;
   const seenCandidates = new Set<string>();
@@ -334,7 +364,18 @@ export function planConstructionInstance(
     layout.rooms,
     layout.nodes,
     layout.routes,
+    layout.serviceConnections ?? [],
     layout.decks.flatMap((d) => d.holes),
+    layout.structure?.schema === "sidereal.layout-structure.v2"
+      ? layout.structure.boundaryTreatments
+      : [],
+    ...(source.wayfarerRebuild || source.wayfarerExterior
+      ? [
+          layout.structure?.schema === "sidereal.layout-structure.v2"
+            ? layout.structure.navigationReservations
+            : [],
+        ]
+      : []),
     source.airlockRoom?.parts ?? [],
     source.stairRoom
       ? [
@@ -409,6 +450,14 @@ export function planConstructionInstance(
     rooms: map("room", layout.rooms),
     routeNodes: map("route-node", layout.nodes),
     routes: map("route", layout.routes),
+    ...(layout.serviceConnections
+      ? {
+          serviceConnections: map(
+            "service-connection",
+            layout.serviceConnections,
+          ),
+        }
+      : {}),
     holes: map(
       "hole",
       layout.decks.flatMap((d) => d.holes),
@@ -419,7 +468,10 @@ export function planConstructionInstance(
     ),
     nativeParts: map(
       "native-part",
-      source.traversalRoom?.parts ?? source.stairRoom?.parts ?? source.airlockRoom?.parts ?? [],
+      source.traversalRoom?.parts ??
+        source.stairRoom?.parts ??
+        source.airlockRoom?.parts ??
+        [],
     ),
     traversalApertures: map(
       "traversal-aperture",
@@ -431,6 +483,22 @@ export function planConstructionInstance(
     ),
     stairSupports: map("stair-support", source.stairRoom?.supports ?? []),
     stairApertures: map("stair-aperture", source.stairRoom?.apertures ?? []),
+    boundaryTreatments: map(
+      "boundary-treatment",
+      layout.structure?.schema === "sidereal.layout-structure.v2"
+        ? layout.structure.boundaryTreatments
+        : [],
+    ),
+    ...(source.wayfarerRebuild || source.wayfarerExterior
+      ? {
+          navigationReservations: map(
+            "navigation-reservation",
+            layout.structure?.schema === "sidereal.layout-structure.v2"
+              ? layout.structure.navigationReservations
+              : [],
+          ),
+        }
+      : {}),
     cargoGrids: [],
   };
   const all = new Map(
@@ -476,15 +544,65 @@ export function planConstructionInstance(
     route.from = mapped(route.from);
     route.to = mapped(route.to);
   }
+  for (const connection of actual.serviceConnections ?? []) {
+    connection.id = mapped(connection.id);
+    connection.fromDeviceId = mapped(connection.fromDeviceId);
+    connection.toDeviceId = mapped(connection.toDeviceId);
+  }
   for (const part of actual.assembly?.parts ?? []) part.id = mapped(part.id);
   for (const floor of spawned.floors) {
     floor.id = mapped(floor.id);
     floor.deckId = mapped(floor.deckId);
   }
+  if (actual.structure?.schema === "sidereal.layout-structure.v2") {
+    const structure = actual.structure;
+    assert(
+      (!structure.navigationReservations.length ||
+        !!spawned.wayfarerRebuild ||
+        !!spawned.wayfarerExterior) &&
+        !structure.armor.length &&
+        !Object.keys(structure.wallFaces).length,
+      "Unsupported structural attachments require explicit identity adapters",
+    );
+    for (const reservation of structure.navigationReservations) {
+      reservation.id = mapped(reservation.id);
+      reservation.deckId = mapped(reservation.deckId);
+    }
+    structure.tileStyles = Object.fromEntries(
+      Object.entries(structure.tileStyles).map(([id, style]) => [
+        mapped(id),
+        style,
+      ]),
+    );
+    for (const profile of structure.deckProfiles)
+      profile.deckId = mapped(profile.deckId);
+    for (const treatment of structure.boundaryTreatments) {
+      const oldDeck = treatment.deckId;
+      treatment.id = mapped(treatment.id);
+      treatment.deckId = mapped(oldDeck);
+      if (treatment.source === "partition")
+        treatment.sourceAnchorId = mapped(treatment.sourceAnchorId);
+      else {
+        const prefix = oldDeck + ":";
+        assert(
+          treatment.sourceAnchorId.startsWith(prefix),
+          "Invalid perimeter treatment lineage",
+        );
+        treatment.sourceAnchorId =
+          treatment.deckId +
+          ":" +
+          treatment.sourceAnchorId.slice(prefix.length);
+      }
+    }
+  }
   if (spawned.airlockRoom) {
-    const a=spawned.airlockRoom; a.deckId=mapped(a.deckId); a.innerDoorId=mapped(a.innerDoorId); a.outerDoorId=mapped(a.outerDoorId);
-    for(const p of a.parts)p.id=mapped(p.id);
-    a.roofTileIds=a.roofTileIds.map(mapped); a.exteriorTileIds=a.exteriorTileIds.map(mapped);
+    const a = spawned.airlockRoom;
+    a.deckId = mapped(a.deckId);
+    a.innerDoorId = mapped(a.innerDoorId);
+    a.outerDoorId = mapped(a.outerDoorId);
+    for (const p of a.parts) p.id = mapped(p.id);
+    a.roofTileIds = a.roofTileIds.map(mapped);
+    a.exteriorTileIds = a.exteriorTileIds.map(mapped);
   }
   if (spawned.stairRoom)
     spawned.stairRoom = remapNativeStairRoomBinding(spawned.stairRoom, all);
@@ -496,6 +614,22 @@ export function planConstructionInstance(
     for (const part of r.parts) part.id = mapped(part.id);
     for (const aperture of r.apertures) aperture.id = mapped(aperture.id);
   }
+  if (spawned.wayfarerRebuild) {
+    spawned.wayfarerRebuild.identities = Object.fromEntries(
+      Object.keys(spawned.wayfarerRebuild.identities).map((id) => [
+        id,
+        id === layout.id ? instanceId : mapped(id),
+      ]),
+    );
+  }
+  if (spawned.wayfarerExterior) {
+    spawned.wayfarerExterior.identities = Object.fromEntries(
+      Object.keys(spawned.wayfarerExterior.identities).map((id) => [
+        id,
+        id === layout.id ? instanceId : mapped(id),
+      ]),
+    );
+  }
   // UUID expansion can push a valid source over the parser budget. Validate the
   // exact remapped representation before the world adapter inserts any instance rows.
   const instanceJson = JSON.stringify(spawned);
@@ -505,6 +639,8 @@ export function planConstructionInstance(
     "Remapped instance exceeds construction document byte budget",
   );
   readConstructionDraft(instanceJson);
+  if (actual.structure?.schema === "sidereal.layout-structure.v2")
+    compileConstruction(instanceJson);
   return {
     instanceId,
     blueprintRevisionId: request.blueprintRevisionId,

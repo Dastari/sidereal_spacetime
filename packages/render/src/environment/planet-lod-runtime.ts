@@ -2,7 +2,7 @@ import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { Scene } from "@babylonjs/core/scene";
 import type { Material } from "@babylonjs/core/Materials/material";
 import type { ShaderMaterial } from "@babylonjs/core/Materials/shaderMaterial";
-import type { PlanetRecipe } from "../../../content/src/environment";
+import type { PlanetRecipe } from "@sidereal/content/environment";
 import { stageLayeredPlanet, type PlanetLOD } from "./layered-planet";
 import { createPlanetLODCache } from "./planet-lod-cache";
 import type { createPlanetWorkerClient } from "./planet-worker-client";
@@ -22,7 +22,7 @@ export function createPlanetLODRuntime(
   content.parent = root;
   const pool = new Map<string, Material>();
   let disposed = false;
-  const nextFrame=worker.nextFrame;
+  const nextFrame = worker.nextFrame;
   const cache = createPlanetLODCache(
     async (lod) => {
       const data = await worker.build(recipe, lod);
@@ -98,10 +98,10 @@ export function createPlanetLODRuntime(
       return current?.animatedMaterials ?? [];
     },
     updateLOD(lod: PlanetLOD, projected: number) {
-      const previous=current;
+      const previous = current;
       current = cache.update(lod, projected);
-      root.metadata.activeLOD=cache.snapshot().active;
-      return current!==previous;
+      root.metadata.activeLOD = cache.snapshot().active;
+      return current !== previous;
     },
     snapshot: cache.snapshot,
     updateWeather(age: number, reduced: boolean) {

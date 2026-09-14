@@ -16,4 +16,7 @@ export default __t.row({
   localX: __t.f64().name("local_x"),
   localY: __t.f64().name("local_y"),
   reachable: __t.bool(),
+  instanceId: __t.string().name("instance_id"),
+  deckId: __t.string().name("deck_id"),
+  elevationM: __t.f64().name("elevation_m"),
 });

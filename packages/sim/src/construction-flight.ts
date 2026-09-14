@@ -1,18 +1,14 @@
+import { WAYFARER_PHYSICAL_CATALOG } from "@sidereal/content/physical-definitions";
 import {
-  LAB_FLIGHT_ACTUATORS,
-  LAB_FLIGHT_COMPUTER,
-  LAB_FLIGHT_MASS,
-  LAB_FLIGHT_PROFILE,
-  LAB_FLIGHT_SPEED,
-} from "@sidereal/content/flight";
-import { LAB_HULL } from "@sidereal/content/space";
-import { STARTER } from "@sidereal/content";
-import { PILOT_LAYOUT } from "../../content/src/pilot-layout";
+  transformFlightVector,
+  type ActuatorDefinition,
+  type ComputerDefinition,
+} from "./flight-definition";
+import { PILOT_LAYOUT } from "@sidereal/content/pilot-layout";
 import {
   qualifiedWayfarerInstanceObstacles,
-  QUALIFIED_WAYFARER_SHA256,
+  isQualifiedWayfarerBlueprint,
 } from "./wayfarer-walking-bindings";
-import { constructionHash } from "./construction-transactions";
 import { spatialCell, validateSpacePoint } from "./spatial-cells";
 import type { ConstructionDocument } from "@sidereal/content/construction";
 import type {
@@ -20,24 +16,12 @@ import type {
   ConstructionIdentityMapping,
 } from "./construction-instance";
 
-/** Existing development installation, not a material/geometry-derived flight rating.
- * Only this exact qualified authored source may use it. Refits need a new compiler. */
+/** Immutable installation protocol pin retained for existing bindings. Physical
+ * ratings are compiled separately from versioned placed-part definitions. */
 export const CONSTRUCTION_FLIGHT_DEFINITION =
   "qualified-wayfarer-lab-flight-v1";
-/** Stored on installation so a code/content update cannot silently retune ships. */
-export const CONSTRUCTION_FLIGHT_DEFINITION_SHA256 = constructionHash(
-  JSON.stringify({
-    definition: CONSTRUCTION_FLIGHT_DEFINITION,
-    mass: LAB_FLIGHT_MASS,
-    hull: LAB_HULL,
-    profile: LAB_FLIGHT_PROFILE,
-    speed: LAB_FLIGHT_SPEED,
-    computer: LAB_FLIGHT_COMPUTER,
-    actuators: LAB_FLIGHT_ACTUATORS,
-    starter: STARTER,
-    pilot: PILOT_LAYOUT,
-  }),
-);
+export const CONSTRUCTION_FLIGHT_DEFINITION_SHA256 =
+  "8aee8337485375adcea4b3408ffc4589f08da8391057d9ef407fd8d002c311d0";
 export interface QualifiedFlightInstance {
   id: string;
   revision: bigint;
@@ -65,7 +49,7 @@ export function planQualifiedConstructionFlight(
   reservedIds: readonly string[] = [],
 ) {
   if (
-    instance.blueprintSha256 !== QUALIFIED_WAYFARER_SHA256 ||
+    !isQualifiedWayfarerBlueprint(instance.blueprintSha256) ||
     instance.revision !== 1n
   )
     throw Error("Exact unrefitted qualified Wayfarer instance required");
@@ -120,25 +104,76 @@ export function planQualifiedConstructionFlight(
     localX: PILOT_LAYOUT.station.x,
     localY: PILOT_LAYOUT.station.y,
     occupantId: undefined as string | undefined,
-    // Installation is inert until native station access and per-ship IFCS are wired.
+    // Activation remains a separate validated transaction.
     operational: false,
   };
+  const consolePart = parts.get(station.consolePlacedObjectId)!;
+  const computerDefinition = WAYFARER_PHYSICAL_CATALOG.definitions.find(
+    (d) =>
+      d.id === "physical:" + consolePart.assetId &&
+      d.revision === 1 &&
+      d.kind === "computer",
+  ) as ComputerDefinition | undefined;
+  if (
+    !computerDefinition ||
+    !computerDefinition.visualRevisions?.includes(
+      document.layout.assembly!.revisions[consolePart.assetId],
+    )
+  )
+    throw Error("Missing qualified computer physical definition");
   const computer = {
     id: fresh(),
     shipId,
     placedObjectId: station.consolePlacedObjectId,
-    sourceDeviceId: LAB_FLIGHT_COMPUTER.id,
-    definitionId: LAB_FLIGHT_COMPUTER.definitionId,
-    installed: LAB_FLIGHT_COMPUTER.installed,
-    powered: LAB_FLIGHT_COMPUTER.powered,
+    sourceDeviceId: "computer-flight-01",
+    definitionId: computerDefinition.fittingDefinitionId,
+    definitionRevision: computerDefinition.revision,
+    installed: true,
+    powered: true,
   };
-  const actuators = LAB_FLIGHT_ACTUATORS.map((a) => ({
-    ...a,
-    id: fresh(),
-    shipId,
-    placedObjectId: placed(a.id),
-    sourceDeviceId: a.id,
-  }));
+  const sourceIds = new Map(map.objects.map((m) => [m.instanceId, m.sourceId]));
+  const actuators = [...parts.values()].flatMap((part) => {
+    const definition = WAYFARER_PHYSICAL_CATALOG.definitions.find(
+      (d) => d.id === "physical:" + part.assetId && d.revision === 1,
+    );
+    if (!definition)
+      throw Error("Missing placed-part physical definition: " + part.assetId);
+    if (definition.kind !== "actuator") return [];
+    const d = definition as ActuatorDefinition;
+    if (
+      !d.visualRevisions?.includes(
+        document.layout.assembly!.revisions[part.assetId],
+      )
+    )
+      throw Error("Missing qualified actuator asset revision");
+    const sourceDeviceId = sourceIds.get(part.id);
+    if (!sourceDeviceId) throw Error("Missing actuator source mapping");
+    const mount = transformFlightVector(
+      d.mountOffset,
+      part.rotation,
+      part.flipped,
+    );
+    const axis = transformFlightVector(
+      d.forceAxis,
+      part.rotation,
+      part.flipped,
+    );
+    return [
+      {
+        id: fresh(),
+        shipId,
+        placedObjectId: part.id,
+        sourceDeviceId,
+        definitionId: d.fittingDefinitionId,
+        definitionRevision: d.revision,
+        x: part.position[0] + mount[0],
+        y: part.position[1] + mount[1],
+        rotation: Math.atan2(-axis[0], axis[1]),
+        maxThrustN: d.maxThrustN,
+        availability: 1,
+      },
+    ];
+  });
   const cell = spatialCell(placement);
   return {
     definitionId: CONSTRUCTION_FLIGHT_DEFINITION,
@@ -156,9 +191,9 @@ export function planQualifiedConstructionFlight(
       vy: 0,
       heading: 0,
       omega: 0,
-      massKg: STARTER.massKg,
-      thrustN: STARTER.thrustN,
-      turnAcceleration: STARTER.turnAcceleration,
+      massKg: 0,
+      thrustN: 0,
+      turnAcceleration: 0,
       tick: placement.serverTick,
     },
     motion: {
@@ -177,14 +212,7 @@ export function planQualifiedConstructionFlight(
     station,
     computer,
     actuators,
-    flight: {
-      mass: { ...LAB_FLIGHT_MASS },
-      hull: { ...LAB_HULL },
-      profile: { ...LAB_FLIGHT_PROFILE },
-      speed: { ...LAB_FLIGHT_SPEED },
-    },
-    provenance: "existing-development-flight-installation" as const,
-    physicalMassCompiled: false as const,
+    provenance: "versioned-placed-part-installation" as const,
     routedPowerFuelImplemented: false as const,
     armorRatingImplemented: false as const,
     actorMutationRequired: false as const,

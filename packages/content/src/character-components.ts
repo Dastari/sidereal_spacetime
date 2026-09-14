@@ -58,10 +58,11 @@ export function characterCoverage(
     }),
   );
 }
-export const MODULAR_CREW_ASSET_URL =
-  `/assets/crew/components/modular-crew.glb?revision=r${String(catalog.revision).padStart(3, "0")}`;
+export const MODULAR_CREW_ASSET_URL = `/assets/crew/components/modular-crew.glb?revision=r${String(catalog.revision).padStart(3, "0")}`;
 /** Visual revisions invalidate browser caches without changing item identities. */
 export function characterComponentImageUrl(id: string) {
-  const revisions = (catalog as { visualRevisions?: Readonly<Record<string, number>> }).visualRevisions;
+  const revisions = (
+    catalog as { visualRevisions?: Readonly<Record<string, number>> }
+  ).visualRevisions;
   return `/assets/crew/components/${id}.png?revision=r${String(revisions?.[id] ?? 2).padStart(3, "0")}`;
 }

@@ -1,4 +1,4 @@
-import { setMeshRole } from './mesh-roles';
+import { setMeshRole } from "./mesh-roles";
 import {
   SceneLoader,
   type ISceneLoaderAsyncResult,
@@ -16,7 +16,11 @@ import { loadConstructionDoorSeals } from "./construction-door-seals";
 export interface NativeAirlockRenderInput {
   instanceId: string;
   deckId: string;
-  doors: readonly { openingId: string; originM: [number, number, number]; quarterTurns: number }[];
+  doors: readonly {
+    openingId: string;
+    originM: [number, number, number];
+    quarterTurns: number;
+  }[];
   /** Exact installation returned by the trusted, fixed-room compiler. */
   installation: readonly NativeRoomInstalledPart[];
   elevationM: number;
@@ -52,13 +56,30 @@ export async function loadNativeAirlockScene(
     (p) => p.source === "door" && p.nodePrefix === leafPrefix,
   );
   const gaskets = input.installation.filter((p) => p.source === "gasket");
-  const frameKey = (p: { originM: readonly number[]; quarterTurns: number }) => JSON.stringify([p.originM, p.quarterTurns]);
-  const doorByFrame = new Map(input.doors.map(d => [frameKey(d), d]));
-  if (input.doors.length !== 2 || doorByFrame.size !== 2 || new Set(input.doors.map(d => d.openingId)).size !== 2 || leaf.length !== 2 || gaskets.length !== 4 ||
-    input.doors.some(d => {
-      const same = input.installation.filter(p => frameKey(p) === frameKey(d));
-      return [leafPrefix, ringPrefix, seatPrefix, "GEO-door-frame-2m--surface"].some(prefix => same.filter(p => p.nodePrefix === prefix).length !== 1);
-    }) || [...leaf, ...gaskets].some(p => !doorByFrame.has(frameKey(p))))
+  const frameKey = (p: { originM: readonly number[]; quarterTurns: number }) =>
+    JSON.stringify([p.originM, p.quarterTurns]);
+  const doorByFrame = new Map(input.doors.map((d) => [frameKey(d), d]));
+  if (
+    input.doors.length !== 2 ||
+    doorByFrame.size !== 2 ||
+    new Set(input.doors.map((d) => d.openingId)).size !== 2 ||
+    leaf.length !== 2 ||
+    gaskets.length !== 4 ||
+    input.doors.some((d) => {
+      const same = input.installation.filter(
+        (p) => frameKey(p) === frameKey(d),
+      );
+      return [
+        leafPrefix,
+        ringPrefix,
+        seatPrefix,
+        "GEO-door-frame-2m--surface",
+      ].some(
+        (prefix) => same.filter((p) => p.nodePrefix === prefix).length !== 1,
+      );
+    }) ||
+    [...leaf, ...gaskets].some((p) => !doorByFrame.has(frameKey(p)))
+  )
     throw Error("Native airlock requires two exact shared door/seal frames");
   const bytes = new Map<string, Uint8Array>();
   // Fetch each used source once. In particular the superseded strip is not used.
@@ -117,9 +138,11 @@ export async function loadNativeAirlockScene(
         ".glb",
       );
       imported.push(result);
-      const meshes = result.meshes.map(m => setMeshRole(m, "wall")).filter(
-        (m): m is Mesh => m instanceof Mesh && m.getTotalVertices() > 0,
-      );
+      const meshes = result.meshes
+        .map((m) => setMeshRole(m, "wall"))
+        .filter(
+          (m): m is Mesh => m instanceof Mesh && m.getTotalVertices() > 0,
+        );
       prototypes.set(source, {
         meshes,
         matrices: new Map(
@@ -131,10 +154,14 @@ export async function loadNativeAirlockScene(
         mesh.isPickable = false;
       }
     }
-    const mechanisms = new Map<string, { openingId: string; frame: TransformNode; hinge: TransformNode }>();
+    const mechanisms = new Map<
+      string,
+      { openingId: string; frame: TransformNode; hinge: TransformNode }
+    >();
     const metadata = (p: NativeRoomInstalledPart) => ({
       partId: p.id,
-      role: p.source === 'roof' ? 'roof' : p.source === 'floor' ? 'floor' : 'wall',
+      role:
+        p.source === "roof" ? "roof" : p.source === "floor" ? "floor" : "wall",
       instanceId: input.instanceId,
       deckId: input.deckId,
       nativeSource: p.source,
@@ -209,10 +236,12 @@ export async function loadNativeAirlockScene(
       });
       add(p, node, meshes);
     }
-    seals = await loadConstructionDoorSeals(scene, bytes.get("gasket")!, [...mechanisms.values()]);
+    seals = await loadConstructionDoorSeals(scene, bytes.get("gasket")!, [
+      ...mechanisms.values(),
+    ]);
     for (const p of gaskets) {
       const openingId = doorByFrame.get(frameKey(p))!.openingId;
-      const entry = seals.entries.find(e => e.openingId === openingId)!;
+      const entry = seals.entries.find((e) => e.openingId === openingId)!;
       const mesh = p.nodePrefix === ringPrefix ? entry.ring : entry.seats;
       add(p, mesh, [mesh]);
     }
@@ -253,11 +282,20 @@ export async function loadNativeAirlockScene(
         // Presentation consumes accepted states only; interlocks remain server-owned.
         const accepted = [];
         for (const mechanism of mechanisms.values()) {
-          const state = states.find(s => s.openingId === mechanism.openingId);
+          const state = states.find((s) => s.openingId === mechanism.openingId);
           const fraction = state?.fraction;
-          const valid = fraction !== undefined && Number.isFinite(fraction) && fraction >= 0 && fraction <= 1;
+          const valid =
+            fraction !== undefined &&
+            Number.isFinite(fraction) &&
+            fraction >= 0 &&
+            fraction <= 1;
           mechanism.hinge.rotation.y = valid ? (-fraction * Math.PI) / 2 : 0;
-          if (state && valid) accepted.push({ openingId: mechanism.openingId, hingeFraction: fraction, sealRetraction: state.sealRetraction ?? NaN });
+          if (state && valid)
+            accepted.push({
+              openingId: mechanism.openingId,
+              hingeFraction: fraction,
+              sealRetraction: state.sealRetraction ?? NaN,
+            });
         }
         seals!.setStates(accepted);
       },

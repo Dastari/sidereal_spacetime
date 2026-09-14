@@ -35,6 +35,8 @@ function fixture() {
     bodyWorldMotion: "bodyId",
     worldAdmission: "characterId",
     constructionFlightBinding: "shipId",
+    constructionFlightCompiled: "shipId",
+    constructionFlightDirty: "shipId",
     constructionFlightStation: "stationId",
     constructionLocation: "characterId",
     constructionReviewOrigin: "characterId",
@@ -50,6 +52,7 @@ function fixture() {
     constructionInteractionBinding: "objectId",
   };
   const field: Record<string, string> = {
+    by_root: "rootContainerId",
     by_owner: "owner",
     by_system: "systemId",
     by_ship: "shipId",
@@ -121,8 +124,9 @@ function fixture() {
   });
   const ctx = raw as unknown as WayfarerStarterContext;
   const snapshot = () =>
-    JSON.stringify([...tables].filter(([,rows])=>rows.length), (_, v) =>
-      typeof v === "bigint" ? v.toString() : v,
+    JSON.stringify(
+      [...tables].filter(([, rows]) => rows.length),
+      (_, v) => (typeof v === "bigint" ? v.toString() : v),
     );
   return { ctx, raw, db, tables, snapshot };
 }

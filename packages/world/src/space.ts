@@ -1,5 +1,4 @@
 import { table, t } from "spacetimedb/server";
-export { stepLabSpace } from "./lab-flight";
 export const spaceBody = table(
   {
     name: "space_body",

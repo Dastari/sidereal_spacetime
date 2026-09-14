@@ -1,9 +1,6 @@
 export const STARTER = {
   id: "wayfarer",
   name: "Wayfarer",
-  massKg: 12000,
-  thrustN: 36000,
-  turnAcceleration: 0.65,
   model: "/assets/wayfarer.glb",
 } as const;
 export const LAYERS = [

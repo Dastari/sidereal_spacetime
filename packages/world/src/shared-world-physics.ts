@@ -3,18 +3,16 @@ import type { Identity } from "spacetimedb";
 import {
   stepSystemSpace,
   type SystemFlightControl,
+  type SystemActuatorConsumption,
 } from "@sidereal/sim/system-space";
 import { spatialCell } from "@sidereal/sim/spatial-cells";
 import type { RigidBody } from "@sidereal/sim/collision";
-import { LAB_HULL } from "@sidereal/content/space";
 import { SHARED_SYSTEM_SEED } from "@sidereal/content/shared-system";
 import {
-  LAB_FLIGHT_ACTUATORS,
-  LAB_FLIGHT_COMPUTER,
-  LAB_FLIGHT_MASS,
-  LAB_FLIGHT_PROFILE,
-  LAB_FLIGHT_SPEED,
-} from "@sidereal/content/flight";
+  toCenterOfMassMotion,
+  toAuthoredFrameMotion,
+} from "@sidereal/sim/flight-frame";
+import type { MassProperties } from "@sidereal/sim/ifcs";
 import { consumeInputControl, type InputControlContext } from "./input-control";
 import type {
   SharedWorldDatabase,
@@ -60,7 +58,9 @@ export interface SharedPhysicsContext extends Omit<InputControlContext, "db"> {
         };
       };
       actuatorOutput: {
+        by_ship: { filter(shipId: string): Iterable<Output> };
         id: {
+          delete(id: string): unknown;
           find(id: string): Output | null | undefined;
           update(row: Output): unknown;
         };
@@ -86,17 +86,22 @@ function limited<T>(rows: Iterable<T>, max: number): T[] | undefined {
   return result;
 }
 /** One invocation per fixed world tick/system, never once per observer or ship.
- * This first adapter only admits the pinned stock Wayfarer flight installation;
- * authored construction ships need their own approved hull/mass/actuator compiler.
+ * All ship inertia, hull offsets and control inputs come from compiled authority.
+ * Persisted motion retains the authored origin while contacts advance the COM.
  * Parent scheduled reducer must verify ctx.sender === ctx.databaseIdentity. */
 export function stepSharedWorld(
   ctx: SharedPhysicsContext,
   systemId = SHARED_SYSTEM_SEED.systemId,
-  hooks?: {
+  hooks: {
+    compileDirty(): void;
     definitionForShip(
       shipId: string,
     ): ReturnType<typeof resolveShipFlightDefinition>;
     canPilot(characterId: string): boolean;
+    recordConsumption(
+      sampleTick: bigint,
+      usage: readonly SystemActuatorConsumption[],
+    ): void;
   },
 ): SharedPhysicsReport {
   const report: SharedPhysicsReport = {
@@ -119,6 +124,7 @@ export function stepSharedWorld(
           ? "sample-already-applied"
           : "sample-regressed",
     };
+  hooks.compileDirty();
   const ships = limited(ctx.db.shipWorldMotion.by_system.filter(systemId), 60);
   const descriptions = limited(
     ctx.db.systemBody.by_system.filter(systemId),
@@ -130,29 +136,38 @@ export function stepSharedWorld(
       status: "exhausted",
       reason: "island-admission-budget",
     };
+  const rejectIsland = (reason: string): SharedPhysicsReport => {
+    // No command was integrated. Clear retained telemetry for the entire island
+    // so a rejected initial definition cannot leave another ship's old burn lit.
+    for (const ship of ships) {
+      const outputs = limited(
+        ctx.db.actuatorOutput.by_ship.filter(ship.shipId),
+        256,
+      );
+      if (!outputs) throw Error("Flight output budget");
+      for (const output of outputs) {
+        ctx.db.actuatorOutput.id.delete(output.id);
+        report.changedOutputs++;
+      }
+    }
+    return { ...report, status: "exhausted", reason };
+  };
   const bodies: RigidBody[] = [],
     controls: SystemFlightControl[] = [],
     shipRows = new Map<string, ShipMotionRow>(),
-    rockRows = new Map<string, BodyMotionRow>();
+    rockRows = new Map<string, BodyMotionRow>(),
+    masses = new Map<string, MassProperties>();
   for (const ship of ships) {
     if (ship.systemId !== systemId || !ctx.db.ship.id.find(ship.shipId))
-      return { ...report, status: "exhausted", reason: "invalid-system-ship" };
-    const definition = hooks?.definitionForShip(ship.shipId) ?? {
-      status: "ready" as const,
-      mass: LAB_FLIGHT_MASS,
-      hull: LAB_HULL,
-      profile: LAB_FLIGHT_PROFILE,
-      speed: LAB_FLIGHT_SPEED,
-      computer: LAB_FLIGHT_COMPUTER,
-      actuators: LAB_FLIGHT_ACTUATORS,
-    };
-    if (definition.status === "invalid")
-      return { ...report, status: "exhausted", reason: definition.reason };
+      return rejectIsland("invalid-system-ship");
+    const definition = hooks.definitionForShip(ship.shipId);
+    if (definition.status === "invalid") return rejectIsland(definition.reason);
     shipRows.set(ship.shipId, ship);
+    masses.set(ship.shipId, definition.mass);
     bodies.push({
-      ...ship,
-      id: ship.shipId,
+      ...toCenterOfMassMotion(ship, definition.mass),
       ...definition.hull,
+      id: ship.shipId,
       massKg: definition.mass.massKg,
       inertia: definition.mass.inertiaKgM2,
     });
@@ -168,6 +183,7 @@ export function stepSharedWorld(
       ? ctx.timestamp.microsSinceUnixEpoch - input.updatedMicros
       : -1n;
     const enabled = !!(
+      definition.status === "ready" &&
       station?.operational &&
       station.shipId === ship.shipId &&
       actor?.connected &&
@@ -181,28 +197,29 @@ export function stepSharedWorld(
       consumeInputControl(ctx, actor.id) &&
       definition.computer.installed &&
       definition.computer.powered &&
-      (!hooks || hooks.canPilot(actor.id))
+      hooks.canPilot(actor.id)
     );
-    controls.push({
-      bodyId: ship.shipId,
-      enabled,
-      intent: enabled
-        ? { throttle: input!.throttle, turn: input!.turn }
-        : { throttle: 0, turn: 0 },
-      mass: definition.mass,
-      actuators: definition.actuators,
-      profile: definition.profile,
-      maxForwardSpeed: definition.speed.forward,
-      maxReverseSpeed: definition.speed.reverse,
-    });
+    if (definition.status === "ready")
+      controls.push({
+        bodyId: ship.shipId,
+        enabled,
+        intent: enabled
+          ? { throttle: input!.throttle, turn: input!.turn }
+          : { throttle: 0, turn: 0 },
+        mass: definition.mass,
+        actuators: definition.actuators,
+        profile: definition.profile,
+        envelope: definition.envelope,
+        maxForwardSpeed: definition.speed.forward,
+        maxReverseSpeed: definition.speed.reverse,
+      });
   }
   for (const body of descriptions) {
-    if (body.systemId !== systemId)
-      return { ...report, status: "exhausted", reason: "invalid-system-body" };
+    if (body.systemId !== systemId) return rejectIsland("invalid-system-body");
     if (body.kind !== "asteroid") continue;
     const motion = ctx.db.bodyWorldMotion.bodyId.find(body.id);
     if (!motion || motion.systemId !== systemId)
-      return { ...report, status: "exhausted", reason: "missing-body-motion" };
+      return rejectIsland("missing-body-motion");
     rockRows.set(body.id, motion);
     bodies.push({
       ...motion,
@@ -215,9 +232,12 @@ export function stepSharedWorld(
   }
   report.bodyCount = bodies.length;
   // Do not truncate/partition an over-budget shared island or move a subset of it.
-  if (bodies.length > 64)
-    return { ...report, status: "exhausted", reason: "body-budget" };
+  if (bodies.length > 64) return rejectIsland("body-budget");
   const result = stepSystemSpace(bodies, controls);
+  hooks.recordConsumption(sampleTick, result.consumption);
+  const consumed = result.consumption.some((s) =>
+    s.actuators.some((a) => a.newtonSeconds > 0),
+  );
   report.status = result.exhausted
     ? "exhausted"
     : result.changedBodyIds.length
@@ -228,14 +248,16 @@ export function stepSharedWorld(
   const changed = new Set(result.changedBodyIds);
   for (const body of result.bodies) {
     if (!changed.has(body.id)) continue;
-    const cell = spatialCell(body),
+    const mass = masses.get(body.id);
+    const frame = mass ? toAuthoredFrameMotion(body, mass) : body;
+    const cell = spatialCell(frame),
       motion = {
-        x: body.x,
-        y: body.y,
-        vx: body.vx,
-        vy: body.vy,
-        heading: body.heading,
-        omega: body.omega,
+        x: frame.x,
+        y: frame.y,
+        vx: frame.vx,
+        vy: frame.vy,
+        heading: frame.heading,
+        omega: frame.omega,
         cellX: BigInt(cell.cellX),
         cellY: BigInt(cell.cellY),
       };
@@ -254,6 +276,27 @@ export function stepSharedWorld(
         serverTick: sampleTick > rock.serverTick ? sampleTick : rock.serverTick,
       });
     report.changedMotions++;
+  }
+  const outputs = new Map(
+    result.commands.map((command) => [
+      command.bodyId,
+      new Set(command.actuators.map((a) => a.id)),
+    ]),
+  );
+  for (const ship of ships) {
+    const current = outputs.get(ship.shipId);
+    const oldOutputs = limited(
+      ctx.db.actuatorOutput.by_ship.filter(ship.shipId),
+      256,
+    );
+    if (!oldOutputs) throw Error("Flight output budget");
+    for (const old of oldOutputs) {
+      if (current?.has(old.actuatorId)) continue;
+      // Removal/rejection cannot leave a previously firing plume behind. Valid
+      // repaired definitions backfill their complete output set on the next tick.
+      ctx.db.actuatorOutput.id.delete(old.id);
+      report.changedOutputs++;
+    }
   }
   for (const command of result.commands)
     for (const actuator of command.actuators) {
@@ -277,7 +320,7 @@ export function stepSharedWorld(
     }
   // One small clock write per active system sample; completely idle samples do
   // not write. Admission motion stamps are not proof that physics has run.
-  if (report.changedMotions || report.changedOutputs)
+  if (report.changedMotions || report.changedOutputs || consumed)
     ctx.db.worldSystem.id.update({ ...system, lastSimulationTick: sampleTick });
   return report;
 }

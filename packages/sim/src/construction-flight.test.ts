@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { expect, test } from "vitest";
-import { WAYFARER_CONVERSION_PIN as PIN } from "../../content/src/wayfarer-conversion-candidate";
+import { WAYFARER_CONVERSION_PIN as PIN } from "@sidereal/content/wayfarer-conversion-candidate";
 import {
   createWayfarerConversionCandidate,
   type WayfarerPinnedInputs,
@@ -8,10 +8,9 @@ import {
 import { qualifiedWayfarerWalkingBindings } from "./wayfarer-walking-bindings";
 import { planConstructionInstance } from "./construction-instance";
 import { planQualifiedConstructionFlight } from "./construction-flight";
-import {
-  LAB_FLIGHT_ACTUATORS,
-  LAB_FLIGHT_MASS,
-} from "@sidereal/content/flight";
+import { WAYFARER_ACTUATOR_DEFINITIONS } from "@sidereal/content/physical-definitions";
+import { transformFlightVector } from "./flight-definition";
+import { CONSTRUCTION_FLIGHT_DEFINITION_SHA256 } from "./construction-flight";
 const candidate = createWayfarerConversionCandidate(
   Object.fromEntries(
     Object.keys(PIN.sources).map((p) => [p, readFileSync(p, "utf8")]),
@@ -86,25 +85,42 @@ test("two native instances get eleven fresh flight identities each and keep inst
     expect(p.activation).toBe("installed-dormant");
   }
 });
-test("ratings and force application remain authored flight definitions, not Blender origins", () => {
+test("installation binds actual placed definitions while retaining the deployed protocol pin", () => {
   const { spawn, allocate } = setup(),
-    instance = spawn(),
-    plan = planQualifiedConstructionFlight(instance, berth, allocate);
-  expect(plan.flight.mass).toEqual(LAB_FLIGHT_MASS);
-  for (const [i, a] of plan.actuators.entries()) {
-    const { id, shipId, placedObjectId, sourceDeviceId, ...physical } = a;
-    const { id: source, ...expected } = LAB_FLIGHT_ACTUATORS[i];
-    expect(sourceDeviceId).toBe(source);
-    expect(physical).toEqual(expected);
-    expect(id).not.toBe(source);
-    const document = JSON.parse(instance.documentJson);
-    const visual = document.layout.assembly.parts.find(
-      (p: { id: string }) => p.id === placedObjectId,
+    instance = spawn();
+  const plan = planQualifiedConstructionFlight(instance, berth, allocate);
+  expect(CONSTRUCTION_FLIGHT_DEFINITION_SHA256).toBe(
+    "8aee8337485375adcea4b3408ffc4589f08da8391057d9ef407fd8d002c311d0",
+  );
+  expect(plan.ship.massKg).toBe(0); // private compatibility sentinel, never a flight rating
+  const document = JSON.parse(instance.documentJson);
+  for (const a of plan.actuators) {
+    const part = document.layout.assembly.parts.find(
+      (p: { id: string }) => p.id === a.placedObjectId,
     );
-    expect(visual).toBeDefined();
-    if (i === 0) expect(a.y).not.toBe(visual.position[1]);
+    const d = WAYFARER_ACTUATOR_DEFINITIONS.find(
+      (d) => d.id === "physical:" + part.assetId,
+    )!;
+    const mount = transformFlightVector(
+      d.mountOffset,
+      part.rotation,
+      part.flipped,
+    );
+    const axis = transformFlightVector(
+      d.forceAxis,
+      part.rotation,
+      part.flipped,
+    );
+    expect(a.definitionId).toBe(d.fittingDefinitionId);
+    expect(a.definitionRevision).toBe(d.revision);
+    expect(a.maxThrustN).toBe(d.maxThrustN);
+    expect([a.x, a.y]).toEqual([
+      part.position[0] + mount[0],
+      part.position[1] + mount[1],
+    ]);
+    expect(a.rotation).toBe(Math.atan2(-axis[0], axis[1]));
+    expect(a.id).not.toBe(a.sourceDeviceId);
   }
-  expect(plan.physicalMassCompiled).toBe(false);
   expect(plan.routedPowerFuelImplemented).toBe(false);
 });
 test("source hash cannot be transplanted onto changed geometry or source mappings", () => {

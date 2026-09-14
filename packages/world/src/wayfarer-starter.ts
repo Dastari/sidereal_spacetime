@@ -1,3 +1,7 @@
+import {
+  CURRENT_WAYFARER_STARTER,
+  type WayfarerStarterTemplate,
+} from "@sidereal/content/wayfarer-current-starter";
 import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
 import {
   planWayfarerStarter,
@@ -51,6 +55,7 @@ export interface WayfarerStarterRepository {
 export function createWayfarerStarter(
   db: WayfarerStarterRepository,
   name: string,
+  template: WayfarerStarterTemplate = WAYFARER_STARTER,
 ) {
   db.requireLiveGame();
   if (!db.ownerId || db.ownerId.length > 256)
@@ -64,7 +69,10 @@ export function createWayfarerStarter(
     if (
       prior.ownerId !== db.ownerId ||
       prior.entitlement !== WAYFARER_STARTER.entitlement ||
-      prior.templateSha256 !== WAYFARER_STARTER.sha256 ||
+      !new Set<string>([
+        WAYFARER_STARTER.sha256,
+        CURRENT_WAYFARER_STARTER.sha256,
+      ]).has(prior.templateSha256) ||
       !actor ||
       actor.id !== prior.characterId
     )
@@ -83,6 +91,7 @@ export function createWayfarerStarter(
     throw Error("Starter character identity already allocated");
   const plan = planWayfarerStarter({
     characterId,
+    template,
     berth: db.reserveBerth(),
     allocateUuid: () => db.allocateUuid(),
     identityExists: (id) => db.identityExists(id),
@@ -92,7 +101,7 @@ export function createWayfarerStarter(
     entitlement: WAYFARER_STARTER.entitlement,
     characterId,
     shipId: plan.instance.instanceId,
-    templateSha256: WAYFARER_STARTER.sha256,
+    templateSha256: template.sha256,
   };
   db.insertInstance(plan);
   db.installFunctionalState(plan);
@@ -106,7 +115,7 @@ export function createWayfarerStarter(
     shipId: plan.instance.instanceId,
     instanceId: plan.instance.instanceId,
     deckId: plan.instance.spawn.deckId,
-    templateSha256: WAYFARER_STARTER.sha256,
+    templateSha256: template.sha256,
     instanceRevision: 1n,
     lifecycle: "active",
   });

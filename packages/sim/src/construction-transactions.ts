@@ -1,3 +1,12 @@
+import {
+  planWayfarerExteriorGame,
+  verifyQualifiedWayfarerExterior,
+  type WayfarerExteriorDocument,
+} from "./wayfarer-exterior-qualification";
+import { planWayfarerRebuildGame } from "./wayfarer-rebuild-game";
+import { verifyWayfarerRebuildSource } from "./wayfarer-rebuild-contract";
+import { CONSTRUCTION_INSET_VISUAL_PIN } from "@sidereal/content/construction-inset-visuals";
+import { planPinnedInsetBoundaries } from "./construction-inset-boundaries";
 import { readNativeAirlockDocument } from "./construction-airlock-document";
 import { validateNativeStairRoomDocument } from "./construction-stairs-document";
 import { validateNativeTraversalRoomDocument } from "./construction-traversal-document";
@@ -21,7 +30,7 @@ import {
   type ConstructionSnapshot,
 } from "@sidereal/content/construction";
 import floorKitJson from "@sidereal/content/construction-floor-interfaces.json";
-import type { TilesetInterface } from "../../content/src/tileset-interfaces";
+import type { TilesetInterface } from "@sidereal/content/tileset-interfaces";
 import { readLayout } from "./layout-validation";
 import { compileLayout } from "./layout-compiler";
 import {
@@ -111,6 +120,8 @@ export function readConstructionDraft(raw: string): {
           "traversalRoom",
           "stairRoom",
           "airlockRoom",
+          "wayfarerRebuild",
+          "wayfarerExterior",
         ].includes(k),
     )
   )
@@ -138,7 +149,9 @@ export function readConstructionDraft(raw: string): {
       (stableStringify(input.boundaryKit) !==
         stableStringify(CONSTRUCTION_BOUNDARY_PIN) &&
         stableStringify(input.boundaryKit) !==
-          stableStringify(CONSTRUCTION_BOUNDARY_FAMILY_PIN)))
+          stableStringify(CONSTRUCTION_BOUNDARY_FAMILY_PIN) &&
+        stableStringify(input.boundaryKit) !==
+          stableStringify(CONSTRUCTION_INSET_VISUAL_PIN)))
   )
     throw Error("Pinned boundary interface revision mismatch");
   if (
@@ -217,6 +230,10 @@ export function readConstructionDraft(raw: string): {
     (a, b) => compareText(a.id, b.id) || compareText(a.revision, b.revision),
   );
   normalized.floors.sort((a, b) => compareText(a.id, b.id));
+  normalized.layout.serviceConnections?.sort((a, b) => compareText(a.id, b.id));
+  if (normalized.wayfarerRebuild) verifyWayfarerRebuildSource(normalized);
+  if (normalized.wayfarerExterior)
+    verifyQualifiedWayfarerExterior(normalized as WayfarerExteriorDocument);
   const canonical = stableStringify(normalized);
   return { canonical, sha256: constructionHash(canonical) };
 }
@@ -224,6 +241,16 @@ export function compileConstruction(raw: string): ConstructionSnapshot {
   const snapshot = readConstructionDraft(raw),
     input = JSON.parse(snapshot.canonical) as ConstructionDocument,
     layout = input.layout;
+  const inset = input.boundaryKit?.id === CONSTRUCTION_INSET_VISUAL_PIN.id;
+  if (
+    layout.structure?.schema === "sidereal.layout-structure.v2" &&
+    !inset &&
+    !input.wayfarerRebuild &&
+    !input.wayfarerExterior
+  )
+    throw Error(
+      "Boundary-treatment native installation adapters are not yet qualified",
+    );
   if (!input.floors.length || input.floors.length !== layout.tiles.length)
     throw Error("Every semantic floor requires one native interface binding");
   const decks = new Map(layout.decks.map((d) => [d.id, d])),
@@ -276,7 +303,12 @@ export function compileConstruction(raw: string): ConstructionSnapshot {
   if (input.stairRoom) validateNativeStairRoomDocument(input);
   if (input.pressureRoom) validateNativePressureRoomDocument(input);
   if (input.traversalRoom) validateNativeTraversalRoomDocument(input);
-  if (input.boundaryKit?.revision === "r004")
+  if (input.wayfarerExterior)
+    planWayfarerExteriorGame(input as WayfarerExteriorDocument);
+  else if (input.wayfarerRebuild) planWayfarerRebuildGame(input);
+  else if (inset)
+    for (const deck of layout.decks) planPinnedInsetBoundaries(input, deck.id);
+  else if (input.boundaryKit?.revision === "r004")
     for (const deck of layout.decks) planPinnedBoundaryFamily(layout, deck.id);
   else if (input.boundaryKit)
     for (const deck of layout.decks)

@@ -74,6 +74,7 @@ function fixture() {
     JSON.stringify(bindConstructionLayout(layout).document),
   );
   const db: any = {
+    constructionFlightBinding: { shipId: { find: () => undefined } },
     constructionCargoAssembly: table(
       { by_instance: "instanceId" },
       "containerId",
@@ -513,6 +514,7 @@ test("door obstruction retains state until clear, with stale visit/revision and 
 });
 
 const ordinaryHooks = {
+  physicalChanged: () => {},
   mayConsumeMovement: () => false,
   mayEnter: () => true,
   incompatibleActivity: () => false,
@@ -523,11 +525,11 @@ const ordinaryHooks = {
 };
 
 import { readFileSync } from "node:fs";
-import { WAYFARER_CONVERSION_PIN } from "../../content/src/wayfarer-conversion-candidate";
+import { WAYFARER_CONVERSION_PIN } from "@sidereal/content/wayfarer-conversion-candidate";
 import {
   createWayfarerConversionCandidate,
   type WayfarerPinnedInputs,
-} from "../../sim/src/wayfarer-conversion-candidate";
+} from "@sidereal/sim/wayfarer-conversion-candidate";
 test("trusted full Wayfarer spawn retains qualified collision after UUID remap and reload", () => {
   const f = fixture(),
     c = createWayfarerConversionCandidate(

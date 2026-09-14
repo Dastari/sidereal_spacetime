@@ -5,7 +5,7 @@ import {
   LIQUID_DENSITY_KG_PER_LITRE,
   type InventoryDefinition,
 } from "../../content/src/inventory";
-import { inventoryMass } from "../../sim/src/inventory";
+import { inventoryMass } from "@sidereal/sim/inventory";
 import { CanvasUI, palette } from "./toolkit";
 import { contains, type Rect } from "./layout";
 import { WindowStack, type FloatingWindow } from "./windows";

@@ -14,10 +14,21 @@ export function updateBodyRangePlane(camera: Camera | null, plane: Plane) {
 
 /** Conservative envelope includes rings, atmosphere billboards and weather.
  * This is range admission only; ordinary mesh frustum culling stays in place. */
-export function bodyWithinRenderRange(center: Vector3, radius: number, projectedRadius: number, far?: Plane) {
+export function bodyWithinRenderRange(
+  center: Vector3,
+  radius: number,
+  projectedRadius: number,
+  far?: Plane,
+) {
   const envelope = radius * 8;
-  return projectedRadius * 8 >= 0.125 && (!far || far.dotCoordinate(center) >= -envelope);
+  return (
+    projectedRadius * 8 >= 0.125 &&
+    (!far || far.dotCoordinate(center) >= -envelope)
+  );
 }
-export function setBodyRenderEnabled(node: TransformNode | undefined, enabled: boolean) {
+export function setBodyRenderEnabled(
+  node: TransformNode | undefined,
+  enabled: boolean,
+) {
   if (node && node.isEnabled(false) !== enabled) node.setEnabled(enabled);
 }

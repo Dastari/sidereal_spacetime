@@ -1,7 +1,7 @@
 import { expect, it } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
-import { planetRecipe } from "../../../content/src/environment";
+import { planetRecipe } from "@sidereal/content/environment";
 import { buildPlanetData } from "./planet-build";
 import { buildLayeredTerrain, terrainResolution } from "./planet-terrain";
 import { createLayeredPlanet, stageLayeredPlanet } from "./layered-planet";

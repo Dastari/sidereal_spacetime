@@ -8,3 +8,18 @@ assets
 reference
 output
 package-lock.json
+
+# Immutable authored snapshots and qualification evidence: preserve exact file hashes.
+packages/content/src/character-components.json
+packages/content/src/construction-inset-visuals.json
+packages/content/src/construction-wayfarer-rebuild-visuals.json
+packages/content/src/ship-tileset-corner-spec.v1.json
+packages/content/src/ship-tileset-internal-spec.v1.json
+packages/content/src/ship-tileset-union-junction-spec.v1.json
+packages/content/src/wayfarer-cockpit-partition-proof.json
+packages/content/src/wayfarer-exterior-r005.json
+packages/content/src/wayfarer-hull-r005-proof.json
+packages/content/src/wayfarer-rebuild-r002.json
+packages/content/src/wayfarer-threshold-proof.json
+packages/content/src/wayfarer-walking-proof.json
+packages/sim/src/wayfarer-refit-fuel-proof.json

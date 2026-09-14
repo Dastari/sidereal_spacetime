@@ -2,7 +2,19 @@ import { expect, test, vi } from "vitest";
 vi.mock("spacetimedb/server", () => ({
   SenderError: class extends Error {},
   table: () => ({}),
-  t: new Proxy({}, { get: () => () => ({ primaryKey() { return this; }, unique() { return this; } }) }),
+  t: new Proxy(
+    {},
+    {
+      get: () => () => ({
+        primaryKey() {
+          return this;
+        },
+        unique() {
+          return this;
+        },
+      }),
+    },
+  ),
 }));
 import {
   dropItem,
@@ -12,6 +24,12 @@ import {
   groundItemsView,
 } from "./inventory-operations";
 import { equipItem } from "./inventory";
+import { validateInventory } from "@sidereal/sim/inventory";
+import {
+  INVENTORY_DEFINITIONS,
+  LIQUID_DENSITY_KG_PER_LITRE,
+  CHARACTER_CARRY_LIMIT_KG,
+} from "@sidereal/content/inventory";
 function fixture() {
   const actor = {
     id: "actor",
@@ -83,10 +101,14 @@ function fixture() {
     revision: bigint;
   }[] = [];
   const states = [{ characterId: "actor", revision: 1n, kitGranted: true }];
-  function table<T extends { id?: string; characterId?: string; containerId?: string; itemId?: string }>(
-    rows: T[],
-    key: "id" | "characterId" | "containerId" | "itemId" = "id",
-  ) {
+  function table<
+    T extends {
+      id?: string;
+      characterId?: string;
+      containerId?: string;
+      itemId?: string;
+    },
+  >(rows: T[], key: "id" | "characterId" | "containerId" | "itemId" = "id") {
     const index = {
       find: (id: string) => rows.find((r) => r[key] === id),
       update: (row: T) => {
@@ -113,15 +135,28 @@ function fixture() {
     seated = false;
   const raw = {
     sender: "owner",
+    timestamp: { microsSinceUnixEpoch: 1n },
     newUuidV4: () => `uuid-${++n}`,
     db: {
+      constructionFlightBinding: { shipId: { find: () => undefined } },
       character: {
+        id: { find: (id: string) => (id === actor.id ? actor : undefined) },
         by_owner: {
           filter: (owner: string) => (owner === "owner" ? [actor] : []),
         },
       },
-      inventoryItemMembership: table<{ itemId: string; containerId: string; rootContainerId: string; revision: bigint }>([], "itemId"),
-      inventoryContainerScope: table<{ containerId: string; rootContainerId: string; rootKind: string; revision: bigint }>([], "containerId"),
+      inventoryItemMembership: table<{
+        itemId: string;
+        containerId: string;
+        rootContainerId: string;
+        revision: bigint;
+      }>([], "itemId"),
+      inventoryContainerScope: table<{
+        containerId: string;
+        rootContainerId: string;
+        rootKind: string;
+        revision: bigint;
+      }>([], "containerId"),
       inventoryItem: table(items),
       inventoryContainer: table(containers),
       storageBinding: table(bindings),
@@ -148,6 +183,7 @@ function fixture() {
     states,
     receipts,
     item,
+    grid,
     mutation,
     seat: () => {
       seated = true;
@@ -288,4 +324,179 @@ test("store all moves only fitting carried contents, retains equipment, and retr
       destinationId: "crate",
     }),
   ).toThrow("nearby storage");
+});
+
+const inventorySnapshot = (f: ReturnType<typeof fixture>) =>
+  JSON.stringify(
+    {
+      items: f.items,
+      containers: f.containers,
+      bindings: f.bindings,
+      states: f.states,
+      receipts: f.receipts,
+    },
+    (_, value) => (typeof value === "bigint" ? value.toString() : value),
+  );
+function replacement(
+  f: ReturnType<typeof fixture>,
+  source = "crate",
+  width = 8,
+  height = 6,
+) {
+  f.items.push(
+    f.item("replacement", "field-pack", source, source === "bag" ? 3 : 0),
+  );
+  f.containers.push(
+    f.grid("replacement-storage", width, height, false, "replacement"),
+  );
+}
+test("primary ground pickup equips an empty back slot despite completely full pockets, preserving nested contents", () => {
+  const f = fixture();
+  f.items.push(f.item("pocket-blocker", "medkit", "pockets", 2));
+  dropItem(f.ctx, { ...f.mutation(), itemId: "pack" });
+  const command = { ...f.mutation(), itemId: "pack", containerId: "" };
+  transferItem(f.ctx, command);
+  const after = inventorySnapshot(f);
+  transferItem(f.ctx, command);
+  expect(inventorySnapshot(f)).toBe(after);
+  expect(f.items.find((i) => i.id === "pack")?.equipmentSlot).toBe("back");
+  expect(f.items.find((i) => i.id === "gun")?.containerId).toBe("bag");
+  expect(f.bindings).toHaveLength(0);
+  expect(f.states[0].revision).toBe(3n);
+});
+test("backpack equip transfers contents into an occupied replacement, returns old pack to source and preserves every UUID and liquid row", () => {
+  const f = fixture();
+  replacement(f);
+  f.items.push(f.item("new-medkit", "medkit", "replacement-storage"));
+  f.items.push(f.item("fuel", "resource-canister", "bag", 2));
+  f.containers.push({
+    ...f.grid("fuel-reservoir", 0, 0, false, "fuel"),
+    kind: "liquid",
+    capacityLitres: 5,
+    amountLitres: 2,
+    liquidType: "fuel",
+  });
+  const ids = f.items.map((i) => i.id).sort();
+  const liquid = { ...f.containers.at(-1)! };
+  const command = { ...f.mutation(), itemId: "replacement" };
+  equipItem(f.ctx, command);
+  expect(f.items.find((i) => i.id === "replacement")?.equipmentSlot).toBe(
+    "back",
+  );
+  expect(f.items.find((i) => i.id === "pack")?.containerId).toBe("crate");
+  for (const id of ["gun", "fuel", "new-medkit"])
+    expect(f.items.find((i) => i.id === id)?.containerId).toBe(
+      "replacement-storage",
+    );
+  expect(f.items.find((i) => i.id === "new-medkit")).toMatchObject({
+    x: 0,
+    y: 0,
+    rotated: false,
+  });
+  expect(f.containers.find((c) => c.id === liquid.id)).toEqual(liquid);
+  expect(f.items.map((i) => i.id).sort()).toEqual(ids);
+  const after = inventorySnapshot(f);
+  equipItem(f.ctx, command);
+  expect(inventorySnapshot(f)).toBe(after);
+  expect(() => equipItem(f.ctx, { ...command, itemId: "pack" })).toThrow(
+    "different request",
+  );
+  expect(inventorySnapshot(f)).toBe(after);
+});
+test("replacement carried inside old pack equips without self-containment or intermediary space; empty old pack drops at the actor", () => {
+  const f = fixture();
+  replacement(f, "bag");
+  f.items.push(f.item("pocket-blocker", "medkit", "pockets", 2));
+  equipItem(f.ctx, { ...f.mutation(), itemId: "replacement" });
+  expect(f.items.find((i) => i.id === "gun")?.containerId).toBe(
+    "replacement-storage",
+  );
+  expect(f.items.some((i) => i.containerId === "bag")).toBe(false);
+  expect(groundItemsView(f.ctx).map((i) => i.id)).toEqual(["pack"]);
+  const c = f.containers.find(
+    (c) => c.id === f.items.find((i) => i.id === "pack")?.containerId,
+  )!;
+  expect([c.localX, c.localY, c.width, c.height]).toEqual([0, 10.25, 3, 4]);
+  expect(
+    f.items.filter((i) => i.equipmentSlot === "back").map((i) => i.id),
+  ).toEqual(["replacement"]);
+});
+test("ground backpack swap reuses its source wrapper and updates the ground item identity", () => {
+  const f = fixture();
+  replacement(f);
+  dropItem(f.ctx, { ...f.mutation(), itemId: "replacement" });
+  const source = f.bindings[0].containerId;
+  equipItem(f.ctx, { ...f.mutation(), itemId: "replacement" });
+  expect(f.bindings).toHaveLength(1);
+  expect(f.bindings[0]).toMatchObject({
+    containerId: source,
+    placementId: "ground:pack",
+  });
+  expect(groundItemsView(f.ctx).map((i) => i.id)).toEqual(["pack"]);
+});
+test.each(["shape", "payload", "carry"])(
+  "backpack swap rejects %s overflow atomically including wrappers, receipts and revision",
+  (reason) => {
+    const f = fixture();
+    replacement(
+      f,
+      "bag",
+      reason === "shape" ? 3 : 8,
+      reason === "shape" ? 3 : 6,
+    );
+    if (reason === "payload") f.containers.at(-1)!.maxMassKg = 3;
+    if (reason === "carry") {
+      // Existing carried state remains below 32 kg; a world-source replacement
+      // contains additional mass which pushes the final carried state over it.
+      f.items.find((i) => i.id === "replacement")!.containerId = "crate";
+      for (let n = 0; n < 6; n++)
+        f.items.push(f.item(`old-rifle-${n}`, "long-rifle", "bag", n * 2 + 2));
+      f.containers.find((c) => c.id === "bag")!.width = 16;
+      f.containers.find((c) => c.id === "bag")!.maxMassKg = 40;
+      f.items.push(f.item("new-rifle", "long-rifle", "replacement-storage"));
+      f.containers.at(-1)!.maxMassKg = 40;
+    }
+    const before = inventorySnapshot(f);
+    expect(() =>
+      validateInventory(
+        f,
+        INVENTORY_DEFINITIONS,
+        LIQUID_DENSITY_KG_PER_LITRE,
+        "pockets",
+        CHARACTER_CARRY_LIMIT_KG,
+      ),
+    ).not.toThrow();
+    expect(() =>
+      equipItem(f.ctx, { ...f.mutation(), itemId: "replacement" }),
+    ).toThrow(
+      reason === "shape"
+        ? "Tetris space"
+        : reason === "payload"
+          ? "payload limit"
+          : "carry limit",
+    );
+    expect(inventorySnapshot(f)).toBe(before);
+  },
+);
+test("backpack swap rechecks standing for fallback drop, proximity and ownership without mutations", () => {
+  const f = fixture();
+  replacement(f, "bag");
+  f.seat();
+  let before = inventorySnapshot(f);
+  expect(() =>
+    equipItem(f.ctx, { ...f.mutation(), itemId: "replacement" }),
+  ).toThrow("Stand up");
+  expect(inventorySnapshot(f)).toBe(before);
+  f.items.find((i) => i.id === "replacement")!.containerId = "crate";
+  f.actor.localY = -10;
+  before = inventorySnapshot(f);
+  expect(() =>
+    equipItem(f.ctx, { ...f.mutation(), itemId: "replacement" }),
+  ).toThrow("out of reach");
+  expect(inventorySnapshot(f)).toBe(before);
+  f.raw.sender = "stranger";
+  expect(() =>
+    equipItem(f.ctx, { ...f.mutation(), itemId: "replacement" }),
+  ).toThrow("unavailable");
+  expect(inventorySnapshot(f)).toBe(before);
 });

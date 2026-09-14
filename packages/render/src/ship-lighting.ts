@@ -5,7 +5,10 @@ import type { ManagedLocalLight } from "./local-light-budget";
 import { isCabinMesh } from "./cabin-visibility";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import type { Geometry } from "@babylonjs/core/Meshes/geometry";
-import { createShadowPlacementCache, sphereIntersectsSpot } from "./ship-shadow-cache";
+import {
+  createShadowPlacementCache,
+  sphereIntersectsSpot,
+} from "./ship-shadow-cache";
 import { Matrix } from "@babylonjs/core/Maths/math.vector";
 import { RenderTargetTexture } from "@babylonjs/core/Materials/Textures/renderTargetTexture";
 import { cabinLineOfSight } from "./ship-occlusion";
@@ -61,7 +64,12 @@ export function createShipLighting(
   for (const mesh of meshes) {
     prepareShadowPolicy(mesh);
     mesh.receiveShadows = true;
-    if (mesh.getTotalVertices() > 0 && !mesh.metadata?.hullDecal && !mesh.metadata?.shadowExcluded) exteriorShadows.addShadowCaster(mesh);
+    if (
+      mesh.getTotalVertices() > 0 &&
+      !mesh.metadata?.hullDecal &&
+      !mesh.metadata?.shadowExcluded
+    )
+      exteriorShadows.addShadowCaster(mesh);
     if (mesh.material && "maxSimultaneousLights" in mesh.material)
       mesh.material.maxSimultaneousLights = 8;
     if (mesh.material && "enableSpecularAntiAliasing" in mesh.material)
@@ -140,7 +148,12 @@ export function createShipLighting(
   const proxySources = new Map<AbstractMesh, AbstractMesh>();
   const occluders: AbstractMesh[] = [];
   for (const mesh of meshes) {
-    if (!mesh.getTotalVertices() || mesh.metadata?.hullDecal || mesh.metadata?.shadowExcluded) continue;
+    if (
+      !mesh.getTotalVertices() ||
+      mesh.metadata?.hullDecal ||
+      mesh.metadata?.shadowExcluded
+    )
+      continue;
     const structural = isStructuralShadowSource(mesh);
     if (structural) {
       // Sibling clone shares immutable geometry, not its visibility or material.
@@ -150,7 +163,11 @@ export function createShipLighting(
         true,
       );
       if (!proxy) continue;
-      proxy.metadata = {...mesh.metadata, role: 'proxy', shadowRole: mesh.metadata.role};
+      proxy.metadata = {
+        ...mesh.metadata,
+        role: "proxy",
+        shadowRole: mesh.metadata.role,
+      };
       proxy.material = proxyMaterial;
       proxy.layerMask = 0x10000000;
       proxy.setEnabled(true);
@@ -192,21 +209,36 @@ export function createShipLighting(
   let cabinVisible = true;
   let budgetManaged = false;
   let budgetLightingAllowed = true;
-  const localEligible = (light:Light) => cabinVisible && budgetLightingAllowed && root.isEnabled() && !light.isDisposed()
-    && light.intensity > 0 && light.includedOnlyMeshes.some(mesh => !mesh.isDisposed() && mesh.isEnabled() && mesh.isVisible && mesh.visibility > 0);
-  const localSources = receiverLights.map(light => ({
+  const localEligible = (light: Light) =>
+    cabinVisible &&
+    budgetLightingAllowed &&
+    root.isEnabled() &&
+    !light.isDisposed() &&
+    light.intensity > 0 &&
+    light.includedOnlyMeshes.some(
+      (mesh) =>
+        !mesh.isDisposed() &&
+        mesh.isEnabled() &&
+        mesh.isVisible &&
+        mesh.visibility > 0,
+    );
+  const localSources = receiverLights.map((light) => ({
     light,
     id: `${root.metadata?.shipId ?? root.name}:local:${light.name}`,
-    apply: ({enabled,shadowEnabled}:Parameters<ManagedLocalLight['apply']>[0]) => {
-      if(light.isDisposed())return;
+    apply: ({
+      enabled,
+      shadowEnabled,
+    }: Parameters<ManagedLocalLight["apply"]>[0]) => {
+      if (light.isDisposed()) return;
       const next = enabled && localEligible(light);
       const shadow = light.getShadowGenerator();
       const nextShadow = next && shadowEnabled && !!shadow;
       // A cached map may have changed while its light was suppressed. Ensure
       // first reactivation sees current actor/geometry occlusion.
-      if(nextShadow && (!light.isEnabled(false) || !light.shadowEnabled))shadow?.getShadowMap()?.resetRefreshCounter();
-      if(light.isEnabled(false)!==next)light.setEnabled(next);
-      if(light.shadowEnabled!==nextShadow)light.shadowEnabled=nextShadow;
+      if (nextShadow && (!light.isEnabled(false) || !light.shadowEnabled))
+        shadow?.getShadowMap()?.resetRefreshCounter();
+      if (light.isEnabled(false) !== next) light.setEnabled(next);
+      if (light.shadowEnabled !== nextShadow) light.shadowEnabled = nextShadow;
     },
   }));
   const exteriorCasters = [
@@ -217,7 +249,10 @@ export function createShipLighting(
   const spotBatches = spots.map(() => createShadowBatches(root));
   const refreshExteriorBatches = () => {
     exteriorShadows.getShadowMap()!.renderList = sunBatches.rebuild(
-      exteriorCasters.filter(mesh => !mesh.isDisposed() && (cabinVisible || !isCabinMesh(mesh.name))),
+      exteriorCasters.filter(
+        (mesh) =>
+          !mesh.isDisposed() && (cabinVisible || !isCabinMesh(mesh.name)),
+      ),
     );
   };
   function setMembership(
@@ -242,7 +277,8 @@ export function createShipLighting(
       );
       // Babylon interprets an empty inclusion list as unrestricted, not empty.
       const enabled = localEligible(light);
-      if (!budgetManaged && light.isEnabled(false) !== enabled) light.setEnabled(enabled);
+      if (!budgetManaged && light.isEnabled(false) !== enabled)
+        light.setEnabled(enabled);
     }
   }
   syncReceiverLights();
@@ -340,19 +376,21 @@ export function createShipLighting(
       root.computeWorldMatrix(true);
       const inverse = Matrix.Invert(root.getWorldMatrix());
       staticLists = spots.map((light, i) =>
-        spotBatches[i].rebuild(liveOccluders.filter((mesh) => {
-          if (!mesh.isEnabled() || !mesh.isVisible) return false;
-          mesh.computeWorldMatrix(true);
-          const sphere = mesh.getBoundingInfo().boundingSphere;
-          return sphereIntersectsSpot(
-            Vector3.TransformCoordinates(sphere.centerWorld, inverse),
-            sphere.radiusWorld,
-            light.position,
-            light.direction,
-            light.range,
-            light.angle,
-          );
-        })),
+        spotBatches[i].rebuild(
+          liveOccluders.filter((mesh) => {
+            if (!mesh.isEnabled() || !mesh.isVisible) return false;
+            mesh.computeWorldMatrix(true);
+            const sphere = mesh.getBoundingInfo().boundingSphere;
+            return sphereIntersectsSpot(
+              Vector3.TransformCoordinates(sphere.centerWorld, inverse),
+              sphere.radiusWorld,
+              light.position,
+              light.direction,
+              light.range,
+              light.angle,
+            );
+          }),
+        ),
       );
     }
     const alive = actorMeshes.filter(
@@ -392,7 +430,8 @@ export function createShipLighting(
   function update(_interiorBlend: number, localX: number, localY: number) {
     if (!cabinVisible) {
       // Parent deck visibility stays live even while local spot maps are paused.
-      if (sunPlacementCache.update(exteriorCasters, geometryRevision)) refreshExteriorBatches();
+      if (sunPlacementCache.update(exteriorCasters, geometryRevision))
+        refreshExteriorBatches();
       return;
     }
     pruneDisposedActors();
@@ -463,14 +502,21 @@ export function createShipLighting(
     update,
     primaryLight: sun,
     /** Sun/fill are separate; local positions use the current renderer frame. */
-    getLocalLightSources(allowed=true):ManagedLocalLight[]{
-      budgetManaged=true;budgetLightingAllowed=allowed;
-      const world=root.computeWorldMatrix(true);
-      return localSources.filter(({light})=>!light.isDisposed()).map(({light,id,apply})=>({
-        id,position:Vector3.TransformCoordinates(light.position,world),range:light.range,
-        eligible:localEligible(light),requiresShadow:spots.includes(light as SpotLight),
-        shadowEligible:!!light.getShadowGenerator()?.getShadowMap(),apply,
-      }));
+    getLocalLightSources(allowed = true): ManagedLocalLight[] {
+      budgetManaged = true;
+      budgetLightingAllowed = allowed;
+      const world = root.computeWorldMatrix(true);
+      return localSources
+        .filter(({ light }) => !light.isDisposed())
+        .map(({ light, id, apply }) => ({
+          id,
+          position: Vector3.TransformCoordinates(light.position, world),
+          range: light.range,
+          eligible: localEligible(light),
+          requiresShadow: spots.includes(light as SpotLight),
+          shadowEligible: !!light.getShadowGenerator()?.getShadowMap(),
+          apply,
+        }));
     },
   };
 }

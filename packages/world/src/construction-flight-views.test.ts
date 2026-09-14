@@ -5,15 +5,20 @@ vi.mock("spacetimedb/server", () => ({
     row: (name: string, fields: unknown) => ({ name, fields }),
     string: () => ({ primaryKey: () => ({ primaryKey: true }) }),
     u64: () => ({}),
+    f64: () => ({}),
     bool: () => ({}),
   },
 }));
 import {
   ownAuthoredFlights,
+  ownAuthoredFlightPhysics,
+  ownAuthoredFlightActuators,
   ownAuthoredFlightFittings,
+  ownAuthoredFlightPowerFittings,
   hasAcceptedAuthoredFlight,
   authoredFlightProjection,
   authoredFlightFittingProjection,
+  authoredFlightPowerFittingProjection,
   type FlightViewContext,
 } from "./construction-flight-views";
 function fixture() {
@@ -72,6 +77,7 @@ function fixture() {
     installed: true,
     powered: true,
     availability: 1,
+    definitionRevision: 1,
     revision: 1n,
     definitionId: "definition",
   }));
@@ -170,6 +176,7 @@ test("keyed minimal status distinguishes active installation from explicit accep
     flightAdmitted: false,
   });
   expect(ownAuthoredFlightFittings(f.ctx)).toEqual([]);
+  expect(ownAuthoredFlightPowerFittings(f.ctx)).toEqual([]);
 });
 test("accepted membership requires current own visit, deck, instance and admission; ambiguous/disconnected account denies", () => {
   for (const change of [
@@ -184,13 +191,18 @@ test("accepted membership requires current own visit, deck, instance and admissi
     change(f);
     expect(hasAcceptedAuthoredFlight(f.ctx, f.a)).toBe(false);
     expect(ownAuthoredFlightFittings(f.ctx)).toEqual([]);
+    expect(ownAuthoredFlightPowerFittings(f.ctx)).toEqual([]);
   }
   const f = fixture();
   f.a.connected = false;
   expect(ownAuthoredFlights(f.ctx)).toEqual([]);
+  expect(ownAuthoredFlightFittings(f.ctx)).toEqual([]);
+  expect(ownAuthoredFlightPowerFittings(f.ctx)).toEqual([]);
   f.a.connected = true;
   f.actors.push({ ...f.a, id: "second" });
   expect(ownAuthoredFlights(f.ctx)).toEqual([]);
+  expect(ownAuthoredFlightFittings(f.ctx)).toEqual([]);
+  expect(ownAuthoredFlightPowerFittings(f.ctx)).toEqual([]);
 });
 test("only own safe seat recovery scalar is exposed; pending survives loss of operational state", () => {
   const f = fixture();
@@ -221,9 +233,22 @@ test("only own safe seat recovery scalar is exposed; pending survives loss of op
   });
   expect(ownAuthoredFlights(f.ctx)[0].seatState).toBe("none");
 });
-test("exact ten current instance mappings preserve fresh IDs and source effect mounts without operational or private fields", () => {
+test("existing fitting view retains its original five-field wire schema while the additive view exposes power", () => {
   const f = fixture();
   const rows = ownAuthoredFlightFittings(f.ctx);
+  const originalFields = [
+    "id",
+    "shipId",
+    "placedObjectId",
+    "sourceDeviceId",
+    "kind",
+  ];
+  expect(Object.keys((authoredFlightFittingProjection as any).fields)).toEqual(
+    originalFields,
+  );
+  expect(
+    Object.keys((authoredFlightPowerFittingProjection as any).fields),
+  ).toEqual([...originalFields, "powered"]);
   expect(rows).toHaveLength(10);
   expect(rows[1]).toEqual({
     id: "device1",
@@ -232,11 +257,39 @@ test("exact ten current instance mappings preserve fresh IDs and source effect m
     sourceDeviceId: "source1",
     kind: "actuator",
   });
+  expect(Object.keys(rows[1])).toEqual(originalFields);
+  expect(ownAuthoredFlightPowerFittings(f.ctx)[1]).toEqual({
+    ...rows[1],
+    powered: true,
+  });
+  f.rows[1].powered = false;
+  expect(ownAuthoredFlightFittings(f.ctx)).toEqual(rows);
+  expect(ownAuthoredFlightPowerFittings(f.ctx)[1]).toEqual({
+    ...rows[1],
+    powered: false,
+  });
   f.rows[0].sourceDeviceId = f.rows[1].sourceDeviceId;
   expect(ownAuthoredFlightFittings(f.ctx)).toEqual([]);
+  expect(ownAuthoredFlightPowerFittings(f.ctx)).toEqual([]);
   f.rows[0].sourceDeviceId = "source0";
   f.rows.push({ ...f.rows[0], id: "extra" });
   expect(ownAuthoredFlightFittings(f.ctx)).toEqual([]);
+  expect(ownAuthoredFlightPowerFittings(f.ctx)).toEqual([]);
+});
+test("both fitting views reject foreign rows and expose no private operational or definition fields", () => {
+  const f = fixture();
+  const row = ownAuthoredFlightPowerFittings(f.ctx)[0];
+  expect(Object.keys(row)).toEqual([
+    "id",
+    "shipId",
+    "placedObjectId",
+    "sourceDeviceId",
+    "kind",
+    "powered",
+  ]);
+  f.rows[0].shipId = "foreignship";
+  expect(ownAuthoredFlightFittings(f.ctx)).toEqual([]);
+  expect(ownAuthoredFlightPowerFittings(f.ctx)).toEqual([]);
 });
 test("owner index results are checked and bounded; no foreign flight or unbounded mappings", () => {
   const f = fixture();
@@ -245,4 +298,82 @@ test("owner index results are checked and bounded; no foreign flight or unbounde
   for (let i = 0; i < 64; i++)
     f.bindings.push({ ...f.binding, shipId: `ship${i}` });
   expect(ownAuthoredFlights(f.ctx)).toEqual([]);
+});
+
+test("compiled physics rejection is owner-visible before admission; actuator mounts stay owner-admitted only", () => {
+  const f = fixture();
+  let pending = false;
+  const compiled: any = {
+    shipId: "ship",
+    revision: 2n,
+    status: "ready",
+    reason: "",
+    massKg: 1234,
+    centerX: 1,
+    centerY: 2,
+    inertiaKgM2: 4567,
+    envelopeJson: "{}",
+    definitionHash: "physical-v1",
+    actuatorsJson: JSON.stringify([
+      {
+        id: "device1",
+        placedObjectId: "part1",
+        x: 3,
+        y: 4,
+        nozzleX: 3,
+        nozzleY: 3.5,
+        height: 1,
+        exhaustX: 0,
+        exhaustY: -1,
+      },
+    ]),
+  };
+  const ctx = {
+    ...f.ctx,
+    db: {
+      ...f.ctx.db,
+      constructionFlightCompiled: { shipId: { find: () => compiled } },
+      constructionFlightDirty: {
+        shipId: { find: () => (pending ? { shipId: "ship" } : undefined) },
+      },
+      actuatorOutput: { id: { find: () => ({ throttle: 0.5 }) } },
+    },
+  };
+  expect(ownAuthoredFlightPhysics(ctx)[0]).toMatchObject({
+    massKg: 1234,
+    centerX: 1,
+    centerY: 2,
+    status: "ready",
+  });
+  expect(ownAuthoredFlightActuators(ctx)).toEqual([
+    {
+      id: "device1",
+      shipId: "ship",
+      placedObjectId: "part1",
+      x: 3,
+      y: 4,
+      nozzleX: 3,
+      nozzleY: 3.5,
+      height: 1,
+      exhaustX: 0,
+      exhaustY: -1,
+      throttle: 0.5,
+    },
+  ]);
+  pending = true;
+  expect(ownAuthoredFlightPhysics(ctx)[0].reason).toBe(
+    "flight-compilation-pending",
+  );
+  expect(ownAuthoredFlightActuators(ctx)).toEqual([]);
+  pending = false;
+  compiled.status = "rejected";
+  compiled.reason = "missing-physical-definition";
+  f.setReview(undefined);
+  expect(ownAuthoredFlightPhysics(ctx)[0].reason).toBe(
+    "missing-physical-definition",
+  );
+  expect(ownAuthoredFlightActuators(ctx)).toEqual([]);
+  f.a.owner = f.foreign;
+  expect(ownAuthoredFlightPhysics({ ...ctx, sender: f.foreign })).toEqual([]);
+  expect(ownAuthoredFlightActuators({ ...ctx, sender: f.foreign })).toEqual([]);
 });

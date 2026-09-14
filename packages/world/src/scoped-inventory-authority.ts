@@ -1,3 +1,7 @@
+import {
+  markShipFlightDirty,
+  markCharacterFlightDirty,
+} from "./construction-flight-dirty";
 import { withCargoCarrierApproaches } from "./construction-cargo-access";
 import { assertCargoStackMass } from "./construction-cargo-carriers";
 import {
@@ -30,7 +34,7 @@ import {
   INVENTORY_DEFINITIONS,
   CHARACTER_CARRY_LIMIT_KG,
   LIQUID_DENSITY_KG_PER_LITRE,
-} from "../../content/src/inventory";
+} from "@sidereal/content/inventory";
 import { constructionCollision } from "./construction-doors";
 import { createConstructionStandingSupport } from "./construction-standing-support";
 import { clearAim } from "./combat";
@@ -123,6 +127,20 @@ export function synchronizeLegacyInventory(
     };
     if (old) ctx.db.inventoryItemMembership.itemId.update(row);
     else ctx.db.inventoryItemMembership.insert(row);
+  }
+  if (
+    changedContainers.size ||
+    changedItems.size ||
+    plan.removedContainerIds.length ||
+    plan.removedItemIds.length
+  ) {
+    markCharacterFlightDirty(ctx, characterId);
+    for (const shipId of new Set(
+      [...before.containers, ...after.containers]
+        .filter((c) => !c.parentItemId && !c.carried)
+        .map((c) => c.shipId),
+    ))
+      markShipFlightDirty(ctx, shipId);
   }
 }
 function actorFor(ctx: ReadContext) {
@@ -374,7 +392,16 @@ export function moveScopedCargo(ctx: Context, request: ScopedTransferRequest) {
   const result = transferScopedCargo(repo, request);
   if (!result.ok) fail(result.error.code + ": " + result.error.message);
   // Throws propagate through the enclosing transaction, including its receipt.
-  if (!result.replay) assertCargoStackMass(ctx, affectedRoots);
+  if (!result.replay) {
+    assertCargoStackMass(ctx, affectedRoots);
+    for (const id of affectedRoots) {
+      const root = ctx.db.inventoryContainerScope.containerId.find(id);
+      if (root?.rootKind === "instance")
+        markShipFlightDirty(ctx, root.instanceId);
+      if (root?.rootCharacterId)
+        markCharacterFlightDirty(ctx, root.rootCharacterId);
+    }
+  }
 }
 /** Bounded server-derived reachable roots, not client query authorization. */
 function reachableCargo(ctx: ReadContext) {

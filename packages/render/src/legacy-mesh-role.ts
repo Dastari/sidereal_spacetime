@@ -31,7 +31,12 @@ export function legacyMeshRole(
 }
 
 /** Retained GLB roof/marking surfaces fade; construction roofs use their own deck gate. */
-export function legacyCutawayFade(mesh: Pick<AbstractMesh, "metadata" | "parent">) {
-  const extras = mesh.metadata?.gltf?.extras ?? mesh.parent?.metadata?.gltf?.extras;
-  return extras?.sidereal_layer === "roof" || extras?.sidereal_layer === "markings";
+export function legacyCutawayFade(
+  mesh: Pick<AbstractMesh, "metadata" | "parent">,
+) {
+  const extras =
+    mesh.metadata?.gltf?.extras ?? mesh.parent?.metadata?.gltf?.extras;
+  return (
+    extras?.sidereal_layer === "roof" || extras?.sidereal_layer === "markings"
+  );
 }

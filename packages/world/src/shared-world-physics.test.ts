@@ -2,11 +2,66 @@ import { describe, expect, it, vi } from "vitest";
 vi.mock("spacetimedb/server", () => ({ SenderError: class extends Error {} }));
 import { joinSharedSystem, ensureCanonicalSystem } from "./shared-world";
 import {
-  stepSharedWorld,
+  stepSharedWorld as stepCompiledSharedWorld,
   type SharedPhysicsContext,
 } from "./shared-world-physics";
 import { fixture, other, owner } from "./shared-world-test-fixture";
 import { SHARED_SYSTEM_SEED } from "@sidereal/content/shared-system";
+import {
+  LAB_FLIGHT_ACTUATORS,
+  LAB_FLIGHT_COMPUTER,
+  LAB_FLIGHT_MASS,
+  LAB_FLIGHT_PROFILE,
+  LAB_FLIGHT_SPEED,
+} from "@sidereal/content/flight";
+import { LAB_HULL } from "@sidereal/content/space";
+import { deriveEnvelope } from "@sidereal/sim/ifcs";
+import * as systemSpace from "@sidereal/sim/system-space";
+// Explicit test-only hook preserves this adapter suite's independent baseline.
+// Production must supply the authoritative compiled reader and dirty queue.
+function stepSharedWorld(
+  ctx: SharedPhysicsContext,
+  recordConsumption: Parameters<
+    typeof stepCompiledSharedWorld
+  >[2]["recordConsumption"] = () => {},
+) {
+  return stepCompiledSharedWorld(ctx, undefined, {
+    recordConsumption,
+    compileDirty: () => {},
+    canPilot: () => true,
+    definitionForShip: () => ({
+      status: "ready",
+      reason: "",
+      kind: "construction",
+      stationId: "",
+      deckId: "",
+      mass: LAB_FLIGHT_MASS,
+      profile: LAB_FLIGHT_PROFILE,
+      speed: LAB_FLIGHT_SPEED,
+      hull: {
+        ...LAB_HULL,
+        id: "test-hull",
+        revision: 1,
+        lateralOffset: 0,
+        authoredMidpointX: 0,
+        authoredMidpointY: LAB_HULL.longitudinalOffset,
+      },
+      computer: LAB_FLIGHT_COMPUTER,
+      envelope: deriveEnvelope(LAB_FLIGHT_ACTUATORS, LAB_FLIGHT_MASS),
+      actuators: LAB_FLIGHT_ACTUATORS.map((a) => ({
+        ...a,
+        sourceDeviceId: a.id,
+        placedObjectId: a.id,
+        definitionRevision: 1,
+        nozzleX: a.x,
+        nozzleY: a.y,
+        height: 0,
+        exhaustX: Math.sin(a.rotation),
+        exhaustY: -Math.cos(a.rotation),
+      })),
+    }),
+  });
+}
 function setup() {
   const f = fixture();
   joinSharedSystem(f.ctx(), f.args());
@@ -42,6 +97,39 @@ function pilot(f: ReturnType<typeof setup>, n = 1) {
     updatedMicros: 100n,
   });
 }
+it("accepted consumption advances the sample clock even with unchanged motion and outputs", () => {
+  const f = setup();
+  const record = vi.fn();
+  const solve = vi
+    .spyOn(systemSpace, "stepSystemSpace")
+    .mockImplementationOnce((bodies) => ({
+      bodies,
+      changedBodyIds: [],
+      commands: [],
+      impacts: 0,
+      exhausted: false,
+      completedSubsteps: 3,
+      consumption: [
+        {
+          bodyId: "ship1",
+          actuators: [{ id: LAB_FLIGHT_ACTUATORS[0].id, newtonSeconds: 2 }],
+        },
+      ],
+    }));
+  try {
+    const first = stepSharedWorld(f.physics(), record);
+    expect(first.changedMotions).toBe(0);
+    expect(first.changedOutputs).toBe(0);
+    expect(record).toHaveBeenCalledTimes(1);
+    expect(stepSharedWorld(f.physics(), record).reason).toBe(
+      "sample-already-applied",
+    );
+    expect(record).toHaveBeenCalledTimes(1);
+    expect(solve).toHaveBeenCalledTimes(1);
+  } finally {
+    solve.mockRestore();
+  }
+});
 describe("authoritative once-per-system adapter", () => {
   it("two ships advance one shared rock exactly once and leave legacy rows untouched", () => {
     const f = setup(),
@@ -262,4 +350,151 @@ it("real stock flight brakes to exact rest and then emits no motion, actuator or
   expect(writes()).toBe(before);
   expect(f.db.shipWorldMotion.shipId.find("ship1")).toEqual(motion);
   expect(step(1, 0).changedMotions).toBeGreaterThan(0);
+});
+
+import { compileFlightDefinition } from "@sidereal/sim/flight-definition";
+import { toCenterOfMassMotion } from "@sidereal/sim/flight-frame";
+import {
+  WAYFARER_FLIGHT_PROFILE,
+  WAYFARER_FLIGHT_SPEED,
+} from "@sidereal/content/physical-definitions";
+function asymmetricDefinition(cargoX: number) {
+  const compiled = compileFlightDefinition({
+    catalog: {
+      id: "adapter-test-physical",
+      revision: 1,
+      definitions: [
+        {
+          id: "hull",
+          revision: 1,
+          kind: "hull",
+          massKg: 1000,
+          centroid: [0, 0],
+          inertiaKgM2: 2000,
+        },
+      ],
+    },
+    parts: [
+      {
+        id: "installed-hull",
+        definitionId: "hull",
+        revision: 1,
+        position: [0, 0, 0],
+        rotation: 0,
+        flipped: false,
+      },
+    ],
+    fittings: [],
+    cargo: [{ containerId: "cargo", massKg: 200, position: [cargoX, 2] }],
+    crew: [{ characterId: "walking-passenger", massKg: 80, position: [-1, 1] }],
+    hull: {
+      id: "authored-hull",
+      revision: 1,
+      radius: 1,
+      halfLength: 2,
+      center: [0, 0],
+    },
+  });
+  if (compiled.status !== "ready") throw Error(compiled.reason);
+  return {
+    status: "ready" as const,
+    kind: "construction" as const,
+    reason: "",
+    stationId: "",
+    deckId: "",
+    mass: compiled.mass,
+    hull: compiled.hull,
+    actuators: [],
+    envelope: compiled.envelope,
+    computer: {
+      id: "absent",
+      definitionId: "absent",
+      installed: false,
+      powered: false,
+    },
+    profile: WAYFARER_FLIGHT_PROFILE,
+    speed: WAYFARER_FLIGHT_SPEED,
+  };
+}
+it("compiled asymmetric engine-less ships coast about COM and persist the authored origin", () => {
+  const f = setup();
+  rest(f);
+  pilot(f);
+  const definition = asymmetricDefinition(3),
+    row = f.db.shipWorldMotion.shipId.find("ship1");
+  f.db.shipWorldMotion.shipId.update({
+    ...row,
+    vx: 3,
+    vy: -2,
+    omega: 0.2,
+    heading: 0.3,
+  });
+  const before = f.db.shipWorldMotion.shipId.find("ship1"),
+    com = toCenterOfMassMotion(before, definition.mass);
+  const result = stepCompiledSharedWorld(f.physics(), undefined, {
+    recordConsumption: () => {},
+    compileDirty: () => {},
+    canPilot: () => true,
+    definitionForShip: () => definition,
+  });
+  expect(result.reason).toBeUndefined();
+  const after = f.db.shipWorldMotion.shipId.find("ship1"),
+    nextCom = toCenterOfMassMotion(after, definition.mass);
+  expect(nextCom.x).toBeCloseTo(com.x + com.vx * 0.05, 10);
+  expect(nextCom.y).toBeCloseTo(com.y + com.vy * 0.05, 10);
+  expect(nextCom.vx).toBeCloseTo(com.vx, 12);
+  expect(nextCom.vy).toBeCloseTo(com.vy, 12);
+  expect(after.omega).toBeCloseTo(0.2, 12);
+  expect(f.db.actuatorOutput.rows.size).toBe(0);
+});
+it("cargo recompilation does not translate resting ship or passenger authored coordinates", () => {
+  const f = setup();
+  rest(f);
+  const before = { ...f.db.shipWorldMotion.shipId.find("ship1") },
+    actor = { ...f.db.character.id.find("actor1") };
+  let definition = asymmetricDefinition(-3),
+    compiled = false;
+  const oldCenter = definition.mass.centerX;
+  stepCompiledSharedWorld(f.physics(), undefined, {
+    recordConsumption: () => {},
+    compileDirty: () => {
+      definition = asymmetricDefinition(3);
+      compiled = true;
+    },
+    canPilot: () => false,
+    definitionForShip: () => definition,
+  });
+  expect(compiled).toBe(true);
+  expect(definition.mass.centerX).not.toBe(oldCenter);
+  expect(f.db.shipWorldMotion.shipId.find("ship1")).toEqual(before);
+  expect(f.db.character.id.find("actor1")).toEqual(actor);
+});
+it("initial invalid definitions reject the island and erase stale burn telemetry", () => {
+  const f = setup();
+  rest(f);
+  f.db.actuatorOutput.insert({
+    id: "old-output",
+    shipId: "ship2",
+    actuatorId: "removed",
+    throttle: 1,
+    tick: 1n,
+  });
+  const before = { ...f.db.shipWorldMotion.shipId.find("ship1") };
+  const result = stepCompiledSharedWorld(f.physics(), undefined, {
+    recordConsumption: () => {},
+    compileDirty: () => {},
+    canPilot: () => true,
+    definitionForShip: () => ({
+      status: "invalid",
+      reason: "missing-physical-definition",
+    }),
+  });
+  expect(result).toMatchObject({
+    status: "exhausted",
+    reason: "missing-physical-definition",
+    changedOutputs: 1,
+    changedMotions: 0,
+  });
+  expect(f.db.actuatorOutput.rows.size).toBe(0);
+  expect(f.db.shipWorldMotion.shipId.find("ship1")).toEqual(before);
 });

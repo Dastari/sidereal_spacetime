@@ -14,7 +14,8 @@ export function prepareCutawayMeshes(meshes: readonly AbstractMesh[]) {
   }
 }
 export function applyCutawayVisibility(mesh: AbstractMesh, visibility: number) {
-  const resolved = visibility >= .995 ? 1 : visibility <= .005 ? 0 : visibility;
+  const resolved =
+    visibility >= 0.995 ? 1 : visibility <= 0.005 ? 0 : visibility;
   mesh.visibility = resolved;
   mesh.setEnabled(resolved > 0);
 }

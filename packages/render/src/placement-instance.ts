@@ -1,5 +1,5 @@
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
-import type { PartAsset } from "../../content/src/assembly";
+import type { PartAsset } from "@sidereal/content/assembly";
 import manifest from "./instanceable-assets.json";
 
 /** Presentation-only opt-in, pinned to unchanged authored visual bytes. */

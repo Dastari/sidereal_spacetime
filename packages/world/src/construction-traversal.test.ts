@@ -13,7 +13,10 @@ import {
 vi.mock("spacetimedb/server", () => ({
   SenderError: class extends Error {},
   table: () => ({}),
-  t: new Proxy({}, { get: () => () => ({ primaryKey: () => ({}), unique: () => ({}) }) }),
+  t: new Proxy(
+    {},
+    { get: () => () => ({ primaryKey: () => ({}), unique: () => ({}) }) },
+  ),
 }));
 vi.mock("./auth", () => ({
   requireGame: (ctx: any) => {
@@ -104,6 +107,7 @@ function database() {
       by_owner: "owner",
       by_instance: "instanceId",
     }),
+    constructionFlightBinding: table("shipId"),
     constructionTraversal: table("characterId", {
       by_owner: "owner",
       by_instance: "instanceId",
