@@ -1,12 +1,12 @@
 """Artifact regressions for Gas4's material-only successor."""
-import hashlib,json,unittest,math
+import io,json,unittest,math
 from pathlib import Path
-import bpy
-import numpy as np
+from PIL import Image,ImageChops
 import sys
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 from audit_native_kit_attributes import read_glb
-ROOT=Path('output/playwright/planet-reference-20260914');NEW=ROOT/'gas-r004';OLD=ROOT/'gas-r003'
+from gas_preservation_fixtures import GasRevision
+NEW=GasRevision('gas-r004');OLD=GasRevision('gas-r003')
 class Gas4MaterialTests(unittest.TestCase):
  def test_geometry_uv_normal_and_stable_placement_identity_exact(self):
   a=json.loads((NEW/'kit.json').read_text());b=json.loads((OLD/'kit.json').read_text())
@@ -15,14 +15,15 @@ class Gas4MaterialTests(unittest.TestCase):
   for name in ['gas-body.glb','ring-rocks.glb','gas-albedo-generated.png']:self.assertEqual((NEW/name).read_bytes(),(OLD/name).read_bytes())
  def test_png_rgb_artwork_unchanged_and_black_density_transparent(self):
   def read(path):
-   image=bpy.data.images.load(str(path),check_existing=False);pixels=np.empty(len(image.pixels),dtype=np.float32);image.pixels.foreach_get(pixels);return tuple(image.size),pixels.reshape((-1,4))
-  size,source=read(NEW/'ring-dust-generated-black.png');rgb=source[:,:3]
+   with Image.open(io.BytesIO(path.read_bytes())) as image:return image.convert('RGBA')
+  source=read(NEW/'ring-dust-generated-black.png');size=source.size;rgb=source.convert('RGB').tobytes()
   for index in range(3):
-   dimensions,pixels=read(NEW/f'ring-dust-{index}.png');self.assertEqual(dimensions,size);self.assertTrue(np.array_equal(pixels[:,:3],rgb),'Decoded RGB artwork changed')
-   black=np.max(pixels[:,:3],axis=1)==0
-   self.assertGreater(np.sum(black),len(pixels)*.1);self.assertTrue(np.all(pixels[black,3]==0))
-   self.assertGreater(np.sum((pixels[:,3]>0)&(pixels[:,3]<150/255)),len(pixels)*.05)
-   self.assertGreater(np.sum(pixels[:,3]>150/255),len(pixels)*.05)
+   pixels=read(NEW/f'ring-dust-{index}.png');self.assertEqual(pixels.size,size);self.assertEqual(pixels.convert('RGB').tobytes(),rgb,'Decoded RGB artwork changed')
+   red,green,blue,alpha=pixels.split();black=ImageChops.lighter(ImageChops.lighter(red,green),blue).point(lambda value:255 if value==0 else 0)
+   count=size[0]*size[1];histogram=alpha.histogram()
+   self.assertGreater(black.histogram()[255],count*.1);self.assertEqual(ImageChops.multiply(alpha,black).getextrema()[1],0)
+   self.assertGreater(sum(histogram[1:150]),count*.05)
+   self.assertGreater(sum(histogram[151:]),count*.05)
  def test_annulus_uv_uses_exact_angular_u_and_inner_to_outer_density_v(self):
   kit=json.loads((NEW/'kit.json').read_text())
   for index,variant in enumerate(kit['variants'][1:4]):

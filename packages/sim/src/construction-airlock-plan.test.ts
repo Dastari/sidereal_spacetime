@@ -1,4 +1,6 @@
 import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { expect, test } from "vitest";
 import {
   planNativeExternalAirlock,
@@ -7,6 +9,9 @@ import {
 } from "./construction-airlock-plan";
 import { stepCompartmentGas } from "./construction-topology";
 import type { NativeAirlockState } from "./construction-airlock-controller";
+const repositoryRoot = fileURLToPath(new URL("../../../", import.meta.url));
+const nativeSourcePath = (path: string) =>
+  resolve(repositoryRoot, path.replace(/^\/root\/sidereal_spacetime\//, ""));
 const audit = readFileSync(
   "assets/art-library/designs/shipyard.structure.external-airlock/revisions/r000/audit-a007.json",
 );
@@ -15,7 +20,10 @@ const pins = JSON.parse(audit.toString()).sourcePins as Record<
   { path: string }
 >;
 const sources = Object.fromEntries(
-  Object.entries(pins).map(([key, pin]) => [key, readFileSync(pin.path)]),
+  Object.entries(pins).map(([key, pin]) => [
+    key,
+    readFileSync(nativeSourcePath(pin.path)),
+  ]),
 );
 const state = (): NativeAirlockState => ({
   inner: {

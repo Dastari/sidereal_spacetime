@@ -1,4 +1,4 @@
-import rebuild from "../../content/src/construction-wayfarer-rebuild-visuals.json";
+import rebuild from "@sidereal/content/construction-wayfarer-rebuild-visuals.json";
 import { CONSTRUCTION_INSET_VISUALS } from "@sidereal/content/construction-inset-visuals";
 import supplement from "@sidereal/content/construction-complex-visuals.json";
 

@@ -15,23 +15,23 @@ import {
   retargetGroundPlacement,
   writeGroundPlacement,
   readGroundPlacement,
-} from "../../sim/src/ground-placement";
-import type { DeckCollisionFrame } from "../../sim/src/construction-collision";
+} from "@sidereal/sim/ground-placement";
+import type { DeckCollisionFrame } from "@sidereal/sim/construction-collision";
 import { readFileSync } from "node:fs";
-import { WAYFARER_CONVERSION_PIN as PIN } from "../../content/src/wayfarer-conversion-candidate";
+import { WAYFARER_CONVERSION_PIN as PIN } from "@sidereal/content/wayfarer-conversion-candidate";
 import {
   createWayfarerConversionCandidate,
   type WayfarerPinnedInputs,
-} from "../../sim/src/wayfarer-conversion-candidate";
-import { planConstructionInstance } from "../../sim/src/construction-instance";
+} from "@sidereal/sim/wayfarer-conversion-candidate";
+import { planConstructionInstance } from "@sidereal/sim/construction-instance";
 import {
   qualifiedWayfarerWalkingBindings,
   qualifiedWayfarerInstanceObstacles,
-} from "../../sim/src/wayfarer-walking-bindings";
+} from "@sidereal/sim/wayfarer-walking-bindings";
 import {
   compileDeckCollision,
   resolveDeckCollision,
-} from "../../sim/src/construction-collision";
+} from "@sidereal/sim/construction-collision";
 import { createConstructionStandingSupport } from "./construction-standing-support";
 
 function fixture() {

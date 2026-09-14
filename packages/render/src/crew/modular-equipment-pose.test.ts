@@ -21,7 +21,7 @@ const paired = new URL(
   import.meta.url,
 );
 const currentPose = new URL(
-  "../../../../assets/art-library/designs/crew.animation.aim/revisions/r003/",
+  "../../../../assets/runtime/crew/poses/r003/",
   import.meta.url,
 );
 const modularBytes = readFileSync(new URL("modular-crew.glb", installed));
@@ -169,7 +169,10 @@ it("installed r009 and exact paired aim assets share all 16 rest/bind joints and
   expect(vertices).toBeGreaterThan(10000);
   const delivered = JSON.parse(
     readFileSync(
-      new URL("equipment-delivery-manifest.json", currentPose),
+      new URL(
+        "../../../../assets/art-library/designs/crew.animation.aim/revisions/r003/equipment-delivery-manifest.json",
+        import.meta.url,
+      ),
       "utf8",
     ),
   );
@@ -275,7 +278,9 @@ describe("actual modular r009 with exact paired equipment and aim samples", () =
           expect(
             visible.some(
               (mesh) =>
-                mesh.name.replace(/_primitive\d+$/, "").replace(/\.\d+$/, "") === `GEO-${id}` &&
+                mesh.name
+                  .replace(/_primitive\d+$/, "")
+                  .replace(/\.\d+$/, "") === `GEO-${id}` &&
                 (mesh.metadata?.gltf?.extras?.component_id ?? id) === id,
             ),
             id,

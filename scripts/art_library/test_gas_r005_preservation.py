@@ -1,8 +1,8 @@
 """Read-only Gas5 UV-only preservation checks; standard-library only."""
 import json,unittest
-from pathlib import Path
 from audit_native_kit_attributes import read_glb,accessor
-ROOT=Path('output/playwright/planet-reference-20260914');OLD=ROOT/'gas-r004';NEW=ROOT/'gas-r005'
+from gas_preservation_fixtures import GasRevision
+OLD=GasRevision('gas-r004');NEW=GasRevision('gas-r005')
 TRANSFORMS=[(.22,.56),(.25,.50),(.12,.76)]
 class Gas5PreservationTests(unittest.TestCase):
  def test_materials_body_debris_and_textures_remain_exact(self):

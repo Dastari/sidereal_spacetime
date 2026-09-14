@@ -1,12 +1,12 @@
 import { expect, test } from "vitest";
-import source from "../../content/src/wayfarer-rebuild-r002.json";
-import type { ConstructionDocument } from "../../content/src/construction";
+import source from "@sidereal/content/wayfarer-rebuild-r002.json";
+import type { ConstructionDocument } from "@sidereal/content/construction";
 import {
   placedDeviceServices,
   deviceServicePortId,
   connectDevicePower,
   withDefaultDevicePower,
-} from "../../content/src/device-services";
+} from "@sidereal/content/device-services";
 import { resolveDevicePower } from "./device-power";
 import { readLayout } from "./layout-validation";
 import { compileLayout } from "./layout-compiler";
