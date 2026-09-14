@@ -1,0 +1,31 @@
+# Wayfarer fixture flight computer
+
+Implemented 2026-09-08. This extends the lab; modular fitting and resource networks remain M2/M4 work.
+
+The preserved `/root/sidereal/crates/sidereal-game/src/flight.rs` maps pilot local translation to bounded velocity and turn input to angular rate, then calls the controller and allocator in `ifcs.rs`. Releasing input requests zero velocity/rate and keeps the flight computer active while residual motion exists. The new authoritative lab now follows that control pipeline. W/S request forward/reverse velocity (30/12 m/s); A/D request up to 0.65 rad/s. Released controls use actual opposing nozzles to decelerate and cancel rotation. A heading controller also exists and is tested, but no heading-selection UI/reducer is advertised.
+
+`packages/content/src/flight.ts` defines stable placed-device IDs and versioned definitions for three main engines, four lateral maneuver nozzles, two retro nozzles and an installed powered flight computer. The allocator respects mount position, force direction, maximum thrust and availability; absent/disabled actuators supply no force. The fixture uses a provisional aggregate 12,000 kg mass and centered rectangular inertia including its equipment. These are authored fixture definitions, not persisted arbitrary installed-part rows. Static availability and computer power represent the supplied lab fixture; they do not claim a connected power/fuel simulation, resource consumption, spool model, damage, cargo mass or live refits.
+
+Each scheduled 50 ms update runs three 60 Hz controller/allocator kicks. Collision stepping alone owns position and heading drift. Motion follows achieved force and torque; no passive velocity multiplier, velocity snap or direct angular damping is used. A bounded private `actuator_output` table records each nozzle’s achieved final-substep throttle. The owner-scoped `own_actuator_outputs` view exposes only device ID, ship ID, throttle and tick; disabled assistance clears output. It contains no resource or authority internals.
+
+Station occupancy, operability, actor connection and ship association are rechecked on every scheduled consumption. Inputs expire after 300 ms. A fresh seated zero command brakes; stale inputs, exiting, disconnecting and losing a station cut all actuation and assistance, leaving contact physics/coasting. This explicitly preserves the new project's no-owner-autopilot authority boundary. The original's unrestricted residual-assistance behavior is not an authorization grant here.
+
+The schema adds only the private output table and its view. Scheduled lazy initialization creates nine rows for each existing fixture; generated clients subscribe to the view. Existing fixture ships acquire this behavior on a non-destructive module publish; old aggregate thrust fields remain for binding compatibility but do not drive the live solver. No destructive database reset or legacy service operation is needed.
+
+Pure tests cover heading capture with counter-torque, zero-input rotation/velocity braking, absent engines, asymmetric layouts, authority loss and collision drift ownership. The isolated smoke additionally exercises real reducer input, scheduled braking, expiry and station exit. Full M2/M4 completion still requires persistent installation/resource state and the broader cases in `ifcs_integration.md`.
+
+## Achieved exhaust presentation
+
+`packages/render/src/flight-effects.ts` supplies bounded engine effects from subscribed actuator outputs. Each of the nine authored mounts has three merged, stepped emissive color bands: a pale hot throat, cyan middle and blue tail. Their exhaust axis is opposite the actuator force axis in the shared ship frame. Throttle changes width/length; missing, invalid or zero telemetry disables the corresponding plume immediately. Unknown IDs create no geometry. The effects never inspect keyboard input or generate propulsion.
+
+The module uses 27 meshes and three shared unlit materials, adds no lights/shadow maps/particle systems, and exposes its meshes for the existing glow layer. It has no independent flicker animation and therefore respects reduced motion. Unit checks exercise mount/direction conversion and actual Babylon mesh enable/clear/disposal behavior with no additional lights. Browser integration and visual review belong to the composed client validation.
+
+Final isolated `npm run smoke` passed on 2026-09-08 at 06:01 UTC against `sidereal-spacetime-dev-smoke`: IFCS rotation/velocity braking, achieved-output privacy, expiry clearing/coasting, station authorization, server asteroid contact, revision idempotency and walk/sprint/room collision checks all passed. This run did not restart the actual development database; restart persistence remains a separately coordinated check. The client telemetry producer also clears outputs whenever subscription status is not ready and filters rows to the displayed ship, preventing cached firing effects after disconnect or subscription failure.
+
+## 2026-09-14 phase 0 characterization
+
+Six baseline tests now reproduce the existing allocation, turn speed loss and
+heading overshoot, including an independent longitudinal COM moment-arm check.
+The seeded 4/9/16/64/256-actuator benchmark records the existing fixed 80-pass
+solver. No live behaviour has changed. Full phase 0 gates pass (1,925 tests, typecheck, docs and build); numerical
+results and subsequent phases are tracked in [progress](handoffs/ifcs_update_progress_20260914.md).
