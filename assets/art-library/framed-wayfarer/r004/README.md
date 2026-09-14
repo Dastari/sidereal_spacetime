@@ -103,3 +103,5 @@ Every meaningful native attempt remains preserved in the shared art library.
 The PR carries the current editable/exported candidate, comparison images and
 review/hash records; historical standalone exports remain local archive history.
 No earlier approval is transferred to this candidate.
+
+Delivery: [draft PR #3](https://github.com/Dastari/sidereal_spacetime/pull/3), implementation commit `50891c6b5900e1d260f030d834bd945821a9dda6`.
