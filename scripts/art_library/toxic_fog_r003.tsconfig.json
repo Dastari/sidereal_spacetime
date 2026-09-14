@@ -1,1 +1,7 @@
-{"extends":"../../tsconfig.json","include":["toxic_fog_composition_r003.ts","toxic_fog_composition_r003.test.ts"]}
+{
+  "extends": "../../tsconfig.json",
+  "include": [
+    "toxic_fog_composition_r003.ts",
+    "toxic_fog_composition_r003.test.ts"
+  ]
+}

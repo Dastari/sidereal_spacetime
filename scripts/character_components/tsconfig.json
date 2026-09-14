@@ -1,4 +1,8 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["reference_review.ts", "reference_runtime_audit.ts", "faces_review.ts"]
+  "include": [
+    "reference_review.ts",
+    "reference_runtime_audit.ts",
+    "faces_review.ts"
+  ]
 }

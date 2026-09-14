@@ -47,66 +47,27 @@
   ],
   "frame": {
     "id": "doorway-frame-2m",
-    "outerMinM": [
-      0,
-      0,
-      0
-    ],
-    "outerMaxM": [
-      2,
-      0.25,
-      3
-    ],
-    "apertureMinM": [
-      0.375,
-      0,
-      0
-    ],
-    "apertureMaxM": [
-      1.625,
-      0.25,
-      2.25
-    ],
+    "outerMinM": [0, 0, 0],
+    "outerMaxM": [2, 0.25, 3],
+    "apertureMinM": [0.375, 0, 0],
+    "apertureMaxM": [1.625, 0.25, 2.25],
     "description": "Full2m span, 375mm jambs, 750mm lintel. Complete end contact patches X0/2, Y0...25, Z0...3. Aperture stays open from actual floor to2.25m. Native authored frame/seat preserve the entire inward envelope."
   },
   "hingeCorrection": {
     "scope": "New derivative only: replace the two penetrating hinge straps with connected native elbow/bridge hardware. Retain leaf panels/slab, moving gasket, fixed seat and exact hinge axis unchanged after the declared source reflection/rebase.",
-    "strapCandidateTranslationM": [
-      0,
-      0.034,
-      0
-    ],
-    "strapClosedYIntervalM": [
-      0.0845,
-      0.0965
-    ],
+    "strapCandidateTranslationM": [0, 0.034, 0],
+    "strapClosedYIntervalM": [0.0845, 0.0965],
     "leafBridgeRegion": "Connect to the leaf atX>0.390m, outside the gasket inner contour; no22mm floating gap. Connect the other end to the original hinge axis without passing through the fixed seat or gasket.",
-    "jambReliefEnvelopeMinM": [
-      0.25,
-      0.0625,
-      0.002
-    ],
-    "jambReliefEnvelopeMaxM": [
-      0.375,
-      0.25,
-      2.248
-    ],
+    "jambReliefEnvelopeMinM": [0.25, 0.0625, 0.002],
+    "jambReliefEnvelopeMaxM": [0.375, 0.25, 2.248],
     "jambReliefRule": "A declared pocket within this bounded envelope may clear the complete leaf/new-hardware sweep. Preserve all fixed seat and deployed-gasket patches; the seat is not carved away. Machine exact seat accommodation into the new frame so fixed bodies do not positively overlap. Full module end and roof contacts remain unchanged. Static floor contact follows the separately declared gasket-stroke channel mask. If this envelope is insufficient, return measured witnesses before expanding it.",
     "commonMechanismYTranslationM": 0,
     "requiredProof": "All91 integer-degree poses plus conservative between-sample sweep bound, all21 closed seal fractions plus continuous morph bound; actual native Boolean/triangle intersection tests, connected hardware and complete retained seal contacts. SourceAABB checks alone are insufficient.",
     "reason": "Preserved doorway r001 feasibility found inherited strap/fixed-seat positive-volume intersections. Translating all mechanism pieces together cannot correct their relative interference. New connected hardware is explicitly authorized inside the same250mm closed reservation; no validator tolerance is changed."
   },
   "gasketStrokeChannels": {
-    "minM": [
-      0.365,
-      0.0625,
-      0
-    ],
-    "maxM": [
-      1.635,
-      0.0845,
-      2.26
-    ],
+    "minM": [0.365, 0.0625, 0],
+    "maxM": [1.635, 0.0845, 2.26],
     "rule": "Machine only the intersection of this declared stroke envelope with new jamb/lintel bodies. Keep the complete retained fixed seat and all deployed opposing seal contact faces. Left/right10mm lips and top10mm lip have explicit clearance outside the unchanged1.25x2.25 aperture. No cut through the outerY0 backing, module end contacts or roof contact.",
     "floorContact": "Static jamb floor-foot contact is the original375x250mm region minus its declared10x22mm stroke-channel intersection (0.09353m2 per jamb before separate exact fixed-seat accommodation). Preserve and measure fixed-seat/floor and moving bottom-gasket/floor contacts separately. Unoccupied channel volume is an intentional internal mechanism recess, not a tolerated missing contact. All actual declared patches must match completely at unchanged tolerance.",
     "scope": "New versioned frame geometry only; old asset and validator contracts remain unchanged. Record closed/retracted/operational coverage separately and prove complete closed-state enclosure before any pressure grant."
@@ -119,40 +80,16 @@
       "z": "z - 0.1875"
     },
     "meaning": "Reflect sourceY and rebase the old floor-top height. Apply once to all mesh vertices, shape keys, hinge geometry and fixed seat. Recalculate native winding/normals after reflection. Do not independently add socketheight or translate each piece again.",
-    "hingeBindM": [
-      0.3125,
-      0.0625,
-      -0.1875
-    ],
-    "hingeSocketM": [
-      0.3125,
-      0.0625,
-      0
-    ],
+    "hingeBindM": [0.3125, 0.0625, -0.1875],
+    "hingeSocketM": [0.3125, 0.0625, 0],
     "hingeAxis": "+Z",
     "closedAngleDegrees": 0,
     "openAngleDegrees": 90,
     "sweepDirection": "positiveY inward",
-    "slabMinM": [
-      0.377,
-      0,
-      0.002
-    ],
-    "slabMaxM": [
-      1.623,
-      0.0625,
-      2.248
-    ],
-    "conservativeSweepMinM": [
-      0.3125,
-      0,
-      0.002
-    ],
-    "conservativeSweepMaxM": [
-      1.6244895197752154,
-      1.3744895197752154,
-      2.248
-    ],
+    "slabMinM": [0.377, 0, 0.002],
+    "slabMaxM": [1.623, 0.0625, 2.248],
+    "conservativeSweepMinM": [0.3125, 0, 0.002],
+    "conservativeSweepMaxM": [1.6244895197752154, 1.3744895197752154, 2.248],
     "description": "These slab/sweep figures describe the retained mechanism derivative, not a substitute for measuring every exported hardware vertex. Evaluate motion as h + R(angle) × (p - h) on the transformed source-world vertex p; the hinge bind is not an extra translation at closed pose. Report any discrepancy before changing the request.",
     "sealMorph": {
       "name": "SealRetracted",
@@ -166,129 +103,74 @@
   "fixture": {
     "id": "inward-door-in-4x2-room",
     "footprintM": [
-      [
-        0,
-        0
-      ],
-      [
-        4,
-        0
-      ],
-      [
-        4,
-        2
-      ],
-      [
-        0,
-        2
-      ]
+      [0, 0],
+      [4, 0],
+      [4, 2],
+      [0, 2]
     ],
     "floorParts": [
       {
         "id": "square-2m",
-        "originM": [
-          0,
-          0
-        ]
+        "originM": [0, 0]
       },
       {
         "id": "square-2m",
-        "originM": [
-          2,
-          0
-        ]
+        "originM": [2, 0]
       }
     ],
-    "doorwayOriginM": [
-      1,
-      0,
-      0.1875
-    ],
+    "doorwayOriginM": [1, 0, 0.1875],
     "corners": [
       {
         "profileId": "corner-7daf02f77db4",
-        "originM": [
-          0,
-          0
-        ]
+        "originM": [0, 0]
       },
       {
         "profileId": "corner-2d29d106ea4c",
-        "originM": [
-          4,
-          0
-        ]
+        "originM": [4, 0]
       },
       {
         "profileId": "corner-5b03c711aa8b",
-        "originM": [
-          4,
-          2
-        ]
+        "originM": [4, 2]
       },
       {
         "profileId": "corner-0792c389209e",
-        "originM": [
-          0,
-          2
-        ]
+        "originM": [0, 2]
       }
     ],
     "spans": [
       {
         "lengthM": 0.625,
-        "originM": [
-          0.25,
-          0
-        ],
+        "originM": [0.25, 0],
         "quarterTurns": 0
       },
       {
         "lengthM": 0.125,
-        "originM": [
-          0.875,
-          0
-        ],
+        "originM": [0.875, 0],
         "quarterTurns": 0
       },
       {
         "lengthM": 0.125,
-        "originM": [
-          3,
-          0
-        ],
+        "originM": [3, 0],
         "quarterTurns": 0
       },
       {
         "lengthM": 0.625,
-        "originM": [
-          3.125,
-          0
-        ],
+        "originM": [3.125, 0],
         "quarterTurns": 0
       },
       {
         "lengthM": 1.5,
-        "originM": [
-          4,
-          0.25
-        ],
+        "originM": [4, 0.25],
         "quarterTurns": 1
       },
       {
         "lengthM": 3.5,
-        "originM": [
-          3.75,
-          2
-        ],
+        "originM": [3.75, 2],
         "quarterTurns": 2
       },
       {
         "lengthM": 1.5,
-        "originM": [
-          0,
-          1.75
-        ],
+        "originM": [0, 1.75],
         "quarterTurns": 3
       }
     ],
@@ -296,12 +178,7 @@
       "convex": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/",
       "roof": "assets/art-library/designs/shipyard.structure.roof125/revisions/r000/"
     },
-    "qualificationQuarterTurns": [
-      0,
-      1,
-      2,
-      3
-    ],
+    "qualificationQuarterTurns": [0, 1, 2, 3],
     "initialRuntimeReflection": "unsupported",
     "actorClearanceStudy": {
       "radiusM": 0.3,
