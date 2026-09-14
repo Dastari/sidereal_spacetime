@@ -9,16 +9,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.0,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -26,16 +18,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.0,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-f94c0ba2aa04f31fb6a5--"
@@ -47,16 +31,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.0,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -64,16 +40,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.0,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-7c657ee01a90318dec3e--"
@@ -85,16 +53,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.0,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -102,16 +62,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.0,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-fe79dfaf2e1542dbd67c--"
@@ -123,16 +75,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.0,
-          0.0,
-          1.5
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 1.5]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -140,16 +84,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.0,
-            0.0,
-            1.5
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 1.5]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-9ca59f6db637d3afceb9--"
@@ -161,16 +97,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.375,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          0.9722718000411987,
-          0.2651650309562683,
-          1.5
-        ]
+        "min": [-0.375, -1.0, 0.0],
+        "max": [0.9722718000411987, 0.2651650309562683, 1.5]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -178,16 +106,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.375,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            0.9722718000411987,
-            0.2651650309562683,
-            1.5
-          ]
+          "min": [-0.375, -1.0, 0.0],
+          "max": [0.9722718000411987, 0.2651650309562683, 1.5]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-70b34597548b284a0a7f--"
@@ -199,16 +119,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.4534270763397217,
-          0.0,
-          1.5
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.4534270763397217, 0.0, 1.5]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -216,16 +128,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.4534270763397217,
-            0.0,
-            1.5
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.4534270763397217, 0.0, 1.5]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-cd2f17ea0cf58cb60b7f--"
@@ -237,16 +141,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -1.125,
-          -1.125,
-          0.0
-        ],
-        "max": [
-          0.0,
-          0.0,
-          3.0
-        ]
+        "min": [-1.125, -1.125, 0.0],
+        "max": [0.0, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -254,16 +150,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -1.125,
-            -1.125,
-            0.0
-          ],
-          "max": [
-            0.0,
-            0.0,
-            3.0
-          ]
+          "min": [-1.125, -1.125, 0.0],
+          "max": [0.0, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-1676c64748013f376c0a--"
@@ -275,16 +163,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.0,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -292,16 +172,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.0,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-a6743a347ee2fcdd1ce9--"
@@ -313,16 +185,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          1.25,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.25, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -330,16 +194,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            1.25,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.25, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-62ad930c45227d5287a0--"
@@ -351,16 +207,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.375,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          1.0,
-          0.375,
-          3.0
-        ]
+        "min": [-0.375, -1.0, 0.0],
+        "max": [1.0, 0.375, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -368,16 +216,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.375,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            1.0,
-            0.375,
-            3.0
-          ]
+          "min": [-0.375, -1.0, 0.0],
+          "max": [1.0, 0.375, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-e1affbf19f4b7fa30311--"
@@ -389,16 +229,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.0,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -406,16 +238,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.0,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-926961217b49c21a526b--"
@@ -427,16 +251,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.0,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -444,16 +260,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.0,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-137adc2153a878094d60--"
@@ -465,16 +273,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.0,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -482,16 +282,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.0,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-e40f082abbcbe4f55a62--"
@@ -503,16 +295,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.0,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -520,16 +304,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.0,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-649dcbda86c17c7952c9--"
@@ -541,16 +317,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          0.5,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.5, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -558,16 +326,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            0.5,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.5, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-2b558e7ac8eb4184c2af--"
@@ -579,16 +339,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          0.5,
-          0.0,
-          1.5
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.5, 0.0, 1.5]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -596,16 +348,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            0.5,
-            0.0,
-            1.5
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.5, 0.0, 1.5]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-b235419d9a165659f2e8--"
@@ -617,16 +361,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -1.125,
-          -1.125,
-          0.0
-        ],
-        "max": [
-          0.0,
-          0.0,
-          3.0
-        ]
+        "min": [-1.125, -1.125, 0.0],
+        "max": [0.0, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -634,16 +370,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -1.125,
-            -1.125,
-            0.0
-          ],
-          "max": [
-            0.0,
-            0.0,
-            3.0
-          ]
+          "min": [-1.125, -1.125, 0.0],
+          "max": [0.0, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-fabbd7b0578ea00b5791--"
@@ -655,16 +383,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          1.0392135381698608,
-          0.0,
-          1.5
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.0392135381698608, 0.0, 1.5]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -672,16 +392,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            1.0392135381698608,
-            0.0,
-            1.5
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.0392135381698608, 0.0, 1.5]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-e120acd13dae3b493668--"
@@ -693,16 +405,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          1.25,
-          0.0,
-          1.5
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.25, 0.0, 1.5]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -710,16 +414,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            1.25,
-            0.0,
-            1.5
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.25, 0.0, 1.5]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-98477a5dd3e88b931589--"
@@ -731,16 +427,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -1.125,
-          -1.125,
-          0.0
-        ],
-        "max": [
-          0.0,
-          0.0,
-          3.0
-        ]
+        "min": [-1.125, -1.125, 0.0],
+        "max": [0.0, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -748,16 +436,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -1.125,
-            -1.125,
-            0.0
-          ],
-          "max": [
-            0.0,
-            0.0,
-            3.0
-          ]
+          "min": [-1.125, -1.125, 0.0],
+          "max": [0.0, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-a7ef36310c50dc565d00--"
@@ -769,16 +449,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          1.25,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.25, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -786,16 +458,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            1.25,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.25, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-4896cc9388c49fcb9b2e--"
@@ -807,16 +471,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.0,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -824,16 +480,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.0,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-d3fa0e462a519b5f36f8--"
@@ -845,16 +493,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          0.5,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.5, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -862,16 +502,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            0.5,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.5, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-9069dfa847efce4fe41e--"
@@ -883,16 +515,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.0,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -900,16 +524,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.0,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-db7ed5477c90dcffe64f--"
@@ -921,16 +537,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          1.25,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.25, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -938,16 +546,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            1.25,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.25, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-05c9d73568be3ad2e6b8--"
@@ -959,16 +559,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.375,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          1.0,
-          0.375,
-          3.0
-        ]
+        "min": [-0.375, -1.0, 0.0],
+        "max": [1.0, 0.375, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -976,16 +568,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.375,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            1.0,
-            0.375,
-            3.0
-          ]
+          "min": [-0.375, -1.0, 0.0],
+          "max": [1.0, 0.375, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-15a405777ecce0335b21--"
@@ -997,16 +581,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          1.25,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.25, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1014,16 +590,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            1.25,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.25, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-43965fec43941bd88fcc--"
@@ -1035,16 +603,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.0,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1052,16 +612,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.0,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-af0cc716991642374212--"
@@ -1073,16 +625,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          1.5,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.5, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1090,16 +634,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            1.5,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.5, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-57b9352f1f040b7f0157--"
@@ -1111,16 +647,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          1.75,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.75, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1128,16 +656,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            1.75,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.75, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-8904b2af208c0ad89e05--"
@@ -1149,16 +669,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          1.5,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.5, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1166,16 +678,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            1.5,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.5, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-d475f516a65773f4c21e--"
@@ -1187,16 +691,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          1.7221359014511108,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.7221359014511108, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1204,16 +700,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            1.7221359014511108,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.7221359014511108, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-97e82a0a2ae19def921f--"
@@ -1225,16 +713,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.375,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          0.7826237678527832,
-          0.16770510375499725,
-          3.0
-        ]
+        "min": [-0.375, -1.0, 0.0],
+        "max": [0.7826237678527832, 0.16770510375499725, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1242,16 +722,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.375,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            0.7826237678527832,
-            0.16770510375499725,
-            3.0
-          ]
+          "min": [-0.375, -1.0, 0.0],
+          "max": [0.7826237678527832, 0.16770510375499725, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-57b42efda0a7a7d9ffdd--"
@@ -1263,16 +735,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          1.7192236185073853,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.7192236185073853, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1280,16 +744,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            1.7192236185073853,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.7192236185073853, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-7c3af440c13bfbd854f7--"
@@ -1301,16 +757,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.375,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          1.0621322393417358,
-          0.3354102075099945,
-          3.0
-        ]
+        "min": [-0.375, -1.0, 0.0],
+        "max": [1.0621322393417358, 0.3354102075099945, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1318,16 +766,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.375,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            1.0621322393417358,
-            0.3354102075099945,
-            3.0
-          ]
+          "min": [-0.375, -1.0, 0.0],
+          "max": [1.0621322393417358, 0.3354102075099945, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-075003ca42dee3ad88d4--"
@@ -1339,16 +779,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.0,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1356,16 +788,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.0,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-137dbd4b0d514b60c4c3--"
@@ -1377,16 +801,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          0.9692236185073853,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.9692236185073853, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1394,16 +810,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            0.9692236185073853,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.9692236185073853, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-cb4ec70047162b4093b9--"
@@ -1415,16 +823,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.9057763814926147,
-          -1.1212677955627441,
-          0.0
-        ],
-        "max": [
-          0.21968305110931396,
-          0.0,
-          3.0
-        ]
+        "min": [-0.9057763814926147, -1.1212677955627441, 0.0],
+        "max": [0.21968305110931396, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1432,16 +832,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.9057763814926147,
-            -1.1212677955627441,
-            0.0
-          ],
-          "max": [
-            0.21968305110931396,
-            0.0,
-            3.0
-          ]
+          "min": [-0.9057763814926147, -1.1212677955627441, 0.0],
+          "max": [0.21968305110931396, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-131df6537810373834cb--"
@@ -1453,16 +845,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          1.1884472370147705,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.1884472370147705, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1470,16 +854,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            1.1884472370147705,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.1884472370147705, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-79d4507d7b58226cbe80--"
@@ -1491,16 +867,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.24810563027858734,
-          -1.030316948890686,
-          0.0
-        ],
-        "max": [
-          0.24069781601428986,
-          0.0,
-          3.0
-        ]
+        "min": [-0.24810563027858734, -1.030316948890686, 0.0],
+        "max": [0.24069781601428986, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1508,16 +876,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.24810563027858734,
-            -1.030316948890686,
-            0.0
-          ],
-          "max": [
-            0.24069781601428986,
-            0.0,
-            3.0
-          ]
+          "min": [-0.24810563027858734, -1.030316948890686, 0.0],
+          "max": [0.24069781601428986, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-edc8f579626e43feb839--"
@@ -1529,16 +889,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          1.2811288833618164,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.2811288833618164, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1546,16 +898,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            1.2811288833618164,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.2811288833618164, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-e7911c4aae9fd2fecbb8--"
@@ -1567,16 +911,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.375,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          1.0387909412384033,
-          0.3721041977405548,
-          3.0
-        ]
+        "min": [-0.375, -1.0, 0.0],
+        "max": [1.0387909412384033, 0.3721041977405548, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1584,16 +920,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.375,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            1.0387909412384033,
-            0.3721041977405548,
-            3.0
-          ]
+          "min": [-0.375, -1.0, 0.0],
+          "max": [1.0387909412384033, 0.3721041977405548, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-649b14141fa27ecd47e6--"
@@ -1605,16 +933,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.375,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          0.49613893032073975,
-          0.04651302471756935,
-          3.0
-        ]
+        "min": [-0.375, -1.0, 0.0],
+        "max": [0.49613893032073975, 0.04651302471756935, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1622,16 +942,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.375,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            0.49613893032073975,
-            0.04651302471756935,
-            3.0
-          ]
+          "min": [-0.375, -1.0, 0.0],
+          "max": [0.49613893032073975, 0.04651302471756935, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-fc5a10216de60493ab08--"
@@ -1643,16 +955,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          0.75,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.75, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1660,16 +964,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            0.75,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.75, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-204079fa21328c629295--"
@@ -1681,16 +977,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          0.5,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.5, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1698,16 +986,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            0.5,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.5, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-50c9e43a8c6ba5af5141--"
@@ -1719,16 +999,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          1.3541020154953003,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.3541020154953003, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1736,16 +1008,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            1.3541020154953003,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.3541020154953003, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-e9bc6213d0d76ca7f44b--"
@@ -1757,16 +1021,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          0.8819659948348999,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.8819659948348999, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1774,16 +1030,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            0.8819659948348999,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.8819659948348999, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-f731b556d8884e7d7557--"
@@ -1795,16 +1043,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.7430340051651001,
-          -1.111803412437439,
-          0.0
-        ],
-        "max": [
-          0.33229491114616394,
-          0.0,
-          3.0
-        ]
+        "min": [-0.7430340051651001, -1.111803412437439, 0.0],
+        "max": [0.33229491114616394, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1812,16 +1052,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.7430340051651001,
-            -1.111803412437439,
-            0.0
-          ],
-          "max": [
-            0.33229491114616394,
-            0.0,
-            3.0
-          ]
+          "min": [-0.7430340051651001, -1.111803412437439, 0.0],
+          "max": [0.33229491114616394, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-207cbce0274b3e836291--"
@@ -1833,16 +1065,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.0,
-          0.0,
-          0.75
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 0.75]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1850,16 +1074,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.0,
-            0.0,
-            0.75
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 0.75]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-975ae6c56dd5c22ae720--"
@@ -1871,16 +1087,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.0,
-          0.0,
-          2.25
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 2.25]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1888,16 +1096,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.0,
-            0.0,
-            2.25
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 2.25]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-0609cba1e9e5472c20b6--"
@@ -1909,16 +1109,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.0,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1926,16 +1118,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.0,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-fbbf224dbd286d805ac1--"
@@ -1947,16 +1131,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -0.5,
-          0.0
-        ],
-        "max": [
-          2.0,
-          0.0,
-          0.75
-        ]
+        "min": [0.0, -0.5, 0.0],
+        "max": [2.0, 0.0, 0.75]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -1964,16 +1140,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -0.5,
-            0.0
-          ],
-          "max": [
-            2.0,
-            0.0,
-            0.75
-          ]
+          "min": [0.0, -0.5, 0.0],
+          "max": [2.0, 0.0, 0.75]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-49384936da4b4c531fcc--"
@@ -1985,16 +1153,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -0.5,
-          0.0
-        ],
-        "max": [
-          2.0,
-          0.0,
-          1.5
-        ]
+        "min": [0.0, -0.5, 0.0],
+        "max": [2.0, 0.0, 1.5]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2002,16 +1162,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -0.5,
-            0.0
-          ],
-          "max": [
-            2.0,
-            0.0,
-            1.5
-          ]
+          "min": [0.0, -0.5, 0.0],
+          "max": [2.0, 0.0, 1.5]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-e8152b71edd21a544d55--"
@@ -2023,16 +1175,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -0.5,
-          0.0
-        ],
-        "max": [
-          2.0,
-          0.0,
-          2.25
-        ]
+        "min": [0.0, -0.5, 0.0],
+        "max": [2.0, 0.0, 2.25]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2040,16 +1184,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -0.5,
-            0.0
-          ],
-          "max": [
-            2.0,
-            0.0,
-            2.25
-          ]
+          "min": [0.0, -0.5, 0.0],
+          "max": [2.0, 0.0, 2.25]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-c2da9d9d47c98c01ceb8--"
@@ -2061,16 +1197,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -0.5,
-          0.0
-        ],
-        "max": [
-          2.0,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -0.5, 0.0],
+        "max": [2.0, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2078,16 +1206,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -0.5,
-            0.0
-          ],
-          "max": [
-            2.0,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -0.5, 0.0],
+          "max": [2.0, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-e7a26fe3b6e058621d39--"
@@ -2099,16 +1219,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.015564441680908,
-          0.0,
-          0.75
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.015564441680908, 0.0, 0.75]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2116,16 +1228,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.015564441680908,
-            0.0,
-            0.75
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.015564441680908, 0.0, 0.75]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-8233c1a3a948a91de0c7--"
@@ -2137,16 +1241,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.0615527629852295,
-          0.0,
-          0.75
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0615527629852295, 0.0, 0.75]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2154,16 +1250,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.0615527629852295,
-            0.0,
-            0.75
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0615527629852295, 0.0, 0.75]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-a252a121923cfb248f94--"
@@ -2175,16 +1263,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.2360680103302,
-          0.0,
-          0.75
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.2360680103302, 0.0, 0.75]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2192,16 +1272,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.2360680103302,
-            0.0,
-            0.75
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.2360680103302, 0.0, 0.75]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-981bd24736c640366791--"
@@ -2213,16 +1285,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.8284270763397217,
-          0.0,
-          0.75
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.8284270763397217, 0.0, 0.75]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2230,16 +1294,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.8284270763397217,
-            0.0,
-            0.75
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.8284270763397217, 0.0, 0.75]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-7bcf58fae727b968e126--"
@@ -2251,16 +1307,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.0,
-          0.0,
-          0.75
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 0.75]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2268,16 +1316,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.0,
-            0.0,
-            0.75
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 0.75]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-825d61aeb52f08f61c14--"
@@ -2289,16 +1329,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.375,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          0.49613893032073975,
-          0.04651302471756935,
-          1.5
-        ]
+        "min": [-0.375, -1.0, 0.0],
+        "max": [0.49613893032073975, 0.04651302471756935, 1.5]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2306,16 +1338,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.375,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            0.49613893032073975,
-            0.04651302471756935,
-            1.5
-          ]
+          "min": [-0.375, -1.0, 0.0],
+          "max": [0.49613893032073975, 0.04651302471756935, 1.5]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-bb2e153a868e9214017f--"
@@ -2327,16 +1351,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.18725775182247162,
-          -1.0155043601989746,
-          0.0
-        ],
-        "max": [
-          0.18581172823905945,
-          0.0,
-          1.5
-        ]
+        "min": [-0.18725775182247162, -1.0155043601989746, 0.0],
+        "max": [0.18581172823905945, 0.0, 1.5]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2344,16 +1360,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.18725775182247162,
-            -1.0155043601989746,
-            0.0
-          ],
-          "max": [
-            0.18581172823905945,
-            0.0,
-            1.5
-          ]
+          "min": [-0.18725775182247162, -1.0155043601989746, 0.0],
+          "max": [0.18581172823905945, 0.0, 1.5]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-b5debfc1efb6816ed06d--"
@@ -2365,16 +1373,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.375,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          0.6063390374183655,
-          0.0909508615732193,
-          1.5
-        ]
+        "min": [-0.375, -1.0, 0.0],
+        "max": [0.6063390374183655, 0.0909508615732193, 1.5]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2382,16 +1382,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.375,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            0.6063390374183655,
-            0.0909508615732193,
-            1.5
-          ]
+          "min": [-0.375, -1.0, 0.0],
+          "max": [0.6063390374183655, 0.0909508615732193, 1.5]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-19cb454187f2b808d0f7--"
@@ -2403,16 +1395,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.24810563027858734,
-          -1.030316948890686,
-          0.0
-        ],
-        "max": [
-          0.24069781601428986,
-          0.0,
-          1.5
-        ]
+        "min": [-0.24810563027858734, -1.030316948890686, 0.0],
+        "max": [0.24069781601428986, 0.0, 1.5]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2420,16 +1404,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.24810563027858734,
-            -1.030316948890686,
-            0.0
-          ],
-          "max": [
-            0.24069781601428986,
-            0.0,
-            1.5
-          ]
+          "min": [-0.24810563027858734, -1.030316948890686, 0.0],
+          "max": [0.24069781601428986, 0.0, 1.5]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-8c601c2467812dda7c97--"
@@ -2441,16 +1417,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.375,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          0.7826237678527832,
-          0.16770510375499725,
-          1.5
-        ]
+        "min": [-0.375, -1.0, 0.0],
+        "max": [0.7826237678527832, 0.16770510375499725, 1.5]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2458,16 +1426,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.375,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            0.7826237678527832,
-            0.16770510375499725,
-            1.5
-          ]
+          "min": [-0.375, -1.0, 0.0],
+          "max": [0.7826237678527832, 0.16770510375499725, 1.5]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-04506299cdccdc3362d3--"
@@ -2479,16 +1439,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.3610679805278778,
-          -1.0559016466140747,
-          0.0
-        ],
-        "max": [
-          0.32294902205467224,
-          0.0,
-          1.5
-        ]
+        "min": [-0.3610679805278778, -1.0559016466140747, 0.0],
+        "max": [0.32294902205467224, 0.0, 1.5]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2496,16 +1448,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.3610679805278778,
-            -1.0559016466140747,
-            0.0
-          ],
-          "max": [
-            0.32294902205467224,
-            0.0,
-            1.5
-          ]
+          "min": [-0.3610679805278778, -1.0559016466140747, 0.0],
+          "max": [0.32294902205467224, 0.0, 1.5]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-b9889f7ac1379ef477d3--"
@@ -2517,16 +1461,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.5392135381698608,
-          -1.0883883237838745,
-          0.0
-        ],
-        "max": [
-          0.3812815546989441,
-          0.0,
-          1.5
-        ]
+        "min": [-0.5392135381698608, -1.0883883237838745, 0.0],
+        "max": [0.3812815546989441, 0.0, 1.5]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2534,16 +1470,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.5392135381698608,
-            -1.0883883237838745,
-            0.0
-          ],
-          "max": [
-            0.3812815546989441,
-            0.0,
-            1.5
-          ]
+          "min": [-0.5392135381698608, -1.0883883237838745, 0.0],
+          "max": [0.3812815546989441, 0.0, 1.5]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-e465b7594b2433a77396--"
@@ -2555,16 +1483,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.375,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          1.0621322393417358,
-          0.3354102075099945,
-          1.5
-        ]
+        "min": [-0.375, -1.0, 0.0],
+        "max": [1.0621322393417358, 0.3354102075099945, 1.5]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2572,16 +1492,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.375,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            1.0621322393417358,
-            0.3354102075099945,
-            1.5
-          ]
+          "min": [-0.375, -1.0, 0.0],
+          "max": [1.0621322393417358, 0.3354102075099945, 1.5]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-c3e51deb6848ddb10001--"
@@ -2593,16 +1505,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.7430340051651001,
-          -1.111803412437439,
-          0.0
-        ],
-        "max": [
-          0.33229491114616394,
-          0.0,
-          1.5
-        ]
+        "min": [-0.7430340051651001, -1.111803412437439, 0.0],
+        "max": [0.33229491114616394, 0.0, 1.5]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2610,16 +1514,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.7430340051651001,
-            -1.111803412437439,
-            0.0
-          ],
-          "max": [
-            0.33229491114616394,
-            0.0,
-            1.5
-          ]
+          "min": [-0.7430340051651001, -1.111803412437439, 0.0],
+          "max": [0.33229491114616394, 0.0, 1.5]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-b8ebf4aa6991e098a6d3--"
@@ -2631,16 +1527,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.375,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          1.0610933303833008,
-          0.3638034462928772,
-          1.5
-        ]
+        "min": [-0.375, -1.0, 0.0],
+        "max": [1.0610933303833008, 0.3638034462928772, 1.5]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2648,16 +1536,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.375,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            1.0610933303833008,
-            0.3638034462928772,
-            1.5
-          ]
+          "min": [-0.375, -1.0, 0.0],
+          "max": [1.0610933303833008, 0.3638034462928772, 1.5]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-bdffe58423963910d02b--"
@@ -2669,16 +1549,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.9057763814926147,
-          -1.1212677955627441,
-          0.0
-        ],
-        "max": [
-          0.21968305110931396,
-          0.0,
-          1.5
-        ]
+        "min": [-0.9057763814926147, -1.1212677955627441, 0.0],
+        "max": [0.21968305110931396, 0.0, 1.5]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2686,16 +1558,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.9057763814926147,
-            -1.1212677955627441,
-            0.0
-          ],
-          "max": [
-            0.21968305110931396,
-            0.0,
-            1.5
-          ]
+          "min": [-0.9057763814926147, -1.1212677955627441, 0.0],
+          "max": [0.21968305110931396, 0.0, 1.5]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-098c86a675e3e951ace9--"
@@ -2707,16 +1571,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.375,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          1.0387909412384033,
-          0.3721041977405548,
-          1.5
-        ]
+        "min": [-0.375, -1.0, 0.0],
+        "max": [1.0387909412384033, 0.3721041977405548, 1.5]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2724,16 +1580,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.375,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            1.0387909412384033,
-            0.3721041977405548,
-            1.5
-          ]
+          "min": [-0.375, -1.0, 0.0],
+          "max": [1.0387909412384033, 0.3721041977405548, 1.5]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-0f4edf0963be28b7952b--"
@@ -2745,16 +1593,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -1.007782220840454,
-          -1.1240347623825073,
-          0.0
-        ],
-        "max": [
-          0.125,
-          0.0,
-          1.5
-        ]
+        "min": [-1.007782220840454, -1.1240347623825073, 0.0],
+        "max": [0.125, 0.0, 1.5]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2762,16 +1602,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -1.007782220840454,
-            -1.1240347623825073,
-            0.0
-          ],
-          "max": [
-            0.125,
-            0.0,
-            1.5
-          ]
+          "min": [-1.007782220840454, -1.1240347623825073, 0.0],
+          "max": [0.125, 0.0, 1.5]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-eae57557166988330b70--"
@@ -2783,16 +1615,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -0.375,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          1.0,
-          0.375,
-          1.5
-        ]
+        "min": [-0.375, -1.0, 0.0],
+        "max": [1.0, 0.375, 1.5]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2800,16 +1624,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -0.375,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            1.0,
-            0.375,
-            1.5
-          ]
+          "min": [-0.375, -1.0, 0.0],
+          "max": [1.0, 0.375, 1.5]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-54094cde041737badaf2--"
@@ -2821,16 +1637,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          -1.125,
-          -1.125,
-          0.0
-        ],
-        "max": [
-          0.0,
-          0.0,
-          1.5
-        ]
+        "min": [-1.125, -1.125, 0.0],
+        "max": [0.0, 0.0, 1.5]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2838,16 +1646,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            -1.125,
-            -1.125,
-            0.0
-          ],
-          "max": [
-            0.0,
-            0.0,
-            1.5
-          ]
+          "min": [-1.125, -1.125, 0.0],
+          "max": [0.0, 0.0, 1.5]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-2cce8582f894eec65110--"
@@ -2859,16 +1659,8 @@
       "category": "superstructure",
       "nodes": [],
       "bounds": {
-        "min": [
-          0.0,
-          -1.0,
-          0.0
-        ],
-        "max": [
-          2.0,
-          0.0,
-          3.0
-        ]
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
       },
       "visual": {
         "url": "/assets/shipyard/armor-r005/hull.glb",
@@ -2876,16 +1668,8 @@
         "designId": "shipyard.hull.armor-block-review",
         "revision": 5,
         "bounds": {
-          "min": [
-            0.0,
-            -1.0,
-            0.0
-          ],
-          "max": [
-            2.0,
-            0.0,
-            3.0
-          ]
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
         },
         "damagePreview": "unsupported",
         "nodePrefix": "GEO-armor-block-aabac0a89386b4aa9045--"
@@ -2904,11 +1688,7 @@
           "assetId": "part-c0b6b036f5b3dd8bd2f3",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000066",
-          "position": [
-            0,
-            10.25,
-            0.1875
-          ],
+          "position": [0, 10.25, 0.1875],
           "removedCells": [],
           "rotation": 0
         },
@@ -2916,11 +1696,7 @@
           "assetId": "part-d9f37a5f7ea6e8d13254",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000065",
-          "position": [
-            0,
-            11.25,
-            0.1875
-          ],
+          "position": [0, 11.25, 0.1875],
           "removedCells": [],
           "rotation": 0
         },
@@ -2928,11 +1704,7 @@
           "assetId": "part-c03ec0260cd7329050a8",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000068",
-          "position": [
-            -4.6875,
-            -6,
-            0.1875
-          ],
+          "position": [-4.6875, -6, 0.1875],
           "removedCells": [],
           "rotation": 0
         },
@@ -2940,11 +1712,7 @@
           "assetId": "part-c03ec0260cd7329050a8",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000067",
-          "position": [
-            -4.6875,
-            -2,
-            0.1875
-          ],
+          "position": [-4.6875, -2, 0.1875],
           "removedCells": [],
           "rotation": 0
         },
@@ -2952,11 +1720,7 @@
           "assetId": "part-c03ec0260cd7329050a8",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000069",
-          "position": [
-            -4.6875,
-            2,
-            0.1875
-          ],
+          "position": [-4.6875, 2, 0.1875],
           "removedCells": [],
           "rotation": 0
         },
@@ -2964,11 +1728,7 @@
           "assetId": "part-c03ec0260cd7329050a8",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000071",
-          "position": [
-            4.6875,
-            -6,
-            0.1875
-          ],
+          "position": [4.6875, -6, 0.1875],
           "removedCells": [],
           "rotation": 0
         },
@@ -2976,11 +1736,7 @@
           "assetId": "part-c03ec0260cd7329050a8",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000070",
-          "position": [
-            4.6875,
-            -2,
-            0.1875
-          ],
+          "position": [4.6875, -2, 0.1875],
           "removedCells": [],
           "rotation": 0
         },
@@ -2988,11 +1744,7 @@
           "assetId": "part-c03ec0260cd7329050a8",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000072",
-          "position": [
-            4.6875,
-            2,
-            0.1875
-          ],
+          "position": [4.6875, 2, 0.1875],
           "removedCells": [],
           "rotation": 0
         },
@@ -3000,11 +1752,7 @@
           "assetId": "part-77728ecc8ad36b0ff45f",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000100",
-          "position": [
-            -3.6875,
-            -6,
-            0.25
-          ],
+          "position": [-3.6875, -6, 0.25],
           "removedCells": [],
           "rotation": 0
         },
@@ -3012,11 +1760,7 @@
           "assetId": "part-acbbef7209c4ef100693",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000103",
-          "position": [
-            -3.6875,
-            -2.375,
-            0.25
-          ],
+          "position": [-3.6875, -2.375, 0.25],
           "removedCells": [],
           "rotation": 0
         },
@@ -3024,11 +1768,7 @@
           "assetId": "part-acbbef7209c4ef100693",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000102",
-          "position": [
-            -3.6875,
-            -1.5,
-            0.25
-          ],
+          "position": [-3.6875, -1.5, 0.25],
           "removedCells": [],
           "rotation": 0
         },
@@ -3036,11 +1776,7 @@
           "assetId": "part-acbbef7209c4ef100693",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000101",
-          "position": [
-            -3.6875,
-            -0.625,
-            0.25
-          ],
+          "position": [-3.6875, -0.625, 0.25],
           "removedCells": [],
           "rotation": 0
         },
@@ -3048,11 +1784,7 @@
           "assetId": "part-c06e4f5f6f6dace38e41",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000106",
-          "position": [
-            -4.0625,
-            2.0625,
-            0.1875
-          ],
+          "position": [-4.0625, 2.0625, 0.1875],
           "removedCells": [],
           "rotation": 1.5707963267948966
         },
@@ -3060,11 +1792,7 @@
           "assetId": "part-5382f8dbbeb54e663d33",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000107",
-          "position": [
-            -3.3125,
-            2.0625,
-            0.1875
-          ],
+          "position": [-3.3125, 2.0625, 0.1875],
           "removedCells": [],
           "rotation": 1.5707963267948966
         },
@@ -3072,11 +1800,7 @@
           "assetId": "part-c06e4f5f6f6dace38e41",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000108",
-          "position": [
-            -4.0625,
-            3.4375,
-            0.1875
-          ],
+          "position": [-4.0625, 3.4375, 0.1875],
           "removedCells": [],
           "rotation": 1.5707963267948966
         },
@@ -3084,11 +1808,7 @@
           "assetId": "part-5382f8dbbeb54e663d33",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000109",
-          "position": [
-            -3.3125,
-            3.4375,
-            0.1875
-          ],
+          "position": [-3.3125, 3.4375, 0.1875],
           "removedCells": [],
           "rotation": 1.5707963267948966
         },
@@ -3096,11 +1816,7 @@
           "assetId": "part-c41467ac46f6b350df24",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000099",
-          "position": [
-            3.6875,
-            -6,
-            0.25
-          ],
+          "position": [3.6875, -6, 0.25],
           "removedCells": [],
           "rotation": 0
         },
@@ -3108,11 +1824,7 @@
           "assetId": "part-cc610ba071b8eb38ab8c",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000105",
-          "position": [
-            3.6875,
-            -1.5,
-            0.25
-          ],
+          "position": [3.6875, -1.5, 0.25],
           "removedCells": [],
           "rotation": 0
         },
@@ -3120,11 +1832,7 @@
           "assetId": "part-73df516feb786d73fc5e",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000104",
-          "position": [
-            3.6875,
-            3,
-            0.25
-          ],
+          "position": [3.6875, 3, 0.25],
           "removedCells": [],
           "rotation": 0
         },
@@ -3132,11 +1840,7 @@
           "assetId": "part-75910d7a0d27dfc17aaf",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000063",
-          "position": [
-            -1.3125,
-            11.25,
-            0.25
-          ],
+          "position": [-1.3125, 11.25, 0.25],
           "removedCells": [],
           "rotation": 0
         },
@@ -3144,11 +1848,7 @@
           "assetId": "part-0f14bf002f4c11854337",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000064",
-          "position": [
-            1.25,
-            11.25,
-            0.25
-          ],
+          "position": [1.25, 11.25, 0.25],
           "removedCells": [],
           "rotation": 0
         },
@@ -3156,11 +1856,7 @@
           "assetId": "part-e8b51ac6443c73becfcb",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000054",
-          "position": [
-            -3.625,
-            -12.5,
-            0.125
-          ],
+          "position": [-3.625, -12.5, 0.125],
           "removedCells": [],
           "rotation": 0
         },
@@ -3168,11 +1864,7 @@
           "assetId": "part-4d754a140cc642ded990",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000056",
-          "position": [
-            3.625,
-            -12.5,
-            0.125
-          ],
+          "position": [3.625, -12.5, 0.125],
           "removedCells": [],
           "rotation": 0
         },
@@ -3180,11 +1872,7 @@
           "assetId": "part-e15ef10ca93701b58ccb",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000055",
-          "position": [
-            0,
-            -11.9375,
-            0.1875
-          ],
+          "position": [0, -11.9375, 0.1875],
           "removedCells": [],
           "rotation": 0
         },
@@ -3192,11 +1880,7 @@
           "assetId": "part-a9dcbf6707ca20039a5c",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000057",
-          "position": [
-            -6.5625,
-            -6.5,
-            0.25
-          ],
+          "position": [-6.5625, -6.5, 0.25],
           "removedCells": [],
           "rotation": 0
         },
@@ -3204,11 +1888,7 @@
           "assetId": "part-a9dcbf6707ca20039a5c",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000058",
-          "position": [
-            -6.5625,
-            6.5,
-            0.25
-          ],
+          "position": [-6.5625, 6.5, 0.25],
           "removedCells": [],
           "rotation": 0
         },
@@ -3216,11 +1896,7 @@
           "assetId": "part-a06cfaab58b430855803",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000059",
-          "position": [
-            6.5625,
-            -6.5,
-            0.25
-          ],
+          "position": [6.5625, -6.5, 0.25],
           "removedCells": [],
           "rotation": 0
         },
@@ -3228,11 +1904,7 @@
           "assetId": "part-a06cfaab58b430855803",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000060",
-          "position": [
-            6.5625,
-            6.5,
-            0.25
-          ],
+          "position": [6.5625, 6.5, 0.25],
           "removedCells": [],
           "rotation": 0
         },
@@ -3240,11 +1912,7 @@
           "assetId": "part-393498d8c8af6149ef28",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000061",
-          "position": [
-            -6.5,
-            8,
-            0.3125
-          ],
+          "position": [-6.5, 8, 0.3125],
           "removedCells": [],
           "rotation": 0
         },
@@ -3252,11 +1920,7 @@
           "assetId": "part-393498d8c8af6149ef28",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000062",
-          "position": [
-            6.4375,
-            8,
-            0.3125
-          ],
+          "position": [6.4375, 8, 0.3125],
           "removedCells": [],
           "rotation": 0
         },
@@ -3264,11 +1928,7 @@
           "assetId": "part-48cf8b9cf29d0b226ec4",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000081",
-          "position": [
-            3,
-            9,
-            1.3125
-          ],
+          "position": [3, 9, 1.3125],
           "removedCells": [],
           "rotation": 1.5707963267948966
         },
@@ -3276,11 +1936,7 @@
           "assetId": "part-624989ddf1192dceee75",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000082",
-          "position": [
-            -3,
-            11,
-            1.3125
-          ],
+          "position": [-3, 11, 1.3125],
           "removedCells": [],
           "rotation": -1.5707963267948966
         },
@@ -3288,11 +1944,7 @@
           "assetId": "part-b70713e9836547941e3f",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000078",
-          "position": [
-            3,
-            11,
-            1.3125
-          ],
+          "position": [3, 11, 1.3125],
           "removedCells": [],
           "rotation": 1.5707963267948966
         },
@@ -3300,11 +1952,7 @@
           "assetId": "part-b70713e9836547941e3f",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000079",
-          "position": [
-            -1,
-            13,
-            1.3125
-          ],
+          "position": [-1, 13, 1.3125],
           "removedCells": [],
           "rotation": 3.141592653589793
         },
@@ -3312,11 +1960,7 @@
           "assetId": "part-4a1d28344c5ee632b249",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000080",
-          "position": [
-            1,
-            13,
-            1.3125
-          ],
+          "position": [1, 13, 1.3125],
           "removedCells": [],
           "rotation": 3.141592653589793
         },
@@ -3324,11 +1968,7 @@
           "assetId": "part-70c422bca2d395c35ecb",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000076",
-          "position": [
-            1,
-            9,
-            0.1875
-          ],
+          "position": [1, 9, 0.1875],
           "removedCells": [],
           "rotation": 3.141592653589793
         },
@@ -3336,11 +1976,7 @@
           "assetId": "part-1d133c308abd8b172d95",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000089",
-          "position": [
-            -3,
-            9,
-            2.625
-          ],
+          "position": [-3, 9, 2.625],
           "removedCells": [],
           "rotation": 0
         },
@@ -3348,11 +1984,7 @@
           "assetId": "part-14404bc85f3a72ad3ab8",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000073",
-          "position": [
-            -3,
-            7,
-            2.625
-          ],
+          "position": [-3, 7, 2.625],
           "removedCells": [],
           "rotation": 0
         },
@@ -3364,26 +1996,15 @@
               "face": "top",
               "id": "frontier-ship-name",
               "kind": "text",
-              "position": [
-                1,
-                1.5,
-                0.3
-              ],
+              "position": [1, 1.5, 0.3],
               "rotation": 0,
-              "size": [
-                5.3,
-                1.35
-              ],
+              "size": [5.3, 1.35],
               "text": "WAYFARER"
             }
           ],
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000074",
-          "position": [
-            -1,
-            7,
-            2.625
-          ],
+          "position": [-1, 7, 2.625],
           "removedCells": [],
           "rotation": 0
         },
@@ -3391,11 +2012,7 @@
           "assetId": "part-14404bc85f3a72ad3ab8",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000075",
-          "position": [
-            1,
-            7,
-            2.625
-          ],
+          "position": [1, 7, 2.625],
           "removedCells": [],
           "rotation": 0
         },
@@ -3403,11 +2020,7 @@
           "assetId": "part-e7dddd4628bd6be8efb7",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000090",
-          "position": [
-            -2.625,
-            8.625,
-            0.1875
-          ],
+          "position": [-2.625, 8.625, 0.1875],
           "removedCells": [],
           "rotation": 0
         },
@@ -3415,22 +2028,14 @@
           "assetId": "part-e7dddd4628bd6be8efb7",
           "flipped": false,
           "id": "30000000-0000-4000-8000-000000000091",
-          "position": [
-            1,
-            8.625,
-            0.1875
-          ],
+          "position": [1, 8.625, 0.1875],
           "removedCells": [],
           "rotation": 0
         },
         {
           "id": "4d26360a-ee6d-5353-943d-4218b68fff38",
           "assetId": "armor-block-a6743a347ee2fcdd1ce9",
-          "position": [
-            -4.625,
-            -9.0,
-            0.1875
-          ],
+          "position": [-4.625, -9.0, 0.1875],
           "rotation": 0.0,
           "flipped": false,
           "removedCells": []
@@ -3438,11 +2043,7 @@
         {
           "id": "a8ccd504-931d-570b-b59a-a6f87f6b35f9",
           "assetId": "armor-block-a6743a347ee2fcdd1ce9",
-          "position": [
-            -2.625,
-            -9.0,
-            0.1875
-          ],
+          "position": [-2.625, -9.0, 0.1875],
           "rotation": 0.0,
           "flipped": false,
           "removedCells": []
@@ -3450,11 +2051,7 @@
         {
           "id": "ddbbba45-afbd-53ec-b46a-04d9f3b18440",
           "assetId": "armor-block-a6743a347ee2fcdd1ce9",
-          "position": [
-            -0.625,
-            -9.0,
-            0.1875
-          ],
+          "position": [-0.625, -9.0, 0.1875],
           "rotation": 0.0,
           "flipped": false,
           "removedCells": []
@@ -3462,11 +2059,7 @@
         {
           "id": "f8457df6-6471-5307-ae80-c62b3353dd34",
           "assetId": "armor-block-a6743a347ee2fcdd1ce9",
-          "position": [
-            1.375,
-            -9.0,
-            0.1875
-          ],
+          "position": [1.375, -9.0, 0.1875],
           "rotation": 0.0,
           "flipped": false,
           "removedCells": []
@@ -3474,11 +2067,7 @@
         {
           "id": "e2570aaf-c2a5-555c-9294-d1ffdb55f6f6",
           "assetId": "armor-block-62ad930c45227d5287a0",
-          "position": [
-            3.375,
-            -9.0,
-            0.1875
-          ],
+          "position": [3.375, -9.0, 0.1875],
           "rotation": 0.0,
           "flipped": false,
           "removedCells": []
@@ -3486,11 +2075,7 @@
         {
           "id": "2af0db24-e7f9-57b8-a867-a3d01eeb5acc",
           "assetId": "armor-block-e1affbf19f4b7fa30311",
-          "position": [
-            -5.0,
-            -9.0,
-            0.1875
-          ],
+          "position": [-5.0, -9.0, 0.1875],
           "rotation": -1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3498,11 +2083,7 @@
         {
           "id": "1f2e1afc-4a51-5778-8930-5d17c5fe6871",
           "assetId": "armor-block-926961217b49c21a526b",
-          "position": [
-            5.0,
-            -8.625,
-            0.1875
-          ],
+          "position": [5.0, -8.625, 0.1875],
           "rotation": 1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3510,11 +2091,7 @@
         {
           "id": "88240657-87e5-56ad-981e-656772ce9356",
           "assetId": "armor-block-926961217b49c21a526b",
-          "position": [
-            5.0,
-            -6.625,
-            0.1875
-          ],
+          "position": [5.0, -6.625, 0.1875],
           "rotation": 1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3522,11 +2099,7 @@
         {
           "id": "6ce22580-82ce-5405-8de6-17d58644880c",
           "assetId": "armor-block-137adc2153a878094d60",
-          "position": [
-            5.0,
-            -4.625,
-            0.1875
-          ],
+          "position": [5.0, -4.625, 0.1875],
           "rotation": 1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3534,11 +2107,7 @@
         {
           "id": "7ff4bda4-a283-5958-b83d-4071f626424a",
           "assetId": "armor-block-137adc2153a878094d60",
-          "position": [
-            5.0,
-            -2.625,
-            0.1875
-          ],
+          "position": [5.0, -2.625, 0.1875],
           "rotation": 1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3546,11 +2115,7 @@
         {
           "id": "82be8b90-3cc1-5017-9872-045ba553576e",
           "assetId": "armor-block-e40f082abbcbe4f55a62",
-          "position": [
-            5.000000000000001,
-            -0.625,
-            0.1875
-          ],
+          "position": [5.000000000000001, -0.625, 0.1875],
           "rotation": 1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3558,11 +2123,7 @@
         {
           "id": "9ce272e3-1d1e-5081-aa5f-558ae0133742",
           "assetId": "armor-block-a6743a347ee2fcdd1ce9",
-          "position": [
-            5.000000000000001,
-            1.375,
-            0.1875
-          ],
+          "position": [5.000000000000001, 1.375, 0.1875],
           "rotation": 1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3570,11 +2131,7 @@
         {
           "id": "e9300146-936a-5c7f-921a-0bc63ecbd51d",
           "assetId": "armor-block-649dcbda86c17c7952c9",
-          "position": [
-            5.000000000000001,
-            3.375,
-            0.1875
-          ],
+          "position": [5.000000000000001, 3.375, 0.1875],
           "rotation": 1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3582,11 +2139,7 @@
         {
           "id": "d5145302-6f18-54ba-9360-500a7522c477",
           "assetId": "armor-block-a6743a347ee2fcdd1ce9",
-          "position": [
-            5.000000000000001,
-            5.375,
-            0.1875
-          ],
+          "position": [5.000000000000001, 5.375, 0.1875],
           "rotation": 1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3594,11 +2147,7 @@
         {
           "id": "ce8dcbb5-68dd-546d-8418-5cf990a6e83a",
           "assetId": "armor-block-62ad930c45227d5287a0",
-          "position": [
-            5.000000000000001,
-            7.375,
-            0.1875
-          ],
+          "position": [5.000000000000001, 7.375, 0.1875],
           "rotation": 1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3606,11 +2155,7 @@
         {
           "id": "e253a836-e527-5868-8ecf-5f19aebc1ec4",
           "assetId": "armor-block-e1affbf19f4b7fa30311",
-          "position": [
-            5.0,
-            -9.0,
-            0.1875
-          ],
+          "position": [5.0, -9.0, 0.1875],
           "rotation": 0.0,
           "flipped": false,
           "removedCells": []
@@ -3618,11 +2163,7 @@
         {
           "id": "4924f276-3a5e-50dc-894c-580617991a66",
           "assetId": "armor-block-2b558e7ac8eb4184c2af",
-          "position": [
-            4.625,
-            9.0,
-            0.1875
-          ],
+          "position": [4.625, 9.0, 0.1875],
           "rotation": 3.141592653589793,
           "flipped": false,
           "removedCells": []
@@ -3630,11 +2171,7 @@
         {
           "id": "adb9cfc7-6c0a-51da-ab70-fe58fa6b9ed7",
           "assetId": "armor-block-e1affbf19f4b7fa30311",
-          "position": [
-            5.0,
-            9.0,
-            0.1875
-          ],
+          "position": [5.0, 9.0, 0.1875],
           "rotation": 1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3642,11 +2179,7 @@
         {
           "id": "a7c04f24-ea6f-56e9-95e8-3f5d8a70171a",
           "assetId": "armor-block-b235419d9a165659f2e8",
-          "position": [
-            3.0,
-            10.125,
-            0.1875
-          ],
+          "position": [3.0, 10.125, 0.1875],
           "rotation": 1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3654,11 +2187,7 @@
         {
           "id": "cfecc6a1-d510-547e-89b0-f4f66d1cf0a4",
           "assetId": "armor-block-fabbd7b0578ea00b5791",
-          "position": [
-            3.0,
-            9.0,
-            0.1875
-          ],
+          "position": [3.0, 9.0, 0.1875],
           "rotation": 3.141592653589793,
           "flipped": false,
           "removedCells": []
@@ -3666,11 +2195,7 @@
         {
           "id": "2ed2e3ee-5a74-5795-984d-1834bbbc58ee",
           "assetId": "armor-block-e120acd13dae3b493668",
-          "position": [
-            2.7348349570550448,
-            11.265165042944956,
-            0.1875
-          ],
+          "position": [2.7348349570550448, 11.265165042944956, 0.1875],
           "rotation": 2.356194490192345,
           "flipped": false,
           "removedCells": []
@@ -3678,11 +2203,7 @@
         {
           "id": "a6ed5671-88ad-5785-a34a-2f7c486f3c32",
           "assetId": "armor-block-e120acd13dae3b493668",
-          "position": [
-            2.0,
-            12.0,
-            0.1875
-          ],
+          "position": [2.0, 12.0, 0.1875],
           "rotation": 2.356194490192345,
           "flipped": false,
           "removedCells": []
@@ -3690,11 +2211,7 @@
         {
           "id": "1e4c0415-5de8-563c-82bf-e257272df1b4",
           "assetId": "armor-block-70b34597548b284a0a7f",
-          "position": [
-            3.0,
-            11.0,
-            0.1875
-          ],
+          "position": [3.0, 11.0, 0.1875],
           "rotation": 1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3702,11 +2219,7 @@
         {
           "id": "4e07a840-01fd-5ec1-b366-38d1fd8e162e",
           "assetId": "armor-block-98477a5dd3e88b931589",
-          "position": [
-            0.625,
-            13.0,
-            0.1875
-          ],
+          "position": [0.625, 13.0, 0.1875],
           "rotation": 3.141592653589793,
           "flipped": false,
           "removedCells": []
@@ -3714,11 +2227,7 @@
         {
           "id": "15f8b790-24ef-5103-858e-929974a1f6b6",
           "assetId": "armor-block-70b34597548b284a0a7f",
-          "position": [
-            1.0,
-            13.0,
-            0.1875
-          ],
+          "position": [1.0, 13.0, 0.1875],
           "rotation": 2.356194490192345,
           "flipped": false,
           "removedCells": []
@@ -3726,11 +2235,7 @@
         {
           "id": "3b00c4bf-fa33-5b02-a3d8-665e4fc29b18",
           "assetId": "armor-block-e120acd13dae3b493668",
-          "position": [
-            -1.2651650429449552,
-            12.734834957055044,
-            0.1875
-          ],
+          "position": [-1.2651650429449552, 12.734834957055044, 0.1875],
           "rotation": -2.356194490192345,
           "flipped": false,
           "removedCells": []
@@ -3738,11 +2243,7 @@
         {
           "id": "ce92e773-9665-552b-84cd-be82f8ce12a0",
           "assetId": "armor-block-e120acd13dae3b493668",
-          "position": [
-            -2.0,
-            12.0,
-            0.1875
-          ],
+          "position": [-2.0, 12.0, 0.1875],
           "rotation": -2.356194490192345,
           "flipped": false,
           "removedCells": []
@@ -3750,11 +2251,7 @@
         {
           "id": "0789704f-f3f0-5e27-9976-448a195213be",
           "assetId": "armor-block-70b34597548b284a0a7f",
-          "position": [
-            -1.0,
-            13.0,
-            0.1875
-          ],
+          "position": [-1.0, 13.0, 0.1875],
           "rotation": 3.141592653589793,
           "flipped": false,
           "removedCells": []
@@ -3762,11 +2259,7 @@
         {
           "id": "4c9cb3e0-9d7e-56bf-a59b-3f44615aae1a",
           "assetId": "armor-block-b235419d9a165659f2e8",
-          "position": [
-            -3.0,
-            10.625,
-            0.1875
-          ],
+          "position": [-3.0, 10.625, 0.1875],
           "rotation": -1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3774,11 +2267,7 @@
         {
           "id": "9a19aaf1-f069-5f1d-8cc3-a47181237356",
           "assetId": "armor-block-70b34597548b284a0a7f",
-          "position": [
-            -3.0,
-            11.0,
-            0.1875
-          ],
+          "position": [-3.0, 11.0, 0.1875],
           "rotation": -2.356194490192345,
           "flipped": false,
           "removedCells": []
@@ -3786,11 +2275,7 @@
         {
           "id": "e433fca5-e2a1-53e2-9180-41e77ece62c6",
           "assetId": "armor-block-2b558e7ac8eb4184c2af",
-          "position": [
-            -4.125,
-            9.0,
-            0.1875
-          ],
+          "position": [-4.125, 9.0, 0.1875],
           "rotation": 3.141592653589793,
           "flipped": false,
           "removedCells": []
@@ -3798,11 +2283,7 @@
         {
           "id": "9d522ba9-8986-5add-818b-d6d14bbea871",
           "assetId": "armor-block-a7ef36310c50dc565d00",
-          "position": [
-            -3.0,
-            9.0,
-            0.1875
-          ],
+          "position": [-3.0, 9.0, 0.1875],
           "rotation": -1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3810,11 +2291,7 @@
         {
           "id": "040aaeb9-4d78-52a8-a2ac-897b2f0e2f2d",
           "assetId": "armor-block-a6743a347ee2fcdd1ce9",
-          "position": [
-            -5.0,
-            8.625,
-            0.1875
-          ],
+          "position": [-5.0, 8.625, 0.1875],
           "rotation": -1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3822,11 +2299,7 @@
         {
           "id": "c3a53f02-2e84-5ce6-b282-09d90d8fae79",
           "assetId": "armor-block-a6743a347ee2fcdd1ce9",
-          "position": [
-            -5.0,
-            6.625,
-            0.1875
-          ],
+          "position": [-5.0, 6.625, 0.1875],
           "rotation": -1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3834,11 +2307,7 @@
         {
           "id": "f803974a-d174-5fdf-9250-853349a936aa",
           "assetId": "armor-block-649dcbda86c17c7952c9",
-          "position": [
-            -5.0,
-            4.625,
-            0.1875
-          ],
+          "position": [-5.0, 4.625, 0.1875],
           "rotation": -1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3846,11 +2315,7 @@
         {
           "id": "ee057564-94c4-5158-93c9-1f09961a71b3",
           "assetId": "armor-block-a6743a347ee2fcdd1ce9",
-          "position": [
-            -5.0,
-            2.625,
-            0.1875
-          ],
+          "position": [-5.0, 2.625, 0.1875],
           "rotation": -1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3858,11 +2323,7 @@
         {
           "id": "b0ebe8ef-27a2-598d-a857-940270f3b2b6",
           "assetId": "armor-block-e40f082abbcbe4f55a62",
-          "position": [
-            -4.999999999999999,
-            0.625,
-            0.1875
-          ],
+          "position": [-4.999999999999999, 0.625, 0.1875],
           "rotation": -1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3870,11 +2331,7 @@
         {
           "id": "085f8d42-2eb0-5ae6-8d28-d49f52765254",
           "assetId": "armor-block-137adc2153a878094d60",
-          "position": [
-            -4.999999999999999,
-            -1.375,
-            0.1875
-          ],
+          "position": [-4.999999999999999, -1.375, 0.1875],
           "rotation": -1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3882,11 +2339,7 @@
         {
           "id": "640491f1-4319-5051-bf66-cbae7f499ea7",
           "assetId": "armor-block-137adc2153a878094d60",
-          "position": [
-            -4.999999999999999,
-            -3.375,
-            0.1875
-          ],
+          "position": [-4.999999999999999, -3.375, 0.1875],
           "rotation": -1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3894,11 +2347,7 @@
         {
           "id": "e4659762-0a4b-5831-b8f4-d211db60354a",
           "assetId": "armor-block-926961217b49c21a526b",
-          "position": [
-            -4.999999999999999,
-            -5.375,
-            0.1875
-          ],
+          "position": [-4.999999999999999, -5.375, 0.1875],
           "rotation": -1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3906,11 +2355,7 @@
         {
           "id": "8d8569e4-434c-5265-926d-39812832dfa5",
           "assetId": "armor-block-4896cc9388c49fcb9b2e",
-          "position": [
-            -4.999999999999999,
-            -7.375,
-            0.1875
-          ],
+          "position": [-4.999999999999999, -7.375, 0.1875],
           "rotation": -1.5707963267948966,
           "flipped": false,
           "removedCells": []
@@ -3918,11 +2363,7 @@
         {
           "id": "048e34aa-0716-55e7-9721-ebe169184a8d",
           "assetId": "armor-block-e1affbf19f4b7fa30311",
-          "position": [
-            -5.0,
-            9.0,
-            0.1875
-          ],
+          "position": [-5.0, 9.0, 0.1875],
           "rotation": 3.141592653589793,
           "flipped": false,
           "removedCells": []
@@ -4091,14 +2532,8 @@
     "nodes": [],
     "openings": [
       {
-        "a": [
-          -48,
-          -48
-        ],
-        "b": [
-          -48,
-          -16
-        ],
+        "a": [-48, -48],
+        "b": [-48, -16],
         "clearance": 64,
         "deckId": "wayfarer-main-deck",
         "id": "port-door--1",
@@ -4107,14 +2542,8 @@
         "sill": 0
       },
       {
-        "a": [
-          -48,
-          -176
-        ],
-        "b": [
-          -48,
-          -144
-        ],
+        "a": [-48, -176],
+        "b": [-48, -144],
         "clearance": 64,
         "deckId": "wayfarer-main-deck",
         "id": "port-door--5",
@@ -4123,14 +2552,8 @@
         "sill": 0
       },
       {
-        "a": [
-          -48,
-          80
-        ],
-        "b": [
-          -48,
-          112
-        ],
+        "a": [-48, 80],
+        "b": [-48, 112],
         "clearance": 64,
         "deckId": "wayfarer-main-deck",
         "id": "port-door-3",
@@ -4139,14 +2562,8 @@
         "sill": 0
       },
       {
-        "a": [
-          -48,
-          208
-        ],
-        "b": [
-          -48,
-          240
-        ],
+        "a": [-48, 208],
+        "b": [-48, 240],
         "clearance": 64,
         "deckId": "wayfarer-main-deck",
         "id": "port-door-7",
@@ -4155,14 +2572,8 @@
         "sill": 0
       },
       {
-        "a": [
-          64,
-          -48
-        ],
-        "b": [
-          64,
-          -16
-        ],
+        "a": [64, -48],
+        "b": [64, -16],
         "clearance": 64,
         "deckId": "wayfarer-main-deck",
         "id": "starboard-door--1",
@@ -4171,14 +2582,8 @@
         "sill": 0
       },
       {
-        "a": [
-          64,
-          -176
-        ],
-        "b": [
-          64,
-          -144
-        ],
+        "a": [64, -176],
+        "b": [64, -144],
         "clearance": 64,
         "deckId": "wayfarer-main-deck",
         "id": "starboard-door--5",
@@ -4187,14 +2592,8 @@
         "sill": 0
       },
       {
-        "a": [
-          64,
-          80
-        ],
-        "b": [
-          64,
-          112
-        ],
+        "a": [64, 80],
+        "b": [64, 112],
         "clearance": 64,
         "deckId": "wayfarer-main-deck",
         "id": "starboard-door-3",
@@ -4203,14 +2602,8 @@
         "sill": 0
       },
       {
-        "a": [
-          64,
-          208
-        ],
-        "b": [
-          64,
-          240
-        ],
+        "a": [64, 208],
+        "b": [64, 240],
         "clearance": 64,
         "deckId": "wayfarer-main-deck",
         "id": "starboard-door-7",
@@ -4221,157 +2614,85 @@
     ],
     "partitions": [
       {
-        "a": [
-          -48,
-          -224
-        ],
-        "b": [
-          -48,
-          256
-        ],
+        "a": [-48, -224],
+        "b": [-48, 256],
         "deckId": "wayfarer-main-deck",
         "id": "port-corridor",
         "seal": "design-sealed"
       },
       {
-        "a": [
-          -160,
-          -128
-        ],
-        "b": [
-          -48,
-          -128
-        ],
+        "a": [-160, -128],
+        "b": [-48, -128],
         "deckId": "wayfarer-main-deck",
         "id": "port-divider--4",
         "seal": "design-sealed"
       },
       {
-        "a": [
-          -160,
-          -224
-        ],
-        "b": [
-          -48,
-          -224
-        ],
+        "a": [-160, -224],
+        "b": [-48, -224],
         "deckId": "wayfarer-main-deck",
         "id": "port-divider--7",
         "seal": "design-sealed"
       },
       {
-        "a": [
-          -160,
-          32
-        ],
-        "b": [
-          -48,
-          32
-        ],
+        "a": [-160, 32],
+        "b": [-48, 32],
         "deckId": "wayfarer-main-deck",
         "id": "port-divider-1",
         "seal": "design-sealed"
       },
       {
-        "a": [
-          -160,
-          160
-        ],
-        "b": [
-          -48,
-          160
-        ],
+        "a": [-160, 160],
+        "b": [-48, 160],
         "deckId": "wayfarer-main-deck",
         "id": "port-divider-5",
         "seal": "design-sealed"
       },
       {
-        "a": [
-          -160,
-          256
-        ],
-        "b": [
-          -48,
-          256
-        ],
+        "a": [-160, 256],
+        "b": [-48, 256],
         "deckId": "wayfarer-main-deck",
         "id": "port-divider-8",
         "seal": "design-sealed"
       },
       {
-        "a": [
-          64,
-          -224
-        ],
-        "b": [
-          64,
-          256
-        ],
+        "a": [64, -224],
+        "b": [64, 256],
         "deckId": "wayfarer-main-deck",
         "id": "starboard-corridor",
         "seal": "design-sealed"
       },
       {
-        "a": [
-          64,
-          -128
-        ],
-        "b": [
-          160,
-          -128
-        ],
+        "a": [64, -128],
+        "b": [160, -128],
         "deckId": "wayfarer-main-deck",
         "id": "starboard-divider--4",
         "seal": "design-sealed"
       },
       {
-        "a": [
-          64,
-          -224
-        ],
-        "b": [
-          160,
-          -224
-        ],
+        "a": [64, -224],
+        "b": [160, -224],
         "deckId": "wayfarer-main-deck",
         "id": "starboard-divider--7",
         "seal": "design-sealed"
       },
       {
-        "a": [
-          64,
-          32
-        ],
-        "b": [
-          160,
-          32
-        ],
+        "a": [64, 32],
+        "b": [160, 32],
         "deckId": "wayfarer-main-deck",
         "id": "starboard-divider-1",
         "seal": "design-sealed"
       },
       {
-        "a": [
-          64,
-          160
-        ],
-        "b": [
-          160,
-          160
-        ],
+        "a": [64, 160],
+        "b": [160, 160],
         "deckId": "wayfarer-main-deck",
         "id": "starboard-divider-5",
         "seal": "design-sealed"
       },
       {
-        "a": [
-          64,
-          256
-        ],
-        "b": [
-          160,
-          256
-        ],
+        "a": [64, 256],
+        "b": [160, 256],
         "deckId": "wayfarer-main-deck",
         "id": "starboard-divider-8",
         "seal": "design-sealed"
@@ -4386,10 +2707,7 @@
         "floorTheme": "native-floor-r002",
         "id": "30000000-0000-4000-8000-000000000148",
         "name": "bridge",
-        "seed": [
-          0,
-          320
-        ],
+        "seed": [0, 320],
         "type": "bridge",
         "wallTheme": "inset250"
       },
@@ -4400,10 +2718,7 @@
         "floorTheme": "native-floor-r002",
         "id": "30000000-0000-4000-8000-000000000149",
         "name": "central corridor",
-        "seed": [
-          0,
-          0
-        ],
+        "seed": [0, 0],
         "type": "central corridor",
         "wallTheme": "inset250"
       },
@@ -4414,10 +2729,7 @@
         "floorTheme": "native-floor-r002",
         "id": "30000000-0000-4000-8000-000000000150",
         "name": "crew",
-        "seed": [
-          112,
-          -192
-        ],
+        "seed": [112, -192],
         "type": "crew",
         "wallTheme": "inset250"
       },
@@ -4428,10 +2740,7 @@
         "floorTheme": "native-floor-r002",
         "id": "30000000-0000-4000-8000-000000000151",
         "name": "engineering",
-        "seed": [
-          -112,
-          -192
-        ],
+        "seed": [-112, -192],
         "type": "engineering",
         "wallTheme": "inset250"
       },
@@ -4442,10 +2751,7 @@
         "floorTheme": "native-floor-r002",
         "id": "30000000-0000-4000-8000-000000000152",
         "name": "hydroponics",
-        "seed": [
-          -112,
-          -64
-        ],
+        "seed": [-112, -64],
         "type": "hydroponics",
         "wallTheme": "inset250"
       },
@@ -4456,10 +2762,7 @@
         "floorTheme": "native-floor-r002",
         "id": "30000000-0000-4000-8000-000000000153",
         "name": "lounge",
-        "seed": [
-          112,
-          104
-        ],
+        "seed": [112, 104],
         "type": "lounge",
         "wallTheme": "inset250"
       },
@@ -4470,10 +2773,7 @@
         "floorTheme": "native-floor-r002",
         "id": "30000000-0000-4000-8000-000000000154",
         "name": "medbay",
-        "seed": [
-          112,
-          -64
-        ],
+        "seed": [112, -64],
         "type": "medbay",
         "wallTheme": "inset250"
       },
@@ -4484,10 +2784,7 @@
         "floorTheme": "native-floor-r002",
         "id": "30000000-0000-4000-8000-000000000155",
         "name": "port service",
-        "seed": [
-          -112,
-          192
-        ],
+        "seed": [-112, 192],
         "type": "port service",
         "wallTheme": "inset250"
       },
@@ -4498,10 +2795,7 @@
         "floorTheme": "native-floor-r002",
         "id": "30000000-0000-4000-8000-000000000156",
         "name": "starboard service",
-        "seed": [
-          112,
-          192
-        ],
+        "seed": [112, 192],
         "type": "starboard service",
         "wallTheme": "inset250"
       },
@@ -4512,10 +2806,7 @@
         "floorTheme": "native-floor-r002",
         "id": "30000000-0000-4000-8000-000000000157",
         "name": "storage",
-        "seed": [
-          -112,
-          104
-        ],
+        "seed": [-112, 104],
         "type": "storage",
         "wallTheme": "inset250"
       }
@@ -4601,14 +2892,8 @@
       "armor": [],
       "boundaryTreatments": [
         {
-          "a": [
-            -48,
-            -144
-          ],
-          "b": [
-            -48,
-            -48
-          ],
+          "a": [-48, -144],
+          "b": [-48, -48],
           "deckId": "wayfarer-main-deck",
           "id": "treatment:partition:port-corridor:-48,-144:-48,-48:treatment:-48,-144:-48,-48",
           "reservationSide": "left",
@@ -4617,14 +2902,8 @@
           "treatment": "bulkhead"
         },
         {
-          "a": [
-            -48,
-            -16
-          ],
-          "b": [
-            -48,
-            80
-          ],
+          "a": [-48, -16],
+          "b": [-48, 80],
           "deckId": "wayfarer-main-deck",
           "id": "treatment:partition:port-corridor:-48,-16:-48,80:treatment:-48,-16:-48,80",
           "reservationSide": "left",
@@ -4633,14 +2912,8 @@
           "treatment": "bulkhead"
         },
         {
-          "a": [
-            -48,
-            -224
-          ],
-          "b": [
-            -48,
-            -176
-          ],
+          "a": [-48, -224],
+          "b": [-48, -176],
           "deckId": "wayfarer-main-deck",
           "id": "treatment:partition:port-corridor:-48,-224:-48,-176:treatment:-48,-224:-48,-176",
           "reservationSide": "left",
@@ -4649,14 +2922,8 @@
           "treatment": "bulkhead"
         },
         {
-          "a": [
-            -48,
-            112
-          ],
-          "b": [
-            -48,
-            208
-          ],
+          "a": [-48, 112],
+          "b": [-48, 208],
           "deckId": "wayfarer-main-deck",
           "id": "treatment:partition:port-corridor:-48,112:-48,208:treatment:-48,112:-48,208",
           "reservationSide": "left",
@@ -4665,14 +2932,8 @@
           "treatment": "bulkhead"
         },
         {
-          "a": [
-            -48,
-            240
-          ],
-          "b": [
-            -48,
-            256
-          ],
+          "a": [-48, 240],
+          "b": [-48, 256],
           "deckId": "wayfarer-main-deck",
           "id": "treatment:partition:port-corridor:-48,240:-48,256:treatment:-48,240:-48,256",
           "reservationSide": "left",
@@ -4681,14 +2942,8 @@
           "treatment": "bulkhead"
         },
         {
-          "a": [
-            -160,
-            -128
-          ],
-          "b": [
-            -48,
-            -128
-          ],
+          "a": [-160, -128],
+          "b": [-48, -128],
           "deckId": "wayfarer-main-deck",
           "id": "treatment:partition:port-divider--4:-160,-128:-48,-128:treatment:-160,-128:-48,-128",
           "reservationSide": "left",
@@ -4697,14 +2952,8 @@
           "treatment": "bulkhead"
         },
         {
-          "a": [
-            -160,
-            -224
-          ],
-          "b": [
-            -48,
-            -224
-          ],
+          "a": [-160, -224],
+          "b": [-48, -224],
           "deckId": "wayfarer-main-deck",
           "id": "treatment:partition:port-divider--7:-160,-224:-48,-224:treatment:-160,-224:-48,-224",
           "reservationSide": "left",
@@ -4713,14 +2962,8 @@
           "treatment": "bulkhead"
         },
         {
-          "a": [
-            -160,
-            32
-          ],
-          "b": [
-            -48,
-            32
-          ],
+          "a": [-160, 32],
+          "b": [-48, 32],
           "deckId": "wayfarer-main-deck",
           "id": "treatment:partition:port-divider-1:-160,32:-48,32:treatment:-160,32:-48,32",
           "reservationSide": "left",
@@ -4729,14 +2972,8 @@
           "treatment": "bulkhead"
         },
         {
-          "a": [
-            -160,
-            160
-          ],
-          "b": [
-            -48,
-            160
-          ],
+          "a": [-160, 160],
+          "b": [-48, 160],
           "deckId": "wayfarer-main-deck",
           "id": "treatment:partition:port-divider-5:-160,160:-48,160:treatment:-160,160:-48,160",
           "reservationSide": "left",
@@ -4745,14 +2982,8 @@
           "treatment": "bulkhead"
         },
         {
-          "a": [
-            -160,
-            256
-          ],
-          "b": [
-            -48,
-            256
-          ],
+          "a": [-160, 256],
+          "b": [-48, 256],
           "deckId": "wayfarer-main-deck",
           "id": "treatment:partition:port-divider-8:-160,256:-48,256:treatment:-160,256:-48,256",
           "reservationSide": "left",
@@ -4761,14 +2992,8 @@
           "treatment": "bulkhead"
         },
         {
-          "a": [
-            64,
-            -144
-          ],
-          "b": [
-            64,
-            -48
-          ],
+          "a": [64, -144],
+          "b": [64, -48],
           "deckId": "wayfarer-main-deck",
           "id": "treatment:partition:starboard-corridor:64,-144:64,-48:treatment:64,-144:64,-48",
           "reservationSide": "right",
@@ -4777,14 +3002,8 @@
           "treatment": "bulkhead"
         },
         {
-          "a": [
-            64,
-            -16
-          ],
-          "b": [
-            64,
-            80
-          ],
+          "a": [64, -16],
+          "b": [64, 80],
           "deckId": "wayfarer-main-deck",
           "id": "treatment:partition:starboard-corridor:64,-16:64,80:treatment:64,-16:64,80",
           "reservationSide": "right",
@@ -4793,14 +3012,8 @@
           "treatment": "bulkhead"
         },
         {
-          "a": [
-            64,
-            -224
-          ],
-          "b": [
-            64,
-            -176
-          ],
+          "a": [64, -224],
+          "b": [64, -176],
           "deckId": "wayfarer-main-deck",
           "id": "treatment:partition:starboard-corridor:64,-224:64,-176:treatment:64,-224:64,-176",
           "reservationSide": "right",
@@ -4809,14 +3022,8 @@
           "treatment": "bulkhead"
         },
         {
-          "a": [
-            64,
-            112
-          ],
-          "b": [
-            64,
-            208
-          ],
+          "a": [64, 112],
+          "b": [64, 208],
           "deckId": "wayfarer-main-deck",
           "id": "treatment:partition:starboard-corridor:64,112:64,208:treatment:64,112:64,208",
           "reservationSide": "right",
@@ -4825,14 +3032,8 @@
           "treatment": "bulkhead"
         },
         {
-          "a": [
-            64,
-            240
-          ],
-          "b": [
-            64,
-            256
-          ],
+          "a": [64, 240],
+          "b": [64, 256],
           "deckId": "wayfarer-main-deck",
           "id": "treatment:partition:starboard-corridor:64,240:64,256:treatment:64,240:64,256",
           "reservationSide": "right",
@@ -4841,14 +3042,8 @@
           "treatment": "bulkhead"
         },
         {
-          "a": [
-            64,
-            -128
-          ],
-          "b": [
-            160,
-            -128
-          ],
+          "a": [64, -128],
+          "b": [160, -128],
           "deckId": "wayfarer-main-deck",
           "id": "treatment:partition:starboard-divider--4:64,-128:160,-128:treatment:64,-128:160,-128",
           "reservationSide": "left",
@@ -4857,14 +3052,8 @@
           "treatment": "bulkhead"
         },
         {
-          "a": [
-            64,
-            -224
-          ],
-          "b": [
-            160,
-            -224
-          ],
+          "a": [64, -224],
+          "b": [160, -224],
           "deckId": "wayfarer-main-deck",
           "id": "treatment:partition:starboard-divider--7:64,-224:160,-224:treatment:64,-224:160,-224",
           "reservationSide": "left",
@@ -4873,14 +3062,8 @@
           "treatment": "bulkhead"
         },
         {
-          "a": [
-            64,
-            32
-          ],
-          "b": [
-            160,
-            32
-          ],
+          "a": [64, 32],
+          "b": [160, 32],
           "deckId": "wayfarer-main-deck",
           "id": "treatment:partition:starboard-divider-1:64,32:160,32:treatment:64,32:160,32",
           "reservationSide": "left",
@@ -4889,14 +3072,8 @@
           "treatment": "bulkhead"
         },
         {
-          "a": [
-            64,
-            160
-          ],
-          "b": [
-            160,
-            160
-          ],
+          "a": [64, 160],
+          "b": [160, 160],
           "deckId": "wayfarer-main-deck",
           "id": "treatment:partition:starboard-divider-5:64,160:160,160:treatment:64,160:160,160",
           "reservationSide": "left",
@@ -4905,14 +3082,8 @@
           "treatment": "bulkhead"
         },
         {
-          "a": [
-            64,
-            256
-          ],
-          "b": [
-            160,
-            256
-          ],
+          "a": [64, 256],
+          "b": [160, 256],
           "deckId": "wayfarer-main-deck",
           "id": "treatment:partition:starboard-divider-8:64,256:160,256:treatment:64,256:160,256",
           "reservationSide": "left",
@@ -4921,14 +3092,8 @@
           "treatment": "bulkhead"
         },
         {
-          "a": [
-            96,
-            288
-          ],
-          "b": [
-            96,
-            352
-          ],
+          "a": [96, 288],
+          "b": [96, 352],
           "deckId": "wayfarer-main-deck",
           "id": "cockpit:starboard-side",
           "source": "perimeter",
@@ -4936,14 +3101,8 @@
           "treatment": "cockpit-glass"
         },
         {
-          "a": [
-            -96,
-            288
-          ],
-          "b": [
-            -96,
-            352
-          ],
+          "a": [-96, 288],
+          "b": [-96, 352],
           "deckId": "wayfarer-main-deck",
           "id": "cockpit:port-side",
           "source": "perimeter",
@@ -4951,14 +3110,8 @@
           "treatment": "cockpit-glass"
         },
         {
-          "a": [
-            96,
-            352
-          ],
-          "b": [
-            32,
-            416
-          ],
+          "a": [96, 352],
+          "b": [32, 416],
           "deckId": "wayfarer-main-deck",
           "id": "cockpit:starboard-diagonal",
           "source": "perimeter",
@@ -4966,14 +3119,8 @@
           "treatment": "cockpit-glass"
         },
         {
-          "a": [
-            -32,
-            416
-          ],
-          "b": [
-            -96,
-            352
-          ],
+          "a": [-32, 416],
+          "b": [-96, 352],
           "deckId": "wayfarer-main-deck",
           "id": "cockpit:port-diagonal",
           "source": "perimeter",
@@ -4981,14 +3128,8 @@
           "treatment": "cockpit-glass"
         },
         {
-          "a": [
-            32,
-            416
-          ],
-          "b": [
-            -32,
-            416
-          ],
+          "a": [32, 416],
+          "b": [-32, 416],
           "deckId": "wayfarer-main-deck",
           "id": "cockpit:nose",
           "source": "perimeter",
@@ -5012,11 +3153,7 @@
         "id": "wayfarer-structural-envelope",
         "length": 704,
         "name": "Wayfarer",
-        "origin": [
-          -160,
-          -288,
-          0
-        ],
+        "origin": [-160, -288, 0],
         "revision": "r002",
         "width": 320
       },
@@ -5026,18 +3163,9 @@
           "id": "navigation-reservation:pilot-r004-floor-corner45-05",
           "reason": "nonwalkable",
           "vertices": [
-            [
-              32,
-              352
-            ],
-            [
-              96,
-              352
-            ],
-            [
-              32,
-              416
-            ]
+            [32, 352],
+            [96, 352],
+            [32, 416]
           ]
         },
         {
@@ -5045,18 +3173,9 @@
           "id": "navigation-reservation:pilot-r004-floor-corner45-06",
           "reason": "nonwalkable",
           "vertices": [
-            [
-              -96,
-              352
-            ],
-            [
-              -32,
-              352
-            ],
-            [
-              -32,
-              416
-            ]
+            [-96, 352],
+            [-32, 352],
+            [-32, 416]
           ]
         }
       ],
@@ -5073,22 +3192,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -96,
-            -96
-          ],
-          [
-            -32,
-            -96
-          ],
-          [
-            -32,
-            -32
-          ],
-          [
-            -96,
-            -32
-          ]
+          [-96, -96],
+          [-32, -96],
+          [-32, -32],
+          [-96, -32]
         ]
       },
       {
@@ -5098,22 +3205,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -96,
-            -160
-          ],
-          [
-            -32,
-            -160
-          ],
-          [
-            -32,
-            -96
-          ],
-          [
-            -96,
-            -96
-          ]
+          [-96, -160],
+          [-32, -160],
+          [-32, -96],
+          [-96, -96]
         ]
       },
       {
@@ -5123,22 +3218,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -96,
-            -224
-          ],
-          [
-            -32,
-            -224
-          ],
-          [
-            -32,
-            -160
-          ],
-          [
-            -96,
-            -160
-          ]
+          [-96, -224],
+          [-32, -224],
+          [-32, -160],
+          [-96, -160]
         ]
       },
       {
@@ -5148,22 +3231,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -96,
-            -288
-          ],
-          [
-            -32,
-            -288
-          ],
-          [
-            -32,
-            -224
-          ],
-          [
-            -96,
-            -224
-          ]
+          [-96, -288],
+          [-32, -288],
+          [-32, -224],
+          [-96, -224]
         ]
       },
       {
@@ -5173,22 +3244,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -96,
-            -32
-          ],
-          [
-            -32,
-            -32
-          ],
-          [
-            -32,
-            32
-          ],
-          [
-            -96,
-            32
-          ]
+          [-96, -32],
+          [-32, -32],
+          [-32, 32],
+          [-96, 32]
         ]
       },
       {
@@ -5198,22 +3257,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -96,
-            32
-          ],
-          [
-            -32,
-            32
-          ],
-          [
-            -32,
-            96
-          ],
-          [
-            -96,
-            96
-          ]
+          [-96, 32],
+          [-32, 32],
+          [-32, 96],
+          [-96, 96]
         ]
       },
       {
@@ -5223,22 +3270,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -96,
-            96
-          ],
-          [
-            -32,
-            96
-          ],
-          [
-            -32,
-            160
-          ],
-          [
-            -96,
-            160
-          ]
+          [-96, 96],
+          [-32, 96],
+          [-32, 160],
+          [-96, 160]
         ]
       },
       {
@@ -5248,22 +3283,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -96,
-            160
-          ],
-          [
-            -32,
-            160
-          ],
-          [
-            -32,
-            224
-          ],
-          [
-            -96,
-            224
-          ]
+          [-96, 160],
+          [-32, 160],
+          [-32, 224],
+          [-96, 224]
         ]
       },
       {
@@ -5273,22 +3296,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -96,
-            224
-          ],
-          [
-            -32,
-            224
-          ],
-          [
-            -32,
-            288
-          ],
-          [
-            -96,
-            288
-          ]
+          [-96, 224],
+          [-32, 224],
+          [-32, 288],
+          [-96, 288]
         ]
       },
       {
@@ -5298,22 +3309,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -160,
-            -96
-          ],
-          [
-            -96,
-            -96
-          ],
-          [
-            -96,
-            -32
-          ],
-          [
-            -160,
-            -32
-          ]
+          [-160, -96],
+          [-96, -96],
+          [-96, -32],
+          [-160, -32]
         ]
       },
       {
@@ -5323,22 +3322,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -160,
-            -160
-          ],
-          [
-            -96,
-            -160
-          ],
-          [
-            -96,
-            -96
-          ],
-          [
-            -160,
-            -96
-          ]
+          [-160, -160],
+          [-96, -160],
+          [-96, -96],
+          [-160, -96]
         ]
       },
       {
@@ -5348,22 +3335,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -160,
-            -224
-          ],
-          [
-            -96,
-            -224
-          ],
-          [
-            -96,
-            -160
-          ],
-          [
-            -160,
-            -160
-          ]
+          [-160, -224],
+          [-96, -224],
+          [-96, -160],
+          [-160, -160]
         ]
       },
       {
@@ -5373,22 +3348,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -160,
-            -288
-          ],
-          [
-            -96,
-            -288
-          ],
-          [
-            -96,
-            -224
-          ],
-          [
-            -160,
-            -224
-          ]
+          [-160, -288],
+          [-96, -288],
+          [-96, -224],
+          [-160, -224]
         ]
       },
       {
@@ -5398,22 +3361,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -160,
-            -32
-          ],
-          [
-            -96,
-            -32
-          ],
-          [
-            -96,
-            32
-          ],
-          [
-            -160,
-            32
-          ]
+          [-160, -32],
+          [-96, -32],
+          [-96, 32],
+          [-160, 32]
         ]
       },
       {
@@ -5423,22 +3374,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -160,
-            32
-          ],
-          [
-            -96,
-            32
-          ],
-          [
-            -96,
-            96
-          ],
-          [
-            -160,
-            96
-          ]
+          [-160, 32],
+          [-96, 32],
+          [-96, 96],
+          [-160, 96]
         ]
       },
       {
@@ -5448,22 +3387,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -160,
-            96
-          ],
-          [
-            -96,
-            96
-          ],
-          [
-            -96,
-            160
-          ],
-          [
-            -160,
-            160
-          ]
+          [-160, 96],
+          [-96, 96],
+          [-96, 160],
+          [-160, 160]
         ]
       },
       {
@@ -5473,22 +3400,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -160,
-            160
-          ],
-          [
-            -96,
-            160
-          ],
-          [
-            -96,
-            224
-          ],
-          [
-            -160,
-            224
-          ]
+          [-160, 160],
+          [-96, 160],
+          [-96, 224],
+          [-160, 224]
         ]
       },
       {
@@ -5498,22 +3413,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -160,
-            224
-          ],
-          [
-            -96,
-            224
-          ],
-          [
-            -96,
-            288
-          ],
-          [
-            -160,
-            288
-          ]
+          [-160, 224],
+          [-96, 224],
+          [-96, 288],
+          [-160, 288]
         ]
       },
       {
@@ -5523,22 +3426,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -32,
-            -96
-          ],
-          [
-            32,
-            -96
-          ],
-          [
-            32,
-            -32
-          ],
-          [
-            -32,
-            -32
-          ]
+          [-32, -96],
+          [32, -96],
+          [32, -32],
+          [-32, -32]
         ]
       },
       {
@@ -5548,22 +3439,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -32,
-            -160
-          ],
-          [
-            32,
-            -160
-          ],
-          [
-            32,
-            -96
-          ],
-          [
-            -32,
-            -96
-          ]
+          [-32, -160],
+          [32, -160],
+          [32, -96],
+          [-32, -96]
         ]
       },
       {
@@ -5573,22 +3452,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -32,
-            -224
-          ],
-          [
-            32,
-            -224
-          ],
-          [
-            32,
-            -160
-          ],
-          [
-            -32,
-            -160
-          ]
+          [-32, -224],
+          [32, -224],
+          [32, -160],
+          [-32, -160]
         ]
       },
       {
@@ -5598,22 +3465,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -32,
-            -288
-          ],
-          [
-            32,
-            -288
-          ],
-          [
-            32,
-            -224
-          ],
-          [
-            -32,
-            -224
-          ]
+          [-32, -288],
+          [32, -288],
+          [32, -224],
+          [-32, -224]
         ]
       },
       {
@@ -5623,22 +3478,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -32,
-            -32
-          ],
-          [
-            32,
-            -32
-          ],
-          [
-            32,
-            32
-          ],
-          [
-            -32,
-            32
-          ]
+          [-32, -32],
+          [32, -32],
+          [32, 32],
+          [-32, 32]
         ]
       },
       {
@@ -5648,22 +3491,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -32,
-            32
-          ],
-          [
-            32,
-            32
-          ],
-          [
-            32,
-            96
-          ],
-          [
-            -32,
-            96
-          ]
+          [-32, 32],
+          [32, 32],
+          [32, 96],
+          [-32, 96]
         ]
       },
       {
@@ -5673,22 +3504,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -32,
-            96
-          ],
-          [
-            32,
-            96
-          ],
-          [
-            32,
-            160
-          ],
-          [
-            -32,
-            160
-          ]
+          [-32, 96],
+          [32, 96],
+          [32, 160],
+          [-32, 160]
         ]
       },
       {
@@ -5698,22 +3517,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -32,
-            160
-          ],
-          [
-            32,
-            160
-          ],
-          [
-            32,
-            224
-          ],
-          [
-            -32,
-            224
-          ]
+          [-32, 160],
+          [32, 160],
+          [32, 224],
+          [-32, 224]
         ]
       },
       {
@@ -5723,22 +3530,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            32,
-            -96
-          ],
-          [
-            96,
-            -96
-          ],
-          [
-            96,
-            -32
-          ],
-          [
-            32,
-            -32
-          ]
+          [32, -96],
+          [96, -96],
+          [96, -32],
+          [32, -32]
         ]
       },
       {
@@ -5748,22 +3543,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            32,
-            -160
-          ],
-          [
-            96,
-            -160
-          ],
-          [
-            96,
-            -96
-          ],
-          [
-            32,
-            -96
-          ]
+          [32, -160],
+          [96, -160],
+          [96, -96],
+          [32, -96]
         ]
       },
       {
@@ -5773,22 +3556,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            32,
-            -224
-          ],
-          [
-            96,
-            -224
-          ],
-          [
-            96,
-            -160
-          ],
-          [
-            32,
-            -160
-          ]
+          [32, -224],
+          [96, -224],
+          [96, -160],
+          [32, -160]
         ]
       },
       {
@@ -5798,22 +3569,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            32,
-            -288
-          ],
-          [
-            96,
-            -288
-          ],
-          [
-            96,
-            -224
-          ],
-          [
-            32,
-            -224
-          ]
+          [32, -288],
+          [96, -288],
+          [96, -224],
+          [32, -224]
         ]
       },
       {
@@ -5823,22 +3582,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            32,
-            -32
-          ],
-          [
-            96,
-            -32
-          ],
-          [
-            96,
-            32
-          ],
-          [
-            32,
-            32
-          ]
+          [32, -32],
+          [96, -32],
+          [96, 32],
+          [32, 32]
         ]
       },
       {
@@ -5848,22 +3595,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            32,
-            32
-          ],
-          [
-            96,
-            32
-          ],
-          [
-            96,
-            96
-          ],
-          [
-            32,
-            96
-          ]
+          [32, 32],
+          [96, 32],
+          [96, 96],
+          [32, 96]
         ]
       },
       {
@@ -5873,22 +3608,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            32,
-            96
-          ],
-          [
-            96,
-            96
-          ],
-          [
-            96,
-            160
-          ],
-          [
-            32,
-            160
-          ]
+          [32, 96],
+          [96, 96],
+          [96, 160],
+          [32, 160]
         ]
       },
       {
@@ -5898,22 +3621,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            32,
-            160
-          ],
-          [
-            96,
-            160
-          ],
-          [
-            96,
-            224
-          ],
-          [
-            32,
-            224
-          ]
+          [32, 160],
+          [96, 160],
+          [96, 224],
+          [32, 224]
         ]
       },
       {
@@ -5923,22 +3634,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            32,
-            224
-          ],
-          [
-            96,
-            224
-          ],
-          [
-            96,
-            288
-          ],
-          [
-            32,
-            288
-          ]
+          [32, 224],
+          [96, 224],
+          [96, 288],
+          [32, 288]
         ]
       },
       {
@@ -5948,22 +3647,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            96,
-            -96
-          ],
-          [
-            160,
-            -96
-          ],
-          [
-            160,
-            -32
-          ],
-          [
-            96,
-            -32
-          ]
+          [96, -96],
+          [160, -96],
+          [160, -32],
+          [96, -32]
         ]
       },
       {
@@ -5973,22 +3660,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            96,
-            -160
-          ],
-          [
-            160,
-            -160
-          ],
-          [
-            160,
-            -96
-          ],
-          [
-            96,
-            -96
-          ]
+          [96, -160],
+          [160, -160],
+          [160, -96],
+          [96, -96]
         ]
       },
       {
@@ -5998,22 +3673,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            96,
-            -224
-          ],
-          [
-            160,
-            -224
-          ],
-          [
-            160,
-            -160
-          ],
-          [
-            96,
-            -160
-          ]
+          [96, -224],
+          [160, -224],
+          [160, -160],
+          [96, -160]
         ]
       },
       {
@@ -6023,22 +3686,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            96,
-            -288
-          ],
-          [
-            160,
-            -288
-          ],
-          [
-            160,
-            -224
-          ],
-          [
-            96,
-            -224
-          ]
+          [96, -288],
+          [160, -288],
+          [160, -224],
+          [96, -224]
         ]
       },
       {
@@ -6048,22 +3699,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            96,
-            -32
-          ],
-          [
-            160,
-            -32
-          ],
-          [
-            160,
-            32
-          ],
-          [
-            96,
-            32
-          ]
+          [96, -32],
+          [160, -32],
+          [160, 32],
+          [96, 32]
         ]
       },
       {
@@ -6073,22 +3712,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            96,
-            32
-          ],
-          [
-            160,
-            32
-          ],
-          [
-            160,
-            96
-          ],
-          [
-            96,
-            96
-          ]
+          [96, 32],
+          [160, 32],
+          [160, 96],
+          [96, 96]
         ]
       },
       {
@@ -6098,22 +3725,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            96,
-            96
-          ],
-          [
-            160,
-            96
-          ],
-          [
-            160,
-            160
-          ],
-          [
-            96,
-            160
-          ]
+          [96, 96],
+          [160, 96],
+          [160, 160],
+          [96, 160]
         ]
       },
       {
@@ -6123,22 +3738,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            96,
-            160
-          ],
-          [
-            160,
-            160
-          ],
-          [
-            160,
-            224
-          ],
-          [
-            96,
-            224
-          ]
+          [96, 160],
+          [160, 160],
+          [160, 224],
+          [96, 224]
         ]
       },
       {
@@ -6148,22 +3751,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            96,
-            224
-          ],
-          [
-            160,
-            224
-          ],
-          [
-            160,
-            288
-          ],
-          [
-            96,
-            288
-          ]
+          [96, 224],
+          [160, 224],
+          [160, 288],
+          [96, 288]
         ]
       },
       {
@@ -6173,18 +3764,9 @@
         "revision": "lattice-shapes-1",
         "shape": "triangle",
         "vertices": [
-          [
-            32,
-            352
-          ],
-          [
-            96,
-            352
-          ],
-          [
-            32,
-            416
-          ]
+          [32, 352],
+          [96, 352],
+          [32, 416]
         ]
       },
       {
@@ -6194,18 +3776,9 @@
         "revision": "lattice-shapes-1",
         "shape": "triangle",
         "vertices": [
-          [
-            -96,
-            352
-          ],
-          [
-            -32,
-            352
-          ],
-          [
-            -32,
-            416
-          ]
+          [-96, 352],
+          [-32, 352],
+          [-32, 416]
         ]
       },
       {
@@ -6215,22 +3788,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -96,
-            288
-          ],
-          [
-            -32,
-            288
-          ],
-          [
-            -32,
-            352
-          ],
-          [
-            -96,
-            352
-          ]
+          [-96, 288],
+          [-32, 288],
+          [-32, 352],
+          [-96, 352]
         ]
       },
       {
@@ -6240,22 +3801,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -32,
-            288
-          ],
-          [
-            32,
-            288
-          ],
-          [
-            32,
-            352
-          ],
-          [
-            -32,
-            352
-          ]
+          [-32, 288],
+          [32, 288],
+          [32, 352],
+          [-32, 352]
         ]
       },
       {
@@ -6265,22 +3814,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            32,
-            288
-          ],
-          [
-            96,
-            288
-          ],
-          [
-            96,
-            352
-          ],
-          [
-            32,
-            352
-          ]
+          [32, 288],
+          [96, 288],
+          [96, 352],
+          [32, 352]
         ]
       },
       {
@@ -6290,22 +3827,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -32,
-            352
-          ],
-          [
-            32,
-            352
-          ],
-          [
-            32,
-            416
-          ],
-          [
-            -32,
-            416
-          ]
+          [-32, 352],
+          [32, 352],
+          [32, 416],
+          [-32, 416]
         ]
       },
       {
@@ -6315,22 +3840,10 @@
         "revision": "lattice-shapes-1",
         "shape": "rectangle",
         "vertices": [
-          [
-            -32,
-            224
-          ],
-          [
-            32,
-            224
-          ],
-          [
-            32,
-            288
-          ],
-          [
-            -32,
-            288
-          ]
+          [-32, 224],
+          [32, 224],
+          [32, 288],
+          [-32, 288]
         ]
       }
     ]
@@ -6380,16 +3893,8 @@
         "previousInnerFaceM": 9.0625,
         "newMountFaceM": 10,
         "deltaM": 0.9375,
-        "previousRendererPosition": [
-          -3.625,
-          0.125,
-          11.5625
-        ],
-        "reviewRendererPosition": [
-          -3.625,
-          0.125,
-          12.5
-        ],
+        "previousRendererPosition": [-3.625, 0.125, 11.5625],
+        "reviewRendererPosition": [-3.625, 0.125, 12.5],
         "limitation": "Rigid review placement only; native geometry unchanged, mount authority unqualified."
       },
       {
@@ -6399,16 +3904,8 @@
         "previousInnerFaceM": 9.0625,
         "newMountFaceM": 10,
         "deltaM": 0.9375,
-        "previousRendererPosition": [
-          3.625,
-          0.125,
-          11.5625
-        ],
-        "reviewRendererPosition": [
-          3.625,
-          0.125,
-          12.5
-        ],
+        "previousRendererPosition": [3.625, 0.125, 11.5625],
+        "reviewRendererPosition": [3.625, 0.125, 12.5],
         "limitation": "Rigid review placement only; native geometry unchanged, mount authority unqualified."
       },
       {
@@ -6418,16 +3915,8 @@
         "previousInnerFaceM": 9.0625,
         "newMountFaceM": 10,
         "deltaM": 0.9375,
-        "previousRendererPosition": [
-          0,
-          0.1875,
-          11
-        ],
-        "reviewRendererPosition": [
-          0,
-          0.1875,
-          11.9375
-        ],
+        "previousRendererPosition": [0, 0.1875, 11],
+        "reviewRendererPosition": [0, 0.1875, 11.9375],
         "limitation": "Rigid review placement only; native geometry unchanged, mount authority unqualified."
       },
       {
@@ -6437,16 +3926,8 @@
         "previousInnerFaceM": -5.8125,
         "newMountFaceM": -6,
         "deltaM": -0.1875,
-        "previousRendererPosition": [
-          -6.375,
-          0.25,
-          6.5
-        ],
-        "reviewRendererPosition": [
-          -6.5625,
-          0.25,
-          6.5
-        ],
+        "previousRendererPosition": [-6.375, 0.25, 6.5],
+        "reviewRendererPosition": [-6.5625, 0.25, 6.5],
         "limitation": "Rigid review placement only; native geometry unchanged, mount authority unqualified."
       },
       {
@@ -6456,16 +3937,8 @@
         "previousInnerFaceM": -5.8125,
         "newMountFaceM": -6,
         "deltaM": -0.1875,
-        "previousRendererPosition": [
-          -6.375,
-          0.25,
-          -6.5
-        ],
-        "reviewRendererPosition": [
-          -6.5625,
-          0.25,
-          -6.5
-        ],
+        "previousRendererPosition": [-6.375, 0.25, -6.5],
+        "reviewRendererPosition": [-6.5625, 0.25, -6.5],
         "limitation": "Rigid review placement only; native geometry unchanged, mount authority unqualified."
       },
       {
@@ -6475,16 +3948,8 @@
         "previousInnerFaceM": 5.8125,
         "newMountFaceM": 6,
         "deltaM": 0.1875,
-        "previousRendererPosition": [
-          6.375,
-          0.25,
-          6.5
-        ],
-        "reviewRendererPosition": [
-          6.5625,
-          0.25,
-          6.5
-        ],
+        "previousRendererPosition": [6.375, 0.25, 6.5],
+        "reviewRendererPosition": [6.5625, 0.25, 6.5],
         "limitation": "Rigid review placement only; native geometry unchanged, mount authority unqualified."
       },
       {
@@ -6494,16 +3959,8 @@
         "previousInnerFaceM": 5.8125,
         "newMountFaceM": 6,
         "deltaM": 0.1875,
-        "previousRendererPosition": [
-          6.375,
-          0.25,
-          -6.5
-        ],
-        "reviewRendererPosition": [
-          6.5625,
-          0.25,
-          -6.5
-        ],
+        "previousRendererPosition": [6.375, 0.25, -6.5],
+        "reviewRendererPosition": [6.5625, 0.25, -6.5],
         "limitation": "Rigid review placement only; native geometry unchanged, mount authority unqualified."
       },
       {
@@ -6513,16 +3970,8 @@
         "previousInnerFaceM": -5,
         "newMountFaceM": -6,
         "deltaM": -1,
-        "previousRendererPosition": [
-          -5.5,
-          0.3125,
-          -8
-        ],
-        "reviewRendererPosition": [
-          -6.5,
-          0.3125,
-          -8
-        ],
+        "previousRendererPosition": [-5.5, 0.3125, -8],
+        "reviewRendererPosition": [-6.5, 0.3125, -8],
         "limitation": "Rigid review placement only; native geometry unchanged, mount authority unqualified."
       },
       {
@@ -6532,16 +3981,8 @@
         "previousInnerFaceM": 5.0625,
         "newMountFaceM": 6,
         "deltaM": 0.9375,
-        "previousRendererPosition": [
-          5.5,
-          0.3125,
-          -8
-        ],
-        "reviewRendererPosition": [
-          6.4375,
-          0.3125,
-          -8
-        ],
+        "previousRendererPosition": [5.5, 0.3125, -8],
+        "reviewRendererPosition": [6.4375, 0.3125, -8],
         "limitation": "Rigid review placement only; native geometry unchanged, mount authority unqualified."
       }
     ],

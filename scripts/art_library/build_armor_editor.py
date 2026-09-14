@@ -4,6 +4,7 @@ import hashlib
 import json
 import uuid
 import re
+import subprocess
 
 ROOT = Path(__file__).resolve().parents[2]
 NATIVE = ROOT / "assets/art-library/framed-wayfarer/r005"
@@ -113,6 +114,8 @@ def build():
                              "structuralIdentityMap": identity_map,
                              "authority": "Editor visual review only; unqualified for game installation."}}
     OUT.write_text(json.dumps(result, indent=2) + "\n")
+    subprocess.run([str(ROOT / "node_modules/.bin/prettier"), "--write", str(OUT)],
+                   cwd=ROOT, check=True, capture_output=True, text=True)
     print(json.dumps({"assets": len(assets), "nativePlacements": len(native_parts), "removed": len(removed),
                       "retained": len(original) - len(removed), "output": str(OUT)}))
 
