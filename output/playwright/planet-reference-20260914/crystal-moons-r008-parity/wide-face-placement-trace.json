@@ -1,0 +1,172 @@
+[
+  {
+    "moon": 1,
+    "hits": [
+      {
+        "label": "upper-crown",
+        "pixel": [
+          450,
+          225
+        ],
+        "object": "GEO-native-regional-fracture-0-panel-81-section-11-band-2",
+        "partId": "planets--crystal-moon-1/regional-fracture-0/panel-81/section-11/band-2",
+        "face": 1,
+        "position": [
+          0.3918023109436035,
+          0.2885892391204834,
+          0.8864243030548096
+        ],
+        "normal": [
+          0.46714168787002563,
+          0.4129452407360077,
+          0.781827986240387
+        ]
+      },
+      {
+        "label": "left-bank",
+        "pixel": [
+          235,
+          470
+        ],
+        "object": "GEO-native-regional-fracture-1-panel-22-section-11-band-1",
+        "partId": "planets--crystal-moon-1/regional-fracture-1/panel-22/section-11/band-1",
+        "face": 4,
+        "position": [
+          0.9441430568695068,
+          -0.05139780044555664,
+          0.2488715648651123
+        ],
+        "normal": [
+          0.021071359515190125,
+          -0.12962888181209564,
+          0.9913386702537537
+        ]
+      },
+      {
+        "label": "front-lower",
+        "pixel": [
+          380,
+          610
+        ],
+        "object": "GEO-native-regional-fracture-0-panel-26-section-7-band-2",
+        "partId": "planets--crystal-moon-1/regional-fracture-0/panel-26/section-7/band-2",
+        "face": 1,
+        "position": [
+          1.008312463760376,
+          0.5131206512451172,
+          0.014664888381958008
+        ],
+        "normal": [
+          0.7466549277305603,
+          0.6406986713409424,
+          0.17891794443130493
+        ]
+      },
+      {
+        "label": "front-right",
+        "pixel": [
+          590,
+          470
+        ],
+        "object": "GEO-native-regional-fracture-0-panel-54-section-8-band-0",
+        "partId": "planets--crystal-moon-1/regional-fracture-0/panel-54/section-8/band-0",
+        "face": 6,
+        "position": [
+          0.4743306636810303,
+          0.820127010345459,
+          0.30962157249450684
+        ],
+        "normal": [
+          -0.14727559685707092,
+          -0.1892758458852768,
+          0.970816433429718
+        ]
+      }
+    ]
+  },
+  {
+    "moon": 2,
+    "hits": [
+      {
+        "label": "upper-crown",
+        "pixel": [
+          450,
+          225
+        ],
+        "object": "GEO-native-regional-fracture-0-panel-25-section-11-band-2",
+        "partId": "planets--crystal-moon-2/regional-fracture-0/panel-25/section-11/band-2",
+        "face": 5,
+        "position": [
+          0.24919509887695312,
+          0.16721749305725098,
+          0.8349921703338623
+        ],
+        "normal": [
+          0.049957264214754105,
+          0.9602331519126892,
+          0.27469369769096375
+        ]
+      },
+      {
+        "label": "left-bank",
+        "pixel": [
+          235,
+          470
+        ],
+        "object": "GEO-native-regional-fracture-1-panel-6-section-11-band-0",
+        "partId": "planets--crystal-moon-2/regional-fracture-1/panel-6/section-11/band-0",
+        "face": 1,
+        "position": [
+          0.8508303165435791,
+          -0.17322063446044922,
+          0.19639277458190918
+        ],
+        "normal": [
+          0.8067715167999268,
+          -0.5007085800170898,
+          0.3137049376964569
+        ]
+      },
+      {
+        "label": "front-lower",
+        "pixel": [
+          380,
+          610
+        ],
+        "object": "GEO-native-regional-fracture-0-panel-7-section-6-band-2",
+        "partId": "planets--crystal-moon-2/regional-fracture-0/panel-7/section-6/band-2",
+        "face": 1,
+        "position": [
+          0.8719666004180908,
+          0.35144662857055664,
+          -0.09144473075866699
+        ],
+        "normal": [
+          0.9259631037712097,
+          0.3776017725467682,
+          -0.0030508723575621843
+        ]
+      },
+      {
+        "label": "front-right",
+        "pixel": [
+          590,
+          470
+        ],
+        "object": "GEO-native-regional-fracture-0-panel-21-section-8-band-0",
+        "partId": "planets--crystal-moon-2/regional-fracture-0/panel-21/section-8/band-0",
+        "face": 1,
+        "position": [
+          0.4149610996246338,
+          0.7466270923614502,
+          0.26241302490234375
+        ],
+        "normal": [
+          0.5372276306152344,
+          0.7829211354255676,
+          0.3137211501598358
+        ]
+      }
+    ]
+  }
+]

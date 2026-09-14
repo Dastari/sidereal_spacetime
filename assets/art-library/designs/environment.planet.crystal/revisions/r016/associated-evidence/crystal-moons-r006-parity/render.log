@@ -1,0 +1,736 @@
+Blender 4.3.2
+Read blend: "/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moon-1-r006/kit.blend"
+Fra:1 Mem:16.79M (Peak 16.79M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-planets--crystal-moon-1-connected-crystalline-body
+Fra:1 Mem:17.09M (Peak 17.09M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-78-tier-1
+Fra:1 Mem:17.16M (Peak 17.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-78-tier-0
+Fra:1 Mem:17.16M (Peak 17.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-34-tier-2
+Fra:1 Mem:17.17M (Peak 17.17M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-34-tier-1
+Fra:1 Mem:17.21M (Peak 17.21M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-34-tier-0
+Fra:1 Mem:17.22M (Peak 17.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-50-tier-1
+Fra:1 Mem:17.22M (Peak 17.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-50-tier-0
+Fra:1 Mem:17.22M (Peak 17.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-35-tier-1
+Fra:1 Mem:17.23M (Peak 17.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-35-tier-0
+Fra:1 Mem:17.23M (Peak 17.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-39-tier-1
+Fra:1 Mem:17.23M (Peak 17.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-39-tier-0
+Fra:1 Mem:17.23M (Peak 17.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-22-tier-2
+Fra:1 Mem:17.24M (Peak 17.24M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-22-tier-1
+Fra:1 Mem:17.24M (Peak 17.24M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-22-tier-0
+Fra:1 Mem:17.24M (Peak 17.24M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-17-tier-1
+Fra:1 Mem:17.25M (Peak 17.25M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-17-tier-0
+Fra:1 Mem:17.34M (Peak 17.34M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-41-tier-1
+Fra:1 Mem:17.34M (Peak 17.34M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-41-tier-0
+Fra:1 Mem:17.34M (Peak 17.34M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-65-tier-1
+Fra:1 Mem:17.35M (Peak 17.35M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-65-tier-0
+Fra:1 Mem:17.35M (Peak 17.35M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-26-tier-2
+Fra:1 Mem:17.37M (Peak 17.37M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-26-tier-1
+Fra:1 Mem:17.44M (Peak 17.44M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-26-tier-0
+Fra:1 Mem:17.44M (Peak 17.44M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-9-tier-1
+Fra:1 Mem:17.45M (Peak 17.45M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-9-tier-0
+Fra:1 Mem:17.45M (Peak 17.45M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-2-tier-1
+Fra:1 Mem:17.54M (Peak 17.54M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-2-tier-0
+Fra:1 Mem:17.54M (Peak 17.54M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-23-tier-1
+Fra:1 Mem:17.55M (Peak 17.55M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-23-tier-0
+Fra:1 Mem:17.55M (Peak 17.55M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-74-tier-2
+Fra:1 Mem:17.55M (Peak 17.55M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-74-tier-1
+Fra:1 Mem:17.56M (Peak 17.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-74-tier-0
+Fra:1 Mem:17.54M (Peak 17.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-47-tier-1
+Fra:1 Mem:17.55M (Peak 17.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-47-tier-0
+Fra:1 Mem:17.48M (Peak 17.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-81-tier-1
+Fra:1 Mem:17.48M (Peak 17.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-5-tier-0
+Fra:1 Mem:17.48M (Peak 17.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-81-tier-0
+Fra:1 Mem:17.48M (Peak 17.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-54-tier-1
+Fra:1 Mem:17.48M (Peak 17.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-5-tier-1
+Fra:1 Mem:17.49M (Peak 17.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-54-tier-0
+Fra:1 Mem:17.49M (Peak 17.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-5-tier-2
+Fra:1 Mem:17.49M (Peak 17.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-8-tier-2
+Fra:1 Mem:17.51M (Peak 17.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-33-tier-0
+Fra:1 Mem:17.50M (Peak 17.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-33-tier-1
+Fra:1 Mem:17.50M (Peak 17.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-8-tier-1
+Fra:1 Mem:17.50M (Peak 17.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-58-tier-0
+Fra:1 Mem:17.50M (Peak 17.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-8-tier-0
+Fra:1 Mem:17.51M (Peak 17.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-58-tier-1
+Fra:1 Mem:17.51M (Peak 17.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-45-tier-1
+Fra:1 Mem:17.53M (Peak 17.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-45-tier-0
+Fra:1 Mem:17.52M (Peak 17.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:17.31M (Peak 17.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-0
+Fra:1 Mem:17.31M (Peak 17.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-7
+Fra:1 Mem:17.82M (Peak 17.82M) | Time:00:00.00 | Mem:0.25M, Peak:0.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-6
+Fra:1 Mem:18.07M (Peak 18.07M) | Time:00:00.00 | Mem:0.50M, Peak:0.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-0
+Fra:1 Mem:18.32M (Peak 18.32M) | Time:00:00.00 | Mem:0.75M, Peak:0.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-5
+Fra:1 Mem:18.57M (Peak 18.57M) | Time:00:00.00 | Mem:1.00M, Peak:1.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-1
+Fra:1 Mem:18.82M (Peak 18.82M) | Time:00:00.00 | Mem:1.25M, Peak:1.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-4
+Fra:1 Mem:19.07M (Peak 19.07M) | Time:00:00.00 | Mem:1.50M, Peak:1.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-1
+Fra:1 Mem:19.32M (Peak 19.32M) | Time:00:00.00 | Mem:1.75M, Peak:1.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-3
+Fra:1 Mem:19.57M (Peak 19.57M) | Time:00:00.00 | Mem:2.00M, Peak:2.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-2
+Fra:1 Mem:19.82M (Peak 19.82M) | Time:00:00.00 | Mem:2.25M, Peak:2.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-2
+Fra:1 Mem:18.04M (Peak 19.82M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:18.04M (Peak 19.82M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:18.04M (Peak 19.82M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:18.04M (Peak 19.82M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:18.13M (Peak 19.82M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:18.13M (Peak 19.82M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:18.13M (Peak 19.82M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:18.13M (Peak 19.82M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:18.13M (Peak 19.82M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:18.13M (Peak 19.82M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:18.14M (Peak 19.82M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:18.14M (Peak 19.82M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:18.14M (Peak 19.82M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:18.14M (Peak 19.82M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:18.21M (Peak 19.82M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:18.40M (Peak 19.82M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:18.39M (Peak 19.82M) | Time:00:00.01 | Mem:2.96M, Peak:2.96M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:18.39M (Peak 19.82M) | Time:00:00.01 | Mem:2.96M, Peak:2.96M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:18.39M (Peak 19.82M) | Time:00:00.01 | Mem:3.10M, Peak:3.10M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:18.39M (Peak 19.82M) | Time:00:00.01 | Mem:3.25M, Peak:3.39M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:18.39M (Peak 19.82M) | Time:00:00.01 | Mem:3.25M, Peak:3.39M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:18.69M (Peak 19.82M) | Time:00:00.01 | Mem:3.25M, Peak:3.39M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:18.69M (Peak 19.82M) | Time:00:00.01 | Mem:3.54M, Peak:3.54M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:18.69M (Peak 19.82M) | Time:00:00.01 | Mem:3.54M, Peak:3.54M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:18.69M (Peak 19.82M) | Time:00:00.01 | Mem:3.54M, Peak:3.54M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:18.69M (Peak 19.82M) | Time:00:00.01 | Mem:3.54M, Peak:3.54M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:18.69M (Peak 19.82M) | Time:00:00.01 | Mem:3.54M, Peak:3.54M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:18.69M (Peak 19.82M) | Time:00:00.01 | Mem:3.62M, Peak:3.62M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:18.69M (Peak 19.82M) | Time:00:00.01 | Mem:3.63M, Peak:3.63M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:18.76M (Peak 19.82M) | Time:00:00.01 | Mem:3.69M, Peak:3.69M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:18.76M (Peak 19.82M) | Time:00:00.01 | Mem:3.69M, Peak:3.69M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:18.76M (Peak 19.82M) | Time:00:00.01 | Mem:3.61M, Peak:3.69M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:18.76M (Peak 19.82M) | Time:00:00.01 | Mem:3.70M, Peak:3.70M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:18.76M (Peak 19.82M) | Time:00:00.01 | Mem:3.70M, Peak:3.70M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:18.76M (Peak 19.82M) | Time:00:00.01 | Mem:3.70M, Peak:3.70M | Scene, ViewLayer | Sample 0/32
+Fra:1 Mem:46.58M (Peak 46.58M) | Time:00:00.44 | Remaining:00:13.42 | Mem:31.52M, Peak:31.52M | Scene, ViewLayer | Sample 1/32
+Fra:1 Mem:58.94M (Peak 83.66M) | Time:00:12.54 | Mem:31.52M, Peak:31.52M | Scene, ViewLayer | Sample 32/32
+Fra:1 Mem:58.94M (Peak 83.66M) | Time:00:12.54 | Mem:31.52M, Peak:31.52M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moons-r006-parity/moon-1-native-two-sided-matched-angle2.png'
+Time: 00:12.67 (Saving: 00:00.13)
+
+Fra:1 Mem:17.02M (Peak 17.02M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-planets--crystal-moon-1-connected-crystalline-body
+Fra:1 Mem:17.52M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-78-tier-1
+Fra:1 Mem:17.43M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-5-tier-0
+Fra:1 Mem:17.43M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-5-tier-1
+Fra:1 Mem:17.43M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-78-tier-0
+Fra:1 Mem:17.43M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-5-tier-2
+Fra:1 Mem:17.44M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-34-tier-2
+Fra:1 Mem:17.44M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-33-tier-0
+Fra:1 Mem:17.44M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-33-tier-1
+Fra:1 Mem:17.44M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-58-tier-0
+Fra:1 Mem:17.45M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-34-tier-0
+Fra:1 Mem:17.45M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-58-tier-1
+Fra:1 Mem:17.45M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-50-tier-1
+Fra:1 Mem:17.45M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-45-tier-0
+Fra:1 Mem:17.45M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-50-tier-0
+Fra:1 Mem:17.45M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-45-tier-1
+Fra:1 Mem:17.45M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-35-tier-1
+Fra:1 Mem:17.46M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-8-tier-0
+Fra:1 Mem:17.46M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-35-tier-0
+Fra:1 Mem:17.46M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-8-tier-1
+Fra:1 Mem:17.46M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-39-tier-1
+Fra:1 Mem:17.46M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-8-tier-2
+Fra:1 Mem:17.47M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-39-tier-0
+Fra:1 Mem:17.47M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-54-tier-0
+Fra:1 Mem:17.47M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-22-tier-2
+Fra:1 Mem:17.47M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-54-tier-1
+Fra:1 Mem:17.47M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-22-tier-1
+Fra:1 Mem:17.48M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-81-tier-0
+Fra:1 Mem:17.48M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-22-tier-0
+Fra:1 Mem:17.48M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-81-tier-1
+Fra:1 Mem:17.48M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-17-tier-1
+Fra:1 Mem:17.48M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-47-tier-0
+Fra:1 Mem:17.48M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-17-tier-0
+Fra:1 Mem:17.49M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-47-tier-1
+Fra:1 Mem:17.49M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-41-tier-1
+Fra:1 Mem:17.49M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-74-tier-0
+Fra:1 Mem:17.49M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-41-tier-0
+Fra:1 Mem:17.49M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-74-tier-1
+Fra:1 Mem:17.50M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-65-tier-1
+Fra:1 Mem:17.50M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-74-tier-2
+Fra:1 Mem:17.50M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-65-tier-0
+Fra:1 Mem:17.50M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-23-tier-0
+Fra:1 Mem:17.50M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-26-tier-2
+Fra:1 Mem:17.50M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-23-tier-1
+Fra:1 Mem:17.51M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-26-tier-1
+Fra:1 Mem:17.51M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-2-tier-0
+Fra:1 Mem:17.51M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-26-tier-0
+Fra:1 Mem:17.51M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-2-tier-1
+Fra:1 Mem:17.51M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-9-tier-1
+Fra:1 Mem:17.52M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-9-tier-0
+Fra:1 Mem:17.52M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:17.31M (Peak 17.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-7
+Fra:1 Mem:17.82M (Peak 17.82M) | Time:00:00.00 | Mem:0.25M, Peak:0.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-6
+Fra:1 Mem:18.07M (Peak 18.07M) | Time:00:00.00 | Mem:0.50M, Peak:0.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-0
+Fra:1 Mem:18.32M (Peak 18.32M) | Time:00:00.00 | Mem:0.75M, Peak:0.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-5
+Fra:1 Mem:18.57M (Peak 18.57M) | Time:00:00.00 | Mem:1.00M, Peak:1.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-1
+Fra:1 Mem:18.82M (Peak 18.82M) | Time:00:00.00 | Mem:1.25M, Peak:1.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-4
+Fra:1 Mem:19.58M (Peak 19.58M) | Time:00:00.00 | Mem:1.50M, Peak:1.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-1
+Fra:1 Mem:19.32M (Peak 19.58M) | Time:00:00.00 | Mem:1.75M, Peak:1.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-3
+Fra:1 Mem:19.57M (Peak 19.58M) | Time:00:00.00 | Mem:2.00M, Peak:2.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-2
+Fra:1 Mem:19.83M (Peak 19.83M) | Time:00:00.00 | Mem:2.25M, Peak:2.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-2
+Fra:1 Mem:18.04M (Peak 19.83M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:18.04M (Peak 19.83M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:18.04M (Peak 19.83M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:18.04M (Peak 19.83M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:18.13M (Peak 19.83M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:18.13M (Peak 19.83M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:18.13M (Peak 19.83M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:18.13M (Peak 19.83M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:18.13M (Peak 19.83M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:18.13M (Peak 19.83M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:18.14M (Peak 19.83M) | Time:00:00.00 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:18.14M (Peak 19.83M) | Time:00:00.00 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:18.14M (Peak 19.83M) | Time:00:00.00 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:18.14M (Peak 19.83M) | Time:00:00.00 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:18.21M (Peak 19.83M) | Time:00:00.00 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:18.41M (Peak 19.83M) | Time:00:00.00 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:18.39M (Peak 19.83M) | Time:00:00.00 | Mem:2.96M, Peak:2.96M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:18.40M (Peak 19.83M) | Time:00:00.00 | Mem:2.96M, Peak:2.96M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:18.40M (Peak 19.83M) | Time:00:00.00 | Mem:3.10M, Peak:3.10M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:18.40M (Peak 19.83M) | Time:00:00.00 | Mem:3.25M, Peak:3.39M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:18.40M (Peak 19.83M) | Time:00:00.00 | Mem:3.25M, Peak:3.39M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:18.69M (Peak 19.83M) | Time:00:00.00 | Mem:3.25M, Peak:3.39M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:18.69M (Peak 19.83M) | Time:00:00.00 | Mem:3.54M, Peak:3.54M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:18.69M (Peak 19.83M) | Time:00:00.00 | Mem:3.54M, Peak:3.54M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:18.69M (Peak 19.83M) | Time:00:00.00 | Mem:3.54M, Peak:3.54M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:18.69M (Peak 19.83M) | Time:00:00.00 | Mem:3.54M, Peak:3.54M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:18.69M (Peak 19.83M) | Time:00:00.00 | Mem:3.54M, Peak:3.54M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:18.69M (Peak 19.83M) | Time:00:00.00 | Mem:3.62M, Peak:3.62M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:18.69M (Peak 19.83M) | Time:00:00.00 | Mem:3.63M, Peak:3.63M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:18.76M (Peak 19.83M) | Time:00:00.01 | Mem:3.69M, Peak:3.69M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:18.76M (Peak 19.83M) | Time:00:00.01 | Mem:3.69M, Peak:3.69M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:18.76M (Peak 19.83M) | Time:00:00.01 | Mem:3.61M, Peak:3.69M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:18.76M (Peak 19.83M) | Time:00:00.01 | Mem:3.70M, Peak:3.70M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:18.76M (Peak 19.83M) | Time:00:00.01 | Mem:3.70M, Peak:3.70M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:18.76M (Peak 19.83M) | Time:00:00.01 | Mem:3.70M, Peak:3.70M | Scene, ViewLayer | Sample 0/32
+Fra:1 Mem:18.98M (Peak 19.83M) | Time:00:00.01 | Remaining:00:00.12 | Mem:3.92M, Peak:3.92M | Scene, ViewLayer | Sample 1/32
+Fra:1 Mem:19.07M (Peak 19.83M) | Time:00:00.11 | Mem:3.92M, Peak:3.92M | Scene, ViewLayer | Sample 32/32
+Fra:1 Mem:19.07M (Peak 19.83M) | Time:00:00.11 | Mem:3.92M, Peak:3.92M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moons-r006-parity/moon-1-native-two-sided-reference-scale.png'
+Time: 00:00.11 (Saving: 00:00.00)
+
+Fra:1 Mem:17.51M (Peak 17.51M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-planets--crystal-moon-1-connected-crystalline-body
+Fra:1 Mem:17.92M (Peak 17.92M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-78-tier-1
+Fra:1 Mem:18.00M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-78-tier-0
+Fra:1 Mem:17.92M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-5-tier-0
+Fra:1 Mem:17.93M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-34-tier-2
+Fra:1 Mem:17.93M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-5-tier-1
+Fra:1 Mem:17.93M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-34-tier-1
+Fra:1 Mem:17.93M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-5-tier-2
+Fra:1 Mem:17.93M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-34-tier-0
+Fra:1 Mem:17.93M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-33-tier-0
+Fra:1 Mem:17.94M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-50-tier-1
+Fra:1 Mem:17.94M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-33-tier-1
+Fra:1 Mem:17.94M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-50-tier-0
+Fra:1 Mem:17.94M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-58-tier-0
+Fra:1 Mem:17.94M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-35-tier-1
+Fra:1 Mem:17.95M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-58-tier-1
+Fra:1 Mem:17.95M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-35-tier-0
+Fra:1 Mem:17.95M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-45-tier-0
+Fra:1 Mem:17.95M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-39-tier-1
+Fra:1 Mem:17.95M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-45-tier-1
+Fra:1 Mem:17.95M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-39-tier-0
+Fra:1 Mem:17.96M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-8-tier-0
+Fra:1 Mem:17.96M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-22-tier-2
+Fra:1 Mem:17.96M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-8-tier-1
+Fra:1 Mem:17.96M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-22-tier-1
+Fra:1 Mem:17.96M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-8-tier-2
+Fra:1 Mem:17.97M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-22-tier-0
+Fra:1 Mem:17.97M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-54-tier-0
+Fra:1 Mem:17.97M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-17-tier-1
+Fra:1 Mem:17.97M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-54-tier-1
+Fra:1 Mem:17.97M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-17-tier-0
+Fra:1 Mem:17.97M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-81-tier-0
+Fra:1 Mem:17.98M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-41-tier-1
+Fra:1 Mem:17.98M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-81-tier-1
+Fra:1 Mem:17.98M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-41-tier-0
+Fra:1 Mem:17.98M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-47-tier-0
+Fra:1 Mem:17.98M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-65-tier-1
+Fra:1 Mem:17.98M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-47-tier-1
+Fra:1 Mem:17.99M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-65-tier-0
+Fra:1 Mem:17.99M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-74-tier-0
+Fra:1 Mem:17.99M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-26-tier-2
+Fra:1 Mem:17.99M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-74-tier-1
+Fra:1 Mem:17.99M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-26-tier-1
+Fra:1 Mem:18.00M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-74-tier-2
+Fra:1 Mem:18.00M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-26-tier-0
+Fra:1 Mem:18.00M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-23-tier-0
+Fra:1 Mem:18.00M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-9-tier-1
+Fra:1 Mem:18.00M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-23-tier-1
+Fra:1 Mem:18.00M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-9-tier-0
+Fra:1 Mem:18.01M (Peak 18.01M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-2-tier-0
+Fra:1 Mem:18.01M (Peak 18.01M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-2-tier-1
+Fra:1 Mem:18.01M (Peak 18.01M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:17.80M (Peak 18.01M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-7
+Fra:1 Mem:18.32M (Peak 18.32M) | Time:00:00.00 | Mem:0.25M, Peak:0.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-6
+Fra:1 Mem:18.57M (Peak 18.57M) | Time:00:00.00 | Mem:0.50M, Peak:0.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-0
+Fra:1 Mem:18.82M (Peak 18.82M) | Time:00:00.00 | Mem:0.75M, Peak:0.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-5
+Fra:1 Mem:19.07M (Peak 19.07M) | Time:00:00.00 | Mem:1.00M, Peak:1.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-1
+Fra:1 Mem:19.32M (Peak 19.32M) | Time:00:00.00 | Mem:1.25M, Peak:1.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-4
+Fra:1 Mem:20.08M (Peak 20.08M) | Time:00:00.00 | Mem:1.50M, Peak:1.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-3
+Fra:1 Mem:19.57M (Peak 20.08M) | Time:00:00.00 | Mem:1.75M, Peak:1.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-1
+Fra:1 Mem:20.07M (Peak 20.08M) | Time:00:00.00 | Mem:2.00M, Peak:2.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-2
+Fra:1 Mem:20.32M (Peak 20.32M) | Time:00:00.00 | Mem:2.25M, Peak:2.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-2
+Fra:1 Mem:18.37M (Peak 20.32M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:18.37M (Peak 20.32M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:18.37M (Peak 20.32M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:18.37M (Peak 20.32M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:18.46M (Peak 20.32M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:18.46M (Peak 20.32M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:18.46M (Peak 20.32M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:18.46M (Peak 20.32M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:18.46M (Peak 20.32M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:18.46M (Peak 20.32M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:18.48M (Peak 20.32M) | Time:00:00.00 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:18.48M (Peak 20.32M) | Time:00:00.00 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:18.48M (Peak 20.32M) | Time:00:00.00 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:18.48M (Peak 20.32M) | Time:00:00.00 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:18.55M (Peak 20.32M) | Time:00:00.00 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:18.74M (Peak 20.32M) | Time:00:00.00 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:18.73M (Peak 20.32M) | Time:00:00.00 | Mem:2.96M, Peak:2.96M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:18.73M (Peak 20.32M) | Time:00:00.00 | Mem:2.96M, Peak:2.96M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:18.73M (Peak 20.32M) | Time:00:00.01 | Mem:3.25M, Peak:3.39M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:18.73M (Peak 20.32M) | Time:00:00.01 | Mem:3.25M, Peak:3.39M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:19.03M (Peak 20.32M) | Time:00:00.01 | Mem:3.25M, Peak:3.39M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:19.03M (Peak 20.32M) | Time:00:00.01 | Mem:3.54M, Peak:3.54M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:19.03M (Peak 20.32M) | Time:00:00.01 | Mem:3.54M, Peak:3.54M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:19.03M (Peak 20.32M) | Time:00:00.01 | Mem:3.54M, Peak:3.54M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:19.03M (Peak 20.32M) | Time:00:00.01 | Mem:3.54M, Peak:3.54M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:19.03M (Peak 20.32M) | Time:00:00.01 | Mem:3.54M, Peak:3.54M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:19.03M (Peak 20.32M) | Time:00:00.01 | Mem:3.63M, Peak:3.63M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:19.03M (Peak 20.32M) | Time:00:00.01 | Mem:3.63M, Peak:3.63M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:19.09M (Peak 20.32M) | Time:00:00.01 | Mem:3.69M, Peak:3.69M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:19.09M (Peak 20.32M) | Time:00:00.01 | Mem:3.69M, Peak:3.69M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:19.10M (Peak 20.32M) | Time:00:00.01 | Mem:3.61M, Peak:3.69M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:19.10M (Peak 20.32M) | Time:00:00.01 | Mem:3.70M, Peak:3.70M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:19.10M (Peak 20.32M) | Time:00:00.01 | Mem:3.70M, Peak:3.70M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:19.10M (Peak 20.32M) | Time:00:00.01 | Mem:3.70M, Peak:3.70M | Scene, ViewLayer | Sample 0/32
+Fra:1 Mem:46.92M (Peak 46.92M) | Time:00:00.45 | Remaining:00:13.80 | Mem:31.52M, Peak:31.52M | Scene, ViewLayer | Sample 1/32
+Fra:1 Mem:59.28M (Peak 84.00M) | Time:00:13.17 | Mem:31.52M, Peak:31.52M | Scene, ViewLayer | Sample 32/32
+Fra:1 Mem:59.28M (Peak 84.00M) | Time:00:13.17 | Mem:31.52M, Peak:31.52M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moons-r006-parity/moon-1-gltf-front-faces-only-matched-angle2.png'
+Time: 00:13.28 (Saving: 00:00.10)
+
+Fra:1 Mem:17.51M (Peak 17.51M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-planets--crystal-moon-1-connected-crystalline-body
+Fra:1 Mem:17.99M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-78-tier-1
+Fra:1 Mem:17.92M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-5-tier-0
+Fra:1 Mem:17.92M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-5-tier-1
+Fra:1 Mem:17.93M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-78-tier-0
+Fra:1 Mem:17.93M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-5-tier-2
+Fra:1 Mem:17.93M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-34-tier-2
+Fra:1 Mem:17.93M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-33-tier-0
+Fra:1 Mem:17.93M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-34-tier-1
+Fra:1 Mem:17.93M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-33-tier-1
+Fra:1 Mem:17.94M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-34-tier-0
+Fra:1 Mem:17.94M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-58-tier-0
+Fra:1 Mem:17.94M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-50-tier-1
+Fra:1 Mem:17.94M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-58-tier-1
+Fra:1 Mem:17.94M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-50-tier-0
+Fra:1 Mem:17.94M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-45-tier-0
+Fra:1 Mem:17.95M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-35-tier-1
+Fra:1 Mem:17.95M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-45-tier-1
+Fra:1 Mem:17.95M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-35-tier-0
+Fra:1 Mem:17.95M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-8-tier-0
+Fra:1 Mem:17.95M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-39-tier-1
+Fra:1 Mem:17.96M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-8-tier-1
+Fra:1 Mem:17.96M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-39-tier-0
+Fra:1 Mem:17.96M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-8-tier-2
+Fra:1 Mem:17.96M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-22-tier-2
+Fra:1 Mem:17.96M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-54-tier-0
+Fra:1 Mem:17.97M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-22-tier-1
+Fra:1 Mem:17.97M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-54-tier-1
+Fra:1 Mem:17.97M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-22-tier-0
+Fra:1 Mem:17.97M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-81-tier-0
+Fra:1 Mem:17.97M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-17-tier-1
+Fra:1 Mem:17.97M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-81-tier-1
+Fra:1 Mem:17.98M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-17-tier-0
+Fra:1 Mem:17.98M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-47-tier-0
+Fra:1 Mem:17.98M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-41-tier-1
+Fra:1 Mem:17.98M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-47-tier-1
+Fra:1 Mem:17.98M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-41-tier-0
+Fra:1 Mem:17.99M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-74-tier-0
+Fra:1 Mem:17.99M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-65-tier-1
+Fra:1 Mem:17.99M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-74-tier-1
+Fra:1 Mem:17.99M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-65-tier-0
+Fra:1 Mem:17.99M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-74-tier-2
+Fra:1 Mem:17.99M (Peak 17.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-26-tier-2
+Fra:1 Mem:18.00M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-23-tier-0
+Fra:1 Mem:18.00M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-26-tier-1
+Fra:1 Mem:18.00M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-23-tier-1
+Fra:1 Mem:18.00M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-26-tier-0
+Fra:1 Mem:18.00M (Peak 18.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-2-tier-0
+Fra:1 Mem:18.01M (Peak 18.01M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-9-tier-1
+Fra:1 Mem:18.01M (Peak 18.01M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-2-tier-1
+Fra:1 Mem:18.01M (Peak 18.01M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-1-fracture-panel-9-tier-0
+Fra:1 Mem:18.01M (Peak 18.01M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:17.80M (Peak 18.01M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-7
+Fra:1 Mem:17.80M (Peak 18.01M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-0
+Fra:1 Mem:18.32M (Peak 18.32M) | Time:00:00.00 | Mem:0.25M, Peak:0.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-6
+Fra:1 Mem:18.57M (Peak 18.57M) | Time:00:00.00 | Mem:0.50M, Peak:0.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-0
+Fra:1 Mem:18.82M (Peak 18.82M) | Time:00:00.00 | Mem:0.75M, Peak:0.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-5
+Fra:1 Mem:19.07M (Peak 19.07M) | Time:00:00.00 | Mem:1.00M, Peak:1.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-1
+Fra:1 Mem:19.32M (Peak 19.32M) | Time:00:00.00 | Mem:1.25M, Peak:1.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-4
+Fra:1 Mem:20.08M (Peak 20.08M) | Time:00:00.00 | Mem:1.50M, Peak:1.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-3
+Fra:1 Mem:19.57M (Peak 20.08M) | Time:00:00.00 | Mem:1.75M, Peak:1.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-1
+Fra:1 Mem:20.58M (Peak 20.58M) | Time:00:00.00 | Mem:2.00M, Peak:2.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-2
+Fra:1 Mem:20.32M (Peak 20.58M) | Time:00:00.00 | Mem:2.25M, Peak:2.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-2
+Fra:1 Mem:18.37M (Peak 20.58M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:18.37M (Peak 20.58M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:18.37M (Peak 20.58M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:18.37M (Peak 20.58M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:18.46M (Peak 20.58M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:18.46M (Peak 20.58M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:18.46M (Peak 20.58M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:18.46M (Peak 20.58M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:18.46M (Peak 20.58M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:18.46M (Peak 20.58M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:18.48M (Peak 20.58M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:18.48M (Peak 20.58M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:18.48M (Peak 20.58M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:18.48M (Peak 20.58M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:18.55M (Peak 20.58M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:18.74M (Peak 20.58M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:18.73M (Peak 20.58M) | Time:00:00.01 | Mem:2.96M, Peak:2.96M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:18.73M (Peak 20.58M) | Time:00:00.01 | Mem:2.96M, Peak:2.96M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:18.73M (Peak 20.58M) | Time:00:00.01 | Mem:3.10M, Peak:3.10M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:18.73M (Peak 20.58M) | Time:00:00.01 | Mem:3.25M, Peak:3.39M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:18.73M (Peak 20.58M) | Time:00:00.01 | Mem:3.25M, Peak:3.39M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:19.03M (Peak 20.58M) | Time:00:00.01 | Mem:3.25M, Peak:3.39M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:19.03M (Peak 20.58M) | Time:00:00.01 | Mem:3.54M, Peak:3.54M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:19.03M (Peak 20.58M) | Time:00:00.01 | Mem:3.54M, Peak:3.54M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:19.03M (Peak 20.58M) | Time:00:00.01 | Mem:3.54M, Peak:3.54M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:19.03M (Peak 20.58M) | Time:00:00.01 | Mem:3.54M, Peak:3.54M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:19.03M (Peak 20.58M) | Time:00:00.01 | Mem:3.54M, Peak:3.54M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:19.03M (Peak 20.58M) | Time:00:00.01 | Mem:3.63M, Peak:3.63M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:19.03M (Peak 20.58M) | Time:00:00.01 | Mem:3.63M, Peak:3.63M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:19.09M (Peak 20.58M) | Time:00:00.01 | Mem:3.69M, Peak:3.69M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:19.09M (Peak 20.58M) | Time:00:00.01 | Mem:3.69M, Peak:3.69M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:19.10M (Peak 20.58M) | Time:00:00.01 | Mem:3.61M, Peak:3.69M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:19.10M (Peak 20.58M) | Time:00:00.01 | Mem:3.70M, Peak:3.70M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:19.10M (Peak 20.58M) | Time:00:00.01 | Mem:3.70M, Peak:3.70M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:19.10M (Peak 20.58M) | Time:00:00.01 | Mem:3.70M, Peak:3.70M | Scene, ViewLayer | Sample 0/32
+Fra:1 Mem:19.32M (Peak 20.58M) | Time:00:00.01 | Remaining:00:00.12 | Mem:3.92M, Peak:3.92M | Scene, ViewLayer | Sample 1/32
+Fra:1 Mem:19.41M (Peak 20.58M) | Time:00:00.12 | Mem:3.92M, Peak:3.92M | Scene, ViewLayer | Sample 32/32
+Fra:1 Mem:19.41M (Peak 20.58M) | Time:00:00.12 | Mem:3.92M, Peak:3.92M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moons-r006-parity/moon-1-gltf-front-faces-only-reference-scale.png'
+Time: 00:00.12 (Saving: 00:00.00)
+
+Read blend: "/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moon-2-r006/kit.blend"
+Fra:1 Mem:14.33M (Peak 14.33M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-planets--crystal-moon-2-connected-crystalline-body
+Fra:1 Mem:14.46M (Peak 14.46M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-10-tier-1
+Fra:1 Mem:14.52M (Peak 14.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-10-tier-0
+Fra:1 Mem:14.52M (Peak 14.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-15-tier-0
+Fra:1 Mem:14.52M (Peak 14.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-22-tier-1
+Fra:1 Mem:14.53M (Peak 14.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-15-tier-1
+Fra:1 Mem:14.53M (Peak 14.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-22-tier-0
+Fra:1 Mem:14.53M (Peak 14.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-15-tier-2
+Fra:1 Mem:14.55M (Peak 14.55M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-8-tier-1
+Fra:1 Mem:14.54M (Peak 14.55M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-19-tier-0
+Fra:1 Mem:14.54M (Peak 14.55M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-8-tier-0
+Fra:1 Mem:14.54M (Peak 14.55M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-19-tier-1
+Fra:1 Mem:14.54M (Peak 14.55M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-21-tier-2
+Fra:1 Mem:14.55M (Peak 14.55M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-23-tier-0
+Fra:1 Mem:14.55M (Peak 14.55M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-21-tier-1
+Fra:1 Mem:14.55M (Peak 14.55M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-23-tier-1
+Fra:1 Mem:14.57M (Peak 14.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-21-tier-0
+Fra:1 Mem:14.56M (Peak 14.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-11-tier-0
+Fra:1 Mem:14.58M (Peak 14.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-1-tier-1
+Fra:1 Mem:14.56M (Peak 14.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-11-tier-1
+Fra:1 Mem:14.58M (Peak 14.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-1-tier-0
+Fra:1 Mem:14.57M (Peak 14.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-2-tier-0
+Fra:1 Mem:14.59M (Peak 14.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-4-tier-1
+Fra:1 Mem:14.58M (Peak 14.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-2-tier-1
+Fra:1 Mem:14.59M (Peak 14.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-4-tier-0
+Fra:1 Mem:14.60M (Peak 14.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-2-tier-2
+Fra:1 Mem:14.58M (Peak 14.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-5-tier-1
+Fra:1 Mem:14.59M (Peak 14.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-5-tier-0
+Fra:1 Mem:14.59M (Peak 14.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:14.48M (Peak 14.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-7
+Fra:1 Mem:14.48M (Peak 14.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-0
+Fra:1 Mem:14.99M (Peak 14.99M) | Time:00:00.00 | Mem:0.25M, Peak:0.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-6
+Fra:1 Mem:15.24M (Peak 15.24M) | Time:00:00.00 | Mem:0.50M, Peak:0.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-0
+Fra:1 Mem:15.49M (Peak 15.49M) | Time:00:00.00 | Mem:0.75M, Peak:0.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-5
+Fra:1 Mem:15.74M (Peak 15.74M) | Time:00:00.00 | Mem:1.00M, Peak:1.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-1
+Fra:1 Mem:15.99M (Peak 15.99M) | Time:00:00.00 | Mem:1.25M, Peak:1.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-4
+Fra:1 Mem:16.24M (Peak 16.24M) | Time:00:00.00 | Mem:1.50M, Peak:1.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-3
+Fra:1 Mem:16.49M (Peak 16.49M) | Time:00:00.00 | Mem:1.75M, Peak:1.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-1
+Fra:1 Mem:16.74M (Peak 16.74M) | Time:00:00.00 | Mem:2.00M, Peak:2.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-2
+Fra:1 Mem:16.99M (Peak 16.99M) | Time:00:00.00 | Mem:2.25M, Peak:2.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-2
+Fra:1 Mem:15.85M (Peak 16.99M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:15.85M (Peak 16.99M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:15.85M (Peak 16.99M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:15.85M (Peak 16.99M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:15.94M (Peak 16.99M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:15.94M (Peak 16.99M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:15.94M (Peak 16.99M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:15.94M (Peak 16.99M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:15.94M (Peak 16.99M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:15.94M (Peak 16.99M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:15.95M (Peak 16.99M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:15.95M (Peak 16.99M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:15.95M (Peak 16.99M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:15.95M (Peak 16.99M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:15.97M (Peak 16.99M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:16.05M (Peak 16.99M) | Time:00:00.00 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:16.04M (Peak 16.99M) | Time:00:00.00 | Mem:2.83M, Peak:2.83M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:16.04M (Peak 16.99M) | Time:00:00.00 | Mem:2.83M, Peak:2.83M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:16.04M (Peak 16.99M) | Time:00:00.00 | Mem:2.95M, Peak:3.00M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:16.04M (Peak 16.99M) | Time:00:00.00 | Mem:2.95M, Peak:3.00M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:16.15M (Peak 16.99M) | Time:00:00.00 | Mem:2.95M, Peak:3.00M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:16.15M (Peak 16.99M) | Time:00:00.00 | Mem:3.05M, Peak:3.05M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:16.15M (Peak 16.99M) | Time:00:00.00 | Mem:3.05M, Peak:3.05M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:16.15M (Peak 16.99M) | Time:00:00.00 | Mem:3.05M, Peak:3.05M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:16.15M (Peak 16.99M) | Time:00:00.00 | Mem:3.05M, Peak:3.05M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:16.15M (Peak 16.99M) | Time:00:00.00 | Mem:3.05M, Peak:3.05M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:16.15M (Peak 16.99M) | Time:00:00.00 | Mem:3.14M, Peak:3.14M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:16.15M (Peak 16.99M) | Time:00:00.00 | Mem:3.14M, Peak:3.14M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:16.17M (Peak 16.99M) | Time:00:00.00 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:16.17M (Peak 16.99M) | Time:00:00.00 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:16.17M (Peak 16.99M) | Time:00:00.00 | Mem:3.07M, Peak:3.16M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:16.17M (Peak 16.99M) | Time:00:00.00 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:16.17M (Peak 16.99M) | Time:00:00.00 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:16.17M (Peak 16.99M) | Time:00:00.00 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Sample 0/32
+Fra:1 Mem:43.99M (Peak 43.99M) | Time:00:00.32 | Remaining:00:09.85 | Mem:30.98M, Peak:30.98M | Scene, ViewLayer | Sample 1/32
+Fra:1 Mem:56.35M (Peak 81.07M) | Time:00:09.33 | Mem:30.98M, Peak:30.98M | Scene, ViewLayer | Sample 32/32
+Fra:1 Mem:56.35M (Peak 81.07M) | Time:00:09.33 | Mem:30.98M, Peak:30.98M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moons-r006-parity/moon-2-native-two-sided-matched-angle2.png'
+Time: 00:09.39 (Saving: 00:00.05)
+
+Fra:1 Mem:14.41M (Peak 14.41M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-planets--crystal-moon-2-connected-crystalline-body
+Fra:1 Mem:14.57M (Peak 14.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-10-tier-1
+Fra:1 Mem:14.54M (Peak 14.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-15-tier-0
+Fra:1 Mem:14.55M (Peak 14.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-10-tier-0
+Fra:1 Mem:14.55M (Peak 14.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-15-tier-1
+Fra:1 Mem:14.55M (Peak 14.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-22-tier-1
+Fra:1 Mem:14.55M (Peak 14.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-15-tier-2
+Fra:1 Mem:14.55M (Peak 14.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-22-tier-0
+Fra:1 Mem:14.55M (Peak 14.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-19-tier-0
+Fra:1 Mem:14.56M (Peak 14.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-8-tier-1
+Fra:1 Mem:14.56M (Peak 14.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-19-tier-1
+Fra:1 Mem:14.56M (Peak 14.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-8-tier-0
+Fra:1 Mem:14.56M (Peak 14.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-23-tier-0
+Fra:1 Mem:14.56M (Peak 14.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-21-tier-2
+Fra:1 Mem:14.56M (Peak 14.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-23-tier-1
+Fra:1 Mem:14.57M (Peak 14.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-21-tier-1
+Fra:1 Mem:14.57M (Peak 14.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-11-tier-0
+Fra:1 Mem:14.57M (Peak 14.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-21-tier-0
+Fra:1 Mem:14.57M (Peak 14.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-11-tier-1
+Fra:1 Mem:14.57M (Peak 14.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-1-tier-1
+Fra:1 Mem:14.58M (Peak 14.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-2-tier-0
+Fra:1 Mem:14.58M (Peak 14.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-1-tier-0
+Fra:1 Mem:14.58M (Peak 14.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-2-tier-1
+Fra:1 Mem:14.58M (Peak 14.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-4-tier-1
+Fra:1 Mem:14.58M (Peak 14.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-2-tier-2
+Fra:1 Mem:14.59M (Peak 14.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-4-tier-0
+Fra:1 Mem:14.59M (Peak 14.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-5-tier-0
+Fra:1 Mem:14.59M (Peak 14.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-5-tier-1
+Fra:1 Mem:14.59M (Peak 14.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:14.48M (Peak 14.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-7
+Fra:1 Mem:14.99M (Peak 14.99M) | Time:00:00.00 | Mem:0.25M, Peak:0.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-6
+Fra:1 Mem:15.24M (Peak 15.24M) | Time:00:00.00 | Mem:0.50M, Peak:0.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-0
+Fra:1 Mem:15.49M (Peak 15.49M) | Time:00:00.00 | Mem:0.75M, Peak:0.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-5
+Fra:1 Mem:15.74M (Peak 15.74M) | Time:00:00.00 | Mem:1.00M, Peak:1.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-1
+Fra:1 Mem:15.99M (Peak 15.99M) | Time:00:00.00 | Mem:1.25M, Peak:1.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-4
+Fra:1 Mem:16.24M (Peak 16.24M) | Time:00:00.00 | Mem:1.50M, Peak:1.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-1
+Fra:1 Mem:16.49M (Peak 16.49M) | Time:00:00.00 | Mem:1.75M, Peak:1.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-3
+Fra:1 Mem:17.25M (Peak 17.25M) | Time:00:00.00 | Mem:2.00M, Peak:2.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-2
+Fra:1 Mem:16.99M (Peak 17.25M) | Time:00:00.00 | Mem:2.25M, Peak:2.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-2
+Fra:1 Mem:15.85M (Peak 17.25M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:15.85M (Peak 17.25M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:15.85M (Peak 17.25M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:15.85M (Peak 17.25M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:15.94M (Peak 17.25M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:15.94M (Peak 17.25M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:15.94M (Peak 17.25M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:15.94M (Peak 17.25M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:15.94M (Peak 17.25M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:15.94M (Peak 17.25M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:15.95M (Peak 17.25M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:15.95M (Peak 17.25M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:15.95M (Peak 17.25M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:15.95M (Peak 17.25M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:15.97M (Peak 17.25M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:16.05M (Peak 17.25M) | Time:00:00.00 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:16.04M (Peak 17.25M) | Time:00:00.00 | Mem:2.83M, Peak:2.83M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:16.04M (Peak 17.25M) | Time:00:00.00 | Mem:2.83M, Peak:2.83M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:16.04M (Peak 17.25M) | Time:00:00.00 | Mem:2.89M, Peak:2.89M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:16.04M (Peak 17.25M) | Time:00:00.00 | Mem:2.95M, Peak:3.00M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:16.04M (Peak 17.25M) | Time:00:00.00 | Mem:2.95M, Peak:3.00M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:16.15M (Peak 17.25M) | Time:00:00.00 | Mem:2.95M, Peak:3.00M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:16.15M (Peak 17.25M) | Time:00:00.00 | Mem:3.05M, Peak:3.05M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:16.15M (Peak 17.25M) | Time:00:00.00 | Mem:3.05M, Peak:3.05M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:16.15M (Peak 17.25M) | Time:00:00.00 | Mem:3.05M, Peak:3.05M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:16.15M (Peak 17.25M) | Time:00:00.00 | Mem:3.05M, Peak:3.05M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:16.15M (Peak 17.25M) | Time:00:00.00 | Mem:3.05M, Peak:3.05M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:16.15M (Peak 17.25M) | Time:00:00.00 | Mem:3.14M, Peak:3.14M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:16.15M (Peak 17.25M) | Time:00:00.00 | Mem:3.14M, Peak:3.14M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:16.17M (Peak 17.25M) | Time:00:00.00 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:16.17M (Peak 17.25M) | Time:00:00.00 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:16.17M (Peak 17.25M) | Time:00:00.00 | Mem:3.07M, Peak:3.16M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:16.17M (Peak 17.25M) | Time:00:00.00 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:16.17M (Peak 17.25M) | Time:00:00.00 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:16.17M (Peak 17.25M) | Time:00:00.00 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Sample 0/32
+Fra:1 Mem:16.33M (Peak 17.25M) | Time:00:00.01 | Remaining:00:00.06 | Mem:3.32M, Peak:3.32M | Scene, ViewLayer | Sample 1/32
+Fra:1 Mem:16.39M (Peak 17.25M) | Time:00:00.06 | Mem:3.32M, Peak:3.32M | Scene, ViewLayer | Sample 32/32
+Fra:1 Mem:16.39M (Peak 17.25M) | Time:00:00.06 | Mem:3.32M, Peak:3.32M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moons-r006-parity/moon-2-native-two-sided-reference-scale.png'
+Time: 00:00.06 (Saving: 00:00.00)
+
+Fra:1 Mem:14.90M (Peak 14.90M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-planets--crystal-moon-2-connected-crystalline-body
+Fra:1 Mem:15.04M (Peak 15.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-15-tier-0
+Fra:1 Mem:15.04M (Peak 15.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-10-tier-1
+Fra:1 Mem:15.04M (Peak 15.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-15-tier-1
+Fra:1 Mem:15.04M (Peak 15.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-15-tier-2
+Fra:1 Mem:15.04M (Peak 15.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-10-tier-0
+Fra:1 Mem:15.04M (Peak 15.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-19-tier-0
+Fra:1 Mem:15.05M (Peak 15.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-22-tier-1
+Fra:1 Mem:15.05M (Peak 15.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-19-tier-1
+Fra:1 Mem:15.05M (Peak 15.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-22-tier-0
+Fra:1 Mem:15.05M (Peak 15.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-23-tier-0
+Fra:1 Mem:15.05M (Peak 15.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-8-tier-1
+Fra:1 Mem:15.05M (Peak 15.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-23-tier-1
+Fra:1 Mem:15.06M (Peak 15.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-8-tier-0
+Fra:1 Mem:15.06M (Peak 15.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-11-tier-0
+Fra:1 Mem:15.06M (Peak 15.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-21-tier-2
+Fra:1 Mem:15.06M (Peak 15.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-11-tier-1
+Fra:1 Mem:15.06M (Peak 15.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-21-tier-1
+Fra:1 Mem:15.07M (Peak 15.07M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-2-tier-0
+Fra:1 Mem:15.07M (Peak 15.07M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-21-tier-0
+Fra:1 Mem:15.07M (Peak 15.07M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-2-tier-1
+Fra:1 Mem:15.07M (Peak 15.07M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-1-tier-1
+Fra:1 Mem:15.07M (Peak 15.07M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-2-tier-2
+Fra:1 Mem:15.08M (Peak 15.08M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-1-tier-0
+Fra:1 Mem:15.08M (Peak 15.08M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-5-tier-0
+Fra:1 Mem:15.08M (Peak 15.08M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-4-tier-1
+Fra:1 Mem:15.08M (Peak 15.08M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-5-tier-1
+Fra:1 Mem:15.08M (Peak 15.08M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-4-tier-0
+Fra:1 Mem:15.09M (Peak 15.09M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:14.97M (Peak 15.09M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-0
+Fra:1 Mem:15.48M (Peak 15.48M) | Time:00:00.00 | Mem:0.25M, Peak:0.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-6
+Fra:1 Mem:15.73M (Peak 15.73M) | Time:00:00.00 | Mem:0.50M, Peak:0.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-0
+Fra:1 Mem:15.98M (Peak 15.98M) | Time:00:00.00 | Mem:0.75M, Peak:0.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-5
+Fra:1 Mem:16.23M (Peak 16.23M) | Time:00:00.00 | Mem:1.00M, Peak:1.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-1
+Fra:1 Mem:16.48M (Peak 16.48M) | Time:00:00.00 | Mem:1.25M, Peak:1.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-4
+Fra:1 Mem:17.24M (Peak 17.24M) | Time:00:00.00 | Mem:1.50M, Peak:1.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-1
+Fra:1 Mem:16.98M (Peak 17.24M) | Time:00:00.00 | Mem:1.75M, Peak:1.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-3
+Fra:1 Mem:17.74M (Peak 17.74M) | Time:00:00.00 | Mem:2.00M, Peak:2.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-2
+Fra:1 Mem:17.48M (Peak 17.74M) | Time:00:00.00 | Mem:2.25M, Peak:2.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-2
+Fra:1 Mem:16.19M (Peak 17.74M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:16.19M (Peak 17.74M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:16.19M (Peak 17.74M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:16.19M (Peak 17.74M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:16.28M (Peak 17.74M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:16.28M (Peak 17.74M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:16.28M (Peak 17.74M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:16.28M (Peak 17.74M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:16.28M (Peak 17.74M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:16.28M (Peak 17.74M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:16.29M (Peak 17.74M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:16.29M (Peak 17.74M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:16.29M (Peak 17.74M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:16.29M (Peak 17.74M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:16.31M (Peak 17.74M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:16.39M (Peak 17.74M) | Time:00:00.00 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:16.38M (Peak 17.74M) | Time:00:00.00 | Mem:2.83M, Peak:2.83M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:16.38M (Peak 17.74M) | Time:00:00.00 | Mem:2.83M, Peak:2.83M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:16.38M (Peak 17.74M) | Time:00:00.00 | Mem:2.95M, Peak:3.01M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:16.38M (Peak 17.74M) | Time:00:00.00 | Mem:2.95M, Peak:3.01M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:16.49M (Peak 17.74M) | Time:00:00.00 | Mem:2.95M, Peak:3.01M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:16.49M (Peak 17.74M) | Time:00:00.00 | Mem:3.05M, Peak:3.05M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:16.49M (Peak 17.74M) | Time:00:00.00 | Mem:3.05M, Peak:3.05M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:16.49M (Peak 17.74M) | Time:00:00.00 | Mem:3.06M, Peak:3.06M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:16.49M (Peak 17.74M) | Time:00:00.00 | Mem:3.06M, Peak:3.06M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:16.49M (Peak 17.74M) | Time:00:00.00 | Mem:3.06M, Peak:3.06M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:16.49M (Peak 17.74M) | Time:00:00.00 | Mem:3.14M, Peak:3.14M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:16.49M (Peak 17.74M) | Time:00:00.00 | Mem:3.14M, Peak:3.14M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:16.51M (Peak 17.74M) | Time:00:00.00 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:16.51M (Peak 17.74M) | Time:00:00.00 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:16.51M (Peak 17.74M) | Time:00:00.00 | Mem:3.08M, Peak:3.16M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:16.51M (Peak 17.74M) | Time:00:00.00 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:16.51M (Peak 17.74M) | Time:00:00.00 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:16.51M (Peak 17.74M) | Time:00:00.00 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Sample 0/32
+Fra:1 Mem:44.33M (Peak 44.33M) | Time:00:00.33 | Remaining:00:10.00 | Mem:30.98M, Peak:30.98M | Scene, ViewLayer | Sample 1/32
+Fra:1 Mem:56.69M (Peak 81.41M) | Time:00:09.60 | Mem:30.98M, Peak:30.98M | Scene, ViewLayer | Sample 32/32
+Fra:1 Mem:56.69M (Peak 81.41M) | Time:00:09.60 | Mem:30.98M, Peak:30.98M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moons-r006-parity/moon-2-gltf-front-faces-only-matched-angle2.png'
+Time: 00:09.66 (Saving: 00:00.05)
+
+Fra:1 Mem:14.91M (Peak 14.91M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-planets--crystal-moon-2-connected-crystalline-body
+Fra:1 Mem:15.04M (Peak 15.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-10-tier-1
+Fra:1 Mem:15.04M (Peak 15.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-15-tier-0
+Fra:1 Mem:15.04M (Peak 15.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-10-tier-0
+Fra:1 Mem:15.04M (Peak 15.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-15-tier-1
+Fra:1 Mem:15.04M (Peak 15.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-22-tier-1
+Fra:1 Mem:15.04M (Peak 15.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-15-tier-2
+Fra:1 Mem:15.05M (Peak 15.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-22-tier-0
+Fra:1 Mem:15.05M (Peak 15.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-19-tier-0
+Fra:1 Mem:15.05M (Peak 15.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-8-tier-1
+Fra:1 Mem:15.05M (Peak 15.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-19-tier-1
+Fra:1 Mem:15.05M (Peak 15.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-8-tier-0
+Fra:1 Mem:15.06M (Peak 15.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-23-tier-0
+Fra:1 Mem:15.06M (Peak 15.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-21-tier-2
+Fra:1 Mem:15.06M (Peak 15.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-23-tier-1
+Fra:1 Mem:15.06M (Peak 15.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-21-tier-1
+Fra:1 Mem:15.06M (Peak 15.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-11-tier-0
+Fra:1 Mem:15.06M (Peak 15.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-21-tier-0
+Fra:1 Mem:15.07M (Peak 15.07M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-11-tier-1
+Fra:1 Mem:15.07M (Peak 15.07M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-1-tier-1
+Fra:1 Mem:15.07M (Peak 15.07M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-2-tier-0
+Fra:1 Mem:15.07M (Peak 15.07M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-1-tier-0
+Fra:1 Mem:15.07M (Peak 15.07M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-2-tier-1
+Fra:1 Mem:15.08M (Peak 15.08M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-4-tier-1
+Fra:1 Mem:15.08M (Peak 15.08M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-2-tier-2
+Fra:1 Mem:15.08M (Peak 15.08M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-5-tier-0
+Fra:1 Mem:15.08M (Peak 15.08M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-5-tier-1
+Fra:1 Mem:15.08M (Peak 15.08M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crystal-moon-2-fracture-panel-4-tier-0
+Fra:1 Mem:15.09M (Peak 15.09M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:14.97M (Peak 15.09M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-7
+Fra:1 Mem:15.48M (Peak 15.48M) | Time:00:00.00 | Mem:0.25M, Peak:0.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-6
+Fra:1 Mem:15.73M (Peak 15.73M) | Time:00:00.00 | Mem:0.50M, Peak:0.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-0
+Fra:1 Mem:15.98M (Peak 15.98M) | Time:00:00.00 | Mem:0.75M, Peak:0.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-5
+Fra:1 Mem:16.23M (Peak 16.23M) | Time:00:00.00 | Mem:1.00M, Peak:1.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-1
+Fra:1 Mem:16.48M (Peak 16.48M) | Time:00:00.00 | Mem:1.25M, Peak:1.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-4
+Fra:1 Mem:17.24M (Peak 17.24M) | Time:00:00.00 | Mem:1.50M, Peak:1.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-1
+Fra:1 Mem:16.73M (Peak 17.24M) | Time:00:00.00 | Mem:1.75M, Peak:1.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-3
+Fra:1 Mem:17.74M (Peak 17.74M) | Time:00:00.00 | Mem:2.00M, Peak:2.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-2
+Fra:1 Mem:17.23M (Peak 17.74M) | Time:00:00.00 | Mem:2.25M, Peak:2.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-2
+Fra:1 Mem:16.19M (Peak 17.74M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:16.19M (Peak 17.74M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:16.19M (Peak 17.74M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:16.19M (Peak 17.74M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:16.28M (Peak 17.74M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:16.28M (Peak 17.74M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:16.28M (Peak 17.74M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:16.28M (Peak 17.74M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:16.28M (Peak 17.74M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:16.28M (Peak 17.74M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:16.29M (Peak 17.74M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:16.29M (Peak 17.74M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:16.29M (Peak 17.74M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:16.29M (Peak 17.74M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:16.31M (Peak 17.74M) | Time:00:00.00 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:16.39M (Peak 17.74M) | Time:00:00.00 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:16.38M (Peak 17.74M) | Time:00:00.00 | Mem:2.83M, Peak:2.83M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:16.38M (Peak 17.74M) | Time:00:00.00 | Mem:2.83M, Peak:2.83M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:16.38M (Peak 17.74M) | Time:00:00.00 | Mem:2.89M, Peak:2.89M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:16.38M (Peak 17.74M) | Time:00:00.00 | Mem:2.95M, Peak:3.01M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:16.38M (Peak 17.74M) | Time:00:00.00 | Mem:2.95M, Peak:3.01M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:16.49M (Peak 17.74M) | Time:00:00.00 | Mem:2.95M, Peak:3.01M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:16.49M (Peak 17.74M) | Time:00:00.00 | Mem:3.05M, Peak:3.05M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:16.49M (Peak 17.74M) | Time:00:00.00 | Mem:3.05M, Peak:3.05M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:16.49M (Peak 17.74M) | Time:00:00.00 | Mem:3.06M, Peak:3.06M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:16.49M (Peak 17.74M) | Time:00:00.00 | Mem:3.06M, Peak:3.06M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:16.49M (Peak 17.74M) | Time:00:00.00 | Mem:3.06M, Peak:3.06M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:16.49M (Peak 17.74M) | Time:00:00.00 | Mem:3.14M, Peak:3.14M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:16.49M (Peak 17.74M) | Time:00:00.00 | Mem:3.14M, Peak:3.14M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:16.51M (Peak 17.74M) | Time:00:00.00 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:16.51M (Peak 17.74M) | Time:00:00.00 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:16.51M (Peak 17.74M) | Time:00:00.00 | Mem:3.08M, Peak:3.16M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:16.51M (Peak 17.74M) | Time:00:00.00 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:16.51M (Peak 17.74M) | Time:00:00.00 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:16.51M (Peak 17.74M) | Time:00:00.00 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Sample 0/32
+Fra:1 Mem:16.66M (Peak 17.74M) | Time:00:00.01 | Remaining:00:00.06 | Mem:3.32M, Peak:3.32M | Scene, ViewLayer | Sample 1/32
+Fra:1 Mem:16.73M (Peak 17.74M) | Time:00:00.06 | Mem:3.32M, Peak:3.32M | Scene, ViewLayer | Sample 32/32
+Fra:1 Mem:16.73M (Peak 17.74M) | Time:00:00.06 | Mem:3.32M, Peak:3.32M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moons-r006-parity/moon-2-gltf-front-faces-only-reference-scale.png'
+Time: 00:00.06 (Saving: 00:00.00)
+
+
+Blender quit

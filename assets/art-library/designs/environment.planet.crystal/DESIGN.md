@@ -579,3 +579,17 @@ Preserve independently authored moon variants and failed/diagnostic history; mai
 - [validation](revisions/r014/reviews/exotic-moons-r001-gas-reflection.md) — d5216201d4bc4fc6c13d4023e6927b7d92c11b3e1eb490a88baec389ec351f20
 - [validation](revisions/r014/reviews/crystal-moons-r002.md) — 3070debc3a548f06ab4153887652691f87129f2d67d791a85bf4b4894df0de27
 - [validation](revisions/r014/manifest.json) — 0ff0654af648bcbebb7ff1a5aeff0d87cb29453251bb9123b6ef43ab953eac73
+
+
+## r015 — late moon preservation checkpoint
+
+Current family checkpoint r015; main-world pin r013. Prior entries above are preserved unchanged. No owner final sign-off inferred.
+
+[Complete source and review manifest](revisions/r015/manifest.json) · [Root review verdict](revisions/r015/reviews/root-final-review-verdict.md)
+
+
+## r016 — Crystal moon r006–r010 preservation checkpoint
+
+Current family checkpoint r016; main-world pin r013. Prior entries above are preserved unchanged. No owner final sign-off inferred.
+
+[Complete source and review manifest](revisions/r016/manifest.json) · [Root review verdict](revisions/r016/reviews/root-final-review-verdict.md)

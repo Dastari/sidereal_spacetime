@@ -1,0 +1,66 @@
+{
+  "directory": "/root/sidereal_spacetime/scripts/art_library/review-staging/volcanic-moon-2-r006",
+  "manifest": {
+    "scope": "explicit isolated local review; no production publication",
+    "revision": "volcanic-moon-2-r006",
+    "source": "output/playwright/planet-reference-20260914/volcanic-moon-2-r006",
+    "files": {
+      "frontier-workshop.hdr": {
+        "sha256": "11f358cce19278c6115633430d1b1d5c7fc2dc35a16f73468b46dcf6724a4364",
+        "bytes": 55248
+      },
+      "kit.json": {
+        "sha256": "0feb7937c42e5e06f30fbdd1dec215ec5abd24e74897cad7636fbb44985ba9b4",
+        "bytes": 23033904
+      },
+      "rocky-0-albedo.png": {
+        "sha256": "4a25c093c542daca85c14cac6a070835b2eab734c7fe557c30c251437b14e65e",
+        "bytes": 62057
+      },
+      "rocky-0-orm.png": {
+        "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+        "bytes": 33670
+      },
+      "rocky-1-albedo.png": {
+        "sha256": "87c451d3f2c8648efc2ba8f9ef2e3c7637261e7de4e700365bcf3c179ae09a23",
+        "bytes": 61906
+      },
+      "rocky-1-orm.png": {
+        "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717",
+        "bytes": 33991
+      },
+      "rocky-2-albedo.png": {
+        "sha256": "68fb2cd61242bbfdc91a2466a4a2f6794a3268c094372e9ec6d765cda2ec2923",
+        "bytes": 45505
+      },
+      "rocky-2-orm.png": {
+        "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8",
+        "bytes": 33022
+      },
+      "rocky-3-albedo.png": {
+        "sha256": "3907a68898c6467fdc1268fcbb5c72329353eed665f134119400da46ecd90e6c",
+        "bytes": 53333
+      },
+      "rocky-3-orm.png": {
+        "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9",
+        "bytes": 33213
+      },
+      "rocky-4-albedo.png": {
+        "sha256": "fea0cad8e772b0be1731366615d6a58a7b141e72fa70a532236445f09eaaa257",
+        "bytes": 63737
+      },
+      "rocky-4-orm.png": {
+        "sha256": "881d15e89c03867a59e02c572bdc65b8464995b0a525f8a16742ba36b8f0c3c0",
+        "bytes": 29233
+      },
+      "rocky-5-albedo.png": {
+        "sha256": "6aabddb6ef2135aea5ce20e048c188358809f8a4f01c4b257b1fddb3bc88933f",
+        "bytes": 69496
+      },
+      "rocky-5-orm.png": {
+        "sha256": "dc9e39924415e4b446a4c6183192104d6d558729b6b1b92aceafdb5a3a63da6a",
+        "bytes": 32160
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+# Planet reference recovery — 2026-09-14
+
+Owner authorized reference-led native planetary iteration and an independent Astra visual comparison, including LOD requirements. Ice26 implements selected transparent tall ice shards in the isolated review candidate; production activation and final owner artistic sign-off remain separate.
+
+Delivery is draft PR https://github.com/Dastari/sidereal_spacetime/pull/2 on art/planet-reference-alignment-20260914 in /root/sidereal-planet-reference-review, based on upstream main599d2c7a. Initial snapshot4392ead0 is pushed. Newer native moon fixes/evidence are being assembled into the next scoped commit. Shared source checkout contains unrelated construction and crew changes; never stage it wholesale. Four pre-existing LFS working-tree anomalies under assets/source/blender in the PR worktree are excluded.
+
+Current visual gates: nine main-world working art/morphology passes and19/19 individual moon working passes at the inspected views. Volcanic moon2r006 and both Crystal moonsr010 pass root+Astra actual two-angle/reference-size comparisons. Ice26 selectively transparent tall shards also pass their bounded review. Known Ice cap-shadow and Gas ring cast-shadow defects remain technical gates. Final Crystal10 changes only27/15 triangles' material assignments;9tests and full native/export audits pass, preserving9 geometry/PBR definitions/maps.
+
+OOM recovery: cgroup oom_kill reports3, unchanged through recovery. Run heavy Blender, browser capture and test jobs sequentially; Blender threads1–2; isolated test processes use a4096MiB Node heap and one worker. The scoped suite passed34files/187tests plus18Python tests before latest followups. Test runner, file manifest and applied tsconfig are in scripts/art_library in the PR worktree. Final39-file/216-test source closure and18Python tests pass from the isolated PR worktree.
+
+Whole PR check/build were attempted with independent npm-ci dependencies. Upstream main contains unchanged imports of missing debug-collision-geometry.ts and scene-material-registration.ts. Fullcheck fails on these; build passes world/client then dashboard fails on the latter. Do not pull unrelated shared-checkout helpers into this art PR to hide baseline incompleteness.
+
+Public hardware acceptance remains open: the recovered shared pane reportsGT730, not baselineRTX4080, and stalls at27frames with visibility disagreement. The current software session planet-art-recovery works for isolated appearance/count captures and is parked about:blank between jobs. SwiftShader timing is never hardware acceptance. No production art activation, authority changes or PR merge is authorized by this recovery note.
+
+Canonical Ice28/Gas7/Vol25/Crystal15 preserve late histories; Vol26 adds final moon2r006. Main pins remain26/5/23/13. Crystal16 checkpoint is complete throughr010 with actual root+Astra verdicts,414 evidence files and unchanged previous approvals/mappings/history/mainpin13. Canonical changed-path list is reviews/crystal-r010-checkpoint-files.json. Current detailed ledger: docs/planet_reference_iteration_20260914.md.

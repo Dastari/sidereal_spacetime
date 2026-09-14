@@ -1,0 +1,266 @@
+{
+  "schema": "sidereal.late-moon-checkpoint-proposal.v1",
+  "prepared_at": "2026-09-14T07:40:22.900372+00:00",
+  "status": "PREPARATION ONLY; no canonical writes until explicit root verdict",
+  "families": [
+    {
+      "family": "ice",
+      "current_checkpoint": 27,
+      "next_checkpoint": 28,
+      "pinned_main_revision": 26,
+      "sources": [
+        {
+          "source": "output/playwright/planet-reference-20260914/ice-moon-2-r003",
+          "reference_id": "planets--ice-moon-2",
+          "source_revision": 3,
+          "trial_suffix": null,
+          "files": 30
+        }
+      ],
+      "associated_evidence": [
+        "output/playwright/planet-reference-20260914/ice-moon-r002-worker-audit",
+        "output/playwright/planet-reference-20260914/ice-moon-r003-applied-tsc.log",
+        "output/playwright/planet-reference-20260914/ice-moon-r003-composition"
+      ],
+      "review_reports": [
+        "output/playwright/planet-reference-20260914/reviews/ice-moons-r002-projected-path.md",
+        "output/playwright/planet-reference-20260914/reviews/ice-r016-review.md",
+        "output/playwright/planet-reference-20260914/reviews/ice-r017-gas-r003-review.md",
+        "output/playwright/planet-reference-20260914/reviews/ice-r018-unit-review.md",
+        "output/playwright/planet-reference-20260914/reviews/ice-r022-temperate-r002.md",
+        "output/playwright/planet-reference-20260914/reviews/ice-r024-rocky-moon-r001.md",
+        "output/playwright/planet-reference-20260914/reviews/ice-r025-toxic-r006.md",
+        "output/playwright/planet-reference-20260914/reviews/ice-r026-selected-glass.md",
+        "output/playwright/planet-reference-20260914/reviews/ice-volcanic-moons-r001-gas-mineral-r002.md",
+        "output/playwright/planet-reference-20260914/reviews/rocky-r007-ice-r019-review.md",
+        "output/playwright/planet-reference-20260914/reviews/rocky-r008-volcanic-r020-ice-r020-corrected.md",
+        "output/playwright/planet-reference-20260914/reviews/rocky-r009-volcanic-r021-ice-r021.md",
+        "output/playwright/planet-reference-20260914/reviews/temperate-r003-ice-r023-crystal-r009.md",
+        "output/playwright/planet-reference-20260914/reviews/volcanic-moons-r002-ice26-shadow.md",
+        "output/playwright/planet-reference-20260914/reviews/volcanic-moons-r003-ice-moon2-r003.md"
+      ]
+    },
+    {
+      "family": "gas-giant",
+      "current_checkpoint": 6,
+      "next_checkpoint": 7,
+      "pinned_main_revision": 5,
+      "sources": [
+        {
+          "source": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005",
+          "reference_id": "planets--gas-giant-moon-1",
+          "source_revision": 5,
+          "trial_suffix": null,
+          "files": 60
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic",
+          "reference_id": "planets--gas-giant-moon-1",
+          "source_revision": 5,
+          "trial_suffix": "-emission-only-diagnostic",
+          "files": 40
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005",
+          "reference_id": "planets--gas-giant-moon-3",
+          "source_revision": 5,
+          "trial_suffix": null,
+          "files": 60
+        }
+      ],
+      "associated_evidence": [
+        "output/playwright/planet-reference-20260914/gas-moon-1-mineral-build.log",
+        "output/playwright/planet-reference-20260914/gas-moon-1-optical-build.log",
+        "output/playwright/planet-reference-20260914/gas-moon-3-mineral-build.log",
+        "output/playwright/planet-reference-20260914/gas-moon-3-optical-build.log",
+        "output/playwright/planet-reference-20260914/gas-moon-mineral-r002-attribute-audit",
+        "output/playwright/planet-reference-20260914/gas-moon-mineral-r002-audit.log",
+        "output/playwright/planet-reference-20260914/gas-moon-mineral-r002-tests-retry.log",
+        "output/playwright/planet-reference-20260914/gas-moon-mineral-r002-tests.log",
+        "output/playwright/planet-reference-20260914/gas-moons-r005-attribute-audit"
+      ],
+      "review_reports": [
+        "output/playwright/planet-reference-20260914/reviews/crystal-moons-r003-native-gas-moon1-r004.md",
+        "output/playwright/planet-reference-20260914/reviews/gas-moons-parent-light-diagnostic.md",
+        "output/playwright/planet-reference-20260914/reviews/gas-moons-r005-corrected-scale.md",
+        "output/playwright/planet-reference-20260914/reviews/gas-moons-r005-luminous-trial.md",
+        "output/playwright/planet-reference-20260914/reviews/ice-volcanic-moons-r001-gas-mineral-r002.md"
+      ]
+    },
+    {
+      "family": "volcanic",
+      "current_checkpoint": 24,
+      "next_checkpoint": 25,
+      "pinned_main_revision": 23,
+      "sources": [
+        {
+          "source": "output/playwright/planet-reference-20260914/volcanic-moon-1-r003",
+          "reference_id": "planets--volcanic-moon-1",
+          "source_revision": 3,
+          "trial_suffix": null,
+          "files": 45
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/volcanic-moon-1-r003-linear-roof-diagnostic",
+          "reference_id": "planets--volcanic-moon-1",
+          "source_revision": 3,
+          "trial_suffix": "-linear-roof-diagnostic",
+          "files": 30
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/volcanic-moon-2-r003",
+          "reference_id": "planets--volcanic-moon-2",
+          "source_revision": 3,
+          "trial_suffix": null,
+          "files": 45
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/volcanic-moon-2-r003-linear-roof-diagnostic",
+          "reference_id": "planets--volcanic-moon-2",
+          "source_revision": 3,
+          "trial_suffix": "-linear-roof-diagnostic",
+          "files": 30
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/volcanic-moon-2-r004",
+          "reference_id": "planets--volcanic-moon-2",
+          "source_revision": 4,
+          "trial_suffix": null,
+          "files": 50
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/volcanic-moon-2-r005",
+          "reference_id": "planets--volcanic-moon-2",
+          "source_revision": 5,
+          "trial_suffix": null,
+          "files": 39
+        }
+      ],
+      "associated_evidence": [
+        "output/playwright/planet-reference-20260914/volcanic-moon2-r004-attribute-audit",
+        "output/playwright/planet-reference-20260914/volcanic-moon2-r005-attribute-audit",
+        "output/playwright/planet-reference-20260914/volcanic-moon2-r005-audit.log",
+        "output/playwright/planet-reference-20260914/volcanic-moon2-r005-build.log",
+        "output/playwright/planet-reference-20260914/volcanic-moon2-r005-preview.log",
+        "output/playwright/planet-reference-20260914/volcanic-moon2-r005-tests.log",
+        "output/playwright/planet-reference-20260914/volcanic-moons-r002-exposed-fracture-rays.json",
+        "output/playwright/planet-reference-20260914/volcanic-moons-r003-attribute-audit",
+        "output/playwright/planet-reference-20260914/volcanic-moons-r003-exposed-fracture-rays.json",
+        "output/playwright/planet-reference-20260914/volcanic-moons-r003-linear-roof-attribute-audit",
+        "output/playwright/planet-reference-20260914/volcanic-moons-r004-exposed-fracture-rays.json"
+      ],
+      "review_reports": [
+        "output/playwright/planet-reference-20260914/reviews/crystal-r013-rocky-moon-r002-volcanic-smoke.md",
+        "output/playwright/planet-reference-20260914/reviews/desert-r014-volcanic-r019-review.md",
+        "output/playwright/planet-reference-20260914/reviews/ice-volcanic-moons-r001-gas-mineral-r002.md",
+        "output/playwright/planet-reference-20260914/reviews/rocky-r008-volcanic-r020-ice-r020-corrected.md",
+        "output/playwright/planet-reference-20260914/reviews/rocky-r009-volcanic-r021-ice-r021.md",
+        "output/playwright/planet-reference-20260914/reviews/volcanic-moon2-r004.md",
+        "output/playwright/planet-reference-20260914/reviews/volcanic-moons-r002-ice26-shadow.md",
+        "output/playwright/planet-reference-20260914/reviews/volcanic-moons-r002-intended-glow.md",
+        "output/playwright/planet-reference-20260914/reviews/volcanic-moons-r003-ice-moon2-r003.md",
+        "output/playwright/planet-reference-20260914/reviews/volcanic-r022-toxic-r004.md",
+        "output/playwright/planet-reference-20260914/reviews/volcanic-r023-crystal-r010.md"
+      ]
+    },
+    {
+      "family": "crystal",
+      "current_checkpoint": 14,
+      "next_checkpoint": 15,
+      "pinned_main_revision": 13,
+      "sources": [
+        {
+          "source": "output/playwright/planet-reference-20260914/crystal-moon-1-r003",
+          "reference_id": "planets--crystal-moon-1",
+          "source_revision": 3,
+          "trial_suffix": null,
+          "files": 66
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/crystal-moon-1-r004",
+          "reference_id": "planets--crystal-moon-1",
+          "source_revision": 4,
+          "trial_suffix": null,
+          "files": 34
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/crystal-moon-1-r005",
+          "reference_id": "planets--crystal-moon-1",
+          "source_revision": 5,
+          "trial_suffix": null,
+          "files": 32
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt1-invalid-uv",
+          "reference_id": "planets--crystal-moon-1",
+          "source_revision": 5,
+          "trial_suffix": "-attempt1-invalid-uv",
+          "files": 18
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt2-normal-precision",
+          "reference_id": "planets--crystal-moon-1",
+          "source_revision": 5,
+          "trial_suffix": "-attempt2-normal-precision",
+          "files": 18
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/crystal-moon-2-r003",
+          "reference_id": "planets--crystal-moon-2",
+          "source_revision": 3,
+          "trial_suffix": null,
+          "files": 66
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/crystal-moon-2-r004",
+          "reference_id": "planets--crystal-moon-2",
+          "source_revision": 4,
+          "trial_suffix": null,
+          "files": 35
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/crystal-moon-2-r005",
+          "reference_id": "planets--crystal-moon-2",
+          "source_revision": 5,
+          "trial_suffix": null,
+          "files": 32
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt1-invalid-uv",
+          "reference_id": "planets--crystal-moon-2",
+          "source_revision": 5,
+          "trial_suffix": "-attempt1-invalid-uv",
+          "files": 18
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt2-normal-precision",
+          "reference_id": "planets--crystal-moon-2",
+          "source_revision": 5,
+          "trial_suffix": "-attempt2-normal-precision",
+          "files": 18
+        }
+      ],
+      "associated_evidence": [
+        "output/playwright/planet-reference-20260914/crystal-moons-r002-attribute-audit",
+        "output/playwright/planet-reference-20260914/crystal-moons-r002-gallery-manifest.json",
+        "output/playwright/planet-reference-20260914/crystal-moons-r003-attribute-audit",
+        "output/playwright/planet-reference-20260914/crystal-moons-r004-attribute-audit",
+        "output/playwright/planet-reference-20260914/crystal-moons-r004-gallery-manifest.json",
+        "output/playwright/planet-reference-20260914/crystal-moons-r004-parity",
+        "output/playwright/planet-reference-20260914/crystal-moons-r005-parity"
+      ],
+      "review_reports": [
+        "output/playwright/planet-reference-20260914/reviews/crystal-moons-r002.md",
+        "output/playwright/planet-reference-20260914/reviews/crystal-moons-r003-native-gas-moon1-r004.md",
+        "output/playwright/planet-reference-20260914/reviews/crystal-moons-r004-runtime.md",
+        "output/playwright/planet-reference-20260914/reviews/crystal-r001-review.md",
+        "output/playwright/planet-reference-20260914/reviews/crystal-r003-review.md",
+        "output/playwright/planet-reference-20260914/reviews/crystal-r006-temperate-r001-corrected.md",
+        "output/playwright/planet-reference-20260914/reviews/crystal-r013-rocky-moon-r002-volcanic-smoke.md",
+        "output/playwright/planet-reference-20260914/reviews/desert-scale-crystal-r004-review.md",
+        "output/playwright/planet-reference-20260914/reviews/temperate-r003-ice-r023-crystal-r009.md",
+        "output/playwright/planet-reference-20260914/reviews/volcanic-r023-crystal-r010.md"
+      ]
+    }
+  ]
+}

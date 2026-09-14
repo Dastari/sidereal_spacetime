@@ -8,7 +8,7 @@
     "planets--ice-moon-2"
   ],
   "mapping_status": "proposed shared production family; inspect and split distinct geometry before implementation",
-  "current_revision": 27,
+  "current_revision": 28,
   "state": "in-progress",
   "owner_final_signoff": null,
   "priority": 50,
@@ -70,6 +70,14 @@
       "text": "Moon preservation checkpoint only. Main-world deliverable remains r026; prior feedback/approval state unchanged. Per-moon gates and original source revisions are in manifest.json and attached independent reviews. Remaining candidates, runtime integration and hardware Flight/Map LOD acceptance remain in progress.",
       "message_reference": "output/playwright/planet-reference-20260914/reviews/moon-canonical-checkpoint-proposal.md",
       "recorded_at": "2026-09-14T05:38:15.758089+00:00",
+      "resolved_by_revision": null
+    },
+    {
+      "revision": 28,
+      "author": "agent",
+      "text": "Late moon preservation checkpoint only. Main-world pin remains r026; prior approvals/mappings are exact. Attached review verdict states current visual gates; no owner sign-off or hardware transition acceptance inferred.",
+      "message_reference": "output/playwright/planet-reference-20260914/reviews/late-moon-checkpoint-proposal.json",
+      "recorded_at": "2026-09-14T07:43:52.696778+00:00",
       "resolved_by_revision": null
     }
   ],
@@ -5450,6 +5458,651 @@
           "bytes": 32206,
           "notes": "Exact source revision, per-moon gate, source path, hashes and pinned main-world provenance.",
           "recorded_at": "2026-09-14T05:38:15.758079+00:00"
+        }
+      ],
+      "review": null
+    },
+    {
+      "revision": 28,
+      "created_at": "2026-09-14T07:43:52.696770+00:00",
+      "stage": "in-progress",
+      "change": "Preserve late native moon candidates and meaningful failed/diagnostic history; main-world candidate remains pinned to r026.",
+      "hypothesis": "Exact sources, PBR exports, captures and dated review verdicts preserve per-reference identity and remaining acceptance boundaries.",
+      "covered_reference_ids": [
+        "planets--ice-moon-2"
+      ],
+      "evidence": [
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/blue-cut-seed38-angle2.png",
+          "sha256": "e9298ab4e9dd6dac192da18c240ece42c325644923b07d9b7093a1b437115282",
+          "bytes": 381868,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.463505+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/blue-cut-seed38-capture.log",
+          "sha256": "8bdcac7faa8e3f47e0ae9eaf84df4ce160dde2397631ebf4a8bb0b872360805c",
+          "bytes": 2904,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.463785+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/blue-cut-seed38-reference-scale.png",
+          "sha256": "f604d03b72daadec1de74bbd41b00bafe94bb96661e87dd7e73ae3dddf9306d9",
+          "bytes": 12428,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.464058+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/blue-cut-seed38.json",
+          "sha256": "4b8b368832afb3492571cf5bb0d2828f9e497a105fc366d5286d1486f4915d3d",
+          "bytes": 4557,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.464627+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/blue-cut-seed38.png",
+          "sha256": "74341d6660c1d1f46dbdea295079aef26d1594edad89ccd4099a62d05e9fbb9a",
+          "bytes": 388087,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.465888+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/composition-change.json",
+          "sha256": "dd37bd031f1e395d43efc67681d19dcaa45743a74344fe9f0c0aa3b80e3e0c99",
+          "bytes": 613,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.466107+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/exact-reference.png",
+          "sha256": "c7a9703b3665f3d50e16c93ea2e3337c0e74389536e23637abc2c2f3b50120c7",
+          "bytes": 4891,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.466329+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/ground-sphere-low.glb",
+          "sha256": "4bfedc7f1bf24a3e36e0d56cb86b6ea904d897dbd04939c02ce1184191e33c3d",
+          "bytes": 4934652,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.477893+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/ground-sphere-medium.glb",
+          "sha256": "b2ded9785ff3a369c453fd760b9d13b42afd72457c8e7cb2bc9a3e45c6eae71c",
+          "bytes": 5023880,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.489208+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/ground-sphere.glb",
+          "sha256": "1c5e21737411907f78c3a5ae0d23ed3e17c2dd9b79df41a4f17e059f8a385c16",
+          "bytes": 5368896,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.500892+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/ice-0-albedo.png",
+          "sha256": "ef0b9ef41997a9588d87f7c2a153c50328656429b3915df204e922b18f79443c",
+          "bytes": 62640,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.501486+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/ice-0-orm.png",
+          "sha256": "422e6c2851744f6324e578e9bc34ec7c586caa5f1edec1a0cc959209a95ff879",
+          "bytes": 22205,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.502285+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/ice-1-albedo.png",
+          "sha256": "daa7ff65ab88390945537287f66700b14e6540b9c41f9bf5a4efd3059bffdd1f",
+          "bytes": 39313,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.502632+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/ice-1-orm.png",
+          "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+          "bytes": 14957,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.502898+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/ice-2-albedo.png",
+          "sha256": "5037a3fab7f4507535fc339b4f7024c7e70a20a191ad0120297a5c64c087a91d",
+          "bytes": 26859,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.503625+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/ice-2-orm.png",
+          "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+          "bytes": 14957,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.504107+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/ice-3-albedo.png",
+          "sha256": "485a3e3326d7cb6726742f50379726bc0fc4c3faa7686f6cd7fb6cf913481fc7",
+          "bytes": 34005,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.504419+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/ice-3-orm.png",
+          "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+          "bytes": 14957,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.504672+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/ice-4-albedo.png",
+          "sha256": "ec118c65ca7feb308a4540da06f75d20bbf7e0bef1a10c8863d44fc15e895037",
+          "bytes": 19156,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.504960+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/ice-4-orm.png",
+          "sha256": "5069fb80400d3e2e7e43d7e1c3e0a52a9d81b5aa8967c9ff790e92f68b3c51e4",
+          "bytes": 18539,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.505252+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/ice_moon_reference_composition_r004.ts",
+          "sha256": "1113ecaff500d81895443df559f8f289d53f2982b826db25a728fe69ee48047f",
+          "bytes": 8151,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.505487+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/kit-preview.png",
+          "sha256": "ab65278b32eef574f9d9528c515882d7abdca0b5406c546b0c1204d7ca8e3f21",
+          "bytes": 1451133,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.509347+00:00"
+        },
+        {
+          "role": "native-source",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/kit.blend",
+          "sha256": "296685bfbddd4c96a7285aaf2d2a02534f29c557b3632d86513011b9e10daa3a",
+          "bytes": 10843469,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.532104+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/kit.json",
+          "sha256": "f2f7bfd0a1cb706bdca20c11e1c53baec18fe7d1212f30115586cbceeaf7de3c",
+          "bytes": 43040066,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.663643+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/revision-notes.md",
+          "sha256": "f6e38d3baca816c3acaf8f28bedebdbcd2bb744d51b82aa7c509c97fb69d6ce4",
+          "bytes": 1166,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.664383+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/snow-cut-region.glb",
+          "sha256": "053f63a98c79505e5c1b3e5ac091b8aa64b77f92198dc3167ecea3f277d7fb73",
+          "bytes": 998228,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.668948+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/snow-open-gorge.glb",
+          "sha256": "078cd59962293b1c0c87e07cef574d4bb26e6d20e7c5dd99cc516dc42f05d99b",
+          "bytes": 1083140,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.675409+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/stage.log",
+          "sha256": "21c4d86c8b124a9bdaccd528447b6570d46d792b6071683cf116ace4f6e3e84c",
+          "bytes": 2190,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.675859+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/tests-material-ray.log",
+          "sha256": "e1c20f59c88e7fadf874fd8d2c1a3518a78eff151d9a21ecfc055f08dd99ae96",
+          "bytes": 209,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.676297+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/tests.log",
+          "sha256": "5caf2725604e95c580f27c607912ea45926ce2cbb95316b31bb6af01e4b1f0bf",
+          "bytes": 1350,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.677243+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r002-worker-audit/benchmark.ts",
+          "sha256": "8165c8c139cbd15e236b04dc33803677a6ca266e5c95915b95bb67a411cffec3",
+          "bytes": 1547,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.678113+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r002-worker-audit/cpu-profile-top.json",
+          "sha256": "f43b3711df1425afa6bcfd244cc2902f3885f65b0110d080ca5544a0eff63949",
+          "bytes": 3047,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.678688+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r002-worker-audit/diagnosis.md",
+          "sha256": "fbd46da13737df7c976e3ab0ea3dade0527bf941e377a739b3893d78ce9f1013",
+          "bytes": 5962,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.679184+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r002-worker-audit/hybrid-time.txt",
+          "sha256": "410b4019ec1cc967e5bf0627cd856cbe55db22a674d59f618fdaf8ed07f7ad4e",
+          "bytes": 860,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.680053+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r002-worker-audit/ice-baseline.cpuprofile",
+          "sha256": "31c582f2f758cd54f18990cc1dff49870bceb7ed51508f59a42f89ca74ecfbd5",
+          "bytes": 142353,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.680795+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r002-worker-audit/ice-moon-1-r002-benchmark.json",
+          "sha256": "d23d774d6a75f9eeab3f5d4c849e040f3324dc56987b132c104e635a525da794",
+          "bytes": 1222,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.681168+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r002-worker-audit/ice-time.txt",
+          "sha256": "d4834f77515d6a107158198bd7e30c359b873215b5152b8a54fa03d8f2e68a32",
+          "bytes": 998,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.681493+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r002-worker-audit/instrumented-frozen-copy.ts",
+          "sha256": "9849957ed28a57925df51043b41d1cabc27ec1baf2de61e4c8bf03b73a2b4538",
+          "bytes": 7296,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.681941+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r002-worker-audit/probe-result.json",
+          "sha256": "d09200ae5d842992e593b7057d8696d5ff86194ffa44ab155e7f1cd30e65b6da",
+          "bytes": 3234,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.682748+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r002-worker-audit/probe.ts",
+          "sha256": "2c1d005d41369872c9765ee0d306758053ef2dcd889c25df2c1f9b8f6001324e",
+          "bytes": 1632,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.683122+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r002-worker-audit/proposed-optimized-copy.ts",
+          "sha256": "ec54e6d5becd74115cf36112647381bc34976a7bc3607623833a6ca0d193a584",
+          "bytes": 7649,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.683489+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r002-worker-audit/real-worker.mjs",
+          "sha256": "125f20459884b0ea131d54fbbc19cd71b14df179092ee2cb8f34409211b177a6",
+          "bytes": 421,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.684317+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r002-worker-audit/source-hashes.json",
+          "sha256": "5742f73cd0d007caa7291b2073f1c2b86d6a17aa7ad8198f110292c069386bde",
+          "bytes": 399,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.684583+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r002-worker-audit/static-work-counts.json",
+          "sha256": "d38b54306ded9cf31711952e3ddee7977481b69bdd4dca80ce77aa07388ef74a",
+          "bytes": 392,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.684884+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r002-worker-audit/temperate-moon-1-r002-benchmark.json",
+          "sha256": "de6125e0755da5669fe33275bfe85506fd018a361c3e13e070e89b38e0e9ce6a",
+          "bytes": 1205,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.685344+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r002-worker-audit/worker-protocol-full-string-retained.json",
+          "sha256": "ebc26e39bab15570a732f239b4484af4059db684a2126302577d4018dfa9e2ba",
+          "bytes": 785,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.685714+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r002-worker-audit/worker-protocol-full.json",
+          "sha256": "90a9b10ca495712dbb9f99be2f119350f0dcbf3c92ee9f6f89a1d4e5f09dbc0b",
+          "bytes": 774,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.686031+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r002-worker-audit/worker-protocol-pruned-string-retained.json",
+          "sha256": "0ca5f45b8be63260a46b014e892ef0a5816c83e58f80f0f7c7db35a3e054d231",
+          "bytes": 733,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.686392+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r002-worker-audit/worker-protocol-pruned.json",
+          "sha256": "7437213b843413f20c333443392c2ffe4e56cf15ba01bea2af1a39b4c89042f0",
+          "bytes": 736,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.686687+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r002-worker-audit/worker-protocol-string-retained.mjs",
+          "sha256": "542e45e9c06feef19c7821c3d32e17fd58a37c15dff288df651ded0b41ba99bc",
+          "bytes": 1520,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.687113+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r002-worker-audit/worker-protocol.mjs",
+          "sha256": "282b75c41711e1e887cd8eda0539067095a1d5d89fbe7af7851bf7fd44d6c345",
+          "bytes": 1570,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.687344+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r003-applied-tsc.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.687501+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r003-composition/projection-validation.json",
+          "sha256": "9c4a3f56d86e50e1116bb5c8b57b13ba75534ca6b0ce531dcbeaaa7e31f97352",
+          "bytes": 687,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.688344+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r003-composition/revision-notes.md",
+          "sha256": "16cb5faece5565c09534826a4a4183be5b18f87708cd6021272758508f2e9df1",
+          "bytes": 2278,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.689891+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r003-composition/source/audit_ice_moon_projection_equality.ts",
+          "sha256": "35fff3300267b6a7bf5ce07571db0d23cc945ac6400ee8699f1913b7e7cee25b",
+          "bytes": 2661,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.690183+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r003-composition/source/ice_moon_reference_composition_r003.test.ts",
+          "sha256": "aee8325b0bb033d2f723337d9f5b8c0bf15c6c06c79f6ad95add984ed0b7a6b8",
+          "bytes": 5569,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.690427+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r003-composition/source/ice_moon_reference_composition_r003.ts",
+          "sha256": "b5344bfa16a35ffa377b3a72012f46013f8b2dce2296f01ecf893b2b50cdf061",
+          "bytes": 7595,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.690694+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r003-composition/source/ice_moon_reference_r003.tsconfig.json",
+          "sha256": "de7c06c1330af3358e56595677a4f04fefbdb7a3087f56fa0c84b9599b3199cf",
+          "bytes": 166,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.690918+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r003-composition/source/ice_moon_reference_r003.vitest.config.ts",
+          "sha256": "b486302432fe1aa8d4867b466cb1443695b80b68cd54a3985446a0c8d0fc3fb4",
+          "bytes": 177,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.691139+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r003-composition/tests.log",
+          "sha256": "4c5a95e8809fd3494f0bf6420dacf52c60f52aa010dae0155b04c677ad12a317",
+          "bytes": 212,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.691356+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r003-composition/used-variant-size-audit.json",
+          "sha256": "1c6df23df315a35a986d85bde7e3e0938d28fd09388b7a734d9a5321be8755b8",
+          "bytes": 678,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.691582+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/reviews/ice-moons-r002-projected-path.md",
+          "sha256": "8817adfc93d7ffc4f4e941a6f8b028fcd9ad82522c0ec3a0013649cc1578fe9b",
+          "bytes": 2757,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.691871+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/reviews/ice-r016-review.md",
+          "sha256": "40d32ca5427115c1d309c2c6b491bf1750acab2fa10a5f94ef46c6a1ebca72ba",
+          "bytes": 2078,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.692100+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/reviews/ice-r017-gas-r003-review.md",
+          "sha256": "a3e1a008c2ced09a57d9667d884eb58785e082fcbf92df5429c13d60964114e3",
+          "bytes": 2555,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.692322+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/reviews/ice-r018-unit-review.md",
+          "sha256": "5184af8ecb63aa760dca618c6ee39d72ffeb356bdf4ba998247c7849a35ef41b",
+          "bytes": 1586,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.693170+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/reviews/ice-r022-temperate-r002.md",
+          "sha256": "a3d627561f76cbe1adb70644339bf117459bd9e8f2cdd893aee8c1f2a0098165",
+          "bytes": 2397,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.693358+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/reviews/ice-r024-rocky-moon-r001.md",
+          "sha256": "f3796afb5ac3ba92d43ff12d79c442f90e2795862db2fd1ebf0dd6e38ff9a3af",
+          "bytes": 1920,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.693559+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/reviews/ice-r025-toxic-r006.md",
+          "sha256": "4b49a076fae45d1c5f26a178aa87f1d5812d44e44a3218598fa2634c68e2e9ff",
+          "bytes": 2518,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.693791+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/reviews/ice-r026-selected-glass.md",
+          "sha256": "eb5f01705914cdff788c6fac7262f74e1789b809cef1e81f105c0bf31dcd6995",
+          "bytes": 1985,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.694000+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/reviews/ice-volcanic-moons-r001-gas-mineral-r002.md",
+          "sha256": "3135c0193a05ff766208ce522f61883968d4126997272d7e719c3569ff289979",
+          "bytes": 3087,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.694319+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/reviews/rocky-r007-ice-r019-review.md",
+          "sha256": "2666a443796000cf0a3ae9952d708e4fd08904f53995437486b868af3e61b830",
+          "bytes": 2073,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.694643+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/reviews/rocky-r008-volcanic-r020-ice-r020-corrected.md",
+          "sha256": "c20d7a8c72da9802c383d339dc5e8bc49a1960815d94a4fad4277df413e74081",
+          "bytes": 4956,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.694913+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/reviews/rocky-r009-volcanic-r021-ice-r021.md",
+          "sha256": "157cdc9578f8d467850074058f9e1f7457c20b48181b9a425f6d079e5ba8214a",
+          "bytes": 3580,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.695139+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/reviews/temperate-r003-ice-r023-crystal-r009.md",
+          "sha256": "d27405a4050d97ff89db1b4a14b4fa7db3362ea89a0350416da0a7f566d3100c",
+          "bytes": 2972,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.695394+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/reviews/volcanic-moons-r002-ice26-shadow.md",
+          "sha256": "5148ab768d20cc669b7ea6e73f5178cfb9e443670f825acdb7d30fe52b38b92a",
+          "bytes": 3155,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.695656+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/reviews/volcanic-moons-r003-ice-moon2-r003.md",
+          "sha256": "51b38b9d8341e40ae572fe89bbc481e3f1c44e42103bda41343360533f69640b",
+          "bytes": 2706,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.695873+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/reviews/root-final-review-verdict.md",
+          "sha256": "02417da619028a0b255db4ea27560cf75f006295a9df4e107a77d96594b99958",
+          "bytes": 1436,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.696397+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ice/revisions/r028/checkpoint_late_moon_history.py",
+          "sha256": "d45dff422dd2d6c385905ad0f01e8e9ed3ca7ced58f985c434048b99bf2b0404",
+          "bytes": 8013,
+          "notes": "Exact preserved candidate/source/diagnostic artifact. Source filename and manifest retain failed-attempt status; see explicit attached reviews for gates.",
+          "recorded_at": "2026-09-14T07:43:52.696549+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ice/revisions/r028/manifest.json",
+          "sha256": "cf21d8ea298df1ffa5c36388aa7f983dcd426b50a30ff29a6e581d608892c147",
+          "bytes": 29534,
+          "notes": "Complete recursive artifact/hash manifest including meaningful failed native attempts and preserved main-world pin.",
+          "recorded_at": "2026-09-14T07:43:52.696761+00:00"
         }
       ],
       "review": null

@@ -1,0 +1,10 @@
+{
+  "status": "Preparation only; root must supply actual bank-hit/placement evidence and selected native hot object names before authoring.",
+  "variant": "battered-region-a",
+  "evidence": [],
+  "hotObjects": [],
+  "maximumCenterDistance": 0.14,
+  "maximumCornerDistance": 0.22,
+  "maximumHeightDifference": 0.09,
+  "intent": "Extend the existing native warm shoulder material onto immediately adjacent actual A cold bank faces at selected existing hot junctions. Preserve r005 B-edge exactly, no geometry or global material changes. Bounds are proposed upper selection distances, not claimed visible coverage."
+}

@@ -1,0 +1,2422 @@
+{
+  "family": "crystal",
+  "current_checkpoint": 14,
+  "next_checkpoint": 15,
+  "pinned_main_revision": 13,
+  "sources": [
+    {
+      "source": "output/playwright/planet-reference-20260914/crystal-moon-1-r003",
+      "reference_id": "planets--crystal-moon-1",
+      "source_revision": 3,
+      "trial_suffix": null,
+      "files": 66
+    },
+    {
+      "source": "output/playwright/planet-reference-20260914/crystal-moon-1-r004",
+      "reference_id": "planets--crystal-moon-1",
+      "source_revision": 4,
+      "trial_suffix": null,
+      "files": 34
+    },
+    {
+      "source": "output/playwright/planet-reference-20260914/crystal-moon-1-r005",
+      "reference_id": "planets--crystal-moon-1",
+      "source_revision": 5,
+      "trial_suffix": null,
+      "files": 32
+    },
+    {
+      "source": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt1-invalid-uv",
+      "reference_id": "planets--crystal-moon-1",
+      "source_revision": 5,
+      "trial_suffix": "-attempt1-invalid-uv",
+      "files": 18
+    },
+    {
+      "source": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt2-normal-precision",
+      "reference_id": "planets--crystal-moon-1",
+      "source_revision": 5,
+      "trial_suffix": "-attempt2-normal-precision",
+      "files": 18
+    },
+    {
+      "source": "output/playwright/planet-reference-20260914/crystal-moon-2-r003",
+      "reference_id": "planets--crystal-moon-2",
+      "source_revision": 3,
+      "trial_suffix": null,
+      "files": 66
+    },
+    {
+      "source": "output/playwright/planet-reference-20260914/crystal-moon-2-r004",
+      "reference_id": "planets--crystal-moon-2",
+      "source_revision": 4,
+      "trial_suffix": null,
+      "files": 35
+    },
+    {
+      "source": "output/playwright/planet-reference-20260914/crystal-moon-2-r005",
+      "reference_id": "planets--crystal-moon-2",
+      "source_revision": 5,
+      "trial_suffix": null,
+      "files": 32
+    },
+    {
+      "source": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt1-invalid-uv",
+      "reference_id": "planets--crystal-moon-2",
+      "source_revision": 5,
+      "trial_suffix": "-attempt1-invalid-uv",
+      "files": 18
+    },
+    {
+      "source": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt2-normal-precision",
+      "reference_id": "planets--crystal-moon-2",
+      "source_revision": 5,
+      "trial_suffix": "-attempt2-normal-precision",
+      "files": 18
+    }
+  ],
+  "associated_evidence": [
+    "output/playwright/planet-reference-20260914/crystal-moons-r002-attribute-audit",
+    "output/playwright/planet-reference-20260914/crystal-moons-r002-gallery-manifest.json",
+    "output/playwright/planet-reference-20260914/crystal-moons-r003-attribute-audit",
+    "output/playwright/planet-reference-20260914/crystal-moons-r004-attribute-audit",
+    "output/playwright/planet-reference-20260914/crystal-moons-r004-gallery-manifest.json",
+    "output/playwright/planet-reference-20260914/crystal-moons-r004-parity",
+    "output/playwright/planet-reference-20260914/crystal-moons-r005-parity"
+  ],
+  "review_reports": [
+    "output/playwright/planet-reference-20260914/reviews/crystal-moons-r002.md",
+    "output/playwright/planet-reference-20260914/reviews/crystal-moons-r003-native-gas-moon1-r004.md",
+    "output/playwright/planet-reference-20260914/reviews/crystal-moons-r004-runtime.md",
+    "output/playwright/planet-reference-20260914/reviews/crystal-moons-r005-runtime.md",
+    "output/playwright/planet-reference-20260914/reviews/crystal-r001-review.md",
+    "output/playwright/planet-reference-20260914/reviews/crystal-r003-review.md",
+    "output/playwright/planet-reference-20260914/reviews/crystal-r006-temperate-r001-corrected.md",
+    "output/playwright/planet-reference-20260914/reviews/crystal-r013-rocky-moon-r002-volcanic-smoke.md",
+    "output/playwright/planet-reference-20260914/reviews/desert-scale-crystal-r004-review.md",
+    "output/playwright/planet-reference-20260914/reviews/temperate-r003-ice-r023-crystal-r009.md",
+    "output/playwright/planet-reference-20260914/reviews/volcanic-r023-crystal-r010.md"
+  ],
+  "schema": "sidereal.late-moon-preservation.v1",
+  "recorded_at": "2026-09-14T07:43:53.940034+00:00",
+  "scope": "Candidate/history checkpoint only; no main-world pin change, owner approval or hardware LOD acceptance. Gates are recorded in exact attached root/independent reviews.",
+  "prior_ledger_sha256": "7daa5a51082706746d50df07bbf18e3bbe895ac35c7e0575feba610147c484d5",
+  "files": [
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-01-geodesic-plates/blender-raw/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-01-geodesic-plates/blender-raw/connected-crystalline-body.glb",
+      "sha256": "9c5307c856966c845f591d6a3910cbb7ceb640cd09c7a3e01744fc0c92934397",
+      "bytes": 416636
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-01-geodesic-plates/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-01-geodesic-plates/connected-crystalline-body.glb",
+      "sha256": "a8aa2e4364c9b1c43eb44e2729c23aefe56f5a9f89e50cb648e939db1cee5ebb",
+      "bytes": 416880
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-01-geodesic-plates/kit.blend",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-01-geodesic-plates/kit.blend",
+      "sha256": "7b00d065468cdf6cef3ef0ba8b798b60968ba0aa8ddfe7ae0b113efccc78b5ac",
+      "bytes": 1601363
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-01-geodesic-plates/kit.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-01-geodesic-plates/kit.json",
+      "sha256": "389770887f21c12ae5828bf7b3ea1fa043c76f99019797a731f87faf468b5efb",
+      "bytes": 1519801
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-01-geodesic-plates/material-0-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-01-geodesic-plates/material-0-albedo.png",
+      "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+      "bytes": 87818
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-01-geodesic-plates/material-0-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-01-geodesic-plates/material-0-orm.png",
+      "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+      "bytes": 40836
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-01-geodesic-plates/material-1-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-01-geodesic-plates/material-1-albedo.png",
+      "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+      "bytes": 76356
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-01-geodesic-plates/material-1-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-01-geodesic-plates/material-1-orm.png",
+      "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+      "bytes": 41452
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-01-geodesic-plates/material-2-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-01-geodesic-plates/material-2-albedo.png",
+      "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+      "bytes": 92476
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-01-geodesic-plates/material-2-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-01-geodesic-plates/material-2-orm.png",
+      "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+      "bytes": 39879
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-01-geodesic-plates/material-3-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-01-geodesic-plates/material-3-albedo.png",
+      "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+      "bytes": 31086
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-01-geodesic-plates/material-4-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-01-geodesic-plates/material-4-albedo.png",
+      "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+      "bytes": 33571
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-01-geodesic-plates/material-5-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-01-geodesic-plates/material-5-albedo.png",
+      "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+      "bytes": 24737
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-01-geodesic-plates/material-6-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-01-geodesic-plates/material-6-albedo.png",
+      "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+      "bytes": 37069
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-01-geodesic-plates/material-7-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-01-geodesic-plates/material-7-albedo.png",
+      "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+      "bytes": 40023
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-01-geodesic-plates/native-body-preview.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-01-geodesic-plates/native-body-preview.png",
+      "sha256": "225e3b60875b503fd47aa834bc6dcd17166e161182708adea78309f664e63f9e",
+      "bytes": 764705
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-01-geodesic-plates/native-body-small-preview.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-01-geodesic-plates/native-body-small-preview.png",
+      "sha256": "cee1ddb0ab6e23dd03fe807ad8ed5492bafef3220468b1acf93bb960ae4a9426",
+      "bytes": 60141
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-01-geodesic-plates/native-panel-plan.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-01-geodesic-plates/native-panel-plan.json",
+      "sha256": "5695c9854795bc80e29dd150386b8d98256c67c15e59ecbd0942f2d07a727d97",
+      "bytes": 59597
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-01-geodesic-plates/source-builder.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-01-geodesic-plates/source-builder.py",
+      "sha256": "29141d39f46ec340d8d92425f7bfb6f657cc8d58727c3a81af246d3562e2fbce",
+      "bytes": 7696
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-01-geodesic-plates/validation.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-01-geodesic-plates/validation.json",
+      "sha256": "52a8005cc927c395be4f2a7e55f4cc4d22ed0467fcb8fba059ff5e25d05b3667",
+      "bytes": 187
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-02-regular-quad-panels/blender-raw/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-02-regular-quad-panels/blender-raw/connected-crystalline-body.glb",
+      "sha256": "a96769a711f3d5e4c8130db6a5744a4ee439cef28154f9d500c81ab47965d545",
+      "bytes": 382676
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-02-regular-quad-panels/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-02-regular-quad-panels/connected-crystalline-body.glb",
+      "sha256": "81d857950e5baad0d201d5fa6f0d9ce87e4a7e8e1cfef870ea900f32379ec51b",
+      "bytes": 382924
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-02-regular-quad-panels/kit.blend",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-02-regular-quad-panels/kit.blend",
+      "sha256": "8f1c4c731e72a166c3e6a6ddb7fa3a3b29da031b9b8a4e06662970a46d020e3e",
+      "bytes": 1561379
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-02-regular-quad-panels/kit.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-02-regular-quad-panels/kit.json",
+      "sha256": "9c3028a5d29a231bf163a2dd8ca0be484caa8fad6f4af584f24822eeab447a5a",
+      "bytes": 1324391
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-02-regular-quad-panels/material-0-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-02-regular-quad-panels/material-0-albedo.png",
+      "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+      "bytes": 87818
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-02-regular-quad-panels/material-0-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-02-regular-quad-panels/material-0-orm.png",
+      "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+      "bytes": 40836
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-02-regular-quad-panels/material-1-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-02-regular-quad-panels/material-1-albedo.png",
+      "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+      "bytes": 76356
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-02-regular-quad-panels/material-1-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-02-regular-quad-panels/material-1-orm.png",
+      "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+      "bytes": 41452
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-02-regular-quad-panels/material-2-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-02-regular-quad-panels/material-2-albedo.png",
+      "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+      "bytes": 92476
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-02-regular-quad-panels/material-2-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-02-regular-quad-panels/material-2-orm.png",
+      "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+      "bytes": 39879
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-02-regular-quad-panels/material-3-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-02-regular-quad-panels/material-3-albedo.png",
+      "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+      "bytes": 31086
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-02-regular-quad-panels/material-4-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-02-regular-quad-panels/material-4-albedo.png",
+      "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+      "bytes": 33571
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-02-regular-quad-panels/material-5-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-02-regular-quad-panels/material-5-albedo.png",
+      "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+      "bytes": 24737
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-02-regular-quad-panels/material-6-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-02-regular-quad-panels/material-6-albedo.png",
+      "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+      "bytes": 37069
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-02-regular-quad-panels/material-7-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-02-regular-quad-panels/material-7-albedo.png",
+      "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+      "bytes": 40023
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-02-regular-quad-panels/native-body-preview.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-02-regular-quad-panels/native-body-preview.png",
+      "sha256": "f154607e5e5478e788efff9630d2afd35f3f827f3b590eb074427ab65aeb2b7c",
+      "bytes": 783320
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-02-regular-quad-panels/native-body-small-preview.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-02-regular-quad-panels/native-body-small-preview.png",
+      "sha256": "061fec36a73a5cb11d5c025100654581b85011781d0a27aa5160758d0fe9fd6a",
+      "bytes": 62535
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-02-regular-quad-panels/native-panel-plan.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-02-regular-quad-panels/native-panel-plan.json",
+      "sha256": "b5d0abd0521828eb1d52bda372f8334bd6bcc7305899c7d5415a6e6b49bd305f",
+      "bytes": 47206
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-02-regular-quad-panels/source-builder.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-02-regular-quad-panels/source-builder.py",
+      "sha256": "20649ac62eb6f0cf7ec4df4339da5f135bf4ead0e9673d230d0131b2fa5a24fc",
+      "bytes": 8429
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/attempt-02-regular-quad-panels/validation.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/attempt-02-regular-quad-panels/validation.json",
+      "sha256": "7d61c56b72248c55d20cfedb0cc98b306a0972961c76c40c40f09ad5362c146f",
+      "bytes": 187
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/blender-raw/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/blender-raw/connected-crystalline-body.glb",
+      "sha256": "90e733cc097e7eb103503f1e7cff70d4f178aeba83d49c76175981e0c63ca017",
+      "bytes": 337212
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/connected-crystalline-body.glb",
+      "sha256": "56d3cb3b7c8bc083ba617a9fa40267ba1ec80bf9ba74d06e41673c187fea91bf",
+      "bytes": 337456
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/kit.blend",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/kit.blend",
+      "sha256": "f4ed839e3f206cc57e257d898d41441b0b9ddbc802a1d06fa74a41df16866b3b",
+      "bytes": 1507299
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/kit.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/kit.json",
+      "sha256": "fac6eddeb8565591e9f5a0126a8bc06b13357cfffd34ae7aa038eb164a4c50e7",
+      "bytes": 1100566
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/material-0-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/material-0-albedo.png",
+      "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+      "bytes": 87818
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/material-0-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/material-0-orm.png",
+      "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+      "bytes": 40836
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/material-1-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/material-1-albedo.png",
+      "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+      "bytes": 76356
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/material-1-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/material-1-orm.png",
+      "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+      "bytes": 41452
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/material-2-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/material-2-albedo.png",
+      "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+      "bytes": 92476
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/material-2-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/material-2-orm.png",
+      "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+      "bytes": 39879
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/material-3-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/material-3-albedo.png",
+      "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+      "bytes": 31086
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/material-4-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/material-4-albedo.png",
+      "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+      "bytes": 33571
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/material-5-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/material-5-albedo.png",
+      "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+      "bytes": 24737
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/material-6-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/material-6-albedo.png",
+      "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+      "bytes": 37069
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/material-7-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/material-7-albedo.png",
+      "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+      "bytes": 40023
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/native-body-preview.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/native-body-preview.png",
+      "sha256": "d59a78e43ce4d770d14eac3cc798073643282c587afde80936f224d4f2edf776",
+      "bytes": 758980
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/native-body-small-preview.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/native-body-small-preview.png",
+      "sha256": "8e802ac3b71ce5a7845cdf3c5278bd8eca6fcb0eabcfe4b1daafe3aa5522edd3",
+      "bytes": 60614
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/native-panel-plan.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/native-panel-plan.json",
+      "sha256": "931fb0022d037d395f392d5920bb650f881d4591c959aa3df3d2808ac2389fae",
+      "bytes": 27050
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/revision-notes.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/revision-notes.md",
+      "sha256": "4c01c635876408f9d6962ee5a61213d6675ecebca25c7582cac783fef39b8b7e",
+      "bytes": 2089
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/source/build_crystal_moon_native_variants_r003.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/source/build_crystal_moon_native_variants_r003.py",
+      "sha256": "c5449d698925afadd3279fae343b4763cff068364a4b7b3b32d60af0a28067f0",
+      "bytes": 9158
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/source/crystal_moon_reference_composition_r003.test.ts",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/source/crystal_moon_reference_composition_r003.test.ts",
+      "sha256": "6bc060da73d1f24e6bf196b6a0e27bf9ac5c6d1abea3eb75168edc2ae04b0729",
+      "bytes": 2495
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/source/crystal_moon_reference_composition_r003.ts",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/source/crystal_moon_reference_composition_r003.ts",
+      "sha256": "94ac0f44bcc6554fe5b707fa49e6748d00f9824f07e6512b57ab78d1a3cb0b50",
+      "bytes": 2144
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/source/crystal_moon_reference_r003.tsconfig.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/source/crystal_moon_reference_r003.tsconfig.json",
+      "sha256": "a4aa10b153d1129a5bef821fa121d43cef8cf55ab31f3502e9e5d08763707e07",
+      "bytes": 174
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/source/crystal_moon_reference_r003.vitest.config.ts",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/source/crystal_moon_reference_r003.vitest.config.ts",
+      "sha256": "c2e9c87efc0077d89dd125eaa14e4ffcdee047af74710c948791f2acf47d46c1",
+      "bytes": 159
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/source-builder.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/source-builder.py",
+      "sha256": "c5449d698925afadd3279fae343b4763cff068364a4b7b3b32d60af0a28067f0",
+      "bytes": 9158
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r003/validation.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r003/validation.json",
+      "sha256": "baa04fe799562f12daec431dc7e3b8bfdd96df8dfca688609d2f9804f6d2deaa",
+      "bytes": 186
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/blender-raw/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/blender-raw/connected-crystalline-body.glb",
+      "sha256": "ece0a22431303b565423bb4384f88c45cfa697cc6cc65f3d5e2ba9361b1f0c03",
+      "bytes": 381364
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/connected-crystalline-body.glb",
+      "sha256": "b1ce92ad081745c3d01dbebd401c4551858907de3398e0167d33c19ce6bef2b7",
+      "bytes": 381608
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/kit.blend",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/kit.blend",
+      "sha256": "53036d26bfe32e7a370971bae89e60319f752d43e17625b39c2d508a87520ad4",
+      "bytes": 1556899
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/kit.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/kit.json",
+      "sha256": "8364d4f7f45e0fedf2e2e774a13537f64d46b3ba8319664439bc3526f3b2a47f",
+      "bytes": 1439198
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/material-0-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/material-0-albedo.png",
+      "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+      "bytes": 87818
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/material-0-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/material-0-orm.png",
+      "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+      "bytes": 40836
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/material-1-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/material-1-albedo.png",
+      "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+      "bytes": 76356
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/material-1-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/material-1-orm.png",
+      "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+      "bytes": 41452
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/material-2-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/material-2-albedo.png",
+      "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+      "bytes": 92476
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/material-2-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/material-2-orm.png",
+      "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+      "bytes": 39879
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/material-3-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/material-3-albedo.png",
+      "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+      "bytes": 31086
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/material-4-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/material-4-albedo.png",
+      "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+      "bytes": 33571
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/material-5-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/material-5-albedo.png",
+      "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+      "bytes": 24737
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/material-6-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/material-6-albedo.png",
+      "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+      "bytes": 37069
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/material-7-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/material-7-albedo.png",
+      "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+      "bytes": 40023
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/native-body-preview.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/native-body-preview.png",
+      "sha256": "c535bf9ceb9e7845b6f4d4a384aed51f9eddaa1245570d40dbb60dd799748efb",
+      "bytes": 757716
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/native-body-seed38-angle2.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/native-body-seed38-angle2.png",
+      "sha256": "fc8e3af21e72cd09c511be606f33946a8ab35ff524a02924d54bef85e5cc98e3",
+      "bytes": 300820
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/native-body-seed38-capture.log",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/native-body-seed38-capture.log",
+      "sha256": "5d2e41f7235fa72829661155b603b9dff0484dc49affb8e0cbef5ab14e34e8e8",
+      "bytes": 2923
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/native-body-seed38-reference-scale.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/native-body-seed38-reference-scale.png",
+      "sha256": "8d2c45647238025335d52aa3dbb6b32b8f5a6cf35f0f973ed0da0ad4195dc375",
+      "bytes": 20716
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/native-body-seed38.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/native-body-seed38.json",
+      "sha256": "ac04201f4f180c66642c56b905203c2a3eb849476adbeaab1b69bce87d46e4d6",
+      "bytes": 2517
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/native-body-seed38.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/native-body-seed38.png",
+      "sha256": "458094553e1d8a35fdb342e51d7f4c8cd36bc5805ec774859885b6101af90e84",
+      "bytes": 297307
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/native-body-small-preview.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/native-body-small-preview.png",
+      "sha256": "5571c1ba4d533e95019aae31f05b0c4b9100ee904586a62780494547496c19e2",
+      "bytes": 60668
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/native-panel-plan.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/native-panel-plan.json",
+      "sha256": "4b52e8cc472e5e4c2be6015ffbe680ad81e2dabf7059d09c17aefc037a46ff9c",
+      "bytes": 29507
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/native-reference-scale.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/native-reference-scale.png",
+      "sha256": "eede9ac6af1351a45a395762379a1849d2ba5d514a24671620c659912a4c2fa9",
+      "bytes": 15066
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/revision-notes.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/revision-notes.md",
+      "sha256": "2bd540772bf7527a4c6aff24960e1e29227faba4d291f92d79219de13b2f9cf6",
+      "bytes": 2035
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/source/build_crystal_moon_native_variants_r004.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/source/build_crystal_moon_native_variants_r004.py",
+      "sha256": "8f861a0b9ac5e2d12e3b5cb867c8c8e13662c90536ee2117e566a69084b1c935",
+      "bytes": 10506
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/source/crystal_moon_reference_composition_r003.ts",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/source/crystal_moon_reference_composition_r003.ts",
+      "sha256": "94ac0f44bcc6554fe5b707fa49e6748d00f9824f07e6512b57ab78d1a3cb0b50",
+      "bytes": 2144
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/source/crystal_moon_reference_composition_r004.test.ts",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/source/crystal_moon_reference_composition_r004.test.ts",
+      "sha256": "8b1a4b934eee54343985679bb944bec8958916f29e14230884b1d0c82c3bf5c4",
+      "bytes": 2911
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/source/crystal_moon_reference_r004.tsconfig.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/source/crystal_moon_reference_r004.tsconfig.json",
+      "sha256": "7d7a2cb29bffbe0b45dfe2c0f8c8f3ade5fd5832919278cfd17f7ed7ca4c9275",
+      "bytes": 174
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/source/crystal_moon_reference_r004.vitest.config.ts",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/source/crystal_moon_reference_r004.vitest.config.ts",
+      "sha256": "0fd9041446067ba7089a24969176493c8a92ff0e0f8d6e19500bad81de949729",
+      "bytes": 159
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/source-builder.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/source-builder.py",
+      "sha256": "8f861a0b9ac5e2d12e3b5cb867c8c8e13662c90536ee2117e566a69084b1c935",
+      "bytes": 10506
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/source-freeze.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/source-freeze.json",
+      "sha256": "9da7df4af694a4c0a8f723e8d8b474ab305dc336a583bb3f11355bd4b0943b57",
+      "bytes": 2057
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/tests.log",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/tests.log",
+      "sha256": "01214a4d0709349fac1a88c2b54c65a1e1d60ae1878bcd233ab3128d1c9288f5",
+      "bytes": 207
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/validation.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/validation.json",
+      "sha256": "7477fab607c6a332d40179626e332e8492a3201dfdf0ec54d4ad526a628b7864",
+      "bytes": 186
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/connected-crystalline-body.glb",
+      "sha256": "4fc300daa05904be9a5a1fe184e1d4b61eafc06a70e5e6a0773fbf34f0b35391",
+      "bytes": 731764
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/kit.blend",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/kit.blend",
+      "sha256": "bc736e841b8523409cfdeb423102c913f5be4c7a8179ce2bbb99c612b9c0d11a",
+      "bytes": 2521143
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/kit.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/kit.json",
+      "sha256": "3f4d5b61c195c64175409a8c9423b5405d1cca86717dc30fce1f7bf9027a0cb3",
+      "bytes": 1441829
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/material-0-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/material-0-albedo.png",
+      "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+      "bytes": 87818
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/material-0-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/material-0-orm.png",
+      "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+      "bytes": 40836
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/material-1-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/material-1-albedo.png",
+      "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+      "bytes": 76356
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/material-1-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/material-1-orm.png",
+      "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+      "bytes": 41452
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/material-2-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/material-2-albedo.png",
+      "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+      "bytes": 92476
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/material-2-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/material-2-orm.png",
+      "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+      "bytes": 39879
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/material-3-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/material-3-albedo.png",
+      "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+      "bytes": 31086
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/material-4-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/material-4-albedo.png",
+      "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+      "bytes": 33571
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/material-5-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/material-5-albedo.png",
+      "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+      "bytes": 24737
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/material-6-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/material-6-albedo.png",
+      "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+      "bytes": 37069
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/material-7-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/material-7-albedo.png",
+      "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+      "bytes": 40023
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/moon-1-gltf-front-faces-only-matched-angle2.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/moon-1-gltf-front-faces-only-matched-angle2.png",
+      "sha256": "82a2398af61c2bea69a0a4020c6569568cbb8c152e9080244cbfe4481ef08e2c",
+      "bytes": 933189
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/moon-1-native-two-sided-matched-angle2.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/moon-1-native-two-sided-matched-angle2.png",
+      "sha256": "9fe3ca15b0c8f0396a07f29807a8a3d3cdcedf517a654bce1eb290e7a6cb0ed6",
+      "bytes": 933168
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/native-panel-plan.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/native-panel-plan.json",
+      "sha256": "4b52e8cc472e5e4c2be6015ffbe680ad81e2dabf7059d09c17aefc037a46ff9c",
+      "bytes": 29507
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/orientation-validation.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/orientation-validation.json",
+      "sha256": "4e0d8250c82e5e40ede23d3d3ad5378d3e2155a22c8d53ee450f80c3ea6ba281",
+      "bytes": 63630
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/outward-native-capture.log",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/outward-native-capture.log",
+      "sha256": "684ae8c01745316edcefd931190c8ac066fca3667bcf3738ca7b1bf18d480f09",
+      "bytes": 654
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/outward-native-seed38-angle2.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/outward-native-seed38-angle2.png",
+      "sha256": "2b69655645aee7b826455d3075c56a56eeaaf989ae07703e0a6e4a217c655402",
+      "bytes": 311132
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/outward-native-seed38-capture.log",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/outward-native-seed38-capture.log",
+      "sha256": "89c82f4ba6dfb8095cffbd152268c27e394abc109c05f78465c3866d8d9e39e2",
+      "bytes": 3014
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/outward-native-seed38-reference-scale.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/outward-native-seed38-reference-scale.png",
+      "sha256": "c79f68a83743f25b17633467de0e2cb20c5191f94d74bba369f7d4aa472c761b",
+      "bytes": 20861
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/outward-native-seed38.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/outward-native-seed38.json",
+      "sha256": "9b5923f3e8631139ebb5f4d0796226149c290876501f7511d28e58f280db0f3b",
+      "bytes": 4827
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/outward-native-seed38.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/outward-native-seed38.png",
+      "sha256": "47567b219a1b7208f736b817c32e595bf0eb6c536fed3fc70a138d76647f85b7",
+      "bytes": 295250
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/revision-notes.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/revision-notes.md",
+      "sha256": "fbc1d93b4ab9abb454c476fc8dbef748c6e6ed5be0de2e68f95f2a3efaaf7006",
+      "bytes": 2590
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/source/crystal_moon_reference_composition_r003.ts",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/source/crystal_moon_reference_composition_r003.ts",
+      "sha256": "94ac0f44bcc6554fe5b707fa49e6748d00f9824f07e6512b57ab78d1a3cb0b50",
+      "bytes": 2144
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/source/crystal_moon_reference_composition_r005.test.ts",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/source/crystal_moon_reference_composition_r005.test.ts",
+      "sha256": "4c4f4e941903f70d68395a85ebbca7e5d53df85170992dea280c6a02a40f3851",
+      "bytes": 4517
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/source/crystal_moon_reference_r005.tsconfig.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/source/crystal_moon_reference_r005.tsconfig.json",
+      "sha256": "af3e8dccab045fe9fb743e5afef08bc97b44e9a7472443d06ab604a1f98c88fa",
+      "bytes": 174
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/source/crystal_moon_reference_r005.vitest.config.ts",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/source/crystal_moon_reference_r005.vitest.config.ts",
+      "sha256": "767ee1b1c19deaacba58f1fc225b9a54783150491dc1b94d5617023d3b9764eb",
+      "bytes": 194
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/source/repair_crystal_moon_orientation_r005.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/source/repair_crystal_moon_orientation_r005.py",
+      "sha256": "561c08f251d69731c448e5387e0989fd55511899b3c6987f57b5011e5d00674b",
+      "bytes": 9457
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/source-builder.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/source-builder.py",
+      "sha256": "561c08f251d69731c448e5387e0989fd55511899b3c6987f57b5011e5d00674b",
+      "bytes": 9457
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005/source-freeze.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/source-freeze.json",
+      "sha256": "10213d18dc07bb098c6f77817570dab64208cb5eb1b720ab3049dbb1603d4451",
+      "bytes": 1966
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt1-invalid-uv/blender-raw/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt1-invalid-uv/blender-raw/connected-crystalline-body.glb",
+      "sha256": "dfd0b1f6e73695278f8825585edfc9bb3a5aa9fb673cf4c2f558d83a756ded0a",
+      "bytes": 381508
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt1-invalid-uv/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt1-invalid-uv/connected-crystalline-body.glb",
+      "sha256": "fcbfcde39d5f92b4cc09242b26072ec86b01d145a6c450f43b70c4426e0391cd",
+      "bytes": 381752
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt1-invalid-uv/kit.blend",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt1-invalid-uv/kit.blend",
+      "sha256": "2a08e545190a973db7e8884964b16bf2899d8c5426f0ac605dd1dce837e28b9f",
+      "bytes": 1696795
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt1-invalid-uv/kit.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt1-invalid-uv/kit.json",
+      "sha256": "4ad7265fd8eac1647f2692235325169966c2d4fbd39a5bfd294ae804ffb478d0",
+      "bytes": 1389047
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt1-invalid-uv/material-0-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt1-invalid-uv/material-0-albedo.png",
+      "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+      "bytes": 87818
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt1-invalid-uv/material-0-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt1-invalid-uv/material-0-orm.png",
+      "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+      "bytes": 40836
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt1-invalid-uv/material-1-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt1-invalid-uv/material-1-albedo.png",
+      "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+      "bytes": 76356
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt1-invalid-uv/material-1-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt1-invalid-uv/material-1-orm.png",
+      "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+      "bytes": 41452
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt1-invalid-uv/material-2-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt1-invalid-uv/material-2-albedo.png",
+      "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+      "bytes": 92476
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt1-invalid-uv/material-2-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt1-invalid-uv/material-2-orm.png",
+      "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+      "bytes": 39879
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt1-invalid-uv/material-3-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt1-invalid-uv/material-3-albedo.png",
+      "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+      "bytes": 31086
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt1-invalid-uv/material-4-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt1-invalid-uv/material-4-albedo.png",
+      "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+      "bytes": 33571
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt1-invalid-uv/material-5-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt1-invalid-uv/material-5-albedo.png",
+      "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+      "bytes": 24737
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt1-invalid-uv/material-6-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt1-invalid-uv/material-6-albedo.png",
+      "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+      "bytes": 37069
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt1-invalid-uv/material-7-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt1-invalid-uv/material-7-albedo.png",
+      "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+      "bytes": 40023
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt1-invalid-uv/native-panel-plan.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt1-invalid-uv/native-panel-plan.json",
+      "sha256": "4b52e8cc472e5e4c2be6015ffbe680ad81e2dabf7059d09c17aefc037a46ff9c",
+      "bytes": 29507
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt1-invalid-uv/orientation-validation.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt1-invalid-uv/orientation-validation.json",
+      "sha256": "2749b7a254c3666475d357e291732bb4221b39e8203cf4ada6e5d1d1ca90dcb9",
+      "bytes": 63623
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt1-invalid-uv/source-builder.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt1-invalid-uv/source-builder.py",
+      "sha256": "63f8dff54c0f2c3f2243debeddb40ac5d245ecceaf3a81904b52490f47409f2d",
+      "bytes": 7526
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt2-normal-precision/blender-raw/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt2-normal-precision/blender-raw/connected-crystalline-body.glb",
+      "sha256": "dfd0b1f6e73695278f8825585edfc9bb3a5aa9fb673cf4c2f558d83a756ded0a",
+      "bytes": 381508
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt2-normal-precision/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt2-normal-precision/connected-crystalline-body.glb",
+      "sha256": "fcbfcde39d5f92b4cc09242b26072ec86b01d145a6c450f43b70c4426e0391cd",
+      "bytes": 381752
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt2-normal-precision/kit.blend",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt2-normal-precision/kit.blend",
+      "sha256": "9ba713238726e57e450151afac1fea84591d033c263361ae601ff1f5817a5de3",
+      "bytes": 1696795
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt2-normal-precision/kit.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt2-normal-precision/kit.json",
+      "sha256": "2681bcce6c6d3e56614cc28b7f3f47900b7a09acbbbd52509323eda13f99d659",
+      "bytes": 1442218
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt2-normal-precision/material-0-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt2-normal-precision/material-0-albedo.png",
+      "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+      "bytes": 87818
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt2-normal-precision/material-0-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt2-normal-precision/material-0-orm.png",
+      "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+      "bytes": 40836
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt2-normal-precision/material-1-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt2-normal-precision/material-1-albedo.png",
+      "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+      "bytes": 76356
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt2-normal-precision/material-1-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt2-normal-precision/material-1-orm.png",
+      "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+      "bytes": 41452
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt2-normal-precision/material-2-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt2-normal-precision/material-2-albedo.png",
+      "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+      "bytes": 92476
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt2-normal-precision/material-2-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt2-normal-precision/material-2-orm.png",
+      "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+      "bytes": 39879
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt2-normal-precision/material-3-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt2-normal-precision/material-3-albedo.png",
+      "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+      "bytes": 31086
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt2-normal-precision/material-4-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt2-normal-precision/material-4-albedo.png",
+      "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+      "bytes": 33571
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt2-normal-precision/material-5-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt2-normal-precision/material-5-albedo.png",
+      "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+      "bytes": 24737
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt2-normal-precision/material-6-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt2-normal-precision/material-6-albedo.png",
+      "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+      "bytes": 37069
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt2-normal-precision/material-7-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt2-normal-precision/material-7-albedo.png",
+      "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+      "bytes": 40023
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt2-normal-precision/native-panel-plan.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt2-normal-precision/native-panel-plan.json",
+      "sha256": "4b52e8cc472e5e4c2be6015ffbe680ad81e2dabf7059d09c17aefc037a46ff9c",
+      "bytes": 29507
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt2-normal-precision/orientation-validation.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt2-normal-precision/orientation-validation.json",
+      "sha256": "893344618a35d776537c57af7ce32edf356447db23b32518e50788ee3b8513f2",
+      "bytes": 63626
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-1-r005-attempt2-normal-precision/source-builder.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005-attempt2-normal-precision/source-builder.py",
+      "sha256": "1d5309457ebd7afdb35ddafd0606f6dcd13a9d0c923c20ca8f3e1715c7747433",
+      "bytes": 7614
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-01-geodesic-plates/blender-raw/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-01-geodesic-plates/blender-raw/connected-crystalline-body.glb",
+      "sha256": "4a8f4d66c72a0b528571465adcb0e0d2ec8c339812dd7e28e953c02b9e3598ef",
+      "bytes": 231400
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-01-geodesic-plates/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-01-geodesic-plates/connected-crystalline-body.glb",
+      "sha256": "efb0fca3ea95d33224ed13fc2bf6b2aa97e778525b9e80dce45fedd89bc55ac5",
+      "bytes": 231644
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-01-geodesic-plates/kit.blend",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-01-geodesic-plates/kit.blend",
+      "sha256": "dae3bbd48d44db30929d57bc33073b542facf1a371cc41634552fcd791993a75",
+      "bytes": 1386451
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-01-geodesic-plates/kit.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-01-geodesic-plates/kit.json",
+      "sha256": "11b781af1475fccc1366c9ac6a8e9ed82ff09562516800de53f6988d7fec47a1",
+      "bytes": 371095
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-01-geodesic-plates/material-0-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-01-geodesic-plates/material-0-albedo.png",
+      "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+      "bytes": 87818
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-01-geodesic-plates/material-0-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-01-geodesic-plates/material-0-orm.png",
+      "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+      "bytes": 40836
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-01-geodesic-plates/material-1-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-01-geodesic-plates/material-1-albedo.png",
+      "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+      "bytes": 76356
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-01-geodesic-plates/material-1-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-01-geodesic-plates/material-1-orm.png",
+      "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+      "bytes": 41452
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-01-geodesic-plates/material-2-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-01-geodesic-plates/material-2-albedo.png",
+      "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+      "bytes": 92476
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-01-geodesic-plates/material-2-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-01-geodesic-plates/material-2-orm.png",
+      "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+      "bytes": 39879
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-01-geodesic-plates/material-3-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-01-geodesic-plates/material-3-albedo.png",
+      "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+      "bytes": 31086
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-01-geodesic-plates/material-4-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-01-geodesic-plates/material-4-albedo.png",
+      "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+      "bytes": 33571
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-01-geodesic-plates/material-5-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-01-geodesic-plates/material-5-albedo.png",
+      "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+      "bytes": 24737
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-01-geodesic-plates/material-6-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-01-geodesic-plates/material-6-albedo.png",
+      "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+      "bytes": 37069
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-01-geodesic-plates/material-7-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-01-geodesic-plates/material-7-albedo.png",
+      "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+      "bytes": 40023
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-01-geodesic-plates/native-body-preview.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-01-geodesic-plates/native-body-preview.png",
+      "sha256": "6ecabdb32d373525b9fa87d23dc9b7d4f436575053696a45dc112f930b86c5f1",
+      "bytes": 662109
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-01-geodesic-plates/native-body-small-preview.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-01-geodesic-plates/native-body-small-preview.png",
+      "sha256": "ebf91d63a9e3ee5a3939ec342692c57760dacfd76d678d11babd356e04cb6f69",
+      "bytes": 51816
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-01-geodesic-plates/native-panel-plan.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-01-geodesic-plates/native-panel-plan.json",
+      "sha256": "1089053c1518937cf1c16eef238e2eabb68a046cb8e2e8a960ec8400b6f76263",
+      "bytes": 13883
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-01-geodesic-plates/source-builder.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-01-geodesic-plates/source-builder.py",
+      "sha256": "29141d39f46ec340d8d92425f7bfb6f657cc8d58727c3a81af246d3562e2fbce",
+      "bytes": 7696
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-01-geodesic-plates/validation.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-01-geodesic-plates/validation.json",
+      "sha256": "96e3bfc8b5dd187a36b543a55f89e773cda8f3b787e6b3eb2e05b0d3402d3d30",
+      "bytes": 185
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-02-regular-quad-panels/blender-raw/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-02-regular-quad-panels/blender-raw/connected-crystalline-body.glb",
+      "sha256": "1f32565c381f6a22d4d2b6d8e77acd066710257cbf1d55aa8f14fc98336c994a",
+      "bytes": 248252
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-02-regular-quad-panels/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-02-regular-quad-panels/connected-crystalline-body.glb",
+      "sha256": "f7bab235f39796a96652ecb4de71511cba14bc91ef2b42a1a9450457d1c3b70c",
+      "bytes": 248496
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-02-regular-quad-panels/kit.blend",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-02-regular-quad-panels/kit.blend",
+      "sha256": "9a07982f8a0b9c2f6dae9a272377bed97c7077e89c6d08b59c43bbe65ba17b08",
+      "bytes": 1405851
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-02-regular-quad-panels/kit.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-02-regular-quad-panels/kit.json",
+      "sha256": "112c68fd5e9e42dda55677884a4d987718d613112ffb9bab6cfb79c16472d36d",
+      "bytes": 478738
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-02-regular-quad-panels/material-0-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-02-regular-quad-panels/material-0-albedo.png",
+      "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+      "bytes": 87818
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-02-regular-quad-panels/material-0-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-02-regular-quad-panels/material-0-orm.png",
+      "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+      "bytes": 40836
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-02-regular-quad-panels/material-1-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-02-regular-quad-panels/material-1-albedo.png",
+      "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+      "bytes": 76356
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-02-regular-quad-panels/material-1-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-02-regular-quad-panels/material-1-orm.png",
+      "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+      "bytes": 41452
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-02-regular-quad-panels/material-2-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-02-regular-quad-panels/material-2-albedo.png",
+      "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+      "bytes": 92476
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-02-regular-quad-panels/material-2-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-02-regular-quad-panels/material-2-orm.png",
+      "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+      "bytes": 39879
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-02-regular-quad-panels/material-3-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-02-regular-quad-panels/material-3-albedo.png",
+      "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+      "bytes": 31086
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-02-regular-quad-panels/material-4-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-02-regular-quad-panels/material-4-albedo.png",
+      "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+      "bytes": 33571
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-02-regular-quad-panels/material-5-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-02-regular-quad-panels/material-5-albedo.png",
+      "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+      "bytes": 24737
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-02-regular-quad-panels/material-6-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-02-regular-quad-panels/material-6-albedo.png",
+      "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+      "bytes": 37069
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-02-regular-quad-panels/material-7-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-02-regular-quad-panels/material-7-albedo.png",
+      "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+      "bytes": 40023
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-02-regular-quad-panels/native-body-preview.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-02-regular-quad-panels/native-body-preview.png",
+      "sha256": "0de9b8c5a9be86d8ed8095f0502d8fc47b9238b24ffeede13e722bfaf28ea385",
+      "bytes": 656382
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-02-regular-quad-panels/native-body-small-preview.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-02-regular-quad-panels/native-body-small-preview.png",
+      "sha256": "e309b205a9469717e7a6b2fa25384fc7c4b8f559991f2dc1ae3fbd1827a0916d",
+      "bytes": 52303
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-02-regular-quad-panels/native-panel-plan.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-02-regular-quad-panels/native-panel-plan.json",
+      "sha256": "d21479364db8ff77ae90796287955b6640a56602f017532517f95edb3048626a",
+      "bytes": 17013
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-02-regular-quad-panels/source-builder.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-02-regular-quad-panels/source-builder.py",
+      "sha256": "20649ac62eb6f0cf7ec4df4339da5f135bf4ead0e9673d230d0131b2fa5a24fc",
+      "bytes": 8429
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/attempt-02-regular-quad-panels/validation.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/attempt-02-regular-quad-panels/validation.json",
+      "sha256": "945fbb39f5fc052ac12c1388d78f7e634d431e9142f6985b1cdea7993cd7ce07",
+      "bytes": 186
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/blender-raw/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/blender-raw/connected-crystalline-body.glb",
+      "sha256": "7db772d0e4145aa8045584feb0642c7c0b678a74fa7e4a1c7af96adadfbd26af",
+      "bytes": 228260
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/connected-crystalline-body.glb",
+      "sha256": "0beaac99e59d81a96e86c7068f9f96656e4d2dd9b907997a9ddf4e3ddaf8d46e",
+      "bytes": 228504
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/kit.blend",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/kit.blend",
+      "sha256": "b6041ec9653501e7fbf7de39ae4c0ad24af4ce5e8d976766bab1e516ee61831b",
+      "bytes": 1382091
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/kit.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/kit.json",
+      "sha256": "07ada4b5f1cf5c64700cab75ab2a4a3ebd447dbea8883fb210acb19ce37ed222",
+      "bytes": 380102
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/material-0-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/material-0-albedo.png",
+      "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+      "bytes": 87818
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/material-0-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/material-0-orm.png",
+      "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+      "bytes": 40836
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/material-1-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/material-1-albedo.png",
+      "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+      "bytes": 76356
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/material-1-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/material-1-orm.png",
+      "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+      "bytes": 41452
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/material-2-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/material-2-albedo.png",
+      "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+      "bytes": 92476
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/material-2-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/material-2-orm.png",
+      "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+      "bytes": 39879
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/material-3-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/material-3-albedo.png",
+      "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+      "bytes": 31086
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/material-4-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/material-4-albedo.png",
+      "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+      "bytes": 33571
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/material-5-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/material-5-albedo.png",
+      "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+      "bytes": 24737
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/material-6-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/material-6-albedo.png",
+      "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+      "bytes": 37069
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/material-7-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/material-7-albedo.png",
+      "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+      "bytes": 40023
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/native-body-preview.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/native-body-preview.png",
+      "sha256": "3c111521695b445eaf053b8a627962f321788ead85571fabeb6c9d370b3a32b0",
+      "bytes": 659056
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/native-body-small-preview.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/native-body-small-preview.png",
+      "sha256": "802e388a8dcfa4692a30ce1bcb9b50ed7b98d7829585c1127be7e4e607ea6dbf",
+      "bytes": 52004
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/native-panel-plan.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/native-panel-plan.json",
+      "sha256": "a4a1ab1eddb66bfa000ec6c7490f7422f8e0935ad4c1a538f135d313ab6f72f4",
+      "bytes": 8200
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/revision-notes.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/revision-notes.md",
+      "sha256": "eae01de2b0e04d11eeaeef121a91bd424c9318f872106e4e160c584f9d7e2146",
+      "bytes": 2085
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/source/build_crystal_moon_native_variants_r003.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/source/build_crystal_moon_native_variants_r003.py",
+      "sha256": "c5449d698925afadd3279fae343b4763cff068364a4b7b3b32d60af0a28067f0",
+      "bytes": 9158
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/source/crystal_moon_reference_composition_r003.test.ts",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/source/crystal_moon_reference_composition_r003.test.ts",
+      "sha256": "6bc060da73d1f24e6bf196b6a0e27bf9ac5c6d1abea3eb75168edc2ae04b0729",
+      "bytes": 2495
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/source/crystal_moon_reference_composition_r003.ts",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/source/crystal_moon_reference_composition_r003.ts",
+      "sha256": "94ac0f44bcc6554fe5b707fa49e6748d00f9824f07e6512b57ab78d1a3cb0b50",
+      "bytes": 2144
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/source/crystal_moon_reference_r003.tsconfig.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/source/crystal_moon_reference_r003.tsconfig.json",
+      "sha256": "a4aa10b153d1129a5bef821fa121d43cef8cf55ab31f3502e9e5d08763707e07",
+      "bytes": 174
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/source/crystal_moon_reference_r003.vitest.config.ts",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/source/crystal_moon_reference_r003.vitest.config.ts",
+      "sha256": "c2e9c87efc0077d89dd125eaa14e4ffcdee047af74710c948791f2acf47d46c1",
+      "bytes": 159
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/source-builder.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/source-builder.py",
+      "sha256": "c5449d698925afadd3279fae343b4763cff068364a4b7b3b32d60af0a28067f0",
+      "bytes": 9158
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r003/validation.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r003/validation.json",
+      "sha256": "330d53ea6bc0d4649fd8b2aa4c626558771a2c092d8a87ff4010932a5c55415a",
+      "bytes": 185
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/blender-raw/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/blender-raw/connected-crystalline-body.glb",
+      "sha256": "f2ea58253227d44172631cceee4eaeb758174841d194ae2ecb26ce028b89714d",
+      "bytes": 238232
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/connected-crystalline-body.glb",
+      "sha256": "09b9b1d5e141e0608eec618c0b96c0438844f67605a2061aa5cb2e180d020a18",
+      "bytes": 238476
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/kit.blend",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/kit.blend",
+      "sha256": "9b4244755e6e54cf1edc11eadedb5bd77b1a07329f2683514d7388a684e4f815",
+      "bytes": 1393291
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/kit.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/kit.json",
+      "sha256": "4b1760df964e244c7f2867572dd473d28412c9c4d2f19a897589d0d5c0ab73fb",
+      "bytes": 456184
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/material-0-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/material-0-albedo.png",
+      "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+      "bytes": 87818
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/material-0-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/material-0-orm.png",
+      "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+      "bytes": 40836
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/material-1-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/material-1-albedo.png",
+      "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+      "bytes": 76356
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/material-1-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/material-1-orm.png",
+      "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+      "bytes": 41452
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/material-2-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/material-2-albedo.png",
+      "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+      "bytes": 92476
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/material-2-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/material-2-orm.png",
+      "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+      "bytes": 39879
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/material-3-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/material-3-albedo.png",
+      "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+      "bytes": 31086
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/material-4-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/material-4-albedo.png",
+      "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+      "bytes": 33571
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/material-5-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/material-5-albedo.png",
+      "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+      "bytes": 24737
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/material-6-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/material-6-albedo.png",
+      "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+      "bytes": 37069
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/material-7-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/material-7-albedo.png",
+      "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+      "bytes": 40023
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/native-body-capture.log",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/native-body-capture.log",
+      "sha256": "b8dc8a1c9f555c9f24f1c49ae25e5a352ac7ebd88a92c6240369f2f38e7a487b",
+      "bytes": 651
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/native-body-preview.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/native-body-preview.png",
+      "sha256": "dc7a2d222b3fc27ff3e9b7299a19abca20b5e14386b0337e00bdd0ae93a0ac98",
+      "bytes": 655647
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/native-body-seed38-angle2.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/native-body-seed38-angle2.png",
+      "sha256": "4a5eb4d38db472c3e9b08fcc38d52b27db83c9d73d6362bae002ce9f4692b9ce",
+      "bytes": 217045
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/native-body-seed38-capture.log",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/native-body-seed38-capture.log",
+      "sha256": "f666995b77f969f784151e6f0850e84da90318d7858ccc0386e89f3d116405ef",
+      "bytes": 2923
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/native-body-seed38-reference-scale.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/native-body-seed38-reference-scale.png",
+      "sha256": "e5678b6560aa611996a922dd5a16679f0765f1aa27474f0f3e3272aadb58fcbc",
+      "bytes": 10556
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/native-body-seed38.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/native-body-seed38.json",
+      "sha256": "173afa13b817153306fa13d08b9d1fdd4e7927da1385361e65919071ae481c65",
+      "bytes": 2518
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/native-body-seed38.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/native-body-seed38.png",
+      "sha256": "28a32e9e2c7f15968cbc599199c9066e0c2df5d9603a6d0ce7bc01a15e2eb96b",
+      "bytes": 208740
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/native-body-small-preview.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/native-body-small-preview.png",
+      "sha256": "3c906ebe1375919a8f58abc6249f2c425c8b36e359f22c64fe0821710c034bd6",
+      "bytes": 51387
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/native-panel-plan.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/native-panel-plan.json",
+      "sha256": "b906549dce9c70d76b184c011658d823dd2ac393873d671b61b1fb4826d234cc",
+      "bytes": 8912
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/native-reference-scale.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/native-reference-scale.png",
+      "sha256": "51ae9a27241ed3a24083f2bcdedeaeb490d29dc22fb981a7c7271553de203bf9",
+      "bytes": 10037
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/revision-notes.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/revision-notes.md",
+      "sha256": "59cb02a41aa49f23fcd42e73902a3e64c851b3d15a97b440203e52c746eed7ad",
+      "bytes": 2034
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/source/build_crystal_moon_native_variants_r004.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/source/build_crystal_moon_native_variants_r004.py",
+      "sha256": "8f861a0b9ac5e2d12e3b5cb867c8c8e13662c90536ee2117e566a69084b1c935",
+      "bytes": 10506
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/source/crystal_moon_reference_composition_r003.ts",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/source/crystal_moon_reference_composition_r003.ts",
+      "sha256": "94ac0f44bcc6554fe5b707fa49e6748d00f9824f07e6512b57ab78d1a3cb0b50",
+      "bytes": 2144
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/source/crystal_moon_reference_composition_r004.test.ts",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/source/crystal_moon_reference_composition_r004.test.ts",
+      "sha256": "8b1a4b934eee54343985679bb944bec8958916f29e14230884b1d0c82c3bf5c4",
+      "bytes": 2911
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/source/crystal_moon_reference_r004.tsconfig.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/source/crystal_moon_reference_r004.tsconfig.json",
+      "sha256": "7d7a2cb29bffbe0b45dfe2c0f8c8f3ade5fd5832919278cfd17f7ed7ca4c9275",
+      "bytes": 174
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/source/crystal_moon_reference_r004.vitest.config.ts",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/source/crystal_moon_reference_r004.vitest.config.ts",
+      "sha256": "0fd9041446067ba7089a24969176493c8a92ff0e0f8d6e19500bad81de949729",
+      "bytes": 159
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/source-builder.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/source-builder.py",
+      "sha256": "8f861a0b9ac5e2d12e3b5cb867c8c8e13662c90536ee2117e566a69084b1c935",
+      "bytes": 10506
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/source-freeze.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/source-freeze.json",
+      "sha256": "d51e20b683015792b767822df25335ba3033ed7a7690e96fe95d43185a863ebb",
+      "bytes": 2057
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/tests.log",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/tests.log",
+      "sha256": "01214a4d0709349fac1a88c2b54c65a1e1d60ae1878bcd233ab3128d1c9288f5",
+      "bytes": 207
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/validation.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/validation.json",
+      "sha256": "7a59345ba914cdd025eb537d9bb922383688fdb391fbf86c696deec868d3e48b",
+      "bytes": 186
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/connected-crystalline-body.glb",
+      "sha256": "6643e0bfa3aba8865b491871d3f0ce41a3f9c82015689078959e1abacef17c0d",
+      "bytes": 351452
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/kit.blend",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/kit.blend",
+      "sha256": "eab6cd9c898c596f434ee49fb6f7264a3c111c19277cecbfe0377677dde45d9e",
+      "bytes": 1678535
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/kit.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/kit.json",
+      "sha256": "2932db1657b29a13d29ba615cc29e8dc4465bedd98caf2a4ce40b84893723b9e",
+      "bytes": 457286
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/material-0-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/material-0-albedo.png",
+      "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+      "bytes": 87818
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/material-0-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/material-0-orm.png",
+      "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+      "bytes": 40836
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/material-1-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/material-1-albedo.png",
+      "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+      "bytes": 76356
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/material-1-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/material-1-orm.png",
+      "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+      "bytes": 41452
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/material-2-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/material-2-albedo.png",
+      "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+      "bytes": 92476
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/material-2-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/material-2-orm.png",
+      "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+      "bytes": 39879
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/material-3-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/material-3-albedo.png",
+      "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+      "bytes": 31086
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/material-4-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/material-4-albedo.png",
+      "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+      "bytes": 33571
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/material-5-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/material-5-albedo.png",
+      "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+      "bytes": 24737
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/material-6-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/material-6-albedo.png",
+      "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+      "bytes": 37069
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/material-7-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/material-7-albedo.png",
+      "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+      "bytes": 40023
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/moon-2-gltf-front-faces-only-matched-angle2.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/moon-2-gltf-front-faces-only-matched-angle2.png",
+      "sha256": "8bfa11f6ea65a2eb8e5b71191e897a14e5ca8d5133766318eb589ef646d0fd9c",
+      "bytes": 784766
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/moon-2-native-two-sided-matched-angle2.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/moon-2-native-two-sided-matched-angle2.png",
+      "sha256": "1f33e023b399776e58ea4ec3fef15f372c43dcbdade2265ccec0d8ac10e91de9",
+      "bytes": 784621
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/native-panel-plan.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/native-panel-plan.json",
+      "sha256": "b906549dce9c70d76b184c011658d823dd2ac393873d671b61b1fb4826d234cc",
+      "bytes": 8912
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/orientation-validation.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/orientation-validation.json",
+      "sha256": "4274cdd0519cb8d8dc0f8bc489b80482adbef0fac6bea31de8568d1804241818",
+      "bytes": 19474
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/outward-native-capture.log",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/outward-native-capture.log",
+      "sha256": "7041f592313ca69ec254682e38ec3f741e81d3c7a1b1086387bddc4cca5e002d",
+      "bytes": 637
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/outward-native-seed38-angle2.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/outward-native-seed38-angle2.png",
+      "sha256": "9373112cd9735db8752c8f19847bc735dedc9356fe5cdaeefb69a554aadffd57",
+      "bytes": 215055
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/outward-native-seed38-capture.log",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/outward-native-seed38-capture.log",
+      "sha256": "08e2161c9c6db633a198e1db41c113789788f4f6e6e4c13653c3b056ffb2787e",
+      "bytes": 2979
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/outward-native-seed38-reference-scale.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/outward-native-seed38-reference-scale.png",
+      "sha256": "7ec967c4bdb9de28fe0b92596c2e4247b734f493e3d88cbeb567083214492eb3",
+      "bytes": 10531
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/outward-native-seed38.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/outward-native-seed38.json",
+      "sha256": "49483c79202943b3e895be66ddaf4cb8472086e4aa290887d72b505a9c052960",
+      "bytes": 4809
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/outward-native-seed38.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/outward-native-seed38.png",
+      "sha256": "e61f765ef5fccede4eef682872a27e1e5b21e6bdfbb57dfbffed60f90a90fcf2",
+      "bytes": 213751
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/revision-notes.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/revision-notes.md",
+      "sha256": "fa1e46b0232b809c963e279cd52ba0316d00558c25bc275c30bc550f5a4c048b",
+      "bytes": 2587
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/source/crystal_moon_reference_composition_r003.ts",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/source/crystal_moon_reference_composition_r003.ts",
+      "sha256": "94ac0f44bcc6554fe5b707fa49e6748d00f9824f07e6512b57ab78d1a3cb0b50",
+      "bytes": 2144
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/source/crystal_moon_reference_composition_r005.test.ts",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/source/crystal_moon_reference_composition_r005.test.ts",
+      "sha256": "4c4f4e941903f70d68395a85ebbca7e5d53df85170992dea280c6a02a40f3851",
+      "bytes": 4517
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/source/crystal_moon_reference_r005.tsconfig.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/source/crystal_moon_reference_r005.tsconfig.json",
+      "sha256": "af3e8dccab045fe9fb743e5afef08bc97b44e9a7472443d06ab604a1f98c88fa",
+      "bytes": 174
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/source/crystal_moon_reference_r005.vitest.config.ts",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/source/crystal_moon_reference_r005.vitest.config.ts",
+      "sha256": "767ee1b1c19deaacba58f1fc225b9a54783150491dc1b94d5617023d3b9764eb",
+      "bytes": 194
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/source/repair_crystal_moon_orientation_r005.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/source/repair_crystal_moon_orientation_r005.py",
+      "sha256": "561c08f251d69731c448e5387e0989fd55511899b3c6987f57b5011e5d00674b",
+      "bytes": 9457
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/source-builder.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/source-builder.py",
+      "sha256": "561c08f251d69731c448e5387e0989fd55511899b3c6987f57b5011e5d00674b",
+      "bytes": 9457
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005/source-freeze.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/source-freeze.json",
+      "sha256": "f7c816fd0ed034660d15cc5fa1527970b123b46a7f50f21b29facf3072d93ed3",
+      "bytes": 1966
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt1-invalid-uv/blender-raw/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt1-invalid-uv/blender-raw/connected-crystalline-body.glb",
+      "sha256": "182b6b463deebb7fbe357a4c974a29bcdd48807674113bb9f3d856e07332e015",
+      "bytes": 238376
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt1-invalid-uv/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt1-invalid-uv/connected-crystalline-body.glb",
+      "sha256": "ad004286b04d089154b481f9f69311641cb2979469feef273f789de662b28a4a",
+      "bytes": 238620
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt1-invalid-uv/kit.blend",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt1-invalid-uv/kit.blend",
+      "sha256": "4577d79eb0a5199c251a728fdd7e3f40ba07276c202be112dfef86c756b79448",
+      "bytes": 1419479
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt1-invalid-uv/kit.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt1-invalid-uv/kit.json",
+      "sha256": "bc9e4993a2d3b8a2ea032da6708a2cf2355afecf8a003d15fb696d4ca186c9c1",
+      "bytes": 443936
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt1-invalid-uv/material-0-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt1-invalid-uv/material-0-albedo.png",
+      "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+      "bytes": 87818
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt1-invalid-uv/material-0-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt1-invalid-uv/material-0-orm.png",
+      "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+      "bytes": 40836
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt1-invalid-uv/material-1-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt1-invalid-uv/material-1-albedo.png",
+      "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+      "bytes": 76356
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt1-invalid-uv/material-1-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt1-invalid-uv/material-1-orm.png",
+      "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+      "bytes": 41452
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt1-invalid-uv/material-2-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt1-invalid-uv/material-2-albedo.png",
+      "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+      "bytes": 92476
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt1-invalid-uv/material-2-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt1-invalid-uv/material-2-orm.png",
+      "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+      "bytes": 39879
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt1-invalid-uv/material-3-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt1-invalid-uv/material-3-albedo.png",
+      "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+      "bytes": 31086
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt1-invalid-uv/material-4-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt1-invalid-uv/material-4-albedo.png",
+      "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+      "bytes": 33571
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt1-invalid-uv/material-5-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt1-invalid-uv/material-5-albedo.png",
+      "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+      "bytes": 24737
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt1-invalid-uv/material-6-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt1-invalid-uv/material-6-albedo.png",
+      "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+      "bytes": 37069
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt1-invalid-uv/material-7-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt1-invalid-uv/material-7-albedo.png",
+      "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+      "bytes": 40023
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt1-invalid-uv/native-panel-plan.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt1-invalid-uv/native-panel-plan.json",
+      "sha256": "b906549dce9c70d76b184c011658d823dd2ac393873d671b61b1fb4826d234cc",
+      "bytes": 8912
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt1-invalid-uv/orientation-validation.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt1-invalid-uv/orientation-validation.json",
+      "sha256": "f33f4a44a9ca166ffd42eb00d39298afbcff183bdf84e5a9c492063d85e3bf42",
+      "bytes": 19479
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt1-invalid-uv/source-builder.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt1-invalid-uv/source-builder.py",
+      "sha256": "63f8dff54c0f2c3f2243debeddb40ac5d245ecceaf3a81904b52490f47409f2d",
+      "bytes": 7526
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt2-normal-precision/blender-raw/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt2-normal-precision/blender-raw/connected-crystalline-body.glb",
+      "sha256": "182b6b463deebb7fbe357a4c974a29bcdd48807674113bb9f3d856e07332e015",
+      "bytes": 238376
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt2-normal-precision/connected-crystalline-body.glb",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt2-normal-precision/connected-crystalline-body.glb",
+      "sha256": "ad004286b04d089154b481f9f69311641cb2979469feef273f789de662b28a4a",
+      "bytes": 238620
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt2-normal-precision/kit.blend",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt2-normal-precision/kit.blend",
+      "sha256": "39484cc61c11c867f39c7220db05942dbe25f0d2b018c6ffe939d41a7dd300fc",
+      "bytes": 1419479
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt2-normal-precision/kit.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt2-normal-precision/kit.json",
+      "sha256": "5f9781deb1098b14614d4e1216bc4f6a9dfb0832c235777712b6614d6399f027",
+      "bytes": 457433
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt2-normal-precision/material-0-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt2-normal-precision/material-0-albedo.png",
+      "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+      "bytes": 87818
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt2-normal-precision/material-0-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt2-normal-precision/material-0-orm.png",
+      "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+      "bytes": 40836
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt2-normal-precision/material-1-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt2-normal-precision/material-1-albedo.png",
+      "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+      "bytes": 76356
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt2-normal-precision/material-1-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt2-normal-precision/material-1-orm.png",
+      "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+      "bytes": 41452
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt2-normal-precision/material-2-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt2-normal-precision/material-2-albedo.png",
+      "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+      "bytes": 92476
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt2-normal-precision/material-2-orm.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt2-normal-precision/material-2-orm.png",
+      "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+      "bytes": 39879
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt2-normal-precision/material-3-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt2-normal-precision/material-3-albedo.png",
+      "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+      "bytes": 31086
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt2-normal-precision/material-4-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt2-normal-precision/material-4-albedo.png",
+      "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+      "bytes": 33571
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt2-normal-precision/material-5-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt2-normal-precision/material-5-albedo.png",
+      "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+      "bytes": 24737
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt2-normal-precision/material-6-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt2-normal-precision/material-6-albedo.png",
+      "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+      "bytes": 37069
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt2-normal-precision/material-7-albedo.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt2-normal-precision/material-7-albedo.png",
+      "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+      "bytes": 40023
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt2-normal-precision/native-panel-plan.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt2-normal-precision/native-panel-plan.json",
+      "sha256": "b906549dce9c70d76b184c011658d823dd2ac393873d671b61b1fb4826d234cc",
+      "bytes": 8912
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt2-normal-precision/orientation-validation.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt2-normal-precision/orientation-validation.json",
+      "sha256": "5c6baa144202244cfc1be055124009051e93dbad52f832d9ba4d00ccc4fd78ac",
+      "bytes": 19479
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moon-2-r005-attempt2-normal-precision/source-builder.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005-attempt2-normal-precision/source-builder.py",
+      "sha256": "1d5309457ebd7afdb35ddafd0606f6dcd13a9d0c923c20ca8f3e1715c7747433",
+      "bytes": 7614
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r002-attribute-audit/report.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r002-attribute-audit/report.json",
+      "sha256": "fec0721548b9a37d98925e36ff5e6199624dfefcc5cb8f4a9d84752dc18b5f71",
+      "bytes": 48349
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r002-attribute-audit/report.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r002-attribute-audit/report.md",
+      "sha256": "245e2799e1d16f27c5345ceb18ec96cd7be8724979c2c7c1f021051fd172f9e7",
+      "bytes": 10110
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r002-gallery-manifest.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r002-gallery-manifest.json",
+      "sha256": "c9deb743039067414d299c88c271cad7e9a9a1f5411151b2cf9d1653cf89cb88",
+      "bytes": 950
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r003-attribute-audit/report.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r003-attribute-audit/report.json",
+      "sha256": "198623bc57b7c4fc34a8c8b48fecac11f2c4ba1e81e2fb300b02fe7db3118eab",
+      "bytes": 5857
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r003-attribute-audit/report.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r003-attribute-audit/report.md",
+      "sha256": "13d5b647820d47c77d59ee496420b06929bd78eae70c7dae5eb3b433b0fc2fcb",
+      "bytes": 1848
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r004-attribute-audit/report.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r004-attribute-audit/report.json",
+      "sha256": "69d4fc639c3ab80fa33eec13c1d0ddcccbc14998a6b9ca0890f1e48f9df2f6e9",
+      "bytes": 5857
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r004-attribute-audit/report.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r004-attribute-audit/report.md",
+      "sha256": "a1c3ce6164365f8afa1b82520f739c98d74f24b57093fc4ca4e9145eb94e65a1",
+      "bytes": 1848
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r004-gallery-manifest.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r004-gallery-manifest.json",
+      "sha256": "25c128ab0c7eb1d61f13f81d1edabf87e9366b04a679b01d220e0dc4ceba3d7c",
+      "bytes": 756
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r004-parity/audit-native-topology.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r004-parity/audit-native-topology.py",
+      "sha256": "5e0de27e5b8f551f178d515a447c7d34fab62ca1d8b83c07aae4346b6f14c871",
+      "bytes": 1630
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r004-parity/matched-camera.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r004-parity/matched-camera.json",
+      "sha256": "b839418fafcfc99e21b89427db4681ba0e411ab890131c038e239eac4ee8fc64",
+      "bytes": 897
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r004-parity/moon-1-gltf-front-faces-only-matched-angle2.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r004-parity/moon-1-gltf-front-faces-only-matched-angle2.png",
+      "sha256": "6ac461dad838988c4b301e163c57c4f9e1c3495a4f25166bbaf7df70d0660017",
+      "bytes": 929293
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r004-parity/moon-1-native-two-sided-matched-angle2.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r004-parity/moon-1-native-two-sided-matched-angle2.png",
+      "sha256": "51d2729898aba681c89501af9cb54ec0adf8235e4b729a6611e2a6d1b6b864ed",
+      "bytes": 933149
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r004-parity/moon-2-gltf-front-faces-only-matched-angle2.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r004-parity/moon-2-gltf-front-faces-only-matched-angle2.png",
+      "sha256": "bad5f091ceb046cf01796c9222039145cc9b44d4d780534aa8e895c0bdb3c229",
+      "bytes": 808804
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r004-parity/moon-2-native-two-sided-matched-angle2.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r004-parity/moon-2-native-two-sided-matched-angle2.png",
+      "sha256": "393655aed6c0aa427f0447736c121a6621ba9e694519276ed01196ad954cd360",
+      "bytes": 784626
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r004-parity/native-topology-audit.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r004-parity/native-topology-audit.json",
+      "sha256": "832c2df724a494b3abd8a45726d1e32f4af809d6825d95b63955c570807afba1",
+      "bytes": 182974
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r004-parity/render-matched-culling.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r004-parity/render-matched-culling.py",
+      "sha256": "a2e24c9f3be2e83ead4577485900ec5122f927662a3bc030fd7c09ae8afed020",
+      "bytes": 2333
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r005-parity/attempt1-failure.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r005-parity/attempt1-failure.md",
+      "sha256": "7b338342d15f7a4b3a1d19572c65a2708868b3dafac7545a40e444784c90146f",
+      "bytes": 259
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r005-parity/attempt2-failure.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r005-parity/attempt2-failure.md",
+      "sha256": "323a9751615764fd7a8cf5593bbb7a4e2f4b7e66972da620584df33940e47aba",
+      "bytes": 342
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r005-parity/attribute-audit/report.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r005-parity/attribute-audit/report.json",
+      "sha256": "611096188aaf3b8754314b0851db8d1a5b996a94923b1e3480b1f66d05983137",
+      "bytes": 5859
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r005-parity/attribute-audit/report.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r005-parity/attribute-audit/report.md",
+      "sha256": "675c17ef791668690d5a05b517d220ebdb90e2931ec47097f0f2629a60c1dc8f",
+      "bytes": 1848
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r005-parity/attribute-audit-attempt1-invalid-uv/report.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r005-parity/attribute-audit-attempt1-invalid-uv/report.json",
+      "sha256": "38ba337fa733d91e066d7954b2a404126b0a397c659f3eb5138465c039c095a3",
+      "bytes": 5861
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r005-parity/attribute-audit-attempt1-invalid-uv/report.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r005-parity/attribute-audit-attempt1-invalid-uv/report.md",
+      "sha256": "0522e6085e8b29f43cf1200bc3553ed51022eec07bb742181b734ab4b75faf87",
+      "bytes": 1848
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r005-parity/attribute-audit-attempt2-normal-precision/report.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r005-parity/attribute-audit-attempt2-normal-precision/report.json",
+      "sha256": "18fe555e97897c5bb38538e0546eb1d7021c507360b01d08ddeac9b65b226e23",
+      "bytes": 5857
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r005-parity/attribute-audit-attempt2-normal-precision/report.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r005-parity/attribute-audit-attempt2-normal-precision/report.md",
+      "sha256": "675c17ef791668690d5a05b517d220ebdb90e2931ec47097f0f2629a60c1dc8f",
+      "bytes": 1848
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r005-parity/audit-native-source-cache.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r005-parity/audit-native-source-cache.py",
+      "sha256": "3e6acb0b36e75ba13fe6501344c10880a1eaa472c1bb6f900afe6c7cfc00a191",
+      "bytes": 2433
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r005-parity/matched-camera.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r005-parity/matched-camera.json",
+      "sha256": "b839418fafcfc99e21b89427db4681ba0e411ab890131c038e239eac4ee8fc64",
+      "bytes": 897
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r005-parity/moon-1-gltf-front-faces-only-matched-angle2.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r005-parity/moon-1-gltf-front-faces-only-matched-angle2.png",
+      "sha256": "82a2398af61c2bea69a0a4020c6569568cbb8c152e9080244cbfe4481ef08e2c",
+      "bytes": 933189
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r005-parity/moon-1-native-two-sided-matched-angle2.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r005-parity/moon-1-native-two-sided-matched-angle2.png",
+      "sha256": "9fe3ca15b0c8f0396a07f29807a8a3d3cdcedf517a654bce1eb290e7a6cb0ed6",
+      "bytes": 933168
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r005-parity/moon-2-gltf-front-faces-only-matched-angle2.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r005-parity/moon-2-gltf-front-faces-only-matched-angle2.png",
+      "sha256": "8bfa11f6ea65a2eb8e5b71191e897a14e5ca8d5133766318eb589ef646d0fd9c",
+      "bytes": 784766
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r005-parity/moon-2-native-two-sided-matched-angle2.png",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r005-parity/moon-2-native-two-sided-matched-angle2.png",
+      "sha256": "1f33e023b399776e58ea4ec3fef15f372c43dcbdade2265ccec0d8ac10e91de9",
+      "bytes": 784621
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r005-parity/native-source-cache-audit.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r005-parity/native-source-cache-audit.json",
+      "sha256": "308bda3903f9a5817b4b550999fd8f9fbbfe7d56a687cbb2e45c77c661db2800",
+      "bytes": 762
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r005-parity/render-matched-culling.log",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r005-parity/render-matched-culling.log",
+      "sha256": "1e7f71d2d455fb93bd127cbd10cd159bdc99a1e6d42f79173264dbcf9e87eeec",
+      "bytes": 26160
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r005-parity/render-matched-culling.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r005-parity/render-matched-culling.py",
+      "sha256": "34937ea8c3ad0146c767379a9fc3e962a65dbf3279667ce20cc86e188f334a82",
+      "bytes": 2390
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r005-parity/tests-attempt2-normal-precision.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r005-parity/tests-attempt2-normal-precision.json",
+      "sha256": "0747c999720b0b7b4c4da3724ab25575ac409c1e8aead0e364c4bcd973108d3b",
+      "bytes": 4918
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r005-parity/tests-exact-normals.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r005-parity/tests-exact-normals.json",
+      "sha256": "ea7048ed2a3dbe064281729a661cdc6d10815d9a0fe388c120ac63c5d1a0b2bf",
+      "bytes": 2805
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/crystal-moons-r005-parity/tests.json",
+      "path": "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r005-parity/tests.json",
+      "sha256": "41220159238b58940924af2eb68125798e9ac6ea56305aa859efd1cc49b93aa4",
+      "bytes": 2814
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/reviews/crystal-moons-r002.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/reviews/crystal-moons-r002.md",
+      "sha256": "3070debc3a548f06ab4153887652691f87129f2d67d791a85bf4b4894df0de27",
+      "bytes": 2877
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/reviews/crystal-moons-r003-native-gas-moon1-r004.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/reviews/crystal-moons-r003-native-gas-moon1-r004.md",
+      "sha256": "187ca2f199d1da6fa2aaf9fd2f11033ff4b623786a9ddc056b114377d5d12635",
+      "bytes": 3300
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/reviews/crystal-moons-r004-runtime.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/reviews/crystal-moons-r004-runtime.md",
+      "sha256": "4a41c07f7c1f8c260a52290ad525d812581ac61bcd13185c53c558d90ef1900e",
+      "bytes": 1889
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/reviews/crystal-moons-r005-runtime.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/reviews/crystal-moons-r005-runtime.md",
+      "sha256": "b48c3a3627d8bada05871adc206711b07ed8624c324879b5c8dde3a4e98d463e",
+      "bytes": 2634
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/reviews/crystal-r001-review.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/reviews/crystal-r001-review.md",
+      "sha256": "371a67e8b6629dc797e082e0b7288d98d8f13d1785b408283c96808c72963c25",
+      "bytes": 2404
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/reviews/crystal-r003-review.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/reviews/crystal-r003-review.md",
+      "sha256": "52b098610ffc31de195582ce152400840e43eddff4d6c45259642b42fd039bd1",
+      "bytes": 2429
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/reviews/crystal-r006-temperate-r001-corrected.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/reviews/crystal-r006-temperate-r001-corrected.md",
+      "sha256": "6f806d8ac8c3b424219e7c2cf94a068d475098d13ee4639de23d1a9b9a427918",
+      "bytes": 4433
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/reviews/crystal-r013-rocky-moon-r002-volcanic-smoke.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/reviews/crystal-r013-rocky-moon-r002-volcanic-smoke.md",
+      "sha256": "e8244d1f70425613d80d7b342924a10f8f469324a596dc00edf34556f4a2c54b",
+      "bytes": 2947
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/reviews/desert-scale-crystal-r004-review.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/reviews/desert-scale-crystal-r004-review.md",
+      "sha256": "6df2e009660f7707901c98cee33f591aa2a14c7db81251cd92f11fa6d212ad6a",
+      "bytes": 2254
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/reviews/temperate-r003-ice-r023-crystal-r009.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/reviews/temperate-r003-ice-r023-crystal-r009.md",
+      "sha256": "d27405a4050d97ff89db1b4a14b4fa7db3362ea89a0350416da0a7f566d3100c",
+      "bytes": 2972
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/reviews/volcanic-r023-crystal-r010.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/reviews/volcanic-r023-crystal-r010.md",
+      "sha256": "3ebcb94462551e6f91859cb96347eefc424ae200b2abe60aef7b801f17b6c742",
+      "bytes": 2407
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/reviews/root-r005-checkpoint-verdict.md",
+      "path": "designs/environment.planet.crystal/revisions/r015/reviews/root-final-review-verdict.md",
+      "sha256": "02417da619028a0b255db4ea27560cf75f006295a9df4e107a77d96594b99958",
+      "bytes": 1436
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/reviews/checkpoint_late_moon_history.py",
+      "path": "designs/environment.planet.crystal/revisions/r015/checkpoint_late_moon_history.py",
+      "sha256": "d45dff422dd2d6c385905ad0f01e8e9ed3ca7ced58f985c434048b99bf2b0404",
+      "bytes": 8013
+    }
+  ]
+}

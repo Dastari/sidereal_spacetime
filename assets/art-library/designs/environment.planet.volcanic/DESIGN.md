@@ -517,3 +517,17 @@ Preserve independently authored moon variants and failed/diagnostic history; mai
 - [validation](revisions/r024/reviews/ice-volcanic-moons-r001-gas-mineral-r002.md) — 3135c0193a05ff766208ce522f61883968d4126997272d7e719c3569ff289979
 - [validation](revisions/r024/reviews/volcanic-moons-r002-ice26-shadow.md) — 5148ab768d20cc669b7ea6e73f5178cfb9e443670f825acdb7d30fe52b38b92a
 - [validation](revisions/r024/manifest.json) — 71b609260841f792024011c188e654d663f866a96e355d166c7567b9c3e0ddb4
+
+
+## r025 — late moon preservation checkpoint
+
+Current family checkpoint r025; main-world pin r023. Prior entries above are preserved unchanged. No owner final sign-off inferred.
+
+[Complete source and review manifest](revisions/r025/manifest.json) · [Root review verdict](revisions/r025/reviews/root-final-review-verdict.md)
+
+
+## r026 — Volcanic moon2 r006 working visual PASS checkpoint
+
+Current family checkpoint r026; main-world pin r023. Prior entries above are preserved unchanged. No owner final sign-off inferred.
+
+[Complete source and review manifest](revisions/r026/manifest.json) · [Root review verdict](revisions/r026/reviews/root-final-review-verdict.md)

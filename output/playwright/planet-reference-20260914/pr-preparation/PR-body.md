@@ -1,18 +1,20 @@
-Adds an isolated Babylon review harness and preserved Blender planet candidates for the owner-authorized R14 reference work. Selected Ice shards now use native PBR transmission while snow caps remain opaque. Production activation is not part of this draft.
+Adds preserved Blender planet candidates and an isolated Babylon review harness for the owner-authorized R14 reference work. Selected tall Ice shards now use native PBR transmission while snow caps remain opaque. All nine main-world working art/morphology gates and all19 individual moon working visual gates have root and independent Astra assessments at the inspected views.
 
 ## Changes
 
-- Preserves exact reference crops, native source/export histories, per-revision visual decisions and geometry/material audits for nine planet families and19 moon references. Root and independent Astra reviews currently pass all nine main worlds and16 moons; the remaining Crystal orientation and Volcanic moon2 finish revisions are still in progress.
-- Prepares composition in a body-owned worker, retains ready geometry/materials, cleans pending uploads on disposal, and reuses explicitly qualified fixed-detail revisions across LOD thresholds.
-- Shares Ice transmission resources and validates native glTF PBR channels. Adds scoped native authoring and LOD requirements.
-- Runs large fixture tests in separate bounded-heap processes after an interrupted run; preserves original failure evidence.
+- Preserves exact reference crops, editable native sources, meaningful failed iterations, exports, visual decisions and geometry/material audits. Final moon revisions include Volcanic2r006 and Crystal1/2r010; selected Ice glass isr026.
+- Builds review composition in a body-owned worker, retains ready geometry and shared/precompiled materials, cleans pending uploads on disposal, and reuses explicitly qualified fixed-detail geometry across LOD thresholds. Merged triangle ranges preserve placement identity.
+- Preserves native glTF PBR channels and shares Ice transmission resources. Crystal fixes outward surface orientation, bounds native terminal fracture intervals, and exposes a small set of existing bright mineral shoulders without changing final geometry.
+- Documents native planet LOD authoring requirements and uses separate bounded-heap test processes after memory recovery.
 
 ## Validation
 
-The isolated checkout passes32 reference test files/174 tests and18 Python tests, plus13 latest Gas/Volcanic tests in two additional files with its own npm-ci dependencies. Further candidate tests are recorded in the evidence directory. Software captures verify appearance and continuity only; the Ice26 fixed-detail route has zero missing/overlapping visible nodes and shares its glass target.
+Final isolated validation passes39TypeScript test files/216tests and18Python tests using process-isolated bounded heaps. Latest Crystal9 and10 each pass nine focused tests; Volcanic6 passes its two focused tests and full GLB audits. Actual two-angle and reference-size software captures support every individual moon working assessment. Logs and exact per-revision evidence are preserved under output/playwright/planet-reference-20260914/.
 
-Required `npm run check` and `npm run build` were run. Fullcheck fails on missing baseline `debug-collision-geometry.ts` and `scene-material-registration.ts`, imported by unchanged code in origin/main599d2c7a. Build passes world/client then fails dashboard on the latter missing module. No unrelated package changes are included to mask this baseline issue.
+Required full `npm run check` and `npm run build` were repeated after final changes from independent npm-ci dependencies. Fullcheck fails on missing baseline debug-collision-geometry.ts and scene-material-registration.ts, imported by unchanged upstream main599d2c7a. Build passes world/client then fails dashboard on the latter. No unrelated package fixes are included to mask this baseline issue.
 
-## Outstanding
+## Risks and remaining gates
 
-Normal hardware Flight/Map→Observe transition timing, F3 isolation measurements, whole-scene refraction cost, shadow artifacts and final owner art approval remain open. The shared RTX preview has repeatedly reported hidden; software timing is not hardware acceptance. This is a large evidence/history PR using the repository's existing Git LFS rules, not production publication.
+This is an isolated review-candidate delivery, not normal-game art activation or final owner artistic approval. Hardware Flight/Map→Observe transition timing, F3 isolation measurements, all-seed/hemisphere visual coverage, whole-scene refraction cost, Ice cap-shadow artifacts and Gas ring cast shadows remain open. Software renders prove appearance/counts only, never hardware timing. The recovered shared preview reportedGT730 rather than baselineRTX4080 and stopped advancing. Working visual passes mean the documented defining gaps are meaningfully closed at inspected views, not reference equivalence or defect-free rendering.
+
+This large evidence/history PR uses the repository's existing Git LFS rules. It excludes unrelated construction/crew changes and changes no authority or simulation code.

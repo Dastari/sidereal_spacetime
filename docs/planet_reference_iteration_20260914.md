@@ -1,6 +1,6 @@
 # Planet reference iteration — 2026-09-14
 
-Status: active owner-authorized visual iteration; nine main-world working visual passes, with hardware/runtime and remaining variant gates open.
+Status: nine main-world working art/morphology passes and 19/19 individual moon working visual passes at inspected views; hardware, runtime integration, shadow defects and final owner approval remain open.
 
 The owner explicitly reopened planetary reference alignment on2026-09-14 and requested repeated independent Astra visual review until both author and reviewer judge the gap meaningfully closed for every remaining family. This supersedes the earlier planet-art pause for this task. It does not authorize unrelated rendering features or authority changes. Preserve native Blender sources, original reference crops, prior revisions, existing materials and body identity. Final owner art approval remains separate from the requested two-agent working gate.
 
@@ -16,10 +16,10 @@ Reference: original `reference/art/planets.png` and the exact per-family main-wo
 | Toxic | Native r007 + fog r005 | Root + Astra main-world morphology pass; optical refinements and hardware pending |
 | Crystal | Native source r009, composition r013 | Root + Astra main-world visual pass; coverage/visibility tests across three seeds; hardware pending |
 | Gas giant | Native r005 | Root + Astra main-world visual pass; ring cast-shadow and hardware verification pending |
-| Ice | Native r025 | Root + Astra morphology pass; shadow hatching and hardware gates remain open |
+| Ice | Native r026, selective glass | Root + Astra morphology and selected-shard transmission pass; cap shadow hatching and hardware gates remain open |
 | Volcanic | Native r023 + restored existing smoke | Root + Astra main-world visual pass; hardware pending |
 | Temperate | Native r003 | Root + Astra main-world visual pass; broader seed/hardware checks pending |
-| Moon variants | Individual native candidates through r005 | Sixteen individual working passes: Rocky1/2, Desert1/2, Gas1/2/3, Ocean1/2, Toxic1/2, Temperate1/2, Ice1/2, Volcanic1; three crops remain open |
+| Moon variants | Individual candidates; Crystal1/2 r010, Volcanic2 r006 | Root + Astra working passes for all 19 individual moon crops; all-seed/hemisphere, optical defects and hardware gates remain separate |
 
 Every meaningful candidate needs immutable source/export/render artifacts, reference/previous/current comparison, both agent assessments and recorded unresolved gaps. At least three seeds and all retained LOD levels must preserve the intended macro features. Hardware timing and normal game Observe evidence remain required; software renders prove appearance/counts only. Do not mark families complete merely because a shader compiles or a screenshot exists.
 
@@ -176,3 +176,29 @@ The owner reported a likely OOM. On recovery, cgroup memory.events reports three
 Crystal's native topology audit found coherent-volume orientation differs from636/1356 faces on moon1 and200/424 on moon2 despite normals matching individual triangle winding. Blender's two-sided shading concealed faces culled by opaque runtime rendering. The bounded successor will correct orientation while preserving exact triangle surfaces, UVs and materials; no thickness or culling workaround. Gas1/3 working passes remain16/19 total. Volcanic moon2 geometry is sufficient afterr004; only an immediate localized warm material shoulder remains under review.
 
 The isolated branch build succeeds through world and client, then fails dashboard on the missing baseline scene-material-registration import. Fullcheck also reports missing debug-collision-geometry. Both are absent from origin/main and outside this art change. Earlier successful fullcheck/build in the shared checkout therefore do not establish a clean baseline PR build.
+
+### 2026-09-14 — repaired Crystal volume, failed finish trials and resolved Volcanic bank identity
+
+Crystal moons1/2r005 repair636/200 native polygons while retaining86/26 panel components and the exact original exported triangle surfaces, UVs, materials/maps and signed normals. Seven exact-normal/frontface/retention tests and GLB parity pass. Native polygon reevaluation chooses115/43 different triangles after reversal; the explicit validated export cache preserves the original authored diagonal inventory, and source/cache correspondence is recorded. Actual staged browser triplets confirm closed panels. Root/Astra keep the full art gates open: broad smooth panel districts still lack selected connected fracture hierarchy. Native r006 adds preserved exact base geometry plus terraces but fails author and Astra native review as repeated pads/towers; it is preserved without runtime integration. A bounded native replacement of selected cap districts is in progress.
+
+Volcanic moon2r005 preserves all geometry and adds native warm material to139 adjacent B-edge triangles. All12 GLB audits and two tests pass, but actual47px review fails because only the bottom/upper-left shoulder changes. Actual material-bearing browser picks resolve right/lower hot banks to crust-4 and upper rim to crust-0, both authored A regions; the earlier warm bottom resolves B-edge crust-9. Evidence bank-placement-probe.json and bank-diagnostic captures now directs a local A-bank material successor. This is no longer an unverified color adjustment to unrelated surfaces.
+
+Canonical checkpoints Ice28,Gas7,Vol25,Crystal15 preserve late source/failed-attempt histories and all current OPEN verdicts, keeping main pins26/5/23/13 and every previous approval/mapping unchanged. The art branch initial snapshot is commit4392ead0; LFS upload is in progress. Newer r005/r006 evidence is a subsequent scoped update. Thirty-four scoped files/187 tests and18 Python tests have passed in isolated/bounded processes; shared OOM count remains unchanged at3. Whole-branch check/build still expose the two baseline missing modules described above.
+
+A fresh post-OOM shared preview reports a GeForceGT730, not the baselineRTX4080. It reaches27 frames with the Ice26 worker complete but one pending upload, then the repeated probe remains at27 frames while tool visibility is false (document visibility says visible). No settled hardware capture or timing acceptance is asserted; evidence ice-r026/hardware-recovery-probe.json. Continue using preserved native/software visual evidence while the preview delivery limitation remains.
+
+### 2026-09-14 — Volcanic moon2 working visual pass
+
+Volcanic moon2r006 warms455 existing A-bank triangles around three native hot objects resolved from actual browser hits. Geometry, normals, UVs, all seven material definitions and r005 B-edge remain exact; twelve GLB variant audits and two focused tests pass. Actual two-angle/47px captures now show separated red-shoulder/orange-core sectors at top, right and lower limb. Root and independent Astra agree the speck-only gap is meaningfully closed. Flat red close patches and the reference's brighter/softer rim are remaining finish differences. Seventeen of19 moon crops have working passes. No hardware, broader-seed, final owner-approval or publication acceptance is inferred.
+
+### 2026-09-14 — Crystal r009 actual review after memory recovery
+
+Both r009 moons pass the root and independent Astra morphology comparison at two actual browser angles and true reference-size views (79/52px). The finite terminal cuts retain the successful interior fracture geometry while eliminating the unsplit outer interval; nine source/geometry/material/LOD tests pass. Actual workers settle with one retained fixed-detail node and zero pending builds. Screenshots and JSON are preserved under crystal-moon-{1,2}-r009/terminal-cut-seed38*. These SwiftShader captures establish appearance and counts only.
+
+The full visual gate remains OPEN: both distant views lack the references' distinct bright pink-white mineral shoulders. A bounded r010 native material-assignment iteration is authorized within the existing owner request; geometry and whole-body lighting remain fixed. Seventeen of19 moon visual gates remain passed. Heavy Blender, browser capture and test jobs are serialized; cgroup oom_kill remains3. Draft PR2 exists at https://github.com/Dastari/sidereal_spacetime/pull/2; newer evidence follows its initial4392ead0 snapshot in a scoped subsequent commit.
+
+### 2026-09-14 — Crystal r010 closes the remaining two working visual gates
+
+Root and independent Astra inspected both actual r010 angles and79/52px views against both exact moon crops. The selected bright mineral shoulders now remain legible at distance while the connected stepped purple bodies retain their scale difference and irregular rims. Both working visual gates pass: all19 individual moon crops now have explicit root+Astra assessments, alongside nine main-world working art/morphology passes. Fine fracture density, broader anchor facets and sparser rim luminosity remain finish differences; these are not claims of reference equivalence or defect-free rendering. Exact reports: reviews/crystal-moons-r010-{root,runtime}.md and visual-scope-consistency-20260914.md.
+
+Native material-only10 changes27/15 triangles on10/6 actual-screen-traced polygons using an existing pale-pink role. All geometry, normals, UVs, indices, material definitions and maps remain identical to9. Nine focused source/NullEngine tests and full GLB/kit audits pass. Both runtime workers settle with one fixed-detail retained node and zero pending builds; exact revision qualification prevents threshold rebuilds. No hardware timing, all-seed visual acceptance, normal-game publication or final owner approval is inferred. Final isolated39-file/216-test closure and18Python tests pass. Required full-project check/build repeat the same unchanged upstream missing-module failures; logs are preserved in pr-preparation/final-full-{check,build}.log.

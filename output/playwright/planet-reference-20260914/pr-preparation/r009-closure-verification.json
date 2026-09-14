@@ -1,0 +1,94 @@
+[
+  {
+    "path": "scripts/art_library/build_crystal_moon_fractures_r006.py",
+    "currentPRStatus": "identical"
+  },
+  {
+    "path": "scripts/art_library/build_crystal_moon_fractures_r007.py",
+    "currentPRStatus": "identical"
+  },
+  {
+    "path": "scripts/art_library/build_crystal_moon_fractures_r008.py",
+    "currentPRStatus": "identical"
+  },
+  {
+    "path": "scripts/art_library/build_crystal_moon_fractures_r009.py",
+    "currentPRStatus": "identical"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_composition_r006.test.ts",
+    "currentPRStatus": "identical"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_composition_r006.ts",
+    "currentPRStatus": "identical"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_composition_r007.test.ts",
+    "currentPRStatus": "identical"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_composition_r007.ts",
+    "currentPRStatus": "identical"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_composition_r008.test.ts",
+    "currentPRStatus": "identical"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_composition_r008.ts",
+    "currentPRStatus": "identical"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_composition_r009.test.ts",
+    "currentPRStatus": "identical"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_r006.tsconfig.json",
+    "currentPRStatus": "identical"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_r006.vitest.config.ts",
+    "currentPRStatus": "identical"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_r007.tsconfig.json",
+    "currentPRStatus": "identical"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_r007.vitest.config.ts",
+    "currentPRStatus": "identical"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_r008.tsconfig.json",
+    "currentPRStatus": "identical"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_r008.vitest.config.ts",
+    "currentPRStatus": "identical"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_r009.tsconfig.json",
+    "currentPRStatus": "identical"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_r009.vitest.config.ts",
+    "currentPRStatus": "identical"
+  },
+  {
+    "path": "scripts/art_library/planet_reference_worker.ts",
+    "currentPRStatus": "identical"
+  },
+  {
+    "path": "scripts/art_library/planet_reference_worker_lifetime.ts",
+    "currentPRStatus": "identical"
+  },
+  {
+    "path": "scripts/art_library/planet_reference_worker_lifetime.test.ts",
+    "currentPRStatus": "identical"
+  },
+  {
+    "path": "scripts/art_library/audit_native_kit_attributes.py",
+    "currentPRStatus": "identical"
+  }
+]

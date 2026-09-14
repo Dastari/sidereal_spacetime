@@ -712,3 +712,10 @@ Preserve independently authored moon variants and failed/diagnostic history; mai
 - [capture-record](revisions/r027/ice-moon-2/source-r002/variant-recipe.json) — 0e14fed22d709721436e1dc6633f5b3a31d3f57b5c29d45ef78ba118ec1fc8be
 - [validation](revisions/r027/reviews/ice-volcanic-moons-r001-gas-mineral-r002.md) — 3135c0193a05ff766208ce522f61883968d4126997272d7e719c3569ff289979
 - [validation](revisions/r027/manifest.json) — d3e9f7793529a4995f6ea1fd1841aefda081381afccbe9e468487bf0ec67ba1f
+
+
+## r028 — late moon preservation checkpoint
+
+Current family checkpoint r028; main-world pin r026. Prior entries above are preserved unchanged. No owner final sign-off inferred.
+
+[Complete source and review manifest](revisions/r028/manifest.json) · [Root review verdict](revisions/r028/reviews/root-final-review-verdict.md)

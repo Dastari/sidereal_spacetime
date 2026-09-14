@@ -1,0 +1,29 @@
+
+ RUN  v4.1.11 /root/sidereal_spacetime
+
+stdout | scripts/art_library/ice_moon_blue_cut_r003.test.ts > NullEngine resolves the exposed added glacial cut to its placement instead of the old white ground
+BJS - [15:52:09]: Babylon.js v9.25.0 - Null engine
+
+ ❯ scripts/art_library/ice_moon_blue_cut_r003.test.ts (3 tests | 1 failed) 7355ms
+   × NullEngine resolves the exposed added glacial cut to its placement instead of the old white ground 1629ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  scripts/art_library/ice_moon_blue_cut_r003.test.ts > NullEngine resolves the exposed added glacial cut to its placement instead of the old white ground
+TypeError: Cannot read properties of undefined (reading 'partId')
+ ❯ scripts/art_library/ice_moon_blue_cut_r003.test.ts:31:16
+     29|   expect(hit?.hit).toBe(true);
+     30|   const range=hit!.pickedMesh!.metadata.trianglePlacementRanges.find((…
+     31|   expect(range.partId).toBe('planets--ice-moon-2/blue-cut-hero');
+       |                ^
+     32|  }finally{scene.dispose();engine.dispose();}
+     33| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  15:52:03
+   Duration  7.74s (transform 59ms, setup 0ms, import 275ms, tests 7.36s, environment 0ms)
+

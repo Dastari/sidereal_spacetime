@@ -80,6 +80,12 @@
     "ice_moon_blue_cut_r003.test.ts",
     "crystal_moon_reference_composition_r002.test.ts",
     "gas_moon_luminous_trial_r005.test.ts",
-    "volcanic_moon_reference_composition_r004.test.ts"
+    "volcanic_moon_reference_composition_r004.test.ts",
+    "crystal_moon_reference_composition_r005.test.ts",
+    "crystal_moon_reference_composition_r009.test.ts",
+    "volcanic_moon2_shoulders_r005.test.ts",
+    "volcanic_moon2_shoulders_r006.test.ts",
+    "crystal_moon_reference_composition_r008.ts",
+    "crystal_moon_reference_composition_r010.test.ts"
   ]
 }

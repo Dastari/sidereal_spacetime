@@ -32,5 +32,10 @@
   "scripts/art_library/volcanic_moon_reference_composition_r002.test.ts",
   "scripts/art_library/volcanic_reference_composition_r023.test.ts",
   "scripts/art_library/gas_moon_luminous_trial_r005.test.ts",
-  "scripts/art_library/volcanic_moon_reference_composition_r004.test.ts"
+  "scripts/art_library/volcanic_moon_reference_composition_r004.test.ts",
+  "scripts/art_library/crystal_moon_reference_composition_r005.test.ts",
+  "scripts/art_library/crystal_moon_reference_composition_r009.test.ts",
+  "scripts/art_library/volcanic_moon2_shoulders_r005.test.ts",
+  "scripts/art_library/volcanic_moon2_shoulders_r006.test.ts",
+  "scripts/art_library/crystal_moon_reference_composition_r010.test.ts"
 ]

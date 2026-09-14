@@ -1,0 +1,818 @@
+[
+  {
+    "candidate": "volcanic-moon-2-r005",
+    "kit": "output/playwright/planet-reference-20260914/volcanic-moon-2-r005/kit.json",
+    "kitSha256": "4e5fdc552d15eb89a412ab22f4f637a6898dac9ff55345b9c8a5827b5d413190",
+    "materialDifferences": [],
+    "attributeGaps": [],
+    "variants": [
+      {
+        "name": "crater-large",
+        "glb": "output/playwright/planet-reference-20260914/volcanic-moon-2-r005/crater-large.glb",
+        "glbSha256": "24861e81f3c092429a5fb451bc4a816f3a2c854e715410b9e3752b0674e3423c",
+        "jsonCorners": 1716,
+        "glbCorners": 1716,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.374203324862029e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--volcanic-moon-2-charcoal-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-charcoal-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-purple-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-purple-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-dark-cavity",
+            "field": "baseColorTexture",
+            "expected": "rocky-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-dark-cavity",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-cooled-fracture",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-cooled-fracture",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-pale-purple-fracture",
+            "field": "baseColorTexture",
+            "expected": "rocky-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-pale-purple-fracture",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-5-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "crater-broken",
+        "glb": "output/playwright/planet-reference-20260914/volcanic-moon-2-r005/crater-broken.glb",
+        "glbSha256": "5143230555756e90089198765a5eb78947455dd012dce9c2b34d41fec7ded2bd",
+        "jsonCorners": 1716,
+        "glbCorners": 1716,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.527892878563046e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--volcanic-moon-2-charcoal-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-charcoal-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-purple-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-purple-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-dark-cavity",
+            "field": "baseColorTexture",
+            "expected": "rocky-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-dark-cavity",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-cooled-fracture",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-cooled-fracture",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-pale-purple-fracture",
+            "field": "baseColorTexture",
+            "expected": "rocky-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-pale-purple-fracture",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-5-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "crater-small",
+        "glb": "output/playwright/planet-reference-20260914/volcanic-moon-2-r005/crater-small.glb",
+        "glbSha256": "70ae9f15e5a46fab440e62be00bde2e8c74f58aaaa3bc18a5a004b9811cc74f3",
+        "jsonCorners": 1716,
+        "glbCorners": 1716,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.569265725237314e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--volcanic-moon-2-charcoal-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-charcoal-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-purple-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-purple-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-dark-cavity",
+            "field": "baseColorTexture",
+            "expected": "rocky-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-dark-cavity",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-cooled-fracture",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-cooled-fracture",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-pale-purple-fracture",
+            "field": "baseColorTexture",
+            "expected": "rocky-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-pale-purple-fracture",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-5-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "fractured-shelf",
+        "glb": "output/playwright/planet-reference-20260914/volcanic-moon-2-r005/fractured-shelf.glb",
+        "glbSha256": "8dbcbda7da2ac02b9090412ddc06decf65b4b4e8b2aba1cff4810f3f8766bb61",
+        "jsonCorners": 450,
+        "glbCorners": 450,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.935736447153988e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--volcanic-moon-2-charcoal-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-charcoal-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-purple-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-purple-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-cooled-fracture",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-cooled-fracture",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "angular-outcrops",
+        "glb": "output/playwright/planet-reference-20260914/volcanic-moon-2-r005/angular-outcrops.glb",
+        "glbSha256": "0b41d8ed991dc436cd1a1b5b676ef6c0235f64c4b5598dfe1bff2497bbf4bb79",
+        "jsonCorners": 450,
+        "glbCorners": 450,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.771974163605368e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--volcanic-moon-2-charcoal-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-charcoal-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-purple-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-purple-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-cooled-fracture",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-cooled-fracture",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "mineral-seam",
+        "glb": "output/playwright/planet-reference-20260914/volcanic-moon-2-r005/mineral-seam.glb",
+        "glbSha256": "4091c4e18d83fbd766d1219cdf23bda35963bf0af091fcd9c798339824e4927e",
+        "jsonCorners": 450,
+        "glbCorners": 450,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.217579356702141e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--volcanic-moon-2-cooled-fracture",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-cooled-fracture",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-molten-fault",
+            "field": "baseColorTexture",
+            "expected": "rocky-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-molten-fault",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-4-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "battered-region-a",
+        "glb": "output/playwright/planet-reference-20260914/volcanic-moon-2-r005/battered-region-a.glb",
+        "glbSha256": "d102a038ef391181be486e7cc24138aea4ef7d113a542efe42eaec12dc104a15",
+        "jsonCorners": 44622,
+        "glbCorners": 44622,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 9.140146923260603e-05,
+        "maximumMatchedUVDelta": 5.960464477539063e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--volcanic-moon-2-charcoal-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-charcoal-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-purple-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-purple-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-dark-cavity",
+            "field": "baseColorTexture",
+            "expected": "rocky-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-dark-cavity",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-cooled-fracture",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-cooled-fracture",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-molten-fault",
+            "field": "baseColorTexture",
+            "expected": "rocky-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-molten-fault",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-4-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "battered-region-b",
+        "glb": "output/playwright/planet-reference-20260914/volcanic-moon-2-r005/battered-region-b.glb",
+        "glbSha256": "c83e05ce699573f970fe06b66ac00132ea6f9766f8c030a551b1e358203b3736",
+        "jsonCorners": 42438,
+        "glbCorners": 42438,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 8.679311839534963e-05,
+        "maximumMatchedUVDelta": 5.960464477539063e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--volcanic-moon-2-charcoal-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-charcoal-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-purple-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-purple-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-dark-cavity",
+            "field": "baseColorTexture",
+            "expected": "rocky-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-dark-cavity",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-cooled-fracture",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-cooled-fracture",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-molten-fault",
+            "field": "baseColorTexture",
+            "expected": "rocky-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-molten-fault",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-4-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere",
+        "glb": "output/playwright/planet-reference-20260914/volcanic-moon-2-r005/ground-sphere.glb",
+        "glbSha256": "ad4eb9cf5ffcc4db7a61456b549cdd6f72e644d134373abe7e8775c3af1031b6",
+        "jsonCorners": 15360,
+        "glbCorners": 15360,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.969896464190269e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--volcanic-moon-2-charcoal-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-charcoal-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere-medium",
+        "glb": "output/playwright/planet-reference-20260914/volcanic-moon-2-r005/ground-sphere-medium.glb",
+        "glbSha256": "83a08312595f9dc8b33fc98902a013acb0391a8a003aef085b7168ae54553b19",
+        "jsonCorners": 3840,
+        "glbCorners": 3840,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.695697840018373e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--volcanic-moon-2-charcoal-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-charcoal-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere-low",
+        "glb": "output/playwright/planet-reference-20260914/volcanic-moon-2-r005/ground-sphere-low.glb",
+        "glbSha256": "d0ff9c6317336b0ee53a9f754cfc3172b45ba8dafa07bce16337e2f6e6eeb3c2",
+        "jsonCorners": 960,
+        "glbCorners": 960,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.110542189241277e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--volcanic-moon-2-charcoal-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-charcoal-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "battered-region-b-edge",
+        "glb": "output/playwright/planet-reference-20260914/volcanic-moon-2-r005/battered-region-b-edge.glb",
+        "glbSha256": "1c7d0645449f0fc67de1ad8c46860c6996f70b088807576a679754b79e267d9e",
+        "jsonCorners": 42582,
+        "glbCorners": 42582,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 8.679311839534963e-05,
+        "maximumMatchedUVDelta": 5.960464477539063e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--volcanic-moon-2-cooled-fracture",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-cooled-fracture",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-molten-fault",
+            "field": "baseColorTexture",
+            "expected": "rocky-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-molten-fault",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-4-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-charcoal-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-charcoal-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-purple-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-purple-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-dark-cavity",
+            "field": "baseColorTexture",
+            "expected": "rocky-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--volcanic-moon-2-dark-cavity",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-2-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      }
+    ],
+    "limitations": [
+      "Material/position-matched corner multisets check values at explicit tolerances independently of index ordering, not mesh topology equivalence.",
+      "Only explicit JSON material fields are compared; source-side omissions remain unspecified.",
+      "Normals compared only when carried in JSON. Reconstruction of omitted normals by a renderer is outside this artifact audit.",
+      "Geometry converted from BlenderZ-up JSON to glTFY-up and accumulated node transforms; UVs follow recorded glTF convention."
+    ],
+    "summary": {
+      "variants": 12,
+      "materialDifferenceOccurrences": 0,
+      "attributeGaps": 0,
+      "variantErrors": 0,
+      "positionMismatchVariants": 0,
+      "normalMismatchVariants": 0,
+      "uvMismatchVariants": 0
+    }
+  }
+]

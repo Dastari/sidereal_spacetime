@@ -1,0 +1,102 @@
+[
+  {
+    "path": "assets/art-library/designs/environment.planet.ice/design.json",
+    "sha256": "e9b9276af975b70640ae4052ed609ca4d871ed3134e612e6cffa82144f84d75b",
+    "bytes": 350842
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.ice/DESIGN.md",
+    "sha256": "bf029c5fb3f8ad0a24d453cdcdeb2f071438836bf42edad64a80a091394290d3",
+    "bytes": 79402
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.ice/revisions/r028/manifest.json",
+    "sha256": "cf21d8ea298df1ffa5c36388aa7f983dcd426b50a30ff29a6e581d608892c147",
+    "bytes": 29534
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.ice/revisions/r028/pre-checkpoint-design.json",
+    "sha256": "05758771ce0963388e11039224b830844127597f3d27b2af19433fe5a680b2c5",
+    "bytes": 308517
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.ice/revisions/r028/pre-checkpoint-DESIGN.md",
+    "sha256": "b4ca6a81d19b46d5a6a8fc76e8655dbf87ea1f40a13a1d37162116834545be50",
+    "bytes": 79074
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.gas-giant/design.json",
+    "sha256": "c3f5b52ba7ae2ceddfee8c9528cb30939d8954b0485b7d8b47eb99a0898b18eb",
+    "bytes": 350678
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.gas-giant/DESIGN.md",
+    "sha256": "fb353ab2f399fca8d688cfd2ce20f9312af713ee9bf30870d3c5a6eb87047ab3",
+    "bytes": 67365
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.gas-giant/revisions/r007/manifest.json",
+    "sha256": "bf8f5c5fb390e28b3debb241fcbe029a566809de2a309ab012040f2aece197e1",
+    "bytes": 67553
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.gas-giant/revisions/r007/pre-checkpoint-design.json",
+    "sha256": "0d541006d5868dca73bdf557aba65032b749ece2c34a9794c142863bbad0ebb0",
+    "bytes": 254241
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.gas-giant/revisions/r007/pre-checkpoint-DESIGN.md",
+    "sha256": "539db5b43b2f70ed3a1d4e6d81390fd2e933ba0f63c506059ac9ce7bc0d93b2e",
+    "bytes": 67037
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.volcanic/design.json",
+    "sha256": "53c6430dd3485f061e5944dc8517936ce40e626f170985ab257174c15273e56f",
+    "bytes": 368398
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.volcanic/DESIGN.md",
+    "sha256": "2857ec221da3fd96468064dae72ab1e5e0cd03a71ec1752348f779e0375be62f",
+    "bytes": 56250
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.volcanic/revisions/r025/manifest.json",
+    "sha256": "9facdf2d8368edd68e5e1c50c2a9eb9fb4193125539a823f14d389f6732591c2",
+    "bytes": 102646
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.volcanic/revisions/r025/pre-checkpoint-design.json",
+    "sha256": "1e0414b5afbf4157c6c3882aca5913c2b7abc4dc9e1c8994556a9a883caa6ac6",
+    "bytes": 221793
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.volcanic/revisions/r025/pre-checkpoint-DESIGN.md",
+    "sha256": "aa899a6f1445113cbbefcde378a538122177856e22fcbac7059ec504f9ac0bcc",
+    "bytes": 55922
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.crystal/design.json",
+    "sha256": "a189c3998d7305705d4ab8127b817c1b113abd080dcdc6a80fa1905e46440466",
+    "bytes": 474627
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.crystal/DESIGN.md",
+    "sha256": "d909e4c11980be29118ed151cc521f0038a1f7db4157bf6741ba28bae6fab4ac",
+    "bytes": 70687
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.crystal/revisions/r015/manifest.json",
+    "sha256": "ebd212f0c8a77cbd91fba1e664225f4737a0bd56d51898ac73514cc3ff05a2ba",
+    "bytes": 149838
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.crystal/revisions/r015/pre-checkpoint-design.json",
+    "sha256": "7daa5a51082706746d50df07bbf18e3bbe895ac35c7e0575feba610147c484d5",
+    "bytes": 265047
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.crystal/revisions/r015/pre-checkpoint-DESIGN.md",
+    "sha256": "96c086913b3f068eafdd3ca65aea5b029ca54d791ce6bc40af282fc3b6c797ec",
+    "bytes": 70359
+  }
+]
