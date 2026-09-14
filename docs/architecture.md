@@ -80,3 +80,8 @@ Provisional goals: 50 concurrent players, 100 stress clients; compare dispersed 
 `apps/client` owns gameplay presentation/input. `apps/dashboard` owns authoring navigation, editors and administration. They have separate manifests, TS entrypoints, Vite configs, ports, `dist` outputs and release lifecycles. Neither imports the other. Shared `packages/ui`, `render`, `content`, `net`, `sim` and `scripting` are libraries only. Rebuilding one application does not rebuild/restart the other or republish `packages/world`. Generated protocol changes require explicit compatible deployments, not an automatic dependency rebuild cascade.
 
 Use the existing Keycloak provider as specified in [authentication](authentication.md). Adopt the event/binding/state/capability model in [scripting lifecycle](scripting_lifecycle.md); full compiled TypeScript and live bounded behavior programs have different trust/deployment properties. Core authority and data privacy remain enforced for both.
+
+
+### Dashboard-only native armor review catalog (2026-09-15)
+
+The Shipyard extends its presentation catalog with unique armor-block model IDs from a generated, pinned native review package. Its New action forks the reviewed Wayfarer through the normal saved-draft/CAS path. Placements are ordinary individually editable assembly parts. `scripts/art_library/build_armor_editor.py` preserves native manifest transforms and the measured retained equipment poses. `prepare_app.py` publishes the exact library only to the dashboard. Server catalogs, collision/mount qualification, construction hashes and the public game release remain unchanged; the review design cannot be published as a qualified game blueprint.

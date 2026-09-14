@@ -1,0 +1,77 @@
+{
+  "recordedAt": "2026-09-14T21:49:37.209304+00:00",
+  "sourceBase": "9c58c07774d7d3c4a58a40c49e90f2a2c647249c",
+  "deliveryBranch": "shipyard-armor-editor",
+  "deliveryBase": "ifcs-update",
+  "sourceHashes": {
+    "apps/dashboard/package.json": "d817c88cdcc944f1c643a4b7e954805449bb0f230ce7e6c14d1f7836bdd3c8c8",
+    "apps/dashboard/src/shipyard/layout/DocumentBar.tsx": "c1ba47b922e8078614204854c66f3709feb3e9e3e2b3805373cc0e2bed7efa19",
+    "apps/dashboard/src/shipyard/layout/LayoutEditor.tsx": "6f4d3fd8525b571d4e2e52f0bf14ccd7d78ca64384e6743f620130251ef8e560",
+    "apps/dashboard/src/shipyard/layout/NewLayoutDialog.tsx": "d398d12b8101f2594b29f6eebd7214db3c7bdde9a25be60d1678e5a9f8b3d382",
+    "apps/dashboard/src/shipyard/layout/useLayout.ts": "58e03b103d09c741e13a58eb3e94daf3d03f3b9de1395525c7f0e0679a4a346f",
+    "apps/dashboard/src/shipyard/layout/armor-review.ts": "b14e12cde7e3cd9f3442ded86eab00d630ae1019ee8fa92d8f1e510a97b3aa69",
+    "apps/dashboard/src/shipyard/layout/armor-review.test.ts": "0f5201a1ed542302bf8bad39213f48c8e100fb338c321a714fca30bfc012b737",
+    "apps/dashboard/src/shipyard/layout/armor-kit-r005.json": "5b1032197b74cc875edda5b21c6bdd996a193db85f9f592b8519c222442206a6",
+    "packages/render/package.json": "8424937c3cae2e5a1dbd46ebc865b6fd058217b5c1903a46d0dba4d4bb228c74",
+    "packages/render/src/layout-hull.ts": "833148dc10accc8b6ccfbb0a8dbf3cc351043f4ad9b386cadc3c88a952cc4ed2",
+    "scripts/prepare_app.py": "e829397f0bf7b0c3dd79b7f3e3f9d9fdefef7f08a2d8b911cc280bcfd053e44c",
+    "scripts/test_prepare_app.py": "2460a14d49794625d2f814331498fe50a4eafac48fc83a70aa2beddcc3d98c72",
+    "scripts/art_library/build_armor_editor.py": "8b98eb6bf52acc0e9381367a56ce9e946b3e1d250bb5eaa80ca54e1859d0b9fd",
+    "package-lock.json": "44e618ee2b7b2435bda46052be5c06a9b12ba9d7dee59b5b763b6ff672addeb6"
+  },
+  "nativePins": {
+    "assets/runtime/assembly/catalog-shipyard-r005.json": "9fa3db94ed61a84f3e9d52b0d404d1433931747bbd268fceefe6a4e2a6ead237",
+    "assets/runtime/assembly/catalog.json": "f92e1e487106794b188bcb4e5a3e2f0cada7047b81ddfc0ee8bd9434964063ac",
+    "assets/runtime/assembly/wayfarer.json": "1f723510ac156089903fbd0d711a2f6adff1da35433e2ac02afde94fa4a00deb",
+    "assets/runtime/assembly/hull-manifest.json": "2e275052217da4b20a92ab40a9a9f098dc011557f7611b6b0c6f40f71ea22695",
+    "packages/content/src/ship-hull-interfaces.v1.json": "2379415fc3501b6818daa3b17174d52fa8a91c330c9a1107271b5fcc4efd4e03",
+    "packages/render/src/framed-wayfarer-visuals.json": "51d225e900a0267c9f8ca5d0202521bdc1c21e420a3ec91ec3140844bd607410",
+    "assets/art-library/framed-wayfarer/r005/library-02/hull.glb": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8"
+  },
+  "pinsUnchanged": true,
+  "gameReleaseUnchanged": {
+    "origin": "https://sidereal.dastari.net",
+    "sha256": "048e6f35a49fffb161d1361dda21cf5f53e69c1e24f73c978525fe99299c7b88",
+    "release": "/root/sidereal_spacetime/.runtime/public-client/releases/20260914-141801-048e6f35a49f"
+  },
+  "worldPublication": false,
+  "authorityWrites": false,
+  "liveBrowser": {
+    "url": "https://sidereal.tail7a58a6.ts.net:8445/shipyard",
+    "asset": {
+      "status": 200,
+      "bytes": 2583732,
+      "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8"
+    },
+    "canvases": 1,
+    "dataset": {
+      "engine": "Babylon.js v9.25.0",
+      "floorSlabs": "51",
+      "nativeFloorIssues": "[]",
+      "nativeWallPieces": "169",
+      "nativeWallMeshes": "855",
+      "nativeWallIssues": "[]",
+      "nativeWallFallback": "false",
+      "nativeDoorwayPieces": "0",
+      "nativeDoorwayMeshes": "0",
+      "nativeDoorwayIssues": "[]",
+      "structuralWallGuides": "0",
+      "placements": "84",
+      "expectedPlacements": "84",
+      "camera": "{\"alpha\":0.3141592653589793,\"beta\":0.7853981633974483,\"radius\":45,\"target\":[0,0,0]}",
+      "meshes": "356"
+    }
+  },
+  "applicationConsoleErrors": 0,
+  "generatedDraftReproducesByteForByte": true,
+  "validation": {
+    "check": "2063 tests / 349 files, typecheck and docs pass",
+    "build": "pass",
+    "artCheck": "pass",
+    "scopedLint": "pass",
+    "scopedFormat": "pass",
+    "pythonPreparation": "8 passed",
+    "authoritySmoke": "not applicable: no authority changes",
+    "browser": "actual normal editor interaction and fresh managed restart passed"
+  }
+}

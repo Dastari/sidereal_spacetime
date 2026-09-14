@@ -33,6 +33,7 @@ import {
 import { LayoutToolbar } from "./LayoutToolbar";
 import { LayerVisibility } from "./LayerVisibility";
 import { NewLayoutDialog } from "./NewLayoutDialog";
+import { withArmorReviewCatalog } from "./armor-review";
 import { transformTiles, type ViewState } from "./state";
 import wayfarerTemplate from "./templates/wayfarer-r001.json";
 import { useLayout, uuid } from "./useLayout";
@@ -154,7 +155,7 @@ export default function LayoutEditor() {
           )
         )
           throw new Error("Invalid part catalog");
-        setCatalog(c);
+        setCatalog(withArmorReviewCatalog(c));
       })
       .catch((e) => {
         if (!cancelled)

@@ -47,6 +47,37 @@ export function NewLayoutDialog({
       <p>
         Your current draft stays saved. These actions create a separate design.
       </p>
+      <section className="design-start-alternatives">
+        <button
+          className="layout-primary"
+          disabled={editor.blocked}
+          onClick={() => {
+            if (!editor.createArmorReview()) return;
+            onResetSelection();
+            editor.setView((view) => ({
+              ...view,
+              mode: "Hull",
+              projection: "3D",
+              layers: {
+                ...view.layers,
+                floor: true,
+                walls: true,
+                roof: false,
+                objects: true,
+                exteriorHull: true,
+                labels: false,
+                routes: false,
+                pressure: false,
+              },
+            }));
+            onClose();
+          }}
+        >
+          <Ship size={20} />
+          <span>Open Wayfarer armor review</span>
+        </button>
+        <p>Editable armor blocks and fittings. Game installation is pending.</p>
+      </section>
       <section className="design-start-primary">
         <h3>
           <SquareDashed size={20} /> Boundary floorplan

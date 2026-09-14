@@ -1,0 +1,97 @@
+
+> sidereal-spacetime@0.1.0 art:check
+> python3 scripts/check_art.py
+
+{"status": "passed", "scope": "Native artifact hashes, material channels and placement identity; actual browser/authority checks recorded separately", "hull_revision": 6, "floor_candidate_revision": 2, "cargo_assets": 73, "native_asset_bytes": 278677152}
+{"ship_triangles": 116622, "ship_primitives": 58, "textured_primitives": 4, "layer_batches": 23, "occupied_voxels": 1795030, "hashes": "passed"}
+{"asset": "engine-pod", "occupied": 31070, "triangles": 7206, "chunks": 8, "materials": 7, "emissiveVoxels": 712, "solid_material_data": "passed"}
+{"asset": "bulkhead", "occupied": 89693, "triangles": 3028, "chunks": 12, "materials": 9, "emissiveVoxels": 416, "solid_material_data": "passed"}
+{"asset": "airlock", "occupied": 60933, "triangles": 1444, "chunks": 12, "materials": 7, "emissiveVoxels": 416, "solid_material_data": "passed"}
+{"part_assets": 333, "assembly_sources": "passed"}
+{"ship_fixture_cells": 424, "source_materials_and_provenance": "passed"}
+{"hydroponics_samples": 2351, "botanical_visual": "approved native equipment GLBs; historical sampled source retained", "prop_provenance": "passed"}
+{"inventory_icons": 11, "icon_bytes": 573459, "preserved_source_and_rgba_provenance": "passed"}
+{
+  "status": "passed",
+  "native_assets": 10,
+  "placements": 17,
+  "rows": [
+    {
+      "id": "part-c0b6b036f5b3dd8bd2f3",
+      "revision": 3,
+      "sha256": "da38770d060f4c5397b2d0ae8ab01258d42ea1f12884cac3ed628c3b110c5a9c",
+      "placements": 1,
+      "triangles": 3572
+    },
+    {
+      "id": "part-d9f37a5f7ea6e8d13254",
+      "revision": 4,
+      "sha256": "713d8a83c902d24bb59e278eb2436b087ebdf06fbbbbbd5daa7d2340fc782a49",
+      "placements": 1,
+      "triangles": 24444
+    },
+    {
+      "id": "part-c03ec0260cd7329050a8",
+      "revision": 5,
+      "sha256": "f527af1e44fc1570355c2268055b7b31343c45849a807b40993cf516c263093a",
+      "placements": 6,
+      "triangles": 6204
+    },
+    {
+      "id": "part-77728ecc8ad36b0ff45f",
+      "revision": 3,
+      "sha256": "02ada2cf811e7893ffd98d8b6231974d111238e2dddf0ecd96739ff6b68a2cd3",
+      "placements": 1,
+      "triangles": 22380
+    },
+    {
+      "id": "part-acbbef7209c4ef100693",
+      "revision": 4,
+      "sha256": "1e96a18539191ea08d48b4134c2820043674f2c3b0960ce583ae1620ba5a81a8",
+      "placements": 3,
+      "triangles": 15756
+    },
+    {
+      "id": "part-c41467ac46f6b350df24",
+      "revision": 6,
+      "sha256": "a5b58c4707df1e37aa70fa40e7d052e63be141df7703cd75337abe0e7610b4c7",
+      "placements": 1,
+      "triangles": 5712
+    },
+    {
+      "id": "part-cc610ba071b8eb38ab8c",
+      "revision": 3,
+      "sha256": "a8e5d2fa478e42723ffc82a845b223051a8f8878ece3c9ea80eb75e4a5021a3b",
+      "placements": 1,
+      "triangles": 19900
+    },
+    {
+      "id": "part-73df516feb786d73fc5e",
+      "revision": 3,
+      "sha256": "3692ffd29f75026ef856af18a0a59538814b4836e8315d98c48e3c76d00735a8",
+      "placements": 1,
+      "triangles": 4624
+    },
+    {
+      "id": "part-75910d7a0d27dfc17aaf",
+      "revision": 4,
+      "sha256": "be3a73faed7b4a2c9e4c7b89477df3c1424284dd3e71ca84438fb049a8b3b5a8",
+      "placements": 1,
+      "triangles": 8976
+    },
+    {
+      "id": "part-0f14bf002f4c11854337",
+      "revision": 4,
+      "sha256": "5bbe40f3637bc640bc26557c3c20e3d9e452587395b0ca7c05d45793ef5e014a",
+      "placements": 1,
+      "triangles": 8976
+    }
+  ],
+  "identity_and_occupancy": "unchanged",
+  "legacy_equipment_visual_generation": "retired",
+  "approval": "Owner-signed designs or explicitly authorized scoped maintenance publications",
+  "scope": "Installed visual art; no authority/stat changes"
+}
+{"installedRevision": 9, "modularCharacterComponents": 90, "bodyTypes": 2, "hairStyles": 8, "editableSourceAndPublicationHashes": "pass", "rigBones": 16, "animations": 12}
+{"pairedRuntimeRevision": "r002", "pairedEquipment": 7, "publishedFiles": 10, "sourceAndDeliveryHashes": "pass", "canonicalFilesPreserved": 30, "preservationSnapshotEntries": 32, "historicalCharacterFilesPreservedAtSources": 223, "validatedSuccessorCharacterFiles": 21, "nativeSourcesPreserved": 2, "normalCrew": "r009 modular crew through exact r008 lineage; historical r002 handhelds and original validator remain unchanged", "ownerFinalSignoff": null}
+{"pairedRuntimeRevision": "r003", "pairedEquipment": 7, "publishedFiles": 10, "publicBaseUrl": "/assets/crew/poses/r003/", "sourceAndDeliveryHashes": "pass", "canonicalAndPriorFilesPreserved": 265, "preservationSnapshotEntries": 287, "historicalCharacterFilesPreservedAtSources": 223, "validatedSuccessorCharacterFiles": 21, "normalCrew": "r009 modular male/female crew through validated r008 lineage; exact shared binds and original clips; r003 handhelds unchanged", "nativeSourcesPreserved": 1, "ownerFinalSignoff": null}

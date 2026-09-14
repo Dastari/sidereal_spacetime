@@ -11,6 +11,10 @@ PUBLIC_HELP = {
     "client": {},
     "dashboard": {"docs/public/shipyard.md": "help/shipyard.md"},
 }
+EDITOR_NATIVE_ASSETS = {
+    "assets/art-library/framed-wayfarer/r005/library-02/hull.glb":
+        "assets/shipyard/armor-r005/hull.glb",
+}
 # Publication is explicit. Only these `assets/runtime` entries (files or whole
 # directories) are copied into an app's public tree; anything else written into
 # `assets/runtime` (review packages, preview builds, rebuild experiments) stays
@@ -1438,6 +1442,11 @@ def prepare(app: str, root: Path = ROOT) -> None:
     elif public_assets.is_dir():
         shutil.rmtree(public_assets)
     _copy_published(root / "assets/runtime", public_assets)
+    if app == "dashboard":
+        for source, destination in EDITOR_NATIVE_ASSETS.items():
+            target = public / destination
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(root / source, target)
     check_references(public_assets)
     for source, destination in PUBLIC_HELP[app].items():
         target = public / destination
