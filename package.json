@@ -48,6 +48,7 @@
     "art:library:check": "python3 scripts/art_catalog.py check && npm run art:library:typecheck && npm run art:library:test",
     "art:library:status": "python3 scripts/art_catalog.py status",
     "art:library:serve": "python3 scripts/art_library/serve.py",
+    "art:library:stage-reference": "python3 scripts/art_library/stage_planet_reference.py",
     "art:library:construction": "python3 scripts/art_library/run_construction.py",
     "art:library:mesh": "tsx scripts/art_library/mesh_construction.ts",
     "art:library:test": ".tools/art/bin/python -m unittest discover -s scripts/art_library -p 'test_*.py'",
@@ -65,12 +66,14 @@
     "art:library:floor:fit": "tsx scripts/art_library/check_floor_review.ts",
     "art:roof": "python3 scripts/art_library/run_roof.py",
     "art:side-hull": "python3 scripts/art_library/run_side_hull.py",
+    "art:study:hull": "python3 scripts/art_library/run_hull_voxel_study.py",
     "format:check": "node scripts/quality-check.mjs format",
     "format:check:all": "prettier --check \"apps/**/*.{ts,tsx,css,json}\" \"packages/**/*.{ts,tsx,json}\" \"scripts/*.{ts,mjs}\"",
     "lint": "node scripts/quality-check.mjs lint",
     "lint:all": "eslint \"apps/**/*.{ts,tsx}\" \"packages/**/*.{ts,tsx}\"",
     "test:python": "python3 scripts/run_python_tests.py",
-    "art:character-components": "python3 scripts/character_components/run.py"
+    "art:character-components": "python3 scripts/character_components/run.py",
+    "art:study:layered": "python3 scripts/art_library/run_hull_layered_study.py"
   },
   "devDependencies": {
     "@types/node": "26.5.0",

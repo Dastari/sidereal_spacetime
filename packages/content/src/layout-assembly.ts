@@ -1,3 +1,4 @@
+import { classifyLegacyYaw } from "./placement-orientation";
 /** Editable visual placements use the game's exact east/north/up metre frame.
  * This local document is not installed inventory, collision, damage or a control grant. */
 import {
@@ -48,11 +49,12 @@ export function assemblyMismatches(
   catalog: PartCatalog,
 ): string[] {
   return (doc.assembly?.parts ?? [])
-    .filter(
-      (p) =>
-        !catalog.assets.some((a) => a.id === p.assetId) ||
-        doc.assembly!.revisions[p.assetId] !==
-          visualRevision(catalog, p.assetId),
+    .filter((p) =>
+      [p.assetId, ...(p.fittingProxy ? [p.fittingProxy.assetId] : [])].some(
+        (id) =>
+          !catalog.assets.some((a) => a.id === id) ||
+          doc.assembly!.revisions[id] !== visualRevision(catalog, id),
+      ),
     )
     .map((p) => p.id);
 }
@@ -98,16 +100,37 @@ export function editVisualPart(
   const f = doc.fittings.find((f) => f.id === part.id);
   if (f) {
     const a = catalog.assets.find((a) => a.id === part.assetId)!;
-    const turns = ((Math.round(part.rotation / (Math.PI / 2)) % 4) + 4) % 4;
+    const angle = classifyLegacyYaw(part.rotation, String(part.rotation));
+    if (angle.status !== "representable" || angle.yawStep % 18 !== 0)
+      throw Error(
+        "This legacy floorplan fitting requires 90° rotation; convert its placement before using finer rotation.",
+      );
+    const turns = angle.yawStep / 18;
     const offset = transformPoint(
       [a.bounds.min[0], a.bounds.min[1]],
       turns,
       part.flipped,
     );
-    f.position = [
-      Math.round((part.position[0] + offset[0]) * 32),
-      Math.round((part.position[1] + offset[1]) * 32),
+    const anchor = [
+      (part.position[0] + offset[0]) * 32,
+      (part.position[1] + offset[1]) * 32,
     ];
+    if (
+      !anchor.every(
+        (n) => Number.isFinite(n) && Math.abs(n - Math.round(n)) <= 1e-8,
+      )
+    )
+      throw Error("Move this floorplan fitting on the 1/32 m grid.");
+    const deck = doc.decks.find((d) => d.id === f.deckId);
+    const expectedZ = (deck?.elevation ?? 0) / 32 - a.bounds.min[2];
+    if (
+      !Number.isFinite(part.position[2]) ||
+      Math.abs(part.position[2] - expectedZ) > 1e-8
+    )
+      throw Error(
+        "This floorplan fitting must stay on its deck; use an explicit 3D placement before changing height.",
+      );
+    f.position = [Math.round(anchor[0]), Math.round(anchor[1])];
     f.quarterTurns = turns;
     f.reflected = part.flipped;
   } else if (doc.assembly)

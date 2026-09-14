@@ -39,6 +39,24 @@ function library(scene: Scene) {
   return container;
 }
 describe("native authoring wall fit preview", () => {
+  it("never substitutes legacy opaque walls for boundary treatment intent", () => {
+    const guide = fixture();
+    guide.walls = guide.walls.map((w) => ({
+      ...w,
+      treatment: {
+        schema: "sidereal.boundary-treatment-resolution.v1",
+        intent: "cockpit-glass",
+        overrideId: "bow",
+        heightUnits: 72,
+        floorThicknessUnits: 6,
+        qualification: "pending",
+      },
+    }));
+    const plan = planLayoutNativeWalls(guide);
+    expect(plan.placements).toEqual([]);
+    expect(plan.issues.map((i) => i.key)).toContain("treatment-family");
+  });
+
   it("identifies the two Wayfarer bow profiles missing from the exact native grammar", () => {
     const layout = JSON.parse(
       readFileSync("packages/content/src/wayfarer-starter-r001.json", "utf8"),

@@ -1,0 +1,510 @@
+{
+  "version": 1,
+  "units": "metres/radians",
+  "space": "authored glTF +Y up/-Z forward; shoulder offsets in spine local frame",
+  "items": {
+    "carbine": {
+      "version": 1,
+      "assetId": "carbine",
+      "profile": "RIFLE",
+      "sockets": {
+        "Grip.Primary": [
+          0,
+          0,
+          0
+        ],
+        "Grip.Secondary": [
+          -0.1,
+          0.045,
+          -0.04
+        ],
+        "Contact.Shoulder": [
+          0,
+          0.075,
+          0.18
+        ],
+        "Aim.Muzzle": [
+          0,
+          0.13,
+          -0.78
+        ],
+        "Sight.Primary": [
+          0,
+          0.25,
+          0.045
+        ]
+      },
+      "clearance": [
+        {
+          "name": "receiver",
+          "center": [
+            0,
+            0.105,
+            -0.13
+          ],
+          "half": [
+            0.096,
+            0.08,
+            0.2166
+          ]
+        },
+        {
+          "name": "slide",
+          "center": [
+            0,
+            0.2,
+            -0.1976
+          ],
+          "half": [
+            0.06,
+            0.033,
+            0.2736
+          ]
+        },
+        {
+          "name": "charging-handle",
+          "center": [
+            0.105,
+            0.19,
+            -0.08
+          ],
+          "half": [
+            0.045,
+            0.018,
+            0.025
+          ]
+        },
+        {
+          "name": "grip",
+          "center": [
+            0,
+            -0.01,
+            0
+          ],
+          "half": [
+            0.044,
+            0.094,
+            0.055
+          ]
+        },
+        {
+          "name": "stock",
+          "center": [
+            0,
+            0.075,
+            0.15
+          ],
+          "half": [
+            0.073,
+            0.11,
+            0.03
+          ]
+        },
+        {
+          "name": "barrel",
+          "center": [
+            0,
+            0.13,
+            -0.5319999999999999
+          ],
+          "half": [
+            0.085,
+            0.07,
+            0.19
+          ]
+        },
+        {
+          "name": "offhand-palm-shelf",
+          "center": [
+            -0.072,
+            0.0275,
+            -0.04
+          ],
+          "half": [
+            0.028,
+            0.0375,
+            0.06
+          ]
+        }
+      ]
+    },
+    "long-rifle": {
+      "version": 1,
+      "assetId": "long-rifle",
+      "profile": "LONG_RIFLE",
+      "sockets": {
+        "Grip.Primary": [
+          0,
+          0.03,
+          0.055
+        ],
+        "Grip.Secondary": [
+          -0.1,
+          0.045,
+          -0.08
+        ],
+        "Contact.Shoulder": [
+          0,
+          0.075,
+          0.18
+        ],
+        "Aim.Muzzle": [
+          0,
+          0.13,
+          -1.12
+        ],
+        "Sight.Primary": [
+          0,
+          0.309,
+          -0.06
+        ],
+        "Sight.EyeReference": [
+          0,
+          0.309,
+          0.04
+        ]
+      },
+      "clearance": [
+        {
+          "name": "receiver",
+          "center": [
+            0,
+            0.105,
+            -0.13
+          ],
+          "half": [
+            0.096,
+            0.08,
+            0.3135
+          ]
+        },
+        {
+          "name": "slide",
+          "center": [
+            0,
+            0.2,
+            -0.28600000000000003
+          ],
+          "half": [
+            0.06,
+            0.033,
+            0.396
+          ]
+        },
+        {
+          "name": "charging-handle",
+          "center": [
+            0.105,
+            0.19,
+            -0.08
+          ],
+          "half": [
+            0.045,
+            0.018,
+            0.025
+          ]
+        },
+        {
+          "name": "grip",
+          "center": [
+            0,
+            -0.01,
+            0
+          ],
+          "half": [
+            0.044,
+            0.094,
+            0.055
+          ]
+        },
+        {
+          "name": "stock",
+          "center": [
+            0,
+            0.075,
+            0.15
+          ],
+          "half": [
+            0.073,
+            0.11,
+            0.03
+          ]
+        },
+        {
+          "name": "barrel",
+          "center": [
+            0,
+            0.13,
+            -0.77
+          ],
+          "half": [
+            0.085,
+            0.07,
+            0.275
+          ]
+        },
+        {
+          "name": "optic",
+          "center": [
+            0,
+            0.309,
+            -0.18
+          ],
+          "half": [
+            0.044,
+            0.043,
+            0.12
+          ]
+        },
+        {
+          "name": "offhand-palm-shelf",
+          "center": [
+            -0.072,
+            0.0275,
+            -0.08
+          ],
+          "half": [
+            0.028,
+            0.0375,
+            0.06
+          ]
+        }
+      ]
+    },
+    "compact-pistol": {
+      "version": 1,
+      "assetId": "compact-pistol",
+      "profile": "PISTOL_ONE_HAND",
+      "sockets": {
+        "Grip.Primary": [
+          0,
+          0,
+          0
+        ],
+        "SupportHandContact": [
+          -0.065,
+          -0.012,
+          0.015
+        ],
+        "Aim.Muzzle": [
+          0,
+          0.13,
+          -0.39
+        ],
+        "Sight.Primary": [
+          0,
+          0.25,
+          0.045
+        ]
+      },
+      "clearance": [
+        {
+          "name": "receiver",
+          "center": [
+            0,
+            0.12,
+            -0.14
+          ],
+          "half": [
+            0.14,
+            0.15,
+            0.185
+          ]
+        }
+      ]
+    },
+    "heavy-handgun": {
+      "version": 1,
+      "assetId": "heavy-handgun",
+      "profile": "PISTOL_TWO_HAND",
+      "sockets": {
+        "Grip.Primary": [
+          0,
+          0,
+          0
+        ],
+        "SupportHandContact": [
+          -0.065,
+          -0.012,
+          0.015
+        ],
+        "Aim.Muzzle": [
+          0,
+          0.13,
+          -0.49
+        ],
+        "Sight.Primary": [
+          0,
+          0.25,
+          0.045
+        ]
+      },
+      "clearance": [
+        {
+          "name": "receiver",
+          "center": [
+            0,
+            0.12,
+            -0.14
+          ],
+          "half": [
+            0.14,
+            0.15,
+            0.235
+          ]
+        }
+      ]
+    },
+    "plasma-cutter": {
+      "version": 1,
+      "assetId": "plasma-cutter",
+      "profile": "TOOL",
+      "sockets": {
+        "Grip.Primary": [
+          0,
+          0,
+          0
+        ],
+        "Aim.Direction": [
+          0,
+          0.13,
+          -0.5
+        ],
+        "Interaction.Contact": [
+          0,
+          0.13,
+          -0.5
+        ]
+      },
+      "clearance": [
+        {
+          "name": "device-body",
+          "center": [
+            0,
+            0.12,
+            -0.13
+          ],
+          "half": [
+            0.151,
+            0.14,
+            0.17
+          ]
+        },
+        {
+          "name": "forks",
+          "center": [
+            0,
+            0.13,
+            -0.38
+          ],
+          "half": [
+            0.105,
+            0.045,
+            0.12
+          ]
+        }
+      ]
+    },
+    "sample-scanner": {
+      "version": 1,
+      "assetId": "sample-scanner",
+      "profile": "HANDHELD_DEVICE",
+      "deviceMode": "VIEW_SCREEN_DEVICE",
+      "sockets": {
+        "Grip.Primary": [
+          0,
+          0,
+          0
+        ],
+        "Aim.Direction": [
+          0.085,
+          0.35,
+          -0.19
+        ],
+        "Display.Reference": [
+          0,
+          0.19,
+          -0.251
+        ]
+      },
+      "clearance": [
+        {
+          "name": "device-body",
+          "center": [
+            0,
+            0.12,
+            -0.055
+          ],
+          "half": [
+            0.1,
+            0.085,
+            0.085
+          ]
+        },
+        {
+          "name": "display",
+          "center": [
+            0,
+            0.19,
+            -0.19
+          ],
+          "half": [
+            0.11,
+            0.125,
+            0.065
+          ]
+        },
+        {
+          "name": "antenna",
+          "center": [
+            0.085,
+            0.35,
+            -0.19
+          ],
+          "half": [
+            0.015,
+            0.065,
+            0.02
+          ]
+        }
+      ]
+    },
+    "flashlight": {
+      "version": 1,
+      "assetId": "flashlight",
+      "profile": "FLASHLIGHT",
+      "sockets": {
+        "Grip.Primary": [
+          0,
+          0,
+          0
+        ],
+        "Aim.Direction": [
+          0,
+          0.06,
+          -0.31
+        ]
+      },
+      "clearance": [
+        {
+          "name": "device-body",
+          "center": [
+            0,
+            0.05,
+            -0.15
+          ],
+          "half": [
+            0.08,
+            0.09,
+            0.16
+          ]
+        }
+      ]
+    }
+  },
+  "revision": "r003",
+  "profile_source": "Runtime presentation profiles remain owned by packages/content/src/equipment-poses.ts; historical r002 values are archived in pairing-dependencies.",
+  "source_r002_metadata_sha256": "fbbb44d1eeca3bb1d9c769ea6999463994c52a883ea6d5291603afa79b278a49",
+  "native_source_sha256": "649dd3b63d2f1cfe07eadd49de7e33968386dd0a7d41d09f5c2f890be7395f3f",
+  "status": "Unsigned native receiver-side support-grip candidate; gameplay integration and owner visual acceptance remain separate."
+}

@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/client",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
   "dependencies": {
@@ -16,7 +16,7 @@
     "@sidereal/canvas-ui": "*"
   },
   "scripts": {
-    "build": "python3 ../../scripts/prepare_app.py client && vite build",
+    "build": "python3 ../../scripts/prepare_app.py client && vite build && node ../../scripts/precompress_assets.mjs dist",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   }
 }

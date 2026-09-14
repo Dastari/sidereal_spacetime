@@ -1,0 +1,1 @@
+{"extends":"../../tsconfig.json","compilerOptions":{"noEmit":true},"include":["temperate_reference_composition_r001.ts","temperate_reference_composition_r001.test.ts","temperate_reference_r001.vitest.config.ts"]}

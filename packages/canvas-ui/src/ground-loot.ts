@@ -5,13 +5,29 @@ import { ITEM_RARITY_PALETTES } from "./item-frame";
 import type { CanvasUI } from "./toolkit";
 import { drawItemTooltip } from "./item-details";
 import { drawInventoryIcon } from "./inventory";
+const menus = new WeakMap<CanvasUI, { itemId: string; x: number; y: number }>();
+export function dismissGroundLootMenu(ui: CanvasUI) {
+  menus.delete(ui);
+  if (ui.focus.startsWith("ground-menu-")) {
+    ui.focus = "";
+    ui.keyboard = false;
+  }
+}
 /** Label visibility is a local preference, never a permission or discovery rule. */
 export function drawGroundLoot(
   ui: CanvasUI,
   rows: readonly GroundItemLabel[],
   pickup: (id: string) => void,
   pending: boolean,
+  equipment?: { equip?: (id: string) => void; backpackEquipped?: boolean },
 ) {
+  const closeMenu = () => {
+    menus.delete(ui);
+    ui.focus = "";
+    ui.keyboard = false;
+    ui.invalidate();
+  };
+  if (!ui.focus.startsWith("ground-menu-")) menus.delete(ui);
   const used: { x: number; y: number; w: number; h: number }[] = [];
   let hover:
     | {
@@ -87,7 +103,14 @@ export function drawGroundLoot(
     c.fillStyle = "rgba(2,17,37,.88)";
     c.fillRect(r.x, r.y, r.w, r.h);
     c.strokeRect(r.x + 0.5, r.y + 0.5, r.w - 1, r.h - 1);
-    ui.text(d.name, r.x + 10, r.y + 6, 12, color.bright, r.w - 20);
+    ui.text(
+      d.name.toUpperCase(),
+      r.x + 10,
+      r.y + 6,
+      12,
+      color.bright,
+      r.w - 20,
+    );
     c.restore();
     const id = "ground-pickup-" + row.id;
     ui.hits.push({
@@ -95,7 +118,20 @@ export function drawGroundLoot(
       label: `${d.name}: ${row.reachable ? "pick up" : "move closer to pick up"}`,
       rect: r,
       disabled: pending || !row.reachable,
-      action: () => pickup(row.id),
+      action: () => {
+        closeMenu();
+        pickup(row.id);
+      },
+      ...(d.equipSlot === "back" && equipment?.equip
+        ? {
+            context: (event: { x: number; y: number }) => {
+              menus.set(ui, { itemId: row.id, x: event.x, y: event.y });
+              ui.focus = "ground-menu-equip";
+              ui.keyboard = true;
+              ui.invalidate();
+            },
+          }
+        : {}),
     });
     if (ui.hover === id) hover = { d, r };
   }
@@ -107,5 +143,45 @@ export function drawGroundLoot(
       11,
       "#8cd9ec",
     );
-  if (hover) drawItemTooltip(ui, hover.d, hover.r, drawInventoryIcon);
+  const menu = menus.get(ui);
+  const target = menu && rows.find((row) => row.id === menu.itemId);
+  if (menu && target && equipment?.equip) {
+    const r = {
+      x: Math.max(8, Math.min(menu.x, ui.width - 226)),
+      y: Math.max(8, Math.min(menu.y, ui.height - 130)),
+      w: 218,
+      h: 122,
+    };
+    ui.panel(r, true);
+    const disabled = pending || !target.reachable;
+    ui.button(
+      "ground-menu-equip",
+      equipment.backpackEquipped ? "Swap backpack" : "Equip backpack",
+      { x: r.x + 8, y: r.y + 8, w: r.w - 16, h: 30 },
+      () => {
+        closeMenu();
+        equipment.equip!(target.id);
+      },
+      { disabled },
+    );
+    ui.button(
+      "ground-menu-pickup",
+      "Pick up",
+      { x: r.x + 8, y: r.y + 46, w: r.w - 16, h: 30 },
+      () => {
+        closeMenu();
+        pickup(target.id);
+      },
+      { disabled },
+    );
+    ui.button(
+      "ground-menu-cancel",
+      "Cancel",
+      { x: r.x + 8, y: r.y + 84, w: r.w - 16, h: 30 },
+      closeMenu,
+    );
+  } else {
+    dismissGroundLootMenu(ui);
+    if (hover) drawItemTooltip(ui, hover.d, hover.r, drawInventoryIcon);
+  }
 }

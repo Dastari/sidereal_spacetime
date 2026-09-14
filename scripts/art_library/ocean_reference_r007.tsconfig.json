@@ -1,0 +1,1 @@
+{"extends":"../../tsconfig.json","compilerOptions":{"noEmit":true},"include":["ocean_reference_composition_r007.ts","ocean_reference_composition_r007.test.ts","ocean_reference_r007.vitest.config.ts"]}

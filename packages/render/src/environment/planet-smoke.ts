@@ -41,6 +41,7 @@ export function createPlanetSmoke(
   const haze = new Mesh(name + "-smoke", scene),
     data = new VertexData();
   setMeshRole(haze, "planet");
+  haze.metadata.planetShadow = { cast: false, receive: true };
   data.positions = geometry.positions;
   data.normals = geometry.normals;
   data.colors = prepared

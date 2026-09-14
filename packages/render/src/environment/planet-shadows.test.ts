@@ -25,7 +25,7 @@ test("hero shadow allocation is isolated, nearest-only and restores primary ligh
     node.position.x = x;
     const surface = CreateBox("surface" + i, {}, scene);
     surface.parent = node;
-    surface.metadata = { style: i === 1 ? "ice" : "temperate" };
+    surface.metadata = { role: "planet", style: i === 1 ? "ice" : "temperate" };
     surface.material = new PBRMaterial("pbr" + i, scene);
     return { node, radius: 1, lod: 0, surface };
   });
@@ -66,4 +66,121 @@ test("hero shadow allocation is isolated, nearest-only and restores primary ligh
   manager.dispose();
   scene.dispose();
   engine.dispose();
+});
+
+test("semantic shadows follow active descendants across same-root swaps and restore light state", () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  new FreeCamera("camera", new Vector3(0, 0, -5), scene);
+  const primary = new DirectionalLight(
+    "primary",
+    new Vector3(-1, -1, 0),
+    scene,
+  );
+  const root = new TransformNode("body", scene);
+  const levels = [0, 1, 2].map(() => {
+    const node = new TransformNode("arbitrary-level", scene);
+    node.parent = root;
+    return node;
+  });
+  const make = (name: string, parent: TransformNode, metadata: object = {}) => {
+    const mesh = CreateBox(name, {}, scene);
+    mesh.parent = parent;
+    mesh.material = new PBRMaterial("shared-role-independent-name", scene);
+    mesh.metadata = { role: "planet", ...metadata };
+    return mesh;
+  };
+  const current = make("smoke-closed-core-is-actually-terrain", levels[0]);
+  const retained = make("retained", levels[1]);
+  const pending = make("pending", levels[2]);
+  levels[1].setEnabled(false);
+  levels[2].setEnabled(false);
+  const smoke = make("renamed-a", levels[0], {
+    planetWeather: true,
+    planetShadow: { cast: false, receive: true },
+  });
+  const core = make("renamed-b", levels[0], {
+    planetShadow: { cast: false, receive: true },
+  });
+  const cloud = make("renamed-c", levels[0], { planetWeather: true });
+  const noReceive = make("effect", levels[0], {
+    planetShadow: { cast: true, receive: false },
+  });
+  const unrelated = make("nonplanet", levels[0], { role: "crew" });
+  const hidden = make("hidden", levels[0]);
+  hidden.isVisible = false;
+  const zeroVisibility = make("zero", levels[0]);
+  zeroVisibility.visibility = 0;
+  cloud.receiveShadows = true;
+  primary.excludedMeshes = [unrelated, cloud];
+  const manager = createPlanetShadows(scene);
+  manager.setPrimaryLight(primary);
+  const update = () => manager.update([{ node: root, radius: 1, lod: 0 }]);
+  const key = scene.getLightByName("planet-hero-key") as DirectionalLight;
+  const casters = () => key.getShadowGenerator()!.getShadowMap()!.renderList!;
+  try {
+    update();
+    expect(key.includedOnlyMeshes.map((m) => m.uniqueId).sort()).toEqual(
+      [current, smoke, core, cloud, noReceive].map((m) => m.uniqueId).sort(),
+    );
+    expect(
+      casters()
+        .map((m) => m.uniqueId)
+        .sort(),
+    ).toEqual([current, cloud, noReceive].map((m) => m.uniqueId).sort());
+    expect(smoke.receiveShadows).toBe(true);
+    expect(core.receiveShadows).toBe(true);
+    expect(noReceive.receiveShadows).toBe(false);
+    expect(casters()).not.toContain(pending);
+    // Preparing an unchanged disabled level must not remove the current caster.
+    update();
+    expect(casters()).toContain(current);
+    levels[0].setEnabled(false);
+    levels[1].setEnabled(true);
+    update();
+    expect(key.includedOnlyMeshes.map((m) => m.uniqueId)).toEqual([
+      retained.uniqueId,
+    ]);
+    expect(casters().map((m) => m.uniqueId)).toEqual([retained.uniqueId]);
+    expect(current.receiveShadows).toBe(false);
+    expect(cloud.receiveShadows).toBe(true);
+    expect(primary.excludedMeshes.map((m) => m.uniqueId)).toEqual([
+      unrelated.uniqueId,
+      cloud.uniqueId,
+      retained.uniqueId,
+    ]);
+    // A ready retained level can be revisited without allocating another body.
+    levels[1].setEnabled(false);
+    levels[0].setEnabled(true);
+    update();
+    expect(casters()).toContain(current);
+    primary.setEnabled(false);
+    update();
+    expect(key.isEnabled()).toBe(false);
+    expect(key.includedOnlyMeshes).toHaveLength(0);
+    expect(casters()).toHaveLength(0);
+    expect(primary.excludedMeshes.map((m) => m.uniqueId)).toEqual([
+      unrelated.uniqueId,
+      cloud.uniqueId,
+    ]);
+    primary.setEnabled(true);
+    update();
+    expect(key.isEnabled()).toBe(true);
+    root.setEnabled(false);
+    update();
+    expect(key.isEnabled()).toBe(false);
+    root.setEnabled(true);
+    update();
+    levels[0].setEnabled(false);
+    update();
+    expect(key.isEnabled()).toBe(false);
+    expect(primary.excludedMeshes.map((m) => m.uniqueId)).toEqual([
+      unrelated.uniqueId,
+      cloud.uniqueId,
+    ]);
+  } finally {
+    manager.dispose();
+    scene.dispose();
+    engine.dispose();
+  }
 });

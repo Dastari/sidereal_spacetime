@@ -1,4 +1,17 @@
+import {
+  WAYFARER_EXTERIOR_SHA256,
+  verifyQualifiedWayfarerExterior,
+  type WayfarerExteriorDocument,
+} from "@sidereal/sim/wayfarer-exterior-qualification";
+import {
+  WAYFARER_REBUILD_SHA256,
+  verifyWayfarerRebuildSource,
+} from "@sidereal/sim/wayfarer-rebuild-contract";
 import { poolAuthoredMaterials } from "./authored-material-pool";
+import { framedWayfarerVisual } from "./framed-wayfarer-visuals";
+import { framedEnginePrototype } from "./framed-engine-prototype";
+import { nativeMeshInGroup } from "./native-mesh-group";
+import { MultiMaterial } from "@babylonjs/core/Materials/multiMaterial";
 import { withMaterialSetup } from "./material-setup";
 import { batchStaticMaterials } from "./static-material-batches";
 import { cacheStaticTransforms } from "./static-transform-cache";
@@ -23,6 +36,7 @@ import { WAYFARER_CONVERSION_PIN as PIN } from "@sidereal/content/wayfarer-conve
 import proof from "@sidereal/content/wayfarer-walking-proof.json";
 import { constructionHash } from "@sidereal/sim/construction-transactions";
 import { createEquipmentLighting } from "./equipment-lighting";
+import { registerReferencedSceneMaterial } from "./scene-material-registration";
 
 /** Exact authored visual assembly for the qualified static Wayfarer review.
  * Reusable GLBs/materials are shared inside this adapter; placed UUID roots are
@@ -34,16 +48,29 @@ export async function loadConstructionAuthoredAssembly(
   deckId: string,
   attachments: readonly RefitAttachmentVisual[] = [],
 ) {
-  if (document.layout.source?.blueprintRevision !== proof.documentSha256)
+  const exterior =
+    document.layout.source?.blueprintRevision === WAYFARER_EXTERIOR_SHA256;
+  const rebuild =
+    document.layout.source?.blueprintRevision === WAYFARER_REBUILD_SHA256;
+  if (exterior)
+    verifyQualifiedWayfarerExterior(document as WayfarerExteriorDocument);
+  else if (rebuild) verifyWayfarerRebuildSource(document);
+  else if (document.layout.source?.blueprintRevision !== proof.documentSha256)
     return null;
   if (!scene.useRightHandedSystem)
     throw Error("Authored assembly requires right-handed renderer");
-  const raw = await fetch("/assets/assembly/catalog.json");
+  const raw = await fetch(
+    exterior
+      ? "/assets/assembly/catalog-shipyard-r005.json"
+      : "/assets/assembly/catalog.json",
+  );
   if (!raw.ok) throw Error("Authored catalog unavailable");
   const text = await raw.text();
   if (
     constructionHash(text) !==
-    PIN.sources["assets/runtime/assembly/catalog.json"]
+    (exterior
+      ? "9fa3db94ed61a84f3e9d52b0d404d1433931747bbd268fceefe6a4e2a6ead237"
+      : PIN.sources["assets/runtime/assembly/catalog.json"])
   )
     throw Error("Authored catalog pin mismatch");
   const catalog = JSON.parse(text) as PartCatalog;
@@ -86,9 +113,10 @@ export async function loadConstructionAuthoredAssembly(
       library: NonNullable<ReturnType<typeof libraries.get>>;
     }[] = [];
     for (const p of [...base, ...extra]) {
-      const a = catalog.assets.find((a) => a.id === p.assetId);
-      if (!a || a.category === "floor" || p.removedCells.length)
+      const original = catalog.assets.find((a) => a.id === p.assetId);
+      if (!original || original.category === "floor" || p.removedCells.length)
         throw Error("Unsupported authored placement or damage");
+      const a = framedWayfarerVisual(original);
       const url = a.visual?.url ?? "/assets/assembly/parts.glb",
         sha =
           a.visual?.sha256 ??
@@ -118,14 +146,13 @@ export async function loadConstructionAuthoredAssembly(
       requests.push({ p, a, library });
     }
     return withMaterialSetup(scene, () => {
+      const enginePrototypes = new Map<string, Mesh>();
       const prepared = requests.map(({ p, a, library }) => {
         const prefix = a.visual?.nodePrefix;
         let selected = library.sources.filter((m) =>
           a.visual
             ? prefix
-              ? m.name === prefix ||
-                m.name.startsWith(prefix + "_") ||
-                m.name.startsWith(prefix + ".")
+              ? nativeMeshInGroup(m.name, prefix)
               : true
             : a.nodes.some(
                 (n) =>
@@ -136,6 +163,18 @@ export async function loadConstructionAuthoredAssembly(
         );
         if (!selected.length)
           throw Error("Missing exact authored mesh selector " + a.id);
+        let enginePrototype = enginePrototypes.get(a.id);
+        if (!enginePrototype) {
+          enginePrototype = framedEnginePrototype(a, selected);
+          if (enginePrototype) {
+            enginePrototypes.set(a.id, enginePrototype);
+            scene.removeMesh(enginePrototype);
+            library.container.meshes.push(enginePrototype);
+            if (enginePrototype.material instanceof MultiMaterial)
+              library.container.multiMaterials.push(enginePrototype.material);
+          }
+        }
+        if (enginePrototype) selected = [enginePrototype];
         for (const source of selected)
           source.metadata = {
             ...source.metadata,
@@ -204,6 +243,7 @@ export async function loadConstructionAuthoredAssembly(
             ? source.createInstance(name)
             : source.clone(name, node, true)!;
           mesh.parent = node;
+          registerReferencedSceneMaterial(scene, mesh.material);
           const q = new Quaternion();
           matrix.decompose(mesh.scaling, q, mesh.position);
           mesh.rotationQuaternion = q;

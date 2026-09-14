@@ -1,0 +1,1 @@
+{"extends":"../../tsconfig.json","compilerOptions":{"noEmit":true},"include":["crystal_reference_composition_r002.ts","crystal_reference_composition_r002.test.ts","crystal_reference_r002.vitest.config.ts"]}

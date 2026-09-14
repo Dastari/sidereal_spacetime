@@ -1184,7 +1184,11 @@ export function createInventoryUI(
             }
           : {
               id: "equip-item",
-              label: "Equip",
+              label:
+                d.equipSlot === "back" &&
+                state.items.some((i) => i.equipmentSlot === "back")
+                  ? "Swap backpack"
+                  : "Equip",
               action: () => {
                 actions.equipItem(item.id);
                 cancelHeld();

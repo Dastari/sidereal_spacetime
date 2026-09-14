@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "revision": 8,
+  "revision": 9,
   "rigId": "crew-shared-16-v1",
   "bodyTypes": [
     "male",
@@ -3287,15 +3287,15 @@
     "legacy-helmet-explorer-visor": 2,
     "legacy-helmet-standard-helmet": 2,
     "legacy-visor-standard-visor": 2,
-    "base-male": 8,
-    "base-female": 8,
-    "hair-swept": 8,
-    "hair-cropped": 2,
-    "hair-crest": 8,
-    "hair-scientist": 2,
-    "hair-bob": 2,
-    "hair-ponytail": 8,
-    "hair-bun": 2,
-    "hair-braids": 2
+    "base-male": 9,
+    "base-female": 9,
+    "hair-swept": 9,
+    "hair-cropped": 9,
+    "hair-crest": 9,
+    "hair-scientist": 9,
+    "hair-bob": 9,
+    "hair-ponytail": 9,
+    "hair-bun": 9,
+    "hair-braids": 9
   }
 }

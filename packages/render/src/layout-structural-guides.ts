@@ -15,9 +15,15 @@ export interface LayoutStructuralGuide {
 type Point3 = [number, number, number];
 /** Trace only surviving compiled spans. In particular, never bridge door gaps
  * from the unsplit perimeter or substitute a retained assembly wall for a span. */
+export interface LayoutStructuralGuideOptions {
+  /** Trace only the floor-level span. Plan projections (Top/Side/Front) draw
+   * the wall-top ring offset from the base, which reads as a second outline. */
+  baseOnly?: boolean;
+}
 export function layoutStructuralLines(
   input: LayoutStructuralGuide | undefined,
   origin: readonly number[] = [0, 0, 0],
+  options: LayoutStructuralGuideOptions = {},
 ): { key: string; source: LayoutWall["source"]; points: Point3[] }[] {
   if (
     !input ||
@@ -37,20 +43,28 @@ export function layoutStructuralLines(
     )
     .sort((a, b) => a.key.localeCompare(b.key))
     .map((w) => {
+      const wallBottom = bottom + (w.treatment?.floorThicknessUnits ?? 0) / 32;
+      const wallTop = w.treatment
+        ? wallBottom + w.treatment.heightUnits / 32
+        : top;
       const a: Point3 = [
         w.a[0] / 32 - origin[0],
-        bottom,
+        wallBottom,
         -w.a[1] / 32 - origin[2],
       ];
       const b: Point3 = [
         w.b[0] / 32 - origin[0],
-        bottom,
+        wallBottom,
         -w.b[1] / 32 - origin[2],
       ];
       return {
         key: w.key,
         source: w.source,
-        points: [a, b, [b[0], top, b[2]], [a[0], top, a[2]], [...a]],
+        points:
+          options.baseOnly ||
+          (w.treatment && ["open", "open-bay"].includes(w.treatment.intent))
+            ? [a, b]
+            : [a, b, [b[0], wallTop, b[2]], [a[0], wallTop, a[2]], [...a]],
       };
     });
 }
@@ -60,12 +74,14 @@ export function createLayoutStructuralGuides(scene: Scene) {
   let mesh: LinesMesh | undefined;
   let signature = "";
   let count = 0;
+  let pointCount = 0;
   let disposed = false;
   function clear() {
     mesh?.dispose();
     mesh = undefined;
     signature = "";
     count = 0;
+    pointCount = 0;
   }
   return {
     get mesh() {
@@ -78,9 +94,10 @@ export function createLayoutStructuralGuides(scene: Scene) {
       input: LayoutStructuralGuide | undefined,
       visible: boolean,
       origin: readonly number[] = [0, 0, 0],
+      options: LayoutStructuralGuideOptions = {},
     ) {
       if (disposed) return;
-      const plan = layoutStructuralLines(input, origin);
+      const plan = layoutStructuralLines(input, origin, options);
       if (!plan.length) {
         clear();
         return;
@@ -95,7 +112,11 @@ export function createLayoutStructuralGuides(scene: Scene) {
         const lines = plan.map((w) =>
           w.points.map((p) => Vector3.FromArray(p)),
         );
-        if (mesh && count !== plan.length) clear();
+        // An updatable line system can only be refreshed in place when every
+        // polyline keeps its point count; base-only guides change that.
+        const points = plan.reduce((n, w) => n + w.points.length, 0);
+        if (mesh && (count !== plan.length || pointCount !== points)) clear();
+        pointCount = points;
         mesh = CreateLineSystem(
           "layout-structural-wall-guides",
           {

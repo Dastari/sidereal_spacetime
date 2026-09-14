@@ -113,6 +113,7 @@ export function* stageLayeredPlanet(
     scene,
   );
   setMeshRole(core, "planet");
+  core.metadata.planetShadow = { cast: false, receive: true };
   core.parent = root;
   core.isPickable = false;
   const coreMaterial = pbr(

@@ -11,6 +11,12 @@ export type GroundItem = {
   localX: number;
   localY: number;
   reachable: boolean;
+  /** Native instance identity; presentation never resolves access from this. */
+  instanceId?: string;
+  /** Server-qualified deck; empty only for the legacy lab. */
+  deckId?: string;
+  /** Accepted support height at the item's stored location, in meters. */
+  elevationM?: number;
 };
 export type GroundItemLabel = GroundItem & { x: number; y: number };
 /** Presentation only. Ground positions and item discovery are supplied by authority. */
@@ -85,16 +91,12 @@ export function createGroundItems(
             );
             placement.parent = owned.root;
             for (const mesh of placement.getChildMeshes())
-              mesh.metadata = {
-                ...mesh.metadata,
-                partId: "ground:" + row.id,
-                role: "equipment",
-              };
+              mesh.metadata = { ...mesh.metadata, partId: "ground:" + row.id, role: "equipment" };
           })
           .catch(() => {});
       }
       entry.row = row;
-      entry.root.position.set(row.localX, 0.16, -row.localY);
+      entry.root.position.set(row.localX, row.elevationM ?? 0.16, -row.localY);
       entry.root.setEnabled(shown);
     }
   }

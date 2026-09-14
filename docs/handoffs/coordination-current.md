@@ -1,8 +1,15 @@
 # Current integration ownership — 2026-09-10
 
+**Character face r009 + native backpack/drop fix LIVE:** matched public client `b3d75db50249b68bd4d954bb8ec61cc4ac3fed898801e410f26fc9b36f8aa45e` / world `8afe80944ba6aaf47f997f8b1de2736d2b88568c1f3cf44753a54ecb82f9fe9a` are activated. All 35 published 0dfa graphics changes and all 1,249 runtime art assets are preserved. Typecheck, 1,339 tests, full build, art checks, 77 docs and exact-module fresh native smoke pass. Publication conserved every captured inventory/appearance/receipt/membership row and character/ship UUID set, without backup, reset or database restart. Actual normal public review recovered the previously hidden backpack, primary-click equipped it, then freshly dropped and context-equipped it again; all seven review item UUIDs and nested fuel survived. Hardware tab_7 was actually signed out and blanked with zero canvases; no character browser slot remains reserved. Software GPU ownership remains with external camera-aa-followup. New r009 final artistic sign-off remains pending. [Exact current release and limitations](character_faces_r009_live_release.md), [backpack authority and evidence](backpack_pickup_swap_r009.md). Coordinate any later publication against this pair; earlier guards/hashes below are history.
+
+
+**Current rendering follow-up (release_rollout, 2026-09-10):** Client `20b3025f` is live, preserving the exact b3d75db5 native backpack/drop source on unchanged world `8afe8094` and delivery `520de12b`. Close-zoom camera framing, uniform-bone TAA warmup/Off restoration and saved TAA passed actual normal gameplay and unmodified public reload. Final 1,347 tests/77 docs/full build passed. Actual sign out/blank/close completed; GPU released. [Exact pins, evidence and limitations](camera_uniform_aa_live_20260910.md).
+**Latest character/F3 public activation —2026-09-10:** owner-approved r003/r008 art is now live in client `8246fafc6e13048bd1eaabd5a63d6c06dc9ca1ba983de4bdb6e466de676c4a35`, entry `index-B4bNcXSU.js`, against unchanged public world `2ade8d75`. Actual public provider login, complete scene/character render and F3 controls passed. No backup or database restart was performed, as explicitly requested. Exact records and continuing technical limits: [character/F3 release](character_f3_public_release_20260910.md). Older release notes below remain history. Cargo authority remains separately owned and was not published with this client.
+
+
 This checkpoint distinguishes deployed behavior, isolated acceptance and unfinished work. The owner authorizes continued implementation and deployment after validation; this does not grant final artistic sign-off or permit loss of existing state.
 
-## Latest verified release and current ownership
+## Earlier verified release and ownership history
 
 As of the 2026-09-10 refit/loading release, public world is `2ade8d75a75f75e5d555c8f2c3a666c69c736300dff13611dd7964ea6984ac8c`. Root accepted client `f9e323997ab7319a1ec52b76cc703eb40c7d8813119977432c64d272a0d0ec67` with real public login, complete loading and explicit refit UI. A subsequent external character/F3 release is now public client `8246fafc6e13048bd1eaabd5a63d6c06dc9ca1ba983de4bdb6e466de676c4a35`; preserve that newer release and its own acceptance record. Older hashes below are retained milestone history, not the current activation target.
 
@@ -22,9 +29,19 @@ Generic floor-fitting authoring rules are in [the tileset interface contract](..
 | Native ordinary-walking stairs | stair_document + root | Exact r000/a003 sixty-placement two-deck fixture, private accepted movement/support/reservations and minimum safe-egress projection integrated. Isolated real server journeys found and fixed input-sequence reset on reconnect. Root browser accepted ascent/descent, expired-grant minimum egress across reload and ordinary safe return. Scoped source checkpoint complete. Not yet a normal Wayfarer refit. |
 | Shared universe | shared_space_rules + root | Indexed private spatial/motion tables, canonical once-per-system bodies, authorized keyed contact views, shared collision rules, retained cell subscriptions and interpolation store staged. World registration and normal public activation complete. Root browser now shows two real accounts and native exteriors; accepted pilot movement propagated into the other account’s camera-relative ship root. Fresh direct-entry and explicit existing-private upgrade passed before normal activation. Public shared entry deployed: world317c007a22ae5a5a2fe5c6fb8c041f567c022f48954d08085b5fd327cb41e1ec, client66b5a92b0b6d0c1db0dbbc3ceba0bbd7b0706e909de94d469de15a07a84fddf1. Two public Dastari accounts and both native exteriors verified. |
 | Complete Shipyard and semantic Wayfarer | Root integration, next construction slices | Native pressure room, ladder and stair fixtures have isolated acceptance. Two independent full262-placement Wayfarer review instances passed provider-driven corridor walking and partition collision; full authored-assembly interior/roof browser review passed. Functional cargo allocation and instance sofa/grow-light authority are connected in source; cockpit low-step authority passes, scalar presentation browser accepted (sill0.21875→floor0.1875). Keyed cargo views and client inventory wiring passed real browser picking/store/rotate/reload/retrieve plus sofa/light controls and actual database-restart persistence; matched9388/a561 release is deployed. Final dashboard native-floor/roof and Objects placement/reload checks passed; editable template is available at the managed HTTPS Shipyard. Powered airlocks, elevators, complete cargo support/utility routing, mount validation and full template reconstruction remain unfinished. Authored native R006 cockpit, current floor/cargo/roof/armor assets must be preserved by stable identity. |
-| Character/pose and inventory UI | External owner agent | Owner confirms live. Preserve paired modular bodies/equipment and external UI changes; no competing redesign. |
+| Character/pose and inventory UI | External owner agent | Inventory polish remains live. 2026-09-10 combat r003 is actively being corrected in source after seven owner reports: rifle/low-ready, noncombat facing, vertical target, free hand, knees and cursor. Preserve paired r002 files and modular r008. Paired r003 is installed as the normal development default. Scoped hardware/F3 checks passed, continuous pose playback/art polish remain open; see combat_pose_r003_integration.md. Owner-approved client8246 is public against the already live refit2ade server. |
 | Rendering optimization and materials | Deferred behind construction | Existing shadow-disable and light-cap preference fixes retained. Full performance plan, hardware measurements and broader material/IBL pass remain outstanding. |
 | Procedural planets | Paused by owner | Preserve installed assets and next-pass specifications. |
+
+## Active character/F3 source integration — 2026-09-10
+
+The character/F3 candidate now selects the installed exact paired `/assets/crew/poses/r003/` namespace with the modular r008 bodies. Source/asset validation preserves287prior/canonical artifacts; do not mix r002 rifle geometry with r003 sockets. Aggregate check passes1,231tests/205files and77documents; full build/art pass. Current-source hashes and hardware evidence are in `docs/handoffs/combat_pose_r003_integration.md` and the r003 `runtime-review-20260910/capture-record.json`.
+
+F3 skeleton, all current light guides, static admitted collision and GI override were reviewed on separate Windows hardware. **The owner-reported Lighting/Shadows disappearance is fixed:** manual native clones now register their referenced materials (including MultiMaterial children). This is one import/call in `construction-authored-assembly.ts` plus `scene-material-registration.ts`; preserve these with concurrent refit changes. Actual fresh-source toggle screenshots retain walls/furniture; native regression tests cover shader invalidation and disposal.
+
+Hardware pose evidence confirms settled vertical floor aiming, accepted fire, switching and a full pistol window with hip-level freehand and straighter knees. Continuous acquisition/sprint/seating playback remains technical follow-up. The owner subsequently approved the delivered art; preserve the separate recorded approval instead of treating tests or exploratory recordings as its source. Review used the exact staged `world-2ade8d75.js` in isolated databases; no public database was changed. **Coordinate any public client deployment with the refit release's matching generated views.** Subsequent explicit owner approval authorized public client8246 activation. Current r003 paired art and installed r008 bundle are approved; see the latest release note above.
+
+The `refit-browser-review` software GPU was not disturbed. Both separate named hardware review tabs were blanked and their actual renderer/observer cleanup verified; no character review GPU slot remains reserved.
 
 ## Verified public persistence
 
@@ -65,9 +82,24 @@ Current public native-starter release: [exact hashes, restart and public accepta
 
 Shared world/schema/generated ownership is now `release_rollout` for the dedicated existing-ship refit transaction. Root adds its explicit UI, native fuel attachment and manual liquid transfer UI. `shared_space_rules` owns qualified1m/2m cargo carrier restraint and supported-grid authority integration, coordinating all shared transfer/mass hooks with release. `stair_document` owns new native Wayfarer roof closure/inlet assets and actual sealing proof. Do not stop at these checkpoints: existing live ships still need explicit conversion; the standalone airlock must be attached to a qualified hull; elevators, complete3D services and destruction remain unfinished. Root's airlock browser was signed out, blanked and closed.
 
+Character/F3 final catalog observation: newly added `reference/art/characters-facial-assets.png` is not yet in sources.json. Keep this separate from the owner-approved delivered r003/r008 bundle and passed installed-art release checks; a later inventory pass must inspect/index it.
+
 
 ## 2026-09-10 collision-only public update
 
 `shared_space_rules` published the parent-authorized planar collision broad phase only: world `81f5582aab0c55a7fd37c3c3310fae0af12fa1dab718c2a932fcd63f995b47c0` on the unchanged normal database identity. Client8246 and its delivery configuration are unchanged. Exact2ade source baseline plus scoped collision checkpoint0023 produced isolated60d4; cargo schema checkpoint26d remains isolated. All709 items/190 containers and30 captured identity sets survived the managed61.348-second backup/restart and non-destructive publication. The occupied pilot station cleared normally on disconnect; no arbitrary row reset occurred. See [collision release and recovery pins](ship_contact_public_release_20260910.md).
 
 Next owned bounded slice is a pure renderer helper for the actual known stock flight capsule, so F3 can distinguish flight from detailed deck walking collision. Root owns integration/index and release_rollout owns current client staging; no further server publication is queued by this agent. Older backup compaction is read-only investigation until coordinated, preserving all original archives.
+
+## Shipyard editor owner-reported fixes — 2026-09-11
+
+Root fixed the owner-reported Shipyard flicker (floorplan overlay projected as a
+12k-pixel matrix3d layer, re-clipped every frame), the "two outlines" (structural
+wall-guide top ring), hidden native walls (compiler gate now names the validation
+errors; stamping can no longer create floor overlaps) and design-tool shortcuts
+(Ctrl+D deselect, Ctrl+Shift+D duplicate, Ctrl+A, Ctrl+C/V, Shift+R). Details and
+evidence: [shipyard editor fixes](shipyard_editor_fixes_20260911.md). Files under
+`apps/dashboard/src/shipyard/layout/` and `packages/render/src/layout-*.ts` carry
+these changes uncommitted alongside the active Shipyard owner's work; commit them
+with that slice, not as a blanket add. `reference/art/editor-mockup-5.png` is the
+owner's UI basis for all future routes (completion plan section 2).

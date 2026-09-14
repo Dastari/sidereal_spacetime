@@ -1,0 +1,271 @@
+{
+  "schema": "sidereal.tileset-wall-convention.v1",
+  "baseInterfaceSchema": "sidereal.tileset-interface.v1",
+  "latticePerMeter": 32,
+  "moduleUnits": 64,
+  "boundary": "outer-construction-edge",
+  "reservationSide": "inside-floorplan",
+  "thicknessUnits": 8,
+  "heightQuarters": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "verticalDimensions": "owner-approved-20260911",
+  "standardDeck": {
+    "floorThicknessUnits": 6,
+    "clearHeightUnits": 96,
+    "roofThicknessUnits": 4,
+    "serviceVoidUnits": 6,
+    "pitchUnits": 112
+  },
+  "smallerDecks": "explicit-profile-and-clearance-qualification",
+  "nativeQualification": "pending",
+  "sourceFrame": "Blender X run, Y inward, Z up; metres; applied transforms",
+  "rendererFrame": "source (x,y,z) becomes renderer (x,z,-y)",
+  "modelOrigin": "outer edge start at wall bottom; place at deck floor-top datum",
+  "exportToleranceMeters": 0.000001,
+  "tolerancePurpose": "float encoding only; nominal seams coincide exactly",
+  "profiles": {
+    "end": "inset250-wall-end-v1",
+    "floor": "inset250-wall-bearing-v1",
+    "top": "inset250-wall-cap-v1",
+    "exterior": "inset250-external-mating-plane-v1"
+  },
+  "shapes": [
+    {
+      "id": "straight-1m-q1",
+      "lengthUnits": 32,
+      "heightUnits": 24,
+      "reservationUnits": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          32,
+          8,
+          24
+        ]
+      },
+      "placementFloorTopUnits": 6,
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "requires-export-validation",
+      "damageMode": "voxel",
+      "gameplayQualification": "pending"
+    },
+    {
+      "id": "straight-1m-q2",
+      "lengthUnits": 32,
+      "heightUnits": 48,
+      "reservationUnits": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          32,
+          8,
+          48
+        ]
+      },
+      "placementFloorTopUnits": 6,
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "requires-export-validation",
+      "damageMode": "voxel",
+      "gameplayQualification": "pending"
+    },
+    {
+      "id": "straight-1m-q3",
+      "lengthUnits": 32,
+      "heightUnits": 72,
+      "reservationUnits": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          32,
+          8,
+          72
+        ]
+      },
+      "placementFloorTopUnits": 6,
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "requires-export-validation",
+      "damageMode": "voxel",
+      "gameplayQualification": "pending"
+    },
+    {
+      "id": "straight-1m-q4",
+      "lengthUnits": 32,
+      "heightUnits": 96,
+      "reservationUnits": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          32,
+          8,
+          96
+        ]
+      },
+      "placementFloorTopUnits": 6,
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "requires-export-validation",
+      "damageMode": "voxel",
+      "gameplayQualification": "pending"
+    },
+    {
+      "id": "straight-2m-q1",
+      "lengthUnits": 64,
+      "heightUnits": 24,
+      "reservationUnits": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          64,
+          8,
+          24
+        ]
+      },
+      "placementFloorTopUnits": 6,
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "requires-export-validation",
+      "damageMode": "voxel",
+      "gameplayQualification": "pending"
+    },
+    {
+      "id": "straight-2m-q2",
+      "lengthUnits": 64,
+      "heightUnits": 48,
+      "reservationUnits": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          64,
+          8,
+          48
+        ]
+      },
+      "placementFloorTopUnits": 6,
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "requires-export-validation",
+      "damageMode": "voxel",
+      "gameplayQualification": "pending"
+    },
+    {
+      "id": "straight-2m-q3",
+      "lengthUnits": 64,
+      "heightUnits": 72,
+      "reservationUnits": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          64,
+          8,
+          72
+        ]
+      },
+      "placementFloorTopUnits": 6,
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "requires-export-validation",
+      "damageMode": "voxel",
+      "gameplayQualification": "pending"
+    },
+    {
+      "id": "straight-2m-q4",
+      "lengthUnits": 64,
+      "heightUnits": 96,
+      "reservationUnits": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          64,
+          8,
+          96
+        ]
+      },
+      "placementFloorTopUnits": 6,
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "requires-export-validation",
+      "damageMode": "voxel",
+      "gameplayQualification": "pending"
+    }
+  ],
+  "standardDatumsUnits": {
+    "floorBottom": 0,
+    "floorTop": 6,
+    "wallTop": 102,
+    "roofTop": 106,
+    "serviceTop": 112
+  },
+  "smallerDeckPolicy": "Explicit per-deck clear height and pitch; reused wall heights require matching native floor/roof/closure. Actor traversal is qualified separately; short ducts do not grant crawling.",
+  "requiredOutputs": [
+    "editable .blend",
+    "material-preserving GLB",
+    "exact source/spec/export hashes",
+    "all-node exported containment",
+    "separate contact/collision/seal/damage data",
+    "assembled native seam renders",
+    "explicit unapproved art status"
+  ]
+}

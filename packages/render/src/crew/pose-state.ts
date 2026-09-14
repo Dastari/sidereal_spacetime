@@ -109,18 +109,24 @@ export function createPoseState() {
           input.moving && !target
             ? input.facing
             : heading + difference * smooth;
-        heading = approach(heading, bodyTarget, p.rootRate, dt);
-        yaw = approach(
-          yaw,
-          heading +
-            clamp(
-              angle(requested - heading),
-              -p.maxUpperBodyYaw,
-              p.maxUpperBodyYaw,
-            ),
-          p.aimRate,
-          dt,
-        );
+        // Travel-facing placement snaps outside combat. Keeping the former visual
+        // heading here counter-rotated that placement and resurrected aim turning.
+        heading = target
+          ? approach(heading, bodyTarget, p.rootRate, dt)
+          : input.facing;
+        yaw = target
+          ? approach(
+              yaw,
+              heading +
+                clamp(
+                  angle(requested - heading),
+                  -p.maxUpperBodyYaw,
+                  p.maxUpperBodyYaw,
+                ),
+              p.aimRate,
+              dt,
+            )
+          : input.facing;
         pitch = approach(
           pitch,
           target
@@ -137,7 +143,7 @@ export function createPoseState() {
         pitch,
         weight,
         recoil,
-        turn: angle(input.yaw - heading),
+        turn: target ? angle(input.yaw - heading) : 0,
         skipped: false,
       };
     },

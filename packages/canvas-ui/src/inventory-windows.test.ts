@@ -1,6 +1,6 @@
 import { afterEach, expect, test, vi } from "vitest";
 import { CanvasUI } from "./toolkit";
-import { drawGroundLoot } from "./ground-loot";
+import { dismissGroundLootMenu, drawGroundLoot } from "./ground-loot";
 import { createInventoryUI, type InventoryState } from "./inventory";
 import { drawAppearanceControls } from "./appearance-controls";
 afterEach(() => vi.unstubAllGlobals());
@@ -45,6 +45,61 @@ test("a dense ground pile keeps pickup labels separate and inside a compact view
   expect(labels.mock.calls.some(([text]) => text.includes("more nearby"))).toBe(
     true,
   );
+  expect(labels.mock.calls.some(([text]) => text === "SURVEY SCANNER")).toBe(
+    true,
+  );
+  expect(labels.mock.calls.some(([text]) => text === "Survey scanner")).toBe(
+    false,
+  );
+});
+test("ground backpack offers a separate Equip/Swap action and retains ordinary pickup", () => {
+  const { ui } = fixture();
+  ui.scale = 1;
+  const pickup = vi.fn(),
+    equip = vi.fn();
+  const rows = [
+    {
+      id: "ground-pack",
+      definitionId: "field-pack",
+      localX: 0,
+      localY: 0,
+      x: 500,
+      y: 350,
+      reachable: true,
+    },
+  ];
+  const draw = (backpackEquipped: boolean, pending = false) => {
+    ui.hits = [];
+    drawGroundLoot(ui, rows, pickup, pending, { equip, backpackEquipped });
+  };
+  draw(false);
+  ui.hits[0].context?.({ x: 510, y: 350, button: 2, shiftKey: false });
+  draw(false);
+  expect(ui.hits.find((h) => h.id === "ground-menu-equip")?.label).toBe(
+    "Equip backpack",
+  );
+  draw(true);
+  expect(ui.hits.find((h) => h.id === "ground-menu-equip")?.label).toBe(
+    "Swap backpack",
+  );
+  draw(true, true);
+  expect(ui.hits.find((h) => h.id === "ground-menu-equip")?.disabled).toBe(
+    true,
+  );
+  draw(true);
+  ui.hits.find((h) => h.id === "ground-menu-equip")?.action?.();
+  expect(equip).toHaveBeenCalledWith("ground-pack");
+  expect(pickup).not.toHaveBeenCalled();
+  draw(false);
+  expect(ui.hits.some((h) => h.id === "ground-menu-equip")).toBe(false);
+  ui.hits[0].action?.();
+  expect(pickup).toHaveBeenCalledWith("ground-pack");
+  draw(false);
+  ui.hits[0].context?.({ x: 510, y: 350, button: 2, shiftKey: false });
+  expect(ui.keyboard).toBe(true);
+  dismissGroundLootMenu(ui);
+  expect(ui.keyboard).toBe(false);
+  expect(ui.focus).toBe("");
 });
 function fixture() {
   vi.stubGlobal(
@@ -195,6 +250,22 @@ test("click picks up without a mutation; context menu equips through authority",
   hit("equip-item").action?.();
   expect(actions.equipItem).toHaveBeenCalledWith("gun");
   expect(JSON.stringify(state)).toBe(before);
+});
+test("inventory replacement backpack context action explicitly swaps through authority", () => {
+  const { board, draw, hit, actions, state } = fixture();
+  state.items[1] = { ...state.items[1], definitionId: "field-pack" };
+  board.open("inventory");
+  draw();
+  hit("item-inventory-gun").context?.({
+    x: 200,
+    y: 200,
+    button: 2,
+    shiftKey: false,
+  });
+  draw();
+  expect(hit("equip-item").label).toBe("Swap backpack");
+  hit("equip-item").action?.();
+  expect(actions.equipItem).toHaveBeenCalledWith("gun");
 });
 test("Shift-click transfers to open storage and storage-to-backpack does not require its window", () => {
   const { board, draw, hit, actions, state } = fixture();

@@ -87,6 +87,14 @@ export interface EquipmentPoseDiagnostics {
     | "hidden"
     | "disposed"
     | "clearance-failed";
+  requestedFailure?: {
+    status: string;
+    primary: number;
+    support: number;
+    body: number;
+    arm: number;
+    shoulder: number;
+  };
   aimErrorDegrees: number;
   primaryErrorM: number;
   supportErrorM: number;
@@ -156,6 +164,17 @@ export function createEquipmentPoseController(
     rotation: Quaternion.Identity(),
   }));
   const originalBodyRotation = bodyFrame.rotation.clone();
+  const modular = bodyFrame
+    .getChildMeshes()
+    .some((mesh) => mesh.name.startsWith("GEO-base-"));
+  // r008 jaw/skull bounds differ from the broad legacy comparison head.
+  const headCenter = modular
+    ? new Vector3(0, 0.325, 0)
+    : new Vector3(0, 0.43, 0);
+  const headHalf = () =>
+    modular
+      ? new Vector3(0.285 + bulk, 0.255, 0.235 + bulk)
+      : new Vector3(0.34 + bulk, 0.39, 0.29 + bulk);
   const initialInverse = Matrix.Invert(placement.computeWorldMatrix(true));
   const rigSigns = {
     R:
@@ -286,7 +305,15 @@ export function createEquipmentPoseController(
     if (disposed || !intent || !binding) return;
     const start = performance.now(),
       input = intent,
-      p = EQUIPMENT_POSE_PROFILES[input.profile],
+      requestedProfile = EQUIPMENT_POSE_PROFILES[input.profile],
+      p =
+        !modular && input.profile.includes("RIFLE")
+          ? {
+              ...EQUIPMENT_POSE_PROFILES.HEAVY_WEAPON,
+              requiresEyeAlignment: requestedProfile.requiresEyeAlignment,
+              aimPoseSet: requestedProfile.aimPoseSet,
+            }
+          : requestedProfile,
       s = retry
         ? {
             ...cachedState!,
@@ -302,6 +329,7 @@ export function createEquipmentPoseController(
       turnPhase += Math.abs(angle(s.heading - lastHeading)) * 7;
       lastHeading = s.heading;
     }
+    if (!retry) diagnostics.requestedFailure = undefined;
     diagnostics.status = s.skipped ? "hidden" : "inactive";
     diagnostics.iterations = 0;
     diagnostics.poles.length = 0;
@@ -334,20 +362,51 @@ export function createEquipmentPoseController(
     bodyFrame.rotation.y =
       originalBodyRotation.y - angle(s.heading - input.facing);
     bodyFrame.computeWorldMatrix(true);
-    if (input.seated || s.weight < 0.001) {
+    const rifle = input.profile === "RIFLE" || input.profile === "LONG_RIFLE";
+    const carry = modular && rifle && input.action !== "unequip";
+    const poseWeight = carry ? 1 : s.weight;
+    const authoredProfile = p.aimPoseSet.split(".")[0] as PoseIntent["profile"];
+    if (input.seated || poseWeight < 0.001) {
+      if (!input.seated && modular && input.profile === "PISTOL_ONE_HAND") {
+        // The old Idle-Pistol clip also bent the empty arm across the chest.
+        // Relax it while keeping the dominant hand's authored carry attachment.
+        save();
+        const world = placement.computeWorldMatrix(true),
+          side = p.primaryHand === "R" ? "L" : "R",
+          sign = rigSigns[side];
+        const target = Vector3.TransformCoordinates(
+          new Vector3(
+            sign * Math.abs(p.freeArmOffset[0]),
+            p.freeArmOffset[1],
+            p.freeArmOffset[2],
+          ),
+          world,
+        );
+        const pole = point(bone(`upper_arm.${side}`)).add(
+          Vector3.TransformNormal(new Vector3(sign * 0.25, -0.4, -0.12), world),
+        );
+        const neutral = Matrix.Compose(
+          Vector3.One(),
+          aimRotation(0, -Math.PI / 2),
+          Vector3.Zero(),
+        ).multiply(world);
+        arm(side, target, pole, neutral, p);
+      }
       binding.followAttachment();
       diagnostics.muzzle = undefined;
+      diagnostics.heading = s.heading;
+      diagnostics.pitch = s.pitch;
       diagnostics.cpuMs = performance.now() - start;
       return;
     }
     save();
     if (aimSpace) {
       const neutralSpine = p.requiresShoulderContact
-        ? sampleAimSpace(aimSpace, input.profile, 0, 0).get("spine")
+        ? sampleAimSpace(aimSpace, authoredProfile, 0, 0).get("spine")
         : undefined;
       for (const [name, rotation] of sampleAimSpace(
         aimSpace,
-        input.profile,
+        authoredProfile,
         (angle(s.yaw - s.heading) * 180) / Math.PI,
         (s.pitch * 180) / Math.PI,
       )) {
@@ -388,10 +447,17 @@ export function createEquipmentPoseController(
     const spine = bone("spine"),
       pelvis = bone("pelvis"),
       head = bone("head");
+    // Preserve the animated foot targets before introducing torso/hip aim twist.
+    const feet = ["R", "L"].map((side) => ({
+      side,
+      point: point(bone(`foot.${side}`)),
+      forward: bone(`foot.${side}`).getDirection(Vector3.Forward()).normalize(),
+      up: bone(`foot.${side}`).getDirection(Vector3.Up()).normalize(),
+    }));
     const authoredTwist = (dominant === "R" ? -1 : 1) * p.stanceYaw;
     const stanceHip = authoredTwist * p.hipAimContribution;
     pelvis.rotationQuaternion = pelvis.rotationQuaternion!.multiply(
-      Quaternion.RotationAxis(Vector3.Up(), stanceHip * s.weight),
+      Quaternion.RotationAxis(Vector3.Up(), stanceHip * poseWeight),
     );
     pelvis.computeWorldMatrix(true);
     spine.rotationQuaternion = spine.rotationQuaternion!.multiply(
@@ -399,23 +465,17 @@ export function createEquipmentPoseController(
         (authoredTwist -
           stanceHip +
           (scene.useRightHandedSystem ? -1 : 1) * torsoYaw) *
-          s.weight,
+          poseWeight,
         -s.pitch * 0.2 * s.weight,
         0,
       ),
     );
     spine.computeWorldMatrix(true);
-    const feet = ["R", "L"].map((side) => ({
-      side,
-      point: point(bone(`foot.${side}`)),
-      forward: bone(`foot.${side}`).getDirection(Vector3.Forward()).normalize(),
-      up: bone(`foot.${side}`).getDirection(Vector3.Up()).normalize(),
-    }));
     pelvis.position.y -= 0.025 * s.weight;
     pelvis.computeWorldMatrix(true);
     head.rotationQuaternion = head.rotationQuaternion!.multiply(
       Quaternion.RotationYawPitchRoll(
-        -authoredTwist * 0.5 * s.weight,
+        -authoredTwist * 0.5 * poseWeight,
         -s.pitch * 0.15 * s.weight,
         0,
       ),
@@ -445,8 +505,8 @@ export function createEquipmentPoseController(
       ),
       transformedBox(
         "HeadClearance",
-        new Vector3(0, 0.43, 0),
-        new Vector3(0.34 + bulk, 0.39, 0.29 + bulk),
+        headCenter,
+        headHalf(),
         head.computeWorldMatrix(true),
       ),
     ];
@@ -465,7 +525,9 @@ export function createEquipmentPoseController(
         item.sockets["Contact.Shoulder"] ?? item.sockets["Grip.Primary"]!,
       );
     const relativeYaw = angle(s.yaw - input.facing),
-      desiredPitch = s.pitch + s.recoil * p.recoilRadians;
+      desiredPitch =
+        (carry ? -0.55 + (s.pitch + 0.55) * s.weight : s.pitch) +
+        s.recoil * p.recoilRadians;
     let selected: Matrix | undefined,
       boxes: OrientedBox[] = [],
       penetration = Infinity,
@@ -488,9 +550,13 @@ export function createEquipmentPoseController(
         );
     for (let iteration = 0; iteration < p.maxCorrections; iteration++) {
       diagnostics.iterations++;
-      const fraction = iteration < 4 ? 1 : Math.max(0, 1 - (iteration - 3) / 5),
+      const fraction = modular
+          ? 1
+          : iteration < 4
+            ? 1
+            : Math.max(0, 1 - (iteration - 3) / 5),
         pitch = desiredPitch * fraction;
-      const rotation = aimRotation(angle(achievedYaw - input.facing), pitch),
+      const rotation = aimRotation(relativeYaw, pitch),
         r = Matrix.FromQuaternionToRef(rotation, Matrix.Identity());
       const correction =
         clearanceOffsets[Math.min(iteration, clearanceOffsets.length - 1)];
@@ -613,7 +679,7 @@ export function createEquipmentPoseController(
       diagnostics.status = "fallback";
     } else diagnostics.status = "solved";
     // Smooth item acquisition from its authored hand attachment; actual socket remains physical.
-    if (s.weight < 0.999) {
+    if (!carry && s.weight < 0.999) {
       const rest = binding.restMatrix(),
         rq = Quaternion.Identity(),
         rp = Vector3.Zero(),
@@ -654,7 +720,7 @@ export function createEquipmentPoseController(
       grip,
       toWorld(
         primaryShoulder.add(
-          bodyOffset(new Vector3(sideSign * 0.45, -0.4, 0.04)),
+          bodyOffset(new Vector3(sideSign * 0.8, -0.35, 0.2)),
         ),
       ),
       selected,
@@ -667,13 +733,18 @@ export function createEquipmentPoseController(
         support,
         toWorld(
           supportShoulder.add(
-            bodyOffset(new Vector3(-sideSign * 0.4, -0.45, -0.12)),
+            bodyOffset(new Vector3(-sideSign * 0.5, -0.45, 0.04)),
           ),
         ),
         selected,
         p,
       );
-    else
+    else {
+      const freeMatrix = Matrix.Compose(
+        Vector3.One(),
+        aimRotation(achievedYaw - input.facing, -Math.PI / 2),
+        Vector3.Zero(),
+      ).multiply(world);
       arm(
         other,
         toWorld(
@@ -685,10 +756,15 @@ export function createEquipmentPoseController(
             ),
           ),
         ),
-        toWorld(supportShoulder.add(new Vector3(-sideSign * 0.4, -0.3, 0))),
-        selected,
+        toWorld(
+          supportShoulder.add(
+            bodyOffset(new Vector3(-sideSign * 0.25, -0.4, -0.12)),
+          ),
+        ),
+        freeMatrix,
         p,
       );
+    }
     for (const foot of feet) {
       const local = toLocal(foot.point),
         direction =
@@ -715,7 +791,9 @@ export function createEquipmentPoseController(
       const solution = twoBone(
         point(a),
         foot.point,
-        foot.point.add(placement.getDirection(new Vector3(0, 0, -1))),
+        foot.point.add(
+          new Vector3(foot.forward.x, 0, foot.forward.z).normalize(),
+        ),
         Vector3.Distance(point(a), point(b)),
         Vector3.Distance(point(b), point(c)),
       );
@@ -726,12 +804,12 @@ export function createEquipmentPoseController(
     // Keep animation baseline blending deterministic. Final equipment transform remains physical.
     for (const entry of saved) {
       entry.node.position.copyFrom(
-        Vector3.Lerp(entry.position, entry.node.position, s.weight),
+        Vector3.Lerp(entry.position, entry.node.position, poseWeight),
       );
       entry.node.rotationQuaternion = Quaternion.Slerp(
         entry.rotation,
         entry.node.rotationQuaternion!,
-        s.weight,
+        poseWeight,
       );
       entry.node.computeWorldMatrix(true);
     }
@@ -741,9 +819,15 @@ export function createEquipmentPoseController(
         point(hands[other]),
         support,
       );
-    diagnostics.muzzle = binding.socket(
-      item.sockets["Aim.Muzzle"] ? "Aim.Muzzle" : "Aim.Direction",
-    );
+    diagnostics.muzzle =
+      input.active &&
+      !input.sprinting &&
+      input.action !== "lowered" &&
+      input.action !== "unequip"
+        ? binding.socket(
+            item.sockets["Aim.Muzzle"] ? "Aim.Muzzle" : "Aim.Direction",
+          )
+        : undefined;
     const desired = Vector3.TransformNormal(
       new Vector3(
         Math.sin(input.yaw - input.facing) * Math.cos(input.pitch),
@@ -788,8 +872,8 @@ export function createEquipmentPoseController(
       head.computeWorldMatrix(true);
       let headProxy = transformedBox(
         "HeadClearance",
-        new Vector3(0, 0.43, 0),
-        new Vector3(0.34 + bulk, 0.39, 0.29 + bulk),
+        headCenter,
+        headHalf(),
         head.getWorldMatrix(),
       );
       if (
@@ -801,8 +885,8 @@ export function createEquipmentPoseController(
         head.computeWorldMatrix(true);
         headProxy = transformedBox(
           "HeadClearance",
-          new Vector3(0, 0.43, 0),
-          new Vector3(0.34 + bulk, 0.39, 0.29 + bulk),
+          headCenter,
+          headHalf(),
           head.getWorldMatrix(),
         );
       }
@@ -869,10 +953,12 @@ export function createEquipmentPoseController(
     diagnostics.torsoYaw = torsoYaw;
     diagnostics.pitch = selectedPitch;
     if (
-      (s.weight > 0.999 &&
+      (poseWeight > 0.999 &&
         (diagnostics.primaryErrorM > 0.004 ||
           diagnostics.supportErrorM > 0.025)) ||
-      diagnostics.shoulderErrorM > p.maxShoulderSeparation
+      // Low ready retains both grips but permits the stock to leave the shoulder.
+      // The shoulder pocket contact limit applies to a fully raised weapon.
+      (s.weight > 0.999 && diagnostics.shoulderErrorM > p.maxShoulderSeparation)
     )
       diagnostics.status = "unreachable";
     if (
@@ -898,6 +984,14 @@ export function createEquipmentPoseController(
     ) {
       const firstCost = diagnostics.cpuMs,
         firstIterations = diagnostics.iterations;
+      diagnostics.requestedFailure = {
+        status: diagnostics.status,
+        primary: diagnostics.primaryErrorM,
+        support: diagnostics.supportErrorM,
+        body: diagnostics.penetrationM,
+        arm: diagnostics.upperArmPenetrationM,
+        shoulder: diagnostics.shoulderErrorM,
+      };
       solveFrame(true);
       diagnostics.cpuMs += firstCost;
       diagnostics.iterations += firstIterations;

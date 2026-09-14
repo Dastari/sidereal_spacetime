@@ -1,4 +1,7 @@
 import { canInstancePlacement } from "./placement-instance";
+import { framedWayfarerVisual } from "./framed-wayfarer-visuals";
+import { framedEnginePrototype } from "./framed-engine-prototype";
+import { constructionHash } from "@sidereal/sim/construction-transactions";
 import { categoryMeshRole, setMeshRole } from "./mesh-roles";
 import { updateHullDecals } from "./hull-decals";
 import { SceneLoader } from "@babylonjs/core/Loading/sceneLoader";
@@ -6,30 +9,41 @@ import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { Scene } from "@babylonjs/core/scene";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
-import type { PartAsset, PartPlacement } from "../../content/src/assembly";
+import type { PartAsset, PartPlacement } from "@sidereal/content/assembly";
 import { createEquipmentLighting } from "./equipment-lighting";
 import { batchStaticMaterials } from "./static-material-batches";
+import { nativeMeshInGroup } from "./native-mesh-group";
 
-/** Load the exact approved GLB. Geometry/materials remain shared, placed nodes do not. */
+/** Load pinned native surfaces. Geometry/materials are shared, placement IDs are not. */
 export async function loadEquipmentPrototypes(
   scene: Scene,
   assets: readonly PartAsset[],
 ) {
   const result = new Map<string, Mesh[]>();
-  const libraries = new Map<string, { sha256: string; meshes: Mesh[] }>();
-  for (const asset of assets) {
+  const libraries = new Map<
+    string,
+    { sha256: string; meshes: Mesh[]; framed: boolean }
+  >();
+  for (const original of assets) {
+    const asset = framedWayfarerVisual(original);
     if (!asset.visual) continue;
-    const url = asset.visual.url,
-      split = url.lastIndexOf("/");
+    const url = asset.visual.url;
     let library = libraries.get(url);
     if (library && library.sha256 !== asset.visual.sha256)
       throw new Error("Conflicting visual revisions for shared GLB: " + url);
     if (!library) {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("Native visual unavailable: " + url);
+      const bytes = new Uint8Array(await response.arrayBuffer());
+      if (constructionHash(bytes) !== asset.visual.sha256)
+        throw new Error("Native visual hash mismatch: " + url);
       const imported = await SceneLoader.ImportMeshAsync(
         "",
-        url.slice(0, split + 1),
-        url.slice(split + 1),
+        "",
+        bytes,
         scene,
+        undefined,
+        ".glb",
       );
       for (const mesh of imported.meshes)
         setMeshRole(mesh, categoryMeshRole(asset.category));
@@ -40,22 +54,25 @@ export async function loadEquipmentPrototypes(
         mesh.isVisible = false;
         mesh.isPickable = false;
       }
-      library = { sha256: asset.visual.sha256, meshes };
+      library = {
+        sha256: asset.visual.sha256,
+        meshes,
+        framed:
+          asset.visual.designId?.startsWith("shipyard.wayfarer.framed.") ??
+          false,
+      };
       libraries.set(url, library);
     }
     const prefix = asset.visual.nodePrefix;
     let meshes = prefix
-      ? library.meshes.filter(
-          (m) =>
-            m.name === prefix ||
-            m.name.startsWith(prefix + "_") ||
-            m.name.startsWith(prefix + "."),
-        )
+      ? library.meshes.filter((m) => nativeMeshInGroup(m.name, prefix))
       : library.meshes;
     if (!meshes.length)
       throw new Error(
         "Empty visual mesh group: " + asset.id + (prefix ? " / " + prefix : ""),
       );
+    const enginePrototype = framedEnginePrototype(asset, meshes);
+    if (enginePrototype) meshes = [enginePrototype];
     if (
       asset.category === "cargo" ||
       asset.visual?.designId === "shipyard.hull.pilot-section"
@@ -65,15 +82,13 @@ export async function loadEquipmentPrototypes(
       setMeshRole(mesh, categoryMeshRole(asset.category));
     result.set(asset.id, meshes);
   }
+  // A shared kit includes optional sizes and variants. Once every requested
+  // group has been resolved, retain only its actual prototypes (including the
+  // merged engines). Keep shared materials and parent transforms alive.
   const retained = new Set([...result.values()].flat());
   for (const library of libraries.values()) {
     for (const mesh of library.meshes)
-      if (
-        !retained.has(mesh) &&
-        !mesh.isDisposed() &&
-        mesh.getChildren().length === 0
-      )
-        mesh.dispose(true, false);
+      if (!retained.has(mesh) && !mesh.isDisposed() && mesh.getChildren().length === 0) mesh.dispose(true, false);
   }
   return result;
 }
@@ -84,6 +99,7 @@ export function equipmentPlacement(
   placement: PartPlacement,
   sources: Mesh[],
 ) {
+  asset = framedWayfarerVisual(asset);
   const node = new TransformNode("placement-" + placement.id, scene);
   node.parent = parent;
   node.metadata = {

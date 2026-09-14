@@ -1,0 +1,3686 @@
+{
+  "schema": "sidereal.construction-audit.v1",
+  "measurementWarning": "Visual AABBs only; never infer structural/support/pressure ratings from these dimensions.",
+  "assembly": {
+    "path": "assets/runtime/assembly/wayfarer.json",
+    "sha256": "6de3faebce181c7c0f073a86abf852716061d159050c0b2e4ea98de4a1047bab",
+    "placementCount": 262
+  },
+  "families": {
+    "floor": {
+      "manifest": "assets/runtime/assembly/floor-manifest.json",
+      "sha256": "b652b30b5ba1125798b6eaecf36e6281cced1cff8f0d7ca6fd6a95d05f720302",
+      "assetCount": 12,
+      "placementCount": 51,
+      "entries": [
+        {
+          "id": "part-a3f5c1c3caa171a94d6c",
+          "label": "Square / 2 \u00d7 2 m / r002 review candidate",
+          "category": "floor",
+          "visual": {
+            "url": "/assets/assembly/floor/r002/kit.glb",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "designId": "shipyard.floor.mapped-deck-kit",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "max": [
+                2.0,
+                2.0,
+                0.1875
+              ]
+            },
+            "damagePreview": "unsupported",
+            "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor"
+          },
+          "visualExtentMeters": [
+            2.0,
+            2.0,
+            0.1875
+          ],
+          "placementIds": [
+            "floor--2--4",
+            "floor--1--4",
+            "floor-0--4",
+            "floor-1--4",
+            "floor-2--4",
+            "floor--2--3",
+            "floor--1--3",
+            "floor-0--3",
+            "floor-1--3",
+            "floor-2--3",
+            "floor--2--2",
+            "floor--1--2",
+            "floor-0--2",
+            "floor-1--2",
+            "floor-2--2",
+            "floor--2--1",
+            "floor--1--1",
+            "floor-0--1",
+            "floor-1--1",
+            "floor-2--1",
+            "floor--2-0",
+            "floor--1-0",
+            "floor-0-0",
+            "floor-1-0",
+            "floor-2-0",
+            "floor--2-1",
+            "floor--1-1",
+            "floor-0-1",
+            "floor-1-1",
+            "floor-2-1",
+            "floor--2-2",
+            "floor--1-2",
+            "floor-0-2",
+            "floor-1-2",
+            "floor-2-2",
+            "floor--2-3",
+            "floor--1-3",
+            "floor-0-3",
+            "floor-1-3",
+            "floor-2-3",
+            "floor--2-4",
+            "floor--1-4",
+            "floor-1-4",
+            "floor-2-4",
+            "pilot-r004-floor-square-00",
+            "pilot-r004-floor-square-01",
+            "pilot-r004-floor-square-02",
+            "pilot-r004-floor-square-03",
+            "pilot-r004-floor-square-04"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-926a2afada18f96d51a3",
+          "label": "Half / 2 \u00d7 1 m / r002 review candidate",
+          "category": "floor",
+          "visual": {
+            "url": "/assets/assembly/floor/r002/kit.glb",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "designId": "shipyard.floor.mapped-deck-kit",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "max": [
+                2.0,
+                1.0,
+                0.1875
+              ]
+            },
+            "damagePreview": "unsupported",
+            "nodePrefix": "GEO-part-926a2afada18f96d51a3--floor"
+          },
+          "visualExtentMeters": [
+            2.0,
+            1.0,
+            0.1875
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-0b833a4f3016609e9b96",
+          "label": "Quarter / 1 \u00d7 1 m / r002 review candidate",
+          "category": "floor",
+          "visual": {
+            "url": "/assets/assembly/floor/r002/kit.glb",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "designId": "shipyard.floor.mapped-deck-kit",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "max": [
+                1.0,
+                1.0,
+                0.1875
+              ]
+            },
+            "damagePreview": "unsupported",
+            "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor"
+          },
+          "visualExtentMeters": [
+            1.0,
+            1.0,
+            0.1875
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-baa2e4a6cbe886a5c292",
+          "label": "Long strip / 4 \u00d7 1 m / r002 review candidate",
+          "category": "floor",
+          "visual": {
+            "url": "/assets/assembly/floor/r002/kit.glb",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "designId": "shipyard.floor.mapped-deck-kit",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "max": [
+                4.0,
+                1.0,
+                0.1875
+              ]
+            },
+            "damagePreview": "unsupported",
+            "nodePrefix": "GEO-part-baa2e4a6cbe886a5c292--floor"
+          },
+          "visualExtentMeters": [
+            4.0,
+            1.0,
+            0.1875
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-771cc318e835d7a08abd",
+          "label": "Triangle / 2 \u00d7 2 m / 45\u00b0 / r002 review candidate",
+          "category": "floor",
+          "visual": {
+            "url": "/assets/assembly/floor/r002/kit.glb",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "designId": "shipyard.floor.mapped-deck-kit",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "max": [
+                1.998000144958496,
+                1.998000144958496,
+                0.1875
+              ]
+            },
+            "damagePreview": "unsupported",
+            "nodePrefix": "GEO-part-771cc318e835d7a08abd--floor"
+          },
+          "visualExtentMeters": [
+            1.998,
+            1.998,
+            0.1875
+          ],
+          "placementIds": [
+            "pilot-r004-floor-corner45-05",
+            "pilot-r004-floor-corner45-06"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-79328356071c674a2c8b",
+          "label": "Long triangle left / 4 \u00d7 2 m / r002 review candidate",
+          "category": "floor",
+          "visual": {
+            "url": "/assets/assembly/floor/r002/kit.glb",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "designId": "shipyard.floor.mapped-deck-kit",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "max": [
+                3.9977800846099854,
+                1.998445987701416,
+                0.1875
+              ]
+            },
+            "damagePreview": "unsupported",
+            "nodePrefix": "GEO-part-79328356071c674a2c8b--floor"
+          },
+          "visualExtentMeters": [
+            3.99778,
+            1.998446,
+            0.1875
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-e0dde5e97e9bed05b4b6",
+          "label": "Long triangle right / 4 \u00d7 2 m / r002 review candidate",
+          "category": "floor",
+          "visual": {
+            "url": "/assets/assembly/floor/r002/kit.glb",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "designId": "shipyard.floor.mapped-deck-kit",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                0.0022194599732756615,
+                0.0,
+                0.0
+              ],
+              "max": [
+                4.0,
+                1.9984462261199951,
+                0.1875
+              ]
+            },
+            "damagePreview": "unsupported",
+            "nodePrefix": "GEO-part-e0dde5e97e9bed05b4b6--floor"
+          },
+          "visualExtentMeters": [
+            3.997781,
+            1.998446,
+            0.1875
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-cf72797120e52d05662c",
+          "label": "Slender triangle left / 4 \u00d7 1 m / r002 review candidate",
+          "category": "floor",
+          "visual": {
+            "url": "/assets/assembly/floor/r002/kit.glb",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "designId": "shipyard.floor.mapped-deck-kit",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "max": [
+                3.997692108154297,
+                0.9990298748016357,
+                0.1875
+              ]
+            },
+            "damagePreview": "unsupported",
+            "nodePrefix": "GEO-part-cf72797120e52d05662c--floor"
+          },
+          "visualExtentMeters": [
+            3.997692,
+            0.99903,
+            0.1875
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-e315cf681838afff216e",
+          "label": "Slender triangle right / 4 \u00d7 1 m / r002 review candidate",
+          "category": "floor",
+          "visual": {
+            "url": "/assets/assembly/floor/r002/kit.glb",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "designId": "shipyard.floor.mapped-deck-kit",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                0.002308165654540062,
+                0.0,
+                0.0
+              ],
+              "max": [
+                4.0,
+                0.9990298748016357,
+                0.1875
+              ]
+            },
+            "damagePreview": "unsupported",
+            "nodePrefix": "GEO-part-e315cf681838afff216e--floor"
+          },
+          "visualExtentMeters": [
+            3.997692,
+            0.99903,
+            0.1875
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-94474fb38b16d77e6429",
+          "label": "Clipped corner / 2 \u00d7 2 m / r002 review candidate",
+          "category": "floor",
+          "visual": {
+            "url": "/assets/assembly/floor/r002/kit.glb",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "designId": "shipyard.floor.mapped-deck-kit",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "max": [
+                2.0,
+                2.0,
+                0.1875
+              ]
+            },
+            "damagePreview": "unsupported",
+            "nodePrefix": "GEO-part-94474fb38b16d77e6429--floor"
+          },
+          "visualExtentMeters": [
+            2.0,
+            2.0,
+            0.1875
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-73f48194371a682af29c",
+          "label": "Taper / 4 m / 2 to 1 m / r002 review candidate",
+          "category": "floor",
+          "visual": {
+            "url": "/assets/assembly/floor/r002/kit.glb",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "designId": "shipyard.floor.mapped-deck-kit",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                0.0004961389931850135,
+                0.0,
+                0.0
+              ],
+              "max": [
+                1.9995038509368896,
+                4.0,
+                0.1875
+              ]
+            },
+            "damagePreview": "unsupported",
+            "nodePrefix": "GEO-part-73f48194371a682af29c--floor"
+          },
+          "visualExtentMeters": [
+            1.999008,
+            4.0,
+            0.1875
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-7902f7617fb23eb8abe3",
+          "label": "Small triangle / 1 \u00d7 1 m / 45\u00b0 / r002 review candidate",
+          "category": "floor",
+          "visual": {
+            "url": "/assets/assembly/floor/r002/kit.glb",
+            "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+            "designId": "shipyard.floor.mapped-deck-kit",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "max": [
+                0.9980000257492065,
+                0.9980000257492065,
+                0.1875
+              ]
+            },
+            "damagePreview": "unsupported",
+            "nodePrefix": "GEO-part-7902f7617fb23eb8abe3--floor"
+          },
+          "visualExtentMeters": [
+            0.998,
+            0.998,
+            0.1875
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        }
+      ]
+    },
+    "hull": {
+      "manifest": "assets/runtime/assembly/hull-manifest.json",
+      "sha256": "166c27f521f06db5124a91d5fc197725f1891ff10540b200f859431ddd0fffc3",
+      "assetCount": 18,
+      "placementCount": 26,
+      "entries": [
+        {
+          "id": "part-04c2fbf8cdd53d6bf70f",
+          "label": "Pilot floor-corner45 / r004",
+          "category": "floor",
+          "visual": {
+            "url": "/assets/assembly/hull/r006/part-04c2fbf8cdd53d6bf70f/clean.glb",
+            "sha256": "2a443848a642a1a3ddc26cb7f53369bda56c1c2d1603f5cf3f075cd067b6dbcc",
+            "designId": "shipyard.hull.pilot-section",
+            "revision": 4,
+            "bounds": {
+              "min": [
+                0,
+                0,
+                0
+              ],
+              "max": [
+                1.9943431615829468,
+                1.9943431615829468,
+                0.1875
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.994343,
+            1.994343,
+            0.1875
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-14404bc85f3a72ad3ab8",
+          "label": "Pilot roof-square / r001",
+          "category": "roof",
+          "visual": {
+            "url": "/assets/assembly/hull/part-14404bc85f3a72ad3ab8/clean.glb",
+            "sha256": "643494ec3fd63bf18ab385df52e2ad44f2e647c54c00245f29e7931c18c2cb86",
+            "designId": "shipyard.hull.pilot-section",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                0,
+                0,
+                0
+              ],
+              "max": [
+                2,
+                2,
+                0.1875
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            2,
+            2,
+            0.1875
+          ],
+          "placementIds": [
+            "pilot-context-vestibule-roof-0",
+            "pilot-context-vestibule-roof-1",
+            "pilot-context-vestibule-roof-2"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-1d133c308abd8b172d95",
+          "label": "Pilot pilot-roof / r004",
+          "category": "roof",
+          "visual": {
+            "url": "/assets/assembly/hull/finish-r004/part-1d133c308abd8b172d95/clean.glb",
+            "sha256": "8fdcb8e39c201918e3518613333ce3bd09a59623099760ed70efef0bdee6a31f",
+            "designId": "shipyard.hull.pilot-section",
+            "revision": 4,
+            "bounds": {
+              "min": [
+                0.625,
+                0,
+                0
+              ],
+              "max": [
+                5.375,
+                3.375,
+                0.2199999988079071
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            4.75,
+            3.375,
+            0.22
+          ],
+          "placementIds": [
+            "pilot-r004-pilot-roof-25"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-437732483fa4d7acbcbc",
+          "label": "Outer armor outer-diagonal-cheek / r006",
+          "category": "superstructure",
+          "visual": {
+            "url": "/assets/assembly/hull/finish-r004/part-437732483fa4d7acbcbc/clean.glb",
+            "sha256": "6992c7d5fb25376f3d12d881f66ab002108ed275a63661ca84025968ca3cadfe",
+            "designId": "shipyard.hull.pilot-section",
+            "revision": 6,
+            "bounds": {
+              "min": [
+                0,
+                0,
+                0
+              ],
+              "max": [
+                4.024903774261475,
+                2.075246572494507,
+                1.5499999523162842
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            4.024904,
+            2.075247,
+            1.55
+          ],
+          "placementIds": [
+            "pilot-r005-outer-diagonal-cheek-starboard",
+            "pilot-r005-outer-diagonal-cheek-port"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-48cf8b9cf29d0b226ec4",
+          "label": "Pilot canopy-side / r004",
+          "category": "wall",
+          "visual": {
+            "url": "/assets/assembly/hull/finish-r004/part-48cf8b9cf29d0b226ec4/clean.glb",
+            "sha256": "65195aefcb5bf72da62839db8fec6123188af9f5ac17024cbe7d6d2cf8959b79",
+            "designId": "shipyard.hull.pilot-section",
+            "revision": 4,
+            "bounds": {
+              "min": [
+                -0.06499999761581421,
+                0.09198706597089767,
+                -0.0700000450015068
+              ],
+              "max": [
+                2.0061984062194824,
+                0.8948594927787781,
+                1.3825000524520874
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            2.071198,
+            0.802872,
+            1.4525
+          ],
+          "placementIds": [
+            "pilot-r004-canopy-side-08"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-4a1d28344c5ee632b249",
+          "label": "Pilot canopy-nose / r004",
+          "category": "wall",
+          "visual": {
+            "url": "/assets/assembly/hull/finish-r004/part-4a1d28344c5ee632b249/clean.glb",
+            "sha256": "d6859439499041ad474afd3d07b4fa1a67512eb7d90fb99720edfbfe5301a5f4",
+            "designId": "shipyard.hull.pilot-section",
+            "revision": 4,
+            "bounds": {
+              "min": [
+                -0.0061983224004507065,
+                0.09198706597089767,
+                -0.07000003755092621
+              ],
+              "max": [
+                2.0061984062194824,
+                0.8948594927787781,
+                1.382500171661377
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            2.012397,
+            0.802872,
+            1.4525
+          ],
+          "placementIds": [
+            "pilot-r004-canopy-nose-16"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-4c25a5fd9da0bce537f5",
+          "label": "Pilot hull-straight / r004",
+          "category": "wall",
+          "visual": {
+            "url": "/assets/assembly/hull/finish-r004/part-4c25a5fd9da0bce537f5/clean.glb",
+            "sha256": "59dd466fd25f5555fd8d29bd4183c2e5c7dd99884586bc7f251a2736fbe396d1",
+            "designId": "shipyard.hull.pilot-section",
+            "revision": 4,
+            "bounds": {
+              "min": [
+                0,
+                -0.03700000420212746,
+                0
+              ],
+              "max": [
+                2,
+                0.375,
+                1.125
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            2,
+            0.412,
+            1.125
+          ],
+          "placementIds": [
+            "pilot-r004-hull-straight-07",
+            "pilot-r004-hull-straight-09"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-540c83fc49ee792d9a4a",
+          "label": "Pilot hull-diagonal45 / r004",
+          "category": "wall",
+          "visual": {
+            "url": "/assets/assembly/hull/finish-r004/part-540c83fc49ee792d9a4a/clean.glb",
+            "sha256": "118f1f2406b0c699517be811d77e585f49d5b9c7d650013f873885dbe74329a5",
+            "designId": "shipyard.hull.pilot-section",
+            "revision": 4,
+            "bounds": {
+              "min": [
+                0,
+                0.0176776684820652,
+                0
+              ],
+              "max": [
+                1.982322335243225,
+                2,
+                1.125
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.982322,
+            1.982322,
+            1.125
+          ],
+          "placementIds": [
+            "pilot-r004-hull-diagonal45-11",
+            "pilot-r004-hull-diagonal45-13"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-624989ddf1192dceee75",
+          "label": "Pilot canopy-side-left / r004",
+          "category": "wall",
+          "visual": {
+            "url": "/assets/assembly/hull/finish-r004/part-624989ddf1192dceee75/clean.glb",
+            "sha256": "9dcf37d5a749a152be66657b100a8d83c59856b4c3b4dc967387bf000723e792",
+            "designId": "shipyard.hull.pilot-section",
+            "revision": 4,
+            "bounds": {
+              "min": [
+                -0.0061983224004507065,
+                0.09198712557554245,
+                -0.0700000450015068
+              ],
+              "max": [
+                2.065000057220459,
+                0.8948594331741333,
+                1.3825000524520874
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            2.071198,
+            0.802872,
+            1.4525
+          ],
+          "placementIds": [
+            "pilot-r004-canopy-side-left-10"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-63a0c40bbb71cfeba4dd",
+          "label": "Outer armor outer-bow-bumper / r006",
+          "category": "superstructure",
+          "visual": {
+            "url": "/assets/assembly/hull/finish-r004/part-63a0c40bbb71cfeba4dd/clean.glb",
+            "sha256": "3d0fd05cf021b3b5badf68e2e9f1011b5b621e64355390f61508a18a5e4cf61d",
+            "designId": "shipyard.hull.pilot-section",
+            "revision": 6,
+            "bounds": {
+              "min": [
+                0,
+                0,
+                0
+              ],
+              "max": [
+                4,
+                0.6324999928474426,
+                1.5499999523162842
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            4,
+            0.6325,
+            1.55
+          ],
+          "placementIds": [
+            "pilot-r005-outer-bow-bumper-center"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-70c422bca2d395c35ecb",
+          "label": "Doorway frame (future door mount)",
+          "category": "wall",
+          "visual": {
+            "url": "/assets/assembly/hull/finish-r004/part-70c422bca2d395c35ecb/clean.glb",
+            "sha256": "825a836cb96f74363c83c1d5be4efc1a11df0ef71bbdafff8b2abb222cebdad6",
+            "designId": "shipyard.hull.pilot-section",
+            "revision": 4,
+            "bounds": {
+              "min": [
+                0,
+                -0.0820000022649765,
+                0
+              ],
+              "max": [
+                2,
+                0.375,
+                2.4375
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            2,
+            0.457,
+            2.4375
+          ],
+          "placementIds": [
+            "pilot-r004-airlock-frame-22"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-7a1a34a2a908f8ff455b",
+          "label": "Pilot floor-square / r004",
+          "category": "floor",
+          "visual": {
+            "url": "/assets/assembly/hull/r006/part-7a1a34a2a908f8ff455b/clean.glb",
+            "sha256": "3a621b356eee87d25e7e7691829aaf52bf68d64af80d2a8bd375be21239a3ac2",
+            "designId": "shipyard.hull.pilot-section",
+            "revision": 4,
+            "bounds": {
+              "min": [
+                0,
+                0,
+                0
+              ],
+              "max": [
+                2,
+                2,
+                0.1875
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            2,
+            2,
+            0.1875
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-9f79f3a40a72f9b7ad4a",
+          "label": "Pilot corner-buttress / r004",
+          "category": "wall",
+          "visual": {
+            "url": "/assets/assembly/hull/finish-r004/part-9f79f3a40a72f9b7ad4a/clean.glb",
+            "sha256": "1b787888f92e9a7691337c02b297a8895703544003ddcec8eb655ff1ffe91af3",
+            "designId": "shipyard.hull.pilot-section",
+            "revision": 4,
+            "bounds": {
+              "min": [
+                0,
+                0,
+                0
+              ],
+              "max": [
+                2.115000009536743,
+                2.115000009536743,
+                2.7200000286102295
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            2.115,
+            2.115,
+            2.72
+          ],
+          "placementIds": [
+            "pilot-r004-corner-buttress-17",
+            "pilot-r004-corner-buttress-18"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-b3a1decd8a0336ac2030",
+          "label": "Outer armor outer-roof-collar / r006",
+          "category": "roof",
+          "visual": {
+            "url": "/assets/assembly/hull/finish-r004/part-b3a1decd8a0336ac2030/clean.glb",
+            "sha256": "227c3e116f59bdc4bf48ccb456aa8d756067dcfb6223ad3b8adf9743d6cdef55",
+            "designId": "shipyard.hull.pilot-section",
+            "revision": 6,
+            "bounds": {
+              "min": [
+                0,
+                0,
+                2.59375
+              ],
+              "max": [
+                0.375,
+                0.5,
+                3.3125
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.375,
+            0.5,
+            0.71875
+          ],
+          "placementIds": [
+            "pilot-r005-outer-roof-collar-starboard",
+            "pilot-r005-outer-roof-collar-port"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-b70713e9836547941e3f",
+          "label": "Pilot canopy-diagonal45 / r004",
+          "category": "wall",
+          "visual": {
+            "url": "/assets/assembly/hull/finish-r004/part-b70713e9836547941e3f/clean.glb",
+            "sha256": "9495f6771dbeafaa24530562acd95a744414674853d7a13e45d2866f59e42526",
+            "designId": "shipyard.hull.pilot-section",
+            "revision": 4,
+            "bounds": {
+              "min": [
+                -0.4204133152961731,
+                0.1051405593752861,
+                -0.07000010460615158
+              ],
+              "max": [
+                1.8948595523834229,
+                2.4204132556915283,
+                1.3825000524520874
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            2.315273,
+            2.315273,
+            1.4525
+          ],
+          "placementIds": [
+            "pilot-r004-canopy-diagonal45-12",
+            "pilot-r004-canopy-diagonal45-14"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-e7dddd4628bd6be8efb7",
+          "label": "Pilot rear-partition / r004",
+          "category": "wall",
+          "visual": {
+            "url": "/assets/assembly/hull/finish-r004/part-e7dddd4628bd6be8efb7/clean.glb",
+            "sha256": "53d58e142047665409aadeb232a83f0c5a1901da705234f2ffc8bda4f211e5c9",
+            "designId": "shipyard.hull.pilot-section",
+            "revision": 4,
+            "bounds": {
+              "min": [
+                0,
+                -0.00800000037997961,
+                0
+              ],
+              "max": [
+                1.625,
+                0.382999986410141,
+                2.4375
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.625,
+            0.391,
+            2.4375
+          ],
+          "placementIds": [
+            "pilot-r004-rear-partition-23",
+            "pilot-r004-rear-partition-24"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-e965a5502d9fe4c25406",
+          "label": "Outer armor outer-shoulder-transition / r006",
+          "category": "superstructure",
+          "visual": {
+            "url": "/assets/assembly/hull/finish-r004/part-e965a5502d9fe4c25406/clean.glb",
+            "sha256": "e34ba9c660088550058053cf9dff5a93bdc1b198d9262ba9f6f3acc05644a2fa",
+            "designId": "shipyard.hull.pilot-section",
+            "revision": 6,
+            "bounds": {
+              "min": [
+                0,
+                0,
+                0
+              ],
+              "max": [
+                0.8140870332717896,
+                2,
+                2.9375
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.814087,
+            2,
+            2.9375
+          ],
+          "placementIds": [
+            "pilot-r005-outer-shoulder-transition-starboard",
+            "pilot-r005-outer-shoulder-transition-port"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-ecd751f76e602db806a3",
+          "label": "Pilot bow-transom / r004",
+          "category": "wall",
+          "visual": {
+            "url": "/assets/assembly/hull/finish-r004/part-ecd751f76e602db806a3/clean.glb",
+            "sha256": "29ef84b9b36290094d9053f7635fe160ca5a1767af14eecc2d965ae7405f5f1d",
+            "designId": "shipyard.hull.pilot-section",
+            "revision": 4,
+            "bounds": {
+              "min": [
+                0,
+                -0.03199999779462814,
+                0
+              ],
+              "max": [
+                2,
+                0.375,
+                1.125
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            2,
+            0.407,
+            1.125
+          ],
+          "placementIds": [
+            "pilot-r004-bow-transom-15"
+          ],
+          "topLevelInterfaceFields": []
+        }
+      ]
+    },
+    "equipment": {
+      "manifest": "assets/runtime/assembly/equipment-manifest.json",
+      "sha256": "a1bb1f047aa5d32d6d417a5d73ee42ec9d3d37cf4b6e6c8d136829a24682b3c3",
+      "assetCount": 10,
+      "placementCount": 17,
+      "entries": [
+        {
+          "id": "part-c0b6b036f5b3dd8bd2f3",
+          "label": "equipment control seat",
+          "category": "equipment",
+          "visual": {
+            "url": "/assets/assembly/equipment/part-c0b6b036f5b3dd8bd2f3/glb.glb",
+            "sha256": "da38770d060f4c5397b2d0ae8ab01258d42ea1f12884cac3ed628c3b110c5a9c",
+            "designId": "shipyard.equipment.pilot-seat",
+            "revision": 3,
+            "bounds": {
+              "min": [
+                -0.550000011920929,
+                -0.4950000047683716,
+                0.0
+              ],
+              "max": [
+                0.550000011920929,
+                0.4950000047683716,
+                1.3100000619888306
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.1,
+            0.99,
+            1.31
+          ],
+          "placementIds": [
+            "equipment-control-seat"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-d9f37a5f7ea6e8d13254",
+          "label": "equipment control console",
+          "category": "equipment",
+          "visual": {
+            "url": "/assets/assembly/equipment/part-d9f37a5f7ea6e8d13254/glb.glb",
+            "sha256": "713d8a83c902d24bb59e278eb2436b087ebdf06fbbbbbd5daa7d2340fc782a49",
+            "designId": "shipyard.equipment.command-console",
+            "revision": 4,
+            "bounds": {
+              "min": [
+                -1.0,
+                -0.375,
+                0.0
+              ],
+              "max": [
+                1.0,
+                0.375,
+                1.625
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            2.0,
+            0.75,
+            1.625
+          ],
+          "placementIds": [
+            "equipment-control-console"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-c03ec0260cd7329050a8",
+          "label": "equipment locker  4.7  6",
+          "category": "equipment",
+          "visual": {
+            "url": "/assets/assembly/equipment/part-c03ec0260cd7329050a8/glb.glb",
+            "sha256": "f527af1e44fc1570355c2268055b7b31343c45849a807b40993cf516c263093a",
+            "designId": "shipyard.equipment.wall-locker",
+            "revision": 5,
+            "bounds": {
+              "min": [
+                -0.25,
+                -0.75,
+                0.0
+              ],
+              "max": [
+                0.25,
+                0.75,
+                1.3125
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.5,
+            1.5,
+            1.3125
+          ],
+          "placementIds": [
+            "equipment-locker--4.7--6",
+            "equipment-locker--4.7--2",
+            "equipment-locker--4.7-2",
+            "equipment-locker-4.7--6",
+            "equipment-locker-4.7--2",
+            "equipment-locker-4.7-2"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-77728ecc8ad36b0ff45f",
+          "label": "room engineering",
+          "category": "equipment",
+          "visual": {
+            "url": "/assets/assembly/equipment/part-77728ecc8ad36b0ff45f/glb.glb",
+            "sha256": "02ada2cf811e7893ffd98d8b6231974d111238e2dddf0ecd96739ff6b68a2cd3",
+            "designId": "shipyard.equipment.reactor",
+            "revision": 3,
+            "bounds": {
+              "min": [
+                -0.75,
+                -1.3093699216842651,
+                0.0
+              ],
+              "max": [
+                0.75,
+                1.375,
+                1.5700000524520874
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.5,
+            2.68437,
+            1.57
+          ],
+          "placementIds": [
+            "room-engineering"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-acbbef7209c4ef100693",
+          "label": "room hydroponics tray  2.4",
+          "category": "equipment",
+          "visual": {
+            "url": "/assets/assembly/equipment/part-acbbef7209c4ef100693/glb.glb",
+            "sha256": "1e96a18539191ea08d48b4134c2820043674f2c3b0960ce583ae1620ba5a81a8",
+            "designId": "shipyard.equipment.hydroponics",
+            "revision": 4,
+            "bounds": {
+              "min": [
+                -0.75,
+                -0.3125,
+                0.0
+              ],
+              "max": [
+                0.75,
+                0.3125,
+                1.7000000476837158
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.5,
+            0.625,
+            1.7
+          ],
+          "placementIds": [
+            "room-hydroponics-tray--2.4",
+            "room-hydroponics-tray--1.5",
+            "room-hydroponics-tray--0.6"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-c41467ac46f6b350df24",
+          "label": "room crew",
+          "category": "equipment",
+          "visual": {
+            "url": "/assets/assembly/equipment/part-c41467ac46f6b350df24/glb.glb",
+            "sha256": "97b1df2c3d9ae66592bf57af6baefa1f0842a1214623fd06641490426495faa6",
+            "designId": "shipyard.equipment.crew-bunk",
+            "revision": 5,
+            "bounds": {
+              "min": [
+                -0.6700000166893005,
+                -1.333125114440918,
+                0.0
+              ],
+              "max": [
+                0.6700000166893005,
+                1.333125114440918,
+                1.9900000095367432
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.34,
+            2.66625,
+            1.99
+          ],
+          "placementIds": [
+            "room-crew"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-cc610ba071b8eb38ab8c",
+          "label": "room medbay",
+          "category": "equipment",
+          "visual": {
+            "url": "/assets/assembly/equipment/part-cc610ba071b8eb38ab8c/glb.glb",
+            "sha256": "a8e5d2fa478e42723ffc82a845b223051a8f8878ece3c9ea80eb75e4a5021a3b",
+            "designId": "shipyard.equipment.medical-bed",
+            "revision": 3,
+            "bounds": {
+              "min": [
+                -0.6700000166893005,
+                -1.3009999990463257,
+                0.0
+              ],
+              "max": [
+                0.6700000166893005,
+                1.28000009059906,
+                1.8949999809265137
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.34,
+            2.581,
+            1.895
+          ],
+          "placementIds": [
+            "room-medbay"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-73df516feb786d73fc5e",
+          "label": "room lounge",
+          "category": "equipment",
+          "visual": {
+            "url": "/assets/assembly/equipment/part-73df516feb786d73fc5e/glb.glb",
+            "sha256": "3692ffd29f75026ef856af18a0a59538814b4836e8315d98c48e3c76d00735a8",
+            "designId": "shipyard.equipment.lounge-sofa",
+            "revision": 3,
+            "bounds": {
+              "min": [
+                -0.75,
+                -1.375,
+                0.0
+              ],
+              "max": [
+                0.75,
+                1.375,
+                1.2899999618530273
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.5,
+            2.75,
+            1.29
+          ],
+          "placementIds": [
+            "room-lounge"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-75910d7a0d27dfc17aaf",
+          "label": "equipment bridge bank  1.3",
+          "category": "equipment",
+          "visual": {
+            "url": "/assets/assembly/equipment/part-75910d7a0d27dfc17aaf/glb.glb",
+            "sha256": "be3a73faed7b4a2c9e4c7b89477df3c1424284dd3e71ca84438fb049a8b3b5a8",
+            "designId": "shipyard.equipment.bridge-bank",
+            "revision": 4,
+            "bounds": {
+              "min": [
+                -0.25,
+                -0.4375,
+                0.0
+              ],
+              "max": [
+                0.3125,
+                0.4375,
+                1.25
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.5625,
+            0.875,
+            1.25
+          ],
+          "placementIds": [
+            "equipment-bridge-bank--1.3"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-0f14bf002f4c11854337",
+          "label": "equipment bridge bank 1.3",
+          "category": "equipment",
+          "visual": {
+            "url": "/assets/assembly/equipment/part-0f14bf002f4c11854337/glb.glb",
+            "sha256": "5bbe40f3637bc640bc26557c3c20e3d9e452587395b0ca7c05d45793ef5e014a",
+            "designId": "shipyard.equipment.bridge-bank",
+            "revision": 4,
+            "bounds": {
+              "min": [
+                -0.25,
+                -0.4375,
+                0.0
+              ],
+              "max": [
+                0.3125,
+                0.4375,
+                1.25
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.5625,
+            0.875,
+            1.25
+          ],
+          "placementIds": [
+            "equipment-bridge-bank-1.3"
+          ],
+          "topLevelInterfaceFields": []
+        }
+      ]
+    },
+    "cargo": {
+      "manifest": "assets/runtime/assembly/cargo-manifest.json",
+      "sha256": "3441819d90775fc83e2d165deba161ec485c308880c794fa064a10248ffe09d0",
+      "assetCount": 73,
+      "placementCount": 4,
+      "entries": [
+        {
+          "id": "part-c06e4f5f6f6dace38e41",
+          "label": "Standard Small",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-c06e4f5f6f6dace38e41/glb.glb",
+            "sha256": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+            "designId": "cargo.standard.small",
+            "revision": 3,
+            "bounds": {
+              "min": [
+                -0.3305000066757202,
+                -0.28049999475479126,
+                0.0
+              ],
+              "max": [
+                0.3305000066757202,
+                0.20500001311302185,
+                0.5114999413490295
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.661,
+            0.4855,
+            0.5115
+          ],
+          "placementIds": [
+            "room-storage-container-2.15-0.25",
+            "room-storage-container-3.5-0.25"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-abb5fe4af40225b7eae4",
+          "label": "Standard Medium",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-abb5fe4af40225b7eae4/glb.glb",
+            "sha256": "b206e9ca51fff669848037ab6288882df033293d535c4f31e96034e1bde7db2c",
+            "designId": "cargo.standard.medium",
+            "revision": 3,
+            "bounds": {
+              "min": [
+                -0.5304999947547913,
+                -0.4505000114440918,
+                0.0
+              ],
+              "max": [
+                0.5304999947547913,
+                0.34584999084472656,
+                0.9514999985694885
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.061,
+            0.79635,
+            0.9515
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-f12452ef26700fa33271",
+          "label": "Standard Large",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-f12452ef26700fa33271/glb.glb",
+            "sha256": "c5327211a125e711f907a41691a5bacf5253f9dc9398ed1484891f947691ced8",
+            "designId": "cargo.standard.large",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.9704999923706055,
+                -0.7270000576972961,
+                0.0
+              ],
+              "max": [
+                0.9704999923706055,
+                0.5891000032424927,
+                1.7200000286102295
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.941,
+            1.3161,
+            1.72
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-b3ba935a9fdc172d4b05",
+          "label": "Standard Oversized",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-b3ba935a9fdc172d4b05/glb.glb",
+            "sha256": "cabf3570fc40613b8476ade9627f78033963e691ddd385a996bcf548ce7a5985",
+            "designId": "cargo.standard.oversized",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.9704999923706055,
+                -2.0269999504089355,
+                0.0
+              ],
+              "max": [
+                0.9704999923706055,
+                1.8890999555587769,
+                1.9199999570846558
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.941,
+            3.9161,
+            1.92
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-7b3c579c1281fc95571e",
+          "label": "Reinforced Medium",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-7b3c579c1281fc95571e/glb.glb",
+            "sha256": "d0c38b77acee4430c023a003a1e8bc536d39a401064724fd586f9499c2fe5bb6",
+            "designId": "cargo.reinforced.medium",
+            "revision": 3,
+            "bounds": {
+              "min": [
+                -0.5304999947547913,
+                -0.46299999952316284,
+                0.0
+              ],
+              "max": [
+                0.5304999947547913,
+                0.34584999084472656,
+                0.9514999985694885
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.061,
+            0.80885,
+            0.9515
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-7c2f338895b10331d945",
+          "label": "Reinforced Large",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-7c2f338895b10331d945/glb.glb",
+            "sha256": "662494d06bd0bb22b221f171e5c154808fdcf2e7198aea086b234755fc833188",
+            "designId": "cargo.reinforced.large",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.9704999923706055,
+                -0.8220000267028809,
+                0.0
+              ],
+              "max": [
+                0.9704999923706055,
+                0.5891000032424927,
+                1.7200000286102295
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.941,
+            1.4111,
+            1.72
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-988451da35483981368a",
+          "label": "Reinforced Oversized",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-988451da35483981368a/glb.glb",
+            "sha256": "f1120e09b195eae7c347c77c529c53dd2df448431c79cd8e50640e62f02e79ae",
+            "designId": "cargo.reinforced.oversized",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.9704999923706055,
+                -2.122000217437744,
+                0.0
+              ],
+              "max": [
+                0.9704999923706055,
+                1.8890999555587769,
+                1.9199999570846558
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.941,
+            4.0111,
+            1.92
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-ba8af622916752a9337b",
+          "label": "Refrigerated Medium",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-ba8af622916752a9337b/glb.glb",
+            "sha256": "0119364ddd193ae12fa5288498d3dadbc34809d63ff0bf5d1f6062e82e94e886",
+            "designId": "cargo.refrigerated.medium",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.4580000042915344,
+                -0.7324999570846558,
+                0.0
+              ],
+              "max": [
+                0.4580000042915344,
+                0.6000000238418579,
+                0.6800000071525574
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.916,
+            1.3325,
+            0.68
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-a35ecc5e892707a10931",
+          "label": "Refrigerated Large",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-a35ecc5e892707a10931/glb.glb",
+            "sha256": "1abde7fc69cb70837bcbfa31a3c92e76020bc2d545739ddf10ea88455c37afe6",
+            "designId": "cargo.refrigerated.large",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.6980000138282776,
+                -1.0325000286102295,
+                0.0
+              ],
+              "max": [
+                0.6980000138282776,
+                0.8999999761581421,
+                1.159999966621399
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.396,
+            1.9325,
+            1.16
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-3e4990bfd3cff3c322a6",
+          "label": "Vacuum Medium",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-3e4990bfd3cff3c322a6/glb.glb",
+            "sha256": "c8fc1355219f88600dd3391a2b805ae25100d4bdf08f2f09b3b4fdda4949bb2f",
+            "designId": "cargo.vacuum.medium",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.43050000071525574,
+                -0.7639999985694885,
+                0.0
+              ],
+              "max": [
+                0.43050000071525574,
+                0.6000000238418579,
+                0.6800000071525574
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.861,
+            1.364,
+            0.68
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-78c27f9eba15730f6e16",
+          "label": "Vacuum Large",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-78c27f9eba15730f6e16/glb.glb",
+            "sha256": "978718994a5323bb1b794065029bf2f9f6b50a9a50534bc8502a7acf3e85a4c3",
+            "designId": "cargo.vacuum.large",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.6704999804496765,
+                -1.063999891281128,
+                0.0
+              ],
+              "max": [
+                0.6704999804496765,
+                0.8999999761581421,
+                1.159999966621399
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.341,
+            1.964,
+            1.16
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-b9296fc370e00c573edb",
+          "label": "Salvage Large",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-b9296fc370e00c573edb/glb.glb",
+            "sha256": "bc35466888b7ef8fbd077aeb4656ee9591aba7c5bfffae40f258582ff3d443f1",
+            "designId": "cargo.salvage.large",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.6704999804496765,
+                -1.0325000286102295,
+                0.0
+              ],
+              "max": [
+                0.6704999804496765,
+                0.8999999761581421,
+                1.2540000677108765
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.341,
+            1.9325,
+            1.254
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-6bb94c053cd8cf77c986",
+          "label": "Salvage Oversized",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-6bb94c053cd8cf77c986/glb.glb",
+            "sha256": "034bc87366c86c39589d5a05754205c5c44b17164849572fe7c54b9c1fd90238",
+            "designId": "cargo.salvage.oversized",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.9704999923706055,
+                -2.0325000286102295,
+                0.0
+              ],
+              "max": [
+                0.9704999923706055,
+                1.9000000953674316,
+                1.8540000915527344
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.941,
+            3.9325,
+            1.854
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-91ea0f7d9a898641e10a",
+          "label": "Medical Small",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-91ea0f7d9a898641e10a/glb.glb",
+            "sha256": "98a665e309e5b136f7658b0a7588b15971f94f9d82af85075f50d8253eeb5998",
+            "designId": "cargo.medical.small",
+            "revision": 3,
+            "bounds": {
+              "min": [
+                -0.3305000066757202,
+                -0.28049999475479126,
+                0.0
+              ],
+              "max": [
+                0.3305000066757202,
+                0.20500001311302185,
+                0.3915000259876251
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.661,
+            0.4855,
+            0.3915
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-30f4da34f1916e0c5c3f",
+          "label": "Medical Medium",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-30f4da34f1916e0c5c3f/glb.glb",
+            "sha256": "e73ec71e8699877088c1ee182106e1738d737159f97a960650b2cdf7c032be5e",
+            "designId": "cargo.medical.medium",
+            "revision": 3,
+            "bounds": {
+              "min": [
+                -0.5304999947547913,
+                -0.4505000114440918,
+                0.0
+              ],
+              "max": [
+                0.5304999947547913,
+                0.34584999084472656,
+                0.6315000057220459
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.061,
+            0.79635,
+            0.6315
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-a4d1c1ae60720fcbe403",
+          "label": "High Value Small",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-a4d1c1ae60720fcbe403/glb.glb",
+            "sha256": "91962c400f4cfd41907a0b8702f772d394e976b4f5f7cbc0a50b3759e4a03c89",
+            "designId": "cargo.high-value.small",
+            "revision": 3,
+            "bounds": {
+              "min": [
+                -0.3305000066757202,
+                -0.4104999899864197,
+                0.0
+              ],
+              "max": [
+                0.3305000066757202,
+                0.24500000476837158,
+                0.4714999794960022
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.661,
+            0.6555,
+            0.4715
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-73d0f3a802c4cb9166c1",
+          "label": "High Value Medium",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-73d0f3a802c4cb9166c1/glb.glb",
+            "sha256": "35a4471f701d9882797a53c43efa9ab1a46dce8fca2c0d45da640184517b92d0",
+            "designId": "cargo.high-value.medium",
+            "revision": 3,
+            "bounds": {
+              "min": [
+                -0.5304999947547913,
+                -0.640500009059906,
+                0.0
+              ],
+              "max": [
+                0.5304999947547913,
+                0.4458500146865845,
+                0.7914999723434448
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.061,
+            1.08635,
+            0.7915
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-3b7ca37c50e723c351a6",
+          "label": "Fluid Medium",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-3b7ca37c50e723c351a6/glb.glb",
+            "sha256": "93def67d6bdde3e7c7062995a8086063b26eb9c42a44c74b6692c2bb9bb97b35",
+            "designId": "cargo.fluid.medium",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.43050000071525574,
+                -0.5800000429153442,
+                0.0
+              ],
+              "max": [
+                0.43050000071525574,
+                0.5800000429153442,
+                0.6800000071525574
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.861,
+            1.16,
+            0.68
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-e925d94b0d7fa47fbedb",
+          "label": "Fluid Large",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-e925d94b0d7fa47fbedb/glb.glb",
+            "sha256": "3a27abd17b594b46f58c68d5b983a35974dcbb088090785677b7589e545e1f40",
+            "designId": "cargo.fluid.large",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.6704999804496765,
+                -0.8799999952316284,
+                0.0
+              ],
+              "max": [
+                0.6704999804496765,
+                0.8799999952316284,
+                1.159999966621399
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.341,
+            1.76,
+            1.16
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-fbd7255612b311847eb2",
+          "label": "Cryo",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-fbd7255612b311847eb2/glb.glb",
+            "sha256": "c63384726bd7b7891283bc72fbfab66de94e803618bd6d0a9ef9b8d093d51c66",
+            "designId": "cargo.fluid-cryo.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.3400000035762787,
+                -0.3400000035762787,
+                0.0
+              ],
+              "max": [
+                0.3400000035762787,
+                0.3400000035762787,
+                1.3600000143051147
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.68,
+            0.68,
+            1.36
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-81d226967abf2efefc20",
+          "label": "Fuel",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-81d226967abf2efefc20/glb.glb",
+            "sha256": "a2f9fca902c7df08f3e8bad348d09034df8f26d9c248d0d912558886aa2eecf6",
+            "designId": "cargo.fluid-fuel.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.2760000228881836,
+                -0.27399998903274536,
+                0.0
+              ],
+              "max": [
+                0.2760000228881836,
+                0.27399998903274536,
+                0.8639999628067017
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.552,
+            0.548,
+            0.864
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-392d51c57ab75c82dc9c",
+          "label": "Chemical",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-392d51c57ab75c82dc9c/glb.glb",
+            "sha256": "23d36657b742c2148682a6fd15e7e76e31434f997f1c7d51881b98fc0d579357",
+            "designId": "cargo.fluid-chemical.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.27399998903274536,
+                -0.27399998903274536,
+                0.0
+              ],
+              "max": [
+                0.27399998903274536,
+                0.27399998903274536,
+                0.8639999628067017
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.548,
+            0.548,
+            0.864
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-9e3dbcbc867202b08b48",
+          "label": "Gas",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-9e3dbcbc867202b08b48/glb.glb",
+            "sha256": "c3752988956571beaba2e3ee3e520c823bb040e5923a6c103191a33fc75eb484",
+            "designId": "cargo.fluid-gas.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.4399999976158142,
+                -0.3400000035762787,
+                0.0
+              ],
+              "max": [
+                0.4399999976158142,
+                0.3400000035762787,
+                0.8999999761581421
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.88,
+            0.68,
+            0.9
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-66a83f73eef38512fd34",
+          "label": "Water",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-66a83f73eef38512fd34/glb.glb",
+            "sha256": "5dcd32b998180c78bb842c5e68e7bdb24a23a0f97dbab95de1e4e4be4db7b8f5",
+            "designId": "cargo.fluid-water.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.4399999976158142,
+                -0.3490000069141388,
+                0.0
+              ],
+              "max": [
+                0.4399999976158142,
+                0.3400000035762787,
+                0.9070000052452087
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.88,
+            0.689,
+            0.907
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-bcd15c0ae99c611cd840",
+          "label": "Narrow Blue",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-bcd15c0ae99c611cd840/glb.glb",
+            "sha256": "b7706350f40b5da148da8bf14cc3d5b11066bdabc930ceb879f4ae5e2990e5c7",
+            "designId": "cargo.standard.narrow",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.12099999934434891,
+                -0.12399999797344208,
+                0.0
+              ],
+              "max": [
+                0.12099999934434891,
+                0.12700000405311584,
+                0.44200000166893005
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.242,
+            0.251,
+            0.442
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-ddbf6661871ea40b586b",
+          "label": "Tiny Magenta",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-ddbf6661871ea40b586b/glb.glb",
+            "sha256": "37765969cf2ac4d760dd189f718dc794ce923ecbeea0adac4a2914f2b3be6a2f",
+            "designId": "cargo.standard.tiny",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.09099999815225601,
+                -0.10799999535083771,
+                0.0
+              ],
+              "max": [
+                0.10099999606609344,
+                0.11100000143051147,
+                0.17100000381469727
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.192,
+            0.219,
+            0.171
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-a0cc41ad3cc80d2c07a4",
+          "label": "Standard Oversized Pale",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-a0cc41ad3cc80d2c07a4/glb.glb",
+            "sha256": "ab75deb1463f719934339f6029fb1b4260d54e26719ced47d1ab9937ed81280d",
+            "designId": "cargo.standard.oversized",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.9704999923706055,
+                -2.0269999504089355,
+                0.0
+              ],
+              "max": [
+                0.9704999923706055,
+                1.8890999555587769,
+                1.9199999570846558
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.941,
+            3.9161,
+            1.92
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-e7e053b614f1a2ab5ef1",
+          "label": "Standard Oversized Amber",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-e7e053b614f1a2ab5ef1/glb.glb",
+            "sha256": "11d154af0b54789610d2f1b4be5dce3331c2e89bbf7e8995c4a0ba40575a7674",
+            "designId": "cargo.standard.oversized",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.9704999923706055,
+                -2.0269999504089355,
+                0.0
+              ],
+              "max": [
+                0.9704999923706055,
+                1.8890999555587769,
+                1.9199999570846558
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.941,
+            3.9161,
+            1.92
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-41d3f8bf61743df8e351",
+          "label": "Standard Oversized Blue",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-41d3f8bf61743df8e351/glb.glb",
+            "sha256": "2850e09c7d07c04ac7ba2d0c2f5ac6c1932704e20928278810c6ecbbf51fa3c1",
+            "designId": "cargo.standard.oversized",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.9704999923706055,
+                -2.0269999504089355,
+                0.0
+              ],
+              "max": [
+                0.9704999923706055,
+                1.8890999555587769,
+                1.9199999570846558
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.941,
+            3.9161,
+            1.92
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-f897d81e4c69384df03b",
+          "label": "Standard Oversized Red",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-f897d81e4c69384df03b/glb.glb",
+            "sha256": "e601361679b0fe9deafe4caa0a863c53fceb9ce53840430a48106777789191df",
+            "designId": "cargo.standard.oversized",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.9704999923706055,
+                -2.0269999504089355,
+                0.0
+              ],
+              "max": [
+                0.9704999923706055,
+                1.8890999555587769,
+                1.9199999570846558
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.941,
+            3.9161,
+            1.92
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-12743466dc1eeca3e482",
+          "label": "Reinforced Large Blue",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-12743466dc1eeca3e482/glb.glb",
+            "sha256": "ae395110aef810c6c0119aa7c149f8055cd35112178fdec1ad98a18c581cde75",
+            "designId": "cargo.reinforced.large",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.9704999923706055,
+                -0.8220000267028809,
+                0.0
+              ],
+              "max": [
+                0.9704999923706055,
+                0.5891000032424927,
+                1.7200000286102295
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.941,
+            1.4111,
+            1.72
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-6c94a694e1a91110e76f",
+          "label": "Reinforced Large Red",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-6c94a694e1a91110e76f/glb.glb",
+            "sha256": "5fb50d1445e011342f8ef5fe994f8f27c7e8bf01518b902e65b1a56111fd74df",
+            "designId": "cargo.reinforced.large",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.9704999923706055,
+                -0.8220000267028809,
+                0.0
+              ],
+              "max": [
+                0.9704999923706055,
+                0.5891000032424927,
+                1.7200000286102295
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.941,
+            1.4111,
+            1.72
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-a82fc07c0f2cf57ffef8",
+          "label": "Refrigerated Medium Green",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-a82fc07c0f2cf57ffef8/glb.glb",
+            "sha256": "b9bced5b170f7035d0efc2fb50af90e4935c328e8aac2065978d9c034e330746",
+            "designId": "cargo.refrigerated.medium",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.4580000042915344,
+                -0.7324999570846558,
+                0.0
+              ],
+              "max": [
+                0.4580000042915344,
+                0.6000000238418579,
+                0.6800000071525574
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.916,
+            1.3325,
+            0.68
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-be4057636f5003ee5fed",
+          "label": "Refrigerated Medium Pale",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-be4057636f5003ee5fed/glb.glb",
+            "sha256": "a0b28cf785212fb719ea3eee2e388b516804299c84374c9f069be4ab3501174e",
+            "designId": "cargo.refrigerated.medium",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.4580000042915344,
+                -0.7324999570846558,
+                0.0
+              ],
+              "max": [
+                0.4580000042915344,
+                0.6000000238418579,
+                0.6800000071525574
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.916,
+            1.3325,
+            0.68
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-45eba046115a3166e3e6",
+          "label": "Refrigerated Medium Red",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-45eba046115a3166e3e6/glb.glb",
+            "sha256": "6729889a462e3a276c9975ade4c80769c2aa3fab43b76b0f8d2f0f5545453ef0",
+            "designId": "cargo.refrigerated.medium",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.4580000042915344,
+                -0.7324999570846558,
+                0.0
+              ],
+              "max": [
+                0.4580000042915344,
+                0.6000000238418579,
+                0.6800000071525574
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.916,
+            1.3325,
+            0.68
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-648c1308e0a5ccd4c749",
+          "label": "Vacuum Medium Pale",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-648c1308e0a5ccd4c749/glb.glb",
+            "sha256": "afe864ebafda474e0ffedeb3c58e3aba426661ef467fcf7c779cf47a911f0195",
+            "designId": "cargo.vacuum.medium",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.43050000071525574,
+                -0.7639999985694885,
+                0.0
+              ],
+              "max": [
+                0.43050000071525574,
+                0.6000000238418579,
+                0.6800000071525574
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.861,
+            1.364,
+            0.68
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-f54c717c38a363f7e658",
+          "label": "Vacuum Medium Dark",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-f54c717c38a363f7e658/glb.glb",
+            "sha256": "9a3450840436ff9f70c3844973e41cf9924dbd175b5f59b5a8cb780b963a1867",
+            "designId": "cargo.vacuum.medium",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.43050000071525574,
+                -0.7639999985694885,
+                0.0
+              ],
+              "max": [
+                0.43050000071525574,
+                0.6000000238418579,
+                0.6800000071525574
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.861,
+            1.364,
+            0.68
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-c1ebb67dff29784e301a",
+          "label": "Vacuum Medium Amber",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-c1ebb67dff29784e301a/glb.glb",
+            "sha256": "0ae108878ae42ad84468a0552acd2c5569f8932f4230e7154dae8b2aa8a0b9bc",
+            "designId": "cargo.vacuum.medium",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.43050000071525574,
+                -0.7639999985694885,
+                0.0
+              ],
+              "max": [
+                0.43050000071525574,
+                0.6000000238418579,
+                0.6800000071525574
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.861,
+            1.364,
+            0.68
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-a09eeadccb5c9982cac6",
+          "label": "Salvage Large Red",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-a09eeadccb5c9982cac6/glb.glb",
+            "sha256": "5d8c3aab6482782cbfbac5cf0cc6f5d11fd2946e89613f5afc2d7d37e6c98bf1",
+            "designId": "cargo.salvage.large",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.6704999804496765,
+                -1.0325000286102295,
+                0.0
+              ],
+              "max": [
+                0.6704999804496765,
+                0.8999999761581421,
+                1.2540000677108765
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.341,
+            1.9325,
+            1.254
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-b2141c33d215edfc9f69",
+          "label": "Salvage Large Pale",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-b2141c33d215edfc9f69/glb.glb",
+            "sha256": "df714234a94dd90e898e2568289f8d254f79d1eb8384cadc66f0c494a10c6891",
+            "designId": "cargo.salvage.large",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.6704999804496765,
+                -1.0325000286102295,
+                0.0
+              ],
+              "max": [
+                0.6704999804496765,
+                0.8999999761581421,
+                1.2540000677108765
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.341,
+            1.9325,
+            1.254
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-5ec11cd63618cfba9ee6",
+          "label": "Salvage Large Amber",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-5ec11cd63618cfba9ee6/glb.glb",
+            "sha256": "ea53a010cc578989dd6f6e7a274cc3a928116eaa9f842ff706770f52fb92f090",
+            "designId": "cargo.salvage.large",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.6704999804496765,
+                -1.0325000286102295,
+                0.0
+              ],
+              "max": [
+                0.6704999804496765,
+                0.8999999761581421,
+                1.2540000677108765
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.341,
+            1.9325,
+            1.254
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-0c13b0afa67118c11465",
+          "label": "Medical Small Red",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-0c13b0afa67118c11465/glb.glb",
+            "sha256": "30adaac760feaf192873f432b87ffe7655565947d35e0858d257a8fbe537dbc7",
+            "designId": "cargo.medical.small",
+            "revision": 3,
+            "bounds": {
+              "min": [
+                -0.3305000066757202,
+                -0.28049999475479126,
+                0.0
+              ],
+              "max": [
+                0.3305000066757202,
+                0.20500001311302185,
+                0.3915000259876251
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.661,
+            0.4855,
+            0.3915
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-75a256627549b94938af",
+          "label": "Medical Small Green",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-75a256627549b94938af/glb.glb",
+            "sha256": "313c58343a48b364378fc40fa89f87db0f012ab194ee9b24f19949290a4a8bc1",
+            "designId": "cargo.medical.small",
+            "revision": 3,
+            "bounds": {
+              "min": [
+                -0.3305000066757202,
+                -0.28049999475479126,
+                0.0
+              ],
+              "max": [
+                0.3305000066757202,
+                0.20500001311302185,
+                0.3915000259876251
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.661,
+            0.4855,
+            0.3915
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-70124a17eeed22f9fdf8",
+          "label": "Medical Small Blue",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-70124a17eeed22f9fdf8/glb.glb",
+            "sha256": "597dd4786249d9c853901d07791e9525c6fc8bc7106b57573a2f4b6582411211",
+            "designId": "cargo.medical.small",
+            "revision": 3,
+            "bounds": {
+              "min": [
+                -0.3305000066757202,
+                -0.28049999475479126,
+                0.0
+              ],
+              "max": [
+                0.3305000066757202,
+                0.20500001311302185,
+                0.3915000259876251
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.661,
+            0.4855,
+            0.3915
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-41d39cecfe513b1a0885",
+          "label": "High Value Small Amber",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-41d39cecfe513b1a0885/glb.glb",
+            "sha256": "153c745e10390599a7bbd372bca850e466a3524bc4b0056083bc487e22fcced9",
+            "designId": "cargo.high-value.small",
+            "revision": 3,
+            "bounds": {
+              "min": [
+                -0.3305000066757202,
+                -0.4104999899864197,
+                0.0
+              ],
+              "max": [
+                0.3305000066757202,
+                0.24500000476837158,
+                0.4714999794960022
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.661,
+            0.6555,
+            0.4715
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-47640f88de2e1065b623",
+          "label": "High Value Small Red",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-47640f88de2e1065b623/glb.glb",
+            "sha256": "bd671de55b8c0b1e97012cbd53996388cef0b5d49a522896f3613c5c2ab7a879",
+            "designId": "cargo.high-value.small",
+            "revision": 3,
+            "bounds": {
+              "min": [
+                -0.3305000066757202,
+                -0.4104999899864197,
+                0.0
+              ],
+              "max": [
+                0.3305000066757202,
+                0.24500000476837158,
+                0.4714999794960022
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.661,
+            0.6555,
+            0.4715
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-0fbeb32a435ded59a627",
+          "label": "High Value Small Blue",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-0fbeb32a435ded59a627/glb.glb",
+            "sha256": "8fe6602f055114b8c30c36672c9e1e7807b3aec96f2d694b98b7cedc62ad6547",
+            "designId": "cargo.high-value.small",
+            "revision": 3,
+            "bounds": {
+              "min": [
+                -0.3305000066757202,
+                -0.4104999899864197,
+                0.0
+              ],
+              "max": [
+                0.3305000066757202,
+                0.24500000476837158,
+                0.4714999794960022
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.661,
+            0.6555,
+            0.4715
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-b447c4118a56a63180a8",
+          "label": "Fluid Medium Covered",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-b447c4118a56a63180a8/glb.glb",
+            "sha256": "9491b1f773ae848b2c5d3f434ae4da4d56f2a627bc739350070493e8a5e91646",
+            "designId": "cargo.fluid.medium",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.43050000071525574,
+                -0.5800000429153442,
+                0.0
+              ],
+              "max": [
+                0.43050000071525574,
+                0.5800000429153442,
+                0.6800000071525574
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.861,
+            1.16,
+            0.68
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-e9c7d5963786d1fec3e3",
+          "label": "Fluid Medium Amber",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-e9c7d5963786d1fec3e3/glb.glb",
+            "sha256": "87c6c3b90dc447e6fd0bf18d6fc346bd6f15a334e80100364253bd97f5cbdf14",
+            "designId": "cargo.fluid.medium",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.43050000071525574,
+                -0.5800000429153442,
+                0.0
+              ],
+              "max": [
+                0.43050000071525574,
+                0.5800000429153442,
+                0.6800000071525574
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.861,
+            1.16,
+            0.68
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-d0db8fa035dfee89aab0",
+          "label": "Fluid Medium Glass Gauge",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-d0db8fa035dfee89aab0/glb.glb",
+            "sha256": "186d101731c12f314cd7f5fbc324ba59519272fea1cd74a2073a7133c817f00b",
+            "designId": "cargo.fluid.medium",
+            "revision": 2,
+            "bounds": {
+              "min": [
+                -0.4490000009536743,
+                -0.5800000429153442,
+                0.0
+              ],
+              "max": [
+                0.4490000009536743,
+                0.5800000429153442,
+                0.6800000071525574
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.898,
+            1.16,
+            0.68
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-5382f8dbbeb54e663d33",
+          "label": "Standard Small Red",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-5382f8dbbeb54e663d33/glb.glb",
+            "sha256": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+            "designId": "cargo.standard.small",
+            "revision": 3,
+            "bounds": {
+              "min": [
+                -0.3305000066757202,
+                -0.28049999475479126,
+                0.0
+              ],
+              "max": [
+                0.3305000066757202,
+                0.20500001311302185,
+                0.5114999413490295
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.661,
+            0.4855,
+            0.5115
+          ],
+          "placementIds": [
+            "room-storage-container-2.15-1",
+            "room-storage-container-3.5-1"
+          ],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-0e982ae6b34746506f67",
+          "label": "Standard Medium Blue",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-0e982ae6b34746506f67/glb.glb",
+            "sha256": "2219fbab29ca11caeda8036cdf4727af9bc072db6c9071a633de2682cdaaf010",
+            "designId": "cargo.standard.medium",
+            "revision": 3,
+            "bounds": {
+              "min": [
+                -0.5304999947547913,
+                -0.4505000114440918,
+                0.0
+              ],
+              "max": [
+                0.5304999947547913,
+                0.34584999084472656,
+                0.9514999985694885
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            1.061,
+            0.79635,
+            0.9515
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-5d5d4a34049e170b1040",
+          "label": "Cargo.Fluid Cryo.Medium.Appearance 1",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-5d5d4a34049e170b1040/glb.glb",
+            "sha256": "cd894cff32132f45da2073749af3f79dab0d285ef5eb05567aa751b24711e611",
+            "designId": "cargo.fluid-cryo.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.3400000035762787,
+                -0.3400000035762787,
+                0.0
+              ],
+              "max": [
+                0.3400000035762787,
+                0.3400000035762787,
+                1.3600000143051147
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.68,
+            0.68,
+            1.36
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-5d103ad6aa3172180976",
+          "label": "Cargo.Fluid Cryo.Medium.Appearance 2",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-5d103ad6aa3172180976/glb.glb",
+            "sha256": "1b19771dd577a05f23ff65f1feca4f39946e8ad0cf4c42b35b51d7320f6dd435",
+            "designId": "cargo.fluid-cryo.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.3400000035762787,
+                -0.3400000035762787,
+                0.0
+              ],
+              "max": [
+                0.3400000035762787,
+                0.3400000035762787,
+                1.3600000143051147
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.68,
+            0.68,
+            1.36
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-8f848965775db332ad3b",
+          "label": "Cargo.Fluid Cryo.Medium.Appearance 3",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-8f848965775db332ad3b/glb.glb",
+            "sha256": "77e593e7453f0b0c16d3b61c6cbcdd6c7be53fb86fef0fe04a88ba8110033c47",
+            "designId": "cargo.fluid-cryo.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.3400000035762787,
+                -0.3400000035762787,
+                0.0
+              ],
+              "max": [
+                0.3400000035762787,
+                0.3400000035762787,
+                1.3600000143051147
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.68,
+            0.68,
+            1.36
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-e8b348082816c379c3ad",
+          "label": "Cargo.Fluid Cryo.Medium.Appearance 4",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-e8b348082816c379c3ad/glb.glb",
+            "sha256": "583a056b96b1459e3861eba33f46c52327a1ac5eb127ec80a5aa754598bf1db5",
+            "designId": "cargo.fluid-cryo.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.3400000035762787,
+                -0.3400000035762787,
+                0.0
+              ],
+              "max": [
+                0.3400000035762787,
+                0.3400000035762787,
+                1.3600000143051147
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.68,
+            0.68,
+            1.36
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-3cc2aaa47b61c3695a01",
+          "label": "Cargo.Fluid Fuel.Medium.Appearance 1",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-3cc2aaa47b61c3695a01/glb.glb",
+            "sha256": "88b545da34d02be1a0697e4a61949e4ab073191eeb2bd599425c5a98549dae64",
+            "designId": "cargo.fluid-fuel.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.2760000228881836,
+                -0.27399998903274536,
+                0.0
+              ],
+              "max": [
+                0.2760000228881836,
+                0.27399998903274536,
+                0.8639999628067017
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.552,
+            0.548,
+            0.864
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-ff4c81d16308982b5556",
+          "label": "Cargo.Fluid Fuel.Medium.Appearance 2",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-ff4c81d16308982b5556/glb.glb",
+            "sha256": "b08fd66f120a2bca68053a75cc4f295e2513ca0ad8bbfde41fd8a4e16926c0a2",
+            "designId": "cargo.fluid-fuel.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.2760000228881836,
+                -0.27399998903274536,
+                0.0
+              ],
+              "max": [
+                0.2760000228881836,
+                0.27399998903274536,
+                0.8639999628067017
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.552,
+            0.548,
+            0.864
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-8963649e2154815c6e0a",
+          "label": "Cargo.Fluid Fuel.Medium.Appearance 3",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-8963649e2154815c6e0a/glb.glb",
+            "sha256": "60bacc18625011c465412692f01611064dd79e413a2224ea78b20548048779cf",
+            "designId": "cargo.fluid-fuel.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.2760000228881836,
+                -0.27399998903274536,
+                0.0
+              ],
+              "max": [
+                0.2760000228881836,
+                0.27399998903274536,
+                0.8639999628067017
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.552,
+            0.548,
+            0.864
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-355fd132ec5fadfb1f66",
+          "label": "Cargo.Fluid Fuel.Medium.Appearance 4",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-355fd132ec5fadfb1f66/glb.glb",
+            "sha256": "6323a87028232d82ee01a7f350ba478659794024d4149f76a1d3ff9c168a095d",
+            "designId": "cargo.fluid-fuel.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.2760000228881836,
+                -0.27399998903274536,
+                0.0
+              ],
+              "max": [
+                0.2760000228881836,
+                0.27399998903274536,
+                0.8639999628067017
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.552,
+            0.548,
+            0.864
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-0f76eb112155db5b4e8b",
+          "label": "Cargo.Fluid Chemical.Medium.Appearance 1",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-0f76eb112155db5b4e8b/glb.glb",
+            "sha256": "eb59a94d0bd940d80736d002acd896c4653514c625032c93fe4f68cf7a400e0d",
+            "designId": "cargo.fluid-chemical.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.27399998903274536,
+                -0.27399998903274536,
+                0.0
+              ],
+              "max": [
+                0.27399998903274536,
+                0.27399998903274536,
+                0.8639999628067017
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.548,
+            0.548,
+            0.864
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-84891c854514b15139aa",
+          "label": "Cargo.Fluid Chemical.Medium.Appearance 2",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-84891c854514b15139aa/glb.glb",
+            "sha256": "73c3930e2deda3541bcc5046c760ba0729cbca998a27eb5784a0aceed16fc05f",
+            "designId": "cargo.fluid-chemical.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.27399998903274536,
+                -0.27399998903274536,
+                0.0
+              ],
+              "max": [
+                0.27399998903274536,
+                0.27399998903274536,
+                0.8639999628067017
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.548,
+            0.548,
+            0.864
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-b215126fd8b9f5447d00",
+          "label": "Cargo.Fluid Chemical.Medium.Appearance 3",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-b215126fd8b9f5447d00/glb.glb",
+            "sha256": "edcab4ad0d252c3f05823cab7489c3c6b0ac0fa38b4539e06009a4f1a5f3f7f1",
+            "designId": "cargo.fluid-chemical.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.27399998903274536,
+                -0.27399998903274536,
+                0.0
+              ],
+              "max": [
+                0.27399998903274536,
+                0.27399998903274536,
+                0.8639999628067017
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.548,
+            0.548,
+            0.864
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-5377949ed91bc9fc3973",
+          "label": "Cargo.Fluid Chemical.Medium.Appearance 4",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-5377949ed91bc9fc3973/glb.glb",
+            "sha256": "152c548e2fcefc35a11fe7dc99ebb9405014c986ef90635cd835717fade2bf25",
+            "designId": "cargo.fluid-chemical.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.27399998903274536,
+                -0.27399998903274536,
+                0.0
+              ],
+              "max": [
+                0.27399998903274536,
+                0.27399998903274536,
+                0.8639999628067017
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.548,
+            0.548,
+            0.864
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-8bcf56f5a154cbb954de",
+          "label": "Cargo.Fluid Gas.Medium.Appearance 1",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-8bcf56f5a154cbb954de/glb.glb",
+            "sha256": "3a00c3838ead1c808c70e4fb1b1832bfc8945ae18ce7588a402866f70f6dad13",
+            "designId": "cargo.fluid-gas.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.4399999976158142,
+                -0.3400000035762787,
+                0.0
+              ],
+              "max": [
+                0.4399999976158142,
+                0.3400000035762787,
+                0.8999999761581421
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.88,
+            0.68,
+            0.9
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-74fd36d0f31a11c97535",
+          "label": "Cargo.Fluid Gas.Medium.Appearance 2",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-74fd36d0f31a11c97535/glb.glb",
+            "sha256": "bd4daafa7b5a43ac052a526f9efdf14453c895bb8692e47fd31585a0eb4a98a3",
+            "designId": "cargo.fluid-gas.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.4399999976158142,
+                -0.3400000035762787,
+                0.0
+              ],
+              "max": [
+                0.4399999976158142,
+                0.3400000035762787,
+                0.8999999761581421
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.88,
+            0.68,
+            0.9
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-96aa76d51e89c5278c25",
+          "label": "Cargo.Fluid Gas.Medium.Appearance 3",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-96aa76d51e89c5278c25/glb.glb",
+            "sha256": "8a0a7f8a075c2aabfc2dd8c01786afb88ac314ecb3bcc28ed569c3ee787bc677",
+            "designId": "cargo.fluid-gas.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.4399999976158142,
+                -0.3400000035762787,
+                0.0
+              ],
+              "max": [
+                0.4399999976158142,
+                0.3400000035762787,
+                0.8999999761581421
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.88,
+            0.68,
+            0.9
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-a8c9ac9eb43a547c76a7",
+          "label": "Cargo.Fluid Gas.Medium.Appearance 4",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-a8c9ac9eb43a547c76a7/glb.glb",
+            "sha256": "40042759b8028894914c0edb6c30ad2d68e01e208da6c02b6a3a55bc41257ea0",
+            "designId": "cargo.fluid-gas.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.4399999976158142,
+                -0.3400000035762787,
+                0.0
+              ],
+              "max": [
+                0.4399999976158142,
+                0.3400000035762787,
+                0.8999999761581421
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.88,
+            0.68,
+            0.9
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-38b95e9ee2941d12d072",
+          "label": "Cargo.Fluid Water.Medium.Appearance 1",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-38b95e9ee2941d12d072/glb.glb",
+            "sha256": "3c64e8b882606fa0131f0da467a0cdcf44af0f299262805a2bed5fc9fac877ca",
+            "designId": "cargo.fluid-water.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.4399999976158142,
+                -0.3490000069141388,
+                0.0
+              ],
+              "max": [
+                0.4399999976158142,
+                0.3400000035762787,
+                0.9070000052452087
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.88,
+            0.689,
+            0.907
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-2b4c94f694595ac8fd1d",
+          "label": "Cargo.Fluid Water.Medium.Appearance 2",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-2b4c94f694595ac8fd1d/glb.glb",
+            "sha256": "5deea8cf44e1a75776dc388207f034fbbd61fe6fe4eb7b73f8ea888b476484bb",
+            "designId": "cargo.fluid-water.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.4399999976158142,
+                -0.3490000069141388,
+                0.0
+              ],
+              "max": [
+                0.4399999976158142,
+                0.3400000035762787,
+                0.9070000052452087
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.88,
+            0.689,
+            0.907
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-7858296690991b13320c",
+          "label": "Cargo.Fluid Water.Medium.Appearance 3",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-7858296690991b13320c/glb.glb",
+            "sha256": "6b3c29b0472a072325cf72a1c138e6585b7b287cff1df124a5adbcb887b2571b",
+            "designId": "cargo.fluid-water.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.4399999976158142,
+                -0.3490000069141388,
+                0.0
+              ],
+              "max": [
+                0.4399999976158142,
+                0.3400000035762787,
+                0.9070000052452087
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.88,
+            0.689,
+            0.907
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-9d84eacfac58c57c012b",
+          "label": "Cargo.Fluid Water.Medium.Appearance 4",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-9d84eacfac58c57c012b/glb.glb",
+            "sha256": "a95d0bcdb784c857be886a9437c788c5d4785179eb8de6733c041b9cc25f2d09",
+            "designId": "cargo.fluid-water.medium",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.4399999976158142,
+                -0.3490000069141388,
+                0.0
+              ],
+              "max": [
+                0.4399999976158142,
+                0.3400000035762787,
+                0.9070000052452087
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.88,
+            0.689,
+            0.907
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        },
+        {
+          "id": "part-091a05481726fc7ccac0",
+          "label": "Narrow Red",
+          "category": "cargo",
+          "visual": {
+            "url": "/assets/assembly/cargo/part-091a05481726fc7ccac0/glb.glb",
+            "sha256": "7a7ba27e84e4895e4b801c5fc578a1936620bfd14533fe4195218b76d016578c",
+            "designId": "cargo.standard.narrow",
+            "revision": 1,
+            "bounds": {
+              "min": [
+                -0.12099999934434891,
+                -0.12399999797344208,
+                0.0
+              ],
+              "max": [
+                0.12099999934434891,
+                0.12700000405311584,
+                0.44200000166893005
+              ]
+            },
+            "damagePreview": "unsupported"
+          },
+          "visualExtentMeters": [
+            0.242,
+            0.251,
+            0.442
+          ],
+          "placementIds": [],
+          "topLevelInterfaceFields": []
+        }
+      ]
+    }
+  }
+}

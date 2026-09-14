@@ -1,0 +1,1 @@
+{"extends":"../../tsconfig.json","compilerOptions":{"noEmit":true},"include":["crystal_reference_composition_r013.ts","crystal_reference_composition_r013.test.ts","native_radial_surface.ts","crystal_reference_r013.vitest.config.ts"]}

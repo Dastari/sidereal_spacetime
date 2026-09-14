@@ -1,0 +1,72 @@
+{
+  "status": "passed",
+  "live_assets": true,
+  "render_capture": "Camera framing and paced frame updates only; actual game lighting and published asset URLs. Early zero-delta manual frame attempt retained in logs; final captures use engine beginFrame/endFrame.",
+  "runtime": {
+    "roofParts": 73,
+    "roofGeometryTriangles": 34200,
+    "decals": [
+      {
+        "name": "GEO-roof-hull-roof-0-0--hull-marking-frontier-emblem",
+        "enabled": true,
+        "visibility": 1,
+        "alphaMode": 2
+      },
+      {
+        "name": "GEO-roof-hull-roof-0-0--hull-marking-frontier-registration",
+        "enabled": true,
+        "visibility": 1,
+        "alphaMode": 2
+      },
+      {
+        "name": "GEO-roof-hull-pilot-context-vestibule-roof-1--hull-marking-frontier-ship-name",
+        "enabled": true,
+        "visibility": 1,
+        "alphaMode": 2
+      }
+    ],
+    "oldRoofGeometry": 0,
+    "paintShadowProxies": 0
+  },
+  "deck_cutaway": {
+    "roofVisible": 0,
+    "decals": [
+      {
+        "name": "GEO-roof-hull-roof-0-0--hull-marking-frontier-emblem",
+        "enabled": false,
+        "visibility": 0
+      },
+      {
+        "name": "GEO-roof-hull-roof-0-0--hull-marking-frontier-registration",
+        "enabled": false,
+        "visibility": 0
+      },
+      {
+        "name": "GEO-roof-hull-pilot-context-vestibule-roof-1--hull-marking-frontier-ship-name",
+        "enabled": false,
+        "visibility": 0
+      }
+    ],
+    "delta": 124.19999885559082
+  },
+  "shipyard": {
+    "activeIndices": 1467420,
+    "meshes": 1723,
+    "materials": 200,
+    "triangleTotal": 489140
+  },
+  "evidence": {
+    "assembly.log": "fdabf1b83fad27007b36f1c2c6a05185a68fbe197a904cf057a36c0586fccda8",
+    "art-check.log": "c35d74fad1f2784a87545b8acc85e214f5e293686f0155b1b04a3ea0d09a8326",
+    "shipyard-roof.png": "907297e86b7a2b6963d0aba9a187d9bc402cb70eb4e2772049533c523af6d444",
+    "game-deck.png": "b39c43efb8b864a27e95b5174588310419aa245d02bef69e88cf528c42d02c3a",
+    "ledger-check.log": "7d5ec1edacd1991efc6892c9f57526f556fbb91d663ca6492c9ebfa73d8cb420",
+    "README.md": "d2da54a83bd674ab1fcebe5c56143ef82d4b50dcc1a4f5f74e4b9aa8acc25eee",
+    "check.log": "8ec0d8887e8fd1e8d267fc37c37e987d37dbcde577bc22a12e46e65189b7c551",
+    "build.log": "385449543aed228c70bbd274abc768433da187f9ed113d40888a1bc8aa9b753a",
+    "voxels.log": "293d3ce15ce56adf1a2d804ddf9bf61c8411f63fc7731f5a3caf214800b82811",
+    "publication.json": "d263d0863e3799885ce9575d0e986cf588d5473011db173d98d5045e6f035093",
+    "game-roof.png": "6f6c1a1f6acf3aa38b4bc25d6b36a81296887383211211cb0f7a7b748405d892",
+    "native-validation.log": "37f1c75a969c1f5dec50d6022b0c6b796c5b30d6304f35d2e8a83258ae39fd85"
+  }
+}

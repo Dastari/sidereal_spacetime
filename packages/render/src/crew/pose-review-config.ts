@@ -14,7 +14,7 @@ export type PoseReviewConfiguration = EquipmentPoseConfiguration & {
 };
 /** Published paired metadata/handhelds, used with the installed modular crew. */
 export async function loadEquipmentPoseConfiguration(
-  base = "/assets/crew/poses/r002/",
+  base = "/assets/crew/poses/r003/",
 ): Promise<EquipmentPoseConfiguration> {
   const [aimResponse, metadataResponse] = await Promise.all([
     fetch(base + "runtime-aim-space.json"),

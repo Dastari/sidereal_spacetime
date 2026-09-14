@@ -1,0 +1,11 @@
+{
+  "schema": "sidereal.floor-finish.v1",
+  "id": "floor-panel-r002",
+  "source": "assets/art-library/shipyard-floor/r002/maps",
+  "periodM": 2,
+  "files": {
+    "basecolor.png": "2e6c69cf27ab2f98876e1f09096ce19b662fa7e64ff9ebbba76819b0cceb9f98",
+    "normal.png": "a6d69d52e92a98fedee3d246f19dd6be8584ac60f4be58b9c0611bf808521e64",
+    "orm.png": "21e4bd1d680592b3b460d4925b4be59f0e1e9e22ee3660da3a0545c49d08444c"
+  }
+}

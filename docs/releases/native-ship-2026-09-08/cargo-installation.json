@@ -1,0 +1,170 @@
+{
+  "approved_manifest_sha256": "512ea3056138b3da315bb92e681c01ba5d758d54928f74d986b58bd9b001e4dd",
+  "assets": 73,
+  "mapping": {
+    "room-storage-container-2.15-0.25": {
+      "appearance": "standard-small",
+      "before": {
+        "id": "room-storage-container-2.15-0.25",
+        "assetId": "part-827961a32d599c00edef",
+        "position": [
+          -3.6875,
+          2.0625,
+          0.25
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "room-storage-container-2.15-0.25",
+        "assetId": "part-c06e4f5f6f6dace38e41",
+        "position": [
+          -4.0625,
+          2.0625,
+          0.1875
+        ],
+        "rotation": 1.5707963267948966,
+        "flipped": false,
+        "removedCells": []
+      },
+      "pre_floor_layout": {
+        "id": "room-storage-container-2.15-0.25",
+        "assetId": "part-c06e4f5f6f6dace38e41",
+        "position": [
+          -3.6875,
+          2.0625,
+          0.25
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    "room-storage-container-2.15-1": {
+      "appearance": "standard-small-red",
+      "before": {
+        "id": "room-storage-container-2.15-1",
+        "assetId": "part-827961a32d599c00edef",
+        "position": [
+          -3.6875,
+          2.0625,
+          1
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "room-storage-container-2.15-1",
+        "assetId": "part-5382f8dbbeb54e663d33",
+        "position": [
+          -3.3125,
+          2.0625,
+          0.1875
+        ],
+        "rotation": 1.5707963267948966,
+        "flipped": false,
+        "removedCells": []
+      },
+      "pre_floor_layout": {
+        "id": "room-storage-container-2.15-1",
+        "assetId": "part-5382f8dbbeb54e663d33",
+        "position": [
+          -3.6875,
+          2.0625,
+          1
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    "room-storage-container-3.5-0.25": {
+      "appearance": "standard-small",
+      "before": {
+        "id": "room-storage-container-3.5-0.25",
+        "assetId": "part-56f197cde09c88860e9c",
+        "position": [
+          -3.6875,
+          3.4375,
+          0.25
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "room-storage-container-3.5-0.25",
+        "assetId": "part-c06e4f5f6f6dace38e41",
+        "position": [
+          -4.0625,
+          3.4375,
+          0.1875
+        ],
+        "rotation": 1.5707963267948966,
+        "flipped": false,
+        "removedCells": []
+      },
+      "pre_floor_layout": {
+        "id": "room-storage-container-3.5-0.25",
+        "assetId": "part-c06e4f5f6f6dace38e41",
+        "position": [
+          -3.6875,
+          3.4375,
+          0.25
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    },
+    "room-storage-container-3.5-1": {
+      "appearance": "standard-small-red",
+      "before": {
+        "id": "room-storage-container-3.5-1",
+        "assetId": "part-56f197cde09c88860e9c",
+        "position": [
+          -3.6875,
+          3.4375,
+          1
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "after": {
+        "id": "room-storage-container-3.5-1",
+        "assetId": "part-5382f8dbbeb54e663d33",
+        "position": [
+          -3.3125,
+          3.4375,
+          0.1875
+        ],
+        "rotation": 1.5707963267948966,
+        "flipped": false,
+        "removedCells": []
+      },
+      "pre_floor_layout": {
+        "id": "room-storage-container-3.5-1",
+        "assetId": "part-5382f8dbbeb54e663d33",
+        "position": [
+          -3.6875,
+          3.4375,
+          1
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      }
+    }
+  },
+  "state": "Installed assets; actual game verification pending",
+  "storage_layout": {
+    "revision": 2,
+    "authority": "packages/content/src/storage-fixtures.ts",
+    "arrangement": "Four floor-standing pods; closed inventory access; no filled stacking or lid sweep claim",
+    "deck_top_m": 0.1875,
+    "rotation_radians": 1.5707963267948966
+  }
+}

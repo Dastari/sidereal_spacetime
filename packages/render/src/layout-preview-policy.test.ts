@@ -19,8 +19,8 @@ describe("editor semantic preview layers", () => {
       walls: ["wall"],
       floors: ["floor"],
       roof: ["roof"],
-      objects: ["decoration", "equipment", "cargo"],
-      exteriorHull: ["superstructure", "engine"],
+      objects: ["decoration", "equipment", "cargo", "engine"],
+      exteriorHull: ["superstructure"],
     };
     for (const [layer, hidden] of Object.entries(groups))
       for (const category of PART_CATEGORIES)

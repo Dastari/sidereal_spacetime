@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "scope": "Combined local ship collision/F3 checkpoint; native volcanic drafts remain unpublished",
+  "check": {
+    "test_files": 72,
+    "tests": 267,
+    "documents": 64,
+    "typecheck": "passed"
+  },
+  "build": "world, generated bindings, independent client and dashboard passed",
+  "art_check": "passed",
+  "collision": "32 focused tests, isolated authority smoke and actual normal-client diagonal/jamb/doorway/helm review passed",
+  "f3": "Actual scrolling, lighting-off IBL/eligible-map distinction and TAB camera values passed without actor movement; not a hardware FPS result",
+  "limitations": [
+    "Owner final art approval remains separate for review candidates",
+    "Native volcanic art work continues; no replacement installed",
+    "Optional selected-object pass-count transition not tested in final F3 browser review"
+  ],
+  "logs": [
+    {
+      "path": ".runtime/native-release-check-collision-f3.log",
+      "bytes": 506,
+      "sha256": "328d28092bcd49a6ec812c9399fdbd78b98e0e743d90fd020f5a9ce1a6ca1938"
+    },
+    {
+      "path": ".runtime/native-release-build-collision-f3.log",
+      "bytes": 65782,
+      "sha256": "4361d62da99b98237634cee97209b26bc09551bfa341cec25f8c728db07b81e4"
+    },
+    {
+      "path": ".runtime/native-release-art-collision-f3.log",
+      "bytes": 3635,
+      "sha256": "c74b2528fe224615514271a991b863edd725adbeb9ad035f5e30488a8b8d7b86"
+    },
+    {
+      "path": ".runtime/r006-collision-smoke.log",
+      "bytes": 1799,
+      "sha256": "6b303213a616ecc1dab3d953c389f39c7ed7d0e5942a95e21b00b439a97c1b2e"
+    }
+  ]
+}

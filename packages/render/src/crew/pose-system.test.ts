@@ -26,6 +26,23 @@ const base = {
   shotSequence: 5n,
 };
 describe("Equipment pose math and contracts", () => {
+  it("immediately releases the visual aim turn when travel resumes outside combat", () => {
+    const state = createPoseState();
+    for (let i = 0; i < 90; i++) state.step({ ...base, yaw: 2 }, 1 / 60);
+    const lower = state.step(
+      { ...base, active: false, moving: true, facing: -Math.PI / 2 },
+      1 / 60,
+    );
+    expect(lower.heading).toBe(-Math.PI / 2);
+    expect(lower.yaw).toBe(-Math.PI / 2);
+    expect(lower.turn).toBe(0);
+    const sprint = state.step(
+      { ...base, sprinting: true, moving: true, facing: Math.PI },
+      1 / 60,
+    );
+    expect(sprint.heading).toBe(Math.PI);
+    expect(sprint.yaw).toBe(Math.PI);
+  });
   it("validates every supplied item and refuses missing shoulder/pistol support", () => {
     for (const item of Object.values(EQUIPMENT_POSE_ITEMS))
       validatePoseItem(item);
@@ -42,7 +59,7 @@ describe("Equipment pose math and contracts", () => {
         sockets: { "Grip.Primary": [0, 0, 0], "Aim.Muzzle": [0, 0, -1] },
       }),
     ).toThrow("SupportHandContact");
-    expect(Object.keys(EQUIPMENT_POSE_PROFILES)).toHaveLength(7);
+    expect(Object.keys(EQUIPMENT_POSE_PROFILES)).toHaveLength(8);
   });
   it("never stretches or flips at singular poles, zero targets and opposite aim changes", () => {
     let bend: Vector3 | undefined;

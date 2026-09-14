@@ -1,0 +1,2271 @@
+{
+  "schema": "sidereal.source-checkpoint-inventory.v1",
+  "date": "2026-09-09",
+  "checkpoint": "native boundary r004 closed-room family plus prior native door/roof and reviewed foundations",
+  "status": "frozen integration-owned source inventory; external pose/character changes require separate parent reconciliation; no staging performed",
+  "validation": "combined tree504tests/111files + typecheck/74docs + build + isolated smoke + art PASS; includes11 explicitly staged tests outside completed slice; lint211existing/0new; external17format violations pending",
+  "baseCommit": "0d61cc002f697afe06b379f2f7b723ba9be89f74",
+  "files": [
+    {
+      "path": ".github/workflows/quality.yml",
+      "sha256": "de238190072704e3af0ae2c7cc71d77faa1685401533449910dfccd18ddd5c89",
+      "category": "root-owned dependency/CI/quality gate"
+    },
+    {
+      "path": ".prettierignore",
+      "sha256": "21eb4db520a87a5b146832c269dddec87fea8020015bc70d9faf44a7c2aeb9f2",
+      "category": "root-owned dependency/CI/quality gate"
+    },
+    {
+      "path": ".prettierrc.json",
+      "sha256": "79e96ffcf891cec9f48d56c528a0baa1c53110e5dd8eb8e9e54a5936c66f9218",
+      "category": "root-owned dependency/CI/quality gate"
+    },
+    {
+      "path": "apps/client/package.json",
+      "sha256": "c8a319a4d46c6cc8a2eb288ca6be7870e821db63d3784f5de4f4f953c6bceaa6",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/client/pose-review-assets.test.ts",
+      "sha256": "69e25abf12c8220efdbba40b87ff9ccbc714f568177b6ab4043d3325d2656238",
+      "category": "concurrent external pose dependency; parent integration approval and final format required"
+    },
+    {
+      "path": "apps/client/pose-review-assets.ts",
+      "sha256": "3a0e28b889b4b1d71d5243f4381c0b4aacb2dcec39488e5a57680b2521bcd03d",
+      "category": "concurrent external pose dependency; parent integration approval and final format required"
+    },
+    {
+      "path": "apps/client/src/AccountPanel.tsx",
+      "sha256": "fc6e9a42879d84c6492ef57ab13f3fa975841e52e92d3fd44979fa390f8793f9",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/client/src/App.tsx",
+      "sha256": "24c23766671f9e580b845a9636a9d5d26e4d6a055cb82de3d0a4519172613479",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/client/src/AuthGate.tsx",
+      "sha256": "5b3f5241f4fcb5d4f6fb9e021e737acaaf557b3ae7e54d52e91d53f856ffb035",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/client/src/ConstructionReview.tsx",
+      "sha256": "39a17eb6a9fd48d79a8960f56a9e1959d712b1989f98e190a60fde1b8f437196",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/client/src/auth.css",
+      "sha256": "544dd946045b115e98decbc22eb658c08aab5880ac4b7614a45370cda0595d20",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/client/src/auth.ts",
+      "sha256": "2c9e45affc07cc3d7420693001dd9484b28fec271bf46b443e252d68926acf16",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/client/src/combat-input.test.ts",
+      "sha256": "e86ff823f42d80d52e7c8a3b42adb951f58295d0faf5b744e9b8282dc48a6c34",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/client/src/combat-input.ts",
+      "sha256": "e16c79de87b9837110602f336ae2201fc6a0302e7560045888fc57aeb190c89c",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/client/src/connection-session.test.ts",
+      "sha256": "8da3292c6f7b530de9191081cd0c3d1523b5c135b7a104072f959e559cc36bb1",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/client/src/connection-session.ts",
+      "sha256": "c99f97b2a283cf3c0da628108d91265c52a5be65b350c2aa444d55a0ab82c4c1",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/client/src/inventory.test.ts",
+      "sha256": "416e4c1c1bd56a1b5e0b2310a818dbe357d2c7fb7034608f8cff139e3333c37a",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "apps/client/src/inventory.ts",
+      "sha256": "e483f38e455302ed87cd3374009f75fcf93b4ef938db08dcd4fbea882d5b57d2",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "apps/client/src/main.tsx",
+      "sha256": "e139f82e38e9d326f93e4ce10e1ea55533422e7211edce24b8061599ab7fca7d",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/client/src/objects.test.ts",
+      "sha256": "78ab1ea14b24fd7ebdf1c6a2edfcf7d3adafddedfe16e992b53b12008e641aa4",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/client/src/objects.ts",
+      "sha256": "4a6c509d9a154475d85178c13f1eb956c02d21b4a6ffb6971b620e26516ee7e1",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/client/src/operation-id.test.ts",
+      "sha256": "71744fbbb2f21b7f654399881ca4be3da8a311f5d9dc724aecac372ea5d444f4",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/client/src/operation-id.ts",
+      "sha256": "49b273761d55af951c2fc7e783154598b51662470589252a03a12fb275505a47",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/client/src/style.css",
+      "sha256": "c97c3454586bd6a595b227c09beb3335371074583986cf9cae85fe320706c3fb",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/client/vite.config.ts",
+      "sha256": "0d088875eeff857fdd07e040bbcfe2a9ef78019d0e6f536f6b6782e2f3e5b017",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/dashboard/package.json",
+      "sha256": "f6ee4a252732d4dad64a0410dd03238ee781411d7863b3d793e6b4d7a1295fcb",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/dashboard/src/App.tsx",
+      "sha256": "318d5f5d4b8439288be29f0c9ca7f47f7f2bc7134c81944d4fadc59be71b04d9",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/dashboard/src/authoring/ConstructionPanel.tsx",
+      "sha256": "ac672b33a02a93fcd37fa0920e94b2b92b2840f756acf488fd987dcf9582a068",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/dashboard/src/authoring/auth.ts",
+      "sha256": "e5d29704371836982174555fa90f4334e112e28ea7a4f6e0d52727ae97e73274",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/dashboard/src/authoring/draft-options.test.ts",
+      "sha256": "8104cd0d8174c39b76d3b7a4c35c8488f781507639c77875c0f462cbfd72ecca",
+      "category": "completed r004 integration and focused tests/evidence record"
+    },
+    {
+      "path": "apps/dashboard/src/authoring/draft-options.ts",
+      "sha256": "b771d3e4b3c8a5cb74d52dd98d6fb15f8734dee17c1539cf4ec32643086eaee9",
+      "category": "completed r004 integration and focused tests/evidence record"
+    },
+    {
+      "path": "apps/dashboard/src/planet-studio/PlanetStudio.tsx",
+      "sha256": "28c4fa937df847d66ca3f9f817d54f016d82e3f909380113a0d954236f0d53c3",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/dashboard/src/planet-studio/planet-studio.css",
+      "sha256": "01f508138ad4c1d077729adcb8b04e9f93d8c1f4912e956871770a2b938d5120",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/AssemblyEditor.tsx",
+      "sha256": "2cb802eb0934449e0063cc956eec1674fd532a4e01f92e68d5de45f7f4c1a6c5",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/HullDecalPanel.tsx",
+      "sha256": "ecf39a09441dcdb8936f264030c14ebd035e6fbc59e40bcb75093f96825417f9",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/assembly.css",
+      "sha256": "93280c0841fb3d438c925f26eca4e2515066e9a2caa1ff681a51af3caa1b386f",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/hull-decals.css",
+      "sha256": "def11f5f5f17b92458e4ed2698c813d935c94cd947a04eea8ac7d456aeeeb275",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/HullWorkspace.tsx",
+      "sha256": "b9c2b68afd451792b8ec57b27b14854624a4589d58006d15916ff5ce8ac95694",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/LayoutCanvas.tsx",
+      "sha256": "068520d76dbb3c13217ed3faf6f59ae2f93d151a99120e4bf62c007f8d26f31a",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/LayoutEditor.tsx",
+      "sha256": "defe571bb893ac342143816772e7d96862ee2895920903796f20dca13d89da03",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/LayoutPanels.tsx",
+      "sha256": "996f66044077f920124e7390f323dd2ef75aed57130a36e295439acd64c47b74",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/compiler.worker.ts",
+      "sha256": "1545b16152ad119adfa646c7db742a88665c5f7f555c62e16028c007d911bd88",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/hull.css",
+      "sha256": "3a394a76e02f5b2214558784b818764919849dc704f9e2221159bc9cadee46c5",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/layout.css",
+      "sha256": "0947f8eca1fb6402a81a96a7d5231a7fbfe21830babc25f0e701f9dd1f5290ad",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/state.test.ts",
+      "sha256": "3cdf8b7dba93431955dfc193d25260fb7377f942c21eda28d8f33855398fed31",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/state.ts",
+      "sha256": "5df237edd6f5da9d4069b866b05666ee7a192de62b38b8e3b252786c944ce1c8",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/useLayout.ts",
+      "sha256": "0b6679864c94a0e1ce4e1d99a5056a4fd9c114beaf37b592ef489d5ab806923e",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "apps/dashboard/vite.config.ts",
+      "sha256": "022bc02758787660721b86dc756836d69a5ec49e1becfab2f4f05c9b7ad711ac",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "dev.toml",
+      "sha256": "b2d8841fb6586d7c6cb93ce3c567ec1417cc0a2eba4fc35090349015f0db998a",
+      "category": "root-owned dependency/CI/quality gate"
+    },
+    {
+      "path": "docs/handoffs/construction_boundary_family_integration.md",
+      "sha256": "dbc45eed99c8a5d2d3bac748e2669397e00abe7efebf6e856c894275439fb93b",
+      "category": "completed r004 integration and focused tests/evidence record"
+    },
+    {
+      "path": "docs/handoffs/construction_boundary_integration.md",
+      "sha256": "db86ace1490e1dfe0bb7cc676a92fadb190fe6d85c66f94e03f2e8739daf9211",
+      "category": "integration validation/tooling and exact release record"
+    },
+    {
+      "path": "docs/handoffs/construction_pressure_layout.md",
+      "sha256": "0ca68ee4ec97261fb24cacb2017a764f0400df5c3527c2f3b7301685c0e13af7",
+      "category": "integration validation/tooling and exact release record"
+    },
+    {
+      "path": "docs/handoffs/construction_roof_integration.md",
+      "sha256": "808ea1e84674ddd719e17802e232eaa80133e872d42edcc96c93b5bfb644d569",
+      "category": "integration validation/tooling and exact release record"
+    },
+    {
+      "path": "docs/releases/construction-boundaries-2026-09-09.json",
+      "sha256": "4649211f34c642bb2f4f0aeb3911514b2d40a0b09ca648e65f43371c35a187fc",
+      "category": "integration validation/tooling and exact release record"
+    },
+    {
+      "path": "docs/releases/construction-boundary-family-2026-09-09.json",
+      "sha256": "4409125b56a79607bb247e5b8fbb5c9f120d0da9f8e2563e5ba25f1a08a9679c",
+      "category": "completed r004 integration and focused tests/evidence record"
+    },
+    {
+      "path": "docs/releases/construction-roofs-2026-09-09.json",
+      "sha256": "38d9b7b5fd2c98b9fe3daa5c35fcc518b38a16f0863619c2e32ad729b06067f4",
+      "category": "integration validation/tooling and exact release record"
+    },
+    {
+      "path": "eslint.config.mjs",
+      "sha256": "9bcf0519186ca0b93126af504b775a5aab8d57fab31805fd0dba598f55b76c6a",
+      "category": "root-owned dependency/CI/quality gate"
+    },
+    {
+      "path": "ops/keycloak/README.md",
+      "sha256": "e9a1e826aad8fdac19ea50771fe9e1778c2bdc16fffa0703ecc72a8ca4b72e1c",
+      "category": "provider operational sources; secret audit required before staging"
+    },
+    {
+      "path": "ops/keycloak/allow-auth-sni.py",
+      "sha256": "c80dd130f4fa622bb85d0da96372b960a948c3fd53efabb5ea4deb2dd660d3cc",
+      "category": "provider operational sources; secret audit required before staging"
+    },
+    {
+      "path": "ops/keycloak/configure-authoring.py",
+      "sha256": "d8a67d0f6431204259a3ffef0cbdb4cd2b6cdea47a7048c3d854581cce593ccd",
+      "category": "provider operational sources; secret audit required before staging"
+    },
+    {
+      "path": "ops/keycloak/install.sh",
+      "sha256": "1d8cbb5b840a319e840678a494771da2c22428d930ffac4c491a828bddbc2603",
+      "category": "provider operational sources; secret audit required before staging"
+    },
+    {
+      "path": "ops/keycloak/keycloak.service",
+      "sha256": "b132275a74b6c5b774ce697b2517b8c6bfeaeef7792f0528dafe2ad735e0a093",
+      "category": "provider operational sources; secret audit required before staging"
+    },
+    {
+      "path": "ops/keycloak/npm-auth-host.mjs",
+      "sha256": "2d8914cd7e4f3503aa35a56a55adc299508570b5a44f5d228cb2906da49d5c07",
+      "category": "provider operational sources; secret audit required before staging"
+    },
+    {
+      "path": "ops/keycloak/setup-secrets.py",
+      "sha256": "9432a9c49d279fa0893948d38f2964f898aa291b0e8706cd98ddbe76a169257e",
+      "category": "provider operational sources; secret audit required before staging"
+    },
+    {
+      "path": "ops/keycloak/verify-provider.py",
+      "sha256": "631804c454f760f3c919ed8c213b695c3e09de6b88c1dbd1b3fe9297b1c1ca10",
+      "category": "provider operational sources; secret audit required before staging"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "92ac30935908d6f7c44a74e46361f2ae207f67d0fbb8572e3c2ea038a7acc0ca",
+      "category": "root-owned dependency/CI/quality gate"
+    },
+    {
+      "path": "package.json",
+      "sha256": "9f26240ac5cfff8b565cdb667f45cae99a6f4de832f29f4e18ec8e0ef1112a05",
+      "category": "root-owned dependency/CI/quality gate"
+    },
+    {
+      "path": "packages/canvas-ui/package.json",
+      "sha256": "034b86b0b92f3d662432edcf147e03af2b0ceaa0dfe249ac040e75b8b6dc308c",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/action-bar.ts",
+      "sha256": "00e5a289eae7a583c1b1b7ce614d69aa7940ea34e119834ec363b6c2962093bd",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/appearance-icons.ts",
+      "sha256": "7c02b13d7e83ccd9d4069e7cdf211cbeda59a51ae3bb6d4f1847cef2f4e1796f",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/character-data.ts",
+      "sha256": "248c12edf6c10bd2026639ccacdd89c2d4a25f3598b929c32e5a8c0dd5c989bd",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/character-sheet.ts",
+      "sha256": "b37de8f267d7780fa7e4906f6a66784e17b53c365e7e33760f4e928cb3a86dce",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/canvas-ui/src/compositing.test.ts",
+      "sha256": "a861cb7f710bf068afdcdcc99777225c05dd55f38202829513f62d3c27298358",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/crew-portrait.test.ts",
+      "sha256": "005501909bec011aa3c74c920f44ae7751a62ea76d1b9a8ae0d86f6c4441df55",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/crew-portrait.ts",
+      "sha256": "07b743dfa6bb60be1cd76e5c8c27c73de73898fef5306b87d7d6683ec9bd77a3",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/destinations.test.ts",
+      "sha256": "fbd6742efdd48951e1f8ff820f01f7fc30ed898dc086558cf4831b9da86b0d1b",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/destinations.ts",
+      "sha256": "ec1014c00128cdd2ebf9fa5f36a9ad150a2d1ff24405497ae29fa837f1d23cff",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/diagnostics.test.ts",
+      "sha256": "d3e429372dd61758112fc4ddfb79f0a6cff2251a1e9cd8eca97c70ca744f2ae9",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/diagnostics.ts",
+      "sha256": "d41b2006734e7ba23d9dfe4485f0a62ac6648791fc0ec83569afe73b7e4faeb9",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/graphics-menu.ts",
+      "sha256": "248e0e2734975deba5004942cfc4a7abc3cf8446460689138bdeb42ecd6423b4",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/hud-icons.ts",
+      "sha256": "8fd547b2eb9a6c52043ab40c4ef1f2646b9a1d5aeae2d308ef5db039595e0d74",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/index.ts",
+      "sha256": "a451d3afc5c2a8161f0ec40b2045cf2be73cbde727ff33b050bc40b8fc4ab75f",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/inventory-windows.test.ts",
+      "sha256": "5b10caa20e7952e75a7d54286125801346a7c2fc743b149e13a1c8d5360cf7f7",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/canvas-ui/src/inventory.test.ts",
+      "sha256": "3022583aa94b9e494045c1b6c917f1a643cdab7e10b89c85201d713459d39f38",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/canvas-ui/src/inventory.ts",
+      "sha256": "e88b7eb5efa011421618056f64d08558ecf12db15352ed715b9056dec13e7800",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/canvas-ui/src/item-frame.ts",
+      "sha256": "b47425d5e38aaa4b2502a7c57bb20f5e3e8e675cb8c71e075fd03a496289019f",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/layout.test.ts",
+      "sha256": "7b88a430d07e875c0fd3af3a83aaf52d7900d9f5b4e4c0592d8de624cf86cc27",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/layout.ts",
+      "sha256": "3d06621cc511c88589996b760b784154d98f69afd4a457bb2656737b7f8f6288",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/object-details.test.ts",
+      "sha256": "18242f71b027301cd274cd2746498c2c32bb17f8977e4923c5a2b68a511d65ad",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/object-details.ts",
+      "sha256": "ee9136a2373d81ccb57e06206b5c3f7262a3586cd4fef0f10fef535d5ce3d368",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/resize.test.ts",
+      "sha256": "e5068e48fe356d3fdce6090fe87142514dca32d300572c8c1e4460ec98bddad5",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/system-menu-layout.test.ts",
+      "sha256": "e0e8bf60705dd921b3b7f2e7fb0a3828c7044f21ae80b2c4bde33e758115f386",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/system-menu-layout.ts",
+      "sha256": "f0c89b58c3ca15cdc8bf91f0ee66e4e4d665d389b017a56db425fcf4e440a825",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/toolkit.ts",
+      "sha256": "a0b7e06b43df53e7f29edb852ace3d7a2a74cc78c7a5a56758784785f52ac6fe",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/windows.test.ts",
+      "sha256": "88e46dd842ae24feb8ab5a1f9d06ce31924830c782b62f354a132317af548a22",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/canvas-ui/src/windows.ts",
+      "sha256": "b0b3f6c89f4b5f27001d27b4e7a4fa51c76938830d09e1424c151d205709bc62",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/package.json",
+      "sha256": "01c3ce92af03034dd8154ced535c0b095ec618fbc5ecc38547601038e4f32662",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/appearance.ts",
+      "sha256": "22226f1768bd55ffcc2c7e532884c5f15eed9bd59ec852f75a71a3d74942c3ab",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/content/src/assembly.test.ts",
+      "sha256": "2ff68db384744fccb38ac7c2f8b631e90b86740b59230f3a0aa7675ee9831d56",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/assembly.ts",
+      "sha256": "d837804dc31f1f42b12b0fc475490a21a41b4fce0e2644397a34fe3ab5503606",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/auth-policy.ts",
+      "sha256": "10b07c5d0aa8d20d0705711d33da5563dd8217634b0e8b0965fa7543aba08200",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/character-components.json",
+      "sha256": "bec7c1b4e1d051adaa141b3acdb38c318b1ea77dbce743804dbc522edf996f52",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/content/src/character-components.ts",
+      "sha256": "b7926174a496e29f077e0f05eb9832720b4a74b13f81e4f3d6c4c04776ed6f1b",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/content/src/construction-boundary-family-interfaces.json",
+      "sha256": "5ea059a89480c1903aa4071b723bb5ed78f5a32f8d43a44299caa12d18fb68bf",
+      "category": "completed r004 integration and focused tests/evidence record"
+    },
+    {
+      "path": "packages/content/src/construction-boundary-family.ts",
+      "sha256": "dd8d2e909224845033f39a295c53dc8a3fa9144027d92fd7bdb817545d431827",
+      "category": "completed r004 integration and focused tests/evidence record"
+    },
+    {
+      "path": "packages/content/src/construction-boundary-interfaces.json",
+      "sha256": "33347b32b1675fee00d36046a05de37013fa32eca6e2a4d671464da3499972d9",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/construction-boundary.ts",
+      "sha256": "24639e38d6dbe1eb74814bb89046d47351dbc1bc1d956267d0ceecca35e86970",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/construction-floor-interfaces.json",
+      "sha256": "76f3f46c8e479106059945be0bfe23000d235d7c1731ad3d91524c3d894e1d16",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/construction-roof-interfaces.json",
+      "sha256": "8471481d11d22a2a8077ceb4582f3066053d7c85dc727f8b8b0a51bef2e6efcc",
+      "category": "roof integration and pressure foundation checkpoint"
+    },
+    {
+      "path": "packages/content/src/construction-roof.ts",
+      "sha256": "71b1dc98191115d02fc60f06e8597ea6c2bdbc26850128b3070cf65614236cab",
+      "category": "roof integration and pressure foundation checkpoint"
+    },
+    {
+      "path": "packages/content/src/construction.ts",
+      "sha256": "b56f793cb31f5229ad02d2deae9b4dbf6472ddb873cbf33e19abf1b15b56a81a",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/crew-looks.json",
+      "sha256": "d489f22a2eb0585baf38b316c9af2baa7b2d4a4522f9decb1e2391a5ed0fe782",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/environment.test.ts",
+      "sha256": "2cc44ce9316965c729f9e80bab52c9537cf292f676b7a5ad2ed40a4070f44feb",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/environment.ts",
+      "sha256": "9a75efeee60725d24afc24f000c72367dafc1dce5e798a2d271ade26c08ceb49",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/equipment-poses.ts",
+      "sha256": "7876f37c2869810e26453521a713c79fa66439d7318ca3b5243f440ffc7221ea",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/flight.ts",
+      "sha256": "ed70e13d7a9a883916ac75eabc29436ef96c61d802c7a58d9daeca28059319c3",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/hull-decals.test.ts",
+      "sha256": "35c90c5261c12c79220e6769ba09b85c1675b83146b428acd38c32b39c23c1d0",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/hull-decals.ts",
+      "sha256": "8dd1d6839d2e5d8572beec8e772bc2fe2d0b1457cc99283e30ba38b3a3da2e60",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/hull-publication.test.ts",
+      "sha256": "80412959d3f51ade6a847a9fa56281d6003247b3f8a7fab631c3cc42b35111e9",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/hull-publication.ts",
+      "sha256": "9c0745399d9f3a748344d6682aebe91d187940c32dbb095aedb901e911f63704",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/index.ts",
+      "sha256": "a9f3dc68e6f39a0a50a38796b58b70fb6f6ceac9e5283c59912dab58b3b3503d",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/interactions.ts",
+      "sha256": "f6ec473ec39d5ee92ce0dd9e27f0877ca7d33a1b0e6fcf09b66c5d18fbc9b4e7",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/interior.ts",
+      "sha256": "275c2e9dd8b5e75aa9daa4be0a22898e2f3adcd8e4784eef8fe5bf0b8dba1b6d",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/inventory.ts",
+      "sha256": "1e56f06313844c86b12043aea977392ce20297b7ed8ed96372720455b2418f5f",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/content/src/layout-assembly.test.ts",
+      "sha256": "1684868df64fb8bfc2ce37dbb2e474fa86ccaaf25b14b2c9ed6017898d8935d4",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/layout-assembly.ts",
+      "sha256": "f5719c3e095e89377e367cc862971953d6b9a18f3f7a30e2085f015c4b27122d",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/pilot-layout.ts",
+      "sha256": "45f6a4961c097ab0b43791a648b33b4a2fdab90337d29a23b834513dc4d995a5",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/ship-layout.ts",
+      "sha256": "f0de8d7190b38ee9e2ebb1b10b76165a2bc3456287f3bfe9520a8d30cd863987",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/space.ts",
+      "sha256": "f2b1c049ad22a12ce6f072217f738a1d3358a6b68884e32b19938603e77d8204",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/storage-fixtures.ts",
+      "sha256": "20485c6b1b9f65ca270617f04231bc056149b2df9fea9e178b952ea52b72c291",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/content/src/tileset-interfaces.ts",
+      "sha256": "12d8469605c815230ad1fb7481a1210110df5371fe0bf6c25027fbd8abdcd28a",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/voxel-ownership.ts",
+      "sha256": "c8d44ceeb1c6ef86656ebc0d6620e936b1e8ba9f795d04a0ea44f0d547702c8e",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/voxel-wayfarer-interior.ts",
+      "sha256": "913483d5b37615966367173b266a0f66e4bef3987ee0e243cd6904948a6bd37b",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/voxel-wayfarer-props.test.ts",
+      "sha256": "fedbdc2a102c49cf7a88ac0643a248275ec24bd3ee0e4252b1100ad3fc2fd226",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/voxel-wayfarer-props.ts",
+      "sha256": "1a182df1103ad0cc7cc2731e87769801f0b220b45bdfefb5f0f458b3bc62f44b",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/voxel-wayfarer-shell.ts",
+      "sha256": "d3160f0180ab2d8ffb047d016169fb6e05a1687fe4c8a2dd768b851ae1835a84",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/voxel-wayfarer.ts",
+      "sha256": "e180e95f54e1aa7ae6332b8f16ee9c2bdc591e6b5656bffcddd4d7a337fce73e",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/content/src/weapons.ts",
+      "sha256": "be9c8a1db71c9a0a47754e7f5fc306aa111840f90b97e60c77636091fff394c6",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/net/src/connection-session.ts",
+      "sha256": "3d240b618085ffa39080ae45e2bc567175301d6cbd8445d7c9aa753becf23adb",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/net/src/construction.ts",
+      "sha256": "2fdddf6461cac79037b919786bf816d51e0ed839ac0629798f1ddf045a718fa9",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/net/src/generated/accept_identity_link_reducer.ts",
+      "sha256": "336eacd4684e6ed592260f3e6f98c56dbc6df6ceb4dbe943a675ed335258e088",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/activate_inventory_hotbar_reducer.ts",
+      "sha256": "e11ac1ce663ee5ea0cf4e2d86687f10f3b0837e780c7d171a1763f9fa49a0a7a",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/assign_inventory_hotbar_reducer.ts",
+      "sha256": "99f37cdb1be1b7b8e4a2855e3871c1decb6a0401d67d1a2eda6b915842ae663a",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/claim_character_armory_reducer.ts",
+      "sha256": "f248fb7bde755933e177614a54ff3d67355fcd2bc0518dc390547993e8f9a256",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/claim_starter_kit_reducer.ts",
+      "sha256": "d03a53c3e6123d4b3a9a6e1ca930b65c8fdd34f0c216fb81fb9862120ca98ea6",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/enter_construction_review_reducer.ts",
+      "sha256": "e6b52d3fed70430e503ba1df4d431c620a91262e5643935fefc705335c0d6752",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/equip_inventory_item_reducer.ts",
+      "sha256": "5a3c9df095d1dc30c74fc90bc41cf7fc8389774dd445c935fe1c61db5ea0c92e",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/fire_weapon_reducer.ts",
+      "sha256": "5a3c9df095d1dc30c74fc90bc41cf7fc8389774dd445c935fe1c61db5ea0c92e",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/index.ts",
+      "sha256": "58d25529de2210451f11152de8036826fd4470f6c48db3430001758364c89f9e",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/interact_object_reducer.ts",
+      "sha256": "47f99e3415da2d6d2dac6bccf4d93fcbbf68e7996ce874a9c3afb47d19e4a250",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/leave_construction_review_reducer.ts",
+      "sha256": "cf732ad5aa7495fbbc45af3406a696dcf09bd1128a226c001fa26e0cbc80f7b9",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/move_inventory_item_reducer.ts",
+      "sha256": "16890af629fec5cbd13b07bed72b1e059b345bb75b3aa8e9001ef811bbfbea9a",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/own_actuator_outputs_table.ts",
+      "sha256": "f1491ed2504b15b5bed9bdf7202abca488e7eb8e8acda81ba5c83dd5728941c5",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/own_appearance_table.ts",
+      "sha256": "bf5bab51cdc09423f75aef8c6281a8e8b12697e43a31c50206e579e268004359",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/own_characters_table.ts",
+      "sha256": "d79e827ad57ac89be5c5f3eeaf8f9dbef7b70b1cf49d19fda2b31ffcdb8227c4",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/own_combat_table.ts",
+      "sha256": "094478f301177a6bd8c1deaf0b292453c02fd73a6b8c2726f51be7221bde532e",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_blueprints_table.ts",
+      "sha256": "49e0cfcb8f4145849ffda169e574a9568a6555d470f16df22b174c50f594b0e9",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_decks_table.ts",
+      "sha256": "09139f55311c23693bb48a96a32d544e5f0a08a272e557acd123cda950a001dd",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_doors_table.ts",
+      "sha256": "b807385e5079144078c6f38a9799e208dad8e7baa07e7574be15d3c741f610cf",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_drafts_table.ts",
+      "sha256": "38dca73ac87f1d2bbcb85fd0e48d2049e89c6b0d867536dbe2edc24db83be04a",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_grants_table.ts",
+      "sha256": "fb796e055a444678d7ecf1c8d067999e593f1c1c9bdb4f2583122955dc8a95e2",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_instances_table.ts",
+      "sha256": "a503f3d6271fd1d1427c2c992b34d82d06b1b1001529999c3a728b3087f803e0",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_location_table.ts",
+      "sha256": "97af8c4a01b849f1480554b4cf86cde4155708565718449167d214a26e3d5b26",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/own_identity_links_table.ts",
+      "sha256": "92ecef08b2300da2cd64e89bd52104526ca7403c8162c2396c9216e8b62e9b97",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/own_interactions_table.ts",
+      "sha256": "25fa75027be3d57f3b6682209ec7197bbb92bc2598c408aa1bb6b9a5199a6ad2",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/own_inventory_containers_table.ts",
+      "sha256": "aa48b45573678dd1959c52f53d513b8caccd05309374d3eed110908a4e48be4f",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/own_inventory_hotbar_table.ts",
+      "sha256": "8506f2056ca733fb8e9e5c42c1eb38adff23951ef2111a7b737ad473518a488e",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/own_inventory_items_table.ts",
+      "sha256": "64debbb81dd1025e03da74b83c3d30e12cdbf3492f6b546bd297ca966133bed6",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/own_inventory_state_table.ts",
+      "sha256": "af65de542af8ba677144d9b3fcca254f63849bff31bcb0dbe49cff89c93a2e6c",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/own_space_bodies_table.ts",
+      "sha256": "94825a7e31e035797602c3ad14824a622d975854f6b2e93e23e11aac094e8e09",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/publish_construction_blueprint_reducer.ts",
+      "sha256": "53e31af364d0e5bfcd9f7d5f3b332bda0a53a43af19f056e5447c9204fe04021",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/request_identity_link_reducer.ts",
+      "sha256": "1b7de02a711868cdadecc739792f4bb81047229c1b090f7bfcb6341e6a6508f4",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/save_construction_draft_reducer.ts",
+      "sha256": "7603623364da35b2f4957f721a7f980236a3ea7e6f1aa53a81efe41aaba64480",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/set_character_appearance_reducer.ts",
+      "sha256": "71daf3cae8e147e2c7ce4b74a3108743232ca166c126284a89f7b025c07a5b54",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/set_combat_aim_reducer.ts",
+      "sha256": "37c8ce23eec32cc935d52ac15f4b85a19cf6a70e51df10a7447c3587c2a7510f",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/set_construction_door_reducer.ts",
+      "sha256": "b9b3a48c47e54d8bd5a02329cd82eb41e12ee1bc2accdc22bf0e962eba0015d1",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/set_construction_grant_reducer.ts",
+      "sha256": "a0624048b664b433162a8bdc42e7e3aeb60ad5e40b2688e9446d145875d4e9fe",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/set_intent_reducer.ts",
+      "sha256": "6a4e2d5108c7fd5df6049b57ba8800d0d0481f2add38011d971e7d465a0d9396",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/spawn_construction_blueprint_reducer.ts",
+      "sha256": "fb505aa17d8d752add9189f046e03dabd32a0024ead5113c79e68a36caae767d",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/types.ts",
+      "sha256": "a587b1ac0beaa4b8fd7830f19d02cde2366c3bc572524c210836239ad4d3f921",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/generated/types/reducers.ts",
+      "sha256": "bcc97d54a16bfec954bf48c5515bfc6c060d72b33bd8fadf3931895917ff939f",
+      "category": "generated authority bindings required by client"
+    },
+    {
+      "path": "packages/net/src/index.ts",
+      "sha256": "e75e9fa61a9e351c4fa69f6a104b5fdf6fff7a322696c534172668068448e850",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/package.json",
+      "sha256": "0fb22d01c36adac9211611cc932ceaa2437fcf8c65d37ac57cf3f4639d0968b4",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/assembly-editor.ts",
+      "sha256": "2f356ec2382a40f560bc712373dafcae592eeb59ecc2cadb4b9ec038e521add6",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/cabin-visibility.test.ts",
+      "sha256": "2b929bf155f99bfcc7fb11b5ac2126e36668d05820d0e8c89b8f2be4a005a9c7",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/cabin-visibility.ts",
+      "sha256": "69ca1df5d05073105247006652d43c11b3bbffad2a3cb0bd32a3faf10c720205",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/camera.test.ts",
+      "sha256": "9777da0e9b4b82b54e2a567c5f8f547841facd67ad4d88b334d37fd778f88132",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/camera.ts",
+      "sha256": "eb8d60bfb82885afabfee8c3d47d461b804587977f99231a9229026709faf34c",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/character-preview.ts",
+      "sha256": "9fb323d2a20e27f985e582aa1bcbb20974e32701d217fcd4ba78d1266d26d853",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/render/src/combat-aim.ts",
+      "sha256": "ebc7ecf9822029531ad71324e7f8c227e9fb11805e8fd670163f45e6391604d2",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/construction-boundaries.test.ts",
+      "sha256": "1aaf6af10c662607db7e778c7542c14fd5880e6b6d83a09073e2536c8229bfa5",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/construction-boundaries.ts",
+      "sha256": "6b7887476588e064cb3efaab9efebb4c987f1e6c30c73e5f24532e0f3f6156f4",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/construction-instance.test.ts",
+      "sha256": "e254befa74b024df2e850856f9ac904d89fc3a27b4d1216158260b1b1e5b4344",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/construction-instance.ts",
+      "sha256": "4ad80f773e157350d22d0fc626a3c5667b7110e83313988a94040b2e252f781f",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/construction-roofs.test.ts",
+      "sha256": "8e0fcdd6cca612f1f8febc0b3e288f58d2b43e1b9a7d40363d06885ea0f2c078",
+      "category": "roof integration and pressure foundation checkpoint"
+    },
+    {
+      "path": "packages/render/src/construction-roofs.ts",
+      "sha256": "42214f880860d1c5aef53781fe989fe91430e65d968197d74c703c2b89086f97",
+      "category": "roof integration and pressure foundation checkpoint"
+    },
+    {
+      "path": "packages/render/src/crew/aim-space.ts",
+      "sha256": "56dff93dc51a04d0afae7d282f2edbb99b9b27cc13dee9fa37c49a51ab6473a1",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/render/src/crew/animation.ts",
+      "sha256": "979acbb22e18ac047e954fcae10c5604596eef5d0f36961fd4be2d4d4c1df7ed",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/render/src/crew/appearance.ts",
+      "sha256": "b53eac7fae004a281857a2f5ee63f112d27debef0f15f117c31169c10f28f0be",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/render/src/crew/combat-pose.ts",
+      "sha256": "9769a3d043088db00eef9fcc45718954980ff94e9231a930661bfaaa2aa9b003",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/render/src/crew/components.test.ts",
+      "sha256": "d20bca36e8cba80c6b036fa98a39fa37587ff28ce235808c6b63f060bf5608f2",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/render/src/crew/crew.test.ts",
+      "sha256": "021d1f5b34adaba3cef8eb80dcd3098049801125826bbcaea95975b3d0cc377e",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/render/src/crew/equipment-pose.test.ts",
+      "sha256": "2b28ff9241e81a49141d4bd05db0db23aeba86b1f3c6f9ae974b78a084d815ce",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/render/src/crew/equipment-pose.ts",
+      "sha256": "a59556c5671cc06faee898ad252a18ec8ce4d224a5b9f0fa7202aa1b108e0b3c",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/render/src/crew/index.ts",
+      "sha256": "e8aa5a17eeba33ce6637a476a7aa13c8e74e92a8abe2342346bb823989945a90",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/render/src/crew/pose-integration-motion.test.ts",
+      "sha256": "19a99992ba603dd184ab5ad5f992ec185f4c400dc76ffb68904930053c75a9ed",
+      "category": "concurrent external pose dependency; parent integration approval and final format required"
+    },
+    {
+      "path": "packages/render/src/crew/pose-integration-motion.ts",
+      "sha256": "50f19938a52fad284e47b319c8b2323a0ac7afe810b6ab85bb2d032aadf2374b",
+      "category": "concurrent external pose dependency; parent integration approval and final format required"
+    },
+    {
+      "path": "packages/render/src/crew/pose-math.ts",
+      "sha256": "7adad524ebe8442cb639e71f41f03bf2ef13a85751bc27c8017ad51b68aaaeca",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/render/src/crew/pose-review-config.ts",
+      "sha256": "c5544e7e63c4c3be2029896c973a5748bfd8a735cde8782f5f9c056fd0a92bbf",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/render/src/crew/pose-review-items.ts",
+      "sha256": "b91e4f6142d8bc68692b8b30202f618dc9821896b7727408a13678e2f2b26c7a",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/render/src/crew/pose-review.ts",
+      "sha256": "4208bf8a799f2b41d28b6107f636652aa4ed7253ded9c523391505102eba192a",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/render/src/crew/pose-state.ts",
+      "sha256": "83f6225d581000ada5a86e7d5b17b3f1cc96b06841d7c9f5a82688f9d37944b7",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/render/src/crew/pose-system.test.ts",
+      "sha256": "54e005e7b071106ee3eb6b2d08910174eef20a85087bd54fc1fe73fd08387410",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/render/src/cutaway.test.ts",
+      "sha256": "3893eccac2c2a6a7061d0dd346f04a3176340f3e84b1fa02f2aa6f689b42bc42",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/cutaway.ts",
+      "sha256": "ece91bf35d3bf8193ac995de4c74d10038a11a4bb19ba500cfe519d6b3c70bcd",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/debug-features.test.ts",
+      "sha256": "9c336af16f10764a84078073422d6b2873f42659c5f44e60ceea31f8c28c4294",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/debug-features.ts",
+      "sha256": "b06e80e9285730ec529d31098ce730350b9599a0f41284bedd8faaaaf3bf5031",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/diagnostics.test.ts",
+      "sha256": "f0c8070c4591a1cfc5b8d0fa5a3a884e5bdc85a146e2ec95adfa45b5a217185b",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/diagnostics.ts",
+      "sha256": "47ef2fbe1ef72e63d80f36d6019420fd540aae591ff32c80d4f11606c76e9a1a",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/dust.test.ts",
+      "sha256": "e59c96c38a90d426f8e00b4dc97c632ddbfa970d817f5695832b4f77d6f15dfb",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/dust.ts",
+      "sha256": "22fe5881f1d5d33584033bc9ef55b573f30fee103fc33b6c82e4a1bbecf49bef",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/ice-material.test.ts",
+      "sha256": "d222a798b1ed237940b9dfce0c8eebb2dc113b7c6dcf2373290e34833a8d813a",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/ice-material.ts",
+      "sha256": "7fcdda1c0a390736822a689565b8f0716373e67f1bdaa40dcb05a5891e7ac7da",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/index.ts",
+      "sha256": "784ab0383985ca2cc4e55cda78b30bf76c8a000603ea745495ed158b85179089",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/layered-planet.ts",
+      "sha256": "0b7aa8e7de768c6032cafd1344fb4f96cfb46e184aa99d20aa04d57b897c7b1c",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/native-glacial-geography.test.ts",
+      "sha256": "41749d618b7e8c00835eeb43862741cbc4a89b2d418ebe4d8d35742250f2f3a6",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/native-glacial-geography.ts",
+      "sha256": "f0f5aaded74064ef9baad0db69c80e0d6c6cd67a9ae94e895ddc4cfc2e0cd453",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/native-glacial-interior.test.ts",
+      "sha256": "1a1f62f6ff34d7f591badf0ff8b3329ef36db371f858b2e644b9062db3137423",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/native-glacial-interior.ts",
+      "sha256": "2bc5262684697be33a5f87c380cb6b2ee5b42b19611dd884f1a54314f1ed5749",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/native-glacier-composition.test.ts",
+      "sha256": "1b9c1824f459a7f70e37d924f8b19cd8f822b9b4e542f21451ab052357c4197d",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/native-glacier-composition.ts",
+      "sha256": "6dca6de30201c08ba034fc5e3955439cac99176e3c67d831c69eaa9daa12e786",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/native-ice-material.test.ts",
+      "sha256": "1b5e6e9ca8b7efcb829ab9e40410258231cb44435fe92f4fc8f1fc3a3b96ab6d",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/native-ice-material.ts",
+      "sha256": "22606a67037931ea522f56ba0124c8b7b34f826c1b4fd3ad8e94ca7f4ed4cab6",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/native-planet-assets.ts",
+      "sha256": "f71c97775671461fa2368dc8536d5c2391311c398f58c54d8c95b7e9eff937e6",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/native-planet-composition.test.ts",
+      "sha256": "48890712e404bd486c714eb00b993716196b78b4047a34b0c00a76b3cf1d2601",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/native-planet-composition.ts",
+      "sha256": "30005cfebad27d2915d41f47c81596eded8c89888812ef203633608ce6eadbe6",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/native-planet.test.ts",
+      "sha256": "8a80810d8aba5e4a2fa48d0421b5c128b606d789b2681e6176ac8dbd7442752d",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/native-planet.ts",
+      "sha256": "c272c0aee62ab55a48aedfd1a35107a9a12cd4d310b248a8e3d8ee42963bfa99",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/native-volcanic-composition.ts",
+      "sha256": "2768707b6fe35258b624e715e5b41cf8f622a09277e597c5b2d05b2aa499c22e",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/native-volcanic-field.test.ts",
+      "sha256": "44d1b1544d02923d7fc12df4b74ddb722b6ad5f229fb3562d47089c32d81567a",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/native-volcanic-field.ts",
+      "sha256": "5d1723e38132d2c9d611a6072451a18622d473f9fa854c2a4d5580cfc2da2667",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/native-volcanic-material.ts",
+      "sha256": "7f8c51e610c09d40d5d2b0a9b6d9e786e06339278d56b2564bdc4c04f5e73995",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/native-volcanic-planet.ts",
+      "sha256": "789209b86d2ce433714f223e45041ab115f491ebbcc8d806e69b0d65aa8828e1",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/native-volcanic-runtime.test.ts",
+      "sha256": "db76cc72c7bad2a8c7bc4b44a801bbb3fc8ae40b56983d344d2da5eed904a311",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/native-volcanic-runtime.ts",
+      "sha256": "f8ff25b7acb113e03384ee004f96fcf677ff979ad62f0d72725811e74c82980a",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/planet-atmosphere.ts",
+      "sha256": "d0eb9de57429995a94e9ca612aad24db3267501512e79b241d1dfb9048e1ac2b",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/planet-clouds.test.ts",
+      "sha256": "e3c8f160152c55927d720e43ebf8ce31a126cb9c3a559ad81ac4755bc5a3b24d",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/planet-clouds.ts",
+      "sha256": "63da1493cadb0513cf1587e2cf4fa8413aa2820c7367e4c8236130ce9c460e95",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/planet-contact-lighting.test.ts",
+      "sha256": "d8c0ffe7825bd2e2a3adb353ec4040bd720a2ed62f0e2727f0dfe67f503f095d",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/planet-contact-lighting.ts",
+      "sha256": "482993e2ecc21eb5b2c9aac8081ea82ff57d415307fa02f273da1f22897bb05b",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/planet-crystals.test.ts",
+      "sha256": "a860944abd5d085fc75b94899573df619577a11f172e370accd6dc2883aed0de",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/planet-crystals.ts",
+      "sha256": "8100a6a94a18b47a3ea0fca4be0590d5b7860e3ffbbd25e8f265a873e35afe14",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/planet-decorations.test.ts",
+      "sha256": "02b319ba94596531647af43643257cbe805909e5b283775dfd25664e0d17cd33",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/planet-decorations.ts",
+      "sha256": "013f95ba2b5442c8d38704c6d644f47f275707e50fd33dff7051b150d083f20d",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/planet-lava-spill.ts",
+      "sha256": "58cda7c8542908657757b41abc6d9d5c44c82ba26781844ef9fdc751a66d248d",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/planet-mesh.ts",
+      "sha256": "959742c74682a293951a2ef33998401b4bf54b16a913bde975db4c015f6511e4",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/planet-preview.ts",
+      "sha256": "404940e22ad5fdba74ee312939e1b2f28dc02f93cea08d320df5958326097687",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/planet-rotation.test.ts",
+      "sha256": "8e77d6bb75d2168c2c28378c61105ad5cfdd27baf4d3523cd1107bd03b29d596",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/planet-rotation.ts",
+      "sha256": "8d196e1052e93a8912b44270cf0277ddb34e43b3bc49c710a59bc129c7ebb566",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/planet-shadows.test.ts",
+      "sha256": "a8f796cf9f104ad2c1fece1878456f46d22c377277173a02cad5d81d5462b5b0",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/planet-shadows.ts",
+      "sha256": "d1bfdf1a14d03a5765d65302f15a813c9b2b57edf21a4123c465f30a0339a57c",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/planet-smoke.ts",
+      "sha256": "37b78c4f1be1121eec5875a7a0ca92b011c521515eeb3323aecbd26e1ee8100c",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/planet-sparkles.test.ts",
+      "sha256": "a33bb9c89ac3e9954a12f889fb6a005307385521c624248f3b820e3f859f14d1",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/planet-sparkles.ts",
+      "sha256": "79fdfba9cb2a239c64201ab63ea5bbf51a18d227d0732861f1c999644cea8599",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/planet-terrain.test.ts",
+      "sha256": "aa490a5e8465c37a840004bd7357c17b5fccadfde33293eb6633499f9023dbf0",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/planet-terrain.ts",
+      "sha256": "71b4c44853fb6a8ef3b6f449ce3d1e9a9f2a58da8f54c38f3ce2d8c4c3cb7b97",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/runtime.test.ts",
+      "sha256": "7142c125ade07579a64abfa15b301def2668c8d481b5a6da738732fef6f7687d",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/shaders.ts",
+      "sha256": "cc54d09e8329d79d9a2cf558309e0446077109e68be1775dd30bf3920566693e",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/voxel-material.ts",
+      "sha256": "46b4c2023a168933b5d0911fac5df2a16c1201ea04a2d32509e7f7d6fd8fe60b",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/voxel-planets.test.ts",
+      "sha256": "9cfa8faebf0457003b61a639e5f8ba7a9ccec342b765bfa53d35cb1b9b2ab177",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/environment/voxel-planets.ts",
+      "sha256": "60366c065aa7440be57713a4c0b05ebd9b7aebceba8705208c6206ce1449b3aa",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/equipment-lighting.test.ts",
+      "sha256": "5f908941ea3890f483c4450064c31dcf994f97963a300a9a684f30cd51618140",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/equipment-lighting.ts",
+      "sha256": "f4adaaa517e3d461e070e76fe57b632ae8873981135d463f5b4329bc11642e1e",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/equipment/anchors.test.ts",
+      "sha256": "c09320a102df4de5957afbbcaf53f3299e45e20dc3235d8eaa314e51ab9e2713",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/equipment/anchors.ts",
+      "sha256": "66613c03fd21c47a945e4a314d0cce378e4ca7756192e615fa2276e1ba97acea",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/equipment/index.ts",
+      "sha256": "40b19a8edaa6a2093e8456f6a8f6c14d7e7f6867205abbd1558e1896b7b7edc6",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/equipment/physical-beam.test.ts",
+      "sha256": "59f9c4fecc48f9ea4ff5f5764dc793c4ae3f62e43afcac9e7013ac6e53e003f2",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/equipment/physical-beam.ts",
+      "sha256": "a4ac71fdfb688318bb9705ddd72849e8584d8b6b3fd3f3d2ca8032f8ea6d9471",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/equipment/pose-anchors.ts",
+      "sha256": "3a402b5bfd4fdd28f9c89078e09e0e0cd9201e381a077388368b4776906434dc",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/flight-effects.test.ts",
+      "sha256": "fbaf2e93ebe418bcded292f0c50c38c010d3bc2f59968fe8c638dc4e160e2fd7",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/flight-effects.ts",
+      "sha256": "a12dc5c631e7bdc5ab941e21168bbe7a95020f26edd84a8c42f2b59c0019e123",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/glow-occluders.test.ts",
+      "sha256": "664e7cd5f711551c5cf24ada1156d7e580109d949a3599f3a2d84ad85e88c4bb",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/glow-occluders.ts",
+      "sha256": "3074e2e769830d6412457e7104fb43471029c7121a55d234d210465567ea2e76",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/graphics-settings.test.ts",
+      "sha256": "370cbcf4d0b3feb5c03d6df15afdca75a69f65f15cea240388ffcd67b2072b61",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/graphics-settings.ts",
+      "sha256": "3adcc014669c957c2aea4936808801032b24e22fbb17c911d9957c6d0b2b4d25",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/holographic-disc.test.ts",
+      "sha256": "8999f8c6bc51d5eb9449cb39f3ad23b259397f48485ab3fb22e8fd0d1c0a25fb",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/holographic-disc.ts",
+      "sha256": "e1b96980403bea02b5d3d27eacb239b35d972c92da86533b93c71ef90398dfb5",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/hull-decals.test.ts",
+      "sha256": "264dd369177ebd3bf265bece123646fb03fb82510cf04facad3f0872706fa6ae",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/hull-decals.ts",
+      "sha256": "e2c72dd350d856b718a3f2eca759db4588e62ec6aa9ce1e645df927490dc634d",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/index.ts",
+      "sha256": "01561b8dad4832e41166f8322980e431b7bc6692fe4d0740fa20de0c94d04d16",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/installed-equipment.test.ts",
+      "sha256": "a16f431166f381a23445e8b1c977646688f5fc9df622a0d4d25352c76cdcea7e",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/installed-equipment.ts",
+      "sha256": "b1a825fd9a530c802cdc772a83ba103d0385227ed5ad70499d5b4a05d6eea829",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/installed-hull.ts",
+      "sha256": "222b96370fbdedd16fa476238b1101f9c03b0d48c688dba06d4d154d80b38cd5",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/installed-modules.ts",
+      "sha256": "c323c20dbe207126cdf25e1f4143a675ec2a185409495895eb8ded4b5b1bd534",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/layout-assembly-preview.ts",
+      "sha256": "28703ece3b21af9e4c216b4bb91d52b22e579ebbf7e6f0dac1c628e91deb8169",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/layout-camera-motion.test.ts",
+      "sha256": "ac4f8d304c24891dfb3c3859d9737adb05ffcf78b3a6150d3a63944965691bce",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/layout-camera-motion.ts",
+      "sha256": "d56030e09236221b191f1f0b9c791101e01a6b171bb9020f3a46257d5832d4e6",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/layout-hull.ts",
+      "sha256": "1399b6cdececd11fc7e34f1d750759d273d0a5e12e2575381ab500408f6504a9",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/layout-preview.ts",
+      "sha256": "340fbcc6551f68b5ced38777ae04455d4811ec38d123cf58be55185bd855856e",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/local-light-budget.test.ts",
+      "sha256": "0c235a564b9b6540a90308b4b165363f8d5b62d4cc1b53412dbd23d6fc0ae8d0",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/local-light-budget.ts",
+      "sha256": "6a65a86da78b36abab0b04256d0c612b7c60beac87e389bf74bd16a39d248793",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/object-presentation.test.ts",
+      "sha256": "c0b520a0a0d554bb604d8197b5239f7e0ef14297b1e3d38670307872a2d3956b",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/object-presentation.ts",
+      "sha256": "c27946a5329b9965df7b3773880f34a5add9178abd589edb6013b1eda820265f",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/selection-silhouette.ts",
+      "sha256": "046a092d059f61194d1cdfd5b2a603ee72976b8ea6117561931f39ebae5c5e87",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/ship-lighting.test.ts",
+      "sha256": "6abf9335ef897f8f50f90e3c998ed1189fb3724f48112f4b5a9fc1cab25ab66a",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/ship-lighting.ts",
+      "sha256": "593cf6dc6d000f0388a20ed67faad095689d87453ec76c0564a64217a0d737c7",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/ship-occlusion.test.ts",
+      "sha256": "1a4f9e5745596174101535dee8e16b2f2b306b63336192d3fcec944e7ad0435c",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/ship-occlusion.ts",
+      "sha256": "52a6661fcdf23b52184d0b60d96a3e746ff1b6fa3dc0529819d921400d3fb735",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/ship-shadow-cache.test.ts",
+      "sha256": "370e3f0ccbf7a7203a18f809cd2c33dc9fc8c814f47010aaf1d164055e582ff7",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/ship-shadow-cache.ts",
+      "sha256": "3e0df09fbaef3bcab66653d537fd62c51d7ed8ee47c9029f966823c68a4721e7",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/static-material-batches.test.ts",
+      "sha256": "a5d496f962f2a5e25a9cc64f265b245d82f1bb8ba8bbe730bc2cf985731fb5f8",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/static-material-batches.ts",
+      "sha256": "6f984137ee3de3646da0ad8fd60f5f59174690130e664851dbcf5b032aaa867c",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/transmission-lifecycle.test.ts",
+      "sha256": "052cc5901dd379d314037b90b122d97c40807ab4a290b032edd5b8ba1c16f465",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/transmission-lifecycle.ts",
+      "sha256": "e9494202714044848fd16adac3c231a822acf1b5f903e1372acea47022f0c3a5",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/render/src/voxel-worker.ts",
+      "sha256": "38a1f3d036d417fad60d5d210973023079c73b2b9764f0bf6b1ed4a89f32f7cc",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/package.json",
+      "sha256": "7f122bada2697478fd65719c9b182fde2cfbc18b214266d4beaf7d0f79874e9b",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/appearance.test.ts",
+      "sha256": "c2f558b2b1851dc0211aaf6752d4e3e33baf5027db84a89936c6c97c1d296c5a",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/appearance.ts",
+      "sha256": "c5b818625c574a6cfad0e66dd9a89086b9f9251df8bde77c2a322a43e2887119",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/armor-issue.test.ts",
+      "sha256": "3480c686cd206b9d4133da14332d466a48819dce71f56f83e297ec934e2f858a",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/sim/src/armor-issue.ts",
+      "sha256": "a35e8eefe07f2765a575286d5b8345ddf86433c21420cf0115e0741b8eb27cdc",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/sim/src/auth-policy.test.ts",
+      "sha256": "2cec4b7f635d0837ade5a8089c2f64fbedcd202ab2909a6af04aeabc2d5214ec",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/auth-policy.ts",
+      "sha256": "4dffa2f182bed9effef3868f42fd4eb0db0d1f21e7bbf8c81b7c6308b5aa7c44",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/collision.test.ts",
+      "sha256": "a1c4326f45e3d9cd89307f033bff40ff9d77a06ff4ac6a8a8849ee55372f506d",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/collision.ts",
+      "sha256": "d34ffa5a1cfab225b7c828022c7b6813d1f559c05f17773744506c4b7fbd8322",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/combat.test.ts",
+      "sha256": "2aed157695a4db66890801932e0209735ee295556ee87684ef971629b9789133",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/combat.ts",
+      "sha256": "7212d4c9383a7da5cd0e6c217e68f24ed8528d59dfc6634df941792236dbbfc3",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/construction-boundaries.test.ts",
+      "sha256": "1455d549175f26d088c237647dbd7204b10a2f3963bf08bac3242fd3a3d20071",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/construction-boundaries.ts",
+      "sha256": "bca2c22e685519e2164280a4aa0d1a91da00cd376b3213803d2f9722729b5bb3",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/construction-boundary-family-native.test.ts",
+      "sha256": "73034228658bf38cc136c75e653eb579e463c52c1a65e68dd799c26cc315b9a3",
+      "category": "completed r004 integration and focused tests/evidence record"
+    },
+    {
+      "path": "packages/sim/src/construction-boundary-family.test.ts",
+      "sha256": "f915bb88395ed6db3e5aac80b1c7516b66f1403a04d0fd9347371eed918f1d0e",
+      "category": "completed r004 integration and focused tests/evidence record"
+    },
+    {
+      "path": "packages/sim/src/construction-boundary-family.ts",
+      "sha256": "28389ca9d326636c2e5bd1d1dc4e2650293a0470bf324ace5281826b3cfa146f",
+      "category": "completed r004 integration and focused tests/evidence record"
+    },
+    {
+      "path": "packages/sim/src/construction-cargo.test.ts",
+      "sha256": "0a63aa939f5a25847c9dcb5abe8106e3de0c18d8cfaa46b3b1559533d5a289e0",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/construction-cargo.ts",
+      "sha256": "b3d217aa0f32d7f38bdc8b5be838f54729de52887eaa00c2780f710316b1f5f7",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/construction-collision.test.ts",
+      "sha256": "48606da0f9e75b84ba7e3d5d0267fa3d497d13e9d00aab710728cbc3d1b4a993",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/construction-collision.ts",
+      "sha256": "813fb97dcc863e87f8b6fdf05d3c4e1c1e880434a01c7b067cabacab4c4f0ad8",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/construction-door-motion.test.ts",
+      "sha256": "685ad9c7383d0f5f76abbe075ab4a591b6904e823a940829b161e017e565539c",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/construction-door-motion.ts",
+      "sha256": "844ccac6b7771460feed07b6d88db1100b1c019e565a4e6ed196051174c166a8",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/construction-instance.test.ts",
+      "sha256": "ec5adfab78787dea40c50a0366d5b0247ffd8798975b3883cf6e6de377f78a77",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/construction-instance.ts",
+      "sha256": "662bff2a60d000778eb51b8e9a911f2da3533ef17be32932a6c079255f088e47",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/construction-layout.ts",
+      "sha256": "fd3b272b6f3d523f9a8cb1398c284005cc3b164805f22a01cdc659ef39f6f629",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/construction-pressure-layout.test.ts",
+      "sha256": "78488fbfc0f286154ad118a90d222981476a39333e3f9606ffad163b6c32f1ac",
+      "category": "roof integration and pressure foundation checkpoint"
+    },
+    {
+      "path": "packages/sim/src/construction-pressure-layout.ts",
+      "sha256": "a3855b2697878312004d35d53245af64f44a151aa99da30fdb080489f073256d",
+      "category": "roof integration and pressure foundation checkpoint"
+    },
+    {
+      "path": "packages/sim/src/construction-roofs.test.ts",
+      "sha256": "001ceae9246ee8b064105ad137cc8a66e52e238e18403229c1cc1d8a07871f61",
+      "category": "roof integration and pressure foundation checkpoint"
+    },
+    {
+      "path": "packages/sim/src/construction-roofs.ts",
+      "sha256": "9a8e6d01ce074fbe456db4a9fd1075ba99033a23f0a4b7ede0012903d83c3b2e",
+      "category": "roof integration and pressure foundation checkpoint"
+    },
+    {
+      "path": "packages/sim/src/construction-services.test.ts",
+      "sha256": "f560bef262b653c295eab06dd0a6dddf564e4a1c7d531eee88b1eeb2a074486f",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/construction-services.ts",
+      "sha256": "4605a148e6d195f497f2765c8bbb98230065f6891aa3ef66f92edfbb561db74b",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/construction-topology.test.ts",
+      "sha256": "e94a6e5365efd7312ec87f49b2661366c105080b0c15f69967e600b6c980ec2b",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/construction-topology.ts",
+      "sha256": "c8067b29793a9ea7d0c53e9bcb34e41b10f0d6fd596aab08e6912cbd3d5a5e1b",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/construction-transactions.test.ts",
+      "sha256": "4c60654d4814965760ca5603fbb567ad831e7689c940893402cfc32ed4adc755",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/construction-transactions.ts",
+      "sha256": "7d0d06113ff0369cf3c6e1c8397b3ea0a2fe204e9b602621e7ad88c3ee368504",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/ifcs.test.ts",
+      "sha256": "dca51311c5a7f64cc78ed45c55ee62a7ad5070f3faaa73e65f3006e23a9a3048",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/ifcs.ts",
+      "sha256": "6babcf4d6156f286a295cbae3b523a9187470de80c1bcb4f7de0c2e76b386069",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/index.ts",
+      "sha256": "a6097fe21eb369fc0ee7f22c536db9fe1e0ee1007befe774757d56b828ea9d1b",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/interactions.test.ts",
+      "sha256": "f0168938b71c09ae5b1c797f69bd3bc0800e0913894e9b1bff8185bbce8370f9",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/interactions.ts",
+      "sha256": "bb4602963510e752a29bb000203e460263d2f3b4543f8f91f59d6e63c21b53c2",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/inventory.test.ts",
+      "sha256": "84b2b956bb675c7c1c30113955685e24538ddaea198e146b90fbe6a8482ab88f",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/inventory.ts",
+      "sha256": "59a9c00746f739e687be1b048c64a1e586581767f2a489e4e4f587e37d9b1f73",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/layout-compiler.test.ts",
+      "sha256": "a9b56a85dc7d67ceaaafb435f51b91b4f0b2337ea8be7786751576db50b65b0d",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/layout-compiler.ts",
+      "sha256": "ee7311f6f946612c317f06e5427eb9f6a7241b25a6071aa5c79e8cc16499815d",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/layout-geometry.ts",
+      "sha256": "f323d9e4acbf3ce9dfca7df146a697b417a816ef8fa893a2f25c5db0221f559b",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/layout-validation.ts",
+      "sha256": "f34d86f08a732fa0d8d86356356a9395dccfe1798a1a2463a4a051b7c20d5aad",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/native-deck.test.ts",
+      "sha256": "35b04f9dfe98d47a516dbfd8b8f17f09299150833acb4e4ad507690a03675307",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/sim.test.ts",
+      "sha256": "5df941b211088a9ec4a0a167538fa6f0a802634f771fe51730bdcf844f5c3bc6",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/tileset-fit.test.ts",
+      "sha256": "277c3d4084ab9a7553d2a92430dbb68639c4950fe3644417db08696dc52b2c33",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/tileset-fit.ts",
+      "sha256": "7f13abaa5d31d393bb4c558f545782627d0efe4d55fc681e1bf1263c7742c5d8",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/voxels.test.ts",
+      "sha256": "ac6d2eaa0879574a93c4c833673283961fd168f9825dd5cb7ec78e94892c45e6",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/sim/src/voxels.ts",
+      "sha256": "d47fb79c0aff3edd7c45b7dc2eabdca927d7d57b5d2e30bae4b73bae2670ea96",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/ui/src/editor-controls.tsx",
+      "sha256": "402692c6262b72e7274968a0268c259403b2bb54ee5a0609d424959de45d662b",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/package.json",
+      "sha256": "7d67d829ca8603faba05ae47620abfdd5485f0d889489dd981e030bd37645839",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/appearance-tables.ts",
+      "sha256": "7dcfb6eb3d85611a32928c3418994df17007f28d0658291fab649b91540bd01a",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/appearance.ts",
+      "sha256": "1d8bc349072d3d944a28888387c6fa717cb1823d114cf52c2af463ce18bf3452",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/auth-tables.ts",
+      "sha256": "a43bdf81716c4bc52d8a5b2bf4932583748f0660b0a3d2f81b10bdd8863be35c",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/auth.test.ts",
+      "sha256": "f278f39224d18b1897e0525585c8ebc03c5a8b709b0925be4a40ed908c249a22",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/auth.ts",
+      "sha256": "904185361501a6ab79382542fbf3a4c661c26af8d5c2ad374ba814d0bb37087b",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/combat-tables.ts",
+      "sha256": "9adfc0fa9a031651a52c63e1e1c2cbe1953a24a7cef3b4bc4a3369d03b39c4be",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/combat.ts",
+      "sha256": "665f592b485e37982784400ff5ce370836d4ce5ddd7e7b7907b7d6cddee3ab77",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/construction-doors.ts",
+      "sha256": "4f94c60f7dc4d02203559b472f9d2051931c0dde19ffdefe6f6e3a9e744e674d",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/construction-instances.test.ts",
+      "sha256": "8589cf8c8ab37b679b2cbd0141af6973dd81768366424f660f615b3dfe863a60",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/construction-instances.ts",
+      "sha256": "de9cba6ec7d942f3623c8f4a42c1d02d9d59745f988f1eeabc2d3d0351d00133",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/construction-tables.ts",
+      "sha256": "c6ab499949ab30089150747e71571bb6e5a21b0ca8f0300b1d30e43af5e91b75",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/construction.test.ts",
+      "sha256": "8901dbc6a4ed0db4a18d17830a1e85a7f1b5527cd281549f42ef0af85d8256dc",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/construction.ts",
+      "sha256": "12eaf2f6abc32f59d30311282274e443b5785a172b42515debb442a3f658416e",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/index.ts",
+      "sha256": "663fabf4f4e38491e7f69318c855b234772ae4fd4205912966a6a1c6bab55019",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/interaction-tables.ts",
+      "sha256": "1650b5dffe554e9953da44137eb5992e09d057bfa735ff35325932155af8080c",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/interactions.ts",
+      "sha256": "028dcd3fab07eda63afbc6b27817f33bf954bfda3893786acf39af349c95ca2f",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/inventory-tables.ts",
+      "sha256": "9b1cc674f3992c2fa1df796c40cffb146ec6222f45e91167d95b900b2ce17d6a",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/world/src/inventory.ts",
+      "sha256": "cde9b21a0dde67ac7da1225391525f9d171a0c12c6a334ad04cdbf6d4e8d8fc7",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "packages/world/src/lab-flight.ts",
+      "sha256": "924d3e86da08e673049d131a9eb4e34f2397d68bf4f7b8620e90c7dc3ddd7458",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/pilot-layout-tables.ts",
+      "sha256": "d57516ce8da7db02b97674d7ec6f482c5f191c81711affb7ff9c145a8397ec37",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/pilot-layout.test.ts",
+      "sha256": "c9610050516e4999d51231fe7aa81c7f6033d5ebae50c0cfeef9b69d61086cb1",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/pilot-layout.ts",
+      "sha256": "8e24a62bdb5520a852e523f3f68184e95424ed9ca073939784cc24e38020dbd7",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/presence.ts",
+      "sha256": "c99cced5a7da69a22d6dcb9b20f9e48c9c3ba5b53b14cba26c658a1543835e88",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/space.test.ts",
+      "sha256": "53ff9000f3c3a17610a69b20c860779c2f9c409acab13f1dab974d4113ffb49f",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/space.ts",
+      "sha256": "3d823424ce995fbaf52aec0491890c1e2b78b58f93d3b7860ed10d1173f1b0ef",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/storage-tables.ts",
+      "sha256": "d43887cd1230a88e418546c57c7b1ea7e1eb3b7f62054e41a6c3a9914547d7bb",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/storage.test.ts",
+      "sha256": "9bef6c2121c09db46e0905c52c526290d169e4a0a283e44f60898c1fb5b33871",
+      "category": "integration runtime and focused tests"
+    },
+    {
+      "path": "packages/world/src/uniforms.test.ts",
+      "sha256": "55a7053481ebd103013079e94814a11a90e0aec37dfe53edf889ea3088c2286d",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "scripts/art_catalog.py",
+      "sha256": "d3c908012b97c89184935beaba02c360385ba65310edc404c35f1c1eb872dfe2",
+      "category": "integration validation/tooling and exact release record"
+    },
+    {
+      "path": "scripts/art_library/annotations.py",
+      "sha256": "45db514adcd24921fe79e31266910f53f2d04182fe2c1c4acbb6ce7ccfdb3a46",
+      "category": "integration validation/tooling and exact release record"
+    },
+    {
+      "path": "scripts/audit_ship_construction.py",
+      "sha256": "82acfaf29e7c9675b3b69386d641995b44bb933f7c135fb07d1509f4ac58ba79",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/auth-admission-smoke.ts",
+      "sha256": "d494bffe60c80a0e75f57f1a72cd7177fd9748cd218c9e4adc6209b28a109042",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/auth_https.py",
+      "sha256": "d356aefabc36590e24f53a985050bb22c315e4aa8d158465c0b3b5b79d0145c6",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/check_art.py",
+      "sha256": "9270d4c910b57e6302dbd96cbe961be69288b8c7220da84e00f5a8430c6b9915",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/check_published_hull.ts",
+      "sha256": "03e369c2737c710487e50f163d57147d5c19bda9fae08ea27674511191f51650",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/combat-smoke.ts",
+      "sha256": "a5c6afab587d324eb263d8f79250f6ca0fbc8c74907e6b775ccebe4431590ea5",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/construction-smoke.ts",
+      "sha256": "eae061dd603b6a1d71d9746de4d51ea85d2ed83272dff7a95994f32b094a5266",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/dev.py",
+      "sha256": "496310c16633a571c8fd1998893f5e9605b9fcf21c955dd6f80639bfb04c98b9",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/generate_construction_floor_interfaces.ts",
+      "sha256": "643d5f73ec5f219c8c501757d39f7aed825eb2f34a2449245292f30944535e5c",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/hull_publication.ts",
+      "sha256": "86cf5d3f722fd46c0f4164a59d29447d6f433958b3298f9dba3dece791aa1281",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/identity-link-smoke.ts",
+      "sha256": "3665015e1346208dfb90834de8095efb16b77bfdd0e31c444d07c33887aee49d",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/install_bridge_bed_fix.py",
+      "sha256": "5fb34aa44bc6b20974d9ab6f1341d22a7f791db7f97f6e9657e3436b101fc3e2",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/install_construction_boundaries.py",
+      "sha256": "2bec52a6ae8c8cb4cdd136329acabf0ae8f1126cced1eec2a8db14582f54a992",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/install_construction_boundary_family.py",
+      "sha256": "d10fdffe0e807412f024e5170210eba3bc57ae4a7adc187213072e67b5172d79",
+      "category": "completed r004 integration and focused tests/evidence record"
+    },
+    {
+      "path": "scripts/install_construction_roofs.py",
+      "sha256": "66e97ec3fd3154b41172a52a82126dd9299e805bdad218bef75da01849096c10",
+      "category": "integration validation/tooling and exact release record"
+    },
+    {
+      "path": "scripts/install_equipment.py",
+      "sha256": "65140fdedc4c434a344be9c95d3b898f58be2abd95f3b699bdcc0a86b3f7f148",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/install_hull.py",
+      "sha256": "4527927e7ce4e8145ca54a7a72b1ccb1bbbeebb24e1a369abe52afff280ef9d3",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/install_release_candidate.py",
+      "sha256": "0d075e6a4b3bb180b19d259e5a973306bb78554e57de40660c738161a1c66022",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/install_roof.py",
+      "sha256": "3eea1c3d92bf878899eb6638d8cf9cc4445fd821cc7e71d274700d7f83f05bec",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/install_side_hull.py",
+      "sha256": "e0e8880dd296babdee887250a04b31ff7101f4924f5ced90bafd6b714cf43ac4",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/interaction-smoke.ts",
+      "sha256": "ddb8ab4b6fd452d2ef415cdb87a90fcd60f289b6febf5ce00f40797e1e54e6e8",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/inventory-smoke.ts",
+      "sha256": "6f3565cfc25875a25492571f95ba1218ae2ac24dfe8395ab2be9ee8a6c2e0c7f",
+      "category": "external character integration; root review required"
+    },
+    {
+      "path": "scripts/keycloak_service.py",
+      "sha256": "6db104142001604174063ff3bd1d64a1393d3178f3edef1c05deec77aa1f3608",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/persistence-smoke.ts",
+      "sha256": "936beee468a294f1290bfb3c5a15b020ea568f856ad695ef36b919542ea1156c",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/public_config.py",
+      "sha256": "4e1d3baf0c3cce24bcc277f031e0de913b63d74979fa6ade9771ba825c7a104c",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/quality-check.mjs",
+      "sha256": "a6f4af5164c07a1d8979a23c9cce86b73e67bb9073d51b93a1d7152ecb1c5c96",
+      "category": "root-owned dependency/CI/quality gate"
+    },
+    {
+      "path": "scripts/quality-format-baseline.json",
+      "sha256": "b36d12da424beaa72f8e9d9b07fb821e7f77ef4dc48e5d37df456d8b9301ff78",
+      "category": "root-owned dependency/CI/quality gate"
+    },
+    {
+      "path": "scripts/quality-lint-baseline.json",
+      "sha256": "146236d0e5fb8e54c218ad5d0335fa99837e5b92ec244cf63fe7e4f944983beb",
+      "category": "root-owned dependency/CI/quality gate"
+    },
+    {
+      "path": "scripts/quality-rules.test.mjs",
+      "sha256": "f8183823bd60c81b6a0672caabc1db6bc84d43b3b57fded227be97534d218d04",
+      "category": "root-owned dependency/CI/quality gate"
+    },
+    {
+      "path": "scripts/record_construction_checkpoint.py",
+      "sha256": "6f1799d5a81213980d7320a7c0d4136969a344262ae9a3323cc675f12079b3bd",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/run_python_tests.py",
+      "sha256": "99e9b816efa40b295ec61a20b3836c65fff4ebcafc48ee2fcbed86c28ce065e7",
+      "category": "integration validation/tooling and exact release record"
+    },
+    {
+      "path": "scripts/smoke.ts",
+      "sha256": "e290cbfcdeb70a904493507f151eed8d0dde4121acbba9e2beea8a75b5788d81",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/test_art_revision_history.py",
+      "sha256": "76dab9fcd95b9374567ffaee69ef9c563d10642f6f9cbe6f18e3f73e382b0871",
+      "category": "integration validation/tooling and exact release record"
+    },
+    {
+      "path": "scripts/test_dev_review.py",
+      "sha256": "3645bca15da64f3a23818c4c9228eb4d3e30ed57a6352e18d17d547533b18b75",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/validate_installed_equipment.py",
+      "sha256": "35ea25d80e0699fdb83a0f3ae86ad768333ee47fd97526b23ea08428d1961b14",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/validate_installed_hull.py",
+      "sha256": "b9d15ca4402eb922e1ec8df1795a56c378b035e9b20606c669aacbdf043316f3",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/validate_native_planets.py",
+      "sha256": "248ac67971de3e1153ee3b0d9e103a65f91d24127b43ee424eb33029f37632fc",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/validate_native_release.py",
+      "sha256": "412003d386e69a7182c5d887e3c0ea55d473402f8384d2661b498e98053ada78",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "scripts/validate_pose_patch.ts",
+      "sha256": "377d1ee3054b95eaebeef567b5246c6bceecc8be4ab0aff716aa77649b6554da",
+      "category": "managed integration/validation tooling"
+    },
+    {
+      "path": "vitest.config.ts",
+      "sha256": "c58e4a090d112d0e686dbecae1d319ad237a30ce0dd31e1aaeef7420a84520bf",
+      "category": "root-owned dependency/CI/quality gate"
+    }
+  ],
+  "excludedWorkInProgress": [
+    {
+      "path": "packages/world/src/construction-atmosphere-tables.ts",
+      "sha256": "2a20a7899af3db55ebdddd31262a93a1ea35fb5ff680016c703a7c8f9b61fe3b",
+      "reason": "staged helper only; not registered/wired into runtime"
+    },
+    {
+      "path": "packages/world/src/construction-atmosphere.ts",
+      "sha256": "84961c17ab20ea7382529b217666fd4d44093947abed3b2f7f093d246b37fe85",
+      "reason": "staged helper only; not registered/wired into runtime"
+    },
+    {
+      "path": "packages/world/src/construction-atmosphere.test.ts",
+      "sha256": "0c7fd6d26454cddecf7bb18f6069195934923bc89aaec7e3786d68a1c47a8997",
+      "reason": "staged helper only; not registered/wired into runtime"
+    },
+    {
+      "path": "packages/sim/src/construction-seal-motion.ts",
+      "sha256": "fb20ffb676a3b2d7d65526e84507f7f20017b1dd6e6bfaf8eb27065cad360547",
+      "reason": "staged helper only; not registered/wired into runtime"
+    },
+    {
+      "path": "packages/sim/src/construction-seal-motion.test.ts",
+      "sha256": "50b37f891e4d717cf5c809da4a4a3936dd21c133847922ea14419c8277c45690",
+      "reason": "staged helper only; not registered/wired into runtime"
+    },
+    {
+      "path": "packages/render/src/construction-door-seals.ts",
+      "sha256": "7701f5e8c6b083d36f3cd8ab0fba7618ea781cae5231b92a68c101bb5b37422e",
+      "reason": "staged helper only; not registered/wired into runtime"
+    },
+    {
+      "path": "packages/render/src/construction-door-seals.test.ts",
+      "sha256": "cb4c95dc76254043cac194d8e19bb4c25694f99778d776f81a74234e0a8ef453",
+      "reason": "staged helper only; not registered/wired into runtime"
+    },
+    {
+      "path": "docs/handoffs/construction_atmosphere_authority.md",
+      "sha256": "db36aebb6711e93bb022a8eea9fd93ea486b2ddabaf0d5a4485ab6b21ea1436e",
+      "reason": "staged helper only; not registered/wired into runtime"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r002/",
+      "reason": "native gasket candidate uninstalled"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r003/",
+      "reason": "native door strip candidate uninstalled"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r005/final-a004/",
+      "reason": "final delivered22-part floor/core closures,130checks; uninstalled and outside this completed checkpoint"
+    }
+  ],
+  "separateRequiredArtifacts": [
+    "Exact path/hash inventory in construction_boundary_artifact_checkpoint.json; source commit alone does not include runtime or canonical binary dependencies",
+    "Canonical r004 family delivery42files remains byte-pinned; runtime-review evidence is additive outside its original manifest",
+    "Root must review LFS/stage exact artifacts separately; no references/draft art/public docs are incidentally published",
+    "Other canonical art-library ledgers and validator dependencies remain separate broader-art scope, not a clean-clone completeness claim"
+  ],
+  "notes": [
+    "Both shared App and renderer entrypoints include external character work; tests pass but root should reconcile that external handoff before source commit",
+    "Source files are already shared; hashes detect changes during commit preparation",
+    "No source changes were staged by integration owner",
+    "This is an explicit source list, not a self-contained clean-clone claim: several existing native tests and build validators load exact files from assets/runtime and canonical assets/art-library designs. Those pins and required binary artifacts must accompany any runnable source checkpoint through reviewed LFS staging. Reference originals remain private."
+  ]
+}

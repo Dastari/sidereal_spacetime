@@ -1,0 +1,52 @@
+{
+  "design": "shipyard.hull.side-armor",
+  "revision": 3,
+  "purpose": "Replaceable external sacrificial armor and service access outside pressure wall",
+  "interfaces": {
+    "module_length_m": 2,
+    "height_m": 2.9375,
+    "inner_world_x_abs_m": 5.3125,
+    "max_outer_world_x_abs_m": 6.155,
+    "world_z_m": [
+      -0.25,
+      2.6875
+    ],
+    "placement_records": "18 existing IDs/positions/rotations preserved; per-panel paint added separately",
+    "crew_clearance": "Outside pressure wall; no interior intrusion. Suggested EVA service clearance 0.8m outward is proposed only.",
+    "sockets": "Existing independent exterior mounts preserved; no authority socket changes",
+    "mount_clearance_m": 0.015625
+  },
+  "materials": "Shared pale enamel, indigo polymer, burgundy service paint, exposed steel, cyan/amber emissive lenses; packed normal/roughness maps",
+  "stats": [
+    {
+      "field": "armor_mass",
+      "value": null,
+      "unit": "kg/module",
+      "status": "proposed",
+      "basis": "Requires gameplay balance and material thickness approval; visual envelope is not solid steel."
+    },
+    {
+      "field": "fixture_power",
+      "value": 4,
+      "unit": "W/fixture",
+      "status": "proposed",
+      "basis": "Small service LED strip; runtime light is presentation only."
+    },
+    {
+      "field": "armor_hit_points",
+      "value": null,
+      "unit": "HP",
+      "status": "proposed",
+      "basis": "No authority/stat changes authorized by this redesign."
+    }
+  ],
+  "lod": "Single native mesh per existing asset, shared kit/materials; no automatic LOD claimed",
+  "references": [
+    "3d-rpg-after--wayfarer-exterior-red-service-panel",
+    "3d-rpg-after--wayfarer-exterior-vent-wall",
+    "3d-rpg-after--wayfarer-exterior-side-hatch",
+    "3d-rpg-after--wayfarer-exterior-slogan-panel"
+  ],
+  "scope": "Eighteen side-run modules outlined by owner. Approved bow, roof, stern returns, interiors and independent mounts retained.",
+  "variant_coverage": "Seven design families, with explicit port/starboard origin variants and cutouts for six independent maneuver/retro mounts. All18 original reusableasset IDs and placedIDs retained."
+}

@@ -154,4 +154,8 @@ runpy.run_path(str(ROOT/"scripts/character_components/check_installed.py"),run_n
 
 # Owner-authorized paired pose equipment; canonical equipment remains preserved.
 if (ROOT/'assets/runtime/crew/poses/r002').exists():
- runpy.run_path(str(ROOT/'scripts/validate_installed_poses.py'),run_name='__main__')
+ crew_revision=json.loads((ROOT/'assets/runtime/crew/components/manifest.json').read_text())['revision']
+ pose_validator='validate_installed_poses_r002_successor.py' if crew_revision==9 else 'validate_installed_poses.py'
+ runpy.run_path(str(ROOT/'scripts'/pose_validator),run_name='__main__')
+if (ROOT/'assets/runtime/crew/poses/r003').exists():
+ runpy.run_path(str(ROOT/'scripts/validate_installed_poses_r003.py'),run_name='__main__')

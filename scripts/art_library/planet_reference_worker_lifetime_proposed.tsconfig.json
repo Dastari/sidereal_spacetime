@@ -1,0 +1,1 @@
+{"extends": "../../tsconfig.json", "compilerOptions": {"noEmit": true}, "include": ["planet_reference_worker_lifetime_proposed.ts", "planet_reference_worker_lifetime_proposed.test.ts", "planet_reference_candidate_lifetime_proposed.ts", "planet_reference_worker_entry_lifetime_proposed.ts"]}

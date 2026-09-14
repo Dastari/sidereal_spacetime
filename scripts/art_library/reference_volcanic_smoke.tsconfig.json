@@ -1,0 +1,1 @@
+{"extends":"../../tsconfig.json","compilerOptions":{"noEmit":true},"include":["reference_volcanic_smoke_build.ts","reference_volcanic_smoke_runtime.ts","reference_volcanic_smoke.test.ts"]}

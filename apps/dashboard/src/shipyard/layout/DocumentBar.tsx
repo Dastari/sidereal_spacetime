@@ -1,6 +1,7 @@
 import type { LayoutDocument } from "@sidereal/content/ship-layout";
 import { Download, Plus, Redo2, Save, Ship, Undo2, Upload } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { PublicationDialog } from "./PublicationDialog";
 import type { useLayout } from "./useLayout";
 export function DocumentBar({
   editor,
@@ -14,6 +15,7 @@ export function DocumentBar({
   onNew: () => void;
 }) {
   const input = useRef<HTMLInputElement>(null);
+  const [publishing, setPublishing] = useState(false);
   return (
     <header className="layout-document-bar">
       <Ship className="document-symbol" size={23} />
@@ -46,10 +48,6 @@ export function DocumentBar({
           <Redo2 size={16} />
           <span>Redo</span>
         </button>
-        <button onClick={() => input.current?.click()} title="Import draft">
-          <Upload size={16} />
-          <span>Import</span>
-        </button>
         <button onClick={onNew}>
           <Plus size={16} />
           <span>New</span>
@@ -58,10 +56,29 @@ export function DocumentBar({
           <Save size={16} />
           Save draft
         </button>
-        <button className="layout-primary" onClick={editor.exportDraft}>
-          <Download size={16} />
-          Export
+        <button
+          className="layout-primary"
+          disabled={blocked}
+          onClick={() => setPublishing(true)}
+        >
+          Publish
         </button>
+        <details className="layout-file-menu">
+          <summary>File</summary>
+          <div>
+            <button onClick={() => input.current?.click()}>
+              <Upload size={16} /> Import draft
+            </button>
+            <button onClick={editor.exportDraft}>
+              <Download size={16} /> Export draft
+            </button>
+            {editor.legacy && (
+              <button onClick={editor.exportLegacy}>
+                Export previous assembly
+              </button>
+            )}
+          </div>
+        </details>
         <input
           ref={input}
           type="file"
@@ -73,6 +90,12 @@ export function DocumentBar({
           }}
         />
       </div>
+      {publishing && (
+        <PublicationDialog
+          editor={editor}
+          onClose={() => setPublishing(false)}
+        />
+      )}
     </header>
   );
 }

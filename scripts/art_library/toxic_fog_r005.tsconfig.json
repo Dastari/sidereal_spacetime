@@ -1,0 +1,1 @@
+{"extends":"../../tsconfig.json","include":["toxic_fog_composition_r005.ts","toxic_fog_composition_r005.test.ts"]}

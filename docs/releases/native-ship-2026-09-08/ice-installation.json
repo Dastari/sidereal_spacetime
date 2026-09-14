@@ -1,0 +1,113 @@
+{
+  "schema": "sidereal.native-planet-runtime-manifest.v1",
+  "id": "environment.planet.ice",
+  "revision": "ice-r015",
+  "status": "root-approved-local-review-candidate; owner-final-art-unapproved",
+  "appearance": "ice",
+  "destination": "/assets/planets/ice-r015/",
+  "files": [
+    {
+      "path": "kit.json",
+      "sha256": "03b034b6f9730b415cb2de9fea9db14bca10b0fc445f76a040456011eff58a5a",
+      "bytes": 17666,
+      "runtimeRole": "native-compiled-form-stream"
+    },
+    {
+      "path": "form-0.glb",
+      "sha256": "9b194c99ea66b18dc4f0bf0b066172996dcf6b3719601c995a4383d08f1c8296",
+      "bytes": 3108,
+      "runtimeRole": "validated-native-GLB-source-equivalent"
+    },
+    {
+      "path": "form-1.glb",
+      "sha256": "cd0f6b813cd88d8a52d101e773a7f9d0c6e111686d866209a5f41a4f28641b8f",
+      "bytes": 4668,
+      "runtimeRole": "validated-native-GLB-source-equivalent"
+    },
+    {
+      "path": "form-2.glb",
+      "sha256": "d6c2575b64d65c5265e94734af61b2d47b4c46ec4fe71503cd02bc4c2679523d",
+      "bytes": 4668,
+      "runtimeRole": "validated-native-GLB-source-equivalent"
+    },
+    {
+      "path": "form-3.glb",
+      "sha256": "955daf7dcc0e43f2b012e417ed27b26907460aa912127530d177baf1bfa83a21",
+      "bytes": 6840,
+      "runtimeRole": "validated-native-GLB-source-equivalent"
+    },
+    {
+      "path": "form-4.glb",
+      "sha256": "90c9ff8f6b974632fd9a144a732a3b86618d99badf1fecf28e685f83285af1cc",
+      "bytes": 5228,
+      "runtimeRole": "validated-native-GLB-source-equivalent"
+    },
+    {
+      "path": "form-5.glb",
+      "sha256": "cb94746ff8b94c93dd9c9212e3f3ea9ca2ce8ff7ac8317542feb6165fbf3cd1c",
+      "bytes": 4236,
+      "runtimeRole": "validated-native-GLB-source-equivalent"
+    },
+    {
+      "path": "form-6.glb",
+      "sha256": "38b126161e56e36beb5947d6a29bed9d5eee98582a0643b6d87c8be85d12596c",
+      "bytes": 9388,
+      "runtimeRole": "validated-native-GLB-source-equivalent"
+    }
+  ],
+  "sources": [
+    {
+      "path": "assets/source/native-planets/ice-r015/kit.blend",
+      "sha256": "8420ab30fe70e899528cc44cd70c0bda3b97a9e1facfc919da12782434b1e0bd",
+      "bytes": 642980,
+      "originalPath": ".runtime/art-library/planets/ice-r015/kit.blend"
+    },
+    {
+      "path": "assets/source/native-planets/ice-r015/build_glacial_interior_kit.py",
+      "sha256": "ade2894ddf7859fd63ef189eaf9813d784601d5d052e9a689ecb5d9b4ab6d692",
+      "bytes": 5747,
+      "originalPath": "scripts/art_library/build_glacial_interior_kit.py"
+    },
+    {
+      "path": "assets/source/native-planets/ice-r015/native-glacial-interior.ts",
+      "sha256": "2bc5262684697be33a5f87c380cb6b2ee5b42b19611dd884f1a54314f1ed5749",
+      "bytes": 4786,
+      "originalPath": "packages/render/src/environment/native-glacial-interior.ts"
+    },
+    {
+      "path": "assets/source/native-planets/ice-r015/native-ice-material.ts",
+      "sha256": "22606a67037931ea522f56ba0124c8b7b34f826c1b4fd3ad8e94ca7f4ed4cab6",
+      "bytes": 3889,
+      "originalPath": "packages/render/src/environment/native-ice-material.ts"
+    },
+    {
+      "path": "assets/source/native-planets/ice-r015/native-planet.ts",
+      "sha256": "c272c0aee62ab55a48aedfd1a35107a9a12cd4d310b248a8e3d8ee42963bfa99",
+      "bytes": 4252,
+      "originalPath": "packages/render/src/environment/native-planet.ts"
+    },
+    {
+      "path": "assets/source/native-planets/ice-r015/native-planet-assets.ts",
+      "sha256": "f71c97775671461fa2368dc8536d5c2391311c398f58c54d8c95b7e9eff937e6",
+      "bytes": 900,
+      "originalPath": "packages/render/src/environment/native-planet-assets.ts"
+    }
+  ],
+  "geometrySource": "Editable Blender authored meshes. Runtime uses compact native vertex/material stream equivalent to preserved GLB forms; no legacy voxel input.",
+  "lodCellsPerFace": [
+    16,
+    10,
+    6
+  ],
+  "cpuCacheEntries": 6,
+  "seed47HeroTriangles": 74864,
+  "sharedRendering": [
+    "primary-sun",
+    "hero-shadows",
+    "atmosphere-rim",
+    "axial-rotation",
+    "Observe-camera"
+  ],
+  "fallback": "Unloaded kit or unsupported mixed effects/custom palette retains earlier full renderer.",
+  "approvalEvidence": "output/playwright/native-ice-r015-threeway-seed47.png"
+}

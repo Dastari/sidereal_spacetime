@@ -229,7 +229,12 @@ export default function App() {
           </button>
           <a
             className="nav-link"
-            href={import.meta.env.VITE_CLIENT_URL ?? clientUrl.href}
+            href={
+              import.meta.env.VITE_CLIENT_URL ??
+              (window.location.protocol === "https:"
+                ? import.meta.env.VITE_PUBLIC_CLIENT_URL
+                : clientUrl.href)
+            }
           >
             Open game <ArrowUpRight size={14} />
           </a>

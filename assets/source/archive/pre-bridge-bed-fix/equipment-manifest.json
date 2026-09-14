@@ -1,0 +1,884 @@
+{
+  "schema": "sidereal.installed-equipment.v1",
+  "owner_quote": "Okay I'm happy with that. Implement them in the game in place of the existing assets.",
+  "message_reference": "Conversation owner message, 2026-09-08, immediately following the native equipment review board (medical-bed r003, hydroponics r004).",
+  "entries": [
+    {
+      "asset": {
+        "id": "part-c0b6b036f5b3dd8bd2f3",
+        "label": "equipment control seat",
+        "category": "equipment",
+        "nodes": [
+          "GEO-part-c0b6b036f5b3dd8bd2f3--equipment-review"
+        ],
+        "bounds": {
+          "min": [
+            -0.5625,
+            -0.5625,
+            0
+          ],
+          "max": [
+            0.5625,
+            0.5625,
+            1.3125
+          ]
+        },
+        "lights": [],
+        "visual": {
+          "url": "/assets/assembly/equipment/part-c0b6b036f5b3dd8bd2f3/glb.glb",
+          "sha256": "da38770d060f4c5397b2d0ae8ab01258d42ea1f12884cac3ed628c3b110c5a9c",
+          "designId": "shipyard.equipment.pilot-seat",
+          "revision": 3,
+          "bounds": {
+            "min": [
+              -0.550000011920929,
+              -0.4950000047683716,
+              0.0
+            ],
+            "max": [
+              0.550000011920929,
+              0.4950000047683716,
+              1.3100000619888306
+            ]
+          },
+          "damagePreview": "unsupported"
+        },
+        "thumbnail": "/assets/assembly/equipment/part-c0b6b036f5b3dd8bd2f3/cutout.png"
+      },
+      "placements": [
+        {
+          "id": "equipment-control-seat",
+          "assetId": "part-c0b6b036f5b3dd8bd2f3",
+          "position": [
+            0,
+            10.25,
+            0.1875
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      ],
+      "source": "assets/source/approved-equipment/part-c0b6b036f5b3dd8bd2f3.blend"
+    },
+    {
+      "asset": {
+        "id": "part-d9f37a5f7ea6e8d13254",
+        "label": "equipment control console",
+        "category": "equipment",
+        "nodes": [
+          "GEO-part-d9f37a5f7ea6e8d13254--equipment-review"
+        ],
+        "bounds": {
+          "min": [
+            -1,
+            -0.375,
+            0
+          ],
+          "max": [
+            1,
+            0.375,
+            1.625
+          ]
+        },
+        "lights": [
+          {
+            "position": [
+              0.0,
+              0.19915583312511445,
+              1.3125
+            ],
+            "direction": [
+              0,
+              -1,
+              -0.45
+            ],
+            "color": [
+              0.18,
+              0.72,
+              1
+            ],
+            "intensity": 0.32,
+            "range": 1.5,
+            "angle": 1.8
+          }
+        ],
+        "visual": {
+          "url": "/assets/assembly/equipment/part-d9f37a5f7ea6e8d13254/glb.glb",
+          "sha256": "713d8a83c902d24bb59e278eb2436b087ebdf06fbbbbbd5daa7d2340fc782a49",
+          "designId": "shipyard.equipment.command-console",
+          "revision": 4,
+          "bounds": {
+            "min": [
+              -1.0,
+              -0.375,
+              0.0
+            ],
+            "max": [
+              1.0,
+              0.375,
+              1.625
+            ]
+          },
+          "damagePreview": "unsupported"
+        },
+        "thumbnail": "/assets/assembly/equipment/part-d9f37a5f7ea6e8d13254/cutout.png"
+      },
+      "placements": [
+        {
+          "id": "equipment-control-console",
+          "assetId": "part-d9f37a5f7ea6e8d13254",
+          "position": [
+            0,
+            11.25,
+            0.1875
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      ],
+      "source": "assets/source/approved-equipment/part-d9f37a5f7ea6e8d13254.blend"
+    },
+    {
+      "asset": {
+        "id": "part-c03ec0260cd7329050a8",
+        "label": "equipment locker  4.7  6",
+        "category": "equipment",
+        "nodes": [
+          "GEO-part-c03ec0260cd7329050a8--equipment-review"
+        ],
+        "bounds": {
+          "min": [
+            -0.25,
+            -0.75,
+            0
+          ],
+          "max": [
+            0.25,
+            0.75,
+            1.3125
+          ]
+        },
+        "lights": [],
+        "visual": {
+          "url": "/assets/assembly/equipment/part-c03ec0260cd7329050a8/glb.glb",
+          "sha256": "f527af1e44fc1570355c2268055b7b31343c45849a807b40993cf516c263093a",
+          "designId": "shipyard.equipment.wall-locker",
+          "revision": 5,
+          "bounds": {
+            "min": [
+              -0.25,
+              -0.75,
+              0.0
+            ],
+            "max": [
+              0.25,
+              0.75,
+              1.3125
+            ]
+          },
+          "damagePreview": "unsupported"
+        },
+        "thumbnail": "/assets/assembly/equipment/part-c03ec0260cd7329050a8/cutout.png"
+      },
+      "placements": [
+        {
+          "id": "equipment-locker--4.7--6",
+          "assetId": "part-c03ec0260cd7329050a8",
+          "position": [
+            -4.6875,
+            -6,
+            0.1875
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "equipment-locker--4.7--2",
+          "assetId": "part-c03ec0260cd7329050a8",
+          "position": [
+            -4.6875,
+            -2,
+            0.1875
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "equipment-locker--4.7-2",
+          "assetId": "part-c03ec0260cd7329050a8",
+          "position": [
+            -4.6875,
+            2,
+            0.1875
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "equipment-locker-4.7--6",
+          "assetId": "part-c03ec0260cd7329050a8",
+          "position": [
+            4.6875,
+            -6,
+            0.1875
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "equipment-locker-4.7--2",
+          "assetId": "part-c03ec0260cd7329050a8",
+          "position": [
+            4.6875,
+            -2,
+            0.1875
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "equipment-locker-4.7-2",
+          "assetId": "part-c03ec0260cd7329050a8",
+          "position": [
+            4.6875,
+            2,
+            0.1875
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      ],
+      "source": "assets/source/approved-equipment/part-c03ec0260cd7329050a8.blend"
+    },
+    {
+      "asset": {
+        "id": "part-77728ecc8ad36b0ff45f",
+        "label": "room engineering",
+        "category": "equipment",
+        "nodes": [
+          "GEO-part-77728ecc8ad36b0ff45f--equipment-review"
+        ],
+        "bounds": {
+          "min": [
+            -0.75,
+            -1.375,
+            0
+          ],
+          "max": [
+            0.75,
+            1.375,
+            1.6875
+          ]
+        },
+        "lights": [
+          {
+            "position": [
+              0.0,
+              -1.3216244173049927,
+              0.9200000166893005
+            ],
+            "direction": [
+              0,
+              -1,
+              -0.45
+            ],
+            "color": [
+              0.18,
+              0.72,
+              1
+            ],
+            "intensity": 0.32,
+            "range": 1.5,
+            "angle": 1.8
+          }
+        ],
+        "visual": {
+          "url": "/assets/assembly/equipment/part-77728ecc8ad36b0ff45f/glb.glb",
+          "sha256": "02ada2cf811e7893ffd98d8b6231974d111238e2dddf0ecd96739ff6b68a2cd3",
+          "designId": "shipyard.equipment.reactor",
+          "revision": 3,
+          "bounds": {
+            "min": [
+              -0.75,
+              -1.3093699216842651,
+              0.0
+            ],
+            "max": [
+              0.75,
+              1.375,
+              1.5700000524520874
+            ]
+          },
+          "damagePreview": "unsupported"
+        },
+        "thumbnail": "/assets/assembly/equipment/part-77728ecc8ad36b0ff45f/cutout.png"
+      },
+      "placements": [
+        {
+          "id": "room-engineering",
+          "assetId": "part-77728ecc8ad36b0ff45f",
+          "position": [
+            -3.6875,
+            -6,
+            0.25
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      ],
+      "source": "assets/source/approved-equipment/part-77728ecc8ad36b0ff45f.blend"
+    },
+    {
+      "asset": {
+        "id": "part-acbbef7209c4ef100693",
+        "label": "room hydroponics tray  2.4",
+        "category": "equipment",
+        "nodes": [
+          "GEO-part-acbbef7209c4ef100693--equipment-review"
+        ],
+        "bounds": {
+          "min": [
+            -0.75,
+            -0.3125,
+            0
+          ],
+          "max": [
+            0.75,
+            0.3125,
+            1.75
+          ]
+        },
+        "lights": [
+          {
+            "position": [
+              -0.38,
+              0.1,
+              1.52
+            ],
+            "direction": [
+              0,
+              -0.12,
+              -1
+            ],
+            "color": [
+              1,
+              0.86,
+              0.66
+            ],
+            "intensity": 0.8,
+            "range": 1.65,
+            "angle": 1.9
+          },
+          {
+            "position": [
+              0.38,
+              0.1,
+              1.52
+            ],
+            "direction": [
+              0,
+              -0.12,
+              -1
+            ],
+            "color": [
+              1,
+              0.86,
+              0.66
+            ],
+            "intensity": 0.8,
+            "range": 1.65,
+            "angle": 1.9
+          }
+        ],
+        "visual": {
+          "url": "/assets/assembly/equipment/part-acbbef7209c4ef100693/glb.glb",
+          "sha256": "1e96a18539191ea08d48b4134c2820043674f2c3b0960ce583ae1620ba5a81a8",
+          "designId": "shipyard.equipment.hydroponics",
+          "revision": 4,
+          "bounds": {
+            "min": [
+              -0.75,
+              -0.3125,
+              0.0
+            ],
+            "max": [
+              0.75,
+              0.3125,
+              1.7000000476837158
+            ]
+          },
+          "damagePreview": "unsupported"
+        },
+        "thumbnail": "/assets/assembly/equipment/part-acbbef7209c4ef100693/cutout.png"
+      },
+      "placements": [
+        {
+          "id": "room-hydroponics-tray--2.4",
+          "assetId": "part-acbbef7209c4ef100693",
+          "position": [
+            -3.6875,
+            -2.375,
+            0.25
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "room-hydroponics-tray--1.5",
+          "assetId": "part-acbbef7209c4ef100693",
+          "position": [
+            -3.6875,
+            -1.5,
+            0.25
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "room-hydroponics-tray--0.6",
+          "assetId": "part-acbbef7209c4ef100693",
+          "position": [
+            -3.6875,
+            -0.625,
+            0.25
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      ],
+      "source": "assets/source/approved-equipment/part-acbbef7209c4ef100693.blend"
+    },
+    {
+      "asset": {
+        "id": "part-c41467ac46f6b350df24",
+        "label": "room crew",
+        "category": "equipment",
+        "nodes": [
+          "GEO-part-c41467ac46f6b350df24--equipment-review"
+        ],
+        "bounds": {
+          "min": [
+            -0.6875,
+            -1.375,
+            0
+          ],
+          "max": [
+            0.6875,
+            1.375,
+            2
+          ]
+        },
+        "lights": [
+          {
+            "position": [
+              0.58,
+              0.95,
+              0.716
+            ],
+            "direction": [
+              0,
+              -0.3,
+              -1
+            ],
+            "color": [
+              1,
+              0.82,
+              0.6
+            ],
+            "intensity": 0.3,
+            "range": 1.4,
+            "angle": 1.6
+          },
+          {
+            "position": [
+              0.58,
+              0.95,
+              1.766
+            ],
+            "direction": [
+              0,
+              -0.3,
+              -1
+            ],
+            "color": [
+              1,
+              0.82,
+              0.6
+            ],
+            "intensity": 0.3,
+            "range": 1.4,
+            "angle": 1.6
+          }
+        ],
+        "visual": {
+          "url": "/assets/assembly/equipment/part-c41467ac46f6b350df24/glb.glb",
+          "sha256": "97b1df2c3d9ae66592bf57af6baefa1f0842a1214623fd06641490426495faa6",
+          "designId": "shipyard.equipment.crew-bunk",
+          "revision": 5,
+          "bounds": {
+            "min": [
+              -0.6700000166893005,
+              -1.333125114440918,
+              0.0
+            ],
+            "max": [
+              0.6700000166893005,
+              1.333125114440918,
+              1.9900000095367432
+            ]
+          },
+          "damagePreview": "unsupported"
+        },
+        "thumbnail": "/assets/assembly/equipment/part-c41467ac46f6b350df24/cutout.png"
+      },
+      "placements": [
+        {
+          "id": "room-crew",
+          "assetId": "part-c41467ac46f6b350df24",
+          "position": [
+            3.6875,
+            -6,
+            0.25
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      ],
+      "source": "assets/source/approved-equipment/part-c41467ac46f6b350df24.blend"
+    },
+    {
+      "asset": {
+        "id": "part-cc610ba071b8eb38ab8c",
+        "label": "room medbay",
+        "category": "equipment",
+        "nodes": [
+          "GEO-part-cc610ba071b8eb38ab8c--equipment-review"
+        ],
+        "bounds": {
+          "min": [
+            -0.75,
+            -1.375,
+            0
+          ],
+          "max": [
+            0.75,
+            1.375,
+            1.9375
+          ]
+        },
+        "lights": [
+          {
+            "position": [
+              0.03,
+              1.02,
+              1.76
+            ],
+            "direction": [
+              0,
+              -0.6,
+              -1
+            ],
+            "color": [
+              1,
+              0.87,
+              0.72
+            ],
+            "intensity": 0.5,
+            "range": 2,
+            "angle": 1.5
+          },
+          {
+            "position": [
+              0.36,
+              1.02,
+              1.68
+            ],
+            "direction": [
+              0,
+              -1,
+              -0.2
+            ],
+            "color": [
+              0.18,
+              0.72,
+              1
+            ],
+            "intensity": 0.15,
+            "range": 1.2,
+            "angle": 1.6
+          }
+        ],
+        "visual": {
+          "url": "/assets/assembly/equipment/part-cc610ba071b8eb38ab8c/glb.glb",
+          "sha256": "a8e5d2fa478e42723ffc82a845b223051a8f8878ece3c9ea80eb75e4a5021a3b",
+          "designId": "shipyard.equipment.medical-bed",
+          "revision": 3,
+          "bounds": {
+            "min": [
+              -0.6700000166893005,
+              -1.3009999990463257,
+              0.0
+            ],
+            "max": [
+              0.6700000166893005,
+              1.28000009059906,
+              1.8949999809265137
+            ]
+          },
+          "damagePreview": "unsupported"
+        },
+        "thumbnail": "/assets/assembly/equipment/part-cc610ba071b8eb38ab8c/cutout.png"
+      },
+      "placements": [
+        {
+          "id": "room-medbay",
+          "assetId": "part-cc610ba071b8eb38ab8c",
+          "position": [
+            3.6875,
+            -1.5,
+            0.25
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      ],
+      "source": "assets/source/approved-equipment/part-cc610ba071b8eb38ab8c.blend"
+    },
+    {
+      "asset": {
+        "id": "part-73df516feb786d73fc5e",
+        "label": "room lounge",
+        "category": "equipment",
+        "nodes": [
+          "GEO-part-73df516feb786d73fc5e--equipment-review"
+        ],
+        "bounds": {
+          "min": [
+            -0.75,
+            -1.375,
+            0
+          ],
+          "max": [
+            0.75,
+            1.375,
+            1.375
+          ]
+        },
+        "lights": [],
+        "visual": {
+          "url": "/assets/assembly/equipment/part-73df516feb786d73fc5e/glb.glb",
+          "sha256": "3692ffd29f75026ef856af18a0a59538814b4836e8315d98c48e3c76d00735a8",
+          "designId": "shipyard.equipment.lounge-sofa",
+          "revision": 3,
+          "bounds": {
+            "min": [
+              -0.75,
+              -1.375,
+              0.0
+            ],
+            "max": [
+              0.75,
+              1.375,
+              1.2899999618530273
+            ]
+          },
+          "damagePreview": "unsupported"
+        },
+        "thumbnail": "/assets/assembly/equipment/part-73df516feb786d73fc5e/cutout.png"
+      },
+      "placements": [
+        {
+          "id": "room-lounge",
+          "assetId": "part-73df516feb786d73fc5e",
+          "position": [
+            3.6875,
+            3,
+            0.25
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      ],
+      "source": "assets/source/approved-equipment/part-73df516feb786d73fc5e.blend"
+    },
+    {
+      "asset": {
+        "id": "part-75910d7a0d27dfc17aaf",
+        "label": "equipment bridge bank  1.3",
+        "category": "equipment",
+        "nodes": [
+          "GEO-part-75910d7a0d27dfc17aaf--equipment-review"
+        ],
+        "bounds": {
+          "min": [
+            -0.25,
+            -0.4375,
+            0
+          ],
+          "max": [
+            0.3125,
+            0.4375,
+            1.25
+          ]
+        },
+        "lights": [
+          {
+            "position": [
+              0.04090665280818939,
+              0.24396647095680238,
+              1.1050000190734863
+            ],
+            "direction": [
+              0,
+              -1,
+              -0.45
+            ],
+            "color": [
+              0.18,
+              0.72,
+              1
+            ],
+            "intensity": 0.32,
+            "range": 1.5,
+            "angle": 1.8
+          }
+        ],
+        "visual": {
+          "url": "/assets/assembly/equipment/part-75910d7a0d27dfc17aaf/glb.glb",
+          "sha256": "be3a73faed7b4a2c9e4c7b89477df3c1424284dd3e71ca84438fb049a8b3b5a8",
+          "designId": "shipyard.equipment.bridge-bank",
+          "revision": 4,
+          "bounds": {
+            "min": [
+              -0.25,
+              -0.4375,
+              0.0
+            ],
+            "max": [
+              0.3125,
+              0.4375,
+              1.25
+            ]
+          },
+          "damagePreview": "unsupported"
+        },
+        "thumbnail": "/assets/assembly/equipment/part-75910d7a0d27dfc17aaf/cutout.png"
+      },
+      "placements": [
+        {
+          "id": "equipment-bridge-bank--1.3",
+          "assetId": "part-75910d7a0d27dfc17aaf",
+          "position": [
+            -1.3125,
+            11.25,
+            0.25
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      ],
+      "source": "assets/source/approved-equipment/part-75910d7a0d27dfc17aaf.blend"
+    },
+    {
+      "asset": {
+        "id": "part-0f14bf002f4c11854337",
+        "label": "equipment bridge bank 1.3",
+        "category": "equipment",
+        "nodes": [
+          "GEO-part-0f14bf002f4c11854337--equipment-review"
+        ],
+        "bounds": {
+          "min": [
+            -0.25,
+            -0.4375,
+            0
+          ],
+          "max": [
+            0.3125,
+            0.4375,
+            1.25
+          ]
+        },
+        "lights": [
+          {
+            "position": [
+              0.021593347191810608,
+              0.24396647095680238,
+              1.1050000190734863
+            ],
+            "direction": [
+              0,
+              -1,
+              -0.45
+            ],
+            "color": [
+              0.18,
+              0.72,
+              1
+            ],
+            "intensity": 0.32,
+            "range": 1.5,
+            "angle": 1.8
+          }
+        ],
+        "visual": {
+          "url": "/assets/assembly/equipment/part-0f14bf002f4c11854337/glb.glb",
+          "sha256": "5bbe40f3637bc640bc26557c3c20e3d9e452587395b0ca7c05d45793ef5e014a",
+          "designId": "shipyard.equipment.bridge-bank",
+          "revision": 4,
+          "bounds": {
+            "min": [
+              -0.25,
+              -0.4375,
+              0.0
+            ],
+            "max": [
+              0.3125,
+              0.4375,
+              1.25
+            ]
+          },
+          "damagePreview": "unsupported"
+        },
+        "thumbnail": "/assets/assembly/equipment/part-0f14bf002f4c11854337/cutout.png"
+      },
+      "placements": [
+        {
+          "id": "equipment-bridge-bank-1.3",
+          "assetId": "part-0f14bf002f4c11854337",
+          "position": [
+            1.25,
+            11.25,
+            0.25
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      ],
+      "source": "assets/source/approved-equipment/part-0f14bf002f4c11854337.blend"
+    }
+  ],
+  "scope": "Visual replacement only; existing occupancy, placed identities/transforms, gameplay and authority remain unchanged.",
+  "placement_correction": {
+    "manifest": "hull-manifest.json",
+    "integration_revision": 2,
+    "scope": "Four pilot fixture transforms +4Y; exact approved GLB designs unchanged"
+  }
+}

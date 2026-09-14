@@ -5,6 +5,7 @@ import { compileLayout } from "@sidereal/sim/layout-compiler";
 import { deleteLayoutSelection } from "./selection-deletion";
 import { systemsFootprints } from "./systems-footprints";
 import { push, undo } from "./state";
+import { createDoorway250ReviewLayout } from "../../../../../packages/content/src/doorway250-review-layout";
 function fixture() {
   const doc = emptyLayout("draft", "deck");
   doc.tiles = [
@@ -71,6 +72,27 @@ function fixture() {
   return doc;
 }
 describe("explicit editor selection deletion", () => {
+  it("restores centered wall reservation when deleting an unpinned native door in one edit", () => {
+    const doc = createDoorway250ReviewLayout();
+    const next = deleteLayoutSelection(doc, compileLayout(doc), [
+      doc.openings[0].id,
+    ]);
+    expect(next.openings).toEqual([]);
+    expect(
+      next.structure?.schema === "sidereal.layout-structure.v2" &&
+        next.structure.boundaryTreatments,
+    ).toEqual([
+      expect.objectContaining({
+        a: [0, 64],
+        b: [192, 64],
+        reservationSide: "center",
+      }),
+    ]);
+    expect(
+      compileLayout(next).diagnostics.filter((d) => d.severity === "error"),
+    ).toEqual([]);
+    expect(doc.openings).toHaveLength(1);
+  });
   it("empty selection does not edit and wall, room or route deletion preserves every unrelated service port", () => {
     const doc = fixture(),
       before = JSON.stringify(doc),

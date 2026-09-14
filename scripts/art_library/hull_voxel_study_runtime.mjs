@@ -1,0 +1,27 @@
+import { Engine } from '/node_modules/.vite/deps/@babylonjs_core_Engines_engine.js';
+import { Scene } from '/node_modules/.vite/deps/@babylonjs_core_scene.js';
+import { ArcRotateCamera } from '/node_modules/.vite/deps/@babylonjs_core_Cameras_arcRotateCamera.js';
+import { Vector3 } from '/node_modules/.vite/deps/@babylonjs_core_Maths_math__vector.js';
+import { Color4 } from '/node_modules/.vite/deps/@babylonjs_core_Maths_math__color.js';
+import { HemisphericLight } from '/node_modules/.vite/deps/@babylonjs_core_Lights_hemisphericLight.js';
+import { DirectionalLight } from '/node_modules/.vite/deps/@babylonjs_core_Lights_directionalLight.js';
+import { HDRCubeTexture } from '/node_modules/.vite/deps/@babylonjs_core_Materials_Textures_hdrCubeTexture.js';
+import { SceneLoader } from '/node_modules/.vite/deps/@babylonjs_core_Loading_sceneLoader.js';
+import '/node_modules/.vite/deps/@babylonjs_loaders_glTF.js';
+const canvas=document.querySelector('canvas');
+const engine=new Engine(canvas,true,{preserveDrawingBuffer:true,stencil:true});
+const scene=new Scene(engine);scene.useRightHandedSystem=true;scene.clearColor=new Color4(.045,.075,.11,1);
+const camera=new ArcRotateCamera('study-camera',Math.atan2(4,8),1.32,10,new Vector3(.15,1.5,0),scene);
+camera.mode=1;camera.orthoLeft=-1.75;camera.orthoRight=1.75;camera.orthoTop=2.1875;camera.orthoBottom=-2.1875;camera.minZ=.05;
+new HemisphericLight('fill',new Vector3(0,1,0),scene).intensity=.65;
+new DirectionalLight('key',new Vector3(-.6,-1,-.3),scene).intensity=1.6;
+scene.environmentTexture=new HDRCubeTexture('/assets/materials/frontier-workshop.hdr',scene,128,false,true,false,true);scene.environmentIntensity=.55;
+let current;
+window.study={scene,engine,async load(slug){
+ current?.dispose();current=await SceneLoader.LoadAssetContainerAsync('/__hull-study/panels/',slug+'.glb',scene);current.addAllToScene();
+ await scene.whenReadyAsync();scene.render();scene.render();
+ document.querySelector('h1').textContent=slug;
+ const meshes=current.meshes.filter(m=>m.getTotalVertices()>0);
+ const materials=current.materials;
+ return {slug,meshes:meshes.length,triangles:meshes.reduce((n,m)=>n+m.getTotalIndices()/3,0),normalMapped:materials.filter(m=>m.bumpTexture).length,textureSizes:current.textures.map(t=>({name:t.name,size:t.getSize()})),webgl:engine.webGLVersion,drawCalls:engine._drawCalls?.current,geometry:'Actual exported study GLB in Babylon; isolated browser route, not live ship'};
+},ready:true};

@@ -1,0 +1,572 @@
+{
+  "result": "Passed native GLB/material/tangent checks, isolated assembly fits and actual Shipyard review; awaiting owner visual feedback. Not published.",
+  "components": [
+    {
+      "slug": "square-2m",
+      "triangles": 108,
+      "primitives": 2,
+      "normal_uv_tangents": true,
+      "bounds_m": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          2.0,
+          0.1875
+        ]
+      },
+      "proxy_occupied_cells": 3072,
+      "proxy_volume_m3": 0.75,
+      "analytic_volume_m3": 0.75,
+      "proxy_basis": "XY polygon cell-centre sampling, excluding centres exactly on the edge, and exact 3-cell thickness. Rotated complementary shapes do not double-own boundary cells. Conservative boundary uncertainty <= one sample; not authoritative collision publication."
+    },
+    {
+      "slug": "half-2x1",
+      "triangles": 108,
+      "primitives": 2,
+      "normal_uv_tangents": true,
+      "bounds_m": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          1.0,
+          0.1875
+        ]
+      },
+      "proxy_occupied_cells": 1536,
+      "proxy_volume_m3": 0.375,
+      "analytic_volume_m3": 0.375,
+      "proxy_basis": "XY polygon cell-centre sampling, excluding centres exactly on the edge, and exact 3-cell thickness. Rotated complementary shapes do not double-own boundary cells. Conservative boundary uncertainty <= one sample; not authoritative collision publication."
+    },
+    {
+      "slug": "quarter-1m",
+      "triangles": 108,
+      "primitives": 2,
+      "normal_uv_tangents": true,
+      "bounds_m": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          0.1875
+        ]
+      },
+      "proxy_occupied_cells": 768,
+      "proxy_volume_m3": 0.1875,
+      "analytic_volume_m3": 0.1875,
+      "proxy_basis": "XY polygon cell-centre sampling, excluding centres exactly on the edge, and exact 3-cell thickness. Rotated complementary shapes do not double-own boundary cells. Conservative boundary uncertainty <= one sample; not authoritative collision publication."
+    },
+    {
+      "slug": "strip-4x1",
+      "triangles": 108,
+      "primitives": 2,
+      "normal_uv_tangents": true,
+      "bounds_m": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          4.0,
+          1.0,
+          0.1875
+        ]
+      },
+      "proxy_occupied_cells": 3072,
+      "proxy_volume_m3": 0.75,
+      "analytic_volume_m3": 0.75,
+      "proxy_basis": "XY polygon cell-centre sampling, excluding centres exactly on the edge, and exact 3-cell thickness. Rotated complementary shapes do not double-own boundary cells. Conservative boundary uncertainty <= one sample; not authoritative collision publication."
+    },
+    {
+      "slug": "triangle-45",
+      "triangles": 80,
+      "primitives": 2,
+      "normal_uv_tangents": true,
+      "bounds_m": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.998000144958496,
+          1.998000144958496,
+          0.1875
+        ]
+      },
+      "proxy_occupied_cells": 1488,
+      "proxy_volume_m3": 0.36328125,
+      "analytic_volume_m3": 0.375,
+      "proxy_basis": "XY polygon cell-centre sampling, excluding centres exactly on the edge, and exact 3-cell thickness. Rotated complementary shapes do not double-own boundary cells. Conservative boundary uncertainty <= one sample; not authoritative collision publication."
+    },
+    {
+      "slug": "triangle-long-left",
+      "triangles": 80,
+      "primitives": 2,
+      "normal_uv_tangents": true,
+      "bounds_m": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          3.9977800846099854,
+          1.998445987701416,
+          0.1875
+        ]
+      },
+      "proxy_occupied_cells": 3072,
+      "proxy_volume_m3": 0.75,
+      "analytic_volume_m3": 0.75,
+      "proxy_basis": "XY polygon cell-centre sampling, excluding centres exactly on the edge, and exact 3-cell thickness. Rotated complementary shapes do not double-own boundary cells. Conservative boundary uncertainty <= one sample; not authoritative collision publication."
+    },
+    {
+      "slug": "triangle-long-right",
+      "triangles": 80,
+      "primitives": 2,
+      "normal_uv_tangents": true,
+      "bounds_m": {
+        "min": [
+          0.0022194599732756615,
+          0.0,
+          0.0
+        ],
+        "max": [
+          4.0,
+          1.9984462261199951,
+          0.1875
+        ]
+      },
+      "proxy_occupied_cells": 3072,
+      "proxy_volume_m3": 0.75,
+      "analytic_volume_m3": 0.75,
+      "proxy_basis": "XY polygon cell-centre sampling, excluding centres exactly on the edge, and exact 3-cell thickness. Rotated complementary shapes do not double-own boundary cells. Conservative boundary uncertainty <= one sample; not authoritative collision publication."
+    },
+    {
+      "slug": "triangle-slim-left",
+      "triangles": 80,
+      "primitives": 2,
+      "normal_uv_tangents": true,
+      "bounds_m": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          3.997692108154297,
+          0.9990298748016357,
+          0.1875
+        ]
+      },
+      "proxy_occupied_cells": 1536,
+      "proxy_volume_m3": 0.375,
+      "analytic_volume_m3": 0.375,
+      "proxy_basis": "XY polygon cell-centre sampling, excluding centres exactly on the edge, and exact 3-cell thickness. Rotated complementary shapes do not double-own boundary cells. Conservative boundary uncertainty <= one sample; not authoritative collision publication."
+    },
+    {
+      "slug": "triangle-slim-right",
+      "triangles": 80,
+      "primitives": 2,
+      "normal_uv_tangents": true,
+      "bounds_m": {
+        "min": [
+          0.002308165654540062,
+          0.0,
+          0.0
+        ],
+        "max": [
+          4.0,
+          0.9990298748016357,
+          0.1875
+        ]
+      },
+      "proxy_occupied_cells": 1536,
+      "proxy_volume_m3": 0.375,
+      "analytic_volume_m3": 0.375,
+      "proxy_basis": "XY polygon cell-centre sampling, excluding centres exactly on the edge, and exact 3-cell thickness. Rotated complementary shapes do not double-own boundary cells. Conservative boundary uncertainty <= one sample; not authoritative collision publication."
+    },
+    {
+      "slug": "corner-clipped",
+      "triangles": 136,
+      "primitives": 2,
+      "normal_uv_tangents": true,
+      "bounds_m": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          2.0,
+          0.1875
+        ]
+      },
+      "proxy_occupied_cells": 2664,
+      "proxy_volume_m3": 0.650390625,
+      "analytic_volume_m3": 0.65625,
+      "proxy_basis": "XY polygon cell-centre sampling, excluding centres exactly on the edge, and exact 3-cell thickness. Rotated complementary shapes do not double-own boundary cells. Conservative boundary uncertainty <= one sample; not authoritative collision publication."
+    },
+    {
+      "slug": "taper-4m",
+      "triangles": 108,
+      "primitives": 2,
+      "normal_uv_tangents": true,
+      "bounds_m": {
+        "min": [
+          0.0004961389931850135,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.9995038509368896,
+          4.0,
+          0.1875
+        ]
+      },
+      "proxy_occupied_cells": 4608,
+      "proxy_volume_m3": 1.125,
+      "analytic_volume_m3": 1.125,
+      "proxy_basis": "XY polygon cell-centre sampling, excluding centres exactly on the edge, and exact 3-cell thickness. Rotated complementary shapes do not double-own boundary cells. Conservative boundary uncertainty <= one sample; not authoritative collision publication."
+    },
+    {
+      "slug": "triangle-1m",
+      "triangles": 80,
+      "primitives": 2,
+      "normal_uv_tangents": true,
+      "bounds_m": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          0.9980000257492065,
+          0.9980000257492065,
+          0.1875
+        ]
+      },
+      "proxy_occupied_cells": 360,
+      "proxy_volume_m3": 0.087890625,
+      "analytic_volume_m3": 0.09375,
+      "proxy_basis": "XY polygon cell-centre sampling, excluding centres exactly on the edge, and exact 3-cell thickness. Rotated complementary shapes do not double-own boundary cells. Conservative boundary uncertainty <= one sample; not authoritative collision publication."
+    }
+  ],
+  "kit": {
+    "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+    "bytes": 368076,
+    "materials": 2,
+    "images": 3,
+    "shared_import": "One native kit GLB, per-asset nodePrefix; materials/textures imported once",
+    "normal_materials": [
+      "MAT-deck-polymer-mapped"
+    ],
+    "occlusion_materials": [
+      "MAT-deck-polymer-mapped"
+    ]
+  },
+  "maps": {
+    "ao.png": "5b7ce410af7b3850d874b7f4e622ff270672c288f4bc3fe93da81380244cdb70",
+    "basecolor.png": "2e6c69cf27ab2f98876e1f09096ce19b662fa7e64ff9ebbba76819b0cceb9f98",
+    "height.png": "dcf56ea58548479ae383bd1ce576b696632a905afbe6d190982a8cd46ba18bd0",
+    "metallic.png": "aa4ff7ca13b3d042e5edda2ccc3612333a8a789e673dce2cc8bbb97c0a566b54",
+    "normal.png": "a6d69d52e92a98fedee3d246f19dd6be8584ac60f4be58b9c0611bf808521e64",
+    "orm.png": "21e4bd1d680592b3b460d4925b4be59f0e1e9e22ee3660da3a0545c49d08444c",
+    "roughness.png": "da5651a664053e8090bc04f04f76621193940493776477be629f6c401312af9c"
+  },
+  "lights_per_tile": 0,
+  "legacy_baseline": {
+    "catalog_sha256": "0d1ab67a34d66e112e174edbf48949fc21251847ff091efd109c9ff63ff49482",
+    "parts_glb_sha256": "3873e9296f33afc4d6859aba2f0e03f1b6774474af02849f4e55349efb33992f",
+    "floor_asset_count": 34,
+    "floor_placement_count": 55,
+    "procedural_floor_triangles_by_asset": {
+      "part-13b30dda6355f0ff17b3": 620,
+      "part-ca866457d5caccb943a9": 620,
+      "part-ce04d53853da84dd9d81": 322,
+      "part-b02132179cb305a21417": 620,
+      "part-15bc4d24f27173de47ce": 620,
+      "part-7b265b4d073afc9bf127": 900,
+      "part-ffc5518d9892477ad05b": 976,
+      "part-7ceebee6336152691b53": 866,
+      "part-c5fa343376505f993a45": 964,
+      "part-a735909957b9e773f219": 900,
+      "part-749baebbcaac89945d5c": 772,
+      "part-395319254b5dd541b5c9": 772,
+      "part-67c91d419e31812795c4": 772,
+      "part-b90945c434415efcef4d": 772,
+      "part-a561ef19a47095f7af9b": 900,
+      "part-79da3bdf7a767bb89c8b": 942,
+      "part-1a05e8da6e2c1ec33a1c": 788,
+      "part-f720d0e3287882975690": 944,
+      "part-2ae59f43b3e997e6ee94": 900,
+      "part-df324c9b4e916c78412f": 756,
+      "part-f75dd89e6deed9eefdb9": 792,
+      "part-1f69531882e3417aadf4": 820,
+      "part-27d644c2d1643c69a713": 756,
+      "part-d5094b4fbaf77ad6ebeb": 900,
+      "part-add5f7040084fbad8df6": 946,
+      "part-7ec54250fbcf112c0861": 650,
+      "part-1a7d03bf8c7aabde4976": 940,
+      "part-8d853ce060a72d6e1e39": 900,
+      "part-152849dcee209e8ef9ac": 974,
+      "part-2ecd61f4910b8988dd2c": 652,
+      "part-0f1f4618418c21228e80": 972,
+      "part-c2db52503da57679ba31": 900
+    },
+    "note": "Counts are geometry measurements, not FPS or light-count savings. Native pilot floor placements are separately identified in the current catalog."
+  },
+  "placement": {
+    "passed": true,
+    "board": [
+      {
+        "id": "floor-review-square-2m",
+        "error": null
+      },
+      {
+        "id": "floor-review-half-2x1",
+        "error": null
+      },
+      {
+        "id": "floor-review-quarter-1m",
+        "error": null
+      },
+      {
+        "id": "floor-review-strip-4x1",
+        "error": null
+      },
+      {
+        "id": "floor-review-triangle-45",
+        "error": null
+      },
+      {
+        "id": "floor-review-triangle-long-left",
+        "error": null
+      },
+      {
+        "id": "floor-review-triangle-long-right",
+        "error": null
+      },
+      {
+        "id": "floor-review-triangle-slim-left",
+        "error": null
+      },
+      {
+        "id": "floor-review-triangle-slim-right",
+        "error": null
+      },
+      {
+        "id": "floor-review-corner-clipped",
+        "error": null
+      },
+      {
+        "id": "floor-review-taper-4m",
+        "error": null
+      },
+      {
+        "id": "floor-review-triangle-1m",
+        "error": null
+      }
+    ],
+    "checks": [
+      {
+        "name": "triangle-45 rotated complement shares a seam",
+        "passed": true,
+        "detail": "No occupied overlap"
+      },
+      {
+        "name": "triangle-long-left rotated complement shares a seam",
+        "passed": true,
+        "detail": "No occupied overlap"
+      },
+      {
+        "name": "triangle-long-right rotated complement shares a seam",
+        "passed": true,
+        "detail": "No occupied overlap"
+      },
+      {
+        "name": "triangle-slim-left rotated complement shares a seam",
+        "passed": true,
+        "detail": "No occupied overlap"
+      },
+      {
+        "name": "triangle-slim-right rotated complement shares a seam",
+        "passed": true,
+        "detail": "No occupied overlap"
+      },
+      {
+        "name": "Square edge contact",
+        "passed": true,
+        "detail": [
+          2,
+          0,
+          0
+        ]
+      },
+      {
+        "name": "Duplicate placement rejected",
+        "passed": true,
+        "detail": "Occupied overlap must fail"
+      },
+      {
+        "name": "Empty triangular half stays empty",
+        "passed": true,
+        "detail": "Quarter tile fits inside triangle bounding box without occupying triangle matter"
+      },
+      {
+        "name": "Quarter-turn 0, mirror false",
+        "passed": true,
+        "detail": 0
+      },
+      {
+        "name": "Quarter-turn 0, mirror true",
+        "passed": true,
+        "detail": 0
+      },
+      {
+        "name": "Quarter-turn 1, mirror false",
+        "passed": true,
+        "detail": 1.5707963267948966
+      },
+      {
+        "name": "Quarter-turn 1, mirror true",
+        "passed": true,
+        "detail": 1.5707963267948966
+      },
+      {
+        "name": "Quarter-turn 2, mirror false",
+        "passed": true,
+        "detail": 3.141592653589793
+      },
+      {
+        "name": "Quarter-turn 2, mirror true",
+        "passed": true,
+        "detail": 3.141592653589793
+      },
+      {
+        "name": "Quarter-turn 3, mirror false",
+        "passed": true,
+        "detail": 4.71238898038469
+      },
+      {
+        "name": "Quarter-turn 3, mirror true",
+        "passed": true,
+        "detail": 4.71238898038469
+      },
+      {
+        "name": "Support snaps to flat deck plane",
+        "passed": true,
+        "detail": [
+          0.5,
+          0.5,
+          0.1875
+        ]
+      },
+      {
+        "name": "Arbitrary object rotation remains rejected",
+        "passed": true,
+        "detail": "Angles are authored polygon geometry; assembly still uses quarter turns"
+      }
+    ],
+    "proxy": "Conservative polygon-centre sample; <= one-cell uncertainty along angled seams. Native visual polygons remain continuous. No authoritative collision or live placement changes.",
+    "publication": false
+  },
+  "browser_summary": {
+    "failures": [],
+    "interactions": {
+      "passed": true,
+      "initial": {
+        "id": "173f7453-e8a1-451b-8560-4e08c0af0d0f",
+        "assetId": "part-79328356071c674a2c8b",
+        "position": [
+          0,
+          0,
+          0.1875
+        ],
+        "rotation": 0,
+        "flipped": false,
+        "removedCells": []
+      },
+      "rotated": {
+        "id": "173f7453-e8a1-451b-8560-4e08c0af0d0f",
+        "assetId": "part-79328356071c674a2c8b",
+        "position": [
+          0,
+          0,
+          0.1875
+        ],
+        "rotation": 1.5707963267948966,
+        "flipped": false,
+        "removedCells": []
+      },
+      "flipped": {
+        "id": "173f7453-e8a1-451b-8560-4e08c0af0d0f",
+        "assetId": "part-79328356071c674a2c8b",
+        "position": [
+          0,
+          0,
+          0.1875
+        ],
+        "rotation": 1.5707963267948966,
+        "flipped": true,
+        "removedCells": []
+      },
+      "restoredCount": 12,
+      "top": {
+        "alpha": 0,
+        "beta": 0.0001,
+        "radius": 43,
+        "target": [
+          8,
+          0.1,
+          -5.5
+        ]
+      },
+      "provenance": "Actual Shipyard Add, Rotate, Flip and Undo controls in isolated local draft. No reducer call or published catalog mutation."
+    },
+    "matched_baseline": {
+      "baselineCamera": {
+        "target": [
+          0,
+          0.4,
+          0
+        ],
+        "radius": 44,
+        "alpha": -2.2,
+        "beta": 0.9553166181245092
+      },
+      "baseline": "Published catalog at capture time; original surfaces and all original placements. Same camera, viewport and workshop lighting as r002 ship context.",
+      "ready": "Board reloaded for UI interaction review"
+    }
+  },
+  "verification": {
+    "npm run check": "passed: 55 files, 188 tests; typecheck and 57-document check passed",
+    "npm run build": "passed: client and dashboard bundles; existing large-chunk warnings retained in log",
+    "npm run art:check": "passed: existing published asset regression validation; new draft validated separately above",
+    "art_library_tsconfig": "passed",
+    "authority_change": false
+  },
+  "limitations": [
+    "Shipyard still review; native game-client flight/cutaway review pending",
+    "No timed performance benchmark; no global lighting reduction",
+    "No new mass/strength/health stats or live migration",
+    "Current uniform atlas does not preserve old room-specific floor markings",
+    "Structural backing below original deck needs explicit installation treatment",
+    "Draft diagonal proxy has <=1 cell boundary uncertainty",
+    "All 12 variants unsigned; source crops stay preserved"
+  ]
+}

@@ -53,6 +53,24 @@ A process restart reconstructs rows from SpacetimeDB durable storage; derived ca
 
 Catalog data starts as schema-validated JSON/TypeScript authored files, published as immutable versioned packages. Preserve legacy Lua as source reference. Lifecycle authoring must support readable code, diagnostics, preview, publish/rollback and bindings for spawn/tick/interaction/damage/destruction/timers. The 2026-09-08 owner refinement establishes lifecycle contracts now, authority integration in M1/M2 and Script Studio from M3. Use reviewed compiled TypeScript for full trusted server logic and a bounded behavior interpreter for live data-driven edits, as specified in [scripting lifecycle](scripting_lifecycle.md). A broader scripting language remains a later feasibility gate; never `eval` untrusted dashboard code in a reducer. A sandbox controls time/operations/memory, deterministic RNG, permitted APIs and emitted action count. External AI generation, Blender and HTTP work occur outside reducers and publish through authenticated content commands.
 
+## Framed Wayfarer presentation revision (2026-09-14)
+
+The renderer can select a newer native surface after validating the original
+physical asset contract. `framed-wayfarer-visuals.json` binds exact source asset
+IDs, category, bounds, node selectors and visual hashes to new Blender exports.
+This mapping stays in `packages/render`; it never rewrites construction drafts,
+published blueprint hashes, collision, pressure, resource or actuator definitions.
+Unknown source revisions fail qualification and GLB bytes are verified before load.
+The public stock exterior uses a separately curated, exact-source exterior plan;
+it contains no private instance or cabin data.
+
+Native libraries share identical maps/materials without changing authored geometry.
+Rigid engine primitives retain their material slots in one placed mesh. Translucent
+stepped exhaust uses three shared unlit materials and 27 bounded meshes, driven only
+by achieved actuator output. It is a visual effect, not refractive matter or a damage
+proxy. Exact sources, performance checks and deployment are recorded in
+`docs/handoffs/wayfarer_framed_native_checkin_20260914.md`.
+
 ## Single-server load budget
 
 Provisional goals: 50 concurrent players, 100 stress clients; compare dispersed activity and concentrated fleet combat. Record tick p50/p95/p99, overdue schedules, subscription CPU, row mutations, bytes/client/s, memory growth, startup time and client frame time. At 20 Hz keep p95 authority work below 30 ms as an initial engineering margin, then revise with measured tests. Do not claim supported CCU from an empty-world connection test. Bound tick candidates with active spatial cells and installed active devices; use lower-frequency jobs for noncritical NPC/economy work with explicit catch-up rules. Keep overload response as admission/queue limits and degraded noncritical updates, without silently slowing gameplay time.

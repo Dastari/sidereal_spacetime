@@ -74,7 +74,21 @@ describe("clean redesign documents and recovery", () => {
       expect(d[key]).toEqual([]);
     expect(d.assembly).toBeUndefined();
     expect(d.structure?.hull).toEqual(chosen);
-    expect(d.decks[0]).toMatchObject({ elevation: 128, ceiling: 64 });
+    expect(d.structure).toMatchObject({
+      schema: "sidereal.layout-structure.v2",
+      wallConvention: "inset250-v1",
+      deckProfiles: [
+        {
+          deckId: deck,
+          floorThickness: 6,
+          clearHeight: 48,
+          roofThickness: 4,
+          serviceVoid: 6,
+          pitch: 64,
+        },
+      ],
+    });
+    expect(d.decks[0]).toMatchObject({ elevation: 128, ceiling: 54 });
     expect(compileLayout(d).valid).toBe(true);
     d.structure!.hull.width = 12;
     expect(chosen.width).toBe(hull.width);

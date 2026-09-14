@@ -1,0 +1,16 @@
+import struct,json,hashlib
+from pathlib import Path
+root=Path(__file__).resolve().parents[2];out=root/'.runtime/art-library/hull/r003';cs=json.loads((out/'components.json').read_text());geo=[]
+for c in cs:
+ raw=(out/c['slug']/'clean.glb').read_bytes();n=struct.unpack_from('<I',raw,12)[0];g=json.loads(raw[20:20+n]);tri=sum(g['accessors'][p['indices']]['count']//3 for m in g.get('meshes',[]) for p in m['primitives']);geo.append({'slug':c['slug'],'triangles':tri,'primitives':sum(len(m['primitives']) for m in g['meshes']),'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest()})
+(out/'geometry-validation.json').write_text(json.dumps(geo,indent=2));parts=json.loads((out/'wayfarer.json').read_text())['parts']
+spec=json.loads((out.parent/'r002/specification.json').read_text());old={c['slug']:c for c in spec['components']}
+for c in cs:
+ c.update({k:old[c['slug']][k] for k in ['purpose','proposed_stats','service_clearance_m']});c['placed_object_ids']=[p['id'] for p in parts if p['assetId']==c['id']]
+spec.update(revision=3,components=cs,geometry=geo,triangle_total_placed=sum(next((g['triangles'] for g in geo if next(c for c in cs if c['slug']==g['slug'])['id']==p['assetId']),0) for p in parts))
+spec['layout'].update(bridge_y_m=[9,13],vestibule_y_m=[7,9],rear_interface_y_m=9,assembly_offset_m=[0,4,0],buttress_plan_chamfer_m=.5,buttress_cap_drop_m=.625)
+spec['remaining_differences']=['Whole-ship main-hull transition requires actual assembled review; isolated bridge is at corrected forward Y9 interface.','Open airlock frames, controls and seals are visual architecture; no functional doors or pressure authority.','The reference has denser machinery and irregular layered plate shapes; these canonical modules remain deliberately reusable.','Material damage maps are visual only; no damage authority.']
+spec['owner_feedback_implemented']+=['Bridge moved ahead of main hull: bay9..13, vestibule7..9; equipment migration baseline preserved','Sloping faceted corner buttresses and3armor courses','Recessed vertical service channel','Recessed roof panel surrounded by pale perimeter armor','Correctly exposed outward-facing cyan rim','Identifiable airlock sill, seals and control pods']
+(out/'specification.json').write_text(json.dumps(spec,indent=2))
+notes={'revision':3,'status':'unsigned model package awaiting independent critique and actualShipyardreview','attempts':[{'path':'attempt-01','finding':'Oldbayassembly location and inwardemissionrim','fix':'Offsetdraft+4Y only; preserveequipmentbaseline; outwardnormalcorrected'},{'path':'attempt-02','finding':'NewslopingloftcapneededexplicitUV for material maps','fix':'AuthoredplanarUVperface and rebuilt nativeGLBs'}],'self_review':['Facetedslope, armorcourses and recessedservicechannel now match the primary reference features moreclosely.','Closedroof now has coherent paleperimeter, recessedcentralaccesspanel and twinventbanks.','Canopyrake unchanged; visiblethin cyanemitters now faceoutward.','Reusable module localorigins unchanged by ownerforwardplacementfix.','Whole-ship interfaces and stationauthority migration are parentintegrationwork, not silently applied here.'],'publication':False}
+(out/'iteration-notes.json').write_text(json.dumps(notes,indent=2));print('triangles',spec['triangle_total_placed'])

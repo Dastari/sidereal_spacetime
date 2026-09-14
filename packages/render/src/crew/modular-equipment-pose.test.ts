@@ -20,11 +20,15 @@ const paired = new URL(
   "../../../../assets/art-library/designs/crew.animation.aim/revisions/r002/",
   import.meta.url,
 );
+const currentPose = new URL(
+  "../../../../assets/art-library/designs/crew.animation.aim/revisions/r003/",
+  import.meta.url,
+);
 const modularBytes = readFileSync(new URL("modular-crew.glb", installed));
-const aimBytes = readFileSync(new URL("runtime-aim-space.json", paired));
+const aimBytes = readFileSync(new URL("runtime-aim-space.json", currentPose));
 const aimSpace = JSON.parse(aimBytes.toString()) as AuthoredAimSpace;
 const metadata = JSON.parse(
-  readFileSync(new URL("profile-socket-metadata.json", paired), "utf8"),
+  readFileSync(new URL("profile-socket-metadata.json", currentPose), "utf8"),
 ) as { items: Record<string, EquipmentPoseItem> };
 const itemIds = [
   "carbine",
@@ -95,11 +99,11 @@ function glb(bytes: Buffer) {
   return { json, values };
 }
 
-it("installed r008 and exact paired aim assets share all 16 rest/bind joints and valid skin weights", () => {
+it("installed r009 and exact paired aim assets share all 16 rest/bind joints and valid skin weights", () => {
   const manifest = JSON.parse(
     readFileSync(new URL("manifest.json", installed), "utf8"),
   );
-  expect(manifest.revision).toBe(8);
+  expect(manifest.revision).toBe(9);
   expect(sha(modularBytes)).toBe(manifest.files["modular-crew.glb"]);
   const pairedBytes = readFileSync(new URL("crew-poses.glb", paired));
   expect(sha(pairedBytes)).toBe(
@@ -164,11 +168,14 @@ it("installed r008 and exact paired aim assets share all 16 rest/bind joints and
     }
   expect(vertices).toBeGreaterThan(10000);
   const delivered = JSON.parse(
-    readFileSync(new URL("delivery-manifest.json", paired), "utf8"),
+    readFileSync(
+      new URL("equipment-delivery-manifest.json", currentPose),
+      "utf8",
+    ),
   );
   for (const id of itemIds)
-    expect(sha(readFileSync(new URL(`equipment/${id}.glb`, paired)))).toBe(
-      delivered.artifacts[`equipment/${id}.glb`],
+    expect(sha(readFileSync(new URL(`equipment/${id}.glb`, currentPose)))).toBe(
+      delivered.files[`equipment/${id}.glb`].sha256,
     );
 });
 
@@ -220,7 +227,7 @@ function settledContacts(d: EquipmentPoseDiagnostics, label: string) {
     .toBeLessThan(0.005);
 }
 
-describe("actual modular r008 with exact paired equipment and aim samples", () => {
+describe("actual modular r009 with exact paired equipment and aim samples", () => {
   for (const bodyType of ["male", "female"] as const)
     for (const [look, equippedComponents] of Object.entries(looks)) {
       it(`${bodyType}/${look}: seven items, reversal, strafe/backward, sprint, hidden and disposal`, async () => {
@@ -268,8 +275,8 @@ describe("actual modular r008 with exact paired equipment and aim samples", () =
           expect(
             visible.some(
               (mesh) =>
-                mesh.name === `GEO-${id}` ||
-                mesh.name.startsWith(`GEO-${id}_primitive`),
+                mesh.name.replace(/_primitive\d+$/, "").replace(/\.\d+$/, "") === `GEO-${id}` &&
+                (mesh.metadata?.gltf?.extras?.component_id ?? id) === id,
             ),
             id,
           ).toBe(true);
@@ -298,7 +305,7 @@ describe("actual modular r008 with exact paired equipment and aim samples", () =
             const gear = await SceneLoader.LoadAssetContainerAsync(
               "",
               new Uint8Array(
-                readFileSync(new URL(`equipment/${id}.glb`, paired)),
+                readFileSync(new URL(`equipment/${id}.glb`, currentPose)),
               ),
               scene,
               undefined,
@@ -389,7 +396,9 @@ describe("actual modular r008 with exact paired equipment and aim samples", () =
             expect(solver.diagnostics.muzzle).toBeUndefined();
             expect(solver.diagnostics.penetrationM).toBe(0);
             expect(solver.diagnostics.upperArmPenetrationM).toBe(0);
-            expect(held.parent).toBe(crew.sockets.handR);
+            if (!item.profile.includes("RIFLE"))
+              expect(held.parent).toBe(crew.sockets.handR);
+            else expect(solver.diagnostics.primaryErrorM).toBeLessThan(0.004);
             skinned();
             step({ hidden: true }, 1 / 60);
             expect(solver.diagnostics.status).toBe("hidden");
@@ -401,7 +410,13 @@ describe("actual modular r008 with exact paired equipment and aim samples", () =
             expect(solver.diagnostics.muzzle).toBeUndefined();
             for (const action of ["lowered", "unequip"] as const) {
               step({ action, reducedMotion: true });
-              expect(solver.diagnostics.status).toBe("inactive");
+              if (action === "unequip" || !item.profile.includes("RIFLE"))
+                expect(solver.diagnostics.status).toBe("inactive");
+              else
+                expect(
+                  ["solved", "fallback"],
+                  `${bodyType}/${look}/${id}/${action}: ${JSON.stringify({ p: solver.diagnostics.primaryErrorM, s: solver.diagnostics.supportErrorM, b: solver.diagnostics.penetrationM, a: solver.diagnostics.upperArmPenetrationM, shoulder: solver.diagnostics.shoulderErrorM })}`,
+                ).toContain(solver.diagnostics.status);
               expect(solver.diagnostics.muzzle).toBeUndefined();
               expect(solver.diagnostics.penetrationM).toBe(0);
             }

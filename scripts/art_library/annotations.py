@@ -499,3 +499,70 @@ for name,box in [('Medic open comms detail',(299,300,350,372)),('Medic swept fri
 # Existing registered vehicle source, inspected during additive catalog maintenance.
 # Its separate vehicle author owns detailed crop mapping; keep that boundary explicit.
 SOURCE_NOTES['buggy-1-mockup.png'] = 'Dock buggy concept with three-quarter, top, side/interior and rear views, separate standard cargo container, seated driver and cargo/maintenance/crew-transit/module/dock icons. Registered source only here; detailed vehicle crop mapping and model work belong to the separate vehicle queue.'
+
+# 2026-09-10 owner facial-sheet follow-up. All eleven portrait groups were
+# inspected in the complete image and seven exact-pixel regional panels.
+# Rectangles follow the observed cell boundaries, not generated recognition.
+source('characters-facial-assets', 'Visually inspected 2026-09-10: eleven modular face option groups, 138 individually visible portrait appearances, plus source-only header/footer/section graphics. Dark vertical eyes, shallow facial features and finer directional stepped hair with natural and vivid violet/pink/red palettes. Repeated heads demonstrate independently composable options; exact backs and underlying accessory surfaces are not observed. New native heads/hair belong to r009; exact crops are not reconstructions, implemented appearance options, gameplay bonuses or inherited r008/r003 approval.')
+
+# Canonical subgroup keys are retained as explicit annotation metadata, then
+# resolved into separate reference-only queues with the catalog split command.
+def facial_row(names, box, subgroup, category='equipment', observation=''):
+    x1,y1,x2,y2=box
+    for i,name in enumerate(names):
+        left=round(x1+(x2-x1)*i/len(names));right=round(x1+(x2-x1)*(i+1)/len(names))
+        item(name,(left,y1,right,y2),category,
+             note=f'Facial sheet group: {subgroup}. {observation} This exact source appearance retains its visible head, shoulders/background and any label; it is not a transparent accessory extraction. Cosmetics have no independent health, inventory mass or gameplay capability. Repeated features must share canonical native designs while retaining this crop.',
+             kind='variant',family='crew.faces.'+subgroup)
+
+facial_row([
+ 'Base male head 01 violet swept','Base male head 02 copper side part','Base male head 03 dark close crop',
+ 'Base male head 04 red sweep','Base male head 05 golden curls','Base male head 06 brown short',
+ 'Base male head 07 charcoal tousled','Base male head 08 brown flat top','Base male head 09 silver sweep',
+ 'Base male head 10 plum fringe','Base male head 11 orange curls','Base male head 12 grey textured'
+],(57,136,800,223),'base-faces',observation='Top clean-base row is labeled male. Hair and skin/color combinations vary; no unique character identity is established.')
+facial_row([
+ 'Base female head 01 charcoal side fringe','Base female head 02 navy long fringe','Base female head 03 red bob',
+ 'Base female head 04 blonde long hair','Base female head 05 dark violet fringe','Base female head 06 purple gathered hair',
+ 'Base female head 07 pink bob','Base female head 08 black gathered hair','Base female head 09 auburn gathered hair',
+ 'Base female head 10 silver bob','Base female head 11 crimson fringe','Base female head 12 plum long hair'
+],(57,225,800,320),'base-faces',observation='Lower clean-base row is labeled female. Hair and skin/color combinations vary; keep hairstyles available to either runtime body.')
+facial_row(['Head age young upper row','Head age adult upper row','Head age middle aged upper row','Head age older upper row'],(825,153,1125,239),'age-variations',observation='Printed age headings are Young, Adult, Middle Aged, Older. These are adult crew style cues, not new rig or gameplay-age rules.')
+facial_row(['Head age young lower row','Head age adult lower row','Head age middle aged lower row','Head age older lower row'],(825,243,1125,321),'age-variations',observation='Lower age examples repeat the four headings. The last grey-bearded portrait resembles the upper older example; preserve the actual drawing without inventing an unseen feminine counterpart.')
+facial_row([f'Head skin tone sample {i:02}' for i in range(1,9)],(1146,140,1520,205),'skin-tones',observation='Eight visibly distinct light-to-dark skin/color samples. Their source lighting is stylized; sample order is not an ethnicity label or exact colorimetric specification.')
+facial_row(['Head eye color '+name for name in ['Brown','Blue','Green','Hazel','Grey','Amber','Red','Cyber']],(1146,261,1520,309),'eye-colors',observation='Eight printed eye-color options. Preserve the dark pupil/frame and small colored insert; cyber is a distinct luminous styling example.')
+facial_row([
+ 'Hair male 01 dark spiked quiff','Hair male 02 blonde swept quiff','Hair male 03 brown pompadour',
+ 'Hair male 04 charcoal short spikes','Hair male 05 auburn pointed quiff','Hair male 06 navy short waves',
+ 'Hair male 07 dark close crop','Hair male 08 tall charcoal crest','Hair male 09 red mohawk shaved sides',
+ 'Hair male 10 blonde side undercut','Hair male 11 dark hanging locks','Hair male 12 brown flat top',
+ 'Hair male 13 dark broad spiked top'
+],(19,385,745,474),'hairstyles-male',observation='Thirteen separately visible male-row silhouettes. Names describe visible geometry; backs and exact gathered-root construction remain inferred. Several repeat clean-head styles with other colors.')
+facial_row([
+ 'Hair female 01 violet side bob','Hair female 02 auburn side bob','Hair female 03 charcoal side bob',
+ 'Hair female 04 blonde long side fringe','Hair female 05 black gathered bun','Hair female 06 red long gathered fringe',
+ 'Hair female 07 violet long gathered fringe','Hair female 08 pink long bob','Hair female 09 auburn gathered bun',
+ 'Hair female 10 navy long bob','Hair female 11 plum long hair','Hair female 12 white long bob',
+ 'Hair female 13 brown cropped side sweep'
+],(775,385,1519,474),'hairstyles-female',observation='Thirteen separately visible female-row silhouettes. Hair naming is a visual interpretation; row labels do not restrict supported body types. Preserve shared geometry for true palette repeats.')
+facial_row(['Facial hair '+name for name in ['Clean','Stubble','Short beard','Full beard','Goatee','Moustache','Handlebar','Side burns','Soul patch','Old beard','Grey','Braided']],(19,532,745,608),'facial-hair',observation='Twelve printed facial-hair options. Beard and head colors vary. Clean is the baseline state of the same face rather than a separate beard item.')
+facial_row(['Head facial detail '+name for name in ['Freckles','Scars','Scratch','Tattoo','Bandage','Dirt','Warpaint','Cyber','Eyepatch','Monocle','Visor scar','Birthmark']],(776,531,1518,608),'details',observation='Twelve printed facial-detail options. Marks and actual wearable geometry are different implementation types; eyepatch/monocle/visor examples must use deliberate compatibility rules.')
+facial_row(['Head accessory '+name for name in ['Cap','Beanie','Headband','Pilot hat','Beret','Cowboy hat','Pirate hat','Hood','Goggles up','Goggles down','Glasses','Sunglasses','Headset','Earring','Nose ring','Cigar','Mask','Scarf dark','Scarf red']],(20,679,1520,793),'accessories',observation='Nineteen visible accessory appearances. Two separate Scarf illustrations and the raised/lowered goggles states are preserved; common hats and glasses reappear in specialty portraits below. Accessories remain partially occluded by their example head.')
+facial_row(['Head specialty '+name for name in ['Pirate','Military','Corporate','Scientist','Engineer','Medic','Mechanic','Scavenger','Civilian','Outlaw','Explorer','Cybernetic','Alien hybrid']],(20,842,974,951),'specialty-looks',observation='Thirteen printed specialty/background looks are combinations of face, hair and accessory features. Reuse the matching accessory design when the visible shape agrees; no role, faction, skill or permission is conferred by the portrait.')
+facial_row(['Head expression '+name for name in ['Neutral','Happy','Sad','Angry','Surprised','Determined','Wink','Grin']],(997,847,1520,952),'expressions',observation='Eight optional printed expression examples on a repeated head. Keep a common neutral head and bounded face variants; a still is not expression playback or a new skeleton.')
+
+# Source sheet graphics are distinct reference UI/context, never native models.
+for name,box in [
+ ('Face sheet identity wordmark',(17,6,404,79)),('Face sheet header slogan',(576,13,785,76)),
+ ('Face Assets header panel',(1124,16,1527,90)),('Face sheet footer wordmark',(20,968,316,1022)),
+ ('Face sheet footer slogan',(577,976,1197,1018))
+]:item(name,box,'ui',kind='context',note='Source-only graphic treatment, not a request to adopt Orion Crest branding or implement the illustrated text.')
+item('Face sheet header ship context',(910,0,1127,89),'ship',kind='context',note='Small partially cropped decorative ship above the face library; source context only, no inferred dimensions or independent ship redesign.')
+for name,box in [
+ ('Base faces header panel',(11,96,813,129)),('Age variations header panel',(822,96,1132,130)),
+ ('Skin tones header panel',(1138,97,1527,130)),('Eye colours header panel',(1138,220,1527,254)),
+ ('Male hairstyles header panel',(12,342,758,378)),('Female hairstyles header panel',(770,342,1527,378)),
+ ('Facial hair header panel',(12,490,758,525)),('Facial details header panel',(770,490,1527,525)),
+ ('Accessories header panel',(12,640,1527,674)),('Specialty styles header panel',(12,810,983,841)),
+ ('Expressions header panel',(994,810,1527,841))
+]:item(name,box,'ui',kind='component',note='Source section-header/frame treatment. Common UI design may be shared while retaining this exact labeled appearance.')

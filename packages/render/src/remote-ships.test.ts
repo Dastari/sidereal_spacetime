@@ -9,6 +9,10 @@ import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { SceneLoader } from "@babylonjs/core/Loading/sceneLoader";
 import { constructionHash } from "@sidereal/sim/construction-transactions";
+import {
+  framedStockWayfarerPlacements,
+  FRAMED_STOCK_WAYFARER_PRESENTATION_ID,
+} from "./framed-wayfarer-stock";
 vi.mock("./hull-decals", () => ({ updateHullDecals: () => [] }));
 import {
   createRemoteShips,
@@ -254,10 +258,11 @@ describe("remote ship lifecycle", () => {
   it("loads each pinned source once and shares material/geometry without remote lights or crew", async () => {
     const f = fixture(),
       m = manifest();
+    const placements = framedStockWayfarerPlacements(m);
     const byHash = new Map<string, ReturnType<typeof glb>>();
     for (const p of [
       { url: m.payload.base.url, sha256: m.payload.base.sha256 },
-      ...m.payload.placements,
+      ...placements,
     ])
       if (!byHash.has(p.sha256))
         byHash.set(p.sha256, glb(readFileSync(pathFor(p.url))));
@@ -301,13 +306,17 @@ describe("remote ship lifecycle", () => {
       });
     try {
       const p = await loadRemoteShipPrototype(f.scene, m, m.assetId);
-      expect(importMock).toHaveBeenCalledTimes(14);
+      expect(importMock).toHaveBeenCalledTimes(
+        new Set([m.payload.base.url, ...placements.map((p) => p.url)]).size,
+      );
+      expect(fetchMock).toHaveBeenCalledTimes(importMock.mock.calls.length);
       expect(importMock.mock.calls[0][0]).toEqual([
         ...REMOTE_EXTERIOR_BASE_MESHES,
         "GEO-walls",
         "GEO-cutaway-aft",
       ]);
       expect(REMOTE_EXTERIOR_BASE_MESHES).not.toContain("GEO-walls");
+      expect(REMOTE_EXTERIOR_BASE_MESHES).not.toContain("GEO-drives-main-0");
       expect(
         REMOTE_EXTERIOR_BASE_MESHES.some((n) => n.startsWith("GEO-cutaway-")),
       ).toBe(false);
@@ -317,12 +326,28 @@ describe("remote ship lifecycle", () => {
 
       const a = p.instantiate("a"),
         b = p.instantiate("b");
+      expect(a.metadata.cosmeticPresentationId).toBe(
+        FRAMED_STOCK_WAYFARER_PRESENTATION_ID,
+      );
+      expect(a.metadata.publishedExteriorAssetId).toBe(m.assetId);
       const am = a.getChildMeshes()[0],
         bm = b.getChildMeshes()[0];
       expect(am).not.toBe(bm);
       expect(am.material).toBe(bm.material);
       expect((am.material as PBRMaterial).roughness).toBe(0.24);
       expect(f.scene.lights).toHaveLength(0);
+      const placedIds = new Set<string>(
+        a
+          .getChildMeshes()
+          .flatMap((mesh) => mesh.metadata.sourcePlacementIds ?? []),
+      );
+      expect(
+        [...placedIds].filter((id) => id.startsWith("drives-")),
+      ).toHaveLength(9);
+      expect([...placedIds].some((id) => id.startsWith("GEO-drives-"))).toBe(
+        false,
+      );
+      expect(placedIds.has("superstructure-0--5")).toBe(false);
       expect(
         a
           .getChildMeshes()
@@ -354,6 +379,23 @@ describe("remote ship lifecycle", () => {
     } finally {
       fetchMock.mockRestore();
       importMock.mockRestore();
+      f.scene.dispose();
+      f.engine.dispose();
+    }
+  });
+  it("validates the original stock manifest before fetching a cosmetic source", async () => {
+    const f = fixture();
+    const m = manifest();
+    m.payload.placements[0].position[0]++;
+    const fetchMock = vi.spyOn(globalThis, "fetch");
+    try {
+      await expect(
+        loadRemoteShipPrototype(f.scene, m, m.assetId),
+      ).rejects.toThrow(/identity\/hash/);
+      expect(fetchMock).not.toHaveBeenCalled();
+      expect(f.scene.meshes).toHaveLength(0);
+    } finally {
+      fetchMock.mockRestore();
       f.scene.dispose();
       f.engine.dispose();
     }

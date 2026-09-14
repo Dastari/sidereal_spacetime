@@ -56,15 +56,15 @@ test("installed ship loader resource budget", async () => {
   vi.stubGlobal("fetch", async (url: string) => ({
     ok: true,
     json: async () => JSON.parse(new TextDecoder().decode(bytes(url))),
+    arrayBuffer: async () => bytes(url).buffer,
   }));
   const importMesh = SceneLoader.ImportMeshAsync.bind(SceneLoader);
   vi.spyOn(SceneLoader, "ImportMeshAsync").mockImplementation(
     (names, root, file, target, progress) => {
-      if (typeof file !== "string") throw Error("Unexpected loader transport");
       return importMesh(
         names,
         "",
-        bytes(root + file),
+        typeof file === "string" ? bytes(root + file) : file,
         target,
         progress,
         ".glb",
@@ -129,6 +129,7 @@ test("installed ship loader resource budget", async () => {
       shadowGenerators: scene.lights.filter((l) => l.getShadowGenerator())
         .length,
     };
+    console.info("Installed Wayfarer render budget", counts);
     // R0 inventory: 1,303 meshes, 182 materials, 45 lights, 8 generators.
     expect(counts.meshes).toBeLessThanOrEqual(1360);
     expect(counts.materials).toBeLessThanOrEqual(188);
@@ -184,7 +185,14 @@ test("current semantic Wayfarer loader resource budget and complete role attribu
   const original = SceneLoader.ImportMeshAsync.bind(SceneLoader);
   vi.spyOn(SceneLoader, "ImportMeshAsync").mockImplementation(
     (names, folder, file, scene, progress) =>
-      original(names, "", bytes(folder + file), scene, progress, ".glb"),
+      original(
+        names,
+        "",
+        typeof file === "string" ? bytes(folder + file) : file,
+        scene,
+        progress,
+        ".glb",
+      ),
   );
   try {
     const candidate = createWayfarerConversionCandidate(

@@ -1,9 +1,7 @@
-import {
-  FLOOR_SHAPES,
-  SERVICE_CHANNELS,
-  stampTile,
-  type Shape,
-} from "@sidereal/content/ship-layout";
+import { FLOOR_FINISHES } from "@sidereal/render/floor-finishes";
+import { replaceFloorShape } from "./tile-geometry-edits";
+import { NATIVE_FLOOR_STAMPS, type FloorStamp } from "./floor-stamps";
+import { SERVICE_CHANNELS } from "@sidereal/content/ship-layout";
 import { floorModelOptions } from "@sidereal/sim/layout-native-floor";
 import { setFloorStyle, setWallFace } from "@sidereal/sim/layout-structure";
 import {
@@ -13,12 +11,10 @@ import {
   ValidationList,
 } from "@sidereal/ui/editor-controls";
 import type { LayoutPanelContext } from "./panel-context";
+import { BoundaryTreatmentPanel } from "./BoundaryTreatmentPanel";
+import { editBoundaryTreatment } from "./boundary-treatment-edits";
+import { editDeckClearHeight } from "./deck-profile-edits";
 import { DOOR_WIDTHS, changeStructuralOpening } from "./structural-edits";
-import {
-  selectedInternalWall,
-  deleteInternalWall,
-  deleteRoomLabel,
-} from "./panel-deletion";
 const roomTypes = [
   "Bridge",
   "Crew quarters",
@@ -38,29 +34,14 @@ export function LayoutInspector(props: LayoutPanelContext) {
     doc,
     result,
     view,
+    tool,
     blocked,
-    showLeft,
     showRight,
     selection,
     select,
     updateView,
     commit,
-    search,
-    setSearch,
-    shape,
-    setShape,
-    tool,
-    setTool,
-    roomType,
-    setRoomType,
-    channel,
-    setChannel,
-    reuseNodes,
-    setReuseNodes,
     catalog,
-    catalogError,
-    asset,
-    setAsset,
     inspector,
     setInspector,
     selectedTile,
@@ -80,15 +61,28 @@ export function LayoutInspector(props: LayoutPanelContext) {
     errors,
     transform,
   } = props;
+  const floorPlacement =
+    view.mode === "Structure" && (tool === "stamp" || tool === "fill");
   const wallKey = props.selectedWallKey ?? selection[0];
   const wallAnchor =
     result?.walls.find((w) => w.key === wallKey)?.anchorId ?? wallKey;
   const selectedWall = result?.structure?.walls.find(
     (w) => w.id === wallKey || w.anchorId === wallAnchor,
   );
-  const internalWall = doc
-    ? selectedInternalWall(doc, result, wallKey)
-    : undefined;
+  const boundaryConfig =
+    doc?.structure?.schema === "sidereal.layout-structure.v2"
+      ? doc.structure
+      : undefined;
+  const activeProfile = boundaryConfig?.deckProfiles.find(
+    (p) => p.deckId === view.deckId,
+  );
+  const boundarySpans =
+    result?.walls.filter(
+      (w) => w.key === wallKey || w.anchorId === wallAnchor,
+    ) ?? [];
+  const selectedBoundary =
+    boundarySpans.find((w) => w.key === wallKey) ??
+    (boundarySpans.length === 1 ? boundarySpans[0] : undefined);
   const floorStyle = selectedTile
     ? doc?.structure?.tileStyles[selectedTile.id]
     : undefined;
@@ -106,33 +100,14 @@ export function LayoutInspector(props: LayoutPanelContext) {
     >
       <ModeTabs
         label="Inspector tabs"
-        values={["Inspector", "Layers", "Validation"] as const}
+        values={["Inspector", "Validation"] as const}
         value={inspector}
         onChange={setInspector}
       />
-      {inspector === "Layers" ? (
-        <EditorSection title="Visible layers">
-          {Object.entries(view.layers).map(([name, enabled]) => (
-            <label className="layout-check" key={name}>
-              <input
-                type="checkbox"
-                checked={enabled}
-                onChange={(e) =>
-                  updateView({
-                    layers: { ...view.layers, [name]: e.target.checked },
-                  })
-                }
-              />
-              {name === "pressure" ? "Pressure areas (Rooms)" : name}
-            </label>
-          ))}
-          <p className="layout-note">
-            Visibility is presentation only. Roof hiding grants no access and
-            changes no collision.
-          </p>
-        </EditorSection>
-      ) : inspector === "Validation" ? (
-        <EditorSection title={`${errors} errors · design validation`}>
+      {inspector === "Validation" ? (
+        <EditorSection
+          title={editor.busy || !result ? "Validating…" : `${errors} errors`}
+        >
           <ValidationList
             items={result?.diagnostics ?? []}
             onSelect={(ids) => {
@@ -146,21 +121,25 @@ export function LayoutInspector(props: LayoutPanelContext) {
             title={
               selectedRoom?.name ??
               (selectedOpening
-                ? "Opening reservation"
+                ? "Opening"
                 : selectedPartition
                   ? "Internal wall"
                   : selectedFitting
-                    ? "Visual placement"
+                    ? "Placement"
                     : selectedRoute
                       ? "Service route"
                       : selectedTile
                         ? "Floor tile"
                         : view.mode === "Hull"
-                          ? "Exterior appearance"
+                          ? "Appearance"
                           : selectedWall
-                            ? selectedWall.source === "perimeter"
-                              ? "Exterior wall"
-                              : "Internal wall"
+                            ? boundaryConfig
+                              ? selectedWall.source === "perimeter"
+                                ? "Exterior boundary"
+                                : "Internal boundary"
+                              : selectedWall.source === "perimeter"
+                                ? "Exterior wall"
+                                : "Internal wall"
                             : "Placement settings")
             }
           >
@@ -170,29 +149,12 @@ export function LayoutInspector(props: LayoutPanelContext) {
                 <p className="layout-id">
                   {selection.length === 1
                     ? selection[0]
-                    : `${selection.length} selected identities`}
+                    : `${selection.length} selected`}
                 </p>
               </details>
             )}
-            {internalWall && (
-              <button
-                className="layout-wide"
-                disabled={blocked}
-                onClick={() => {
-                  commit((d) => deleteInternalWall(d, internalWall.id));
-                  select([]);
-                }}
-              >
-                Delete internal wall
-              </button>
-            )}
             {selectedWall && (
               <>
-                <p className="layout-note">
-                  {selectedWall.source === "perimeter"
-                    ? "Generated from the floor plan. Edit the floor boundary to change this wall."
-                    : "An internal wall edge. Its two faces can use different finishes."}
-                </p>
                 {(["left", "right"] as const).map((side) => (
                   <PropertyField
                     key={side}
@@ -223,31 +185,69 @@ export function LayoutInspector(props: LayoutPanelContext) {
                 ))}
                 <details className="editor-disclosure">
                   <summary>Face orientation</summary>
-                  <p className="layout-note">
-                    Left and right follow the wall's A→B direction, independent
-                    of the camera.
-                  </p>
+                  <p className="layout-note">Left and right follow A → B.</p>
                 </details>
-                <button
-                  className="layout-wide"
-                  disabled={blocked}
-                  onClick={() => setTool("door")}
-                >
-                  Place a door in this wall
-                </button>
               </>
+            )}
+            {boundaryConfig && boundarySpans.length > 1 && (
+              <PropertyField label="Boundary span">
+                <select
+                  aria-label="Boundary span"
+                  value={selectedBoundary?.key ?? ""}
+                  onChange={(event) => select([event.target.value])}
+                >
+                  <option value="" disabled>
+                    Choose an exact span
+                  </option>
+                  {boundarySpans.map((wall) => (
+                    <option key={wall.key} value={wall.key}>
+                      {wall.a.map((n) => n / 32).join(", ")} →{" "}
+                      {wall.b.map((n) => n / 32).join(", ")} m
+                    </option>
+                  ))}
+                </select>
+              </PropertyField>
+            )}
+            {boundaryConfig && selectedBoundary && (
+              <BoundaryTreatmentPanel
+                wall={selectedBoundary}
+                override={boundaryConfig.boundaryTreatments.find(
+                  (o) => o.id === selectedBoundary.treatment?.overrideId,
+                )}
+                clearHeightUnits={
+                  boundaryConfig.deckProfiles.find(
+                    (p) => p.deckId === selectedBoundary.deckId,
+                  )?.clearHeight ?? 0
+                }
+                disabled={blocked}
+                onChange={(patch) => {
+                  const newId = crypto.randomUUID();
+                  commit((draft) =>
+                    editBoundaryTreatment(
+                      draft,
+                      selectedBoundary,
+                      patch,
+                      newId,
+                    ),
+                  );
+                }}
+              />
             )}
             {selectedRoom && (
               <>
                 <button
                   className="layout-wide"
-                  disabled={blocked}
                   onClick={() => {
-                    commit((d) => deleteRoomLabel(d, selectedRoom.id));
-                    select([]);
+                    select(
+                      selectedRoom.tileIds ??
+                        result?.rooms.find((r) => r.id === selectedRoom.id)
+                          ?.tileIds ??
+                        [],
+                    );
+                    props.setTool("room");
                   }}
                 >
-                  Delete room label
+                  Select room tiles
                 </button>
                 <PropertyField label="Room name">
                   <input
@@ -270,7 +270,7 @@ export function LayoutInspector(props: LayoutPanelContext) {
                     ))}
                   </select>
                 </PropertyField>
-                <PropertyField label="Access design">
+                <PropertyField label="Access policy">
                   <select
                     value={selectedRoom.access}
                     onChange={(e) =>
@@ -301,7 +301,7 @@ export function LayoutInspector(props: LayoutPanelContext) {
                   />
                 </PropertyField>
                 <dl>
-                  <dt>Computed region area</dt>
+                  <dt>Area</dt>
                   <dd>
                     {result?.rooms
                       .find((r) => r.id === selectedRoom.id)
@@ -311,16 +311,12 @@ export function LayoutInspector(props: LayoutPanelContext) {
                   <dt>Pressure / occupancy</dt>
                   <dd>Not simulated</dd>
                 </dl>
-                <p className="layout-note">
-                  Access is a design policy reference, not a permission grant. A
-                  label does not prove a seal.
-                </p>
               </>
             )}
             {selectedOpening && (
               <>
                 {doc?.structure && (
-                  <PropertyField label="Door grid span" unit="m">
+                  <PropertyField label="Grid width" unit="m">
                     <select
                       aria-label="Selected door width"
                       disabled={blocked}
@@ -378,7 +374,7 @@ export function LayoutInspector(props: LayoutPanelContext) {
                     <option value="airlock">Airlock reservation</option>
                   </select>
                 </PropertyField>
-                <PropertyField label="Approach / sweep" unit="m">
+                <PropertyField label="Clearance" unit="m">
                   <input
                     aria-label="Opening clearance"
                     type="number"
@@ -401,27 +397,6 @@ export function LayoutInspector(props: LayoutPanelContext) {
                     }
                   />
                 </PropertyField>
-                {doc?.structure && (
-                  <p className="layout-note">
-                    Width is the grid span; diagonal openings have the longer
-                    clear width shown below. Corner, junction and approach
-                    clearance are checked on every edit.
-                  </p>
-                )}
-                <button
-                  className="layout-wide"
-                  disabled={blocked}
-                  onClick={() =>
-                    commit((d) => ({
-                      ...d,
-                      openings: d.openings.filter(
-                        (o) => o.id !== selectedOpening.id,
-                      ),
-                    }))
-                  }
-                >
-                  Remove door opening
-                </button>
                 <dl>
                   <dt>Reserved width</dt>
                   <dd>
@@ -440,21 +415,27 @@ export function LayoutInspector(props: LayoutPanelContext) {
             )}
             {selectedPartition && (
               <>
-                <PropertyField label="Boundary intent">
+                <PropertyField
+                  label={
+                    boundaryConfig
+                      ? "Design-region boundary"
+                      : "Boundary intent"
+                  }
+                >
                   <select
                     value={selectedPartition.seal}
                     onChange={(e) =>
                       changeSelected("partitions", { seal: e.target.value })
                     }
                   >
-                    <option value="design-sealed">Sealed design</option>
+                    <option value="design-sealed">
+                      {boundaryConfig
+                        ? "Separates design regions"
+                        : "Sealed design"}
+                    </option>
                     <option value="open-divider">Open divider</option>
                   </select>
                 </PropertyField>
-                <p className="layout-note">
-                  Drawn on shared tile edges. Delete removes this partition and
-                  its local opening reservations as one undoable command.
-                </p>
               </>
             )}
             {selectedFitting && (
@@ -526,11 +507,8 @@ export function LayoutInspector(props: LayoutPanelContext) {
                       )}
                     </div>
                     <p className="layout-note">
-                      Empty blueprint container. Proposed internal grid:{" "}
-                      {selectedFitting.container.columns} ×{" "}
-                      {selectedFitting.container.rows} cells. This grid is
-                      separate from the physical deck footprint; no live items
-                      or liquid quantities are copied.
+                      Empty container: {selectedFitting.container.columns} ×{" "}
+                      {selectedFitting.container.rows} cells.
                     </p>
                   </>
                 )}
@@ -542,7 +520,7 @@ export function LayoutInspector(props: LayoutPanelContext) {
                   <output>{selectedRoute.channel}</output>
                 </PropertyField>
                 <PropertyField
-                  label="Declared capacity"
+                  label="Capacity"
                   unit={SERVICE_CHANNELS[selectedRoute.channel].unit}
                 >
                   <input
@@ -567,7 +545,7 @@ export function LayoutInspector(props: LayoutPanelContext) {
                   <dd>{selectedRoute.to}</dd>
                   <dt>Supply / load</dt>
                   <dd>Not simulated</dd>
-                  <dt>Explicit graph components</dt>
+                  <dt>Connected networks</dt>
                   <dd>
                     {
                       result?.routeComponents.filter(
@@ -583,27 +561,42 @@ export function LayoutInspector(props: LayoutPanelContext) {
                 {doc?.structure && (
                   <>
                     <PropertyField label="Floor finish">
-                      <input
-                        key={`${selectedTile.id}:${floorStyle?.material ?? selectedTile.material}`}
+                      <select
                         aria-label="Floor finish"
                         disabled={blocked}
-                        defaultValue={
-                          floorStyle?.material ?? selectedTile.material
+                        value={
+                          floorStyle?.material ?? selectedTile.material ?? ""
                         }
-                        maxLength={128}
-                        onBlur={(e) => {
-                          if (
-                            e.target.value !==
-                            (floorStyle?.material ?? selectedTile.material)
+                        onChange={(e) =>
+                          commit((d) =>
+                            setFloorStyle(d, selectedTile.id, {
+                              ...d.structure?.tileStyles[selectedTile.id],
+                              material: e.target.value,
+                            }),
                           )
-                            commit((d) =>
-                              setFloorStyle(d, selectedTile.id, {
-                                ...d.structure?.tileStyles[selectedTile.id],
-                                material: e.target.value,
-                              }),
-                            );
-                        }}
-                      />
+                        }
+                      >
+                        {!FLOOR_FINISHES.some(
+                          (finish) =>
+                            finish.id ===
+                            (floorStyle?.material ?? selectedTile.material),
+                        ) && (
+                          <option
+                            value={
+                              floorStyle?.material ??
+                              selectedTile.material ??
+                              ""
+                            }
+                          >
+                            Default panel
+                          </option>
+                        )}
+                        {FLOOR_FINISHES.map((finish) => (
+                          <option key={finish.id} value={finish.id}>
+                            {finish.label}
+                          </option>
+                        ))}
+                      </select>
                     </PropertyField>
                     <PropertyField label="Floor model override">
                       <select
@@ -676,48 +669,38 @@ export function LayoutInspector(props: LayoutPanelContext) {
                         ))}
                       </select>
                     </PropertyField>
-                    <p className="layout-note">
-                      Finishes and native model choices keep the floor tile
-                      identity and footprint.
-                    </p>
                   </>
                 )}
 
-                <PropertyField label="Replace tile shape">
+                <PropertyField label="Tile shape">
                   <select
-                    aria-label="Replace tile shape"
-                    value={selectedTile.shape}
+                    aria-label="Tile shape"
+                    value={
+                      floorModelOptions(selectedTile, 0)[0]
+                        ? `native:${floorModelOptions(selectedTile, 0)[0].partId}`
+                        : "custom"
+                    }
                     onChange={(e) =>
-                      commit((d) => ({
-                        ...d,
-                        tiles: d.tiles.map((t) =>
-                          t.id === selectedTile.id
-                            ? stampTile(
-                                t.id,
-                                t.deckId,
-                                e.target.value as Shape,
-                                [
-                                  Math.min(...t.vertices.map((p) => p[0])),
-                                  Math.min(...t.vertices.map((p) => p[1])),
-                                ],
-                                turns,
-                              )
-                            : t,
+                      commit((d) =>
+                        replaceFloorShape(
+                          d,
+                          selectedTile.id,
+                          e.target.value as FloorStamp,
+                          turns,
                         ),
-                      }))
+                      )
                     }
                   >
-                    {Object.entries(FLOOR_SHAPES).map(([key, s]) => (
-                      <option key={key} value={key}>
+                    <option value="custom" disabled>
+                      Custom footprint
+                    </option>
+                    {NATIVE_FLOOR_STAMPS.map((s) => (
+                      <option key={s.id} value={s.id}>
                         {s.label}
                       </option>
                     ))}
                   </select>
                 </PropertyField>
-                <p className="layout-note">
-                  Replacement retains the selected tile ID. Other placements
-                  remain intact; conflicts are reported.
-                </p>
                 <PropertyField label="Minimum X" unit="m">
                   <input
                     aria-label="Tile X"
@@ -758,21 +741,27 @@ export function LayoutInspector(props: LayoutPanelContext) {
               !selectedOpening &&
               !selectedPartition &&
               !selectedFitting &&
-              !selectedRoute && (
+              !selectedRoute &&
+              !selectedTile &&
+              !selectedWall &&
+              !selectedBoundary &&
+              view.mode !== "Hull" && (
                 <>
-                  <PropertyField label="Stamp rotation">
-                    <select
-                      aria-label="Stamp rotation"
-                      value={turns}
-                      onChange={(e) => setTurns(Number(e.target.value))}
-                    >
-                      {[0, 1, 2, 3].map((t) => (
-                        <option key={t} value={t}>
-                          {t * 90}°
-                        </option>
-                      ))}
-                    </select>
-                  </PropertyField>
+                  {floorPlacement && (
+                    <PropertyField label="Stamp rotation">
+                      <select
+                        aria-label="Stamp rotation"
+                        value={turns}
+                        onChange={(e) => setTurns(Number(e.target.value))}
+                      >
+                        {[0, 1, 2, 3].map((t) => (
+                          <option key={t} value={t}>
+                            {t * 90}°
+                          </option>
+                        ))}
+                      </select>
+                    </PropertyField>
+                  )}
                   <PropertyField label="Snap grid">
                     <select
                       aria-label="Snap grid"
@@ -787,27 +776,31 @@ export function LayoutInspector(props: LayoutPanelContext) {
                       <option value="1">1/32 m</option>
                     </select>
                   </PropertyField>
-                  <label className="layout-check">
-                    <input
-                      type="checkbox"
-                      checked={mirrorX}
-                      onChange={(e) => setMirrorX(e.target.checked)}
-                    />{" "}
-                    Symmetry across X = 0
-                  </label>
-                  <label className="layout-check">
-                    <input
-                      type="checkbox"
-                      checked={mirrorY}
-                      onChange={(e) => setMirrorY(e.target.checked)}
-                    />{" "}
-                    Symmetry across Y = 0
-                  </label>
+                  {floorPlacement && (
+                    <>
+                      <label className="layout-check">
+                        <input
+                          type="checkbox"
+                          checked={mirrorX}
+                          onChange={(e) => setMirrorX(e.target.checked)}
+                        />{" "}
+                        Symmetry across X = 0
+                      </label>
+                      <label className="layout-check">
+                        <input
+                          type="checkbox"
+                          checked={mirrorY}
+                          onChange={(e) => setMirrorY(e.target.checked)}
+                        />{" "}
+                        Symmetry across Y = 0
+                      </label>
+                    </>
+                  )}
                 </>
               )}
           </EditorSection>
           {view.mode === "Hull" && doc && (
-            <EditorSection title="Draft appearance">
+            <EditorSection title="Appearance colors">
               <PropertyField label="Primary">
                 <input
                   type="color"
@@ -841,14 +834,13 @@ export function LayoutInspector(props: LayoutPanelContext) {
                 />
               </PropertyField>
               <p className="layout-note">
-                Proxy colors only. No armor, damage or pressure values are
-                changed. Approved faction skin adapters are unassigned.
+                Preview colors; faction skins unavailable.
               </p>
             </EditorSection>
           )}
           <details className="editor-disclosure">
             <summary>Design dimensions</summary>
-            <EditorSection title="Dimensions">
+            <div className="layout-section">
               <dl>
                 <dt>Length × width</dt>
                 <dd>
@@ -875,11 +867,11 @@ export function LayoutInspector(props: LayoutPanelContext) {
                     0}
                 </dd>
               </dl>
-            </EditorSection>
+            </div>
           </details>
           <details className="editor-disclosure">
             <summary>Deck properties</summary>
-            <EditorSection title="Active deck">
+            <div className="layout-section">
               {doc && (
                 <>
                   <PropertyField label="Deck name">
@@ -900,34 +892,65 @@ export function LayoutInspector(props: LayoutPanelContext) {
                       }
                     />
                   </PropertyField>
-                  <PropertyField label="Ceiling" unit="m">
+                  <PropertyField
+                    label={boundaryConfig ? "Clear height" : "Ceiling"}
+                    unit="m"
+                  >
                     <input
-                      aria-label="Ceiling height"
+                      aria-label={
+                        boundaryConfig ? "Deck clear height" : "Ceiling height"
+                      }
                       type="number"
-                      min="1"
-                      max="16"
-                      step=".5"
+                      disabled={blocked || (!!boundaryConfig && !activeProfile)}
+                      min={
+                        activeProfile
+                          ? Math.max(1, 32 - activeProfile.floorThickness) / 32
+                          : 1
+                      }
+                      max={
+                        activeProfile
+                          ? (512 - activeProfile.floorThickness) / 32
+                          : 16
+                      }
+                      step={boundaryConfig ? 1 / 32 : 0.5}
                       value={
-                        (doc.decks.find((d) => d.id === view.deckId)?.ceiling ??
+                        (activeProfile?.clearHeight ??
+                          doc.decks.find((d) => d.id === view.deckId)
+                            ?.ceiling ??
                           96) / 32
                       }
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        if (!e.target.validity.valid || e.target.value === "")
+                          return;
+                        const units = Number(e.target.value) * 32;
+                        if (boundaryConfig) {
+                          commit((d) =>
+                            editDeckClearHeight(d, view.deckId, units),
+                          );
+                          return;
+                        }
                         commit((d) => ({
                           ...d,
                           decks: d.decks.map((deck) =>
                             deck.id === view.deckId
                               ? {
                                   ...deck,
-                                  ceiling: Math.round(
-                                    Number(e.target.value) * 32,
-                                  ),
+                                  ceiling: Math.round(units),
                                 }
                               : deck,
                           ),
-                        }))
-                      }
+                        }));
+                      }}
                     />
                   </PropertyField>
+                  {activeProfile && (
+                    <p className="layout-note">
+                      Floor {(activeProfile.floorThickness / 32).toFixed(4)} m ·
+                      roof {(activeProfile.roofThickness / 32).toFixed(4)} m ·
+                      service void {(activeProfile.serviceVoid / 32).toFixed(4)}{" "}
+                      m. Pitch {(activeProfile.pitch / 32).toFixed(4)} m.
+                    </p>
+                  )}
                   <label className="layout-check">
                     <input
                       type="checkbox"
@@ -946,12 +969,8 @@ export function LayoutInspector(props: LayoutPanelContext) {
                         }));
                       }}
                     />
-                    Include roof in design
+                    Include roof
                   </label>
-                  <p className="layout-note">
-                    Changes enclosure coverage. Use Layers to hide the roof
-                    without removing it.
-                  </p>
                   <button
                     className="layout-wide"
                     disabled={blocked || doc.playableDeckId === view.deckId}
@@ -959,40 +978,14 @@ export function LayoutInspector(props: LayoutPanelContext) {
                       commit((d) => ({ ...d, playableDeckId: view.deckId }))
                     }
                   >
-                    Designate playable plane
+                    Set playable deck
                   </button>
                   <p className="layout-note">
-                    Additional decks are authored reservations. Vertical
-                    traversal is not implemented.
+                    Vertical traversal is not yet supported.
                   </p>
                 </>
               )}
-            </EditorSection>
-          </details>
-          <details className="editor-disclosure">
-            <summary>
-              Validation · {errors ? `${errors} errors` : "details"}
-            </summary>
-            <EditorSection title="Validation">
-              <button
-                className="layout-wide"
-                onClick={() => setInspector("Validation")}
-              >
-                {editor.busy || !result
-                  ? "Validation pending"
-                  : errors
-                    ? `${errors} errors to resolve`
-                    : "Floor topology valid"}{" "}
-                · inspect diagnostics
-              </button>
-              <p className="layout-note">
-                {editor.busy
-                  ? "Validating in worker…"
-                  : `Compiler ${editor.milliseconds.toFixed(1)} ms`}
-                <br />
-                Enclosure render uses labeled draft proxies.
-              </p>
-            </EditorSection>
+            </div>
           </details>
         </>
       )}

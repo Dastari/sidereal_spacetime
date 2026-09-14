@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/dashboard",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
   "dependencies": {
@@ -16,7 +16,7 @@
     "react-dom": "19.2.8"
   },
   "scripts": {
-    "build": "python3 ../../scripts/prepare_app.py dashboard && vite build",
+    "build": "python3 ../../scripts/prepare_app.py dashboard && vite build && node ../../scripts/precompress_assets.mjs dist",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   }
 }

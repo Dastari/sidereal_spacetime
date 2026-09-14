@@ -19,7 +19,7 @@ const candidate = () =>
       Object.keys(PIN.sources).map((p) => [p, readFileSync(p, "utf8")]),
     ) as WayfarerPinnedInputs,
   );
-test("all 211 authored objects load from 28 verified libraries with independent IDs, retained materials, roof cutaway and safe disposal", async () => {
+test("all 211 authored objects load from 24 verified libraries with independent IDs, retained materials, roof cutaway and safe disposal", async () => {
   const e = new NullEngine(),
     scene = new Scene(e);
   scene.useRightHandedSystem = true;
@@ -77,7 +77,11 @@ test("all 211 authored objects load from 28 verified libraries with independent 
     expect(
       new Set(result!.placements.map((p) => p.node.metadata.partId)).size,
     ).toBe(211);
-    expect(fetcher).toHaveBeenCalledTimes(29);
+    // Shared native hull/engine kits preserve selectors with fewer fetches.
+    expect(fetcher).toHaveBeenCalledTimes(25);
+    expect(
+      result!.placements.filter((p) => p.category === "engine"),
+    ).toHaveLength(9);
     expect(result!.placements.some((p) => p.category === "floor")).toBe(false);
     for (const p of result!.placements) {
       expect(p.meshes.length).toBeGreaterThan(0);
@@ -87,6 +91,9 @@ test("all 211 authored objects load from 28 verified libraries with independent 
             !!m.material && m.isPickable && m.metadata.category === p.category,
         ),
       ).toBe(true);
+      for (const mesh of p.meshes)
+        for (const subMesh of mesh.subMeshes ?? [])
+          expect(scene.materials, mesh.name).toContain(subMesh.getMaterial());
       const original = a.document.layout.assembly!.parts.find(
         (o) => o.id === p.node.metadata.partId,
       )!;
@@ -119,6 +126,9 @@ test("all 211 authored objects load from 28 verified libraries with independent 
       ),
     ).toBe(true);
     result!.dispose();
+    expect(
+      materials.every((material) => !scene.materials.includes(material!)),
+    ).toBe(true);
     expect(root.isDisposed()).toBe(false);
     expect(root.getChildMeshes()).toHaveLength(0);
   } finally {

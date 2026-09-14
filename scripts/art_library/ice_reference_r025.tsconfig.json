@@ -1,0 +1,1 @@
+{"extends":"../../tsconfig.json","compilerOptions":{"noEmit":true},"include":["ice_reference_composition_r025.ts","ice_reference_composition_r025.test.ts","ice_reference_r025.vitest.config.ts"]}

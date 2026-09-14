@@ -1,10 +1,11 @@
 {
   "name": "@sidereal/render",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./floor-finishes": "./src/floor-finishes.ts",
     "./assembly-editor": "./src/assembly-editor.ts",
     "./equipment": "./src/equipment/index.ts",
     "./crew/appearance": "./src/crew/appearance.ts",
@@ -12,6 +13,8 @@
     "./layout-native-floors": "./src/layout-native-floors.ts",
     "./construction-refit-attachments": "./src/construction-refit-attachments.ts",
     "./layout-hull": "./src/layout-hull.ts",
+    "./layout-measurement": "./src/layout-measurement.ts",
+    "./layout-plane-projection": "./src/layout-plane-projection.ts",
     "./antialiasing-settings": "./src/antialiasing-settings.ts",
     "./graphics-settings": "./src/graphics-settings.ts",
     "./local-light-budget": "./src/local-light-budget.ts",
