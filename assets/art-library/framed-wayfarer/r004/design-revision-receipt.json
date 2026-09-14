@@ -1,0 +1,318 @@
+{
+  "schema": "sidereal.art-library.revision-receipt.v1",
+  "canonicalLedger": "assets/art-library/designs/shipyard.hull.voxel-material-study/design.json",
+  "canonicalLedgerSha256": "e7ec6468792fd3f3f9911728eb262f257b2f36290ccd6015c37de41b70f12f3e",
+  "id": "shipyard.hull.voxel-material-study",
+  "asset_uuid": "ce432bb9-f916-50bc-8463-3d3034790d24",
+  "state": "awaiting-owner",
+  "owner_final_signoff": null,
+  "current_revision": {
+    "revision": 6,
+    "created_at": "2026-09-14T05:58:42.993009+00:00",
+    "stage": "native-review-passed",
+    "change": "Separate deep framed exterior armor with portable finish maps; corrected complete46-model final-03 family, paired modular broad bays and fitted bow continuation. Four final-01 visual defects resolved; final-02 bevel-sliver failure preserved.",
+    "hypothesis": "Stepped shoulders, wrapped ribs and recessed cassettes make exterior armor legible at whole-ship scale while keeping qualified 2 m sockets and outward 0.5 m bounds.",
+    "covered_reference_ids": [],
+    "evidence": [
+      {
+        "role": "blender-source",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/hull/final-03/source.blend",
+        "sha256": "49d7fb868d9572b3886ed102cfce624579128b08bfae56c6a407f33a904346fb",
+        "bytes": 10357752,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off."
+      },
+      {
+        "role": "glb",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/library-03/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "bytes": 5956204,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off."
+      },
+      {
+        "role": "manifest",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/hull/final-03/models.json",
+        "sha256": "8b03baaf8fabcd181225a8f91e35f85303cd07d458646d968bdd5a863b74e764",
+        "bytes": 111902,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off."
+      },
+      {
+        "role": "validation",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/hull/final-03/validation-mating-and-lights.json",
+        "sha256": "3032136143ad179b51e1c009151f0909ee652f7a80b332ce0ce105ba65a4d564",
+        "bytes": 63156,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off."
+      },
+      {
+        "role": "validation",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/library-03/parity.json",
+        "sha256": "d6a06ffc3c18592616b632857c609a108c9577329e238e4bb33262f0e154860b",
+        "bytes": 311453,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off."
+      },
+      {
+        "role": "blender-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/hull/final-03/renders/bow-cyan-pocket-close.png",
+        "sha256": "296e83e5f54c4329514b7aed48154f647d88418cfbf3f6af5d114f92b9f5d722",
+        "bytes": 1075102,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off."
+      },
+      {
+        "role": "blender-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/hull/final-03/renders/diagonal-cheek.png",
+        "sha256": "f36cfa8defa3cd321ba1b5a009fff5bff2ef750e4a34bb88d7c96dcbc617cfa0",
+        "bytes": 912777,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off."
+      },
+      {
+        "role": "blender-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/hull/final-03/renders/diagonal-sill.png",
+        "sha256": "82949dbe54d3b04b5e6f5f12dd3dd640847cb27ac249555faa93356cbb60fd0f",
+        "bytes": 829942,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off."
+      },
+      {
+        "role": "blender-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/hull/final-03/renders/fitted-bow-terminal-close.png",
+        "sha256": "14c9a4d6c9eaf0a5baa7db0451aaa0353b23028df6871a98d8a0b2097cfdc26f",
+        "bytes": 1428626,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off."
+      },
+      {
+        "role": "blender-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/hull/final-03/renders/fixed-height-examples.png",
+        "sha256": "a301b97dd53246b152314e9b49380487066ac62390ceda333f1fc974a192f109",
+        "bytes": 845306,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off."
+      },
+      {
+        "role": "blender-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/hull/final-03/renders/fixed-width-examples.png",
+        "sha256": "98460fbd386894d2c67641548c63f3591d43b249398bba3deb249de9230fd6d1",
+        "bytes": 1037199,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off."
+      },
+      {
+        "role": "blender-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/hull/final-03/renders/joined-cyan-pocket-close.png",
+        "sha256": "8f513f8b1bec1f57d1e7261df05dfa717db0c73e9b92b33f8c0b69436f5efd73",
+        "bytes": 1164199,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off."
+      },
+      {
+        "role": "blender-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/hull/final-03/renders/joined-identity-bay.png",
+        "sha256": "575f55659a977221e5e93311854e765cc93f42775bfadf7b00a3b57381487393",
+        "bytes": 1112004,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off."
+      },
+      {
+        "role": "blender-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/hull/final-03/renders/joined-identity-port.png",
+        "sha256": "3e4a3d4ab2953519484e628f4bd4ac0538e84e8715d4c678622d635a600699fc",
+        "bytes": 1076040,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off."
+      },
+      {
+        "role": "blender-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/hull/final-03/renders/joined-red-service-bay.png",
+        "sha256": "b4d82c07d3a93613b303a3e9f47e246d0f3ff2f17dd47b40e0384671037d4ce1",
+        "bytes": 1204757,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off."
+      },
+      {
+        "role": "blender-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/hull/final-03/renders/joined-utility-bay.png",
+        "sha256": "c9893e63d02113add4e7e9522e35c2bad85630ff1e0d3f1e8e9b89f2c2af3904",
+        "bytes": 1183104,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off."
+      },
+      {
+        "role": "blender-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/hull/final-03/renders/sill-and-transom.png",
+        "sha256": "3f21183a81e3389f4c9bd285ffd1e54ddf1420eda9662b9bbc5a3be4feba9035",
+        "bytes": 746403,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off."
+      },
+      {
+        "role": "blender-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/hull/final-03/renders/single-identity-port.png",
+        "sha256": "8c2f8d6ae104b2281beae50a722046da9897b1ed1f85243911281c1abc53b881",
+        "bytes": 1122259,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off."
+      },
+      {
+        "role": "blender-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/hull/final-03/renders/single-identity-standard.png",
+        "sha256": "af1481865092b84111747771a833307a78f48e41b15442f2a27a88d6a216d77a",
+        "bytes": 1149847,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/browser/final-03/concept.png",
+        "sha256": "406d9e1876c8d9c3aa244a6b986ff0ca4515de566ec34f34c2b81682ad845168",
+        "bytes": 350617,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off.",
+        "capture_context": "Exact native r004 final-03 library03 SHA2567e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3 through frozen actual game construction loader. Private qualified fixture,1400x950, zero errors,28new placements and0fallbacks. Cameras/source hashes in captures.json and bundle-provenance.json. Armor/bare/exploded are inspection modes; no authenticated gameplay, pressure/damage, publication or performance acceptance."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/browser/final-03/starboard.png",
+        "sha256": "740e3b475d819a0d8faa509f5f1584acb45619fdae2c6e50dcb15c0f5c446dc3",
+        "bytes": 358990,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off.",
+        "capture_context": "Exact native r004 final-03 library03 SHA2567e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3 through frozen actual game construction loader. Private qualified fixture,1400x950, zero errors,28new placements and0fallbacks. Cameras/source hashes in captures.json and bundle-provenance.json. Armor/bare/exploded are inspection modes; no authenticated gameplay, pressure/damage, publication or performance acceptance."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/browser/final-03/bow.png",
+        "sha256": "fa5a7ab32d8aefaf237b14ad92f4127d6e6f0b796b314fed46e7313dcda9ac79",
+        "bytes": 600465,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off.",
+        "capture_context": "Exact native r004 final-03 library03 SHA2567e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3 through frozen actual game construction loader. Private qualified fixture,1400x950, zero errors,28new placements and0fallbacks. Cameras/source hashes in captures.json and bundle-provenance.json. Armor/bare/exploded are inspection modes; no authenticated gameplay, pressure/damage, publication or performance acceptance."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/browser/final-03/joined.png",
+        "sha256": "ff0aa9805d33547411729d1f99c3e4465579152ac84719ba9c80f52d1315eb2a",
+        "bytes": 597258,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off.",
+        "capture_context": "Exact native r004 final-03 library03 SHA2567e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3 through frozen actual game construction loader. Private qualified fixture,1400x950, zero errors,28new placements and0fallbacks. Cameras/source hashes in captures.json and bundle-provenance.json. Armor/bare/exploded are inspection modes; no authenticated gameplay, pressure/damage, publication or performance acceptance."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/browser/final-03/gameplay.png",
+        "sha256": "af8c4ebbd92441f804a7c4cd21a24456771b829a5cad6195f7ce084a51050342",
+        "bytes": 306936,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off.",
+        "capture_context": "Exact native r004 final-03 library03 SHA2567e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3 through frozen actual game construction loader. Private qualified fixture,1400x950, zero errors,28new placements and0fallbacks. Cameras/source hashes in captures.json and bundle-provenance.json. Armor/bare/exploded are inspection modes; no authenticated gameplay, pressure/damage, publication or performance acceptance."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/browser/final-03/armor.png",
+        "sha256": "9ee571175ae5c049de1a950bd6d924e1a51562dd3a26eea47178f1330cffd3af",
+        "bytes": 189796,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off.",
+        "capture_context": "Exact native r004 final-03 library03 SHA2567e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3 through frozen actual game construction loader. Private qualified fixture,1400x950, zero errors,28new placements and0fallbacks. Cameras/source hashes in captures.json and bundle-provenance.json. Armor/bare/exploded are inspection modes; no authenticated gameplay, pressure/damage, publication or performance acceptance."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/browser/final-03/bare.png",
+        "sha256": "6f982d1b013aba722ca1371c013005f9319a47880858438e2fd4c74cb185580c",
+        "bytes": 262500,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off.",
+        "capture_context": "Exact native r004 final-03 library03 SHA2567e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3 through frozen actual game construction loader. Private qualified fixture,1400x950, zero errors,28new placements and0fallbacks. Cameras/source hashes in captures.json and bundle-provenance.json. Armor/bare/exploded are inspection modes; no authenticated gameplay, pressure/damage, publication or performance acceptance."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/browser/final-03/exploded.png",
+        "sha256": "1577b8639795f98a4aaf9e3bcc00cfb88ec489fb9ebb654ccdbe8711b2aa0c69",
+        "bytes": 384774,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off.",
+        "capture_context": "Exact native r004 final-03 library03 SHA2567e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3 through frozen actual game construction loader. Private qualified fixture,1400x950, zero errors,28new placements and0fallbacks. Cameras/source hashes in captures.json and bundle-provenance.json. Armor/bare/exploded are inspection modes; no authenticated gameplay, pressure/damage, publication or performance acceptance."
+      },
+      {
+        "role": "validation",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r004/browser/final-03/captures.json",
+        "sha256": "6a77d50cff52a956b393208d01bb0118639d9d30395232793513dc155d318ad4",
+        "bytes": 3308,
+        "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+        "notes": "Native r004 final-03 correction; exact revision candidate, not owner final sign-off."
+      }
+    ],
+    "review": {
+      "outcome": "pass",
+      "reviewer": "armor_review_resume",
+      "scope": "Native asset/reference-structure readiness only; exact14native+8game-loader captures. No owner sign-off, publication or authenticated gameplay claim.",
+      "recorded_at": "2026-09-14T08:16:18.548402+00:00",
+      "report": "framed-wayfarer/armor-correction-review-20260914/final-03-review.md",
+      "reportSha256": "47f2bc676a286cdd3a606a2bbefdc9727248d77c68c58ce0c2fea66a0bd31971",
+      "notes": "Independent native/reference review passed: four recorded defects repaired across14native and8exact game-loader images. Remaining concept differences and publication/authority limits are explicit in final-03-review.md."
+    },
+    "covered_native_variants": [
+      "armor-plain-w200-h300",
+      "armor-plain-w200-h300-port",
+      "armor-plain-pair-left-w200-h300",
+      "armor-plain-pair-left-w200-h300-port",
+      "armor-plain-pair-right-w200-h300",
+      "armor-plain-pair-right-w200-h300-port",
+      "armor-red-service-w200-h300",
+      "armor-red-service-w200-h300-port",
+      "armor-red-service-pair-left-w200-h300",
+      "armor-red-service-pair-left-w200-h300-port",
+      "armor-red-service-pair-right-w200-h300",
+      "armor-red-service-pair-right-w200-h300-port",
+      "armor-vent-w200-h300",
+      "armor-vent-w200-h300-port",
+      "armor-vent-pair-left-w200-h300",
+      "armor-vent-pair-left-w200-h300-port",
+      "armor-vent-pair-right-w200-h300",
+      "armor-vent-pair-right-w200-h300-port",
+      "armor-utility-w200-h300",
+      "armor-utility-w200-h300-port",
+      "armor-utility-pair-left-w200-h300",
+      "armor-utility-pair-left-w200-h300-port",
+      "armor-utility-pair-right-w200-h300",
+      "armor-utility-pair-right-w200-h300-port",
+      "armor-identity-w200-h300",
+      "armor-identity-w200-h300-port",
+      "armor-identity-pair-left-w200-h300",
+      "armor-identity-pair-left-w200-h300-port",
+      "armor-identity-pair-right-w200-h300",
+      "armor-identity-pair-right-w200-h300-port",
+      "armor-plain-w100-h300",
+      "armor-plain-w100-h300-port",
+      "armor-plain-w050-h300",
+      "armor-plain-w050-h300-port",
+      "armor-plain-w200-h075",
+      "armor-plain-w200-h075-port",
+      "armor-plain-w200-h150",
+      "armor-plain-w200-h150-port",
+      "armor-plain-w200-h225",
+      "armor-plain-w200-h225-port",
+      "front-sill-straight",
+      "front-sill-diagonal45",
+      "front-bow-transom",
+      "front-bow-bumper",
+      "front-diagonal-cheek",
+      "front-shoulder-transition"
+    ]
+  },
+  "latest_native_candidate": {
+    "design_revision": 6,
+    "hull_revision": 4,
+    "attempt": "final-03",
+    "runtime_library": "library-03",
+    "source_sha256": "49d7fb868d9572b3886ed102cfce624579128b08bfae56c6a407f33a904346fb",
+    "library_sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+    "status": "native-review-passed; not installed or owner-approved"
+  },
+  "historyScope": "Full canonical history remains in shared art library; this PR isolates revision6 and its exact evidence instead of importing unrelated library history."
+}

@@ -1,0 +1,7 @@
+{
+  "path": "models.tar.xz",
+  "sha256": "0aaec4cd05ab0baa601d725ebb1d19dacee372cf96365d1f193c768c9a3b8c87",
+  "bytes": 966656,
+  "models": 7,
+  "parity": "every archived byte matches original exported GLB"
+}

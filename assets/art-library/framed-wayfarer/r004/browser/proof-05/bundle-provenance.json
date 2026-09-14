@@ -1,0 +1,955 @@
+{
+  "candidate": "/root/wayfarer-framed-r001-candidate",
+  "outputs": [
+    {
+      "kind": "whole",
+      "sha256": "494044fe5bb2b3b830b48c22686dc83e7a932f9bb00021ce0f293754746a4c81",
+      "sources": [
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/flight.ts",
+          "sha256": "ed70e13d7a9a883916ac75eabc29436ef96c61d802c7a58d9daeca28059319c3"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/device-services.ts",
+          "sha256": "e838fab70691c4d05acc199fd359bd198a1f75662160d4688911d0ae9627452a"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/wayfarer-hull-r005-map.json",
+          "sha256": "7558c45b0e7cb38d956b94c3e95caa634039097250915bed49c84b039fde0c36"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/upgrade-wayfarer-hull-layout.ts",
+          "sha256": "33e8e3faf83803cd37f8a85363f8e2fa243844f641c58f479127be814497d307"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/wayfarer-hull-r005-proof.json",
+          "sha256": "97af19d9ccb13fa1fc531d4829b605f5c6bcd0192f61902118b0c450c84e9ca7"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-inset-visuals.json",
+          "sha256": "6b75192961d960c57559c0136d141b1a3de47a2a592c084b21a7b33562625dd3"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-inset-visuals.ts",
+          "sha256": "151e93c4e0079f131140bf47d0a41843a76b3f133c4a1a7147107334efe2af48"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-wayfarer-rebuild-visuals.json",
+          "sha256": "c3980fe3040107d7adf12a187dec2c2e696b2700993cbb4c8d81e65bc9002bae"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/wayfarer-rebuild-r002.json",
+          "sha256": "e939ffcd9b484fd6bbb61038c2bb697f703b39aa020c0045d0e3a7e8a70dfad3"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/layout-geometry.ts",
+          "sha256": "a45ec6de12701c9a41299375a31fe9bf61d2780a5643befbf86d8f2b733d171a"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/wayfarer-rebuild-contract.ts",
+          "sha256": "3a4ff3914ba4e28c0da5672f8fc27b2ef7c8a5acd3692ef1908b768da0d7b9d5"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/layout-boundary-treatments.ts",
+          "sha256": "0e8f3b3666795239e2da710c4a23dc44b16e3dbc9e96d4a080a0ae0c23003743"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-floor-interfaces.json",
+          "sha256": "76f3f46c8e479106059945be0bfe23000d235d7c1731ad3d91524c3d894e1d16"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/tileset-interfaces.ts",
+          "sha256": "1b16c1e80fb73ca55f4e7b5c17097f170b93b2920056311a8d5bd43082c969c2"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/tileset-fit.ts",
+          "sha256": "7f13abaa5d31d393bb4c558f545782627d0efe4d55fc681e1bf1263c7742c5d8"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/layout-native-floor.ts",
+          "sha256": "af4c383d985b1a20a0868e05a7630f363345350f65021d18188472a4502f2911"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/layout-opening-treatments.ts",
+          "sha256": "71989564b0639a111a8236233bfff0a96e0f25c0a1254e6b07cf976726c94453"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/layout-boundary-treatments.ts",
+          "sha256": "5bfb8fdfe95c7184f92f6698ce7ad49a17f79b210560b1a6dfd4759d0fbcf244"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/layout-envelope-admission.ts",
+          "sha256": "59c7273f6ba7e952a867048bd97a857e3c3813dde8d9d5edc3b511e4b0195dd2"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/layout-structure-admission.ts",
+          "sha256": "9a8bd5ee4e6f582e2c2bafaa8dfba95c090a19c3ec8c531f247d351da27a3605"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/layout-structure.ts",
+          "sha256": "71a10ca2d4f2a67807c71cce4d9652a74d3831b7d2cb998684cc28271dc35dfe"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/ship-layout.ts",
+          "sha256": "9259967b62e928360dc8ac504716bf16fc87d368a8b35ed3126f59810c4723e8"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/hull-decals.ts",
+          "sha256": "8dd1d6839d2e5d8572beec8e772bc2fe2d0b1457cc99283e30ba38b3a3da2e60"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/assembly.ts",
+          "sha256": "d837804dc31f1f42b12b0fc475490a21a41b4fce0e2644397a34fe3ab5503606"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/layout-validation.ts",
+          "sha256": "13407fd29c5a28f3755d3cfb7a66dc8033496778c1b7ef34cec9cfdc93017b7d"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/layout-compiler.ts",
+          "sha256": "4ff7c7c0a7e6d404eb13a68afb4eaaad018e35cbc821a1c8c460b9831505c560"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/ship-tileset-corner-spec.v1.json",
+          "sha256": "3c94dbaba8dfa33c466c23eb83b6b2a10637d27683b8ce055327000e94be2ac4"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/ship-tileset-internal-spec.v1.json",
+          "sha256": "f8dc612cf7ce856043431d98180a1f00d3cfac17031a2e1ca96e28118496f200"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/ship-tileset-union-junction-spec.v1.json",
+          "sha256": "46b06de54bfd81993716e0acea0d840ded94a6bcf45a0cc13a610ba0bddac6c4"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/layout-inset-native-plan.ts",
+          "sha256": "6e175d36740f9ac820f009a5ae97c9a2040a4c4ef09b7b703258b9daf72c91e8"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/wayfarer-rebuild-native-plan.ts",
+          "sha256": "736afec7ab6ef70ca89237de1b5cd25fff4317d260aab6f214855cec9992375e"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/wayfarer-starter-r001.json",
+          "sha256": "53a636ea9905e9ec953268e65b54ed7c59ed8e0f97158dac914958ad38f1e21b"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/wayfarer-walking-proof.json",
+          "sha256": "99b9f964e7b80775b7a034a874b741e22aa4ce64fe95285745c0241527cdac02"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/wayfarer-threshold-proof.json",
+          "sha256": "013d53faf5f2367f6b1c7ae808664092321c456d7096db538e19a29e91006099"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/storage-fixtures.ts",
+          "sha256": "20485c6b1b9f65ca270617f04231bc056149b2df9fea9e178b952ea52b72c291"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/interactions.ts",
+          "sha256": "f6ec473ec39d5ee92ce0dd9e27f0877ca7d33a1b0e6fcf09b66c5d18fbc9b4e7"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-collision.ts",
+          "sha256": "813fb97dcc863e87f8b6fdf05d3c4e1c1e880434a01c7b067cabacab4c4f0ad8"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/wayfarer-rebuild-walking.ts",
+          "sha256": "a4e5dd705ce8cfb02662c82473bfaec1086c44f7d530e8a879a7e8e19ee08a2a"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/wayfarer-rebuild-game.ts",
+          "sha256": "223610fcd94d152dca86bf3034bd5e08f545aacfa843d1c1ae489851a18c09c4"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/wayfarer-exterior-qualification.ts",
+          "sha256": "cf713736d4d0582a09105d190d6f820f94037a666866cf8ad5db5602a0e907cf"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-complex-visuals.json",
+          "sha256": "81ccd3920812c548d5829b6d183270c12f86200e854a8cea13e87bbdd55a835a"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/inset-visual-registry.ts",
+          "sha256": "cca3658d738c8575dfdf0a9450ba97a7234208dab1ec8caf5ed41e76533e806f"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/mesh-roles.ts",
+          "sha256": "071028183f930213e8692d530d72ca4abc7eb074a460531daf7629c0204bd4d1"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/floor-finishes.ts",
+          "sha256": "c02e3082121bcc4d9fe15400e2b18befbfd796ed518ad1ccb8047867394bc8d9"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/layout-floor-slabs.ts",
+          "sha256": "55041bfbf77a3fe862c717aa068549328d06efd6ceb93ed6eaede95bc8779df0"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/layout-doorway-plan.ts",
+          "sha256": "5698e1934d0d2399d82910bce51c29ee190310491be5fe5064fe862fe507aff1"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/layout-doorway-walls.ts",
+          "sha256": "995af858fd980d84ccb101c03ec4842dcdd75a6f3a06eac7855efc940a503f0d"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/ship-tileset-complex-perimeter-spec.v1.json",
+          "sha256": "cdb7ad0048144380c71c9dfdfe2ae80f3b356f4361fe45465ff5656c53bd73d2"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/layout-complex-perimeter.ts",
+          "sha256": "04a737794d5103673f0511c88b1f121904a39ac1cbb40380afc0f68ddcf11b7d"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/layout-complex-visual-plan.ts",
+          "sha256": "f0546b755f2ebb616b2fa6278dfb5b1b7a1c90589ae492c41a1bb17dde35c6a2"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/layout-supplemental-floors.ts",
+          "sha256": "1079bc21405a27a6e1fc0279873ee3af34b83921d42d9c58c7dfb5cee1854ae3"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-inset-boundaries.ts",
+          "sha256": "61304add41d9d6701bc9029693ba1c6033530ef17eeb4b7e1d590fdfc635c87c"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction.ts",
+          "sha256": "ccf1affab26ddcd60eb15b228d983b2048d2029f7a81db528ad0016e4cae5b95"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-topology.ts",
+          "sha256": "c8067b29793a9ea7d0c53e9bcb34e41b10f0d6fd596aab08e6912cbd3d5a5e1b"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-seal-motion.ts",
+          "sha256": "fb20ffb676a3b2d7d65526e84507f7f20017b1dd6e6bfaf8eb27065cad360547"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-airlock-plan.ts",
+          "sha256": "9e7feec1e1ddb4a0bfcf99d0ac80eaf46dd8f774f77c76254d4fac59870bf6ce"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-boundary-family-interfaces.json",
+          "sha256": "5ea059a89480c1903aa4071b723bb5ed78f5a32f8d43a44299caa12d18fb68bf"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-boundary-family.ts",
+          "sha256": "dd8d2e909224845033f39a295c53dc8a3fa9144027d92fd7bdb817545d431827"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-boundary-interfaces.json",
+          "sha256": "33347b32b1675fee00d36046a05de37013fa32eca6e2a4d671464da3499972d9"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-door-motion.ts",
+          "sha256": "844ccac6b7771460feed07b6d88db1100b1c019e565a4e6ed196051174c166a8"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-airlock-document.ts",
+          "sha256": "cb6ca596935072749c0e89f323817a6056c8cacaf015457736b1a71396d622ef"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-stairs-room.ts",
+          "sha256": "d2d7944a081034fdc63c94713b39b85421710a517a49d91bbc6ca62eb784c004"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-roof-interfaces.json",
+          "sha256": "8471481d11d22a2a8077ceb4582f3066053d7c85dc727f8b8b0a51bef2e6efcc"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-roof.ts",
+          "sha256": "71b1dc98191115d02fc60f06e8597ea6c2bdbc26850128b3070cf65614236cab"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-stairs.ts",
+          "sha256": "4fffa3a9e086aed2649cc9972a89257fb901b2c672da6ae82467ae848ccba09f"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-stairs-document.ts",
+          "sha256": "456d402e8ec6d7ef120b11f411214664a66f417ec532c7aa1e9d85197f6504a9"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-traversal-room.ts",
+          "sha256": "2e3fc781c7b71945903ba416e6245735deced57cfd8189a15c0249211aaa0114"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-traversal.ts",
+          "sha256": "596b8a5df24d20ab5ad53ecc3d1a6273138e3587b0a21e89a498f60a86a9add8"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-traversal-document.ts",
+          "sha256": "97a36073935d570395a48a8e1eadd1ef2564f0297eb8ac4f9336684874933763"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-pressure-room.ts",
+          "sha256": "306f06677d68f7b96af81f4edd5400273adc0ddbda91b3bdb7c89bb3dfad590c"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-pressure-layout.ts",
+          "sha256": "a3855b2697878312004d35d53245af64f44a151aa99da30fdb080489f073256d"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-native-room.ts",
+          "sha256": "9e9223514ed3283568b44d4b7e6510f95897cca71baf3361a0aa41df6a7e0cd5"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-native-room-published.ts",
+          "sha256": "9ffad638e66b8ad3935f91510b933353b5e406f31e90d4e4d6cf07db0f5c5d6a"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-pressure-document.ts",
+          "sha256": "496462818885d9dd35f70d62a417fd8ce649de220161e5f99615f165005451fa"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-boundary-family.ts",
+          "sha256": "28389ca9d326636c2e5bd1d1dc4e2650293a0470bf324ace5281826b3cfa146f"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-boundary.ts",
+          "sha256": "24639e38d6dbe1eb74814bb89046d47351dbc1bc1d956267d0ceecca35e86970"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-boundaries.ts",
+          "sha256": "bca2c22e685519e2164280a4aa0d1a91da00cd376b3213803d2f9722729b5bb3"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-roofs.ts",
+          "sha256": "0c0e7613fefe3044925c28f336e22fbbf07ee9de746dd502d447ba81b1a6a177"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-transactions.ts",
+          "sha256": "ab349b3fa3d00d07db5bfad6e1cadda2bebfc3cd21c842fcb6fae593dad85932"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/layout-inset-visual-plan.ts",
+          "sha256": "bc0c51a88d90110aafb0e676e5fe7ac331e35686dbf5334f94575a9876d3b7e6"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/inset-native-materials.ts",
+          "sha256": "d24740a020e795f3f5122c8ca1892905043a8dd24bc755f7593ec675c32b105a"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/structural-batches.ts",
+          "sha256": "86e3eb4352dbd5c7fa13c74bce2e0ae43453e5d430115c335ca173c906422e79"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/inset-native-batches.ts",
+          "sha256": "83c011bc9fda23f82e085d357d3ba2f0efbc0f07c720b2e72003b4bb60d29da2"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/scene-material-registration.ts",
+          "sha256": "1b286c8403cdceda8a1a08daef9accefee86cd29de6eb4ff1b61508524f1f7dd"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/material-setup.ts",
+          "sha256": "f95608fbbff98af8aa88531209cd894877bea875e41ead947d3836453d2e6516"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/inset-native-visuals.ts",
+          "sha256": "4b051d706010a0d44959f3d1c1c21dbb0ede48c107fa1bc13efed75fc9db622d"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/cutaway.ts",
+          "sha256": "0c0d42dbbfe6f5baf5faf99febf1bba5c841e834f04f5eaa56e2a10d25a84ac0"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/inset-wall-cutaway.ts",
+          "sha256": "76440cd5576da21efde8d0439f9a4e61931e4bf06a41de6918b3494cea1cf3f2"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/equipment-lighting.ts",
+          "sha256": "f4adaaa517e3d461e070e76fe57b632ae8873981135d463f5b4329bc11642e1e"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-airlock-room.ts",
+          "sha256": "5402299c5993a36e57c383267b520c070c22b1084479aa18576036690887223f"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-airlock-published.ts",
+          "sha256": "9b4192378026e32b0f81c41727d86016b787862cee4856268040c702a7c48b20"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/construction-door-seals.ts",
+          "sha256": "273b9cc9ac635659607b0e3e5e1676014f7869eac2b763e48022375be9271859"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/native-airlock-scene.ts",
+          "sha256": "58f2accf8bd27c3cbdd029d1e01fbecb2b0f5c74d2ae69e9cdcfe3a82336d5b1"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/authored-material-pool.ts",
+          "sha256": "383b573c0c63dd8fb425b173f47ded22d1dc12e2a0988387d70d93f2f18ced9e"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/framed-wayfarer-visuals.json",
+          "sha256": "51d225e900a0267c9f8ca5d0202521bdc1c21e420a3ec91ec3140844bd607410"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/framed-wayfarer-visuals.ts",
+          "sha256": "5172a24a29104545acf9698d955dac665943727c8c443ee4a44ddcc0bc9edfe9"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/framed-engine-prototype.ts",
+          "sha256": "ecc9503b6bd644fd893ee727bc9bcc9a1e349af4ecf1fd7b3bb71f2042945b54"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/native-mesh-group.ts",
+          "sha256": "7ec0ea60fc3fdc477da6286b046736f51dcaa3afc60eab93d3efd925875c28da"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/static-material-batches.ts",
+          "sha256": "ea758ed177e588cce8b5abfd0cc16370c953f4cf21014ae29ad7c610b2182b0f"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/static-transform-cache.ts",
+          "sha256": "7488467114eeb88b8915b2702904ee50aec197c431e1c0fcfacaa04fe9752002"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/instanceable-assets.json",
+          "sha256": "1ab0599ced57c09dc254ccc01e90f174bbfc50f374dbf7b587f6dca1377c6b4d"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/placement-instance.ts",
+          "sha256": "a8b6282a460212df8128d3294f7a32262c67df840b7a5ac651443e595afb6c9e"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/wayfarer-starter.ts",
+          "sha256": "72ed78705210f42ed7a5b8bd5d99550949a61ec7f9787c80c36a5ca6e101a427"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/wayfarer-threshold.ts",
+          "sha256": "1b64d243d82282d7ca2879ebbee8abf10c9f0bd84a337406b521637ca6c0c6c9"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/wayfarer-walking-bindings.ts",
+          "sha256": "e666979c7094f693ac595949648ed645d3deb27569875c9a5ecc40cdc721d2c7"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/wayfarer-refit-audit.ts",
+          "sha256": "b5c1206a7fe04cd88119372323234a8b98f3ed0d147931b81e9b2ea412cedec9"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/construction-refit-attachments.ts",
+          "sha256": "d1b2e4fb14b525ad549532f96ea1612b7a29760bbe6a1270d89dfeac6b7d2405"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/wayfarer-conversion-candidate.ts",
+          "sha256": "dca7ed7d9ac2a0a8669cecdaeb5dbdef5404040338670f5db430b2906753f9e8"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/construction-authored-assembly.ts",
+          "sha256": "4785abf5c09855a597079f12a0156ef214701c40245db89ef03968f500069cf0"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/construction-traversal.ts",
+          "sha256": "a11c9afda799b848d08f2d00923263bec80b9dbfc4a52721f8e61f9ce8d7928d"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/construction-pressure-room.ts",
+          "sha256": "4dd876ebff6b35302eb25b0b8fb607679f0d2db7d5f55caf7bf3a6c00f6f5945"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/construction-boundaries.ts",
+          "sha256": "9338bc1fb057c3e77782073eb3e787f083e0c52909063fa2ab57dd7c04f440da"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/construction-roofs.ts",
+          "sha256": "b13da2a9c812167994d4468c637adb94eb69c971946db149b31b5a5983862ed8"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/hull-decals.ts",
+          "sha256": "490a63143f6463dcce1e76f980e0d582a3b0234f9740ba68f5b8b7e879955d26"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/installed-equipment.ts",
+          "sha256": "9c553242cd4564dcbe1a0fd097417e4e3f95f871e0cc825f2d996db9830fab44"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/construction-instance.ts",
+          "sha256": "25afecbf18b806d8ee388729947114c4d3e5e986ca9509a9410cbda6b061638e"
+        },
+        {
+          "path": "/root/sidereal_spacetime/scripts/art_library/armor_cassette_browser.mjs",
+          "sha256": "4db4177917c851676a7edb7a1242dd10d2ced67c877f06a2491c3f9ec63efce0"
+        }
+      ],
+      "bindingOverrideSha256": "5d7f6cfdef78bf3279a794914300f98b4f4f17323aa6ff1a413f6aa0b72e41c2"
+    },
+    {
+      "kind": "bare",
+      "sha256": "494044fe5bb2b3b830b48c22686dc83e7a932f9bb00021ce0f293754746a4c81",
+      "sources": [
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/flight.ts",
+          "sha256": "ed70e13d7a9a883916ac75eabc29436ef96c61d802c7a58d9daeca28059319c3"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/device-services.ts",
+          "sha256": "e838fab70691c4d05acc199fd359bd198a1f75662160d4688911d0ae9627452a"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/wayfarer-hull-r005-map.json",
+          "sha256": "7558c45b0e7cb38d956b94c3e95caa634039097250915bed49c84b039fde0c36"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/upgrade-wayfarer-hull-layout.ts",
+          "sha256": "33e8e3faf83803cd37f8a85363f8e2fa243844f641c58f479127be814497d307"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/wayfarer-hull-r005-proof.json",
+          "sha256": "97af19d9ccb13fa1fc531d4829b605f5c6bcd0192f61902118b0c450c84e9ca7"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-inset-visuals.json",
+          "sha256": "6b75192961d960c57559c0136d141b1a3de47a2a592c084b21a7b33562625dd3"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-inset-visuals.ts",
+          "sha256": "151e93c4e0079f131140bf47d0a41843a76b3f133c4a1a7147107334efe2af48"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-wayfarer-rebuild-visuals.json",
+          "sha256": "c3980fe3040107d7adf12a187dec2c2e696b2700993cbb4c8d81e65bc9002bae"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/wayfarer-rebuild-r002.json",
+          "sha256": "e939ffcd9b484fd6bbb61038c2bb697f703b39aa020c0045d0e3a7e8a70dfad3"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/layout-geometry.ts",
+          "sha256": "a45ec6de12701c9a41299375a31fe9bf61d2780a5643befbf86d8f2b733d171a"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/wayfarer-rebuild-contract.ts",
+          "sha256": "3a4ff3914ba4e28c0da5672f8fc27b2ef7c8a5acd3692ef1908b768da0d7b9d5"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/layout-boundary-treatments.ts",
+          "sha256": "0e8f3b3666795239e2da710c4a23dc44b16e3dbc9e96d4a080a0ae0c23003743"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-floor-interfaces.json",
+          "sha256": "76f3f46c8e479106059945be0bfe23000d235d7c1731ad3d91524c3d894e1d16"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/tileset-interfaces.ts",
+          "sha256": "1b16c1e80fb73ca55f4e7b5c17097f170b93b2920056311a8d5bd43082c969c2"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/tileset-fit.ts",
+          "sha256": "7f13abaa5d31d393bb4c558f545782627d0efe4d55fc681e1bf1263c7742c5d8"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/layout-native-floor.ts",
+          "sha256": "af4c383d985b1a20a0868e05a7630f363345350f65021d18188472a4502f2911"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/layout-opening-treatments.ts",
+          "sha256": "71989564b0639a111a8236233bfff0a96e0f25c0a1254e6b07cf976726c94453"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/layout-boundary-treatments.ts",
+          "sha256": "5bfb8fdfe95c7184f92f6698ce7ad49a17f79b210560b1a6dfd4759d0fbcf244"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/layout-envelope-admission.ts",
+          "sha256": "59c7273f6ba7e952a867048bd97a857e3c3813dde8d9d5edc3b511e4b0195dd2"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/layout-structure-admission.ts",
+          "sha256": "9a8bd5ee4e6f582e2c2bafaa8dfba95c090a19c3ec8c531f247d351da27a3605"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/layout-structure.ts",
+          "sha256": "71a10ca2d4f2a67807c71cce4d9652a74d3831b7d2cb998684cc28271dc35dfe"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/ship-layout.ts",
+          "sha256": "9259967b62e928360dc8ac504716bf16fc87d368a8b35ed3126f59810c4723e8"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/hull-decals.ts",
+          "sha256": "8dd1d6839d2e5d8572beec8e772bc2fe2d0b1457cc99283e30ba38b3a3da2e60"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/assembly.ts",
+          "sha256": "d837804dc31f1f42b12b0fc475490a21a41b4fce0e2644397a34fe3ab5503606"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/layout-validation.ts",
+          "sha256": "13407fd29c5a28f3755d3cfb7a66dc8033496778c1b7ef34cec9cfdc93017b7d"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/layout-compiler.ts",
+          "sha256": "4ff7c7c0a7e6d404eb13a68afb4eaaad018e35cbc821a1c8c460b9831505c560"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/ship-tileset-corner-spec.v1.json",
+          "sha256": "3c94dbaba8dfa33c466c23eb83b6b2a10637d27683b8ce055327000e94be2ac4"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/ship-tileset-internal-spec.v1.json",
+          "sha256": "f8dc612cf7ce856043431d98180a1f00d3cfac17031a2e1ca96e28118496f200"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/ship-tileset-union-junction-spec.v1.json",
+          "sha256": "46b06de54bfd81993716e0acea0d840ded94a6bcf45a0cc13a610ba0bddac6c4"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/layout-inset-native-plan.ts",
+          "sha256": "6e175d36740f9ac820f009a5ae97c9a2040a4c4ef09b7b703258b9daf72c91e8"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/wayfarer-rebuild-native-plan.ts",
+          "sha256": "736afec7ab6ef70ca89237de1b5cd25fff4317d260aab6f214855cec9992375e"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/wayfarer-starter-r001.json",
+          "sha256": "53a636ea9905e9ec953268e65b54ed7c59ed8e0f97158dac914958ad38f1e21b"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/wayfarer-walking-proof.json",
+          "sha256": "99b9f964e7b80775b7a034a874b741e22aa4ce64fe95285745c0241527cdac02"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/wayfarer-threshold-proof.json",
+          "sha256": "013d53faf5f2367f6b1c7ae808664092321c456d7096db538e19a29e91006099"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/storage-fixtures.ts",
+          "sha256": "20485c6b1b9f65ca270617f04231bc056149b2df9fea9e178b952ea52b72c291"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/interactions.ts",
+          "sha256": "f6ec473ec39d5ee92ce0dd9e27f0877ca7d33a1b0e6fcf09b66c5d18fbc9b4e7"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-collision.ts",
+          "sha256": "813fb97dcc863e87f8b6fdf05d3c4e1c1e880434a01c7b067cabacab4c4f0ad8"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/wayfarer-rebuild-walking.ts",
+          "sha256": "a4e5dd705ce8cfb02662c82473bfaec1086c44f7d530e8a879a7e8e19ee08a2a"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/wayfarer-rebuild-game.ts",
+          "sha256": "223610fcd94d152dca86bf3034bd5e08f545aacfa843d1c1ae489851a18c09c4"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/wayfarer-exterior-qualification.ts",
+          "sha256": "cf713736d4d0582a09105d190d6f820f94037a666866cf8ad5db5602a0e907cf"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-complex-visuals.json",
+          "sha256": "81ccd3920812c548d5829b6d183270c12f86200e854a8cea13e87bbdd55a835a"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/inset-visual-registry.ts",
+          "sha256": "cca3658d738c8575dfdf0a9450ba97a7234208dab1ec8caf5ed41e76533e806f"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/mesh-roles.ts",
+          "sha256": "071028183f930213e8692d530d72ca4abc7eb074a460531daf7629c0204bd4d1"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/floor-finishes.ts",
+          "sha256": "c02e3082121bcc4d9fe15400e2b18befbfd796ed518ad1ccb8047867394bc8d9"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/layout-floor-slabs.ts",
+          "sha256": "55041bfbf77a3fe862c717aa068549328d06efd6ceb93ed6eaede95bc8779df0"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/layout-doorway-plan.ts",
+          "sha256": "5698e1934d0d2399d82910bce51c29ee190310491be5fe5064fe862fe507aff1"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/layout-doorway-walls.ts",
+          "sha256": "995af858fd980d84ccb101c03ec4842dcdd75a6f3a06eac7855efc940a503f0d"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/ship-tileset-complex-perimeter-spec.v1.json",
+          "sha256": "cdb7ad0048144380c71c9dfdfe2ae80f3b356f4361fe45465ff5656c53bd73d2"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/layout-complex-perimeter.ts",
+          "sha256": "04a737794d5103673f0511c88b1f121904a39ac1cbb40380afc0f68ddcf11b7d"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/layout-complex-visual-plan.ts",
+          "sha256": "f0546b755f2ebb616b2fa6278dfb5b1b7a1c90589ae492c41a1bb17dde35c6a2"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/layout-supplemental-floors.ts",
+          "sha256": "1079bc21405a27a6e1fc0279873ee3af34b83921d42d9c58c7dfb5cee1854ae3"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-inset-boundaries.ts",
+          "sha256": "61304add41d9d6701bc9029693ba1c6033530ef17eeb4b7e1d590fdfc635c87c"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction.ts",
+          "sha256": "ccf1affab26ddcd60eb15b228d983b2048d2029f7a81db528ad0016e4cae5b95"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-topology.ts",
+          "sha256": "c8067b29793a9ea7d0c53e9bcb34e41b10f0d6fd596aab08e6912cbd3d5a5e1b"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-seal-motion.ts",
+          "sha256": "fb20ffb676a3b2d7d65526e84507f7f20017b1dd6e6bfaf8eb27065cad360547"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-airlock-plan.ts",
+          "sha256": "9e7feec1e1ddb4a0bfcf99d0ac80eaf46dd8f774f77c76254d4fac59870bf6ce"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-boundary-family-interfaces.json",
+          "sha256": "5ea059a89480c1903aa4071b723bb5ed78f5a32f8d43a44299caa12d18fb68bf"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-boundary-family.ts",
+          "sha256": "dd8d2e909224845033f39a295c53dc8a3fa9144027d92fd7bdb817545d431827"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-boundary-interfaces.json",
+          "sha256": "33347b32b1675fee00d36046a05de37013fa32eca6e2a4d671464da3499972d9"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-door-motion.ts",
+          "sha256": "844ccac6b7771460feed07b6d88db1100b1c019e565a4e6ed196051174c166a8"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-airlock-document.ts",
+          "sha256": "cb6ca596935072749c0e89f323817a6056c8cacaf015457736b1a71396d622ef"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-stairs-room.ts",
+          "sha256": "d2d7944a081034fdc63c94713b39b85421710a517a49d91bbc6ca62eb784c004"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-roof-interfaces.json",
+          "sha256": "8471481d11d22a2a8077ceb4582f3066053d7c85dc727f8b8b0a51bef2e6efcc"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-roof.ts",
+          "sha256": "71b1dc98191115d02fc60f06e8597ea6c2bdbc26850128b3070cf65614236cab"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-stairs.ts",
+          "sha256": "4fffa3a9e086aed2649cc9972a89257fb901b2c672da6ae82467ae848ccba09f"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-stairs-document.ts",
+          "sha256": "456d402e8ec6d7ef120b11f411214664a66f417ec532c7aa1e9d85197f6504a9"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-traversal-room.ts",
+          "sha256": "2e3fc781c7b71945903ba416e6245735deced57cfd8189a15c0249211aaa0114"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-traversal.ts",
+          "sha256": "596b8a5df24d20ab5ad53ecc3d1a6273138e3587b0a21e89a498f60a86a9add8"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-traversal-document.ts",
+          "sha256": "97a36073935d570395a48a8e1eadd1ef2564f0297eb8ac4f9336684874933763"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-pressure-room.ts",
+          "sha256": "306f06677d68f7b96af81f4edd5400273adc0ddbda91b3bdb7c89bb3dfad590c"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-pressure-layout.ts",
+          "sha256": "a3855b2697878312004d35d53245af64f44a151aa99da30fdb080489f073256d"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-native-room.ts",
+          "sha256": "9e9223514ed3283568b44d4b7e6510f95897cca71baf3361a0aa41df6a7e0cd5"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-native-room-published.ts",
+          "sha256": "9ffad638e66b8ad3935f91510b933353b5e406f31e90d4e4d6cf07db0f5c5d6a"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-pressure-document.ts",
+          "sha256": "496462818885d9dd35f70d62a417fd8ce649de220161e5f99615f165005451fa"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-boundary-family.ts",
+          "sha256": "28389ca9d326636c2e5bd1d1dc4e2650293a0470bf324ace5281826b3cfa146f"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-boundary.ts",
+          "sha256": "24639e38d6dbe1eb74814bb89046d47351dbc1bc1d956267d0ceecca35e86970"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-boundaries.ts",
+          "sha256": "bca2c22e685519e2164280a4aa0d1a91da00cd376b3213803d2f9722729b5bb3"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-roofs.ts",
+          "sha256": "0c0e7613fefe3044925c28f336e22fbbf07ee9de746dd502d447ba81b1a6a177"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-transactions.ts",
+          "sha256": "ab349b3fa3d00d07db5bfad6e1cadda2bebfc3cd21c842fcb6fae593dad85932"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/layout-inset-visual-plan.ts",
+          "sha256": "bc0c51a88d90110aafb0e676e5fe7ac331e35686dbf5334f94575a9876d3b7e6"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/inset-native-materials.ts",
+          "sha256": "d24740a020e795f3f5122c8ca1892905043a8dd24bc755f7593ec675c32b105a"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/structural-batches.ts",
+          "sha256": "86e3eb4352dbd5c7fa13c74bce2e0ae43453e5d430115c335ca173c906422e79"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/inset-native-batches.ts",
+          "sha256": "83c011bc9fda23f82e085d357d3ba2f0efbc0f07c720b2e72003b4bb60d29da2"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/scene-material-registration.ts",
+          "sha256": "1b286c8403cdceda8a1a08daef9accefee86cd29de6eb4ff1b61508524f1f7dd"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/material-setup.ts",
+          "sha256": "f95608fbbff98af8aa88531209cd894877bea875e41ead947d3836453d2e6516"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/inset-native-visuals.ts",
+          "sha256": "4b051d706010a0d44959f3d1c1c21dbb0ede48c107fa1bc13efed75fc9db622d"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/cutaway.ts",
+          "sha256": "0c0d42dbbfe6f5baf5faf99febf1bba5c841e834f04f5eaa56e2a10d25a84ac0"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/inset-wall-cutaway.ts",
+          "sha256": "76440cd5576da21efde8d0439f9a4e61931e4bf06a41de6918b3494cea1cf3f2"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/equipment-lighting.ts",
+          "sha256": "f4adaaa517e3d461e070e76fe57b632ae8873981135d463f5b4329bc11642e1e"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/construction-airlock-room.ts",
+          "sha256": "5402299c5993a36e57c383267b520c070c22b1084479aa18576036690887223f"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/construction-airlock-published.ts",
+          "sha256": "9b4192378026e32b0f81c41727d86016b787862cee4856268040c702a7c48b20"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/construction-door-seals.ts",
+          "sha256": "273b9cc9ac635659607b0e3e5e1676014f7869eac2b763e48022375be9271859"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/native-airlock-scene.ts",
+          "sha256": "58f2accf8bd27c3cbdd029d1e01fbecb2b0f5c74d2ae69e9cdcfe3a82336d5b1"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/authored-material-pool.ts",
+          "sha256": "383b573c0c63dd8fb425b173f47ded22d1dc12e2a0988387d70d93f2f18ced9e"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/framed-wayfarer-visuals.json",
+          "sha256": "51d225e900a0267c9f8ca5d0202521bdc1c21e420a3ec91ec3140844bd607410"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/framed-wayfarer-visuals.ts",
+          "sha256": "5172a24a29104545acf9698d955dac665943727c8c443ee4a44ddcc0bc9edfe9"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/framed-engine-prototype.ts",
+          "sha256": "ecc9503b6bd644fd893ee727bc9bcc9a1e349af4ecf1fd7b3bb71f2042945b54"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/native-mesh-group.ts",
+          "sha256": "7ec0ea60fc3fdc477da6286b046736f51dcaa3afc60eab93d3efd925875c28da"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/static-material-batches.ts",
+          "sha256": "ea758ed177e588cce8b5abfd0cc16370c953f4cf21014ae29ad7c610b2182b0f"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/static-transform-cache.ts",
+          "sha256": "7488467114eeb88b8915b2702904ee50aec197c431e1c0fcfacaa04fe9752002"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/instanceable-assets.json",
+          "sha256": "1ab0599ced57c09dc254ccc01e90f174bbfc50f374dbf7b587f6dca1377c6b4d"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/placement-instance.ts",
+          "sha256": "a8b6282a460212df8128d3294f7a32262c67df840b7a5ac651443e595afb6c9e"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/wayfarer-starter.ts",
+          "sha256": "72ed78705210f42ed7a5b8bd5d99550949a61ec7f9787c80c36a5ca6e101a427"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/wayfarer-threshold.ts",
+          "sha256": "1b64d243d82282d7ca2879ebbee8abf10c9f0bd84a337406b521637ca6c0c6c9"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/wayfarer-walking-bindings.ts",
+          "sha256": "e666979c7094f693ac595949648ed645d3deb27569875c9a5ecc40cdc721d2c7"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/sim/src/wayfarer-refit-audit.ts",
+          "sha256": "b5c1206a7fe04cd88119372323234a8b98f3ed0d147931b81e9b2ea412cedec9"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/construction-refit-attachments.ts",
+          "sha256": "d1b2e4fb14b525ad549532f96ea1612b7a29760bbe6a1270d89dfeac6b7d2405"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/content/src/wayfarer-conversion-candidate.ts",
+          "sha256": "dca7ed7d9ac2a0a8669cecdaeb5dbdef5404040338670f5db430b2906753f9e8"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/construction-authored-assembly.ts",
+          "sha256": "4785abf5c09855a597079f12a0156ef214701c40245db89ef03968f500069cf0"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/construction-traversal.ts",
+          "sha256": "a11c9afda799b848d08f2d00923263bec80b9dbfc4a52721f8e61f9ce8d7928d"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/construction-pressure-room.ts",
+          "sha256": "4dd876ebff6b35302eb25b0b8fb607679f0d2db7d5f55caf7bf3a6c00f6f5945"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/construction-boundaries.ts",
+          "sha256": "9338bc1fb057c3e77782073eb3e787f083e0c52909063fa2ab57dd7c04f440da"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/construction-roofs.ts",
+          "sha256": "b13da2a9c812167994d4468c637adb94eb69c971946db149b31b5a5983862ed8"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/hull-decals.ts",
+          "sha256": "490a63143f6463dcce1e76f980e0d582a3b0234f9740ba68f5b8b7e879955d26"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/installed-equipment.ts",
+          "sha256": "9c553242cd4564dcbe1a0fd097417e4e3f95f871e0cc825f2d996db9830fab44"
+        },
+        {
+          "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/construction-instance.ts",
+          "sha256": "25afecbf18b806d8ee388729947114c4d3e5e986ca9509a9410cbda6b061638e"
+        },
+        {
+          "path": "/root/sidereal_spacetime/scripts/art_library/armor_cassette_browser.mjs",
+          "sha256": "4db4177917c851676a7edb7a1242dd10d2ced67c877f06a2491c3f9ec63efce0"
+        }
+      ],
+      "bindingOverrideSha256": "5d7f6cfdef78bf3279a794914300f98b4f4f17323aa6ff1a413f6aa0b72e41c2"
+    }
+  ]
+}

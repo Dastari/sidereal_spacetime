@@ -1,0 +1,1278 @@
+{
+  "schema": "sidereal.presentation-revision.v1",
+  "revision": 1,
+  "entries": [
+    {
+      "assetId": "part-0211e6d7960f233accb7",
+      "sources": [
+        {
+          "category": "superstructure",
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.8075000047683716,
+              1.0,
+              3.0
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "9fc96538375bfdec44b3ac832d9100b1cdfcbd2f751654fa30ff540bddb1440a"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-identity-pair-right-w200-h300-port--"
+      }
+    },
+    {
+      "assetId": "part-08dac7402c764c4d89d7",
+      "sources": [
+        {
+          "category": "superstructure",
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.8424999713897705,
+              1.0,
+              3.0
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "c84f5950fa0e31e1f966e043706993f1e2b2edaaf6149aa5f725f93eb472b995"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-utility-pair-right-w200-h300-port--"
+      }
+    },
+    {
+      "assetId": "part-151314086c02e30e06f4",
+      "sources": [
+        {
+          "category": "superstructure",
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.8075000047683716,
+              1.0,
+              3.0
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "3e1fa2b7d8b302e602844c9ae0ae38a5c7c2b6090d86b05fe70bbb5852de4afd"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-plain-pair-left-w200-h300-port--"
+      }
+    },
+    {
+      "assetId": "part-357cf42235c1a190e1d6",
+      "sources": [
+        {
+          "category": "superstructure",
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.8075000047683716,
+              1.0,
+              3.0
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "3b25ca7fcde2fd054076d0b84fc463701230ef2f68cfbc638a1d44173a7d74a9"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-red-service-pair-left-w200-h300-port--"
+      }
+    },
+    {
+      "assetId": "part-393498d8c8af6149ef28",
+      "sources": [
+        {
+          "category": "engine",
+          "bounds": {
+            "min": [
+              -0.4375,
+              -0.5,
+              0
+            ],
+            "max": [
+              0.5,
+              0.5625,
+              0.9375
+            ]
+          },
+          "nodes": [
+            "GEO-part-393498d8c8af6149ef28--drives-retro--1"
+          ],
+          "visualSha256": null
+        }
+      ],
+      "visual": {
+        "url": "/assets/assembly/native/framed-wayfarer/runtime-r001/engines.glb",
+        "sha256": "3236a0175f567760c0b4307931e475f492224b5d607ab771a558685d583fc54c",
+        "designId": "shipyard.wayfarer.framed.engines",
+        "revision": 3,
+        "bounds": {
+          "min": [
+            -0.4375,
+            -0.5,
+            0.0
+          ],
+          "max": [
+            0.5,
+            0.5,
+            0.9375
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-part-393498d8c8af6149ef28--drives-retro--1"
+      }
+    },
+    {
+      "assetId": "part-437732483fa4d7acbcbc",
+      "sources": [
+        {
+          "category": "superstructure",
+          "bounds": {
+            "min": [
+              0,
+              0,
+              0
+            ],
+            "max": [
+              4.024903774261475,
+              2.075246572494507,
+              1.5499999523162842
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "6992c7d5fb25376f3d12d881f66ab002108ed275a63661ca84025968ca3cadfe"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max": [
+            4.0225348472595215,
+            2.0625,
+            1.5499999523162842
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-front-diagonal-cheek--"
+      }
+    },
+    {
+      "assetId": "part-4c25a5fd9da0bce537f5",
+      "sources": [
+        {
+          "category": "wall",
+          "bounds": {
+            "min": [
+              0,
+              -0.03700000420212746,
+              0
+            ],
+            "max": [
+              2,
+              0.375,
+              1.125
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "59dd466fd25f5555fd8d29bd4183c2e5c7dd99884586bc7f251a2736fbe396d1"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -0.03125,
+            0.0
+          ],
+          "max": [
+            2.0,
+            0.375,
+            1.125
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-front-sill-straight--"
+      }
+    },
+    {
+      "assetId": "part-4d754a140cc642ded990",
+      "sources": [
+        {
+          "category": "engine",
+          "bounds": {
+            "min": [
+              -1.25,
+              -2.4375,
+              0
+            ],
+            "max": [
+              1.3125,
+              2.5,
+              2.6875
+            ]
+          },
+          "nodes": [
+            "GEO-part-4d754a140cc642ded990--drives-main-3.6"
+          ],
+          "visualSha256": null
+        }
+      ],
+      "visual": {
+        "url": "/assets/assembly/native/framed-wayfarer/runtime-r001/engines.glb",
+        "sha256": "3236a0175f567760c0b4307931e475f492224b5d607ab771a558685d583fc54c",
+        "designId": "shipyard.wayfarer.framed.engines",
+        "revision": 3,
+        "bounds": {
+          "min": [
+            -1.25,
+            -2.4375,
+            0.0
+          ],
+          "max": [
+            1.3125,
+            2.5,
+            2.6875
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-part-4d754a140cc642ded990--drives-main-3.6"
+      }
+    },
+    {
+      "assetId": "part-540c83fc49ee792d9a4a",
+      "sources": [
+        {
+          "category": "wall",
+          "bounds": {
+            "min": [
+              0,
+              0.0176776684820652,
+              0
+            ],
+            "max": [
+              1.982322335243225,
+              2,
+              1.125
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "118f1f2406b0c699517be811d77e585f49d5b9c7d650013f873885dbe74329a5"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            0.03500594571232796,
+            0.0
+          ],
+          "max": [
+            1.964993953704834,
+            2.0,
+            1.125
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-front-sill-diagonal45--"
+      }
+    },
+    {
+      "assetId": "part-5b7cee528aeb6959eb7c",
+      "sources": [
+        {
+          "category": "superstructure",
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.8075000047683716,
+              1.0,
+              3.0
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "ae5e7d1e0100d5a1fcf7cc341a2d3504cbd0eb8f98548e9af2f73c3f8aee861f"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-vent-w200-h300-port--"
+      }
+    },
+    {
+      "assetId": "part-5cd7ebc9a8d894fb2b3a",
+      "sources": [
+        {
+          "category": "superstructure",
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.8075000047683716,
+              1.0,
+              3.0
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "a47626d013c69d22eeef2a6e55b87b4fc70ccecd0f01ff4ae7b84188e03f6627"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-identity-pair-left-w200-h300--"
+      }
+    },
+    {
+      "assetId": "part-62c859bcc51b318b2c65",
+      "sources": [
+        {
+          "category": "superstructure",
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.8075000047683716,
+              1.0,
+              3.0
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "5f9dcc01666d63a4aa702b92f50a8abb4ccbe99e04b11cb87bb9496ac2c07258"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-identity-pair-left-w200-h300-port--"
+      }
+    },
+    {
+      "assetId": "part-63a0c40bbb71cfeba4dd",
+      "sources": [
+        {
+          "category": "superstructure",
+          "bounds": {
+            "min": [
+              0,
+              0,
+              0
+            ],
+            "max": [
+              4,
+              0.6324999928474426,
+              1.5499999523162842
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "3d0fd05cf021b3b5badf68e2e9f1011b5b621e64355390f61508a18a5e4cf61d"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max": [
+            4.0,
+            0.625,
+            1.5499999523162842
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-front-bow-bumper--"
+      }
+    },
+    {
+      "assetId": "part-64b068a5a6e987c1d518",
+      "sources": [
+        {
+          "category": "superstructure",
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.8075000047683716,
+              1.0,
+              3.0
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "00b58ac661647cf4be62502e7e92face84f918524eb43cabc6440fd6b3571037"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-identity-pair-right-w200-h300--"
+      }
+    },
+    {
+      "assetId": "part-679e9e22f0af30b070a3",
+      "sources": [
+        {
+          "category": "superstructure",
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.8075000047683716,
+              1.0,
+              3.0
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "b2905c1756dfa3e13467be9e3d35b03017cb38d64d984ffb02e7efeb3322d559"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-red-service-pair-left-w200-h300--"
+      }
+    },
+    {
+      "assetId": "part-77e9c39b3c50d6dd66f7",
+      "sources": [
+        {
+          "category": "superstructure",
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.8075000047683716,
+              1.0,
+              3.0
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "83162077528937afc25358b0a88e6b58e7151a4981f3030df853b6438ac5fd77"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-plain-pair-left-w200-h300--"
+      }
+    },
+    {
+      "assetId": "part-9ab3a7a3dbc68586c530",
+      "sources": [
+        {
+          "category": "superstructure",
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.8075000047683716,
+              1.0,
+              3.0
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "c7bb6a556bb6994ace8c1bdbd41ccd5fd4eba7bf8d6fdf1058e70a470854eb40"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-plain-pair-right-w200-h300-port--"
+      }
+    },
+    {
+      "assetId": "part-9b292ad82d675d682b8b",
+      "sources": [
+        {
+          "category": "superstructure",
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.8075000047683716,
+              1.0,
+              3.0
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "25be3e2df4292455bf63148e6934a73599c2ad6dbe09644118f9b3d63efefc79"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-vent-w200-h300--"
+      }
+    },
+    {
+      "assetId": "part-a06cfaab58b430855803",
+      "sources": [
+        {
+          "category": "engine",
+          "bounds": {
+            "min": [
+              -0.5625,
+              -0.5,
+              0
+            ],
+            "max": [
+              0.625,
+              0.5,
+              0.9375
+            ]
+          },
+          "nodes": [
+            "GEO-part-a06cfaab58b430855803--drives-maneuver-1--6.5"
+          ],
+          "visualSha256": null
+        }
+      ],
+      "visual": {
+        "url": "/assets/assembly/native/framed-wayfarer/runtime-r001/engines.glb",
+        "sha256": "3236a0175f567760c0b4307931e475f492224b5d607ab771a558685d583fc54c",
+        "designId": "shipyard.wayfarer.framed.engines",
+        "revision": 3,
+        "bounds": {
+          "min": [
+            -0.5625,
+            -0.5,
+            0.0
+          ],
+          "max": [
+            0.5,
+            0.5,
+            0.9375
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-part-a06cfaab58b430855803--drives-maneuver-1--6.5"
+      }
+    },
+    {
+      "assetId": "part-a9dcbf6707ca20039a5c",
+      "sources": [
+        {
+          "category": "engine",
+          "bounds": {
+            "min": [
+              -0.5625,
+              -0.5,
+              0
+            ],
+            "max": [
+              0.5625,
+              0.5,
+              0.9375
+            ]
+          },
+          "nodes": [
+            "GEO-part-a9dcbf6707ca20039a5c--drives-maneuver--1--6.5"
+          ],
+          "visualSha256": null
+        }
+      ],
+      "visual": {
+        "url": "/assets/assembly/native/framed-wayfarer/runtime-r001/engines.glb",
+        "sha256": "3236a0175f567760c0b4307931e475f492224b5d607ab771a558685d583fc54c",
+        "designId": "shipyard.wayfarer.framed.engines",
+        "revision": 3,
+        "bounds": {
+          "min": [
+            -0.5,
+            -0.5,
+            0.0
+          ],
+          "max": [
+            0.5625,
+            0.5,
+            0.9375
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-part-a9dcbf6707ca20039a5c--drives-maneuver--1--6.5"
+      }
+    },
+    {
+      "assetId": "part-b9ca98146302dec24dd6",
+      "sources": [
+        {
+          "category": "superstructure",
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.8075000047683716,
+              1.0,
+              3.0
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "9c8a425853a723547b789b872f282ad03e9efafa6d1724ec0364a721b3ec3784"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-red-service-pair-right-w200-h300-port--"
+      }
+    },
+    {
+      "assetId": "part-c9e43b70cbc1f9f77b1f",
+      "sources": [
+        {
+          "category": "superstructure",
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.8075000047683716,
+              1.0,
+              3.0
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "41127699fdae0a4d31b29a7b9fc1845e3ddfa280f2e7f3f36d1ec857d236dc75"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-plain-pair-right-w200-h300--"
+      }
+    },
+    {
+      "assetId": "part-d16f3e3a2db2188e5ed6",
+      "sources": [
+        {
+          "category": "superstructure",
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.8075000047683716,
+              1.0,
+              3.0
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "dec0304492e5f58b968d1c547183132e21f9ee9333b607e195bcf14d1517afe2"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-red-service-pair-right-w200-h300--"
+      }
+    },
+    {
+      "assetId": "part-d3e5e45b0f3f60b3fa0a",
+      "sources": [
+        {
+          "category": "superstructure",
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.8075000047683716,
+              1.0,
+              3.0
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "3b6ca75b0a2302fb6f2f4456988f9f19d9266602aff0e1e89da921f4427caad9"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-utility-pair-left-w200-h300--"
+      }
+    },
+    {
+      "assetId": "part-e15ef10ca93701b58ccb",
+      "sources": [
+        {
+          "category": "engine",
+          "bounds": {
+            "min": [
+              -0.875,
+              -1.875,
+              0
+            ],
+            "max": [
+              0.875,
+              1.9375,
+              2.0625
+            ]
+          },
+          "nodes": [
+            "GEO-part-e15ef10ca93701b58ccb--drives-main-0"
+          ],
+          "visualSha256": null
+        }
+      ],
+      "visual": {
+        "url": "/assets/assembly/native/framed-wayfarer/runtime-r001/engines.glb",
+        "sha256": "3236a0175f567760c0b4307931e475f492224b5d607ab771a558685d583fc54c",
+        "designId": "shipyard.wayfarer.framed.engines",
+        "revision": 3,
+        "bounds": {
+          "min": [
+            -0.875,
+            -1.875,
+            0.0
+          ],
+          "max": [
+            0.875,
+            1.9375,
+            2.0625
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-part-e15ef10ca93701b58ccb--drives-main-0"
+      }
+    },
+    {
+      "assetId": "part-e43ac94780eb7a1adc50",
+      "sources": [
+        {
+          "category": "superstructure",
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.8424999713897705,
+              1.0,
+              3.0
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "47ebe1c2493985afacc9e35b18b33ba32ef52a9bb72a0bbf3706d6cde30741cf"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-utility-pair-right-w200-h300--"
+      }
+    },
+    {
+      "assetId": "part-e8b51ac6443c73becfcb",
+      "sources": [
+        {
+          "category": "engine",
+          "bounds": {
+            "min": [
+              -1.25,
+              -2.4375,
+              0
+            ],
+            "max": [
+              1.3125,
+              2.5,
+              2.6875
+            ]
+          },
+          "nodes": [
+            "GEO-part-e8b51ac6443c73becfcb--drives-main--3.6"
+          ],
+          "visualSha256": null
+        }
+      ],
+      "visual": {
+        "url": "/assets/assembly/native/framed-wayfarer/runtime-r001/engines.glb",
+        "sha256": "3236a0175f567760c0b4307931e475f492224b5d607ab771a558685d583fc54c",
+        "designId": "shipyard.wayfarer.framed.engines",
+        "revision": 3,
+        "bounds": {
+          "min": [
+            -1.25,
+            -2.4375,
+            0.0
+          ],
+          "max": [
+            1.3125,
+            2.5,
+            2.6875
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-part-e8b51ac6443c73becfcb--drives-main--3.6"
+      }
+    },
+    {
+      "assetId": "part-e965a5502d9fe4c25406",
+      "sources": [
+        {
+          "category": "superstructure",
+          "bounds": {
+            "min": [
+              0,
+              0,
+              0
+            ],
+            "max": [
+              0.8140870332717896,
+              2,
+              2.9375
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "e34ba9c660088550058053cf9dff5a93bdc1b198d9262ba9f6f3acc05644a2fa"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max": [
+            0.7445136904716492,
+            2.0,
+            2.9375
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-front-shoulder-transition--"
+      }
+    },
+    {
+      "assetId": "part-ecd751f76e602db806a3",
+      "sources": [
+        {
+          "category": "wall",
+          "bounds": {
+            "min": [
+              0,
+              -0.03199999779462814,
+              0
+            ],
+            "max": [
+              2,
+              0.375,
+              1.125
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "29ef84b9b36290094d9053f7635fe160ca5a1767af14eecc2d965ae7405f5f1d"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -0.03125,
+            0.0
+          ],
+          "max": [
+            2.0,
+            0.375,
+            1.125
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-front-bow-transom--"
+      }
+    },
+    {
+      "assetId": "part-f85394947090b7609d41",
+      "sources": [
+        {
+          "category": "superstructure",
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.8075000047683716,
+              1.0,
+              3.0
+            ]
+          },
+          "nodes": [],
+          "visualSha256": "61b12a335a653486b1d12371ecd5b9159821294a128fda1e00021e56e613aef7"
+        }
+      ],
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-utility-pair-left-w200-h300-port--"
+      }
+    }
+  ]
+}

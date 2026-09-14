@@ -1,0 +1,601 @@
+22:32:00 | INFO: Data are loaded, start creating Blender stuff
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-closed-incoming-wrapped-b
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-closed-outgoing-wrapped-b
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-closed-solid-body
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-cyan-flush-status-lens
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-interchangeable-plain-fac
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-lower-impact-rail-right
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-lower-impact-rail-cut-poc
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-lower-impact-rail-left
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-pale-wrapped-connector-ou
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-pale-wrapped-connector-in
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-recess-shadow-seat
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-upper-stepped-shoulder
+22:32:00 | INFO: glTF import finished in 0.01s
+22:32:00 | INFO: Data are loaded, start creating Blender stuff
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-7c657ee01a90318dec3e-closed-incoming-wrapped-b
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-7c657ee01a90318dec3e-closed-outgoing-wrapped-b
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-7c657ee01a90318dec3e-closed-solid-body
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-7c657ee01a90318dec3e-cyan-flush-status-lens
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-7c657ee01a90318dec3e-deep-vent-louver-1
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-7c657ee01a90318dec3e-deep-vent-louver-2
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-7c657ee01a90318dec3e-deep-vent-louver-3
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-7c657ee01a90318dec3e-deep-vent-louver-4
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-7c657ee01a90318dec3e-deep-vent-louver-5
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-7c657ee01a90318dec3e-deep-vent-louver-6
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-7c657ee01a90318dec3e-deep-vent-louver-7
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-7c657ee01a90318dec3e-deep-vent-louver-8
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-7c657ee01a90318dec3e-deep-vent-louver-0
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-7c657ee01a90318dec3e-interchangeable-vent-face
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-7c657ee01a90318dec3e-lower-impact-rail-right
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-7c657ee01a90318dec3e-lower-impact-rail-cut-poc
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-7c657ee01a90318dec3e-lower-impact-rail-left
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-7c657ee01a90318dec3e-pale-wrapped-connector-ou
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-7c657ee01a90318dec3e-pale-wrapped-connector-in
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-7c657ee01a90318dec3e-recess-shadow-seat
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-7c657ee01a90318dec3e-upper-stepped-shoulder
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-7c657ee01a90318dec3e-vent-dark-well
+22:32:00 | INFO: glTF import finished in 0.01s
+22:32:00 | INFO: Data are loaded, start creating Blender stuff
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-closed-incoming-wrapped-b
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-closed-outgoing-wrapped-b
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-closed-solid-body
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-cyan-flush-status-lens
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-interchangeable-red-servi
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-lower-impact-rail-right
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-lower-impact-rail-cut-poc
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-lower-impact-rail-left
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-pale-wrapped-connector-ou
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-pale-wrapped-connector-in
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-recess-shadow-seat
+22:32:00 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-upper-stepped-shoulder
+22:32:00 | INFO: glTF import finished in 0.01s
+Blender 4.3.2
+Fra:1 Mem:17.87M (Peak 17.87M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-incoming-
+Fra:1 Mem:17.87M (Peak 17.87M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-outgoing-
+Fra:1 Mem:17.88M (Peak 17.88M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--upper-stepped-sho
+Fra:1 Mem:19.89M (Peak 19.89M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--recess-shadow-sea
+Fra:1 Mem:19.89M (Peak 19.89M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--cyan-flush-status
+Fra:1 Mem:19.89M (Peak 19.89M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--pale-wrapped-conn
+Fra:1 Mem:19.90M (Peak 19.90M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--interchangeable-p
+Fra:1 Mem:19.91M (Peak 19.91M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--pale-wrapped-
+Fra:1 Mem:19.92M (Peak 19.92M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--lower-impact-
+Fra:1 Mem:19.92M (Peak 19.92M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--lower-impact-rail
+Fra:1 Mem:19.93M (Peak 19.93M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--lower-impact-.001
+Fra:1 Mem:19.95M (Peak 19.95M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--lower-impact-.001
+Fra:1 Mem:19.95M (Peak 19.95M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--lower-impact-
+Fra:1 Mem:19.97M (Peak 19.97M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--lower-impact-rail
+Fra:1 Mem:19.96M (Peak 19.97M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--pale-wrapped-
+Fra:1 Mem:19.96M (Peak 19.97M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--interchangeable-r
+Fra:1 Mem:19.98M (Peak 19.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--pale-wrapped-conn
+Fra:1 Mem:19.98M (Peak 19.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--recess-shadow-sea
+Fra:1 Mem:19.98M (Peak 19.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--cyan-flush-status
+Fra:1 Mem:19.99M (Peak 19.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--upper-stepped-sho
+Fra:1 Mem:20.00M (Peak 20.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-7c657ee01a90318dec3e--BACKING--closed-incoming-
+Fra:1 Mem:20.00M (Peak 20.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--BACKING--closed-solid-bod
+Fra:1 Mem:20.00M (Peak 20.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-7c657ee01a90318dec3e--BACKING--closed-outgoing-
+Fra:1 Mem:19.99M (Peak 20.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-7c657ee01a90318dec3e--FINISH--cyan-flush-status
+Fra:1 Mem:20.01M (Peak 20.01M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-7c657ee01a90318dec3e--FINISH--deep-vent-lou
+Fra:1 Mem:20.01M (Peak 20.01M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-7c657ee01a90318dec3e--FINISH--deep-vent-lou.001
+Fra:1 Mem:20.01M (Peak 20.01M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-7c657ee01a90318dec3e--FINISH--deep-vent-lou.002
+Fra:1 Mem:20.02M (Peak 20.02M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-7c657ee01a90318dec3e--FINISH--deep-vent-lou.004
+Fra:1 Mem:20.03M (Peak 20.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--BACKING--closed-outgoing-
+Fra:1 Mem:20.03M (Peak 20.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-7c657ee01a90318dec3e--FINISH--deep-vent-lou.005
+Fra:1 Mem:20.03M (Peak 20.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--BACKING--closed-incoming-
+Fra:1 Mem:20.04M (Peak 20.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-7c657ee01a90318dec3e--FINISH--vent-dark-well
+Fra:1 Mem:20.04M (Peak 20.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-7c657ee01a90318dec3e--FINISH--deep-vent-louver-
+Fra:1 Mem:20.05M (Peak 20.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-7c657ee01a90318dec3e--FINISH--interchangeable-v
+Fra:1 Mem:20.04M (Peak 20.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-7c657ee01a90318dec3e--FINISH--lower-impact-
+Fra:1 Mem:20.05M (Peak 20.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-7c657ee01a90318dec3e--FINISH--lower-impact-.001
+Fra:1 Mem:20.08M (Peak 20.08M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-7c657ee01a90318dec3e--FINISH--lower-impact-rail
+Fra:1 Mem:20.08M (Peak 20.08M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-7c657ee01a90318dec3e--FINISH--recess-shadow-sea
+Fra:1 Mem:20.10M (Peak 20.10M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-7c657ee01a90318dec3e--FINISH--pale-wrapped-
+Fra:1 Mem:20.09M (Peak 20.10M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-7c657ee01a90318dec3e--FINISH--pale-wrapped-conn
+Fra:1 Mem:20.09M (Peak 20.10M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:19.90M (Peak 20.10M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading armor-basecolor
+Fra:1 Mem:19.90M (Peak 20.10M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading armor-roughness
+Fra:1 Mem:59.95M (Peak 67.94M) | Time:00:00.08 | Mem:4.00M, Peak:4.00M | Scene, ViewLayer | Updating Images | Loading armor-roughness.002
+Fra:1 Mem:55.94M (Peak 67.94M) | Time:00:00.11 | Mem:8.00M, Peak:8.00M | Scene, ViewLayer | Updating Images | Loading armor-basecolor.001
+Fra:1 Mem:47.93M (Peak 67.94M) | Time:00:00.11 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Images | Loading armor-roughness.001
+Fra:1 Mem:47.92M (Peak 67.94M) | Time:00:00.11 | Mem:16.00M, Peak:16.00M | Scene, ViewLayer | Updating Images | Loading armor-normal.001
+Fra:1 Mem:55.93M (Peak 67.94M) | Time:00:00.12 | Mem:20.00M, Peak:20.00M | Scene, ViewLayer | Updating Images | Loading armor-basecolor.002
+Fra:1 Mem:53.90M (Peak 71.94M) | Time:00:00.15 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:53.90M (Peak 71.94M) | Time:00:00.15 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:53.90M (Peak 71.94M) | Time:00:00.15 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:53.90M (Peak 71.94M) | Time:00:00.15 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:53.99M (Peak 71.94M) | Time:00:00.15 | Mem:36.01M, Peak:36.01M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:53.99M (Peak 71.94M) | Time:00:00.15 | Mem:36.01M, Peak:36.01M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:53.99M (Peak 71.94M) | Time:00:00.15 | Mem:36.01M, Peak:36.01M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:53.99M (Peak 71.94M) | Time:00:00.15 | Mem:36.01M, Peak:36.01M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:53.99M (Peak 71.94M) | Time:00:00.15 | Mem:36.01M, Peak:36.01M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:53.99M (Peak 71.94M) | Time:00:00.15 | Mem:36.01M, Peak:36.01M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:54.00M (Peak 71.94M) | Time:00:00.15 | Mem:36.02M, Peak:36.02M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:54.00M (Peak 71.94M) | Time:00:00.15 | Mem:36.02M, Peak:36.02M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:54.00M (Peak 71.94M) | Time:00:00.15 | Mem:36.02M, Peak:36.02M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:54.00M (Peak 71.94M) | Time:00:00.15 | Mem:36.02M, Peak:36.02M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:54.01M (Peak 71.94M) | Time:00:00.15 | Mem:36.02M, Peak:36.02M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:54.12M (Peak 71.94M) | Time:00:00.15 | Mem:36.02M, Peak:36.02M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:54.10M (Peak 71.94M) | Time:00:00.15 | Mem:36.10M, Peak:36.10M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:54.10M (Peak 71.94M) | Time:00:00.15 | Mem:36.10M, Peak:36.10M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:54.10M (Peak 71.94M) | Time:00:00.15 | Mem:36.13M, Peak:36.13M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:54.10M (Peak 71.94M) | Time:00:00.15 | Mem:36.16M, Peak:36.19M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:54.10M (Peak 71.94M) | Time:00:00.15 | Mem:36.16M, Peak:36.19M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:54.19M (Peak 71.94M) | Time:00:00.15 | Mem:36.16M, Peak:36.19M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:54.19M (Peak 71.94M) | Time:00:00.15 | Mem:36.25M, Peak:36.25M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:54.19M (Peak 71.94M) | Time:00:00.15 | Mem:36.25M, Peak:36.25M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:54.19M (Peak 71.94M) | Time:00:00.15 | Mem:36.25M, Peak:36.25M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:54.19M (Peak 71.94M) | Time:00:00.15 | Mem:36.25M, Peak:36.25M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:54.19M (Peak 71.94M) | Time:00:00.15 | Mem:36.25M, Peak:36.25M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:54.19M (Peak 71.94M) | Time:00:00.15 | Mem:36.33M, Peak:36.33M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:54.19M (Peak 71.94M) | Time:00:00.15 | Mem:36.33M, Peak:36.33M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:54.20M (Peak 71.94M) | Time:00:00.15 | Mem:36.34M, Peak:36.34M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:54.20M (Peak 71.94M) | Time:00:00.15 | Mem:36.34M, Peak:36.34M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:54.20M (Peak 71.94M) | Time:00:00.15 | Mem:36.26M, Peak:36.34M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:54.20M (Peak 71.94M) | Time:00:00.15 | Mem:36.34M, Peak:36.34M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:54.20M (Peak 71.94M) | Time:00:00.15 | Mem:36.34M, Peak:36.34M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:54.20M (Peak 71.94M) | Time:00:00.15 | Mem:36.34M, Peak:36.34M | Scene, ViewLayer | Sample 0/64
+Fra:1 Mem:91.29M (Peak 91.29M) | Time:00:00.41 | Remaining:00:16.59 | Mem:73.43M, Peak:73.43M | Scene, ViewLayer | Sample 1/64
+Fra:1 Mem:107.77M (Peak 140.73M) | Time:00:10.91 | Mem:73.43M, Peak:73.43M | Scene, ViewLayer | Sample 64/64
+Fra:1 Mem:107.77M (Peak 140.73M) | Time:00:10.91 | Mem:73.43M, Peak:73.43M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/assets/art-library/framed-wayfarer/r005/proof-03/renders/joined-bay.png'
+Time: 00:11.17 (Saving: 00:00.25)
+
+22:32:12 | INFO: Data are loaded, start creating Blender stuff
+22:32:12 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-closed-incoming-wrapped-b
+22:32:12 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-closed-outgoing-wrapped-b
+22:32:12 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-closed-solid-body
+22:32:12 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-cyan-flush-status-lens
+22:32:12 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-interchangeable-plain-fac
+22:32:12 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-lower-impact-rail-right
+22:32:12 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-lower-impact-rail-cut-poc
+22:32:12 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-lower-impact-rail-left
+22:32:12 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-pale-wrapped-connector-ou
+22:32:12 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-pale-wrapped-connector-in
+22:32:12 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-recess-shadow-seat
+22:32:12 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-upper-stepped-shoulder
+22:32:12 | INFO: glTF import finished in 0.01s
+Fra:1 Mem:14.23M (Peak 14.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | EVIDENCE-structural-datum-250mm
+Fra:1 Mem:14.23M (Peak 14.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-solid-bod
+Fra:1 Mem:14.24M (Peak 14.24M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:14.22M (Peak 14.24M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading armor-normal
+Fra:1 Mem:14.22M (Peak 14.24M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading armor-basecolor
+Fra:1 Mem:25.83M (Peak 42.25M) | Time:00:00.03 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:25.83M (Peak 42.25M) | Time:00:00.03 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:25.83M (Peak 42.25M) | Time:00:00.03 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:25.83M (Peak 42.25M) | Time:00:00.03 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:25.92M (Peak 42.25M) | Time:00:00.03 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:25.92M (Peak 42.25M) | Time:00:00.03 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:25.92M (Peak 42.25M) | Time:00:00.03 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:25.92M (Peak 42.25M) | Time:00:00.03 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:25.92M (Peak 42.25M) | Time:00:00.03 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:25.92M (Peak 42.25M) | Time:00:00.03 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:25.92M (Peak 42.25M) | Time:00:00.03 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:25.92M (Peak 42.25M) | Time:00:00.03 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:25.92M (Peak 42.25M) | Time:00:00.03 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:25.92M (Peak 42.25M) | Time:00:00.03 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:25.92M (Peak 42.25M) | Time:00:00.03 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:25.92M (Peak 42.25M) | Time:00:00.03 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:25.92M (Peak 42.25M) | Time:00:00.03 | Mem:12.01M, Peak:12.01M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:25.92M (Peak 42.25M) | Time:00:00.03 | Mem:12.01M, Peak:12.01M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:25.92M (Peak 42.25M) | Time:00:00.03 | Mem:12.01M, Peak:12.01M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:25.92M (Peak 42.25M) | Time:00:00.03 | Mem:12.01M, Peak:12.01M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:25.92M (Peak 42.25M) | Time:00:00.03 | Mem:12.01M, Peak:12.01M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:25.93M (Peak 42.25M) | Time:00:00.03 | Mem:12.01M, Peak:12.01M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:25.93M (Peak 42.25M) | Time:00:00.03 | Mem:12.02M, Peak:12.02M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:25.93M (Peak 42.25M) | Time:00:00.03 | Mem:12.02M, Peak:12.02M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:25.93M (Peak 42.25M) | Time:00:00.03 | Mem:12.02M, Peak:12.02M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:25.93M (Peak 42.25M) | Time:00:00.03 | Mem:12.02M, Peak:12.02M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:25.93M (Peak 42.25M) | Time:00:00.03 | Mem:12.02M, Peak:12.02M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:25.93M (Peak 42.25M) | Time:00:00.03 | Mem:12.10M, Peak:12.10M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:25.93M (Peak 42.25M) | Time:00:00.03 | Mem:12.10M, Peak:12.10M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:25.93M (Peak 42.25M) | Time:00:00.03 | Mem:12.10M, Peak:12.10M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:25.93M (Peak 42.25M) | Time:00:00.03 | Mem:12.10M, Peak:12.10M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:25.93M (Peak 42.25M) | Time:00:00.03 | Mem:12.02M, Peak:12.10M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:25.93M (Peak 42.25M) | Time:00:00.03 | Mem:12.10M, Peak:12.10M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:25.93M (Peak 42.25M) | Time:00:00.03 | Mem:12.10M, Peak:12.10M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:25.93M (Peak 42.25M) | Time:00:00.03 | Mem:12.10M, Peak:12.10M | Scene, ViewLayer | Sample 0/64
+Fra:1 Mem:63.03M (Peak 63.03M) | Time:00:00.27 | Remaining:00:14.91 | Mem:49.19M, Peak:49.19M | Scene, ViewLayer | Sample 1/64
+Fra:1 Mem:79.51M (Peak 112.47M) | Time:00:08.85 | Mem:49.19M, Peak:49.19M | Scene, ViewLayer | Sample 64/64
+Fra:1 Mem:79.51M (Peak 112.47M) | Time:00:08.85 | Mem:49.19M, Peak:49.19M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/assets/art-library/framed-wayfarer/r005/proof-03/renders/solid-section.png'
+Time: 00:09.00 (Saving: 00:00.15)
+
+22:32:21 | INFO: Data are loaded, start creating Blender stuff
+22:32:21 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-closed-incoming-wrapped-b
+22:32:21 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-closed-outgoing-wrapped-b
+22:32:21 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-closed-solid-body
+22:32:21 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-cyan-flush-status-lens
+22:32:21 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-interchangeable-plain-fac
+22:32:21 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-lower-impact-rail-right
+22:32:21 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-lower-impact-rail-cut-poc
+22:32:21 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-lower-impact-rail-left
+22:32:21 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-pale-wrapped-connector-ou
+22:32:21 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-pale-wrapped-connector-in
+22:32:21 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-recess-shadow-seat
+22:32:21 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-upper-stepped-shoulder
+22:32:21 | INFO: glTF import finished in 0.01s
+Fra:1 Mem:14.52M (Peak 14.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | EVIDENCE-structural-datum-250mm
+Fra:1 Mem:14.52M (Peak 14.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-outgoing-
+Fra:1 Mem:14.53M (Peak 14.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--upper-stepped-sho
+Fra:1 Mem:14.55M (Peak 14.55M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-solid-bod
+Fra:1 Mem:14.54M (Peak 14.55M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--cyan-flush-status
+Fra:1 Mem:14.54M (Peak 14.55M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--interchangeable-p
+Fra:1 Mem:14.55M (Peak 14.55M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--lower-impact-
+Fra:1 Mem:14.55M (Peak 14.55M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--pale-wrapped-conn
+Fra:1 Mem:14.56M (Peak 14.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--lower-impact-.001
+Fra:1 Mem:14.58M (Peak 14.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--lower-impact-rail
+Fra:1 Mem:14.59M (Peak 14.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--pale-wrapped-
+Fra:1 Mem:14.58M (Peak 14.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:14.53M (Peak 14.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading armor-normal
+Fra:1 Mem:14.53M (Peak 14.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading armor-roughness
+Fra:1 Mem:25.85M (Peak 42.56M) | Time:00:00.04 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:25.85M (Peak 42.56M) | Time:00:00.04 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:25.85M (Peak 42.56M) | Time:00:00.04 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:25.85M (Peak 42.56M) | Time:00:00.04 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:25.93M (Peak 42.56M) | Time:00:00.04 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:25.93M (Peak 42.56M) | Time:00:00.04 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:25.93M (Peak 42.56M) | Time:00:00.04 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:25.93M (Peak 42.56M) | Time:00:00.04 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:25.93M (Peak 42.56M) | Time:00:00.04 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:25.93M (Peak 42.56M) | Time:00:00.04 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:25.94M (Peak 42.56M) | Time:00:00.04 | Mem:12.01M, Peak:12.01M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:25.94M (Peak 42.56M) | Time:00:00.04 | Mem:12.01M, Peak:12.01M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:25.94M (Peak 42.56M) | Time:00:00.04 | Mem:12.01M, Peak:12.01M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:25.94M (Peak 42.56M) | Time:00:00.04 | Mem:12.01M, Peak:12.01M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:25.94M (Peak 42.56M) | Time:00:00.04 | Mem:12.01M, Peak:12.01M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:25.97M (Peak 42.56M) | Time:00:00.04 | Mem:12.01M, Peak:12.01M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:25.97M (Peak 42.56M) | Time:00:00.04 | Mem:12.03M, Peak:12.03M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:25.97M (Peak 42.56M) | Time:00:00.04 | Mem:12.03M, Peak:12.03M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:25.97M (Peak 42.56M) | Time:00:00.04 | Mem:12.04M, Peak:12.04M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:25.97M (Peak 42.56M) | Time:00:00.04 | Mem:12.05M, Peak:12.06M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:25.97M (Peak 42.56M) | Time:00:00.04 | Mem:12.05M, Peak:12.06M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:25.99M (Peak 42.56M) | Time:00:00.04 | Mem:12.05M, Peak:12.06M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:25.99M (Peak 42.56M) | Time:00:00.04 | Mem:12.08M, Peak:12.08M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:25.99M (Peak 42.56M) | Time:00:00.04 | Mem:12.08M, Peak:12.08M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:25.99M (Peak 42.56M) | Time:00:00.04 | Mem:12.08M, Peak:12.08M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:25.99M (Peak 42.56M) | Time:00:00.04 | Mem:12.08M, Peak:12.08M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:25.99M (Peak 42.56M) | Time:00:00.04 | Mem:12.08M, Peak:12.08M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:25.99M (Peak 42.56M) | Time:00:00.04 | Mem:12.16M, Peak:12.16M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:25.99M (Peak 42.56M) | Time:00:00.04 | Mem:12.16M, Peak:12.16M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:25.99M (Peak 42.56M) | Time:00:00.04 | Mem:12.16M, Peak:12.16M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:25.99M (Peak 42.56M) | Time:00:00.04 | Mem:12.16M, Peak:12.16M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:26.00M (Peak 42.56M) | Time:00:00.04 | Mem:12.08M, Peak:12.16M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:26.00M (Peak 42.56M) | Time:00:00.04 | Mem:12.17M, Peak:12.17M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:26.00M (Peak 42.56M) | Time:00:00.04 | Mem:12.17M, Peak:12.17M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:26.00M (Peak 42.56M) | Time:00:00.04 | Mem:12.17M, Peak:12.17M | Scene, ViewLayer | Sample 0/64
+Fra:1 Mem:63.09M (Peak 63.09M) | Time:00:00.28 | Remaining:00:14.69 | Mem:49.26M, Peak:49.26M | Scene, ViewLayer | Sample 1/64
+Fra:1 Mem:79.57M (Peak 112.53M) | Time:00:09.43 | Mem:49.26M, Peak:49.26M | Scene, ViewLayer | Sample 64/64
+Fra:1 Mem:79.57M (Peak 112.53M) | Time:00:09.43 | Mem:49.26M, Peak:49.26M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/assets/art-library/framed-wayfarer/r005/proof-03/renders/exploded-section.png'
+Time: 00:09.59 (Saving: 00:00.15)
+
+22:32:30 | INFO: Data are loaded, start creating Blender stuff
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-9ca59f6db637d3afceb9-closed-incoming-wrapped-b
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-9ca59f6db637d3afceb9-closed-outgoing-wrapped-b
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-9ca59f6db637d3afceb9-closed-solid-body
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-9ca59f6db637d3afceb9-cyan-flush-status-lens
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-9ca59f6db637d3afceb9-interchangeable-plain-fac
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-9ca59f6db637d3afceb9-lower-impact-rail-right
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-9ca59f6db637d3afceb9-lower-impact-rail-cut-poc
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-9ca59f6db637d3afceb9-lower-impact-rail-left
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-9ca59f6db637d3afceb9-pale-wrapped-connector-ou
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-9ca59f6db637d3afceb9-pale-wrapped-connector-in
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-9ca59f6db637d3afceb9-recess-shadow-seat
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-9ca59f6db637d3afceb9-upper-stepped-shoulder
+22:32:30 | INFO: glTF import finished in 0.01s
+22:32:30 | INFO: Data are loaded, start creating Blender stuff
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-70b34597548b284a0a7f-closed-junction-wedge
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-70b34597548b284a0a7f-junction-lower-navy-shoe
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-70b34597548b284a0a7f-junction-upper-navy-shoul
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-70b34597548b284a0a7f-junction-wrapped-pale-con
+22:32:30 | INFO: glTF import finished in 0.00s
+22:32:30 | INFO: Data are loaded, start creating Blender stuff
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-cd2f17ea0cf58cb60b7f-closed-incoming-wrapped-b
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-cd2f17ea0cf58cb60b7f-closed-outgoing-wrapped-b
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-cd2f17ea0cf58cb60b7f-closed-solid-body
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-cd2f17ea0cf58cb60b7f-cyan-flush-status-lens
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-cd2f17ea0cf58cb60b7f-deep-vent-louver-1
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-cd2f17ea0cf58cb60b7f-deep-vent-louver-0
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-cd2f17ea0cf58cb60b7f-interchangeable-vent-face
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-cd2f17ea0cf58cb60b7f-lower-impact-rail-right
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-cd2f17ea0cf58cb60b7f-lower-impact-rail-cut-poc
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-cd2f17ea0cf58cb60b7f-lower-impact-rail-left
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-cd2f17ea0cf58cb60b7f-pale-wrapped-connector-ou
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-cd2f17ea0cf58cb60b7f-pale-wrapped-connector-in
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-cd2f17ea0cf58cb60b7f-recess-shadow-seat
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-cd2f17ea0cf58cb60b7f-upper-stepped-shoulder
+22:32:30 | INFO: Blender create Mesh node MESH-armor-block-cd2f17ea0cf58cb60b7f-vent-dark-well
+22:32:30 | INFO: glTF import finished in 0.01s
+Fra:1 Mem:18.56M (Peak 18.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-9ca59f6db637d3afceb9--BACKING--closed-incoming-
+Fra:1 Mem:18.56M (Peak 18.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-9ca59f6db637d3afceb9--BACKING--closed-solid-bod
+Fra:1 Mem:18.58M (Peak 18.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--vent-dark-well
+Fra:1 Mem:18.58M (Peak 18.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-9ca59f6db637d3afceb9--FINISH--lower-impact-
+Fra:1 Mem:18.61M (Peak 18.61M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-9ca59f6db637d3afceb9--FINISH--lower-impact-.001
+Fra:1 Mem:18.61M (Peak 18.61M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--upper-stepped-sho
+Fra:1 Mem:18.62M (Peak 18.62M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-9ca59f6db637d3afceb9--FINISH--pale-wrapped-
+Fra:1 Mem:18.65M (Peak 18.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--recess-shadow-sea
+Fra:1 Mem:18.65M (Peak 18.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-9ca59f6db637d3afceb9--FINISH--pale-wrapped-conn
+Fra:1 Mem:18.63M (Peak 18.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--pale-wrapped-conn
+Fra:1 Mem:18.65M (Peak 18.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--pale-wrapped-
+Fra:1 Mem:18.66M (Peak 18.66M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-70b34597548b284a0a7f--BACKING--closed-junction-
+Fra:1 Mem:18.67M (Peak 18.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-70b34597548b284a0a7f--FINISH--junction-lower-na
+Fra:1 Mem:18.66M (Peak 18.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--lower-impact-rail
+Fra:1 Mem:18.69M (Peak 18.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-70b34597548b284a0a7f--FINISH--junction-wrapped-
+Fra:1 Mem:18.69M (Peak 18.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--lower-impact-.001
+Fra:1 Mem:18.71M (Peak 18.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-cd2f17ea0cf58cb60b7f--BACKING--closed-incoming-
+Fra:1 Mem:18.71M (Peak 18.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-cd2f17ea0cf58cb60b7f--BACKING--closed-outgoing-
+Fra:1 Mem:18.69M (Peak 18.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--cyan-flush-status
+Fra:1 Mem:18.72M (Peak 18.72M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--deep-vent-lou
+Fra:1 Mem:18.71M (Peak 18.72M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--interchangeable-v
+Fra:1 Mem:18.73M (Peak 18.73M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--deep-vent-louver-
+Fra:1 Mem:18.72M (Peak 18.73M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:18.60M (Peak 18.73M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading armor-normal.002
+Fra:1 Mem:18.60M (Peak 18.73M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading armor-basecolor
+Fra:1 Mem:50.63M (Peak 58.63M) | Time:00:00.02 | Mem:4.00M, Peak:4.00M | Scene, ViewLayer | Updating Images | Loading armor-basecolor.001
+Fra:1 Mem:38.61M (Peak 58.63M) | Time:00:00.02 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Images | Loading armor-roughness.001
+Fra:1 Mem:38.61M (Peak 58.63M) | Time:00:00.02 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Images | Loading armor-normal.001
+Fra:1 Mem:46.62M (Peak 58.63M) | Time:00:00.03 | Mem:16.00M, Peak:16.00M | Scene, ViewLayer | Updating Images | Loading armor-basecolor.002
+Fra:1 Mem:58.62M (Peak 66.63M) | Time:00:00.04 | Mem:20.00M, Peak:20.00M | Scene, ViewLayer | Updating Images | Loading armor-roughness.002
+Fra:1 Mem:53.12M (Peak 66.63M) | Time:00:00.06 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:53.12M (Peak 66.63M) | Time:00:00.06 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:53.12M (Peak 66.63M) | Time:00:00.06 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:53.12M (Peak 66.63M) | Time:00:00.06 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:53.20M (Peak 66.63M) | Time:00:00.06 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:53.20M (Peak 66.63M) | Time:00:00.06 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:53.20M (Peak 66.63M) | Time:00:00.06 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:53.20M (Peak 66.63M) | Time:00:00.06 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:53.20M (Peak 66.63M) | Time:00:00.06 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:53.20M (Peak 66.63M) | Time:00:00.06 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:53.21M (Peak 66.63M) | Time:00:00.06 | Mem:36.01M, Peak:36.01M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:53.21M (Peak 66.63M) | Time:00:00.06 | Mem:36.01M, Peak:36.01M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:53.21M (Peak 66.63M) | Time:00:00.06 | Mem:36.01M, Peak:36.01M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:53.21M (Peak 66.63M) | Time:00:00.06 | Mem:36.01M, Peak:36.01M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:53.22M (Peak 66.63M) | Time:00:00.06 | Mem:36.01M, Peak:36.01M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:53.30M (Peak 66.63M) | Time:00:00.06 | Mem:36.02M, Peak:36.02M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:53.29M (Peak 66.63M) | Time:00:00.06 | Mem:36.08M, Peak:36.08M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:53.29M (Peak 66.63M) | Time:00:00.06 | Mem:36.08M, Peak:36.08M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:53.29M (Peak 66.63M) | Time:00:00.06 | Mem:36.10M, Peak:36.10M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:53.29M (Peak 66.63M) | Time:00:00.06 | Mem:36.12M, Peak:36.14M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:53.29M (Peak 66.63M) | Time:00:00.06 | Mem:36.12M, Peak:36.14M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:53.35M (Peak 66.63M) | Time:00:00.06 | Mem:36.12M, Peak:36.14M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:53.35M (Peak 66.63M) | Time:00:00.06 | Mem:36.19M, Peak:36.19M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:53.35M (Peak 66.63M) | Time:00:00.06 | Mem:36.19M, Peak:36.19M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:53.35M (Peak 66.63M) | Time:00:00.06 | Mem:36.19M, Peak:36.19M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:53.35M (Peak 66.63M) | Time:00:00.06 | Mem:36.19M, Peak:36.19M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:53.35M (Peak 66.63M) | Time:00:00.06 | Mem:36.19M, Peak:36.19M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:53.35M (Peak 66.63M) | Time:00:00.06 | Mem:36.27M, Peak:36.27M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:53.35M (Peak 66.63M) | Time:00:00.06 | Mem:36.27M, Peak:36.27M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:53.36M (Peak 66.63M) | Time:00:00.06 | Mem:36.27M, Peak:36.27M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:53.36M (Peak 66.63M) | Time:00:00.06 | Mem:36.27M, Peak:36.27M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:53.36M (Peak 66.63M) | Time:00:00.06 | Mem:36.19M, Peak:36.27M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:53.36M (Peak 66.63M) | Time:00:00.06 | Mem:36.28M, Peak:36.28M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:53.36M (Peak 66.63M) | Time:00:00.06 | Mem:36.28M, Peak:36.28M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:53.36M (Peak 66.63M) | Time:00:00.06 | Mem:36.28M, Peak:36.28M | Scene, ViewLayer | Sample 0/64
+Fra:1 Mem:90.45M (Peak 90.45M) | Time:00:00.30 | Remaining:00:15.26 | Mem:73.37M, Peak:73.37M | Scene, ViewLayer | Sample 1/64
+Fra:1 Mem:106.93M (Peak 139.89M) | Time:00:09.44 | Mem:73.37M, Peak:73.37M | Scene, ViewLayer | Sample 64/64
+Fra:1 Mem:106.93M (Peak 139.89M) | Time:00:09.44 | Mem:73.37M, Peak:73.37M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/assets/art-library/framed-wayfarer/r005/proof-03/renders/convex-45-half-height.png'
+Time: 00:09.61 (Saving: 00:00.16)
+
+22:32:40 | INFO: Data are loaded, start creating Blender stuff
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-closed-incoming-wrapped-b
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-closed-outgoing-wrapped-b
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-closed-solid-body
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-cyan-flush-status-lens
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-interchangeable-plain-fac
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-lower-impact-rail-right
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-lower-impact-rail-cut-poc
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-lower-impact-rail-left
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-pale-wrapped-connector-ou
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-pale-wrapped-connector-in
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-recess-shadow-seat
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-upper-stepped-shoulder
+22:32:40 | INFO: glTF import finished in 0.01s
+22:32:40 | INFO: Data are loaded, start creating Blender stuff
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-1676c64748013f376c0a-closed-junction-wedge
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-1676c64748013f376c0a-junction-lower-navy-shoe
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-1676c64748013f376c0a-junction-upper-navy-shoul
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-1676c64748013f376c0a-junction-wrapped-pale-con
+22:32:40 | INFO: glTF import finished in 0.00s
+22:32:40 | INFO: Data are loaded, start creating Blender stuff
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-closed-incoming-wrapped-b
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-closed-outgoing-wrapped-b
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-closed-solid-body
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-cyan-flush-status-lens
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-interchangeable-red-servi
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-lower-impact-rail-right
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-lower-impact-rail-cut-poc
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-lower-impact-rail-left
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-pale-wrapped-connector-ou
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-pale-wrapped-connector-in
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-recess-shadow-seat
+22:32:40 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-upper-stepped-shoulder
+22:32:40 | INFO: glTF import finished in 0.01s
+Fra:1 Mem:18.35M (Peak 18.35M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-incoming-
+Fra:1 Mem:18.36M (Peak 18.36M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--upper-stepped-sho
+Fra:1 Mem:18.36M (Peak 18.36M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-outgoing-
+Fra:1 Mem:18.37M (Peak 18.37M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-solid-bod
+Fra:1 Mem:18.38M (Peak 18.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--cyan-flush-status
+Fra:1 Mem:18.37M (Peak 18.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--lower-impact-
+Fra:1 Mem:18.37M (Peak 18.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--lower-impact-.001
+Fra:1 Mem:18.39M (Peak 18.39M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--lower-impact-rail
+Fra:1 Mem:18.40M (Peak 18.40M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--pale-wrapped-
+Fra:1 Mem:18.40M (Peak 18.40M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--pale-wrapped-conn
+Fra:1 Mem:18.40M (Peak 18.40M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--recess-shadow-sea
+Fra:1 Mem:18.40M (Peak 18.40M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--upper-stepped-sho
+Fra:1 Mem:18.41M (Peak 18.41M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-1676c64748013f376c0a--BACKING--closed-junction-
+Fra:1 Mem:18.42M (Peak 18.42M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-1676c64748013f376c0a--FINISH--junction-lower-na
+Fra:1 Mem:18.42M (Peak 18.42M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-1676c64748013f376c0a--FINISH--junction-upper-na
+Fra:1 Mem:18.43M (Peak 18.43M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-1676c64748013f376c0a--FINISH--junction-wrapped-
+Fra:1 Mem:18.43M (Peak 18.43M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--BACKING--closed-incoming-
+Fra:1 Mem:18.43M (Peak 18.43M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--BACKING--closed-outgoing-
+Fra:1 Mem:18.44M (Peak 18.44M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--BACKING--closed-solid-bod
+Fra:1 Mem:18.44M (Peak 18.44M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--cyan-flush-status
+Fra:1 Mem:18.44M (Peak 18.44M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--interchangeable-r
+Fra:1 Mem:18.45M (Peak 18.45M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--lower-impact-
+Fra:1 Mem:18.46M (Peak 18.46M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--lower-impact-.001
+Fra:1 Mem:18.47M (Peak 18.47M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--lower-impact-rail
+Fra:1 Mem:18.47M (Peak 18.47M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--pale-wrapped-
+Fra:1 Mem:18.48M (Peak 18.48M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--pale-wrapped-conn
+Fra:1 Mem:18.50M (Peak 18.50M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:18.38M (Peak 18.50M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading armor-basecolor
+Fra:1 Mem:22.38M (Peak 22.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading armor-roughness
+Fra:1 Mem:26.38M (Peak 26.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading armor-normal.002
+Fra:1 Mem:30.39M (Peak 30.39M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading armor-normal
+Fra:1 Mem:42.41M (Peak 50.40M) | Time:00:00.01 | Mem:4.00M, Peak:4.00M | Scene, ViewLayer | Updating Images | Loading armor-basecolor.001
+Fra:1 Mem:54.42M (Peak 62.43M) | Time:00:00.02 | Mem:8.00M, Peak:8.00M | Scene, ViewLayer | Updating Images | Loading armor-roughness.001
+Fra:1 Mem:50.41M (Peak 62.43M) | Time:00:00.02 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Images | Loading armor-roughness.002
+Fra:1 Mem:54.41M (Peak 62.43M) | Time:00:00.03 | Mem:16.00M, Peak:16.00M | Scene, ViewLayer | Updating Images | Loading armor-normal.001
+Fra:1 Mem:58.41M (Peak 66.42M) | Time:00:00.03 | Mem:20.00M, Peak:20.00M | Scene, ViewLayer | Updating Images | Loading armor-basecolor.002
+Fra:1 Mem:52.98M (Peak 70.42M) | Time:00:00.04 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:52.98M (Peak 70.42M) | Time:00:00.04 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:52.98M (Peak 70.42M) | Time:00:00.04 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:52.98M (Peak 70.42M) | Time:00:00.04 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:53.07M (Peak 70.42M) | Time:00:00.04 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:53.07M (Peak 70.42M) | Time:00:00.04 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:53.07M (Peak 70.42M) | Time:00:00.04 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:53.07M (Peak 70.42M) | Time:00:00.04 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:53.07M (Peak 70.42M) | Time:00:00.04 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:53.07M (Peak 70.42M) | Time:00:00.04 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:53.07M (Peak 70.42M) | Time:00:00.04 | Mem:36.01M, Peak:36.01M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:53.07M (Peak 70.42M) | Time:00:00.04 | Mem:36.01M, Peak:36.01M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:53.07M (Peak 70.42M) | Time:00:00.04 | Mem:36.01M, Peak:36.01M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:53.07M (Peak 70.42M) | Time:00:00.04 | Mem:36.01M, Peak:36.01M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:53.08M (Peak 70.42M) | Time:00:00.04 | Mem:36.01M, Peak:36.01M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:53.15M (Peak 70.42M) | Time:00:00.04 | Mem:36.02M, Peak:36.02M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:53.14M (Peak 70.42M) | Time:00:00.04 | Mem:36.07M, Peak:36.07M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:53.14M (Peak 70.42M) | Time:00:00.04 | Mem:36.07M, Peak:36.07M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:53.14M (Peak 70.42M) | Time:00:00.04 | Mem:36.09M, Peak:36.09M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:53.14M (Peak 70.42M) | Time:00:00.04 | Mem:36.11M, Peak:36.13M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:53.14M (Peak 70.42M) | Time:00:00.04 | Mem:36.11M, Peak:36.13M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:53.20M (Peak 70.42M) | Time:00:00.04 | Mem:36.11M, Peak:36.13M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:53.20M (Peak 70.42M) | Time:00:00.04 | Mem:36.17M, Peak:36.17M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:53.20M (Peak 70.42M) | Time:00:00.04 | Mem:36.17M, Peak:36.17M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:53.20M (Peak 70.42M) | Time:00:00.04 | Mem:36.17M, Peak:36.17M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:53.20M (Peak 70.42M) | Time:00:00.04 | Mem:36.17M, Peak:36.17M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:53.20M (Peak 70.42M) | Time:00:00.04 | Mem:36.17M, Peak:36.17M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:53.20M (Peak 70.42M) | Time:00:00.04 | Mem:36.25M, Peak:36.25M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:53.20M (Peak 70.42M) | Time:00:00.04 | Mem:36.25M, Peak:36.25M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:53.20M (Peak 70.42M) | Time:00:00.04 | Mem:36.25M, Peak:36.25M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:53.20M (Peak 70.42M) | Time:00:00.04 | Mem:36.25M, Peak:36.25M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:53.21M (Peak 70.42M) | Time:00:00.04 | Mem:36.17M, Peak:36.25M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:53.21M (Peak 70.42M) | Time:00:00.04 | Mem:36.26M, Peak:36.26M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:53.21M (Peak 70.42M) | Time:00:00.04 | Mem:36.26M, Peak:36.26M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:53.21M (Peak 70.42M) | Time:00:00.04 | Mem:36.26M, Peak:36.26M | Scene, ViewLayer | Sample 0/64
+Fra:1 Mem:90.30M (Peak 90.30M) | Time:00:00.30 | Remaining:00:16.32 | Mem:73.35M, Peak:73.35M | Scene, ViewLayer | Sample 1/64
+Fra:1 Mem:106.78M (Peak 139.74M) | Time:00:11.27 | Mem:73.35M, Peak:73.35M | Scene, ViewLayer | Sample 64/64
+Fra:1 Mem:106.78M (Peak 139.74M) | Time:00:11.27 | Mem:73.35M, Peak:73.35M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/assets/art-library/framed-wayfarer/r005/proof-03/renders/concave-90.png'
+Time: 00:11.42 (Saving: 00:00.14)
+
+22:32:51 | INFO: Data are loaded, start creating Blender stuff
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-closed-incoming-wrapped-b
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-closed-outgoing-wrapped-b
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-closed-solid-body
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-cyan-flush-status-lens
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-interchangeable-plain-fac
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-lower-impact-rail-right
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-lower-impact-rail-cut-poc
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-lower-impact-rail-left
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-pale-wrapped-connector-ou
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-pale-wrapped-connector-in
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-recess-shadow-seat
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-f94c0ba2aa04f31fb6a5-upper-stepped-shoulder
+22:32:51 | INFO: glTF import finished in 0.01s
+22:32:51 | INFO: Data are loaded, start creating Blender stuff
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-1676c64748013f376c0a-closed-junction-wedge
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-1676c64748013f376c0a-junction-lower-navy-shoe
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-1676c64748013f376c0a-junction-upper-navy-shoul
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-1676c64748013f376c0a-junction-wrapped-pale-con
+22:32:51 | INFO: glTF import finished in 0.00s
+22:32:51 | INFO: Data are loaded, start creating Blender stuff
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-closed-incoming-wrapped-b
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-closed-outgoing-wrapped-b
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-closed-solid-body
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-cyan-flush-status-lens
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-interchangeable-red-servi
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-lower-impact-rail-right
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-lower-impact-rail-cut-poc
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-lower-impact-rail-left
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-pale-wrapped-connector-ou
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-pale-wrapped-connector-in
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-recess-shadow-seat
+22:32:51 | INFO: Blender create Mesh node MESH-armor-block-fe79dfaf2e1542dbd67c-upper-stepped-shoulder
+22:32:51 | INFO: glTF import finished in 0.01s
+Fra:1 Mem:18.35M (Peak 18.35M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-incoming-
+Fra:1 Mem:18.36M (Peak 18.36M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--upper-stepped-sho
+Fra:1 Mem:18.37M (Peak 18.37M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-outgoing-
+Fra:1 Mem:18.37M (Peak 18.37M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-solid-bod
+Fra:1 Mem:18.37M (Peak 18.37M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--recess-shadow-sea
+Fra:1 Mem:18.38M (Peak 18.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--cyan-flush-status
+Fra:1 Mem:18.38M (Peak 18.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--pale-wrapped-conn
+Fra:1 Mem:18.38M (Peak 18.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--lower-impact-
+Fra:1 Mem:18.39M (Peak 18.39M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--pale-wrapped-
+Fra:1 Mem:18.39M (Peak 18.39M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--lower-impact-rail
+Fra:1 Mem:18.40M (Peak 18.40M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--lower-impact-.001
+Fra:1 Mem:18.43M (Peak 18.43M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--lower-impact-.001
+Fra:1 Mem:18.43M (Peak 18.43M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--lower-impact-rail
+Fra:1 Mem:18.43M (Peak 18.43M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--pale-wrapped-
+Fra:1 Mem:18.44M (Peak 18.44M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--pale-wrapped-conn
+Fra:1 Mem:18.45M (Peak 18.45M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--recess-shadow-sea
+Fra:1 Mem:18.44M (Peak 18.45M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--upper-stepped-sho
+Fra:1 Mem:18.46M (Peak 18.46M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-1676c64748013f376c0a--BACKING--closed-junction-
+Fra:1 Mem:18.46M (Peak 18.46M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-1676c64748013f376c0a--FINISH--junction-lower-na
+Fra:1 Mem:18.47M (Peak 18.47M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-1676c64748013f376c0a--FINISH--junction-upper-na
+Fra:1 Mem:18.46M (Peak 18.47M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-1676c64748013f376c0a--FINISH--junction-wrapped-
+Fra:1 Mem:18.47M (Peak 18.47M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--BACKING--closed-outgoing-
+Fra:1 Mem:18.48M (Peak 18.48M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--BACKING--closed-solid-bod
+Fra:1 Mem:18.47M (Peak 18.48M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--cyan-flush-status
+Fra:1 Mem:18.48M (Peak 18.48M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--interchangeable-r
+Fra:1 Mem:18.50M (Peak 18.50M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:18.38M (Peak 18.50M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading armor-normal.002
+Fra:1 Mem:18.38M (Peak 18.50M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading armor-roughness
+Fra:1 Mem:30.39M (Peak 30.39M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading armor-normal
+Fra:1 Mem:50.42M (Peak 58.42M) | Time:00:00.02 | Mem:4.00M, Peak:4.00M | Scene, ViewLayer | Updating Images | Loading armor-basecolor.001
+Fra:1 Mem:46.41M (Peak 58.42M) | Time:00:00.02 | Mem:8.00M, Peak:8.00M | Scene, ViewLayer | Updating Images | Loading armor-roughness.001
+Fra:1 Mem:42.40M (Peak 58.42M) | Time:00:00.02 | Mem:12.00M, Peak:12.00M | Scene, ViewLayer | Updating Images | Loading armor-roughness.002
+Fra:1 Mem:46.40M (Peak 58.42M) | Time:00:00.02 | Mem:16.00M, Peak:16.00M | Scene, ViewLayer | Updating Images | Loading armor-normal.001
+Fra:1 Mem:74.43M (Peak 82.44M) | Time:00:00.05 | Mem:20.00M, Peak:20.00M | Scene, ViewLayer | Updating Images | Loading armor-basecolor.002
+Fra:1 Mem:52.98M (Peak 82.44M) | Time:00:00.06 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:52.98M (Peak 82.44M) | Time:00:00.06 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:52.98M (Peak 82.44M) | Time:00:00.06 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:52.98M (Peak 82.44M) | Time:00:00.06 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:53.07M (Peak 82.44M) | Time:00:00.06 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:53.07M (Peak 82.44M) | Time:00:00.06 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:53.07M (Peak 82.44M) | Time:00:00.06 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:53.07M (Peak 82.44M) | Time:00:00.06 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:53.07M (Peak 82.44M) | Time:00:00.06 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:53.07M (Peak 82.44M) | Time:00:00.06 | Mem:36.00M, Peak:36.00M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:53.07M (Peak 82.44M) | Time:00:00.06 | Mem:36.01M, Peak:36.01M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:53.07M (Peak 82.44M) | Time:00:00.06 | Mem:36.01M, Peak:36.01M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:53.07M (Peak 82.44M) | Time:00:00.06 | Mem:36.01M, Peak:36.01M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:53.07M (Peak 82.44M) | Time:00:00.06 | Mem:36.01M, Peak:36.01M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:53.08M (Peak 82.44M) | Time:00:00.06 | Mem:36.01M, Peak:36.01M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:53.15M (Peak 82.44M) | Time:00:00.06 | Mem:36.02M, Peak:36.02M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:53.14M (Peak 82.44M) | Time:00:00.06 | Mem:36.07M, Peak:36.07M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:53.14M (Peak 82.44M) | Time:00:00.06 | Mem:36.07M, Peak:36.07M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:53.14M (Peak 82.44M) | Time:00:00.06 | Mem:36.09M, Peak:36.09M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:53.14M (Peak 82.44M) | Time:00:00.06 | Mem:36.11M, Peak:36.13M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:53.14M (Peak 82.44M) | Time:00:00.06 | Mem:36.11M, Peak:36.13M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:53.20M (Peak 82.44M) | Time:00:00.06 | Mem:36.11M, Peak:36.13M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:53.20M (Peak 82.44M) | Time:00:00.06 | Mem:36.17M, Peak:36.17M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:53.20M (Peak 82.44M) | Time:00:00.06 | Mem:36.17M, Peak:36.17M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:53.20M (Peak 82.44M) | Time:00:00.06 | Mem:36.17M, Peak:36.17M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:53.20M (Peak 82.44M) | Time:00:00.06 | Mem:36.17M, Peak:36.17M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:53.20M (Peak 82.44M) | Time:00:00.06 | Mem:36.17M, Peak:36.17M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:53.20M (Peak 82.44M) | Time:00:00.06 | Mem:36.25M, Peak:36.25M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:53.20M (Peak 82.44M) | Time:00:00.06 | Mem:36.25M, Peak:36.25M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:53.20M (Peak 82.44M) | Time:00:00.06 | Mem:36.25M, Peak:36.25M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:53.20M (Peak 82.44M) | Time:00:00.06 | Mem:36.25M, Peak:36.25M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:53.21M (Peak 82.44M) | Time:00:00.06 | Mem:36.17M, Peak:36.25M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:53.21M (Peak 82.44M) | Time:00:00.06 | Mem:36.26M, Peak:36.26M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:53.21M (Peak 82.44M) | Time:00:00.06 | Mem:36.26M, Peak:36.26M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:53.21M (Peak 82.44M) | Time:00:00.06 | Mem:36.26M, Peak:36.26M | Scene, ViewLayer | Sample 0/64
+Fra:1 Mem:90.30M (Peak 90.30M) | Time:00:00.23 | Remaining:00:10.92 | Mem:73.35M, Peak:73.35M | Scene, ViewLayer | Sample 1/64
+Fra:1 Mem:106.78M (Peak 139.74M) | Time:00:05.94 | Mem:73.35M, Peak:73.35M | Scene, ViewLayer | Sample 64/64
+Fra:1 Mem:106.78M (Peak 139.74M) | Time:00:05.94 | Mem:73.35M, Peak:73.35M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/assets/art-library/framed-wayfarer/r005/proof-03/renders/concave-90-top.png'
+Time: 00:06.10 (Saving: 00:00.15)
+
+
+Blender quit

@@ -1,0 +1,554 @@
+{
+  "recordedAt": "2026-09-14T08:13:33.602268+00:00",
+  "reviewer": "/root/armor_review_resume",
+  "outcome": "pass native asset and reference-structure review; ready for owner art review, no owner approval or live publication",
+  "coverage": {
+    "nativeModels": 46,
+    "nativeImagesViewed": 14,
+    "actualLoaderImagesViewed": 8,
+    "newPlacedModels": 28,
+    "oldFallbackEntries": 0,
+    "missingRequiredModels": 0,
+    "trianglesAcrossNativeFamily": 33640
+  },
+  "resolvedFindings": [
+    "cyan rail surface overlap",
+    "bumper-cheek terminal gap",
+    "single identity emblem omission",
+    "diagonal rail UV course alignment"
+  ],
+  "remainingArtDifferences": [
+    "slimmer and simpler side ribs",
+    "sharper planar bow returns",
+    "cleaner/sparser surface details and larger red service field",
+    "pixelated glyph treatment",
+    "single tile proportions constrained by retained interfaces"
+  ],
+  "evidence": [
+    {
+      "path": "assets/art-library/hull-voxel-study/wayfarer-layout-concept-r001/proposal.png",
+      "sha256": "b53b7e26e6ca1453e19d0a45b7f6291c8f1b33860e873f6648ce7edb0d7d5863",
+      "bytes": 2719714
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/armor-correction-review-20260914/initial-rubric.md",
+      "sha256": "12d18f9227b396810e9f212e4b5afaf315c09aa4da6099e8557fcaca4fcf987e",
+      "bytes": 4220
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/armor-correction-review-20260914/proof-05-review.md",
+      "sha256": "78d09eeadbd5d7ce986d3a1484720dfb2883ea28922f1c737efeb543a84ce828",
+      "bytes": 4847
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/armor-correction-review-20260914/final-01-review.md",
+      "sha256": "92106da248bc741477f8f51224b1faa499550a0276acaf23033a574c138931b4",
+      "bytes": 6325
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/armor-correction-review-20260914/final-01-evidence.json",
+      "sha256": "6f8a5a030f8b82b0824d4579716f73ac40b519ebd2cc6607b56732755881038e",
+      "bytes": 20712
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/baseline/concept-wide.png",
+      "sha256": "f22ca32f8f3be903729168069540e0910bba44d470727350e67392d3bfec8bde",
+      "bytes": 335881
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/final-01/bow.png",
+      "sha256": "b9247e051d932866b93f6fbaa797897f9d6bcb4a914977ca282de8a0900ee26f",
+      "bytes": 600240
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/final-01/joined.png",
+      "sha256": "599bad7764539fc6e4b3a31050255572c841885e74d6ddec31ac3db255af307f",
+      "bytes": 593490
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/final-01/bare.png",
+      "sha256": "6f982d1b013aba722ca1371c013005f9319a47880858438e2fd4c74cb185580c",
+      "bytes": 262500
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/final-01/concept.png",
+      "sha256": "78277a98e6a4e0288e9c184847bcaddd585fb164cf15c13fc4929c360aec60ae",
+      "bytes": 350247
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-01/renders/single-identity-port.png",
+      "sha256": "748b94c2993b81977312c0407bb526a1bc1fbd6caec0d2e413eef9558dbacfca",
+      "bytes": 1105904
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-01/renders/diagonal-sill.png",
+      "sha256": "8a9974cf445ec586072b158bfb15423e2f2b258bacb39e4ea5e90e22bac3472f",
+      "bytes": 830750
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-01/renders/diagonal-cheek.png",
+      "sha256": "fc301e118bc5c9583db82d08138413bcc201bb26679aea79eb2bf1b7e8495345",
+      "bytes": 913064
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models.json",
+      "sha256": "8b03baaf8fabcd181225a8f91e35f85303cd07d458646d968bdd5a863b74e764",
+      "bytes": 111902
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/source.blend",
+      "sha256": "49d7fb868d9572b3886ed102cfce624579128b08bfae56c6a407f33a904346fb",
+      "bytes": 10357752
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/recipe.py",
+      "sha256": "437480435844fac88e061ec151cb9cbaf1ebafe1890c8c5066e970e4209303f3",
+      "bytes": 43830
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/armor_cassette_interfaces.json",
+      "sha256": "888fa44f8d4dd9a72ffa3956aca7affd1b7b121962ebe89b4e7c23d6e942159d",
+      "bytes": 2097
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/validation.json",
+      "sha256": "f3609c10caf61683cf128aa0a59cb1b6ea1ca42610e994844fd7aa4ad8275b1a",
+      "bytes": 62794
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/validation-mating-and-lights.json",
+      "sha256": "3032136143ad179b51e1c009151f0909ee652f7a80b332ce0ce105ba65a4d564",
+      "bytes": 63156
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/renders/captures.json",
+      "sha256": "a3678212a9ff46ed03c8204b60b926cc91b077a4610bce4ff8a37c575322a099",
+      "bytes": 15481
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w200-h300/model.glb",
+      "sha256": "37d86032ef626af53df9b4231b91856fdecca6549e8b7b774b5300419f5cdd99",
+      "bytes": 3922020
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w200-h300-port/model.glb",
+      "sha256": "c6088e157ddd6c979d7911deade37d5f11131c6be4207b274fc5a19aae44c081",
+      "bytes": 3922044
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-pair-left-w200-h300/model.glb",
+      "sha256": "a3a4b91b3bfc7aa2b20af27a0391ac0656f84ae60e14db13a39e9bb4bb4e0962",
+      "bytes": 3905444
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-pair-left-w200-h300-port/model.glb",
+      "sha256": "f1bd01e1f68a6ef9394473c30a4ab15adee9602655705d326ec6a683e13b9301",
+      "bytes": 3905464
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-pair-right-w200-h300/model.glb",
+      "sha256": "ba03bd28693cbc1d5e556027eb6e60e14c5dbcb1092a8d3d70a7a5f154123bca",
+      "bytes": 3905672
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-pair-right-w200-h300-port/model.glb",
+      "sha256": "b56d6a9b3791b14af3b982677f13c9ca8fb8f34022e17df4f719ec0b3d9dc763",
+      "bytes": 3905688
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-red-service-w200-h300/model.glb",
+      "sha256": "c3bac96d19fdd3f53698d21b5558e23c18b5075f8a69282666fb0dfc0ed2de80",
+      "bytes": 3933152
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-red-service-w200-h300-port/model.glb",
+      "sha256": "41ab2f18fc97c1576e1c689939b86893bc96c9d423f49c0c37aa5519efa3cf65",
+      "bytes": 3933168
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-red-service-pair-left-w200-h300/model.glb",
+      "sha256": "5fc84cf2cc50ac3aaa89a0525046231f1e08cf2abc820f462d6010948722a91e",
+      "bytes": 3911396
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-red-service-pair-left-w200-h300-port/model.glb",
+      "sha256": "5d5757fbfcee7048918999b0c92c7c5ab62c3cb0cca3d0762a5f6491a0b5ad3a",
+      "bytes": 3911412
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-red-service-pair-right-w200-h300/model.glb",
+      "sha256": "743ae507b8c0d7d837100b321a60d1f7c3697c7422004c8184e899c3b5127a34",
+      "bytes": 3911592
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-red-service-pair-right-w200-h300-port/model.glb",
+      "sha256": "392b055ebbe085ad3b01d4bd138dc94156d439d34ceee26122db30017afe34e0",
+      "bytes": 3911604
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-vent-w200-h300/model.glb",
+      "sha256": "b7ffcc34f95180a872a7cc44945619e2ce1e7e18a8c792d6437e018027fc523e",
+      "bytes": 3946596
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-vent-w200-h300-port/model.glb",
+      "sha256": "a9d7d6d5a3294af1446db3424d32fc3e1d300c0dbf5cfde6a8b51911ce1e37c9",
+      "bytes": 3946620
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-vent-pair-left-w200-h300/model.glb",
+      "sha256": "a9068687686bae5558a336c341ac7fc4d0e8224885f54912a564a8d6f58c97fb",
+      "bytes": 3923172
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-vent-pair-left-w200-h300-port/model.glb",
+      "sha256": "99aca02be3ed465dc5c40d2ae3cddaca40377e45721fb7a921b4f2e59def5cc8",
+      "bytes": 3923188
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-vent-pair-right-w200-h300/model.glb",
+      "sha256": "8cc46a72dc0485e9e9a725f4594bce2a3c0682dc14d79a431317ef987be24f4e",
+      "bytes": 3924036
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-vent-pair-right-w200-h300-port/model.glb",
+      "sha256": "f6f36ce03cf698865b5225ce34eee22329ea3bce0e26cb2294bb2d3482f6bf35",
+      "bytes": 3924056
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-utility-w200-h300/model.glb",
+      "sha256": "f1d0d4903c4efa5036359a9eeabcc87faa8714083f994abf5921a232dd709e70",
+      "bytes": 3935988
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-utility-w200-h300-port/model.glb",
+      "sha256": "182abcc1d91f6a5bdc311304dd5c35bddab082bd065127624948e11034f690b7",
+      "bytes": 3936012
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-utility-pair-left-w200-h300/model.glb",
+      "sha256": "2571fe1f7703bdf1b6decae1c645ec20ed4805e595dbcf8b2d207f9286a8cad3",
+      "bytes": 3919888
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-utility-pair-left-w200-h300-port/model.glb",
+      "sha256": "79e164274c428bbe30875092d6527f3b11b222f947899cefd8796ff56036ff3f",
+      "bytes": 3919900
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-utility-pair-right-w200-h300/model.glb",
+      "sha256": "a61626f08495b85cbcd43830bc5b4df987c205bb4759e88e72f659ab14e6280c",
+      "bytes": 3919980
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-utility-pair-right-w200-h300-port/model.glb",
+      "sha256": "38ea679016d369f4a08f8342e5ef2bdb730b31b267896186abc4c902bdf80a6e",
+      "bytes": 3919992
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-identity-w200-h300/model.glb",
+      "sha256": "32a7453096c4a9286b7e167b2d723e520f739ac568fe3245b09a9e04b1e29c1c",
+      "bytes": 3922036
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-identity-w200-h300-port/model.glb",
+      "sha256": "ee9abae809a86fffc6d8bac42f0186ea32163614042d5228c3f39bfadad815ab",
+      "bytes": 3922060
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-identity-pair-left-w200-h300/model.glb",
+      "sha256": "9b038a53af1366dd91dbfe2d609c5da8f7cc5cd66d07ca4703ef6ab1c68f24e5",
+      "bytes": 3905456
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-identity-pair-left-w200-h300-port/model.glb",
+      "sha256": "38ca63ac4a0613a86cef3effeb1cdd1c40333694b9520b77cae2fe0fb40b9710",
+      "bytes": 3905472
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-identity-pair-right-w200-h300/model.glb",
+      "sha256": "a342413464f9b7e7a67e0284a60c26e0d481112df876bc1b478c9a4240547dc3",
+      "bytes": 3905684
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-identity-pair-right-w200-h300-port/model.glb",
+      "sha256": "7914a41708376c12d82ce1553058e01c8e0c88328a5564a9652380e2c93dd55e",
+      "bytes": 3905696
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w100-h300/model.glb",
+      "sha256": "3ff7e45acd541424252b10aa691ebd81cc63694b69566053d1c88cfd87867157",
+      "bytes": 3922452
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w100-h300-port/model.glb",
+      "sha256": "194ecade7d179b7b586bd124707476d10e0ef282b7001ffc34aa76d90df30fd7",
+      "bytes": 3922476
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w050-h300/model.glb",
+      "sha256": "a10eb06864964257c52854b3b97b5ad1af23f876ef5898f79dd58ce4d275c2c2",
+      "bytes": 3906692
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w050-h300-port/model.glb",
+      "sha256": "9cc6993df6d7ec77e54a044fdf2cb37957b5e4910ca8d6d26216b0dd46053f17",
+      "bytes": 3906720
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w200-h075/model.glb",
+      "sha256": "a929a721c059e651f23352bf1b1a4de89e0f39e16b6d1dca183157c1ad3d8502",
+      "bytes": 3913624
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w200-h075-port/model.glb",
+      "sha256": "4bcf2ddd9523bd4a604aeb295e852206271554f43b9d12b68d860f4d5f9307e0",
+      "bytes": 3913648
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w200-h150/model.glb",
+      "sha256": "fdfd2a877c0bed3c841b143a69565aca89178660598b8e0c9013674d0bcfcae0",
+      "bytes": 3914760
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w200-h150-port/model.glb",
+      "sha256": "27825d0b6569d82d7127cc8391cf402a66684e8ead9ae5bda41df6ccebb21b5a",
+      "bytes": 3914784
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w200-h225/model.glb",
+      "sha256": "6a54987d1311f65113f17d55af784106f159cd1cf100a96ba5f9fdbcadb4fca9",
+      "bytes": 3923148
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w200-h225-port/model.glb",
+      "sha256": "2cc44e4ca974f5f89f50c276aff677306057ff5c730cb96ee9c755511c38f26d",
+      "bytes": 3923176
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/front-sill-straight/model.glb",
+      "sha256": "add4defb47f8f994d261e1db77daf0b324c933c1b138828439bf5aa00fd62ef7",
+      "bytes": 3886136
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/front-sill-diagonal45/model.glb",
+      "sha256": "31ccae2459180af1bd39ab1169f88fa74b7908b1ec1d4857de57b08afa1b1324",
+      "bytes": 3891052
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/front-bow-transom/model.glb",
+      "sha256": "e04ad6c33d9bd0cddf71b2b7477cddfad7b6e20ea76672b40d1b861b6f3f0c57",
+      "bytes": 3886124
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/front-bow-bumper/model.glb",
+      "sha256": "4b8f813d292c06c033c5ad4e2dd00d84f62c83694429b700a1c918f173b72888",
+      "bytes": 3903536
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/front-diagonal-cheek/model.glb",
+      "sha256": "0d302ea3f239965c49c0db07b3ba6da87badd5149703d1320223c9f931facba7",
+      "bytes": 3906108
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/front-shoulder-transition/model.glb",
+      "sha256": "9814498d140b65a6d754b93762d0746c7b979420ebeb39c713966baf56c15fd1",
+      "bytes": 3892440
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/textures/armor-basecolor.png",
+      "sha256": "9f084a395599916f475dcf43f9ce815f7b76f16dace29f0501a79e978ac4795d",
+      "bytes": 1897664
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/textures/armor-normal.png",
+      "sha256": "4527bdc53e52325500c143302a11b34a4b15712ecee9933421c446bbd42c7670",
+      "bytes": 87168
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/textures/armor-roughness.png",
+      "sha256": "b632d91b57195392f31c36138d9bcaadb352db8c4f8a14d5d5824f5c5776d621",
+      "bytes": 1986038
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/renders/joined-red-service-bay.png",
+      "sha256": "b4d82c07d3a93613b303a3e9f47e246d0f3ff2f17dd47b40e0384671037d4ce1",
+      "bytes": 1204757
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/renders/joined-utility-bay.png",
+      "sha256": "c9893e63d02113add4e7e9522e35c2bad85630ff1e0d3f1e8e9b89f2c2af3904",
+      "bytes": 1183104
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/renders/joined-identity-bay.png",
+      "sha256": "575f55659a977221e5e93311854e765cc93f42775bfadf7b00a3b57381487393",
+      "bytes": 1112004
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/renders/joined-identity-port.png",
+      "sha256": "3e4a3d4ab2953519484e628f4bd4ac0538e84e8715d4c678622d635a600699fc",
+      "bytes": 1076040
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/renders/single-identity-port.png",
+      "sha256": "8c2f8d6ae104b2281beae50a722046da9897b1ed1f85243911281c1abc53b881",
+      "bytes": 1122259
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/renders/single-identity-standard.png",
+      "sha256": "af1481865092b84111747771a833307a78f48e41b15442f2a27a88d6a216d77a",
+      "bytes": 1149847
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/renders/joined-cyan-pocket-close.png",
+      "sha256": "8f513f8b1bec1f57d1e7261df05dfa717db0c73e9b92b33f8c0b69436f5efd73",
+      "bytes": 1164199
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/renders/fixed-width-examples.png",
+      "sha256": "98460fbd386894d2c67641548c63f3591d43b249398bba3deb249de9230fd6d1",
+      "bytes": 1037199
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/renders/fixed-height-examples.png",
+      "sha256": "a301b97dd53246b152314e9b49380487066ac62390ceda333f1fc974a192f109",
+      "bytes": 845306
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/renders/sill-and-transom.png",
+      "sha256": "3f21183a81e3389f4c9bd285ffd1e54ddf1420eda9662b9bbc5a3be4feba9035",
+      "bytes": 746403
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/renders/diagonal-sill.png",
+      "sha256": "82949dbe54d3b04b5e6f5f12dd3dd640847cb27ac249555faa93356cbb60fd0f",
+      "bytes": 829942
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/renders/diagonal-cheek.png",
+      "sha256": "f36cfa8defa3cd321ba1b5a009fff5bff2ef750e4a34bb88d7c96dcbc617cfa0",
+      "bytes": 912777
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/renders/fitted-bow-terminal-close.png",
+      "sha256": "14c9a4d6c9eaf0a5baa7db0451aaa0353b23028df6871a98d8a0b2097cfdc26f",
+      "bytes": 1428626
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/renders/bow-cyan-pocket-close.png",
+      "sha256": "296e83e5f54c4329514b7aed48154f647d88418cfbf3f6af5d114f92b9f5d722",
+      "bytes": 1075102
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/final-03/armor-layout.json",
+      "sha256": "5d5cd0456b9cbf023cc83d974d161e46bbb0d983093dee6f7077deb871517f5a",
+      "bytes": 33576
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/final-03/armor.png",
+      "sha256": "9ee571175ae5c049de1a950bd6d924e1a51562dd3a26eea47178f1330cffd3af",
+      "bytes": 189796
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/final-03/bare-bindings.json",
+      "sha256": "84456e6924624e4c4380f7017b30baf021325b2cfd333b28b314f4f73f7e4e24",
+      "bytes": 31532
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/final-03/bare.png",
+      "sha256": "6f982d1b013aba722ca1371c013005f9319a47880858438e2fd4c74cb185580c",
+      "bytes": 262500
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/final-03/bow.png",
+      "sha256": "fa5a7ab32d8aefaf237b14ad92f4127d6e6f0b796b314fed46e7313dcda9ac79",
+      "bytes": 600465
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/final-03/bundle-provenance.json",
+      "sha256": "6d887b635e7427f0f675a36c6e397e8e8f19e78be5b21d06b87d49e3f51195cc",
+      "bytes": 50176
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/final-03/capture.js",
+      "sha256": "1340967a52b827955932c43938eee3bbccd6f8f5e6ac9a3cbb2117ad66761c3c",
+      "bytes": 2253
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/final-03/capture.log",
+      "sha256": "9a00de85d7f67b51ad9a618a45c9b10cc2c83f9032c049b7e3f26bac730fe2c1",
+      "bytes": 3919
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/final-03/captures.json",
+      "sha256": "6a77d50cff52a956b393208d01bb0118639d9d30395232793513dc155d318ad4",
+      "bytes": 3308
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/final-03/concept.png",
+      "sha256": "406d9e1876c8d9c3aa244a6b986ff0ca4515de566ec34f34c2b81682ad845168",
+      "bytes": 350617
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/final-03/document.json",
+      "sha256": "9e0da70783ffcd6c480e287fab5a056fd0b81e570e838d96e5d66df5d516b48b",
+      "bytes": 72881
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/final-03/exploded.png",
+      "sha256": "1577b8639795f98a4aaf9e3bcc00cfb88ec489fb9ebb654ccdbe8711b2aa0c69",
+      "bytes": 384774
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/final-03/gameplay.png",
+      "sha256": "af8c4ebbd92441f804a7c4cd21a24456771b829a5cad6195f7ce084a51050342",
+      "bytes": 306936
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/final-03/inputs.json",
+      "sha256": "6385c2fbc98ce5b11539fba67697a397aad9be67df41c17355dcf5c723154e03",
+      "bytes": 7800
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/final-03/joined.png",
+      "sha256": "ff0aa9805d33547411729d1f99c3e4465579152ac84719ba9c80f52d1315eb2a",
+      "bytes": 597258
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/final-03/starboard.png",
+      "sha256": "740e3b475d819a0d8faa509f5f1584acb45619fdae2c6e50dcb15c0f5c446dc3",
+      "bytes": 358990
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/final-03/whole-bindings.json",
+      "sha256": "a07471ab3cbcb7f1106f5b88a791335dfd4cf1463c324a0725f4d3b890a453dc",
+      "bytes": 31517
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/library-03/hull.glb",
+      "sha256": "7e876ad6a313b918e9497a2dc8cdb36236aa576a14b91c115d4b181b399b80d3",
+      "bytes": 5956204
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/library-03/models.json",
+      "sha256": "899e7c51cd98bd530fdd24f5aede709544e0312abc58b96a32b97a166b6db4c1",
+      "bytes": 117909
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/library-03/model-source-map.json",
+      "sha256": "1ccdd331bd02577830af35714608db2fa31eb3ba65a886c7aeea93fa2e0b2007",
+      "bytes": 28755
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/library-03/parity.json",
+      "sha256": "d6a06ffc3c18592616b632857c609a108c9577329e238e4bb33262f0e154860b",
+      "bytes": 311453
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/armor-correction-review-20260914/final-03-review.md",
+      "sha256": "47f2bc676a286cdd3a606a2bbefdc9727248d77c68c58ce0c2fea66a0bd31971",
+      "bytes": 6809
+    }
+  ]
+}

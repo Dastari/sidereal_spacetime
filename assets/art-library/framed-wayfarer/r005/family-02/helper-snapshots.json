@@ -1,0 +1,23 @@
+{
+  "snapshots": [
+    {
+      "path": "armor_block_kit_check.py",
+      "sha256": "ed4a3203806a0e0624a1c34f198f503f965bb0f300059c134089367b1c9eddd1",
+      "canonicalPath": "scripts/art_library/armor_block_kit_check.py",
+      "execution": "Invoke from the canonical repository path with this candidate directory. Snapshot retains the exact helper used; authoring recipe and planner can run from their archived locations."
+    },
+    {
+      "path": "armor_block_kit_contacts.py",
+      "sha256": "7eb06e279fe4b190a7fe42ef99ff6c122db3e5e1a13784acebc6c52f7028723e",
+      "canonicalPath": "scripts/art_library/armor_block_kit_contacts.py",
+      "execution": "Invoke from the canonical repository path with this candidate directory. Snapshot retains the exact helper used; authoring recipe and planner can run from their archived locations."
+    },
+    {
+      "path": "armor_block_kit_render.py",
+      "sha256": "a4d224275fc26e1639d125b20e8e5972a592ee01f0cb9e43e27744fe00f11706",
+      "canonicalPath": "scripts/art_library/armor_block_kit_render.py",
+      "execution": "Invoke from the canonical repository path with this candidate directory. Snapshot retains the exact helper used; authoring recipe and planner can run from their archived locations."
+    }
+  ],
+  "note": "Source recipe/planner hashes are in models.json; validator hashes are in validation.json/validation-contacts.json. Native capture metadata identifies exact source, manifest and GLB hashes."
+}

@@ -1,0 +1,5 @@
+{
+  "status": "geometry-valid-finish-review-failed",
+  "reason": "Actual final-01 browser review showed WF identity text and planet/ring cropped by pale face ribs. Source identity graphic exceeded usable inset UV width, and its original pixel-sized text was oversized at the 64 texels/m atlas density. Native geometry and contact proofs remain valid. family-03 preserves geometry/material UVs and composes a bounded single-bay graphic; previous source/images retained.",
+  "supersededBy": "family-03"
+}

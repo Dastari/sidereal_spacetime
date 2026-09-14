@@ -1,0 +1,37 @@
+### Result
+{"captures":[{"name":"concept","mode":"whole","camera":[-2.75,0.955,0,1,-1,24],"draws":316,"triangles":304234,"activeMeshes":279,"renderMs":3.1999988555908203},{"name":"starboard","mode":"whole","camera":[-0.39,0.955,0,1,-1,24],"draws":316,"triangles":304234,"activeMeshes":279,"renderMs":1.3000011444091797},{"name":"bow","mode":"whole","camera":[-2.12,1.02,0,1,-8,11],"draws":247,"triangles":248362,"activeMeshes":240,"renderMs":1.2000007629394531},{"name":"joined","mode":"whole","camera":[-2.9,1.12,-5,1.5,-1,9],"draws":212,"triangles":236434,"activeMeshes":216,"renderMs":0.6999988555908203},{"name":"gameplay","mode":"whole","camera":[-2.34,0.955,0,1,-1,27],"draws":336,"triangles":304234,"activeMeshes":299,"renderMs":2.3000011444091797}],"errors":[],"scope":"Final01 complete28nativeplacements; zero fallback or missing required models; exact game-loader pure fixture; no authenticated gameplay or live authority"}
+### Ran Playwright code
+```js
+await (async page => {
+  const source='/root/sidereal_spacetime/.runtime/shipyard-completion/armor-geometry-pass-20260914/final-01-review';
+  const out='/root/sidereal_spacetime/assets/art-library/framed-wayfarer/r004/browser/final-01';
+  await page.goto('about:blank'); await page.unrouteAll({behavior:'ignoreErrors'});
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.route('**/assets/**',route=>{
+    const rel=route.request().url().split('/assets/')[1].split('?')[0];
+    if(!/^[\w/.-]+$/.test(rel)||rel.includes('..'))return route.abort();
+    return route.fulfill({path:'/root/wayfarer-framed-r001-candidate/assets/runtime/'+rel});
+  });
+  await page.route('**/__armor-review/**',route=>{
+    const rel=route.request().url().split('/__armor-review/')[1].split('?')[0];
+    return route.fulfill({path:source+'/'+rel,contentType:rel.endsWith('.html')?'text/html':rel.endsWith('.js')?'application/javascript':'application/json'});
+  });
+  await page.route('**/__armor-native/**',route=>{const rel=route.request().url().split('/__armor-native/')[1].split('?')[0]; if(!/^[\w/.-]+$/.test(rel)||rel.includes('..'))return route.abort(); return route.fulfill({path:'/root/sidereal_spacetime/assets/art-library/framed-wayfarer/r004/library-01/'+rel});});
+  await page.setViewportSize({width:1400,height:950});
+  await page.goto('https://sidereal.tail7a58a6.ts.net:8445/__armor-review/index.html?mode=whole');
+  await page.waitForFunction(()=>window.review?.ready,undefined,{timeout:60000});
+  const captures=[];
+  for(const name of ['concept','starboard','bow','joined','gameplay']){
+    const metrics=await page.evaluate(name=>window.review.view(name),name);
+    await page.screenshot({path:out+'/'+name+'.png',timeout:60000});captures.push({name,...metrics});
+  }
+  return {captures,errors,scope:'Final01 complete28nativeplacements; zero fallback or missing required models; exact game-loader pure fixture; no authenticated gameplay or live authority'};
+}
+)(page);
+```
+### Page
+- Page URL: https://sidereal.tail7a58a6.ts.net:8445/__armor-review/index.html?mode=whole
+- Page Title: Wayfarer armor native review
+- Console: 0 errors, 4 warnings
+### Events
+- New console entries: .playwright-cli/console-2026-09-14T07-42-57-104Z.log#L1-L5

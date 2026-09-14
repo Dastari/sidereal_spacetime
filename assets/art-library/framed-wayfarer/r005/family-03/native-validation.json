@@ -1,0 +1,1587 @@
+{
+  "schema": "sidereal.native-block-validation.v1",
+  "status": "pass",
+  "models": [
+    {
+      "modelId": "armor-block-f94c0ba2aa04f31fb6a5",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 3.65625,
+          "expectedVolumeM3": 3.65625
+        },
+        {
+          "object": "GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-7c657ee01a90318dec3e",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-7c657ee01a90318dec3e--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 3.65625,
+          "expectedVolumeM3": 3.65625
+        },
+        {
+          "object": "GEO-armor-block-7c657ee01a90318dec3e--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-7c657ee01a90318dec3e--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-fe79dfaf2e1542dbd67c",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-fe79dfaf2e1542dbd67c--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 3.65625,
+          "expectedVolumeM3": 3.65625
+        },
+        {
+          "object": "GEO-armor-block-fe79dfaf2e1542dbd67c--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-fe79dfaf2e1542dbd67c--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-9ca59f6db637d3afceb9",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-9ca59f6db637d3afceb9--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.828125,
+          "expectedVolumeM3": 1.828125
+        },
+        {
+          "object": "GEO-armor-block-9ca59f6db637d3afceb9--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.2109375,
+          "expectedVolumeM3": 0.2109375
+        },
+        {
+          "object": "GEO-armor-block-9ca59f6db637d3afceb9--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.2109375,
+          "expectedVolumeM3": 0.2109375
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-70b34597548b284a0a7f",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-70b34597548b284a0a7f--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.142060657239436,
+          "expectedVolumeM3": 1.1420606733129408
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-cd2f17ea0cf58cb60b7f",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-cd2f17ea0cf58cb60b7f--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 2.338230460882187,
+          "expectedVolumeM3": 2.3382305153392506
+        },
+        {
+          "object": "GEO-armor-block-cd2f17ea0cf58cb60b7f--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.2109375,
+          "expectedVolumeM3": 0.2109375
+        },
+        {
+          "object": "GEO-armor-block-cd2f17ea0cf58cb60b7f--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.2109375,
+          "expectedVolumeM3": 0.2109375
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-1676c64748013f376c0a",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-1676c64748013f376c0a--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 3.3749999999998037,
+          "expectedVolumeM3": 3.3749999999998255
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-a6743a347ee2fcdd1ce9",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-a6743a347ee2fcdd1ce9--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 3.65625,
+          "expectedVolumeM3": 3.65625
+        },
+        {
+          "object": "GEO-armor-block-a6743a347ee2fcdd1ce9--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-a6743a347ee2fcdd1ce9--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-62ad930c45227d5287a0",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-62ad930c45227d5287a0--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.96875,
+          "expectedVolumeM3": 1.96875
+        },
+        {
+          "object": "GEO-armor-block-62ad930c45227d5287a0--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-62ad930c45227d5287a0--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-e1affbf19f4b7fa30311",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-e1affbf19f4b7fa30311--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 2.5312499999999343,
+          "expectedVolumeM3": 2.53125
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-926961217b49c21a526b",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-926961217b49c21a526b--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 3.65625,
+          "expectedVolumeM3": 3.65625
+        },
+        {
+          "object": "GEO-armor-block-926961217b49c21a526b--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-926961217b49c21a526b--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-137adc2153a878094d60",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-137adc2153a878094d60--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 3.65625,
+          "expectedVolumeM3": 3.65625
+        },
+        {
+          "object": "GEO-armor-block-137adc2153a878094d60--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-137adc2153a878094d60--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-e40f082abbcbe4f55a62",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-e40f082abbcbe4f55a62--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 3.65625,
+          "expectedVolumeM3": 3.65625
+        },
+        {
+          "object": "GEO-armor-block-e40f082abbcbe4f55a62--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-e40f082abbcbe4f55a62--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-649dcbda86c17c7952c9",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-649dcbda86c17c7952c9--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 3.65625,
+          "expectedVolumeM3": 3.65625
+        },
+        {
+          "object": "GEO-armor-block-649dcbda86c17c7952c9--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-649dcbda86c17c7952c9--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-2b558e7ac8eb4184c2af",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-2b558e7ac8eb4184c2af--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.5625,
+          "expectedVolumeM3": 0.5625
+        },
+        {
+          "object": "GEO-armor-block-2b558e7ac8eb4184c2af--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.28125,
+          "expectedVolumeM3": 0.28125
+        },
+        {
+          "object": "GEO-armor-block-2b558e7ac8eb4184c2af--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.28125,
+          "expectedVolumeM3": 0.28125
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-b235419d9a165659f2e8",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-b235419d9a165659f2e8--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.28125,
+          "expectedVolumeM3": 0.28125
+        },
+        {
+          "object": "GEO-armor-block-b235419d9a165659f2e8--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.140625,
+          "expectedVolumeM3": 0.140625
+        },
+        {
+          "object": "GEO-armor-block-b235419d9a165659f2e8--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.140625,
+          "expectedVolumeM3": 0.140625
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-fabbd7b0578ea00b5791",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-fabbd7b0578ea00b5791--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.6874999999999019,
+          "expectedVolumeM3": 1.6874999999999127
+        },
+        {
+          "object": "GEO-armor-block-fabbd7b0578ea00b5791--BACKING--closed-height-tr",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.84375,
+          "expectedVolumeM3": 0.8437499999999564
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-e120acd13dae3b493668",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-e120acd13dae3b493668--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.7472402304410934,
+          "expectedVolumeM3": 0.7472402576696252
+        },
+        {
+          "object": "GEO-armor-block-e120acd13dae3b493668--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.2109375,
+          "expectedVolumeM3": 0.2109375
+        },
+        {
+          "object": "GEO-armor-block-e120acd13dae3b493668--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.2109375,
+          "expectedVolumeM3": 0.2109375
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-98477a5dd3e88b931589",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-98477a5dd3e88b931589--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.984375,
+          "expectedVolumeM3": 0.984375
+        },
+        {
+          "object": "GEO-armor-block-98477a5dd3e88b931589--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.2109375,
+          "expectedVolumeM3": 0.2109375
+        },
+        {
+          "object": "GEO-armor-block-98477a5dd3e88b931589--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.2109375,
+          "expectedVolumeM3": 0.2109375
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-a7ef36310c50dc565d00",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-a7ef36310c50dc565d00--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.6874999999999019,
+          "expectedVolumeM3": 1.6874999999999127
+        },
+        {
+          "object": "GEO-armor-block-a7ef36310c50dc565d00--BACKING--closed-height-tr",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.8437499999999019,
+          "expectedVolumeM3": 0.8437499999999564
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-4896cc9388c49fcb9b2e",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-4896cc9388c49fcb9b2e--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.96875,
+          "expectedVolumeM3": 1.96875
+        },
+        {
+          "object": "GEO-armor-block-4896cc9388c49fcb9b2e--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-4896cc9388c49fcb9b2e--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-d3fa0e462a519b5f36f8",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-d3fa0e462a519b5f36f8--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 3.65625,
+          "expectedVolumeM3": 3.65625
+        },
+        {
+          "object": "GEO-armor-block-d3fa0e462a519b5f36f8--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-d3fa0e462a519b5f36f8--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-9069dfa847efce4fe41e",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-9069dfa847efce4fe41e--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.5625,
+          "expectedVolumeM3": 0.5625
+        },
+        {
+          "object": "GEO-armor-block-9069dfa847efce4fe41e--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.28125,
+          "expectedVolumeM3": 0.28125
+        },
+        {
+          "object": "GEO-armor-block-9069dfa847efce4fe41e--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.28125,
+          "expectedVolumeM3": 0.28125
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-db7ed5477c90dcffe64f",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-db7ed5477c90dcffe64f--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 3.65625,
+          "expectedVolumeM3": 3.65625
+        },
+        {
+          "object": "GEO-armor-block-db7ed5477c90dcffe64f--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-db7ed5477c90dcffe64f--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-05c9d73568be3ad2e6b8",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-05c9d73568be3ad2e6b8--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.96875,
+          "expectedVolumeM3": 1.96875
+        },
+        {
+          "object": "GEO-armor-block-05c9d73568be3ad2e6b8--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-05c9d73568be3ad2e6b8--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-15a405777ecce0335b21",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-15a405777ecce0335b21--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 2.5312499999999343,
+          "expectedVolumeM3": 2.53125
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-43965fec43941bd88fcc",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-43965fec43941bd88fcc--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.96875,
+          "expectedVolumeM3": 1.96875
+        },
+        {
+          "object": "GEO-armor-block-43965fec43941bd88fcc--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-43965fec43941bd88fcc--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-af0cc716991642374212",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-af0cc716991642374212--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 3.65625,
+          "expectedVolumeM3": 3.65625
+        },
+        {
+          "object": "GEO-armor-block-af0cc716991642374212--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-af0cc716991642374212--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-57b9352f1f040b7f0157",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-57b9352f1f040b7f0157--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 2.53125,
+          "expectedVolumeM3": 2.53125
+        },
+        {
+          "object": "GEO-armor-block-57b9352f1f040b7f0157--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-57b9352f1f040b7f0157--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-8904b2af208c0ad89e05",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-8904b2af208c0ad89e05--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 3.09375,
+          "expectedVolumeM3": 3.09375
+        },
+        {
+          "object": "GEO-armor-block-8904b2af208c0ad89e05--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-8904b2af208c0ad89e05--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-d475f516a65773f4c21e",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-d475f516a65773f4c21e--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 2.53125,
+          "expectedVolumeM3": 2.53125
+        },
+        {
+          "object": "GEO-armor-block-d475f516a65773f4c21e--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-d475f516a65773f4c21e--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-97e82a0a2ae19def921f",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-97e82a0a2ae19def921f--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 3.0310557782649994,
+          "expectedVolumeM3": 3.03105589875
+        },
+        {
+          "object": "GEO-armor-block-97e82a0a2ae19def921f--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-97e82a0a2ae19def921f--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-57b42efda0a7a7d9ffdd",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-57b42efda0a7a7d9ffdd--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 2.0648365382129756,
+          "expectedVolumeM3": 2.064836471203236
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-7c3af440c13bfbd854f7",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-7c3af440c13bfbd854f7--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 3.024503141641617,
+          "expectedVolumeM3": 3.0245030855910002
+        },
+        {
+          "object": "GEO-armor-block-7c3af440c13bfbd854f7--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-7c3af440c13bfbd854f7--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-075003ca42dee3ad88d4",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-075003ca42dee3ad88d4--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 2.442172976679648,
+          "expectedVolumeM3": 2.442172942406145
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-137dbd4b0d514b60c4c3",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-137dbd4b0d514b60c4c3--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 3.65625,
+          "expectedVolumeM3": 3.65625
+        },
+        {
+          "object": "GEO-armor-block-137dbd4b0d514b60c4c3--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-137dbd4b0d514b60c4c3--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-cb4ec70047162b4093b9",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-cb4ec70047162b4093b9--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.3370031416416168,
+          "expectedVolumeM3": 1.337003085591
+        },
+        {
+          "object": "GEO-armor-block-cb4ec70047162b4093b9--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-cb4ec70047162b4093b9--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-131df6537810373834cb",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-131df6537810373834cb--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 2.758433604119439,
+          "expectedVolumeM3": 2.758433643010594
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-79d4507d7b58226cbe80",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-79d4507d7b58226cbe80--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.8302562832832336,
+          "expectedVolumeM3": 1.8302561711797503
+        },
+        {
+          "object": "GEO-armor-block-79d4507d7b58226cbe80--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-79d4507d7b58226cbe80--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-edc8f579626e43feb839",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-edc8f579626e43feb839--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.9087346017725411,
+          "expectedVolumeM3": 0.9087345720510814
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-e7911c4aae9fd2fecbb8",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-e7911c4aae9fd2fecbb8--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 2.038789987564087,
+          "expectedVolumeM3": 2.0387899668352496
+        },
+        {
+          "object": "GEO-armor-block-e7911c4aae9fd2fecbb8--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-e7911c4aae9fd2fecbb8--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-649b14141fa27ecd47e6",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-649b14141fa27ecd47e6--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 2.5247344227815987,
+          "expectedVolumeM3": 2.5247344584771434
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-fc5a10216de60493ab08",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-fc5a10216de60493ab08--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.792154306352118,
+          "expectedVolumeM3": 1.7921543073098443
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-204079fa21328c629295",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-204079fa21328c629295--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.84375,
+          "expectedVolumeM3": 0.84375
+        },
+        {
+          "object": "GEO-armor-block-204079fa21328c629295--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-204079fa21328c629295--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-50c9e43a8c6ba5af5141",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-50c9e43a8c6ba5af5141--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.5625,
+          "expectedVolumeM3": 0.5625
+        },
+        {
+          "object": "GEO-armor-block-50c9e43a8c6ba5af5141--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.28125,
+          "expectedVolumeM3": 0.28125
+        },
+        {
+          "object": "GEO-armor-block-50c9e43a8c6ba5af5141--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.28125,
+          "expectedVolumeM3": 0.28125
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-e9bc6213d0d76ca7f44b",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-e9bc6213d0d76ca7f44b--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 2.2029795348644257,
+          "expectedVolumeM3": 2.2029794240625
+        },
+        {
+          "object": "GEO-armor-block-e9bc6213d0d76ca7f44b--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-e9bc6213d0d76ca7f44b--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-f731b556d8884e7d7557",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-f731b556d8884e7d7557--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.1406734883785248,
+          "expectedVolumeM3": 1.1406735253125
+        },
+        {
+          "object": "GEO-armor-block-f731b556d8884e7d7557--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-f731b556d8884e7d7557--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-207cbce0274b3e836291",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-207cbce0274b3e836291--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 2.3007206571267416,
+          "expectedVolumeM3": 2.300720593359658
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-975ae6c56dd5c22ae720",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-975ae6c56dd5c22ae720--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.9140625,
+          "expectedVolumeM3": 0.9140625
+        },
+        {
+          "object": "GEO-armor-block-975ae6c56dd5c22ae720--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.10546875,
+          "expectedVolumeM3": 0.10546875
+        },
+        {
+          "object": "GEO-armor-block-975ae6c56dd5c22ae720--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.10546875,
+          "expectedVolumeM3": 0.10546875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-0609cba1e9e5472c20b6",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-0609cba1e9e5472c20b6--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 2.7421875,
+          "expectedVolumeM3": 2.7421875
+        },
+        {
+          "object": "GEO-armor-block-0609cba1e9e5472c20b6--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.31640625,
+          "expectedVolumeM3": 0.31640625
+        },
+        {
+          "object": "GEO-armor-block-0609cba1e9e5472c20b6--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.31640625,
+          "expectedVolumeM3": 0.31640625
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-fbbf224dbd286d805ac1",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-fbbf224dbd286d805ac1--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 3.65625,
+          "expectedVolumeM3": 3.65625
+        },
+        {
+          "object": "GEO-armor-block-fbbf224dbd286d805ac1--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-fbbf224dbd286d805ac1--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-49384936da4b4c531fcc",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-49384936da4b4c531fcc--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.3046875,
+          "expectedVolumeM3": 0.3046875
+        },
+        {
+          "object": "GEO-armor-block-49384936da4b4c531fcc--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.03515625,
+          "expectedVolumeM3": 0.03515625
+        },
+        {
+          "object": "GEO-armor-block-49384936da4b4c531fcc--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.03515625,
+          "expectedVolumeM3": 0.03515625
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-e8152b71edd21a544d55",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-e8152b71edd21a544d55--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.609375,
+          "expectedVolumeM3": 0.609375
+        },
+        {
+          "object": "GEO-armor-block-e8152b71edd21a544d55--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.0703125,
+          "expectedVolumeM3": 0.0703125
+        },
+        {
+          "object": "GEO-armor-block-e8152b71edd21a544d55--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.0703125,
+          "expectedVolumeM3": 0.0703125
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-c2da9d9d47c98c01ceb8",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-c2da9d9d47c98c01ceb8--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.9140625,
+          "expectedVolumeM3": 0.9140625
+        },
+        {
+          "object": "GEO-armor-block-c2da9d9d47c98c01ceb8--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.10546875,
+          "expectedVolumeM3": 0.10546875
+        },
+        {
+          "object": "GEO-armor-block-c2da9d9d47c98c01ceb8--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.10546875,
+          "expectedVolumeM3": 0.10546875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-e7a26fe3b6e058621d39",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-e7a26fe3b6e058621d39--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.21875,
+          "expectedVolumeM3": 1.21875
+        },
+        {
+          "object": "GEO-armor-block-e7a26fe3b6e058621d39--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.140625,
+          "expectedVolumeM3": 0.140625
+        },
+        {
+          "object": "GEO-armor-block-e7a26fe3b6e058621d39--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.140625,
+          "expectedVolumeM3": 0.140625
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-8233c1a3a948a91de0c7",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-8233c1a3a948a91de0c7--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.9228174984455109,
+          "expectedVolumeM3": 0.9228174958546876
+        },
+        {
+          "object": "GEO-armor-block-8233c1a3a948a91de0c7--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.10546875,
+          "expectedVolumeM3": 0.10546875
+        },
+        {
+          "object": "GEO-armor-block-8233c1a3a948a91de0c7--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.10546875,
+          "expectedVolumeM3": 0.10546875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-a252a121923cfb248f94",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-a252a121923cfb248f94--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.9486859291791916,
+          "expectedVolumeM3": 0.9486859572050625
+        },
+        {
+          "object": "GEO-armor-block-a252a121923cfb248f94--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.10546875,
+          "expectedVolumeM3": 0.10546875
+        },
+        {
+          "object": "GEO-armor-block-a252a121923cfb248f94--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.10546875,
+          "expectedVolumeM3": 0.10546875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-981bd24736c640366791",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-981bd24736c640366791--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.0468507558107376,
+          "expectedVolumeM3": 1.0468507373437501
+        },
+        {
+          "object": "GEO-armor-block-981bd24736c640366791--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.10546875,
+          "expectedVolumeM3": 0.10546875
+        },
+        {
+          "object": "GEO-armor-block-981bd24736c640366791--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.10546875,
+          "expectedVolumeM3": 0.10546875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-7bcf58fae727b968e126",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-7bcf58fae727b968e126--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.3800527304410934,
+          "expectedVolumeM3": 1.3800527576696253
+        },
+        {
+          "object": "GEO-armor-block-7bcf58fae727b968e126--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.10546875,
+          "expectedVolumeM3": 0.10546875
+        },
+        {
+          "object": "GEO-armor-block-7bcf58fae727b968e126--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.10546875,
+          "expectedVolumeM3": 0.10546875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-825d61aeb52f08f61c14",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-825d61aeb52f08f61c14--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.9140625,
+          "expectedVolumeM3": 0.9140625
+        },
+        {
+          "object": "GEO-armor-block-825d61aeb52f08f61c14--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.10546875,
+          "expectedVolumeM3": 0.10546875
+        },
+        {
+          "object": "GEO-armor-block-825d61aeb52f08f61c14--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.10546875,
+          "expectedVolumeM3": 0.10546875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-bb2e153a868e9214017f",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-bb2e153a868e9214017f--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.896077153176059,
+          "expectedVolumeM3": 0.8960771536549221
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-b5debfc1efb6816ed06d",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-b5debfc1efb6816ed06d--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.3687999713432789,
+          "expectedVolumeM3": 0.3687999585457477
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-19cb454187f2b808d0f7",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-19cb454187f2b808d0f7--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.9460697151414055,
+          "expectedVolumeM3": 0.9460697168122586
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-8c601c2467812dda7c97",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-8c601c2467812dda7c97--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.45436730088627053,
+          "expectedVolumeM3": 0.4543672860255407
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-04506299cdccdc3362d3",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-04506299cdccdc3362d3--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.0324182691064878,
+          "expectedVolumeM3": 1.032418235601618
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-b9889f7ac1379ef477d3",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-b9889f7ac1379ef477d3--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.6132205920225837,
+          "expectedVolumeM3": 0.613220593359466
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-e465b7594b2433a77396",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-e465b7594b2433a77396--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.8637377985549748,
+          "expectedVolumeM3": 0.8637378220871726
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-c3e51deb6848ddb10001",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-c3e51deb6848ddb10001--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.221086488339824,
+          "expectedVolumeM3": 1.2210864712030725
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-b8ebf4aa6991e098a6d3",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-b8ebf4aa6991e098a6d3--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.1503603285633708,
+          "expectedVolumeM3": 1.150360296679829
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-bdffe58423963910d02b",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-bdffe58423963910d02b--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.253028891247212,
+          "expectedVolumeM3": 1.2530288672488086
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-098c86a675e3e951ace9",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-098c86a675e3e951ace9--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.3792168020597195,
+          "expectedVolumeM3": 1.379216821505297
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-0f4edf0963be28b7952b",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-0f4edf0963be28b7952b--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.2623672113907993,
+          "expectedVolumeM3": 1.2623672292385717
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-eae57557166988330b70",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-eae57557166988330b70--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.5226624903057182,
+          "expectedVolumeM3": 1.5226624948174885
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-54094cde041737badaf2",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-54094cde041737badaf2--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.2656249999999671,
+          "expectedVolumeM3": 1.265625
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-2cce8582f894eec65110",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-2cce8582f894eec65110--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.6874999999999019,
+          "expectedVolumeM3": 1.6874999999999127
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-aabac0a89386b4aa9045",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-aabac0a89386b4aa9045--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 3.65625,
+          "expectedVolumeM3": 3.65625
+        },
+        {
+          "object": "GEO-armor-block-aabac0a89386b4aa9045--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-aabac0a89386b4aa9045--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    }
+  ],
+  "modelCount": 76,
+  "sourceSha256": "f0f381f1f9b38a8b19cb6a91226aafbff082e678e9471b607c0823c15fdbf2ec",
+  "limits": [
+    "Native topology/volume validated here. Assembly intersections and imported GLB parity checked by companion validator."
+  ]
+}

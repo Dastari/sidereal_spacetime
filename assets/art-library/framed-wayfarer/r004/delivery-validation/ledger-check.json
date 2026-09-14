@@ -1,0 +1,11 @@
+{
+  "currentRevision": 6,
+  "currentEvidenceCount": 28,
+  "currentEvidenceHashes": "pass",
+  "owner_final_signoff": null,
+  "fullLibraryCheck": "Fails source inventory changed; no other ledger/hash errors reported.",
+  "unregisteredSourceFiles": [
+    "reference/art/editor-mockup-5.png"
+  ],
+  "missingSourceFiles": []
+}

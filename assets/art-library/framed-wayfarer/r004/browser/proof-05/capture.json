@@ -1,0 +1,24 @@
+{
+  "captures": [
+    {
+      "name": "concept",
+      "mode": "whole",
+      "camera": [
+        -2.75,
+        0.955,
+        0,
+        1,
+        -1,
+        24
+      ],
+      "draws": 338,
+      "triangles": 311766,
+      "activeMeshes": 301,
+      "renderMs": 2.3999996185302734
+    }
+  ],
+  "errors": [],
+  "scope": "Proof05 exact lossless library, qualified game-loader pure fixture;17 new native placements and8 previous hull binding entries; no authenticated gameplay or live authority.",
+  "metadataNote": "Raw CLI scope string retained a proof03 label from the harness template; routed directory, library hash and images are proof05 as recorded in inputs and bundle provenance.",
+  "imageSha256": "26ca06d923e2731651793f246a9e046982c18ddbe8db155fa9842b4b00f55ec1"
+}

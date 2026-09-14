@@ -1,0 +1,2770 @@
+{
+  "schema": "sidereal.armor-cassette-native-check.v1",
+  "revision": 4,
+  "status": "pass",
+  "models": [
+    {
+      "slug": "armor-plain-w200-h300",
+      "status": "pass",
+      "sha256": "37d86032ef626af53df9b4231b91856fdecca6549e8b7b774b5300419f5cdd99",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 852,
+      "semanticGroups": {
+        "GEO-armor-plain-w200-h300--ARMOR": {
+          "triangles": 840,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-plain-w200-h300--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-plain-w200-h300-port",
+      "status": "pass",
+      "sha256": "c6088e157ddd6c979d7911deade37d5f11131c6be4207b274fc5a19aae44c081",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 852,
+      "semanticGroups": {
+        "GEO-armor-plain-w200-h300-port--ARMOR": {
+          "triangles": 840,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-plain-w200-h300-port--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-plain-pair-left-w200-h300",
+      "status": "pass",
+      "sha256": "a3a4b91b3bfc7aa2b20af27a0391ac0656f84ae60e14db13a39e9bb4bb4e0962",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 558,
+      "semanticGroups": {
+        "GEO-armor-plain-pair-left-w200-h300--ARMOR": {
+          "triangles": 546,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-plain-pair-left-w200-h300--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-plain-pair-left-w200-h300-port",
+      "status": "pass",
+      "sha256": "f1bd01e1f68a6ef9394473c30a4ab15adee9602655705d326ec6a683e13b9301",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 558,
+      "semanticGroups": {
+        "GEO-armor-plain-pair-left-w200-h300-port--ARMOR": {
+          "triangles": 546,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-plain-pair-left-w200-h300-port--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-plain-pair-right-w200-h300",
+      "status": "pass",
+      "sha256": "ba03bd28693cbc1d5e556027eb6e60e14c5dbcb1092a8d3d70a7a5f154123bca",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 558,
+      "semanticGroups": {
+        "GEO-armor-plain-pair-right-w200-h300--ARMOR": {
+          "triangles": 546,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-plain-pair-right-w200-h300--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-plain-pair-right-w200-h300-port",
+      "status": "pass",
+      "sha256": "b56d6a9b3791b14af3b982677f13c9ca8fb8f34022e17df4f719ec0b3d9dc763",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 558,
+      "semanticGroups": {
+        "GEO-armor-plain-pair-right-w200-h300-port--ARMOR": {
+          "triangles": 546,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-plain-pair-right-w200-h300-port--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-red-service-w200-h300",
+      "status": "pass",
+      "sha256": "c3bac96d19fdd3f53698d21b5558e23c18b5075f8a69282666fb0dfc0ed2de80",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 1028,
+      "semanticGroups": {
+        "GEO-armor-red-service-w200-h300--ARMOR": {
+          "triangles": 1016,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-red-service-w200-h300--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-red-service-w200-h300-port",
+      "status": "pass",
+      "sha256": "41ab2f18fc97c1576e1c689939b86893bc96c9d423f49c0c37aa5519efa3cf65",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 1028,
+      "semanticGroups": {
+        "GEO-armor-red-service-w200-h300-port--ARMOR": {
+          "triangles": 1016,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-red-service-w200-h300-port--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-red-service-pair-left-w200-h300",
+      "status": "pass",
+      "sha256": "5fc84cf2cc50ac3aaa89a0525046231f1e08cf2abc820f462d6010948722a91e",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 646,
+      "semanticGroups": {
+        "GEO-armor-red-service-pair-left-w200-h300--ARMOR": {
+          "triangles": 634,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-red-service-pair-left-w200-h300--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-red-service-pair-left-w200-h300-port",
+      "status": "pass",
+      "sha256": "5d5757fbfcee7048918999b0c92c7c5ab62c3cb0cca3d0762a5f6491a0b5ad3a",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 646,
+      "semanticGroups": {
+        "GEO-armor-red-service-pair-left-w200-h300-port--ARMOR": {
+          "triangles": 634,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-red-service-pair-left-w200-h300-port--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-red-service-pair-right-w200-h300",
+      "status": "pass",
+      "sha256": "743ae507b8c0d7d837100b321a60d1f7c3697c7422004c8184e899c3b5127a34",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 646,
+      "semanticGroups": {
+        "GEO-armor-red-service-pair-right-w200-h300--ARMOR": {
+          "triangles": 634,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-red-service-pair-right-w200-h300--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-red-service-pair-right-w200-h300-port",
+      "status": "pass",
+      "sha256": "392b055ebbe085ad3b01d4bd138dc94156d439d34ceee26122db30017afe34e0",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 646,
+      "semanticGroups": {
+        "GEO-armor-red-service-pair-right-w200-h300-port--ARMOR": {
+          "triangles": 634,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-red-service-pair-right-w200-h300-port--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-vent-w200-h300",
+      "status": "pass",
+      "sha256": "b7ffcc34f95180a872a7cc44945619e2ce1e7e18a8c792d6437e018027fc523e",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 1248,
+      "semanticGroups": {
+        "GEO-armor-vent-w200-h300--ARMOR": {
+          "triangles": 1236,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-vent-w200-h300--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-vent-w200-h300-port",
+      "status": "pass",
+      "sha256": "a9d7d6d5a3294af1446db3424d32fc3e1d300c0dbf5cfde6a8b51911ce1e37c9",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 1248,
+      "semanticGroups": {
+        "GEO-armor-vent-w200-h300-port--ARMOR": {
+          "triangles": 1236,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-vent-w200-h300-port--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-vent-pair-left-w200-h300",
+      "status": "pass",
+      "sha256": "a9068687686bae5558a336c341ac7fc4d0e8224885f54912a564a8d6f58c97fb",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 854,
+      "semanticGroups": {
+        "GEO-armor-vent-pair-left-w200-h300--ARMOR": {
+          "triangles": 842,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-vent-pair-left-w200-h300--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-vent-pair-left-w200-h300-port",
+      "status": "pass",
+      "sha256": "99aca02be3ed465dc5c40d2ae3cddaca40377e45721fb7a921b4f2e59def5cc8",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 854,
+      "semanticGroups": {
+        "GEO-armor-vent-pair-left-w200-h300-port--ARMOR": {
+          "triangles": 842,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-vent-pair-left-w200-h300-port--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-vent-pair-right-w200-h300",
+      "status": "pass",
+      "sha256": "8cc46a72dc0485e9e9a725f4594bce2a3c0682dc14d79a431317ef987be24f4e",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 854,
+      "semanticGroups": {
+        "GEO-armor-vent-pair-right-w200-h300--ARMOR": {
+          "triangles": 842,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-vent-pair-right-w200-h300--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-vent-pair-right-w200-h300-port",
+      "status": "pass",
+      "sha256": "f6f36ce03cf698865b5225ce34eee22329ea3bce0e26cb2294bb2d3482f6bf35",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 854,
+      "semanticGroups": {
+        "GEO-armor-vent-pair-right-w200-h300-port--ARMOR": {
+          "triangles": 842,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-vent-pair-right-w200-h300-port--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-utility-w200-h300",
+      "status": "pass",
+      "sha256": "f1d0d4903c4efa5036359a9eeabcc87faa8714083f994abf5921a232dd709e70",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 1084,
+      "semanticGroups": {
+        "GEO-armor-utility-w200-h300--ARMOR": {
+          "triangles": 1072,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-utility-w200-h300--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-utility-w200-h300-port",
+      "status": "pass",
+      "sha256": "182abcc1d91f6a5bdc311304dd5c35bddab082bd065127624948e11034f690b7",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 1084,
+      "semanticGroups": {
+        "GEO-armor-utility-w200-h300-port--ARMOR": {
+          "triangles": 1072,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-utility-w200-h300-port--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-utility-pair-left-w200-h300",
+      "status": "pass",
+      "sha256": "2571fe1f7703bdf1b6decae1c645ec20ed4805e595dbcf8b2d207f9286a8cad3",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 790,
+      "semanticGroups": {
+        "GEO-armor-utility-pair-left-w200-h300--ARMOR": {
+          "triangles": 778,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-utility-pair-left-w200-h300--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-utility-pair-left-w200-h300-port",
+      "status": "pass",
+      "sha256": "79e164274c428bbe30875092d6527f3b11b222f947899cefd8796ff56036ff3f",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 790,
+      "semanticGroups": {
+        "GEO-armor-utility-pair-left-w200-h300-port--ARMOR": {
+          "triangles": 778,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-utility-pair-left-w200-h300-port--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-utility-pair-right-w200-h300",
+      "status": "pass",
+      "sha256": "a61626f08495b85cbcd43830bc5b4df987c205bb4759e88e72f659ab14e6280c",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 790,
+      "semanticGroups": {
+        "GEO-armor-utility-pair-right-w200-h300--ARMOR": {
+          "triangles": 778,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-utility-pair-right-w200-h300--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-utility-pair-right-w200-h300-port",
+      "status": "pass",
+      "sha256": "38ea679016d369f4a08f8342e5ef2bdb730b31b267896186abc4c902bdf80a6e",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 790,
+      "semanticGroups": {
+        "GEO-armor-utility-pair-right-w200-h300-port--ARMOR": {
+          "triangles": 778,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-utility-pair-right-w200-h300-port--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-identity-w200-h300",
+      "status": "pass",
+      "sha256": "32a7453096c4a9286b7e167b2d723e520f739ac568fe3245b09a9e04b1e29c1c",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 852,
+      "semanticGroups": {
+        "GEO-armor-identity-w200-h300--ARMOR": {
+          "triangles": 840,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-identity-w200-h300--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-identity-w200-h300-port",
+      "status": "pass",
+      "sha256": "ee9abae809a86fffc6d8bac42f0186ea32163614042d5228c3f39bfadad815ab",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 852,
+      "semanticGroups": {
+        "GEO-armor-identity-w200-h300-port--ARMOR": {
+          "triangles": 840,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-identity-w200-h300-port--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-identity-pair-left-w200-h300",
+      "status": "pass",
+      "sha256": "9b038a53af1366dd91dbfe2d609c5da8f7cc5cd66d07ca4703ef6ab1c68f24e5",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 558,
+      "semanticGroups": {
+        "GEO-armor-identity-pair-left-w200-h300--ARMOR": {
+          "triangles": 546,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-identity-pair-left-w200-h300--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-identity-pair-left-w200-h300-port",
+      "status": "pass",
+      "sha256": "38ca63ac4a0613a86cef3effeb1cdd1c40333694b9520b77cae2fe0fb40b9710",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 558,
+      "semanticGroups": {
+        "GEO-armor-identity-pair-left-w200-h300-port--ARMOR": {
+          "triangles": 546,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-identity-pair-left-w200-h300-port--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-identity-pair-right-w200-h300",
+      "status": "pass",
+      "sha256": "a342413464f9b7e7a67e0284a60c26e0d481112df876bc1b478c9a4240547dc3",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 558,
+      "semanticGroups": {
+        "GEO-armor-identity-pair-right-w200-h300--ARMOR": {
+          "triangles": 546,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-identity-pair-right-w200-h300--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-identity-pair-right-w200-h300-port",
+      "status": "pass",
+      "sha256": "7914a41708376c12d82ce1553058e01c8e0c88328a5564a9652380e2c93dd55e",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 558,
+      "semanticGroups": {
+        "GEO-armor-identity-pair-right-w200-h300-port--ARMOR": {
+          "triangles": 546,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-identity-pair-right-w200-h300-port--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-plain-w100-h300",
+      "status": "pass",
+      "sha256": "3ff7e45acd541424252b10aa691ebd81cc63694b69566053d1c88cfd87867157",
+      "bounds": {
+        "min": [
+          0.0,
+          -0.5,
+          0.0
+        ],
+        "max": [
+          0.5,
+          0.5,
+          3.0
+        ]
+      },
+      "triangles": 852,
+      "semanticGroups": {
+        "GEO-armor-plain-w100-h300--ARMOR": {
+          "triangles": 840,
+          "bounds": {
+            "min": [
+              0.03125,
+              -0.5,
+              0.0
+            ],
+            "max": [
+              0.5,
+              0.5,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-plain-w100-h300--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -0.5,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              0.5,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-plain-w100-h300-port",
+      "status": "pass",
+      "sha256": "194ecade7d179b7b586bd124707476d10e0ef282b7001ffc34aa76d90df30fd7",
+      "bounds": {
+        "min": [
+          0.0,
+          -0.5,
+          0.0
+        ],
+        "max": [
+          0.5,
+          0.5,
+          3.0
+        ]
+      },
+      "triangles": 852,
+      "semanticGroups": {
+        "GEO-armor-plain-w100-h300-port--ARMOR": {
+          "triangles": 840,
+          "bounds": {
+            "min": [
+              0.03125,
+              -0.5,
+              0.0
+            ],
+            "max": [
+              0.5,
+              0.5,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-plain-w100-h300-port--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -0.5,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              0.5,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-plain-w050-h300",
+      "status": "pass",
+      "sha256": "a10eb06864964257c52854b3b97b5ad1af23f876ef5898f79dd58ce4d275c2c2",
+      "bounds": {
+        "min": [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        "max": [
+          0.5,
+          0.25,
+          3.0
+        ]
+      },
+      "triangles": 588,
+      "semanticGroups": {
+        "GEO-armor-plain-w050-h300--ARMOR": {
+          "triangles": 576,
+          "bounds": {
+            "min": [
+              0.03125,
+              -0.25,
+              0.0
+            ],
+            "max": [
+              0.5,
+              0.25,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-plain-w050-h300--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -0.25,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              0.25,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 3,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 0,
+        "profile": "narrow module omits rail light"
+      }
+    },
+    {
+      "slug": "armor-plain-w050-h300-port",
+      "status": "pass",
+      "sha256": "9cc6993df6d7ec77e54a044fdf2cb37957b5e4910ca8d6d26216b0dd46053f17",
+      "bounds": {
+        "min": [
+          0.0,
+          -0.25,
+          0.0
+        ],
+        "max": [
+          0.5,
+          0.25,
+          3.0
+        ]
+      },
+      "triangles": 588,
+      "semanticGroups": {
+        "GEO-armor-plain-w050-h300-port--ARMOR": {
+          "triangles": 576,
+          "bounds": {
+            "min": [
+              0.03125,
+              -0.25,
+              0.0
+            ],
+            "max": [
+              0.5,
+              0.25,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-plain-w050-h300-port--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -0.25,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              0.25,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 3,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 0,
+        "profile": "narrow module omits rail light"
+      }
+    },
+    {
+      "slug": "armor-plain-w200-h075",
+      "status": "pass",
+      "sha256": "a929a721c059e651f23352bf1b1a4de89e0f39e16b6d1dca183157c1ad3d8502",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          0.75
+        ]
+      },
+      "triangles": 716,
+      "semanticGroups": {
+        "GEO-armor-plain-w200-h075--ARMOR": {
+          "triangles": 704,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              0.75
+            ]
+          }
+        },
+        "GEO-armor-plain-w200-h075--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              0.75
+            ]
+          }
+        }
+      },
+      "materials": 3,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-plain-w200-h075-port",
+      "status": "pass",
+      "sha256": "4bcf2ddd9523bd4a604aeb295e852206271554f43b9d12b68d860f4d5f9307e0",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          0.75
+        ]
+      },
+      "triangles": 716,
+      "semanticGroups": {
+        "GEO-armor-plain-w200-h075-port--ARMOR": {
+          "triangles": 704,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              0.75
+            ]
+          }
+        },
+        "GEO-armor-plain-w200-h075-port--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              0.75
+            ]
+          }
+        }
+      },
+      "materials": 3,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-plain-w200-h150",
+      "status": "pass",
+      "sha256": "fdfd2a877c0bed3c841b143a69565aca89178660598b8e0c9013674d0bcfcae0",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          1.5
+        ]
+      },
+      "triangles": 740,
+      "semanticGroups": {
+        "GEO-armor-plain-w200-h150--ARMOR": {
+          "triangles": 728,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              1.5
+            ]
+          }
+        },
+        "GEO-armor-plain-w200-h150--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              1.5
+            ]
+          }
+        }
+      },
+      "materials": 3,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-plain-w200-h150-port",
+      "status": "pass",
+      "sha256": "27825d0b6569d82d7127cc8391cf402a66684e8ead9ae5bda41df6ccebb21b5a",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          1.5
+        ]
+      },
+      "triangles": 740,
+      "semanticGroups": {
+        "GEO-armor-plain-w200-h150-port--ARMOR": {
+          "triangles": 728,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              1.5
+            ]
+          }
+        },
+        "GEO-armor-plain-w200-h150-port--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              1.5
+            ]
+          }
+        }
+      },
+      "materials": 3,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-plain-w200-h225",
+      "status": "pass",
+      "sha256": "6a54987d1311f65113f17d55af784106f159cd1cf100a96ba5f9fdbcadb4fca9",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          2.25
+        ]
+      },
+      "triangles": 852,
+      "semanticGroups": {
+        "GEO-armor-plain-w200-h225--ARMOR": {
+          "triangles": 840,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              2.25
+            ]
+          }
+        },
+        "GEO-armor-plain-w200-h225--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              2.25
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "armor-plain-w200-h225-port",
+      "status": "pass",
+      "sha256": "2cc44e4ca974f5f89f50c276aff677306057ff5c730cb96ee9c755511c38f26d",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          2.25
+        ]
+      },
+      "triangles": 852,
+      "semanticGroups": {
+        "GEO-armor-plain-w200-h225-port--ARMOR": {
+          "triangles": 840,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              2.25
+            ]
+          }
+        },
+        "GEO-armor-plain-w200-h225-port--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              2.25
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "front-sill-straight",
+      "status": "pass",
+      "sha256": "add4defb47f8f994d261e1db77daf0b324c933c1b138828439bf5aa00fd62ef7",
+      "bounds": {
+        "min": [
+          0.0,
+          -0.03125,
+          0.0
+        ],
+        "max": [
+          2.0,
+          0.375,
+          1.125
+        ]
+      },
+      "triangles": 276,
+      "semanticGroups": {
+        "GEO-front-sill-straight--ARMOR": {
+          "triangles": 264,
+          "bounds": {
+            "min": [
+              0.0,
+              -0.03125,
+              0.0
+            ],
+            "max": [
+              2.0,
+              0.3125,
+              1.125
+            ]
+          }
+        },
+        "GEO-front-sill-straight--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              0.34375,
+              0.0
+            ],
+            "max": [
+              2.0,
+              0.375,
+              1.125
+            ]
+          }
+        }
+      },
+      "materials": 2,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": null
+    },
+    {
+      "slug": "front-sill-diagonal45",
+      "status": "pass",
+      "sha256": "31ccae2459180af1bd39ab1169f88fa74b7908b1ec1d4857de57b08afa1b1324",
+      "bounds": {
+        "min": [
+          0.0,
+          0.03500594571232796,
+          0.0
+        ],
+        "max": [
+          1.964993953704834,
+          2.0,
+          1.125
+        ]
+      },
+      "triangles": 348,
+      "semanticGroups": {
+        "GEO-front-sill-diagonal45--ARMOR": {
+          "triangles": 336,
+          "bounds": {
+            "min": [
+              0.0,
+              0.03500594571232796,
+              0.0
+            ],
+            "max": [
+              1.964993953704834,
+              2.0,
+              1.125
+            ]
+          }
+        },
+        "GEO-front-sill-diagonal45--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              0.34375,
+              0.0
+            ],
+            "max": [
+              1.65625,
+              2.0,
+              1.125
+            ]
+          }
+        }
+      },
+      "materials": 2,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": null
+    },
+    {
+      "slug": "front-bow-transom",
+      "status": "pass",
+      "sha256": "e04ad6c33d9bd0cddf71b2b7477cddfad7b6e20ea76672b40d1b861b6f3f0c57",
+      "bounds": {
+        "min": [
+          0.0,
+          -0.03125,
+          0.0
+        ],
+        "max": [
+          2.0,
+          0.375,
+          1.125
+        ]
+      },
+      "triangles": 276,
+      "semanticGroups": {
+        "GEO-front-bow-transom--ARMOR": {
+          "triangles": 264,
+          "bounds": {
+            "min": [
+              0.0,
+              -0.03125,
+              0.0
+            ],
+            "max": [
+              2.0,
+              0.3125,
+              1.125
+            ]
+          }
+        },
+        "GEO-front-bow-transom--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              0.34375,
+              0.0
+            ],
+            "max": [
+              2.0,
+              0.375,
+              1.125
+            ]
+          }
+        }
+      },
+      "materials": 2,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": null
+    },
+    {
+      "slug": "front-bow-bumper",
+      "status": "pass",
+      "sha256": "4b8f813d292c06c033c5ad4e2dd00d84f62c83694429b700a1c918f173b72888",
+      "bounds": {
+        "min": [
+          0.0,
+          -0.0,
+          0.0
+        ],
+        "max": [
+          4.0,
+          0.625,
+          1.5499999523162842
+        ]
+      },
+      "triangles": 532,
+      "semanticGroups": {
+        "GEO-front-bow-bumper--ARMOR": {
+          "triangles": 520,
+          "bounds": {
+            "min": [
+              0.0,
+              0.03125,
+              0.0
+            ],
+            "max": [
+              4.0,
+              0.625,
+              1.5499999523162842
+            ]
+          }
+        },
+        "GEO-front-bow-bumper--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "max": [
+              4.0,
+              0.03125,
+              1.4800000190734863
+            ]
+          }
+        }
+      },
+      "materials": 2,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 1,
+      "lightPocket": {
+        "lensTriangles": 2,
+        "minimumOpaqueBackingGapM": 0.015625,
+        "coplanarOpaqueOverlapAreaM2": 0,
+        "method": "Every positive-facing opaque planar triangle projected against every cyan front triangle"
+      }
+    },
+    {
+      "slug": "front-diagonal-cheek",
+      "status": "pass",
+      "sha256": "0d302ea3f239965c49c0db07b3ba6da87badd5149703d1320223c9f931facba7",
+      "bounds": {
+        "min": [
+          0.0,
+          -0.0,
+          0.0
+        ],
+        "max": [
+          4.0225348472595215,
+          2.0625,
+          1.5499999523162842
+        ]
+      },
+      "triangles": 592,
+      "semanticGroups": {
+        "GEO-front-diagonal-cheek--ARMOR": {
+          "triangles": 580,
+          "bounds": {
+            "min": [
+              0.7990199327468872,
+              -0.0,
+              0.0
+            ],
+            "max": [
+              4.0225348472595215,
+              2.0625,
+              1.5499999523162842
+            ]
+          }
+        },
+        "GEO-front-diagonal-cheek--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "max": [
+              2.03125,
+              2.0,
+              1.4800000190734863
+            ]
+          }
+        }
+      },
+      "materials": 2,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2,
+      "lightPocket": null
+    },
+    {
+      "slug": "front-shoulder-transition",
+      "status": "pass",
+      "sha256": "9814498d140b65a6d754b93762d0746c7b979420ebeb39c713966baf56c15fd1",
+      "bounds": {
+        "min": [
+          0.0,
+          -0.0,
+          0.0
+        ],
+        "max": [
+          0.7445136904716492,
+          2.0,
+          2.9375
+        ]
+      },
+      "triangles": 368,
+      "semanticGroups": {
+        "GEO-front-shoulder-transition--ARMOR": {
+          "triangles": 360,
+          "bounds": {
+            "min": [
+              0.004042099695652723,
+              -0.0,
+              0.0
+            ],
+            "max": [
+              0.7445136904716492,
+              1.9725483655929565,
+              2.928647994995117
+            ]
+          }
+        },
+        "GEO-front-shoulder-transition--LINER": {
+          "triangles": 8,
+          "bounds": {
+            "min": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              2.0,
+              2.9375
+            ]
+          }
+        }
+      },
+      "materials": 1,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 1,
+      "lightPocket": null
+    }
+  ],
+  "pairedFamiliesChecked": [
+    [
+      "plain",
+      2,
+      3,
+      false
+    ],
+    [
+      "plain",
+      2,
+      3,
+      true
+    ],
+    [
+      "red-service",
+      2,
+      3,
+      false
+    ],
+    [
+      "red-service",
+      2,
+      3,
+      true
+    ],
+    [
+      "vent",
+      2,
+      3,
+      false
+    ],
+    [
+      "vent",
+      2,
+      3,
+      true
+    ],
+    [
+      "utility",
+      2,
+      3,
+      false
+    ],
+    [
+      "utility",
+      2,
+      3,
+      true
+    ],
+    [
+      "identity",
+      2,
+      3,
+      false
+    ],
+    [
+      "identity",
+      2,
+      3,
+      true
+    ]
+  ],
+  "bowMating": {
+    "contacts": [
+      {
+        "side": "right",
+        "sharedContactAreaM2": 0.04826955827981471
+      },
+      {
+        "side": "left",
+        "sharedContactAreaM2": 0.04826955827981472
+      }
+    ],
+    "positiveVolumeOverlap": false,
+    "scope": "Exact ARMOR triangles and frozen review placements; retained liner is separate."
+  },
+  "pairMating": "Every variant/width/height/exterior-handedness pair is checked independently. Vertex half-spaces prove zero positive-volume overlap at the joined Y=0 plane.",
+  "scope": "Actual GLB geometry/UV/materials, exact bounds/sockets, distinct armor/liner groups and mating envelopes. Independent visual review and pressure/damage qualification remain separate."
+}
