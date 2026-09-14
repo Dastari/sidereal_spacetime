@@ -37,5 +37,7 @@
   "scripts/art_library/crystal_moon_reference_composition_r009.test.ts",
   "scripts/art_library/volcanic_moon2_shoulders_r005.test.ts",
   "scripts/art_library/volcanic_moon2_shoulders_r006.test.ts",
-  "scripts/art_library/crystal_moon_reference_composition_r010.test.ts"
+  "scripts/art_library/crystal_moon_reference_composition_r010.test.ts",
+  "scripts/art_library/reference_full_output_fixed_detail.test.ts",
+  "scripts/art_library/reference_shadow_radius.test.ts"
 ]

@@ -1,0 +1,32 @@
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+stdout | packages/render/src/environment/planet-shadows.test.ts > semantic shadows follow active descendants across same-root swaps and restore light state
+BJS - [22:29:21]: Babylon.js v9.25.0 - Null engine
+
+ ❯ packages/render/src/environment/planet-shadows.test.ts (2 tests | 1 failed) 159ms
+   × semantic shadows follow active descendants across same-root swaps and restore light state 134ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/render/src/environment/planet-shadows.test.ts > semantic shadows follow active descendants across same-root swaps and restore light state
+AssertionError: expected [ Array(5) ] to deeply equal [ Array(5) ]
+
+Compared values have no visual difference.
+
+ ❯ packages/render/src/environment/planet-shadows.test.ts:123:36
+    121|   try {
+    122|     update();
+    123|     expect(key.includedOnlyMeshes).toEqual([
+       |                                    ^
+    124|       current,
+    125|       smoke,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 passed (2)
+   Start at  22:29:21
+   Duration  407ms (transform 28ms, setup 0ms, import 165ms, tests 159ms, environment 0ms)
+

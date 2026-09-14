@@ -1,3 +1,4 @@
+import {referenceShadowRadius} from './reference_shadow_radius';
 import {composeCrystalMoonReference as composePartitionedCrystalMoonReference} from './crystal_moon_reference_composition_r008';
 import {composeCrystalMoonReference as composeNativeCrystalMoonReference} from './crystal_moon_reference_composition_r003';
 import {composeToxicMoonReference} from './toxic_moon_reference_composition_r001';
@@ -42,6 +43,6 @@ self.onmessage=async event=>{
   const clouds=!nativeToxicFog&&cloudKit&&recipe?.cloudCoverage>0?composeNativeClouds(cloudKit,seed,recipe.cloudCoverage)[0]:undefined;
   const weather=nativeToxicFog?composeClearedToxicReferenceWeather(cloudKit,seed,recipe.cloudCoverage,batches,[8]):clouds?{positions:Array.from(clouds.positions),normals:Array.from(clouds.normals),indices:Array.from(clouds.indices),colors:Array(clouds.positions.length/3).fill([1,1,1,1]).flat(),faces:clouds.indices.length/3,ranges:clouds.ranges}:undefined;
   const smoke=recipe?buildReferenceVolcanicSmoke(recipe,lod):undefined;
-  self.postMessage({id,batches,weather,smoke,buildMs:performance.now()-start},{transfer:[...batches.flatMap(b=>[b.positions.buffer,b.normals.buffer,b.indices.buffer,...('uvs' in b&&b.uvs instanceof Float32Array?[b.uvs.buffer]:[])]),...(smoke?[smoke.positions.buffer,smoke.normals.buffer,smoke.colors.buffer,smoke.indices.buffer]:[])]});
+  self.postMessage({id,batches,shadowRadii:batches.map(b=>referenceShadowRadius(b.positions)),weatherShadowRadius:weather?referenceShadowRadius(weather.positions):undefined,weather,smoke,buildMs:performance.now()-start},{transfer:[...batches.flatMap(b=>[b.positions.buffer,b.normals.buffer,b.indices.buffer,...('uvs' in b&&b.uvs instanceof Float32Array?[b.uvs.buffer]:[])]),...(smoke?[smoke.positions.buffer,smoke.normals.buffer,smoke.colors.buffer,smoke.indices.buffer]:[])]});
  }catch(error){self.postMessage({id,error:String(error)});}
 };

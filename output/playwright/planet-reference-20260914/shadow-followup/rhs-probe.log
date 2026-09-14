@@ -1,0 +1,4 @@
+### Ran Playwright code
+```js
+await (async(page)=>{await page.evaluate(()=>{const r=window.planetReview;for(const l of r.scene.lights){const s=l.getShadowGenerator();if(s){s.forceBackFacesOnly=false;s.normalBias=0;s.bias=.0005;s.onBeforeShadowMapRenderMeshObservable.add(()=>r.engine.setState(true,0,false,false,true));}}r.scene.render();});await page.waitForTimeout(500);await page.evaluate(()=>window.planetReview.scene.render());await page.screenshot({path:"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/shadow-followup"+'/ice-rhs-backfaces.png'});})(page);
+```

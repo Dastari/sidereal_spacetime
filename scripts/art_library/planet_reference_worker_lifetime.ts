@@ -13,7 +13,12 @@ const fixedRevisions:Readonly<Record<string,readonly string[]>>={
  'single-glacial-cut-diagnostic':['ice-r025','ice-r026'],
  'ice-moon-glacial':['ice-moon-1-r002','ice-moon-2-r002','ice-moon-2-r003'],
  'crystal-moon-native-body':['crystal-moon-1-r003','crystal-moon-2-r003','crystal-moon-1-r004','crystal-moon-2-r004','crystal-moon-1-r005','crystal-moon-2-r005','crystal-moon-1-r008','crystal-moon-2-r008','crystal-moon-1-r009','crystal-moon-2-r009','crystal-moon-1-r010','crystal-moon-2-r010'],
- 'solid-moon-craters':['gas-giant-moon-1-r005','gas-giant-moon-3-r005'],
+ 'solid-moon-craters':['gas-giant-moon-1-r005','gas-giant-moon-3-r005','rocky-moon-2-r001','desert-moon-1-r001','desert-moon-2-r001','gas-giant-moon-2-r001'],
+ 'hybrid-moon-craters':['ocean-moon-1-r001','ocean-moon-2-r002','temperate-moon-1-r002','temperate-moon-2-r002'],
+ 'toxic-moon-craters':['toxic-moon-1-r001','toxic-moon-2-r001'],
+ 'rocky-crater-geology':['rocky-r010','rocky-moon-r002'],
+ 'connected-toxic-crust':['toxic-r007'],
+ 'crystal-geology':['crystal-r013'],
  'volcanic-moon-craters':['volcanic-moon-1-r003','volcanic-moon-2-r004','volcanic-moon-2-r005','volcanic-moon-2-r006'],
 };
 export function referenceFixedDetail(layout:string,revision:string|null){return layout==='gas-bands-and-rings'||(revision!==null&&(fixedRevisions[layout]?.includes(revision)??false));}

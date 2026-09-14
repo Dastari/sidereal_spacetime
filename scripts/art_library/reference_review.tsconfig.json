@@ -86,6 +86,7 @@
     "volcanic_moon2_shoulders_r005.test.ts",
     "volcanic_moon2_shoulders_r006.test.ts",
     "crystal_moon_reference_composition_r008.ts",
-    "crystal_moon_reference_composition_r010.test.ts"
+    "crystal_moon_reference_composition_r010.test.ts",
+    "reference_full_output_fixed_detail.test.ts"
   ]
 }
