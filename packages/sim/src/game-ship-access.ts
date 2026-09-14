@@ -1,3 +1,4 @@
+import { WAYFARER_REBUILD_SHA256 } from "./wayfarer-rebuild-contract";
 import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
 
 /** Private gameplay relationship created by the trusted starter transaction.
@@ -74,9 +75,10 @@ export function gameShipAccess(f: GameShipAccessFacts) {
     d.instanceId === i.id &&
     l.deckId === d.id &&
     i.revision === b.instanceRevision &&
-    i.revision === 1n &&
     i.blueprintSha256 === b.templateSha256 &&
-    b.templateSha256 === WAYFARER_STARTER.sha256
+    ((b.templateSha256 === WAYFARER_STARTER.sha256 && i.revision === 1n) ||
+      (b.templateSha256 === WAYFARER_REBUILD_SHA256 &&
+        (i.revision === 1n || i.revision === 2n)))
   );
   return {
     readInterior: allowed,

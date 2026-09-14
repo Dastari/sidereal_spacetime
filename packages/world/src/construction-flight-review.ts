@@ -133,6 +133,8 @@ export function beginConstructionFlightReview(
       currentInstanceRevision: (id) =>
         ctx.db.constructionInstance.id.find(id)?.revision,
       fittings: (id) => ctx.db.constructionFlightFitting.by_ship.filter(id),
+            compiled: (id) => ctx.db.constructionFlightCompiled.shipId.find(id),
+            dirty: (id) => !!ctx.db.constructionFlightDirty.shipId.find(id),
     },
     i.id,
   );

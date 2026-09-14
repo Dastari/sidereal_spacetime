@@ -1,5 +1,5 @@
 import {
-  QUALIFIED_WAYFARER_SHA256,
+  isQualifiedWayfarerBlueprint,
   qualifiedWayfarerInstanceObstacles,
 } from "../../sim/src/wayfarer-walking-bindings";
 import { wayfarerThresholdElevation } from "../../sim/src/wayfarer-threshold";
@@ -35,7 +35,7 @@ export function createConstructionStandingSupport() {
       throw Error(
         "Standing support: matching accepted actor/visit/deck required",
       );
-    if (instance.blueprintSha256 !== QUALIFIED_WAYFARER_SHA256)
+    if (!isQualifiedWayfarerBlueprint(instance.blueprintSha256))
       return deck.elevation + 6 / 32;
     // The exact pinned Wayfarer has one deck at the zero origin. This also
     // catches a divergent authoritative deck row instead of mixing datums.

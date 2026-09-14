@@ -52,7 +52,15 @@
     "./construction-cargo": "./src/construction-cargo.ts",
     "./construction-instance": "./src/construction-instance.ts",
     "./layout-structure": "./src/layout-structure.ts",
-    "./layout-native-floor": "./src/layout-native-floor.ts"
+    "./layout-native-floor": "./src/layout-native-floor.ts",
+    "./layout-inset-native-plan": "./src/layout-inset-native-plan.ts",
+    "./construction-inset-boundaries": "./src/construction-inset-boundaries.ts",
+    "./wayfarer-walking-bindings": "./src/wayfarer-walking-bindings.ts",
+    "./wayfarer-exterior-qualification": "./src/wayfarer-exterior-qualification.ts",
+    "./layout-opening-treatments": "./src/layout-opening-treatments.ts",
+    "./wayfarer-rebuild-contract": "./src/wayfarer-rebuild-contract.ts",
+    "./wayfarer-rebuild-game": "./src/wayfarer-rebuild-game.ts",
+    "./wayfarer-conversion-candidate": "./src/wayfarer-conversion-candidate.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",

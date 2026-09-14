@@ -1,0 +1,292 @@
+{
+  "schema": "sidereal.tileset-internal-junction-request.v1",
+  "wallConvention": "sidereal.tileset-wall-convention.v1",
+  "latticePerMeter": 32,
+  "thicknessM": 0.25,
+  "reservation": "explicit-centered-internal-partition-only",
+  "halfThicknessM": 0.125,
+  "sourceFrame": "Blender X along line, Y across line, Z up; metres; origin is graph node or first span end",
+  "heightsM": [
+    0.75,
+    1.5,
+    2.25,
+    3
+  ],
+  "placementFloorTopM": 0.1875,
+  "shapes": [
+    {
+      "id": "internal-core",
+      "reservationPolygonM": [
+        [
+          -0.125,
+          -0.125
+        ],
+        [
+          0.125,
+          -0.125
+        ],
+        [
+          0.125,
+          0.125
+        ],
+        [
+          -0.125,
+          0.125
+        ]
+      ]
+    },
+    {
+      "id": "internal-end",
+      "reservationPolygonM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.125,
+          -0.125
+        ],
+        [
+          0.125,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ]
+    },
+    {
+      "id": "internal-span-0.75",
+      "lengthM": 0.75,
+      "reservationPolygonM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.75,
+          -0.125
+        ],
+        [
+          0.75,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ]
+    },
+    {
+      "id": "internal-span-0.875",
+      "lengthM": 0.875,
+      "reservationPolygonM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.875,
+          -0.125
+        ],
+        [
+          0.875,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ]
+    },
+    {
+      "id": "internal-span-1",
+      "lengthM": 1,
+      "reservationPolygonM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1,
+          -0.125
+        ],
+        [
+          1,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ]
+    },
+    {
+      "id": "internal-span-1.75",
+      "lengthM": 1.75,
+      "reservationPolygonM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1.75,
+          -0.125
+        ],
+        [
+          1.75,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ]
+    },
+    {
+      "id": "internal-span-1.875",
+      "lengthM": 1.875,
+      "reservationPolygonM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1.875,
+          -0.125
+        ],
+        [
+          1.875,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ]
+    },
+    {
+      "id": "internal-span-2",
+      "lengthM": 2,
+      "reservationPolygonM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          2,
+          -0.125
+        ],
+        [
+          2,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ]
+    }
+  ],
+  "junctionProfiles": [
+    {
+      "id": "end",
+      "part": "internal-end",
+      "rays": [
+        [
+          1,
+          0
+        ]
+      ],
+      "cutbackM": 0.125
+    },
+    {
+      "id": "corner",
+      "part": "internal-core",
+      "rays": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "cutbackM": 0.125
+    },
+    {
+      "id": "tee",
+      "part": "internal-core",
+      "rays": [
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "cutbackM": 0.125
+    },
+    {
+      "id": "cross",
+      "part": "internal-core",
+      "rays": [
+        [
+          -1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          -1
+        ]
+      ],
+      "cutbackM": 0.125
+    }
+  ],
+  "fixtures": [
+    "isolated capped 1m and2m wall",
+    "right-angle corner with1m and2m branches",
+    "T with three2m branches",
+    "cross with four2m branches"
+  ],
+  "allowedQuarterTurns": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "exportToleranceMeters": 0.000001,
+  "tolerancePurpose": "float encoding only; exact perpendicular mate planes",
+  "requirements": [
+    "Core owns junction volume once; straight arms terminate at the half-thickness planes, never pass through core",
+    "End cap terminates at the authored endpoint plane and extends only toward its connected span",
+    "Full imported GLB node and face containment, correct closed contacts and negative gap/overlap controls",
+    "Native Blender continuous backing, inset panels, pinned PBR preservation, editable source and opaque assembled renders",
+    "Separate native visible geometry and unqualified collision/seal/damage/bearing roles"
+  ],
+  "unsupported": [
+    "inward exterior boundary use",
+    "internal left/right unilateral reservations",
+    "angled internal junctions",
+    "internal-to-exterior junction adapters",
+    "doors/openings",
+    "generic native installation and pressure"
+  ],
+  "approval": "unapproved"
+}

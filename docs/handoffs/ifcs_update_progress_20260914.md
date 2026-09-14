@@ -9,8 +9,8 @@ Implementation contract: [plan](ifcs_update_plan_20260914.md).
 | --- | --- | --- |
 | 0 Baseline | Complete: 6 baseline tests, 1,925 total tests and build pass | `output/ifcs-update/phase0-check.log`, `phase0-build.log` |
 | 1 Allocator/controller | Complete: 1,951 tests, build and isolated smoke pass | `0307ace4` |
-| 2 Definitions/compiler | Complete: 1,993 tests and build pass | `phase2-check.log`, `phase2-build.log` |
-| 3 Authority switch | Not started | Requires phases 1–2; owner check-in before shared DB publish |
+| 2 Definitions/compiler | Complete: 1,993 tests and build pass | `0de90fe8` |
+| 3 Authority switch | Complete in isolation; shared publication awaits required owner check-in | 2,048 full-check tests; 1,511 staged-source tests; build, smoke variants, additive migration and shared schema comparison pass |
 | 4 Resource gating | Not started | Depends on phase 3 |
 | 5 Presentation | Not started | Depends on phase 3; real browser evidence required |
 | 6 Cleanup | Not started | Depends on phases 3 and 5 |
@@ -29,8 +29,10 @@ session on 2026-09-14:
    preserve base-table columns until a separately scheduled destructive publish.
 
 Any non-additive schema change, validator relaxation, collision revision/native
-pin change requires escalation. No such change authorized or made. Shared DB
-publication remains gated by the explicit phase 3 owner check-in.
+pin change requires escalation. The passenger admission and bounded fitting-set
+changes were explicitly approved below. No non-additive schema or collision/native
+pin change was made. Shared DB publication remains gated by the explicit phase 3
+owner check-in.
 
 ## Source inspection and shared edits
 
@@ -298,3 +300,353 @@ Phase 2 final gates: `VITEST_MAX_WORKERS=1 npm run check` passes 334 files /
 1,993 tests, full typecheck and 88 document checks in `phase2-check.log`.
 `npm run build` passes in `phase2-build.log`. Pure compiler/frame exit criteria
 are complete; no phase 3 authority changes were included in this commit.
+
+## Phase 3 independent implementation underway
+
+Root added private compiled/dirty tables and appended fitting definitionRevision
+with default 1. Additive character.by_ship and inventoryContainer.by_ship indexes
+support bounded crew and abandoned-ground-inventory mass joins. No module publish
+has occurred; populated migration rehearsal is pending. Existing fitting writers
+now explicitly supply revision 1. Dead base columns and authority validators remain.
+
+New construction-flight-compilation adapter passes three focused tests: at most
+two compilations per tick, pending age survives repeated mutations, unchanged
+hashes/rejections do not rewrite rows, and rejection clears actuators/computers
+while retaining only the last valid inertia/hull. Initial invalid definitions
+have no invented stock inertia and must remain unadmitted until corrected.
+
+New construction-flight-input adapter passes three focused tests: versioned body
+mass plus equipped/pocket inventory exactly once, disconnected crew mass retained,
+accepted stair positions used, ground inventory retained after its prior owner
+leaves, carrier shell replaced once with payload at actual placement, and missing
+cargo bindings/unqualified structures rejected. Logs: phase3-compilation-focused.log
+and phase3-input-focused.log. Storage/input typechecks pass before wiring.
+These adapters are not yet scheduled or authoritative; dirty producers, resolver,
+coasting integration, migration, views, smoke and two-client evidence remain.
+
+Source snapshots for already-dirty shared files are retained under
+/tmp/ifcs-phase3-before for hunk-selective staging. Existing resolver blueprint
+matching and power-fitting projection work remain intact. Additional owner
+questions above remain unanswered; no dependent validator relaxation or passenger
+policy has been implemented.
+
+## Additional owner approvals and Git workflow update
+
+Owner explicitly approved all three additional questions: explicit passenger
+admission with expiry/revocation, the bounded unique definition-bound fitting-set
+validator, and bounded server-only damage events plus validated removal/detachment.
+All pilot station, admission, lease and computer checks remain strict. Weapon hit
+detection remains future combat work; clients cannot provide damage values.
+
+The replacement AGENTS.md requires delivery through a GitHub PR. Applied
+/root/.codex/skills/git-pr-rules/SKILL.md. `git fetch origin` failed because this
+checkout has no configured remote; `gh pr list --author @me --state open` likewise
+reports no Git remotes. Branch inspection shows only main and ifcs-update. Asked
+the owner for the target GitHub repository URL; implementation continues. Existing
+phase commits stay on the explicitly requested ifcs-update branch. No push,
+merge, or shared database publication has occurred.
+
+Queue scan tightened to an indexed oldest-first range, stopping after two rows;
+compilation work no longer begins by materializing and sorting the whole queue.
+
+Phase 3 follow-up investigation ownership: allocator_review is read-only (no file
+edits), mapping the newly owner-approved passenger admission into game-ship-access,
+construction walking/views and boarding/return relations. Root retains all edits,
+including schemas, resolver, bindings, schedule, passenger and mutation adapters.
+
+### Phase 3 authority implementation and approved passenger work
+
+The resolver now requires current compiled physical state and bounded actual
+fittings. Missing/invalid bindings have no fixture fallback. A rejected update
+retains only previously valid inertia/hull for coasting and clears actuation;
+an initial invalid definition cannot invent inertia. The scheduled shared step
+compiles at most two oldest dirty ships, converts between authored and COM frames,
+and retains all station, admission, lease and computer consumption checks. An
+initial invalid body rejects the island and clears old telemetry for that sample.
+The legacy scheduled fixture flight path is disabled; saved legacy rows remain
+for explicit validated migration. The dead lab helper remains for phase 6 removal.
+
+Dirty markers are wired into validated crew placement, inventory movement,
+carrier movement, refit, power and fitting mutations. This coverage still needs
+its final audit. Additive compiled physics and actuator views exist, including
+owner-visible rejection reasons, but generated bindings and presentation are
+pending. Explicit installation compiles before admitting a ship; the scheduled
+queue handles subsequent mutations. No shared database publication occurred.
+
+Owner-approved fitting removal retains the fitting UUID as a tombstone and
+removes its mass/actuation in compilation. Detachment retains mass with zero
+availability. Server-only queued damage is bounded to eight events per tick,
+rechecks fitting revision, records replay receipts and marks dirty state. Its
+replay serialization is independent of database field order; invalid existing
+availability is rejected. This is an event producer API, not weapon hit detection.
+The isolated smoke must still exercise actual server event production/consumption.
+The power action now validates a bounded unique set of actual definition-bound
+fittings while preserving owner/active/reactor/mapping/revision/operation checks.
+
+Passenger admission uses separate pure rules and private grant/visit/receipt
+rows. It does not broaden ownedGameShipAccess or hasAcceptedAuthoredFlight.
+Owner issues an expiring invitation; the grantee explicitly consents to board.
+Walking and approved interior views use current passenger membership, while
+object use, inventory, refit, power and pilot checks retain their existing guards.
+Interior projections omit account identities and private physical ratings.
+
+Routine passenger policy choices taken for the approved feature: invitations
+last 1–3600 seconds; at most eight per ship, 256 globally and 128 active visits.
+Boarding requires ships within 50 m, in the same system, moving no faster than
+0.01 m/s and 0.001 rad/s. Entry is selected server-side from at most 25 supported,
+unoccupied positions around the authored spawn. The grant explicitly permits
+ship-wide interior geometry and walking only on the admitted entry deck; it
+adds no stair/object interaction grant. Return restores the recorded local visit
+on the still-owned, currently validated original ship, preserving its current
+world motion and all inventory UUIDs. Location/admission counters increase.
+Revocation/expiry denies access immediately; an obstructed return retains the
+body and a private recovery reason, with at most eight retries per tick. These
+are implementation defaults for the approved admission, not additional pilot
+or structural permissions. No collision revision/native pins were changed.
+
+Focused evidence: phase3-passenger-guard-focused.log passes 19 tests (14 pure
+membership tests, five fitting/damage tests). phase3-passenger-wiring-focused.log
+passes five files / 42 tests including seven passenger transaction/projection
+tests and existing walking, interaction, spatial view and shared physics tests.
+Passenger transaction tests use mocked collision/compilation boundaries; real
+native support, compiled two-client mass and browser evidence remain required.
+Latest world typecheck passed before disabling the legacy fixture schedule; it
+is being rerun. Full phase 3 check/build, populated additive migration rehearsal,
+isolated smoke, two-client evidence, generated bindings and owner publication
+check-in remain outstanding. Phase 3 is not exit-ready and has no commit yet.
+
+Phase 3 follow-up investigation ownership: allocator_review is read-only,
+investigating the installed render-resource budget failure from the first broad
+phase 3 check. No render/art edits are delegated. Root is correcting compilation
+indexes/table behavior in older authority test doubles and owns all integration.
+
+First broad phase 3 check: typecheck passed; 343 test files ran, with 11 failing
+files / 52 failed and 1,986 passed tests. Identified authority failures were old
+test doubles missing physical table/index/timestamp support; follow-up groups
+now pass 28, 25 and 31 tests respectively. Full check must be rerun after fixes.
+The independent installed render budget failed at 1,376 meshes (limit 1,360).
+Read-only investigation isolated 20 unused hidden floor-kit prototypes. Root
+extended the existing post-load cleanup to unused leaf meshes in all libraries,
+preserving selected prototypes, parents, materials and surfaces. Existing render
+budget tests now pass. This small unrelated cleanup is needed for the required
+full gate; no budget, geometry, native pin or collision revision was changed.
+
+Phase 3 intermediate build passed (world, generated bindings, both apps).
+Added compiled asymmetric world-adapter tests: 11 pass in
+phase3-asymmetric-adapter-focused.log, including engine-less COM coasting,
+cargo recompilation without authored-frame/passenger translation and initial
+invalid definition clearing stale burn telemetry.
+
+Fresh isolated smoke r0001 published only to
+sidereal-spacetime-dev-ifcs-phase3-r0001-smoke and failed during pilot entry.
+Server logs show the operational-flight gate rejecting a pending compilation
+from the immediately preceding final walking step. The fix compiles one pending
+ship during explicit pilot entry, after current actor/deck access checks, before
+the unchanged powered-computer and input-lease gates. Scheduled/recovery readers
+do not opt into this synchronous path and retain their two-ship tick budget.
+This is an explicit-admission compilation adjustment, not a validator relaxation.
+A fresh r0002 smoke is running; no shared development database was published.
+
+Second broad phase 3 check passes: 344 files / 2,045 tests, typecheck and 88
+project document checks (phase3-check-retry.log). This precedes the latest
+recording-time compilation adjustment and requires a final rerun for exit.
+Standard fresh isolated smoke r0004 passes in phase3-smoke-r0004.log. The r0003
+attempt reached expiry but its old test compared authored-origin velocities;
+with off-origin COM those velocities change during rotation without thrust.
+The smoke now verifies conserved COM velocity and zero output, using actual
+compiled physics/envelope rather than fixture ratings. r0002 was reserved but
+not published because a new test's TypeScript return annotation failed; fixed.
+
+Real two-client passenger smoke is added in scripts/ifcs-passenger-smoke.ts.
+Its first run exercised actual admission, privacy and removal, then exposed the
+same dirty-mass timing issue when recording fresh pilot setpoints while another
+passenger walks. Recording now uses the unchanged complete pilot validator with
+one bounded pending physical refresh after current station/actor/deck checks.
+Consumption still rechecks all permissions and uses scheduled compilation only.
+This is a documented scheduling deviation: explicit entry/recording may compile
+one authorized ship in addition to the scheduled queue's two-ship budget. It
+avoids treating a crew mass update as a spurious computer-power loss without
+relaxing any authority predicate. Final benchmark/smoke evidence is pending.
+
+Real fresh two-client passenger smoke passes on
+sidereal-spacetime-dev-ifcs-passenger-r0001-smoke (phase3-passenger-fresh-smoke.log):
+initial captain ship mass 12,089.7 kg; boarded mass 12,179.4 kg; removed side
+engine mass 203.9170431847797 kg. It proves actual passenger walking while the
+asymmetric ship turns, denied passenger piloting/private fitting telemetry,
+bounded power changes after removal, zero-powered-engine COM coasting despite
+fresh pilot input, and revocation/return preserving inventory UUIDs. The earlier
+retry on an already occupied fixture correctly rejected distant berths; the new
+managed `npm run smoke -- --smoke-name LABEL --fresh-smoke --ifcs-passenger`
+variant reserves its own first two nearby berths without resets. A second run
+adds actual ground-to-carried cargo transfer and authored-frame invariance.
+
+Populated migration rehearsal updated the phase 1 isolated database
+sidereal-spacetime-dev-ifcs-phase1-r0002-smoke with --delete-data=never.
+Complete before/after ship IDs, item IDs and fitting rows compare unchanged
+(order-insensitive). All ten existing ships compiled ready; every existing
+fitting gained definitionRevision=1. Evidence: phase3-populated-migration.log
+and phase3-migration-*.txt. SDK reports that additive row layout changes require
+client disconnection/reload; no non-additive table change or data deletion was
+performed. Shared publication still requires the owner's phase 3 check-in.
+
+### Phase 3 final isolated evidence
+
+The extended passenger/cargo smoke passes in phase3-passenger-cargo-smoke.log
+on sidereal-spacetime-dev-ifcs-passenger-r0002-smoke. Actual ground-to-carried
+inventory transfer shifts COM without changing ship/actor poses, conserves mass,
+and the earlier removal/turning/walking/power/revocation proofs still pass.
+
+The fixed server event/definition smoke passes on
+sidereal-spacetime-dev-ifcs-definition-r0003-smoke. Actual derived forward
+acceleration changed 2.9777413831608843 → 2.398736114212934 m/s² after the real
+server-only damage producer and scheduled consumption. Measured COM acceleration
+was 2.9777413831608865 → 2.3987361142129338 m/s². Detachment further reduced force
+without removing mass. Invalid definition revision produced an owner-visible
+flight-fitting-definition-mismatch reason and retained last valid inertia for
+uncontrolled coasting with no actuator output. The test trigger is a copied
+isolated module generated under .runtime, never an export of packages/world.
+It supplies a fixed server event (no client damage values) and one deliberate
+invalid-definition corruption solely for failure testing. Weapon hit detection
+remains future work. The managed variant is `npm run smoke -- --smoke-name LABEL
+--fresh-smoke --ifcs-definition`.
+
+Definition smoke r0001 used an invalid elapsed-time measurement: resting ship
+motion ticks do not advance while its pilot walks, so the measured burn interval
+included prior idle time. It now starts on the first accepted powered sample.
+r0002 caught an inventory-adapter call missing its density argument; fixed, and
+the isolated-copy publisher now typechecks production before copying/building.
+Both failures and corrected evidence are retained in the phase3-definition logs.
+
+Final mass-source audit added explicit inventory-unit and liquid-density physical
+v1 definitions to the catalog. Existing inventory metadata supplies storage rules;
+flight unit mass comes from the bound physical revision. A regression test mutates
+unrelated inventory mass metadata and verifies flight mass/hash remain unchanged.
+This completes the authority mass join rather than relying on an implicitly
+versioned inventory constant. Existing accepted values and Wayfarer calibration
+are unchanged. The final catalog is exercised by definition smoke r0003.
+
+Phase 3 final check passes 344 files / 2,046 tests, full typecheck and 88 document
+checks (phase3-check-final.log). All 100 preexisting fittings in the populated
+migration acquired revision 1; captured rows and ship/item UUIDs were unchanged.
+Final production build/generation passed (phase3-build-final.log). Shared
+publication remains gated. No phase 4 work has started.
+
+Owner supplied https://github.com/dastari/sidereal_spacetime and authorized public
+repository creation. Created the public repository, configured origin, fetched
+and verified no existing branches or PRs. Publishing a review baseline branch
+from the original commit avoids pushing main; no merge is authorized.
+
+`allocator_review` is assigned a read-only phase 3 commit dependency audit:
+compare committed compiler imports with preexisting untracked source dependencies
+and report the smallest required integration set. Owns no edits. Root retains
+exclusive schema, resolver, generated bindings and scheduled-step ownership.
+
+
+### Phase 3 commit dependency audit
+
+The independent staged-source check exposed a phase 2 delivery gap: the compiler
+used existing uncommitted r002/r005 definition/qualification sources. Phase 3
+includes their exact existing source data, V2 layout contracts/qualification
+implementation and required package exports. It does not register the unrelated
+replacement/rebuild reducers or change onboarding selection. This is a dependency
+closure, not new approval of a native revision; live collision/native pins remain
+unchanged. The two baseline render imports debug-collision-geometry and
+scene-material-registration also lacked committed implementations and are included.
+Unrelated art, dashboard, replacement and other working changes remain unstaged.
+
+A separate source tree is exported from the actual Git index under
+/tmp/ifcs-phase3-review, with workspace package resolution pointing to that tree.
+Installed dependencies and existing assets are reused. The first check exposed
+missing exports and these source dependencies; after correction, TypeScript
+passes and the complete staged-source test suite is running. This is additional
+verification beyond the shared-workspace 2,046-test/build and isolated smoke gates.
+
+
+Repository publication: public https://github.com/Dastari/sidereal_spacetime,
+draft PR https://github.com/Dastari/sidereal_spacetime/pull/1. Owner subsequently
+explicitly requested pushing existing main for other agents: pushed unchanged
+599d2c7a as main, made it default, and retargeted PR #1 to main. No merge.
+
+The separate source export now uses all committed files and exact locally cached
+Git LFS asset objects, not other sessions' modified art. The staged build passed.
+The first complete staged test run passed 1,483 tests and exposed five passenger
+tests needing the preexisting qualified r002 admission matcher and standing
+support integration. Those exact existing rules are now included; pilot, lease,
+computer and command consumption checks are not weakened. An updated full staged
+check is running. Earlier incomplete source/asset export test attempts are retained
+as diagnostic evidence, not counted as successful verification.
+
+
+Independent staged-source verification: 277 test files / 1,488 tests pass,
+TypeScript passes, and the full staged build/generation passes
+(phase3-index-check-r4.log, phase3-index-build-final.log). The staged full check
+then fails the preexisting documentation link inventory: 33 missing references
+from the original tracked README/AGENTS/PIVOT/project docs point to unrelated
+uncommitted documents/art-library material. These are not copied into the IFCS
+commit as incidental publication. The shared-workspace full check already passed
+2,046 tests and all 88 document/provenance checks; both results are recorded rather
+than presenting the independent checkout's documentation gate as passing.
+
+A final standard smoke is running against the independently staged module on
+sidereal-spacetime-dev-ifcs-index-r0001-smoke. This retains the original committed
+onboarding choice and excludes other sessions' replacement/rebuild reducers.
+The r002 two-client/cargo and server damage proofs above exercise the shared
+workspace implementation with its existing qualification work preserved.
+
+
+Read-only shared schema inspection changed the staging decision: the shared DB
+already exposes refitRebuiltWayfarer, replaceLegacyPlayerWayfarer and
+ownWayfarerRebuildOffer. Excluding those existing APIs would remove them during
+publication. No such publication is performed or proposed. The integration must
+preserve their existing implementation and dependency set. `allocator_review`
+continues its read-only dependency audit for those three already-live APIs and
+the existing ground-item projection; owns no edits. This supersedes the earlier
+intent to exclude those APIs and is required to avoid reverting other sessions.
+
+
+Preservation is now verified against actual shared schema metadata:
+- No removed tables, reducers or views; no changed existing reducer parameters or
+  view result fields (resolved types compared, not unstable type indices).
+- Six new private tables, five new reducers and six new authorized views.
+- The only existing table row change is the appended fitting definition revision
+  with default 1; existing indexes remain with additive lookup indexes.
+Evidence: phase3-preserved-schema-comparison.txt and captured describe JSON.
+
+The already-deployed replacement transaction now removes the replaced ship's
+compiled/dirty/damage/invitation rows and rejects an outstanding passenger return.
+It retains audit receipts and never follows a grantee into another ship's state.
+New tests cover these boundaries. Its existing operator restriction remains.
+The existing rollback mock needed to instantiate the new passenger table before
+its snapshot; focused replacement tests pass 13/13 after that fixture correction.
+
+Standard smoke also passes for the compatibility-preserving staged module on
+sidereal-spacetime-dev-ifcs-index-r0002-smoke (phase3-index-smoke-preserved-apis.log).
+The prior r0001 staged smoke passed the original committed onboarding path too.
+The existing native smoke navigation branches are included with current onboarding.
+Existing roof-export validation tests remain in their owner's uncommitted work
+because they require that owner's separately published art; they were not copied
+as part of the IFCS source dependency closure. The shared full suite still runs
+those existing tests against the available assets.
+
+
+### Phase 3 exit and required owner check-in
+
+Final shared-workspace `VITEST_MAX_WORKERS=1 npm run check`: **345 files / 2,048
+tests pass**, TypeScript passes, 88 document/provenance checks pass
+(phase3-check-complete.log). Independently staged source: **279 files / 1,511 tests
+pass** (phase3-index-tests-complete.log), full `npm run build` passes
+(phase3-index-build-preserved-apis.log), and the compatibility-preserving standard
+`npm run smoke` passes on ifcs-index-r0002. Earlier two-client passenger/cargo,
+fixed server damage/invalid-definition and populated additive migration proofs
+complete the phase 3 exit criteria. The separate export's preexisting missing-doc
+limitation is recorded above and remains a draft PR risk.
+
+Reviewed module artifact: output/ifcs-update/phase3-world.bundle.js
+SHA-256: c322bd12c6df071e8d06e74831addea2e3ccb484e1da436ed21a73226ec8f116.
+The staged source export is /tmp/ifcs-phase3-review. Publication must use this
+reviewed phase source (or a newly verified rebase preserving the existing APIs),
+not an incidental build of other sessions' changing worktree. Non-destructive
+shared publication is pending the explicit owner check-in required by the plan.
+No shared module publication or replacement/refit maintenance operation was run.
+Phases 4–6 remain unstarted. The owner-approved defaults and all three additional
+authority decisions are implemented as recorded.

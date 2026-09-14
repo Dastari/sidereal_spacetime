@@ -1,0 +1,710 @@
+{
+  "schema": "sidereal.wayfarer-exterior-proof.v1",
+  "revision": "r005",
+  "nativeKitSha256": "3ca097eeda5f50a05e1c540c9279bb27039b573da45e1a0e268394cb271805a6",
+  "nativeBlenderSha256": "312b1ba45c983c9adde933d37519cab452b4244735ba05919082d6c73a31c62f",
+  "parts": [
+    {
+      "assetId": "part-357cf42235c1a190e1d6",
+      "previousAssetId": "part-18280ba6cc037eb433dc",
+      "sha256": "3b25ca7fcde2fd054076d0b84fc463701230ef2f68cfbc638a1d44173a7d74a9",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.8075000047683716,
+          1.0,
+          3.0
+        ]
+      },
+      "anchors": {
+        "HULL_ATTACH": [
+          0,
+          0,
+          0
+        ],
+        "HULL_EDGE_START": [
+          0,
+          -1,
+          0
+        ],
+        "HULL_EDGE_END": [
+          0,
+          1,
+          0
+        ],
+        "HULL_TOP": [
+          0,
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "assetId": "part-b9ca98146302dec24dd6",
+      "previousAssetId": "part-a754ceb1ebef9f1395d9",
+      "sha256": "9c8a425853a723547b789b872f282ad03e9efafa6d1724ec0364a721b3ec3784",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.8075000047683716,
+          1.0,
+          3.0
+        ]
+      },
+      "anchors": {
+        "HULL_ATTACH": [
+          0,
+          0,
+          0
+        ],
+        "HULL_EDGE_START": [
+          0,
+          -1,
+          0
+        ],
+        "HULL_EDGE_END": [
+          0,
+          1,
+          0
+        ],
+        "HULL_TOP": [
+          0,
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "assetId": "part-f85394947090b7609d41",
+      "previousAssetId": "part-3da4aef9b526b104b324",
+      "sha256": "61b12a335a653486b1d12371ecd5b9159821294a128fda1e00021e56e613aef7",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.8075000047683716,
+          1.0,
+          3.0
+        ]
+      },
+      "anchors": {
+        "HULL_ATTACH": [
+          0,
+          0,
+          0
+        ],
+        "HULL_EDGE_START": [
+          0,
+          -1,
+          0
+        ],
+        "HULL_EDGE_END": [
+          0,
+          1,
+          0
+        ],
+        "HULL_TOP": [
+          0,
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "assetId": "part-08dac7402c764c4d89d7",
+      "previousAssetId": "part-e21a69be0c5b6a98e812",
+      "sha256": "c84f5950fa0e31e1f966e043706993f1e2b2edaaf6149aa5f725f93eb472b995",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.8424999713897705,
+          1.0,
+          3.0
+        ]
+      },
+      "anchors": {
+        "HULL_ATTACH": [
+          0,
+          0,
+          0
+        ],
+        "HULL_EDGE_START": [
+          0,
+          -1,
+          0
+        ],
+        "HULL_EDGE_END": [
+          0,
+          1,
+          0
+        ],
+        "HULL_TOP": [
+          0,
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "assetId": "part-62c859bcc51b318b2c65",
+      "previousAssetId": "part-91c8f3d728f25c968810",
+      "sha256": "5f9dcc01666d63a4aa702b92f50a8abb4ccbe99e04b11cb87bb9496ac2c07258",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.8075000047683716,
+          1.0,
+          3.0
+        ]
+      },
+      "anchors": {
+        "HULL_ATTACH": [
+          0,
+          0,
+          0
+        ],
+        "HULL_EDGE_START": [
+          0,
+          -1,
+          0
+        ],
+        "HULL_EDGE_END": [
+          0,
+          1,
+          0
+        ],
+        "HULL_TOP": [
+          0,
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "assetId": "part-0211e6d7960f233accb7",
+      "previousAssetId": "part-0fe602115d20ec950357",
+      "sha256": "9fc96538375bfdec44b3ac832d9100b1cdfcbd2f751654fa30ff540bddb1440a",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.8075000047683716,
+          1.0,
+          3.0
+        ]
+      },
+      "anchors": {
+        "HULL_ATTACH": [
+          0,
+          0,
+          0
+        ],
+        "HULL_EDGE_START": [
+          0,
+          -1,
+          0
+        ],
+        "HULL_EDGE_END": [
+          0,
+          1,
+          0
+        ],
+        "HULL_TOP": [
+          0,
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "assetId": "part-5b7cee528aeb6959eb7c",
+      "previousAssetId": "part-0ac1e39dec34655a366f",
+      "sha256": "ae5e7d1e0100d5a1fcf7cc341a2d3504cbd0eb8f98548e9af2f73c3f8aee861f",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.8075000047683716,
+          1.0,
+          3.0
+        ]
+      },
+      "anchors": {
+        "HULL_ATTACH": [
+          0,
+          0,
+          0
+        ],
+        "HULL_EDGE_START": [
+          0,
+          -1,
+          0
+        ],
+        "HULL_EDGE_END": [
+          0,
+          1,
+          0
+        ],
+        "HULL_TOP": [
+          0,
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "assetId": "part-151314086c02e30e06f4",
+      "previousAssetId": "part-dd83177cdf0e1d968cb7",
+      "sha256": "3e1fa2b7d8b302e602844c9ae0ae38a5c7c2b6090d86b05fe70bbb5852de4afd",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.8075000047683716,
+          1.0,
+          3.0
+        ]
+      },
+      "anchors": {
+        "HULL_ATTACH": [
+          0,
+          0,
+          0
+        ],
+        "HULL_EDGE_START": [
+          0,
+          -1,
+          0
+        ],
+        "HULL_EDGE_END": [
+          0,
+          1,
+          0
+        ],
+        "HULL_TOP": [
+          0,
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "assetId": "part-9ab3a7a3dbc68586c530",
+      "previousAssetId": "part-b351480b6386fb131dc0",
+      "sha256": "c7bb6a556bb6994ace8c1bdbd41ccd5fd4eba7bf8d6fdf1058e70a470854eb40",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.8075000047683716,
+          1.0,
+          3.0
+        ]
+      },
+      "anchors": {
+        "HULL_ATTACH": [
+          0,
+          0,
+          0
+        ],
+        "HULL_EDGE_START": [
+          0,
+          -1,
+          0
+        ],
+        "HULL_EDGE_END": [
+          0,
+          1,
+          0
+        ],
+        "HULL_TOP": [
+          0,
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "assetId": "part-679e9e22f0af30b070a3",
+      "previousAssetId": "part-7b28f47930a6f7cbdf10",
+      "sha256": "b2905c1756dfa3e13467be9e3d35b03017cb38d64d984ffb02e7efeb3322d559",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.8075000047683716,
+          1.0,
+          3.0
+        ]
+      },
+      "anchors": {
+        "HULL_ATTACH": [
+          0,
+          0,
+          0
+        ],
+        "HULL_EDGE_START": [
+          0,
+          -1,
+          0
+        ],
+        "HULL_EDGE_END": [
+          0,
+          1,
+          0
+        ],
+        "HULL_TOP": [
+          0,
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "assetId": "part-d16f3e3a2db2188e5ed6",
+      "previousAssetId": "part-3cb4b658b677f06829b6",
+      "sha256": "dec0304492e5f58b968d1c547183132e21f9ee9333b607e195bcf14d1517afe2",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.8075000047683716,
+          1.0,
+          3.0
+        ]
+      },
+      "anchors": {
+        "HULL_ATTACH": [
+          0,
+          0,
+          0
+        ],
+        "HULL_EDGE_START": [
+          0,
+          -1,
+          0
+        ],
+        "HULL_EDGE_END": [
+          0,
+          1,
+          0
+        ],
+        "HULL_TOP": [
+          0,
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "assetId": "part-d3e5e45b0f3f60b3fa0a",
+      "previousAssetId": "part-0558bcda4ab0cb8c9f70",
+      "sha256": "3b6ca75b0a2302fb6f2f4456988f9f19d9266602aff0e1e89da921f4427caad9",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.8075000047683716,
+          1.0,
+          3.0
+        ]
+      },
+      "anchors": {
+        "HULL_ATTACH": [
+          0,
+          0,
+          0
+        ],
+        "HULL_EDGE_START": [
+          0,
+          -1,
+          0
+        ],
+        "HULL_EDGE_END": [
+          0,
+          1,
+          0
+        ],
+        "HULL_TOP": [
+          0,
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "assetId": "part-e43ac94780eb7a1adc50",
+      "previousAssetId": "part-8ddb637a40bd23dfd03a",
+      "sha256": "47ebe1c2493985afacc9e35b18b33ba32ef52a9bb72a0bbf3706d6cde30741cf",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.8424999713897705,
+          1.0,
+          3.0
+        ]
+      },
+      "anchors": {
+        "HULL_ATTACH": [
+          0,
+          0,
+          0
+        ],
+        "HULL_EDGE_START": [
+          0,
+          -1,
+          0
+        ],
+        "HULL_EDGE_END": [
+          0,
+          1,
+          0
+        ],
+        "HULL_TOP": [
+          0,
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "assetId": "part-5cd7ebc9a8d894fb2b3a",
+      "previousAssetId": "part-1c0570cdd9d7bc9d67da",
+      "sha256": "a47626d013c69d22eeef2a6e55b87b4fc70ccecd0f01ff4ae7b84188e03f6627",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.8075000047683716,
+          1.0,
+          3.0
+        ]
+      },
+      "anchors": {
+        "HULL_ATTACH": [
+          0,
+          0,
+          0
+        ],
+        "HULL_EDGE_START": [
+          0,
+          -1,
+          0
+        ],
+        "HULL_EDGE_END": [
+          0,
+          1,
+          0
+        ],
+        "HULL_TOP": [
+          0,
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "assetId": "part-64b068a5a6e987c1d518",
+      "previousAssetId": "part-505abaccb2279cad2d0f",
+      "sha256": "00b58ac661647cf4be62502e7e92face84f918524eb43cabc6440fd6b3571037",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.8075000047683716,
+          1.0,
+          3.0
+        ]
+      },
+      "anchors": {
+        "HULL_ATTACH": [
+          0,
+          0,
+          0
+        ],
+        "HULL_EDGE_START": [
+          0,
+          -1,
+          0
+        ],
+        "HULL_EDGE_END": [
+          0,
+          1,
+          0
+        ],
+        "HULL_TOP": [
+          0,
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "assetId": "part-9b292ad82d675d682b8b",
+      "previousAssetId": "part-f307639bad50377eba7b",
+      "sha256": "25be3e2df4292455bf63148e6934a73599c2ad6dbe09644118f9b3d63efefc79",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.8075000047683716,
+          1.0,
+          3.0
+        ]
+      },
+      "anchors": {
+        "HULL_ATTACH": [
+          0,
+          0,
+          0
+        ],
+        "HULL_EDGE_START": [
+          0,
+          -1,
+          0
+        ],
+        "HULL_EDGE_END": [
+          0,
+          1,
+          0
+        ],
+        "HULL_TOP": [
+          0,
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "assetId": "part-77e9c39b3c50d6dd66f7",
+      "previousAssetId": "part-66a37b7990899a620125",
+      "sha256": "83162077528937afc25358b0a88e6b58e7151a4981f3030df853b6438ac5fd77",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.8075000047683716,
+          1.0,
+          3.0
+        ]
+      },
+      "anchors": {
+        "HULL_ATTACH": [
+          0,
+          0,
+          0
+        ],
+        "HULL_EDGE_START": [
+          0,
+          -1,
+          0
+        ],
+        "HULL_EDGE_END": [
+          0,
+          1,
+          0
+        ],
+        "HULL_TOP": [
+          0,
+          0,
+          3
+        ]
+      }
+    },
+    {
+      "assetId": "part-c9e43b70cbc1f9f77b1f",
+      "previousAssetId": "part-2143e7c0fcb3b5b3270f",
+      "sha256": "41127699fdae0a4d31b29a7b9fc1845e3ddfa280f2e7f3f36d1ec857d236dc75",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.8075000047683716,
+          1.0,
+          3.0
+        ]
+      },
+      "anchors": {
+        "HULL_ATTACH": [
+          0,
+          0,
+          0
+        ],
+        "HULL_EDGE_START": [
+          0,
+          -1,
+          0
+        ],
+        "HULL_EDGE_END": [
+          0,
+          1,
+          0
+        ],
+        "HULL_TOP": [
+          0,
+          0,
+          3
+        ]
+      }
+    }
+  ]
+}

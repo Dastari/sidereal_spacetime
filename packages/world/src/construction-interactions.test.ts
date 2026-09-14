@@ -105,6 +105,7 @@ function fixture() {
     );
   const owner = Identity.fromString("1".repeat(64));
   const db: any = {
+    constructionFlightBinding: {shipId:{find:()=>undefined}},
     constructionCargoAssembly: store("containerId", {
       by_instance: "instanceId",
     }),

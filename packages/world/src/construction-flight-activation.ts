@@ -1,3 +1,5 @@
+import { compileShipFlight } from "./construction-flight-compilation";
+import { readConstructionFlightInput } from "./construction-flight-input";
 import type { ConstructionPilotContext } from "./construction-pilot-authority";
 import { requireGame } from "./auth";
 import { requireGrant } from "./construction";
@@ -62,13 +64,16 @@ export function activateConstructionFlight(
     throw Error(
       "Complete empty pilot installation and canonical motion required",
     );
-  const definition = resolveShipFlightDefinition(
+  compileShipFlight(ctx.db, b.shipId, id => readConstructionFlightInput(ctx, id));
+        const definition = resolveShipFlightDefinition(
     {
       binding: () => b,
       constructionInstanceExists: () => true,
       currentInstanceRevision: () => i.revision,
       fittings: (shipId) =>
         ctx.db.constructionFlightFitting.by_ship.filter(shipId),
+            compiled: (id) => ctx.db.constructionFlightCompiled.shipId.find(id),
+            dirty: (id) => !!ctx.db.constructionFlightDirty.shipId.find(id),
     },
     b.shipId,
   );

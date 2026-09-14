@@ -1,3 +1,9 @@
+import * as passengerViews from "./construction-passenger-views";
+import * as passengers from "./construction-passenger-authority";
+import { commitFlightCharacter } from "./construction-flight-dirty";
+import { setConstructionEnginePower as setEnginePower } from "./construction-device-power";
+import { replacePlayerWayfarer } from "./wayfarer-replacement";
+import * as rebuiltWayfarer from "./wayfarer-rebuild-installation";
 import { constructionCargoAssembly } from "./construction-cargo-assembly-tables";
 import {
   constructionCargoGrid,
@@ -43,14 +49,22 @@ import {
   constructionFlightFitting,
   constructionFlightStation,
   constructionFlightReceipt,
+  constructionFlightCompiled,
+  constructionFlightDirty,
 } from "./construction-flight-tables";
 import { constructionPilotSeat } from "./construction-pilot-tables";
 import { constructionFlightReview } from "./construction-flight-review-tables";
 import {
   authoredFlightProjection,
   authoredFlightFittingProjection,
+  authoredFlightPowerFittingProjection,
+  authoredFlightPhysicsProjection,
+  authoredFlightActuatorProjection,
+  ownAuthoredFlightPhysics as readAuthoredFlightPhysics,
+  ownAuthoredFlightActuators as readAuthoredFlightActuators,
   ownAuthoredFlights as readAuthoredFlights,
   ownAuthoredFlightFittings as readAuthoredFlightFittings,
+  ownAuthoredFlightPowerFittings as readAuthoredFlightPowerFittings,
 } from "./construction-flight-views";
 import {
   beginConstructionFlightReview,
@@ -59,9 +73,16 @@ import {
 import { installConstructionFlightAuthority } from "./construction-flight-authority";
 import { activateConstructionFlight } from "./construction-flight-activation";
 import { resolveShipFlightDefinition } from "./construction-flight-resolver";
+import { compileDirtyFlights, markFlightDirty } from "./construction-flight-compilation";
+import { readConstructionFlightInput } from "./construction-flight-input";
+import { SHARED_SYSTEM_SEED } from "../../content/src/shared-system";
+import { constructionFlightDamageEvent } from "./construction-flight-damage-tables";
+import { constructionPassengerGrant, constructionPassengerVisit, constructionPassengerReceipt } from "./construction-passenger-tables";
+import { changeFlightFittingDisposition, consumeFlightDamage } from "./construction-flight-availability";
 import {
   enterConstructionPilotAuthority,
   canConsumeConstructionPilot,
+  canRecordConstructionPilot,
   recoverConstructionPilotAuthority,
   recoverPendingConstructionPilots,
 } from "./construction-pilot-authority";
@@ -169,12 +190,14 @@ import { ScheduleAt } from "spacetimedb";
 import { walk, assertRevision } from "../../sim/src/index";
 import { CABIN_COLLIDERS } from "../../content/src/interior";
 import { LAB_BODIES, bodyDiscoverable } from "../../content/src/space";
-import { LAB_FLIGHT_ACTUATORS } from "../../content/src/flight";
-import { actuatorOutput, spaceBody, stepLabSpace } from "./space";
+import { actuatorOutput, spaceBody } from "./space";
 const character = table(
   {
     name: "character",
-    indexes: [{ accessor: "by_owner", algorithm: "btree", columns: ["owner"] }],
+    indexes: [
+      { accessor: "by_owner", algorithm: "btree", columns: ["owner"] },
+      { accessor: "by_ship", algorithm: "btree", columns: ["shipId"] },
+    ],
   },
   {
     id: t.string().primaryKey(),
@@ -265,6 +288,12 @@ const db = schema({
   constructionFlightFitting,
   constructionFlightStation,
   constructionFlightReceipt,
+  constructionFlightCompiled,
+  constructionFlightDirty,
+  constructionFlightDamageEvent,
+  constructionPassengerGrant,
+  constructionPassengerVisit,
+  constructionPassengerReceipt,
   constructionPilotSeat,
   constructionFlightReview,
   worldSystem,
@@ -520,7 +549,7 @@ export const setIntent = db.reducer(
       seat?.operational &&
       seat.occupantId === actor.id &&
       (!ctx.db.constructionFlightBinding.shipId.find(actor.shipId) ||
-        canConsumeConstructionPilot(ctx, actor.id));
+        canRecordConstructionPilot(ctx, actor.id));
     if ((args.throttle !== 0 || args.turn !== 0) && !controlled)
       throw new SenderError("Occupy the control station to pilot");
     if (!inputControl.recordInput(ctx, actor.id, args.sequence)) return;
@@ -557,12 +586,12 @@ export const useStation = db.reducer((ctx) => {
     )
       throw new SenderError("Move closer to the control station");
     ctx.db.station.id.update({ ...seat, occupantId: actor.id });
-    ctx.db.character.id.update({
+    commitFlightCharacter(ctx, {
       ...actor,
       localX: seat.localX,
       localY: seat.localY,
       sprinting: false,
-    });
+    }, row => ctx.db.character.id.update(row));
   }
   if (actor.sprinting)
     ctx.db.character.id.update({
@@ -635,6 +664,7 @@ export const stepWorld = db.reducer(
       throw new SenderError("Server schedule only");
     auth.expireSessions(ctx);
     construction.expireGrants(ctx);
+    passengers.expireShipPassengers(ctx);
     constructionInteractions.recoverConstructionSeats(ctx);
     recoverPendingConstructionPilots(ctx);
     constructionDoors.stepDoors(ctx);
@@ -646,9 +676,19 @@ export const stepWorld = db.reducer(
     traversal.stepConstructionTraversals(ctx, nativeTraversalRegistry);
     stairs.stepConstructionStairs(ctx, createConstructionStairWorldHooks(ctx));
     combat.stepCombat(ctx);
+    consumeFlightDamage(ctx);
     // The canonical contact island advances once for all admitted ships/bodies,
     // never inside the legacy per-owner loop below.
     stepSharedWorld(ctx, undefined, {
+      compileDirty: () => {
+        let count = 0;
+        for (const ship of ctx.db.shipWorldMotion.by_system.filter(SHARED_SYSTEM_SEED.systemId)) {
+          if (++count > 60) throw Error("Flight migration admission budget");
+          if (!ctx.db.constructionFlightCompiled.shipId.find(ship.shipId))
+            markFlightDirty(ctx.db, ship.shipId, ctx.timestamp.microsSinceUnixEpoch);
+        }
+        compileDirtyFlights(ctx.db, shipId => readConstructionFlightInput(ctx, shipId));
+      },
       definitionForShip: (shipId) =>
         resolveShipFlightDefinition(
           {
@@ -659,6 +699,8 @@ export const stepWorld = db.reducer(
               ctx.db.constructionInstance.id.find(id)?.revision,
             fittings: (id) =>
               ctx.db.constructionFlightFitting.by_ship.filter(id),
+            compiled: (id) => ctx.db.constructionFlightCompiled.shipId.find(id),
+            dirty: (id) => !!ctx.db.constructionFlightDirty.shipId.find(id),
           },
           shipId,
         ),
@@ -671,101 +713,16 @@ export const stepWorld = db.reducer(
         );
       },
     });
+    // Legacy rows remain preserved for explicit validated migration. A missing
+    // shared admission/compiled definition may never invoke fixture flight.
+    // Clear old telemetry without inventing inertia or rewriting saved motion.
     for (const target of ctx.db.ship.iter()) {
       if (ctx.db.shipWorldMotion.shipId.find(target.id)) continue;
-      const seat = ctx.db.station.shipId.find(target.id);
-      const actor = seat?.occupantId
-        ? ctx.db.character.id.find(seat.occupantId)
-        : undefined;
-      const command = actor
-        ? ctx.db.input.characterId.find(actor.id)
-        : undefined;
-      const enabled =
-        seat?.operational &&
-        actor?.connected &&
-        auth.canConsume(ctx, actor.owner) &&
-        inputControl.consumeInputControl(ctx, actor.id) &&
-        actor.shipId === target.id &&
-        command &&
-        ctx.timestamp.microsSinceUnixEpoch - command.updatedMicros < 300000n;
-      // Lazy additive fixture migration also initializes existing persistent ships.
-      for (const actuator of LAB_FLIGHT_ACTUATORS) {
-        const id = `${target.id}:${actuator.id}`;
-        const output = ctx.db.actuatorOutput.id.find(id);
-        if (!output)
-          ctx.db.actuatorOutput.insert({
-            id,
-            shipId: target.id,
-            actuatorId: actuator.id,
-            throttle: 0,
-            tick: target.tick,
-          });
-        else if (!enabled && output.throttle !== 0)
-          ctx.db.actuatorOutput.id.update({
-            ...output,
-            throttle: 0,
-            tick: target.tick,
-          });
+      let count = 0;
+      for (const output of ctx.db.actuatorOutput.by_ship.filter(target.id)) {
+        if (++count > 256) throw Error("Legacy flight output budget");
+        ctx.db.actuatorOutput.id.delete(output.id);
       }
-      const intent = enabled
-        ? { throttle: command.throttle, turn: command.turn }
-        : { throttle: 0, turn: 0 };
-      const rocks = [...ctx.db.spaceBody.by_ship.filter(target.id)].filter(
-        (b) => b.kind === "asteroid",
-      );
-      if (
-        intent.throttle === 0 &&
-        intent.turn === 0 &&
-        target.vx === 0 &&
-        target.vy === 0 &&
-        target.omega === 0 &&
-        rocks.every((b) => b.vx === 0 && b.vy === 0 && b.omega === 0)
-      )
-        continue;
-      const result = stepLabSpace(target, rocks, intent, Boolean(enabled));
-      for (const command of result.commands) {
-        const output = ctx.db.actuatorOutput.id.find(
-          `${target.id}:${command.id}`,
-        )!;
-        if (output.throttle !== command.throttle)
-          ctx.db.actuatorOutput.id.update({
-            ...output,
-            throttle: command.throttle,
-            tick: target.tick + 1n,
-          });
-      }
-      const { x, y, vx, vy, heading, omega } = result.ship;
-      ctx.db.ship.id.update({
-        ...target,
-        x,
-        y,
-        vx,
-        vy,
-        heading,
-        omega,
-        tick: target.tick + 1n,
-      });
-      for (const motion of result.rocks) {
-        const rock = rocks.find((b) => b.id === motion.id)!;
-        if (
-          ["x", "y", "vx", "vy", "heading", "omega"].some(
-            (k) =>
-              rock[k as keyof typeof rock] !== motion[k as keyof typeof motion],
-          )
-        )
-          ctx.db.spaceBody.id.update({
-            ...rock,
-            x: motion.x,
-            y: motion.y,
-            vx: motion.vx,
-            vy: motion.vy,
-            heading: motion.heading,
-            omega: motion.omega,
-            tick: rock.tick + 1n,
-          });
-      }
-      if (result.exhausted)
-        console.warn("Contact event budget exhausted for lab", target.id);
     }
     for (const actor of ctx.db.character.iter()) {
       const seat = ctx.db.station.shipId.find(actor.shipId);
@@ -812,12 +769,12 @@ export const stepWorld = db.reducer(
         point.y !== actor.localY ||
         sprinting !== actor.sprinting
       )
-        ctx.db.character.id.update({
+        commitFlightCharacter(ctx, {
           ...actor,
           localX: point.x,
           localY: point.y,
           sprinting,
-        });
+        }, row => ctx.db.character.id.update(row));
     }
   },
 );
@@ -1282,6 +1239,11 @@ export const ownAuthoredFlightFittings = db.view(
   t.array(authoredFlightFittingProjection),
   auth.gameView(readAuthoredFlightFittings),
 );
+export const ownAuthoredFlightPowerFittings = db.view(
+  { name: "own_authored_flight_power_fittings", public: true },
+  t.array(authoredFlightPowerFittingProjection),
+  auth.gameView(readAuthoredFlightPowerFittings),
+);
 
 export const ownGameShipAccess = db.view(
   { name: "own_game_ship_access", public: true },
@@ -1293,6 +1255,22 @@ export const ownNativeAirlocks = db.view(
   { name: "own_native_airlocks", public: true },
   t.array(nativeAirlock.nativeAirlockProjection),
   auth.gameView(nativeAirlock.ownNativeAirlocks),
+);
+
+export const refitRebuiltWayfarer = db.reducer(
+  {
+    shipId: t.string(),
+    expectedInstanceRevision: t.u64(),
+    expectedShipRevision: t.u64(),
+    fingerprint: t.string(),
+    operationId: t.string(),
+  },
+  auth.gameAction(rebuiltWayfarer.applyWayfarerRebuild, true),
+);
+export const ownWayfarerRebuildOffer = db.view(
+  { name: "own_wayfarer_rebuild_offer", public: true },
+  t.array(rebuiltWayfarer.wayfarerRebuildOfferProjection),
+  auth.gameView(rebuiltWayfarer.ownWayfarerRebuildOffer),
 );
 
 export const refitExistingWayfarer = db.reducer(
@@ -1379,3 +1357,35 @@ export const moveCargoCarrier = db.reducer(
     });
   }, true),
 );
+
+/** Explicit deployment maintenance; ordinary game identities cannot invoke it. */
+export const replaceLegacyPlayerWayfarer = db.reducer({ characterId: t.string(), expectedShipId: t.string(), expectedShipRevision: t.u64() }, replacePlayerWayfarer);
+
+export const setConstructionEnginePower = db.reducer({ shipId: t.string(), enginePlacedObjectId: t.string(), connected: t.bool(), expectedRevision: t.u64(), operationId: t.string() }, setEnginePower);
+
+export const changeShipFlightFitting = db.reducer(
+  { shipId:t.string(), fittingId:t.string(), action:t.string(), expectedRevision:t.u64(), expectedFittingRevision:t.u64(), operationId:t.string() },
+  (ctx,args)=>changeFlightFittingDisposition(ctx,args),
+);
+
+export const ownAuthoredFlightPhysics = db.view(
+  {name:"own_authored_flight_physics",public:true},t.array(authoredFlightPhysicsProjection),
+  auth.gameView(readAuthoredFlightPhysics),
+);
+export const ownAuthoredFlightActuators = db.view(
+  {name:"own_authored_flight_actuators",public:true},t.array(authoredFlightActuatorProjection),
+  auth.gameView(readAuthoredFlightActuators),
+);
+
+export const grantShipPassenger = db.reducer({shipId:t.string(),granteeId:t.string(),expectedInstanceRevision:t.u64(),expectedFlightRevision:t.u64(),durationSeconds:t.u32(),operationId:t.string()}, passengers.grantShipPassenger);
+export const boardShipPassenger = db.reducer({grantId:t.string(),expectedGrantRevision:t.u64(),expectedVisitId:t.string(),expectedLocationRevision:t.u64(),expectedAdmissionRevision:t.u64(),operationId:t.string()}, passengers.boardShipPassenger);
+export const revokeShipPassenger = db.reducer({grantId:t.string(),expectedRevision:t.u64(),operationId:t.string()}, passengers.revokeShipPassenger);
+export const returnShipPassenger = db.reducer({expectedVisitId:t.string(),expectedRevision:t.u64(),operationId:t.string()}, passengers.returnShipPassenger);
+
+export const ownPassengerGrants = db.view({name:"own_passenger_grants",public:true},t.array(passengerViews.passengerGrantProjection),auth.gameView(passengerViews.ownPassengerGrants));
+
+export const ownPassengerVisit = db.view({name:"own_passenger_visit",public:true},t.array(passengerViews.passengerVisitProjection),auth.gameView(passengerViews.ownPassengerVisit));
+
+export const currentPassengerInterior = db.view({name:"current_passenger_interior",public:true},t.array(passengerViews.passengerInteriorProjection),auth.gameView(passengerViews.currentPassengerInterior));
+
+export const currentInteriorCrew = db.view({name:"current_interior_crew",public:true},t.array(passengerViews.interiorCrewProjection),auth.gameView(passengerViews.currentInteriorCrew));

@@ -74,6 +74,7 @@ function fixture() {
     JSON.stringify(bindConstructionLayout(layout).document),
   );
   const db: any = {
+    constructionFlightBinding: {shipId:{find:()=>undefined}},
     constructionCargoAssembly: table(
       { by_instance: "instanceId" },
       "containerId",
@@ -513,6 +514,7 @@ test("door obstruction retains state until clear, with stale visit/revision and 
 });
 
 const ordinaryHooks = {
+  physicalChanged: () => {},
   mayConsumeMovement: () => false,
   mayEnter: () => true,
   incompatibleActivity: () => false,

@@ -50,3 +50,32 @@ export interface InterfacePlacement {
 }
 export const constructionDamageMode=(role:ConstructionRole):DamageMode=>
  ['floor','roof','pressure-wall','partition','armor','external-system'].includes(role)?'voxel':role==='decoration'?'none':'entity-health';
+
+/** Owner decision 2026-09-11. Extends the existing lattice contract; historical
+ * centred/outward families retain their original pins and qualification status. */
+export const TILESET_WALL_CONVENTION = {
+ schema: 'sidereal.tileset-wall-convention.v1',
+ baseInterfaceSchema: TILESET_INTERFACE_SCHEMA,
+ latticePerMeter: STRUCTURAL_LATTICE_PER_METER,
+ moduleUnits: STRUCTURAL_MODULE_UNITS,
+ boundary: 'outer-construction-edge',
+ reservationSide: 'inside-floorplan',
+ thicknessUnits: 8,
+ heightQuarters: [1, 2, 3, 4],
+ verticalDimensions: 'owner-approved-20260911',
+ standardDeck: { floorThicknessUnits: 6, clearHeightUnits: 96, roofThicknessUnits: 4, serviceVoidUnits: 6, pitchUnits: 112 },
+ smallerDecks: 'explicit-profile-and-clearance-qualification',
+ nativeQualification: 'pending',
+} as const;
+
+/** Directed edge and explicit interior side avoid double walls between rooms.
+ * Coordinates are structural lattice units. Fractions never round a datum. */
+export interface TileWallReservationInput {
+ id: string;
+ a: Point;
+ b: Point;
+ interiorSide: 'left' | 'right';
+ floorTop: number;
+ fullWallHeight: number;
+ heightQuarters: 1 | 2 | 3 | 4;
+}

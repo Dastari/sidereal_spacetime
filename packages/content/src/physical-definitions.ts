@@ -1,3 +1,4 @@
+import { INVENTORY_PHYSICAL_DEFINITIONS } from "./inventory-physical-definitions";
 import type {
   FlightDefinitionCatalog,
   FlightPhysicalDefinition,
@@ -15,6 +16,7 @@ import type { FlightProfile } from "../../sim/src/ifcs";
  * Asset visual revisions are provenance checks, never mutable catalog defaults.
  */
 const definitions: FlightPhysicalDefinition[] = [
+  ...INVENTORY_PHYSICAL_DEFINITIONS,
   {
     id: "carrier-1m",
     revision: 1,

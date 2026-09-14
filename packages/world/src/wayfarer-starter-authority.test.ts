@@ -1,3 +1,11 @@
+import { WAYFARER_STARTER } from "../../content/src/wayfarer-starter";
+import { CURRENT_WAYFARER_STARTER } from "../../content/src/wayfarer-current-starter";
+import {
+  replacePlayerWayfarer,
+  replacementRows,
+  REPLACED_SHIP_TABLES,
+} from "./wayfarer-replacement";
+import { WAYFARER_REPLACEMENT_OPERATOR } from "./wayfarer-replacement-operator";
 import { expect, test, vi } from "vitest";
 import { Identity } from "spacetimedb";
 vi.mock("spacetimedb/server", () => {
@@ -26,6 +34,7 @@ import {
 } from "./wayfarer-personal-kit";
 
 type Row = Record<string, any>;
+let fixtureSequence = 0;
 function fixture() {
   const tables = new Map<string, Row[]>();
   const primary: Record<string, string> = {
@@ -35,6 +44,8 @@ function fixture() {
     bodyWorldMotion: "bodyId",
     worldAdmission: "characterId",
     constructionFlightBinding: "shipId",
+    constructionFlightCompiled: "shipId",
+    constructionFlightDirty: "shipId",
     constructionFlightStation: "stationId",
     constructionLocation: "characterId",
     input: "characterId",
@@ -48,6 +59,7 @@ function fixture() {
     by_owner: "owner",
     by_system: "systemId",
     by_ship: "shipId",
+    by_root: "rootContainerId",
     by_deck: "deckId",
     by_instance: "instanceId",
     by_character: "characterId",
@@ -64,6 +76,12 @@ function fixture() {
         {
           rows,
           iter: () => rows.values(),
+          delete: (row: Row) => {
+            const at = rows.findIndex((r) => key(r[pk]) === key(row[pk]));
+            if (at < 0) return false;
+            rows.splice(at, 1);
+            return true;
+          },
           insert: (row: Row) => {
             if (rows.some((r) => key(r[pk]) === key(row[pk])))
               throw Error("Duplicate row:" + name);
@@ -96,7 +114,7 @@ function fixture() {
       return target[name];
     },
   });
-  let sequence = 1;
+  let sequence = 1 + ++fixtureSequence * 100000;
   const owner = Identity.fromString("04".repeat(32));
   const raw = {
     db,
@@ -288,4 +306,217 @@ test("public kit replay never seeds legacy storage or repairs a redeemed missing
   ).toBe(before);
   f.db.inventoryState.rows.length = 0;
   expect(() => preserveWayfarerStarterKit(f.ctx)).toThrow("explicit recovery");
+});
+
+test("normal onboarding installs the exact rebuilt template with usable owned access", () => {
+  const f = fixture(),
+    result = createWayfarerStarterAuthority(f.ctx, "New captain");
+  const instance = f.db.constructionInstance.id.find(result.actor.shipId);
+  expect(instance.blueprintSha256).toBe(CURRENT_WAYFARER_STARTER.sha256);
+  expect(instance.spawnX).not.toBe(-2);
+  expect(
+    ownedGameShipAccess(f.ctx, instance.id, instance.spawnDeckId).walkDeck,
+  ).toBe(true);
+});
+test("operator replacement handles an offline occupied old ship, preserves characters and leaves the other ship alone", () => {
+  const f = fixture(),
+    old = createWayfarerStarterAuthority(
+      f.ctx,
+      "Old captain",
+      WAYFARER_STARTER,
+    );
+  const oldShip = old.actor.shipId,
+    actorId = old.actor.id,
+    actor = f.db.character.id.find(actorId);
+  const oldItems = [...f.db.inventoryItem.iter()].map((r: Row) => r.id);
+  f.db.characterAppearance.insert({
+    id: "appearance",
+    characterId: actorId,
+    body: "preserved",
+  });
+  f.db.character.id.update({
+    ...actor,
+    connected: false,
+    localX: -2,
+    localY: -2,
+  });
+  const station = f.db.station.shipId.find(oldShip);
+  f.db.station.id.update({ ...station, occupantId: actorId });
+  f.db.input.characterId.update({
+    ...f.db.input.characterId.find(actorId),
+    dx: 1,
+    throttle: 1,
+  });
+  f.raw.sender = Identity.fromString("05".repeat(32));
+  const other = createWayfarerStarterAuthority(f.ctx, "Other captain");
+  const otherShip = JSON.stringify(
+    f.db.ship.id.find(other.actor.shipId),
+    (_, v) => (typeof v === "bigint" ? String(v) : v),
+  );
+  const args = {
+    characterId: actorId,
+    expectedShipId: oldShip,
+    expectedShipRevision: f.db.ship.id.find(oldShip).revision,
+  };
+  const before = f.snapshot();
+  expect(() => replacePlayerWayfarer(f.ctx, args)).toThrow(
+    "Deployment operator",
+  );
+  expect(f.snapshot()).toBe(before);
+  f.raw.sender = Identity.fromString(WAYFARER_REPLACEMENT_OPERATOR);
+  replacePlayerWayfarer(f.ctx, args);
+  const now = f.db.character.id.find(actorId),
+    newShip = now.shipId;
+  expect(newShip).not.toBe(oldShip);
+  expect(now.id).toBe(actor.id);
+  expect(now.owner).toEqual(actor.owner);
+  expect(now.name).toBe(actor.name);
+  expect(now.connected).toBe(false);
+  expect(f.db.characterAppearance.rows).toEqual([
+    { id: "appearance", characterId: actorId, body: "preserved" },
+  ]);
+  expect(f.db.constructionInstance.id.find(newShip).blueprintSha256).toBe(
+    CURRENT_WAYFARER_STARTER.sha256,
+  );
+  expect(f.db.ship.id.find(oldShip)).toBeUndefined();
+  expect(f.db.constructionInstance.id.find(oldShip)).toBeUndefined();
+  expect(oldItems.some((id: string) => f.db.inventoryItem.id.find(id))).toBe(
+    false,
+  );
+  expect(
+    f.db.inventoryItem.rows.filter((r: Row) => r.characterId === actorId),
+  ).toHaveLength(7);
+  expect(f.db.station.shipId.find(newShip).occupantId).toBeUndefined();
+  expect(f.db.input.characterId.find(actorId).dx).toBe(0);
+  expect(
+    JSON.stringify(f.db.ship.id.find(other.actor.shipId), (_, v) =>
+      typeof v === "bigint" ? String(v) : v,
+    ),
+  ).toBe(otherShip);
+  const after = f.snapshot();
+  replacePlayerWayfarer(f.ctx, args);
+  expect(f.snapshot()).toBe(after);
+  expect(() =>
+    replacePlayerWayfarer(f.ctx, { ...args, expectedShipRevision: 999n }),
+  ).toThrow("receipt conflict");
+});
+test("replacement dependency closure includes nested inventory without following owner or destination links", () => {
+  const rows = [
+    {
+      table: "inventoryContainer",
+      row: { id: "pockets", characterId: "actor" },
+    },
+    { table: "inventoryItem", row: { id: "bag", containerId: "pockets" } },
+    { table: "inventoryContainer", row: { id: "inside", parentItemId: "bag" } },
+    { table: "inventoryItem", row: { id: "item", containerId: "inside" } },
+    {
+      table: "inventoryContainer",
+      row: { id: "foreign", characterId: "other", owner: "actor" },
+    },
+  ];
+  expect(
+    replacementRows(rows.reverse(), "actor", "ship")
+      .map((e) => e.row.id)
+      .sort(),
+  ).toEqual(["bag", "inside", "item", "pockets"]);
+});
+test("failed replacement installation rolls deletions back with the enclosing transaction", () => {
+  const f = fixture(),
+    old = createWayfarerStarterAuthority(
+      f.ctx,
+      "Old captain",
+      WAYFARER_STARTER,
+    );
+  // Prepare every adapter table before taking the mock transaction snapshot.
+  for (const name of REPLACED_SHIP_TABLES) void f.db[name];
+  void f.db.constructionReceipt;
+  void f.db.constructionPassengerVisit;
+  const args = {
+    characterId: old.actor.id,
+    expectedShipId: old.actor.shipId,
+    expectedShipRevision: f.db.ship.id.find(old.actor.shipId).revision,
+  };
+  f.raw.sender = Identity.fromString(WAYFARER_REPLACEMENT_OPERATOR);
+  const saved = new Map(
+    [...f.tables].map(([name, rows]) => [name, rows.map((r) => ({ ...r }))]),
+  );
+  const before = f.snapshot();
+  f.db.constructionReceipt.insert = () => {
+    throw Error("late receipt failure");
+  };
+  expect(() => {
+    try {
+      replacePlayerWayfarer(f.ctx, args);
+    } catch (e) {
+      for (const [name, rows] of f.tables)
+        rows.splice(0, rows.length, ...(saved.get(name) ?? []));
+      throw e;
+    }
+  }).toThrow("late receipt failure");
+  expect(f.snapshot()).toBe(before);
+});
+
+test("operator replaces a pre-construction legacy ship and discards its old kit", () => {
+  const f = fixture(),
+    owner = f.raw.sender;
+  const actorId = "55555555-5555-4555-8555-555555555555",
+    shipId = "66666666-6666-4666-8666-666666666666";
+  f.db.character.insert({
+    id: actorId,
+    owner,
+    name: "Legacy captain",
+    shipId,
+    localX: 4,
+    localY: 3,
+    connected: false,
+    sprinting: false,
+  });
+  f.db.ship.insert({
+    id: shipId,
+    owner,
+    name: "Wayfarer",
+    revision: 7n,
+    x: 10,
+    y: 20,
+    vx: 1,
+    vy: 0,
+    heading: 1,
+    omega: 0,
+    massKg: 1,
+    thrustN: 1,
+    turnAcceleration: 1,
+    tick: 1n,
+  });
+  f.db.inventoryState.insert({
+    characterId: actorId,
+    kitGranted: true,
+    revision: 9n,
+  });
+  f.db.inventoryContainer.insert({
+    id: "old-pockets",
+    characterId: actorId,
+    shipId,
+    carried: true,
+  });
+  f.db.inventoryItem.insert({
+    id: "old-gear",
+    characterId: actorId,
+    containerId: "old-pockets",
+  });
+  f.raw.sender = Identity.fromString(WAYFARER_REPLACEMENT_OPERATOR);
+  replacePlayerWayfarer(f.ctx, {
+    characterId: actorId,
+    expectedShipId: shipId,
+    expectedShipRevision: 7n,
+  });
+  const actor = f.db.character.id.find(actorId);
+  expect(actor.owner).toEqual(owner);
+  expect(actor.connected).toBe(false);
+  expect([actor.localX, actor.localY]).toEqual([0, -2]);
+  expect(f.db.constructionInstance.id.find(actor.shipId).blueprintSha256).toBe(
+    CURRENT_WAYFARER_STARTER.sha256,
+  );
+  expect(f.db.ship.id.find(shipId)).toBeUndefined();
+  expect(f.db.inventoryItem.id.find("old-gear")).toBeUndefined();
+  expect(f.db.inventoryItem.rows).toHaveLength(7);
 });

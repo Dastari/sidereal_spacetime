@@ -10,7 +10,7 @@ import { STARTER } from "@sidereal/content";
 import { PILOT_LAYOUT } from "../../content/src/pilot-layout";
 import {
   qualifiedWayfarerInstanceObstacles,
-  QUALIFIED_WAYFARER_SHA256,
+  isQualifiedWayfarerBlueprint,
 } from "./wayfarer-walking-bindings";
 import { constructionHash } from "./construction-transactions";
 import { spatialCell, validateSpacePoint } from "./spatial-cells";
@@ -65,7 +65,7 @@ export function planQualifiedConstructionFlight(
   reservedIds: readonly string[] = [],
 ) {
   if (
-    instance.blueprintSha256 !== QUALIFIED_WAYFARER_SHA256 ||
+    !isQualifiedWayfarerBlueprint(instance.blueprintSha256) ||
     instance.revision !== 1n
   )
     throw Error("Exact unrefitted qualified Wayfarer instance required");

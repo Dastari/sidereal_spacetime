@@ -1,5 +1,9 @@
 import { readLayoutStructure } from "./layout-structure-admission";
 import {
+  deviceServicePortId,
+  placedDeviceServices,
+} from "../../content/src/device-services";
+import {
   LAYOUT_SCHEMA,
   LAYOUT_LIMITS as L,
   LAYOUT_COMPILER,
@@ -203,6 +207,12 @@ export function readLayout(value: unknown): LayoutDocument {
       !Array.isArray(r.boundaryIds) ||
       r.boundaryIds.length > L.edges ||
       !r.boundaryIds.every((v: unknown) => string(v)) ||
+      (r.tileIds !== undefined &&
+        (!Array.isArray(r.tileIds) ||
+          !r.tileIds.length ||
+          r.tileIds.length > L.tiles ||
+          !r.tileIds.every((v: unknown) => string(v)) ||
+          new Set(r.tileIds).size !== r.tileIds.length)) ||
       !["crew", "visitors", "restricted"].includes(r.access) ||
       !string(r.floorTheme) ||
       !string(r.wallTheme)
@@ -253,6 +263,53 @@ export function readLayout(value: unknown): LayoutDocument {
     segments += r.path.length - 1;
   }
   if (segments > L.routeSegments) fail("Utility segment budget exceeded");
+  if (value.serviceConnections !== undefined) {
+    if (
+      !Array.isArray(value.serviceConnections) ||
+      value.serviceConnections.length > 1024
+    )
+      fail("Device connection budget exceeded");
+    const devices = placedDeviceServices(value as unknown as LayoutDocument);
+    const usedInputs = new Set<string>();
+    for (const connection of value.serviceConnections) {
+      if (
+        !record(connection) ||
+        !string(connection.id) ||
+        ids.has(connection.id) ||
+        !Object.hasOwn(SERVICE_CHANNELS, connection.channel) ||
+        !string(connection.fromDeviceId) ||
+        !string(connection.toDeviceId) ||
+        !string(connection.fromPortId) ||
+        !string(connection.toPortId) ||
+        connection.fromDeviceId === connection.toDeviceId
+      )
+        fail("Invalid logical device connection");
+      ids.add(connection.id);
+      const from = devices
+        .find((device) => device.placedObjectId === connection.fromDeviceId)
+        ?.ports.find((port) => port.id === connection.fromPortId);
+      const to = devices
+        .find((device) => device.placedObjectId === connection.toDeviceId)
+        ?.ports.find((port) => port.id === connection.toPortId);
+      const input = deviceServicePortId(
+        connection.toDeviceId,
+        connection.toPortId,
+      );
+      if (
+        !from ||
+        !to ||
+        from.channel !== connection.channel ||
+        to.channel !== connection.channel ||
+        !["out", "both"].includes(from.direction) ||
+        !["in", "both"].includes(to.direction) ||
+        usedInputs.has(input)
+      )
+        fail(
+          "Logical device connection requires compatible declared ports and one source per input",
+        );
+      usedInputs.add(input);
+    }
+  }
   if (
     !record(value.appearance) ||
     !/^#[a-f0-9]{6}$/i.test(value.appearance.primary) ||

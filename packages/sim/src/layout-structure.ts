@@ -1,4 +1,6 @@
 import { matchNativeFloorTile } from "./layout-native-floor";
+import { remapOpeningTreatments } from "./layout-opening-treatments";
+export { remapOpeningTreatments } from "./layout-opening-treatments";
 import type {
   HullEnvelope,
   FloorStyle,
@@ -808,6 +810,8 @@ export function proposeWallOpening(
       sill: input.sill,
       setback: input.setback ?? 4,
     };
+    if (next.structure?.schema === "sidereal.layout-structure.v2")
+      next.structure.boundaryTreatments = remapOpeningTreatments(doc, opening);
     next.openings = [
       ...next.openings.filter((o) => o.id !== input.id),
       opening,

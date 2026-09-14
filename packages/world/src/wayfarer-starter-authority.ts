@@ -1,3 +1,11 @@
+import { commitFlightCharacter, markShipFlightDirty } from "./construction-flight-dirty";
+import { compileShipFlight } from "./construction-flight-compilation";
+import { readConstructionFlightInput } from "./construction-flight-input";
+import {
+  CURRENT_WAYFARER_STARTER,
+  type WayfarerStarterTemplate,
+} from "../../content/src/wayfarer-current-starter";
+import { requireWayfarerReplacementOperator } from "./wayfarer-replacement-operator";
 import type { Infer, InferSchema, ReducerCtx } from "spacetimedb/server";
 import type world from "./index";
 import type {
@@ -37,15 +45,56 @@ export type WayfarerStarterContext = Omit<Base, "db"> & {
 export function createWayfarerStarterAuthority(
   ctx: WayfarerStarterContext,
   name: string,
+  template: WayfarerStarterTemplate = CURRENT_WAYFARER_STARTER,
 ) {
+  return installStarter(ctx, name, template);
+}
+
+/** Trusted maintenance path preserves the account's character identity, not the old ship. */
+export function installReplacementWayfarer(
+  ctx: WayfarerStarterContext,
+  actor: NonNullable<
+    ReturnType<WayfarerStarterContext["db"]["character"]["id"]["find"]>
+  >,
+) {
+  requireWayfarerReplacementOperator(ctx);
+  const ownerContext = new Proxy(ctx, {
+    get(target, key) {
+      if (key === "sender") return actor.owner;
+      const value = Reflect.get(target, key, target);
+      return typeof value === "function" ? value.bind(target) : value;
+    },
+  });
+  const result = installStarter(
+    ownerContext,
+    actor.name,
+    CURRENT_WAYFARER_STARTER,
+    actor,
+  );
+  const installed = ctx.db.character.id.find(actor.id)!;
+  ctx.db.character.id.update({ ...installed, connected: actor.connected });
+  return result;
+}
+function installStarter(
+  ctx: WayfarerStarterContext,
+  name: string,
+  template: WayfarerStarterTemplate,
+  replacement?: NonNullable<
+    ReturnType<WayfarerStarterContext["db"]["character"]["id"]["find"]>
+  >,
+) {
+  let characterAllocated = false;
   return createWayfarerStarter(
     {
       ownerId: ctx.sender.toHexString(),
       requireLiveGame: () => {
-        requireGame(ctx);
+        if (!replacement) requireGame(ctx);
       },
       existingCharacters: () =>
-        [...ctx.db.character.by_owner.filter(ctx.sender)].map((a) => ({
+        (replacement
+          ? []
+          : [...ctx.db.character.by_owner.filter(ctx.sender)]
+        ).map((a) => ({
           id: a.id,
           shipId: a.shipId,
           ownerId: a.owner.toHexString(),
@@ -54,8 +103,15 @@ export function createWayfarerStarterAuthority(
         const r = ctx.db.personalStarterReceipt.owner.find(ctx.sender);
         return r ? { ...r, ownerId: r.owner.toHexString() } : undefined;
       },
-      allocateUuid: () => ctx.newUuidV4().toString(),
+      allocateUuid: () => {
+        if (replacement && !characterAllocated) {
+          characterAllocated = true;
+          return replacement.id;
+        }
+        return ctx.newUuidV4().toString();
+      },
       identityExists: (id) =>
+        id !== replacement?.id &&
         !!(
           ctx.db.character.id.find(id) ||
           ctx.db.ship.id.find(id) ||
@@ -137,6 +193,7 @@ export function createWayfarerStarterAuthority(
           binding.deckId !== p.instance.spawn.deckId
         )
           throw Error("Complete empty dormant starter flight required");
+        compileShipFlight(ctx.db, i.id, id => readConstructionFlightInput(ctx, id));
         const definition = resolveShipFlightDefinition(
           {
             binding: () => b,
@@ -144,11 +201,13 @@ export function createWayfarerStarterAuthority(
             currentInstanceRevision: () => i.revision,
             fittings: (id) =>
               ctx.db.constructionFlightFitting.by_ship.filter(id),
+            compiled: (id) => ctx.db.constructionFlightCompiled.shipId.find(id),
+            dirty: (id) => !!ctx.db.constructionFlightDirty.shipId.find(id),
           },
           i.id,
         );
         if (definition.status !== "dormant")
-          throw Error("Qualified starter flight definition required");
+          throw Error("Qualified starter flight definition required: " + definition.reason);
         qualifyPilotGeometry({
           instance: i,
           frame: constructionCollision(ctx, i, b.deckId),
@@ -164,7 +223,8 @@ export function createWayfarerStarterAuthority(
       },
       insertCharacterAndStandingLocation: (p, clean) => {
         const [x, y] = p.instance.spawn.positionM;
-        ctx.db.character.insert({
+        const characterRow = {
+          ...(replacement ?? {}),
           id: p.characterId,
           owner: ctx.sender,
           name: clean,
@@ -173,7 +233,10 @@ export function createWayfarerStarterAuthority(
           localY: y,
           connected: true,
           sprinting: false,
-        });
+        };
+        if (replacement) commitFlightCharacter(ctx, characterRow, row => ctx.db.character.id.update(row));
+        else ctx.db.character.insert(characterRow);
+        markShipFlightDirty(ctx, characterRow.shipId);
         // Permanent owned location has no review-return destination. Ownership
         // policy identifies it; a future transfer must supply real departure rules.
         ctx.db.constructionLocation.insert({
@@ -219,5 +282,6 @@ export function createWayfarerStarterAuthority(
       },
     },
     name,
+    template,
   );
 }

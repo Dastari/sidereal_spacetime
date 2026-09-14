@@ -56,6 +56,19 @@ export interface ConstructionDocument {
   floors: ConstructionFloor[];
   /** Optional exact native wall/door candidate. Absence preserves historical floor-only reviews. */
   boundaryKit?: { id: string; revision: string; sha256: string };
+  /** Exact rebuilt Wayfarer source with explicit instance identity substitution. */
+  wayfarerRebuild?: {
+    revision: "r002";
+    nativeVisualsSha256: string;
+    identities: Record<string, string>;
+  };
+  /** Exact exterior-only successor; independently proves the eighteen new native hull bounds. */
+  wayfarerExterior?: {
+    revision: "r005";
+    baseSourceSha256: string;
+    nativeProofSha256: string;
+    identities: Record<string, string>;
+  };
   /** Matching native ceiling surfaces only on decks with an authored roof. */
   roofKit?: { id: string; revision: string; sha256: string };
   /** Exact bounded native enclosure review, not a generic pressure flag. */

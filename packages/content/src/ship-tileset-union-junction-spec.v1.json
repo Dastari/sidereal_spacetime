@@ -1,0 +1,1480 @@
+{
+  "schema": "sidereal.tileset-union-junction-request.v1",
+  "latticePerMeter": 32,
+  "thicknessM": 0.25,
+  "heightsM": [
+    0.75,
+    1.5,
+    2.25,
+    3
+  ],
+  "placementFloorTopM": 0.1875,
+  "sourceFrame": "Blender XY floor plane, Z up; metres; applied transforms",
+  "sourceRequests": [
+    {
+      "path": "packages/content/src/ship-tileset-corner-spec.v1.json",
+      "sha256": "3c94dbaba8dfa33c466c23eb83b6b2a10637d27683b8ce055327000e94be2ac4"
+    },
+    {
+      "path": "packages/content/src/ship-tileset-internal-spec.v1.json",
+      "sha256": "f8dc612cf7ce856043431d98180a1f00d3cfac17031a2e1ca96e28118496f200"
+    }
+  ],
+  "nativeDependencies": [
+    {
+      "path": "assets/art-library/designs/shipyard.floor.mapped-deck-kit/revisions/r002/glb.glb",
+      "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/corner-0792c389209e-q1.glb",
+      "sha256": "d47f11e842bd9c3ba30203a7d8f7cfa6c3dccc3a6adae66f9ecef508ba430cc4"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/corner-0792c389209e-q2.glb",
+      "sha256": "245e24cec4427e24c8e1b049a15c52c320cc456330cd3e39374e22dfd8673092"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/corner-0792c389209e-q3.glb",
+      "sha256": "739cb7fd2f66166c5ef648ba911fd59c58cc77347e6854aca7c9c0e0dc9ccbb5"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/corner-0792c389209e-q4.glb",
+      "sha256": "2b8730cdad08dd0de3058471c36a26a10664088d05af2636765c9ca65272513a"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/corner-2d29d106ea4c-q1.glb",
+      "sha256": "f0a981c7b9dba4af4305ffb90c58d70716498d779864c86d2669f763a5832efe"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/corner-2d29d106ea4c-q2.glb",
+      "sha256": "9f799f391ec2496adbd915bef804f408da9bfe8023a1ac57ca30e980690c694c"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/corner-2d29d106ea4c-q3.glb",
+      "sha256": "3bfcdd9b58485ef535527bf6ccf03e151dcd92eafc0a1a4850290170c80a3035"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/corner-2d29d106ea4c-q4.glb",
+      "sha256": "fc5ea9b0aee5cd83d4b69d0abf4dc4dc33927a8d09114b505a8c44aaf3b3ed49"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/corner-5b03c711aa8b-q1.glb",
+      "sha256": "dad9f90e217ea0b61299229f0ef2a5e457a04bdf3780141e7fdad8652265e3de"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/corner-5b03c711aa8b-q2.glb",
+      "sha256": "76771ab9b39341991972d4b65c7d9fb8bd09c186fcd97835b241e6714fd45c41"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/corner-5b03c711aa8b-q3.glb",
+      "sha256": "21a0c65440e0a3ad7f0b18caa2d7c24f9ab7b2b4ba34dd4414300e7cab08c942"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/corner-5b03c711aa8b-q4.glb",
+      "sha256": "05c44aeb508c334e95312333fe99c4d6d7a7a4aa39697776d743d221ef8d6f59"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/corner-7daf02f77db4-q1.glb",
+      "sha256": "e8467cc96154431fd16afd912d39cd07820735266bc6c263e8224a7334aeed10"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/corner-7daf02f77db4-q2.glb",
+      "sha256": "9425bb927ca790672aac057d27fe065c34f9927995b8fc962f3ded66619db5cf"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/corner-7daf02f77db4-q3.glb",
+      "sha256": "d3360f2bcf0ed35d3fcd6058d100175060e6a0fae344eb0f4293e9777dcdebb2"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/corner-7daf02f77db4-q4.glb",
+      "sha256": "25bbd1d039eace5e389150ed2153b743ac569c0a6c22e6e3dea0d7a5aa2c1fcc"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/span-42c2fafec189-q1.glb",
+      "sha256": "f023550870917c9624a719891e3ed9107f5501946cf11ad725d3ab16b892dc56"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/span-42c2fafec189-q2.glb",
+      "sha256": "102bc3c86a96b48b84b5698803365f6d7679b04d850e47d20d3ed4306a5e7132"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/span-42c2fafec189-q3.glb",
+      "sha256": "88974d2f50c9f74f779140edec4170dbeb95cfb248cc30d38bf636ef692218a8"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/span-42c2fafec189-q4.glb",
+      "sha256": "abef4edd8ce2d8915e8c309e3d852851e9508ac7bb843ac79adf94e325d72f63"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/span-9f29a130438b-q1.glb",
+      "sha256": "b0fece97e06bf1d0d6a6de52a65ab7452889ff5d268d695c90c27e08de99d0a3"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/span-9f29a130438b-q2.glb",
+      "sha256": "731bf786f10b6514d9ce88d6b5da4ded9d8930c062e3d696bc6013cfe981932a"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/span-9f29a130438b-q3.glb",
+      "sha256": "3c74ca9fbabf02b77cead0079a56ec81154ab62673673793b52e0a7b41cf08d9"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/span-9f29a130438b-q4.glb",
+      "sha256": "bd620d8a3eac161363852e823e01c2965d7b65ec4748e839397b5d6b45a298de"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/span-d2cbad71ff33-q1.glb",
+      "sha256": "fd1a11ff730ce10e73b1d699ecf6d0b1c870bcf4615509e36015bb63904e7b01"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/span-d2cbad71ff33-q2.glb",
+      "sha256": "b2a1ad70d77b507fed15b3f2e521b5b52615a99ba194bd9f0e323b6dbf9af9e3"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/span-d2cbad71ff33-q3.glb",
+      "sha256": "babb2e9d46de51f1b7696b8641c0611b3294bc08bca6bb4e2e38f7179f40dbfc"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/profiles/span-d2cbad71ff33-q4.glb",
+      "sha256": "411d041a8c33adb54e9b2eacad8dc829413d024161c49f53d836acbd3a212e23"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.internal250/revisions/r000/internal-end-q1.glb",
+      "sha256": "1f0a209ef92dbc1d327a031e34bd17c1580d575d0736aae1bc888e527070f5b9"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.internal250/revisions/r000/internal-end-q2.glb",
+      "sha256": "e781db1650f8c86c1b3af9c17a0194ab4d29f58b36d918202cae97a0f928bd8f"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.internal250/revisions/r000/internal-end-q3.glb",
+      "sha256": "68235c57d472f18f92bdff3a99833bfcd666e7f475784c7be4344fabd790cc03"
+    },
+    {
+      "path": "assets/art-library/designs/shipyard.structure.internal250/revisions/r000/internal-end-q4.glb",
+      "sha256": "d8369d36436b4f7e0804522bf22ed3e2f6f4f814173ef93dcfacb9c36cd94349"
+    }
+  ],
+  "nativeFamilies": {
+    "convex-r004": "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/",
+    "internal-r000": "assets/art-library/designs/shipyard.structure.internal250/revisions/r000/",
+    "floor-r002": "assets/art-library/designs/shipyard.floor.mapped-deck-kit/revisions/r002/"
+  },
+  "shapes": [
+    {
+      "id": "concave-90",
+      "reservationPolygonM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0.125
+        ],
+        [
+          -0.25,
+          0.125
+        ],
+        [
+          -0.25,
+          -0.25
+        ],
+        [
+          0.125,
+          -0.25
+        ],
+        [
+          0.125,
+          0
+        ]
+      ],
+      "description": "Reentrant vertex at origin; excluded quadrant NE, rays +X/+Y, inward normals -Y/-X; 0.125m ray cutbacks.",
+      "contacts": [
+        {
+          "a": [
+            0,
+            0.125
+          ],
+          "b": [
+            -0.25,
+            0.125
+          ],
+          "outwardNormal": [
+            0,
+            1
+          ],
+          "fullHeight": true,
+          "roles": [
+            "nominal-native-contact"
+          ],
+          "physicalQualification": "pending"
+        },
+        {
+          "a": [
+            0.125,
+            -0.25
+          ],
+          "b": [
+            0.125,
+            0
+          ],
+          "outwardNormal": [
+            1,
+            0
+          ],
+          "fullHeight": true,
+          "roles": [
+            "nominal-native-contact"
+          ],
+          "physicalQualification": "pending"
+        }
+      ]
+    },
+    {
+      "id": "exterior-t",
+      "reservationPolygonM": [
+        [
+          -0.125,
+          0
+        ],
+        [
+          0.125,
+          0
+        ],
+        [
+          0.125,
+          0.375
+        ],
+        [
+          -0.125,
+          0.375
+        ]
+      ],
+      "description": "Fixed outer mating plane Y0; external arms at X±.125, centered inward branch starts Y.375. Side contacts occupy only Y0...25.",
+      "contacts": [
+        {
+          "a": [
+            -0.125,
+            0
+          ],
+          "b": [
+            -0.125,
+            0.25
+          ],
+          "outwardNormal": [
+            -1,
+            0
+          ],
+          "fullHeight": true,
+          "roles": [
+            "nominal-native-contact"
+          ],
+          "physicalQualification": "pending"
+        },
+        {
+          "a": [
+            0.125,
+            0.25
+          ],
+          "b": [
+            0.125,
+            0
+          ],
+          "outwardNormal": [
+            1,
+            0
+          ],
+          "fullHeight": true,
+          "roles": [
+            "nominal-native-contact"
+          ],
+          "physicalQualification": "pending"
+        },
+        {
+          "a": [
+            0.125,
+            0.375
+          ],
+          "b": [
+            -0.125,
+            0.375
+          ],
+          "outwardNormal": [
+            0,
+            1
+          ],
+          "fullHeight": true,
+          "roles": [
+            "nominal-native-contact"
+          ],
+          "physicalQualification": "pending"
+        }
+      ]
+    },
+    {
+      "id": "internal-span-0.25",
+      "lengthM": 0.25,
+      "reservationPolygonM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.25,
+          -0.125
+        ],
+        [
+          0.25,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "description": "Explicit centered internal residual span; full terminal faces and native recessed side panels.",
+      "contacts": [
+        {
+          "a": [
+            0,
+            0.125
+          ],
+          "b": [
+            0,
+            -0.125
+          ],
+          "outwardNormal": [
+            -1,
+            0
+          ],
+          "fullHeight": true,
+          "roles": [
+            "nominal-native-contact"
+          ],
+          "physicalQualification": "pending"
+        },
+        {
+          "a": [
+            0.25,
+            -0.125
+          ],
+          "b": [
+            0.25,
+            0.125
+          ],
+          "outwardNormal": [
+            1,
+            0
+          ],
+          "fullHeight": true,
+          "roles": [
+            "nominal-native-contact"
+          ],
+          "physicalQualification": "pending"
+        }
+      ]
+    },
+    {
+      "id": "internal-span-0.5",
+      "lengthM": 0.5,
+      "reservationPolygonM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.5,
+          -0.125
+        ],
+        [
+          0.5,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "description": "Explicit centered internal residual span; full terminal faces and native recessed side panels.",
+      "contacts": [
+        {
+          "a": [
+            0,
+            0.125
+          ],
+          "b": [
+            0,
+            -0.125
+          ],
+          "outwardNormal": [
+            -1,
+            0
+          ],
+          "fullHeight": true,
+          "roles": [
+            "nominal-native-contact"
+          ],
+          "physicalQualification": "pending"
+        },
+        {
+          "a": [
+            0.5,
+            -0.125
+          ],
+          "b": [
+            0.5,
+            0.125
+          ],
+          "outwardNormal": [
+            1,
+            0
+          ],
+          "fullHeight": true,
+          "roles": [
+            "nominal-native-contact"
+          ],
+          "physicalQualification": "pending"
+        }
+      ]
+    },
+    {
+      "id": "internal-span-1.25",
+      "lengthM": 1.25,
+      "reservationPolygonM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1.25,
+          -0.125
+        ],
+        [
+          1.25,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "description": "Explicit centered internal residual span; full terminal faces and native recessed side panels.",
+      "contacts": [
+        {
+          "a": [
+            0,
+            0.125
+          ],
+          "b": [
+            0,
+            -0.125
+          ],
+          "outwardNormal": [
+            -1,
+            0
+          ],
+          "fullHeight": true,
+          "roles": [
+            "nominal-native-contact"
+          ],
+          "physicalQualification": "pending"
+        },
+        {
+          "a": [
+            1.25,
+            -0.125
+          ],
+          "b": [
+            1.25,
+            0.125
+          ],
+          "outwardNormal": [
+            1,
+            0
+          ],
+          "fullHeight": true,
+          "roles": [
+            "nominal-native-contact"
+          ],
+          "physicalQualification": "pending"
+        }
+      ]
+    },
+    {
+      "id": "internal-span-1.5",
+      "lengthM": 1.5,
+      "reservationPolygonM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1.5,
+          -0.125
+        ],
+        [
+          1.5,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "description": "Explicit centered internal residual span; full terminal faces and native recessed side panels.",
+      "contacts": [
+        {
+          "a": [
+            0,
+            0.125
+          ],
+          "b": [
+            0,
+            -0.125
+          ],
+          "outwardNormal": [
+            -1,
+            0
+          ],
+          "fullHeight": true,
+          "roles": [
+            "nominal-native-contact"
+          ],
+          "physicalQualification": "pending"
+        },
+        {
+          "a": [
+            1.5,
+            -0.125
+          ],
+          "b": [
+            1.5,
+            0.125
+          ],
+          "outwardNormal": [
+            1,
+            0
+          ],
+          "fullHeight": true,
+          "roles": [
+            "nominal-native-contact"
+          ],
+          "physicalQualification": "pending"
+        }
+      ]
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "concave-l-three-quarter-floors",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "floors": [
+        {
+          "id": "quarter-1m",
+          "originM": [
+            0,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "id": "quarter-1m",
+          "originM": [
+            1,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "id": "quarter-1m",
+          "originM": [
+            0,
+            1
+          ],
+          "quarterTurns": 0
+        }
+      ],
+      "internalReservationsM": [],
+      "pieces": [
+        {
+          "family": "convex-r004",
+          "profileId": "corner-7daf02f77db4",
+          "originM": [
+            0,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "corner-2d29d106ea4c",
+          "originM": [
+            2,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "corner-5b03c711aa8b",
+          "originM": [
+            2,
+            1
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "new",
+          "profileId": "concave-90",
+          "originM": [
+            1,
+            1
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "corner-5b03c711aa8b",
+          "originM": [
+            1,
+            2
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "corner-0792c389209e",
+          "originM": [
+            0,
+            2
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-9f29a130438b",
+          "originM": [
+            0.25,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-d2cbad71ff33",
+          "originM": [
+            2,
+            0.25
+          ],
+          "quarterTurns": 1
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-42c2fafec189",
+          "originM": [
+            1.75,
+            1
+          ],
+          "quarterTurns": 2
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-42c2fafec189",
+          "originM": [
+            1,
+            1.125
+          ],
+          "quarterTurns": 1
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-d2cbad71ff33",
+          "originM": [
+            0.75,
+            2
+          ],
+          "quarterTurns": 2
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-9f29a130438b",
+          "originM": [
+            0,
+            1.75
+          ],
+          "quarterTurns": 3
+        }
+      ]
+    },
+    {
+      "id": "opposing-exterior-t-1m",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "floors": [
+        {
+          "id": "half-2x1",
+          "originM": [
+            0,
+            0
+          ],
+          "quarterTurns": 0
+        }
+      ],
+      "internalReservationsM": [
+        [
+          [
+            0.875,
+            0
+          ],
+          [
+            1.125,
+            0
+          ],
+          [
+            1.125,
+            1
+          ],
+          [
+            0.875,
+            1
+          ]
+        ]
+      ],
+      "pieces": [
+        {
+          "family": "convex-r004",
+          "profileId": "corner-7daf02f77db4",
+          "originM": [
+            0,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "corner-2d29d106ea4c",
+          "originM": [
+            2,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "corner-5b03c711aa8b",
+          "originM": [
+            2,
+            1
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "corner-0792c389209e",
+          "originM": [
+            0,
+            1
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "new",
+          "profileId": "exterior-t",
+          "originM": [
+            1,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-42c2fafec189",
+          "originM": [
+            0.25,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-42c2fafec189",
+          "originM": [
+            1.125,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-d2cbad71ff33",
+          "originM": [
+            2,
+            0.25
+          ],
+          "quarterTurns": 1
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-d2cbad71ff33",
+          "originM": [
+            0,
+            0.75
+          ],
+          "quarterTurns": 3
+        },
+        {
+          "family": "new",
+          "profileId": "exterior-t",
+          "originM": [
+            1,
+            1
+          ],
+          "quarterTurns": 2
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-42c2fafec189",
+          "originM": [
+            1.75,
+            1
+          ],
+          "quarterTurns": 2
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-42c2fafec189",
+          "originM": [
+            0.875,
+            1
+          ],
+          "quarterTurns": 2
+        },
+        {
+          "family": "new",
+          "profileId": "internal-span-0.25",
+          "originM": [
+            1,
+            0.375
+          ],
+          "quarterTurns": 1
+        }
+      ]
+    },
+    {
+      "id": "exterior-t-capped-branch-1m",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "floors": [
+        {
+          "id": "half-2x1",
+          "originM": [
+            0,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "id": "half-2x1",
+          "originM": [
+            0,
+            1
+          ],
+          "quarterTurns": 0
+        }
+      ],
+      "internalReservationsM": [
+        [
+          [
+            0.875,
+            0
+          ],
+          [
+            1.125,
+            0
+          ],
+          [
+            1.125,
+            1
+          ],
+          [
+            0.875,
+            1
+          ]
+        ]
+      ],
+      "pieces": [
+        {
+          "family": "convex-r004",
+          "profileId": "corner-7daf02f77db4",
+          "originM": [
+            0,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "corner-2d29d106ea4c",
+          "originM": [
+            2,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "corner-5b03c711aa8b",
+          "originM": [
+            2,
+            2
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "corner-0792c389209e",
+          "originM": [
+            0,
+            2
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "new",
+          "profileId": "exterior-t",
+          "originM": [
+            1,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-42c2fafec189",
+          "originM": [
+            0.25,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-42c2fafec189",
+          "originM": [
+            1.125,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-9f29a130438b",
+          "originM": [
+            2,
+            0.25
+          ],
+          "quarterTurns": 1
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-9f29a130438b",
+          "originM": [
+            0,
+            1.75
+          ],
+          "quarterTurns": 3
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-9f29a130438b",
+          "originM": [
+            1.75,
+            2
+          ],
+          "quarterTurns": 2
+        },
+        {
+          "family": "new",
+          "profileId": "internal-span-0.5",
+          "originM": [
+            1,
+            0.375
+          ],
+          "quarterTurns": 1
+        },
+        {
+          "family": "internal-r000",
+          "profileId": "internal-end",
+          "originM": [
+            1,
+            1
+          ],
+          "quarterTurns": 3
+        }
+      ]
+    },
+    {
+      "id": "opposing-exterior-t-2m",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "floors": [
+        {
+          "id": "square-2m",
+          "originM": [
+            0,
+            0
+          ],
+          "quarterTurns": 0
+        }
+      ],
+      "internalReservationsM": [
+        [
+          [
+            0.875,
+            0
+          ],
+          [
+            1.125,
+            0
+          ],
+          [
+            1.125,
+            2
+          ],
+          [
+            0.875,
+            2
+          ]
+        ]
+      ],
+      "pieces": [
+        {
+          "family": "convex-r004",
+          "profileId": "corner-7daf02f77db4",
+          "originM": [
+            0,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "corner-2d29d106ea4c",
+          "originM": [
+            2,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "corner-5b03c711aa8b",
+          "originM": [
+            2,
+            2
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "corner-0792c389209e",
+          "originM": [
+            0,
+            2
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "new",
+          "profileId": "exterior-t",
+          "originM": [
+            1,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-42c2fafec189",
+          "originM": [
+            0.25,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-42c2fafec189",
+          "originM": [
+            1.125,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-9f29a130438b",
+          "originM": [
+            2,
+            0.25
+          ],
+          "quarterTurns": 1
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-9f29a130438b",
+          "originM": [
+            0,
+            1.75
+          ],
+          "quarterTurns": 3
+        },
+        {
+          "family": "new",
+          "profileId": "exterior-t",
+          "originM": [
+            1,
+            2
+          ],
+          "quarterTurns": 2
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-42c2fafec189",
+          "originM": [
+            1.75,
+            2
+          ],
+          "quarterTurns": 2
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-42c2fafec189",
+          "originM": [
+            0.875,
+            2
+          ],
+          "quarterTurns": 2
+        },
+        {
+          "family": "new",
+          "profileId": "internal-span-1.25",
+          "originM": [
+            1,
+            0.375
+          ],
+          "quarterTurns": 1
+        }
+      ]
+    },
+    {
+      "id": "exterior-t-capped-branch-2m",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "floors": [
+        {
+          "id": "half-2x1",
+          "originM": [
+            0,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "id": "half-2x1",
+          "originM": [
+            0,
+            1
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "id": "half-2x1",
+          "originM": [
+            0,
+            2
+          ],
+          "quarterTurns": 0
+        }
+      ],
+      "internalReservationsM": [
+        [
+          [
+            0.875,
+            0
+          ],
+          [
+            1.125,
+            0
+          ],
+          [
+            1.125,
+            2
+          ],
+          [
+            0.875,
+            2
+          ]
+        ]
+      ],
+      "pieces": [
+        {
+          "family": "convex-r004",
+          "profileId": "corner-7daf02f77db4",
+          "originM": [
+            0,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "corner-2d29d106ea4c",
+          "originM": [
+            2,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "corner-5b03c711aa8b",
+          "originM": [
+            2,
+            3
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "corner-0792c389209e",
+          "originM": [
+            0,
+            3
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "new",
+          "profileId": "exterior-t",
+          "originM": [
+            1,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-42c2fafec189",
+          "originM": [
+            0.25,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-42c2fafec189",
+          "originM": [
+            1.125,
+            0
+          ],
+          "quarterTurns": 0
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-9f29a130438b",
+          "originM": [
+            2,
+            0.25
+          ],
+          "quarterTurns": 1
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-d2cbad71ff33",
+          "originM": [
+            2,
+            1.75
+          ],
+          "quarterTurns": 1
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-d2cbad71ff33",
+          "originM": [
+            2,
+            2.25
+          ],
+          "quarterTurns": 1
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-9f29a130438b",
+          "originM": [
+            0,
+            2.75
+          ],
+          "quarterTurns": 3
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-d2cbad71ff33",
+          "originM": [
+            0,
+            1.25
+          ],
+          "quarterTurns": 3
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-d2cbad71ff33",
+          "originM": [
+            0,
+            0.75
+          ],
+          "quarterTurns": 3
+        },
+        {
+          "family": "convex-r004",
+          "profileId": "span-9f29a130438b",
+          "originM": [
+            1.75,
+            3
+          ],
+          "quarterTurns": 2
+        },
+        {
+          "family": "new",
+          "profileId": "internal-span-1.5",
+          "originM": [
+            1,
+            0.375
+          ],
+          "quarterTurns": 1
+        },
+        {
+          "family": "internal-r000",
+          "profileId": "internal-end",
+          "originM": [
+            1,
+            2
+          ],
+          "quarterTurns": 3
+        }
+      ]
+    }
+  ],
+  "fixtureTransforms": {
+    "quarterTurns": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "reflectedAcrossX": [
+      false,
+      true
+    ],
+    "meaning": "Qualification fixtures only; no runtime capability is granted."
+  },
+  "requirements": [
+    "Preserve native r005/internal250 material roles and embedded normal/roughness texture payloads; editable Blender source is visual authority.",
+    "Contact patches are complete flush actual native surfaces at every height. Decorative recession is forbidden on contact patches.",
+    "All exported nodes/triangles/edges remain in reservation, including the concave notch. Source/export manifoldness and nondegenerate cap triangulation required.",
+    "Assembled projected occupancy equals exact fixed-floor inward band union the explicitly declared internal reservations. No duplicate positive-volume body, unsupported floor, or undeclared inset intrusion.",
+    "Rotate/mirror exact fixture placements; no scaling, floor-edge movement, hand nudges or tolerance increase. Existing pinned 1 micrometre export allowance remains.",
+    "Negative controls: 1mm translation gap and overlap, height mismatch, winding and socket-normal mismatch; identify offending piece/contact IDs.",
+    "Reject collapsed inset, point-touch floor union, overlapping cores, insufficient corner setback and unequal-height mate. General non-cardinal concave profiles remain unsupported.",
+    "Opaque individual and actual GLB assembled views; separate unqualified collision/seal/damage/support metadata; exact hashes, references, retained revision history; no publication or owner approval."
+  ]
+}

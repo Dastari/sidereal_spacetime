@@ -33,6 +33,11 @@ export async function loadEquipmentPrototypes(scene:Scene,assets:readonly PartAs
   for(const mesh of meshes)setMeshRole(mesh,categoryMeshRole(asset.category));
   result.set(asset.id,meshes);
  }
+ const retained = new Set([...result.values()].flat());
+ for (const library of libraries.values()) {
+  for (const mesh of library.meshes)
+   if (!retained.has(mesh) && !mesh.isDisposed() && mesh.getChildren().length === 0) mesh.dispose(true, false);
+ }
  return result;
 }
 export function equipmentPlacement(scene:Scene,parent:TransformNode,asset:PartAsset,placement:PartPlacement,sources:Mesh[]) {

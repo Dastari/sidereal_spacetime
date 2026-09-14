@@ -1,5 +1,6 @@
-import { deriveEnvelope } from "../packages/sim/src/ifcs";
-import { LAB_FLIGHT_ACTUATORS, LAB_FLIGHT_MASS, LAB_FLIGHT_SPEED } from "../packages/content/src/flight";
+import { toCenterOfMassMotion } from "../packages/sim/src/flight-frame";
+import { WAYFARER_FLIGHT_SPEED } from "../packages/content/src/physical-definitions";
+import { CURRENT_WAYFARER_STARTER } from "../packages/content/src/wayfarer-current-starter";
 import {
   acquireNativePilot,
   nextSequence,
@@ -62,6 +63,7 @@ async function client(token?: string) {
           tables.ownStations,
           tables.ownAuthoredFlights,
           tables.ownAuthoredFlightFittings,
+          tables.ownAuthoredFlightPhysics,
           tables.ownGameShipAccess,
           tables.ownConstructionLocation,
           tables.ownEditReceipts,
@@ -374,8 +376,10 @@ if (restore) {
       };
       for (let i = 0; i < 6; i++) await commandFlight(1, 1);
       const moving = [...flight.db.ownShips.iter()][0];
-      // Phase 1 preserves speed by limiting yaw to available lateral acceleration.
-      const turnLimit = deriveEnvelope(LAB_FLIGHT_ACTUATORS, LAB_FLIGHT_MASS).left / LAB_FLIGHT_SPEED.forward;
+      const physics = [...flight.db.ownAuthoredFlightPhysics.iter()].find(p=>p.shipId===moving.id)!;
+      assert.equal(physics.status,"ready","live physical compilation is ready");
+      const envelope = JSON.parse(physics.envelopeJson);
+      const turnLimit = Math.min(envelope.left,envelope.right) / WAYFARER_FLIGHT_SPEED.forward;
       assert(
         Math.hypot(moving.vx, moving.vy) > 0.5 && moving.omega > turnLimit * 0.5 && moving.omega <= turnLimit + 1e-6,
         "available engines accelerate and turn within the derived envelope",
@@ -410,12 +414,10 @@ if (restore) {
       const expired = [...flight.db.ownShips.iter()][0];
       await new Promise((r) => setTimeout(r, 300));
       const coast = [...flight.db.ownShips.iter()][0];
-      assert.equal(
-        coast.vx,
-        expired.vx,
-        "expired control cannot continue assisted thrust",
-      );
-      assert.equal(coast.vy, expired.vy, "expired control coasts");
+      const expiredCOM = toCenterOfMassMotion(expired, physics);
+      const coastCOM = toCenterOfMassMotion(coast, physics);
+      assert(Math.abs(coastCOM.vx-expiredCOM.vx)<1e-10, "expired control preserves COM velocity X");
+      assert(Math.abs(coastCOM.vy-expiredCOM.vy)<1e-10, "expired control preserves COM velocity Y");
       assert.equal(
         coast.omega,
         expired.omega,
@@ -652,7 +654,19 @@ if (restore) {
       ownActor().localY < 8.325,
       "central native doorway remains walkable",
     );
-    await walkNative(a, 2, 7.5);
+    const rebuilt =
+      [...a.db.ownGameShipAccess.iter()][0]?.templateSha256 ===
+      CURRENT_WAYFARER_STARTER.sha256;
+    if (rebuilt) {
+      await walkFor(1, 0, 1100);
+      assert(
+        ownActor().localX > 1.65 && ownActor().localX < 1.75,
+        "new corridor wall blocks crew at its inward face",
+      );
+      await walkNative(a, 0, 7.5);
+      await walkNative(a, 0, 7);
+      await walkNative(a, 2.6, 7);
+    } else await walkNative(a, 2, 7.5);
     await walkFor(0, -1, 1500);
     summary.authoritative_native_bow_collision = true;
     const atWall = [...a.db.ownCharacters.iter()][0];
@@ -661,8 +675,10 @@ if (restore) {
       "crew reached the room partition",
     );
     assert(
-      atWall.localY >= 5.65 && atWall.localY < 5.9,
-      "authority stops crew at the visible bulkhead",
+      rebuilt
+        ? Math.abs(atWall.localY - (5.25 + 0.3)) < 0.01
+        : atWall.localY >= 5.65 && atWall.localY < 5.9,
+      `authority stops crew at the visible bulkhead: ${atWall.localX},${atWall.localY}`,
     );
     summary.authoritative_room_collision = true;
     const inventoryClient = await client();

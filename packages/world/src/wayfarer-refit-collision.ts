@@ -1,3 +1,4 @@
+import { WAYFARER_REBUILD_SHA256 } from "../../sim/src/wayfarer-rebuild-contract";
 import { requireQualifiedPreservedFuelMount } from "@sidereal/sim/wayfarer-refit-mount";
 import type { DeckCollisionFrame } from "@sidereal/sim/construction-collision";
 import { REFIT_FUEL_ATTACHMENT } from "@sidereal/sim/wayfarer-refit-audit";
@@ -15,7 +16,7 @@ export function addWayfarerRefitCollision(
     ...ctx.db.wayfarerRefitAttachment.by_instance.filter(instance.id),
   ].filter((a) => a.deckId === deckId);
   if (!rows.length) return frame;
-  if (rows.length !== 1 || instance.revision !== 1n)
+  if (rows.length !== 1 || ![1n, 2n].includes(instance.revision))
     throw Error("Refit attachment qualification changed");
   const a = rows[0]!,
     source = ctx.db.constructionInstance.id.find(instance.id),
@@ -23,7 +24,13 @@ export function addWayfarerRefitCollision(
     container = ctx.db.inventoryContainer.id.find(a.containerId);
   if (
     !source ||
-    source.blueprintSha256 !== WAYFARER_STARTER.sha256 ||
+    source.revision !== instance.revision ||
+    !(
+      (source.blueprintSha256 === WAYFARER_STARTER.sha256 &&
+        instance.revision === 1n) ||
+      (source.blueprintSha256 === WAYFARER_REBUILD_SHA256 &&
+        [1n, 2n].includes(instance.revision))
+    ) ||
     a.assetId !== REFIT_FUEL_ATTACHMENT.assetId ||
     a.assetSha256 !== REFIT_FUEL_ATTACHMENT.glbSha256 ||
     a.x !== -3 ||

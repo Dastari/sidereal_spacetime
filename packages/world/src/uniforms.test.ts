@@ -57,6 +57,7 @@ test("uniform migration fills the original four containers once, retaining cargo
     receipt: { characterId: string; version: number } | undefined,
     state = { characterId: "actor", revision: 12n, kitGranted: true };
   const db = {
+    constructionFlightBinding: {shipId:{find:()=>undefined}},
     ...inventoryMetadataTestTables(),
     character: { id: { find: () => ({ id: "actor", shipId: "ship" }) } },
     characterUniformIssue: {

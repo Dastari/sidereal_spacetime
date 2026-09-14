@@ -1,3 +1,4 @@
+import { commitFlightCharacter } from "./construction-flight-dirty";
 import {
   constructionInteractionView,
   interactWithConstructionObject,
@@ -68,12 +69,12 @@ export function leaveCouch(
       revision: object.revision + 1n,
     });
   if (actor && definition)
-    ctx.db.character.id.update({
+    commitFlightCharacter(ctx, {
       ...actor,
       localX: definition.approachX,
       localY: definition.approachY,
       sprinting: false,
-    });
+    }, row => ctx.db.character.id.update(row));
   clearInteractionInput(ctx, characterId);
 }
 export const interactionProjection = t.row("VisibleInteraction", {
@@ -186,21 +187,21 @@ export function interact(
     if (helm?.occupantId === actor.id)
       ctx.db.station.id.update({ ...helm, occupantId: undefined });
     ctx.db.couchSeat.insert({ characterId: actor.id, objectId: object.id });
-    ctx.db.character.id.update({
+    commitFlightCharacter(ctx, {
       ...actor,
       localX: d.seatX,
       localY: d.seatY,
       sprinting: false,
-    });
+    }, row => ctx.db.character.id.update(row));
     clearInteractionInput(ctx, actor.id);
   } else if (args.action === "stand") {
     ctx.db.couchSeat.characterId.delete(actor.id);
-    ctx.db.character.id.update({
+    commitFlightCharacter(ctx, {
       ...actor,
       localX: d.approachX,
       localY: d.approachY,
       sprinting: false,
-    });
+    }, row => ctx.db.character.id.update(row));
     clearInteractionInput(ctx, actor.id);
   }
   ctx.db.interactionObject.id.update({
