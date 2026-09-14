@@ -1,5 +1,14 @@
 import { expect, it, vi } from "vitest";
 import { createIntentTransmitter } from "./intent-transmitter";
+import {
+  solveFlight,
+  pilotDesiredMotion,
+} from "../../../packages/sim/src/ifcs";
+import {
+  LAB_FLIGHT_MASS,
+  LAB_FLIGHT_ACTUATORS,
+  LAB_FLIGHT_PROFILE,
+} from "../../../packages/content/src/flight";
 const idle = { throttle: 0, turn: 0, dx: 0, dy: 0, sprint: false };
 const walk = { ...idle, dx: 1 };
 const flush = async () => {
@@ -11,11 +20,18 @@ const flush = async () => {
 function setup(send = vi.fn(async (_target: object) => {})) {
   let now = 0;
   const error = vi.fn();
-  const tx = createIntentTransmitter({ now: () => now, send, onError: error });
+  const stalled = vi.fn();
+  const tx = createIntentTransmitter({
+    now: () => now,
+    send,
+    onError: error,
+    onStalled: stalled,
+  });
   return {
     tx,
     send,
     error,
+    stalled,
     at: (n: number) => {
       now = n;
     },
@@ -68,7 +84,7 @@ it("sends a fresh snapshot for a replacement socket and bounds in-flight work", 
   f.tx.offer(a, idle);
   await flush();
   f.at(999);
-  expect(f.tx.offer(a, walk)).toBe(false);
+  expect(f.tx.offer(a, walk)).toBe(true);
   complete();
   await flush();
   expect(f.tx.offer(b, idle)).toBe(true);
@@ -123,21 +139,101 @@ it("replaces an old socket with an indefinitely pending send and ignores its lat
   expect(send).toHaveBeenCalledTimes(3);
   f.tx.dispose();
 });
-it("bounds an unacknowledged same-socket send and suppresses deferred work after disposal", async () => {
+it("keeps held controls and releases flowing before earlier acknowledgements", async () => {
   const c = {},
     send = vi.fn(() => new Promise<void>(() => {})),
     f = setup(send);
+  f.tx.offer(c, walk);
+  await flush();
+  f.at(100);
   expect(f.tx.offer(c, walk)).toBe(true);
   await flush();
-  f.at(999);
-  expect(f.tx.offer(c, idle)).toBe(false);
-  f.at(1000);
+  f.at(110);
   expect(f.tx.offer(c, idle)).toBe(true);
   await flush();
-  expect(send).toHaveBeenCalledTimes(2);
-  f.at(2000);
-  expect(f.tx.offer(c, walk)).toBe(true);
+  expect(send).toHaveBeenLastCalledWith(c, idle);
+  f.at(200);
+  f.tx.offer(c, walk);
   f.tx.dispose();
   await flush();
-  expect(send).toHaveBeenCalledTimes(2);
+  expect(send).toHaveBeenCalledTimes(3);
+});
+
+it("bounds stalled requests and asks for a replacement socket once", async () => {
+  const c = {},
+    send = vi.fn(() => new Promise<void>(() => {})),
+    f = setup(send);
+  for (let n = 0; n < 40; n++) {
+    f.at(n * 100);
+    f.tx.offer(c, idle, true);
+    await flush();
+  }
+  expect(send).toHaveBeenCalledTimes(32);
+  expect(f.stalled).toHaveBeenCalledExactlyOnceWith(c);
+  expect(f.tx.offer({}, idle, true)).toBe(true);
+  await flush();
+  expect(send).toHaveBeenCalledTimes(33);
+});
+
+it("keeps IFCS enabled through released-input braking, even with delayed ACKs", async () => {
+  let now = 0,
+    lastInput = -Infinity;
+  const c = {},
+    intent = { ...idle, throttle: 1 };
+  const tx = createIntentTransmitter({
+    now: () => now,
+    send: async () => {
+      lastInput = now;
+      // The server accepts input immediately; the response can be delayed.
+      await new Promise<void>(() => {});
+    },
+    onError: vi.fn(),
+    onStalled: vi.fn(),
+  });
+  let motion = { x: 0, y: 0, vx: 0, vy: 10, heading: 0, omega: 0 };
+  for (now = 0; now <= 2200; now += 50) {
+    tx.offer(c, now < 200 ? intent : idle, true);
+    await flush();
+    expect(now - lastInput).toBeLessThan(300);
+    if (now >= 200) {
+      const before = motion.vy;
+      for (let step = 0; step < 3; step++) {
+        motion = solveFlight(
+          motion,
+          pilotDesiredMotion(motion, idle, 30, 12, 0.65),
+          LAB_FLIGHT_MASS,
+          LAB_FLIGHT_ACTUATORS,
+          now - lastInput < 300,
+          LAB_FLIGHT_PROFILE,
+        ).motion;
+      }
+      expect(motion.vy).toBeLessThan(before);
+    }
+  }
+  tx.dispose();
+});
+
+it("ignores an older failure after newer input has been accepted", async () => {
+  let reject!: (e: unknown) => void;
+  const send = vi
+    .fn()
+    .mockImplementationOnce(
+      () =>
+        new Promise<void>((_, r) => {
+          reject = r;
+        }),
+    )
+    .mockResolvedValue(undefined);
+  const f = setup(send),
+    c = {};
+  f.tx.offer(c, walk);
+  await flush();
+  f.at(100);
+  f.tx.offer(c, idle, true);
+  await flush();
+  reject(Error("old request"));
+  await flush();
+  expect(f.error).not.toHaveBeenCalled();
+  f.at(200);
+  expect(f.tx.offer(c, idle, true)).toBe(true);
 });

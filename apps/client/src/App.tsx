@@ -1196,6 +1196,7 @@ export default function App({
         });
       },
       onError: (e) => setError(String(e)),
+      onStalled: (c) => c.disconnect(),
     });
     const send = () => {
       const c = connection.current,
@@ -1219,13 +1220,17 @@ export default function App({
         intent.horizontal,
         intent.vertical,
       ) ?? { dx: 0, dy: 0 };
-      transmitter.offer(c, {
-        throttle: intent.throttle,
-        turn: intent.turn,
-        dx: walk.dx,
-        dy: walk.dy,
-        sprint: intent.sprint,
-      });
+      transmitter.offer(
+        c,
+        {
+          throttle: intent.throttle,
+          turn: intent.turn,
+          dx: walk.dx,
+          dy: walk.dy,
+          sprint: intent.sprint,
+        },
+        seated,
+      );
     };
     const down = (e: KeyboardEvent) => {
       if (

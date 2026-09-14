@@ -13,72 +13,74 @@ const same = (a: MovementIntent, b: MovementIntent) =>
   a.sprint === b.sprint;
 const moving = (a: MovementIntent) =>
   a.throttle !== 0 || a.turn !== 0 || a.dx !== 0 || a.dy !== 0;
-/** Coalesce unchanged controls, not authority. Sequence/lease ownership belongs
- * to the authenticated reducer adapter. Active intent expires after 300ms on
- * the server, so retain 100ms moving heartbeats; idle needs only 1s keepalive. */
+/** Sequence/lease ownership belongs to the authenticated reducer adapter.
+ * Piloting needs fresh zero-input commands too: zero demand asks IFCS to brake.
+ * Acknowledgements must not serialize the 100ms heartbeat or key releases. */
 export function createIntentTransmitter<T extends object>(options: {
   now: () => number;
   send: (connection: T, intent: MovementIntent) => Promise<unknown>;
   onError: (error: unknown) => void;
+  onStalled: (connection: T) => void;
 }) {
-  let previous:
-    { connection: T; intent: MovementIntent; at: number } | undefined;
-  let pending:
-    { connection: T; intent: MovementIntent; at: number } | undefined;
+  type Attempt = { intent: MovementIntent; at: number };
+  let previous: Attempt | undefined;
+  let pending = new Set<Attempt>();
   let currentConnection: T | undefined;
   let failedUntil = 0;
+  let stalled = false;
   let disposed = false;
   return {
-    offer(connection: T, intent: MovementIntent) {
+    offer(connection: T, intent: MovementIntent, piloting = false) {
       if (disposed) return false;
       const now = options.now();
       if (currentConnection !== connection) {
         currentConnection = connection;
         previous = undefined;
-        pending = undefined;
+        pending = new Set();
         failedUntil = 0;
+        stalled = false;
       }
-      if (pending) {
-        if (now - pending.at < 1000) return false;
-        // Bound an uncertain acknowledgement, not the server request. Newer
-        // connection-local sequences make a late older packet harmless.
-        pending = undefined;
-        previous = undefined;
-      }
-      if (now < failedUntil) return false;
-      const heartbeat = moving(intent) ? 100 : 1000;
+      if (stalled || now < failedUntil) return false;
+      const heartbeat = piloting || moving(intent) ? 100 : 1000;
       if (
         previous &&
         same(previous.intent, intent) &&
         now - previous.at < heartbeat
       )
         return false;
-      const attempt = { connection, intent: { ...intent }, at: now };
-      pending = attempt;
-      previous = { ...attempt, at: now };
-      // Capture synchronous reducer adapter failures too.
+      // Bound SDK requests if the socket stops acknowledging. Reconnect instead
+      // of dropping the queue and accumulating another batch on the same socket.
+      if (pending.size >= 32) {
+        stalled = true;
+        options.onStalled(connection);
+        return false;
+      }
+      const attempt = { intent: { ...intent }, at: now };
+      const batch = pending;
+      batch.add(attempt);
+      previous = attempt;
       Promise.resolve()
         .then(() => {
-          if (disposed || pending !== attempt) return;
+          if (disposed || pending !== batch) return;
           return options.send(connection, attempt.intent);
         })
         .then(
           () => {
-            if (pending === attempt) pending = undefined;
+            batch.delete(attempt);
           },
           (error) => {
-            if (pending !== attempt) return;
-            pending = undefined;
+            batch.delete(attempt);
+            if (disposed || pending !== batch || previous !== attempt) return;
             previous = undefined;
             failedUntil = options.now() + 1000;
-            if (!disposed) options.onError(error);
+            options.onError(error);
           },
         );
       return true;
     },
     dispose() {
       disposed = true;
-      pending = undefined;
+      pending.clear();
     },
   };
 }
