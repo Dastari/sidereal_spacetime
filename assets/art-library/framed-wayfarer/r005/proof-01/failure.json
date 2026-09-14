@@ -1,0 +1,5 @@
+{
+  "state": "preserved-render-failure",
+  "reason": "Installed Blender lacks OpenImageDenoise support. Geometry exported; first render aborted before writing any image. Subsequent attempts disable denoising.",
+  "renderSourceSnapshot": "The failed renderer script was not separately archived; render.log retains the actual failure."
+}

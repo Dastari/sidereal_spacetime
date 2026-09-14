@@ -1,0 +1,190 @@
+[
+  {
+    "name": "joined-bay",
+    "assembly": "joined-bay",
+    "path": "renders/joined-bay.png",
+    "sha256": "1e7044763eaf3c2b3ee8fc05c49a5ed113d944d1103bb3d0f82b2dc23a2d0473",
+    "mode": "all",
+    "explosionOutwardM": 0,
+    "manifestSha256": "66542b6a404db51e4010574c85f4609dd58edeb52038e06f840a9bf589762732",
+    "sourceSha256": "1207f7eca4cede4baf0ea10927b622c3f455a105e1e40437c3dcb22a91ecffb9",
+    "modelGlbHashes": {
+      "armor-block-f94c0ba2aa04f31fb6a5": "2ba52942620ef7c806c2e76d55a89b7dc71aca27663b043bfc2beea940b67426",
+      "armor-block-7c657ee01a90318dec3e": "e9656cd1356aed6540eda3373fe494e6b9b2af49f9cc51253fc578177ed5fea7",
+      "armor-block-fe79dfaf2e1542dbd67c": "13cc7fa682a277646163ae4699ec4a430f882b337c636909b9c764c5952d69fb"
+    },
+    "cameraPosition": [
+      10.0,
+      -10.399999618530273,
+      7.5
+    ],
+    "cameraTarget": [
+      3.0,
+      -0.4000000059604645,
+      1.5
+    ],
+    "orthographicScaleM": 8,
+    "viewport": [
+      1200,
+      900
+    ],
+    "renderer": "Blender 4.3.2 Cycles CPU 64 samples no denoising AgX medium-high",
+    "scope": "Fresh exact GLB imports. Gray 250mm datum in section views is evidence-only and not an exported kit part."
+  },
+  {
+    "name": "solid-section",
+    "assembly": "solid-section",
+    "path": "renders/solid-section.png",
+    "sha256": "d989662403bd9ad544fcba326d1d360489c3e2c9548e2c70dc8e899414982ec1",
+    "mode": "backing",
+    "explosionOutwardM": 0,
+    "manifestSha256": "66542b6a404db51e4010574c85f4609dd58edeb52038e06f840a9bf589762732",
+    "sourceSha256": "1207f7eca4cede4baf0ea10927b622c3f455a105e1e40437c3dcb22a91ecffb9",
+    "modelGlbHashes": {
+      "armor-block-f94c0ba2aa04f31fb6a5": "2ba52942620ef7c806c2e76d55a89b7dc71aca27663b043bfc2beea940b67426"
+    },
+    "cameraPosition": [
+      6.0,
+      -7.400000095367432,
+      6.5
+    ],
+    "cameraTarget": [
+      1.0,
+      -0.4000000059604645,
+      1.5
+    ],
+    "orthographicScaleM": 4.8,
+    "viewport": [
+      1200,
+      900
+    ],
+    "renderer": "Blender 4.3.2 Cycles CPU 64 samples no denoising AgX medium-high",
+    "scope": "Fresh exact GLB imports. Gray 250mm datum in section views is evidence-only and not an exported kit part."
+  },
+  {
+    "name": "exploded-section",
+    "assembly": "solid-section",
+    "path": "renders/exploded-section.png",
+    "sha256": "6c312c6fd283c187947daf995b3f77184a7a859e89515a71d5d586b6d04524ef",
+    "mode": "explode",
+    "explosionOutwardM": 1.2,
+    "manifestSha256": "66542b6a404db51e4010574c85f4609dd58edeb52038e06f840a9bf589762732",
+    "sourceSha256": "1207f7eca4cede4baf0ea10927b622c3f455a105e1e40437c3dcb22a91ecffb9",
+    "modelGlbHashes": {
+      "armor-block-f94c0ba2aa04f31fb6a5": "2ba52942620ef7c806c2e76d55a89b7dc71aca27663b043bfc2beea940b67426"
+    },
+    "cameraPosition": [
+      6.0,
+      -9.0,
+      6.5
+    ],
+    "cameraTarget": [
+      1.0,
+      -1.0,
+      1.5
+    ],
+    "orthographicScaleM": 6.4,
+    "viewport": [
+      1200,
+      900
+    ],
+    "renderer": "Blender 4.3.2 Cycles CPU 64 samples no denoising AgX medium-high",
+    "scope": "Fresh exact GLB imports. Gray 250mm datum in section views is evidence-only and not an exported kit part."
+  },
+  {
+    "name": "convex-45-half-height",
+    "assembly": "convex-45-half-height",
+    "path": "renders/convex-45-half-height.png",
+    "sha256": "e6cdac0a73d5183d67f2b655ea0fbce8f54d1b200330b36a08c5c84ab613189a",
+    "mode": "all",
+    "explosionOutwardM": 0,
+    "manifestSha256": "66542b6a404db51e4010574c85f4609dd58edeb52038e06f840a9bf589762732",
+    "sourceSha256": "1207f7eca4cede4baf0ea10927b622c3f455a105e1e40437c3dcb22a91ecffb9",
+    "modelGlbHashes": {
+      "armor-block-9ca59f6db637d3afceb9": "8c213705f103b08179133df8f39df343432cae708d840deb62a47072f5195e28",
+      "armor-block-70b34597548b284a0a7f": "57becd882be8eb22314f87b6e8d72e3dcfad9c891723ab4935c43aad0b32f671",
+      "armor-block-cd2f17ea0cf58cb60b7f": "696e3666a46866af6bac674279b73be7736ec4321671e0b826a56b5282df60ca"
+    },
+    "cameraPosition": [
+      4.0,
+      -9.149999618530273,
+      7.800000190734863
+    ],
+    "cameraTarget": [
+      0.0,
+      -0.15000000596046448,
+      0.800000011920929
+    ],
+    "orthographicScaleM": 6.7,
+    "viewport": [
+      1200,
+      900
+    ],
+    "renderer": "Blender 4.3.2 Cycles CPU 64 samples no denoising AgX medium-high",
+    "scope": "Fresh exact GLB imports. Gray 250mm datum in section views is evidence-only and not an exported kit part."
+  },
+  {
+    "name": "concave-90",
+    "assembly": "concave-90",
+    "path": "renders/concave-90.png",
+    "sha256": "927dde9d30c34974cc2bdff63a7d630bdaae39b8a1e176f9e1060e17c67975f0",
+    "mode": "all",
+    "explosionOutwardM": 0,
+    "manifestSha256": "66542b6a404db51e4010574c85f4609dd58edeb52038e06f840a9bf589762732",
+    "sourceSha256": "1207f7eca4cede4baf0ea10927b622c3f455a105e1e40437c3dcb22a91ecffb9",
+    "modelGlbHashes": {
+      "armor-block-f94c0ba2aa04f31fb6a5": "2ba52942620ef7c806c2e76d55a89b7dc71aca27663b043bfc2beea940b67426",
+      "armor-block-1676c64748013f376c0a": "7a5fa77f6ec3de7fe463813d996361d3ed420b636aee5fcb0ce963dd5d4a0450",
+      "armor-block-fe79dfaf2e1542dbd67c": "13cc7fa682a277646163ae4699ec4a430f882b337c636909b9c764c5952d69fb"
+    },
+    "cameraPosition": [
+      -8.100000381469727,
+      -9.100000381469727,
+      10.5
+    ],
+    "cameraTarget": [
+      -1.100000023841858,
+      -1.100000023841858,
+      1.5
+    ],
+    "orthographicScaleM": 7,
+    "viewport": [
+      1200,
+      900
+    ],
+    "renderer": "Blender 4.3.2 Cycles CPU 64 samples no denoising AgX medium-high",
+    "scope": "Fresh exact GLB imports. Gray 250mm datum in section views is evidence-only and not an exported kit part."
+  },
+  {
+    "name": "concave-90-top",
+    "assembly": "concave-90",
+    "path": "renders/concave-90-top.png",
+    "sha256": "35c3a0b0f825af205f9d7085b24b0ad7f5b9580ab81ccd599cedc9e026cc2af8",
+    "mode": "all",
+    "explosionOutwardM": 0,
+    "manifestSha256": "66542b6a404db51e4010574c85f4609dd58edeb52038e06f840a9bf589762732",
+    "sourceSha256": "1207f7eca4cede4baf0ea10927b622c3f455a105e1e40437c3dcb22a91ecffb9",
+    "modelGlbHashes": {
+      "armor-block-f94c0ba2aa04f31fb6a5": "2ba52942620ef7c806c2e76d55a89b7dc71aca27663b043bfc2beea940b67426",
+      "armor-block-1676c64748013f376c0a": "7a5fa77f6ec3de7fe463813d996361d3ed420b636aee5fcb0ce963dd5d4a0450",
+      "armor-block-fe79dfaf2e1542dbd67c": "13cc7fa682a277646163ae4699ec4a430f882b337c636909b9c764c5952d69fb"
+    },
+    "cameraPosition": [
+      -1.100000023841858,
+      -1.100000023841858,
+      13.5
+    ],
+    "cameraTarget": [
+      -1.100000023841858,
+      -1.100000023841858,
+      1.5
+    ],
+    "orthographicScaleM": 6,
+    "viewport": [
+      1200,
+      900
+    ],
+    "renderer": "Blender 4.3.2 Cycles CPU 64 samples no denoising AgX medium-high",
+    "scope": "Fresh exact GLB imports. Gray 250mm datum in section views is evidence-only and not an exported kit part."
+  }
+]

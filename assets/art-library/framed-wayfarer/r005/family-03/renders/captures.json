@@ -1,0 +1,591 @@
+[
+  {
+    "name": "joined-bay",
+    "assembly": "joined-bay",
+    "path": "renders/joined-bay.png",
+    "sha256": "9a7b8ed10e1fad83ebcc291bf6f714c4f2f5b3559a8e21f87a0b4d8e861ec32c",
+    "mode": "all",
+    "explosionOutwardM": 0,
+    "manifestSha256": "2e199dba85fe112fd3249c1837cf73c581939ef327aaaf517b47c8d9e25eede9",
+    "sourceSha256": "f0f381f1f9b38a8b19cb6a91226aafbff082e678e9471b607c0823c15fdbf2ec",
+    "modelGlbHashes": {
+      "armor-block-f94c0ba2aa04f31fb6a5": "bdbeca38f54429ee4b19f1540688735e142bb5f3b139f7784fc646bf6a11ab61",
+      "armor-block-7c657ee01a90318dec3e": "1aabbc710053000f347921a78da9504da021b26e92e5d6a93cb18955020f96e7",
+      "armor-block-fe79dfaf2e1542dbd67c": "85155d244f0daebe3be3436d5df25f8da0d5237e5b2db2c270ea93afe559b427"
+    },
+    "cameraPosition": [
+      10.0,
+      -10.399999618530273,
+      7.5
+    ],
+    "cameraTarget": [
+      3.0,
+      -0.4000000059604645,
+      1.5
+    ],
+    "orthographicScaleM": 8,
+    "viewport": [
+      1200,
+      900
+    ],
+    "renderer": "Blender 4.3.2 Cycles CPU 64 samples no denoising AgX medium-high",
+    "scope": "Fresh exact GLB imports. Gray 250mm datum in section views is evidence-only and not an exported kit part."
+  },
+  {
+    "name": "solid-section",
+    "assembly": "solid-section",
+    "path": "renders/solid-section.png",
+    "sha256": "ccaf1cd736d8796b4051d04b1860d0f85fe71f4d3c18d1bfbc0f2b18ae6d199b",
+    "mode": "backing",
+    "explosionOutwardM": 0,
+    "manifestSha256": "2e199dba85fe112fd3249c1837cf73c581939ef327aaaf517b47c8d9e25eede9",
+    "sourceSha256": "f0f381f1f9b38a8b19cb6a91226aafbff082e678e9471b607c0823c15fdbf2ec",
+    "modelGlbHashes": {
+      "armor-block-f94c0ba2aa04f31fb6a5": "bdbeca38f54429ee4b19f1540688735e142bb5f3b139f7784fc646bf6a11ab61"
+    },
+    "cameraPosition": [
+      6.0,
+      -7.400000095367432,
+      6.5
+    ],
+    "cameraTarget": [
+      1.0,
+      -0.4000000059604645,
+      1.5
+    ],
+    "orthographicScaleM": 4.8,
+    "viewport": [
+      1200,
+      900
+    ],
+    "renderer": "Blender 4.3.2 Cycles CPU 64 samples no denoising AgX medium-high",
+    "scope": "Fresh exact GLB imports. Gray 250mm datum in section views is evidence-only and not an exported kit part."
+  },
+  {
+    "name": "exploded-section",
+    "assembly": "solid-section",
+    "path": "renders/exploded-section.png",
+    "sha256": "05fe4d6cb8d7227522484b4eb738cbbd558663982b53e2f895bd1e9e12b19958",
+    "mode": "explode",
+    "explosionOutwardM": 1.2,
+    "manifestSha256": "2e199dba85fe112fd3249c1837cf73c581939ef327aaaf517b47c8d9e25eede9",
+    "sourceSha256": "f0f381f1f9b38a8b19cb6a91226aafbff082e678e9471b607c0823c15fdbf2ec",
+    "modelGlbHashes": {
+      "armor-block-f94c0ba2aa04f31fb6a5": "bdbeca38f54429ee4b19f1540688735e142bb5f3b139f7784fc646bf6a11ab61"
+    },
+    "cameraPosition": [
+      6.0,
+      -9.0,
+      6.5
+    ],
+    "cameraTarget": [
+      1.0,
+      -1.0,
+      1.5
+    ],
+    "orthographicScaleM": 6.4,
+    "viewport": [
+      1200,
+      900
+    ],
+    "renderer": "Blender 4.3.2 Cycles CPU 64 samples no denoising AgX medium-high",
+    "scope": "Fresh exact GLB imports. Gray 250mm datum in section views is evidence-only and not an exported kit part."
+  },
+  {
+    "name": "convex-45-half-height",
+    "assembly": "convex-45-half-height",
+    "path": "renders/convex-45-half-height.png",
+    "sha256": "d1fc45275d88dff62ab792a432192b351a136cfaa765df772c8ba9301d91ae48",
+    "mode": "all",
+    "explosionOutwardM": 0,
+    "manifestSha256": "2e199dba85fe112fd3249c1837cf73c581939ef327aaaf517b47c8d9e25eede9",
+    "sourceSha256": "f0f381f1f9b38a8b19cb6a91226aafbff082e678e9471b607c0823c15fdbf2ec",
+    "modelGlbHashes": {
+      "armor-block-9ca59f6db637d3afceb9": "d51805b2e04641a51b59f2e32c5d85f3468bcb86e5bc668cb7f0903d7600a8f8",
+      "armor-block-70b34597548b284a0a7f": "9754a614faf93ab09604a427911cede60f2962869e4459aeff0ccc82fab9c5bf",
+      "armor-block-cd2f17ea0cf58cb60b7f": "a17f14b5c4fe4a5524b473853def27da9dd26ce1ce4edb5f90330dfb053755f7"
+    },
+    "cameraPosition": [
+      4.0,
+      -9.149999618530273,
+      7.800000190734863
+    ],
+    "cameraTarget": [
+      0.0,
+      -0.15000000596046448,
+      0.800000011920929
+    ],
+    "orthographicScaleM": 6.7,
+    "viewport": [
+      1200,
+      900
+    ],
+    "renderer": "Blender 4.3.2 Cycles CPU 64 samples no denoising AgX medium-high",
+    "scope": "Fresh exact GLB imports. Gray 250mm datum in section views is evidence-only and not an exported kit part."
+  },
+  {
+    "name": "concave-90",
+    "assembly": "concave-90",
+    "path": "renders/concave-90.png",
+    "sha256": "25cff8a205e01d77d8d7bd6b1546cf8f22c1193441e7eb601f4f2f0f8dbd5f5a",
+    "mode": "all",
+    "explosionOutwardM": 0,
+    "manifestSha256": "2e199dba85fe112fd3249c1837cf73c581939ef327aaaf517b47c8d9e25eede9",
+    "sourceSha256": "f0f381f1f9b38a8b19cb6a91226aafbff082e678e9471b607c0823c15fdbf2ec",
+    "modelGlbHashes": {
+      "armor-block-f94c0ba2aa04f31fb6a5": "bdbeca38f54429ee4b19f1540688735e142bb5f3b139f7784fc646bf6a11ab61",
+      "armor-block-1676c64748013f376c0a": "2e99a52ae1cbce3e023a584df2f834068c1e424d1f9aefc6ae352ab564097419",
+      "armor-block-fe79dfaf2e1542dbd67c": "85155d244f0daebe3be3436d5df25f8da0d5237e5b2db2c270ea93afe559b427"
+    },
+    "cameraPosition": [
+      -8.100000381469727,
+      -9.100000381469727,
+      10.5
+    ],
+    "cameraTarget": [
+      -1.100000023841858,
+      -1.100000023841858,
+      1.5
+    ],
+    "orthographicScaleM": 7,
+    "viewport": [
+      1200,
+      900
+    ],
+    "renderer": "Blender 4.3.2 Cycles CPU 64 samples no denoising AgX medium-high",
+    "scope": "Fresh exact GLB imports. Gray 250mm datum in section views is evidence-only and not an exported kit part."
+  },
+  {
+    "name": "concave-90-top",
+    "assembly": "concave-90",
+    "path": "renders/concave-90-top.png",
+    "sha256": "15db8913db4cdb7844557ffe24f8a5012baec1025b5d2bb0a11f1a687d035005",
+    "mode": "all",
+    "explosionOutwardM": 0,
+    "manifestSha256": "2e199dba85fe112fd3249c1837cf73c581939ef327aaaf517b47c8d9e25eede9",
+    "sourceSha256": "f0f381f1f9b38a8b19cb6a91226aafbff082e678e9471b607c0823c15fdbf2ec",
+    "modelGlbHashes": {
+      "armor-block-f94c0ba2aa04f31fb6a5": "bdbeca38f54429ee4b19f1540688735e142bb5f3b139f7784fc646bf6a11ab61",
+      "armor-block-1676c64748013f376c0a": "2e99a52ae1cbce3e023a584df2f834068c1e424d1f9aefc6ae352ab564097419",
+      "armor-block-fe79dfaf2e1542dbd67c": "85155d244f0daebe3be3436d5df25f8da0d5237e5b2db2c270ea93afe559b427"
+    },
+    "cameraPosition": [
+      -1.100000023841858,
+      -1.100000023841858,
+      13.5
+    ],
+    "cameraTarget": [
+      -1.100000023841858,
+      -1.100000023841858,
+      1.5
+    ],
+    "orthographicScaleM": 6,
+    "viewport": [
+      1200,
+      900
+    ],
+    "renderer": "Blender 4.3.2 Cycles CPU 64 samples no denoising AgX medium-high",
+    "scope": "Fresh exact GLB imports. Gray 250mm datum in section views is evidence-only and not an exported kit part."
+  },
+  {
+    "name": "identity-single-bay",
+    "assembly": "identity-bay",
+    "path": "renders/identity-single-bay.png",
+    "sha256": "d93dff5ee64d9020b2b0570201084d0d9d3235117bed7e35bd543cc915ea7a4e",
+    "mode": "all",
+    "explosionOutwardM": 0,
+    "manifestSha256": "2e199dba85fe112fd3249c1837cf73c581939ef327aaaf517b47c8d9e25eede9",
+    "sourceSha256": "f0f381f1f9b38a8b19cb6a91226aafbff082e678e9471b607c0823c15fdbf2ec",
+    "modelGlbHashes": {
+      "armor-block-aabac0a89386b4aa9045": "fbfc29ce53c6b34de900f61217857b908f3ca559b8f1c6746485f2a7b2501aad"
+    },
+    "cameraPosition": [
+      4.0,
+      -8.399999618530273,
+      5.300000190734863
+    ],
+    "cameraTarget": [
+      1.0,
+      -0.4000000059604645,
+      1.5
+    ],
+    "orthographicScaleM": 5.2,
+    "viewport": [
+      1200,
+      900
+    ],
+    "renderer": "Blender 4.3.2 Cycles CPU 64 samples no denoising AgX medium-high",
+    "scope": "Fresh exact GLB imports. Gray 250mm datum in section views is evidence-only and not an exported kit part."
+  },
+  {
+    "name": "junction-registry",
+    "assembly": "junction-registry",
+    "path": "renders/junction-registry.png",
+    "sha256": "53935e478dece37d0cf2bb930e32862330f991453ab41ce803cb77755e4c4a6a",
+    "mode": "all",
+    "explosionOutwardM": 0,
+    "manifestSha256": "2e199dba85fe112fd3249c1837cf73c581939ef327aaaf517b47c8d9e25eede9",
+    "sourceSha256": "f0f381f1f9b38a8b19cb6a91226aafbff082e678e9471b607c0823c15fdbf2ec",
+    "modelGlbHashes": {
+      "armor-block-bb2e153a868e9214017f": "bc35ee6f219c49472acb0aa5e0fe05265fbc6c90d7a7ccc225cc6303dc4d994b",
+      "armor-block-b5debfc1efb6816ed06d": "6ef2619ee5239dadc58e0f4e2ffc08207bae511f801af5eae3aec6cf9b2c2939",
+      "armor-block-19cb454187f2b808d0f7": "1168b1c5dd1294f350eddb973194c39e60851fbbf9a35481f155d684f473f9a9",
+      "armor-block-8c601c2467812dda7c97": "412f8af1adffb0e86d3841bc135661f33ed05e2890e1a4f9c701f0d336b2b1cd",
+      "armor-block-04506299cdccdc3362d3": "28b9cc11a5c0cff8c69d8f12c437cb6dbab9e5066fface373e03f5b041a1b7c8",
+      "armor-block-b9889f7ac1379ef477d3": "2d96f3fd28de10a568cb284e3af2325e51cbb7cf489e46a2a6fc94311c2b38d2",
+      "armor-block-70b34597548b284a0a7f": "9754a614faf93ab09604a427911cede60f2962869e4459aeff0ccc82fab9c5bf",
+      "armor-block-e465b7594b2433a77396": "d26a2a368a83adba038d16b8ddf6b2a5baf483d889aa7edc8fe85b666503fa54",
+      "armor-block-c3e51deb6848ddb10001": "a12d2a4902bf6b3019cb989a0626d6b507e98c575c3c1fab9d8a4f1a99b41f94",
+      "armor-block-b8ebf4aa6991e098a6d3": "645ba6e0c5725195047a3e9a5b0fd4c3401e7229461181336751d5cd1afd0d07",
+      "armor-block-bdffe58423963910d02b": "53af335ff883ed0861be285c32427c3557a562858417d534dae40449a2d89aa6",
+      "armor-block-098c86a675e3e951ace9": "1069a591dcb77a69deff5b07f8b5ef80e9c3f4bf386dbab8fb1b3d042e397e8b",
+      "armor-block-0f4edf0963be28b7952b": "3d073515e4e266558fab53659027747c9de9379e594312b7f4c1edcd59849ad6",
+      "armor-block-eae57557166988330b70": "c164a5f615196d27a139507eb844c6afa051f576c75e3221dfcaee1a7b5b40bc",
+      "armor-block-54094cde041737badaf2": "6cd9a903549eec244aa687c1f4e720c35168de5c18e2f0f513ecb3b0ab65109f",
+      "armor-block-2cce8582f894eec65110": "0a2b346bf664ff7d596606ee6581086d2163f393d4e739efca54add2b7324788"
+    },
+    "cameraPosition": [
+      7.5,
+      3.0,
+      25.0
+    ],
+    "cameraTarget": [
+      7.5,
+      4.0,
+      0.0
+    ],
+    "orthographicScaleM": 23,
+    "viewport": [
+      1200,
+      900
+    ],
+    "renderer": "Blender 4.3.2 Cycles CPU 64 samples no denoising AgX medium-high",
+    "scope": "Fresh exact GLB imports. Gray 250mm datum in section views is evidence-only and not an exported kit part."
+  },
+  {
+    "name": "heights",
+    "assembly": "heights",
+    "path": "renders/heights.png",
+    "sha256": "6a461c4d6dd80d301bf5af734400b5a58c26d127529d5bad9d7e7e904fa28975",
+    "mode": "all",
+    "explosionOutwardM": 0,
+    "manifestSha256": "2e199dba85fe112fd3249c1837cf73c581939ef327aaaf517b47c8d9e25eede9",
+    "sourceSha256": "f0f381f1f9b38a8b19cb6a91226aafbff082e678e9471b607c0823c15fdbf2ec",
+    "modelGlbHashes": {
+      "armor-block-975ae6c56dd5c22ae720": "63b51fd45548edf9098549583666d8e404c69cbd34ee15f103d6fdf5f435e944",
+      "armor-block-9ca59f6db637d3afceb9": "d51805b2e04641a51b59f2e32c5d85f3468bcb86e5bc668cb7f0903d7600a8f8",
+      "armor-block-0609cba1e9e5472c20b6": "8dc18154c3887eabd93392270d648abec24ed6eaaa97600364fe4bb7bbc10e11",
+      "armor-block-fbbf224dbd286d805ac1": "e86623f6f2825a5c986d8bc354f1fc6512fd18e783dd55065f97cfc0eb9837bb"
+    },
+    "cameraPosition": [
+      13.0,
+      -14.399999618530273,
+      10.5
+    ],
+    "cameraTarget": [
+      6.0,
+      -0.4000000059604645,
+      1.5
+    ],
+    "orthographicScaleM": 16,
+    "viewport": [
+      1200,
+      900
+    ],
+    "renderer": "Blender 4.3.2 Cycles CPU 64 samples no denoising AgX medium-high",
+    "scope": "Fresh exact GLB imports. Gray 250mm datum in section views is evidence-only and not an exported kit part."
+  },
+  {
+    "name": "bulkheads",
+    "assembly": "bulkheads",
+    "path": "renders/bulkheads.png",
+    "sha256": "5f92d6004ef0a7748251d05d3e9f242dceaa3421d109ee6d1602f8a786be09e8",
+    "mode": "all",
+    "explosionOutwardM": 0,
+    "manifestSha256": "2e199dba85fe112fd3249c1837cf73c581939ef327aaaf517b47c8d9e25eede9",
+    "sourceSha256": "f0f381f1f9b38a8b19cb6a91226aafbff082e678e9471b607c0823c15fdbf2ec",
+    "modelGlbHashes": {
+      "armor-block-49384936da4b4c531fcc": "0b1f18bb5b4591c91ce9418ea37949fb707ace242b6e86939fcd6b84b8cc525c",
+      "armor-block-e8152b71edd21a544d55": "85b90d06cc95c0a69c92f11f067884524f0881149005089fca1f29f9568e6ce2",
+      "armor-block-c2da9d9d47c98c01ceb8": "111b8127c36ddf9c599e5f302493b59d83c9ff2a098987f04253f21a3894c72c",
+      "armor-block-e7a26fe3b6e058621d39": "568321160a3939212cf86059766ecb7fa822cc52bbd6184c6abd55aaf942d1a6"
+    },
+    "cameraPosition": [
+      9.0,
+      -12.149999618530273,
+      9.5
+    ],
+    "cameraTarget": [
+      4.0,
+      -0.15000000596046448,
+      1.5
+    ],
+    "orthographicScaleM": 12,
+    "viewport": [
+      1200,
+      900
+    ],
+    "renderer": "Blender 4.3.2 Cycles CPU 64 samples no denoising AgX medium-high",
+    "scope": "Fresh exact GLB imports. Gray 250mm datum in section views is evidence-only and not an exported kit part."
+  },
+  {
+    "name": "directions-32",
+    "assembly": "directions-32",
+    "path": "renders/directions-32.png",
+    "sha256": "7b0daa41b4298f24abe8320f71365b2e3ee1054844e02fc1863445a4e163822a",
+    "mode": "all",
+    "explosionOutwardM": 0,
+    "manifestSha256": "2e199dba85fe112fd3249c1837cf73c581939ef327aaaf517b47c8d9e25eede9",
+    "sourceSha256": "f0f381f1f9b38a8b19cb6a91226aafbff082e678e9471b607c0823c15fdbf2ec",
+    "modelGlbHashes": {
+      "armor-block-8233c1a3a948a91de0c7": "ec6e98a70ecefc4662b1704bdd5fbe46a1a6bd8ba11d7686a039b427fc5724d2",
+      "armor-block-a252a121923cfb248f94": "409ab5d055f4a85f5da56c3e1a4d31ab848a788124c80eabc70c2a440267fa7f",
+      "armor-block-981bd24736c640366791": "2bfb64f6b18e3bc6148cd41be3ef399d58a18f091650009e6139f1b0f90189ac",
+      "armor-block-7bcf58fae727b968e126": "23524214fd4b3ffb8eeb722e9359e5ff2a5de990f3c9500c6cbcbdb80fb15eb1",
+      "armor-block-825d61aeb52f08f61c14": "c099bfb2f02dad69b88edb47b8a843c24f0a2c340906f239412051f061fbded9"
+    },
+    "cameraPosition": [
+      14.0,
+      5.0,
+      40.0
+    ],
+    "cameraTarget": [
+      14.0,
+      6.0,
+      0.0
+    ],
+    "orthographicScaleM": 35,
+    "viewport": [
+      1200,
+      900
+    ],
+    "renderer": "Blender 4.3.2 Cycles CPU 64 samples no denoising AgX medium-high",
+    "scope": "Fresh exact GLB imports. Gray 250mm datum in section views is evidence-only and not an exported kit part."
+  },
+  {
+    "name": "wayfarer-kit",
+    "assembly": "wayfarer",
+    "path": "renders/wayfarer-kit.png",
+    "sha256": "347aa35bcf068b6ca0611092ad412ea00c86cae3ec6749b1277521fc263d14b3",
+    "mode": "all",
+    "explosionOutwardM": 0,
+    "manifestSha256": "2e199dba85fe112fd3249c1837cf73c581939ef327aaaf517b47c8d9e25eede9",
+    "sourceSha256": "f0f381f1f9b38a8b19cb6a91226aafbff082e678e9471b607c0823c15fdbf2ec",
+    "modelGlbHashes": {
+      "armor-block-a6743a347ee2fcdd1ce9": "88dbb2bc40befebf3e594223b87e2d694760bb97b347b4a4adfe8fc6f4a2beb1",
+      "armor-block-62ad930c45227d5287a0": "d748d4ef860aa1b6a0f740fafb9fec765e6ce3403fd7588319d7734d323b72cf",
+      "armor-block-e1affbf19f4b7fa30311": "9df58316dbbf219742c5bd1402a737142d43ff206efeee9454a8456ed6e0a291",
+      "armor-block-926961217b49c21a526b": "b6f771368eab10b945be078fa2e89247234fdfb46113263b823bb2f6ca0ebe35",
+      "armor-block-137adc2153a878094d60": "ccdc65db60ed6b39553cea197fa3deaa519e12779cfd73de46f6520edc975ebb",
+      "armor-block-e40f082abbcbe4f55a62": "c94aa2e2b71c45baf89bd3271150acf74db60c03a1120e661a823adbaacb14a9",
+      "armor-block-649dcbda86c17c7952c9": "b89cc0966bac5ddc79f027e561031bc2486cee52b54b9c3409c05a960147424b",
+      "armor-block-2b558e7ac8eb4184c2af": "6a88cb098d2fd916d2561448a94ffc1ccb37da72b8bbaa384614b6a5705b167a",
+      "armor-block-b235419d9a165659f2e8": "f2c2df8f98430b8d0151ac584ea6f1249e1373ceb497aaae6f4c8bb51897c5cd",
+      "armor-block-fabbd7b0578ea00b5791": "0dff82e13866df5dd7a0305422737f85e933663aba612dade96221a1d2a50efa",
+      "armor-block-e120acd13dae3b493668": "1193ef66b72fc810c5070fc1fb589fb922e120020b38c3f8f3c2b42a1a592477",
+      "armor-block-70b34597548b284a0a7f": "9754a614faf93ab09604a427911cede60f2962869e4459aeff0ccc82fab9c5bf",
+      "armor-block-98477a5dd3e88b931589": "4e031dcd80f8453c41fd754d30bc0b475e089bbe681a546d1f8186a391e7c4f3",
+      "armor-block-a7ef36310c50dc565d00": "69ca157a98af5d66f99f02047d6233fd6ba1ecfa09304c4d00462fe7f3690a62",
+      "armor-block-4896cc9388c49fcb9b2e": "74e9772cacc3dbc406e8b2167f00021f762bc9c7c9e0a4f409efa9f3e2b17691"
+    },
+    "cameraPosition": [
+      17.0,
+      30.0,
+      26.0
+    ],
+    "cameraTarget": [
+      0.0,
+      2.0,
+      1.0
+    ],
+    "orthographicScaleM": 34,
+    "viewport": [
+      1200,
+      900
+    ],
+    "renderer": "Blender 4.3.2 Cycles CPU 64 samples no denoising AgX medium-high",
+    "scope": "Fresh exact GLB imports. Gray 250mm datum in section views is evidence-only and not an exported kit part."
+  },
+  {
+    "name": "wayfarer-backing",
+    "assembly": "wayfarer",
+    "path": "renders/wayfarer-backing.png",
+    "sha256": "0cc5c636a796df457ff6b2b3e045c8c0de59e60fc000602bdb82fbcf753981de",
+    "mode": "backing",
+    "explosionOutwardM": 0,
+    "manifestSha256": "2e199dba85fe112fd3249c1837cf73c581939ef327aaaf517b47c8d9e25eede9",
+    "sourceSha256": "f0f381f1f9b38a8b19cb6a91226aafbff082e678e9471b607c0823c15fdbf2ec",
+    "modelGlbHashes": {
+      "armor-block-a6743a347ee2fcdd1ce9": "88dbb2bc40befebf3e594223b87e2d694760bb97b347b4a4adfe8fc6f4a2beb1",
+      "armor-block-62ad930c45227d5287a0": "d748d4ef860aa1b6a0f740fafb9fec765e6ce3403fd7588319d7734d323b72cf",
+      "armor-block-e1affbf19f4b7fa30311": "9df58316dbbf219742c5bd1402a737142d43ff206efeee9454a8456ed6e0a291",
+      "armor-block-926961217b49c21a526b": "b6f771368eab10b945be078fa2e89247234fdfb46113263b823bb2f6ca0ebe35",
+      "armor-block-137adc2153a878094d60": "ccdc65db60ed6b39553cea197fa3deaa519e12779cfd73de46f6520edc975ebb",
+      "armor-block-e40f082abbcbe4f55a62": "c94aa2e2b71c45baf89bd3271150acf74db60c03a1120e661a823adbaacb14a9",
+      "armor-block-649dcbda86c17c7952c9": "b89cc0966bac5ddc79f027e561031bc2486cee52b54b9c3409c05a960147424b",
+      "armor-block-2b558e7ac8eb4184c2af": "6a88cb098d2fd916d2561448a94ffc1ccb37da72b8bbaa384614b6a5705b167a",
+      "armor-block-b235419d9a165659f2e8": "f2c2df8f98430b8d0151ac584ea6f1249e1373ceb497aaae6f4c8bb51897c5cd",
+      "armor-block-fabbd7b0578ea00b5791": "0dff82e13866df5dd7a0305422737f85e933663aba612dade96221a1d2a50efa",
+      "armor-block-e120acd13dae3b493668": "1193ef66b72fc810c5070fc1fb589fb922e120020b38c3f8f3c2b42a1a592477",
+      "armor-block-70b34597548b284a0a7f": "9754a614faf93ab09604a427911cede60f2962869e4459aeff0ccc82fab9c5bf",
+      "armor-block-98477a5dd3e88b931589": "4e031dcd80f8453c41fd754d30bc0b475e089bbe681a546d1f8186a391e7c4f3",
+      "armor-block-a7ef36310c50dc565d00": "69ca157a98af5d66f99f02047d6233fd6ba1ecfa09304c4d00462fe7f3690a62",
+      "armor-block-4896cc9388c49fcb9b2e": "74e9772cacc3dbc406e8b2167f00021f762bc9c7c9e0a4f409efa9f3e2b17691"
+    },
+    "cameraPosition": [
+      17.0,
+      30.0,
+      26.0
+    ],
+    "cameraTarget": [
+      0.0,
+      2.0,
+      1.0
+    ],
+    "orthographicScaleM": 34,
+    "viewport": [
+      1200,
+      900
+    ],
+    "renderer": "Blender 4.3.2 Cycles CPU 64 samples no denoising AgX medium-high",
+    "scope": "Fresh exact GLB imports. Gray 250mm datum in section views is evidence-only and not an exported kit part."
+  },
+  {
+    "name": "wayfarer-bow",
+    "assembly": "wayfarer",
+    "path": "renders/wayfarer-bow.png",
+    "sha256": "360ca43380e7ca1dbeba96859752c66934077d12786c277dc4fb7e8d7e250301",
+    "mode": "all",
+    "explosionOutwardM": 0,
+    "manifestSha256": "2e199dba85fe112fd3249c1837cf73c581939ef327aaaf517b47c8d9e25eede9",
+    "sourceSha256": "f0f381f1f9b38a8b19cb6a91226aafbff082e678e9471b607c0823c15fdbf2ec",
+    "modelGlbHashes": {
+      "armor-block-a6743a347ee2fcdd1ce9": "88dbb2bc40befebf3e594223b87e2d694760bb97b347b4a4adfe8fc6f4a2beb1",
+      "armor-block-62ad930c45227d5287a0": "d748d4ef860aa1b6a0f740fafb9fec765e6ce3403fd7588319d7734d323b72cf",
+      "armor-block-e1affbf19f4b7fa30311": "9df58316dbbf219742c5bd1402a737142d43ff206efeee9454a8456ed6e0a291",
+      "armor-block-926961217b49c21a526b": "b6f771368eab10b945be078fa2e89247234fdfb46113263b823bb2f6ca0ebe35",
+      "armor-block-137adc2153a878094d60": "ccdc65db60ed6b39553cea197fa3deaa519e12779cfd73de46f6520edc975ebb",
+      "armor-block-e40f082abbcbe4f55a62": "c94aa2e2b71c45baf89bd3271150acf74db60c03a1120e661a823adbaacb14a9",
+      "armor-block-649dcbda86c17c7952c9": "b89cc0966bac5ddc79f027e561031bc2486cee52b54b9c3409c05a960147424b",
+      "armor-block-2b558e7ac8eb4184c2af": "6a88cb098d2fd916d2561448a94ffc1ccb37da72b8bbaa384614b6a5705b167a",
+      "armor-block-b235419d9a165659f2e8": "f2c2df8f98430b8d0151ac584ea6f1249e1373ceb497aaae6f4c8bb51897c5cd",
+      "armor-block-fabbd7b0578ea00b5791": "0dff82e13866df5dd7a0305422737f85e933663aba612dade96221a1d2a50efa",
+      "armor-block-e120acd13dae3b493668": "1193ef66b72fc810c5070fc1fb589fb922e120020b38c3f8f3c2b42a1a592477",
+      "armor-block-70b34597548b284a0a7f": "9754a614faf93ab09604a427911cede60f2962869e4459aeff0ccc82fab9c5bf",
+      "armor-block-98477a5dd3e88b931589": "4e031dcd80f8453c41fd754d30bc0b475e089bbe681a546d1f8186a391e7c4f3",
+      "armor-block-a7ef36310c50dc565d00": "69ca157a98af5d66f99f02047d6233fd6ba1ecfa09304c4d00462fe7f3690a62",
+      "armor-block-4896cc9388c49fcb9b2e": "74e9772cacc3dbc406e8b2167f00021f762bc9c7c9e0a4f409efa9f3e2b17691"
+    },
+    "cameraPosition": [
+      10.0,
+      24.200000762939453,
+      12.300000190734863
+    ],
+    "cameraTarget": [
+      0.0,
+      10.199999809265137,
+      1.2999999523162842
+    ],
+    "orthographicScaleM": 12,
+    "viewport": [
+      1200,
+      900
+    ],
+    "renderer": "Blender 4.3.2 Cycles CPU 64 samples no denoising AgX medium-high",
+    "scope": "Fresh exact GLB imports. Gray 250mm datum in section views is evidence-only and not an exported kit part."
+  },
+  {
+    "name": "alternate-station",
+    "assembly": "alternate-station",
+    "path": "renders/alternate-station.png",
+    "sha256": "7b6f610ba3649074ee6d9dfbd8e3e703271eda68efb9d8f9e890903f7a3c7e35",
+    "mode": "all",
+    "explosionOutwardM": 0,
+    "manifestSha256": "2e199dba85fe112fd3249c1837cf73c581939ef327aaaf517b47c8d9e25eede9",
+    "sourceSha256": "f0f381f1f9b38a8b19cb6a91226aafbff082e678e9471b607c0823c15fdbf2ec",
+    "modelGlbHashes": {
+      "armor-block-d3fa0e462a519b5f36f8": "3ecaea7a1aef512dd4742a03d7522c06e87e12f0b68e0c44b43c104469faaa44",
+      "armor-block-9069dfa847efce4fe41e": "6a9f89dc18dbd8910679e759ac3eb7c7f90951266b43a8f367fd7dd0a9cbbb63",
+      "armor-block-1676c64748013f376c0a": "2e99a52ae1cbce3e023a584df2f834068c1e424d1f9aefc6ae352ab564097419",
+      "armor-block-db7ed5477c90dcffe64f": "9a2e12db9c6872256154c11cc7e6ca97dfebc5014c5fc87885af24c57b4014b4",
+      "armor-block-05c9d73568be3ad2e6b8": "430ad3c3f5da98dcb27177b78c12b92b4b178e22ac9380d6c000be43b2fde14c",
+      "armor-block-15a405777ecce0335b21": "e00dbb1cc3e5bbfe7c008b5263f380ca28663d3ba8a92491dd7d85e72e029537",
+      "armor-block-43965fec43941bd88fcc": "8b24a60ddab7a40414f6ef505083ffe8f79256c1d8443d92efc39afe4ca01c82",
+      "armor-block-af0cc716991642374212": "5a5cc0f7998308930911e579b060783773db21f0bb810c22b16589ba4604da08",
+      "armor-block-57b9352f1f040b7f0157": "9bec2180776db3892622c87438b82b4954d885161b4b66669a48ddef3e236646",
+      "armor-block-8904b2af208c0ad89e05": "4b23589bc1a5b98c8a244b722bd099963d9f356c6f7688cc6f3d1931e757a108",
+      "armor-block-d475f516a65773f4c21e": "7d79fb6ed105b453850b127f40883f4c12f5a5d047d398534677fd92e7696e7a",
+      "armor-block-97e82a0a2ae19def921f": "4fbfe16b98de5407783ee0837445a0402a336f2a275f50025ad65a9e1f9ec60a",
+      "armor-block-57b42efda0a7a7d9ffdd": "464fc4755ca841a00d863f692a3d685f7addd7a7f016d5b273b58c1bc5281f9f",
+      "armor-block-7c3af440c13bfbd854f7": "f30e7ef373a485cb2641a62eae78cc0535f60c8207e246cf122e078c1e729ed6",
+      "armor-block-075003ca42dee3ad88d4": "3c5e3eddacd98116bd38f65c0d6aa3a872cebb4f928766cb43142ab934a52457",
+      "armor-block-137dbd4b0d514b60c4c3": "f23727a88700f248fd63f9d45c9215f25a83f1869020f36da4f9742b3fd847a0",
+      "armor-block-cb4ec70047162b4093b9": "eca47c06c9c9d17c07ad49040f35226482f148a341766d1faf8791416b6369a4",
+      "armor-block-131df6537810373834cb": "7cef078521f2180dc8c94199db76bd0600e4db9e9b9e4ec020daa952c36c58d2",
+      "armor-block-79d4507d7b58226cbe80": "67468ee6ecc1e0dca3fddc61f6d7d88e515712f440c757c9742ac968704f1a47",
+      "armor-block-edc8f579626e43feb839": "9b4f0244481e6fa313425e34c5ae3e8ecfa11d215bbaa14470081d1c8fb0b700",
+      "armor-block-e7911c4aae9fd2fecbb8": "923eccd69598936bf3883868e2e3cb31db7d302e990ec55ecbf20f2a0fc31b2a",
+      "armor-block-649b14141fa27ecd47e6": "87741848cdd4afc32a933e017b0968faf542b5d3f22111edd3358b6337dc53d4",
+      "armor-block-fc5a10216de60493ab08": "d0b9c18f03da9616b47d185c458b866d00f7327932e67359a1a7c1075a2ea9d5",
+      "armor-block-204079fa21328c629295": "92e20ceb09ff288efee4c2c2c81fb78e8ff0db167acb396e382644067761adfe",
+      "armor-block-50c9e43a8c6ba5af5141": "14ad2ac60b31aa99ff2ea1c8a5016d96de6bc1178652e3ce2fc6377a3684097f"
+    },
+    "cameraPosition": [
+      20.0,
+      -22.0,
+      36.5
+    ],
+    "cameraTarget": [
+      0.0,
+      3.0,
+      1.5
+    ],
+    "orthographicScaleM": 33,
+    "viewport": [
+      1200,
+      900
+    ],
+    "renderer": "Blender 4.3.2 Cycles CPU 64 samples no denoising AgX medium-high",
+    "scope": "Fresh exact GLB imports. Gray 250mm datum in section views is evidence-only and not an exported kit part."
+  },
+  {
+    "name": "alternate-tug",
+    "assembly": "alternate-tug",
+    "path": "renders/alternate-tug.png",
+    "sha256": "c2adfc5a73904e398275a517464fe396fd19f8d0c4d2304b9bf9be96b938b816",
+    "mode": "all",
+    "explosionOutwardM": 0,
+    "manifestSha256": "2e199dba85fe112fd3249c1837cf73c581939ef327aaaf517b47c8d9e25eede9",
+    "sourceSha256": "f0f381f1f9b38a8b19cb6a91226aafbff082e678e9471b607c0823c15fdbf2ec",
+    "modelGlbHashes": {
+      "armor-block-db7ed5477c90dcffe64f": "9a2e12db9c6872256154c11cc7e6ca97dfebc5014c5fc87885af24c57b4014b4",
+      "armor-block-05c9d73568be3ad2e6b8": "430ad3c3f5da98dcb27177b78c12b92b4b178e22ac9380d6c000be43b2fde14c",
+      "armor-block-15a405777ecce0335b21": "e00dbb1cc3e5bbfe7c008b5263f380ca28663d3ba8a92491dd7d85e72e029537",
+      "armor-block-d3fa0e462a519b5f36f8": "3ecaea7a1aef512dd4742a03d7522c06e87e12f0b68e0c44b43c104469faaa44",
+      "armor-block-43965fec43941bd88fcc": "8b24a60ddab7a40414f6ef505083ffe8f79256c1d8443d92efc39afe4ca01c82",
+      "armor-block-af0cc716991642374212": "5a5cc0f7998308930911e579b060783773db21f0bb810c22b16589ba4604da08",
+      "armor-block-e9bc6213d0d76ca7f44b": "23abaf71f105891ef480a63558b32f7ccd527c78e9543fb09eaaf7764e743bc4",
+      "armor-block-075003ca42dee3ad88d4": "3c5e3eddacd98116bd38f65c0d6aa3a872cebb4f928766cb43142ab934a52457",
+      "armor-block-137dbd4b0d514b60c4c3": "f23727a88700f248fd63f9d45c9215f25a83f1869020f36da4f9742b3fd847a0",
+      "armor-block-f731b556d8884e7d7557": "afb746dde122384221e9d95823e79fe84be1e937001fefa47030de8007a1c792",
+      "armor-block-207cbce0274b3e836291": "1b0a6168aab37c03f0b9b3182d757029b264096d4163a80b316c12e193f0dbe5"
+    },
+    "cameraPosition": [
+      20.0,
+      -16.0,
+      25.5
+    ],
+    "cameraTarget": [
+      5.0,
+      4.0,
+      1.5
+    ],
+    "orthographicScaleM": 17,
+    "viewport": [
+      1200,
+      900
+    ],
+    "renderer": "Blender 4.3.2 Cycles CPU 64 samples no denoising AgX medium-high",
+    "scope": "Fresh exact GLB imports. Gray 250mm datum in section views is evidence-only and not an exported kit part."
+  }
+]

@@ -1,0 +1,1674 @@
+ERROR Draco mesh compression is not available because library could not be found at /usr/bin/4.3/python/lib/python3.13/site-packages/libextern_draco.so
+22:49:17 | INFO: Starting glTF 2.0 export
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-f94c0ba2aa04f31fb6a5-closed-incoming-wrapped-b
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-f94c0ba2aa04f31fb6a5-closed-outgoing-wrapped-b
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-f94c0ba2aa04f31fb6a5-closed-solid-body
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-f94c0ba2aa04f31fb6a5-cyan-flush-status-lens
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-f94c0ba2aa04f31fb6a5-interchangeable-plain-fac
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-f94c0ba2aa04f31fb6a5-lower-impact-rail-right
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-f94c0ba2aa04f31fb6a5-lower-impact-rail-cut-poc
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-f94c0ba2aa04f31fb6a5-lower-impact-rail-left
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-f94c0ba2aa04f31fb6a5-pale-wrapped-connector-ou
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-f94c0ba2aa04f31fb6a5-pale-wrapped-connector-in
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-f94c0ba2aa04f31fb6a5-recess-shadow-seat
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-f94c0ba2aa04f31fb6a5-upper-stepped-shoulder
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Finished glTF 2.0 export in 0.13873815536499023 s
+
+22:49:17 | INFO: Starting glTF 2.0 export
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-7c657ee01a90318dec3e-closed-incoming-wrapped-b
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-7c657ee01a90318dec3e-closed-outgoing-wrapped-b
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-7c657ee01a90318dec3e-closed-solid-body
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-7c657ee01a90318dec3e-cyan-flush-status-lens
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-7c657ee01a90318dec3e-deep-vent-louver-1
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-7c657ee01a90318dec3e-deep-vent-louver-2
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-7c657ee01a90318dec3e-deep-vent-louver-3
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-7c657ee01a90318dec3e-deep-vent-louver-4
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-7c657ee01a90318dec3e-deep-vent-louver-5
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-7c657ee01a90318dec3e-deep-vent-louver-6
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-7c657ee01a90318dec3e-deep-vent-louver-7
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-7c657ee01a90318dec3e-deep-vent-louver-8
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-7c657ee01a90318dec3e-deep-vent-louver-0
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-7c657ee01a90318dec3e-interchangeable-vent-face
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-7c657ee01a90318dec3e-lower-impact-rail-right
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-7c657ee01a90318dec3e-lower-impact-rail-cut-poc
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-7c657ee01a90318dec3e-lower-impact-rail-left
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-7c657ee01a90318dec3e-pale-wrapped-connector-ou
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-7c657ee01a90318dec3e-pale-wrapped-connector-in
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-7c657ee01a90318dec3e-recess-shadow-seat
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-7c657ee01a90318dec3e-upper-stepped-shoulder
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-7c657ee01a90318dec3e-vent-dark-well
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Finished glTF 2.0 export in 0.18158411979675293 s
+
+22:49:17 | INFO: Starting glTF 2.0 export
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-fe79dfaf2e1542dbd67c-closed-incoming-wrapped-b
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-fe79dfaf2e1542dbd67c-closed-outgoing-wrapped-b
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-fe79dfaf2e1542dbd67c-closed-solid-body
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-fe79dfaf2e1542dbd67c-cyan-flush-status-lens
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-fe79dfaf2e1542dbd67c-interchangeable-red-servi
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-fe79dfaf2e1542dbd67c-lower-impact-rail-right
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-fe79dfaf2e1542dbd67c-lower-impact-rail-cut-poc
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-fe79dfaf2e1542dbd67c-lower-impact-rail-left
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-fe79dfaf2e1542dbd67c-pale-wrapped-connector-ou
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-fe79dfaf2e1542dbd67c-pale-wrapped-connector-in
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-fe79dfaf2e1542dbd67c-recess-shadow-seat
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-fe79dfaf2e1542dbd67c-upper-stepped-shoulder
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Finished glTF 2.0 export in 0.1220240592956543 s
+
+22:49:17 | INFO: Starting glTF 2.0 export
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-9ca59f6db637d3afceb9-closed-incoming-wrapped-b
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-9ca59f6db637d3afceb9-closed-outgoing-wrapped-b
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-9ca59f6db637d3afceb9-closed-solid-body
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-9ca59f6db637d3afceb9-cyan-flush-status-lens
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-9ca59f6db637d3afceb9-interchangeable-plain-fac
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-9ca59f6db637d3afceb9-lower-impact-rail-right
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-9ca59f6db637d3afceb9-lower-impact-rail-cut-poc
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-9ca59f6db637d3afceb9-lower-impact-rail-left
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-9ca59f6db637d3afceb9-pale-wrapped-connector-ou
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-9ca59f6db637d3afceb9-pale-wrapped-connector-in
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-9ca59f6db637d3afceb9-recess-shadow-seat
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-9ca59f6db637d3afceb9-upper-stepped-shoulder
+22:49:17 | INFO: Primitives created: 1
+22:49:17 | INFO: Finished glTF 2.0 export in 0.12771391868591309 s
+
+22:49:17 | INFO: Starting glTF 2.0 export
+22:49:17 | INFO: Extracting primitive: MESH-armor-block-70b34597548b284a0a7f-closed-junction-wedge
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-70b34597548b284a0a7f-junction-lower-navy-shoe
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-70b34597548b284a0a7f-junction-upper-navy-shoul
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-70b34597548b284a0a7f-junction-wrapped-pale-con
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Finished glTF 2.0 export in 0.14168715476989746 s
+
+22:49:18 | INFO: Starting glTF 2.0 export
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-cd2f17ea0cf58cb60b7f-closed-incoming-wrapped-b
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-cd2f17ea0cf58cb60b7f-closed-outgoing-wrapped-b
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-cd2f17ea0cf58cb60b7f-closed-solid-body
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-cd2f17ea0cf58cb60b7f-cyan-flush-status-lens
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-cd2f17ea0cf58cb60b7f-deep-vent-louver-1
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-cd2f17ea0cf58cb60b7f-deep-vent-louver-0
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-cd2f17ea0cf58cb60b7f-interchangeable-vent-face
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-cd2f17ea0cf58cb60b7f-lower-impact-rail-right
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-cd2f17ea0cf58cb60b7f-lower-impact-rail-cut-poc
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-cd2f17ea0cf58cb60b7f-lower-impact-rail-left
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-cd2f17ea0cf58cb60b7f-pale-wrapped-connector-ou
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-cd2f17ea0cf58cb60b7f-pale-wrapped-connector-in
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-cd2f17ea0cf58cb60b7f-recess-shadow-seat
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-cd2f17ea0cf58cb60b7f-upper-stepped-shoulder
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-cd2f17ea0cf58cb60b7f-vent-dark-well
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Finished glTF 2.0 export in 0.07472014427185059 s
+
+22:49:18 | INFO: Starting glTF 2.0 export
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-1676c64748013f376c0a-closed-junction-wedge
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-1676c64748013f376c0a-junction-lower-navy-shoe
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-1676c64748013f376c0a-junction-upper-navy-shoul
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-1676c64748013f376c0a-junction-wrapped-pale-con
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Finished glTF 2.0 export in 0.20037508010864258 s
+
+22:49:18 | INFO: Starting glTF 2.0 export
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-a6743a347ee2fcdd1ce9-closed-incoming-wrapped-b
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-a6743a347ee2fcdd1ce9-closed-outgoing-wrapped-b
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-a6743a347ee2fcdd1ce9-closed-solid-body
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-a6743a347ee2fcdd1ce9-cyan-flush-status-lens
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-a6743a347ee2fcdd1ce9-interchangeable-plain-fac
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-a6743a347ee2fcdd1ce9-lower-impact-rail-right
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-a6743a347ee2fcdd1ce9-lower-impact-rail-cut-poc
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-a6743a347ee2fcdd1ce9-lower-impact-rail-left
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-a6743a347ee2fcdd1ce9-pale-wrapped-connector-ou
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-a6743a347ee2fcdd1ce9-pale-wrapped-connector-in
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-a6743a347ee2fcdd1ce9-recess-shadow-seat
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-a6743a347ee2fcdd1ce9-upper-stepped-shoulder
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Finished glTF 2.0 export in 0.08418488502502441 s
+
+22:49:18 | INFO: Starting glTF 2.0 export
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-62ad930c45227d5287a0-closed-incoming-wrapped-b
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-62ad930c45227d5287a0-closed-outgoing-wrapped-b
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-62ad930c45227d5287a0-closed-solid-body
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-62ad930c45227d5287a0-cyan-flush-status-lens
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-62ad930c45227d5287a0-interchangeable-plain-fac
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-62ad930c45227d5287a0-lower-impact-rail-right
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-62ad930c45227d5287a0-lower-impact-rail-cut-poc
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-62ad930c45227d5287a0-lower-impact-rail-left
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-62ad930c45227d5287a0-pale-wrapped-connector-ou
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-62ad930c45227d5287a0-pale-wrapped-connector-in
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-62ad930c45227d5287a0-recess-shadow-seat
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-62ad930c45227d5287a0-upper-stepped-shoulder
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Finished glTF 2.0 export in 0.19405841827392578 s
+
+22:49:18 | INFO: Starting glTF 2.0 export
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-e1affbf19f4b7fa30311-closed-junction-wedge
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-e1affbf19f4b7fa30311-junction-lower-navy-shoe
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-e1affbf19f4b7fa30311-junction-upper-navy-shoul
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-e1affbf19f4b7fa30311-junction-wrapped-pale-con
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Finished glTF 2.0 export in 0.0940864086151123 s
+
+22:49:18 | INFO: Starting glTF 2.0 export
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-926961217b49c21a526b-closed-incoming-wrapped-b
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-926961217b49c21a526b-closed-outgoing-wrapped-b
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-926961217b49c21a526b-closed-solid-body
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-926961217b49c21a526b-cyan-flush-status-lens
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-926961217b49c21a526b-interchangeable-red-servi
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-926961217b49c21a526b-lower-impact-rail-right
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-926961217b49c21a526b-lower-impact-rail-cut-poc
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-926961217b49c21a526b-lower-impact-rail-left
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-926961217b49c21a526b-pale-wrapped-connector-ou
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-926961217b49c21a526b-pale-wrapped-connector-in
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-926961217b49c21a526b-recess-shadow-seat
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-926961217b49c21a526b-upper-stepped-shoulder
+22:49:18 | INFO: Primitives created: 1
+22:49:18 | INFO: Finished glTF 2.0 export in 0.13967657089233398 s
+
+22:49:18 | INFO: Starting glTF 2.0 export
+22:49:18 | INFO: Extracting primitive: MESH-armor-block-137adc2153a878094d60-closed-incoming-wrapped-b
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-137adc2153a878094d60-closed-outgoing-wrapped-b
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-137adc2153a878094d60-closed-solid-body
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-137adc2153a878094d60-cyan-flush-status-lens
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-137adc2153a878094d60-interchangeable-utility-f
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-137adc2153a878094d60-lower-impact-rail-right
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-137adc2153a878094d60-lower-impact-rail-cut-poc
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-137adc2153a878094d60-lower-impact-rail-left
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-137adc2153a878094d60-pale-wrapped-connector-ou
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-137adc2153a878094d60-pale-wrapped-connector-in
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-137adc2153a878094d60-recess-shadow-seat
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-137adc2153a878094d60-upper-stepped-shoulder
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-137adc2153a878094d60-utility-removable-box
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-137adc2153a878094d60-utility-status-lens
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Finished glTF 2.0 export in 0.1844184398651123 s
+
+22:49:19 | INFO: Starting glTF 2.0 export
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-e40f082abbcbe4f55a62-closed-incoming-wrapped-b
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-e40f082abbcbe4f55a62-closed-outgoing-wrapped-b
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-e40f082abbcbe4f55a62-closed-solid-body
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-e40f082abbcbe4f55a62-cyan-flush-status-lens
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-e40f082abbcbe4f55a62-interchangeable-identity-
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-e40f082abbcbe4f55a62-lower-impact-rail-right
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-e40f082abbcbe4f55a62-lower-impact-rail-cut-poc
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-e40f082abbcbe4f55a62-lower-impact-rail-left
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-e40f082abbcbe4f55a62-pale-wrapped-connector-ou
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-e40f082abbcbe4f55a62-pale-wrapped-connector-in
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-e40f082abbcbe4f55a62-recess-shadow-seat
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-e40f082abbcbe4f55a62-upper-stepped-shoulder
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Finished glTF 2.0 export in 0.1417851448059082 s
+
+22:49:19 | INFO: Starting glTF 2.0 export
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-649dcbda86c17c7952c9-closed-incoming-wrapped-b
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-649dcbda86c17c7952c9-closed-outgoing-wrapped-b
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-649dcbda86c17c7952c9-closed-solid-body
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-649dcbda86c17c7952c9-cyan-flush-status-lens
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-649dcbda86c17c7952c9-deep-vent-louver-1
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-649dcbda86c17c7952c9-deep-vent-louver-2
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-649dcbda86c17c7952c9-deep-vent-louver-3
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-649dcbda86c17c7952c9-deep-vent-louver-4
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-649dcbda86c17c7952c9-deep-vent-louver-5
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-649dcbda86c17c7952c9-deep-vent-louver-6
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-649dcbda86c17c7952c9-deep-vent-louver-7
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-649dcbda86c17c7952c9-deep-vent-louver-8
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-649dcbda86c17c7952c9-deep-vent-louver-0
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-649dcbda86c17c7952c9-interchangeable-vent-face
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-649dcbda86c17c7952c9-lower-impact-rail-right
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-649dcbda86c17c7952c9-lower-impact-rail-cut-poc
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-649dcbda86c17c7952c9-lower-impact-rail-left
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-649dcbda86c17c7952c9-pale-wrapped-connector-ou
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-649dcbda86c17c7952c9-pale-wrapped-connector-in
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-649dcbda86c17c7952c9-recess-shadow-seat
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-649dcbda86c17c7952c9-upper-stepped-shoulder
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-649dcbda86c17c7952c9-vent-dark-well
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Finished glTF 2.0 export in 0.2217388153076172 s
+
+22:49:19 | INFO: Starting glTF 2.0 export
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-2b558e7ac8eb4184c2af-closed-incoming-wrapped-b
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-2b558e7ac8eb4184c2af-closed-outgoing-wrapped-b
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-2b558e7ac8eb4184c2af-closed-solid-body
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-2b558e7ac8eb4184c2af-interchangeable-utility-f
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-2b558e7ac8eb4184c2af-lower-impact-rail
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-2b558e7ac8eb4184c2af-pale-wrapped-connector-ou
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-2b558e7ac8eb4184c2af-pale-wrapped-connector-in
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-2b558e7ac8eb4184c2af-recess-shadow-seat
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-2b558e7ac8eb4184c2af-upper-stepped-shoulder
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Finished glTF 2.0 export in 0.1661844253540039 s
+
+22:49:19 | INFO: Starting glTF 2.0 export
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-b235419d9a165659f2e8-closed-incoming-wrapped-b
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-b235419d9a165659f2e8-closed-outgoing-wrapped-b
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-b235419d9a165659f2e8-closed-solid-body
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-b235419d9a165659f2e8-interchangeable-plain-fac
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-b235419d9a165659f2e8-lower-impact-rail
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-b235419d9a165659f2e8-pale-wrapped-connector-ou
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-b235419d9a165659f2e8-pale-wrapped-connector-in
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-b235419d9a165659f2e8-recess-shadow-seat
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-b235419d9a165659f2e8-upper-stepped-shoulder
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Finished glTF 2.0 export in 0.12712597846984863 s
+
+22:49:19 | INFO: Starting glTF 2.0 export
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-fabbd7b0578ea00b5791-closed-height-transition-
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-fabbd7b0578ea00b5791-closed-junction-wedge
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-fabbd7b0578ea00b5791-height-transition-pale-en
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-fabbd7b0578ea00b5791-junction-lower-navy-shoe
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-fabbd7b0578ea00b5791-junction-upper-navy-shoul
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-fabbd7b0578ea00b5791-junction-wrapped-pale-con
+22:49:19 | INFO: Primitives created: 1
+22:49:19 | INFO: Finished glTF 2.0 export in 0.11370992660522461 s
+
+22:49:19 | INFO: Starting glTF 2.0 export
+22:49:19 | INFO: Extracting primitive: MESH-armor-block-e120acd13dae3b493668-closed-incoming-wrapped-b
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-e120acd13dae3b493668-closed-outgoing-wrapped-b
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-e120acd13dae3b493668-closed-solid-body
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-e120acd13dae3b493668-cyan-flush-status-lens
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-e120acd13dae3b493668-deep-vent-louver-1
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-e120acd13dae3b493668-deep-vent-louver-0
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-e120acd13dae3b493668-interchangeable-vent-face
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-e120acd13dae3b493668-lower-impact-rail-right
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-e120acd13dae3b493668-lower-impact-rail-cut-poc
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-e120acd13dae3b493668-lower-impact-rail-left
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-e120acd13dae3b493668-pale-wrapped-connector-ou
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-e120acd13dae3b493668-pale-wrapped-connector-in
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-e120acd13dae3b493668-recess-shadow-seat
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-e120acd13dae3b493668-upper-stepped-shoulder
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-e120acd13dae3b493668-vent-dark-well
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Finished glTF 2.0 export in 0.1716480255126953 s
+
+22:49:20 | INFO: Starting glTF 2.0 export
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-98477a5dd3e88b931589-closed-incoming-wrapped-b
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-98477a5dd3e88b931589-closed-outgoing-wrapped-b
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-98477a5dd3e88b931589-closed-solid-body
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-98477a5dd3e88b931589-cyan-flush-status-lens
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-98477a5dd3e88b931589-interchangeable-plain-fac
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-98477a5dd3e88b931589-lower-impact-rail-right
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-98477a5dd3e88b931589-lower-impact-rail-cut-poc
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-98477a5dd3e88b931589-lower-impact-rail-left
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-98477a5dd3e88b931589-pale-wrapped-connector-ou
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-98477a5dd3e88b931589-pale-wrapped-connector-in
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-98477a5dd3e88b931589-recess-shadow-seat
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-98477a5dd3e88b931589-upper-stepped-shoulder
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Finished glTF 2.0 export in 0.15153837203979492 s
+
+22:49:20 | INFO: Starting glTF 2.0 export
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-a7ef36310c50dc565d00-closed-height-transition-
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-a7ef36310c50dc565d00-closed-junction-wedge
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-a7ef36310c50dc565d00-height-transition-pale-en
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-a7ef36310c50dc565d00-junction-lower-navy-shoe
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-a7ef36310c50dc565d00-junction-upper-navy-shoul
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-a7ef36310c50dc565d00-junction-wrapped-pale-con
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Finished glTF 2.0 export in 0.185560941696167 s
+
+22:49:20 | INFO: Starting glTF 2.0 export
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-4896cc9388c49fcb9b2e-closed-incoming-wrapped-b
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-4896cc9388c49fcb9b2e-closed-outgoing-wrapped-b
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-4896cc9388c49fcb9b2e-closed-solid-body
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-4896cc9388c49fcb9b2e-cyan-flush-status-lens
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-4896cc9388c49fcb9b2e-interchangeable-red-servi
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-4896cc9388c49fcb9b2e-lower-impact-rail-right
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-4896cc9388c49fcb9b2e-lower-impact-rail-cut-poc
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-4896cc9388c49fcb9b2e-lower-impact-rail-left
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-4896cc9388c49fcb9b2e-pale-wrapped-connector-ou
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-4896cc9388c49fcb9b2e-pale-wrapped-connector-in
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-4896cc9388c49fcb9b2e-recess-shadow-seat
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-4896cc9388c49fcb9b2e-upper-stepped-shoulder
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Finished glTF 2.0 export in 0.15028810501098633 s
+
+22:49:20 | INFO: Starting glTF 2.0 export
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-d3fa0e462a519b5f36f8-closed-incoming-wrapped-b
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-d3fa0e462a519b5f36f8-closed-outgoing-wrapped-b
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-d3fa0e462a519b5f36f8-closed-solid-body
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-d3fa0e462a519b5f36f8-cyan-flush-status-lens
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-d3fa0e462a519b5f36f8-interchangeable-plain-fac
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-d3fa0e462a519b5f36f8-lower-impact-rail-right
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-d3fa0e462a519b5f36f8-lower-impact-rail-cut-poc
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-d3fa0e462a519b5f36f8-lower-impact-rail-left
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-d3fa0e462a519b5f36f8-pale-wrapped-connector-ou
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-d3fa0e462a519b5f36f8-pale-wrapped-connector-in
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-d3fa0e462a519b5f36f8-recess-shadow-seat
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-d3fa0e462a519b5f36f8-upper-stepped-shoulder
+22:49:20 | INFO: Primitives created: 1
+22:49:20 | INFO: Finished glTF 2.0 export in 0.1278972625732422 s
+
+22:49:20 | INFO: Starting glTF 2.0 export
+22:49:20 | INFO: Extracting primitive: MESH-armor-block-9069dfa847efce4fe41e-closed-incoming-wrapped-b
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-9069dfa847efce4fe41e-closed-outgoing-wrapped-b
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-9069dfa847efce4fe41e-closed-solid-body
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-9069dfa847efce4fe41e-interchangeable-plain-fac
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-9069dfa847efce4fe41e-lower-impact-rail
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-9069dfa847efce4fe41e-pale-wrapped-connector-ou
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-9069dfa847efce4fe41e-pale-wrapped-connector-in
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-9069dfa847efce4fe41e-recess-shadow-seat
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-9069dfa847efce4fe41e-upper-stepped-shoulder
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Finished glTF 2.0 export in 0.21361851692199707 s
+
+22:49:21 | INFO: Starting glTF 2.0 export
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-db7ed5477c90dcffe64f-closed-incoming-wrapped-b
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-db7ed5477c90dcffe64f-closed-outgoing-wrapped-b
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-db7ed5477c90dcffe64f-closed-solid-body
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-db7ed5477c90dcffe64f-cyan-flush-status-lens
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-db7ed5477c90dcffe64f-deep-vent-louver-1
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-db7ed5477c90dcffe64f-deep-vent-louver-2
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-db7ed5477c90dcffe64f-deep-vent-louver-3
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-db7ed5477c90dcffe64f-deep-vent-louver-4
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-db7ed5477c90dcffe64f-deep-vent-louver-5
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-db7ed5477c90dcffe64f-deep-vent-louver-6
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-db7ed5477c90dcffe64f-deep-vent-louver-7
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-db7ed5477c90dcffe64f-deep-vent-louver-8
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-db7ed5477c90dcffe64f-deep-vent-louver-0
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-db7ed5477c90dcffe64f-interchangeable-vent-face
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-db7ed5477c90dcffe64f-lower-impact-rail-right
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-db7ed5477c90dcffe64f-lower-impact-rail-cut-poc
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-db7ed5477c90dcffe64f-lower-impact-rail-left
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-db7ed5477c90dcffe64f-pale-wrapped-connector-ou
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-db7ed5477c90dcffe64f-pale-wrapped-connector-in
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-db7ed5477c90dcffe64f-recess-shadow-seat
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-db7ed5477c90dcffe64f-upper-stepped-shoulder
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-db7ed5477c90dcffe64f-vent-dark-well
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Finished glTF 2.0 export in 0.1583256721496582 s
+
+22:49:21 | INFO: Starting glTF 2.0 export
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-05c9d73568be3ad2e6b8-closed-incoming-wrapped-b
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-05c9d73568be3ad2e6b8-closed-outgoing-wrapped-b
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-05c9d73568be3ad2e6b8-closed-solid-body
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-05c9d73568be3ad2e6b8-cyan-flush-status-lens
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-05c9d73568be3ad2e6b8-deep-vent-louver-1
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-05c9d73568be3ad2e6b8-deep-vent-louver-2
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-05c9d73568be3ad2e6b8-deep-vent-louver-3
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-05c9d73568be3ad2e6b8-deep-vent-louver-4
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-05c9d73568be3ad2e6b8-deep-vent-louver-5
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-05c9d73568be3ad2e6b8-deep-vent-louver-6
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-05c9d73568be3ad2e6b8-deep-vent-louver-7
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-05c9d73568be3ad2e6b8-deep-vent-louver-8
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-05c9d73568be3ad2e6b8-deep-vent-louver-0
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-05c9d73568be3ad2e6b8-interchangeable-vent-face
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-05c9d73568be3ad2e6b8-lower-impact-rail-right
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-05c9d73568be3ad2e6b8-lower-impact-rail-cut-poc
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-05c9d73568be3ad2e6b8-lower-impact-rail-left
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-05c9d73568be3ad2e6b8-pale-wrapped-connector-ou
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-05c9d73568be3ad2e6b8-pale-wrapped-connector-in
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-05c9d73568be3ad2e6b8-recess-shadow-seat
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-05c9d73568be3ad2e6b8-upper-stepped-shoulder
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-05c9d73568be3ad2e6b8-vent-dark-well
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Finished glTF 2.0 export in 0.2362346649169922 s
+
+22:49:21 | INFO: Starting glTF 2.0 export
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-15a405777ecce0335b21-closed-junction-wedge
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-15a405777ecce0335b21-junction-lower-navy-shoe
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-15a405777ecce0335b21-junction-upper-navy-shoul
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-15a405777ecce0335b21-junction-wrapped-pale-con
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Finished glTF 2.0 export in 0.12415814399719238 s
+
+22:49:21 | INFO: Starting glTF 2.0 export
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-43965fec43941bd88fcc-closed-incoming-wrapped-b
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-43965fec43941bd88fcc-closed-outgoing-wrapped-b
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-43965fec43941bd88fcc-closed-solid-body
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-43965fec43941bd88fcc-cyan-flush-status-lens
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-43965fec43941bd88fcc-interchangeable-plain-fac
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-43965fec43941bd88fcc-lower-impact-rail-right
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-43965fec43941bd88fcc-lower-impact-rail-cut-poc
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-43965fec43941bd88fcc-lower-impact-rail-left
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-43965fec43941bd88fcc-pale-wrapped-connector-ou
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-43965fec43941bd88fcc-pale-wrapped-connector-in
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-43965fec43941bd88fcc-recess-shadow-seat
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-43965fec43941bd88fcc-upper-stepped-shoulder
+22:49:21 | INFO: Primitives created: 1
+22:49:21 | INFO: Finished glTF 2.0 export in 0.202803373336792 s
+
+22:49:21 | INFO: Starting glTF 2.0 export
+22:49:21 | INFO: Extracting primitive: MESH-armor-block-af0cc716991642374212-closed-incoming-wrapped-b
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-af0cc716991642374212-closed-outgoing-wrapped-b
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-af0cc716991642374212-closed-solid-body
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-af0cc716991642374212-cyan-flush-status-lens
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-af0cc716991642374212-interchangeable-red-servi
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-af0cc716991642374212-lower-impact-rail-right
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-af0cc716991642374212-lower-impact-rail-cut-poc
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-af0cc716991642374212-lower-impact-rail-left
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-af0cc716991642374212-pale-wrapped-connector-ou
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-af0cc716991642374212-pale-wrapped-connector-in
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-af0cc716991642374212-recess-shadow-seat
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-af0cc716991642374212-upper-stepped-shoulder
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Finished glTF 2.0 export in 0.1611018180847168 s
+
+22:49:22 | INFO: Starting glTF 2.0 export
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-57b9352f1f040b7f0157-closed-incoming-wrapped-b
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-57b9352f1f040b7f0157-closed-outgoing-wrapped-b
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-57b9352f1f040b7f0157-closed-solid-body
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-57b9352f1f040b7f0157-cyan-flush-status-lens
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-57b9352f1f040b7f0157-interchangeable-red-servi
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-57b9352f1f040b7f0157-lower-impact-rail-right
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-57b9352f1f040b7f0157-lower-impact-rail-cut-poc
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-57b9352f1f040b7f0157-lower-impact-rail-left
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-57b9352f1f040b7f0157-pale-wrapped-connector-ou
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-57b9352f1f040b7f0157-pale-wrapped-connector-in
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-57b9352f1f040b7f0157-recess-shadow-seat
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-57b9352f1f040b7f0157-upper-stepped-shoulder
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Finished glTF 2.0 export in 0.1365203857421875 s
+
+22:49:22 | INFO: Starting glTF 2.0 export
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-8904b2af208c0ad89e05-closed-incoming-wrapped-b
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-8904b2af208c0ad89e05-closed-outgoing-wrapped-b
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-8904b2af208c0ad89e05-closed-solid-body
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-8904b2af208c0ad89e05-cyan-flush-status-lens
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-8904b2af208c0ad89e05-interchangeable-utility-f
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-8904b2af208c0ad89e05-lower-impact-rail-right
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-8904b2af208c0ad89e05-lower-impact-rail-cut-poc
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-8904b2af208c0ad89e05-lower-impact-rail-left
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-8904b2af208c0ad89e05-pale-wrapped-connector-ou
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-8904b2af208c0ad89e05-pale-wrapped-connector-in
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-8904b2af208c0ad89e05-recess-shadow-seat
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-8904b2af208c0ad89e05-upper-stepped-shoulder
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-8904b2af208c0ad89e05-utility-removable-box
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-8904b2af208c0ad89e05-utility-status-lens
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Finished glTF 2.0 export in 0.21542882919311523 s
+
+22:49:22 | INFO: Starting glTF 2.0 export
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-d475f516a65773f4c21e-closed-incoming-wrapped-b
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-d475f516a65773f4c21e-closed-outgoing-wrapped-b
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-d475f516a65773f4c21e-closed-solid-body
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-d475f516a65773f4c21e-cyan-flush-status-lens
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-d475f516a65773f4c21e-interchangeable-plain-fac
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-d475f516a65773f4c21e-lower-impact-rail-right
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-d475f516a65773f4c21e-lower-impact-rail-cut-poc
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-d475f516a65773f4c21e-lower-impact-rail-left
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-d475f516a65773f4c21e-pale-wrapped-connector-ou
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-d475f516a65773f4c21e-pale-wrapped-connector-in
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-d475f516a65773f4c21e-recess-shadow-seat
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-d475f516a65773f4c21e-upper-stepped-shoulder
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Finished glTF 2.0 export in 0.1719672679901123 s
+
+22:49:22 | INFO: Starting glTF 2.0 export
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-97e82a0a2ae19def921f-closed-incoming-wrapped-b
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-97e82a0a2ae19def921f-closed-outgoing-wrapped-b
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-97e82a0a2ae19def921f-closed-solid-body
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-97e82a0a2ae19def921f-cyan-flush-status-lens
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-97e82a0a2ae19def921f-interchangeable-plain-fac
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-97e82a0a2ae19def921f-lower-impact-rail-right
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-97e82a0a2ae19def921f-lower-impact-rail-cut-poc
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-97e82a0a2ae19def921f-lower-impact-rail-left
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-97e82a0a2ae19def921f-pale-wrapped-connector-ou
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-97e82a0a2ae19def921f-pale-wrapped-connector-in
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-97e82a0a2ae19def921f-recess-shadow-seat
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-97e82a0a2ae19def921f-upper-stepped-shoulder
+22:49:22 | INFO: Primitives created: 1
+22:49:22 | INFO: Finished glTF 2.0 export in 0.19379019737243652 s
+
+22:49:22 | INFO: Starting glTF 2.0 export
+22:49:22 | INFO: Extracting primitive: MESH-armor-block-57b42efda0a7a7d9ffdd-closed-junction-wedge
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-57b42efda0a7a7d9ffdd-junction-lower-navy-shoe
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-57b42efda0a7a7d9ffdd-junction-upper-navy-shoul
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-57b42efda0a7a7d9ffdd-junction-wrapped-pale-con
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Finished glTF 2.0 export in 0.11238694190979004 s
+
+22:49:23 | INFO: Starting glTF 2.0 export
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-7c3af440c13bfbd854f7-closed-incoming-wrapped-b
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-7c3af440c13bfbd854f7-closed-outgoing-wrapped-b
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-7c3af440c13bfbd854f7-closed-solid-body
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-7c3af440c13bfbd854f7-cyan-flush-status-lens
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-7c3af440c13bfbd854f7-interchangeable-red-servi
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-7c3af440c13bfbd854f7-lower-impact-rail-right
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-7c3af440c13bfbd854f7-lower-impact-rail-cut-poc
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-7c3af440c13bfbd854f7-lower-impact-rail-left
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-7c3af440c13bfbd854f7-pale-wrapped-connector-ou
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-7c3af440c13bfbd854f7-pale-wrapped-connector-in
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-7c3af440c13bfbd854f7-recess-shadow-seat
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-7c3af440c13bfbd854f7-upper-stepped-shoulder
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Finished glTF 2.0 export in 0.18137717247009277 s
+
+22:49:23 | INFO: Starting glTF 2.0 export
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-075003ca42dee3ad88d4-closed-junction-wedge
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-075003ca42dee3ad88d4-junction-lower-navy-shoe
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-075003ca42dee3ad88d4-junction-upper-navy-shoul
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-075003ca42dee3ad88d4-junction-wrapped-pale-con
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Finished glTF 2.0 export in 0.11156535148620605 s
+
+22:49:23 | INFO: Starting glTF 2.0 export
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-137dbd4b0d514b60c4c3-closed-incoming-wrapped-b
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-137dbd4b0d514b60c4c3-closed-outgoing-wrapped-b
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-137dbd4b0d514b60c4c3-closed-solid-body
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-137dbd4b0d514b60c4c3-cyan-flush-status-lens
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-137dbd4b0d514b60c4c3-interchangeable-utility-f
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-137dbd4b0d514b60c4c3-lower-impact-rail-right
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-137dbd4b0d514b60c4c3-lower-impact-rail-cut-poc
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-137dbd4b0d514b60c4c3-lower-impact-rail-left
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-137dbd4b0d514b60c4c3-pale-wrapped-connector-ou
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-137dbd4b0d514b60c4c3-pale-wrapped-connector-in
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-137dbd4b0d514b60c4c3-recess-shadow-seat
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-137dbd4b0d514b60c4c3-upper-stepped-shoulder
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-137dbd4b0d514b60c4c3-utility-removable-box
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-137dbd4b0d514b60c4c3-utility-status-lens
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Finished glTF 2.0 export in 0.20262718200683594 s
+
+22:49:23 | INFO: Starting glTF 2.0 export
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-cb4ec70047162b4093b9-closed-incoming-wrapped-b
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-cb4ec70047162b4093b9-closed-outgoing-wrapped-b
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-cb4ec70047162b4093b9-closed-solid-body
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-cb4ec70047162b4093b9-cyan-flush-status-lens
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-cb4ec70047162b4093b9-interchangeable-utility-f
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-cb4ec70047162b4093b9-lower-impact-rail-right
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-cb4ec70047162b4093b9-lower-impact-rail-cut-poc
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-cb4ec70047162b4093b9-lower-impact-rail-left
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-cb4ec70047162b4093b9-pale-wrapped-connector-ou
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-cb4ec70047162b4093b9-pale-wrapped-connector-in
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-cb4ec70047162b4093b9-recess-shadow-seat
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-cb4ec70047162b4093b9-upper-stepped-shoulder
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-cb4ec70047162b4093b9-utility-removable-box
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-cb4ec70047162b4093b9-utility-status-lens
+22:49:23 | INFO: Primitives created: 1
+22:49:23 | INFO: Finished glTF 2.0 export in 0.1617565155029297 s
+
+22:49:23 | INFO: Starting glTF 2.0 export
+22:49:23 | INFO: Extracting primitive: MESH-armor-block-131df6537810373834cb-closed-junction-wedge
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-131df6537810373834cb-junction-lower-navy-shoe
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-131df6537810373834cb-junction-upper-navy-shoul
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-131df6537810373834cb-junction-wrapped-pale-con
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Finished glTF 2.0 export in 0.19737911224365234 s
+
+22:49:24 | INFO: Starting glTF 2.0 export
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-79d4507d7b58226cbe80-closed-incoming-wrapped-b
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-79d4507d7b58226cbe80-closed-outgoing-wrapped-b
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-79d4507d7b58226cbe80-closed-solid-body
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-79d4507d7b58226cbe80-cyan-flush-status-lens
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-79d4507d7b58226cbe80-interchangeable-plain-fac
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-79d4507d7b58226cbe80-lower-impact-rail-right
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-79d4507d7b58226cbe80-lower-impact-rail-cut-poc
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-79d4507d7b58226cbe80-lower-impact-rail-left
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-79d4507d7b58226cbe80-pale-wrapped-connector-ou
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-79d4507d7b58226cbe80-pale-wrapped-connector-in
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-79d4507d7b58226cbe80-recess-shadow-seat
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-79d4507d7b58226cbe80-upper-stepped-shoulder
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Finished glTF 2.0 export in 0.09076929092407227 s
+
+22:49:24 | INFO: Starting glTF 2.0 export
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-edc8f579626e43feb839-closed-junction-wedge
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-edc8f579626e43feb839-junction-lower-navy-shoe
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-edc8f579626e43feb839-junction-upper-navy-shoul
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-edc8f579626e43feb839-junction-wrapped-pale-con
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Finished glTF 2.0 export in 0.20436906814575195 s
+
+22:49:24 | INFO: Starting glTF 2.0 export
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-e7911c4aae9fd2fecbb8-closed-incoming-wrapped-b
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-e7911c4aae9fd2fecbb8-closed-outgoing-wrapped-b
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-e7911c4aae9fd2fecbb8-closed-solid-body
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-e7911c4aae9fd2fecbb8-cyan-flush-status-lens
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-e7911c4aae9fd2fecbb8-deep-vent-louver-1
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-e7911c4aae9fd2fecbb8-deep-vent-louver-2
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-e7911c4aae9fd2fecbb8-deep-vent-louver-3
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-e7911c4aae9fd2fecbb8-deep-vent-louver-4
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-e7911c4aae9fd2fecbb8-deep-vent-louver-5
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-e7911c4aae9fd2fecbb8-deep-vent-louver-6
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-e7911c4aae9fd2fecbb8-deep-vent-louver-7
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-e7911c4aae9fd2fecbb8-deep-vent-louver-8
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-e7911c4aae9fd2fecbb8-deep-vent-louver-0
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-e7911c4aae9fd2fecbb8-interchangeable-vent-face
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-e7911c4aae9fd2fecbb8-lower-impact-rail-right
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-e7911c4aae9fd2fecbb8-lower-impact-rail-cut-poc
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-e7911c4aae9fd2fecbb8-lower-impact-rail-left
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-e7911c4aae9fd2fecbb8-pale-wrapped-connector-ou
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-e7911c4aae9fd2fecbb8-pale-wrapped-connector-in
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-e7911c4aae9fd2fecbb8-recess-shadow-seat
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-e7911c4aae9fd2fecbb8-upper-stepped-shoulder
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-e7911c4aae9fd2fecbb8-vent-dark-well
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Finished glTF 2.0 export in 0.13060402870178223 s
+
+22:49:24 | INFO: Starting glTF 2.0 export
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-649b14141fa27ecd47e6-closed-junction-wedge
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-649b14141fa27ecd47e6-junction-lower-navy-shoe
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-649b14141fa27ecd47e6-junction-upper-navy-shoul
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-649b14141fa27ecd47e6-junction-wrapped-pale-con
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Finished glTF 2.0 export in 0.16945862770080566 s
+
+22:49:24 | INFO: Starting glTF 2.0 export
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-fc5a10216de60493ab08-closed-junction-wedge
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-fc5a10216de60493ab08-junction-lower-navy-shoe
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-fc5a10216de60493ab08-junction-upper-navy-shoul
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-fc5a10216de60493ab08-junction-wrapped-pale-con
+22:49:24 | INFO: Primitives created: 1
+22:49:24 | INFO: Finished glTF 2.0 export in 0.06654906272888184 s
+
+22:49:24 | INFO: Starting glTF 2.0 export
+22:49:24 | INFO: Extracting primitive: MESH-armor-block-204079fa21328c629295-closed-incoming-wrapped-b
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-204079fa21328c629295-closed-outgoing-wrapped-b
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-204079fa21328c629295-closed-solid-body
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-204079fa21328c629295-interchangeable-red-servi
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-204079fa21328c629295-lower-impact-rail
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-204079fa21328c629295-pale-wrapped-connector-ou
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-204079fa21328c629295-pale-wrapped-connector-in
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-204079fa21328c629295-recess-shadow-seat
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-204079fa21328c629295-upper-stepped-shoulder
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Finished glTF 2.0 export in 0.14760065078735352 s
+
+22:49:25 | INFO: Starting glTF 2.0 export
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-50c9e43a8c6ba5af5141-closed-incoming-wrapped-b
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-50c9e43a8c6ba5af5141-closed-outgoing-wrapped-b
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-50c9e43a8c6ba5af5141-closed-solid-body
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-50c9e43a8c6ba5af5141-interchangeable-utility-f
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-50c9e43a8c6ba5af5141-lower-impact-rail
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-50c9e43a8c6ba5af5141-pale-wrapped-connector-ou
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-50c9e43a8c6ba5af5141-pale-wrapped-connector-in
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-50c9e43a8c6ba5af5141-recess-shadow-seat
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-50c9e43a8c6ba5af5141-upper-stepped-shoulder
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Finished glTF 2.0 export in 0.11841559410095215 s
+
+22:49:25 | INFO: Starting glTF 2.0 export
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-e9bc6213d0d76ca7f44b-closed-incoming-wrapped-b
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-e9bc6213d0d76ca7f44b-closed-outgoing-wrapped-b
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-e9bc6213d0d76ca7f44b-closed-solid-body
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-e9bc6213d0d76ca7f44b-cyan-flush-status-lens
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-e9bc6213d0d76ca7f44b-interchangeable-red-servi
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-e9bc6213d0d76ca7f44b-lower-impact-rail-right
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-e9bc6213d0d76ca7f44b-lower-impact-rail-cut-poc
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-e9bc6213d0d76ca7f44b-lower-impact-rail-left
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-e9bc6213d0d76ca7f44b-pale-wrapped-connector-ou
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-e9bc6213d0d76ca7f44b-pale-wrapped-connector-in
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-e9bc6213d0d76ca7f44b-recess-shadow-seat
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-e9bc6213d0d76ca7f44b-upper-stepped-shoulder
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Finished glTF 2.0 export in 0.2395458221435547 s
+
+22:49:25 | INFO: Starting glTF 2.0 export
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-f731b556d8884e7d7557-closed-incoming-wrapped-b
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-f731b556d8884e7d7557-closed-outgoing-wrapped-b
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-f731b556d8884e7d7557-closed-solid-body
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-f731b556d8884e7d7557-cyan-flush-status-lens
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-f731b556d8884e7d7557-interchangeable-utility-f
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-f731b556d8884e7d7557-lower-impact-rail-right
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-f731b556d8884e7d7557-lower-impact-rail-cut-poc
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-f731b556d8884e7d7557-lower-impact-rail-left
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-f731b556d8884e7d7557-pale-wrapped-connector-ou
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-f731b556d8884e7d7557-pale-wrapped-connector-in
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-f731b556d8884e7d7557-recess-shadow-seat
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-f731b556d8884e7d7557-upper-stepped-shoulder
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Finished glTF 2.0 export in 0.1241757869720459 s
+
+22:49:25 | INFO: Starting glTF 2.0 export
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-207cbce0274b3e836291-closed-junction-wedge
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-207cbce0274b3e836291-junction-lower-navy-shoe
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-207cbce0274b3e836291-junction-upper-navy-shoul
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Extracting primitive: MESH-armor-block-207cbce0274b3e836291-junction-wrapped-pale-con
+22:49:25 | INFO: Primitives created: 1
+22:49:25 | INFO: Finished glTF 2.0 export in 0.20360589027404785 s
+
+22:49:26 | INFO: Starting glTF 2.0 export
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-975ae6c56dd5c22ae720-closed-incoming-wrapped-b
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-975ae6c56dd5c22ae720-closed-outgoing-wrapped-b
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-975ae6c56dd5c22ae720-closed-solid-body
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-975ae6c56dd5c22ae720-interchangeable-plain-fac
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-975ae6c56dd5c22ae720-lower-impact-rail
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-975ae6c56dd5c22ae720-pale-wrapped-connector-ou
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-975ae6c56dd5c22ae720-pale-wrapped-connector-in
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-975ae6c56dd5c22ae720-recess-shadow-seat
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-975ae6c56dd5c22ae720-upper-stepped-shoulder
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Finished glTF 2.0 export in 0.178117036819458 s
+
+22:49:26 | INFO: Starting glTF 2.0 export
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-0609cba1e9e5472c20b6-closed-incoming-wrapped-b
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-0609cba1e9e5472c20b6-closed-outgoing-wrapped-b
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-0609cba1e9e5472c20b6-closed-solid-body
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-0609cba1e9e5472c20b6-cyan-flush-status-lens
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-0609cba1e9e5472c20b6-interchangeable-plain-fac
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-0609cba1e9e5472c20b6-lower-impact-rail-right
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-0609cba1e9e5472c20b6-lower-impact-rail-cut-poc
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-0609cba1e9e5472c20b6-lower-impact-rail-left
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-0609cba1e9e5472c20b6-pale-wrapped-connector-ou
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-0609cba1e9e5472c20b6-pale-wrapped-connector-in
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-0609cba1e9e5472c20b6-recess-shadow-seat
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-0609cba1e9e5472c20b6-upper-stepped-shoulder
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Finished glTF 2.0 export in 0.17561888694763184 s
+
+22:49:26 | INFO: Starting glTF 2.0 export
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-fbbf224dbd286d805ac1-closed-incoming-wrapped-b
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-fbbf224dbd286d805ac1-closed-outgoing-wrapped-b
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-fbbf224dbd286d805ac1-closed-solid-body
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-fbbf224dbd286d805ac1-cyan-flush-status-lens
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-fbbf224dbd286d805ac1-interchangeable-plain-fac
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-fbbf224dbd286d805ac1-lower-impact-rail-right
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-fbbf224dbd286d805ac1-lower-impact-rail-cut-poc
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-fbbf224dbd286d805ac1-lower-impact-rail-left
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-fbbf224dbd286d805ac1-pale-wrapped-connector-ou
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-fbbf224dbd286d805ac1-pale-wrapped-connector-in
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-fbbf224dbd286d805ac1-recess-shadow-seat
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-fbbf224dbd286d805ac1-upper-stepped-shoulder
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Finished glTF 2.0 export in 0.2573237419128418 s
+
+22:49:26 | INFO: Starting glTF 2.0 export
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-49384936da4b4c531fcc-closed-incoming-wrapped-b
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-49384936da4b4c531fcc-closed-outgoing-wrapped-b
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-49384936da4b4c531fcc-closed-solid-body
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-49384936da4b4c531fcc-interchangeable-plain-fac
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-49384936da4b4c531fcc-lower-impact-rail
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-49384936da4b4c531fcc-pale-wrapped-connector-ou
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-49384936da4b4c531fcc-pale-wrapped-connector-in
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-49384936da4b4c531fcc-recess-shadow-seat
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-49384936da4b4c531fcc-upper-stepped-shoulder
+22:49:26 | INFO: Primitives created: 1
+22:49:26 | INFO: Finished glTF 2.0 export in 0.20015239715576172 s
+
+22:49:26 | INFO: Starting glTF 2.0 export
+22:49:26 | INFO: Extracting primitive: MESH-armor-block-e8152b71edd21a544d55-closed-incoming-wrapped-b
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e8152b71edd21a544d55-closed-outgoing-wrapped-b
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e8152b71edd21a544d55-closed-solid-body
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e8152b71edd21a544d55-cyan-flush-status-lens
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e8152b71edd21a544d55-interchangeable-plain-fac
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e8152b71edd21a544d55-lower-impact-rail-right
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e8152b71edd21a544d55-lower-impact-rail-cut-poc
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e8152b71edd21a544d55-lower-impact-rail-left
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e8152b71edd21a544d55-pale-wrapped-connector-ou
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e8152b71edd21a544d55-pale-wrapped-connector-in
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e8152b71edd21a544d55-recess-shadow-seat
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e8152b71edd21a544d55-upper-stepped-shoulder
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Finished glTF 2.0 export in 0.15414953231811523 s
+
+22:49:27 | INFO: Starting glTF 2.0 export
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-c2da9d9d47c98c01ceb8-closed-incoming-wrapped-b
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-c2da9d9d47c98c01ceb8-closed-outgoing-wrapped-b
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-c2da9d9d47c98c01ceb8-closed-solid-body
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-c2da9d9d47c98c01ceb8-cyan-flush-status-lens
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-c2da9d9d47c98c01ceb8-interchangeable-plain-fac
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-c2da9d9d47c98c01ceb8-lower-impact-rail-right
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-c2da9d9d47c98c01ceb8-lower-impact-rail-cut-poc
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-c2da9d9d47c98c01ceb8-lower-impact-rail-left
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-c2da9d9d47c98c01ceb8-pale-wrapped-connector-ou
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-c2da9d9d47c98c01ceb8-pale-wrapped-connector-in
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-c2da9d9d47c98c01ceb8-recess-shadow-seat
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-c2da9d9d47c98c01ceb8-upper-stepped-shoulder
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Finished glTF 2.0 export in 0.22579264640808105 s
+
+22:49:27 | INFO: Starting glTF 2.0 export
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e7a26fe3b6e058621d39-closed-incoming-wrapped-b
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e7a26fe3b6e058621d39-closed-outgoing-wrapped-b
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e7a26fe3b6e058621d39-closed-solid-body
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e7a26fe3b6e058621d39-cyan-flush-status-lens
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e7a26fe3b6e058621d39-interchangeable-plain-fac
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e7a26fe3b6e058621d39-lower-impact-rail-right
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e7a26fe3b6e058621d39-lower-impact-rail-cut-poc
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e7a26fe3b6e058621d39-lower-impact-rail-left
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e7a26fe3b6e058621d39-pale-wrapped-connector-ou
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e7a26fe3b6e058621d39-pale-wrapped-connector-in
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e7a26fe3b6e058621d39-recess-shadow-seat
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-e7a26fe3b6e058621d39-upper-stepped-shoulder
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Finished glTF 2.0 export in 0.1581578254699707 s
+
+22:49:27 | INFO: Starting glTF 2.0 export
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-8233c1a3a948a91de0c7-closed-incoming-wrapped-b
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-8233c1a3a948a91de0c7-closed-outgoing-wrapped-b
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-8233c1a3a948a91de0c7-closed-solid-body
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-8233c1a3a948a91de0c7-interchangeable-plain-fac
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-8233c1a3a948a91de0c7-lower-impact-rail
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-8233c1a3a948a91de0c7-pale-wrapped-connector-ou
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-8233c1a3a948a91de0c7-pale-wrapped-connector-in
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-8233c1a3a948a91de0c7-recess-shadow-seat
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-8233c1a3a948a91de0c7-upper-stepped-shoulder
+22:49:27 | INFO: Primitives created: 1
+22:49:27 | INFO: Finished glTF 2.0 export in 0.2555816173553467 s
+
+22:49:27 | INFO: Starting glTF 2.0 export
+22:49:27 | INFO: Extracting primitive: MESH-armor-block-a252a121923cfb248f94-closed-incoming-wrapped-b
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-a252a121923cfb248f94-closed-outgoing-wrapped-b
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-a252a121923cfb248f94-closed-solid-body
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-a252a121923cfb248f94-interchangeable-plain-fac
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-a252a121923cfb248f94-lower-impact-rail
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-a252a121923cfb248f94-pale-wrapped-connector-ou
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-a252a121923cfb248f94-pale-wrapped-connector-in
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-a252a121923cfb248f94-recess-shadow-seat
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-a252a121923cfb248f94-upper-stepped-shoulder
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Finished glTF 2.0 export in 0.15468120574951172 s
+
+22:49:28 | INFO: Starting glTF 2.0 export
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-981bd24736c640366791-closed-incoming-wrapped-b
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-981bd24736c640366791-closed-outgoing-wrapped-b
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-981bd24736c640366791-closed-solid-body
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-981bd24736c640366791-interchangeable-plain-fac
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-981bd24736c640366791-lower-impact-rail
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-981bd24736c640366791-pale-wrapped-connector-ou
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-981bd24736c640366791-pale-wrapped-connector-in
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-981bd24736c640366791-recess-shadow-seat
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-981bd24736c640366791-upper-stepped-shoulder
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Finished glTF 2.0 export in 0.16667437553405762 s
+
+22:49:28 | INFO: Starting glTF 2.0 export
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-7bcf58fae727b968e126-closed-incoming-wrapped-b
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-7bcf58fae727b968e126-closed-outgoing-wrapped-b
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-7bcf58fae727b968e126-closed-solid-body
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-7bcf58fae727b968e126-interchangeable-plain-fac
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-7bcf58fae727b968e126-lower-impact-rail
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-7bcf58fae727b968e126-pale-wrapped-connector-ou
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-7bcf58fae727b968e126-pale-wrapped-connector-in
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-7bcf58fae727b968e126-recess-shadow-seat
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-7bcf58fae727b968e126-upper-stepped-shoulder
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Finished glTF 2.0 export in 0.15857481956481934 s
+
+22:49:28 | INFO: Starting glTF 2.0 export
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-825d61aeb52f08f61c14-closed-incoming-wrapped-b
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-825d61aeb52f08f61c14-closed-outgoing-wrapped-b
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-825d61aeb52f08f61c14-closed-solid-body
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-825d61aeb52f08f61c14-interchangeable-plain-fac
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-825d61aeb52f08f61c14-lower-impact-rail
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-825d61aeb52f08f61c14-pale-wrapped-connector-ou
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-825d61aeb52f08f61c14-pale-wrapped-connector-in
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-825d61aeb52f08f61c14-recess-shadow-seat
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-825d61aeb52f08f61c14-upper-stepped-shoulder
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Finished glTF 2.0 export in 0.17728376388549805 s
+
+22:49:28 | INFO: Starting glTF 2.0 export
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-bb2e153a868e9214017f-closed-junction-wedge
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-bb2e153a868e9214017f-junction-lower-navy-shoe
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-bb2e153a868e9214017f-junction-upper-navy-shoul
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Extracting primitive: MESH-armor-block-bb2e153a868e9214017f-junction-wrapped-pale-con
+22:49:28 | INFO: Primitives created: 1
+22:49:28 | INFO: Finished glTF 2.0 export in 0.21110081672668457 s
+
+22:49:29 | INFO: Starting glTF 2.0 export
+22:49:29 | INFO: Extracting primitive: MESH-armor-block-b5debfc1efb6816ed06d-closed-junction-wedge
+22:49:29 | INFO: Primitives created: 1
+22:49:29 | INFO: Extracting primitive: MESH-armor-block-b5debfc1efb6816ed06d-junction-lower-navy-shoe
+22:49:29 | INFO: Primitives created: 1
+22:49:29 | INFO: Extracting primitive: MESH-armor-block-b5debfc1efb6816ed06d-junction-upper-navy-shoul
+22:49:29 | INFO: Primitives created: 1
+22:49:29 | INFO: Extracting primitive: MESH-armor-block-b5debfc1efb6816ed06d-junction-wrapped-pale-con
+22:49:29 | INFO: Primitives created: 1
+22:49:29 | INFO: Finished glTF 2.0 export in 0.12152409553527832 s
+
+22:49:29 | INFO: Starting glTF 2.0 export
+22:49:29 | INFO: Extracting primitive: MESH-armor-block-19cb454187f2b808d0f7-closed-junction-wedge
+22:49:29 | INFO: Primitives created: 1
+22:49:29 | INFO: Extracting primitive: MESH-armor-block-19cb454187f2b808d0f7-junction-lower-navy-shoe
+22:49:29 | INFO: Primitives created: 1
+22:49:29 | INFO: Extracting primitive: MESH-armor-block-19cb454187f2b808d0f7-junction-upper-navy-shoul
+22:49:29 | INFO: Primitives created: 1
+22:49:29 | INFO: Extracting primitive: MESH-armor-block-19cb454187f2b808d0f7-junction-wrapped-pale-con
+22:49:29 | INFO: Primitives created: 1
+22:49:29 | INFO: Finished glTF 2.0 export in 0.20296573638916016 s
+
+22:49:29 | INFO: Starting glTF 2.0 export
+22:49:29 | INFO: Extracting primitive: MESH-armor-block-8c601c2467812dda7c97-closed-junction-wedge
+22:49:29 | INFO: Primitives created: 1
+22:49:29 | INFO: Extracting primitive: MESH-armor-block-8c601c2467812dda7c97-junction-lower-navy-shoe
+22:49:29 | INFO: Primitives created: 1
+22:49:29 | INFO: Extracting primitive: MESH-armor-block-8c601c2467812dda7c97-junction-upper-navy-shoul
+22:49:29 | INFO: Primitives created: 1
+22:49:29 | INFO: Extracting primitive: MESH-armor-block-8c601c2467812dda7c97-junction-wrapped-pale-con
+22:49:29 | INFO: Primitives created: 1
+22:49:29 | INFO: Finished glTF 2.0 export in 0.06935977935791016 s
+
+22:49:29 | INFO: Starting glTF 2.0 export
+22:49:29 | INFO: Extracting primitive: MESH-armor-block-04506299cdccdc3362d3-closed-junction-wedge
+22:49:29 | INFO: Primitives created: 1
+22:49:29 | INFO: Extracting primitive: MESH-armor-block-04506299cdccdc3362d3-junction-lower-navy-shoe
+22:49:29 | INFO: Primitives created: 1
+22:49:29 | INFO: Extracting primitive: MESH-armor-block-04506299cdccdc3362d3-junction-upper-navy-shoul
+22:49:29 | INFO: Primitives created: 1
+22:49:29 | INFO: Extracting primitive: MESH-armor-block-04506299cdccdc3362d3-junction-wrapped-pale-con
+22:49:29 | INFO: Primitives created: 1
+22:49:29 | INFO: Finished glTF 2.0 export in 0.19355988502502441 s
+
+22:49:30 | INFO: Starting glTF 2.0 export
+22:49:30 | INFO: Extracting primitive: MESH-armor-block-b9889f7ac1379ef477d3-closed-junction-wedge
+22:49:30 | INFO: Primitives created: 1
+22:49:30 | INFO: Extracting primitive: MESH-armor-block-b9889f7ac1379ef477d3-junction-lower-navy-shoe
+22:49:30 | INFO: Primitives created: 1
+22:49:30 | INFO: Extracting primitive: MESH-armor-block-b9889f7ac1379ef477d3-junction-upper-navy-shoul
+22:49:30 | INFO: Primitives created: 1
+22:49:30 | INFO: Extracting primitive: MESH-armor-block-b9889f7ac1379ef477d3-junction-wrapped-pale-con
+22:49:30 | INFO: Primitives created: 1
+22:49:30 | INFO: Finished glTF 2.0 export in 0.08906888961791992 s
+
+22:49:30 | INFO: Starting glTF 2.0 export
+22:49:30 | INFO: Extracting primitive: MESH-armor-block-e465b7594b2433a77396-closed-junction-wedge
+22:49:30 | INFO: Primitives created: 1
+22:49:30 | INFO: Extracting primitive: MESH-armor-block-e465b7594b2433a77396-junction-lower-navy-shoe
+22:49:30 | INFO: Primitives created: 1
+22:49:30 | INFO: Extracting primitive: MESH-armor-block-e465b7594b2433a77396-junction-upper-navy-shoul
+22:49:30 | INFO: Primitives created: 1
+22:49:30 | INFO: Extracting primitive: MESH-armor-block-e465b7594b2433a77396-junction-wrapped-pale-con
+22:49:30 | INFO: Primitives created: 1
+22:49:30 | INFO: Finished glTF 2.0 export in 0.15710020065307617 s
+
+22:49:30 | INFO: Starting glTF 2.0 export
+22:49:30 | INFO: Extracting primitive: MESH-armor-block-c3e51deb6848ddb10001-closed-junction-wedge
+22:49:30 | INFO: Primitives created: 1
+22:49:30 | INFO: Extracting primitive: MESH-armor-block-c3e51deb6848ddb10001-junction-lower-navy-shoe
+22:49:30 | INFO: Primitives created: 1
+22:49:30 | INFO: Extracting primitive: MESH-armor-block-c3e51deb6848ddb10001-junction-upper-navy-shoul
+22:49:30 | INFO: Primitives created: 1
+22:49:30 | INFO: Extracting primitive: MESH-armor-block-c3e51deb6848ddb10001-junction-wrapped-pale-con
+22:49:30 | INFO: Primitives created: 1
+22:49:30 | INFO: Finished glTF 2.0 export in 0.15680551528930664 s
+
+22:49:30 | INFO: Starting glTF 2.0 export
+22:49:30 | INFO: Extracting primitive: MESH-armor-block-b8ebf4aa6991e098a6d3-closed-junction-wedge
+22:49:30 | INFO: Primitives created: 1
+22:49:30 | INFO: Extracting primitive: MESH-armor-block-b8ebf4aa6991e098a6d3-junction-lower-navy-shoe
+22:49:30 | INFO: Primitives created: 1
+22:49:30 | INFO: Extracting primitive: MESH-armor-block-b8ebf4aa6991e098a6d3-junction-upper-navy-shoul
+22:49:30 | INFO: Primitives created: 1
+22:49:30 | INFO: Extracting primitive: MESH-armor-block-b8ebf4aa6991e098a6d3-junction-wrapped-pale-con
+22:49:30 | INFO: Primitives created: 1
+22:49:30 | INFO: Finished glTF 2.0 export in 0.1417984962463379 s
+
+22:49:30 | INFO: Starting glTF 2.0 export
+22:49:30 | INFO: Extracting primitive: MESH-armor-block-bdffe58423963910d02b-closed-junction-wedge
+22:49:31 | INFO: Primitives created: 1
+22:49:31 | INFO: Extracting primitive: MESH-armor-block-bdffe58423963910d02b-junction-lower-navy-shoe
+22:49:31 | INFO: Primitives created: 1
+22:49:31 | INFO: Extracting primitive: MESH-armor-block-bdffe58423963910d02b-junction-upper-navy-shoul
+22:49:31 | INFO: Primitives created: 1
+22:49:31 | INFO: Extracting primitive: MESH-armor-block-bdffe58423963910d02b-junction-wrapped-pale-con
+22:49:31 | INFO: Primitives created: 1
+22:49:31 | INFO: Finished glTF 2.0 export in 0.19385170936584473 s
+
+22:49:31 | INFO: Starting glTF 2.0 export
+22:49:31 | INFO: Extracting primitive: MESH-armor-block-098c86a675e3e951ace9-closed-junction-wedge
+22:49:31 | INFO: Primitives created: 1
+22:49:31 | INFO: Extracting primitive: MESH-armor-block-098c86a675e3e951ace9-junction-lower-navy-shoe
+22:49:31 | INFO: Primitives created: 1
+22:49:31 | INFO: Extracting primitive: MESH-armor-block-098c86a675e3e951ace9-junction-upper-navy-shoul
+22:49:31 | INFO: Primitives created: 1
+22:49:31 | INFO: Extracting primitive: MESH-armor-block-098c86a675e3e951ace9-junction-wrapped-pale-con
+22:49:31 | INFO: Primitives created: 1
+22:49:31 | INFO: Finished glTF 2.0 export in 0.1274271011352539 s
+
+22:49:31 | INFO: Starting glTF 2.0 export
+22:49:31 | INFO: Extracting primitive: MESH-armor-block-0f4edf0963be28b7952b-closed-junction-wedge
+22:49:31 | INFO: Primitives created: 1
+22:49:31 | INFO: Extracting primitive: MESH-armor-block-0f4edf0963be28b7952b-junction-lower-navy-shoe
+22:49:31 | INFO: Primitives created: 1
+22:49:31 | INFO: Extracting primitive: MESH-armor-block-0f4edf0963be28b7952b-junction-upper-navy-shoul
+22:49:31 | INFO: Primitives created: 1
+22:49:31 | INFO: Extracting primitive: MESH-armor-block-0f4edf0963be28b7952b-junction-wrapped-pale-con
+22:49:31 | INFO: Primitives created: 1
+22:49:31 | INFO: Finished glTF 2.0 export in 0.2252511978149414 s
+
+22:49:31 | INFO: Starting glTF 2.0 export
+22:49:31 | INFO: Extracting primitive: MESH-armor-block-eae57557166988330b70-closed-junction-wedge
+22:49:31 | INFO: Primitives created: 1
+22:49:31 | INFO: Extracting primitive: MESH-armor-block-eae57557166988330b70-junction-lower-navy-shoe
+22:49:31 | INFO: Primitives created: 1
+22:49:31 | INFO: Extracting primitive: MESH-armor-block-eae57557166988330b70-junction-upper-navy-shoul
+22:49:31 | INFO: Primitives created: 1
+22:49:31 | INFO: Extracting primitive: MESH-armor-block-eae57557166988330b70-junction-wrapped-pale-con
+22:49:31 | INFO: Primitives created: 1
+22:49:31 | INFO: Finished glTF 2.0 export in 0.12482857704162598 s
+
+22:49:31 | INFO: Starting glTF 2.0 export
+22:49:31 | INFO: Extracting primitive: MESH-armor-block-54094cde041737badaf2-closed-junction-wedge
+22:49:32 | INFO: Primitives created: 1
+22:49:32 | INFO: Extracting primitive: MESH-armor-block-54094cde041737badaf2-junction-lower-navy-shoe
+22:49:32 | INFO: Primitives created: 1
+22:49:32 | INFO: Extracting primitive: MESH-armor-block-54094cde041737badaf2-junction-upper-navy-shoul
+22:49:32 | INFO: Primitives created: 1
+22:49:32 | INFO: Extracting primitive: MESH-armor-block-54094cde041737badaf2-junction-wrapped-pale-con
+22:49:32 | INFO: Primitives created: 1
+22:49:32 | INFO: Finished glTF 2.0 export in 0.11458063125610352 s
+
+22:49:32 | INFO: Starting glTF 2.0 export
+22:49:32 | INFO: Extracting primitive: MESH-armor-block-2cce8582f894eec65110-closed-junction-wedge
+22:49:32 | INFO: Primitives created: 1
+22:49:32 | INFO: Extracting primitive: MESH-armor-block-2cce8582f894eec65110-junction-lower-navy-shoe
+22:49:32 | INFO: Primitives created: 1
+22:49:32 | INFO: Extracting primitive: MESH-armor-block-2cce8582f894eec65110-junction-upper-navy-shoul
+22:49:32 | INFO: Primitives created: 1
+22:49:32 | INFO: Extracting primitive: MESH-armor-block-2cce8582f894eec65110-junction-wrapped-pale-con
+22:49:32 | INFO: Primitives created: 1
+22:49:32 | INFO: Finished glTF 2.0 export in 0.18540406227111816 s
+
+22:49:32 | INFO: Starting glTF 2.0 export
+22:49:32 | INFO: Extracting primitive: MESH-armor-block-aabac0a89386b4aa9045-closed-incoming-wrapped-b
+22:49:32 | INFO: Primitives created: 1
+22:49:32 | INFO: Extracting primitive: MESH-armor-block-aabac0a89386b4aa9045-closed-outgoing-wrapped-b
+22:49:32 | INFO: Primitives created: 1
+22:49:32 | INFO: Extracting primitive: MESH-armor-block-aabac0a89386b4aa9045-closed-solid-body
+22:49:32 | INFO: Primitives created: 1
+22:49:32 | INFO: Extracting primitive: MESH-armor-block-aabac0a89386b4aa9045-cyan-flush-status-lens
+22:49:32 | INFO: Primitives created: 1
+22:49:32 | INFO: Extracting primitive: MESH-armor-block-aabac0a89386b4aa9045-interchangeable-identity-
+22:49:32 | INFO: Primitives created: 1
+22:49:32 | INFO: Extracting primitive: MESH-armor-block-aabac0a89386b4aa9045-lower-impact-rail-right
+22:49:32 | INFO: Primitives created: 1
+22:49:32 | INFO: Extracting primitive: MESH-armor-block-aabac0a89386b4aa9045-lower-impact-rail-cut-poc
+22:49:32 | INFO: Primitives created: 1
+22:49:32 | INFO: Extracting primitive: MESH-armor-block-aabac0a89386b4aa9045-lower-impact-rail-left
+22:49:32 | INFO: Primitives created: 1
+22:49:32 | INFO: Extracting primitive: MESH-armor-block-aabac0a89386b4aa9045-pale-wrapped-connector-ou
+22:49:32 | INFO: Primitives created: 1
+22:49:32 | INFO: Extracting primitive: MESH-armor-block-aabac0a89386b4aa9045-pale-wrapped-connector-in
+22:49:32 | INFO: Primitives created: 1
+22:49:32 | INFO: Extracting primitive: MESH-armor-block-aabac0a89386b4aa9045-recess-shadow-seat
+22:49:32 | INFO: Primitives created: 1
+22:49:32 | INFO: Extracting primitive: MESH-armor-block-aabac0a89386b4aa9045-upper-stepped-shoulder
+22:49:32 | INFO: Primitives created: 1
+22:49:32 | INFO: Finished glTF 2.0 export in 0.15205001831054688 s
+
+Info: Saved "source.blend"
+{"output": "/root/sidereal_spacetime/assets/art-library/framed-wayfarer/r005/family-03", "models": 76, "assemblies": ["joined-bay", "solid-section", "convex-45-half-height", "concave-90", "wayfarer", "alternate-station", "alternate-tug", "heights", "bulkheads", "directions-32", "junction-registry", "identity-bay"]}
+Blender 4.3.2
+
+Blender quit

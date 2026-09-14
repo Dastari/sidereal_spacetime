@@ -1,0 +1,45 @@
+{
+  "status": "pass",
+  "sourceCheckout": "/root/wayfarer-armor-pr",
+  "rebuildCommand": "python3 scripts/art_library/armor_block_kit.py --out .runtime/armor-block-r005-verification/rebuilt-proof",
+  "rebuiltModels": [
+    {
+      "modelId": "armor-block-f94c0ba2aa04f31fb6a5",
+      "expected": "bdbeca38f54429ee4b19f1540688735e142bb5f3b139f7784fc646bf6a11ab61",
+      "rebuilt": "bdbeca38f54429ee4b19f1540688735e142bb5f3b139f7784fc646bf6a11ab61"
+    },
+    {
+      "modelId": "armor-block-7c657ee01a90318dec3e",
+      "expected": "1aabbc710053000f347921a78da9504da021b26e92e5d6a93cb18955020f96e7",
+      "rebuilt": "1aabbc710053000f347921a78da9504da021b26e92e5d6a93cb18955020f96e7"
+    },
+    {
+      "modelId": "armor-block-fe79dfaf2e1542dbd67c",
+      "expected": "85155d244f0daebe3be3436d5df25f8da0d5237e5b2db2c270ea93afe559b427",
+      "rebuilt": "85155d244f0daebe3be3436d5df25f8da0d5237e5b2db2c270ea93afe559b427"
+    },
+    {
+      "modelId": "armor-block-9ca59f6db637d3afceb9",
+      "expected": "d51805b2e04641a51b59f2e32c5d85f3468bcb86e5bc668cb7f0903d7600a8f8",
+      "rebuilt": "d51805b2e04641a51b59f2e32c5d85f3468bcb86e5bc668cb7f0903d7600a8f8"
+    },
+    {
+      "modelId": "armor-block-70b34597548b284a0a7f",
+      "expected": "9754a614faf93ab09604a427911cede60f2962869e4459aeff0ccc82fab9c5bf",
+      "rebuilt": "9754a614faf93ab09604a427911cede60f2962869e4459aeff0ccc82fab9c5bf"
+    },
+    {
+      "modelId": "armor-block-cd2f17ea0cf58cb60b7f",
+      "expected": "a17f14b5c4fe4a5524b473853def27da9dd26ce1ce4edb5f90330dfb053755f7",
+      "rebuilt": "a17f14b5c4fe4a5524b473853def27da9dd26ce1ce4edb5f90330dfb053755f7"
+    },
+    {
+      "modelId": "armor-block-1676c64748013f376c0a",
+      "expected": "2e99a52ae1cbce3e023a584df2f834068c1e424d1f9aefc6ae352ab564097419",
+      "rebuilt": "2e99a52ae1cbce3e023a584df2f834068c1e424d1f9aefc6ae352ab564097419"
+    }
+  ],
+  "archiveModels": 76,
+  "archiveNativeAndContacts": "pass",
+  "packedGlbSha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8"
+}

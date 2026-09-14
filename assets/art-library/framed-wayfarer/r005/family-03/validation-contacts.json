@@ -1,0 +1,1916 @@
+{
+  "schema": "sidereal.native-block-contact-validation.v1",
+  "status": "pass",
+  "manifestSha256": "2e199dba85fe112fd3249c1837cf73c581939ef327aaaf517b47c8d9e25eede9",
+  "validatorSha256": "7eb06e279fe4b190a7fe42ef99ff6c122db3e5e1a13784acebc6c52f7028723e",
+  "dependencySha256": "ed4a3203806a0e0624a1c34f198f503f965bb0f300059c134089367b1c9eddd1",
+  "backingContactFaces": [
+    {
+      "modelId": "armor-block-f94c0ba2aa04f31fb6a5",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-f94c0ba2aa04f31fb6a5",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-7c657ee01a90318dec3e",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-7c657ee01a90318dec3e",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-fe79dfaf2e1542dbd67c",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-fe79dfaf2e1542dbd67c",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-9ca59f6db637d3afceb9",
+      "contact": "incoming",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-9ca59f6db637d3afceb9",
+      "contact": "outgoing",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-70b34597548b284a0a7f",
+      "contact": "incoming",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-70b34597548b284a0a7f",
+      "contact": "outgoing",
+      "areaM2": 1.1250000123565833,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-cd2f17ea0cf58cb60b7f",
+      "contact": "incoming",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-cd2f17ea0cf58cb60b7f",
+      "contact": "outgoing",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-1676c64748013f376c0a",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-1676c64748013f376c0a",
+      "contact": "outgoing",
+      "areaM2": 2.249999999999651,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-a6743a347ee2fcdd1ce9",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-a6743a347ee2fcdd1ce9",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-62ad930c45227d5287a0",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-62ad930c45227d5287a0",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-e1affbf19f4b7fa30311",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-e1affbf19f4b7fa30311",
+      "contact": "outgoing",
+      "areaM2": 2.2500000000001164,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-926961217b49c21a526b",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-926961217b49c21a526b",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-137adc2153a878094d60",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-137adc2153a878094d60",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-e40f082abbcbe4f55a62",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-e40f082abbcbe4f55a62",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-649dcbda86c17c7952c9",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-649dcbda86c17c7952c9",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-2b558e7ac8eb4184c2af",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-2b558e7ac8eb4184c2af",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-b235419d9a165659f2e8",
+      "contact": "incoming",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-b235419d9a165659f2e8",
+      "contact": "outgoing",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-fabbd7b0578ea00b5791",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 4
+    },
+    {
+      "modelId": "armor-block-fabbd7b0578ea00b5791",
+      "contact": "outgoing",
+      "areaM2": 1.1249999999998255,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-e120acd13dae3b493668",
+      "contact": "incoming",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-e120acd13dae3b493668",
+      "contact": "outgoing",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-98477a5dd3e88b931589",
+      "contact": "incoming",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-98477a5dd3e88b931589",
+      "contact": "outgoing",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-a7ef36310c50dc565d00",
+      "contact": "incoming",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-a7ef36310c50dc565d00",
+      "contact": "outgoing",
+      "areaM2": 2.249999999999651,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 4
+    },
+    {
+      "modelId": "armor-block-4896cc9388c49fcb9b2e",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-4896cc9388c49fcb9b2e",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-d3fa0e462a519b5f36f8",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-d3fa0e462a519b5f36f8",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-9069dfa847efce4fe41e",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-9069dfa847efce4fe41e",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-db7ed5477c90dcffe64f",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-db7ed5477c90dcffe64f",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-05c9d73568be3ad2e6b8",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-05c9d73568be3ad2e6b8",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-15a405777ecce0335b21",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-15a405777ecce0335b21",
+      "contact": "outgoing",
+      "areaM2": 2.2500000000001164,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-43965fec43941bd88fcc",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-43965fec43941bd88fcc",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-af0cc716991642374212",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-af0cc716991642374212",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-57b9352f1f040b7f0157",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-57b9352f1f040b7f0157",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-8904b2af208c0ad89e05",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-8904b2af208c0ad89e05",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-d475f516a65773f4c21e",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-d475f516a65773f4c21e",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-97e82a0a2ae19def921f",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-97e82a0a2ae19def921f",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-57b42efda0a7a7d9ffdd",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-57b42efda0a7a7d9ffdd",
+      "contact": "outgoing",
+      "areaM2": 2.250000033034963,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-7c3af440c13bfbd854f7",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-7c3af440c13bfbd854f7",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-075003ca42dee3ad88d4",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-075003ca42dee3ad88d4",
+      "contact": "outgoing",
+      "areaM2": 2.2499999530670434,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-137dbd4b0d514b60c4c3",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-137dbd4b0d514b60c4c3",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-cb4ec70047162b4093b9",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-cb4ec70047162b4093b9",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-131df6537810373834cb",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-131df6537810373834cb",
+      "contact": "outgoing",
+      "areaM2": 2.2500000323595084,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-79d4507d7b58226cbe80",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-79d4507d7b58226cbe80",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-edc8f579626e43feb839",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-edc8f579626e43feb839",
+      "contact": "outgoing",
+      "areaM2": 2.2500000865704437,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-e7911c4aae9fd2fecbb8",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-e7911c4aae9fd2fecbb8",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-649b14141fa27ecd47e6",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-649b14141fa27ecd47e6",
+      "contact": "outgoing",
+      "areaM2": 2.249999949694191,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-fc5a10216de60493ab08",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-fc5a10216de60493ab08",
+      "contact": "outgoing",
+      "areaM2": 2.2499999829629003,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-204079fa21328c629295",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-204079fa21328c629295",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-50c9e43a8c6ba5af5141",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-50c9e43a8c6ba5af5141",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-e9bc6213d0d76ca7f44b",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-e9bc6213d0d76ca7f44b",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-f731b556d8884e7d7557",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-f731b556d8884e7d7557",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-207cbce0274b3e836291",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-207cbce0274b3e836291",
+      "contact": "outgoing",
+      "areaM2": 2.2500000330349645,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-975ae6c56dd5c22ae720",
+      "contact": "incoming",
+      "areaM2": 0.5625,
+      "expectedAreaM2": 0.5625,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-975ae6c56dd5c22ae720",
+      "contact": "outgoing",
+      "areaM2": 0.5625,
+      "expectedAreaM2": 0.5625,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-0609cba1e9e5472c20b6",
+      "contact": "incoming",
+      "areaM2": 1.6875,
+      "expectedAreaM2": 1.6875,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-0609cba1e9e5472c20b6",
+      "contact": "outgoing",
+      "areaM2": 1.6875,
+      "expectedAreaM2": 1.6875,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-fbbf224dbd286d805ac1",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-fbbf224dbd286d805ac1",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-49384936da4b4c531fcc",
+      "contact": "incoming",
+      "areaM2": 0.1875,
+      "expectedAreaM2": 0.1875,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-49384936da4b4c531fcc",
+      "contact": "outgoing",
+      "areaM2": 0.1875,
+      "expectedAreaM2": 0.1875,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-e8152b71edd21a544d55",
+      "contact": "incoming",
+      "areaM2": 0.375,
+      "expectedAreaM2": 0.375,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-e8152b71edd21a544d55",
+      "contact": "outgoing",
+      "areaM2": 0.375,
+      "expectedAreaM2": 0.375,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-c2da9d9d47c98c01ceb8",
+      "contact": "incoming",
+      "areaM2": 0.5625,
+      "expectedAreaM2": 0.5625,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-c2da9d9d47c98c01ceb8",
+      "contact": "outgoing",
+      "areaM2": 0.5625,
+      "expectedAreaM2": 0.5625,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-e7a26fe3b6e058621d39",
+      "contact": "incoming",
+      "areaM2": 0.75,
+      "expectedAreaM2": 0.75,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-e7a26fe3b6e058621d39",
+      "contact": "outgoing",
+      "areaM2": 0.75,
+      "expectedAreaM2": 0.75,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-8233c1a3a948a91de0c7",
+      "contact": "incoming",
+      "areaM2": 0.5625,
+      "expectedAreaM2": 0.5625,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-8233c1a3a948a91de0c7",
+      "contact": "outgoing",
+      "areaM2": 0.5625,
+      "expectedAreaM2": 0.5625,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-a252a121923cfb248f94",
+      "contact": "incoming",
+      "areaM2": 0.5625,
+      "expectedAreaM2": 0.5625,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-a252a121923cfb248f94",
+      "contact": "outgoing",
+      "areaM2": 0.5625,
+      "expectedAreaM2": 0.5625,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-981bd24736c640366791",
+      "contact": "incoming",
+      "areaM2": 0.5625,
+      "expectedAreaM2": 0.5625,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-981bd24736c640366791",
+      "contact": "outgoing",
+      "areaM2": 0.5625,
+      "expectedAreaM2": 0.5625,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-7bcf58fae727b968e126",
+      "contact": "incoming",
+      "areaM2": 0.5625,
+      "expectedAreaM2": 0.5625,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-7bcf58fae727b968e126",
+      "contact": "outgoing",
+      "areaM2": 0.5625,
+      "expectedAreaM2": 0.5625,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-825d61aeb52f08f61c14",
+      "contact": "incoming",
+      "areaM2": 0.5625,
+      "expectedAreaM2": 0.5625,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-825d61aeb52f08f61c14",
+      "contact": "outgoing",
+      "areaM2": 0.5625,
+      "expectedAreaM2": 0.5625,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-bb2e153a868e9214017f",
+      "contact": "incoming",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-bb2e153a868e9214017f",
+      "contact": "outgoing",
+      "areaM2": 1.1249999914814501,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-b5debfc1efb6816ed06d",
+      "contact": "incoming",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-b5debfc1efb6816ed06d",
+      "contact": "outgoing",
+      "areaM2": 1.125000033067335,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-19cb454187f2b808d0f7",
+      "contact": "incoming",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-19cb454187f2b808d0f7",
+      "contact": "outgoing",
+      "areaM2": 1.1249999511266298,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-8c601c2467812dda7c97",
+      "contact": "incoming",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-8c601c2467812dda7c97",
+      "contact": "outgoing",
+      "areaM2": 1.1250000432852219,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-04506299cdccdc3362d3",
+      "contact": "incoming",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-04506299cdccdc3362d3",
+      "contact": "outgoing",
+      "areaM2": 1.1250000165174816,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-b9889f7ac1379ef477d3",
+      "contact": "incoming",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-b9889f7ac1379ef477d3",
+      "contact": "outgoing",
+      "areaM2": 1.1249999727849695,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-e465b7594b2433a77396",
+      "contact": "incoming",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-e465b7594b2433a77396",
+      "contact": "outgoing",
+      "areaM2": 1.1250000281616506,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-c3e51deb6848ddb10001",
+      "contact": "incoming",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-c3e51deb6848ddb10001",
+      "contact": "outgoing",
+      "areaM2": 1.1249999765335217,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-b8ebf4aa6991e098a6d3",
+      "contact": "incoming",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-b8ebf4aa6991e098a6d3",
+      "contact": "outgoing",
+      "areaM2": 1.1250000165174823,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-bdffe58423963910d02b",
+      "contact": "incoming",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-bdffe58423963910d02b",
+      "contact": "outgoing",
+      "areaM2": 1.1250000053375662,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-098c86a675e3e951ace9",
+      "contact": "incoming",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-098c86a675e3e951ace9",
+      "contact": "outgoing",
+      "areaM2": 1.1250000161797542,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-0f4edf0963be28b7952b",
+      "contact": "incoming",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-0f4edf0963be28b7952b",
+      "contact": "outgoing",
+      "areaM2": 1.1249999748470956,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-eae57557166988330b70",
+      "contact": "incoming",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-eae57557166988330b70",
+      "contact": "outgoing",
+      "areaM2": 1.1249999803918802,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-54094cde041737badaf2",
+      "contact": "incoming",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-54094cde041737badaf2",
+      "contact": "outgoing",
+      "areaM2": 1.1250000000000582,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-2cce8582f894eec65110",
+      "contact": "incoming",
+      "areaM2": 1.125,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-2cce8582f894eec65110",
+      "contact": "outgoing",
+      "areaM2": 1.1249999999998255,
+      "expectedAreaM2": 1.125,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-aabac0a89386b4aa9045",
+      "contact": "incoming",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    },
+    {
+      "modelId": "armor-block-aabac0a89386b4aa9045",
+      "contact": "outgoing",
+      "areaM2": 2.25,
+      "expectedAreaM2": 2.25,
+      "exportedFaceTriangles": 2
+    }
+  ],
+  "assemblies": [
+    {
+      "name": "joined-bay",
+      "pairedContacts": [
+        {
+          "a": "joined-bay-000:outgoing",
+          "b": "joined-bay-001:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "joined-bay-001:outgoing",
+          "b": "joined-bay-002:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        }
+      ],
+      "openFixtureEnds": 2,
+      "closedBoundary": false,
+      "endpointDerivedYawChecks": 0
+    },
+    {
+      "name": "solid-section",
+      "pairedContacts": [],
+      "openFixtureEnds": 2,
+      "closedBoundary": false,
+      "endpointDerivedYawChecks": 0
+    },
+    {
+      "name": "convex-45-half-height",
+      "pairedContacts": [
+        {
+          "a": "convex-45-half-height-000:outgoing",
+          "b": "convex-45-half-height-001:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "convex-45-half-height-001:outgoing",
+          "b": "convex-45-half-height-002:incoming",
+          "gapM": 2.3769877549991914e-13,
+          "normalDot": -1.0
+        }
+      ],
+      "openFixtureEnds": 2,
+      "closedBoundary": false,
+      "endpointDerivedYawChecks": 0
+    },
+    {
+      "name": "concave-90",
+      "pairedContacts": [
+        {
+          "a": "concave-90-000:outgoing",
+          "b": "concave-90-001:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "concave-90-001:outgoing",
+          "b": "concave-90-002:incoming",
+          "gapM": 1.226685414884247e-13,
+          "normalDot": -1.0
+        }
+      ],
+      "openFixtureEnds": 2,
+      "closedBoundary": false,
+      "endpointDerivedYawChecks": 0
+    },
+    {
+      "name": "wayfarer",
+      "pairedContacts": [
+        {
+          "a": "wayfarer-000:incoming",
+          "b": "wayfarer-005:outgoing",
+          "gapM": 5.526725454566888e-14,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-000:outgoing",
+          "b": "wayfarer-001:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-001:outgoing",
+          "b": "wayfarer-002:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-002:outgoing",
+          "b": "wayfarer-003:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-003:outgoing",
+          "b": "wayfarer-004:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-004:outgoing",
+          "b": "wayfarer-015:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-005:incoming",
+          "b": "wayfarer-040:outgoing",
+          "gapM": 8.881784197001252e-16,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-006:incoming",
+          "b": "wayfarer-015:outgoing",
+          "gapM": 5.526725454566888e-14,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-006:outgoing",
+          "b": "wayfarer-007:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-007:outgoing",
+          "b": "wayfarer-008:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-008:outgoing",
+          "b": "wayfarer-009:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-009:outgoing",
+          "b": "wayfarer-010:incoming",
+          "gapM": 8.881784197001252e-16,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-010:outgoing",
+          "b": "wayfarer-011:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-011:outgoing",
+          "b": "wayfarer-012:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-012:outgoing",
+          "b": "wayfarer-013:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-013:outgoing",
+          "b": "wayfarer-014:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-014:outgoing",
+          "b": "wayfarer-017:incoming",
+          "gapM": 8.881784197001252e-16,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-016:incoming",
+          "b": "wayfarer-017:outgoing",
+          "gapM": 5.526725454566888e-14,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-016:outgoing",
+          "b": "wayfarer-019:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-018:incoming",
+          "b": "wayfarer-019:outgoing",
+          "gapM": 1.2273905941877535e-13,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-018:outgoing",
+          "b": "wayfarer-022:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-020:incoming",
+          "b": "wayfarer-022:outgoing",
+          "gapM": 2.375877272697835e-13,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-020:outgoing",
+          "b": "wayfarer-021:incoming",
+          "gapM": 9.546162148797352e-14,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-021:outgoing",
+          "b": "wayfarer-024:incoming",
+          "gapM": 9.530474157418038e-14,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-023:incoming",
+          "b": "wayfarer-024:outgoing",
+          "gapM": 2.3818349173111945e-13,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-023:outgoing",
+          "b": "wayfarer-027:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-025:incoming",
+          "b": "wayfarer-027:outgoing",
+          "gapM": 2.380319200451917e-13,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-025:outgoing",
+          "b": "wayfarer-026:incoming",
+          "gapM": 9.389625494116542e-14,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-026:outgoing",
+          "b": "wayfarer-029:incoming",
+          "gapM": 9.389625494116542e-14,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-028:incoming",
+          "b": "wayfarer-029:outgoing",
+          "gapM": 2.3834024209140883e-13,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-028:outgoing",
+          "b": "wayfarer-031:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-030:incoming",
+          "b": "wayfarer-031:outgoing",
+          "gapM": 1.218974323385976e-13,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-030:outgoing",
+          "b": "wayfarer-041:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-032:incoming",
+          "b": "wayfarer-041:outgoing",
+          "gapM": 5.526725454566888e-14,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-032:outgoing",
+          "b": "wayfarer-033:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-033:outgoing",
+          "b": "wayfarer-034:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-034:outgoing",
+          "b": "wayfarer-035:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-035:outgoing",
+          "b": "wayfarer-036:incoming",
+          "gapM": 8.881784197001252e-16,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-036:outgoing",
+          "b": "wayfarer-037:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-037:outgoing",
+          "b": "wayfarer-038:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-038:outgoing",
+          "b": "wayfarer-039:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "wayfarer-039:outgoing",
+          "b": "wayfarer-040:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        }
+      ],
+      "openFixtureEnds": 0,
+      "closedBoundary": true,
+      "endpointDerivedYawChecks": 32
+    },
+    {
+      "name": "alternate-station",
+      "pairedContacts": [
+        {
+          "a": "alternate-station-000:incoming",
+          "b": "alternate-station-006:outgoing",
+          "gapM": 1.2272119519344765e-13,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-000:outgoing",
+          "b": "alternate-station-001:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-001:outgoing",
+          "b": "alternate-station-002:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-002:outgoing",
+          "b": "alternate-station-003:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-003:outgoing",
+          "b": "alternate-station-004:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-004:outgoing",
+          "b": "alternate-station-005:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-005:outgoing",
+          "b": "alternate-station-012:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-006:incoming",
+          "b": "alternate-station-052:outgoing",
+          "gapM": 2.7755575615628914e-16,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-007:incoming",
+          "b": "alternate-station-012:outgoing",
+          "gapM": 5.507134270489467e-14,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-007:outgoing",
+          "b": "alternate-station-008:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-008:outgoing",
+          "b": "alternate-station-009:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-009:outgoing",
+          "b": "alternate-station-010:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-010:outgoing",
+          "b": "alternate-station-011:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-011:outgoing",
+          "b": "alternate-station-015:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-013:incoming",
+          "b": "alternate-station-015:outgoing",
+          "gapM": 5.526725454566888e-14,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-013:outgoing",
+          "b": "alternate-station-014:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-014:outgoing",
+          "b": "alternate-station-018:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-016:incoming",
+          "b": "alternate-station-018:outgoing",
+          "gapM": 5.526725454566888e-14,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-016:outgoing",
+          "b": "alternate-station-017:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-017:outgoing",
+          "b": "alternate-station-020:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-019:incoming",
+          "b": "alternate-station-020:outgoing",
+          "gapM": 1.2273905941877535e-13,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-019:outgoing",
+          "b": "alternate-station-023:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-021:incoming",
+          "b": "alternate-station-023:outgoing",
+          "gapM": 1.2273905941877535e-13,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-021:outgoing",
+          "b": "alternate-station-022:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-022:outgoing",
+          "b": "alternate-station-026:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-024:incoming",
+          "b": "alternate-station-026:outgoing",
+          "gapM": 5.4954133242298876e-14,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-024:outgoing",
+          "b": "alternate-station-025:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-025:outgoing",
+          "b": "alternate-station-029:incoming",
+          "gapM": 5.551115123125783e-17,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-027:incoming",
+          "b": "alternate-station-029:outgoing",
+          "gapM": 1.0125331372097693e-13,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-027:outgoing",
+          "b": "alternate-station-028:incoming",
+          "gapM": 1.7763568394002505e-15,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-028:outgoing",
+          "b": "alternate-station-031:incoming",
+          "gapM": 4.20640633810713e-13,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-030:incoming",
+          "b": "alternate-station-031:outgoing",
+          "gapM": 4.773081074398676e-14,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-030:outgoing",
+          "b": "alternate-station-034:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-032:incoming",
+          "b": "alternate-station-034:outgoing",
+          "gapM": 4.030148115872043e-13,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-032:outgoing",
+          "b": "alternate-station-033:incoming",
+          "gapM": 8.881784197001252e-16,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-033:outgoing",
+          "b": "alternate-station-037:incoming",
+          "gapM": 7.545989152597272e-13,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-035:incoming",
+          "b": "alternate-station-037:outgoing",
+          "gapM": 2.89742260524108e-13,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-035:outgoing",
+          "b": "alternate-station-036:incoming",
+          "gapM": 1.687538997430238e-13,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-036:outgoing",
+          "b": "alternate-station-040:incoming",
+          "gapM": 1.687538997430238e-13,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-038:incoming",
+          "b": "alternate-station-040:outgoing",
+          "gapM": 7.178465468420082e-14,
+          "normalDot": -0.9999999999999999
+        },
+        {
+          "a": "alternate-station-038:outgoing",
+          "b": "alternate-station-039:incoming",
+          "gapM": 1.790180836524724e-15,
+          "normalDot": -0.9999999999999999
+        },
+        {
+          "a": "alternate-station-039:outgoing",
+          "b": "alternate-station-043:incoming",
+          "gapM": 2.748067361293024e-13,
+          "normalDot": -0.9999999999999999
+        },
+        {
+          "a": "alternate-station-041:incoming",
+          "b": "alternate-station-043:outgoing",
+          "gapM": 1.2603991169040605e-13,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-041:outgoing",
+          "b": "alternate-station-042:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-042:outgoing",
+          "b": "alternate-station-050:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-044:incoming",
+          "b": "alternate-station-050:outgoing",
+          "gapM": 5.526725454566888e-14,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-044:outgoing",
+          "b": "alternate-station-045:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-045:outgoing",
+          "b": "alternate-station-046:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-046:outgoing",
+          "b": "alternate-station-047:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-047:outgoing",
+          "b": "alternate-station-048:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-048:outgoing",
+          "b": "alternate-station-049:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-049:outgoing",
+          "b": "alternate-station-053:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-051:incoming",
+          "b": "alternate-station-053:outgoing",
+          "gapM": 5.475710111680983e-14,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-station-051:outgoing",
+          "b": "alternate-station-052:incoming",
+          "gapM": 5.551115123125783e-17,
+          "normalDot": -1.0
+        }
+      ],
+      "openFixtureEnds": 0,
+      "closedBoundary": true,
+      "endpointDerivedYawChecks": 39
+    },
+    {
+      "name": "alternate-tug",
+      "pairedContacts": [
+        {
+          "a": "alternate-tug-000:incoming",
+          "b": "alternate-tug-005:outgoing",
+          "gapM": 5.487473143099794e-14,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-tug-000:outgoing",
+          "b": "alternate-tug-001:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-tug-001:outgoing",
+          "b": "alternate-tug-002:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-tug-002:outgoing",
+          "b": "alternate-tug-003:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-tug-003:outgoing",
+          "b": "alternate-tug-004:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-tug-004:outgoing",
+          "b": "alternate-tug-010:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-tug-005:incoming",
+          "b": "alternate-tug-021:outgoing",
+          "gapM": 2.220446049250313e-16,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-tug-006:incoming",
+          "b": "alternate-tug-010:outgoing",
+          "gapM": 5.507134270489467e-14,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-tug-006:outgoing",
+          "b": "alternate-tug-007:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-tug-007:outgoing",
+          "b": "alternate-tug-008:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-tug-008:outgoing",
+          "b": "alternate-tug-009:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-tug-009:outgoing",
+          "b": "alternate-tug-013:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-tug-011:incoming",
+          "b": "alternate-tug-013:outgoing",
+          "gapM": 5.526725454566888e-14,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-tug-011:outgoing",
+          "b": "alternate-tug-012:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-tug-012:outgoing",
+          "b": "alternate-tug-016:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-tug-014:incoming",
+          "b": "alternate-tug-016:outgoing",
+          "gapM": 4.7747335172643135e-14,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-tug-014:outgoing",
+          "b": "alternate-tug-015:incoming",
+          "gapM": 0.0,
+          "normalDot": -0.9999999999999999
+        },
+        {
+          "a": "alternate-tug-015:outgoing",
+          "b": "alternate-tug-019:incoming",
+          "gapM": 4.200447787294386e-13,
+          "normalDot": -0.9999999999999999
+        },
+        {
+          "a": "alternate-tug-017:incoming",
+          "b": "alternate-tug-019:outgoing",
+          "gapM": 1.5532270091231123e-13,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-tug-017:outgoing",
+          "b": "alternate-tug-018:incoming",
+          "gapM": 0.0,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-tug-018:outgoing",
+          "b": "alternate-tug-022:incoming",
+          "gapM": 1.0597078770047119e-13,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-tug-020:incoming",
+          "b": "alternate-tug-022:outgoing",
+          "gapM": 5.4717778501185896e-14,
+          "normalDot": -1.0
+        },
+        {
+          "a": "alternate-tug-020:outgoing",
+          "b": "alternate-tug-021:incoming",
+          "gapM": 5.551115123125783e-17,
+          "normalDot": -1.0
+        }
+      ],
+      "openFixtureEnds": 0,
+      "closedBoundary": true,
+      "endpointDerivedYawChecks": 17
+    },
+    {
+      "name": "heights",
+      "pairedContacts": [],
+      "openFixtureEnds": 16,
+      "closedBoundary": false,
+      "endpointDerivedYawChecks": 0
+    },
+    {
+      "name": "bulkheads",
+      "pairedContacts": [],
+      "openFixtureEnds": 8,
+      "closedBoundary": false,
+      "endpointDerivedYawChecks": 0
+    },
+    {
+      "name": "directions-32",
+      "pairedContacts": [],
+      "openFixtureEnds": 64,
+      "closedBoundary": false,
+      "endpointDerivedYawChecks": 32
+    },
+    {
+      "name": "junction-registry",
+      "pairedContacts": [],
+      "openFixtureEnds": 32,
+      "closedBoundary": false,
+      "endpointDerivedYawChecks": 0
+    },
+    {
+      "name": "identity-bay",
+      "pairedContacts": [],
+      "openFixtureEnds": 2,
+      "closedBoundary": false,
+      "endpointDerivedYawChecks": 0
+    }
+  ],
+  "scope": "Exact exported backing triangles cover each native named span/corner contact plane; placed sockets coincide with opposing normals. Closed polygons permit no unpaired ends. Direction proofs derive yaw directly from declared integer endpoint vectors."
+}

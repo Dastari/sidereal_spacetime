@@ -1,0 +1,28 @@
+{
+  "snapshots": [
+    {
+      "path": "armor_block_kit_check.py",
+      "sha256": "ed4a3203806a0e0624a1c34f198f503f965bb0f300059c134089367b1c9eddd1",
+      "canonicalPath": "scripts/art_library/armor_block_kit_check.py",
+      "execution": "Run canonical repository helper with candidate directory; finish parity uses .tools/art/bin/python for pinned Pillow."
+    },
+    {
+      "path": "armor_block_kit_contacts.py",
+      "sha256": "7eb06e279fe4b190a7fe42ef99ff6c122db3e5e1a13784acebc6c52f7028723e",
+      "canonicalPath": "scripts/art_library/armor_block_kit_contacts.py",
+      "execution": "Run canonical repository helper with candidate directory; finish parity uses .tools/art/bin/python for pinned Pillow."
+    },
+    {
+      "path": "armor_block_kit_finish_parity.py",
+      "sha256": "279b745a2e64731da283720fe5c33afaf430e079a78094f07e892c972ebac2fc",
+      "canonicalPath": "scripts/art_library/armor_block_kit_finish_parity.py",
+      "execution": "Run canonical repository helper with candidate directory; finish parity uses .tools/art/bin/python for pinned Pillow."
+    },
+    {
+      "path": "armor_block_kit_render.py",
+      "sha256": "23861fdeab2d3366e830ea77ddf15eff635ba335d8b8bdd940121960529b8aa3",
+      "canonicalPath": "scripts/art_library/armor_block_kit_render.py",
+      "execution": "Run canonical repository helper with candidate directory; finish parity uses .tools/art/bin/python for pinned Pillow."
+    }
+  ]
+}

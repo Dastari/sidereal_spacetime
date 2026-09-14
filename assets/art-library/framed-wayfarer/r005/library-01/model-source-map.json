@@ -1,0 +1,3434 @@
+[
+  {
+    "slug": "armor-block-f94c0ba2aa04f31fb6a5",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-f94c0ba2aa04f31fb6a5/model.glb",
+    "sourceSha256": "2ba52942620ef7c806c2e76d55a89b7dc71aca27663b043bfc2beea940b67426",
+    "nodePrefix": "GEO-armor-block-f94c0ba2aa04f31fb6a5--",
+    "kitNodeIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ],
+    "kitMeshIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-7c657ee01a90318dec3e",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-7c657ee01a90318dec3e/model.glb",
+    "sourceSha256": "e9656cd1356aed6540eda3373fe494e6b9b2af49f9cc51253fc578177ed5fea7",
+    "nodePrefix": "GEO-armor-block-7c657ee01a90318dec3e--",
+    "kitNodeIndices": [
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45
+    ],
+    "kitMeshIndices": [
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-fe79dfaf2e1542dbd67c",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-fe79dfaf2e1542dbd67c/model.glb",
+    "sourceSha256": "13cc7fa682a277646163ae4699ec4a430f882b337c636909b9c764c5952d69fb",
+    "nodePrefix": "GEO-armor-block-fe79dfaf2e1542dbd67c--",
+    "kitNodeIndices": [
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "kitMeshIndices": [
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-9ca59f6db637d3afceb9",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-9ca59f6db637d3afceb9/model.glb",
+    "sourceSha256": "8c213705f103b08179133df8f39df343432cae708d840deb62a47072f5195e28",
+    "nodePrefix": "GEO-armor-block-9ca59f6db637d3afceb9--",
+    "kitNodeIndices": [
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81
+    ],
+    "kitMeshIndices": [
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.0,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-70b34597548b284a0a7f",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-70b34597548b284a0a7f/model.glb",
+    "sourceSha256": "57becd882be8eb22314f87b6e8d72e3dcfad9c891723ab4935c43aad0b32f671",
+    "nodePrefix": "GEO-armor-block-70b34597548b284a0a7f--",
+    "kitNodeIndices": [
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88
+    ],
+    "kitMeshIndices": [
+      58,
+      59,
+      60,
+      61
+    ],
+    "bounds": {
+      "min": [
+        -0.375,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.9722718000411987,
+        0.2651650309562683,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-cd2f17ea0cf58cb60b7f",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-cd2f17ea0cf58cb60b7f/model.glb",
+    "sourceSha256": "696e3666a46866af6bac674279b73be7736ec4321671e0b826a56b5282df60ca",
+    "nodePrefix": "GEO-armor-block-cd2f17ea0cf58cb60b7f--",
+    "kitNodeIndices": [
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108,
+      109
+    ],
+    "kitMeshIndices": [
+      62,
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        2.4534270763397217,
+        0.0,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-1676c64748013f376c0a",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-1676c64748013f376c0a/model.glb",
+    "sourceSha256": "7a5fa77f6ec3de7fe463813d996361d3ed420b636aee5fcb0ce963dd5d4a0450",
+    "nodePrefix": "GEO-armor-block-1676c64748013f376c0a--",
+    "kitNodeIndices": [
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116
+    ],
+    "kitMeshIndices": [
+      77,
+      78,
+      79,
+      80
+    ],
+    "bounds": {
+      "min": [
+        -1.125,
+        -1.125,
+        0.0
+      ],
+      "max": [
+        0.0,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-a6743a347ee2fcdd1ce9",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-a6743a347ee2fcdd1ce9/model.glb",
+    "sourceSha256": "2b7d0b1d4674d65ed81347c62f5b80c7a004de359e6532fe1535679bd89a24a2",
+    "nodePrefix": "GEO-armor-block-a6743a347ee2fcdd1ce9--",
+    "kitNodeIndices": [
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134
+    ],
+    "kitMeshIndices": [
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-62ad930c45227d5287a0",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-62ad930c45227d5287a0/model.glb",
+    "sourceSha256": "4dbb1406bd30e9d18d7f072b09fa093fdacb92ca854c12233866052fc709a115",
+    "nodePrefix": "GEO-armor-block-62ad930c45227d5287a0--",
+    "kitNodeIndices": [
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150,
+      151,
+      152
+    ],
+    "kitMeshIndices": [
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.25,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-e1affbf19f4b7fa30311",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-e1affbf19f4b7fa30311/model.glb",
+    "sourceSha256": "23e2019e48cfae4058415b0bc61a50787e8a99570f486e7a484eed096b9a11ed",
+    "nodePrefix": "GEO-armor-block-e1affbf19f4b7fa30311--",
+    "kitNodeIndices": [
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159
+    ],
+    "kitMeshIndices": [
+      105,
+      106,
+      107,
+      108
+    ],
+    "bounds": {
+      "min": [
+        -0.375,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0,
+        0.375,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-926961217b49c21a526b",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-926961217b49c21a526b/model.glb",
+    "sourceSha256": "078c03041d5f6351a84b6cbe8fdf3760659f0911eb22234b0a6fb3a5989d0cd9",
+    "nodePrefix": "GEO-armor-block-926961217b49c21a526b--",
+    "kitNodeIndices": [
+      160,
+      161,
+      162,
+      163,
+      164,
+      165,
+      166,
+      167,
+      168,
+      169,
+      170,
+      171,
+      172,
+      173,
+      174,
+      175,
+      176,
+      177
+    ],
+    "kitMeshIndices": [
+      109,
+      110,
+      111,
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-137adc2153a878094d60",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-137adc2153a878094d60/model.glb",
+    "sourceSha256": "eb0b014e5130fd38d02598044add03a2b1104e166df3e37b0a2a2b4a00649cb7",
+    "nodePrefix": "GEO-armor-block-137adc2153a878094d60--",
+    "kitNodeIndices": [
+      178,
+      179,
+      180,
+      181,
+      182,
+      183,
+      184,
+      185,
+      186,
+      187,
+      188,
+      189,
+      190,
+      191,
+      192,
+      193,
+      194,
+      195,
+      196,
+      197
+    ],
+    "kitMeshIndices": [
+      121,
+      122,
+      123,
+      124,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-e40f082abbcbe4f55a62",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-e40f082abbcbe4f55a62/model.glb",
+    "sourceSha256": "9cbf322f3d1c9e01e223bf7384fc224bf9e77453001ccc97fd2b78ac7fef8abd",
+    "nodePrefix": "GEO-armor-block-e40f082abbcbe4f55a62--",
+    "kitNodeIndices": [
+      198,
+      199,
+      200,
+      201,
+      202,
+      203,
+      204,
+      205,
+      206,
+      207,
+      208,
+      209,
+      210,
+      211,
+      212,
+      213,
+      214,
+      215
+    ],
+    "kitMeshIndices": [
+      135,
+      136,
+      137,
+      138,
+      139,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-649dcbda86c17c7952c9",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-649dcbda86c17c7952c9/model.glb",
+    "sourceSha256": "a3cb4926efbb31c5700a4ee25c660a220d52bd91898b88a238bad0a648e9b986",
+    "nodePrefix": "GEO-armor-block-649dcbda86c17c7952c9--",
+    "kitNodeIndices": [
+      216,
+      217,
+      218,
+      219,
+      220,
+      221,
+      222,
+      223,
+      224,
+      225,
+      226,
+      227,
+      228,
+      229,
+      230,
+      231,
+      232,
+      233,
+      234,
+      235,
+      236,
+      237,
+      238,
+      239,
+      240,
+      241,
+      242,
+      243
+    ],
+    "kitMeshIndices": [
+      147,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160,
+      161,
+      162,
+      163,
+      164,
+      165,
+      166,
+      167,
+      168
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-2b558e7ac8eb4184c2af",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-2b558e7ac8eb4184c2af/model.glb",
+    "sourceSha256": "039def561e65d68b4c29ea3d988c36e946f9a2382b64322c4c13448892b373c3",
+    "nodePrefix": "GEO-armor-block-2b558e7ac8eb4184c2af--",
+    "kitNodeIndices": [
+      244,
+      245,
+      246,
+      247,
+      248,
+      249,
+      250,
+      251,
+      252,
+      253,
+      254,
+      255,
+      256,
+      257,
+      258
+    ],
+    "kitMeshIndices": [
+      169,
+      170,
+      171,
+      172,
+      173,
+      174,
+      175,
+      176,
+      177
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-b235419d9a165659f2e8",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-b235419d9a165659f2e8/model.glb",
+    "sourceSha256": "952faac5cbad0a0ef7c822cc00a20707fbd6ccb14cd5d584ed5ba72905de6fea",
+    "nodePrefix": "GEO-armor-block-b235419d9a165659f2e8--",
+    "kitNodeIndices": [
+      259,
+      260,
+      261,
+      262,
+      263,
+      264,
+      265,
+      266,
+      267,
+      268,
+      269,
+      270,
+      271,
+      272,
+      273
+    ],
+    "kitMeshIndices": [
+      178,
+      179,
+      180,
+      181,
+      182,
+      183,
+      184,
+      185,
+      186
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        0.0,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-fabbd7b0578ea00b5791",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-fabbd7b0578ea00b5791/model.glb",
+    "sourceSha256": "fe65cbe07fe8009f777616b8d56c89511213b0a450c4bc42f403b8ae9b4c663a",
+    "nodePrefix": "GEO-armor-block-fabbd7b0578ea00b5791--",
+    "kitNodeIndices": [
+      274,
+      275,
+      276,
+      277,
+      278,
+      279,
+      280,
+      281,
+      282
+    ],
+    "kitMeshIndices": [
+      187,
+      188,
+      189,
+      190,
+      191,
+      192
+    ],
+    "bounds": {
+      "min": [
+        -1.125,
+        -1.125,
+        0.0
+      ],
+      "max": [
+        0.0,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-e120acd13dae3b493668",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-e120acd13dae3b493668/model.glb",
+    "sourceSha256": "904bba8e696fee91077620b4a6d4e961b81420a387d0b9fdcfa4a8bda6affd6f",
+    "nodePrefix": "GEO-armor-block-e120acd13dae3b493668--",
+    "kitNodeIndices": [
+      283,
+      284,
+      285,
+      286,
+      287,
+      288,
+      289,
+      290,
+      291,
+      292,
+      293,
+      294,
+      295,
+      296,
+      297,
+      298,
+      299,
+      300,
+      301,
+      302,
+      303
+    ],
+    "kitMeshIndices": [
+      193,
+      194,
+      195,
+      196,
+      197,
+      198,
+      199,
+      200,
+      201,
+      202,
+      203,
+      204,
+      205,
+      206,
+      207
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0392135381698608,
+        0.0,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-98477a5dd3e88b931589",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-98477a5dd3e88b931589/model.glb",
+    "sourceSha256": "1bdc0ef6732060b7a28129c07d2e553b11a677d682714584a20b6550ee73212f",
+    "nodePrefix": "GEO-armor-block-98477a5dd3e88b931589--",
+    "kitNodeIndices": [
+      304,
+      305,
+      306,
+      307,
+      308,
+      309,
+      310,
+      311,
+      312,
+      313,
+      314,
+      315,
+      316,
+      317,
+      318,
+      319,
+      320,
+      321
+    ],
+    "kitMeshIndices": [
+      208,
+      209,
+      210,
+      211,
+      212,
+      213,
+      214,
+      215,
+      216,
+      217,
+      218,
+      219
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.25,
+        0.0,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-a7ef36310c50dc565d00",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-a7ef36310c50dc565d00/model.glb",
+    "sourceSha256": "6e2bb040de5b42d4222e4668fcab638adaba67b1f3aae3d93bac9e295a9a4bfe",
+    "nodePrefix": "GEO-armor-block-a7ef36310c50dc565d00--",
+    "kitNodeIndices": [
+      322,
+      323,
+      324,
+      325,
+      326,
+      327,
+      328,
+      329,
+      330
+    ],
+    "kitMeshIndices": [
+      220,
+      221,
+      222,
+      223,
+      224,
+      225
+    ],
+    "bounds": {
+      "min": [
+        -1.125,
+        -1.125,
+        0.0
+      ],
+      "max": [
+        0.0,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-4896cc9388c49fcb9b2e",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-4896cc9388c49fcb9b2e/model.glb",
+    "sourceSha256": "a08d9394b627d7d716596f945628739a31ee67615c80804feda10f973df7becb",
+    "nodePrefix": "GEO-armor-block-4896cc9388c49fcb9b2e--",
+    "kitNodeIndices": [
+      331,
+      332,
+      333,
+      334,
+      335,
+      336,
+      337,
+      338,
+      339,
+      340,
+      341,
+      342,
+      343,
+      344,
+      345,
+      346,
+      347,
+      348
+    ],
+    "kitMeshIndices": [
+      226,
+      227,
+      228,
+      229,
+      230,
+      231,
+      232,
+      233,
+      234,
+      235,
+      236,
+      237
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.25,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-d3fa0e462a519b5f36f8",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-d3fa0e462a519b5f36f8/model.glb",
+    "sourceSha256": "676d2705285fd1d5703bf2f0aea5a0db60a949d85e5933737960eb3581895ec1",
+    "nodePrefix": "GEO-armor-block-d3fa0e462a519b5f36f8--",
+    "kitNodeIndices": [
+      349,
+      350,
+      351,
+      352,
+      353,
+      354,
+      355,
+      356,
+      357,
+      358,
+      359,
+      360,
+      361,
+      362,
+      363,
+      364,
+      365,
+      366
+    ],
+    "kitMeshIndices": [
+      238,
+      239,
+      240,
+      241,
+      242,
+      243,
+      244,
+      245,
+      246,
+      247,
+      248,
+      249
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-9069dfa847efce4fe41e",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-9069dfa847efce4fe41e/model.glb",
+    "sourceSha256": "cebee15b682928d99d17cbe86584f7312e7108f1119b982755cc899cebc9d542",
+    "nodePrefix": "GEO-armor-block-9069dfa847efce4fe41e--",
+    "kitNodeIndices": [
+      367,
+      368,
+      369,
+      370,
+      371,
+      372,
+      373,
+      374,
+      375,
+      376,
+      377,
+      378,
+      379,
+      380,
+      381
+    ],
+    "kitMeshIndices": [
+      250,
+      251,
+      252,
+      253,
+      254,
+      255,
+      256,
+      257,
+      258
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-db7ed5477c90dcffe64f",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-db7ed5477c90dcffe64f/model.glb",
+    "sourceSha256": "1069c4e46dfdae1bdb972619aa92d505a122a0103468d02cb069738b8e4aaee4",
+    "nodePrefix": "GEO-armor-block-db7ed5477c90dcffe64f--",
+    "kitNodeIndices": [
+      382,
+      383,
+      384,
+      385,
+      386,
+      387,
+      388,
+      389,
+      390,
+      391,
+      392,
+      393,
+      394,
+      395,
+      396,
+      397,
+      398,
+      399,
+      400,
+      401,
+      402,
+      403,
+      404,
+      405,
+      406,
+      407,
+      408,
+      409
+    ],
+    "kitMeshIndices": [
+      259,
+      260,
+      261,
+      262,
+      263,
+      264,
+      265,
+      266,
+      267,
+      268,
+      269,
+      270,
+      271,
+      272,
+      273,
+      274,
+      275,
+      276,
+      277,
+      278,
+      279,
+      280
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-05c9d73568be3ad2e6b8",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-05c9d73568be3ad2e6b8/model.glb",
+    "sourceSha256": "9752f5597ea43bb14ce52bbbd71755b8cc7f1d87bae1398c0a08df2b413da688",
+    "nodePrefix": "GEO-armor-block-05c9d73568be3ad2e6b8--",
+    "kitNodeIndices": [
+      410,
+      411,
+      412,
+      413,
+      414,
+      415,
+      416,
+      417,
+      418,
+      419,
+      420,
+      421,
+      422,
+      423,
+      424,
+      425,
+      426,
+      427,
+      428,
+      429,
+      430,
+      431,
+      432,
+      433,
+      434,
+      435,
+      436,
+      437
+    ],
+    "kitMeshIndices": [
+      281,
+      282,
+      283,
+      284,
+      285,
+      286,
+      287,
+      288,
+      289,
+      290,
+      291,
+      292,
+      293,
+      294,
+      295,
+      296,
+      297,
+      298,
+      299,
+      300,
+      301,
+      302
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.25,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-15a405777ecce0335b21",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-15a405777ecce0335b21/model.glb",
+    "sourceSha256": "75f2a5d5d8a49a5481ab8bbae64e2816f881737fdf12e0091dcf20c52e10e83f",
+    "nodePrefix": "GEO-armor-block-15a405777ecce0335b21--",
+    "kitNodeIndices": [
+      438,
+      439,
+      440,
+      441,
+      442,
+      443,
+      444
+    ],
+    "kitMeshIndices": [
+      303,
+      304,
+      305,
+      306
+    ],
+    "bounds": {
+      "min": [
+        -0.375,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0,
+        0.375,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-43965fec43941bd88fcc",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-43965fec43941bd88fcc/model.glb",
+    "sourceSha256": "2301658cbe756f4016076d44e23349d33248e02d643775d91bbd4a59b5a45b64",
+    "nodePrefix": "GEO-armor-block-43965fec43941bd88fcc--",
+    "kitNodeIndices": [
+      445,
+      446,
+      447,
+      448,
+      449,
+      450,
+      451,
+      452,
+      453,
+      454,
+      455,
+      456,
+      457,
+      458,
+      459,
+      460,
+      461,
+      462
+    ],
+    "kitMeshIndices": [
+      307,
+      308,
+      309,
+      310,
+      311,
+      312,
+      313,
+      314,
+      315,
+      316,
+      317,
+      318
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.25,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-af0cc716991642374212",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-af0cc716991642374212/model.glb",
+    "sourceSha256": "d9c0c3b44f9168731c18cbe690dbb7d08a7bd1231cccc12326738666623bd046",
+    "nodePrefix": "GEO-armor-block-af0cc716991642374212--",
+    "kitNodeIndices": [
+      463,
+      464,
+      465,
+      466,
+      467,
+      468,
+      469,
+      470,
+      471,
+      472,
+      473,
+      474,
+      475,
+      476,
+      477,
+      478,
+      479,
+      480
+    ],
+    "kitMeshIndices": [
+      319,
+      320,
+      321,
+      322,
+      323,
+      324,
+      325,
+      326,
+      327,
+      328,
+      329,
+      330
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-57b9352f1f040b7f0157",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-57b9352f1f040b7f0157/model.glb",
+    "sourceSha256": "f7fa2d8bf91fc3656996b74a95305e7acfd7c0037f5759c54e628c1ae4abed96",
+    "nodePrefix": "GEO-armor-block-57b9352f1f040b7f0157--",
+    "kitNodeIndices": [
+      481,
+      482,
+      483,
+      484,
+      485,
+      486,
+      487,
+      488,
+      489,
+      490,
+      491,
+      492,
+      493,
+      494,
+      495,
+      496,
+      497,
+      498
+    ],
+    "kitMeshIndices": [
+      331,
+      332,
+      333,
+      334,
+      335,
+      336,
+      337,
+      338,
+      339,
+      340,
+      341,
+      342
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.5,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-8904b2af208c0ad89e05",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-8904b2af208c0ad89e05/model.glb",
+    "sourceSha256": "22c41e926c5b3fcaec18e7d20f72be641b0e37ae66e20462bc5a5781ce635815",
+    "nodePrefix": "GEO-armor-block-8904b2af208c0ad89e05--",
+    "kitNodeIndices": [
+      499,
+      500,
+      501,
+      502,
+      503,
+      504,
+      505,
+      506,
+      507,
+      508,
+      509,
+      510,
+      511,
+      512,
+      513,
+      514,
+      515,
+      516,
+      517,
+      518
+    ],
+    "kitMeshIndices": [
+      343,
+      344,
+      345,
+      346,
+      347,
+      348,
+      349,
+      350,
+      351,
+      352,
+      353,
+      354,
+      355,
+      356
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.75,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-d475f516a65773f4c21e",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-d475f516a65773f4c21e/model.glb",
+    "sourceSha256": "8a506e435767f480ff71761e9351241a28ba15db5cd829083cf27b5a1355f421",
+    "nodePrefix": "GEO-armor-block-d475f516a65773f4c21e--",
+    "kitNodeIndices": [
+      519,
+      520,
+      521,
+      522,
+      523,
+      524,
+      525,
+      526,
+      527,
+      528,
+      529,
+      530,
+      531,
+      532,
+      533,
+      534,
+      535,
+      536
+    ],
+    "kitMeshIndices": [
+      357,
+      358,
+      359,
+      360,
+      361,
+      362,
+      363,
+      364,
+      365,
+      366,
+      367,
+      368
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.5,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-97e82a0a2ae19def921f",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-97e82a0a2ae19def921f/model.glb",
+    "sourceSha256": "b49d367fd5d6710df47cb6239a5087fe12392fecca90dca959270afe76ef77c1",
+    "nodePrefix": "GEO-armor-block-97e82a0a2ae19def921f--",
+    "kitNodeIndices": [
+      537,
+      538,
+      539,
+      540,
+      541,
+      542,
+      543,
+      544,
+      545,
+      546,
+      547,
+      548,
+      549,
+      550,
+      551,
+      552,
+      553,
+      554
+    ],
+    "kitMeshIndices": [
+      369,
+      370,
+      371,
+      372,
+      373,
+      374,
+      375,
+      376,
+      377,
+      378,
+      379,
+      380
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.7221359014511108,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-57b42efda0a7a7d9ffdd",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-57b42efda0a7a7d9ffdd/model.glb",
+    "sourceSha256": "36ca6606055cee6f785872bc97914a0f9143ef8ec12b0da2ed7c48fafcf88feb",
+    "nodePrefix": "GEO-armor-block-57b42efda0a7a7d9ffdd--",
+    "kitNodeIndices": [
+      555,
+      556,
+      557,
+      558,
+      559,
+      560,
+      561
+    ],
+    "kitMeshIndices": [
+      381,
+      382,
+      383,
+      384
+    ],
+    "bounds": {
+      "min": [
+        -0.375,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.7826237678527832,
+        0.16770510375499725,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-7c3af440c13bfbd854f7",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-7c3af440c13bfbd854f7/model.glb",
+    "sourceSha256": "51d6eeed7849d901e3e9d9ce14cffffc39a574bb7bc81dbcd0390ab4817b1cb0",
+    "nodePrefix": "GEO-armor-block-7c3af440c13bfbd854f7--",
+    "kitNodeIndices": [
+      562,
+      563,
+      564,
+      565,
+      566,
+      567,
+      568,
+      569,
+      570,
+      571,
+      572,
+      573,
+      574,
+      575,
+      576,
+      577,
+      578,
+      579
+    ],
+    "kitMeshIndices": [
+      385,
+      386,
+      387,
+      388,
+      389,
+      390,
+      391,
+      392,
+      393,
+      394,
+      395,
+      396
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.7192236185073853,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-075003ca42dee3ad88d4",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-075003ca42dee3ad88d4/model.glb",
+    "sourceSha256": "46cc47577b4af828a779e77163c74c1838e2d7816fa61ab3dcd09e7e520e5ae5",
+    "nodePrefix": "GEO-armor-block-075003ca42dee3ad88d4--",
+    "kitNodeIndices": [
+      580,
+      581,
+      582,
+      583,
+      584,
+      585,
+      586
+    ],
+    "kitMeshIndices": [
+      397,
+      398,
+      399,
+      400
+    ],
+    "bounds": {
+      "min": [
+        -0.375,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0621322393417358,
+        0.3354102075099945,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-137dbd4b0d514b60c4c3",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-137dbd4b0d514b60c4c3/model.glb",
+    "sourceSha256": "716e3e7e468eb6f6a01e369b8c2983b2d7359efd86bc632d62f89a5a243687cc",
+    "nodePrefix": "GEO-armor-block-137dbd4b0d514b60c4c3--",
+    "kitNodeIndices": [
+      587,
+      588,
+      589,
+      590,
+      591,
+      592,
+      593,
+      594,
+      595,
+      596,
+      597,
+      598,
+      599,
+      600,
+      601,
+      602,
+      603,
+      604,
+      605,
+      606
+    ],
+    "kitMeshIndices": [
+      401,
+      402,
+      403,
+      404,
+      405,
+      406,
+      407,
+      408,
+      409,
+      410,
+      411,
+      412,
+      413,
+      414
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-cb4ec70047162b4093b9",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-cb4ec70047162b4093b9/model.glb",
+    "sourceSha256": "93999ab668c30852c2c3f157758749fee5d51b1d9aa14608c4de342d6699e4f6",
+    "nodePrefix": "GEO-armor-block-cb4ec70047162b4093b9--",
+    "kitNodeIndices": [
+      607,
+      608,
+      609,
+      610,
+      611,
+      612,
+      613,
+      614,
+      615,
+      616,
+      617,
+      618,
+      619,
+      620,
+      621,
+      622,
+      623,
+      624,
+      625,
+      626
+    ],
+    "kitMeshIndices": [
+      415,
+      416,
+      417,
+      418,
+      419,
+      420,
+      421,
+      422,
+      423,
+      424,
+      425,
+      426,
+      427,
+      428
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.9692236185073853,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-131df6537810373834cb",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-131df6537810373834cb/model.glb",
+    "sourceSha256": "2110d94e64797c6ba45af1dd1cf167b8104615168e9d9cd62b9a265ec4b555a0",
+    "nodePrefix": "GEO-armor-block-131df6537810373834cb--",
+    "kitNodeIndices": [
+      627,
+      628,
+      629,
+      630,
+      631,
+      632,
+      633
+    ],
+    "kitMeshIndices": [
+      429,
+      430,
+      431,
+      432
+    ],
+    "bounds": {
+      "min": [
+        -0.9057763814926147,
+        -1.1212677955627441,
+        0.0
+      ],
+      "max": [
+        0.21968305110931396,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-79d4507d7b58226cbe80",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-79d4507d7b58226cbe80/model.glb",
+    "sourceSha256": "d91d1308b79ec73c54097e1ea70d442d9c111dc07dcfccc1082da6d59beab869",
+    "nodePrefix": "GEO-armor-block-79d4507d7b58226cbe80--",
+    "kitNodeIndices": [
+      634,
+      635,
+      636,
+      637,
+      638,
+      639,
+      640,
+      641,
+      642,
+      643,
+      644,
+      645,
+      646,
+      647,
+      648,
+      649,
+      650,
+      651
+    ],
+    "kitMeshIndices": [
+      433,
+      434,
+      435,
+      436,
+      437,
+      438,
+      439,
+      440,
+      441,
+      442,
+      443,
+      444
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.1884472370147705,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-edc8f579626e43feb839",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-edc8f579626e43feb839/model.glb",
+    "sourceSha256": "ea29a054fdd6fe0953bfa4351ddd4391699114ae8f4e977c3769bfc8c1f812bd",
+    "nodePrefix": "GEO-armor-block-edc8f579626e43feb839--",
+    "kitNodeIndices": [
+      652,
+      653,
+      654,
+      655,
+      656,
+      657,
+      658
+    ],
+    "kitMeshIndices": [
+      445,
+      446,
+      447,
+      448
+    ],
+    "bounds": {
+      "min": [
+        -0.24810563027858734,
+        -1.030316948890686,
+        0.0
+      ],
+      "max": [
+        0.24069781601428986,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-e7911c4aae9fd2fecbb8",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-e7911c4aae9fd2fecbb8/model.glb",
+    "sourceSha256": "ebf5e2e2dc562daaea4a6fd3ae846aa586948d10b6c76c8f27365a09f627b64d",
+    "nodePrefix": "GEO-armor-block-e7911c4aae9fd2fecbb8--",
+    "kitNodeIndices": [
+      659,
+      660,
+      661,
+      662,
+      663,
+      664,
+      665,
+      666,
+      667,
+      668,
+      669,
+      670,
+      671,
+      672,
+      673,
+      674,
+      675,
+      676,
+      677,
+      678,
+      679,
+      680,
+      681,
+      682,
+      683,
+      684,
+      685,
+      686
+    ],
+    "kitMeshIndices": [
+      449,
+      450,
+      451,
+      452,
+      453,
+      454,
+      455,
+      456,
+      457,
+      458,
+      459,
+      460,
+      461,
+      462,
+      463,
+      464,
+      465,
+      466,
+      467,
+      468,
+      469,
+      470
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.2811288833618164,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-649b14141fa27ecd47e6",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-649b14141fa27ecd47e6/model.glb",
+    "sourceSha256": "28f9fd573bec4d330dacecfca538cacd7322806268a20f3e3e99f27734ba1b00",
+    "nodePrefix": "GEO-armor-block-649b14141fa27ecd47e6--",
+    "kitNodeIndices": [
+      687,
+      688,
+      689,
+      690,
+      691,
+      692,
+      693
+    ],
+    "kitMeshIndices": [
+      471,
+      472,
+      473,
+      474
+    ],
+    "bounds": {
+      "min": [
+        -0.375,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0387909412384033,
+        0.3721041977405548,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-fc5a10216de60493ab08",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-fc5a10216de60493ab08/model.glb",
+    "sourceSha256": "411a3e53fe5f8547318b7734f2387dbb8a852346b84beffb1695b895edcd321b",
+    "nodePrefix": "GEO-armor-block-fc5a10216de60493ab08--",
+    "kitNodeIndices": [
+      694,
+      695,
+      696,
+      697,
+      698,
+      699,
+      700
+    ],
+    "kitMeshIndices": [
+      475,
+      476,
+      477,
+      478
+    ],
+    "bounds": {
+      "min": [
+        -0.375,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.49613893032073975,
+        0.04651302471756935,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-204079fa21328c629295",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-204079fa21328c629295/model.glb",
+    "sourceSha256": "f0ebebe2919d4032c765c1d271041919f97623a42d1c52fe6e5eac540361c9c7",
+    "nodePrefix": "GEO-armor-block-204079fa21328c629295--",
+    "kitNodeIndices": [
+      701,
+      702,
+      703,
+      704,
+      705,
+      706,
+      707,
+      708,
+      709,
+      710,
+      711,
+      712,
+      713,
+      714,
+      715
+    ],
+    "kitMeshIndices": [
+      479,
+      480,
+      481,
+      482,
+      483,
+      484,
+      485,
+      486,
+      487
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.75,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-50c9e43a8c6ba5af5141",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-50c9e43a8c6ba5af5141/model.glb",
+    "sourceSha256": "e3441ce34092cb9a073a85fdb154351447ad294f2314aae496870020f7400616",
+    "nodePrefix": "GEO-armor-block-50c9e43a8c6ba5af5141--",
+    "kitNodeIndices": [
+      716,
+      717,
+      718,
+      719,
+      720,
+      721,
+      722,
+      723,
+      724,
+      725,
+      726,
+      727,
+      728,
+      729,
+      730
+    ],
+    "kitMeshIndices": [
+      488,
+      489,
+      490,
+      491,
+      492,
+      493,
+      494,
+      495,
+      496
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-e9bc6213d0d76ca7f44b",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-e9bc6213d0d76ca7f44b/model.glb",
+    "sourceSha256": "4c2a5f25634e1cdb9d425b3ff3143cfcf19701856ff577de8dfb9994bc3d8238",
+    "nodePrefix": "GEO-armor-block-e9bc6213d0d76ca7f44b--",
+    "kitNodeIndices": [
+      731,
+      732,
+      733,
+      734,
+      735,
+      736,
+      737,
+      738,
+      739,
+      740,
+      741,
+      742,
+      743,
+      744,
+      745,
+      746,
+      747,
+      748
+    ],
+    "kitMeshIndices": [
+      497,
+      498,
+      499,
+      500,
+      501,
+      502,
+      503,
+      504,
+      505,
+      506,
+      507,
+      508
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.3541020154953003,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-f731b556d8884e7d7557",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-f731b556d8884e7d7557/model.glb",
+    "sourceSha256": "703efe6cd45fdf77833db9b993574a3f4a76bfeee9e294d3c632b4e480918b95",
+    "nodePrefix": "GEO-armor-block-f731b556d8884e7d7557--",
+    "kitNodeIndices": [
+      749,
+      750,
+      751,
+      752,
+      753,
+      754,
+      755,
+      756,
+      757,
+      758,
+      759,
+      760,
+      761,
+      762,
+      763,
+      764,
+      765,
+      766
+    ],
+    "kitMeshIndices": [
+      509,
+      510,
+      511,
+      512,
+      513,
+      514,
+      515,
+      516,
+      517,
+      518,
+      519,
+      520
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.8819659948348999,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-207cbce0274b3e836291",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-207cbce0274b3e836291/model.glb",
+    "sourceSha256": "4a1a86f47cfc042409cf6206fd056f42e256d2fe3743cab7275c77d25ec56b6e",
+    "nodePrefix": "GEO-armor-block-207cbce0274b3e836291--",
+    "kitNodeIndices": [
+      767,
+      768,
+      769,
+      770,
+      771,
+      772,
+      773
+    ],
+    "kitMeshIndices": [
+      521,
+      522,
+      523,
+      524
+    ],
+    "bounds": {
+      "min": [
+        -0.7430340051651001,
+        -1.111803412437439,
+        0.0
+      ],
+      "max": [
+        0.33229491114616394,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-975ae6c56dd5c22ae720",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-975ae6c56dd5c22ae720/model.glb",
+    "sourceSha256": "93a3e41989c8d5ea48d8e0c95b0780181b7993f77875b7f5bc9f11813b29f114",
+    "nodePrefix": "GEO-armor-block-975ae6c56dd5c22ae720--",
+    "kitNodeIndices": [
+      774,
+      775,
+      776,
+      777,
+      778,
+      779,
+      780,
+      781,
+      782,
+      783,
+      784,
+      785,
+      786,
+      787,
+      788
+    ],
+    "kitMeshIndices": [
+      525,
+      526,
+      527,
+      528,
+      529,
+      530,
+      531,
+      532,
+      533
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.0,
+        0.75
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-0609cba1e9e5472c20b6",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-0609cba1e9e5472c20b6/model.glb",
+    "sourceSha256": "1165aa01c81a543a4c00bf61576bb8d8cbf7f6951305356d28097ddfa56f887f",
+    "nodePrefix": "GEO-armor-block-0609cba1e9e5472c20b6--",
+    "kitNodeIndices": [
+      789,
+      790,
+      791,
+      792,
+      793,
+      794,
+      795,
+      796,
+      797,
+      798,
+      799,
+      800,
+      801,
+      802,
+      803,
+      804,
+      805,
+      806
+    ],
+    "kitMeshIndices": [
+      534,
+      535,
+      536,
+      537,
+      538,
+      539,
+      540,
+      541,
+      542,
+      543,
+      544,
+      545
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.0,
+        2.25
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-fbbf224dbd286d805ac1",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-fbbf224dbd286d805ac1/model.glb",
+    "sourceSha256": "f4d6f4abd964a7c853a3a51ed69ab349abaacfb16a4b9c11ebf45a07bece7a46",
+    "nodePrefix": "GEO-armor-block-fbbf224dbd286d805ac1--",
+    "kitNodeIndices": [
+      807,
+      808,
+      809,
+      810,
+      811,
+      812,
+      813,
+      814,
+      815,
+      816,
+      817,
+      818,
+      819,
+      820,
+      821,
+      822,
+      823,
+      824
+    ],
+    "kitMeshIndices": [
+      546,
+      547,
+      548,
+      549,
+      550,
+      551,
+      552,
+      553,
+      554,
+      555,
+      556,
+      557
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-49384936da4b4c531fcc",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-49384936da4b4c531fcc/model.glb",
+    "sourceSha256": "7db89d061384806d397a74d63ae264c8357c481be6a3ebcaef3e44fc16ef1248",
+    "nodePrefix": "GEO-armor-block-49384936da4b4c531fcc--",
+    "kitNodeIndices": [
+      825,
+      826,
+      827,
+      828,
+      829,
+      830,
+      831,
+      832,
+      833,
+      834,
+      835,
+      836,
+      837,
+      838,
+      839
+    ],
+    "kitMeshIndices": [
+      558,
+      559,
+      560,
+      561,
+      562,
+      563,
+      564,
+      565,
+      566
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -0.5,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.0,
+        0.75
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-e8152b71edd21a544d55",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-e8152b71edd21a544d55/model.glb",
+    "sourceSha256": "0e118a0b19cb0545ac9a955880b9212b60dc5671e4a2263fb2ba23b6371491f6",
+    "nodePrefix": "GEO-armor-block-e8152b71edd21a544d55--",
+    "kitNodeIndices": [
+      840,
+      841,
+      842,
+      843,
+      844,
+      845,
+      846,
+      847,
+      848,
+      849,
+      850,
+      851,
+      852,
+      853,
+      854,
+      855,
+      856,
+      857
+    ],
+    "kitMeshIndices": [
+      567,
+      568,
+      569,
+      570,
+      571,
+      572,
+      573,
+      574,
+      575,
+      576,
+      577,
+      578
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -0.5,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.0,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-c2da9d9d47c98c01ceb8",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-c2da9d9d47c98c01ceb8/model.glb",
+    "sourceSha256": "5d5b0ae56309c17b01a173f133a3c3594550c873c93748addff514293f034ad2",
+    "nodePrefix": "GEO-armor-block-c2da9d9d47c98c01ceb8--",
+    "kitNodeIndices": [
+      858,
+      859,
+      860,
+      861,
+      862,
+      863,
+      864,
+      865,
+      866,
+      867,
+      868,
+      869,
+      870,
+      871,
+      872,
+      873,
+      874,
+      875
+    ],
+    "kitMeshIndices": [
+      579,
+      580,
+      581,
+      582,
+      583,
+      584,
+      585,
+      586,
+      587,
+      588,
+      589,
+      590
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -0.5,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.0,
+        2.25
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-e7a26fe3b6e058621d39",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-e7a26fe3b6e058621d39/model.glb",
+    "sourceSha256": "03bdc65c29e4a05998f63ed7eb8ed6f3475c20bbae14f598333e4765bbbb4d1b",
+    "nodePrefix": "GEO-armor-block-e7a26fe3b6e058621d39--",
+    "kitNodeIndices": [
+      876,
+      877,
+      878,
+      879,
+      880,
+      881,
+      882,
+      883,
+      884,
+      885,
+      886,
+      887,
+      888,
+      889,
+      890,
+      891,
+      892,
+      893
+    ],
+    "kitMeshIndices": [
+      591,
+      592,
+      593,
+      594,
+      595,
+      596,
+      597,
+      598,
+      599,
+      600,
+      601,
+      602
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -0.5,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-8233c1a3a948a91de0c7",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-8233c1a3a948a91de0c7/model.glb",
+    "sourceSha256": "b8225bce5beda082d408001dd83f698728152293d2b56bf9a1812fd510d184bb",
+    "nodePrefix": "GEO-armor-block-8233c1a3a948a91de0c7--",
+    "kitNodeIndices": [
+      894,
+      895,
+      896,
+      897,
+      898,
+      899,
+      900,
+      901,
+      902,
+      903,
+      904,
+      905,
+      906,
+      907,
+      908
+    ],
+    "kitMeshIndices": [
+      603,
+      604,
+      605,
+      606,
+      607,
+      608,
+      609,
+      610,
+      611
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        2.015564441680908,
+        0.0,
+        0.75
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-a252a121923cfb248f94",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-a252a121923cfb248f94/model.glb",
+    "sourceSha256": "9e50f1e80963a48d561712a84a94ab172d0d8b2a4649b8860d3004b095d69ee5",
+    "nodePrefix": "GEO-armor-block-a252a121923cfb248f94--",
+    "kitNodeIndices": [
+      909,
+      910,
+      911,
+      912,
+      913,
+      914,
+      915,
+      916,
+      917,
+      918,
+      919,
+      920,
+      921,
+      922,
+      923
+    ],
+    "kitMeshIndices": [
+      612,
+      613,
+      614,
+      615,
+      616,
+      617,
+      618,
+      619,
+      620
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        2.0615527629852295,
+        0.0,
+        0.75
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-981bd24736c640366791",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-981bd24736c640366791/model.glb",
+    "sourceSha256": "7628dcd89026775615bf3c1ed2e420997e52e96d7f1c1f1841ad4b4e2d75a57f",
+    "nodePrefix": "GEO-armor-block-981bd24736c640366791--",
+    "kitNodeIndices": [
+      924,
+      925,
+      926,
+      927,
+      928,
+      929,
+      930,
+      931,
+      932,
+      933,
+      934,
+      935,
+      936,
+      937,
+      938
+    ],
+    "kitMeshIndices": [
+      621,
+      622,
+      623,
+      624,
+      625,
+      626,
+      627,
+      628,
+      629
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        2.2360680103302,
+        0.0,
+        0.75
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-7bcf58fae727b968e126",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-7bcf58fae727b968e126/model.glb",
+    "sourceSha256": "6a94b40b89ff8c9fb5bb0f2c98ff1483fd9d66c3544b978545b8797e7ac74f78",
+    "nodePrefix": "GEO-armor-block-7bcf58fae727b968e126--",
+    "kitNodeIndices": [
+      939,
+      940,
+      941,
+      942,
+      943,
+      944,
+      945,
+      946,
+      947,
+      948,
+      949,
+      950,
+      951,
+      952,
+      953
+    ],
+    "kitMeshIndices": [
+      630,
+      631,
+      632,
+      633,
+      634,
+      635,
+      636,
+      637,
+      638
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        2.8284270763397217,
+        0.0,
+        0.75
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-825d61aeb52f08f61c14",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-825d61aeb52f08f61c14/model.glb",
+    "sourceSha256": "055d4eddbd72c3185bb92d8c0b5a689e066aded8192e284788f3b07c1dbdf208",
+    "nodePrefix": "GEO-armor-block-825d61aeb52f08f61c14--",
+    "kitNodeIndices": [
+      954,
+      955,
+      956,
+      957,
+      958,
+      959,
+      960,
+      961,
+      962,
+      963,
+      964,
+      965,
+      966,
+      967,
+      968
+    ],
+    "kitMeshIndices": [
+      639,
+      640,
+      641,
+      642,
+      643,
+      644,
+      645,
+      646,
+      647
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.0,
+        0.75
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-bb2e153a868e9214017f",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-bb2e153a868e9214017f/model.glb",
+    "sourceSha256": "45b3aeadbaa1fb93bf9c0b965c95ad680ca740ce1d1e62c27d9aeb0cbca0c534",
+    "nodePrefix": "GEO-armor-block-bb2e153a868e9214017f--",
+    "kitNodeIndices": [
+      969,
+      970,
+      971,
+      972,
+      973,
+      974,
+      975
+    ],
+    "kitMeshIndices": [
+      648,
+      649,
+      650,
+      651
+    ],
+    "bounds": {
+      "min": [
+        -0.375,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.49613893032073975,
+        0.04651302471756935,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-b5debfc1efb6816ed06d",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-b5debfc1efb6816ed06d/model.glb",
+    "sourceSha256": "184305398a5413251f7fe8cf1d982ca875fedb74b7b5ac96d4966abd80a2f9de",
+    "nodePrefix": "GEO-armor-block-b5debfc1efb6816ed06d--",
+    "kitNodeIndices": [
+      976,
+      977,
+      978,
+      979,
+      980,
+      981,
+      982
+    ],
+    "kitMeshIndices": [
+      652,
+      653,
+      654,
+      655
+    ],
+    "bounds": {
+      "min": [
+        -0.18725775182247162,
+        -1.0155043601989746,
+        0.0
+      ],
+      "max": [
+        0.18581172823905945,
+        0.0,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-19cb454187f2b808d0f7",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-19cb454187f2b808d0f7/model.glb",
+    "sourceSha256": "73375387d4126922c136de1bd2a97e1d5f062b10949c6c94d58bea3d23bbfb84",
+    "nodePrefix": "GEO-armor-block-19cb454187f2b808d0f7--",
+    "kitNodeIndices": [
+      983,
+      984,
+      985,
+      986,
+      987,
+      988,
+      989
+    ],
+    "kitMeshIndices": [
+      656,
+      657,
+      658,
+      659
+    ],
+    "bounds": {
+      "min": [
+        -0.375,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.6063390374183655,
+        0.0909508615732193,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-8c601c2467812dda7c97",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-8c601c2467812dda7c97/model.glb",
+    "sourceSha256": "20f064b43c0587e16d5a9363b2293e607048ce9403d05b05136ef506ec7d6011",
+    "nodePrefix": "GEO-armor-block-8c601c2467812dda7c97--",
+    "kitNodeIndices": [
+      990,
+      991,
+      992,
+      993,
+      994,
+      995,
+      996
+    ],
+    "kitMeshIndices": [
+      660,
+      661,
+      662,
+      663
+    ],
+    "bounds": {
+      "min": [
+        -0.24810563027858734,
+        -1.030316948890686,
+        0.0
+      ],
+      "max": [
+        0.24069781601428986,
+        0.0,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-04506299cdccdc3362d3",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-04506299cdccdc3362d3/model.glb",
+    "sourceSha256": "3813a696fd2e0f1690cb2c7eaa52919151aa134dd2612f8f4c6462b0939689bb",
+    "nodePrefix": "GEO-armor-block-04506299cdccdc3362d3--",
+    "kitNodeIndices": [
+      997,
+      998,
+      999,
+      1000,
+      1001,
+      1002,
+      1003
+    ],
+    "kitMeshIndices": [
+      664,
+      665,
+      666,
+      667
+    ],
+    "bounds": {
+      "min": [
+        -0.375,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.7826237678527832,
+        0.16770510375499725,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-b9889f7ac1379ef477d3",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-b9889f7ac1379ef477d3/model.glb",
+    "sourceSha256": "5bcea3cc1486461e5c0a59033fa6d4b9f36f47a400a268cba1ebf76adadadb43",
+    "nodePrefix": "GEO-armor-block-b9889f7ac1379ef477d3--",
+    "kitNodeIndices": [
+      1004,
+      1005,
+      1006,
+      1007,
+      1008,
+      1009,
+      1010
+    ],
+    "kitMeshIndices": [
+      668,
+      669,
+      670,
+      671
+    ],
+    "bounds": {
+      "min": [
+        -0.3610679805278778,
+        -1.0559016466140747,
+        0.0
+      ],
+      "max": [
+        0.32294902205467224,
+        0.0,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-e465b7594b2433a77396",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-e465b7594b2433a77396/model.glb",
+    "sourceSha256": "c22d6168c6e8d0ec95caa2921fca4b0d8d1235e4dc8efbc763742e1eab85bc06",
+    "nodePrefix": "GEO-armor-block-e465b7594b2433a77396--",
+    "kitNodeIndices": [
+      1011,
+      1012,
+      1013,
+      1014,
+      1015,
+      1016,
+      1017
+    ],
+    "kitMeshIndices": [
+      672,
+      673,
+      674,
+      675
+    ],
+    "bounds": {
+      "min": [
+        -0.5392135381698608,
+        -1.0883883237838745,
+        0.0
+      ],
+      "max": [
+        0.3812815546989441,
+        0.0,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-c3e51deb6848ddb10001",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-c3e51deb6848ddb10001/model.glb",
+    "sourceSha256": "f1d3fd6934edf5ee74baf9779131595f65c72d8a875bfb8f30cc987139e4c634",
+    "nodePrefix": "GEO-armor-block-c3e51deb6848ddb10001--",
+    "kitNodeIndices": [
+      1018,
+      1019,
+      1020,
+      1021,
+      1022,
+      1023,
+      1024
+    ],
+    "kitMeshIndices": [
+      676,
+      677,
+      678,
+      679
+    ],
+    "bounds": {
+      "min": [
+        -0.375,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0621322393417358,
+        0.3354102075099945,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-b8ebf4aa6991e098a6d3",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-b8ebf4aa6991e098a6d3/model.glb",
+    "sourceSha256": "faf4dbc39024d7be63216d9de15e619930b811cb4766d9bcebae67ceb7d50485",
+    "nodePrefix": "GEO-armor-block-b8ebf4aa6991e098a6d3--",
+    "kitNodeIndices": [
+      1025,
+      1026,
+      1027,
+      1028,
+      1029,
+      1030,
+      1031
+    ],
+    "kitMeshIndices": [
+      680,
+      681,
+      682,
+      683
+    ],
+    "bounds": {
+      "min": [
+        -0.7430340051651001,
+        -1.111803412437439,
+        0.0
+      ],
+      "max": [
+        0.33229491114616394,
+        0.0,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-bdffe58423963910d02b",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-bdffe58423963910d02b/model.glb",
+    "sourceSha256": "ccce60da8639fb8a9646ab21845b3bab627a91ea45eb7a5cbf8bf53111a8ae9e",
+    "nodePrefix": "GEO-armor-block-bdffe58423963910d02b--",
+    "kitNodeIndices": [
+      1032,
+      1033,
+      1034,
+      1035,
+      1036,
+      1037,
+      1038
+    ],
+    "kitMeshIndices": [
+      684,
+      685,
+      686,
+      687
+    ],
+    "bounds": {
+      "min": [
+        -0.375,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0610933303833008,
+        0.3638034462928772,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-098c86a675e3e951ace9",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-098c86a675e3e951ace9/model.glb",
+    "sourceSha256": "647428befa1bafb86267fc6b90064398d1a035c753ceb958b5fb9844bcad856d",
+    "nodePrefix": "GEO-armor-block-098c86a675e3e951ace9--",
+    "kitNodeIndices": [
+      1039,
+      1040,
+      1041,
+      1042,
+      1043,
+      1044,
+      1045
+    ],
+    "kitMeshIndices": [
+      688,
+      689,
+      690,
+      691
+    ],
+    "bounds": {
+      "min": [
+        -0.9057763814926147,
+        -1.1212677955627441,
+        0.0
+      ],
+      "max": [
+        0.21968305110931396,
+        0.0,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-0f4edf0963be28b7952b",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-0f4edf0963be28b7952b/model.glb",
+    "sourceSha256": "f2d265b62abe70f96e450a5db21a8d645b0c9b95d5880a8cdc024c27fafcd6a5",
+    "nodePrefix": "GEO-armor-block-0f4edf0963be28b7952b--",
+    "kitNodeIndices": [
+      1046,
+      1047,
+      1048,
+      1049,
+      1050,
+      1051,
+      1052
+    ],
+    "kitMeshIndices": [
+      692,
+      693,
+      694,
+      695
+    ],
+    "bounds": {
+      "min": [
+        -0.375,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0387909412384033,
+        0.3721041977405548,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-eae57557166988330b70",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-eae57557166988330b70/model.glb",
+    "sourceSha256": "6ae84ce910855b5f1e7b7b5a394e5d831e843b2d3e469d819e4eac9ded2de578",
+    "nodePrefix": "GEO-armor-block-eae57557166988330b70--",
+    "kitNodeIndices": [
+      1053,
+      1054,
+      1055,
+      1056,
+      1057,
+      1058,
+      1059
+    ],
+    "kitMeshIndices": [
+      696,
+      697,
+      698,
+      699
+    ],
+    "bounds": {
+      "min": [
+        -1.007782220840454,
+        -1.1240347623825073,
+        0.0
+      ],
+      "max": [
+        0.125,
+        0.0,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-54094cde041737badaf2",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-54094cde041737badaf2/model.glb",
+    "sourceSha256": "98f73b0097c1bbf2615ba29a6de0fed28d6ddb9303871ae440a63e111e37772a",
+    "nodePrefix": "GEO-armor-block-54094cde041737badaf2--",
+    "kitNodeIndices": [
+      1060,
+      1061,
+      1062,
+      1063,
+      1064,
+      1065,
+      1066
+    ],
+    "kitMeshIndices": [
+      700,
+      701,
+      702,
+      703
+    ],
+    "bounds": {
+      "min": [
+        -0.375,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0,
+        0.375,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-block-2cce8582f894eec65110",
+    "sourcePath": "assets/art-library/framed-wayfarer/r005/family-02/models/armor-block-2cce8582f894eec65110/model.glb",
+    "sourceSha256": "300f69635d3ed32213ef03fda466b945f96309da76e82cb21c61d4c868990d71",
+    "nodePrefix": "GEO-armor-block-2cce8582f894eec65110--",
+    "kitNodeIndices": [
+      1067,
+      1068,
+      1069,
+      1070,
+      1071,
+      1072,
+      1073
+    ],
+    "kitMeshIndices": [
+      704,
+      705,
+      706,
+      707
+    ],
+    "bounds": {
+      "min": [
+        -1.125,
+        -1.125,
+        0.0
+      ],
+      "max": [
+        0.0,
+        0.0,
+        1.5
+      ]
+    }
+  }
+]

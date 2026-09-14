@@ -1,0 +1,162 @@
+{
+  "schema": "sidereal.native-block-validation.v1",
+  "status": "pass",
+  "models": [
+    {
+      "modelId": "armor-block-f94c0ba2aa04f31fb6a5",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 3.65625,
+          "expectedVolumeM3": 3.65625
+        },
+        {
+          "object": "GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-7c657ee01a90318dec3e",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-7c657ee01a90318dec3e--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 3.65625,
+          "expectedVolumeM3": 3.65625
+        },
+        {
+          "object": "GEO-armor-block-7c657ee01a90318dec3e--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-7c657ee01a90318dec3e--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-fe79dfaf2e1542dbd67c",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-fe79dfaf2e1542dbd67c--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 3.65625,
+          "expectedVolumeM3": 3.65625
+        },
+        {
+          "object": "GEO-armor-block-fe79dfaf2e1542dbd67c--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-fe79dfaf2e1542dbd67c--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.421875,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-9ca59f6db637d3afceb9",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-9ca59f6db637d3afceb9--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.828125,
+          "expectedVolumeM3": 1.828125
+        },
+        {
+          "object": "GEO-armor-block-9ca59f6db637d3afceb9--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.2109375,
+          "expectedVolumeM3": 0.2109375
+        },
+        {
+          "object": "GEO-armor-block-9ca59f6db637d3afceb9--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.2109375,
+          "expectedVolumeM3": 0.2109375
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-70b34597548b284a0a7f",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-70b34597548b284a0a7f--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 1.142060657239436,
+          "expectedVolumeM3": 1.1420606733129408
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-cd2f17ea0cf58cb60b7f",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-cd2f17ea0cf58cb60b7f--BACKING--closed-solid-bod",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 2.338230460882187,
+          "expectedVolumeM3": 2.3382305153392506
+        },
+        {
+          "object": "GEO-armor-block-cd2f17ea0cf58cb60b7f--BACKING--closed-incoming-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.2109375,
+          "expectedVolumeM3": 0.2109375
+        },
+        {
+          "object": "GEO-armor-block-cd2f17ea0cf58cb60b7f--BACKING--closed-outgoing-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 0.2109375,
+          "expectedVolumeM3": 0.2109375
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    },
+    {
+      "modelId": "armor-block-1676c64748013f376c0a",
+      "closedBackingSolids": [
+        {
+          "object": "GEO-armor-block-1676c64748013f376c0a--BACKING--closed-junction-",
+          "nonManifoldEdges": 0,
+          "measuredVolumeM3": 3.3749999999998037,
+          "expectedVolumeM3": 3.3749999999998255
+        }
+      ],
+      "zeroAreaTriangles": 0,
+      "finiteGeometry": true
+    }
+  ],
+  "modelCount": 7,
+  "sourceSha256": "1207f7eca4cede4baf0ea10927b622c3f455a105e1e40437c3dcb22a91ecffb9",
+  "limits": [
+    "Native topology/volume validated here. Assembly intersections and imported GLB parity checked by companion validator."
+  ]
+}
