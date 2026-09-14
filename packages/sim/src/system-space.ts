@@ -2,6 +2,8 @@ import { stepContacts, type RigidBody } from "./collision";
 import { DT, type Intent } from "./index";
 import {
   pilotDesiredMotion,
+  deriveEnvelope,
+  type FlightEnvelope,
   desiredWrench,
   actuatorWrench,
   solveFlight,
@@ -36,6 +38,8 @@ export interface SystemFlightControl {
   intent: Intent;
   mass: MassProperties;
   actuators: readonly Actuator[];
+  /** Compiled availability envelope; derive once per tick for older callers. */
+  envelope?: FlightEnvelope;
   profile: FlightProfile;
   maxForwardSpeed: number;
   maxReverseSpeed: number;
@@ -169,15 +173,19 @@ export function stepSystemSpace(
       actuatorIds.add(actuator.id);
       actuatorWrench(actuator, control.mass);
     }
-    controlMap.set(control.bodyId, control);
+    controlMap.set(control.bodyId, {
+      ...control,
+      envelope: control.envelope ?? deriveEnvelope(control.actuators, control.mass),
+    });
   }
   let bodies = input.map((body) => ({ ...body })).sort(compareIds);
   let impacts = 0,
     completedSubsteps = 0;
   let reason: SystemSpaceStep["reason"];
-  const commandMap = new Map<string, { id: string; throttle: number }[]>();
+  let commandMap = new Map<string, { id: string; throttle: number }[]>();
   for (let step = 0; step < SYSTEM_SPACE_LIMITS.substeps; step++) {
     const beforeKick = bodies;
+    const beforeCommands = new Map(commandMap);
     const kicked = bodies.map((body) => {
       const control = controlMap.get(body.id);
       if (!control) return { ...body };
@@ -189,18 +197,22 @@ export function stepSystemSpace(
           control.maxForwardSpeed,
           control.maxReverseSpeed,
           control.profile.maxAngularSpeed,
+          control.envelope,
+          control.profile,
         ),
         control.mass,
         control.actuators,
         control.enabled,
         control.profile,
+        control.envelope,
       );
+      const achievedCommands = new Map(flight.commands.map(c => [c.id, c.throttle]));
       commandMap.set(
         body.id,
         control.actuators
           .map((a) => ({
             id: a.id,
-            throttle: flight.commands.find((c) => c.id === a.id)?.throttle ?? 0,
+            throttle: achievedCommands.get(a.id) ?? 0,
           }))
           .sort(compareIds),
       );
@@ -242,6 +254,7 @@ export function stepSystemSpace(
       }
     } catch {
       bodies = beforeKick;
+      commandMap = beforeCommands;
       reason = "coordinate-bound";
       break;
     }
@@ -251,6 +264,7 @@ export function stepSystemSpace(
       for (const body of result.bodies) bodyValid(body);
     } catch {
       bodies = beforeKick;
+      commandMap = beforeCommands;
       reason = "coordinate-bound";
       break;
     }

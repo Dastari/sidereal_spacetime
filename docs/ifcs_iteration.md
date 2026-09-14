@@ -29,3 +29,18 @@ heading overshoot, including an independent longitudinal COM moment-arm check.
 The seeded 4/9/16/64/256-actuator benchmark records the existing fixed 80-pass
 solver. No live behaviour has changed. Full phase 0 gates pass (1,925 tests, typecheck, docs and build); numerical
 results and subsequent phases are tracked in [progress](handoffs/ifcs_update_progress_20260914.md).
+
+## 2026-09-14 phase 1 pure corrections
+
+The corrected solver spends 18,000 N for either an 18,000 N forward or lateral
+request, and 2,769.230769 N for a pure 18,000 N·m couple. The eight-second full
+throttle/turn baseline finishes at 30.001315 m/s; heading capture overshoot is
+zero in the one-radian baseline. ID renaming, mixed reachable layouts up to 256
+actuators, off-centre underactuation and full optimum-face balancing are tested.
+
+No content or authority switch has occurred. Phase 1 passes full check (1,951
+tests, typecheck and documentation), build and fresh isolated smoke. The smoke
+turn assertion now follows the approved derived speed-preserving envelope.
+The exact-rest and tiny-force regressions pass without relaxing the physical
+stop invariant. Phase 2 mass/compiler and phase 3 live switch remain planned.
+See the progress document for benchmark details and gate evidence.

@@ -1,12 +1,12 @@
 # Component-driven IFCS integration
 
-Status: Pure controller/allocator and authoritative authored lab fixture implemented; modular installation/resource authority pending M2/M4
-Last updated: 2026-09-08
+Status: Phase 1 pure allocator/controller corrections implemented; full gates in progress; live compiled definitions remain planned
+Last updated: 2026-09-14
 Owners: Sidereal simulation and ship assembly
 
 ## Update plan
 
-The 2026-09-11 audit and the phased plan to replace fixture mass/actuators with compiled definitions and to correct the allocator are in [the IFCS update plan](handoffs/ifcs_update_plan_20260914.md). Phase 0 characterization tests and the deterministic allocator benchmark are implemented; full phase 0 gates pass (1,925 tests, typecheck, docs and build). Behaviour corrections and the compiled live path remain planned. See [progress](handoffs/ifcs_update_progress_20260914.md).
+The 2026-09-11 audit and the phased plan to replace fixture mass/actuators with compiled definitions and to correct the allocator are in [the IFCS update plan](handoffs/ifcs_update_plan_20260914.md). Phase 0 characterization tests and the deterministic allocator benchmark are implemented; full phase 0 gates pass (1,925 tests, typecheck, docs and build). Phase 1 corrections are implemented and undergoing full validation; the compiled live path remains planned. See [progress](handoffs/ifcs_update_progress_20260914.md).
 
 ## Preserved design and current status
 
@@ -36,7 +36,29 @@ All physical arithmetic remains JavaScript number / f64. Local +Y is bow-forward
 
 Every floor/structural tile, armor section, device, stored item, fuel mass and crew mass contributes once. An element supplies its own centroidal inertia; the compiler adds the parallel-axis term about the combined center of mass. Moving cargo shifts the center and inertia without creating mass. Physics integration is about the center of mass; the authority adapter must preserve the authored frame origin by its explicit centroid offset so cargo movement does not teleport the ship or its passengers.
 
-For each thruster, force comes from its actual direction and available maximum newtons. Torque is `(mount - center of mass) × force`. The current solver uses a stable-ID ordered, fixed-budget projected coordinate descent over translation and torque together, with throttle constrained to `[0,1]`. It reports residual/unachievable force and torque. Zero actuators means zero actuation. A forward engine cannot supply reverse thrust; an off-center engine produces torque.
+For each thruster, force comes from its actual direction and available maximum newtons. Torque is `(mount - center of mass) × force`. The phase 1 solver uses a bounded lexicographic objective: exact reachable wrench,
+attitude priority for unreachable requests, translation residual, minimum actual
+expended newtons, then dimensionless quadratic throttle balancing on the complete
+optimal face. Physical columns determine numerical order; IDs identify outputs.
+Bounded simplex and torque-null pair descent replace the old unregularized
+coordinate descent. All stages share an 80-pass ceiling (a simplex pass permits
+at most actuator-count pivots); results expose passes and convergence. Exhausted
+balancing retains the feasible minimum-newton solution and reports nonconvergence.
+
+`deriveEnvelope` computes pure-axis attainable accelerations. Profile ceilings,
+centripetal feedforward and default speed-preserving turn limits are implemented;
+`rawTurnBehavior` opts out of the turn limit. Heading capture also limits effective
+heading gain for critical damping. Joint feasibility projection preserves both
+`guidanceRequested` and `guidanceResidual`; published controller `requested` is
+reachable and allocator residual is not confused with guidance shortfall.
+CompileMass rejects zero inertia. Heading writes wrap to (-π, π], and rejected
+system substeps restore output telemetry together with motion.
+
+Phase 1 check (1,951 tests), build and fresh isolated smoke pass; evidence is in
+[progress](handoffs/ifcs_update_progress_20260914.md). These are pure-simulation changes. The production world still resolves fixture
+mass and actuators until phase 3. Installed physical definitions, dynamic COM,
+resource producers and per-ship mount presentation remain planned.
+
 
 ## Concrete live implementation order
 

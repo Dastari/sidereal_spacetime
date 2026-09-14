@@ -11,6 +11,7 @@ import {
   actuatorWrench,
   allocateThrust,
   desiredWrench,
+  deriveEnvelope,
   integrateWrench,
   type Actuator,
 } from "./ifcs";
@@ -201,4 +202,280 @@ test("fixture captures a heading by applying reverse torque before arrival", () 
   expect(counterthrust).toBe(true);
   expect(state.heading).toBeCloseTo(1, 3);
   expect(state.omega).toBeCloseTo(0, 3);
+});
+
+test("allocator preserves physical commands under ID renaming, including redundant nozzles", () => {
+  const renamed = LAB_FLIGHT_ACTUATORS.map((a, i) => ({
+    ...a,
+    id: `renamed-${99 - i}`,
+  }));
+  for (const request of [
+    { fx: 0, fy: 18000, torque: 0 },
+    { fx: 8000, fy: 14000, torque: -19000 },
+    { fx: -13000, fy: -25000, torque: 8000 },
+  ]) {
+    const original = allocateThrust(
+      LAB_FLIGHT_ACTUATORS,
+      LAB_FLIGHT_MASS,
+      request,
+    );
+    const changed = allocateThrust(renamed, LAB_FLIGHT_MASS, request);
+    LAB_FLIGHT_ACTUATORS.forEach((a, i) =>
+      expect(
+        changed.commands.find((c) => c.id === renamed[i].id)?.throttle,
+      ).toBe(original.commands.find((c) => c.id === a.id)?.throttle),
+    );
+    expect(changed.achieved).toEqual(original.achieved);
+    expect(changed.converged).toBe(true);
+    expect(changed.passes).toBeLessThanOrEqual(80);
+  }
+});
+
+test("single off-centre nozzle cannot trade unrequested yaw for translation", () => {
+  const result = allocateThrust([engine("off-centre", 3)], mass, {
+    fx: 0,
+    fy: 1000,
+    torque: 0,
+  });
+  expect(result.achieved).toEqual({ fx: 0, fy: 0, torque: 0 });
+  expect(result.residual).toEqual({ fx: 0, fy: 1000, torque: 0 });
+  expect(result.converged).toBe(true);
+});
+
+test("minimum newtons beats throttle minimisation with unequal and oblique engines", () => {
+  const parts = [
+    { ...engine("small-efficient", 0), maxThrustN: 1000 },
+    { ...engine("huge-diagonal-left", 0, Math.PI / 4), maxThrustN: 100000 },
+    { ...engine("huge-diagonal-right", 0, -Math.PI / 4), maxThrustN: 100000 },
+  ];
+  const result = allocateThrust(parts, mass, { fx: 0, fy: 1000, torque: 0 });
+  expect(result.achieved.fy).toBeCloseTo(1000, 8);
+  expect(
+    result.commands.find((c) => c.id === "small-efficient")?.throttle,
+  ).toBeCloseTo(1, 10);
+  expect(
+    result.commands
+      .filter((c) => c.id.startsWith("huge"))
+      .every((c) => c.throttle < 1e-12),
+  ).toBe(true);
+  const spent = result.commands.reduce(
+    (sum, c) => sum + parts.find((a) => a.id === c.id)!.maxThrustN * c.throttle,
+    0,
+  );
+  expect(spent).toBeCloseTo(1000, 8);
+});
+
+test("quadratic tie balancing keeps exact wrench and minimum N for unequal equivalent engines", () => {
+  const parts = [
+    { ...engine("large", 0), maxThrustN: 2000 },
+    { ...engine("small", 0), maxThrustN: 1000 },
+  ];
+  const result = allocateThrust(
+    parts,
+    mass,
+    { fx: 0, fy: 1000, torque: 0 },
+    undefined,
+    1,
+  );
+  expect(result.achieved.fy).toBeCloseTo(1000, 10);
+  expect(result.commands[0].throttle).toBeCloseTo(0.4, 12);
+  expect(result.commands[1].throttle).toBeCloseTo(0.2, 12);
+});
+
+test("unreachable torque is clamped with honest residual before translation", () => {
+  const result = allocateThrust([engine("off-centre", 3)], mass, {
+    fx: 0,
+    fy: 0,
+    torque: 10000,
+  });
+  expect(result.achieved.torque).toBeCloseTo(6000);
+  expect(result.residual.torque).toBeCloseTo(4000);
+  expect(result.achieved.fy).toBeCloseTo(2000);
+});
+
+test("seeded reachable mixed-axis requests preserve wrench across varied physical layouts", () => {
+  let seed = 117;
+  const random = () => {
+    seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+    return seed / 2 ** 32;
+  };
+  for (const count of [4, 9, 16, 64, 256]) {
+    const parts = Array.from({ length: count }, (_, i) => ({
+      id: `test-${i}`,
+      x: random() * 10 - 5,
+      y: random() * 20 - 10,
+      rotation: random() * 2 * Math.PI,
+      maxThrustN: 2000 + random() * 10000,
+      availability: random(),
+    }));
+    const request = { fx: 0, fy: 0, torque: 0 };
+    let spent = 0;
+    for (const a of parts) {
+      const throttle = random(),
+        w = actuatorWrench(a, mass);
+      request.fx += w.fx * throttle;
+      request.fy += w.fy * throttle;
+      request.torque += w.torque * throttle;
+      spent += a.maxThrustN * a.availability * throttle;
+    }
+    const result = allocateThrust(parts, mass, request);
+    expect(
+      Math.hypot(
+        result.residual.fx,
+        result.residual.fy,
+        result.residual.torque,
+      ),
+    ).toBeLessThan(1e-6);
+    const actual = result.commands.reduce((sum, c) => {
+      const a = parts.find((a) => a.id === c.id)!;
+      return sum + c.throttle * a.maxThrustN * a.availability;
+    }, 0);
+    expect(actual).toBeLessThanOrEqual(spent + 1e-6);
+    expect(result.converged).toBe(true);
+    expect(result.passes).toBeLessThanOrEqual(80);
+  }
+});
+
+test("minimum-effort optimum shares a yaw-free burn across center and offset main engines", () => {
+  const result = allocateThrust(LAB_FLIGHT_ACTUATORS, LAB_FLIGHT_MASS, {
+    fx: 0,
+    fy: 18000,
+    torque: 0,
+  });
+  const factor = 18000 / (2 * 14000 ** 2 + 8000 ** 2);
+  for (const a of LAB_FLIGHT_ACTUATORS) {
+    const actual = result.commands.find((c) => c.id === a.id)!.throttle;
+    expect(actual).toBeCloseTo(
+      a.id.startsWith("drives-main") ? a.maxThrustN * factor : 0,
+      10,
+    );
+  }
+  expect(result.converged).toBe(true);
+});
+
+test("derived envelope describes pure-axis physical authority and validates inputs", () => {
+  const envelope = deriveEnvelope(LAB_FLIGHT_ACTUATORS, LAB_FLIGHT_MASS);
+  expect(envelope.forward).toBeCloseTo(3, 10);
+  expect(envelope.reverse).toBeCloseTo(3, 10);
+  expect(envelope.left).toBeCloseTo(32000 / 12000, 10);
+  expect(envelope.right).toBeCloseTo(32000 / 12000, 10);
+  expect(envelope.angularPositive).toBeCloseTo(envelope.angularNegative, 10);
+  const isolated = deriveEnvelope([engine("off-centre", 3)], mass);
+  expect(Object.values(isolated).every((v) => v === 0)).toBe(true);
+  expect(() =>
+    deriveEnvelope([engine("duplicate", 0), engine("duplicate", 0)], mass),
+  ).toThrow();
+  expect(() =>
+    deriveEnvelope(
+      Array.from({ length: 257 }, (_, i) => engine(String(i), 0)),
+      mass,
+    ),
+  ).toThrow();
+  expect(() => deriveEnvelope([], { ...mass, inertiaKgM2: 0 })).toThrow();
+  expect(() =>
+    compileMass([{ id: "point", massKg: 1, x: 0, y: 0, inertiaKgM2: 0 }]),
+  ).toThrow(/positive inertia/);
+});
+
+test("combined controller request is feasible while guidance shortfall stays visible", () => {
+  const state = { x: 0, y: 0, vx: -100, vy: -100, heading: 0, omega: -10 };
+  const result = solveFlight(
+    state,
+    { vx: 30, vy: 30, angularVelocity: 1 },
+    LAB_FLIGHT_MASS,
+    LAB_FLIGHT_ACTUATORS,
+    true,
+  );
+  const repeat = allocateThrust(
+    LAB_FLIGHT_ACTUATORS,
+    LAB_FLIGHT_MASS,
+    result.requested,
+  );
+  expect(
+    Math.hypot(repeat.residual.fx, repeat.residual.fy, repeat.residual.torque),
+  ).toBeLessThan(1e-6);
+  expect(result.guidanceResidual.fx).toBeCloseTo(
+    result.guidanceRequested.fx - result.achieved.fx,
+    8,
+  );
+  expect(result.guidanceResidual.fy).toBeCloseTo(
+    result.guidanceRequested.fy - result.achieved.fy,
+    8,
+  );
+  expect(result.guidanceResidual.torque).toBeCloseTo(
+    result.guidanceRequested.torque - result.achieved.torque,
+    8,
+  );
+  expect(
+    Math.hypot(result.guidanceResidual.fx, result.guidanceResidual.fy),
+  ).toBeGreaterThan(1);
+});
+
+test("raw-turn profile opt-out permits speed loss and validates boolean separately", () => {
+  let state = { x: 0, y: 0, vx: 0, vy: 30, heading: 0, omega: 0 };
+  const profile = { ...LAB_FLIGHT_PROFILE, rawTurnBehavior: true };
+  for (let i = 0; i < 480; i++)
+    state = solveFlight(
+      state,
+      pilotDesiredMotion(state, { throttle: 1, turn: 1 }, 30, 12, 0.65),
+      LAB_FLIGHT_MASS,
+      LAB_FLIGHT_ACTUATORS,
+      true,
+      profile,
+    ).motion;
+  expect(Math.hypot(state.vx, state.vy)).toBeLessThan(29);
+  expect(state.omega).toBeGreaterThan(0.3);
+  expect(() =>
+    desiredWrench(state, { vx: 0, vy: 0 }, mass, {
+      ...profile,
+      effortWeight: -1,
+    }),
+  ).toThrow();
+  const envelope = deriveEnvelope(LAB_FLIGHT_ACTUATORS, LAB_FLIGHT_MASS);
+  expect(() =>
+    desiredWrench(state, { vx: 0, vy: 0 }, mass, profile, {
+      ...envelope,
+      left: -1,
+    }),
+  ).toThrow();
+});
+
+test("yaw-free braking never injects residual rotation through cancellation roundoff", () => {
+  let state = {
+    x: 0,
+    y: 0,
+    vx: -0.09173,
+    vy: 1.8921,
+    heading: 0.0317,
+    omega: 0,
+  };
+  for (let i = 0; i < 1500; i++) {
+    const result = solveFlight(
+      state,
+      { vx: 0, vy: 0, angularVelocity: 0 },
+      LAB_FLIGHT_MASS,
+      LAB_FLIGHT_ACTUATORS,
+      true,
+      LAB_FLIGHT_PROFILE,
+    );
+    expect(result.achieved.torque).toBe(0);
+    expect(result.motion.omega).toBe(0);
+    state = result.motion;
+  }
+});
+
+test("roundoff handling preserves real tiny forces and torques rather than imposing a dead zone", () => {
+  const force = allocateThrust([engine("center", 0)], mass, {
+    fx: 0,
+    fy: 1e-18,
+    torque: 0,
+  });
+  expect(force.achieved.fy / 1e-18).toBeCloseTo(1, 10);
+  expect(force.commands[0].throttle).toBeGreaterThan(0);
+  const torque = allocateThrust([engine("offset", 2)], mass, {
+    fx: 0,
+    fy: 1e-18,
+    torque: 2e-18,
+  });
+  expect(torque.achieved.torque / 2e-18).toBeCloseTo(1, 10);
 });

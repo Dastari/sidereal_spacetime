@@ -1,3 +1,5 @@
+import { deriveEnvelope } from "../packages/sim/src/ifcs";
+import { LAB_FLIGHT_ACTUATORS, LAB_FLIGHT_MASS, LAB_FLIGHT_SPEED } from "../packages/content/src/flight";
 import {
   acquireNativePilot,
   nextSequence,
@@ -372,9 +374,11 @@ if (restore) {
       };
       for (let i = 0; i < 6; i++) await commandFlight(1, 1);
       const moving = [...flight.db.ownShips.iter()][0];
+      // Phase 1 preserves speed by limiting yaw to available lateral acceleration.
+      const turnLimit = deriveEnvelope(LAB_FLIGHT_ACTUATORS, LAB_FLIGHT_MASS).left / LAB_FLIGHT_SPEED.forward;
       assert(
-        Math.hypot(moving.vx, moving.vy) > 0.5 && moving.omega > 0.1,
-        "available engines accelerate and turn",
+        Math.hypot(moving.vx, moving.vy) > 0.5 && moving.omega > turnLimit * 0.5 && moving.omega <= turnLimit + 1e-6,
+        "available engines accelerate and turn within the derived envelope",
       );
       for (let i = 0; i < 45; i++) await commandFlight(0, 0);
       assert(

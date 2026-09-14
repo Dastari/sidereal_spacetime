@@ -1,3 +1,4 @@
+import { wrapFlightHeading } from "./flight-angle";
 import { sweptContactCandidates } from "./collision-broadphase";
 /** Planar rigid capsule/circle contacts. All positions and impulse math stay f64.
  * Multiple capsules (ships) and circles (movable asteroids). No render mesh
@@ -157,7 +158,7 @@ function advance(body: RigidBody, dt: number) {
     ...body,
     x: body.x + body.vx * dt,
     y: body.y + body.vy * dt,
-    heading: body.heading + body.omega * dt,
+    heading: wrapFlightHeading(body.heading + body.omega * dt),
   };
 }
 export interface ContactWork {
@@ -237,7 +238,7 @@ export function stepContacts(
     throw new Error("Invalid contact body set");
   const bodies = input
     .map((b) => ({ ...b }))
-    .sort((a, b) => a.id.localeCompare(b.id));
+    .sort((a, b) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
   for (const b of bodies)
     if (
       ![

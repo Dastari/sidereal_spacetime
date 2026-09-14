@@ -144,3 +144,19 @@ describe("forward-offset capsule envelope", () => {
     ).toThrow();
   });
 });
+
+it("wraps contact headings to (-pi, pi] without changing angular momentum", () => {
+  for (const [heading, omega] of [[Math.PI, 3], [-Math.PI, 0], [-Math.PI + .01, -3], [200 * Math.PI, 0]]) {
+    const result = stepContacts([body("ship", 0, { heading, omega })], 1 / 60).bodies[0];
+    expect(result.heading).toBeGreaterThan(-Math.PI);
+    expect(result.heading).toBeLessThanOrEqual(Math.PI);
+    expect(Math.sin(result.heading)).toBeCloseTo(Math.sin(heading + omega / 60), 12);
+    expect(Math.cos(result.heading)).toBeCloseTo(Math.cos(heading + omega / 60), 12);
+    expect(result.omega).toBe(omega);
+  }
+});
+
+it("contact ordering uses plain stable identity comparison", () => {
+  const ids = ["z", "A", "a", "_", "ä"];
+  expect(stepContacts(ids.map((id, i) => body(id, i * 10)), 1 / 60).bodies.map(b => b.id)).toEqual([...ids].sort());
+});
