@@ -1,0 +1,269 @@
+[
+  {
+    "name": "single-service",
+    "path": "renders/single-service.png",
+    "sha256": "3f64faee3e3e66ef0719ffe8a39f357d19a1023cbbbf0aa5a9151bc05fcae4f0",
+    "models": [
+      {
+        "slug": "armor-red-service-w200-h300",
+        "sha256": "1c911ffc231265676909cd954e87fc8db00d984bc2ef595b8152bbc617673300",
+        "translationM": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "groupMode": "all",
+    "armorExplosionM": null,
+    "cameraPosition": [
+      7.25,
+      -4.0,
+      5.199999809265137
+    ],
+    "cameraTarget": [
+      0.25,
+      0.0,
+      1.5
+    ],
+    "orthographicScale": 4.3,
+    "viewport": [
+      1200,
+      1000
+    ],
+    "renderer": "Blender 4.3.2 / Cycles CPU / 64 samples / no denoising / AgX medium-high",
+    "scope": "Fresh exact GLB imports. Neutral native source review; no live state or synthesized art."
+  },
+  {
+    "name": "single-vent",
+    "path": "renders/single-vent.png",
+    "sha256": "6ce1c18b66269d36c21dea438d1fd88fdb73071dded35435beebd14d2e38953a",
+    "models": [
+      {
+        "slug": "armor-vent-w200-h300",
+        "sha256": "97da32f845bd1c1510bfb1bb3a0a52e0e41176d1de7eab10661fabf6925034e7",
+        "translationM": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "groupMode": "all",
+    "armorExplosionM": null,
+    "cameraPosition": [
+      7.25,
+      -4.0,
+      5.199999809265137
+    ],
+    "cameraTarget": [
+      0.25,
+      0.0,
+      1.5
+    ],
+    "orthographicScale": 4.3,
+    "viewport": [
+      1200,
+      1000
+    ],
+    "renderer": "Blender 4.3.2 / Cycles CPU / 64 samples / no denoising / AgX medium-high",
+    "scope": "Fresh exact GLB imports. Neutral native source review; no live state or synthesized art."
+  },
+  {
+    "name": "joined-plain-bay",
+    "path": "renders/joined-plain-bay.png",
+    "sha256": "df9e1a66b96a049a0fa85ec8c3e54e841d2b6560d7b2c6bb02a82298d79bafb1",
+    "models": [
+      {
+        "slug": "armor-plain-pair-left-w200-h300",
+        "sha256": "73a9375201ee3f30f1a29675b021513347352b9beca8356aa3d367fea87796a4",
+        "translationM": [
+          0,
+          -1,
+          0
+        ]
+      },
+      {
+        "slug": "armor-plain-pair-right-w200-h300",
+        "sha256": "7d6ed81cc935586fc266d8e8770c5a29c53dab0b673d93ad85d9f20df7e4b021",
+        "translationM": [
+          0,
+          1,
+          0
+        ]
+      }
+    ],
+    "groupMode": "all",
+    "armorExplosionM": null,
+    "cameraPosition": [
+      7.25,
+      -4.0,
+      5.199999809265137
+    ],
+    "cameraTarget": [
+      0.25,
+      0.0,
+      1.5
+    ],
+    "orthographicScale": 5.8,
+    "viewport": [
+      1200,
+      1000
+    ],
+    "renderer": "Blender 4.3.2 / Cycles CPU / 64 samples / no denoising / AgX medium-high",
+    "scope": "Fresh exact GLB imports. Neutral native source review; no live state or synthesized art."
+  },
+  {
+    "name": "joined-seam-close",
+    "path": "renders/joined-seam-close.png",
+    "sha256": "85b2e10a789173b728e36c0a911789d70f2ce74f68de1add164ba6a7a3af1ef0",
+    "models": [
+      {
+        "slug": "armor-plain-pair-left-w200-h300",
+        "sha256": "73a9375201ee3f30f1a29675b021513347352b9beca8356aa3d367fea87796a4",
+        "translationM": [
+          0,
+          -1,
+          0
+        ]
+      },
+      {
+        "slug": "armor-plain-pair-right-w200-h300",
+        "sha256": "7d6ed81cc935586fc266d8e8770c5a29c53dab0b673d93ad85d9f20df7e4b021",
+        "translationM": [
+          0,
+          1,
+          0
+        ]
+      }
+    ],
+    "groupMode": "all",
+    "armorExplosionM": null,
+    "cameraPosition": [
+      7.28000020980835,
+      -2.0,
+      3.700000047683716
+    ],
+    "cameraTarget": [
+      0.2800000011920929,
+      0.0,
+      1.5
+    ],
+    "orthographicScale": 1.5,
+    "viewport": [
+      1200,
+      1000
+    ],
+    "renderer": "Blender 4.3.2 / Cycles CPU / 64 samples / no denoising / AgX medium-high",
+    "scope": "Fresh exact GLB imports. Neutral native source review; no live state or synthesized art."
+  },
+  {
+    "name": "bow-armor",
+    "path": "renders/bow-armor.png",
+    "sha256": "2fc07ed6f9b520e84defa75e9700c5d93bedebbf959a5820b6b3e53cd51c65a1",
+    "models": [
+      {
+        "slug": "front-bow-bumper",
+        "sha256": "7c31efed77ec246e7f4036f20a5dc2656ce7ace01f1a9684a9612c9ace952daf",
+        "translationM": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "groupMode": "all",
+    "armorExplosionM": null,
+    "cameraPosition": [
+      8.0,
+      7.300000190734863,
+      4.775000095367432
+    ],
+    "cameraTarget": [
+      2.0,
+      0.30000001192092896,
+      0.7749999761581421
+    ],
+    "orthographicScale": 5.4,
+    "viewport": [
+      1200,
+      1000
+    ],
+    "renderer": "Blender 4.3.2 / Cycles CPU / 64 samples / no denoising / AgX medium-high",
+    "scope": "Fresh exact GLB imports. Neutral native source review; no live state or synthesized art."
+  },
+  {
+    "name": "shoulder-armor",
+    "path": "renders/shoulder-armor.png",
+    "sha256": "8d71d33c1400f6cccda5858f35cb5644bd24fd33847fb4470b16942ab55065a8",
+    "models": [
+      {
+        "slug": "front-shoulder-transition",
+        "sha256": "a483755aa233070ff5e680feeb4352b361e4c8185020e915bfa5d44e0f31f781",
+        "translationM": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "groupMode": "all",
+    "armorExplosionM": null,
+    "cameraPosition": [
+      7.400000095367432,
+      5.0,
+      5.199999809265137
+    ],
+    "cameraTarget": [
+      0.4000000059604645,
+      1.0,
+      1.5
+    ],
+    "orthographicScale": 4.3,
+    "viewport": [
+      1200,
+      1000
+    ],
+    "renderer": "Blender 4.3.2 / Cycles CPU / 64 samples / no denoising / AgX medium-high",
+    "scope": "Fresh exact GLB imports. Neutral native source review; no live state or synthesized art."
+  },
+  {
+    "name": "bow-exploded-liner",
+    "path": "renders/bow-exploded-liner.png",
+    "sha256": "28bdcd006d11d2e68617d18e58403260c9cebb282c71d80775487c20de148f9c",
+    "models": [
+      {
+        "slug": "front-bow-bumper",
+        "sha256": "7c31efed77ec246e7f4036f20a5dc2656ce7ace01f1a9684a9612c9ace952daf",
+        "translationM": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "groupMode": "explode",
+    "armorExplosionM": [
+      0,
+      0.75,
+      0
+    ],
+    "cameraPosition": [
+      8.0,
+      7.699999809265137,
+      5.775000095367432
+    ],
+    "cameraTarget": [
+      2.0,
+      0.699999988079071,
+      0.7749999761581421
+    ],
+    "orthographicScale": 5.4,
+    "viewport": [
+      1200,
+      1000
+    ],
+    "renderer": "Blender 4.3.2 / Cycles CPU / 64 samples / no denoising / AgX medium-high",
+    "scope": "Fresh exact GLB imports. Neutral native source review; no live state or synthesized art."
+  }
+]

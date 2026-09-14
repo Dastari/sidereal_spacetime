@@ -1,0 +1,150 @@
+{
+  "whole": {
+    "captures": [
+      {
+        "name": "concept",
+        "mode": "whole",
+        "camera": [
+          -2.75,
+          0.955,
+          0,
+          1,
+          -1,
+          24
+        ],
+        "draws": 316,
+        "triangles": 304234,
+        "activeMeshes": 279,
+        "renderMs": 3.1999988555908203
+      },
+      {
+        "name": "starboard",
+        "mode": "whole",
+        "camera": [
+          -0.39,
+          0.955,
+          0,
+          1,
+          -1,
+          24
+        ],
+        "draws": 316,
+        "triangles": 304234,
+        "activeMeshes": 279,
+        "renderMs": 1.3000011444091797
+      },
+      {
+        "name": "bow",
+        "mode": "whole",
+        "camera": [
+          -2.12,
+          1.02,
+          0,
+          1,
+          -8,
+          11
+        ],
+        "draws": 247,
+        "triangles": 248362,
+        "activeMeshes": 240,
+        "renderMs": 1.2000007629394531
+      },
+      {
+        "name": "joined",
+        "mode": "whole",
+        "camera": [
+          -2.9,
+          1.12,
+          -5,
+          1.5,
+          -1,
+          9
+        ],
+        "draws": 212,
+        "triangles": 236434,
+        "activeMeshes": 216,
+        "renderMs": 0.6999988555908203
+      },
+      {
+        "name": "gameplay",
+        "mode": "whole",
+        "camera": [
+          -2.34,
+          0.955,
+          0,
+          1,
+          -1,
+          27
+        ],
+        "draws": 336,
+        "triangles": 304234,
+        "activeMeshes": 299,
+        "renderMs": 2.3000011444091797
+      }
+    ],
+    "errors": [],
+    "scope": "Final01 complete28nativeplacements; zero fallback or missing required models; exact game-loader pure fixture; no authenticated gameplay or live authority"
+  },
+  "separation": {
+    "captures": [
+      {
+        "mode": "armor",
+        "camera": [
+          -2.75,
+          0.955,
+          0,
+          1,
+          -1,
+          24
+        ],
+        "draws": 77,
+        "triangles": 13784,
+        "activeMeshes": 77,
+        "renderMs": 0.5999984741210938
+      },
+      {
+        "mode": "bare",
+        "camera": [
+          -2.75,
+          0.955,
+          0,
+          1,
+          -1,
+          24
+        ],
+        "draws": 311,
+        "triangles": 290182,
+        "activeMeshes": 274,
+        "renderMs": 1.8999996185302734
+      },
+      {
+        "mode": "exploded",
+        "camera": [
+          -2.75,
+          0.955,
+          0,
+          1,
+          -1,
+          24
+        ],
+        "draws": 388,
+        "triangles": 303966,
+        "activeMeshes": 351,
+        "renderMs": 2.1999988555908203
+      }
+    ],
+    "errors": [],
+    "scope": "Exact native armor only, retained structure with armor hidden, and1.5m rigid exploded inspection offsets. Private pure fixture; no live state changes."
+  },
+  "images": {
+    "armor.png": "18e812d41b1c90adf2385881604d064612a52e0ebdddb56eb83d29c8d618c3cb",
+    "bare.png": "6f982d1b013aba722ca1371c013005f9319a47880858438e2fd4c74cb185580c",
+    "bow.png": "b9247e051d932866b93f6fbaa797897f9d6bcb4a914977ca282de8a0900ee26f",
+    "concept.png": "78277a98e6a4e0288e9c184847bcaddd585fb164cf15c13fc4929c360aec60ae",
+    "exploded.png": "180875b128ffef8a5fbf01eebdbfc3b248dca5a820969de46261d2a402e41051",
+    "gameplay.png": "d485f0ef7334adc9eb71b2ded6de973f18d03310247225f1e47a97aea62c6c0f",
+    "joined.png": "599bad7764539fc6e4b3a31050255572c841885e74d6ddec31ac3db255af307f",
+    "starboard.png": "d2d6b05e813e1223a80f3776401bd562e91baa9bf9be16ce547f265aa3b8777b"
+  },
+  "status": "Failed independent visual review; preserved for comparison. Not approved or live."
+}

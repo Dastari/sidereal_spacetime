@@ -1,0 +1,8 @@
+{
+  "status": "fail",
+  "stage": "binary-glb-validation",
+  "error": "front-bow-bumper: two degenerate sliver triangles from weighted bevel at X=0 mating return",
+  "validationJsonIsEmpty": true,
+  "replacementAttempt": "final-03",
+  "validatorThresholdChanged": false
+}

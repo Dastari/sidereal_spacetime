@@ -1,0 +1,42 @@
+{
+  "base": "599d2c7a8ab2c3553f4db8fb63ea5624511a63f0",
+  "candidate": "native r004 final-03 / library-03",
+  "checks": [
+    {
+      "command": "python3 scripts/art_library/check_armor_cassette_hull.py assets/art-library/framed-wayfarer/r004/hull/final-03",
+      "exitCode": 0,
+      "note": "Passed: all46 exact native GLBs after extracting committed archive.",
+      "log": "/root/wayfarer-armor-pr/.runtime/armor-delivery-validation/native.json",
+      "logSha256": "3032136143ad179b51e1c009151f0909ee652f7a80b332ce0ce105ba65a4d564"
+    },
+    {
+      "command": "npm run check",
+      "exitCode": 2,
+      "note": "Inherited missing debug-collision-geometry and scene-material-registration modules plus cascading type errors.",
+      "log": "/root/wayfarer-armor-pr/.runtime/armor-delivery-validation/check.log",
+      "logSha256": "42fb32992e9d5592d182f8c7820551b0e295752e2e859783470c0325ea559814"
+    },
+    {
+      "command": "npm run build",
+      "exitCode": 1,
+      "note": "World/client built; dashboard failed missing scene-material-registration.",
+      "log": "/root/wayfarer-armor-pr/.runtime/armor-delivery-validation/build.log",
+      "logSha256": "3e48ba684f3c71262f9bcbbf25d427962ef97287f640ceed1292311b48954c6c"
+    },
+    {
+      "command": "npm run art:check",
+      "exitCode": 1,
+      "note": "Inherited absent historical assets/source/voxel_wayfarer.blend.",
+      "log": "/root/wayfarer-armor-pr/.runtime/armor-delivery-validation/art.log",
+      "logSha256": "afa5c8b8d34cf6ff35d583ca937a514330034c40b08f2147144f09b1d59a5ea0"
+    },
+    {
+      "command": "python3 scripts/art_library/armor_cassette_hull.py --out .runtime/armor-delivery-validation/reproduction",
+      "exitCode": 0,
+      "note": "Native recipe reproduces all six prototype GLB hashes exactly in isolated upstream-main checkout, with no r005 runtime catalog. Reproduction validator also passes.",
+      "evidence": "reproduction.json"
+    }
+  ],
+  "authority": "No authority changes; no new authority smoke claimed.",
+  "baseline": "Same repository-wide failures reproduced on untouched upstream base before armor files were copied."
+}

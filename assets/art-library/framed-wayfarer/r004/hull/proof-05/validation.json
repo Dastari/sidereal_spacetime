@@ -1,0 +1,335 @@
+{
+  "schema": "sidereal.armor-cassette-native-check.v1",
+  "revision": 4,
+  "status": "pass",
+  "models": [
+    {
+      "slug": "armor-red-service-w200-h300",
+      "status": "pass",
+      "sha256": "1c911ffc231265676909cd954e87fc8db00d984bc2ef595b8152bbc617673300",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 820,
+      "semanticGroups": {
+        "GEO-armor-red-service-w200-h300--ARMOR": {
+          "triangles": 808,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-red-service-w200-h300--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2
+    },
+    {
+      "slug": "armor-vent-w200-h300",
+      "status": "pass",
+      "sha256": "97da32f845bd1c1510bfb1bb3a0a52e0e41176d1de7eab10661fabf6925034e7",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 1040,
+      "semanticGroups": {
+        "GEO-armor-vent-w200-h300--ARMOR": {
+          "triangles": 1028,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-vent-w200-h300--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2
+    },
+    {
+      "slug": "armor-plain-pair-left-w200-h300",
+      "status": "pass",
+      "sha256": "73a9375201ee3f30f1a29675b021513347352b9beca8356aa3d367fea87796a4",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 438,
+      "semanticGroups": {
+        "GEO-armor-plain-pair-left-w200-h300--ARMOR": {
+          "triangles": 426,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-plain-pair-left-w200-h300--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2
+    },
+    {
+      "slug": "armor-plain-pair-right-w200-h300",
+      "status": "pass",
+      "sha256": "7d6ed81cc935586fc266d8e8770c5a29c53dab0b673d93ad85d9f20df7e4b021",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "triangles": 438,
+      "semanticGroups": {
+        "GEO-armor-plain-pair-right-w200-h300--ARMOR": {
+          "triangles": 426,
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          }
+        },
+        "GEO-armor-plain-pair-right-w200-h300--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          }
+        }
+      },
+      "materials": 4,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 2
+    },
+    {
+      "slug": "front-bow-bumper",
+      "status": "pass",
+      "sha256": "7c31efed77ec246e7f4036f20a5dc2656ce7ace01f1a9684a9612c9ace952daf",
+      "bounds": {
+        "min": [
+          0.0,
+          -0.0,
+          0.0
+        ],
+        "max": [
+          4.0,
+          0.625,
+          1.5499999523162842
+        ]
+      },
+      "triangles": 332,
+      "semanticGroups": {
+        "GEO-front-bow-bumper--ARMOR": {
+          "triangles": 320,
+          "bounds": {
+            "min": [
+              0.25,
+              0.125,
+              0.0
+            ],
+            "max": [
+              3.75,
+              0.625,
+              1.5499999523162842
+            ]
+          }
+        },
+        "GEO-front-bow-bumper--LINER": {
+          "triangles": 12,
+          "bounds": {
+            "min": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "max": [
+              4.0,
+              0.03125,
+              1.4800000190734863
+            ]
+          }
+        }
+      },
+      "materials": 2,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 1
+    },
+    {
+      "slug": "front-shoulder-transition",
+      "status": "pass",
+      "sha256": "a483755aa233070ff5e680feeb4352b361e4c8185020e915bfa5d44e0f31f781",
+      "bounds": {
+        "min": [
+          0.0,
+          -0.0,
+          0.0
+        ],
+        "max": [
+          0.7445136904716492,
+          2.0,
+          2.9375
+        ]
+      },
+      "triangles": 368,
+      "semanticGroups": {
+        "GEO-front-shoulder-transition--ARMOR": {
+          "triangles": 360,
+          "bounds": {
+            "min": [
+              0.004042099695652723,
+              -0.0,
+              0.0
+            ],
+            "max": [
+              0.7445136904716492,
+              1.9725483655929565,
+              2.928647994995117
+            ]
+          }
+        },
+        "GEO-front-shoulder-transition--LINER": {
+          "triangles": 8,
+          "bounds": {
+            "min": [
+              0.0,
+              -0.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              2.0,
+              2.9375
+            ]
+          }
+        }
+      },
+      "materials": 1,
+      "embeddedImages": 3,
+      "normalMappedMaterials": 1
+    }
+  ],
+  "pairedFamiliesChecked": [
+    [
+      "plain",
+      2,
+      3,
+      false
+    ]
+  ],
+  "pairMating": "Every variant/width/height/exterior-handedness pair is checked independently. Vertex half-spaces prove zero positive-volume overlap at the joined Y=0 plane.",
+  "scope": "Actual GLB geometry/UV/materials, exact bounds/sockets, distinct armor/liner groups and mating envelopes. Independent visual review and pressure/damage qualification remain separate."
+}

@@ -1,0 +1,443 @@
+[
+  {
+    "name": "joined-red-service-bay",
+    "path": "renders/joined-red-service-bay.png",
+    "sha256": "153dbd632f2f45a9f0fd6d05b1cf62ab9a72008d3f76f499fd98aed9bbd36364",
+    "models": [
+      {
+        "slug": "armor-red-service-pair-left-w200-h300",
+        "sha256": "082bf26aefd44ae2b3fc448e18c3fef533dd912b57b051a5218a8cd35b24fd99",
+        "translationM": [
+          0,
+          -1,
+          0
+        ]
+      },
+      {
+        "slug": "armor-red-service-pair-right-w200-h300",
+        "sha256": "016ec4a25d4661fe1fc640fd5a1511e64f69f0ef2ebd2f0bb5390e05d8249a45",
+        "translationM": [
+          0,
+          1,
+          0
+        ]
+      }
+    ],
+    "groupMode": "all",
+    "armorExplosionM": null,
+    "placementReflectionX": false,
+    "cameraPosition": [
+      7.25,
+      -4.0,
+      5.199999809265137
+    ],
+    "cameraTarget": [
+      0.25,
+      0.0,
+      1.5
+    ],
+    "orthographicScale": 5.8,
+    "viewport": [
+      1200,
+      1000
+    ],
+    "renderer": "Blender 4.3.2 / Cycles CPU / 64 samples / no denoising / AgX medium-high",
+    "scope": "Fresh exact GLB imports. Neutral native source review; no live state or synthesized art."
+  },
+  {
+    "name": "joined-utility-bay",
+    "path": "renders/joined-utility-bay.png",
+    "sha256": "1b0abac1e333dc38895bc2bf3347ba772c4e18e2f50fa04db9edbb75d9da6e2a",
+    "models": [
+      {
+        "slug": "armor-utility-pair-left-w200-h300",
+        "sha256": "84cb7bfaea39a9b6e590829fa80ea1ffbe3e2aac4d583aa09a787c06f21dcf46",
+        "translationM": [
+          0,
+          -1,
+          0
+        ]
+      },
+      {
+        "slug": "armor-utility-pair-right-w200-h300",
+        "sha256": "b7d764cb65b2b2afa64db0f53f8f7db49189c598b33ef68b2b22b597674ac588",
+        "translationM": [
+          0,
+          1,
+          0
+        ]
+      }
+    ],
+    "groupMode": "all",
+    "armorExplosionM": null,
+    "placementReflectionX": false,
+    "cameraPosition": [
+      7.25,
+      -4.0,
+      5.199999809265137
+    ],
+    "cameraTarget": [
+      0.25,
+      0.0,
+      1.5
+    ],
+    "orthographicScale": 5.8,
+    "viewport": [
+      1200,
+      1000
+    ],
+    "renderer": "Blender 4.3.2 / Cycles CPU / 64 samples / no denoising / AgX medium-high",
+    "scope": "Fresh exact GLB imports. Neutral native source review; no live state or synthesized art."
+  },
+  {
+    "name": "joined-identity-bay",
+    "path": "renders/joined-identity-bay.png",
+    "sha256": "8ff79535db953b467f62a6a0f9520d3a581f749e5bcd7b0a9d838d0d832dd7d4",
+    "models": [
+      {
+        "slug": "armor-identity-pair-left-w200-h300",
+        "sha256": "fc0fbd7dea29cff88e85cf2a64d874c30ab0516dba2578801ca52083486a3ce6",
+        "translationM": [
+          0,
+          -1,
+          0
+        ]
+      },
+      {
+        "slug": "armor-identity-pair-right-w200-h300",
+        "sha256": "2e040a4c0879e669cee54281c9e56c0bafb322533bec1d97d3127f919c62f2e5",
+        "translationM": [
+          0,
+          1,
+          0
+        ]
+      }
+    ],
+    "groupMode": "all",
+    "armorExplosionM": null,
+    "placementReflectionX": false,
+    "cameraPosition": [
+      7.25,
+      -4.0,
+      5.199999809265137
+    ],
+    "cameraTarget": [
+      0.25,
+      0.0,
+      1.5
+    ],
+    "orthographicScale": 5.8,
+    "viewport": [
+      1200,
+      1000
+    ],
+    "renderer": "Blender 4.3.2 / Cycles CPU / 64 samples / no denoising / AgX medium-high",
+    "scope": "Fresh exact GLB imports. Neutral native source review; no live state or synthesized art."
+  },
+  {
+    "name": "joined-identity-port",
+    "path": "renders/joined-identity-port.png",
+    "sha256": "a3a27d024aa0a44653b0d1684f558cd4d67e2eabd351255368bd3e9c05a47aa8",
+    "models": [
+      {
+        "slug": "armor-identity-pair-left-w200-h300-port",
+        "sha256": "5acc6ffcbaf2dc852473cbeaf96839821d36d3821586b6d9713de86b02522d79",
+        "translationM": [
+          0,
+          -1,
+          0
+        ]
+      },
+      {
+        "slug": "armor-identity-pair-right-w200-h300-port",
+        "sha256": "d7572d2e71c9ae3adae761f4805d527c867fc49618bba05f68b0e4b8f0454e2d",
+        "translationM": [
+          0,
+          1,
+          0
+        ]
+      }
+    ],
+    "groupMode": "port",
+    "armorExplosionM": null,
+    "placementReflectionX": true,
+    "cameraPosition": [
+      -7.25,
+      4.0,
+      5.199999809265137
+    ],
+    "cameraTarget": [
+      -0.25,
+      0.0,
+      1.5
+    ],
+    "orthographicScale": 5.8,
+    "viewport": [
+      1200,
+      1000
+    ],
+    "renderer": "Blender 4.3.2 / Cycles CPU / 64 samples / no denoising / AgX medium-high",
+    "scope": "Fresh exact GLB imports. Neutral native source review; no live state or synthesized art."
+  },
+  {
+    "name": "single-identity-port",
+    "path": "renders/single-identity-port.png",
+    "sha256": "748b94c2993b81977312c0407bb526a1bc1fbd6caec0d2e413eef9558dbacfca",
+    "models": [
+      {
+        "slug": "armor-identity-w200-h300-port",
+        "sha256": "387fb18afd316c5445d0840159b49784a9c780354ec2ea753675b2a21904e86c",
+        "translationM": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "groupMode": "port",
+    "armorExplosionM": null,
+    "placementReflectionX": true,
+    "cameraPosition": [
+      -7.25,
+      4.0,
+      5.199999809265137
+    ],
+    "cameraTarget": [
+      -0.25,
+      0.0,
+      1.5
+    ],
+    "orthographicScale": 4.3,
+    "viewport": [
+      1200,
+      1000
+    ],
+    "renderer": "Blender 4.3.2 / Cycles CPU / 64 samples / no denoising / AgX medium-high",
+    "scope": "Fresh exact GLB imports. Neutral native source review; no live state or synthesized art."
+  },
+  {
+    "name": "fixed-width-examples",
+    "path": "renders/fixed-width-examples.png",
+    "sha256": "0d3f2493d7bc5001176a8569e170a9efd498ae1538066420a139fc6c80433b4a",
+    "models": [
+      {
+        "slug": "armor-plain-w050-h300",
+        "sha256": "52d6ef7dfc0ebe300387249b4a29d3ef0dae64b2874c5ef1ba096d9f11e8ddb7",
+        "translationM": [
+          0,
+          -2.5,
+          0
+        ]
+      },
+      {
+        "slug": "armor-plain-w100-h300",
+        "sha256": "08ae6747fbbbc45c3de6d14e833f8adc87eca4159b07dcff5d4545465284475e",
+        "translationM": [
+          0,
+          -1.25,
+          0
+        ]
+      },
+      {
+        "slug": "armor-plain-w200-h300",
+        "sha256": "3a8ad85e0bf3d23e3e274ad2a96a72172a9d038742b1a39fcd494fae0e52e652",
+        "translationM": [
+          0,
+          0.75,
+          0
+        ]
+      }
+    ],
+    "groupMode": "all",
+    "armorExplosionM": null,
+    "placementReflectionX": false,
+    "cameraPosition": [
+      8.25,
+      -3.375,
+      5.5
+    ],
+    "cameraTarget": [
+      0.25,
+      -0.375,
+      1.5
+    ],
+    "orthographicScale": 7,
+    "viewport": [
+      1200,
+      1000
+    ],
+    "renderer": "Blender 4.3.2 / Cycles CPU / 64 samples / no denoising / AgX medium-high",
+    "scope": "Fresh exact GLB imports. Neutral native source review; no live state or synthesized art."
+  },
+  {
+    "name": "fixed-height-examples",
+    "path": "renders/fixed-height-examples.png",
+    "sha256": "f3dad6fc2a9da271d4698070833ba798c7ff4201b8e0b1ed9125857f7e916658",
+    "models": [
+      {
+        "slug": "armor-plain-w200-h075",
+        "sha256": "07ae89b2f9fb011e65c4c3cd39fdd652c5928bbcab6c6a4c8ccaf9a7663b6511",
+        "translationM": [
+          0,
+          -2.5,
+          0
+        ]
+      },
+      {
+        "slug": "armor-plain-w200-h150",
+        "sha256": "b04010eeb62a35d26f6d674d53bd79cb9afdbe3610b0a521820d6e8f425302d0",
+        "translationM": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "slug": "armor-plain-w200-h225",
+        "sha256": "b0d37dccc90790a73061e6506a0d29f8b6d0cf9a9a701aae789512d8faae6df8",
+        "translationM": [
+          0,
+          2.5,
+          0
+        ]
+      }
+    ],
+    "groupMode": "all",
+    "armorExplosionM": null,
+    "placementReflectionX": false,
+    "cameraPosition": [
+      8.25,
+      -2.0,
+      5.125
+    ],
+    "cameraTarget": [
+      0.25,
+      0.0,
+      1.125
+    ],
+    "orthographicScale": 8.2,
+    "viewport": [
+      1200,
+      1000
+    ],
+    "renderer": "Blender 4.3.2 / Cycles CPU / 64 samples / no denoising / AgX medium-high",
+    "scope": "Fresh exact GLB imports. Neutral native source review; no live state or synthesized art."
+  },
+  {
+    "name": "sill-and-transom",
+    "path": "renders/sill-and-transom.png",
+    "sha256": "f0ddbb900dbc56509647eba2285e3112a8632e9d50767c231b00dd48a23419e2",
+    "models": [
+      {
+        "slug": "front-sill-straight",
+        "sha256": "3c547eab27e56f991d411b34bdfb5350b04bd8b23a51255f3ba0680597614fd8",
+        "translationM": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "slug": "front-bow-transom",
+        "sha256": "2023fd965ad50f78545a715c089bef24ba80f231885291c172dcf8b371f9ce77",
+        "translationM": [
+          2.5,
+          0,
+          0
+        ]
+      }
+    ],
+    "groupMode": "all",
+    "armorExplosionM": null,
+    "placementReflectionX": false,
+    "cameraPosition": [
+      2.25,
+      -6.875,
+      4.5625
+    ],
+    "cameraTarget": [
+      2.25,
+      0.125,
+      0.5625
+    ],
+    "orthographicScale": 5.8,
+    "viewport": [
+      1200,
+      1000
+    ],
+    "renderer": "Blender 4.3.2 / Cycles CPU / 64 samples / no denoising / AgX medium-high",
+    "scope": "Fresh exact GLB imports. Neutral native source review; no live state or synthesized art."
+  },
+  {
+    "name": "diagonal-sill",
+    "path": "renders/diagonal-sill.png",
+    "sha256": "8a9974cf445ec586072b158bfb15423e2f2b258bacb39e4ea5e90e22bac3472f",
+    "models": [
+      {
+        "slug": "front-sill-diagonal45",
+        "sha256": "12e3629689bc9ec9214e54981cee0223999202972e5481d13ac14c61e13fc558",
+        "translationM": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "groupMode": "all",
+    "armorExplosionM": null,
+    "placementReflectionX": false,
+    "cameraPosition": [
+      6.0,
+      -4.0,
+      4.5625
+    ],
+    "cameraTarget": [
+      1.0,
+      1.0,
+      0.5625
+    ],
+    "orthographicScale": 3.8,
+    "viewport": [
+      1200,
+      1000
+    ],
+    "renderer": "Blender 4.3.2 / Cycles CPU / 64 samples / no denoising / AgX medium-high",
+    "scope": "Fresh exact GLB imports. Neutral native source review; no live state or synthesized art."
+  },
+  {
+    "name": "diagonal-cheek",
+    "path": "renders/diagonal-cheek.png",
+    "sha256": "fc301e118bc5c9583db82d08138413bcc201bb26679aea79eb2bf1b7e8495345",
+    "models": [
+      {
+        "slug": "front-diagonal-cheek",
+        "sha256": "782ee0823483382ccdea1a70b2ac55c834e2ae92544b80c2b1dd5d4c15a9813b",
+        "translationM": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "groupMode": "all",
+    "armorExplosionM": null,
+    "placementReflectionX": false,
+    "cameraPosition": [
+      8.0,
+      8.0,
+      4.775000095367432
+    ],
+    "cameraTarget": [
+      2.0,
+      1.0,
+      0.7749999761581421
+    ],
+    "orthographicScale": 5.7,
+    "viewport": [
+      1200,
+      1000
+    ],
+    "renderer": "Blender 4.3.2 / Cycles CPU / 64 samples / no denoising / AgX medium-high",
+    "scope": "Fresh exact GLB imports. Neutral native source review; no live state or synthesized art."
+  }
+]

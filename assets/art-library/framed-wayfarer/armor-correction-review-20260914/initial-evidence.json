@@ -1,0 +1,62 @@
+{
+  "recordedAt": "2026-09-14T05:48:37.406547+00:00",
+  "reviewer": "/root/armor_reference_review",
+  "reviewType": "independent visual reference comparison",
+  "newCandidateStatus": "not yet supplied",
+  "evidence": [
+    {
+      "path": "assets/art-library/hull-voxel-study/wayfarer-layout-concept-r001/proposal.png",
+      "sha256": "b53b7e26e6ca1453e19d0a45b7f6291c8f1b33860e873f6648ce7edb0d7d5863",
+      "bytes": 2719714,
+      "role": "AI concept target; not game evidence"
+    },
+    {
+      "path": "reference/art/3d-rpg-after.png",
+      "sha256": "d90ebb5a0526234a5debecc1bc5ef6f32ef370dc3f6520c287be34d1c23e1b29",
+      "bytes": 3127646,
+      "role": "original reference art"
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r001/assembly/front.png",
+      "sha256": "b2bf3817b87096d3578ff691dd245ea117c4249b8d7921cac439aae222469357",
+      "bytes": 244185,
+      "role": "prior rejected implementation evidence"
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r002/hull/renders/front-bow-transom.png",
+      "sha256": "0c6b632a6d7c1a282f059ffad811790ba743e4035962a3183db8c6dcd3490e7f",
+      "bytes": 815303,
+      "role": "prior rejected implementation evidence"
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r002/hull/renders/front-diagonal-cheek.png",
+      "sha256": "6236d53354870828c1bc573b316754d3e22621d5bb7fda8dd95ad5a6467bf882",
+      "bytes": 799626,
+      "role": "prior rejected implementation evidence"
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r002/hull/renders/front-shoulder-transition.png",
+      "sha256": "0dcb1bbdc5408dd1eae078d53d208df50d658fe5d91ca36be86294d75bf480f7",
+      "bytes": 891954,
+      "role": "prior rejected implementation evidence"
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r002/hull/renders/side-plain-w200-h300.png",
+      "sha256": "fd2fbd0f9f5731dc634535a75365d6a653eb52caf282522c938d268d99bbf698",
+      "bytes": 1050720,
+      "role": "prior rejected implementation evidence"
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r002/hull/renders/side-red-service-w200-h300.png",
+      "sha256": "0aa9d48c32b3f503707352d2b67328800de8b95b9a0f69bccbb1a7118aa0dde5",
+      "bytes": 1098139,
+      "role": "prior rejected implementation evidence"
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r002/hull/renders/side-vent-w200-h300.png",
+      "sha256": "a21696e4e1db4251efdce8ae195938a1f1f94e6eb2f70dbab1c981ae7148607e",
+      "bytes": 1139792,
+      "role": "prior rejected implementation evidence"
+    }
+  ]
+}
