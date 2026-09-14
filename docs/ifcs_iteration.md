@@ -1,6 +1,6 @@
 # Wayfarer flight computer implementation
 
-Status: Compiled authority verified through phase 3 in isolation; phase 3 published with owner approval; resource gating implemented and verified; presentation and cleanup planned
+Status: Compiled authority verified through phase 3 in isolation; phase 3 published with owner approval; resource gating implemented and verified; presentation implemented and verified; cleanup planned
 Last updated: 2026-09-14
 
 The implementation follows the [IFCS integration contract](ifcs_integration.md)
@@ -66,11 +66,17 @@ Passenger projections expose current interior membership and flight rejection re
 without account identities or private ratings. Removed/rejected/dormant devices
 cannot leave stale firing output rows behind.
 
-The composed client and `packages/render/src/flight-effects.ts` have not yet completed
-the phase 5 presentation switch. Their current fixture mounts and authored-review
-ratings remain historical presentation, not physical authority. Phase 5 must consume
-compiled projections and demonstrate forward burn without retro plume, turning and
-removed-thruster disappearance in a real browser. No new browser sign-off is claimed.
+The composed client and `packages/render/src/flight-effects.ts` now consume the
+owner-scoped compiled actuator projection. Actuator UUIDs identify dynamic plume
+nodes; nozzle offset and exhaust vector come from the compiler, and only achieved
+throttle lights them. Removed/rejected projections remove plume geometry. Exterior
+observers retain motion-only data. The authored flight review and Flight properties
+panel show compiled mass, COM, inertia, envelope and rejection reasons. Passenger
+presentation requires its current admission, interior revision and discovered ship
+motion. Retained shell nozzle references use the same v1 definitions and transforms.
+
+Real browser evidence passes forward burn with zero retro output, turning and
+removed port main plume disappearance. See [screenshots and sampled telemetry](handoffs/ifcs_update_evidence_20260914/README.md).
 
 ## Verified and planned
 
@@ -95,9 +101,13 @@ zero removes force while retaining installed mass. Authority explicitly supplies
 until M4. A private latest-nonzero consumption sample records actual accepted
 per-actuator newton-seconds across substeps, including rollback/contact exhaustion
 semantics, with tick and compiled revision/hash. Idle samples keep the last burn
-stamped. No fuel or energy is deducted. Phase 5 client/browser work and phase 6
-dead-code/projection cleanup remain pending. Dead ship base columns remain by
+stamped. No fuel or energy is deducted. Phase 5 client/browser work is implemented and verified; its full check/build
+gates pass. Phase 6 dead-code/projection cleanup remains pending. Dead ship base columns remain by
 explicit owner decision.
 
 Phase 4 final gates: 2,058 tests, TypeScript, 88 document/provenance checks and
 full build pass; fresh isolated two-client computer-power smoke passes.
+
+Phase 5 full gates pass: 2,061 tests, TypeScript, 88 document checks, build,
+voxel export in isolation, canonical art validation and the three required real
+browser flight checks. Phase 6 cleanup remains planned.

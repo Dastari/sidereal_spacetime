@@ -62,7 +62,7 @@ import { loadInstalledEquipment } from "./installed-equipment";
 import { createObjectPresentation } from "./object-presentation";
 import { applyCutawayVisibility, prepareCutawayMeshes } from "./cutaway";
 import { createShipLighting } from "./ship-lighting";
-import { createFlightEffects } from "./flight-effects";
+import { createFlightEffects, type FlightEffectActuator } from "./flight-effects";
 import { createRenderDiagnostics } from "./diagnostics";
 import { createEquipmentVisual, type EquipmentAsset } from "./equipment";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
@@ -123,7 +123,7 @@ export type SceneState = {
   objectLights?: readonly { placementId: string; enabled: boolean }[];
   vx?: number;
   vy?: number;
-  actuatorOutputs?: readonly { actuatorId: string; throttle: number }[];
+  flightActuators?: readonly FlightEffectActuator[];
   /** Omitted for authoring previews; null explicitly means empty authoritative hand. */
   equippedAsset?: EquipmentAsset | null;
   heading: number;
@@ -530,7 +530,7 @@ async function buildWorld(
     options.constructionEgress
       ? {
           meshes: [] as Mesh[],
-          update(_outputs: unknown, _motion?: boolean) {},
+          update(_outputs: unknown, _motion?: boolean) { return false; },
           dispose() {},
         }
       : createFlightEffects(scene, shipRoot);
@@ -883,7 +883,7 @@ async function buildWorld(
       if (label.metadata?.side)
         label.setEnabled(label.metadata.side * Math.cos(cameraLocal) < 0);
     lighting.update(blend, avatar.position.x, -avatar.position.z);
-    flightEffects.update(state.actuatorOutputs ?? [], state.reducedMotion);
+    if (flightEffects.update(state.flightActuators ?? [], state.reducedMotion)) refreshLocalGlow();
     camera.alpha +=
       angleDelta(
         camera.alpha,

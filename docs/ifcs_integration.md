@@ -1,6 +1,6 @@
 # Component-driven IFCS integration
 
-Status: Phases 0–3 implemented and verified in isolation; phase 3 published with owner approval; phase 4 implemented and verified; phases 5–6 planned
+Status: Phases 0–3 implemented and verified in isolation; phase 3 published with owner approval; phase 4 implemented and verified; phase 5 presentation implemented and verified; phase 6 planned
 Last updated: 2026-09-14
 Owners: Sidereal simulation and ship assembly
 
@@ -110,12 +110,25 @@ supplies 1 pending M4. Accepted per-substep newton-seconds are recorded in a pri
 latest-nonzero sample with tick, compiled revision and input hash. Coordinate
 rollback discards usage; a contact-budget stop retains accepted force kicks. Idle
 ticks do not rewrite the previous sample. No fuel or electrical energy is deducted;
-routed resource networks remain outside this update. Phase 5 still
-must connect compiled nozzle/physics projections to plumes and the flight review,
-provide the actual passenger client composition, and pass real browser review of
-forward burn, turn and removal. Current presentation still includes fixture mounts.
+routed resource networks remain outside this update. Phase 5 plumes now read owner-scoped compiled nozzle positions, exhaust vectors
+and achieved throttle by actuator UUID. Removed/rejected projections dispose their
+plumes; there is no stock mount list or exactly-nine display gate. The authored
+flight review and normal Flight properties panel display compiled mass, COM,
+inertia, directional/angular envelope and rejection reason. Passenger composition
+joins the narrow current interior admission to discovered motion and exact document
+revision, without owner-only telemetry or pilot controls. Retained voxel-shell
+nozzles reference the v1 physical definitions and placed transforms.
+
+Real browser review passes forward burn (three aft plumes, zero retro output),
+turning and removed port main (two remaining aft plumes). The latter reduces mass
+by 203.917043 kg and leaves eight compiled actuators. Screenshots and sampled
+telemetry are in [phase 5 evidence](handoffs/ifcs_update_evidence_20260914/README.md).
 Phase 6 removes dead lab helpers, fixture references, duplicate writers and dead
 ship fields from the client projection; base-table fields remain by owner decision.
 
 Phase 4 final gates: 2,058 tests, TypeScript, 88 document/provenance checks and
 full build pass; fresh isolated two-client computer-power smoke passes.
+
+Phase 5 full gates pass: 2,061 tests, TypeScript, 88 document checks, build,
+voxel export in isolation, canonical art validation and the three required real
+browser flight checks. Phase 6 cleanup remains planned.

@@ -12,7 +12,7 @@ Implementation contract: [plan](ifcs_update_plan_20260914.md).
 | 2 Definitions/compiler | Complete: 1,993 tests and build pass | `0de90fe8` |
 | 3 Authority switch | Complete; owner-approved non-destructive shared publication succeeded | 2,048 full-check tests; 1,511 staged-source tests; build, smoke variants, additive migration and shared schema comparison pass |
 | 4 Resource gating | Complete: 2,058 tests, build and isolated two-client smoke pass | phase4-check-final.log, phase4-build-final.log, phase4-smoke-r0002.log |
-| 5 Presentation | Not started | Depends on phase 3; real browser evidence required |
+| 5 Presentation | Complete: 2,061 tests, build, art checks and real browser evidence pass | phase5-check.log, phase5-build.log, committed screenshots and telemetry |
 | 6 Cleanup | Not started | Depends on phases 3 and 5 |
 
 ## Owner decisions
@@ -715,3 +715,68 @@ smoke passes as above. Repeated operator SQL after idling is byte-identical
 (phase4-consumption-idle-sql.txt). No phase 4 shared publication occurred. Phase 4
 contains one additive private table and one additive reducer; no non-additive
 schema change, authority relaxation, collision revision or native-pin change.
+
+Phase 4 committed as 146c4401 and pushed to PR #1. Phase 5 root ownership: flight-effects, render/client entrypoint integration, authored-flight review, existing shell nozzle references and transport subscriptions. Preexisting shared file edits were snapshotted under /tmp/ifcs-phase5-before and will be preserved in selective staging.
+
+
+Phase 5 export deviation: the first `npm run art:voxels` was mistakenly invoked
+from the shared checkout after preparing /tmp/ifcs-phase5-review. Generated GLBs,
+voxel JSON and material outputs were byte-identical to the pre-command snapshot;
+Blender saves changed four historical source binaries and three manifests. Those
+sources were recovered from retained release checkouts by exact original manifest
+SHA-256 (asteroid identical across every retained copy); original manifests were
+restored. Hash/provenance evidence: phase5-restored-export-outputs.json. No remaining
+voxel manifest diff and `npm run art:check` passes. The same full voxel export also
+passed correctly in /tmp/ifcs-phase5-review, leaving its outputs there for review.
+This was an execution-directory error, not an authorized art revision/publication.
+
+Browser review uses a managed isolated client on port 5297 (5187 was occupied),
+connected to the reserved phase4-r0002 smoke database. This deviates from the older
+shared-browser port in active_agent_ownership.md to avoid changing real ships.
+Only the copied client's service is started; shared database process metadata is
+referenced for readiness, not restarted. Stop only the copied client at closeout.
+
+
+Phase 5 real-browser evidence (normal composed client, WebGL2 / SwiftShader,
+1200×780, one browser after the owner-reported OOM interruption): native admission,
+server-validated walk to pilot approach and station entry; 54 forward-burn samples
+had maximum main throttle 1 and maximum retro throttle 0. `forward-burn-verified.png`
+shows all three aft plumes, no retro plume. `turn.png` shows actual heading change
+and achieved plumes. Removed port main fitting 9b8dc30d-45a9-4df9-be4c-5ea08813421a
+at nozzle (-3.6,-14) through the production revision/operation-checked reducer.
+Mass changed from 12089.69999999995 to 11885.782956815168 kg; eight actuators remain.
+None of 75 subsequent sampled projections contains the removed ID.
+`removed-port-main.png` shows centre/starboard aft plumes and the removed port
+nozzle dark. `compiled-properties.png` shows mass 11885.8 kg, COM (0.074,1.200)m,
+inertia 608523.7 kg·m² and the reduced envelope. No console errors in the recovered
+browser. JSON/text evidence is in phase5-browser-{forward-verified,turn-evidence,
+removal-evidence}.log; screenshots in output/playwright/ifcs-phase5/.
+
+Browser controls used only existing authorized reducer inputs. For canvas-only UI,
+coordinates came from inspected screenshots. Read-only React fiber inspection
+located the existing browser connection for scripted walking/setpoint/removal
+checks. No test hook or browser instrumentation was added to production source.
+The bounded private compiled projections supplied every rendered nozzle position,
+direction and throttle; IDs were never remapped to stock effect mounts.
+
+Root preserved the preexisting stepped translucent plume surface implementation
+while switching its data source. Phase 5 commits the qualified presentation
+allowlist needed for r002 alongside the compiled integration; unrelated Systems
+panel, ground-item, debug collision and pose edits remain in their owners' working
+files and are excluded from the phase commit where separable.
+
+
+Phase 5 final gates: `VITEST_MAX_WORKERS=1 npm run check` passes **347 files /
+2,061 tests**, TypeScript and all 88 document/provenance checks. Full `npm run
+build` passes. `npm run art:voxels` passes in the isolated copy and `npm run
+art:check` passes with the original canonical assets restored/preserved. Browser
+screenshots and sampled data are committed under
+[phase 5 evidence](ifcs_update_evidence_20260914/README.md). Recovered review browser
+closed; only the isolated port-5297 client was stopped. The managed shared database
+was recovered after OOM without reset or republication. Phase 6 remains unstarted
+until this verified phase commit is recorded.
+
+Independent staged source also passes TypeScript, all 13 focused presentation/
+nozzle tests and the client build (phase5-staged-check.log, phase5-staged-build.log).
+The preexisting independent documentation-export gap recorded in phase 3 remains
+separate from these implemented flight exit criteria.
