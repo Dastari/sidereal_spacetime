@@ -72,3 +72,23 @@ resource producers and per-ship mount presentation remain planned.
 ## Required tests before full modular/resource integration
 
 No engine means coasting without thrust; no tanks means no stored fuel; disconnected/depleted supply prevents engine output; no powered core prevents IFCS. Thrust saturation must remain observable. Move cargo, destroy a thruster, detach an engine, change mount orientation and run out of fuel during a turn. Verify resource conservation, mass/inertia changes, achieved exhaust, revoked seat/AI grants, reconnect/restart and concurrent refit/damage. Test heading/velocity targets on underactuated layouts rather than only a symmetric starter craft. Benchmark the solver with representative actuator counts before choosing the production iteration/actuator budget.
+
+## 2026-09-14 phase 2 physical compiler
+
+The versioned physical catalog and generic compiler are implemented, with a
+separate content adapter for actual qualified Wayfarer instance documents.
+The canonical empty r002 compiles to 12,000 kg and 636,480 kg·m² to floating
+roundoff, with 301 individually counted physical elements. All nine actuator
+mounts and axes derive from placed transforms and asset-local definitions.
+Mirroring/rotation, removal, cargo movement, crew movement, missing definitions
+and binding rejection are covered by focused tests. There is no fixture fallback
+inside the compiler.
+
+Pure authored-frame/COM conversion preserves ship and passenger placement when
+cargo moves; lateral and longitudinal hull offsets support off-centre rotation
+and collision. Installed-but-disabled equipment retains mass. Payload mass joins
+and actual availability producers are still phase 3 authority work. Native
+structure must match an existing qualified variant; arbitrary new structural
+revisions require qualification. The live resolver/render have not switched.
+Phase 2 full check passes 1,993 tests, typecheck and documentation; build passes.
+Evidence is tracked in the progress document.

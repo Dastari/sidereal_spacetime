@@ -8,8 +8,8 @@ Implementation contract: [plan](ifcs_update_plan_20260914.md).
 | Phase | Status | Evidence / commit |
 | --- | --- | --- |
 | 0 Baseline | Complete: 6 baseline tests, 1,925 total tests and build pass | `output/ifcs-update/phase0-check.log`, `phase0-build.log` |
-| 1 Allocator/controller | Complete: 1,951 tests, build and isolated smoke pass | Logs below; phase commit follows |
-| 2 Definitions/compiler | Not started | Depends on phase 0 exit |
+| 1 Allocator/controller | Complete: 1,951 tests, build and isolated smoke pass | `0307ace4` |
+| 2 Definitions/compiler | Complete: 1,993 tests and build pass | `phase2-check.log`, `phase2-build.log` |
 | 3 Authority switch | Not started | Requires phases 1–2; owner check-in before shared DB publish |
 | 4 Resource gating | Not started | Depends on phase 3 |
 | 5 Presentation | Not started | Depends on phase 3; real browser evidence required |
@@ -227,3 +227,74 @@ these were sent as asynchronous questions while independent phase 2 work proceed
   producer. Alternative is expanding scope to real weapon hit detection now.
 
 No approval-sensitive implementation for these questions has begun.
+
+## Phase 2 integration ownership
+
+`physical_review` resumes bounded pure compiler/content work, owning
+`packages/sim/src/flight-definition.ts`, `flight-definition.test.ts`,
+`packages/content/src/physical-definitions.ts`, `physical-definitions.test.ts`,
+and new `packages/content/src/wayfarer-flight-definition.ts`. The concrete
+Wayfarer source adapter is being extracted from the generic sim compiler to
+keep authored catalog and JSON imports in content. Root owns flight-frame,
+collision, broadphase and system-space COM integration. No world edits yet.
+
+## Phase 2 implementation and evidence
+
+Versioned physical catalog, generic bounded compiler and authored Wayfarer
+adapter are integrated. Root added authored-origin/COM motion conversion and
+lateral plus longitudinal capsule offsets. System-space validates compiled
+midpoint offsets against mass. Contact and conservative broadphase use the
+same displaced geometry, including circles displaced from COM. Tests sample
+rotating hull bounds at ±1e9 m with lateral offsets ±8 m; offset contact,
+angular impulse and frame/passenger invariants pass.
+
+Focused compiler/content tests: 38 pass. Focused contact/frame/system tests:
+37 pass (`output/ifcs-update/phase2-contact.log`); initial combined run: 75 tests
+pass (`phase2-focused.log`). Full check and build pass.
+
+Canonical empty r002 has 301 positive contributions (81 assembly, 51 floors,
+126 native wall modules and 43 native roof modules). Compiled mass is
+11999.999999999967 kg, inertia 636479.9999999965 kg·m², COM
+[0.012567135782623, 0.915897698209490] m. Both owner-approved fixture targets
+are reproduced to floating roundoff. This COM follows actual placements;
+the target did not require a zero COM. Per-definition positive masses were
+calibrated offline. There is no live target-minus-parts ballast, aggregate
+fixture mass or fixture import in the compiler/catalog.
+
+All nine canonical mounts, force axes, thrust and nozzle heights are tested
+against the existing documented fixture. Mirrors and rotations apply together.
+Removed parts drop mass and actuation; absent fittings retain hardware mass;
+power loss, damage availability zero and detachment retain mass and cut force.
+Physical IDs cannot alias across part/cargo/crew contributions. Payload joins
+remain an authority responsibility for phase 3; fitting rows never add mass.
+Cargo carrier adoption replaces the existing shell under its same identity,
+then payload is added once; preserved fuel attachment shell is separate from
+its actual liquid payload. Crew body definition is versioned at 80 kg.
+
+Pure compiler rejects missing/unknown definitions, invalid fitting bindings,
+invalid placements, duplicate physical identities and degenerate inertia with
+reasons and no fallback. Hashes include all inputs and the versioned catalog,
+independent of collection order. Work caps: 4096 parts/definitions, 256 fittings,
+512 cargo roots, 256 crew. Hash-only dirty detection does not grant validation.
+
+The concrete source adapter accepts actual instance documents for the three
+already qualified variants r001/r002/r005. Native structural metadata is reused
+only after exact restored semantic-source matching; unsupported structural
+edits reject pending a newly qualified variant. This restriction preserves
+existing native qualification, not a substitute stock assembly. No collision
+revision or native pins changed. The pinned authored capsule midpoint remains
+[0,1.125] m, radius 5.4 m and half-length 7.125 m. Only its COM offsets change.
+
+Scratch compiler timing reported by physical_review: 100 warmed samples p50
+2.013 ms, p95 2.870 ms, max 4.956 ms, first native preparation plus compile about
+79 ms. This is Node characterization, not server performance certification.
+The first preparation is cached source metadata; production dirty work must
+still have a per-tick ship budget. No supply hook is included before phase 4.
+
+The live resolver and render still use fixture inputs. The pure compiler and
+frame functions are not claimed to be active world authority in this phase.
+
+Phase 2 final gates: `VITEST_MAX_WORKERS=1 npm run check` passes 334 files /
+1,993 tests, full typecheck and 88 document checks in `phase2-check.log`.
+`npm run build` passes in `phase2-build.log`. Pure compiler/frame exit criteria
+are complete; no phase 3 authority changes were included in this commit.

@@ -72,6 +72,9 @@ function bodyValid(body: RigidBody): void {
       body.radius,
       body.halfLength,
       body.longitudinalOffset ?? 0,
+      body.lateralOffset ?? 0,
+      body.authoredMidpointX ?? 0,
+      body.authoredMidpointY ?? 0,
     ].every(Number.isFinite) ||
     Math.min(body.massKg, body.inertia, body.radius) <= 0 ||
     body.halfLength < 0 ||
@@ -83,6 +86,9 @@ function bodyValid(body: RigidBody): void {
       body.radius,
       body.halfLength,
       Math.abs(body.longitudinalOffset ?? 0),
+      Math.abs(body.lateralOffset ?? 0),
+      Math.abs(body.authoredMidpointX ?? 0),
+      Math.abs(body.authoredMidpointY ?? 0),
     ) > 1e6
   )
     throw new Error("Invalid bounded system body");
@@ -148,7 +154,12 @@ export function stepSystemSpace(
       throw new Error("Missing or duplicate controlled body");
     if (
       control.mass.massKg !== body.massKg ||
-      control.mass.inertiaKgM2 !== body.inertia
+      control.mass.inertiaKgM2 !== body.inertia ||
+      (body.lateralOffset ?? 0) !==
+        (body.authoredMidpointX ?? 0) - control.mass.centerX ||
+      (body.longitudinalOffset ?? 0) !==
+        (body.authoredMidpointY ?? body.longitudinalOffset ?? 0) -
+          control.mass.centerY
     )
       throw new Error("Flight/contact inertial properties differ");
     // Exercise existing validation even when disabled: malformed trusted content
@@ -175,7 +186,8 @@ export function stepSystemSpace(
     }
     controlMap.set(control.bodyId, {
       ...control,
-      envelope: control.envelope ?? deriveEnvelope(control.actuators, control.mass),
+      envelope:
+        control.envelope ?? deriveEnvelope(control.actuators, control.mass),
     });
   }
   let bodies = input.map((body) => ({ ...body })).sort(compareIds);
@@ -206,7 +218,9 @@ export function stepSystemSpace(
         control.profile,
         control.envelope,
       );
-      const achievedCommands = new Map(flight.commands.map(c => [c.id, c.throttle]));
+      const achievedCommands = new Map(
+        flight.commands.map((c) => [c.id, c.throttle]),
+      );
       commandMap.set(
         body.id,
         control.actuators
