@@ -1,0 +1,45 @@
+{
+  "camera": {
+    "alpha": 1.0529033447245055,
+    "beta": 1.1694941410002127,
+    "radius": 5.5
+  },
+  "ready": true,
+  "resolution": {
+    "height": 907,
+    "width": 1574
+  },
+  "scope": "Actual onAfterRender callback after shared implementation extraction; visual load only, no new timing claim",
+  "stats": {
+    "baselineEnvironmentEnabled": false,
+    "candidate": {
+      "active": 0,
+      "buildMs": 2262.199999988079,
+      "fixedDetail": true,
+      "localLights": 0,
+      "pendingBuilds": 0,
+      "requestedLOD": 0,
+      "retained": [
+        0
+      ],
+      "retainedSmokeMeshes": 0,
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "transmissionMaterials": 2,
+      "transmissionTargets": 1,
+      "workerPending": 0
+    },
+    "frames": 5265,
+    "lods": [],
+    "meshes": 8,
+    "renderer": {
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4080 Laptop GPU (0x000027E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "vendor": "Google Inc. (NVIDIA)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "seed": 38,
+    "style": "ice",
+    "triangles": 549004
+  }
+}

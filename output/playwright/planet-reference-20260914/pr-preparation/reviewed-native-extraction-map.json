@@ -1,0 +1,100 @@
+[
+  {
+    "from": "scripts/art_library/rocky_reference_composition_r010.ts",
+    "to": "packages/render/src/environment/reviewed-native/rocky_reference_composition_r010.ts",
+    "originalSHA256": "ade618237e5540554843bbcc5bfbae0e892064a620eab1ca2b5e1d8bbf7c6b4d",
+    "implementationChange": "import path only; exact implementation preserved",
+    "reviewShim": "export *"
+  },
+  {
+    "from": "scripts/art_library/temperate_reference_composition_r003.ts",
+    "to": "packages/render/src/environment/reviewed-native/temperate_reference_composition_r003.ts",
+    "originalSHA256": "8ff08c502bdfb6e270a9892eb175712d67e5bb031e7361ce54808e40947af61b",
+    "implementationChange": "import path only; exact implementation preserved",
+    "reviewShim": "export *"
+  },
+  {
+    "from": "scripts/art_library/planet_reference_composition.ts",
+    "to": "packages/render/src/environment/reviewed-native/planet_reference_composition.ts",
+    "originalSHA256": "555bdbc724b2028f9ed5e1e7f95ba1cff550486ca1424f6237137f4268ea4ee3",
+    "implementationChange": "import path only; exact implementation preserved",
+    "reviewShim": "export *"
+  },
+  {
+    "from": "scripts/art_library/ice_reference_composition_r025.ts",
+    "to": "packages/render/src/environment/reviewed-native/ice_reference_composition_r025.ts",
+    "originalSHA256": "776ab79c61eda60d44b5b3f6cda9802a7aab83a871168170cdd2a7f81d13fc7b",
+    "implementationChange": "import path only; exact implementation preserved",
+    "reviewShim": "export *"
+  },
+  {
+    "from": "scripts/art_library/volcanic_reference_composition_r023.ts",
+    "to": "packages/render/src/environment/reviewed-native/volcanic_reference_composition_r023.ts",
+    "originalSHA256": "731eeb4bad249c4eca82242251221675ef2e88c816e683ee5c7a758f3bdcdaaa",
+    "implementationChange": "import path only; exact implementation preserved",
+    "reviewShim": "export *"
+  },
+  {
+    "from": "scripts/art_library/gas_reference_composition.ts",
+    "to": "packages/render/src/environment/reviewed-native/gas_reference_composition.ts",
+    "originalSHA256": "29ca8363248b85bbc7d7e61d79569d49f59972b9684a1e019464163516bb37bf",
+    "implementationChange": "import path only; exact implementation preserved",
+    "reviewShim": "export *"
+  },
+  {
+    "from": "scripts/art_library/ocean_reference_composition_r007.ts",
+    "to": "packages/render/src/environment/reviewed-native/ocean_reference_composition_r007.ts",
+    "originalSHA256": "c22cbc5fe97e0f17d1c39ea0e7b85b624574f8a59ac000eae50a729f4c38fcac",
+    "implementationChange": "import path only; exact implementation preserved",
+    "reviewShim": "export *"
+  },
+  {
+    "from": "scripts/art_library/toxic_reference_composition_r007.ts",
+    "to": "packages/render/src/environment/reviewed-native/toxic_reference_composition_r007.ts",
+    "originalSHA256": "b9dc8f13e4ef2ae2b4934224523dea19a10c213fd191b4b79e634a6c5cdc504f",
+    "implementationChange": "import path only; exact implementation preserved",
+    "reviewShim": "export *"
+  },
+  {
+    "from": "scripts/art_library/crystal_reference_composition_r013.ts",
+    "to": "packages/render/src/environment/reviewed-native/crystal_reference_composition_r013.ts",
+    "originalSHA256": "898bd1bcc70f7a256917a9135a478514d895305c21b5913a071de7697a180ecd",
+    "implementationChange": "import path only; exact implementation preserved",
+    "reviewShim": "export *"
+  },
+  {
+    "from": "scripts/art_library/native_reference_assembly.ts",
+    "to": "packages/render/src/environment/reviewed-native/native_reference_assembly.ts",
+    "originalSHA256": "56cc88e5dc74583275addc15585b6cb702bbb2f4d32b55b1652fa3269cc20d92",
+    "implementationChange": "import path only; exact implementation preserved",
+    "reviewShim": "export *"
+  },
+  {
+    "from": "scripts/art_library/native_deformation_normals.ts",
+    "to": "packages/render/src/environment/reviewed-native/native_deformation_normals.ts",
+    "originalSHA256": "0667bfc25c2fd3b26ab9ce5c9ab08ce3f88317b3a01a7ed7cdc3ff846e5d3906",
+    "implementationChange": "import path only; exact implementation preserved",
+    "reviewShim": "export *"
+  },
+  {
+    "from": "scripts/art_library/native_radial_surface.ts",
+    "to": "packages/render/src/environment/reviewed-native/native_radial_surface.ts",
+    "originalSHA256": "ae6b0e45b6ec8b859fc3c3f5cd0be096715897b7e2bfb2d274d6c95cff03db8b",
+    "implementationChange": "import path only; exact implementation preserved",
+    "reviewShim": "export *"
+  },
+  {
+    "from": "scripts/art_library/native_surface_clearance.ts",
+    "to": "packages/render/src/environment/reviewed-native/native_surface_clearance.ts",
+    "originalSHA256": "1d53cf1407395d7a9e8182e95f150df3f41baf8d48db2ff6a1aeada935c2cb28",
+    "implementationChange": "import path only; exact implementation preserved",
+    "reviewShim": "export *"
+  },
+  {
+    "from": "scripts/art_library/reference_shadow_radius.ts",
+    "to": "packages/render/src/environment/reviewed-native/reference_shadow_radius.ts",
+    "originalSHA256": "12960c0e8773e960a6c9a8892cd8c15246209d71d0099d5ca8c7919a1e17e996",
+    "implementationChange": "import path only; exact implementation preserved",
+    "reviewShim": "export *"
+  }
+]

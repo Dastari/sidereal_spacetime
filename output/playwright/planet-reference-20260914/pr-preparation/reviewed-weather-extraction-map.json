@@ -1,0 +1,32 @@
+[
+  {
+    "from": "scripts/art_library/native_cloud_composition_r002.ts",
+    "to": "packages/render/src/environment/reviewed-native/native_cloud_composition_r002.ts",
+    "originalSHA256": "a869afddbe714bfdb03c5d2bd0220a2245ba9e847ce655237b381802af8da7d5",
+    "implementationChange": "import paths only"
+  },
+  {
+    "from": "scripts/art_library/reference_volcanic_smoke_build.ts",
+    "to": "packages/render/src/environment/reviewed-native/reference_volcanic_smoke_build.ts",
+    "originalSHA256": "81f3ecc255ac9e456ed701acb003da844d074fc861ab9d4db1c686708ea77b39",
+    "implementationChange": "import paths only"
+  },
+  {
+    "from": "scripts/art_library/toxic_fog_reference_clearance.ts",
+    "to": "packages/render/src/environment/reviewed-native/toxic_fog_reference_clearance.ts",
+    "originalSHA256": "34a0e1d1b08261f85a098e8e61fb8ac603dcff7d91774c185de835fc8fb48c98",
+    "implementationChange": "import paths only"
+  },
+  {
+    "from": "scripts/art_library/toxic_fog_reference_integration.ts",
+    "to": "packages/render/src/environment/reviewed-native/toxic_fog_reference_integration.ts",
+    "originalSHA256": "9a54d0e62a3b1258e363819b584c1d350bedd32c656671320edcf92dca7b3f9d",
+    "implementationChange": "import paths only"
+  },
+  {
+    "from": "scripts/art_library/toxic_fog_composition_r005.ts",
+    "to": "packages/render/src/environment/reviewed-native/toxic_fog_composition_r005.ts",
+    "originalSHA256": "d9479e52cf4f39c647079f4e73d0d6b22bf442bdbe8806d7a95088042e8229d7",
+    "implementationChange": "import paths only"
+  }
+]

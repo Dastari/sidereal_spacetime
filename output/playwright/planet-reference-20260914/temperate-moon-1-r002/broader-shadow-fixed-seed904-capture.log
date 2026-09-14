@@ -1,0 +1,52 @@
+### Ran Playwright code
+```js
+await (async (page)=>{
+ const settleView=label=>page.evaluate(async ({label, timeoutMs=60000}) => {
+ const r=window.planetReview;
+ const loops=window.__referenceCaptureLoops??=r.engine.activeRenderLoops.slice();
+ if(!loops.length)throw new Error('No reference render loop to advance '+label);
+ const start=r.stats().frames;
+ for(const loop of loops)r.engine.runRenderLoop(loop);
+ return await new Promise((resolve,reject)=>{
+  let previousFrame=start, stable=0, signature='', finished=false, frameHandle;
+  const fail=error=>{if(finished)return;finished=true;clearTimeout(timer);cancelAnimationFrame(frameHandle);r.engine.stopRenderLoop();reject(error);};
+  const timer=setTimeout(()=>fail(new Error('Capture view did not settle: '+label+' '+JSON.stringify(r.stats()))),timeoutMs);
+  const poll=()=>{
+   if(finished)return;
+   const stats=r.stats(),c=stats.candidate;
+   if(c?.error){fail(new Error('Capture candidate failed: '+c.error));return;}
+   if(stats.frames>previousFrame){
+    previousFrame=stats.frames;
+    const expected=c?.fixedDetail?0:c?.requestedLOD;
+    const ready=c&&[0,1,2].includes(expected)&&c.active===expected&&c.pendingBuilds===0&&c.workerPending===0&&r.scene.isReady();
+    const next=JSON.stringify([c?.active,c?.requestedLOD,c?.fixedDetail,c?.retained]);
+    stable=ready?(signature===next?stable+1:1):0;signature=next;
+    if(stable>=3){
+     finished=true;clearTimeout(timer);r.engine.stopRenderLoop();
+     const result={label,startFrame:start,endFrame:stats.frames,stableFrames:stable,camera:{alpha:r.camera.alpha,beta:r.camera.beta,radius:r.camera.radius},candidate:c};
+     (window.__referenceCaptureSettlements??=[]).push(result);resolve(result);return;
+    }
+   }
+   frameHandle=requestAnimationFrame(poll);
+  };
+  frameHandle=requestAnimationFrame(poll);
+ });
+},{label});
+ await page.setViewportSize({width:900,height:900});
+ await page.unroute("**/planet-reference-kit.json");await page.route("**/planet-reference-kit.json",r=>r.fulfill({path:"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/temperate-moon-1-r002/kit.json",contentType:"application/json"}));
+ await page.unroute("**/planet-reference-cloud-kit.json");await page.route("**/planet-reference-cloud-kit.json",r=>r.fulfill({path:"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/cloud-r002/kit.json",contentType:"application/json"}));
+ await page.unroute("**/planet-reference-assets/**");await page.route("**/planet-reference-assets/**",r=>r.fulfill({path:"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/temperate-moon-1-r002/"+r.request().url().split("/planet-reference-assets/")[1]}));
+ await page.unroute("**/planet-reference-weather-assets/**");await page.route("**/planet-reference-weather-assets/**",r=>r.fulfill({path:"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/cloud-r002/"+r.request().url().split("/planet-reference-weather-assets/")[1]}));
+ await page.goto("about:blank");await page.goto("http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=moon&seed=904&candidate=1&reviewRevision=temperate-moon-1-r002&capture=1789393822129738029&glow=1");
+ await page.waitForFunction(()=>window.planetReview?.stats().candidate?.error||(window.planetReview?.stats().candidate?.active===0&&window.planetReview.stats().frames>0),{},{timeout:60000});
+ const error=await page.evaluate(()=>window.planetReview.stats().candidate.error);if(error)throw new Error(error);
+ await page.evaluate(()=>{const r=window.planetReview;r.camera.radius=5.5;});await settleView('close');await page.screenshot({path:"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/temperate-moon-1-r002/broader-shadow-fixed-seed904.png"});
+ await page.evaluate(()=>{const r=window.planetReview;r.camera.alpha+=1.6;});await settleView('angle2');await page.screenshot({path:"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/temperate-moon-1-r002/broader-shadow-fixed-seed904-angle2.png"});
+await page.evaluate(()=>{const r=window.planetReview;r.camera.radius=46.91891891891892;});await settleView("reference-scale");await page.screenshot({path:"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/temperate-moon-1-r002/broader-shadow-fixed-seed904-reference-scale.png"});
+})(page);
+```
+### Page
+- Page URL: http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=moon&seed=904&candidate=1&reviewRevision=temperate-moon-1-r002&capture=1789393822129738029&glow=1
+- Page Title: Planet reference review — isolated
+### Events
+- New console entries: .playwright-cli/console-2026-09-14T13-28-07-306Z.log#L43

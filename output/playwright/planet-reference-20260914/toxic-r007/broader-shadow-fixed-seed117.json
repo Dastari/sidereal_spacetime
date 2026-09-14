@@ -1,0 +1,169 @@
+{
+  "viewSettlements": [
+    {
+      "label": "close",
+      "startFrame": 133,
+      "endFrame": 143,
+      "stableFrames": 3,
+      "camera": {
+        "alpha": 1.0529033447245055,
+        "beta": 1.1694941410002127,
+        "radius": 5.5
+      },
+      "candidate": {
+        "active": 0,
+        "pendingBuilds": 0,
+        "retained": [
+          0
+        ],
+        "smokeImplemented": true,
+        "smokeMeshes": 0,
+        "smokeTriangles": 0,
+        "retainedSmokeMeshes": 0,
+        "requestedLOD": 0,
+        "fixedDetail": true,
+        "workerPending": 0,
+        "buildMs": 1546.3999996185303,
+        "localLights": 0,
+        "transmissionMaterials": 0,
+        "transmissionTargets": 0
+      }
+    },
+    {
+      "label": "angle2",
+      "startFrame": 143,
+      "endFrame": 146,
+      "stableFrames": 3,
+      "camera": {
+        "alpha": 2.6529033447245056,
+        "beta": 1.1694941410002127,
+        "radius": 5.5
+      },
+      "candidate": {
+        "active": 0,
+        "pendingBuilds": 0,
+        "retained": [
+          0
+        ],
+        "smokeImplemented": true,
+        "smokeMeshes": 0,
+        "smokeTriangles": 0,
+        "retainedSmokeMeshes": 0,
+        "requestedLOD": 0,
+        "fixedDetail": true,
+        "workerPending": 0,
+        "buildMs": 1546.3999996185303,
+        "localLights": 0,
+        "transmissionMaterials": 0,
+        "transmissionTargets": 0
+      }
+    },
+    {
+      "label": "reference-scale",
+      "startFrame": 146,
+      "endFrame": 149,
+      "stableFrames": 3,
+      "camera": {
+        "alpha": 2.6529033447245056,
+        "beta": 1.1694941410002127,
+        "radius": 13.5
+      },
+      "candidate": {
+        "active": 0,
+        "pendingBuilds": 0,
+        "retained": [
+          0
+        ],
+        "smokeImplemented": true,
+        "smokeMeshes": 0,
+        "smokeTriangles": 0,
+        "retainedSmokeMeshes": 0,
+        "requestedLOD": 1,
+        "fixedDetail": true,
+        "workerPending": 0,
+        "buildMs": 1546.3999996185303,
+        "localLights": 0,
+        "transmissionMaterials": 0,
+        "transmissionTargets": 0
+      }
+    }
+  ],
+  "viewport": {
+    "width": 900,
+    "height": 900
+  },
+  "canvas": {
+    "width": 900,
+    "height": 900
+  },
+  "stats": {
+    "style": "toxic",
+    "seed": 117,
+    "frames": 149,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 0,
+      "requestedLOD": 1,
+      "fixedDetail": true,
+      "workerPending": 0,
+      "buildMs": 1546.3999996185303,
+      "localLights": 0,
+      "transmissionMaterials": 0,
+      "transmissionTargets": 0
+    },
+    "baselineEnvironmentEnabled": false,
+    "meshes": 11,
+    "triangles": 136524,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": []
+  },
+  "shadowsEnabled": true,
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 13.5
+  },
+  "shadows": [],
+  "checkoutHead": "2af5fb3e98057f577b61a657e71f61067c7d338b",
+  "sourceRoot": "/root/sidereal_spacetime",
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "toxic",
+    "revision": "toxic-r007",
+    "seed": 117,
+    "radius": 5.5,
+    "alpha": null,
+    "beta": null,
+    "bias": null,
+    "depth_bias": null,
+    "glow": false,
+    "local_light": false,
+    "prefix": "broader-shadow-fixed",
+    "reference_scale": true,
+    "weather_revision": "toxic-fog-r005",
+    "sample_surfaces": false,
+    "unit": false,
+    "staged": false,
+    "target": null,
+    "shadows_off": false,
+    "reference_radius": 13.5
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=toxic&seed=117&candidate=1&reviewRevision=toxic-r007&capture=1789391181509916949",
+  "images": {
+    "broader-shadow-fixed-seed117.png": "3300237a136c721cfbb945f6e49a263d3c271d4b29090ae041cfbef5e7bb7193",
+    "broader-shadow-fixed-seed117-angle2.png": "09d8ee6399413705ac908c927b3a512148f061de2ae106e34794ecfeee2cafed",
+    "broader-shadow-fixed-seed117-reference-scale.png": "f67cb0f4dd0326579ed9c4ffdf9140388c4e1542b2b7586997e60538c3a5a184"
+  },
+  "kitSha256": "df85fefbbb5b9474e810197333255819d33dcf3c911462f98dc49a111edfcb2c"
+}

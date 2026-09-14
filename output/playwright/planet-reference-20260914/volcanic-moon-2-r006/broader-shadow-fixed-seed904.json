@@ -1,0 +1,243 @@
+{
+  "viewSettlements": [
+    {
+      "label": "close",
+      "startFrame": 50,
+      "endFrame": 56,
+      "stableFrames": 3,
+      "camera": {
+        "alpha": 1.0529033447245055,
+        "beta": 1.1694941410002127,
+        "radius": 5.5
+      },
+      "candidate": {
+        "active": 0,
+        "pendingBuilds": 0,
+        "retained": [
+          0
+        ],
+        "smokeImplemented": true,
+        "smokeMeshes": 0,
+        "smokeTriangles": 0,
+        "retainedSmokeMeshes": 0,
+        "requestedLOD": 0,
+        "fixedDetail": true,
+        "workerPending": 0,
+        "buildMs": 583.2000007629395,
+        "localLights": 0,
+        "transmissionMaterials": 0,
+        "transmissionTargets": 0
+      }
+    },
+    {
+      "label": "angle2",
+      "startFrame": 56,
+      "endFrame": 59,
+      "stableFrames": 3,
+      "camera": {
+        "alpha": 2.6529033447245056,
+        "beta": 1.1694941410002127,
+        "radius": 5.5
+      },
+      "candidate": {
+        "active": 0,
+        "pendingBuilds": 0,
+        "retained": [
+          0
+        ],
+        "smokeImplemented": true,
+        "smokeMeshes": 0,
+        "smokeTriangles": 0,
+        "retainedSmokeMeshes": 0,
+        "requestedLOD": 0,
+        "fixedDetail": true,
+        "workerPending": 0,
+        "buildMs": 583.2000007629395,
+        "localLights": 0,
+        "transmissionMaterials": 0,
+        "transmissionTargets": 0
+      }
+    },
+    {
+      "label": "reference-scale",
+      "startFrame": 59,
+      "endFrame": 62,
+      "stableFrames": 3,
+      "camera": {
+        "alpha": 2.6529033447245056,
+        "beta": 1.1694941410002127,
+        "radius": 73.8723404255
+      },
+      "candidate": {
+        "active": 0,
+        "pendingBuilds": 0,
+        "retained": [
+          0
+        ],
+        "smokeImplemented": true,
+        "smokeMeshes": 0,
+        "smokeTriangles": 0,
+        "retainedSmokeMeshes": 0,
+        "requestedLOD": 2,
+        "fixedDetail": true,
+        "workerPending": 0,
+        "buildMs": 583.2000007629395,
+        "localLights": 0,
+        "transmissionMaterials": 0,
+        "transmissionTargets": 0
+      }
+    }
+  ],
+  "viewport": {
+    "width": 900,
+    "height": 900
+  },
+  "canvas": {
+    "width": 900,
+    "height": 900
+  },
+  "stats": {
+    "style": "moon",
+    "seed": 904,
+    "frames": 62,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 0,
+      "requestedLOD": 2,
+      "fixedDetail": true,
+      "workerPending": 0,
+      "buildMs": 583.2000007629395,
+      "localLights": 0,
+      "transmissionMaterials": 0,
+      "transmissionTargets": 0
+    },
+    "baselineEnvironmentEnabled": false,
+    "meshes": 7,
+    "triangles": 354306,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": []
+  },
+  "shadowsEnabled": true,
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 73.8723404255
+  },
+  "shadows": [],
+  "checkoutHead": "2af5fb3e98057f577b61a657e71f61067c7d338b",
+  "sourceRoot": "/root/sidereal_spacetime",
+  "sourceHashesAtStart": {
+    "scripts/art_library/planet_reference_review.ts": "9b379b9de4c6de06870922d9e319b3151c31915a3163d0ad788bc237bc1a72b3",
+    "scripts/art_library/planet_reference_worker.ts": "12c0e4ec46e0ef413c965afd5b4d788b96079dabdc61e91cde6ee6379e56b847",
+    "scripts/art_library/planet_reference_candidate.ts": "9c4691f54f799846ebb798ca511af417f49dcaf2865a906c65d503c5d8b1da2d",
+    "scripts/art_library/planet_reference_worker_lifetime.ts": "04ca166e3d0924c555b436be134ed9d1d6089c5a74cb98dcb23f0a25cf53290d",
+    "scripts/art_library/capture_planet_reference_settle.py": "fbf895cfa73f3e2e6b1f227c5869d1cbc26656be34ccedcd1470e0a0a98c9ba2",
+    "packages/render/src/environment/planet-shadows.ts": "f407287a1c872d4b15058ecb5d2cb43e7466f4c93bec56f711e7db61229a4bf6",
+    "packages/render/src/environment/planet-shadow-coverage.ts": "1eb6337d43213a3583e638c8680af6542efab8e4b6c6c7bfac249090220520af",
+    "packages/render/src/environment/planet-shadow-depth-offset.ts": "c7a541d9d183ff489e1295a648a28637ccf62c16f6365de74d42c6cebd316445"
+  },
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "moon",
+    "revision": "volcanic-moon-2-r006",
+    "seed": 904,
+    "radius": 5.5,
+    "alpha": null,
+    "beta": null,
+    "bias": null,
+    "depth_bias": null,
+    "glow": true,
+    "local_light": false,
+    "prefix": "broader-shadow-fixed",
+    "reference_scale": true,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": false,
+    "unit": false,
+    "staged": true,
+    "target": null,
+    "shadows_off": false,
+    "reference_radius": 73.8723404255
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=moon&seed=904&candidate=1&reviewRevision=volcanic-moon-2-r006&capture=1789394696425064693&kit=volcanic-moon-2-r006&glow=1",
+  "images": {
+    "broader-shadow-fixed-seed904.png": "d0c9d44bb21d9e14849a1c657f7636e0455503e617100131ff606b41d6106cde",
+    "broader-shadow-fixed-seed904-angle2.png": "ec05dcad24e82ad45b7b7eca17f40e2a14d1111e7e93e2f91390c1042281069b",
+    "broader-shadow-fixed-seed904-reference-scale.png": "0e53dc811d96c302c7c66a088851d3bade62580ffc4402b82195b54ad2077569"
+  },
+  "kitSha256": "0feb7937c42e5e06f30fbdd1dec215ec5abd24e74897cad7636fbb44985ba9b4",
+  "sourceKitSha256": "0feb7937c42e5e06f30fbdd1dec215ec5abd24e74897cad7636fbb44985ba9b4",
+  "stagingManifest": {
+    "scope": "explicit isolated local review; no production publication",
+    "revision": "volcanic-moon-2-r006",
+    "source": "output/playwright/planet-reference-20260914/volcanic-moon-2-r006",
+    "files": {
+      "frontier-workshop.hdr": {
+        "sha256": "11f358cce19278c6115633430d1b1d5c7fc2dc35a16f73468b46dcf6724a4364",
+        "bytes": 55248
+      },
+      "kit.json": {
+        "sha256": "0feb7937c42e5e06f30fbdd1dec215ec5abd24e74897cad7636fbb44985ba9b4",
+        "bytes": 23033904
+      },
+      "rocky-0-albedo.png": {
+        "sha256": "4a25c093c542daca85c14cac6a070835b2eab734c7fe557c30c251437b14e65e",
+        "bytes": 62057
+      },
+      "rocky-0-orm.png": {
+        "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+        "bytes": 33670
+      },
+      "rocky-1-albedo.png": {
+        "sha256": "87c451d3f2c8648efc2ba8f9ef2e3c7637261e7de4e700365bcf3c179ae09a23",
+        "bytes": 61906
+      },
+      "rocky-1-orm.png": {
+        "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717",
+        "bytes": 33991
+      },
+      "rocky-2-albedo.png": {
+        "sha256": "68fb2cd61242bbfdc91a2466a4a2f6794a3268c094372e9ec6d765cda2ec2923",
+        "bytes": 45505
+      },
+      "rocky-2-orm.png": {
+        "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8",
+        "bytes": 33022
+      },
+      "rocky-3-albedo.png": {
+        "sha256": "3907a68898c6467fdc1268fcbb5c72329353eed665f134119400da46ecd90e6c",
+        "bytes": 53333
+      },
+      "rocky-3-orm.png": {
+        "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9",
+        "bytes": 33213
+      },
+      "rocky-4-albedo.png": {
+        "sha256": "fea0cad8e772b0be1731366615d6a58a7b141e72fa70a532236445f09eaaa257",
+        "bytes": 63737
+      },
+      "rocky-4-orm.png": {
+        "sha256": "881d15e89c03867a59e02c572bdc65b8464995b0a525f8a16742ba36b8f0c3c0",
+        "bytes": 29233
+      },
+      "rocky-5-albedo.png": {
+        "sha256": "6aabddb6ef2135aea5ce20e048c188358809f8a4f01c4b257b1fddb3bc88933f",
+        "bytes": 69496
+      },
+      "rocky-5-orm.png": {
+        "sha256": "dc9e39924415e4b446a4c6183192104d6d558729b6b1b92aceafdb5a3a63da6a",
+        "bytes": 32160
+      }
+    }
+  }
+}

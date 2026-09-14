@@ -1,0 +1,239 @@
+{
+  "viewSettlements": [
+    {
+      "label": "close",
+      "startFrame": 23,
+      "endFrame": 29,
+      "stableFrames": 3,
+      "camera": {
+        "alpha": 1.0529033447245055,
+        "beta": 1.1694941410002127,
+        "radius": 5.5
+      },
+      "candidate": {
+        "active": 0,
+        "pendingBuilds": 0,
+        "retained": [
+          0
+        ],
+        "smokeImplemented": true,
+        "smokeMeshes": 0,
+        "smokeTriangles": 0,
+        "retainedSmokeMeshes": 0,
+        "requestedLOD": 0,
+        "fixedDetail": true,
+        "workerPending": 0,
+        "buildMs": 6.200000762939453,
+        "localLights": 0,
+        "transmissionMaterials": 0,
+        "transmissionTargets": 0
+      }
+    },
+    {
+      "label": "angle2",
+      "startFrame": 29,
+      "endFrame": 32,
+      "stableFrames": 3,
+      "camera": {
+        "alpha": 2.6529033447245056,
+        "beta": 1.1694941410002127,
+        "radius": 5.5
+      },
+      "candidate": {
+        "active": 0,
+        "pendingBuilds": 0,
+        "retained": [
+          0
+        ],
+        "smokeImplemented": true,
+        "smokeMeshes": 0,
+        "smokeTriangles": 0,
+        "retainedSmokeMeshes": 0,
+        "requestedLOD": 0,
+        "fixedDetail": true,
+        "workerPending": 0,
+        "buildMs": 6.200000762939453,
+        "localLights": 0,
+        "transmissionMaterials": 0,
+        "transmissionTargets": 0
+      }
+    },
+    {
+      "label": "reference-scale",
+      "startFrame": 32,
+      "endFrame": 35,
+      "stableFrames": 3,
+      "camera": {
+        "alpha": 2.6529033447245056,
+        "beta": 1.1694941410002127,
+        "radius": 43.9493670886
+      },
+      "candidate": {
+        "active": 0,
+        "pendingBuilds": 0,
+        "retained": [
+          0
+        ],
+        "smokeImplemented": true,
+        "smokeMeshes": 0,
+        "smokeTriangles": 0,
+        "retainedSmokeMeshes": 0,
+        "requestedLOD": 1,
+        "fixedDetail": true,
+        "workerPending": 0,
+        "buildMs": 6.200000762939453,
+        "localLights": 0,
+        "transmissionMaterials": 0,
+        "transmissionTargets": 0
+      }
+    }
+  ],
+  "viewport": {
+    "width": 900,
+    "height": 900
+  },
+  "canvas": {
+    "width": 900,
+    "height": 900
+  },
+  "stats": {
+    "style": "moon",
+    "seed": 117,
+    "frames": 35,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 0,
+      "requestedLOD": 1,
+      "fixedDetail": true,
+      "workerPending": 0,
+      "buildMs": 6.200000762939453,
+      "localLights": 0,
+      "transmissionMaterials": 0,
+      "transmissionTargets": 0
+    },
+    "baselineEnvironmentEnabled": false,
+    "meshes": 6,
+    "triangles": 10450,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": []
+  },
+  "shadowsEnabled": true,
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 43.9493670886
+  },
+  "shadows": [],
+  "checkoutHead": "2af5fb3e98057f577b61a657e71f61067c7d338b",
+  "sourceRoot": "/root/sidereal_spacetime",
+  "sourceHashesAtStart": {
+    "scripts/art_library/planet_reference_review.ts": "9b379b9de4c6de06870922d9e319b3151c31915a3163d0ad788bc237bc1a72b3",
+    "scripts/art_library/planet_reference_worker.ts": "12c0e4ec46e0ef413c965afd5b4d788b96079dabdc61e91cde6ee6379e56b847",
+    "scripts/art_library/planet_reference_candidate.ts": "9c4691f54f799846ebb798ca511af417f49dcaf2865a906c65d503c5d8b1da2d",
+    "scripts/art_library/planet_reference_worker_lifetime.ts": "04ca166e3d0924c555b436be134ed9d1d6089c5a74cb98dcb23f0a25cf53290d",
+    "scripts/art_library/capture_planet_reference_settle.py": "fbf895cfa73f3e2e6b1f227c5869d1cbc26656be34ccedcd1470e0a0a98c9ba2",
+    "packages/render/src/environment/planet-shadows.ts": "f407287a1c872d4b15058ecb5d2cb43e7466f4c93bec56f711e7db61229a4bf6",
+    "packages/render/src/environment/planet-shadow-coverage.ts": "1eb6337d43213a3583e638c8680af6542efab8e4b6c6c7bfac249090220520af",
+    "packages/render/src/environment/planet-shadow-depth-offset.ts": "c7a541d9d183ff489e1295a648a28637ccf62c16f6365de74d42c6cebd316445"
+  },
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "moon",
+    "revision": "crystal-moon-1-r010",
+    "seed": 117,
+    "radius": 5.5,
+    "alpha": null,
+    "beta": null,
+    "bias": null,
+    "depth_bias": null,
+    "glow": true,
+    "local_light": false,
+    "prefix": "broader-shadow-fixed",
+    "reference_scale": true,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": false,
+    "unit": false,
+    "staged": true,
+    "target": null,
+    "shadows_off": false,
+    "reference_radius": 43.9493670886
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=moon&seed=117&candidate=1&reviewRevision=crystal-moon-1-r010&capture=1789394735922717107&kit=crystal-moon-1-r010&glow=1",
+  "images": {
+    "broader-shadow-fixed-seed117.png": "669482286e02846ad2b7d76a90618218cf8a2e37ec6c9f692c9b6ecc85b2728a",
+    "broader-shadow-fixed-seed117-angle2.png": "2d80c1e6dcb581769f3709415f7794fce390d9ff186387abe87cb92291de0791",
+    "broader-shadow-fixed-seed117-reference-scale.png": "efee629b59f5704797b575637b44678ac7bdc34b07020b42d71c9ba9afadffb5"
+  },
+  "kitSha256": "808cf50f1a25e00d39cbd39cbabebf05a344cb0cf75ca7167d80a101f086c702",
+  "sourceKitSha256": "808cf50f1a25e00d39cbd39cbabebf05a344cb0cf75ca7167d80a101f086c702",
+  "stagingManifest": {
+    "scope": "explicit isolated local review; no production publication",
+    "revision": "crystal-moon-1-r010",
+    "source": "output/playwright/planet-reference-20260914/crystal-moon-1-r010",
+    "files": {
+      "frontier-workshop.hdr": {
+        "sha256": "11f358cce19278c6115633430d1b1d5c7fc2dc35a16f73468b46dcf6724a4364",
+        "bytes": 55248
+      },
+      "kit.json": {
+        "sha256": "808cf50f1a25e00d39cbd39cbabebf05a344cb0cf75ca7167d80a101f086c702",
+        "bytes": 2604930
+      },
+      "material-0-albedo.png": {
+        "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+        "bytes": 87818
+      },
+      "material-0-orm.png": {
+        "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+        "bytes": 40836
+      },
+      "material-1-albedo.png": {
+        "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+        "bytes": 76356
+      },
+      "material-1-orm.png": {
+        "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+        "bytes": 41452
+      },
+      "material-2-albedo.png": {
+        "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+        "bytes": 92476
+      },
+      "material-2-orm.png": {
+        "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+        "bytes": 39879
+      },
+      "material-3-albedo.png": {
+        "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+        "bytes": 31086
+      },
+      "material-4-albedo.png": {
+        "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+        "bytes": 33571
+      },
+      "material-5-albedo.png": {
+        "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+        "bytes": 24737
+      },
+      "material-6-albedo.png": {
+        "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+        "bytes": 37069
+      },
+      "material-7-albedo.png": {
+        "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+        "bytes": 40023
+      }
+    }
+  }
+}

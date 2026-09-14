@@ -6,13 +6,22 @@
   ],
   "renderer": "RTX4080 Laptop",
   "records": [
+    "output/playwright/render-plan/R15/planet-reference-followup-20260914/ice26-prepared-rtt-rtx4080-lod.json",
+    "output/playwright/render-plan/R15/planet-reference-followup-20260914/ice26-cold-far-first-prepared-rtx4080-lod.json",
+    "output/playwright/render-plan/R15/planet-reference-followup-20260914/gas5-cold-far-first-prepared-rtx4080-lod.json"
+  ],
+  "screenshots": [
+    "output/playwright/render-plan/R15/planet-reference-followup-20260914/prepared-rtt-hardware-angle1.png",
+    "output/playwright/render-plan/R15/planet-reference-followup-20260914/prepared-rtt-hardware-angle2.png"
+  ],
+  "status": "Isolated transition budget passed; normal-game acceptance remains open",
+  "sourceRecords": [
     "output/playwright/planet-reference-20260914/shadow-followup/ice26-prepared-rtt-rtx4080-lod.json",
     "output/playwright/planet-reference-20260914/shadow-followup/ice26-cold-far-first-prepared-rtx4080-lod.json",
     "output/playwright/planet-reference-20260914/shadow-followup/gas5-cold-far-first-prepared-rtx4080-lod.json"
   ],
-  "screenshots": [
+  "sourceScreenshots": [
     "output/playwright/planet-reference-20260914/ice-r026/prepared-rtt-hardware-angle1.png",
     "output/playwright/planet-reference-20260914/ice-r026/prepared-rtt-hardware-angle2.png"
-  ],
-  "status": "Isolated transition budget passed; normal-game acceptance remains open"
+  ]
 }

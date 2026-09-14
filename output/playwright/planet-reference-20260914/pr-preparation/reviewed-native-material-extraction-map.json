@@ -1,0 +1,20 @@
+[
+  {
+    "from": "scripts/art_library/planet_reference_materials.ts",
+    "to": "packages/render/src/environment/reviewed-native/planet_reference_materials.ts",
+    "implementationSha256": "6dbf44b623d56abacce51c6c186a296b79c3f766347a6df35f49f9b17c9f55fe",
+    "changes": "exact implementation moved; review re-export shim only; no runtime activation"
+  },
+  {
+    "from": "scripts/art_library/planet_reference_transmission.ts",
+    "to": "packages/render/src/environment/reviewed-native/planet_reference_transmission.ts",
+    "implementationSha256": "70269433398dd76cbcb4d844fa00ae45b7cc2e3a80ccbf7d114b575d24c2cc9f",
+    "changes": "exact implementation moved; review re-export shim only; no runtime activation"
+  },
+  {
+    "from": "scripts/art_library/planet_reference_local_lights.ts",
+    "to": "packages/render/src/environment/reviewed-native/planet_reference_local_lights.ts",
+    "implementationSha256": "73631876c1635591eaebd217fb4a55ae5c6f07e1bcfc95be2e51faa070a6669e",
+    "changes": "exact implementation moved; review re-export shim only; no runtime activation"
+  }
+]
