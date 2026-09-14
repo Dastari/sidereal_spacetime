@@ -1,0 +1,86 @@
+{
+  "stats": {
+    "style": "crystal",
+    "seed": 38,
+    "frames": 39,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "requestedLOD": 0,
+      "buildMs": 604.8999996185303,
+      "localLights": 4
+    },
+    "build": {
+      "lastBuildMs": 790,
+      "pendingBuilds": 0,
+      "pendingWeatherBuilds": 0
+    },
+    "meshes": 10,
+    "triangles": 436964,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": [
+      {
+        "name": "reference-review-layers",
+        "role": "planet",
+        "layeredPlanet": true,
+        "activeLOD": 0,
+        "enabled": false
+      },
+      {
+        "name": "reference-review-layers",
+        "role": "planet",
+        "layeredPlanet": true,
+        "lod": 0,
+        "resolution": 54,
+        "requestedResolution": 96,
+        "budgetReduced": true,
+        "trees": 0,
+        "terrainFaces": 76024,
+        "enabled": false
+      }
+    ]
+  },
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 13.5
+  },
+  "shadows": [
+    {
+      "casters": 2,
+      "normalBias": 0.006
+    },
+    {
+      "casters": 9,
+      "normalBias": 0.006
+    }
+  ],
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "crystal",
+    "revision": "crystal-r011",
+    "seed": 38,
+    "radius": 5.5,
+    "bias": 0.006,
+    "glow": true,
+    "local_light": true,
+    "prefix": "corrected",
+    "reference_scale": true,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": false
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=crystal&seed=38&candidate=1&capture=1789358638721105197&shadowBias=0.006&glow=1&localLight=1",
+  "images": {
+    "corrected-seed38.png": "459faff1cf21c530ae22cb964e0c6df9add584c183a52c3dfd09a159b41e313e",
+    "corrected-seed38-angle2.png": "e0cfe101886be696b82b58db871bbc44d7e75b2fb6c151cd7f972b33a26f5859",
+    "corrected-seed38-reference-scale.png": "94641d69d18ce575b556756933c780d6aeb1f5721d77e2c44f002a1b329c3f68"
+  },
+  "kitSha256": "f3798cc5e67d0dfbed1caf86001002906465021764839be9da0260615052e369"
+}

@@ -1,0 +1,84 @@
+{
+  "stats": {
+    "style": "toxic",
+    "seed": 38,
+    "frames": 43,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "requestedLOD": 0,
+      "buildMs": 698.5,
+      "localLights": 0
+    },
+    "build": {
+      "lastBuildMs": 928.3000011444092,
+      "pendingBuilds": 0,
+      "pendingWeatherBuilds": 0
+    },
+    "meshes": 10,
+    "triangles": 248954,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": [
+      {
+        "name": "reference-review-layers",
+        "role": "planet",
+        "layeredPlanet": true,
+        "enabled": false
+      },
+      {
+        "name": "reference-review-layers",
+        "role": "planet",
+        "layeredPlanet": true,
+        "lod": 0,
+        "resolution": 54,
+        "requestedResolution": 96,
+        "budgetReduced": true,
+        "trees": 0,
+        "terrainFaces": 81413,
+        "enabled": false
+      }
+    ]
+  },
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 13.5
+  },
+  "shadows": [
+    {
+      "casters": 2,
+      "normalBias": 0.006
+    },
+    {
+      "casters": 9,
+      "normalBias": 0.006
+    }
+  ],
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "toxic",
+    "revision": "toxic-r004",
+    "seed": 38,
+    "radius": 5.5,
+    "bias": 0.006,
+    "glow": true,
+    "local_light": false,
+    "prefix": "fog5",
+    "reference_scale": true,
+    "weather_revision": "toxic-fog-r005"
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=toxic&seed=38&candidate=1&capture=1789357832397115026&shadowBias=0.006&glow=1",
+  "images": {
+    "fog5-seed38.png": "a5a8d6061d37529e36704a1cd5b8dc983f1bcf299f1cade8e145776121eea631",
+    "fog5-seed38-angle2.png": "d94cd1d13dbee2f4c65f249c4173d78fff70f11c1e4f78614e1cdf69f7d35302",
+    "fog5-seed38-reference-scale.png": "6638840a3aaefffb6fe4c8e323b2043c22c64bdb6f984fb5b81ad9fb9c41c78c"
+  },
+  "kitSha256": "9afa331eb9daedc2faeed0e316350d1f2ef2c893c1a056f82f3f8c81f142e667"
+}

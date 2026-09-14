@@ -1,0 +1,79 @@
+{
+  "stats": {
+    "style": "rock",
+    "seed": 38,
+    "frames": 29,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "requestedLOD": 0,
+      "buildMs": 503.3000011444092,
+      "localLights": 0
+    },
+    "build": {
+      "lastBuildMs": 1278.7000007629395,
+      "pendingBuilds": 0,
+      "pendingWeatherBuilds": 0
+    },
+    "meshes": 6,
+    "triangles": 189122,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": [
+      {
+        "name": "reference-review-layers",
+        "role": "planet",
+        "layeredPlanet": true,
+        "enabled": false
+      },
+      {
+        "name": "reference-review-layers",
+        "role": "planet",
+        "layeredPlanet": true,
+        "lod": 0,
+        "resolution": 54,
+        "requestedResolution": 96,
+        "budgetReduced": true,
+        "trees": 0,
+        "terrainFaces": 74621,
+        "enabled": false
+      }
+    ]
+  },
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 13.5
+  },
+  "shadows": [
+    {
+      "casters": 5,
+      "normalBias": 0.006
+    }
+  ],
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "rock",
+    "revision": "rocky-r008",
+    "seed": 38,
+    "radius": 5.5,
+    "bias": 0.006,
+    "glow": false,
+    "local_light": false,
+    "prefix": "corrected",
+    "reference_scale": true
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=rock&seed=38&candidate=1&capture=1789356121088047971&shadowBias=0.006",
+  "images": {
+    "corrected-seed38.png": "2cdc60107d99df599d5a6891f9f32ceecf8f2275c201c85ee395e2b6967a5ce5",
+    "corrected-seed38-angle2.png": "be5bd74073b56fb1f473ac8e35301133fdf3aa6ddcc0fba566defcd74d793557",
+    "corrected-seed38-reference-scale.png": "dfc2f1e13402ce63fc477a39f001515a660ef5c457338b5083cba0ca14a42b92"
+  },
+  "kitSha256": "d51b189720f9e2363e001134434c7a6c26f90c8cfdaa64965c6149ce509841ef"
+}

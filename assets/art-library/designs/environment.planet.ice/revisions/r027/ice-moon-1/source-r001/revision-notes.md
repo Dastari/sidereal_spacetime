@@ -1,0 +1,9 @@
+# ice-moon-1 native candidate r001 — 2026-09-14
+
+Exact coverage `planets--ice-moon-1` only. Broken white snow over saturated blue vertical glacial exposure and unequal protrusions.
+
+Editable original native foundation and fully resolved authoring source retained in this candidate. Explicit layout seed, regional scales, exact-reference placement IDs. Dominant geometry/materials, UVs/normals remain byte-identical across LODs; 125,416 triangles. No atmosphere/clouds or automatic mainworld visual acceptance. All four exact reference crops and actual Blender previews were viewed. Source readiness only: whole-moon capture and independent Astra comparison are separate pending gates, followed by hardware LOD evidence; no owner approval or publication inferred.
+
+Both dedicated TypeScript checks pass. Fourteen tests pass across the pair suites: LOD/attributes/identity, diagnostic shaft/gorge or crater floors, all14 global glacial floors and all24 global volcanic large cavities. Full GLB/JSON materials, texture bytes, positions and UV parity pass. Native albedo uses explicit linear-to-sRGB encoding with white full-color texture factors.
+
+Ice25 source reuse is bounded to closed shaft/gorge primitives and native surface finish. Moon1 uses8 unequal regions,28 native ground districts; Moon2 uses6 regions,22 districts, native buttress height factor.67 and white ground. Original deep cavity floors remain. The initial greedy attribute audit reported three ground normal matching discrepancies per kit. Read-only maximum bipartite matching resolves every corner at unchanged tolerances (position1e-5, normal1e-4, UV1e-5), preserving multiplicity and material boundaries; zero unmatched corners, unchanged kit bytes. See all three ground-*-exact-normal-audit JSON/Python files. No geometry repair or tolerance relaxation.

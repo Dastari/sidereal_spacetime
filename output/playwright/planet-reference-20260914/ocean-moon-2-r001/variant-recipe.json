@@ -1,0 +1,75 @@
+{
+  "referenceId": "planets--ocean-moon-2",
+  "sourceFoundation": "Rocky10 native cavities plus original Ocean7 sparse groves",
+  "foundationSha256": "591061696339368d9f7570392726b5ee11038e992987e21b92a6ebbb8bc2af50",
+  "candidateRevision": "r001",
+  "runtimeStyle": "moon",
+  "publication": "isolated candidate; independent visual review pending",
+  "seed": 1181,
+  "cover": 0.2,
+  "groves": 0,
+  "palette": [
+    [
+      0.1,
+      0.28,
+      0.44
+    ],
+    [
+      0.48,
+      0.7,
+      0.79
+    ],
+    [
+      0.007,
+      0.025,
+      0.052
+    ],
+    [
+      0.025,
+      0.1,
+      0.2
+    ],
+    [
+      0.045,
+      0.36,
+      0.48
+    ],
+    [
+      0.72,
+      0.86,
+      0.87
+    ]
+  ],
+  "coverColors": [
+    [
+      0.19,
+      0.4,
+      0.04
+    ],
+    [
+      0.53,
+      0.7,
+      0.22
+    ],
+    [
+      0.025,
+      0.37,
+      0.61
+    ]
+  ],
+  "cue": "Blue/white crater moon, very sparse green edge cover and no invented forest blanket",
+  "scales": [
+    0.4,
+    0.38,
+    0.42,
+    0.39,
+    0.41,
+    0.38,
+    0.43,
+    0.39,
+    0.4,
+    0.37,
+    0.42,
+    0.4
+  ]
+}

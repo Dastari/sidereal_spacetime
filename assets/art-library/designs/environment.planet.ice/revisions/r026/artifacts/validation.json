@@ -1,0 +1,130 @@
+{
+  "publication": "isolated draft; existing ice-r015 untouched",
+  "sourceComponentsManifold": true,
+  "attributes": "Corner-expanded native normals and UVs preserve authored hard edges, snow smoothing and seams",
+  "variants": [
+    {
+      "name": "snow-cut-region",
+      "triangles": 10104,
+      "normalCount": 30312,
+      "uvCount": 30312,
+      "bounds": [
+        [
+          -1.4800000190734863,
+          1.703225016593933
+        ],
+        [
+          -1.3109145164489746,
+          1.1699999570846558
+        ],
+        [
+          -0.8399999737739563,
+          0.6473967432975769
+        ]
+      ]
+    },
+    {
+      "name": "snow-open-gorge",
+      "triangles": 17080,
+      "normalCount": 51240,
+      "uvCount": 51240,
+      "bounds": [
+        [
+          -1.899999976158142,
+          1.8799999952316284
+        ],
+        [
+          -1.0299999713897705,
+          1.0299999713897705
+        ],
+        [
+          -0.8399999737739563,
+          0.6494770050048828
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere",
+      "triangles": 22440,
+      "normalCount": 67320,
+      "uvCount": 67320,
+      "bounds": [
+        [
+          -1.0773980617523193,
+          1.0698968172073364
+        ],
+        [
+          -1.0696983337402344,
+          1.0856297016143799
+        ],
+        [
+          -1.1014758348464966,
+          1.0742682218551636
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-medium",
+      "triangles": 18600,
+      "normalCount": 55800,
+      "uvCount": 55800,
+      "bounds": [
+        [
+          -1.0773980617523193,
+          1.0698968172073364
+        ],
+        [
+          -1.0696983337402344,
+          1.0856297016143799
+        ],
+        [
+          -1.1014758348464966,
+          1.0742682218551636
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-low",
+      "triangles": 17640,
+      "normalCount": 52920,
+      "uvCount": 52920,
+      "bounds": [
+        [
+          -1.0773980617523193,
+          1.0698968172073364
+        ],
+        [
+          -1.0696983337402344,
+          1.0856297016143799
+        ],
+        [
+          -1.1014758348464966,
+          1.0742682218551636
+        ]
+      ]
+    }
+  ],
+  "sha256": {
+    "ground-sphere-medium.glb": "99bb6453d9c2e6d0ebcda1b1466f1f819b11aa6e577d3cb8ec88f25f9e4235a5",
+    "ice-3-orm.png": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+    "ice-0-albedo.png": "ef0b9ef41997a9588d87f7c2a153c50328656429b3915df204e922b18f79443c",
+    "snow-cut-region.glb": "e35d82b7d684c2311ebbb17456f7ffdf9c7b725a071a4f0d3e37de3be9cc7d36",
+    "snow-open-gorge.glb": "9af5976c055ee9a6fa7bc6761720a0942a61d10f79578895e74f7ac6d6c89bfd",
+    "kit.blend": "bf95059e40ab37083d44199a50d894018b7cf45db420ec25df386fda5244ebee",
+    "ground-sphere.glb": "d23342229aafde707d1eae44ef07bf0d65f04bc7b1e363f0989be75ff1342d6f",
+    "ice-2-albedo.png": "5037a3fab7f4507535fc339b4f7024c7e70a20a191ad0120297a5c64c087a91d",
+    "ice-2-orm.png": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+    "generator.py": "4555f9024cb0e65f65b2bf95bf9d58c9983eceab6595f651c7c8ffe6230a04b7",
+    "kit.json": "cd6210c54b001bbaa7e753de0a5af3965b572a19d1d4913427ac4d7398cd3574",
+    "ice-4-albedo.png": "ec118c65ca7feb308a4540da06f75d20bbf7e0bef1a10c8863d44fc15e895037",
+    "ice-4-orm.png": "5069fb80400d3e2e7e43d7e1c3e0a52a9d81b5aa8967c9ff790e92f68b3c51e4",
+    "ice-0-orm.png": "422e6c2851744f6324e578e9bc34ec7c586caa5f1edec1a0cc959209a95ff879",
+    "kit-preview.png": "8b9ac9c9a0ef5154182a95525b74ad5ce21d705cee33704e440acf2a3c5bdc46",
+    "ice-3-albedo.png": "485a3e3326d7cb6726742f50379726bc0fc4c3faa7686f6cd7fb6cf913481fc7",
+    "foundation-source.py": "002d90a4f818089acb1f50bba71ba7d0ed9c847ea55749a08ab403aa0ba48fe0",
+    "ice-1-orm.png": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+    "foundation-sha256.txt": "64503580d4ed3c131ccbcc1a382b12d824da68a4043cda7f0fdd15ce8bb0d03d",
+    "ground-sphere-low.glb": "9dd2447f28d8dd6224666d3bfacbfca66623ca94428af8ed4933c6d2b86fc2d8",
+    "ice-1-albedo.png": "daa7ff65ab88390945537287f66700b14e6540b9c41f9bf5a4efd3059bffdd1f"
+  }
+}

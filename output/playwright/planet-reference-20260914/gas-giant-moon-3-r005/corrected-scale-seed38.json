@@ -1,0 +1,86 @@
+{
+  "viewport": {
+    "width": 900,
+    "height": 900
+  },
+  "canvas": {
+    "width": 900,
+    "height": 900
+  },
+  "stats": {
+    "style": "moon",
+    "seed": 38,
+    "frames": 58,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 0,
+      "requestedLOD": 0,
+      "fixedDetail": false,
+      "workerPending": 0,
+      "buildMs": 597.6999988555908,
+      "localLights": 0,
+      "transmissionMaterials": 0,
+      "transmissionTargets": 0
+    },
+    "baselineEnvironmentEnabled": false,
+    "meshes": 8,
+    "triangles": 513386,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": []
+  },
+  "shadowsEnabled": true,
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 44.5128205128
+  },
+  "shadows": [
+    {
+      "casters": 7,
+      "normalBias": 0.006,
+      "bias": 0.0005
+    }
+  ],
+  "checkoutHead": "146c44016dc8da170ba24bf7fa0a0566b2b94c28",
+  "sourceRoot": "/root/sidereal_spacetime",
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "moon",
+    "revision": "gas-giant-moon-3-r005",
+    "seed": 38,
+    "radius": 5.5,
+    "alpha": null,
+    "beta": null,
+    "bias": 0.006,
+    "depth_bias": null,
+    "glow": true,
+    "local_light": false,
+    "prefix": "corrected-scale",
+    "reference_scale": true,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": false,
+    "unit": false,
+    "staged": false,
+    "target": null,
+    "shadows_off": false,
+    "reference_radius": 44.5128205128
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=moon&seed=38&candidate=1&reviewRevision=gas-giant-moon-3-r005&capture=1789366461384452234&shadowBias=0.006&glow=1",
+  "images": {
+    "corrected-scale-seed38.png": "31680a90196a785cd7f27c26448f99892d7eb80fcec65ed2ffc8171c123ce094",
+    "corrected-scale-seed38-angle2.png": "26fb29035e0b300ac2fcde9fb5f2c4316be3f59102fb48d732dcfce7e6e81050",
+    "corrected-scale-seed38-reference-scale.png": "83fd183ed876fa16352321fa6371d184bf1901167410d124a541704c68b066a0"
+  },
+  "kitSha256": "9391022b5a57b77b346a469fac91860164696c31bb46388a60bcb4d153f72e59"
+}

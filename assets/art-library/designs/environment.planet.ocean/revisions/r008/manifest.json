@@ -1,0 +1,696 @@
+{
+  "schema": "sidereal.planet-moon-preservation.v1",
+  "recorded_at": "2026-09-14T05:38:16.793151+00:00",
+  "design_id": "environment.planet.ocean",
+  "canonical_checkpoint_revision": 8,
+  "pinned_main_revision": 7,
+  "pre_checkpoint_ledger_sha256": "b879585b8cbd8055e74928cf841daf7e35dbeca22e06af14a08a4e352bf93d67",
+  "scope": "Retrospective moon candidate preservation; no main-world replacement, owner approval, production publication or hardware/LOD acceptance. Original source-art revision numbering retained separately.",
+  "variants": [
+    {
+      "reference_id": "planets--ocean-moon-1",
+      "source_revision": 1,
+      "original_output_directory": "output/playwright/planet-reference-20260914/ocean-moon-1-r001",
+      "artifact_directory": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001",
+      "working_gate": "bounded agent working visual pass; no owner sign-off",
+      "source_timestamp_note": "Original files copied with metadata; capture JSON retains actual timestamps/context where present. Checkpoint time is not authoring time.",
+      "files": [
+        {
+          "filename": "angular-outcrops.glb",
+          "sha256": "5b75b371fd6ecb29177440314682fa6f7db09009830f4d60db959be90dc5993e",
+          "bytes": 329808
+        },
+        {
+          "filename": "battered-region-a.glb",
+          "sha256": "af9d971311c09758caf34b9b4b3128bbca2062690bb7f5df62d31b92e671b391",
+          "bytes": 1255084
+        },
+        {
+          "filename": "battered-region-b.glb",
+          "sha256": "937f333c165980e508d50d861cb713c1a2a1c46e7aa01b6809e1c4760f8c8886",
+          "bytes": 1250884
+        },
+        {
+          "filename": "build_hybrid_moon_native_variants_r001.py",
+          "sha256": "7d599394f6acf18af32b2f8357daf6fe1fc79be01d99f34e60033468b2b7b515",
+          "bytes": 6647
+        },
+        {
+          "filename": "corrected-run.log",
+          "sha256": "9427eb89960ec98426042027e34fe116bf826d54bb207f4f347a9c5df05f896c",
+          "bytes": 551
+        },
+        {
+          "filename": "corrected-seed38-angle2.png",
+          "sha256": "47a6d1e1ca73fa5c8e9ccb970be18ff8470fe68a6102643f2a760eee80d42514",
+          "bytes": 314392
+        },
+        {
+          "filename": "corrected-seed38-capture.log",
+          "sha256": "9de93390919113c052e88862eefcbf90477a885425e42a61c0cd863f9f4ec25c",
+          "bytes": 2776
+        },
+        {
+          "filename": "corrected-seed38-reference-scale.png",
+          "sha256": "f2c2988e637f48061d14f0922123c8f166c2a51f39f72469fdc5909d6358804f",
+          "bytes": 19037
+        },
+        {
+          "filename": "corrected-seed38.json",
+          "sha256": "c5ab5b7fc85d3356fdbd3db9ef8333d66920611ca8a926ce5721ba7f007a6c02",
+          "bytes": 1998
+        },
+        {
+          "filename": "corrected-seed38.png",
+          "sha256": "e5ed1e2fb226599157a2e95f7aac2a5c3f9bf0d222b2cd2c4e8f1b924202189b",
+          "bytes": 350929
+        },
+        {
+          "filename": "crater-broken.glb",
+          "sha256": "fd0d40f86e2b5b3d911fe3ad990621fe75c4603739f1b5f6aff8c85f6aa111d9",
+          "bytes": 551924
+        },
+        {
+          "filename": "crater-large.glb",
+          "sha256": "03558e438de68adbb676fbac8be34670f777872d85fe06073515a1fc9ff4448b",
+          "bytes": 551920
+        },
+        {
+          "filename": "crater-small.glb",
+          "sha256": "aee000e1a30d00342ed48165419848a9e4080d615a54620ecae0b0d4a697b174",
+          "bytes": 551932
+        },
+        {
+          "filename": "exact-reference.png",
+          "sha256": "d9ff21fbcae013a205e75dee9086430825cd6335fe266ddd36af9903439f50f6",
+          "bytes": 12310
+        },
+        {
+          "filename": "foundation-source.py",
+          "sha256": "591061696339368d9f7570392726b5ee11038e992987e21b92a6ebbb8bc2af50",
+          "bytes": 19405
+        },
+        {
+          "filename": "fractured-shelf.glb",
+          "sha256": "a7d85d2aef997fb23d7b0d418e1efc74acaffec84fd9743722599ba71f8cf8f5",
+          "bytes": 329800
+        },
+        {
+          "filename": "generator.py",
+          "sha256": "f73f9d1b024dfa648383eb0b0d4bb2c81f3fccb91df91a18d1d48a4086264250",
+          "bytes": 22406
+        },
+        {
+          "filename": "ground-sphere-low.glb",
+          "sha256": "bb5cdd4d7e2e050450977a18e6e62bd72214e7b28238d806e92831604ede2a5f",
+          "bytes": 115704
+        },
+        {
+          "filename": "ground-sphere-medium.glb",
+          "sha256": "8df9a24d0e979b44d37b975ffc5de04d81c508939f63eaea9f528c7171386697",
+          "bytes": 138240
+        },
+        {
+          "filename": "ground-sphere.glb",
+          "sha256": "58753623db22f318db8ec0370b9f9d0d202ae53790365e75b940ab12d50511ba",
+          "bytes": 225536
+        },
+        {
+          "filename": "hybrid_moon_reference_composition_r001.test.ts",
+          "sha256": "61b45bac55566bbe1596d63f162fce4e1a63e68bbed8a40041706ab5babba459",
+          "bytes": 6059
+        },
+        {
+          "filename": "hybrid_moon_reference_composition_r001.ts",
+          "sha256": "8824c5820d3f86864b303f3ca4c245891c6730f7dd28288152732f0d7afa205f",
+          "bytes": 5201
+        },
+        {
+          "filename": "hybrid_moon_reference_r001.tsconfig.json",
+          "sha256": "857094ab09b85f1d69a1e7d2191f3d727f4cc934356827fda9749d9d9b9740ed",
+          "bytes": 172
+        },
+        {
+          "filename": "hybrid_moon_reference_r001.vitest.config.ts",
+          "sha256": "81a6bb42954f3a5a9f250beb10a2170e49cfed64fa04ce032f659079cb7d9eae",
+          "bytes": 176
+        },
+        {
+          "filename": "kit-preview.png",
+          "sha256": "afa9162342ab2549bba7dc6cc6ffcacb351405aa4fd6551ed36a948dcdcbdda4",
+          "bytes": 1114962
+        },
+        {
+          "filename": "kit.blend",
+          "sha256": "0b3f2728e02deccc913fbfa078143f23c625851e0619c3e5532991db92ad3cad",
+          "bytes": 5197930
+        },
+        {
+          "filename": "kit.json",
+          "sha256": "ffb61918739465a4d34ccc82beab3201afbd1e707687e4519a4d94701a7cb3a8",
+          "bytes": 16377882
+        },
+        {
+          "filename": "mineral-seam.glb",
+          "sha256": "da1a66a8be743e23050fdaaf1be33a1b526d5469b6335696cbe687d484bccc07",
+          "bytes": 218216
+        },
+        {
+          "filename": "revision-notes.md",
+          "sha256": "25ab6fbce54b7ded925ea85a68069741f681c2a2b7b9d6e42b0dcf65af99ef48",
+          "bytes": 1604
+        },
+        {
+          "filename": "rocky-0-albedo.png",
+          "sha256": "0030c5deceb3918e252e8e93f268999fc86b378f9c5d6f0d9b799ed1ace8f965",
+          "bytes": 72013
+        },
+        {
+          "filename": "rocky-0-orm.png",
+          "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+          "bytes": 33670
+        },
+        {
+          "filename": "rocky-1-albedo.png",
+          "sha256": "53652007ff9b36f4d9310f1145e2756a053c17237b9390687ca3c752eb393cde",
+          "bytes": 74501
+        },
+        {
+          "filename": "rocky-1-orm.png",
+          "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717",
+          "bytes": 33991
+        },
+        {
+          "filename": "rocky-2-albedo.png",
+          "sha256": "abc5e4313e37a4a54c4f263fcf9c70f336dafddde115cd4d3067effc5d237e4e",
+          "bytes": 55924
+        },
+        {
+          "filename": "rocky-2-orm.png",
+          "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8",
+          "bytes": 33022
+        },
+        {
+          "filename": "rocky-3-albedo.png",
+          "sha256": "668b9cd85a14224171eb1214c3e9a1e79dec6339cc5d9291074b6e9c0a71ae18",
+          "bytes": 65583
+        },
+        {
+          "filename": "rocky-3-orm.png",
+          "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9",
+          "bytes": 33213
+        },
+        {
+          "filename": "rocky-4-albedo.png",
+          "sha256": "6c903a1fe254238e8d0ddf53c7900ee9597e28e0f7e55a4d96a49c4f8ce45c14",
+          "bytes": 70888
+        },
+        {
+          "filename": "rocky-4-orm.png",
+          "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+          "bytes": 33670
+        },
+        {
+          "filename": "rocky-5-albedo.png",
+          "sha256": "da3254d36ea267109d2d6bee88525ead99ac2255d4f3c58738ce744b4723cad8",
+          "bytes": 72059
+        },
+        {
+          "filename": "rocky-5-orm.png",
+          "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66",
+          "bytes": 33335
+        },
+        {
+          "filename": "validation.json",
+          "sha256": "9bf91eb670dffa3e71d224fcbb286c81c682a085390e6792c47043fe075dcf65",
+          "bytes": 6956
+        },
+        {
+          "filename": "variant-recipe.json",
+          "sha256": "5715f368f85562522db433c4146dfbf1192375b2b4fa96410ab69161ad6fcffb",
+          "bytes": 1106
+        }
+      ]
+    },
+    {
+      "reference_id": "planets--ocean-moon-2",
+      "source_revision": 1,
+      "original_output_directory": "output/playwright/planet-reference-20260914/ocean-moon-2-r001",
+      "artifact_directory": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001",
+      "working_gate": "open or historical trial; use attached dated independent review, never infer acceptance from source presence",
+      "source_timestamp_note": "Original files copied with metadata; capture JSON retains actual timestamps/context where present. Checkpoint time is not authoring time.",
+      "files": [
+        {
+          "filename": "angular-outcrops.glb",
+          "sha256": "29466524dddd93729ddaf612675c676f9d981034c7ea8fc6db2af13e4f42c632",
+          "bytes": 329548
+        },
+        {
+          "filename": "battered-region-a.glb",
+          "sha256": "255ea7dae98260b7cd25f8baf535ef6331ce4ce2776ac222fcff28f4fd11d3d5",
+          "bytes": 1113132
+        },
+        {
+          "filename": "battered-region-b.glb",
+          "sha256": "f286b2c3ce42b02219d5f26fd18f8c60c022308c9fabbab2d1a2d4869b4dee96",
+          "bytes": 1109028
+        },
+        {
+          "filename": "build_hybrid_moon_native_variants_r001.py",
+          "sha256": "7d599394f6acf18af32b2f8357daf6fe1fc79be01d99f34e60033468b2b7b515",
+          "bytes": 6647
+        },
+        {
+          "filename": "corrected-run.log",
+          "sha256": "1fbf99077db091d2a0d62f056f58076652c4720f2f7ed35ab2da113b1f2d2c4c",
+          "bytes": 551
+        },
+        {
+          "filename": "corrected-seed38-angle2.png",
+          "sha256": "aa3e6bd540aaf1b229b56d17384dbb742675342a10156f2ac48f4a4f233f6df4",
+          "bytes": 300048
+        },
+        {
+          "filename": "corrected-seed38-capture.log",
+          "sha256": "4232dfa3d597cdf4d668ef3e694c2ff460647a38b860cb4e6b1c45896737fc19",
+          "bytes": 2776
+        },
+        {
+          "filename": "corrected-seed38-reference-scale.png",
+          "sha256": "a62f8638348c04745259733d61961243e778954e5530e4257249e5e29c7ee347",
+          "bytes": 14331
+        },
+        {
+          "filename": "corrected-seed38.json",
+          "sha256": "651ad262ed75a3cdb28c672cf06bafd56cd66418365751ec5377970594564aff",
+          "bytes": 1996
+        },
+        {
+          "filename": "corrected-seed38.png",
+          "sha256": "06e03cc2896fe9835e0077bb146611b48e2c7a0809b748e05613e3da49aff28e",
+          "bytes": 325005
+        },
+        {
+          "filename": "crater-broken.glb",
+          "sha256": "4b5296e02293441d48800f1ddbb02daa7f563161895a1f37b12c7b773b2a9b36",
+          "bytes": 557724
+        },
+        {
+          "filename": "crater-large.glb",
+          "sha256": "be6f9b46441c728017f115671890886fc3adac5dfc159e0eae8f9ee2e9aa614c",
+          "bytes": 557720
+        },
+        {
+          "filename": "crater-small.glb",
+          "sha256": "b13c7922874f3245a7cac35c79a54f9f91512b906ba047d08a5e805bef1fc9d2",
+          "bytes": 557732
+        },
+        {
+          "filename": "exact-reference.png",
+          "sha256": "dd6b7843d48e30f7c5298b6b3c5976204a5479e42ec90550ee41a456facbacd2",
+          "bytes": 7292
+        },
+        {
+          "filename": "foundation-source.py",
+          "sha256": "591061696339368d9f7570392726b5ee11038e992987e21b92a6ebbb8bc2af50",
+          "bytes": 19405
+        },
+        {
+          "filename": "fractured-shelf.glb",
+          "sha256": "3e3d87a477f8fa7dfa56828443697f0b4fba06eb9093e6a093a0fa67df5b5d1e",
+          "bytes": 329540
+        },
+        {
+          "filename": "generator.py",
+          "sha256": "9b7261ed05abd568d982b642a9d4ffd860846ff2d4a5a1ceb7b127f03595c529",
+          "bytes": 20758
+        },
+        {
+          "filename": "ground-sphere-low.glb",
+          "sha256": "12ae462c3727b2ad1655cdb5524e049092f7caa077e112bcd122adacf28a70be",
+          "bytes": 114440
+        },
+        {
+          "filename": "ground-sphere-medium.glb",
+          "sha256": "ce51d11fc9157ed5ecddc587d73de2beb353008e1cec34003542f06fe7af3058",
+          "bytes": 136976
+        },
+        {
+          "filename": "ground-sphere.glb",
+          "sha256": "bfd599102bbde0223b0ff0ff958bf6465c630d9711a7e4d09db86c793a0769f5",
+          "bytes": 224272
+        },
+        {
+          "filename": "hybrid_moon_reference_composition_r001.test.ts",
+          "sha256": "61b45bac55566bbe1596d63f162fce4e1a63e68bbed8a40041706ab5babba459",
+          "bytes": 6059
+        },
+        {
+          "filename": "hybrid_moon_reference_composition_r001.ts",
+          "sha256": "8824c5820d3f86864b303f3ca4c245891c6730f7dd28288152732f0d7afa205f",
+          "bytes": 5201
+        },
+        {
+          "filename": "hybrid_moon_reference_r001.tsconfig.json",
+          "sha256": "857094ab09b85f1d69a1e7d2191f3d727f4cc934356827fda9749d9d9b9740ed",
+          "bytes": 172
+        },
+        {
+          "filename": "hybrid_moon_reference_r001.vitest.config.ts",
+          "sha256": "81a6bb42954f3a5a9f250beb10a2170e49cfed64fa04ce032f659079cb7d9eae",
+          "bytes": 176
+        },
+        {
+          "filename": "kit-preview.png",
+          "sha256": "21c743ab46d29aecf82bf04a08e0aec4a7b3086e87d5f71abdfee321e20c78c7",
+          "bytes": 1137782
+        },
+        {
+          "filename": "kit.blend",
+          "sha256": "89a949103e0f3c29c516f29c7658675fbdd355eb75c410282650379fa0c6bc6f",
+          "bytes": 4499298
+        },
+        {
+          "filename": "kit.json",
+          "sha256": "6b9d58440c7df04084f252a80a66d4f657a71ecf892ea29a5136a488b651e84e",
+          "bytes": 15480204
+        },
+        {
+          "filename": "mineral-seam.glb",
+          "sha256": "6fdf0fbf5ec4ecde4b84c4ab6ec4f9361a2355ae34f7d0787b3736f3b1f956ef",
+          "bytes": 213384
+        },
+        {
+          "filename": "revision-notes.md",
+          "sha256": "1afa72fab982042944259fbb84d8e56d70a9fa20e4ccef66c0e217c22d5b00b7",
+          "bytes": 1597
+        },
+        {
+          "filename": "rocky-0-albedo.png",
+          "sha256": "1c625ee9c4ba327b792a144d81ca067ff9e398c4abb596ec829eb4ff88eb5c30",
+          "bytes": 70750
+        },
+        {
+          "filename": "rocky-0-orm.png",
+          "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+          "bytes": 33670
+        },
+        {
+          "filename": "rocky-1-albedo.png",
+          "sha256": "0e39f77e129b56c29ddd4f201dbf346ca2a38b60243136a03f9953aa2cd83f8d",
+          "bytes": 79411
+        },
+        {
+          "filename": "rocky-1-orm.png",
+          "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717",
+          "bytes": 33991
+        },
+        {
+          "filename": "rocky-2-albedo.png",
+          "sha256": "eb62cb3ca6636524e34eead064071b76b3ade31203c8b19c5e79be865e45a431",
+          "bytes": 54650
+        },
+        {
+          "filename": "rocky-2-orm.png",
+          "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8",
+          "bytes": 33022
+        },
+        {
+          "filename": "rocky-3-albedo.png",
+          "sha256": "ec2fc5ab08e937bc61d058bd8aee79ed4586a72b430051f12381f6ab4c7fb534",
+          "bytes": 61678
+        },
+        {
+          "filename": "rocky-3-orm.png",
+          "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9",
+          "bytes": 33213
+        },
+        {
+          "filename": "rocky-4-albedo.png",
+          "sha256": "dcf43af84b46f764148195987c875ede1d39e671bd5fb21377e102577755e73e",
+          "bytes": 69963
+        },
+        {
+          "filename": "rocky-4-orm.png",
+          "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+          "bytes": 33670
+        },
+        {
+          "filename": "rocky-5-albedo.png",
+          "sha256": "e08d3a6c6ef651678d4384d3d009a321aabdc447e77dfc72b64f83b089c2d1f6",
+          "bytes": 79390
+        },
+        {
+          "filename": "rocky-5-orm.png",
+          "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66",
+          "bytes": 33335
+        },
+        {
+          "filename": "validation.json",
+          "sha256": "68a3b58c726c143d5eee87128a11baa0e3d6c809e26c8aed417f9ead57c69943",
+          "bytes": 6956
+        },
+        {
+          "filename": "variant-recipe.json",
+          "sha256": "2ad15d6ee4d5ea84fb8b05a605ca2ec31535fceb689d15709932cf500bc786b2",
+          "bytes": 1101
+        }
+      ]
+    },
+    {
+      "reference_id": "planets--ocean-moon-2",
+      "source_revision": 2,
+      "original_output_directory": "output/playwright/planet-reference-20260914/ocean-moon-2-r002",
+      "artifact_directory": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002",
+      "working_gate": "bounded agent working visual pass; no owner sign-off",
+      "source_timestamp_note": "Original files copied with metadata; capture JSON retains actual timestamps/context where present. Checkpoint time is not authoring time.",
+      "files": [
+        {
+          "filename": "angular-outcrops.glb",
+          "sha256": "e20e9a6ea7bb94e3f13bf58cf1fb339429d8e5fbda93d2f0881deaf4352f6dff",
+          "bytes": 329548
+        },
+        {
+          "filename": "battered-region-a.glb",
+          "sha256": "318ac8b4c0d3771ab9dac2481ae492b9ce907bf8a926be2c06d8532e4e2e27cf",
+          "bytes": 1112516
+        },
+        {
+          "filename": "battered-region-b.glb",
+          "sha256": "f19c237cde8f46e044e1f5b855e9d425e17ec2ca6f87bcc0693264aca8608ab3",
+          "bytes": 1107928
+        },
+        {
+          "filename": "build_hybrid_moon_native_variants_r002.py",
+          "sha256": "206fbd18229f593b7d159ea3cc548b06093beef41148d6802a76b76e247efa40",
+          "bytes": 2082
+        },
+        {
+          "filename": "corrected-run.log",
+          "sha256": "d9abef681c35d20ddb82f9f5b7782e00977a7117d6b18ec9f3aad78ec3af11a2",
+          "bytes": 551
+        },
+        {
+          "filename": "corrected-seed38-angle2.png",
+          "sha256": "e17d81b1299b8011c4c2c2c5c72b09620d432ff3e25fca48746b08289de0d1d4",
+          "bytes": 303923
+        },
+        {
+          "filename": "corrected-seed38-capture.log",
+          "sha256": "f796ca7e54361b43c8b2b40c099df5ea63bb1c1c327e15a0bddf8236e5f11103",
+          "bytes": 2790
+        },
+        {
+          "filename": "corrected-seed38-reference-scale.png",
+          "sha256": "2dd0ccccc98ea5747e6669d5e9ca983ef81d7c00bb4bb8f0acd9af58537274e4",
+          "bytes": 15107
+        },
+        {
+          "filename": "corrected-seed38.json",
+          "sha256": "98caf22229d3150731fbe5510aee8ef1b85c8958da1f26252c5f696573a6955a",
+          "bytes": 2085
+        },
+        {
+          "filename": "corrected-seed38.png",
+          "sha256": "0358aca6ff014202639619369c3ab39aa740e721b9729f87b92be3ca88921a91",
+          "bytes": 329175
+        },
+        {
+          "filename": "crater-broken.glb",
+          "sha256": "c5836227d15549f8e57b87b6c0986bb3ae2057fdbec80deac555f2e8f4e0c77a",
+          "bytes": 557724
+        },
+        {
+          "filename": "crater-large.glb",
+          "sha256": "91c85260f24cded120df5a94b4932cc5e2ecd321a399179fff384f08d8054595",
+          "bytes": 557720
+        },
+        {
+          "filename": "crater-small.glb",
+          "sha256": "06dfb4f2eccb3bbae22257cb068cae48176a16fd33798fd3f68642d7085c0c5d",
+          "bytes": 557732
+        },
+        {
+          "filename": "exact-reference.png",
+          "sha256": "dd6b7843d48e30f7c5298b6b3c5976204a5479e42ec90550ee41a456facbacd2",
+          "bytes": 7292
+        },
+        {
+          "filename": "foundation-source.py",
+          "sha256": "9b7261ed05abd568d982b642a9d4ffd860846ff2d4a5a1ceb7b127f03595c529",
+          "bytes": 20758
+        },
+        {
+          "filename": "fractured-shelf.glb",
+          "sha256": "e0e8234e534467259a74bc30ae712976d3caf547f8ba423b75fe491a4f9dd2f7",
+          "bytes": 329540
+        },
+        {
+          "filename": "generator.py",
+          "sha256": "59fd0976a94dff751e8c8275420ac777e8077a83063c47dbaa1eaf415fcd23a1",
+          "bytes": 21091
+        },
+        {
+          "filename": "ground-sphere-low.glb",
+          "sha256": "12ae462c3727b2ad1655cdb5524e049092f7caa077e112bcd122adacf28a70be",
+          "bytes": 114440
+        },
+        {
+          "filename": "ground-sphere-medium.glb",
+          "sha256": "ce51d11fc9157ed5ecddc587d73de2beb353008e1cec34003542f06fe7af3058",
+          "bytes": 136976
+        },
+        {
+          "filename": "ground-sphere.glb",
+          "sha256": "bfd599102bbde0223b0ff0ff958bf6465c630d9711a7e4d09db86c793a0769f5",
+          "bytes": 224272
+        },
+        {
+          "filename": "hybrid_moon_reference_composition_r001.ts",
+          "sha256": "8824c5820d3f86864b303f3ca4c245891c6730f7dd28288152732f0d7afa205f",
+          "bytes": 5201
+        },
+        {
+          "filename": "hybrid_moon_reference_composition_r002.test.ts",
+          "sha256": "7b7de33c51f49ff7f8a16c5f295ca097e3615d3641c189a429653bcb832675dd",
+          "bytes": 6981
+        },
+        {
+          "filename": "hybrid_moon_reference_r002.tsconfig.json",
+          "sha256": "7f4b110804ea18bc0bb66b362af1dff33213ce2642fa25b053644af0a0ab3dcf",
+          "bytes": 172
+        },
+        {
+          "filename": "hybrid_moon_reference_r002.vitest.config.ts",
+          "sha256": "df6da9c312e470716cccea3f18888a597a7ff76ba724ea4efee49dab785810f5",
+          "bytes": 176
+        },
+        {
+          "filename": "kit-preview.png",
+          "sha256": "24bc6b4e386e7341eccea97269b04b232dfeaa4aae700e5783e54284cfa85f71",
+          "bytes": 1137764
+        },
+        {
+          "filename": "kit.blend",
+          "sha256": "890ec674367e12587d3f28242859d0b48a9063449f8210d77640da279489e770",
+          "bytes": 4523586
+        },
+        {
+          "filename": "kit.json",
+          "sha256": "bc81bfb98f28fe4a37753bfea25db8b3c91acc2591837fe79bd3de54401a3347",
+          "bytes": 15480289
+        },
+        {
+          "filename": "mineral-seam.glb",
+          "sha256": "3d3599c41f4217b4f0cf39aa5f4a3897c0ad81ac0a1b30185c1988bfad7abfae",
+          "bytes": 213384
+        },
+        {
+          "filename": "revision-notes.md",
+          "sha256": "a7c904acd1331461be06e5901b310d2bf9f171f4d27b31eb7962d0287b24f117",
+          "bytes": 1056
+        },
+        {
+          "filename": "rocky-0-albedo.png",
+          "sha256": "1c625ee9c4ba327b792a144d81ca067ff9e398c4abb596ec829eb4ff88eb5c30",
+          "bytes": 70750
+        },
+        {
+          "filename": "rocky-0-orm.png",
+          "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+          "bytes": 33670
+        },
+        {
+          "filename": "rocky-1-albedo.png",
+          "sha256": "0e39f77e129b56c29ddd4f201dbf346ca2a38b60243136a03f9953aa2cd83f8d",
+          "bytes": 79411
+        },
+        {
+          "filename": "rocky-1-orm.png",
+          "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717",
+          "bytes": 33991
+        },
+        {
+          "filename": "rocky-2-albedo.png",
+          "sha256": "eb62cb3ca6636524e34eead064071b76b3ade31203c8b19c5e79be865e45a431",
+          "bytes": 54650
+        },
+        {
+          "filename": "rocky-2-orm.png",
+          "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8",
+          "bytes": 33022
+        },
+        {
+          "filename": "rocky-3-albedo.png",
+          "sha256": "ec2fc5ab08e937bc61d058bd8aee79ed4586a72b430051f12381f6ab4c7fb534",
+          "bytes": 61678
+        },
+        {
+          "filename": "rocky-3-orm.png",
+          "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9",
+          "bytes": 33213
+        },
+        {
+          "filename": "rocky-4-albedo.png",
+          "sha256": "dcf43af84b46f764148195987c875ede1d39e671bd5fb21377e102577755e73e",
+          "bytes": 69963
+        },
+        {
+          "filename": "rocky-4-orm.png",
+          "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+          "bytes": 33670
+        },
+        {
+          "filename": "rocky-5-albedo.png",
+          "sha256": "e08d3a6c6ef651678d4384d3d009a321aabdc447e77dfc72b64f83b089c2d1f6",
+          "bytes": 79390
+        },
+        {
+          "filename": "rocky-5-orm.png",
+          "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66",
+          "bytes": 33335
+        },
+        {
+          "filename": "validation.json",
+          "sha256": "48cf7d0a677e96bcc5bc714bb9c0c6879d0c16a62340ec42513df78983ae53ce",
+          "bytes": 6956
+        },
+        {
+          "filename": "variant-recipe.json",
+          "sha256": "a60e82a962e5879038741492c3cfcfef7031049ad5addabcc67f206632ad21b7",
+          "bytes": 1343
+        }
+      ]
+    }
+  ],
+  "review_reports": [
+    {
+      "path": "designs/environment.planet.ocean/revisions/r008/reviews/toxic-r007-four-hybrid-moons.md",
+      "sha256": "3ac2e8e075b841c550dde9c5237f751fb606c429e616c6004fd2fa8c9d670b45"
+    },
+    {
+      "path": "designs/environment.planet.ocean/revisions/r008/reviews/hybrid-moons-r002-working-passes.md",
+      "sha256": "cd64cd5b1352b889cce0b473505af488eb937985bb9998e8e4d4f135f53246b7"
+    }
+  ]
+}

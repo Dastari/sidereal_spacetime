@@ -1,0 +1,11 @@
+# Ocean r006 — bounded coastline and water finish
+
+Keeps Ocean5 global placement and 1.4× tangent footprint, including its groves and every radial height transform. Source coast refinements add selected cliff terraces and notches, retain quiet plateau centers, and slope the outer shoreline ends beneath water. Atoll fan blades become three unequal closed curved islands with tapered submerged ends. Their native tops remain at the prior maximum height.
+
+The water uses authored albedo, tangent normal and packed metallic/roughness maps, shared by native ground LODs. Roughness varies around .32, coat roughness is .22, and the normal also drives the physical coat. No replacement shader, emission, painted reflection or light removal is used. The first normal pattern was visibly regular in the Blender kit preview; that complete attempt is preserved under `ocean-r006-initial-regular-water/`. The final source uses irregular periodic multi-scale capillary variation and retains a visible reflective response.
+
+All source meshes now export corner normals and UVs in JSON as well as GLB. Ground UVs use a seam-preserving spherical unwrap; hard coastal faces and smooth water normals are transported with the inverse Jacobian helper. Candidate uploader must honor `baseColorTexture`, `normalTexture`, `metallicRoughnessTexture`, `clearcoatNormalTexture`, normalScale=1 and invertY=false. Packed map channels: G=roughness, B=metallic (zero); factors remain1.
+
+Five composition tests and TypeScript pass, including exact previous placement-map geometry, all-LOD major attribute hashes and actual NullEngine plateau identity. Six read-only audit tests pass. The final ten-variant audit has no explicit material differences, missing channels or supplied corner mismatches; all four texture bindings byte-match GLB bytes. High detail is 147,902 native triangles, up from110,156 due to source terrace/crescent loops. The test guard is160,000; no native surfaces were reduced for this bound.
+
+Blender kit preview was visually inspected. Complete body two-angle and approximately300-pixel review remain required: underwater masking must prove shelf ends disappear naturally, water must read as ocean at game scale, and cloud improvements remain separately owned. No owner, whole-planet or hardware transition acceptance is claimed. This candidate is frozen for parent capture.

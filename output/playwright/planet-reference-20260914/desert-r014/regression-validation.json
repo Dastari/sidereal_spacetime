@@ -1,0 +1,134 @@
+{
+  "heads": [
+    {
+      "part": "GEO-regional-cliff-head-restricted-head-0",
+      "width": 0.5179679989814758,
+      "depth": 0.4610700011253357
+    },
+    {
+      "part": "GEO-regional-cliff-head-restricted-head-1",
+      "width": 0.5719229876995087,
+      "depth": 0.4708799868822098
+    },
+    {
+      "part": "GEO-regional-cliff-head-restricted-head-2",
+      "width": 0.43164000660181046,
+      "depth": 0.402209997177124
+    },
+    {
+      "part": "GEO-regional-cliff-head-restricted-head-3",
+      "width": 0.48559504747390747,
+      "depth": 0.4120200015604496
+    },
+    {
+      "part": "GEO-regional-cliff-head-restricted-head-4",
+      "width": 0.5287589728832245,
+      "depth": 0.44145001098513603
+    },
+    {
+      "part": "GEO-regional-cliff-head-restricted-head-5",
+      "width": 0.3992670178413391,
+      "depth": 0.38259000331163406
+    },
+    {
+      "part": "GEO-regional-cliff-continuation-restricted-head-0",
+      "width": 0.5179680269211531,
+      "depth": 0.4610700011253357
+    },
+    {
+      "part": "GEO-regional-cliff-continuation-restricted-head-1",
+      "width": 0.5719230026006699,
+      "depth": 0.4708799719810486
+    },
+    {
+      "part": "GEO-regional-cliff-continuation-restricted-head-2",
+      "width": 0.43163998425006866,
+      "depth": 0.402209997177124
+    },
+    {
+      "part": "GEO-regional-cliff-continuation-restricted-head-3",
+      "width": 0.4855949766933918,
+      "depth": 0.4120199829339981
+    }
+  ],
+  "variants": [
+    {
+      "name": "mesa-group-a",
+      "triangles": 3054,
+      "maxEdge": 0.2984520196914673
+    },
+    {
+      "name": "mesa-group-b",
+      "triangles": 3066,
+      "maxEdge": 0.2999024192287802
+    },
+    {
+      "name": "mesa-group-c",
+      "triangles": 2948,
+      "maxEdge": 0.2994220234723738
+    },
+    {
+      "name": "tower-group",
+      "triangles": 1654,
+      "maxEdge": 0.29815376189242826
+    },
+    {
+      "name": "broken-cliff-shelves",
+      "triangles": 1686,
+      "maxEdge": 0.29883340342253045
+    },
+    {
+      "name": "tiny-rock-group",
+      "triangles": 402,
+      "maxEdge": 0.29543091384036185
+    },
+    {
+      "name": "sand-plateau",
+      "triangles": 628,
+      "maxEdge": 0.29752703013131493
+    },
+    {
+      "name": "broad-shelf-a",
+      "triangles": 970,
+      "maxEdge": 0.29976756061517523
+    },
+    {
+      "name": "broad-shelf-b",
+      "triangles": 926,
+      "maxEdge": 0.29996800422668457
+    },
+    {
+      "name": "regional-cliff-head",
+      "triangles": 9404,
+      "maxEdge": 0.29997979889818127
+    },
+    {
+      "name": "regional-cliff-continuation",
+      "triangles": 8722,
+      "maxEdge": 0.2999326101004188
+    },
+    {
+      "name": "regional-cliff-end",
+      "triangles": 7296,
+      "maxEdge": 0.29997979889818127
+    },
+    {
+      "name": "ground-sphere",
+      "triangles": 81920,
+      "maxEdge": null
+    },
+    {
+      "name": "ground-sphere-medium",
+      "triangles": 20480,
+      "maxEdge": null
+    },
+    {
+      "name": "ground-sphere-low",
+      "triangles": 5120,
+      "maxEdge": null
+    }
+  ],
+  "materialsExactR13": true,
+  "texturesExactR13": true,
+  "sourceDefectFixed": "Dedicated immutable pillar profile; regional terrace outline no longer changes summit footprint."
+}

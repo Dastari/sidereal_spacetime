@@ -1,0 +1,127 @@
+{
+  "publication": "isolated draft; existing ice-r015 untouched",
+  "sourceComponentsManifold": true,
+  "attributes": "Corner-expanded native normals and UVs preserve authored hard edges, snow smoothing and seams",
+  "variants": [
+    {
+      "name": "snow-cut-region",
+      "triangles": 7512,
+      "normalCount": 22536,
+      "uvCount": 22536,
+      "bounds": [
+        [
+          -1.8899106979370117,
+          2.307384490966797
+        ],
+        [
+          -1.6249163150787354,
+          1.3551563024520874
+        ],
+        [
+          -0.8399999737739563,
+          0.7667176127433777
+        ]
+      ]
+    },
+    {
+      "name": "snow-open-gorge",
+      "triangles": 8408,
+      "normalCount": 25224,
+      "uvCount": 25224,
+      "bounds": [
+        [
+          -1.899999976158142,
+          1.8799999952316284
+        ],
+        [
+          -1.0299999713897705,
+          1.0299999713897705
+        ],
+        [
+          -0.8399999737739563,
+          0.6303585171699524
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere",
+      "triangles": 5120,
+      "normalCount": 15360,
+      "uvCount": 15360,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-medium",
+      "triangles": 1280,
+      "normalCount": 3840,
+      "uvCount": 3840,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-low",
+      "triangles": 320,
+      "normalCount": 960,
+      "uvCount": 960,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "sha256": {
+    "ice-0-albedo.png": "ef0b9ef41997a9588d87f7c2a153c50328656429b3915df204e922b18f79443c",
+    "kit-preview.png": "b08b6cf4a6bf85b0acdfb1ca01180906fdfd998279418d841c9f5601565a709d",
+    "ice-1-orm.png": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+    "ground-sphere-low.glb": "81213f47a2845c3305cfd6a12722898645fbed1ecd8b488a39d27c6debbfd57b",
+    "ice-0-orm.png": "422e6c2851744f6324e578e9bc34ec7c586caa5f1edec1a0cc959209a95ff879",
+    "ice-4-orm.png": "5069fb80400d3e2e7e43d7e1c3e0a52a9d81b5aa8967c9ff790e92f68b3c51e4",
+    "ice-2-albedo.png": "5037a3fab7f4507535fc339b4f7024c7e70a20a191ad0120297a5c64c087a91d",
+    "kit.blend": "7485dce80e25dfb13b2740d698cbc93aba64b7b88f41609506692916ca843040",
+    "ice-2-orm.png": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+    "ice-4-albedo.png": "ec118c65ca7feb308a4540da06f75d20bbf7e0bef1a10c8863d44fc15e895037",
+    "ice-3-albedo.png": "485a3e3326d7cb6726742f50379726bc0fc4c3faa7686f6cd7fb6cf913481fc7",
+    "kit.json": "ccdae8d78eecf85f7b43ad3cfbad70dfd070bc76c346d48e23e76000ae8191a0",
+    "snow-open-gorge.glb": "6f26a313f28894e2cd40425c3b48dc20cb5ff9ed4f92a390b27c46a79b69f1f7",
+    "ground-sphere-medium.glb": "e5698b7d1ecf73098b2ce93360ce1c3bcbac6d7e14d9ced102f5d5a662f4b044",
+    "ice-3-orm.png": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+    "ground-sphere.glb": "1fa5cff70a2f4a81e62283e809aa6a98fb3971624faed206df8e358be3a13656",
+    "snow-cut-region.glb": "5ff70e0e6b0681ee19843defe9bb25b9f116120b0aadc7153909fafa9374a569",
+    "ice-1-albedo.png": "daa7ff65ab88390945537287f66700b14e6540b9c41f9bf5a4efd3059bffdd1f"
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "viewport": {
+    "width": 900,
+    "height": 900
+  },
+  "canvas": {
+    "width": 900,
+    "height": 900
+  },
+  "stats": {
+    "style": "moon",
+    "seed": 38,
+    "frames": 84,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 0,
+      "requestedLOD": 0,
+      "buildMs": 1370,
+      "localLights": 0,
+      "transmissionMaterials": 0,
+      "transmissionTargets": 0
+    },
+    "baselineEnvironmentEnabled": false,
+    "meshes": 6,
+    "triangles": 338706,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": []
+  },
+  "shadowsEnabled": true,
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 69.44
+  },
+  "shadows": [
+    {
+      "casters": 5,
+      "normalBias": 0.006,
+      "bias": 0.0005
+    }
+  ],
+  "checkoutHead": "cd09510ca30705a49bbd38a010d775be30aef0c7",
+  "sourceRoot": "/root/sidereal_spacetime",
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "moon",
+    "revision": "ice-moon-2-r002",
+    "seed": 38,
+    "radius": 5.5,
+    "alpha": null,
+    "beta": null,
+    "bias": 0.006,
+    "depth_bias": null,
+    "glow": false,
+    "local_light": false,
+    "prefix": "projected-path-corrected",
+    "reference_scale": true,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": false,
+    "unit": false,
+    "staged": true,
+    "target": null,
+    "shadows_off": false,
+    "reference_radius": 69.44
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=moon&seed=38&candidate=1&reviewRevision=ice-moon-2-r002&capture=1789364536132368937&kit=ice-moon-2-r002&shadowBias=0.006",
+  "images": {
+    "projected-path-corrected-seed38.png": "52eb6b61813d89feac054e6970031e13435c8faf281e8361c51d06a44b504701",
+    "projected-path-corrected-seed38-angle2.png": "3d2eac5bcda8d54eef51eac31282a3da92dce2c96ad0e75d4eb733fa4a64f4be",
+    "projected-path-corrected-seed38-reference-scale.png": "0135fd784a02350ae48faa850cdf03c2a6d75aacc0488e6732fa49b5d4099de7"
+  },
+  "kitSha256": "f5e21fbe3c38689fddcc3a8120eeec2715c8265ceef31af28d13a8175e95c2ee",
+  "sourceKitSha256": "15cc6b11bcdc0abb94987bf36f632bdf0a71ef315b7e66d76c3da90bb66ae64e",
+  "stagingManifest": {
+    "scope": "explicit isolated local review; no production publication",
+    "revision": "ice-moon-2-r002",
+    "source": "output/playwright/planet-reference-20260914/ice-moon-2-r002",
+    "files": {
+      "frontier-workshop.hdr": {
+        "sha256": "11f358cce19278c6115633430d1b1d5c7fc2dc35a16f73468b46dcf6724a4364",
+        "bytes": 55248
+      },
+      "ice-0-albedo.png": {
+        "sha256": "ef0b9ef41997a9588d87f7c2a153c50328656429b3915df204e922b18f79443c",
+        "bytes": 62640
+      },
+      "ice-0-orm.png": {
+        "sha256": "422e6c2851744f6324e578e9bc34ec7c586caa5f1edec1a0cc959209a95ff879",
+        "bytes": 22205
+      },
+      "ice-1-albedo.png": {
+        "sha256": "daa7ff65ab88390945537287f66700b14e6540b9c41f9bf5a4efd3059bffdd1f",
+        "bytes": 39313
+      },
+      "ice-1-orm.png": {
+        "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+        "bytes": 14957
+      },
+      "ice-2-albedo.png": {
+        "sha256": "5037a3fab7f4507535fc339b4f7024c7e70a20a191ad0120297a5c64c087a91d",
+        "bytes": 26859
+      },
+      "ice-2-orm.png": {
+        "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+        "bytes": 14957
+      },
+      "ice-3-albedo.png": {
+        "sha256": "485a3e3326d7cb6726742f50379726bc0fc4c3faa7686f6cd7fb6cf913481fc7",
+        "bytes": 34005
+      },
+      "ice-3-orm.png": {
+        "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+        "bytes": 14957
+      },
+      "ice-4-albedo.png": {
+        "sha256": "ec118c65ca7feb308a4540da06f75d20bbf7e0bef1a10c8863d44fc15e895037",
+        "bytes": 19156
+      },
+      "ice-4-orm.png": {
+        "sha256": "5069fb80400d3e2e7e43d7e1c3e0a52a9d81b5aa8967c9ff790e92f68b3c51e4",
+        "bytes": 18539
+      },
+      "kit.json": {
+        "sha256": "f5e21fbe3c38689fddcc3a8120eeec2715c8265ceef31af28d13a8175e95c2ee",
+        "bytes": 43039994
+      }
+    },
+    "runtimeProjection": {
+      "schema": "sidereal.runtime-projection.v1",
+      "rule": "sidereal.ice-moon-used-native-variants.v1",
+      "revision": "ice-moon-2-r002",
+      "source": {
+        "path": "output/playwright/planet-reference-20260914/ice-moon-2-r002/kit.json",
+        "sha256": "15cc6b11bcdc0abb94987bf36f632bdf0a71ef315b7e66d76c3da90bb66ae64e",
+        "bytes": 87657228
+      },
+      "projection": {
+        "path": "output/playwright/planet-reference-20260914/runtime-projections/ice-moon-2-r002/kit.json",
+        "sha256": "f5e21fbe3c38689fddcc3a8120eeec2715c8265ceef31af28d13a8175e95c2ee",
+        "bytes": 43039994
+      },
+      "keptVariantIds": [
+        "snow-cut-region",
+        "snow-open-gorge",
+        "ground-sphere"
+      ],
+      "omittedVariantIds": [
+        "ground-sphere-medium",
+        "ground-sphere-low"
+      ],
+      "preserved": "all retained native geometry attributes, placement recipe, materials and top-level metadata; source archive unchanged",
+      "equalityEvidence": {
+        "path": "equality.json",
+        "sha256": "ec8af4494dee272f6a2958fc90568e5e3e46253ccb4a8849ce3ffb9bb2d7d388"
+      }
+    }
+  }
+}

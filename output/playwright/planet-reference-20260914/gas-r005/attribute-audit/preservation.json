@@ -1,0 +1,24 @@
+{
+  "testsPassed": 4,
+  "command": "python3 -m unittest discover -s scripts/art_library -p test_gas_r005_preservation.py",
+  "materialAndTextureBytes": "exact Gas4",
+  "geometry": "JSON positions/indices/normals and GLB geometry attributes exact Gas4",
+  "uvOnlyChanges": [
+    [
+      0.22,
+      0.56
+    ],
+    [
+      0.25,
+      0.5
+    ],
+    [
+      0.12,
+      0.76
+    ]
+  ],
+  "blenderGltfConvention": "All three transforms satisfy 2*offset+span=1, so applying offset+span*V before and after V inversion is equivalent. General asymmetric transforms require JSON Vnew=1-offset-span+span*Vold.",
+  "fullAudit": "Five variants, no material/normal/UV/position gaps or mismatches; PNGs byte-identical to GLB embedded images",
+  "sourceSha256": "879c2f898f2dbd05f282b6f071b67961b3fc6e391e1a81321e2dae370cc1952a",
+  "scope": "Read-only. No candidate mutation or visual/hardware acceptance."
+}

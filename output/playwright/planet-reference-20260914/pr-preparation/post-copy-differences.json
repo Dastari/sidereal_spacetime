@@ -1,0 +1,12 @@
+[
+  {
+    "path": "scripts/art_library/capture_planet_reference_lod.py",
+    "copiedSHA256": "39a74d98fa380f3c7d594f192d3a3473870d75909ce78e49b4cd859e29fc2ab6",
+    "finalSHA256": "ecfb5737b0ac55b4a493406a0465fdcb308df57e1bfcd6d4208b3c4190032f46"
+  },
+  {
+    "path": "scripts/art_library/planet_reference_hardware_review.test.ts",
+    "copiedSHA256": "6721d9bad157c924f4818dc262e72c65f7dd030672572df2f7f680e13d31b667",
+    "finalSHA256": "7bddc77a7fd607214d6b5b8a0ea3eb0d2226fba97f041cc4e904918e09a42354"
+  }
+]

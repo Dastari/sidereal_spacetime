@@ -1,0 +1,1564 @@
+{
+  "schema": "sidereal.art-library.v1",
+  "id": "environment.planet.temperate",
+  "asset_uuid": "91cfaa7c-add9-5e35-9b0f-3b1b0c24d35e",
+  "reference_ids": [
+    "planets--temperate-world",
+    "planets--temperate-moon-1",
+    "planets--temperate-moon-2"
+  ],
+  "mapping_status": "proposed shared production family; inspect and split distinct geometry before implementation",
+  "current_revision": 3,
+  "state": "in-progress",
+  "owner_final_signoff": null,
+  "priority": 50,
+  "profile": "planet",
+  "assigned_to": "root/planet-reference-20260914",
+  "blocker": null,
+  "feedback": [
+    {
+      "revision": 1,
+      "author": "agent",
+      "text": "Giant smooth land caps and regular tree rows miss the reference medium-continent hierarchy.",
+      "message_reference": "output/playwright/planet-reference-20260914/reviews/crystal-r006-temperate-r001-corrected.md",
+      "recorded_at": "2026-09-14T03:48:15.307399+00:00",
+      "resolved_by_revision": null
+    }
+  ],
+  "approvals": [],
+  "revisions": [
+    {
+      "revision": 0,
+      "created_at": "2026-09-08",
+      "stage": "reference-only",
+      "change": "Reference inventory and provisional scale/gameplay brief",
+      "hypothesis": null,
+      "covered_reference_ids": [],
+      "evidence": [],
+      "review": null
+    },
+    {
+      "revision": 1,
+      "created_at": "2026-09-14T03:48:15.307399+00:00",
+      "stage": "changes-requested",
+      "change": "Native large continents with Ocean7 PBR water and groves",
+      "hypothesis": "Broader continental landforms distinguish temperate from ocean archipelagos.",
+      "covered_reference_ids": [
+        "planets--temperate-world"
+      ],
+      "evidence": [
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/attribute-audit/report.json",
+          "sha256": "2eda1aea4b7656cf9fb0814322a80716014abed0dcb95f39b6d497cb48f09d23",
+          "bytes": 23422,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/attribute-audit/report.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/attribute-audit/report.md",
+          "sha256": "bbdad6c10b42cabfe22f31b879df6ef6f5fb575cf302ce98e6a1ddbfef89774b",
+          "bytes": 5803,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/attribute-audit/report.md",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/build_temperate_native_kit_r001.py",
+          "sha256": "79153c72e9de9080eb821c1d1d9087b858be768ce5607091793a6e72af1cd158",
+          "bytes": 5397,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/build_temperate_native_kit_r001.py",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/composition-tests.log",
+          "sha256": "78a1a3a3e0738fc700696cfcd696c9e403532ccb69672474d08ceb67f3d85c62",
+          "bytes": 208,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/composition-tests.log",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/continent-a.glb",
+          "sha256": "17a44ee77a9f53ddf838f0f976d7f1aae3e6c84858c1a3db5284c7e2a0dda9e6",
+          "bytes": 2006876,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/continent-a.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/continent-b.glb",
+          "sha256": "412c4c23f54404a9b632de5deec0ab9785b644da300e97107b93616c3da93406",
+          "bytes": 2007812,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/continent-b.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/continent-c.glb",
+          "sha256": "69b14b0847610e98c576badb231fb075640c457a9480e09d25b87039317ebadb",
+          "bytes": 2000864,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/continent-c.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "runtime-back",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/corrected-seed38-angle2.png",
+          "sha256": "dc583d6b99d1911a1a7df5720cb0a9f1d41fcdd59bd18503fac5fd7618690864",
+          "bytes": 465375,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/corrected-seed38-angle2.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/corrected-seed38-capture.log",
+          "sha256": "08650ad6ded11438943ec177b1d9d9ae58395f3f406905706284fc4e7d851ac5",
+          "bytes": 2470,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/corrected-seed38-capture.log",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "runtime-context",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/corrected-seed38-reference-scale.png",
+          "sha256": "f2601137fcff7bd8786d5f094a70816095b1b2104d1a522fc8e7b74fa6b4f6c5",
+          "bytes": 119760,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/corrected-seed38-reference-scale.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/corrected-seed38.json",
+          "sha256": "7417a4320070f6f3467439566d909779c00eafb6daf0dfa109b1ea3e9fa40785",
+          "bytes": 2322,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/corrected-seed38.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/corrected-seed38.png",
+          "sha256": "1fc70ff0453584eead11def14ba143ad8bdb6d648ce9f63f660059cf728d990c",
+          "bytes": 486824,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/corrected-seed38.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/forested-continent-preview.png",
+          "sha256": "dfe7021f5f4f3bc3c2d5ee887b0f7545a2395a5c401538f720743f9c663db57a",
+          "bytes": 1160264,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/forested-continent-preview.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/ground-sphere-low.glb",
+          "sha256": "03138956e4425d3ecc9e8b98b8738f9ee1d356307d10b1a876fb185e06b57386",
+          "bytes": 265936,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/ground-sphere-low.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/ground-sphere-medium.glb",
+          "sha256": "e9841cb038ad5f038c884212f02ddb9ee57d5a9bea763e38ecc882cf18b766cd",
+          "bytes": 287448,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/ground-sphere-medium.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/ground-sphere.glb",
+          "sha256": "22ec0dcb11d5fbbb669c36e095bfad24c01009e7c5554eea991072beed461775",
+          "bytes": 372700,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/ground-sphere.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/island-1-albedo.png",
+          "sha256": "cf05fa7597941cd4a9dfcd9b808affb1147d27ec8cbe560361997862d1097630",
+          "bytes": 95918,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/island-1-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/island-1-normal.png",
+          "sha256": "2d565384dd72dd0a775f98917d414e400ffe75bc1766c31a41f2ed2e30b8ee48",
+          "bytes": 96770,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/island-1-normal.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/island-1-orm.png",
+          "sha256": "49d55db301acb4fa17eb366e6282a48dd7d7d5131f8d5665c3ba40c61bcac155",
+          "bytes": 61173,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/island-1-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/island-2-albedo.png",
+          "sha256": "0a4555636d01e76b98b21732488ec31dfeb597f233fd684abbefee47ed4340e3",
+          "bytes": 95963,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/island-2-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/island-2-normal.png",
+          "sha256": "2d565384dd72dd0a775f98917d414e400ffe75bc1766c31a41f2ed2e30b8ee48",
+          "bytes": 96770,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/island-2-normal.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/island-2-orm.png",
+          "sha256": "f89ba9b6acba36367557aab26aba759e6d51af93d69110665a7aa496157ff413",
+          "bytes": 61190,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/island-2-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/island-3-albedo.png",
+          "sha256": "95d88f8e7fa2ad03e45c767cfbdfd3900abcabab7a9303ccb57f280aad65b66b",
+          "bytes": 100063,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/island-3-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/island-3-normal.png",
+          "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2",
+          "bytes": 111546,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/island-3-normal.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/island-3-orm.png",
+          "sha256": "ca20405ec37d8bc842a1ecb59dfb44133ef546ed6e0623f00794d3f0f890e6f5",
+          "bytes": 72729,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/island-3-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/island-4-albedo.png",
+          "sha256": "dfb9545f38dc50eeb530499932c855b670fa003ea57822e63cc27c6813206394",
+          "bytes": 97689,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/island-4-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/island-4-normal.png",
+          "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2",
+          "bytes": 111546,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/island-4-normal.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/island-4-orm.png",
+          "sha256": "a903a4bd0fcfede7e968335fb2ae865c5a24bc875642be3eb1c3f6f05cb96086",
+          "bytes": 72407,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/island-4-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/island-5-albedo.png",
+          "sha256": "3b98bdacbccbfd9eacf760161d64d0c5fa8799541d68da29c1ea2743d9b7f9c5",
+          "bytes": 95102,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/island-5-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/island-5-normal.png",
+          "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2",
+          "bytes": 111546,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/island-5-normal.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/island-5-orm.png",
+          "sha256": "7ae19499b3a2cbd6149b8f03fdeb71960cf82460c21de40c5f2e91e577178223",
+          "bytes": 72543,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/island-5-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/island-6-albedo.png",
+          "sha256": "885892ae66865e9380596fc4d7d6654758bffaea3d36e55c349002d7d78fe2fd",
+          "bytes": 95442,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/island-6-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/island-6-normal.png",
+          "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2",
+          "bytes": 111546,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/island-6-normal.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/island-6-orm.png",
+          "sha256": "a646f1100c24da8bead6add3abe283f5c04a6f270e3fbd866bb157f1ff176d1c",
+          "bytes": 72547,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/island-6-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/kit-preview.png",
+          "sha256": "8ee91d22eec3ca6a004b76185d2c4512af7ec21fbef8a88ed80f04c9229a0a70",
+          "bytes": 948623,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/kit-preview.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "blender-source",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/kit.blend",
+          "sha256": "7c4529d0e9bcaad0bd8c0d972cde24b1082c3d7b0b24a1f8e5e19fbcc3fe8155",
+          "bytes": 7338811,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/kit.blend",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/kit.json",
+          "sha256": "b04ea373dc17a704d76d446eccdec40d385e519f7b35a22961d011725b9cef23",
+          "bytes": 7972627,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/kit.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "runtime-context",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/planet-reference-scale.png",
+          "sha256": "44d4a0202928735b2116c34fbeb643d38f76856360a6c8951482e7ddea882e29",
+          "bytes": 111606,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/planet-reference-scale.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "runtime-back",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/planet-seed38-angle2.png",
+          "sha256": "7895ff63f6cfe140803f49753ecb487e843fbf577873b4ae0d5e6945a2c7e339",
+          "bytes": 350632,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/planet-seed38-angle2.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/planet-seed38.png",
+          "sha256": "d7e82d37fecfde6de21af90c5e279508e8480e081fe627a8bd6301046cd3dd8c",
+          "bytes": 328114,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/planet-seed38.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/render-forest-unit.py",
+          "sha256": "f66fcb6df551a37816b88ecfac87f56c51a696f79b1d29a41f68564fc3ff1bf8",
+          "bytes": 1175,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/render-forest-unit.py",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/revision-notes.md",
+          "sha256": "3ed4aa412a8cb13fd55f836b04c823efa113028eb44176cfc9fbd82e1ae41d7e",
+          "bytes": 1645,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/revision-notes.md",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/small-grove.glb",
+          "sha256": "136c588d9fd44d5e8ef9d6cedc852333a399fbfd191e57e253d83128150f7c2b",
+          "bytes": 64208,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/small-grove.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/temperate_reference_composition_r001.test.ts",
+          "sha256": "9980dff6c0fdb59d88531e254a7eb2b9e9c1d88e33cb62c51d66ea70bbc1c9c3",
+          "bytes": 3135,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/temperate_reference_composition_r001.test.ts",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/temperate_reference_composition_r001.ts",
+          "sha256": "7c7089b0481d432fd86d2e98a691807efe72efe6efe2d3dd700723d09ce3f8b5",
+          "bytes": 4918,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/temperate_reference_composition_r001.ts",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/temperate_reference_r001.tsconfig.json",
+          "sha256": "a11f756ff608f2f7d23824e85e72e27d47388b72b61c51d1e1d2a8e67177b8bf",
+          "bytes": 213,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/temperate_reference_r001.tsconfig.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/temperate_reference_r001.vitest.config.ts",
+          "sha256": "07f211328a0d6d43aa8b8d5db904dc758cb7cc0c9214220ddf9e678934b054a3",
+          "bytes": 160,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/temperate_reference_r001.vitest.config.ts",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/tree-grove.glb",
+          "sha256": "ef1f3c825210d5aa9f4ae848c3801b6c3a8a961ca28d89ca39676ab9912b83a1",
+          "bytes": 127144,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/tree-grove.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/validation.json",
+          "sha256": "01345c9ecf0afc193426f4529b0ef783be5a6638ecd87a6a88b3fb660591d0e1",
+          "bytes": 747,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/validation.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/water-albedo.png",
+          "sha256": "e05012eda3625e188f23ee5ebbfc75b57c5d522752a33c93b25122a44cf805a7",
+          "bytes": 54636,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/water-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/water-normal.png",
+          "sha256": "39232b0a816d26908fe3bc7842b1699ed2e93c99e44847f92d4cb9626987742f",
+          "bytes": 132322,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/water-normal.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r001/artifacts/water-orm.png",
+          "sha256": "594ab38132c524629984063a8ce56206f4bbf9e7baf6d4aa08b3c6850c466cfc",
+          "bytes": 69599,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; artifacts/water-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r001/review.md",
+          "sha256": "6f806d8ac8c3b424219e7c2cf94a068d475098d13ee4639de23d1a9b9a427918",
+          "bytes": 4433,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; review.md",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.temperate/revisions/r001/specification.json",
+          "sha256": "2a22910cc3511b19b9b420c02d40e20ac7868e1c134d67ad6207a9b979abc179",
+          "bytes": 1043,
+          "notes": "Exact candidate temperate-r001 immutable checkpoint; specification.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        }
+      ],
+      "review": {
+        "outcome": "fail",
+        "notes": "Giant smooth land caps and regular tree rows miss the reference medium-continent hierarchy.",
+        "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+      }
+    },
+    {
+      "revision": 2,
+      "created_at": "2026-09-14T03:48:15.307399+00:00",
+      "stage": "changes-requested",
+      "change": "Smaller unequal continents, native terraces and clustered forests",
+      "hypothesis": "Fourteen regions, varied coastal relief and clustered groves replace oversized blank caps and rows.",
+      "covered_reference_ids": [
+        "planets--temperate-world"
+      ],
+      "evidence": [
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/attribute-audit/report.json",
+          "sha256": "484cd3d3669ce1ecbbfc000b799baa817314492ea28f65d29855a60cdc4df6fd",
+          "bytes": 23428,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/attribute-audit/report.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/attribute-audit/report.md",
+          "sha256": "3f4546179b40fff4f7fa89ece280d461e210d7c03cc9c89ac6f372a09c10c7af",
+          "bytes": 5803,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/attribute-audit/report.md",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/attribute-audit-final/report.json",
+          "sha256": "484cd3d3669ce1ecbbfc000b799baa817314492ea28f65d29855a60cdc4df6fd",
+          "bytes": 23428,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/attribute-audit-final/report.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/attribute-audit-final/report.md",
+          "sha256": "3f4546179b40fff4f7fa89ece280d461e210d7c03cc9c89ac6f372a09c10c7af",
+          "bytes": 5803,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/attribute-audit-final/report.md",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/build_temperate_native_kit_r002.py",
+          "sha256": "f28e1e533d89a5a766bc73c0346a729e7bb392604a4e127ee14c0ea7fe257781",
+          "bytes": 6909,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/build_temperate_native_kit_r002.py",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/continent-a.glb",
+          "sha256": "a13d0395b45dafe1ef5388985c85de9115a28c83341686424323029b0c78d415",
+          "bytes": 2080188,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/continent-a.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/continent-b.glb",
+          "sha256": "126d46cbe8a264ad4f38d0120fd2a1993739c844526470c2814ddedc4e030b32",
+          "bytes": 2080652,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/continent-b.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/continent-c.glb",
+          "sha256": "8fb9a0a4dd5ea6b4d0289c23b6592c79286d610ce041d348cd127af47566ae49",
+          "bytes": 2076068,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/continent-c.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "runtime-back",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/corrected-seed38-angle2.png",
+          "sha256": "636a1f3cc87524d81828269b41345b794f6e6b37265460b5a1d3aa2876a2404a",
+          "bytes": 495802,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/corrected-seed38-angle2.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/corrected-seed38-capture.log",
+          "sha256": "c6bb061264098ceeeeefa3e16ee99af01346cdbae817c7a7d3bea7dd09204ba4",
+          "bytes": 2470,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/corrected-seed38-capture.log",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "runtime-context",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/corrected-seed38-reference-scale.png",
+          "sha256": "386f71a8ec3bb5cb85cbc19ced767c7fb38ea07485cbb72f91f821a1407a6fb0",
+          "bytes": 120885,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/corrected-seed38-reference-scale.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/corrected-seed38.json",
+          "sha256": "23a526ae6b39a0e02ae106076d907f9e55ea138a923d363b507c3e1aab38f575",
+          "bytes": 2336,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/corrected-seed38.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/corrected-seed38.png",
+          "sha256": "3adb9470fa5aef3dd2f259b7f8f7b5edee57fde6efb8de8ffbacc61b3a88d0f5",
+          "bytes": 505805,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/corrected-seed38.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/exact-normal-matching-audit.json",
+          "sha256": "586512bb57898ff20f44891cfb26024d6a27a678514c97b24cc356226c2b0661",
+          "bytes": 530,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/exact-normal-matching-audit.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/exact-normal-matching-audit.py",
+          "sha256": "c7d7d71ff048979d25d426e6ad74cd44861ddf012070ac41dfa1a95cf123bcfd",
+          "bytes": 2196,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/exact-normal-matching-audit.py",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/export-normal-alignment.json",
+          "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "bytes": 2,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/export-normal-alignment.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/forested-continent-preview.png",
+          "sha256": "a4e32ead88c8a5974d32f7dc0cfc9b775e48c25dd4bfd229069f82cfdc928f35",
+          "bytes": 1080926,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/forested-continent-preview.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/ground-sphere-low.glb",
+          "sha256": "03138956e4425d3ecc9e8b98b8738f9ee1d356307d10b1a876fb185e06b57386",
+          "bytes": 265936,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/ground-sphere-low.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/ground-sphere-medium.glb",
+          "sha256": "e9841cb038ad5f038c884212f02ddb9ee57d5a9bea763e38ecc882cf18b766cd",
+          "bytes": 287448,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/ground-sphere-medium.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/ground-sphere.glb",
+          "sha256": "22ec0dcb11d5fbbb669c36e095bfad24c01009e7c5554eea991072beed461775",
+          "bytes": 372700,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/ground-sphere.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/island-1-albedo.png",
+          "sha256": "cf05fa7597941cd4a9dfcd9b808affb1147d27ec8cbe560361997862d1097630",
+          "bytes": 95918,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/island-1-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/island-1-normal.png",
+          "sha256": "2d565384dd72dd0a775f98917d414e400ffe75bc1766c31a41f2ed2e30b8ee48",
+          "bytes": 96770,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/island-1-normal.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/island-1-orm.png",
+          "sha256": "49d55db301acb4fa17eb366e6282a48dd7d7d5131f8d5665c3ba40c61bcac155",
+          "bytes": 61173,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/island-1-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/island-2-albedo.png",
+          "sha256": "0a4555636d01e76b98b21732488ec31dfeb597f233fd684abbefee47ed4340e3",
+          "bytes": 95963,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/island-2-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/island-2-normal.png",
+          "sha256": "2d565384dd72dd0a775f98917d414e400ffe75bc1766c31a41f2ed2e30b8ee48",
+          "bytes": 96770,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/island-2-normal.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/island-2-orm.png",
+          "sha256": "f89ba9b6acba36367557aab26aba759e6d51af93d69110665a7aa496157ff413",
+          "bytes": 61190,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/island-2-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/island-3-albedo.png",
+          "sha256": "95d88f8e7fa2ad03e45c767cfbdfd3900abcabab7a9303ccb57f280aad65b66b",
+          "bytes": 100063,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/island-3-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/island-3-normal.png",
+          "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2",
+          "bytes": 111546,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/island-3-normal.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/island-3-orm.png",
+          "sha256": "ca20405ec37d8bc842a1ecb59dfb44133ef546ed6e0623f00794d3f0f890e6f5",
+          "bytes": 72729,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/island-3-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/island-4-albedo.png",
+          "sha256": "dfb9545f38dc50eeb530499932c855b670fa003ea57822e63cc27c6813206394",
+          "bytes": 97689,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/island-4-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/island-4-normal.png",
+          "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2",
+          "bytes": 111546,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/island-4-normal.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/island-4-orm.png",
+          "sha256": "a903a4bd0fcfede7e968335fb2ae865c5a24bc875642be3eb1c3f6f05cb96086",
+          "bytes": 72407,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/island-4-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/island-5-albedo.png",
+          "sha256": "3b98bdacbccbfd9eacf760161d64d0c5fa8799541d68da29c1ea2743d9b7f9c5",
+          "bytes": 95102,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/island-5-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/island-5-normal.png",
+          "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2",
+          "bytes": 111546,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/island-5-normal.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/island-5-orm.png",
+          "sha256": "7ae19499b3a2cbd6149b8f03fdeb71960cf82460c21de40c5f2e91e577178223",
+          "bytes": 72543,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/island-5-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/island-6-albedo.png",
+          "sha256": "885892ae66865e9380596fc4d7d6654758bffaea3d36e55c349002d7d78fe2fd",
+          "bytes": 95442,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/island-6-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/island-6-normal.png",
+          "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2",
+          "bytes": 111546,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/island-6-normal.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/island-6-orm.png",
+          "sha256": "a646f1100c24da8bead6add3abe283f5c04a6f270e3fbd866bb157f1ff176d1c",
+          "bytes": 72547,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/island-6-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/kit-before-export-normal-alignment.json",
+          "sha256": "426d18faaa123a9277f5b7cebc52e9ad0656a2c937f3168e8585021f113f3446",
+          "bytes": 9721919,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/kit-before-export-normal-alignment.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/kit-preview.png",
+          "sha256": "98bb891fad12e4f7c8019d9ed7bc88c73a392d0241c52ecb7020b7837b1810ee",
+          "bytes": 953960,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/kit-preview.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "blender-source",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/kit.blend",
+          "sha256": "8d74e4a85fce758039ab10ba99fc1fe55d09e2e4404d1aeea86da1b42ee44d65",
+          "bytes": 7646967,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/kit.blend",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/kit.json",
+          "sha256": "426d18faaa123a9277f5b7cebc52e9ad0656a2c937f3168e8585021f113f3446",
+          "bytes": 9721919,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/kit.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "runtime-context",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/planet-reference-scale.png",
+          "sha256": "44d4a0202928735b2116c34fbeb643d38f76856360a6c8951482e7ddea882e29",
+          "bytes": 111606,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/planet-reference-scale.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "runtime-back",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/planet-seed38-angle2.png",
+          "sha256": "7895ff63f6cfe140803f49753ecb487e843fbf577873b4ae0d5e6945a2c7e339",
+          "bytes": 350632,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/planet-seed38-angle2.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/planet-seed38.png",
+          "sha256": "d7e82d37fecfde6de21af90c5e279508e8480e081fe627a8bd6301046cd3dd8c",
+          "bytes": 328114,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/planet-seed38.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/preserve-exported-normals.py",
+          "sha256": "2523ebf4f7c02c6d0c6810a1e05016309206131fca16df475b85df358a6a77be",
+          "bytes": 1517,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/preserve-exported-normals.py",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/render-forest-unit.py",
+          "sha256": "c05901f89bc2cca21168a042524901db2b7e1a7e511973576bd1e1c094ff6335",
+          "bytes": 1393,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/render-forest-unit.py",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/revision-notes.md",
+          "sha256": "dbb587618ec625110c1c623e99e19fae79c4947ad5bdb7c06efbc4e65d2b8558",
+          "bytes": 1933,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/revision-notes.md",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/small-grove.glb",
+          "sha256": "136c588d9fd44d5e8ef9d6cedc852333a399fbfd191e57e253d83128150f7c2b",
+          "bytes": 64208,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/small-grove.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/temperate_reference_composition_r002.test.ts",
+          "sha256": "7b63a171996db47498a81886f8d1546977c4582c73203763ed61a3999b5d12d1",
+          "bytes": 3137,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/temperate_reference_composition_r002.test.ts",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/temperate_reference_composition_r002.ts",
+          "sha256": "8ff08c502bdfb6e270a9892eb175712d67e5bb031e7361ce54808e40947af61b",
+          "bytes": 5199,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/temperate_reference_composition_r002.ts",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/temperate_reference_r002.tsconfig.json",
+          "sha256": "d431d0c5c232ec9dfb68e57e3c1b976ac6a59769e9559346a4aa970788b55c7b",
+          "bytes": 213,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/temperate_reference_r002.tsconfig.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/temperate_reference_r002.vitest.config.ts",
+          "sha256": "b66207732e5ff5da767f2a44269b334a95d42d6a6efc02fb77dad1e8c1f380c9",
+          "bytes": 160,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/temperate_reference_r002.vitest.config.ts",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/tree-grove.glb",
+          "sha256": "ef1f3c825210d5aa9f4ae848c3801b6c3a8a961ca28d89ca39676ab9912b83a1",
+          "bytes": 127144,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/tree-grove.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/validation.json",
+          "sha256": "4263c956fed2f5208fae7c420fe0a705380b0c950927b6f58ce2f86ae7a5ce2a",
+          "bytes": 747,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/validation.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/water-albedo.png",
+          "sha256": "e05012eda3625e188f23ee5ebbfc75b57c5d522752a33c93b25122a44cf805a7",
+          "bytes": 54636,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/water-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/water-normal.png",
+          "sha256": "39232b0a816d26908fe3bc7842b1699ed2e93c99e44847f92d4cb9626987742f",
+          "bytes": 132322,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/water-normal.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r002/artifacts/water-orm.png",
+          "sha256": "594ab38132c524629984063a8ce56206f4bbf9e7baf6d4aa08b3c6850c466cfc",
+          "bytes": 69599,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; artifacts/water-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.temperate/revisions/r002/specification.json",
+          "sha256": "27e4f501c89b91abf50396123ed564860f892e51bfbe3e0b7e4b626ab6593168",
+          "bytes": 1043,
+          "notes": "Exact candidate temperate-r002 immutable checkpoint; specification.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.temperate/revisions/r002/normal-audit-resolution.md",
+          "sha256": "549439f233ae5709a2cccaa3264acdd0b643098ad0176c9489810b791929781a",
+          "bytes": 783,
+          "notes": "Read-only exact matching resolves earlier three greedy-corner audit mismatches; frozen source unchanged.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:49:16.295708+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.temperate/revisions/r002/coast-review.md",
+          "sha256": "a3d627561f76cbe1adb70644339bf117459bd9e8f2cdd893aee8c1f2a0098165",
+          "bytes": 2397,
+          "notes": "Independent macro subpass and bounded coast change request, no final approval.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.477911+00:00"
+        }
+      ],
+      "review": {
+        "outcome": "fail",
+        "notes": "Macro composition subpass preserved; whole visual gate requires bounded coast finish. Uniform grey walls and concentric terraces remain. See coast-review.md. No owner approval.",
+        "recorded_at": "2026-09-14T03:54:41.477814+00:00"
+      }
+    },
+    {
+      "revision": 3,
+      "created_at": "2026-09-14T03:54:41.479377+00:00",
+      "stage": "in-progress",
+      "change": "Selected irregular coastal buttresses, warm strata and unequal cyan shoals",
+      "hypothesis": "Preserve r002 macro/forest subpass while breaking selected manufactured coast bands.",
+      "covered_reference_ids": [
+        "planets--temperate-world"
+      ],
+      "evidence": [
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/attribute-audit/report.json",
+          "sha256": "9bacabe86c3febd9520c7f35a153217b3b9bee53de4b65ea8a741a5225379f0a",
+          "bytes": 23428,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/attribute-audit/report.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/attribute-audit/report.md",
+          "sha256": "7a7f288e3dc893321adb0ac9839a737556af0a1708458cb474db45cdcf2f708d",
+          "bytes": 5803,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/attribute-audit/report.md",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/build_temperate_native_kit_r003.py",
+          "sha256": "4129e11ea397147cc9e96cc11125608bdff10dd684aafbd54b10cdae38e805b4",
+          "bytes": 8914,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/build_temperate_native_kit_r003.py",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/continent-a.glb",
+          "sha256": "5872a2f471a7d3f26e8f85147938af1f604cd6d5bcc2aaa6c54bb7ef575471e1",
+          "bytes": 2128364,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/continent-a.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/continent-b.glb",
+          "sha256": "72066478b0422ddecd0f3d9c877fca323975100223b15c5948a4b5b498a05792",
+          "bytes": 2128812,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/continent-b.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/continent-c.glb",
+          "sha256": "af2b5e60174b4ab12edea53871eb1e0e29ef0b558db509c9588f8fdc4e63ffdc",
+          "bytes": 2123832,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/continent-c.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/exact-normal-matching-audit.json",
+          "sha256": "a3c232101b938c8b18ea14f10943c999ba325f1a4e101ed05ce2849143241df7",
+          "bytes": 529,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/exact-normal-matching-audit.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/exact-normal-matching-audit.py",
+          "sha256": "c7d7d71ff048979d25d426e6ad74cd44861ddf012070ac41dfa1a95cf123bcfd",
+          "bytes": 2196,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/exact-normal-matching-audit.py",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/forested-continent-preview.png",
+          "sha256": "80aa015c3f22fdc821ff4679511e90303c02961a8c6ca30d07a05fa55f89b825",
+          "bytes": 1125813,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/forested-continent-preview.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/ground-sphere-low.glb",
+          "sha256": "03138956e4425d3ecc9e8b98b8738f9ee1d356307d10b1a876fb185e06b57386",
+          "bytes": 265936,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/ground-sphere-low.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/ground-sphere-medium.glb",
+          "sha256": "e9841cb038ad5f038c884212f02ddb9ee57d5a9bea763e38ecc882cf18b766cd",
+          "bytes": 287448,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/ground-sphere-medium.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/ground-sphere.glb",
+          "sha256": "22ec0dcb11d5fbbb669c36e095bfad24c01009e7c5554eea991072beed461775",
+          "bytes": 372700,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/ground-sphere.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/island-1-albedo.png",
+          "sha256": "cf05fa7597941cd4a9dfcd9b808affb1147d27ec8cbe560361997862d1097630",
+          "bytes": 95918,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/island-1-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/island-1-normal.png",
+          "sha256": "2d565384dd72dd0a775f98917d414e400ffe75bc1766c31a41f2ed2e30b8ee48",
+          "bytes": 96770,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/island-1-normal.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/island-1-orm.png",
+          "sha256": "49d55db301acb4fa17eb366e6282a48dd7d7d5131f8d5665c3ba40c61bcac155",
+          "bytes": 61173,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/island-1-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/island-2-albedo.png",
+          "sha256": "0a4555636d01e76b98b21732488ec31dfeb597f233fd684abbefee47ed4340e3",
+          "bytes": 95963,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/island-2-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/island-2-normal.png",
+          "sha256": "2d565384dd72dd0a775f98917d414e400ffe75bc1766c31a41f2ed2e30b8ee48",
+          "bytes": 96770,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/island-2-normal.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/island-2-orm.png",
+          "sha256": "f89ba9b6acba36367557aab26aba759e6d51af93d69110665a7aa496157ff413",
+          "bytes": 61190,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/island-2-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/island-3-albedo.png",
+          "sha256": "95d88f8e7fa2ad03e45c767cfbdfd3900abcabab7a9303ccb57f280aad65b66b",
+          "bytes": 100063,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/island-3-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/island-3-normal.png",
+          "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2",
+          "bytes": 111546,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/island-3-normal.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/island-3-orm.png",
+          "sha256": "ca20405ec37d8bc842a1ecb59dfb44133ef546ed6e0623f00794d3f0f890e6f5",
+          "bytes": 72729,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/island-3-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/island-4-albedo.png",
+          "sha256": "dfb9545f38dc50eeb530499932c855b670fa003ea57822e63cc27c6813206394",
+          "bytes": 97689,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/island-4-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/island-4-normal.png",
+          "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2",
+          "bytes": 111546,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/island-4-normal.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/island-4-orm.png",
+          "sha256": "a903a4bd0fcfede7e968335fb2ae865c5a24bc875642be3eb1c3f6f05cb96086",
+          "bytes": 72407,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/island-4-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/island-5-albedo.png",
+          "sha256": "3b98bdacbccbfd9eacf760161d64d0c5fa8799541d68da29c1ea2743d9b7f9c5",
+          "bytes": 95102,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/island-5-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/island-5-normal.png",
+          "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2",
+          "bytes": 111546,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/island-5-normal.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/island-5-orm.png",
+          "sha256": "7ae19499b3a2cbd6149b8f03fdeb71960cf82460c21de40c5f2e91e577178223",
+          "bytes": 72543,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/island-5-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/island-6-albedo.png",
+          "sha256": "885892ae66865e9380596fc4d7d6654758bffaea3d36e55c349002d7d78fe2fd",
+          "bytes": 95442,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/island-6-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/island-6-normal.png",
+          "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2",
+          "bytes": 111546,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/island-6-normal.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/island-6-orm.png",
+          "sha256": "a646f1100c24da8bead6add3abe283f5c04a6f270e3fbd866bb157f1ff176d1c",
+          "bytes": 72547,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/island-6-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/kit-preview.png",
+          "sha256": "7add136658db469b8af2c05e2e5fe8d32868659b686daeba431d4618e07d105d",
+          "bytes": 992436,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/kit-preview.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "blender-source",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/kit.blend",
+          "sha256": "0bf6fa2f1b708550ae546bedb9bfa86bcf7e514dd90aae76cd98c080b3d7f687",
+          "bytes": 7866679,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/kit.blend",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/kit.json",
+          "sha256": "c8c3470f41e85b53b9ce1e1f05b24446900bfad439a0522cfedce3c48eef01fc",
+          "bytes": 10773353,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/kit.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "runtime-context",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/planet-reference-scale.png",
+          "sha256": "44d4a0202928735b2116c34fbeb643d38f76856360a6c8951482e7ddea882e29",
+          "bytes": 111606,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/planet-reference-scale.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "runtime-back",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/planet-seed38-angle2.png",
+          "sha256": "7895ff63f6cfe140803f49753ecb487e843fbf577873b4ae0d5e6945a2c7e339",
+          "bytes": 350632,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/planet-seed38-angle2.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/planet-seed38.png",
+          "sha256": "d7e82d37fecfde6de21af90c5e279508e8480e081fe627a8bd6301046cd3dd8c",
+          "bytes": 328114,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/planet-seed38.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/render-forest-unit.py",
+          "sha256": "c05901f89bc2cca21168a042524901db2b7e1a7e511973576bd1e1c094ff6335",
+          "bytes": 1393,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/render-forest-unit.py",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/revision-notes.md",
+          "sha256": "192a05b067d42bb1de4f58d1c80c862540b7981d8a3da901d65500ec611ef5b0",
+          "bytes": 1823,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/revision-notes.md",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/small-grove.glb",
+          "sha256": "136c588d9fd44d5e8ef9d6cedc852333a399fbfd191e57e253d83128150f7c2b",
+          "bytes": 64208,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/small-grove.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/temperate_reference_composition_r003.test.ts",
+          "sha256": "e7811cd5c14d25a4a1651de4ba3b205eca854d2f79ac3d5755cdba195b095a0b",
+          "bytes": 3169,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/temperate_reference_composition_r003.test.ts",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/temperate_reference_composition_r003.ts",
+          "sha256": "8ff08c502bdfb6e270a9892eb175712d67e5bb031e7361ce54808e40947af61b",
+          "bytes": 5199,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/temperate_reference_composition_r003.ts",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/temperate_reference_r003.tsconfig.json",
+          "sha256": "d50a0be6b92cef6195e41e1856c6f02a8c32adebbad4c21eba8bb69df6159150",
+          "bytes": 213,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/temperate_reference_r003.tsconfig.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/temperate_reference_r003.vitest.config.ts",
+          "sha256": "504b19643b86e381e8286184bbe7831c0baf81911d8ed8c242748cbb7db518cb",
+          "bytes": 160,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/temperate_reference_r003.vitest.config.ts",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/tree-grove.glb",
+          "sha256": "ef1f3c825210d5aa9f4ae848c3801b6c3a8a961ca28d89ca39676ab9912b83a1",
+          "bytes": 127144,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/tree-grove.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/validation.json",
+          "sha256": "01b27094311bbdb97ae76be25e24b74b46589cad368171f5c3fb199acb995712",
+          "bytes": 747,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/validation.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/water-albedo.png",
+          "sha256": "e05012eda3625e188f23ee5ebbfc75b57c5d522752a33c93b25122a44cf805a7",
+          "bytes": 54636,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/water-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/water-normal.png",
+          "sha256": "39232b0a816d26908fe3bc7842b1699ed2e93c99e44847f92d4cb9626987742f",
+          "bytes": 132322,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/water-normal.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.temperate/revisions/r003/artifacts/water-orm.png",
+          "sha256": "594ab38132c524629984063a8ce56206f4bbf9e7baf6d4aa08b3c6850c466cfc",
+          "bytes": 69599,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; artifacts/water-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.temperate/revisions/r003/specification.json",
+          "sha256": "175c79a8810b4170ae6a42649637af92e61407fd173c377f8e63bfcf29b40809",
+          "bytes": 1043,
+          "notes": "Exact candidate temperate-r003 immutable checkpoint; specification.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:54:41.479377+00:00"
+        }
+      ],
+      "review": null
+    }
+  ]
+}

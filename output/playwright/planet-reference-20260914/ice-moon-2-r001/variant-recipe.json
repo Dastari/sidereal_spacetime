@@ -1,0 +1,21 @@
+{
+  "referenceId": "planets--ice-moon-2",
+  "foundation": "/root/sidereal_spacetime/scripts/art_library/build_ice_native_kit_r025.py",
+  "foundationSha256": "002d90a4f818089acb1f50bba71ba7d0ed9c847ea55749a08ab403aa0ba48fe0",
+  "runtimeStyle": "moon",
+  "status": "isolated authored candidate; exact variant visual review pending",
+  "seed": 1409,
+  "family": "ice",
+  "count": 6,
+  "scales": [
+    0.33,
+    0.26,
+    0.29,
+    0.25,
+    0.3,
+    0.27
+  ],
+  "columns": 0.67,
+  "districts": 22,
+  "cue": "Quieter smaller white-dominant glacial moon with substantial dark blue openings and lower projections"
+}

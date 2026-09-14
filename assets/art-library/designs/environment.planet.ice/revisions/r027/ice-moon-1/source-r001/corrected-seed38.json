@@ -1,0 +1,65 @@
+{
+  "stats": {
+    "style": "moon",
+    "seed": 38,
+    "frames": 59,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 0,
+      "requestedLOD": 0,
+      "buildMs": 1479.8000011444092,
+      "localLights": 0
+    },
+    "baselineEnvironmentEnabled": false,
+    "meshes": 6,
+    "triangles": 250834,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": []
+  },
+  "shadowsEnabled": true,
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 41.333333333333336
+  },
+  "shadows": [
+    {
+      "casters": 5,
+      "normalBias": 0.006
+    }
+  ],
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "moon",
+    "revision": "ice-moon-1-r001",
+    "seed": 38,
+    "radius": 5.5,
+    "bias": 0.006,
+    "glow": false,
+    "local_light": false,
+    "prefix": "corrected",
+    "reference_scale": true,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": false,
+    "shadows_off": false,
+    "reference_radius": 41.333333333333336
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=moon&seed=38&candidate=1&capture=1789360966653047514&shadowBias=0.006",
+  "images": {
+    "corrected-seed38.png": "f675f661230b069e9c721a308005ab849db383d3dab1c060ccf7d22dc3139c21",
+    "corrected-seed38-angle2.png": "56aeac467a699fed9bab248c520f1b407ead3bf687bc46d849c5a3a44c1e61e9",
+    "corrected-seed38-reference-scale.png": "97d9b55dbbf2ae0ef163ede2b6f7ff6d1e61eacfb35958f35fc5166ecf026040"
+  },
+  "kitSha256": "3facdd4831a4ed043385ef6fdf75030cb7eadeba04b5ff19abd9587f0d0f4f2e"
+}

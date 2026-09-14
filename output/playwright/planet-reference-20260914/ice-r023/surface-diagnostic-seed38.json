@@ -1,0 +1,86 @@
+{
+  "stats": {
+    "style": "ice",
+    "seed": 38,
+    "frames": 18,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "requestedLOD": 0,
+      "buildMs": 1097.7000007629395,
+      "localLights": 0
+    },
+    "build": {
+      "lastBuildMs": 81,
+      "pendingBuilds": 0,
+      "pendingWeatherBuilds": 0
+    },
+    "meshes": 6,
+    "triangles": 336450,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": [
+      {
+        "name": "reference-review-ice-lods",
+        "role": "planet",
+        "nativePlanet": true,
+        "nativeRevision": "ice-r015",
+        "activeLOD": 0,
+        "enabled": false
+      },
+      {
+        "name": "reference-review-native-ice",
+        "role": "planet",
+        "nativePlanet": true,
+        "nativeRevision": "ice-r015",
+        "lod": 0,
+        "triangles": 74720,
+        "seed": 38,
+        "source": "Blender authored native forms",
+        "artApproval": "local review candidate, final art unapproved",
+        "enabled": false
+      }
+    ]
+  },
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 5.5
+  },
+  "shadows": [
+    {
+      "casters": 4,
+      "normalBias": 0.006
+    },
+    {
+      "casters": 5,
+      "normalBias": 0.006
+    }
+  ],
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "ice",
+    "revision": "ice-r023",
+    "seed": 38,
+    "radius": 5.5,
+    "bias": 0.006,
+    "glow": false,
+    "local_light": false,
+    "prefix": "surface-diagnostic",
+    "reference_scale": false,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": true
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=ice&seed=38&candidate=1&capture=1789358208846180466&shadowBias=0.006",
+  "images": {
+    "surface-diagnostic-seed38.png": "618f797bb56016f1d5279028b892845e086b1a2b32492e880700e279ae4f8d41",
+    "surface-diagnostic-seed38-angle2.png": "0a6c7d1d7a2cab7213ec41e054d99f164d89a64c36b3d9b2cd5ad662e120aa78"
+  },
+  "kitSha256": "dbb5d9e71049ad612129b5f40fa626376f05f46023463d55b4230351a05e0e2f"
+}

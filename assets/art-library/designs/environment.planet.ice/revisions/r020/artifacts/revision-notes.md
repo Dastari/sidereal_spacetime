@@ -1,0 +1,7 @@
+# Ice r020 mixed shaft and open gorge
+
+Preserves accepted-direction Ice18 unit as history. New source20 retains its working shaft floor while replacing the three principal tall posts with six narrower unequal principal columns, maximum .712 versus1.01 before (about30% reduction). Cornices have small unequal height offsets. A new snow-open-gorge variant contains an elongated deep cut, two broad snowplains, six narrower unequal prisms and selected thick snow ledges, with no circular shaft. Composition20 alternates six gorge/six shaft regions at prior global scales. Diagnostic true shows shaft; diagnostic 'gorge' shows new gorge alone.
+
+Variant-specific upward native surface indexes clear the substrate under each type, with rotation-aware local sampling. Native UV/corner normals and offline-authored snow powder/ice facet albedo/ORM images preserve ordinary PBR, IOR and clearcoat. All five JSON/GLB variants match with zero material/channel/position/normal/UV audit differences. New gorge cap edges are adaptively tessellated to≤.25 before spherical deformation; the initial sparse-cap attempt is preserved.
+
+Three tests plus TypeScript checking pass: exact complete LOD attribute/identity retention,81,344 retained composed triangles,30% lower peak columns, and NullEngine shaft/gorge floor rays before their cleared substrates. Native shaft/gorge previews inspected. Actual whole-body pair and approximately300px body review remain with parent; no visual acceptance, moon coverage or hardware timing claim.

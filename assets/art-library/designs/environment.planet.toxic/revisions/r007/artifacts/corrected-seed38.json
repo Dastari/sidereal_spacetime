@@ -1,0 +1,65 @@
+{
+  "stats": {
+    "style": "toxic",
+    "seed": 38,
+    "frames": 26,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 0,
+      "requestedLOD": 0,
+      "buildMs": 1756.8999996185303,
+      "localLights": 0
+    },
+    "baselineEnvironmentEnabled": false,
+    "meshes": 11,
+    "triangles": 269014,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": []
+  },
+  "shadowsEnabled": true,
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 13.5
+  },
+  "shadows": [
+    {
+      "casters": 10,
+      "normalBias": 0.006
+    }
+  ],
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "toxic",
+    "revision": "toxic-r007",
+    "seed": 38,
+    "radius": 5.5,
+    "bias": 0.006,
+    "glow": false,
+    "local_light": false,
+    "prefix": "corrected",
+    "reference_scale": true,
+    "weather_revision": "toxic-fog-r005",
+    "sample_surfaces": false,
+    "shadows_off": false,
+    "reference_radius": 13.5
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=toxic&seed=38&candidate=1&capture=1789360863952110749&shadowBias=0.006",
+  "images": {
+    "corrected-seed38.png": "1256a167642784215b7c307aab341e0c3033c3ace06d82328e058aceaea1e519",
+    "corrected-seed38-angle2.png": "25acbb136482da7bdb45bed99fddb04c795aec0c8b5d71af2d3f9ef524db512e",
+    "corrected-seed38-reference-scale.png": "0159ed366b73c787f87397e9d078b718de295428b7a777cc0760f1f9cfbed817"
+  },
+  "kitSha256": "df85fefbbb5b9474e810197333255819d33dcf3c911462f98dc49a111edfcb2c"
+}

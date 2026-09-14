@@ -1,0 +1,17 @@
+{
+  "candidate": "rocky-r009",
+  "canonicalRevision": 9,
+  "coveredReferenceIds": [
+    "planets--rocky-world"
+  ],
+  "excludedReferenceIds": [
+    "planets--rocky-moon-1",
+    "planets--rocky-moon-2"
+  ],
+  "sourceCoordinates": "Blender Z up; unit spherical composition; radius is presentation only",
+  "physicalScale": "No new physical-radius or authority proposal",
+  "publication": "isolated candidate; no owner approval or production installation",
+  "lod": "Dominant authored geometry/materials retained across LOD; worker build-ahead and material precompile contract unchanged",
+  "provenance": "Snapshots preserve all presently saved native source, GLBs, textures, tests, attempts, actual isolated captures and validation files. Corrected captures supersede old empty-shadow-list captures for appearance only. SwiftShader cannot establish timing.",
+  "remaining": "Actual hardware Flight/Map Observe transitions and owner exact-revision approval remain. Latest visual working gate not marked pass by this checkpoint."
+}

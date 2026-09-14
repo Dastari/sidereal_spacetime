@@ -1,0 +1,3026 @@
+{
+  "frames": [
+    {
+      "active": 2,
+      "atMs": 909,
+      "cameraRadius": 71.03121503136403,
+      "intervalMs": null,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 23.999999999999996,
+      "renderSubmissionMs": 0.699999988079071,
+      "retained": [
+        0,
+        2
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 1912.300000011921,
+      "cameraRadius": 71.03121503136403,
+      "intervalMs": 1003.5,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 23.999999999999996,
+      "renderSubmissionMs": 0.5,
+      "retained": [
+        0,
+        2
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 2918,
+      "cameraRadius": 71.03121503136403,
+      "intervalMs": 1005.6999999880791,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 23.999999999999996,
+      "renderSubmissionMs": 0.5,
+      "retained": [
+        0,
+        2
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 3923.699999988079,
+      "cameraRadius": 71.03121503136403,
+      "intervalMs": 1005.1999999880791,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 23.999999999999996,
+      "renderSubmissionMs": 1,
+      "retained": [
+        0,
+        2
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 4931,
+      "cameraRadius": 71.03121503136403,
+      "intervalMs": 1007.8000000119209,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 23.999999999999996,
+      "renderSubmissionMs": 0.5,
+      "retained": [
+        0,
+        2
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 5935.899999976158,
+      "cameraRadius": 71.03121503136403,
+      "intervalMs": 1004.8999999761581,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 23.999999999999996,
+      "renderSubmissionMs": 0.5,
+      "retained": [
+        0,
+        2
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 6960.800000011921,
+      "cameraRadius": 38.74429910801673,
+      "intervalMs": 1004,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        }
+      ],
+      "pendingBuilds": 1,
+      "projected": 44,
+      "renderSubmissionMs": 21.400000035762787,
+      "retained": [
+        0,
+        2
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 7943.800000011921,
+      "cameraRadius": 38.74429910801673,
+      "intervalMs": 1003.7000000476837,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        }
+      ],
+      "pendingBuilds": 1,
+      "projected": 44,
+      "renderSubmissionMs": 0.699999988079071,
+      "retained": [
+        0,
+        2
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 8947.800000011921,
+      "cameraRadius": 38.74429910801673,
+      "intervalMs": 1004,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        }
+      ],
+      "pendingBuilds": 1,
+      "projected": 44,
+      "renderSubmissionMs": 0.699999988079071,
+      "retained": [
+        0,
+        2
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 9950.5,
+      "cameraRadius": 38.74429910801673,
+      "intervalMs": 1002.5999999642372,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        }
+      ],
+      "pendingBuilds": 1,
+      "projected": 44,
+      "renderSubmissionMs": 0.800000011920929,
+      "retained": [
+        0,
+        2
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 10956.899999976158,
+      "cameraRadius": 38.74429910801673,
+      "intervalMs": 1006.4000000357628,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        }
+      ],
+      "pendingBuilds": 1,
+      "projected": 44,
+      "renderSubmissionMs": 0.7999999523162842,
+      "retained": [
+        0,
+        2
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 11962.899999976158,
+      "cameraRadius": 38.74429910801673,
+      "intervalMs": 1006.1999999880791,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        }
+      ],
+      "pendingBuilds": 1,
+      "projected": 44,
+      "renderSubmissionMs": 0.5999999642372131,
+      "retained": [
+        0,
+        2
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 12964.199999988079,
+      "cameraRadius": 26.636705636761505,
+      "intervalMs": 1001.1999999880791,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 1,
+      "projected": 64,
+      "renderSubmissionMs": 0.699999988079071,
+      "retained": [
+        0,
+        2
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 13967.100000023842,
+      "cameraRadius": 26.636705636761505,
+      "intervalMs": 1003.1999999880791,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 1,
+      "projected": 64,
+      "renderSubmissionMs": 0.40000003576278687,
+      "retained": [
+        0,
+        2
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 14971.100000023842,
+      "cameraRadius": 26.636705636761505,
+      "intervalMs": 1003.1999999880791,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 1,
+      "projected": 64,
+      "renderSubmissionMs": 1.2000000476837158,
+      "retained": [
+        0,
+        2
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 15976.100000023842,
+      "cameraRadius": 26.636705636761505,
+      "intervalMs": 1005.7000000476837,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 1,
+      "projected": 64,
+      "renderSubmissionMs": 0.5,
+      "retained": [
+        0,
+        2
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 16984.600000023842,
+      "cameraRadius": 26.636705636761505,
+      "intervalMs": 1008.2999999523163,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 1,
+      "projected": 64,
+      "renderSubmissionMs": 0.7000000476837158,
+      "retained": [
+        0,
+        2
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 17990.30000001192,
+      "cameraRadius": 26.636705636761505,
+      "intervalMs": 1005.1000000238419,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 1,
+      "projected": 64,
+      "renderSubmissionMs": 1.300000011920929,
+      "retained": [
+        0,
+        2
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 18992,
+      "cameraRadius": 11.756890763811974,
+      "intervalMs": 1002.1999999880791,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 1,
+      "projected": 145,
+      "renderSubmissionMs": 0.800000011920929,
+      "retained": [
+        0,
+        2
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 19992.399999976158,
+      "cameraRadius": 11.756890763811974,
+      "intervalMs": 1000.5,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 1,
+      "projected": 145,
+      "renderSubmissionMs": 0.699999988079071,
+      "retained": [
+        0,
+        2
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 20993.69999998808,
+      "cameraRadius": 11.756890763811974,
+      "intervalMs": 1001.1999999880791,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 1,
+      "projected": 145,
+      "renderSubmissionMs": 0.800000011920929,
+      "retained": [
+        0,
+        2
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 22000.399999976158,
+      "cameraRadius": 11.756890763811974,
+      "intervalMs": 1006.9000000357628,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 1,
+      "projected": 145,
+      "renderSubmissionMs": 0.5999999642372131,
+      "retained": [
+        0,
+        2
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 1,
+      "atMs": 23004.600000023842,
+      "cameraRadius": 11.756890763811974,
+      "intervalMs": 1003.3999999761581,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 145,
+      "renderSubmissionMs": 1.4000000357627869,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        1
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 1,
+      "atMs": 24011.100000023842,
+      "cameraRadius": 9.470828670848537,
+      "intervalMs": 1007.3000000119209,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 179.99999999999997,
+      "renderSubmissionMs": 0.6000000238418579,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        1
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 1,
+      "atMs": 25015.80000001192,
+      "cameraRadius": 9.470828670848537,
+      "intervalMs": 1004.8000000119209,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 179.99999999999997,
+      "renderSubmissionMs": 0.5,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        1
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 1,
+      "atMs": 26020.19999998808,
+      "cameraRadius": 9.470828670848537,
+      "intervalMs": 1004.3999999761581,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 179.99999999999997,
+      "renderSubmissionMs": 0.5,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        1
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 1,
+      "atMs": 27022.100000023842,
+      "cameraRadius": 9.470828670848537,
+      "intervalMs": 1001.4000000357628,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 179.99999999999997,
+      "renderSubmissionMs": 1,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        1
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 1,
+      "atMs": 28027.80000001192,
+      "cameraRadius": 9.470828670848537,
+      "intervalMs": 1006.0999999642372,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 179.99999999999997,
+      "renderSubmissionMs": 0.6000000238418579,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        1
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 1,
+      "atMs": 29034.100000023842,
+      "cameraRadius": 9.470828670848537,
+      "intervalMs": 1006.1999999880791,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 179.99999999999997,
+      "renderSubmissionMs": 0.7000000476837158,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        1
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 0,
+      "atMs": 30038.600000023842,
+      "cameraRadius": 6.088389859831201,
+      "intervalMs": 1003,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 280,
+      "renderSubmissionMs": 2.200000047683716,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        0
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 0,
+      "atMs": 31040.69999998808,
+      "cameraRadius": 6.088389859831201,
+      "intervalMs": 1003.1000000238419,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 280,
+      "renderSubmissionMs": 1.199999988079071,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        0
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 0,
+      "atMs": 32041.100000023842,
+      "cameraRadius": 6.088389859831201,
+      "intervalMs": 1000.6000000238419,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 280,
+      "renderSubmissionMs": 1,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        0
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 0,
+      "atMs": 33045,
+      "cameraRadius": 6.088389859831201,
+      "intervalMs": 1003.5999999642372,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 280,
+      "renderSubmissionMs": 1.300000011920929,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        0
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 0,
+      "atMs": 34046.69999998808,
+      "cameraRadius": 6.088389859831201,
+      "intervalMs": 1002.4000000357628,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 280,
+      "renderSubmissionMs": 0.5999999642372131,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        0
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 0,
+      "atMs": 35047.39999997616,
+      "cameraRadius": 6.088389859831201,
+      "intervalMs": 1000.6999999880791,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 280,
+      "renderSubmissionMs": 0.5999999642372131,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        0
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 0,
+      "atMs": 36053.10000002384,
+      "cameraRadius": 9.470828670848537,
+      "intervalMs": 1005.5999999642372,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 179.99999999999997,
+      "renderSubmissionMs": 0.7000000476837158,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        0
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 0,
+      "atMs": 37058.69999998808,
+      "cameraRadius": 9.470828670848537,
+      "intervalMs": 1005.4000000357628,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 179.99999999999997,
+      "renderSubmissionMs": 0.8999999761581421,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        0
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 0,
+      "atMs": 38067.10000002384,
+      "cameraRadius": 9.470828670848537,
+      "intervalMs": 1008.5,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 179.99999999999997,
+      "renderSubmissionMs": 0.800000011920929,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        0
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 0,
+      "atMs": 39068.19999998808,
+      "cameraRadius": 9.470828670848537,
+      "intervalMs": 1001.1999999880791,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 179.99999999999997,
+      "renderSubmissionMs": 0.699999988079071,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        0
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 0,
+      "atMs": 40069.10000002384,
+      "cameraRadius": 9.470828670848537,
+      "intervalMs": 1000.8999999761581,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 179.99999999999997,
+      "renderSubmissionMs": 0.7000000476837158,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        0
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 0,
+      "atMs": 41071.5,
+      "cameraRadius": 9.470828670848537,
+      "intervalMs": 1001.3000000119209,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 179.99999999999997,
+      "renderSubmissionMs": 1.800000011920929,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        0
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 1,
+      "atMs": 42074,
+      "cameraRadius": 40.58926573220801,
+      "intervalMs": 1003.1000000238419,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 41.99999999999999,
+      "renderSubmissionMs": 1.199999988079071,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        1
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 1,
+      "atMs": 43081,
+      "cameraRadius": 40.58926573220801,
+      "intervalMs": 1007.8000000119209,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 41.99999999999999,
+      "renderSubmissionMs": 0.3999999761581421,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        1
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 1,
+      "atMs": 44081.60000002384,
+      "cameraRadius": 40.58926573220801,
+      "intervalMs": 1000.3999999761581,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 41.99999999999999,
+      "renderSubmissionMs": 0.6000000238418579,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        1
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 1,
+      "atMs": 45086.39999997616,
+      "cameraRadius": 40.58926573220801,
+      "intervalMs": 1005,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 41.99999999999999,
+      "renderSubmissionMs": 0.3999999761581421,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        1
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 1,
+      "atMs": 46087.80000001192,
+      "cameraRadius": 40.58926573220801,
+      "intervalMs": 1000.8999999761581,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 41.99999999999999,
+      "renderSubmissionMs": 0.9000000357627869,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        1
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 1,
+      "atMs": 47088.19999998808,
+      "cameraRadius": 40.58926573220801,
+      "intervalMs": 1000.2000000476837,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 41.99999999999999,
+      "renderSubmissionMs": 1.0999999642372131,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        1
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 48097.19999998808,
+      "cameraRadius": 71.03121503136403,
+      "intervalMs": 1009.2999999523163,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 23.999999999999996,
+      "renderSubmissionMs": 0.800000011920929,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 49101.60000002384,
+      "cameraRadius": 71.03121503136403,
+      "intervalMs": 1004.8000000119209,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 23.999999999999996,
+      "renderSubmissionMs": 0.40000003576278687,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 50106.80000001192,
+      "cameraRadius": 71.03121503136403,
+      "intervalMs": 1004.3000000119209,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 23.999999999999996,
+      "renderSubmissionMs": 1.300000011920929,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 51107.89999997616,
+      "cameraRadius": 71.03121503136403,
+      "intervalMs": 1001.5,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 23.999999999999996,
+      "renderSubmissionMs": 0.8999999761581421,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 52111.69999998808,
+      "cameraRadius": 71.03121503136403,
+      "intervalMs": 1004.1999999880791,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 23.999999999999996,
+      "renderSubmissionMs": 0.5,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 53112.10000002384,
+      "cameraRadius": 71.03121503136403,
+      "intervalMs": 1000.5,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 23.999999999999996,
+      "renderSubmissionMs": 0.40000003576278687,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    },
+    {
+      "active": 2,
+      "atMs": 54117.89999997616,
+      "cameraRadius": 71.03121503136403,
+      "intervalMs": 1005.8000000119209,
+      "materialIds": [
+        9,
+        11,
+        12,
+        13,
+        14
+      ],
+      "materialsByLOD": [
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 0
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 2
+        },
+        {
+          "ids": [
+            9,
+            11,
+            12,
+            13,
+            14
+          ],
+          "lod": 1
+        }
+      ],
+      "pendingBuilds": 0,
+      "projected": 23.999999999999996,
+      "renderSubmissionMs": 0.3999999761581421,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "visibility": "visible",
+      "visibleLODNodes": [
+        2
+      ],
+      "visibleMeshes": 5
+    }
+  ],
+  "reason": "route complete",
+  "renderer": {
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4080 Laptop GPU (0x000027E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "vendor": "Google Inc. (NVIDIA)",
+    "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+  },
+  "resolution": {
+    "height": 907,
+    "width": 1574
+  },
+  "running": false,
+  "scope": "isolated reference camera; not Flight/Map acceptance",
+  "steps": [
+    {
+      "durationMs": 6000,
+      "projected": 24
+    },
+    {
+      "durationMs": 6000,
+      "projected": 44
+    },
+    {
+      "durationMs": 6000,
+      "projected": 64
+    },
+    {
+      "durationMs": 6000,
+      "projected": 145
+    },
+    {
+      "durationMs": 6000,
+      "projected": 180
+    },
+    {
+      "durationMs": 6000,
+      "projected": 280
+    },
+    {
+      "durationMs": 6000,
+      "projected": 180
+    },
+    {
+      "durationMs": 6000,
+      "projected": 42
+    },
+    {
+      "durationMs": 6000,
+      "projected": 24
+    }
+  ],
+  "summary": {
+    "blankFrames": 0,
+    "frames": 54,
+    "maxIntervalMs": 1009.2999999523163,
+    "maxRenderSubmissionMs": 21.400000035762787,
+    "multipleVisibleLODFrames": 0
+  },
+  "limitation": "Preview delivered about one animation frame per second despite visible state. This is not usable 20ms transition acceptance; isolated camera, not Flight/Map. LOD0/2 were retained before recording; LOD1 built during recording."
+}

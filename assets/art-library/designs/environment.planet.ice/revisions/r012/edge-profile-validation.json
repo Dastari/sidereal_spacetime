@@ -1,0 +1,48 @@
+{
+  "sampleCount": 180,
+  "domain": [
+    -0.4475,
+    0.4475
+  ],
+  "reference": "ravine-end E",
+  "boundaryTolerance": 1e-06,
+  "notes": "Samples offset from exact step edges to avoid floating-point side ambiguity. This tests port cross-section, not every possible global mesh intersection.",
+  "profiles": [
+    {
+      "variant": "ravine-end",
+      "port": 0,
+      "missingSamples": 0,
+      "maxHeightError": 0.0
+    },
+    {
+      "variant": "ravine-straight",
+      "port": 0,
+      "missingSamples": 0,
+      "maxHeightError": 0.0
+    },
+    {
+      "variant": "ravine-straight",
+      "port": 2,
+      "missingSamples": 0,
+      "maxHeightError": 0.0
+    },
+    {
+      "variant": "ravine-bend",
+      "port": 0,
+      "missingSamples": 0,
+      "maxHeightError": 0.0
+    },
+    {
+      "variant": "ravine-bend",
+      "port": 1,
+      "missingSamples": 0,
+      "maxHeightError": 0.0
+    },
+    {
+      "variant": "basin-end",
+      "port": 0,
+      "missingSamples": 0,
+      "maxHeightError": 0.0
+    }
+  ]
+}

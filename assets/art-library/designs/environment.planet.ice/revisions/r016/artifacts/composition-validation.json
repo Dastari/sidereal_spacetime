@@ -1,0 +1,20 @@
+{
+  "sourceSha256": "543a8dd3bfb0a78f78fa824d493dd121664697f5a639963e95b5af198d14934e",
+  "helperSha256": "0667bfc25c2fd3b26ab9ce5c9ab08ce3f88317b3a01a7ed7cdc3ff846e5d3906",
+  "kitSha256": "13c530bdc2c950ef814b19210198420f421a0998b009f54daae4fb0f161b198a",
+  "tests": {
+    "vitestFilesPassed": 1,
+    "vitestTestsPassed": 3,
+    "durationSeconds": 0.944,
+    "typecheck": "passed"
+  },
+  "invariants": [
+    "AllLODnative positions/normals/UVs/indices/ranges byte-identical",
+    "Exact native UV seams retained by material role",
+    "Missing normals/UVs rejected",
+    "Normal/UV buffers uploaded in NullEngine",
+    "NullEngine actual triangle picking reaches deep shaft floor before substrate by >.015 normalizedradius",
+    "Diagnostic floor radius below.85"
+  ],
+  "hardware": "Unmeasured; actualtwoangle diagnostic pending"
+}

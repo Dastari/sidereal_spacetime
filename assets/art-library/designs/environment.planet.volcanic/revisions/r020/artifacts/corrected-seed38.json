@@ -1,0 +1,87 @@
+{
+  "stats": {
+    "style": "volcanic",
+    "seed": 38,
+    "frames": 36,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "requestedLOD": 0,
+      "buildMs": 724.5,
+      "localLights": 0
+    },
+    "build": {
+      "lastBuildMs": 2005.5,
+      "pendingBuilds": 0,
+      "pendingWeatherBuilds": 0
+    },
+    "meshes": 7,
+    "triangles": 457754,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": [
+      {
+        "name": "reference-review-volcanic-lods",
+        "role": "planet",
+        "nativePlanet": true,
+        "nativeRevision": "volcanic-r018",
+        "enabled": false
+      },
+      {
+        "name": "reference-review-native-volcanic",
+        "role": "planet",
+        "nativePlanet": true,
+        "nativeRevision": "volcanic-r018",
+        "seed": 38,
+        "triangles": 132496,
+        "litVertices": 140105,
+        "minimumAO": 0.48,
+        "maximumRadiance": 1.5,
+        "buriedBaseMaxClearance": -0.015050093083488814,
+        "regionalGroupCount": 19,
+        "nativeUnitCount": 57,
+        "actualCells": 12,
+        "lod": 0,
+        "smokeImplemented": true,
+        "artApproval": "unapproved draft",
+        "enabled": false
+      }
+    ]
+  },
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 13.5
+  },
+  "shadows": [
+    {
+      "casters": 6,
+      "normalBias": 0.006
+    }
+  ],
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "volcanic",
+    "revision": "volcanic-r020",
+    "seed": 38,
+    "radius": 5.5,
+    "bias": 0.006,
+    "glow": true,
+    "local_light": false,
+    "prefix": "corrected",
+    "reference_scale": true
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=volcanic&seed=38&candidate=1&capture=1789356284595551067&shadowBias=0.006&glow=1",
+  "images": {
+    "corrected-seed38.png": "1852ea0acb040c83b17ee33116add43bd04b6ce2c8557d09c7bd4a6f06e0f686",
+    "corrected-seed38-angle2.png": "f6240af07e58467b931404b7f4e372160e458934dd4cad0818501e6942172d4d",
+    "corrected-seed38-reference-scale.png": "284c11c372d57f812b5ef473314acd3f22b3b19aeecfb047d95af88738405a63"
+  },
+  "kitSha256": "5437dfcc15b5dc1ef029a643fa1ee38cb5c7c19f6f4a46e34fb039b4dfb7541e"
+}

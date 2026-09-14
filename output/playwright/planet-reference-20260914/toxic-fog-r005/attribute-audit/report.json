@@ -1,0 +1,119 @@
+[
+  {
+    "candidate": "toxic-fog-r005",
+    "kit": "output/playwright/planet-reference-20260914/toxic-fog-r005/kit.json",
+    "kitSha256": "f4f47fdf8a2652d91284c77ac591b522adae45795495c4fd45c3c8a258deb731",
+    "materialDifferences": [],
+    "attributeGaps": [],
+    "variants": [
+      {
+        "name": "toxic-fog-low-bank",
+        "glb": "output/playwright/planet-reference-20260914/toxic-fog-r005/toxic-fog-low-bank.glb",
+        "glbSha256": "63363685da4e5572d0e7117ab5dc2ff7ed80a63224cbc52dcd661579c30b7388",
+        "jsonCorners": 1728,
+        "glbCorners": 1728,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.391553977638788e-05,
+        "maximumMatchedUVDelta": 0,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "toxic-muted-olive-fog",
+            "field": "baseColorTexture",
+            "expected": "toxic-fog-density.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "toxic-fog-vent-plume",
+        "glb": "output/playwright/planet-reference-20260914/toxic-fog-r005/toxic-fog-vent-plume.glb",
+        "glbSha256": "e87288fe139480a777c6f0509ad62d100f21a19b3494014f86f116ffc9d0732e",
+        "jsonCorners": 1728,
+        "glbCorners": 1728,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.386293468014228e-05,
+        "maximumMatchedUVDelta": 0,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "toxic-muted-olive-fog",
+            "field": "baseColorTexture",
+            "expected": "toxic-fog-density.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "toxic-fog-broken-wisp",
+        "glb": "output/playwright/planet-reference-20260914/toxic-fog-r005/toxic-fog-broken-wisp.glb",
+        "glbSha256": "73d9923f52c24266626496db7610bbcc1a5c530fee214d809a2c155a60565204",
+        "jsonCorners": 1728,
+        "glbCorners": 1728,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.252570695076063e-05,
+        "maximumMatchedUVDelta": 0,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "toxic-muted-olive-fog",
+            "field": "baseColorTexture",
+            "expected": "toxic-fog-density.png",
+            "status": "byte-identical"
+          }
+        ]
+      }
+    ],
+    "limitations": [
+      "Material/position-matched corner multisets check values at explicit tolerances independently of index ordering, not mesh topology equivalence.",
+      "Only explicit JSON material fields are compared; source-side omissions remain unspecified.",
+      "Normals compared only when carried in JSON. Reconstruction of omitted normals by a renderer is outside this artifact audit.",
+      "Geometry converted from BlenderZ-up JSON to glTFY-up and accumulated node transforms; UVs follow recorded glTF convention."
+    ],
+    "summary": {
+      "variants": 3,
+      "materialDifferenceOccurrences": 0,
+      "attributeGaps": 0,
+      "variantErrors": 0,
+      "positionMismatchVariants": 0,
+      "normalMismatchVariants": 0,
+      "uvMismatchVariants": 0
+    }
+  }
+]

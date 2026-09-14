@@ -1,0 +1,146 @@
+[
+  {
+    "partId": "region-0",
+    "initialRadius": 0.9606400014351251,
+    "correctedRadius": 1.234600031080194,
+    "terrainRadius": 1.171600014343986,
+    "minimumFogRadius": 1.183600014343986,
+    "clearance": 0.012,
+    "terrainPartIds": [
+      "ground",
+      "region-0"
+    ]
+  },
+  {
+    "partId": "region-1",
+    "initialRadius": 0.965200005524728,
+    "correctedRadius": 1.3369800514492998,
+    "terrainRadius": 1.1969800435793192,
+    "minimumFogRadius": 1.2089800435793192,
+    "clearance": 0.012,
+    "terrainPartIds": [
+      "ground",
+      "region-1"
+    ]
+  },
+  {
+    "partId": "region-10",
+    "initialRadius": 0.9575999939499953,
+    "correctedRadius": 1.1790800632561949,
+    "terrainRadius": 1.0916000336515022,
+    "minimumFogRadius": 1.1036000336515022,
+    "clearance": 0.012,
+    "terrainPartIds": [
+      "ground",
+      "region-10"
+    ]
+  },
+  {
+    "partId": "region-11",
+    "initialRadius": 0.9629200067464572,
+    "correctedRadius": 1.2995890844104587,
+    "terrainRadius": 1.2365890577354381,
+    "minimumFogRadius": 1.2485890577354382,
+    "clearance": 0.012,
+    "terrainPartIds": [
+      "ground",
+      "region-11"
+    ]
+  },
+  {
+    "partId": "region-2",
+    "initialRadius": 0.9575999977243763,
+    "correctedRadius": 1.2456000545116002,
+    "terrainRadius": 1.1056000303866709,
+    "minimumFogRadius": 1.1176000303866709,
+    "clearance": 0.012,
+    "terrainPartIds": [
+      "ground",
+      "region-2"
+    ]
+  },
+  {
+    "partId": "region-3",
+    "initialRadius": 0.9629199995225655,
+    "correctedRadius": 1.3427800710304165,
+    "terrainRadius": 1.2553000477708929,
+    "minimumFogRadius": 1.2673000477708931,
+    "clearance": 0.012,
+    "terrainPartIds": [
+      "ground",
+      "region-3"
+    ]
+  },
+  {
+    "partId": "region-4",
+    "initialRadius": 0.960639999682826,
+    "correctedRadius": 1.3017760855797533,
+    "terrainRadius": 1.238776059437356,
+    "minimumFogRadius": 1.250776059437356,
+    "clearance": 0.012,
+    "terrainPartIds": [
+      "ground",
+      "region-4"
+    ]
+  },
+  {
+    "partId": "region-5",
+    "initialRadius": 0.965200005304075,
+    "correctedRadius": 1.270290062681386,
+    "terrainRadius": 1.1302900381440355,
+    "minimumFogRadius": 1.1422900381440355,
+    "clearance": 0.012,
+    "terrainPartIds": [
+      "ground",
+      "region-5"
+    ]
+  },
+  {
+    "partId": "region-6",
+    "initialRadius": 0.9576000042692023,
+    "correctedRadius": 1.1650800913712462,
+    "terrainRadius": 1.0776000609011533,
+    "minimumFogRadius": 1.0896000609011534,
+    "clearance": 0.012,
+    "terrainPartIds": [
+      "ground",
+      "region-6"
+    ]
+  },
+  {
+    "partId": "region-7",
+    "initialRadius": 0.9629199917699824,
+    "correctedRadius": 1.195738045593549,
+    "terrainRadius": 1.1327380231453081,
+    "minimumFogRadius": 1.1447380231453081,
+    "clearance": 0.012,
+    "terrainPartIds": [
+      "ground",
+      "region-7"
+    ]
+  },
+  {
+    "partId": "region-8",
+    "initialRadius": 0.9606399966384475,
+    "correctedRadius": 1.3991880461404187,
+    "terrainRadius": 1.2591880214080913,
+    "minimumFogRadius": 1.2711880214080913,
+    "clearance": 0.012,
+    "terrainPartIds": [
+      "ground",
+      "region-8"
+    ]
+  },
+  {
+    "partId": "region-9",
+    "initialRadius": 0.9651999971123342,
+    "correctedRadius": 1.3184800140217683,
+    "terrainRadius": 1.2310000079873453,
+    "minimumFogRadius": 1.2430000079873453,
+    "clearance": 0.012,
+    "terrainPartIds": [
+      "ground",
+      "region-9"
+    ]
+  }
+]

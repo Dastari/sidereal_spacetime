@@ -1,0 +1,20 @@
+### Result
+{"stats":{"style":"moon","seed":38,"frames":45,"candidate":{"active":0,"pendingBuilds":0,"retained":[0],"smokeImplemented":true,"smokeMeshes":0,"smokeTriangles":0,"retainedSmokeMeshes":0,"requestedLOD":0,"buildMs":897.3999996185303,"localLights":0},"baselineEnvironmentEnabled":false,"meshes":6,"triangles":342258,"renderer":{"vendor":"Google Inc. (Google)","renderer":"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)","version":"WebGL 2.0 (OpenGL ES 3.0 Chromium)"},"lods":[]},"lights":[{"name":"review-sun","intensity":2.1,"diffuse":[0.93,0.95,1],"direction":[-0.6,-1,0.45]},{"name":"review-fill","intensity":0.2,"diffuse":[0.6,0.72,1],"direction":[0,1,0]},{"name":"planet-hero-key","intensity":2.1,"diffuse":[0.93,0.95,1],"direction":[-0.48,-0.8,0.36000000000000004]},{"name":"diagnostic-hypothetical-parent","intensity":3.2,"diffuse":[1,0.025,0.65],"direction":[-0.9,-0.25,-0.25]}]}
+### Ran Playwright code
+```js
+await (async(page)=>{
+ await page.route('**/@fs/**',r=>r.continue());
+ await page.route('**/@fs/root/sidereal_spacetime/output/playwright/planet-reference-20260914/gas-giant-moon-3-r001/**',r=>r.fulfill({path:"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/gas-giant-moon-3-r001/"+r.request().url().split('/gas-giant-moon-3-r001/')[1]}));
+ await page.route('**/assets/runtime/materials/frontier-workshop.hdr',r=>r.fulfill({path:'/root/sidereal_spacetime/assets/runtime/materials/frontier-workshop.hdr'}));
+ await page.goto('about:blank');await page.goto("http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?candidate=1&style=moon&seed=38&kit=gas-giant-moon-3-r001&capture=1789360766449660817&shadowBias=.006");
+ await page.waitForFunction(()=>window.planetReview?.stats().candidate?.active===0,{}, {timeout:60000});
+ await page.evaluate(async()=>{const r=window.planetReview;r.engine.stopRenderLoop();r.camera.radius=5.5;const sun=r.scene.lights.find(l=>l.name==='review-sun');const light=new sun.constructor('diagnostic-hypothetical-parent',sun.direction.clone().set(-.9,-.25,-.25),r.scene);light.diffuse.copyFromFloats(1,.025,.65);light.intensity=3.2;light.specular.copyFromFloats(1,.08,.8);light.metadata={role:'planet-review-light',hypothesis:'Unverified reflected parent light; not an authored emissive material'};r.scene.render();await r.scene.whenReadyAsync();r.scene.render();});
+ await page.screenshot({path:"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/gas-giant-moon-3-r001/parent-light-diagnostic-angle1.png"});await page.evaluate(()=>{const r=window.planetReview;r.camera.alpha+=1.6;r.scene.render()});await page.screenshot({path:"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/gas-giant-moon-3-r001/parent-light-diagnostic-angle2.png"});await page.evaluate(()=>{const r=window.planetReview;r.camera.radius=41.83132530120482;r.scene.render()});await page.screenshot({path:"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/gas-giant-moon-3-r001/parent-light-diagnostic-reference-scale.png"});
+ return await page.evaluate(()=>({stats:window.planetReview.stats(),lights:window.planetReview.scene.lights.map(l=>({name:l.name,intensity:l.intensity,diffuse:l.diffuse.asArray(),direction:l.direction?.asArray()}))}));
+ })(page);
+```
+### Page
+- Page URL: http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?candidate=1&style=moon&seed=38&kit=gas-giant-moon-3-r001&capture=1789360766449660817&shadowBias=.006
+- Page Title: Planet reference review — isolated
+### Events
+- New console entries: .playwright-cli/console-2026-09-14T01-01-13-194Z.log#L1865

@@ -1,0 +1,415 @@
+[
+  {
+    "candidate": "ice-r025",
+    "kit": "output/playwright/planet-reference-20260914/ice-r025/kit.json",
+    "kitSha256": "c347e6a56256d9d3781c2c67c57aab3dc36240d26001922979efedbefdcc92a1",
+    "materialDifferences": [],
+    "attributeGaps": [],
+    "variants": [
+      {
+        "name": "snow-cut-region",
+        "glb": "output/playwright/planet-reference-20260914/ice-r025/snow-cut-region.glb",
+        "glbSha256": "84d0ef512ad9b683b93abacf95373b991b24f4e80fb873b06b450d2052b25927",
+        "jsonCorners": 30312,
+        "glbCorners": 30312,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 8.190993497285245e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "powder-snow",
+            "field": "baseColorTexture",
+            "expected": "ice-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "powder-snow",
+            "field": "metallicRoughnessTexture",
+            "expected": "ice-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "pale-ice-edge",
+            "field": "baseColorTexture",
+            "expected": "ice-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "pale-ice-edge",
+            "field": "metallicRoughnessTexture",
+            "expected": "ice-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cobalt-ice",
+            "field": "baseColorTexture",
+            "expected": "ice-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cobalt-ice",
+            "field": "metallicRoughnessTexture",
+            "expected": "ice-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cyan-ice-face",
+            "field": "baseColorTexture",
+            "expected": "ice-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cyan-ice-face",
+            "field": "metallicRoughnessTexture",
+            "expected": "ice-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-ice",
+            "field": "baseColorTexture",
+            "expected": "ice-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-ice",
+            "field": "metallicRoughnessTexture",
+            "expected": "ice-4-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "snow-open-gorge",
+        "glb": "output/playwright/planet-reference-20260914/ice-r025/snow-open-gorge.glb",
+        "glbSha256": "5e6e634981304f4754a8300c89022ab4ee78a57287294dca8d310bb319c149e1",
+        "jsonCorners": 51240,
+        "glbCorners": 51240,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 8.761617047698105e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "cobalt-ice",
+            "field": "baseColorTexture",
+            "expected": "ice-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cobalt-ice",
+            "field": "metallicRoughnessTexture",
+            "expected": "ice-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cyan-ice-face",
+            "field": "baseColorTexture",
+            "expected": "ice-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cyan-ice-face",
+            "field": "metallicRoughnessTexture",
+            "expected": "ice-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-ice",
+            "field": "baseColorTexture",
+            "expected": "ice-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-ice",
+            "field": "metallicRoughnessTexture",
+            "expected": "ice-4-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "powder-snow",
+            "field": "baseColorTexture",
+            "expected": "ice-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "powder-snow",
+            "field": "metallicRoughnessTexture",
+            "expected": "ice-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "pale-ice-edge",
+            "field": "baseColorTexture",
+            "expected": "ice-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "pale-ice-edge",
+            "field": "metallicRoughnessTexture",
+            "expected": "ice-1-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere",
+        "glb": "output/playwright/planet-reference-20260914/ice-r025/ground-sphere.glb",
+        "glbSha256": "36f19b5590c9115a1a79b651c18bae4461401068a33ce7751b8b85ecf347dbca",
+        "jsonCorners": 67320,
+        "glbCorners": 67320,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 19,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 0.000171309812957709,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "powder-snow",
+            "field": "baseColorTexture",
+            "expected": "ice-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "powder-snow",
+            "field": "metallicRoughnessTexture",
+            "expected": "ice-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "pale-ice-edge",
+            "field": "baseColorTexture",
+            "expected": "ice-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "pale-ice-edge",
+            "field": "metallicRoughnessTexture",
+            "expected": "ice-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cobalt-ice",
+            "field": "baseColorTexture",
+            "expected": "ice-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cobalt-ice",
+            "field": "metallicRoughnessTexture",
+            "expected": "ice-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cyan-ice-face",
+            "field": "baseColorTexture",
+            "expected": "ice-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cyan-ice-face",
+            "field": "metallicRoughnessTexture",
+            "expected": "ice-3-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere-medium",
+        "glb": "output/playwright/planet-reference-20260914/ice-r025/ground-sphere-medium.glb",
+        "glbSha256": "70e716d0622585949ea0883b8b5c1a6a79d4277c3f87c6b23d8542bbe9b5927c",
+        "jsonCorners": 55800,
+        "glbCorners": 55800,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 19,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 0.000171309812957709,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "powder-snow",
+            "field": "baseColorTexture",
+            "expected": "ice-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "powder-snow",
+            "field": "metallicRoughnessTexture",
+            "expected": "ice-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "pale-ice-edge",
+            "field": "baseColorTexture",
+            "expected": "ice-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "pale-ice-edge",
+            "field": "metallicRoughnessTexture",
+            "expected": "ice-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cobalt-ice",
+            "field": "baseColorTexture",
+            "expected": "ice-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cobalt-ice",
+            "field": "metallicRoughnessTexture",
+            "expected": "ice-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cyan-ice-face",
+            "field": "baseColorTexture",
+            "expected": "ice-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cyan-ice-face",
+            "field": "metallicRoughnessTexture",
+            "expected": "ice-3-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere-low",
+        "glb": "output/playwright/planet-reference-20260914/ice-r025/ground-sphere-low.glb",
+        "glbSha256": "e735095329dc08cf119a6fb4ebbeaa741b12d32b0d53382d055285083ec825e9",
+        "jsonCorners": 52920,
+        "glbCorners": 52920,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 19,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 0.000171309812957709,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "powder-snow",
+            "field": "baseColorTexture",
+            "expected": "ice-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "powder-snow",
+            "field": "metallicRoughnessTexture",
+            "expected": "ice-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "pale-ice-edge",
+            "field": "baseColorTexture",
+            "expected": "ice-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "pale-ice-edge",
+            "field": "metallicRoughnessTexture",
+            "expected": "ice-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cobalt-ice",
+            "field": "baseColorTexture",
+            "expected": "ice-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cobalt-ice",
+            "field": "metallicRoughnessTexture",
+            "expected": "ice-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cyan-ice-face",
+            "field": "baseColorTexture",
+            "expected": "ice-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cyan-ice-face",
+            "field": "metallicRoughnessTexture",
+            "expected": "ice-3-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      }
+    ],
+    "limitations": [
+      "Material/position-matched corner multisets check values at explicit tolerances independently of index ordering, not mesh topology equivalence.",
+      "Only explicit JSON material fields are compared; source-side omissions remain unspecified.",
+      "Normals compared only when carried in JSON. Reconstruction of omitted normals by a renderer is outside this artifact audit.",
+      "Geometry converted from BlenderZ-up JSON to glTFY-up and accumulated node transforms; UVs follow recorded glTF convention."
+    ],
+    "summary": {
+      "variants": 5,
+      "materialDifferenceOccurrences": 0,
+      "attributeGaps": 0,
+      "variantErrors": 0,
+      "positionMismatchVariants": 0,
+      "normalMismatchVariants": 3,
+      "uvMismatchVariants": 0
+    }
+  }
+]

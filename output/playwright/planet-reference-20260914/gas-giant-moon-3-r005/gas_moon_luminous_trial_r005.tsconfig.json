@@ -1,0 +1,1 @@
+{"extends":"../../tsconfig.json","compilerOptions":{"noEmit":true},"include":["gas_moon_luminous_trial_r005.test.ts"]}

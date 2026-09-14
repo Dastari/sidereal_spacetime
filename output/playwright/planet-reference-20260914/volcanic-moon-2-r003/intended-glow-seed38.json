@@ -1,0 +1,84 @@
+{
+  "viewport": {
+    "width": 900,
+    "height": 900
+  },
+  "canvas": {
+    "width": 900,
+    "height": 900
+  },
+  "stats": {
+    "style": "moon",
+    "seed": 38,
+    "frames": 52,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 0,
+      "requestedLOD": 0,
+      "buildMs": 594.8000011444092,
+      "localLights": 0,
+      "transmissionMaterials": 0,
+      "transmissionTargets": 0
+    },
+    "baselineEnvironmentEnabled": false,
+    "meshes": 6,
+    "triangles": 531170,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": []
+  },
+  "shadowsEnabled": true,
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 73.8723404255
+  },
+  "shadows": [
+    {
+      "casters": 5,
+      "normalBias": 0.006,
+      "bias": 0.0005
+    }
+  ],
+  "checkoutHead": "cd09510ca30705a49bbd38a010d775be30aef0c7",
+  "sourceRoot": "/root/sidereal_spacetime",
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "moon",
+    "revision": "volcanic-moon-2-r003",
+    "seed": 38,
+    "radius": 5.5,
+    "alpha": null,
+    "beta": null,
+    "bias": 0.006,
+    "depth_bias": null,
+    "glow": true,
+    "local_light": false,
+    "prefix": "intended-glow",
+    "reference_scale": true,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": false,
+    "unit": false,
+    "staged": false,
+    "target": null,
+    "shadows_off": false,
+    "reference_radius": 73.8723404255
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=moon&seed=38&candidate=1&reviewRevision=volcanic-moon-2-r003&capture=1789365159840682620&shadowBias=0.006&glow=1",
+  "images": {
+    "intended-glow-seed38.png": "347b69bb476f60c58ed03d1148df800e3ec5cc19bc8d99c256e8ced3c86bf503",
+    "intended-glow-seed38-angle2.png": "02248666d6064f0322824873cd68159a07654c5afdaa37c9a9d4d27baf89ff2f",
+    "intended-glow-seed38-reference-scale.png": "c145273b156536ed9689d6dd282c78c7d838489f33987f9a688f144975a40526"
+  },
+  "kitSha256": "4518af690d6776f07db6f935ce545f6fb7ba95c90356b20412924662695e0b4f"
+}

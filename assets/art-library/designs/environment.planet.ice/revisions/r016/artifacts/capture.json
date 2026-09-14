@@ -1,0 +1,22 @@
+{
+  "kind": "actualBlenderkitpreview",
+  "renderer": "CyclesCPU32samples AgX no denoising",
+  "resolution": [
+    1500,
+    1000
+  ],
+  "camera": {
+    "position": [
+      7,
+      -11,
+      10
+    ],
+    "target": [
+      0,
+      1,
+      0
+    ],
+    "orthographicScale": 15
+  },
+  "command": "blender -b --python scripts/art_library/build_ice_native_kit_r016.py -- output/playwright/planet-reference-20260914/ice-r016"
+}
