@@ -1,5 +1,7 @@
 import { planetShadowCoverage } from "./planet-shadow-coverage";
 import { applyPlanetShadowDepthOffset } from "./planet-shadow-depth-offset";
+import { createPlanetShadowPreparation } from "./planet-shadow-preparation";
+import type { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { Scene } from "@babylonjs/core/scene";
 import { DirectionalLight } from "@babylonjs/core/Lights/directionalLight";
 import { ShadowGenerator } from "@babylonjs/core/Lights/Shadows/shadowGenerator";
@@ -30,6 +32,15 @@ export function createPlanetShadows(scene: Scene) {
   shadows.transparencyShadow = true;
   shadows.enableSoftTransparentShadow = true;
   let primary: DirectionalLight | undefined;
+  let disposed = false;
+  let lightEpoch = 0;
+  let preparationTail: Promise<void> = Promise.resolve();
+  let preparationYield: () => Promise<void> = async () => {};
+  const preparation = createPlanetShadowPreparation(scene, {
+    hero: key,
+    shadows,
+    yield: () => preparationYield(),
+  });
   let selected: TransformNode | undefined;
   let coverage = 0;
   let selectedRadius = 0;
@@ -54,8 +65,41 @@ export function createPlanetShadows(scene: Scene) {
   }
   return {
     setPrimaryLight(light: DirectionalLight) {
+      lightEpoch++;
       release();
       primary = light;
+    },
+    /** Prepare the exact initial, returned-far and hero light orders before a
+     * pending native level is made ready. Babylon appends restored lights. */
+    prepare(mesh: Mesh, nextFrame: () => Promise<void>, options: { signal?: AbortSignal; opaqueRefraction?: boolean } = {}) {
+      const { signal, opaqueRefraction } = options;
+      const epoch = lightEpoch;
+      const run = preparationTail.catch(() => {}).then(async () => {
+        const check = () => {
+          if (disposed || epoch !== lightEpoch || signal?.aborted || mesh.isDisposed())
+            throw new Error("Planet shadow preparation invalidated");
+        };
+        check();
+        if (!primary) throw new Error("Planet shadow preparation requires primary light");
+        const far = mesh.lightSources.filter(light => light !== key);
+        const other = far.filter(light => light !== primary);
+        const returned = far.includes(primary) ? [...other, primary] : other;
+        preparationYield = async () => { await nextFrame(); check(); };
+        await preparation.prepare({
+          mesh,
+          signal,
+          opaqueRefraction,
+          cast: mesh.metadata?.planetShadow?.cast !== false,
+          variants: [
+            { lights: far, receiveShadows: mesh.receiveShadows },
+            { lights: returned, receiveShadows: mesh.receiveShadows },
+            { lights: [...other, key], receiveShadows: mesh.metadata?.planetShadow?.receive !== false },
+          ],
+        });
+        check();
+      });
+      preparationTail = run;
+      return run;
     },
     update(
       candidates: readonly {
@@ -157,6 +201,9 @@ export function createPlanetShadows(scene: Scene) {
       shadows.normalBias = target.radius * (ice ? 0.003 : 0.0008);
     },
     dispose() {
+      disposed = true;
+      lightEpoch++;
+      preparation.dispose();
       release();
       releaseDepthOffset();
       shadows.dispose();

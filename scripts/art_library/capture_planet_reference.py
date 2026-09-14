@@ -4,6 +4,8 @@ from pathlib import Path
 from capture_planet_reference_settle import SETTLE_VIEW_JS
 p=argparse.ArgumentParser();p.add_argument('--style',required=True);p.add_argument('--revision',required=True);p.add_argument('--seed',type=int,default=38);p.add_argument('--radius',type=float,default=5.5);p.add_argument('--alpha',type=float);p.add_argument('--beta',type=float);p.add_argument('--bias',type=float);p.add_argument('--depth-bias',type=float);p.add_argument('--glow',action='store_true');p.add_argument('--local-light',action='store_true');p.add_argument('--prefix',default='review');p.add_argument('--reference-scale',action='store_true');p.add_argument('--weather-revision',default='cloud-r002');p.add_argument('--sample-surfaces',action='store_true');p.add_argument('--unit',action='store_true');p.add_argument('--staged',action='store_true');p.add_argument('--target',type=float,nargs=3);p.add_argument('--shadows-off',action='store_true');p.add_argument('--reference-radius',type=float,default=13.5);a=p.parse_args()
 root=Path(__file__).resolve().parents[2];folder=root/'output/playwright/planet-reference-20260914'/a.revision
+source_files=['scripts/art_library/planet_reference_review.ts','scripts/art_library/planet_reference_worker.ts','scripts/art_library/planet_reference_candidate.ts','scripts/art_library/planet_reference_worker_lifetime.ts','scripts/art_library/capture_planet_reference_settle.py','packages/render/src/environment/planet-shadows.ts','packages/render/src/environment/planet-shadow-coverage.ts','packages/render/src/environment/planet-shadow-depth-offset.ts']
+source_hashes={name:hashlib.sha256((root/name).read_bytes()).hexdigest() for name in source_files}
 capture_lock=open(root/'.runtime/planet-reference-capture.lock','w');fcntl.flock(capture_lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
 prefix=f'{a.prefix}-seed{a.seed}';paths=[folder/(prefix+'.png'),folder/(prefix+'-angle2.png')]
 if a.reference_scale:paths.append(folder/(prefix+'-reference-scale.png'))
@@ -26,7 +28,7 @@ code=f'''async (page)=>{{
  await page.unroute("**/planet-reference-assets/**");await page.route("**/planet-reference-assets/**",r=>r.fulfill({{path:{q(str(folder)+'/')}+r.request().url().split("/planet-reference-assets/")[1]}}));
  await page.unroute("**/planet-reference-weather-assets/**");await page.route("**/planet-reference-weather-assets/**",r=>r.fulfill({{path:{q(str(folder.parent/a.weather_revision)+'/')}+r.request().url().split("/planet-reference-weather-assets/")[1]}}));
  await page.goto("about:blank");await page.goto({q(url)});
- await page.waitForFunction(()=>window.planetReview?.stats().candidate?.error||(window.planetReview?.stats().candidate?.active===0&&window.planetReview.stats().frames>15),{{}},{{timeout:60000}});
+ await page.waitForFunction(()=>window.planetReview?.stats().candidate?.error||(window.planetReview?.stats().candidate?.active===0&&window.planetReview.stats().frames>0),{{}},{{timeout:60000}});
  const error=await page.evaluate(()=>window.planetReview.stats().candidate.error);if(error)throw new Error(error);
  await page.evaluate(()=>{{const r=window.planetReview;{'r.scene.onBeforeRenderObservable.add(()=>{for(const light of r.scene.lights){const shadow=light.getShadowGenerator();if(shadow)shadow.bias='+str(a.depth_bias)+';}});' if a.depth_bias is not None else ''}r.camera.radius={a.radius};{'r.camera.target.set('+','.join(map(str,a.target))+');' if a.target else ''}{'r.camera.alpha='+str(a.alpha)+';' if a.alpha is not None else ''}{'r.camera.beta='+str(a.beta)+';' if a.beta is not None else ''}}});await settleView('close');await page.screenshot({{path:{q(str(paths[0]))}}});
  await page.evaluate(()=>{{const r=window.planetReview;r.camera.alpha+=1.6;}});await settleView('angle2');await page.screenshot({{path:{q(str(paths[1]))}}});
@@ -47,6 +49,7 @@ raw=r.stdout.split('### Result\n',1)[1];payload=json.JSONDecoder().raw_decode(ra
 if payload['stats']['style']!=a.style:raise RuntimeError('Capture style changed during review')
 payload['checkoutHead']=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()
 payload['sourceRoot']=str(root)
+payload['sourceHashesAtStart']=source_hashes
 payload.update(method='Isolated Babylon review; software renderer timing is not hardware acceptance',request=vars(a),url=url,images={x.name:hashlib.sha256(x.read_bytes()).hexdigest() for x in paths},kitSha256=hashlib.sha256((folder/'kit.json').read_bytes()).hexdigest())
 if a.staged:
  staged=root/'scripts/art_library/review-staging'/a.revision

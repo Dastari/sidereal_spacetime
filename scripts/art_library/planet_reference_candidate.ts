@@ -21,7 +21,7 @@ import {createPlanetLODCache} from '../../packages/render/src/environment/planet
 import {planetLOD} from '../../packages/render/src/environment/layered-planet';
 import type {NativePlanetKit} from '../../packages/render/src/environment/native-planet-composition';
 import type {composeDesertReference} from './planet_reference_composition';
-export async function createReferenceCandidate(scene:Scene,seed:number){
+export async function createReferenceCandidate(scene:Scene,seed:number,prepareShadows?:(mesh:Mesh,nextFrame:()=>Promise<void>,opaqueRefraction:boolean)=>Promise<void>){
  const paths=referenceDirectPaths(new URLSearchParams(location.search));
  const kit=await (await fetch(paths.kit)).json() as NativePlanetKit;
  const recipe=planetRecipe((new URLSearchParams(location.search).get('style')??'desert') as PlanetStyle,seed);
@@ -50,6 +50,7 @@ export async function createReferenceCandidate(scene:Scene,seed:number){
  const transmission=acquireReferenceTransmission(scene,materials);
  let previous:0|1|2|undefined,buildMs=0;let localLights:ReturnType<typeof createPlanetReferenceLocalLights>|undefined;
  const nextFrame=()=>new Promise<void>(resolve=>requestAnimationFrame(()=>resolve()));
+ const prepareMaterial=(mesh:Mesh)=>prepareShadows?prepareShadows(mesh,nextFrame,Boolean(transmission.target)&&!(mesh.material as PBRMaterial).subSurface.isRefractionEnabled):mesh.material!.forceCompilationAsync(mesh);
  const uploadLifetime=createReferenceUploadLifetime();
  const workerClient=createReferenceWorkerLifetime<{batches:ReturnType<typeof composeDesertReference>;buildMs:number;shadowRadii:number[];weatherShadowRadius?:number;smoke?:PackedPlanetGeometry;weather?:PlanetCloudGeometry & {uvs?:number[];ranges?:{firstTriangle:number;triangleCount:number;partId:string}[]}}>(new Worker(new URL('./planet_reference_worker.ts',import.meta.url),{type:'module'}),{kitURL:new URL(paths.kit,location.href).href,cloudKitURL:cloudKit?new URL(paths.weatherKit,location.href).href:undefined});
  const cache=createPlanetLODCache(async lod=>{
@@ -64,12 +65,12 @@ export async function createReferenceCandidate(scene:Scene,seed:number){
    if(!batch.indices.length)continue;await uploadLifetime.yieldFrame(nextFrame);
    const mesh=new Mesh('native-'+kit.materials[index].name,scene),data=new VertexData();data.positions=batch.positions;data.normals=batch.normals;data.indices=batch.indices;if('uvs' in batch)data.uvs=batch.uvs as Float32Array;data.applyToMesh(mesh);mesh.sideOrientation=Material.CounterClockWiseSideOrientation;mesh.material=materials[index];mesh.parent=node;mesh.isPickable=false;mesh.receiveShadows=true;mesh.metadata={role:'planet',style:recipe.style,planetShadowRadius:result.shadowRadii[index],trianglePlacementRanges:batch.ranges.map(r=>({...r,partId:`reference-review:${seed}:${r.partId}`}))};
    localLights?.replaceMeshes(root.getChildMeshes().filter(m=>m.material instanceof PBRMaterial&&!m.metadata?.planetWeather));
-   await uploadLifetime.yieldFrame(nextFrame);await uploadLifetime.wait(mesh.material.forceCompilationAsync(mesh));
+   await uploadLifetime.yieldFrame(nextFrame);await uploadLifetime.wait(prepareMaterial(mesh));
   }
   if(result.weather?.indices.length){
-   await uploadLifetime.yieldFrame(nextFrame);const mesh=new Mesh('reference-weather',scene),data=new VertexData();Object.assign(data,result.weather);data.applyToMesh(mesh);mesh.sideOrientation=Material.CounterClockWiseSideOrientation;mesh.material=weatherMaterial;mesh.parent=node;mesh.isPickable=false;mesh.metadata={role:'planet',style:recipe.style,planetWeather:true,planetShadowRadius:result.weatherShadowRadius,trianglePlacementRanges:(result.weather.ranges??[{firstTriangle:0,triangleCount:result.weather.indices.length/3,partId:"weather"}]).map(r=>({...r,partId:`reference-review:${seed}:${r.partId}`}))};await uploadLifetime.yieldFrame(nextFrame);await uploadLifetime.wait(weatherMaterial.forceCompilationAsync(mesh));
+   await uploadLifetime.yieldFrame(nextFrame);const mesh=new Mesh('reference-weather',scene),data=new VertexData();Object.assign(data,result.weather);data.applyToMesh(mesh);mesh.sideOrientation=Material.CounterClockWiseSideOrientation;mesh.material=weatherMaterial;mesh.parent=node;mesh.isPickable=false;mesh.metadata={role:'planet',style:recipe.style,planetWeather:true,planetShadowRadius:result.weatherShadowRadius,trianglePlacementRanges:(result.weather.ranges??[{firstTriangle:0,triangleCount:result.weather.indices.length/3,partId:"weather"}]).map(r=>({...r,partId:`reference-review:${seed}:${r.partId}`}))};await uploadLifetime.yieldFrame(nextFrame);await uploadLifetime.wait(prepareMaterial(mesh));
   }
-  if(result.smoke){await uploadLifetime.yieldFrame(nextFrame);const smoke=smokeRuntime.attach(node,lod,result.smoke);if(smoke){await uploadLifetime.yieldFrame(nextFrame);await uploadLifetime.wait(smoke.material!.forceCompilationAsync(smoke));}}
+  if(result.smoke){await uploadLifetime.yieldFrame(nextFrame);const smoke=smokeRuntime.attach(node,lod,result.smoke);if(smoke){await uploadLifetime.yieldFrame(nextFrame);await uploadLifetime.wait(prepareMaterial(smoke));}}
   }).then(root=>({root}));
  },v=>v.root.dispose(false,false));
  return {root,update(projected:number){if(uploadLifetime.isDisposed())return;previous=planetLOD(projected,previous);cache.update(fixedDetail?0:previous,projected);},stats:()=>({...cache.snapshot(),...smokeRuntime.stats(),requestedLOD:previous,fixedDetail,workerPending:workerClient.stats().pending,buildMs,localLights:localLights?.lights.length??0,transmissionMaterials:materials.filter(m=>m.subSurface.isRefractionEnabled).length,transmissionTargets:transmission.target?1:0}),dispose(){workerClient.dispose();uploadLifetime.dispose();smokeRuntime.dispose();localLights?.dispose();cache.dispose();root.dispose(false,false);transmission.dispose();materials.forEach(m=>m.dispose());weatherMaterial.dispose();for(const pending of texturePromises.values())void pending.then(texture=>texture.dispose());}};

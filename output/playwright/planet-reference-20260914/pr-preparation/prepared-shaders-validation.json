@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-14",
+  "required": {
+    "check": 2,
+    "build": 1
+  },
+  "focused": {
+    "shadowPreparation": 9,
+    "inactiveSchema": 5,
+    "initialRadius": 1,
+    "referenceTypecheck": "pass"
+  },
+  "scope": "Full project failures remain explicit; focused passes do not replace full checks"
+}

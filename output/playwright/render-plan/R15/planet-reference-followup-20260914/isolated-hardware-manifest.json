@@ -1,0 +1,18 @@
+{
+  "scope": "Isolated reference camera; not normal Flight/Map or F3 acceptance",
+  "resolution": [
+    1574,
+    907
+  ],
+  "renderer": "RTX4080 Laptop",
+  "records": [
+    "output/playwright/planet-reference-20260914/shadow-followup/ice26-prepared-rtt-rtx4080-lod.json",
+    "output/playwright/planet-reference-20260914/shadow-followup/ice26-cold-far-first-prepared-rtx4080-lod.json",
+    "output/playwright/planet-reference-20260914/shadow-followup/gas5-cold-far-first-prepared-rtx4080-lod.json"
+  ],
+  "screenshots": [
+    "output/playwright/planet-reference-20260914/ice-r026/prepared-rtt-hardware-angle1.png",
+    "output/playwright/planet-reference-20260914/ice-r026/prepared-rtt-hardware-angle2.png"
+  ],
+  "status": "Isolated transition budget passed; normal-game acceptance remains open"
+}
