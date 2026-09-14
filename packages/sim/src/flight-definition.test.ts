@@ -203,6 +203,38 @@ describe("compileFlightDefinition", () => {
     expect(r2.hull.authoredMidpointY).toBe(1);
     expect(moved.parts).toEqual(input.parts);
   });
+  it("zero supply reproduces disabled-engine wrench but retains its physical mass", () => {
+    const input = fixture(),
+      supplied = ready(
+        compileFlightDefinition({ ...input, supply: { "fit-port": 0 } }),
+      );
+    expect(supplied.mass.massKg).toBe(120);
+    expect(
+      supplied.actuators.find((a) => a.id === "fit-port")!.availability,
+    ).toBe(0);
+    const damaged = ready(
+      compileFlightDefinition({
+        ...input,
+        fittings: input.fittings.map((f) =>
+          f.id === "fit-port" ? { ...f, availability: 0 } : f,
+        ),
+      }),
+    );
+    expect(supplied.actuators).toEqual(damaged.actuators);
+    expect(supplied.envelope).toEqual(damaged.envelope);
+  });
+  it("reduces thrust proportionally with damage and supply fractions", () => {
+    const input = fixture();
+    input.fittings = input.fittings.map((f) => ({ ...f, availability: 0.5 }));
+    const r = ready(
+      compileFlightDefinition({
+        ...input,
+        supply: { "fit-port": 0.5, "fit-starboard": 0.5 },
+      }),
+    );
+    expect(r.actuators.every((a) => a.availability === 0.25)).toBe(true);
+    expect(r.envelope.forward).toBeCloseTo(50 / 120);
+  });
   it("hashes every physical input independently of collection order", () => {
     const a = fixture(),
       b = fixture();
@@ -334,6 +366,18 @@ describe("compileFlightDefinition", () => {
           { characterId: "x", massKg: 1, position: [0, 0] },
           { characterId: "x", massKg: 1, position: [0, 0] },
         ];
+      },
+    ],
+    [
+      "invalid supply",
+      (i: FlightDefinitionInput) => {
+        i.supply = { "fit-port": NaN };
+      },
+    ],
+    [
+      "unknown supply engine",
+      (i: FlightDefinitionInput) => {
+        i.supply = { other: 1 };
       },
     ],
     [

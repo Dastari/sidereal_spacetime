@@ -452,6 +452,15 @@ export const ConstructionFlightCompiled = __t.object("ConstructionFlightCompiled
 });
 export type ConstructionFlightCompiled = __Infer<typeof ConstructionFlightCompiled>;
 
+export const ConstructionFlightConsumption = __t.object("ConstructionFlightConsumption", {
+  shipId: __t.string(),
+  sampleTick: __t.u64(),
+  compiledRevision: __t.u64(),
+  inputHash: __t.string(),
+  actuatorsJson: __t.string(),
+});
+export type ConstructionFlightConsumption = __Infer<typeof ConstructionFlightConsumption>;
+
 export const ConstructionFlightDamageEvent = __t.object("ConstructionFlightDamageEvent", {
   id: __t.string(),
   shipId: __t.string(),

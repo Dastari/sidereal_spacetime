@@ -1,6 +1,6 @@
 # Component-driven IFCS integration
 
-Status: Phases 0–3 implemented and verified in isolation; shared phase 3 publication awaits owner check-in; phases 4–6 remain planned
+Status: Phases 0–3 implemented and verified in isolation; phase 3 published with owner approval; phase 4 implemented and verified; phases 5–6 planned
 Last updated: 2026-09-14
 Owners: Sidereal simulation and ship assembly
 
@@ -98,12 +98,24 @@ are absent from the production module. Damage reduced measured acceleration from
 2.977741 to 2.398736 m/s² while retaining mass. Populated additive migration preserved
 all captured ship/item IDs and fitting rows, defaulted definitionRevision to 1, and
 compiled all ten preexisting ships. Client reload is required by the additive row
-layout change. No shared development database publication has occurred.
+layout change. The owner approved phase 3 publication; the reviewed module was
+published non-destructively to the shared development database. Both live ships
+compiled ready and captured ship/item UUID sets were preserved.
 
-Phase 4 bounded resource supply/consumption hooks and a real computer-power producer
-remain planned; routed power/fuel networks are outside this update. Phase 5 still
+Phase 4 adds a separate validated computer circuit command using the existing
+power-fitting rows. Unpowered computers reject IFCS input and cut actuation; fresh
+intent is required after restoring power. The compiler accepts bounded per-actuator
+supply fractions, multiplying damage/power availability; authority explicitly
+supplies 1 pending M4. Accepted per-substep newton-seconds are recorded in a private
+latest-nonzero sample with tick, compiled revision and input hash. Coordinate
+rollback discards usage; a contact-budget stop retains accepted force kicks. Idle
+ticks do not rewrite the previous sample. No fuel or electrical energy is deducted;
+routed resource networks remain outside this update. Phase 5 still
 must connect compiled nozzle/physics projections to plumes and the flight review,
 provide the actual passenger client composition, and pass real browser review of
 forward burn, turn and removal. Current presentation still includes fixture mounts.
 Phase 6 removes dead lab helpers, fixture references, duplicate writers and dead
 ship fields from the client projection; base-table fields remain by owner decision.
+
+Phase 4 final gates: 2,058 tests, TypeScript, 88 document/provenance checks and
+full build pass; fresh isolated two-client computer-power smoke passes.

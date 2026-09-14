@@ -75,6 +75,7 @@ import RevokeShipPassengerReducer from "./revoke_ship_passenger_reducer";
 import SaveConstructionDraftReducer from "./save_construction_draft_reducer";
 import SetCharacterAppearanceReducer from "./set_character_appearance_reducer";
 import SetCombatAimReducer from "./set_combat_aim_reducer";
+import SetConstructionComputerPowerReducer from "./set_construction_computer_power_reducer";
 import SetConstructionDoorReducer from "./set_construction_door_reducer";
 import SetConstructionEnginePowerReducer from "./set_construction_engine_power_reducer";
 import SetConstructionGrantReducer from "./set_construction_grant_reducer";
@@ -556,6 +557,7 @@ const reducersSchema = __reducers(
   __reducerSchema("save_construction_draft", SaveConstructionDraftReducer),
   __reducerSchema("set_character_appearance", SetCharacterAppearanceReducer),
   __reducerSchema("set_combat_aim", SetCombatAimReducer),
+  __reducerSchema("set_construction_computer_power", SetConstructionComputerPowerReducer),
   __reducerSchema("set_construction_door", SetConstructionDoorReducer),
   __reducerSchema("set_construction_engine_power", SetConstructionEnginePowerReducer),
   __reducerSchema("set_construction_grant", SetConstructionGrantReducer),

@@ -3,6 +3,7 @@ import type { Identity } from "spacetimedb";
 import {
   stepSystemSpace,
   type SystemFlightControl,
+  type SystemActuatorConsumption,
 } from "@sidereal/sim/system-space";
 import { spatialCell } from "@sidereal/sim/spatial-cells";
 import type { RigidBody } from "@sidereal/sim/collision";
@@ -97,6 +98,7 @@ export function stepSharedWorld(
       shipId: string,
     ): ReturnType<typeof resolveShipFlightDefinition>;
     canPilot(characterId: string): boolean;
+    recordConsumption(sampleTick: bigint, usage: readonly SystemActuatorConsumption[]): void;
   },
 ): SharedPhysicsReport {
   const report: SharedPhysicsReport = {
@@ -229,6 +231,8 @@ export function stepSharedWorld(
   if (bodies.length > 64)
     return rejectIsland("body-budget");
   const result = stepSystemSpace(bodies, controls);
+  hooks.recordConsumption(sampleTick, result.consumption);
+  const consumed = result.consumption.some(s => s.actuators.some(a => a.newtonSeconds > 0));
   report.status = result.exhausted
     ? "exhausted"
     : result.changedBodyIds.length
@@ -311,7 +315,7 @@ export function stepSharedWorld(
     }
   // One small clock write per active system sample; completely idle samples do
   // not write. Admission motion stamps are not proof that physics has run.
-  if (report.changedMotions || report.changedOutputs)
+  if (report.changedMotions || report.changedOutputs || consumed)
     ctx.db.worldSystem.id.update({ ...system, lastSimulationTick: sampleTick });
   return report;
 }

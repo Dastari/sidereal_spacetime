@@ -262,6 +262,11 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
   return wayfarerFlightInput(
     document,
     { variant, identities, replacements, attachments },
-    { fittings, cargo, crew },
+    {
+      fittings, cargo, crew,
+      // M4 will replace this explicit full supply with bounded fuel-network facts.
+      // No fuel is consumed or inferred from inventory in this phase.
+      supply: Object.fromEntries(fittingRows.filter(f => f.kind === "actuator").map(f => [f.id, 1])),
+    },
   );
 }

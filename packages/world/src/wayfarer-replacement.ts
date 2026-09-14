@@ -58,6 +58,7 @@ export const REPLACED_SHIP_TABLES = [
   "constructionFlightCompiled",
   "constructionFlightDirty",
   "constructionFlightDamageEvent",
+  "constructionFlightConsumption",
   "constructionPassengerGrant",
   "wayfarerRefitAttachment",
   "constructionCargoAssembly",

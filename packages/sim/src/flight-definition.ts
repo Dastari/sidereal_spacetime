@@ -88,6 +88,8 @@ export interface FlightDefinitionInput {
   crew: readonly FlightCrewMass[];
   catalog: FlightDefinitionCatalog;
   hull: FlightHullDefinition;
+  /** Missing entry means fully supplied; zero keeps mass but cuts actuation. */
+  supply?: Readonly<Record<string, number>>;
 }
 export type CompiledFlightActuator = Actuator & {
   placedObjectId: string;
@@ -245,6 +247,7 @@ export function flightDefinitionInputHash(
     fittings: byId(input.fittings),
     cargo: [...input.cargo].sort((a, b) => order(a.containerId, b.containerId)),
     crew: [...input.crew].sort((a, b) => order(a.characterId, b.characterId)),
+    supply: input.supply ?? {},
     hull: input.hull,
     definitionHash: flightDefinitionCatalogHash(input.catalog),
   });
@@ -301,7 +304,8 @@ export function compileFlightDefinition(
     reject("invalid-flight-hull");
   const parts = new Map<string, FlightPlacedPart>(),
     fittings = new Map<string, FlightFitting>(),
-    fittingIds = new Set<string>();
+    fittingIds = new Set<string>(),
+    actuatorFittingIds = new Set<string>();
   for (const p of input.parts) {
     if (
       !p ||
@@ -346,6 +350,7 @@ export function compileFlightDefinition(
     fittings.set(f.placedObjectId, f);
     const p = parts.get(f.placedObjectId),
       d = p && definitions.get(JSON.stringify([p.definitionId, p.revision]));
+    if (d?.kind === "actuator") actuatorFittingIds.add(f.id);
     if (!p) reject("orphan-flight-fitting:" + f.id);
     else if (
       d &&
@@ -377,6 +382,19 @@ export function compileFlightDefinition(
       if (payloadIds.has(id)) reject("duplicate-physical-mass-identity:" + id);
       payloadIds.add(id);
     }
+  if (input.supply !== undefined) {
+    if (
+      !input.supply ||
+      typeof input.supply !== "object" ||
+      Array.isArray(input.supply) ||
+      Object.keys(input.supply).length > 256
+    )
+      reject("invalid-flight-supply");
+    else
+      for (const [id, v] of Object.entries(input.supply))
+        if (!actuatorFittingIds.has(id) || !nonnegative(v) || v > 1)
+          reject("invalid-flight-supply:" + id);
+  }
   if (reasons.size) {
     const sorted = [...reasons].sort(order);
     return { status: "rejected", reason: sorted.join("; "), reasons: sorted };
@@ -415,7 +433,7 @@ export function compileFlightDefinition(
           y: mount[1],
           rotation: Math.atan2(-force[0], force[1]),
           maxThrustN: a.maxThrustN,
-          availability: f.powered && !f.detached ? f.availability : 0,
+          availability: f.powered && !f.detached ? f.availability * (input.supply && Object.hasOwn(input.supply,f.id) ? input.supply[f.id] : 1) : 0,
           nozzleX: nozzle[0],
           nozzleY: nozzle[1],
           height: p.position[2] + a.nozzleHeight,

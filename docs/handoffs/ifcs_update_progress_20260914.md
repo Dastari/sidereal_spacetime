@@ -10,8 +10,8 @@ Implementation contract: [plan](ifcs_update_plan_20260914.md).
 | 0 Baseline | Complete: 6 baseline tests, 1,925 total tests and build pass | `output/ifcs-update/phase0-check.log`, `phase0-build.log` |
 | 1 Allocator/controller | Complete: 1,951 tests, build and isolated smoke pass | `0307ace4` |
 | 2 Definitions/compiler | Complete: 1,993 tests and build pass | `0de90fe8` |
-| 3 Authority switch | Complete in isolation; shared publication awaits required owner check-in | 2,048 full-check tests; 1,511 staged-source tests; build, smoke variants, additive migration and shared schema comparison pass |
-| 4 Resource gating | Not started | Depends on phase 3 |
+| 3 Authority switch | Complete; owner-approved non-destructive shared publication succeeded | 2,048 full-check tests; 1,511 staged-source tests; build, smoke variants, additive migration and shared schema comparison pass |
+| 4 Resource gating | Complete: 2,058 tests, build and isolated two-client smoke pass | phase4-check-final.log, phase4-build-final.log, phase4-smoke-r0002.log |
 | 5 Presentation | Not started | Depends on phase 3; real browser evidence required |
 | 6 Cleanup | Not started | Depends on phases 3 and 5 |
 
@@ -650,3 +650,68 @@ shared publication is pending the explicit owner check-in required by the plan.
 No shared module publication or replacement/refit maintenance operation was run.
 Phases 4–6 remain unstarted. The owner-approved defaults and all three additional
 authority decisions are implemented as recorded.
+
+
+Owner explicitly approved the non-destructive phase 3 shared publication after
+reviewing commit cd09510c / PR #1. Approval persists; no further confirmation is
+required for this publication. The reviewed world/sim/content source matches that
+commit byte for byte, artifact hash matches, and the shared schema is unchanged
+from the reviewed additive comparison. Publishing from the isolated source export.
+
+
+Approved phase 3 publication succeeded to sidereal-spacetime-dev from the reviewed
+source export, with delete-data=never. The SDK required client reconnection for
+the additive fitting row layout. Both existing live ships compiled ready with
+empty reasons, masses 12089.699999999948 and 12089.699999999952 kg. Captured ship
+and inventory item UUID sets are unchanged. Evidence: phase3-approved-shared-
+publish.log, phase3-shared-*-before/after.txt, phase3-shared-compiled-after.txt.
+
+Phase 4 now starts. `allocator_review` owns a read-only investigation of accurate
+per-actuator newton-second accounting across the actual system-space substeps and
+rollback paths. No file edits delegated; root owns all phase 4 changes.
+
+
+### Phase 4 resource interfaces and isolated evidence
+
+Computer power uses a separate additive validated circuit command, retaining the
+engine command's owner, active instance, reactor, exact definition and mapping,
+revision and operation guards. The first fresh smoke (ifcs-phase4-r0001) exposed a
+new-command mapping error: the computer device ID is computer-flight-01, while its
+authored placed console maps from equipment-control-console. Corrected that exact
+mapping, with a regression proving the device ID cannot replace the console source.
+No existing engine or pilot validator was relaxed.
+
+Fresh isolated `npm run smoke -- --smoke-name ifcs-phase4 --fresh-smoke
+--ifcs-passenger` passed on ifcs-phase4-r0002 (phase4-smoke-r0002.log). It proves
+computer power off cuts all output, fresh pilot input rejects, COM velocity and
+omega remain constant while coasting, and restored power permits fresh intent.
+Existing two-client walking during asymmetric turning, removed hardware, cargo COM,
+remaining-engine power and passenger revocation/inventory identity checks also pass.
+
+Optional compiler supply is bounded, finite [0,1], actuator-ID-only and included
+in the input hash. Zero supply retains installed mass but removes wrench/envelope
+contribution; fractional supply multiplies damage availability. Authority explicitly
+passes 1 for actuators until M4 supplies actual network facts.
+
+The pure step reports actual per-actuator N·s over each accepted force kick, not
+last throttle multiplied by elapsed wall time or completedSubsteps. Coordinate
+rollback discards the attempted usage; contact exhaustion retains accepted kicks.
+Tests compare changing per-substep thrust with momentum, exercise partial rollback,
+and ensure positive usage advances the system sample even with no motion/output
+row change. Latest nonzero usage per ship is stamped with tick, compiled revision
+and input hash in private construction_flight_consumption. Idle samples preserve
+the last burn stamp; exact replay is quiet and conflicting/regressed samples reject.
+No fuel or electrical energy is deducted. Operator replacement clears this table.
+
+Real scheduled-step output is captured in phase4-consumption-sql.txt (eight actual
+remaining actuators, with positive and zero values). phase4-schema.json confirms
+Private table access, with no consumption view. The allocator_review investigation
+was read-only and its accepted-kick/clock findings are covered by root's tests.
+
+Phase 4 final exit: `VITEST_MAX_WORKERS=1 npm run check` passes **346 files /
+2,058 tests**, TypeScript and all 88 document/provenance checks. `npm run build`
+passes (phase4-check-final.log, phase4-build-final.log). Fresh isolated two-client
+smoke passes as above. Repeated operator SQL after idling is byte-identical
+(phase4-consumption-idle-sql.txt). No phase 4 shared publication occurred. Phase 4
+contains one additive private table and one additive reducer; no non-additive
+schema change, authority relaxation, collision revision or native-pin change.

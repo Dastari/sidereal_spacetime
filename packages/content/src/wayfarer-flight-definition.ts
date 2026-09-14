@@ -211,6 +211,7 @@ export function wayfarerFlightInput(
     fittings: readonly FlightFitting[];
     cargo?: readonly FlightCargoMass[];
     crew?: readonly FlightCrewMass[];
+    supply?: Readonly<Record<string,number>>;
   },
 ): FlightDefinitionInput {
   return {
@@ -218,6 +219,7 @@ export function wayfarerFlightInput(
     fittings: dynamic.fittings,
     cargo: dynamic.cargo ?? [],
     crew: dynamic.crew ?? [],
+    supply: dynamic.supply,
     catalog: WAYFARER_PHYSICAL_CATALOG,
     hull: WAYFARER_FLIGHT_HULL,
   };

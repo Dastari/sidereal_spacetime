@@ -10,11 +10,12 @@ import { SHARED_SYSTEM_SEED } from "@sidereal/content/shared-system";
 import { LAB_FLIGHT_ACTUATORS, LAB_FLIGHT_COMPUTER, LAB_FLIGHT_MASS, LAB_FLIGHT_PROFILE, LAB_FLIGHT_SPEED } from "../../content/src/flight";
 import { LAB_HULL } from "../../content/src/space";
 import { deriveEnvelope } from "../../sim/src/ifcs";
+import * as systemSpace from "../../sim/src/system-space";
 // Explicit test-only hook preserves this adapter suite's independent baseline.
 // Production must supply the authoritative compiled reader and dirty queue.
-function stepSharedWorld(ctx: SharedPhysicsContext) {
+function stepSharedWorld(ctx: SharedPhysicsContext, recordConsumption: Parameters<typeof stepCompiledSharedWorld>[2]["recordConsumption"] = () => {}) {
   return stepCompiledSharedWorld(ctx, undefined, {
-    compileDirty: () => {}, canPilot: () => true,
+    recordConsumption, compileDirty: () => {}, canPilot: () => true,
     definitionForShip: () => ({
       status: "ready", reason: "", kind: "construction", stationId: "", deckId: "",
       mass: LAB_FLIGHT_MASS, profile: LAB_FLIGHT_PROFILE, speed: LAB_FLIGHT_SPEED,
@@ -60,6 +61,23 @@ function pilot(f: ReturnType<typeof setup>, n = 1) {
     updatedMicros: 100n,
   });
 }
+it("accepted consumption advances the sample clock even with unchanged motion and outputs", () => {
+  const f = setup();
+  const record = vi.fn();
+  const solve = vi.spyOn(systemSpace, "stepSystemSpace").mockImplementationOnce(bodies => ({
+    bodies, changedBodyIds: [], commands: [], impacts: 0, exhausted: false, completedSubsteps: 3,
+    consumption: [{ bodyId: "ship1", actuators: [{ id: LAB_FLIGHT_ACTUATORS[0].id, newtonSeconds: 2 }] }],
+  }));
+  try {
+    const first = stepSharedWorld(f.physics(), record);
+    expect(first.changedMotions).toBe(0);
+    expect(first.changedOutputs).toBe(0);
+    expect(record).toHaveBeenCalledTimes(1);
+    expect(stepSharedWorld(f.physics(), record).reason).toBe("sample-already-applied");
+    expect(record).toHaveBeenCalledTimes(1);
+    expect(solve).toHaveBeenCalledTimes(1);
+  } finally { solve.mockRestore(); }
+});
 describe("authoritative once-per-system adapter", () => {
   it("two ships advance one shared rock exactly once and leave legacy rows untouched", () => {
     const f = setup(),
@@ -300,7 +318,7 @@ it("compiled asymmetric engine-less ships coast about COM and persist the author
   const definition=asymmetricDefinition(3),row=f.db.shipWorldMotion.shipId.find("ship1");
   f.db.shipWorldMotion.shipId.update({...row,vx:3,vy:-2,omega:0.2,heading:0.3});
   const before=f.db.shipWorldMotion.shipId.find("ship1"),com=toCenterOfMassMotion(before,definition.mass);
-  const result=stepCompiledSharedWorld(f.physics(),undefined,{compileDirty:()=>{},canPilot:()=>true,definitionForShip:()=>definition});
+  const result=stepCompiledSharedWorld(f.physics(),undefined,{recordConsumption: () => {}, compileDirty:()=>{},canPilot:()=>true,definitionForShip:()=>definition});
   expect(result.reason).toBeUndefined();
   const after=f.db.shipWorldMotion.shipId.find("ship1"),nextCom=toCenterOfMassMotion(after,definition.mass);
   expect(nextCom.x).toBeCloseTo(com.x+com.vx*0.05,10);
@@ -314,7 +332,7 @@ it("cargo recompilation does not translate resting ship or passenger authored co
   const before={...f.db.shipWorldMotion.shipId.find("ship1")},actor={...f.db.character.id.find("actor1")};
   let definition=asymmetricDefinition(-3),compiled=false;
   const oldCenter=definition.mass.centerX;
-  stepCompiledSharedWorld(f.physics(),undefined,{compileDirty:()=>{definition=asymmetricDefinition(3);compiled=true;},canPilot:()=>false,definitionForShip:()=>definition});
+  stepCompiledSharedWorld(f.physics(),undefined,{recordConsumption: () => {}, compileDirty:()=>{definition=asymmetricDefinition(3);compiled=true;},canPilot:()=>false,definitionForShip:()=>definition});
   expect(compiled).toBe(true);expect(definition.mass.centerX).not.toBe(oldCenter);
   expect(f.db.shipWorldMotion.shipId.find("ship1")).toEqual(before);
   expect(f.db.character.id.find("actor1")).toEqual(actor);
@@ -323,7 +341,7 @@ it("initial invalid definitions reject the island and erase stale burn telemetry
   const f=setup();rest(f);
   f.db.actuatorOutput.insert({id:"old-output",shipId:"ship2",actuatorId:"removed",throttle:1,tick:1n});
   const before={...f.db.shipWorldMotion.shipId.find("ship1")};
-  const result=stepCompiledSharedWorld(f.physics(),undefined,{compileDirty:()=>{},canPilot:()=>true,definitionForShip:()=>({status:"invalid",reason:"missing-physical-definition"})});
+  const result=stepCompiledSharedWorld(f.physics(),undefined,{recordConsumption: () => {}, compileDirty:()=>{},canPilot:()=>true,definitionForShip:()=>({status:"invalid",reason:"missing-physical-definition"})});
   expect(result).toMatchObject({status:"exhausted",reason:"missing-physical-definition",changedOutputs:1,changedMotions:0});
   expect(f.db.actuatorOutput.rows.size).toBe(0);
   expect(f.db.shipWorldMotion.shipId.find("ship1")).toEqual(before);

@@ -48,12 +48,18 @@ export interface SystemSpaceStep {
   bodies: readonly RigidBody[];
   changedBodyIds: string[];
   commands: { bodyId: string; actuators: { id: string; throttle: number }[] }[];
+  /** Actual accepted force kicks, summed per actuator over this invocation. */
+  consumption: SystemActuatorConsumption[];
   impacts: number;
   exhausted: boolean;
   reason?:
     "body-budget" | "actuator-budget" | "contact-budget" | "coordinate-bound";
   /** Whole 60Hz substeps completed, not wall-clock elapsed time. Never catch up. */
   completedSubsteps: number;
+}
+export interface SystemActuatorConsumption {
+  bodyId: string;
+  actuators: { id: string; newtonSeconds: number }[];
 }
 const compareIds = (a: { id: string }, b: { id: string }) =>
   a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
@@ -123,6 +129,7 @@ export function stepSystemSpace(
     bodies: input,
     changedBodyIds: [],
     commands: [],
+    consumption: [],
     impacts: 0,
     exhausted: true,
     reason,
@@ -195,9 +202,11 @@ export function stepSystemSpace(
     completedSubsteps = 0;
   let reason: SystemSpaceStep["reason"];
   let commandMap = new Map<string, { id: string; throttle: number }[]>();
+  const consumption = new Map<string, Map<string, number>>();
   for (let step = 0; step < SYSTEM_SPACE_LIMITS.substeps; step++) {
     const beforeKick = bodies;
     const beforeCommands = new Map(commandMap);
+    const attemptedConsumption = new Map<string, Map<string, number>>();
     const kicked = bodies.map((body) => {
       const control = controlMap.get(body.id);
       if (!control) return { ...body };
@@ -221,6 +230,9 @@ export function stepSystemSpace(
       const achievedCommands = new Map(
         flight.commands.map((c) => [c.id, c.throttle]),
       );
+      attemptedConsumption.set(body.id, new Map(control.actuators.map(a => [
+        a.id, a.maxThrustN * a.availability * (achievedCommands.get(a.id) ?? 0) * DT,
+      ])));
       commandMap.set(
         body.id,
         control.actuators
@@ -283,6 +295,13 @@ export function stepSystemSpace(
       break;
     }
     bodies = result.bodies;
+    // Coordinate rollback discards the attempted kick. Contact exhaustion keeps
+    // its accepted velocity kick, even if no complete drift substep is counted.
+    for (const [bodyId, values] of attemptedConsumption) {
+      let total = consumption.get(bodyId);
+      if (!total) consumption.set(bodyId, total = new Map());
+      for (const [id, value] of values) total.set(id, (total.get(id) ?? 0) + value);
+    }
     impacts += result.impacts;
     if (result.exhausted) {
       reason = "contact-budget";
@@ -299,6 +318,10 @@ export function stepSystemSpace(
       bodyId,
       actuators,
     })),
+    consumption: [...consumption].map(([bodyId, values]) => ({
+      bodyId,
+      actuators: [...values].map(([id, newtonSeconds]) => ({ id, newtonSeconds })).sort(compareIds),
+    })).sort((a, b) => a.bodyId < b.bodyId ? -1 : a.bodyId > b.bodyId ? 1 : 0),
     impacts,
     exhausted: reason !== undefined,
     ...(reason ? { reason } : {}),

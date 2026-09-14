@@ -1,6 +1,6 @@
 # Wayfarer flight computer implementation
 
-Status: Compiled authority verified through phase 3 in isolation; shared publication awaits owner check-in; resource gating, presentation and cleanup remain planned
+Status: Compiled authority verified through phase 3 in isolation; phase 3 published with owner approval; resource gating implemented and verified; presentation and cleanup planned
 Last updated: 2026-09-14
 
 The implementation follows the [IFCS integration contract](ifcs_integration.md)
@@ -86,6 +86,18 @@ in a copied isolated module. Weapon hit detection is not implemented.
 
 Populated non-destructive migration preserved the captured ship/item UUIDs and fitting
 rows; all ten existing ships compiled ready. The new fitting revision defaults to 1.
-Shared publication awaits the required owner check-in. Phase 4 resource hooks and
-computer-power producer, phase 5 client/browser work and phase 6 dead-code/projection
-cleanup remain pending. Dead ship base columns remain by explicit owner decision.
+The owner approved and phase 3 was published non-destructively from the reviewed
+source; both live ships are ready and captured ship/item UUID sets are unchanged.
+Phase 4 isolated two-client smoke proves unpowered-computer actuation cutoff,
+rejected fresh input, coasting and recovery with fresh input after power restoration.
+The optional bounded supply map multiplies effective actuator availability; supply
+zero removes force while retaining installed mass. Authority explicitly supplies 1
+until M4. A private latest-nonzero consumption sample records actual accepted
+per-actuator newton-seconds across substeps, including rollback/contact exhaustion
+semantics, with tick and compiled revision/hash. Idle samples keep the last burn
+stamped. No fuel or energy is deducted. Phase 5 client/browser work and phase 6
+dead-code/projection cleanup remain pending. Dead ship base columns remain by
+explicit owner decision.
+
+Phase 4 final gates: 2,058 tests, TypeScript, 88 document/provenance checks and
+full build pass; fresh isolated two-client computer-power smoke passes.

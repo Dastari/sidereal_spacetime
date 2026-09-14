@@ -1,7 +1,7 @@
 import * as passengerViews from "./construction-passenger-views";
 import * as passengers from "./construction-passenger-authority";
 import { commitFlightCharacter } from "./construction-flight-dirty";
-import { setConstructionEnginePower as setEnginePower } from "./construction-device-power";
+import { setConstructionEnginePower as setEnginePower, setConstructionComputerPower as setComputerPower } from "./construction-device-power";
 import { replacePlayerWayfarer } from "./wayfarer-replacement";
 import * as rebuiltWayfarer from "./wayfarer-rebuild-installation";
 import { constructionCargoAssembly } from "./construction-cargo-assembly-tables";
@@ -77,6 +77,8 @@ import { compileDirtyFlights, markFlightDirty } from "./construction-flight-comp
 import { readConstructionFlightInput } from "./construction-flight-input";
 import { SHARED_SYSTEM_SEED } from "../../content/src/shared-system";
 import { constructionFlightDamageEvent } from "./construction-flight-damage-tables";
+import { constructionFlightConsumption } from "./construction-flight-consumption-tables";
+import { recordFlightConsumption } from "./construction-flight-consumption";
 import { constructionPassengerGrant, constructionPassengerVisit, constructionPassengerReceipt } from "./construction-passenger-tables";
 import { changeFlightFittingDisposition, consumeFlightDamage } from "./construction-flight-availability";
 import {
@@ -291,6 +293,7 @@ const db = schema({
   constructionFlightCompiled,
   constructionFlightDirty,
   constructionFlightDamageEvent,
+  constructionFlightConsumption,
   constructionPassengerGrant,
   constructionPassengerVisit,
   constructionPassengerReceipt,
@@ -689,6 +692,7 @@ export const stepWorld = db.reducer(
         }
         compileDirtyFlights(ctx.db, shipId => readConstructionFlightInput(ctx, shipId));
       },
+      recordConsumption: (sampleTick, usage) => recordFlightConsumption(ctx, sampleTick, usage),
       definitionForShip: (shipId) =>
         resolveShipFlightDefinition(
           {
@@ -1362,6 +1366,7 @@ export const moveCargoCarrier = db.reducer(
 export const replaceLegacyPlayerWayfarer = db.reducer({ characterId: t.string(), expectedShipId: t.string(), expectedShipRevision: t.u64() }, replacePlayerWayfarer);
 
 export const setConstructionEnginePower = db.reducer({ shipId: t.string(), enginePlacedObjectId: t.string(), connected: t.bool(), expectedRevision: t.u64(), operationId: t.string() }, setEnginePower);
+export const setConstructionComputerPower = db.reducer({ shipId: t.string(), computerPlacedObjectId: t.string(), connected: t.bool(), expectedRevision: t.u64(), operationId: t.string() }, setComputerPower);
 
 export const changeShipFlightFitting = db.reducer(
   { shipId:t.string(), fittingId:t.string(), action:t.string(), expectedRevision:t.u64(), expectedFittingRevision:t.u64(), operationId:t.string() },

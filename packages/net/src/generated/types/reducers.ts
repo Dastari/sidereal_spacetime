@@ -47,6 +47,7 @@ import RevokeShipPassengerReducer from "../revoke_ship_passenger_reducer";
 import SaveConstructionDraftReducer from "../save_construction_draft_reducer";
 import SetCharacterAppearanceReducer from "../set_character_appearance_reducer";
 import SetCombatAimReducer from "../set_combat_aim_reducer";
+import SetConstructionComputerPowerReducer from "../set_construction_computer_power_reducer";
 import SetConstructionDoorReducer from "../set_construction_door_reducer";
 import SetConstructionEnginePowerReducer from "../set_construction_engine_power_reducer";
 import SetConstructionGrantReducer from "../set_construction_grant_reducer";
@@ -100,6 +101,7 @@ export type RevokeShipPassengerParams = __Infer<typeof RevokeShipPassengerReduce
 export type SaveConstructionDraftParams = __Infer<typeof SaveConstructionDraftReducer>;
 export type SetCharacterAppearanceParams = __Infer<typeof SetCharacterAppearanceReducer>;
 export type SetCombatAimParams = __Infer<typeof SetCombatAimReducer>;
+export type SetConstructionComputerPowerParams = __Infer<typeof SetConstructionComputerPowerReducer>;
 export type SetConstructionDoorParams = __Infer<typeof SetConstructionDoorReducer>;
 export type SetConstructionEnginePowerParams = __Infer<typeof SetConstructionEnginePowerReducer>;
 export type SetConstructionGrantParams = __Infer<typeof SetConstructionGrantReducer>;

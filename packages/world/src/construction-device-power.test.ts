@@ -8,7 +8,7 @@ vi.mock("./auth", () => ({
     if (!ctx.live) throw Error("Live game required");
   },
 }));
-import { setConstructionEnginePower } from "./construction-device-power";
+import { setConstructionEnginePower, setConstructionComputerPower } from "./construction-device-power";
 import { WAYFARER_REBUILD_SHA256 } from "../../sim/src/wayfarer-rebuild-contract";
 import { LAB_FLIGHT_ACTUATORS } from "../../content/src/flight";
 import { resolveShipFlightDefinition } from "./construction-flight-resolver";
@@ -79,7 +79,7 @@ function fixture() {
       objects: [
         { sourceId: "room-engineering", instanceId: "reactor" },
         ...fittings.map((f) => ({
-          sourceId: f.sourceDeviceId,
+          sourceId: f.kind === "computer" ? "equipment-control-console" : f.sourceDeviceId,
           instanceId: f.placedObjectId,
         })),
       ],
@@ -141,6 +141,35 @@ test("owned circuit changes only target engine; exact replay and reconnect prese
   });
   expect(f.fittings[0].powered).toBe(true);
   expect(f.fittings.map((r) => r.id)).toEqual(original);
+});
+test("computer power is a distinct validated circuit operation with unchanged engine gates", () => {
+  const f = fixture();
+  const args = {
+    shipId: "ship", computerPlacedObjectId: "computer", connected: false,
+    expectedRevision: 1n, operationId: "computer-off",
+  };
+  expect(() => setConstructionEnginePower(f.ctx, { ...f.args, enginePlacedObjectId: "computer" })).toThrow("Installed qualified engine");
+  expect(() => setConstructionComputerPower(f.ctx, { ...args, computerPlacedObjectId: f.args.enginePlacedObjectId })).toThrow("Installed qualified computer");
+  setConstructionComputerPower(f.ctx, args);
+  expect(f.fittings.find(r => r.kind === "computer")!.powered).toBe(false);
+  expect(f.fittings.filter(r => r.kind === "actuator").every(r => r.powered)).toBe(true);
+  setConstructionComputerPower(f.ctx, args);
+  expect(f.binding().revision).toBe(2n);
+  expect(() => setConstructionComputerPower(f.ctx, { ...args, connected: true })).toThrow("payload conflict");
+  setConstructionComputerPower(f.ctx, { ...args, connected: true, expectedRevision: 2n, operationId: "computer-on" });
+  expect(f.fittings.every(r => r.powered)).toBe(true);
+});
+test("computer power rejects a device ID substituted for the authored console mapping", () => {
+  const f = fixture();
+  const mappings = JSON.parse(f.instance.idMapJson);
+  mappings.objects.find((m: any) => m.instanceId === "computer").sourceId = LAB_FLIGHT_COMPUTER.id;
+  f.instance.idMapJson = JSON.stringify(mappings);
+  expect(() => setConstructionComputerPower(f.ctx, {
+    shipId: "ship", computerPlacedObjectId: "computer", connected: false,
+    expectedRevision: 1n, operationId: "bad-console-mapping",
+  })).toThrow("Installed qualified computer");
+  expect(f.binding().revision).toBe(1n);
+  expect(f.fittings.every(r => r.powered)).toBe(true);
 });
 test("foreign owner, stale operation, missing reactor and unknown engine reject before writes", () => {
   for (const change of [

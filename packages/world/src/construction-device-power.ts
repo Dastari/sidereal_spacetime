@@ -6,7 +6,6 @@ import {
   WAYFARER_REACTOR_SOURCE_ID,
 } from "@sidereal/content/device-services";
 import { WAYFARER_PHYSICAL_CATALOG } from "../../content/src/physical-definitions";
-import type { ActuatorDefinition } from "../../sim/src/flight-definition";
 import { markShipFlightDirty } from "./construction-flight-dirty";
 import type { ConstructionDocument } from "@sidereal/content/construction";
 import type { ConstructionInstanceMappings } from "@sidereal/sim/construction-instance";
@@ -18,12 +17,39 @@ export interface ConstructionEnginePowerArgs {
   expectedRevision: bigint;
   operationId: string;
 }
+export interface ConstructionComputerPowerArgs {
+  shipId: string;
+  computerPlacedObjectId: string;
+  connected: boolean;
+  expectedRevision: bigint;
+  operationId: string;
+}
 /** Owner edits the qualified reactor-to-engine circuit, not a generic powered
  * override. Existing fittings are initially connected. No fuel or J are minted:
  * this first installation has unrated on/off power, matching its prior IFCS gate. */
 export function setConstructionEnginePower(
   ctx: ConstructionPilotContext,
   args: ConstructionEnginePowerArgs,
+) {
+  return setDevicePower(ctx, args, "actuator");
+}
+/** Separate additive command; engine power never accepts a computer target. */
+export function setConstructionComputerPower(
+  ctx: ConstructionPilotContext,
+  args: ConstructionComputerPowerArgs,
+) {
+  return setDevicePower(ctx, {
+    shipId: args.shipId,
+    enginePlacedObjectId: args.computerPlacedObjectId,
+    connected: args.connected,
+    expectedRevision: args.expectedRevision,
+    operationId: args.operationId,
+  }, "computer");
+}
+function setDevicePower(
+  ctx: ConstructionPilotContext,
+  args: ConstructionEnginePowerArgs,
+  kind: "actuator" | "computer",
 ) {
   requireGame(ctx);
   if (
@@ -50,9 +76,11 @@ export function setConstructionEnginePower(
     throw Error("Current active qualified power installation required");
   const id = JSON.stringify([ctx.sender.toHexString(), args.operationId]);
   const requestJson = JSON.stringify({
-    kind: "engine-power",
+    kind: kind === "computer" ? "computer-power" : "engine-power",
     shipId: args.shipId,
-    enginePlacedObjectId: args.enginePlacedObjectId,
+    ...(kind === "computer"
+      ? { computerPlacedObjectId: args.enginePlacedObjectId }
+      : { enginePlacedObjectId: args.enginePlacedObjectId }),
     connected: args.connected,
     expectedRevision: args.expectedRevision.toString(),
   });
@@ -98,11 +126,11 @@ export function setConstructionEnginePower(
     if (!physical || physical.kind!==fitting.kind || !("fittingDefinitionId" in physical) || physical.fittingDefinitionId!==fitting.definitionId || !mappings.objects.some(m=>m.instanceId===fitting.placedObjectId))
       throw Error("Definition-bound power fitting set required");
   }
-  const engine = fittings.find(f=>f.placedObjectId===args.enginePlacedObjectId && f.kind==="actuator");
+  const engine = fittings.find(f=>f.placedObjectId===args.enginePlacedObjectId && f.kind===kind);
   const placed = document.layout.assembly?.parts.find(p=>p.id===args.enginePlacedObjectId);
-  const source = placed && WAYFARER_PHYSICAL_CATALOG.definitions.find(d=>d.id==="physical:"+placed.assetId && d.revision===engine?.definitionRevision && d.kind==="actuator") as ActuatorDefinition | undefined;
-  if (!engine || !source || source.fittingDefinitionId!==engine.definitionId || !engine.installed || !mappings.objects.some(m=>m.sourceId===engine.sourceDeviceId && m.instanceId===engine.placedObjectId))
-    throw Error("Installed qualified engine required");
+  const source = placed && WAYFARER_PHYSICAL_CATALOG.definitions.find(d=>d.id==="physical:"+placed.assetId && d.revision===engine?.definitionRevision && d.kind===kind);
+  if (!engine || !source || !("fittingDefinitionId" in source) || source.fittingDefinitionId!==engine.definitionId || !engine.installed || !mappings.objects.some(m=>m.sourceId===(kind === "computer" ? "equipment-control-console" : engine.sourceDeviceId) && m.instanceId===engine.placedObjectId))
+    throw Error(kind === "computer" ? "Installed qualified computer required" : "Installed qualified engine required");
   // Permission, stale revision, exact mappings and complete source checks precede writes.
   ctx.db.constructionFlightFitting.id.update({
     ...engine,
