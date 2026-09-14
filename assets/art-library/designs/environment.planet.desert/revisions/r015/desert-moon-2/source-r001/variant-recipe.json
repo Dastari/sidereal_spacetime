@@ -1,0 +1,56 @@
+{
+  "referenceId": "planets--desert-moon-2",
+  "sourceFoundation": "rocky-r010",
+  "foundationSha256": "591061696339368d9f7570392726b5ee11038e992987e21b92a6ebbb8bc2af50",
+  "candidateRevision": "r001",
+  "sourceCoordinates": "Native Blender Z-up; unit radius, no authority dimensions",
+  "seed": 419,
+  "scales": [
+    0.39,
+    0.42,
+    0.38,
+    0.43,
+    0.4,
+    0.41,
+    0.39,
+    0.44,
+    0.38,
+    0.42,
+    0.4,
+    0.41
+  ],
+  "palette": [
+    [
+      0.58,
+      0.15,
+      0.06
+    ],
+    [
+      0.79,
+      0.28,
+      0.11
+    ],
+    [
+      0.055,
+      0.008,
+      0.004
+    ],
+    [
+      0.25,
+      0.055,
+      0.02
+    ],
+    [
+      0.38,
+      0.09,
+      0.04
+    ],
+    [
+      0.85,
+      0.35,
+      0.16
+    ]
+  ],
+  "cue": "Terracotta/orange cratered moon, dark holes; no mesa hierarchy",
+  "publication": "isolated source candidate; no automatic acceptance from rocky-moon-1 pass"
+}

@@ -1,0 +1,25 @@
+{
+  "referenceId": "planets--toxic-moon-2",
+  "foundation": "/root/sidereal_spacetime/scripts/art_library/build_rocky_native_kit_r010.py",
+  "foundationSha256": "591061696339368d9f7570392726b5ee11038e992987e21b92a6ebbb8bc2af50",
+  "runtimeStyle": "moon",
+  "status": "isolated authored candidate, exact visual review pending",
+  "seed": 1861,
+  "family": "toxic",
+  "cover": 0.58,
+  "scales": [
+    0.43,
+    0.4,
+    0.44,
+    0.39,
+    0.42,
+    0.41,
+    0.43,
+    0.4,
+    0.42,
+    0.39,
+    0.44,
+    0.41
+  ],
+  "cue": "Broader yellow-green broken upper crust and irregular silhouette over dark open cavities"
+}

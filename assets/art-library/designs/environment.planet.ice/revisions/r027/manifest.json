@@ -1,0 +1,847 @@
+{
+  "schema": "sidereal.planet-moon-preservation.v1",
+  "recorded_at": "2026-09-14T05:38:14.954236+00:00",
+  "design_id": "environment.planet.ice",
+  "canonical_checkpoint_revision": 27,
+  "pinned_main_revision": 26,
+  "pre_checkpoint_ledger_sha256": "9902c670eb571ce1d7e68396ffbae2ab1933a1a2a1046e87a089f431a6561c18",
+  "scope": "Retrospective moon candidate preservation; no main-world replacement, owner approval, production publication or hardware/LOD acceptance. Original source-art revision numbering retained separately.",
+  "variants": [
+    {
+      "reference_id": "planets--ice-moon-1",
+      "source_revision": 1,
+      "original_output_directory": "output/playwright/planet-reference-20260914/ice-moon-1-r001",
+      "artifact_directory": "designs/environment.planet.ice/revisions/r027/ice-moon-1/source-r001",
+      "working_gate": "open or historical trial; use attached dated independent review, never infer acceptance from source presence",
+      "source_timestamp_note": "Original files copied with metadata; capture JSON retains actual timestamps/context where present. Checkpoint time is not authoring time.",
+      "files": [
+        {
+          "filename": "build_extreme_moon_native_variants_r001.py",
+          "sha256": "fc48710d084c02cdafe8186effd4a8647e8668828ce498441421202b05ff92df",
+          "bytes": 4516
+        },
+        {
+          "filename": "corrected-run.log",
+          "sha256": "68a3451da5c69f9bc9636445c1979e88b0d450e7d960371d9ddbd6f2b8cefad7",
+          "bytes": 550
+        },
+        {
+          "filename": "corrected-seed38-angle2.png",
+          "sha256": "56aeac467a699fed9bab248c520f1b407ead3bf687bc46d849c5a3a44c1e61e9",
+          "bytes": 340970
+        },
+        {
+          "filename": "corrected-seed38-capture.log",
+          "sha256": "761f841f167cdf909cf626edc1e63f656c78c6d6f86a1978c694738916f54b5c",
+          "bytes": 2767
+        },
+        {
+          "filename": "corrected-seed38-reference-scale.png",
+          "sha256": "97d9b55dbbf2ae0ef163ede2b6f7ff6d1e61eacfb35958f35fc5166ecf026040",
+          "bytes": 23375
+        },
+        {
+          "filename": "corrected-seed38.json",
+          "sha256": "d060c0a17a5603dd8a80656c91bb722cc0261ad42b534bf512bb507d5a02b9b8",
+          "bytes": 1997
+        },
+        {
+          "filename": "corrected-seed38.png",
+          "sha256": "f675f661230b069e9c721a308005ab849db383d3dab1c060ccf7d22dc3139c21",
+          "bytes": 360951
+        },
+        {
+          "filename": "exact-reference.png",
+          "sha256": "f6144b319474eec44430bdd763c1de1a36ec089a1eb50880e876774a3d421fa0",
+          "bytes": 14161
+        },
+        {
+          "filename": "foundation-source.py",
+          "sha256": "002d90a4f818089acb1f50bba71ba7d0ed9c847ea55749a08ab403aa0ba48fe0",
+          "bytes": 21795
+        },
+        {
+          "filename": "generator.py",
+          "sha256": "ff8241df250b258c31bd66654ac5e5a2cc562c920668f3ad705b796d9fbe4004",
+          "bytes": 22042
+        },
+        {
+          "filename": "ground-sphere-exact-normal-audit.json",
+          "sha256": "d7a3dd5196d8f9f0ecf51016c2f08decaeaad4415613083823b096ff90e848c6",
+          "bytes": 532
+        },
+        {
+          "filename": "ground-sphere-exact-normal-audit.py",
+          "sha256": "4962f14066ee5ce6a9d6424068a4bd4ee29ac2ae8e12d161b3e6e4cf36795b8a",
+          "bytes": 2207
+        },
+        {
+          "filename": "ground-sphere-low-exact-normal-audit.json",
+          "sha256": "9fd4a308eaa9db0c082b0d87ea2c953162c180f94f68568398fc46fffff3feba",
+          "bytes": 536
+        },
+        {
+          "filename": "ground-sphere-low-exact-normal-audit.py",
+          "sha256": "b95c4c5e059c50952f28ec20687e2b53f0dbae4625e39b40a84031c0bc95ded4",
+          "bytes": 2223
+        },
+        {
+          "filename": "ground-sphere-low.glb",
+          "sha256": "dedb6a6f14e64d1beec7ff4b61e4af1793534aa17ae048fb18c97db323735f09",
+          "bytes": 1589180
+        },
+        {
+          "filename": "ground-sphere-medium-exact-normal-audit.json",
+          "sha256": "95963d0db9ca023e8103b54cb767a3070ec601029e7ab5e732af5f31b110b81d",
+          "bytes": 539
+        },
+        {
+          "filename": "ground-sphere-medium-exact-normal-audit.py",
+          "sha256": "997cb02090c88b49ceb4603c7606bcc5e9b920a6188701eebbe4aaf6fd84d1b1",
+          "bytes": 2235
+        },
+        {
+          "filename": "ground-sphere-medium.glb",
+          "sha256": "ec394181f35c838844ba9cf75c06f6b3ffb8dd36e62b2b611898aa9505476041",
+          "bytes": 1611776
+        },
+        {
+          "filename": "ground-sphere.glb",
+          "sha256": "4d50e9a2edd6d0bcbb53905a70d4fd35a0b4346cbf08d8e2feb806464cee7018",
+          "bytes": 1700988
+        },
+        {
+          "filename": "ice-0-albedo.png",
+          "sha256": "ef0b9ef41997a9588d87f7c2a153c50328656429b3915df204e922b18f79443c",
+          "bytes": 62640
+        },
+        {
+          "filename": "ice-0-orm.png",
+          "sha256": "422e6c2851744f6324e578e9bc34ec7c586caa5f1edec1a0cc959209a95ff879",
+          "bytes": 22205
+        },
+        {
+          "filename": "ice-1-albedo.png",
+          "sha256": "daa7ff65ab88390945537287f66700b14e6540b9c41f9bf5a4efd3059bffdd1f",
+          "bytes": 39313
+        },
+        {
+          "filename": "ice-1-orm.png",
+          "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+          "bytes": 14957
+        },
+        {
+          "filename": "ice-2-albedo.png",
+          "sha256": "5037a3fab7f4507535fc339b4f7024c7e70a20a191ad0120297a5c64c087a91d",
+          "bytes": 26859
+        },
+        {
+          "filename": "ice-2-orm.png",
+          "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+          "bytes": 14957
+        },
+        {
+          "filename": "ice-3-albedo.png",
+          "sha256": "485a3e3326d7cb6726742f50379726bc0fc4c3faa7686f6cd7fb6cf913481fc7",
+          "bytes": 34005
+        },
+        {
+          "filename": "ice-3-orm.png",
+          "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+          "bytes": 14957
+        },
+        {
+          "filename": "ice-4-albedo.png",
+          "sha256": "ec118c65ca7feb308a4540da06f75d20bbf7e0bef1a10c8863d44fc15e895037",
+          "bytes": 19156
+        },
+        {
+          "filename": "ice-4-orm.png",
+          "sha256": "5069fb80400d3e2e7e43d7e1c3e0a52a9d81b5aa8967c9ff790e92f68b3c51e4",
+          "bytes": 18539
+        },
+        {
+          "filename": "ice_moon_reference_composition_r001.test.ts",
+          "sha256": "5f3ce543cc49e5277584ef3662c7c6d02a79109c793c5f753c0ae95d13805112",
+          "bytes": 4828
+        },
+        {
+          "filename": "ice_moon_reference_composition_r001.ts",
+          "sha256": "b5b21f151821820e03c1ac0737e9ceeb821d71346e74fb215894a29e479de446",
+          "bytes": 7078
+        },
+        {
+          "filename": "ice_moon_reference_r001.tsconfig.json",
+          "sha256": "95e738d20d3e21d77fa586ba01838a306a1391d2a673b870ba2582ca8b4d09af",
+          "bytes": 166
+        },
+        {
+          "filename": "ice_moon_reference_r001.vitest.config.ts",
+          "sha256": "7572c56217cf31a5f4bb52462fe1af854fc2e45370057e117fd6cd67ba0f0dae",
+          "bytes": 177
+        },
+        {
+          "filename": "kit-preview.png",
+          "sha256": "60ec17e2b18a2f7e35e2d5aa9d0ea383a26c656841e0dd244e8ade767d4eb637",
+          "bytes": 1469647
+        },
+        {
+          "filename": "kit.blend",
+          "sha256": "af9684bfed2c11226bf1cc37c6c1ef5d23205cb807f19662a70d8571e3d5642b",
+          "bytes": 6149877
+        },
+        {
+          "filename": "kit.json",
+          "sha256": "3facdd4831a4ed043385ef6fdf75030cb7eadeba04b5ff19abd9587f0d0f4f2e",
+          "bytes": 32713080
+        },
+        {
+          "filename": "revision-notes.md",
+          "sha256": "1c1e1903399ecabff268aeab4b614fdc43ac7587cd9b1c8959fa39cacd34f2c0",
+          "bytes": 1828
+        },
+        {
+          "filename": "snow-cut-region.glb",
+          "sha256": "e105d1df3377797c25efafcebf3943ab9570c55363b7c9600d865bcbb04d9512",
+          "bytes": 999876
+        },
+        {
+          "filename": "snow-open-gorge.glb",
+          "sha256": "dd1ebe7db3f5ae6435c7858c7a5f071d3876bc5c76fd77eccaa093bed258914f",
+          "bytes": 1099880
+        },
+        {
+          "filename": "validation.json",
+          "sha256": "10bcdc229e270648bcc4c7a725e043df755e76dc53e7ea1488d0ea040c642aed",
+          "bytes": 4140
+        },
+        {
+          "filename": "variant-recipe.json",
+          "sha256": "eed38771088c3e30b6604825261e18515a9b26174192b0d497cadf068b1b4664",
+          "bytes": 614
+        }
+      ]
+    },
+    {
+      "reference_id": "planets--ice-moon-1",
+      "source_revision": 2,
+      "original_output_directory": "output/playwright/planet-reference-20260914/ice-moon-1-r002",
+      "artifact_directory": "designs/environment.planet.ice/revisions/r027/ice-moon-1/source-r002",
+      "working_gate": "open or historical trial; use attached dated independent review, never infer acceptance from source presence",
+      "source_timestamp_note": "Original files copied with metadata; capture JSON retains actual timestamps/context where present. Checkpoint time is not authoring time.",
+      "files": [
+        {
+          "filename": "build_extreme_moon_native_variants_r002.py",
+          "sha256": "f269d6172c932e142dffd9f9ac4b276ada7f238bec5ebbef4e5284ed406f5e09",
+          "bytes": 7247
+        },
+        {
+          "filename": "capture-retry-run.log",
+          "sha256": "332a8cda8b7f00afa7b4ea1d541d26a571cf9fb04e1efae8287558d8f3e34c85",
+          "bytes": 431
+        },
+        {
+          "filename": "capture-retry-seed38-capture.log",
+          "sha256": "bd30c4e8c094cbf88de6ee85875c3b0b312e2801c55a59fcc30f6d4eea3b7f6f",
+          "bytes": 87
+        },
+        {
+          "filename": "corrected-run.log",
+          "sha256": "332a8cda8b7f00afa7b4ea1d541d26a571cf9fb04e1efae8287558d8f3e34c85",
+          "bytes": 431
+        },
+        {
+          "filename": "corrected-seed38-capture.log",
+          "sha256": "bd30c4e8c094cbf88de6ee85875c3b0b312e2801c55a59fcc30f6d4eea3b7f6f",
+          "bytes": 87
+        },
+        {
+          "filename": "exact-reference.png",
+          "sha256": "f6144b319474eec44430bdd763c1de1a36ec089a1eb50880e876774a3d421fa0",
+          "bytes": 14161
+        },
+        {
+          "filename": "foundation-source.py",
+          "sha256": "002d90a4f818089acb1f50bba71ba7d0ed9c847ea55749a08ab403aa0ba48fe0",
+          "bytes": 21795
+        },
+        {
+          "filename": "fresh-session-seed38-capture.log",
+          "sha256": "bd30c4e8c094cbf88de6ee85875c3b0b312e2801c55a59fcc30f6d4eea3b7f6f",
+          "bytes": 87
+        },
+        {
+          "filename": "generator.py",
+          "sha256": "61a11ed6415f6ab9b10a5969b1bf0269addd0009dc4a7496f80b9d0d97d84fdf",
+          "bytes": 22459
+        },
+        {
+          "filename": "ground-sphere-exact-normal-audit.json",
+          "sha256": "cd5e4dd5e42072aca02fdf9bfe28da004a471092fa084be13f2aecacedd1f49b",
+          "bytes": 535
+        },
+        {
+          "filename": "ground-sphere-exact-normal-audit.py",
+          "sha256": "4962f14066ee5ce6a9d6424068a4bd4ee29ac2ae8e12d161b3e6e4cf36795b8a",
+          "bytes": 2207
+        },
+        {
+          "filename": "ground-sphere-low-exact-normal-audit.json",
+          "sha256": "2b4633d727451ac266ca0d89ce501655ebc75a28b9201d105129b91f65e4660d",
+          "bytes": 539
+        },
+        {
+          "filename": "ground-sphere-low-exact-normal-audit.py",
+          "sha256": "b95c4c5e059c50952f28ec20687e2b53f0dbae4625e39b40a84031c0bc95ded4",
+          "bytes": 2223
+        },
+        {
+          "filename": "ground-sphere-low.glb",
+          "sha256": "954b5ec7727227e6c572973464fd0dfd59efa21a269bacab2b4f0ba603e9a0a6",
+          "bytes": 5516820
+        },
+        {
+          "filename": "ground-sphere-medium-exact-normal-audit.json",
+          "sha256": "a220f8f214ae0ab96edddaf32bb75368023497ad06cffbf853237028b059970c",
+          "bytes": 542
+        },
+        {
+          "filename": "ground-sphere-medium-exact-normal-audit.py",
+          "sha256": "997cb02090c88b49ceb4603c7606bcc5e9b920a6188701eebbe4aaf6fd84d1b1",
+          "bytes": 2235
+        },
+        {
+          "filename": "ground-sphere-medium.glb",
+          "sha256": "346730008ec69b3ed8b68cf6fc8eb97aa5dbaed98d4a287aee0438b29200657b",
+          "bytes": 5606048
+        },
+        {
+          "filename": "ground-sphere.glb",
+          "sha256": "809768aa70447626468c293d2eafb572ad65ab197b52a0dcb9b00f3b1827c12c",
+          "bytes": 5951064
+        },
+        {
+          "filename": "ice-0-albedo.png",
+          "sha256": "ef0b9ef41997a9588d87f7c2a153c50328656429b3915df204e922b18f79443c",
+          "bytes": 62640
+        },
+        {
+          "filename": "ice-0-orm.png",
+          "sha256": "422e6c2851744f6324e578e9bc34ec7c586caa5f1edec1a0cc959209a95ff879",
+          "bytes": 22205
+        },
+        {
+          "filename": "ice-1-albedo.png",
+          "sha256": "daa7ff65ab88390945537287f66700b14e6540b9c41f9bf5a4efd3059bffdd1f",
+          "bytes": 39313
+        },
+        {
+          "filename": "ice-1-orm.png",
+          "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+          "bytes": 14957
+        },
+        {
+          "filename": "ice-2-albedo.png",
+          "sha256": "5037a3fab7f4507535fc339b4f7024c7e70a20a191ad0120297a5c64c087a91d",
+          "bytes": 26859
+        },
+        {
+          "filename": "ice-2-orm.png",
+          "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+          "bytes": 14957
+        },
+        {
+          "filename": "ice-3-albedo.png",
+          "sha256": "485a3e3326d7cb6726742f50379726bc0fc4c3faa7686f6cd7fb6cf913481fc7",
+          "bytes": 34005
+        },
+        {
+          "filename": "ice-3-orm.png",
+          "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+          "bytes": 14957
+        },
+        {
+          "filename": "ice-4-albedo.png",
+          "sha256": "ec118c65ca7feb308a4540da06f75d20bbf7e0bef1a10c8863d44fc15e895037",
+          "bytes": 19156
+        },
+        {
+          "filename": "ice-4-orm.png",
+          "sha256": "5069fb80400d3e2e7e43d7e1c3e0a52a9d81b5aa8967c9ff790e92f68b3c51e4",
+          "bytes": 18539
+        },
+        {
+          "filename": "ice_moon_reference_composition_r002.test.ts",
+          "sha256": "924d55d757495e0dbd0c2f531928062ab286fd3c5132e2fc168649cf39876204",
+          "bytes": 4829
+        },
+        {
+          "filename": "ice_moon_reference_composition_r002.ts",
+          "sha256": "d6d94a18d02b578ae52ee3b7cdcd12938dedf5048c8a1e956a15a257a74ca989",
+          "bytes": 7079
+        },
+        {
+          "filename": "ice_moon_reference_r002.tsconfig.json",
+          "sha256": "ee31d2686d971fe5284eb901a7a9a63e619f6d6990672a8b0670d360a8629787",
+          "bytes": 166
+        },
+        {
+          "filename": "ice_moon_reference_r002.vitest.config.ts",
+          "sha256": "74f1a8a91dace1b844cf8a3d9b29e6369407709bc861d83b6b09768119c765d8",
+          "bytes": 177
+        },
+        {
+          "filename": "kit-preview.png",
+          "sha256": "5bb6f11426e10ec1741718294d0de5bac141fa3645af76f969e1e5fe3895b579",
+          "bytes": 1469647
+        },
+        {
+          "filename": "kit.blend",
+          "sha256": "21993c44f4a117b11656fa7e024f0b15a64eb3ba0a9a5a0b92d840906ecd1d02",
+          "bytes": 11484221
+        },
+        {
+          "filename": "kit.json",
+          "sha256": "dd192b60d46ad562bef442306a7ded75053647ea69a5ceca2fe05b70323a5fb8",
+          "bytes": 95700105
+        },
+        {
+          "filename": "projection-stage.log",
+          "sha256": "18d42634e25b6e8e819648357d4cd46f25cb70641efa89e18bc769799d329a49",
+          "bytes": 3374
+        },
+        {
+          "filename": "revision-notes.md",
+          "sha256": "2ce86ef133b71260ba4165aed461918835f2292a0422f2942af7cc852a42a485",
+          "bytes": 1138
+        },
+        {
+          "filename": "snow-cut-region.glb",
+          "sha256": "c95b24c2923ad4e2748b6df230b99fca21b4787e9a84596901a3ac66ca77da38",
+          "bytes": 999876
+        },
+        {
+          "filename": "snow-open-gorge.glb",
+          "sha256": "827d2122e9362d21b472c86c3ce516f4635defc137f4f31dfa0f6bf0a5b112d0",
+          "bytes": 1099880
+        },
+        {
+          "filename": "validation.json",
+          "sha256": "80b8c5c9b9c13c815d772c60e02e619abd53a99010972136e0b2b6be438514c1",
+          "bytes": 4140
+        },
+        {
+          "filename": "variant-recipe.json",
+          "sha256": "5d467ced645a6de00989267bc9336901d34f4a74b1318adc1746614668afeb73",
+          "bytes": 634
+        }
+      ]
+    },
+    {
+      "reference_id": "planets--ice-moon-2",
+      "source_revision": 1,
+      "original_output_directory": "output/playwright/planet-reference-20260914/ice-moon-2-r001",
+      "artifact_directory": "designs/environment.planet.ice/revisions/r027/ice-moon-2/source-r001",
+      "working_gate": "open or historical trial; use attached dated independent review, never infer acceptance from source presence",
+      "source_timestamp_note": "Original files copied with metadata; capture JSON retains actual timestamps/context where present. Checkpoint time is not authoring time.",
+      "files": [
+        {
+          "filename": "build_extreme_moon_native_variants_r001.py",
+          "sha256": "fc48710d084c02cdafe8186effd4a8647e8668828ce498441421202b05ff92df",
+          "bytes": 4516
+        },
+        {
+          "filename": "corrected-run.log",
+          "sha256": "700ecc36fcc53f3d9035eb890f8bea156822283639463632642295406fb04b5a",
+          "bytes": 549
+        },
+        {
+          "filename": "corrected-seed38-angle2.png",
+          "sha256": "b1d213a4c0571cb65b9c3a971f251a112cefcf3a28fbe049dc9b26d5ad4da1ac",
+          "bytes": 298165
+        },
+        {
+          "filename": "corrected-seed38-capture.log",
+          "sha256": "8dfa7f483c1866f6eda5199d94e2617f63a8a5f90fa43a2685dfbd5d422eb590",
+          "bytes": 2754
+        },
+        {
+          "filename": "corrected-seed38-reference-scale.png",
+          "sha256": "a2ac8cbd6e88c8710ebf6d34239ec22ff6fa523b103e310982fb15a72637788d",
+          "bytes": 10963
+        },
+        {
+          "filename": "corrected-seed38.json",
+          "sha256": "ca47f73d286fc46f8a0aca22f718d2c4cd9c41c5edb3a18bf67c6bec91b05dc1",
+          "bytes": 1970
+        },
+        {
+          "filename": "corrected-seed38.png",
+          "sha256": "ff1155132be31614f820c5567f36332073d12a486c211578c2abe523705d0b52",
+          "bytes": 308750
+        },
+        {
+          "filename": "exact-reference.png",
+          "sha256": "c7a9703b3665f3d50e16c93ea2e3337c0e74389536e23637abc2c2f3b50120c7",
+          "bytes": 4891
+        },
+        {
+          "filename": "foundation-source.py",
+          "sha256": "002d90a4f818089acb1f50bba71ba7d0ed9c847ea55749a08ab403aa0ba48fe0",
+          "bytes": 21795
+        },
+        {
+          "filename": "generator.py",
+          "sha256": "ca364a21e93ae436544c9452fa1d6c64857d04297f7f2e6c3c77f6e865f503b2",
+          "bytes": 22031
+        },
+        {
+          "filename": "ground-sphere-exact-normal-audit.json",
+          "sha256": "b2798a0274041c482b18dfa372b87584d4d69e338da82bae819312d854473c08",
+          "bytes": 532
+        },
+        {
+          "filename": "ground-sphere-exact-normal-audit.py",
+          "sha256": "4962f14066ee5ce6a9d6424068a4bd4ee29ac2ae8e12d161b3e6e4cf36795b8a",
+          "bytes": 2207
+        },
+        {
+          "filename": "ground-sphere-low-exact-normal-audit.json",
+          "sha256": "68207ab922b831a2241b6f884b1976e3e5714efe54329bb2d69af9c90de709e6",
+          "bytes": 536
+        },
+        {
+          "filename": "ground-sphere-low-exact-normal-audit.py",
+          "sha256": "b95c4c5e059c50952f28ec20687e2b53f0dbae4625e39b40a84031c0bc95ded4",
+          "bytes": 2223
+        },
+        {
+          "filename": "ground-sphere-low.glb",
+          "sha256": "a66368913395525901a54f77d3094d1b39ced69f5f2aba577bc505788ae74f64",
+          "bytes": 1298752
+        },
+        {
+          "filename": "ground-sphere-medium-exact-normal-audit.json",
+          "sha256": "747a373509bbd50df73aea24ec2120d24d83d970c0b20cd74fcfabb6cf4896fe",
+          "bytes": 539
+        },
+        {
+          "filename": "ground-sphere-medium-exact-normal-audit.py",
+          "sha256": "997cb02090c88b49ceb4603c7606bcc5e9b920a6188701eebbe4aaf6fd84d1b1",
+          "bytes": 2235
+        },
+        {
+          "filename": "ground-sphere-medium.glb",
+          "sha256": "6d22d11affcaef93d5a2198e00f066567701d6685491a278f78093dbafb1c4c5",
+          "bytes": 1321348
+        },
+        {
+          "filename": "ground-sphere.glb",
+          "sha256": "fb12106630adcd7262204f70361c7704c4c737870732d50ce2d0b0d997f7f9eb",
+          "bytes": 1410564
+        },
+        {
+          "filename": "ice-0-albedo.png",
+          "sha256": "ef0b9ef41997a9588d87f7c2a153c50328656429b3915df204e922b18f79443c",
+          "bytes": 62640
+        },
+        {
+          "filename": "ice-0-orm.png",
+          "sha256": "422e6c2851744f6324e578e9bc34ec7c586caa5f1edec1a0cc959209a95ff879",
+          "bytes": 22205
+        },
+        {
+          "filename": "ice-1-albedo.png",
+          "sha256": "daa7ff65ab88390945537287f66700b14e6540b9c41f9bf5a4efd3059bffdd1f",
+          "bytes": 39313
+        },
+        {
+          "filename": "ice-1-orm.png",
+          "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+          "bytes": 14957
+        },
+        {
+          "filename": "ice-2-albedo.png",
+          "sha256": "5037a3fab7f4507535fc339b4f7024c7e70a20a191ad0120297a5c64c087a91d",
+          "bytes": 26859
+        },
+        {
+          "filename": "ice-2-orm.png",
+          "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+          "bytes": 14957
+        },
+        {
+          "filename": "ice-3-albedo.png",
+          "sha256": "485a3e3326d7cb6726742f50379726bc0fc4c3faa7686f6cd7fb6cf913481fc7",
+          "bytes": 34005
+        },
+        {
+          "filename": "ice-3-orm.png",
+          "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+          "bytes": 14957
+        },
+        {
+          "filename": "ice-4-albedo.png",
+          "sha256": "ec118c65ca7feb308a4540da06f75d20bbf7e0bef1a10c8863d44fc15e895037",
+          "bytes": 19156
+        },
+        {
+          "filename": "ice-4-orm.png",
+          "sha256": "5069fb80400d3e2e7e43d7e1c3e0a52a9d81b5aa8967c9ff790e92f68b3c51e4",
+          "bytes": 18539
+        },
+        {
+          "filename": "ice_moon_reference_composition_r001.test.ts",
+          "sha256": "5f3ce543cc49e5277584ef3662c7c6d02a79109c793c5f753c0ae95d13805112",
+          "bytes": 4828
+        },
+        {
+          "filename": "ice_moon_reference_composition_r001.ts",
+          "sha256": "b5b21f151821820e03c1ac0737e9ceeb821d71346e74fb215894a29e479de446",
+          "bytes": 7078
+        },
+        {
+          "filename": "ice_moon_reference_r001.tsconfig.json",
+          "sha256": "95e738d20d3e21d77fa586ba01838a306a1391d2a673b870ba2582ca8b4d09af",
+          "bytes": 166
+        },
+        {
+          "filename": "ice_moon_reference_r001.vitest.config.ts",
+          "sha256": "7572c56217cf31a5f4bb52462fe1af854fc2e45370057e117fd6cd67ba0f0dae",
+          "bytes": 177
+        },
+        {
+          "filename": "kit-preview.png",
+          "sha256": "279d3192e7a1afc26e74f0b32af465245c158e2e395ae364e7d48129f61c0e25",
+          "bytes": 1442744
+        },
+        {
+          "filename": "kit.blend",
+          "sha256": "ad0b93b1ca55c3e43fbb64335b3ffdd9dc29cf340bfc0188db35b77969a6b82c",
+          "bytes": 5751289
+        },
+        {
+          "filename": "kit.json",
+          "sha256": "6258e8c5a48bf5300e904dd64a71465178aace03c9243ecb1aa4235cc409082d",
+          "bytes": 28562611
+        },
+        {
+          "filename": "revision-notes.md",
+          "sha256": "16b68b9aa1c3031108290109dc6534530afe5e706796d8f5c90d60c81eb81316",
+          "bytes": 1841
+        },
+        {
+          "filename": "snow-cut-region.glb",
+          "sha256": "f5c907548311f4cb0c7ada1ef563f6445a5a51ce586d0e36303d6c20c5517a8d",
+          "bytes": 997892
+        },
+        {
+          "filename": "snow-open-gorge.glb",
+          "sha256": "6f0a5960f9031da1de357c3f1ab9b3ec9e1c79a595ee1fdc8839bf4f83ac9060",
+          "bytes": 1073420
+        },
+        {
+          "filename": "validation.json",
+          "sha256": "0ac3b4a568c1b207059e2622364416766f61315519f7cdcbe4b2b446a47e8c69",
+          "bytes": 4129
+        },
+        {
+          "filename": "variant-recipe.json",
+          "sha256": "a319d3261925f4eac22d63cd69c57c5b6829e4d5cd277dcc78763bce65beb9dc",
+          "bytes": 609
+        }
+      ]
+    },
+    {
+      "reference_id": "planets--ice-moon-2",
+      "source_revision": 2,
+      "original_output_directory": "output/playwright/planet-reference-20260914/ice-moon-2-r002",
+      "artifact_directory": "designs/environment.planet.ice/revisions/r027/ice-moon-2/source-r002",
+      "working_gate": "open or historical trial; use attached dated independent review, never infer acceptance from source presence",
+      "source_timestamp_note": "Original files copied with metadata; capture JSON retains actual timestamps/context where present. Checkpoint time is not authoring time.",
+      "files": [
+        {
+          "filename": "build_extreme_moon_native_variants_r002.py",
+          "sha256": "f269d6172c932e142dffd9f9ac4b276ada7f238bec5ebbef4e5284ed406f5e09",
+          "bytes": 7247
+        },
+        {
+          "filename": "exact-reference.png",
+          "sha256": "c7a9703b3665f3d50e16c93ea2e3337c0e74389536e23637abc2c2f3b50120c7",
+          "bytes": 4891
+        },
+        {
+          "filename": "foundation-source.py",
+          "sha256": "002d90a4f818089acb1f50bba71ba7d0ed9c847ea55749a08ab403aa0ba48fe0",
+          "bytes": 21795
+        },
+        {
+          "filename": "generator.py",
+          "sha256": "13123dda5a659f46d72c2643df4303938d7f00f428b7fbc4fd9da42f0ef17c9b",
+          "bytes": 22449
+        },
+        {
+          "filename": "ground-sphere-exact-normal-audit.json",
+          "sha256": "44611dae10adaddc67d5401394b7a16665163f7cf026f0a0b9839db5d48c29b6",
+          "bytes": 535
+        },
+        {
+          "filename": "ground-sphere-exact-normal-audit.py",
+          "sha256": "4962f14066ee5ce6a9d6424068a4bd4ee29ac2ae8e12d161b3e6e4cf36795b8a",
+          "bytes": 2207
+        },
+        {
+          "filename": "ground-sphere-low-exact-normal-audit.json",
+          "sha256": "dec1b92f7e302787f5658f9b76132b2a1cf8088d92e7b68c3e2164a5d6f34a29",
+          "bytes": 539
+        },
+        {
+          "filename": "ground-sphere-low-exact-normal-audit.py",
+          "sha256": "b95c4c5e059c50952f28ec20687e2b53f0dbae4625e39b40a84031c0bc95ded4",
+          "bytes": 2223
+        },
+        {
+          "filename": "ground-sphere-low.glb",
+          "sha256": "4bfedc7f1bf24a3e36e0d56cb86b6ea904d897dbd04939c02ce1184191e33c3d",
+          "bytes": 4934652
+        },
+        {
+          "filename": "ground-sphere-medium-exact-normal-audit.json",
+          "sha256": "c6364becc24842f6cdf891fdc0914074727e53bd3ef3786a905593bfc1013ba9",
+          "bytes": 542
+        },
+        {
+          "filename": "ground-sphere-medium-exact-normal-audit.py",
+          "sha256": "997cb02090c88b49ceb4603c7606bcc5e9b920a6188701eebbe4aaf6fd84d1b1",
+          "bytes": 2235
+        },
+        {
+          "filename": "ground-sphere-medium.glb",
+          "sha256": "b2ded9785ff3a369c453fd760b9d13b42afd72457c8e7cb2bc9a3e45c6eae71c",
+          "bytes": 5023880
+        },
+        {
+          "filename": "ground-sphere.glb",
+          "sha256": "1c5e21737411907f78c3a5ae0d23ed3e17c2dd9b79df41a4f17e059f8a385c16",
+          "bytes": 5368896
+        },
+        {
+          "filename": "ice-0-albedo.png",
+          "sha256": "ef0b9ef41997a9588d87f7c2a153c50328656429b3915df204e922b18f79443c",
+          "bytes": 62640
+        },
+        {
+          "filename": "ice-0-orm.png",
+          "sha256": "422e6c2851744f6324e578e9bc34ec7c586caa5f1edec1a0cc959209a95ff879",
+          "bytes": 22205
+        },
+        {
+          "filename": "ice-1-albedo.png",
+          "sha256": "daa7ff65ab88390945537287f66700b14e6540b9c41f9bf5a4efd3059bffdd1f",
+          "bytes": 39313
+        },
+        {
+          "filename": "ice-1-orm.png",
+          "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+          "bytes": 14957
+        },
+        {
+          "filename": "ice-2-albedo.png",
+          "sha256": "5037a3fab7f4507535fc339b4f7024c7e70a20a191ad0120297a5c64c087a91d",
+          "bytes": 26859
+        },
+        {
+          "filename": "ice-2-orm.png",
+          "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+          "bytes": 14957
+        },
+        {
+          "filename": "ice-3-albedo.png",
+          "sha256": "485a3e3326d7cb6726742f50379726bc0fc4c3faa7686f6cd7fb6cf913481fc7",
+          "bytes": 34005
+        },
+        {
+          "filename": "ice-3-orm.png",
+          "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+          "bytes": 14957
+        },
+        {
+          "filename": "ice-4-albedo.png",
+          "sha256": "ec118c65ca7feb308a4540da06f75d20bbf7e0bef1a10c8863d44fc15e895037",
+          "bytes": 19156
+        },
+        {
+          "filename": "ice-4-orm.png",
+          "sha256": "5069fb80400d3e2e7e43d7e1c3e0a52a9d81b5aa8967c9ff790e92f68b3c51e4",
+          "bytes": 18539
+        },
+        {
+          "filename": "ice_moon_reference_composition_r002.test.ts",
+          "sha256": "924d55d757495e0dbd0c2f531928062ab286fd3c5132e2fc168649cf39876204",
+          "bytes": 4829
+        },
+        {
+          "filename": "ice_moon_reference_composition_r002.ts",
+          "sha256": "d6d94a18d02b578ae52ee3b7cdcd12938dedf5048c8a1e956a15a257a74ca989",
+          "bytes": 7079
+        },
+        {
+          "filename": "ice_moon_reference_r002.tsconfig.json",
+          "sha256": "ee31d2686d971fe5284eb901a7a9a63e619f6d6990672a8b0670d360a8629787",
+          "bytes": 166
+        },
+        {
+          "filename": "ice_moon_reference_r002.vitest.config.ts",
+          "sha256": "74f1a8a91dace1b844cf8a3d9b29e6369407709bc861d83b6b09768119c765d8",
+          "bytes": 177
+        },
+        {
+          "filename": "kit-preview.png",
+          "sha256": "ab65278b32eef574f9d9528c515882d7abdca0b5406c546b0c1204d7ca8e3f21",
+          "bytes": 1451133
+        },
+        {
+          "filename": "kit.blend",
+          "sha256": "296685bfbddd4c96a7285aaf2d2a02534f29c557b3632d86513011b9e10daa3a",
+          "bytes": 10843469
+        },
+        {
+          "filename": "kit.json",
+          "sha256": "15cc6b11bcdc0abb94987bf36f632bdf0a71ef315b7e66d76c3da90bb66ae64e",
+          "bytes": 87657228
+        },
+        {
+          "filename": "revision-notes.md",
+          "sha256": "3dc34b00ce56af646608b441dcaaf03ca97296beeb0a9437b2efb550849f3060",
+          "bytes": 1138
+        },
+        {
+          "filename": "snow-cut-region.glb",
+          "sha256": "053f63a98c79505e5c1b3e5ac091b8aa64b77f92198dc3167ecea3f277d7fb73",
+          "bytes": 998228
+        },
+        {
+          "filename": "snow-open-gorge.glb",
+          "sha256": "078cd59962293b1c0c87e07cef574d4bb26e6d20e7c5dd99cc516dc42f05d99b",
+          "bytes": 1083140
+        },
+        {
+          "filename": "validation.json",
+          "sha256": "7f57a478b9791f408b4e1a0c3f11b44d174bddcde805ffa54d9f6f53c1dd6a00",
+          "bytes": 4143
+        },
+        {
+          "filename": "variant-recipe.json",
+          "sha256": "0e14fed22d709721436e1dc6633f5b3a31d3f57b5c29d45ef78ba118ec1fc8be",
+          "bytes": 629
+        }
+      ]
+    }
+  ],
+  "review_reports": [
+    {
+      "path": "designs/environment.planet.ice/revisions/r027/reviews/ice-volcanic-moons-r001-gas-mineral-r002.md",
+      "sha256": "3135c0193a05ff766208ce522f61883968d4126997272d7e719c3569ff289979"
+    }
+  ]
+}

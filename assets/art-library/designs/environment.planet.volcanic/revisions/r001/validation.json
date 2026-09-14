@@ -1,0 +1,98 @@
+[
+  {
+    "seed": 0,
+    "coverage": 0,
+    "triangles": 141104,
+    "placements": 2400,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.2577875649571362
+  },
+  {
+    "seed": 0,
+    "coverage": 0.55,
+    "triangles": 126032,
+    "placements": 2102,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.2577875649571362
+  },
+  {
+    "seed": 0,
+    "coverage": 1,
+    "triangles": 112340,
+    "placements": 1844,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.2568492636910047
+  },
+  {
+    "seed": 89,
+    "coverage": 0,
+    "triangles": 141268,
+    "placements": 2400,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.2572536947563113
+  },
+  {
+    "seed": 89,
+    "coverage": 0.55,
+    "triangles": 125352,
+    "placements": 2084,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.2572536947563113
+  },
+  {
+    "seed": 89,
+    "coverage": 1,
+    "triangles": 114156,
+    "placements": 1867,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.2572536947563113
+  },
+  {
+    "seed": 9187,
+    "coverage": 0,
+    "triangles": 138892,
+    "placements": 2400,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.2564788077093856
+  },
+  {
+    "seed": 9187,
+    "coverage": 0.55,
+    "triangles": 122716,
+    "placements": 2085,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.2564788077093856
+  },
+  {
+    "seed": 9187,
+    "coverage": 1,
+    "triangles": 111148,
+    "placements": 1856,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.2564788077093856
+  },
+  {
+    "seed": 4294967295,
+    "coverage": 0,
+    "triangles": 136796,
+    "placements": 2400,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.256437515311627
+  },
+  {
+    "seed": 4294967295,
+    "coverage": 0.55,
+    "triangles": 121104,
+    "placements": 2091,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.256437515311627
+  },
+  {
+    "seed": 4294967295,
+    "coverage": 1,
+    "triangles": 108932,
+    "placements": 1848,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.256437515311627
+  }
+]

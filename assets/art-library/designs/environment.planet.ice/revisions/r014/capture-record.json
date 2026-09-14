@@ -1,0 +1,41 @@
+{
+  "live": {
+    "seed": 47,
+    "revision": "live-ice",
+    "triangles": 191990,
+    "meshes": 4,
+    "materials": 4,
+    "drawCalls": 6,
+    "activeIndices": 1099662
+  },
+  "candidate": {
+    "seed": 47,
+    "revision": "ice-r014",
+    "triangles": 81508,
+    "meshes": 4,
+    "materials": 5,
+    "nonemptyMaterials": 4,
+    "drawCalls": 8,
+    "activeIndices": 489048,
+    "sharedHeroShadows": true
+  },
+  "sharedContext": {
+    "shadowMapSize": 1024,
+    "environment": "/assets/materials/frontier-workshop.hdr",
+    "environmentReady": true,
+    "environmentIntensity": 0.28,
+    "rightHanded": true,
+    "viewport": [
+      1780,
+      740
+    ],
+    "canvas": [
+      560,
+      560
+    ],
+    "URL": "http://sidereal.tail7a58a6.ts.net:5173/@fs/root/sidereal_spacetime/output/playwright/planet-native-r014-review.html",
+    "databaseCapture": false,
+    "baselineReusedFrom": "live-ice-seed47-control.png"
+  },
+  "verdict": "Root review pending. Taller blue walls/deep cavities improve structure, but radial column rows, broad white shingle region and muted optics remain substantial gaps."
+}

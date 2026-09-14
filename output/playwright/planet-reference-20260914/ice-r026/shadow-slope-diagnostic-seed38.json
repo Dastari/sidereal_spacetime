@@ -1,0 +1,73 @@
+{
+  "stats": {
+    "style": "ice",
+    "seed": 38,
+    "frames": 155,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 0,
+      "requestedLOD": 0,
+      "buildMs": 3071.7999992370605,
+      "localLights": 0,
+      "transmissionMaterials": 2,
+      "transmissionTargets": 1
+    },
+    "baselineEnvironmentEnabled": false,
+    "meshes": 8,
+    "triangles": 549004,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": []
+  },
+  "shadowsEnabled": true,
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 13.5
+  },
+  "shadows": [
+    {
+      "casters": 7,
+      "normalBias": 0.008,
+      "bias": 0.003
+    }
+  ],
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "ice",
+    "revision": "ice-r026",
+    "seed": 38,
+    "radius": 5.5,
+    "alpha": null,
+    "beta": null,
+    "bias": 0.008,
+    "depth_bias": 0.003,
+    "glow": false,
+    "local_light": false,
+    "prefix": "shadow-slope-diagnostic",
+    "reference_scale": true,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": false,
+    "unit": false,
+    "target": null,
+    "shadows_off": false,
+    "reference_radius": 13.5
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=ice&seed=38&candidate=1&capture=1789363336486136834&shadowBias=0.008",
+  "images": {
+    "shadow-slope-diagnostic-seed38.png": "617d2c95a0587e67bc3253e5b2a9228a27a0032ba21d0808edb8d75fa1e46d17",
+    "shadow-slope-diagnostic-seed38-angle2.png": "7c0b601c8ff434cc297201f7d2b4da67ebfbef5c93b3968070f31669097b51c6",
+    "shadow-slope-diagnostic-seed38-reference-scale.png": "eab2ea95263b04597cd54825c4041552c7a1330c81d6dc574964d17044c7c6ab"
+  },
+  "kitSha256": "cd6210c54b001bbaa7e753de0a5af3965b572a19d1d4913427ac4d7398cd3574"
+}

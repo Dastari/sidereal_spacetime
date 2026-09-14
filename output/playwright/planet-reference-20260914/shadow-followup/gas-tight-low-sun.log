@@ -1,0 +1,4 @@
+### Ran Playwright code
+```js
+await (async(page)=>{for(const beta of [1.9,1.1]){for(const enabled of [true,false]){await page.evaluate(({beta,enabled})=>{const r=window.planetReview;r.scene.shadowsEnabled=enabled;r.camera.beta=beta;r.camera.radius=7.5;for(const l of r.scene.lights){if(l.getShadowGenerator()){l.direction.set(-.6,-.22,.45).normalize();const distance=l.position.length();l.position.copyFrom(l.direction.scale(-distance));}}r.scene.render();r.scene.render();},{beta,enabled});await page.screenshot({path:"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/shadow-followup"+'/gas-tight-low-sun-'+beta+'-'+(enabled?'on':'off')+'.png'});}}})(page);
+```

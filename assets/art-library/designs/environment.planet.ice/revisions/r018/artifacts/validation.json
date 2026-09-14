@@ -1,0 +1,96 @@
+{
+  "publication": "isolated draft; existing ice-r015 untouched",
+  "sourceComponentsManifold": true,
+  "attributes": "Corner-expanded native normals and UVs preserve authored hard edges, snow smoothing and seams",
+  "variants": [
+    {
+      "name": "snow-cut-region",
+      "triangles": 5576,
+      "normalCount": 16728,
+      "uvCount": 16728,
+      "bounds": [
+        [
+          -1.8899106979370117,
+          2.307384490966797
+        ],
+        [
+          -1.6249163150787354,
+          1.3551563024520874
+        ],
+        [
+          -0.8399999737739563,
+          1.0099999904632568
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere",
+      "triangles": 5120,
+      "normalCount": 15360,
+      "uvCount": 15360,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-medium",
+      "triangles": 1280,
+      "normalCount": 3840,
+      "uvCount": 3840,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-low",
+      "triangles": 320,
+      "normalCount": 960,
+      "uvCount": 960,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "sha256": {
+    "kit.blend": "61679476cf32843b28d8ac306c2441362b13fb0e1f4137b9fd40e2742a47b3f1",
+    "ground-sphere.glb": "12fc9cf80277ec7192a4d6aed9d7cd6efc4381521127b2453500cea3c5504fdb",
+    "ground-sphere-low.glb": "d36b1ae76cdb4ac37e049ad8a05ac8fd6650b64b79921cffd16355d6a2def16f",
+    "snow-cut-region.glb": "73c3e95fdc392ccf583b21796fe0e8ab8ed8f899e0abd93a86eb5b0319a71dac",
+    "ground-sphere-medium.glb": "5f39573cf00d2c7857ee2db18ed62924da7735d07cd4f099d5b7d637f71102ac",
+    "kit-preview.png": "e2da5e1d6692f7e92777121068de942d0a6557636e70414279720f6029e75a6c",
+    "kit.json": "7dae44b5f9ede68aedbe4433238fd268784cbb466346dc71107e14de3b416b3f"
+  }
+}

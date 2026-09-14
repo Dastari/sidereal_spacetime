@@ -1,0 +1,3121 @@
+{
+  "schema": "sidereal.planet-broader-seed-capture.v1",
+  "status": "planned; no capture executed",
+  "candidateCount": 28,
+  "jobCount": 56,
+  "seeds": [
+    117,
+    904
+  ],
+  "maximumConcurrentHeavyJobs": 1,
+  "executionPrerequisites": [
+    "Parent grants heavy slot; no Blender or test process concurrently.",
+    "Current integrated shadow correction passes tests and seed38 inspection.",
+    "Each kit SHA256 matches; stage exact revisions first if using staged routes.",
+    "Reuse isolated review browser; park about:blank between jobs; never overwrite existing prefix.",
+    "Check current capture tooling waits for active LOD after changing camera; tiny screenshots must represent settled requested detail."
+  ],
+  "acceptance": [
+    "Inspect all three views for each seed; record independent Astra review.",
+    "Retain approved geometry; treat new artifacts as concrete regressions, not automatic art reopening.",
+    "Run approach/retreat/Observe on genuinely varying Desert/Ocean/Temperate/Volcanic mains separately.",
+    "Software screenshots cannot close hardware timing, normal-game integration or owner approval."
+  ],
+  "jobs": [
+    {
+      "id": "desert-r014-seed117",
+      "revision": "desert-r014",
+      "style": "desert",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "f42546e33499b7727d1609c8a808fe52de880a10f630ebafeac33d68c9ef4e96",
+      "acceptedCapture": null,
+      "referenceRadius": 13.5,
+      "referenceRadiusProvenance": "planned capture tool default 13.5; accepted Desert14 image has no capture JSON; verify exact crop scale before visual sign-off",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "desert",
+        "--revision",
+        "desert-r014",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "13.5",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "desert-r014-seed904",
+      "revision": "desert-r014",
+      "style": "desert",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "f42546e33499b7727d1609c8a808fe52de880a10f630ebafeac33d68c9ef4e96",
+      "acceptedCapture": null,
+      "referenceRadius": 13.5,
+      "referenceRadiusProvenance": "planned capture tool default 13.5; accepted Desert14 image has no capture JSON; verify exact crop scale before visual sign-off",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "desert",
+        "--revision",
+        "desert-r014",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "13.5",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "rocky-r010-seed117",
+      "revision": "rocky-r010",
+      "style": "rock",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "fdb5964a2c4dcde7889fd821a0b4625664eae477be62130c7ea99794a5d98de2",
+      "acceptedCapture": "rocky-r010/corrected-seed38.json",
+      "referenceRadius": 13.5,
+      "referenceRadiusProvenance": "capture tool default 13.5; prior request omitted field",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "rock",
+        "--revision",
+        "rocky-r010",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "13.5",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "rocky-r010-seed904",
+      "revision": "rocky-r010",
+      "style": "rock",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "fdb5964a2c4dcde7889fd821a0b4625664eae477be62130c7ea99794a5d98de2",
+      "acceptedCapture": "rocky-r010/corrected-seed38.json",
+      "referenceRadius": 13.5,
+      "referenceRadiusProvenance": "capture tool default 13.5; prior request omitted field",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "rock",
+        "--revision",
+        "rocky-r010",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "13.5",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "ocean-r007-seed117",
+      "revision": "ocean-r007",
+      "style": "ocean",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "71c2918ae71f8d074bfb8a8d94bc76f7271dd94e8a20c2c1b1f323f30d057f22",
+      "acceptedCapture": "ocean-r007/current-optics-seed38.json",
+      "referenceRadius": 13.5,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "ocean",
+        "--revision",
+        "ocean-r007",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "13.5",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "ocean-r007-seed904",
+      "revision": "ocean-r007",
+      "style": "ocean",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "71c2918ae71f8d074bfb8a8d94bc76f7271dd94e8a20c2c1b1f323f30d057f22",
+      "acceptedCapture": "ocean-r007/current-optics-seed38.json",
+      "referenceRadius": 13.5,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "ocean",
+        "--revision",
+        "ocean-r007",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "13.5",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "temperate-r003-seed117",
+      "revision": "temperate-r003",
+      "style": "temperate",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "c8c3470f41e85b53b9ce1e1f05b24446900bfad439a0522cfedce3c48eef01fc",
+      "acceptedCapture": "temperate-r003/corrected-seed38.json",
+      "referenceRadius": 13.5,
+      "referenceRadiusProvenance": "capture tool default 13.5; prior request omitted field",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "temperate",
+        "--revision",
+        "temperate-r003",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "13.5",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "temperate-r003-seed904",
+      "revision": "temperate-r003",
+      "style": "temperate",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "c8c3470f41e85b53b9ce1e1f05b24446900bfad439a0522cfedce3c48eef01fc",
+      "acceptedCapture": "temperate-r003/corrected-seed38.json",
+      "referenceRadius": 13.5,
+      "referenceRadiusProvenance": "capture tool default 13.5; prior request omitted field",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "temperate",
+        "--revision",
+        "temperate-r003",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "13.5",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "toxic-r007-seed117",
+      "revision": "toxic-r007",
+      "style": "toxic",
+      "seed": 117,
+      "weatherRevision": "toxic-fog-r005",
+      "kitSha256": "df85fefbbb5b9474e810197333255819d33dcf3c911462f98dc49a111edfcb2c",
+      "acceptedCapture": "toxic-r007/corrected-seed38.json",
+      "referenceRadius": 13.5,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "toxic",
+        "--revision",
+        "toxic-r007",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "13.5",
+        "--weather-revision",
+        "toxic-fog-r005",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "toxic-r007-seed904",
+      "revision": "toxic-r007",
+      "style": "toxic",
+      "seed": 904,
+      "weatherRevision": "toxic-fog-r005",
+      "kitSha256": "df85fefbbb5b9474e810197333255819d33dcf3c911462f98dc49a111edfcb2c",
+      "acceptedCapture": "toxic-r007/corrected-seed38.json",
+      "referenceRadius": 13.5,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "toxic",
+        "--revision",
+        "toxic-r007",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "13.5",
+        "--weather-revision",
+        "toxic-fog-r005",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "crystal-r013-seed117",
+      "revision": "crystal-r013",
+      "style": "crystal",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "f3798cc5e67d0dfbed1caf86001002906465021764839be9da0260615052e369",
+      "acceptedCapture": "crystal-r013/corrected-seed38.json",
+      "referenceRadius": 13.5,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": true,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "crystal",
+        "--revision",
+        "crystal-r013",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "13.5",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow",
+        "--local-light"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "crystal-r013-seed904",
+      "revision": "crystal-r013",
+      "style": "crystal",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "f3798cc5e67d0dfbed1caf86001002906465021764839be9da0260615052e369",
+      "acceptedCapture": "crystal-r013/corrected-seed38.json",
+      "referenceRadius": 13.5,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": true,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "crystal",
+        "--revision",
+        "crystal-r013",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "13.5",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow",
+        "--local-light"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "volcanic-r023-seed117",
+      "revision": "volcanic-r023",
+      "style": "volcanic",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "e591d10cc0810958484bc058ec0b3d0307bde8acd8ff44d1a40d8c50116f3ecf",
+      "acceptedCapture": "volcanic-r023/smoke-restored-seed38.json",
+      "referenceRadius": 13.5,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "volcanic",
+        "--revision",
+        "volcanic-r023",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "13.5",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "volcanic-r023-seed904",
+      "revision": "volcanic-r023",
+      "style": "volcanic",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "e591d10cc0810958484bc058ec0b3d0307bde8acd8ff44d1a40d8c50116f3ecf",
+      "acceptedCapture": "volcanic-r023/smoke-restored-seed38.json",
+      "referenceRadius": 13.5,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "volcanic",
+        "--revision",
+        "volcanic-r023",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "13.5",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "ice-r026-seed117",
+      "revision": "ice-r026",
+      "style": "ice",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "cd6210c54b001bbaa7e753de0a5af3965b572a19d1d4913427ac4d7398cd3574",
+      "acceptedCapture": "ice-r026/glass-wired-seed38.json",
+      "referenceRadius": 13.5,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "ice",
+        "--revision",
+        "ice-r026",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "13.5",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "ice-r026-seed904",
+      "revision": "ice-r026",
+      "style": "ice",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "cd6210c54b001bbaa7e753de0a5af3965b572a19d1d4913427ac4d7398cd3574",
+      "acceptedCapture": "ice-r026/glass-wired-seed38.json",
+      "referenceRadius": 13.5,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "ice",
+        "--revision",
+        "ice-r026",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "13.5",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "gas-r005-seed117",
+      "revision": "gas-r005",
+      "style": "gas",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "516f79ced2b76c0e82e2d3bc4399b306d137d901f281c1d34c466a76b1477130",
+      "acceptedCapture": "gas-r005/shadow-fix-integrated-seed38.json",
+      "referenceRadius": 13.5,
+      "referenceRadiusProvenance": "fresh shadow integration request default; reference-scale capture was disabled, so tiny-size acceptance remains open",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-independent native geometry; recipe/camera scenario check",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "gas",
+        "--revision",
+        "gas-r005",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "13.5",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--staged"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed",
+      "stagingManifest": {
+        "scope": "explicit isolated local review; no production publication",
+        "revision": "gas-r005",
+        "source": "output/playwright/planet-reference-20260914/gas-r005",
+        "files": {
+          "frontier-workshop.hdr": {
+            "sha256": "11f358cce19278c6115633430d1b1d5c7fc2dc35a16f73468b46dcf6724a4364",
+            "bytes": 55248
+          },
+          "gas-albedo-generated.png": {
+            "sha256": "1043b2f9253ff2bb8197335016fc0819b05984e9b77f2489e06758e3d7aba7da",
+            "bytes": 2383804
+          },
+          "kit.json": {
+            "sha256": "516f79ced2b76c0e82e2d3bc4399b306d137d901f281c1d34c466a76b1477130",
+            "bytes": 8745362
+          },
+          "ring-dust-0.png": {
+            "sha256": "7041fa1d8a8f2fdd0f2dbcbc8c77ce4b491e78b79759b44d3e4ae4f6d853c73e",
+            "bytes": 3267917
+          },
+          "ring-dust-1.png": {
+            "sha256": "27e20a0ac8a669a94866bc80ddb9078f34b12b32df537ff8beefa25e38518d79",
+            "bytes": 3275831
+          },
+          "ring-dust-2.png": {
+            "sha256": "dd37b7192e49d7fa4114d384d9ba61ec6147859ca9d5261529b9ea1badb455b4",
+            "bytes": 3258461
+          }
+        }
+      }
+    },
+    {
+      "id": "gas-r005-seed904",
+      "revision": "gas-r005",
+      "style": "gas",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "516f79ced2b76c0e82e2d3bc4399b306d137d901f281c1d34c466a76b1477130",
+      "acceptedCapture": "gas-r005/shadow-fix-integrated-seed38.json",
+      "referenceRadius": 13.5,
+      "referenceRadiusProvenance": "fresh shadow integration request default; reference-scale capture was disabled, so tiny-size acceptance remains open",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-independent native geometry; recipe/camera scenario check",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "gas",
+        "--revision",
+        "gas-r005",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "13.5",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--staged"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed",
+      "stagingManifest": {
+        "scope": "explicit isolated local review; no production publication",
+        "revision": "gas-r005",
+        "source": "output/playwright/planet-reference-20260914/gas-r005",
+        "files": {
+          "frontier-workshop.hdr": {
+            "sha256": "11f358cce19278c6115633430d1b1d5c7fc2dc35a16f73468b46dcf6724a4364",
+            "bytes": 55248
+          },
+          "gas-albedo-generated.png": {
+            "sha256": "1043b2f9253ff2bb8197335016fc0819b05984e9b77f2489e06758e3d7aba7da",
+            "bytes": 2383804
+          },
+          "kit.json": {
+            "sha256": "516f79ced2b76c0e82e2d3bc4399b306d137d901f281c1d34c466a76b1477130",
+            "bytes": 8745362
+          },
+          "ring-dust-0.png": {
+            "sha256": "7041fa1d8a8f2fdd0f2dbcbc8c77ce4b491e78b79759b44d3e4ae4f6d853c73e",
+            "bytes": 3267917
+          },
+          "ring-dust-1.png": {
+            "sha256": "27e20a0ac8a669a94866bc80ddb9078f34b12b32df537ff8beefa25e38518d79",
+            "bytes": 3275831
+          },
+          "ring-dust-2.png": {
+            "sha256": "dd37b7192e49d7fa4114d384d9ba61ec6147859ca9d5261529b9ea1badb455b4",
+            "bytes": 3258461
+          }
+        }
+      }
+    },
+    {
+      "id": "rocky-moon-r002-seed117",
+      "revision": "rocky-moon-r002",
+      "style": "moon",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "bd22ee4e2b51a13bd09ee3b299c49e9f6c45e2955290c9afc21a15fc9df8b92d",
+      "acceptedCapture": "rocky-moon-r002/corrected-seed38.json",
+      "referenceRadius": 56.0,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "rocky-moon-r002",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "56.0",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "rocky-moon-r002-seed904",
+      "revision": "rocky-moon-r002",
+      "style": "moon",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "bd22ee4e2b51a13bd09ee3b299c49e9f6c45e2955290c9afc21a15fc9df8b92d",
+      "acceptedCapture": "rocky-moon-r002/corrected-seed38.json",
+      "referenceRadius": 56.0,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "rocky-moon-r002",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "56.0",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "rocky-moon-2-r001-seed117",
+      "revision": "rocky-moon-2-r001",
+      "style": "moon",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "40f0b9a4cdc59d2de49d0edbcd0b1ad1438e366006edcdd28551b859204ed6db",
+      "acceptedCapture": "rocky-moon-2-r001/corrected-seed38.json",
+      "referenceRadius": 56.91803278688525,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "rocky-moon-2-r001",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "56.91803278688525",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "rocky-moon-2-r001-seed904",
+      "revision": "rocky-moon-2-r001",
+      "style": "moon",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "40f0b9a4cdc59d2de49d0edbcd0b1ad1438e366006edcdd28551b859204ed6db",
+      "acceptedCapture": "rocky-moon-2-r001/corrected-seed38.json",
+      "referenceRadius": 56.91803278688525,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "rocky-moon-2-r001",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "56.91803278688525",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "desert-moon-1-r001-seed117",
+      "revision": "desert-moon-1-r001",
+      "style": "moon",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "83a1ceb44cf8a5f3b2a9a7473d1e9b9202a4119be05c49322cb5a22941fd3c20",
+      "acceptedCapture": "desert-moon-1-r001/corrected-seed38.json",
+      "referenceRadius": 45.68421052631579,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "desert-moon-1-r001",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "45.68421052631579",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "desert-moon-1-r001-seed904",
+      "revision": "desert-moon-1-r001",
+      "style": "moon",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "83a1ceb44cf8a5f3b2a9a7473d1e9b9202a4119be05c49322cb5a22941fd3c20",
+      "acceptedCapture": "desert-moon-1-r001/corrected-seed38.json",
+      "referenceRadius": 45.68421052631579,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "desert-moon-1-r001",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "45.68421052631579",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "desert-moon-2-r001-seed117",
+      "revision": "desert-moon-2-r001",
+      "style": "moon",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "4d4b1a295643ad05bb37012d517e75d05a41a63e7032ea9dc6e75b7bf5d375be",
+      "acceptedCapture": "desert-moon-2-r001/corrected-seed38.json",
+      "referenceRadius": 44.51282051282051,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "desert-moon-2-r001",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "44.51282051282051",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "desert-moon-2-r001-seed904",
+      "revision": "desert-moon-2-r001",
+      "style": "moon",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "4d4b1a295643ad05bb37012d517e75d05a41a63e7032ea9dc6e75b7bf5d375be",
+      "acceptedCapture": "desert-moon-2-r001/corrected-seed38.json",
+      "referenceRadius": 44.51282051282051,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "desert-moon-2-r001",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "44.51282051282051",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "gas-giant-moon-1-r005-seed117",
+      "revision": "gas-giant-moon-1-r005",
+      "style": "moon",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "6f5385ee9f65def88c0e33c9b2bed391bec75103ddab2de50cfb36f63f4f596e",
+      "acceptedCapture": "gas-giant-moon-1-r005/corrected-scale-seed38.json",
+      "referenceRadius": 73.8723404255,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "gas-giant-moon-1-r005",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "73.8723404255",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "gas-giant-moon-1-r005-seed904",
+      "revision": "gas-giant-moon-1-r005",
+      "style": "moon",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "6f5385ee9f65def88c0e33c9b2bed391bec75103ddab2de50cfb36f63f4f596e",
+      "acceptedCapture": "gas-giant-moon-1-r005/corrected-scale-seed38.json",
+      "referenceRadius": 73.8723404255,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "gas-giant-moon-1-r005",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "73.8723404255",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "gas-giant-moon-2-r001-seed117",
+      "revision": "gas-giant-moon-2-r001",
+      "style": "moon",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "598a32d8f5b8ed67ddee6828ce9b1fa6082d83de7556c1c007542efc676f6fe5",
+      "acceptedCapture": "gas-giant-moon-2-r001/corrected-seed38.json",
+      "referenceRadius": 66.76923076923077,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "gas-giant-moon-2-r001",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "66.76923076923077",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "gas-giant-moon-2-r001-seed904",
+      "revision": "gas-giant-moon-2-r001",
+      "style": "moon",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "598a32d8f5b8ed67ddee6828ce9b1fa6082d83de7556c1c007542efc676f6fe5",
+      "acceptedCapture": "gas-giant-moon-2-r001/corrected-seed38.json",
+      "referenceRadius": 66.76923076923077,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "gas-giant-moon-2-r001",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "66.76923076923077",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "gas-giant-moon-3-r005-seed117",
+      "revision": "gas-giant-moon-3-r005",
+      "style": "moon",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "9391022b5a57b77b346a469fac91860164696c31bb46388a60bcb4d153f72e59",
+      "acceptedCapture": "gas-giant-moon-3-r005/corrected-scale-seed38.json",
+      "referenceRadius": 44.5128205128,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "gas-giant-moon-3-r005",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "44.5128205128",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "gas-giant-moon-3-r005-seed904",
+      "revision": "gas-giant-moon-3-r005",
+      "style": "moon",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "9391022b5a57b77b346a469fac91860164696c31bb46388a60bcb4d153f72e59",
+      "acceptedCapture": "gas-giant-moon-3-r005/corrected-scale-seed38.json",
+      "referenceRadius": 44.5128205128,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "gas-giant-moon-3-r005",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "44.5128205128",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "ocean-moon-1-r001-seed117",
+      "revision": "ocean-moon-1-r001",
+      "style": "moon",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "ffb61918739465a4d34ccc82beab3201afbd1e707687e4519a4d94701a7cb3a8",
+      "acceptedCapture": "ocean-moon-1-r001/corrected-seed38.json",
+      "referenceRadius": 46.29333333333334,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "ocean-moon-1-r001",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "46.29333333333334",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "ocean-moon-1-r001-seed904",
+      "revision": "ocean-moon-1-r001",
+      "style": "moon",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "ffb61918739465a4d34ccc82beab3201afbd1e707687e4519a4d94701a7cb3a8",
+      "acceptedCapture": "ocean-moon-1-r001/corrected-seed38.json",
+      "referenceRadius": 46.29333333333334,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "ocean-moon-1-r001",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "46.29333333333334",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "ocean-moon-2-r002-seed117",
+      "revision": "ocean-moon-2-r002",
+      "style": "moon",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "bc81bfb98f28fe4a37753bfea25db8b3c91acc2591837fe79bd3de54401a3347",
+      "acceptedCapture": "ocean-moon-2-r002/corrected-seed38.json",
+      "referenceRadius": 57.86666666666667,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "ocean-moon-2-r002",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "57.86666666666667",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "ocean-moon-2-r002-seed904",
+      "revision": "ocean-moon-2-r002",
+      "style": "moon",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "bc81bfb98f28fe4a37753bfea25db8b3c91acc2591837fe79bd3de54401a3347",
+      "acceptedCapture": "ocean-moon-2-r002/corrected-seed38.json",
+      "referenceRadius": 57.86666666666667,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "ocean-moon-2-r002",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "57.86666666666667",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "temperate-moon-1-r002-seed117",
+      "revision": "temperate-moon-1-r002",
+      "style": "moon",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "b686cf85d77a2d116bd18602592a3dcada882fa2eb2a8d71ba7b92847368949d",
+      "acceptedCapture": "temperate-moon-1-r002/corrected-seed38.json",
+      "referenceRadius": 46.91891891891892,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "temperate-moon-1-r002",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "46.91891891891892",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "temperate-moon-1-r002-seed904",
+      "revision": "temperate-moon-1-r002",
+      "style": "moon",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "b686cf85d77a2d116bd18602592a3dcada882fa2eb2a8d71ba7b92847368949d",
+      "acceptedCapture": "temperate-moon-1-r002/corrected-seed38.json",
+      "referenceRadius": 46.91891891891892,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "temperate-moon-1-r002",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "46.91891891891892",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "temperate-moon-2-r002-seed117",
+      "revision": "temperate-moon-2-r002",
+      "style": "moon",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "a20ab21c8c121a87167ff1480add89b2d60fd65cb07c39377054824f79c47de8",
+      "acceptedCapture": "temperate-moon-2-r002/corrected-seed38.json",
+      "referenceRadius": 68.07843137254902,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "temperate-moon-2-r002",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "68.07843137254902",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "temperate-moon-2-r002-seed904",
+      "revision": "temperate-moon-2-r002",
+      "style": "moon",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "a20ab21c8c121a87167ff1480add89b2d60fd65cb07c39377054824f79c47de8",
+      "acceptedCapture": "temperate-moon-2-r002/corrected-seed38.json",
+      "referenceRadius": 68.07843137254902,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "temperate-moon-2-r002",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "68.07843137254902",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "toxic-moon-1-r001-seed117",
+      "revision": "toxic-moon-1-r001",
+      "style": "moon",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "b3d7eb42691d2bf24d2d7e6119180452d712f50e88ad80901dfc9a7a8993e213",
+      "acceptedCapture": "toxic-moon-1-r001/corrected-seed38.json",
+      "referenceRadius": 47.56164383561644,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "toxic-moon-1-r001",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "47.56164383561644",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "toxic-moon-1-r001-seed904",
+      "revision": "toxic-moon-1-r001",
+      "style": "moon",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "b3d7eb42691d2bf24d2d7e6119180452d712f50e88ad80901dfc9a7a8993e213",
+      "acceptedCapture": "toxic-moon-1-r001/corrected-seed38.json",
+      "referenceRadius": 47.56164383561644,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "toxic-moon-1-r001",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "47.56164383561644",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "toxic-moon-2-r001-seed117",
+      "revision": "toxic-moon-2-r001",
+      "style": "moon",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "d97fbcc129c4876fb4b217ecb81de63d7f9b4e62abe5f336984c9c5e2b5957fe",
+      "acceptedCapture": "toxic-moon-2-r001/corrected-seed38.json",
+      "referenceRadius": 40.84705882352941,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "toxic-moon-2-r001",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "40.84705882352941",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "toxic-moon-2-r001-seed904",
+      "revision": "toxic-moon-2-r001",
+      "style": "moon",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "d97fbcc129c4876fb4b217ecb81de63d7f9b4e62abe5f336984c9c5e2b5957fe",
+      "acceptedCapture": "toxic-moon-2-r001/corrected-seed38.json",
+      "referenceRadius": 40.84705882352941,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "toxic-moon-2-r001",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "40.84705882352941",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "ice-moon-1-r002-seed117",
+      "revision": "ice-moon-1-r002",
+      "style": "moon",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "dd192b60d46ad562bef442306a7ded75053647ea69a5ceca2fe05b70323a5fb8",
+      "acceptedCapture": "ice-moon-1-r002/projected-path-corrected-seed38.json",
+      "referenceRadius": 41.3333333333,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "ice-moon-1-r002",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "41.3333333333",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--staged"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed",
+      "stagingManifest": {
+        "scope": "explicit isolated local review; no production publication",
+        "revision": "ice-moon-1-r002",
+        "source": "output/playwright/planet-reference-20260914/ice-moon-1-r002",
+        "files": {
+          "frontier-workshop.hdr": {
+            "sha256": "11f358cce19278c6115633430d1b1d5c7fc2dc35a16f73468b46dcf6724a4364",
+            "bytes": 55248
+          },
+          "ice-0-albedo.png": {
+            "sha256": "ef0b9ef41997a9588d87f7c2a153c50328656429b3915df204e922b18f79443c",
+            "bytes": 62640
+          },
+          "ice-0-orm.png": {
+            "sha256": "422e6c2851744f6324e578e9bc34ec7c586caa5f1edec1a0cc959209a95ff879",
+            "bytes": 22205
+          },
+          "ice-1-albedo.png": {
+            "sha256": "daa7ff65ab88390945537287f66700b14e6540b9c41f9bf5a4efd3059bffdd1f",
+            "bytes": 39313
+          },
+          "ice-1-orm.png": {
+            "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+            "bytes": 14957
+          },
+          "ice-2-albedo.png": {
+            "sha256": "5037a3fab7f4507535fc339b4f7024c7e70a20a191ad0120297a5c64c087a91d",
+            "bytes": 26859
+          },
+          "ice-2-orm.png": {
+            "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+            "bytes": 14957
+          },
+          "ice-3-albedo.png": {
+            "sha256": "485a3e3326d7cb6726742f50379726bc0fc4c3faa7686f6cd7fb6cf913481fc7",
+            "bytes": 34005
+          },
+          "ice-3-orm.png": {
+            "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+            "bytes": 14957
+          },
+          "ice-4-albedo.png": {
+            "sha256": "ec118c65ca7feb308a4540da06f75d20bbf7e0bef1a10c8863d44fc15e895037",
+            "bytes": 19156
+          },
+          "ice-4-orm.png": {
+            "sha256": "5069fb80400d3e2e7e43d7e1c3e0a52a9d81b5aa8967c9ff790e92f68b3c51e4",
+            "bytes": 18539
+          },
+          "kit.json": {
+            "sha256": "8bf42eb720f34978fc174ce519a76b72f8b27debbd42f80e700d5f0383f50b95",
+            "bytes": 45891881
+          }
+        },
+        "runtimeProjection": {
+          "schema": "sidereal.runtime-projection.v1",
+          "rule": "sidereal.ice-moon-used-native-variants.v1",
+          "revision": "ice-moon-1-r002",
+          "source": {
+            "path": "output/playwright/planet-reference-20260914/ice-moon-1-r002/kit.json",
+            "sha256": "dd192b60d46ad562bef442306a7ded75053647ea69a5ceca2fe05b70323a5fb8",
+            "bytes": 95700105
+          },
+          "projection": {
+            "path": "output/playwright/planet-reference-20260914/runtime-projections/ice-moon-1-r002/kit.json",
+            "sha256": "8bf42eb720f34978fc174ce519a76b72f8b27debbd42f80e700d5f0383f50b95",
+            "bytes": 45891881
+          },
+          "keptVariantIds": [
+            "snow-cut-region",
+            "snow-open-gorge",
+            "ground-sphere"
+          ],
+          "omittedVariantIds": [
+            "ground-sphere-medium",
+            "ground-sphere-low"
+          ],
+          "preserved": "all retained native geometry attributes, placement recipe, materials and top-level metadata; source archive unchanged",
+          "equalityEvidence": {
+            "path": "equality.json",
+            "sha256": "55bd56f68d2aa3d649ebb7a37c60fe0fd0cf7d4fba910be3733ec802b421ec7a"
+          }
+        }
+      }
+    },
+    {
+      "id": "ice-moon-1-r002-seed904",
+      "revision": "ice-moon-1-r002",
+      "style": "moon",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "dd192b60d46ad562bef442306a7ded75053647ea69a5ceca2fe05b70323a5fb8",
+      "acceptedCapture": "ice-moon-1-r002/projected-path-corrected-seed38.json",
+      "referenceRadius": 41.3333333333,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "ice-moon-1-r002",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "41.3333333333",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--staged"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed",
+      "stagingManifest": {
+        "scope": "explicit isolated local review; no production publication",
+        "revision": "ice-moon-1-r002",
+        "source": "output/playwright/planet-reference-20260914/ice-moon-1-r002",
+        "files": {
+          "frontier-workshop.hdr": {
+            "sha256": "11f358cce19278c6115633430d1b1d5c7fc2dc35a16f73468b46dcf6724a4364",
+            "bytes": 55248
+          },
+          "ice-0-albedo.png": {
+            "sha256": "ef0b9ef41997a9588d87f7c2a153c50328656429b3915df204e922b18f79443c",
+            "bytes": 62640
+          },
+          "ice-0-orm.png": {
+            "sha256": "422e6c2851744f6324e578e9bc34ec7c586caa5f1edec1a0cc959209a95ff879",
+            "bytes": 22205
+          },
+          "ice-1-albedo.png": {
+            "sha256": "daa7ff65ab88390945537287f66700b14e6540b9c41f9bf5a4efd3059bffdd1f",
+            "bytes": 39313
+          },
+          "ice-1-orm.png": {
+            "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+            "bytes": 14957
+          },
+          "ice-2-albedo.png": {
+            "sha256": "5037a3fab7f4507535fc339b4f7024c7e70a20a191ad0120297a5c64c087a91d",
+            "bytes": 26859
+          },
+          "ice-2-orm.png": {
+            "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+            "bytes": 14957
+          },
+          "ice-3-albedo.png": {
+            "sha256": "485a3e3326d7cb6726742f50379726bc0fc4c3faa7686f6cd7fb6cf913481fc7",
+            "bytes": 34005
+          },
+          "ice-3-orm.png": {
+            "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+            "bytes": 14957
+          },
+          "ice-4-albedo.png": {
+            "sha256": "ec118c65ca7feb308a4540da06f75d20bbf7e0bef1a10c8863d44fc15e895037",
+            "bytes": 19156
+          },
+          "ice-4-orm.png": {
+            "sha256": "5069fb80400d3e2e7e43d7e1c3e0a52a9d81b5aa8967c9ff790e92f68b3c51e4",
+            "bytes": 18539
+          },
+          "kit.json": {
+            "sha256": "8bf42eb720f34978fc174ce519a76b72f8b27debbd42f80e700d5f0383f50b95",
+            "bytes": 45891881
+          }
+        },
+        "runtimeProjection": {
+          "schema": "sidereal.runtime-projection.v1",
+          "rule": "sidereal.ice-moon-used-native-variants.v1",
+          "revision": "ice-moon-1-r002",
+          "source": {
+            "path": "output/playwright/planet-reference-20260914/ice-moon-1-r002/kit.json",
+            "sha256": "dd192b60d46ad562bef442306a7ded75053647ea69a5ceca2fe05b70323a5fb8",
+            "bytes": 95700105
+          },
+          "projection": {
+            "path": "output/playwright/planet-reference-20260914/runtime-projections/ice-moon-1-r002/kit.json",
+            "sha256": "8bf42eb720f34978fc174ce519a76b72f8b27debbd42f80e700d5f0383f50b95",
+            "bytes": 45891881
+          },
+          "keptVariantIds": [
+            "snow-cut-region",
+            "snow-open-gorge",
+            "ground-sphere"
+          ],
+          "omittedVariantIds": [
+            "ground-sphere-medium",
+            "ground-sphere-low"
+          ],
+          "preserved": "all retained native geometry attributes, placement recipe, materials and top-level metadata; source archive unchanged",
+          "equalityEvidence": {
+            "path": "equality.json",
+            "sha256": "55bd56f68d2aa3d649ebb7a37c60fe0fd0cf7d4fba910be3733ec802b421ec7a"
+          }
+        }
+      }
+    },
+    {
+      "id": "ice-moon-2-r003-seed117",
+      "revision": "ice-moon-2-r003",
+      "style": "moon",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "f2f7bfd0a1cb706bdca20c11e1c53baec18fe7d1212f30115586cbceeaf7de3c",
+      "acceptedCapture": "ice-moon-2-r003/blue-cut-seed38.json",
+      "referenceRadius": 69.44,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "ice-moon-2-r003",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "69.44",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--staged"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed",
+      "stagingManifest": {
+        "scope": "explicit isolated local review; no production publication",
+        "revision": "ice-moon-2-r003",
+        "source": "output/playwright/planet-reference-20260914/ice-moon-2-r003",
+        "files": {
+          "frontier-workshop.hdr": {
+            "sha256": "11f358cce19278c6115633430d1b1d5c7fc2dc35a16f73468b46dcf6724a4364",
+            "bytes": 55248
+          },
+          "ice-0-albedo.png": {
+            "sha256": "ef0b9ef41997a9588d87f7c2a153c50328656429b3915df204e922b18f79443c",
+            "bytes": 62640
+          },
+          "ice-0-orm.png": {
+            "sha256": "422e6c2851744f6324e578e9bc34ec7c586caa5f1edec1a0cc959209a95ff879",
+            "bytes": 22205
+          },
+          "ice-1-albedo.png": {
+            "sha256": "daa7ff65ab88390945537287f66700b14e6540b9c41f9bf5a4efd3059bffdd1f",
+            "bytes": 39313
+          },
+          "ice-1-orm.png": {
+            "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+            "bytes": 14957
+          },
+          "ice-2-albedo.png": {
+            "sha256": "5037a3fab7f4507535fc339b4f7024c7e70a20a191ad0120297a5c64c087a91d",
+            "bytes": 26859
+          },
+          "ice-2-orm.png": {
+            "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+            "bytes": 14957
+          },
+          "ice-3-albedo.png": {
+            "sha256": "485a3e3326d7cb6726742f50379726bc0fc4c3faa7686f6cd7fb6cf913481fc7",
+            "bytes": 34005
+          },
+          "ice-3-orm.png": {
+            "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+            "bytes": 14957
+          },
+          "ice-4-albedo.png": {
+            "sha256": "ec118c65ca7feb308a4540da06f75d20bbf7e0bef1a10c8863d44fc15e895037",
+            "bytes": 19156
+          },
+          "ice-4-orm.png": {
+            "sha256": "5069fb80400d3e2e7e43d7e1c3e0a52a9d81b5aa8967c9ff790e92f68b3c51e4",
+            "bytes": 18539
+          },
+          "kit.json": {
+            "sha256": "f2f7bfd0a1cb706bdca20c11e1c53baec18fe7d1212f30115586cbceeaf7de3c",
+            "bytes": 43040066
+          }
+        }
+      }
+    },
+    {
+      "id": "ice-moon-2-r003-seed904",
+      "revision": "ice-moon-2-r003",
+      "style": "moon",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "f2f7bfd0a1cb706bdca20c11e1c53baec18fe7d1212f30115586cbceeaf7de3c",
+      "acceptedCapture": "ice-moon-2-r003/blue-cut-seed38.json",
+      "referenceRadius": 69.44,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": false,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "ice-moon-2-r003",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "69.44",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--staged"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed",
+      "stagingManifest": {
+        "scope": "explicit isolated local review; no production publication",
+        "revision": "ice-moon-2-r003",
+        "source": "output/playwright/planet-reference-20260914/ice-moon-2-r003",
+        "files": {
+          "frontier-workshop.hdr": {
+            "sha256": "11f358cce19278c6115633430d1b1d5c7fc2dc35a16f73468b46dcf6724a4364",
+            "bytes": 55248
+          },
+          "ice-0-albedo.png": {
+            "sha256": "ef0b9ef41997a9588d87f7c2a153c50328656429b3915df204e922b18f79443c",
+            "bytes": 62640
+          },
+          "ice-0-orm.png": {
+            "sha256": "422e6c2851744f6324e578e9bc34ec7c586caa5f1edec1a0cc959209a95ff879",
+            "bytes": 22205
+          },
+          "ice-1-albedo.png": {
+            "sha256": "daa7ff65ab88390945537287f66700b14e6540b9c41f9bf5a4efd3059bffdd1f",
+            "bytes": 39313
+          },
+          "ice-1-orm.png": {
+            "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+            "bytes": 14957
+          },
+          "ice-2-albedo.png": {
+            "sha256": "5037a3fab7f4507535fc339b4f7024c7e70a20a191ad0120297a5c64c087a91d",
+            "bytes": 26859
+          },
+          "ice-2-orm.png": {
+            "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+            "bytes": 14957
+          },
+          "ice-3-albedo.png": {
+            "sha256": "485a3e3326d7cb6726742f50379726bc0fc4c3faa7686f6cd7fb6cf913481fc7",
+            "bytes": 34005
+          },
+          "ice-3-orm.png": {
+            "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+            "bytes": 14957
+          },
+          "ice-4-albedo.png": {
+            "sha256": "ec118c65ca7feb308a4540da06f75d20bbf7e0bef1a10c8863d44fc15e895037",
+            "bytes": 19156
+          },
+          "ice-4-orm.png": {
+            "sha256": "5069fb80400d3e2e7e43d7e1c3e0a52a9d81b5aa8967c9ff790e92f68b3c51e4",
+            "bytes": 18539
+          },
+          "kit.json": {
+            "sha256": "f2f7bfd0a1cb706bdca20c11e1c53baec18fe7d1212f30115586cbceeaf7de3c",
+            "bytes": 43040066
+          }
+        }
+      }
+    },
+    {
+      "id": "volcanic-moon-1-r003-seed117",
+      "revision": "volcanic-moon-1-r003",
+      "style": "moon",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "73ecf286225a9daf4d1be1d2479a691747f34614f8782ec21f8c7e732721d7fc",
+      "acceptedCapture": "volcanic-moon-1-r003/intended-glow-seed38.json",
+      "referenceRadius": 42.3414634146,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "volcanic-moon-1-r003",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "42.3414634146",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "volcanic-moon-1-r003-seed904",
+      "revision": "volcanic-moon-1-r003",
+      "style": "moon",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "73ecf286225a9daf4d1be1d2479a691747f34614f8782ec21f8c7e732721d7fc",
+      "acceptedCapture": "volcanic-moon-1-r003/intended-glow-seed38.json",
+      "referenceRadius": 42.3414634146,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "volcanic-moon-1-r003",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "42.3414634146",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed"
+    },
+    {
+      "id": "volcanic-moon-2-r006-seed117",
+      "revision": "volcanic-moon-2-r006",
+      "style": "moon",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "0feb7937c42e5e06f30fbdd1dec215ec5abd24e74897cad7636fbb44985ba9b4",
+      "acceptedCapture": "volcanic-moon-2-r006/resolved-bank-seed38.json",
+      "referenceRadius": 73.8723404255,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "volcanic-moon-2-r006",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "73.8723404255",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow",
+        "--staged"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed",
+      "stagingManifest": {
+        "scope": "explicit isolated local review; no production publication",
+        "revision": "volcanic-moon-2-r006",
+        "source": "output/playwright/planet-reference-20260914/volcanic-moon-2-r006",
+        "files": {
+          "frontier-workshop.hdr": {
+            "sha256": "11f358cce19278c6115633430d1b1d5c7fc2dc35a16f73468b46dcf6724a4364",
+            "bytes": 55248
+          },
+          "kit.json": {
+            "sha256": "0feb7937c42e5e06f30fbdd1dec215ec5abd24e74897cad7636fbb44985ba9b4",
+            "bytes": 23033904
+          },
+          "rocky-0-albedo.png": {
+            "sha256": "4a25c093c542daca85c14cac6a070835b2eab734c7fe557c30c251437b14e65e",
+            "bytes": 62057
+          },
+          "rocky-0-orm.png": {
+            "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+            "bytes": 33670
+          },
+          "rocky-1-albedo.png": {
+            "sha256": "87c451d3f2c8648efc2ba8f9ef2e3c7637261e7de4e700365bcf3c179ae09a23",
+            "bytes": 61906
+          },
+          "rocky-1-orm.png": {
+            "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717",
+            "bytes": 33991
+          },
+          "rocky-2-albedo.png": {
+            "sha256": "68fb2cd61242bbfdc91a2466a4a2f6794a3268c094372e9ec6d765cda2ec2923",
+            "bytes": 45505
+          },
+          "rocky-2-orm.png": {
+            "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8",
+            "bytes": 33022
+          },
+          "rocky-3-albedo.png": {
+            "sha256": "3907a68898c6467fdc1268fcbb5c72329353eed665f134119400da46ecd90e6c",
+            "bytes": 53333
+          },
+          "rocky-3-orm.png": {
+            "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9",
+            "bytes": 33213
+          },
+          "rocky-4-albedo.png": {
+            "sha256": "fea0cad8e772b0be1731366615d6a58a7b141e72fa70a532236445f09eaaa257",
+            "bytes": 63737
+          },
+          "rocky-4-orm.png": {
+            "sha256": "881d15e89c03867a59e02c572bdc65b8464995b0a525f8a16742ba36b8f0c3c0",
+            "bytes": 29233
+          },
+          "rocky-5-albedo.png": {
+            "sha256": "6aabddb6ef2135aea5ce20e048c188358809f8a4f01c4b257b1fddb3bc88933f",
+            "bytes": 69496
+          },
+          "rocky-5-orm.png": {
+            "sha256": "dc9e39924415e4b446a4c6183192104d6d558729b6b1b92aceafdb5a3a63da6a",
+            "bytes": 32160
+          }
+        }
+      }
+    },
+    {
+      "id": "volcanic-moon-2-r006-seed904",
+      "revision": "volcanic-moon-2-r006",
+      "style": "moon",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "0feb7937c42e5e06f30fbdd1dec215ec5abd24e74897cad7636fbb44985ba9b4",
+      "acceptedCapture": "volcanic-moon-2-r006/resolved-bank-seed38.json",
+      "referenceRadius": 73.8723404255,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "seed-dependent region/scatter composition",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "volcanic-moon-2-r006",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "73.8723404255",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow",
+        "--staged"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed",
+      "stagingManifest": {
+        "scope": "explicit isolated local review; no production publication",
+        "revision": "volcanic-moon-2-r006",
+        "source": "output/playwright/planet-reference-20260914/volcanic-moon-2-r006",
+        "files": {
+          "frontier-workshop.hdr": {
+            "sha256": "11f358cce19278c6115633430d1b1d5c7fc2dc35a16f73468b46dcf6724a4364",
+            "bytes": 55248
+          },
+          "kit.json": {
+            "sha256": "0feb7937c42e5e06f30fbdd1dec215ec5abd24e74897cad7636fbb44985ba9b4",
+            "bytes": 23033904
+          },
+          "rocky-0-albedo.png": {
+            "sha256": "4a25c093c542daca85c14cac6a070835b2eab734c7fe557c30c251437b14e65e",
+            "bytes": 62057
+          },
+          "rocky-0-orm.png": {
+            "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+            "bytes": 33670
+          },
+          "rocky-1-albedo.png": {
+            "sha256": "87c451d3f2c8648efc2ba8f9ef2e3c7637261e7de4e700365bcf3c179ae09a23",
+            "bytes": 61906
+          },
+          "rocky-1-orm.png": {
+            "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717",
+            "bytes": 33991
+          },
+          "rocky-2-albedo.png": {
+            "sha256": "68fb2cd61242bbfdc91a2466a4a2f6794a3268c094372e9ec6d765cda2ec2923",
+            "bytes": 45505
+          },
+          "rocky-2-orm.png": {
+            "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8",
+            "bytes": 33022
+          },
+          "rocky-3-albedo.png": {
+            "sha256": "3907a68898c6467fdc1268fcbb5c72329353eed665f134119400da46ecd90e6c",
+            "bytes": 53333
+          },
+          "rocky-3-orm.png": {
+            "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9",
+            "bytes": 33213
+          },
+          "rocky-4-albedo.png": {
+            "sha256": "fea0cad8e772b0be1731366615d6a58a7b141e72fa70a532236445f09eaaa257",
+            "bytes": 63737
+          },
+          "rocky-4-orm.png": {
+            "sha256": "881d15e89c03867a59e02c572bdc65b8464995b0a525f8a16742ba36b8f0c3c0",
+            "bytes": 29233
+          },
+          "rocky-5-albedo.png": {
+            "sha256": "6aabddb6ef2135aea5ce20e048c188358809f8a4f01c4b257b1fddb3bc88933f",
+            "bytes": 69496
+          },
+          "rocky-5-orm.png": {
+            "sha256": "dc9e39924415e4b446a4c6183192104d6d558729b6b1b92aceafdb5a3a63da6a",
+            "bytes": 32160
+          }
+        }
+      }
+    },
+    {
+      "id": "crystal-moon-1-r010-seed117",
+      "revision": "crystal-moon-1-r010",
+      "style": "moon",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "808cf50f1a25e00d39cbd39cbabebf05a344cb0cf75ca7167d80a101f086c702",
+      "acceptedCapture": "crystal-moon-1-r010/mineral-edges-seed38.json",
+      "referenceRadius": 43.9493670886,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "rigid body rotation only",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "crystal-moon-1-r010",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "43.9493670886",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow",
+        "--staged"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed",
+      "stagingManifest": {
+        "scope": "explicit isolated local review; no production publication",
+        "revision": "crystal-moon-1-r010",
+        "source": "output/playwright/planet-reference-20260914/crystal-moon-1-r010",
+        "files": {
+          "frontier-workshop.hdr": {
+            "sha256": "11f358cce19278c6115633430d1b1d5c7fc2dc35a16f73468b46dcf6724a4364",
+            "bytes": 55248
+          },
+          "kit.json": {
+            "sha256": "808cf50f1a25e00d39cbd39cbabebf05a344cb0cf75ca7167d80a101f086c702",
+            "bytes": 2604930
+          },
+          "material-0-albedo.png": {
+            "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+            "bytes": 87818
+          },
+          "material-0-orm.png": {
+            "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+            "bytes": 40836
+          },
+          "material-1-albedo.png": {
+            "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+            "bytes": 76356
+          },
+          "material-1-orm.png": {
+            "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+            "bytes": 41452
+          },
+          "material-2-albedo.png": {
+            "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+            "bytes": 92476
+          },
+          "material-2-orm.png": {
+            "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+            "bytes": 39879
+          },
+          "material-3-albedo.png": {
+            "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+            "bytes": 31086
+          },
+          "material-4-albedo.png": {
+            "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+            "bytes": 33571
+          },
+          "material-5-albedo.png": {
+            "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+            "bytes": 24737
+          },
+          "material-6-albedo.png": {
+            "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+            "bytes": 37069
+          },
+          "material-7-albedo.png": {
+            "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+            "bytes": 40023
+          }
+        }
+      }
+    },
+    {
+      "id": "crystal-moon-1-r010-seed904",
+      "revision": "crystal-moon-1-r010",
+      "style": "moon",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "808cf50f1a25e00d39cbd39cbabebf05a344cb0cf75ca7167d80a101f086c702",
+      "acceptedCapture": "crystal-moon-1-r010/mineral-edges-seed38.json",
+      "referenceRadius": 43.9493670886,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "rigid body rotation only",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "crystal-moon-1-r010",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "43.9493670886",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow",
+        "--staged"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed",
+      "stagingManifest": {
+        "scope": "explicit isolated local review; no production publication",
+        "revision": "crystal-moon-1-r010",
+        "source": "output/playwright/planet-reference-20260914/crystal-moon-1-r010",
+        "files": {
+          "frontier-workshop.hdr": {
+            "sha256": "11f358cce19278c6115633430d1b1d5c7fc2dc35a16f73468b46dcf6724a4364",
+            "bytes": 55248
+          },
+          "kit.json": {
+            "sha256": "808cf50f1a25e00d39cbd39cbabebf05a344cb0cf75ca7167d80a101f086c702",
+            "bytes": 2604930
+          },
+          "material-0-albedo.png": {
+            "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+            "bytes": 87818
+          },
+          "material-0-orm.png": {
+            "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+            "bytes": 40836
+          },
+          "material-1-albedo.png": {
+            "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+            "bytes": 76356
+          },
+          "material-1-orm.png": {
+            "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+            "bytes": 41452
+          },
+          "material-2-albedo.png": {
+            "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+            "bytes": 92476
+          },
+          "material-2-orm.png": {
+            "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+            "bytes": 39879
+          },
+          "material-3-albedo.png": {
+            "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+            "bytes": 31086
+          },
+          "material-4-albedo.png": {
+            "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+            "bytes": 33571
+          },
+          "material-5-albedo.png": {
+            "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+            "bytes": 24737
+          },
+          "material-6-albedo.png": {
+            "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+            "bytes": 37069
+          },
+          "material-7-albedo.png": {
+            "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+            "bytes": 40023
+          }
+        }
+      }
+    },
+    {
+      "id": "crystal-moon-2-r010-seed117",
+      "revision": "crystal-moon-2-r010",
+      "style": "moon",
+      "seed": 117,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "90ba1de6ecd0bfb4f5333c7010ff70764887d13d68cb1c072e2d2cc0648818e0",
+      "acceptedCapture": "crystal-moon-2-r010/mineral-edges-seed38.json",
+      "referenceRadius": 67.0588235294,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "rigid body rotation only",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "crystal-moon-2-r010",
+        "--seed",
+        "117",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "67.0588235294",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow",
+        "--staged"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed",
+      "stagingManifest": {
+        "scope": "explicit isolated local review; no production publication",
+        "revision": "crystal-moon-2-r010",
+        "source": "output/playwright/planet-reference-20260914/crystal-moon-2-r010",
+        "files": {
+          "frontier-workshop.hdr": {
+            "sha256": "11f358cce19278c6115633430d1b1d5c7fc2dc35a16f73468b46dcf6724a4364",
+            "bytes": 55248
+          },
+          "kit.json": {
+            "sha256": "90ba1de6ecd0bfb4f5333c7010ff70764887d13d68cb1c072e2d2cc0648818e0",
+            "bytes": 1136607
+          },
+          "material-0-albedo.png": {
+            "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+            "bytes": 87818
+          },
+          "material-0-orm.png": {
+            "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+            "bytes": 40836
+          },
+          "material-1-albedo.png": {
+            "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+            "bytes": 76356
+          },
+          "material-1-orm.png": {
+            "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+            "bytes": 41452
+          },
+          "material-2-albedo.png": {
+            "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+            "bytes": 92476
+          },
+          "material-2-orm.png": {
+            "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+            "bytes": 39879
+          },
+          "material-3-albedo.png": {
+            "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+            "bytes": 31086
+          },
+          "material-4-albedo.png": {
+            "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+            "bytes": 33571
+          },
+          "material-5-albedo.png": {
+            "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+            "bytes": 24737
+          },
+          "material-6-albedo.png": {
+            "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+            "bytes": 37069
+          },
+          "material-7-albedo.png": {
+            "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+            "bytes": 40023
+          }
+        }
+      }
+    },
+    {
+      "id": "crystal-moon-2-r010-seed904",
+      "revision": "crystal-moon-2-r010",
+      "style": "moon",
+      "seed": 904,
+      "weatherRevision": "cloud-r002",
+      "kitSha256": "90ba1de6ecd0bfb4f5333c7010ff70764887d13d68cb1c072e2d2cc0648818e0",
+      "acceptedCapture": "crystal-moon-2-r010/mineral-edges-seed38.json",
+      "referenceRadius": 67.0588235294,
+      "referenceRadiusProvenance": "accepted capture request",
+      "lighting": {
+        "glow": true,
+        "localLight": false,
+        "shadowPolicy": "current integrated defaults; do not replay historical bias overrides"
+      },
+      "seedContract": "rigid body rotation only",
+      "argv": [
+        "python3",
+        "scripts/art_library/capture_planet_reference.py",
+        "--style",
+        "moon",
+        "--revision",
+        "crystal-moon-2-r010",
+        "--seed",
+        "904",
+        "--radius",
+        "5.5",
+        "--reference-scale",
+        "--reference-radius",
+        "67.0588235294",
+        "--weather-revision",
+        "cloud-r002",
+        "--prefix",
+        "broader-shadow-fixed",
+        "--glow",
+        "--staged"
+      ],
+      "expectedViews": [
+        "close",
+        "angle2",
+        "reference-scale"
+      ],
+      "status": "not executed",
+      "stagingManifest": {
+        "scope": "explicit isolated local review; no production publication",
+        "revision": "crystal-moon-2-r010",
+        "source": "output/playwright/planet-reference-20260914/crystal-moon-2-r010",
+        "files": {
+          "frontier-workshop.hdr": {
+            "sha256": "11f358cce19278c6115633430d1b1d5c7fc2dc35a16f73468b46dcf6724a4364",
+            "bytes": 55248
+          },
+          "kit.json": {
+            "sha256": "90ba1de6ecd0bfb4f5333c7010ff70764887d13d68cb1c072e2d2cc0648818e0",
+            "bytes": 1136607
+          },
+          "material-0-albedo.png": {
+            "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+            "bytes": 87818
+          },
+          "material-0-orm.png": {
+            "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+            "bytes": 40836
+          },
+          "material-1-albedo.png": {
+            "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+            "bytes": 76356
+          },
+          "material-1-orm.png": {
+            "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+            "bytes": 41452
+          },
+          "material-2-albedo.png": {
+            "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+            "bytes": 92476
+          },
+          "material-2-orm.png": {
+            "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+            "bytes": 39879
+          },
+          "material-3-albedo.png": {
+            "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+            "bytes": 31086
+          },
+          "material-4-albedo.png": {
+            "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+            "bytes": 33571
+          },
+          "material-5-albedo.png": {
+            "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+            "bytes": 24737
+          },
+          "material-6-albedo.png": {
+            "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+            "bytes": 37069
+          },
+          "material-7-albedo.png": {
+            "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+            "bytes": 40023
+          }
+        }
+      }
+    }
+  ],
+  "captureTransportCorrection": "2026-09-14: preserve accepted staged transport for Ice moon1; initial manifest omitted --staged. Full-source captures closed browser and are preserved. Existing source/projection hashes unchanged."
+}

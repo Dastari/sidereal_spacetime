@@ -1,0 +1,46 @@
+{
+  "camera": {
+    "alpha": 1.0529033447245055,
+    "beta": 1.1694941410002127,
+    "radius": 5.5
+  },
+  "characters": 886850,
+  "shadows": [
+    {
+      "bias": 0.0005,
+      "casters": 15,
+      "normalBias": 0.003
+    }
+  ],
+  "stats": {
+    "baselineEnvironmentEnabled": false,
+    "candidate": {
+      "active": 0,
+      "buildMs": 5419.800000011921,
+      "localLights": 0,
+      "pendingBuilds": 0,
+      "requestedLOD": 0,
+      "retained": [
+        0,
+        2,
+        1
+      ],
+      "retainedSmokeMeshes": 0,
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0
+    },
+    "frames": 261,
+    "lods": [],
+    "meshes": 6,
+    "renderer": {
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4080 Laptop GPU (0x000027E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "vendor": "Google Inc. (NVIDIA)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "seed": 38,
+    "style": "ice",
+    "triangles": 371090
+  },
+  "scope": "Actual RTX4080 isolated hero LOD0 canvas capture; no Flight/Map or timing acceptance. Default production normalBias .003."
+}

@@ -1,0 +1,9 @@
+{
+  "referenceId": "planets--gas-giant-moon-1",
+  "prior": "/root/sidereal_spacetime/output/playwright/planet-reference-20260914/gas-giant-moon-1-r001",
+  "priorSourceSha256": "5fa69740b6cee0cc29440a09cf205c159c0c9f5f64bc475945a56c217e3b4add",
+  "hypothesis": "Sparse lower-roughness violet/pink mineral faces may localize highlights while preserving cool rough crust. Ambiguous source lighting; interpreted non-emissive material trial, not factual inferred deposits.",
+  "geometry": "No geometry changes; selected existing polygon material slots only",
+  "emission": false,
+  "approval": "none"
+}

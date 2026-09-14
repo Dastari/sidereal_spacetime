@@ -1,0 +1,38 @@
+{
+  "preparedAtUTC": "2026-09-14T06:11:51.215466+00:00",
+  "worktree": "/root/sidereal-planet-reference-review",
+  "branch": "art/planet-reference-alignment-20260914",
+  "base": "599d2c7a8ab2c3553f4db8fb63ea5624511a63f0",
+  "validation": {
+    "typescript": "pass",
+    "vitest": {
+      "files": 32,
+      "tests": 173,
+      "runs": [
+        {
+          "log": "focused-check.log",
+          "files": 31,
+          "tests": 165
+        },
+        {
+          "log": "current-legacy-crystal-composer-tests.log",
+          "files": 1,
+          "tests": 8
+        }
+      ]
+    },
+    "pythonToolTests": 18,
+    "canonicalEvidenceFilesChecked": 3179,
+    "canonicalEvidenceErrors": 0,
+    "browser": "not run in this worktree",
+    "fullCheckAndBuild": "deferred to root PR review"
+  },
+  "nodeModules": "symlink to /root/sidereal_spacetime/node_modules; external dependency versions match target lock; four unrelated workspace lock-entry differences recorded; lockfile unchanged",
+  "excludedDirtyPaths": [
+    "assets/source/blender/industrial_kit.blend",
+    "assets/source/blender/ship_3d_study.blend",
+    "assets/source/blender/ship_top.png",
+    "assets/source/blender/station_3d_study.blend"
+  ],
+  "noCommitOrPush": true
+}

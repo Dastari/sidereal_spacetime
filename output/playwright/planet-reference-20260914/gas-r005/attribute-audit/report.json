@@ -1,0 +1,174 @@
+[
+  {
+    "candidate": "gas-r005",
+    "kit": "output/playwright/planet-reference-20260914/gas-r005/kit.json",
+    "kitSha256": "516f79ced2b76c0e82e2d3bc4399b306d137d901f281c1d34c466a76b1477130",
+    "materialDifferences": [],
+    "attributeGaps": [],
+    "variants": [
+      {
+        "name": "gas-body",
+        "glb": "output/playwright/planet-reference-20260914/gas-r005/gas-body.glb",
+        "glbSha256": "5331d888d72819809abb50b37521b7b5fb636ce91f566ce6c572593b0bcfa190",
+        "jsonCorners": 48384,
+        "glbCorners": 48384,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.345253924596489e-05,
+        "maximumMatchedUVDelta": 0,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "gas-authored-PBR",
+            "field": "baseColorTexture",
+            "expected": "gas-albedo-generated.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ring-dust-0",
+        "glb": "output/playwright/planet-reference-20260914/gas-r005/ring-dust-0.glb",
+        "glbSha256": "3d0089c98c817802708d1f7e6a99199f384cf6f0af1da8756d03ca893f11f710",
+        "jsonCorners": 1536,
+        "glbCorners": 1536,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 0,
+        "maximumMatchedUVDelta": 2.8610229518832853e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "ring-inner-dust",
+            "field": "baseColorTexture",
+            "expected": "ring-dust-0.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ring-dust-1",
+        "glb": "output/playwright/planet-reference-20260914/gas-r005/ring-dust-1.glb",
+        "glbSha256": "5808aa9eae7dbb220e886f83a5390732298b7faadb7f37ab6396c79f3463bac9",
+        "jsonCorners": 1536,
+        "glbCorners": 1536,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 0,
+        "maximumMatchedUVDelta": 0,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "ring-main-lavender",
+            "field": "baseColorTexture",
+            "expected": "ring-dust-1.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ring-dust-2",
+        "glb": "output/playwright/planet-reference-20260914/gas-r005/ring-dust-2.glb",
+        "glbSha256": "d2b10205acbc962ee67ee08e6ca93278ecbcba94a7695a36f19c3045fe04f52e",
+        "jsonCorners": 1536,
+        "glbCorners": 1536,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 0,
+        "maximumMatchedUVDelta": 4.768371586472142e-09,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "ring-outer-dust",
+            "field": "baseColorTexture",
+            "expected": "ring-dust-2.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ring-rocks",
+        "glb": "output/playwright/planet-reference-20260914/gas-r005/ring-rocks.glb",
+        "glbSha256": "f407398bf8eb21313d2ee8b85b427db6686404d653f860c3b2d0c8b6e15f9b5b",
+        "jsonCorners": 6720,
+        "glbCorners": 6720,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 8.345997731442112e-08,
+        "maximumMatchedNormalDelta": 7.738088559620215e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": []
+      }
+    ],
+    "limitations": [
+      "Material/position-matched corner multisets check values at explicit tolerances independently of index ordering, not mesh topology equivalence.",
+      "Only explicit JSON material fields are compared; source-side omissions remain unspecified.",
+      "Normals compared only when carried in JSON. Reconstruction of omitted normals by a renderer is outside this artifact audit.",
+      "Geometry converted from BlenderZ-up JSON to glTFY-up and accumulated node transforms; UVs follow recorded glTF convention."
+    ],
+    "summary": {
+      "variants": 5,
+      "materialDifferenceOccurrences": 0,
+      "attributeGaps": 0,
+      "variantErrors": 0,
+      "positionMismatchVariants": 0,
+      "normalMismatchVariants": 0,
+      "uvMismatchVariants": 0
+    }
+  }
+]

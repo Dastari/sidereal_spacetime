@@ -1,0 +1,12 @@
+{
+  "method": "Read-only existing isolated preview; hidden, no hardware timing acceptance",
+  "toolResult": {
+    "content": [
+      {
+        "type": "text",
+        "text": "\"{\\\"at\\\":\\\"2026-09-14T06:11:03.043Z\\\",\\\"visibility\\\":\\\"hidden\\\",\\\"url\\\":\\\"http://sidereal.tail7a58a6.ts.net:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?candidate=1&style=ice&seed=38&kit=ice-r026\\\",\\\"stats\\\":{\\\"style\\\":\\\"ice\\\",\\\"seed\\\":38,\\\"frames\\\":4813,\\\"candidate\\\":{\\\"active\\\":0,\\\"pendingBuilds\\\":0,\\\"retained\\\":[0],\\\"smokeImplemented\\\":true,\\\"smokeMeshes\\\":0,\\\"smokeTriangles\\\":0,\\\"retainedSmokeMeshes\\\":0,\\\"requestedLOD\\\":0,\\\"buildMs\\\":2965.300000011921,\\\"localLights\\\":0,\\\"transmissionMaterials\\\":2,\\\"transmissionTargets\\\":1},\\\"baselineEnvironmentEnabled\\\":false,\\\"meshes\\\":8,\\\"triangles\\\":549004,\\\"renderer\\\":{\\\"vendor\\\":\\\"Google Inc. (NVIDIA)\\\",\\\"renderer\\\":\\\"ANGLE (NVIDIA, NVIDIA GeForce RTX 4080 Laptop GPU (0x000027E0) Direct3D11 vs_5_0 ps_5_0, D3D11)\\\",\\\"version\\\":\\\"WebGL 2.0 (OpenGL ES 3.0 Chromium)\\\"},\\\"lods\\\":[]}}\""
+      }
+    ],
+    "isError": false
+  }
+}

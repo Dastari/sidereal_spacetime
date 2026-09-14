@@ -1,0 +1,65 @@
+{
+  "stats": {
+    "style": "moon",
+    "seed": 38,
+    "frames": 45,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 0,
+      "requestedLOD": 0,
+      "buildMs": 802.7000007629395,
+      "localLights": 0
+    },
+    "baselineEnvironmentEnabled": false,
+    "meshes": 10,
+    "triangles": 449912,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": []
+  },
+  "shadowsEnabled": true,
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 43.949367088607595
+  },
+  "shadows": [
+    {
+      "casters": 9,
+      "normalBias": 0.006
+    }
+  ],
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "moon",
+    "revision": "crystal-moon-1-r001",
+    "seed": 38,
+    "radius": 5.5,
+    "bias": 0.006,
+    "glow": true,
+    "local_light": false,
+    "prefix": "corrected",
+    "reference_scale": true,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": false,
+    "shadows_off": false,
+    "reference_radius": 43.949367088607595
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=moon&seed=38&candidate=1&capture=1789361571137311554&shadowBias=0.006&glow=1",
+  "images": {
+    "corrected-seed38.png": "d497009678d2734019b6ae594dd0e6c18c65709fbed4eb2f3be0bfba6adf43bf",
+    "corrected-seed38-angle2.png": "a30929e6bd1c09f17ee9d9f68a5e2533e75b2476bf2ed7b284e55c5df4885ab3",
+    "corrected-seed38-reference-scale.png": "760c85b6795205980b696dbfb4d6147a5b6288ef5888888d7973118bcb3c1152"
+  },
+  "kitSha256": "f3404c5e520c9ef4815f07093016287c4ae249e36c1a461b96d32dce3a6a334b"
+}

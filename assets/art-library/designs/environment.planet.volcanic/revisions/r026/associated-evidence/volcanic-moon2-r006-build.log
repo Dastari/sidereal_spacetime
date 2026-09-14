@@ -1,0 +1,79 @@
+ERROR Draco mesh compression is not available because library could not be found at /usr/bin/4.3/python/lib/python3.13/site-packages/libextern_draco.so
+17:49:45 | INFO: Starting glTF 2.0 export
+17:49:45 | INFO: Extracting primitive: battered-region-a
+17:49:45 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+17:49:45 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+17:49:45 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+17:49:45 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+17:49:45 | INFO: Primitives created: 4
+17:49:45 | INFO: Extracting primitive: battered-region-a-directional-crust-0
+17:49:45 | INFO: Primitives created: 5
+17:49:45 | INFO: Extracting primitive: battered-region-a-directional-crust-1
+17:49:45 | INFO: Primitives created: 4
+17:49:45 | INFO: Extracting primitive: battered-region-a-directional-crust-2
+17:49:45 | INFO: Primitives created: 5
+17:49:45 | INFO: Extracting primitive: battered-region-a-directional-crust-3
+17:49:45 | INFO: Primitives created: 4
+17:49:45 | INFO: Extracting primitive: battered-region-a-embedded-medium-pit
+17:49:45 | INFO: Primitives created: 4
+17:49:45 | INFO: Extracting primitive: battered-region-a-unequal-broken-ledge-0
+17:49:45 | INFO: Primitives created: 5
+17:49:45 | INFO: Extracting primitive: battered-region-a-unequal-broken-ledge-1
+17:49:45 | INFO: Primitives created: 5
+17:49:45 | INFO: Extracting primitive: battered-region-a-unequal-broken-ledge-2
+17:49:45 | INFO: Primitives created: 4
+17:49:45 | INFO: Extracting primitive: battered-region-a-unequal-broken-ledge-3
+17:49:45 | INFO: Primitives created: 4
+17:49:45 | INFO: Extracting primitive: battered-region-a-unequal-broken-ledge-4
+17:49:45 | INFO: Primitives created: 4
+17:49:45 | INFO: Extracting primitive: battered-region-a-unequal-broken-ledge-5
+17:49:45 | INFO: Primitives created: 5
+17:49:45 | INFO: Extracting primitive: battered-region-a-unequal-broken-ledge-6
+17:49:45 | INFO: Primitives created: 4
+17:49:45 | INFO: Extracting primitive: battered-region-a-unequal-broken-ledge-7
+17:49:45 | INFO: Primitives created: 4
+17:49:45 | INFO: Extracting primitive: battered-region-a-warm-inset-mineral
+17:49:45 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+17:49:45 | INFO: Primitives created: 2
+17:49:45 | INFO: Extracting primitive: battered-region-a-warm-inset-mineral-rise
+17:49:45 | INFO: Primitives created: 2
+17:49:45 | INFO: Extracting primitive: battered-region-a-fault-collapsed-cap-a
+17:49:45 | INFO: Primitives created: 3
+17:49:45 | INFO: Extracting primitive: battered-region-a-fault-collapsed-cap-b
+17:49:45 | INFO: Primitives created: 3
+17:49:45 | INFO: Extracting primitive: battered-region-a-fracture-chip-0
+17:49:45 | INFO: Primitives created: 3
+17:49:45 | INFO: Extracting primitive: battered-region-a-fracture-chip-1
+17:49:45 | INFO: Primitives created: 3
+17:49:45 | INFO: Extracting primitive: battered-region-a-fracture-chip-2
+17:49:45 | INFO: Primitives created: 3
+17:49:45 | INFO: Extracting primitive: battered-region-a-fracture-chip-3
+17:49:45 | INFO: Primitives created: 3
+17:49:45 | INFO: Extracting primitive: battered-region-a-fracture-chip-4
+17:49:45 | INFO: Primitives created: 3
+17:49:45 | INFO: Extracting primitive: battered-region-a-fracture-chip-5
+17:49:45 | INFO: Primitives created: 4
+17:49:45 | INFO: Extracting primitive: battered-region-a-fracture-chip-6
+17:49:45 | INFO: Primitives created: 4
+17:49:45 | INFO: Extracting primitive: battered-region-a-fracture-chip-7
+17:49:45 | INFO: Primitives created: 3
+17:49:45 | INFO: Extracting primitive: battered-region-a-fracture-chip-8
+17:49:45 | INFO: Primitives created: 3
+17:49:45 | INFO: Extracting primitive: battered-region-a-fracture-chip-9
+17:49:45 | INFO: Primitives created: 3
+17:49:45 | INFO: Extracting primitive: battered-region-a-fracture-chip-10
+17:49:45 | INFO: Primitives created: 3
+17:49:45 | INFO: Extracting primitive: battered-region-a-exposed-hot-fracture-0
+17:49:45 | INFO: Primitives created: 2
+17:49:45 | INFO: Extracting primitive: battered-region-a-exposed-hot-fracture-1
+17:49:45 | INFO: Primitives created: 3
+17:49:45 | INFO: Extracting primitive: battered-region-a-exposed-hot-fracture-2
+17:49:45 | INFO: Primitives created: 2
+17:49:45 | INFO: Finished glTF 2.0 export in 0.133544921875 s
+
+Info: Saved "kit.blend"
+VOLCANIC_R006_DONE 455 triangles 455 faces
+Blender 4.3.2
+Read blend: "/root/sidereal_spacetime/output/playwright/planet-reference-20260914/volcanic-moon-2-r005/kit.blend"
+
+Blender quit

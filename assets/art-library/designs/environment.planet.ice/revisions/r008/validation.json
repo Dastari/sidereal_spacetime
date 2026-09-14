@@ -1,0 +1,104 @@
+{
+  "checks": [
+    "GLB2 header length",
+    "JSON chunk",
+    "finite declared position bounds",
+    "indexed triangle counts",
+    "exported material role names"
+  ],
+  "limitation": "Structural export audit only; not a renderer image or complete optical validation.",
+  "variants": [
+    {
+      "file": "variant-0.glb",
+      "triangles": 4242,
+      "materials": [
+        "powder-snow"
+      ],
+      "meshNodes": [
+        {
+          "mesh": 0,
+          "name": "GEO-kit-0-continuous-stepped-crust"
+        }
+      ]
+    },
+    {
+      "file": "variant-1.glb",
+      "triangles": 5452,
+      "materials": [
+        "powder-snow",
+        "cobalt-ice",
+        "cyan-ice-face",
+        "deep-ice"
+      ],
+      "meshNodes": [
+        {
+          "mesh": 0,
+          "name": "GEO-kit-1-continuous-stepped-crust"
+        }
+      ]
+    },
+    {
+      "file": "variant-2.glb",
+      "triangles": 4926,
+      "materials": [
+        "powder-snow",
+        "cobalt-ice",
+        "cyan-ice-face",
+        "deep-ice"
+      ],
+      "meshNodes": [
+        {
+          "mesh": 0,
+          "name": "GEO-kit-2-continuous-stepped-crust"
+        }
+      ]
+    },
+    {
+      "file": "variant-3.glb",
+      "triangles": 5154,
+      "materials": [
+        "powder-snow",
+        "cobalt-ice",
+        "cyan-ice-face",
+        "deep-ice"
+      ],
+      "meshNodes": [
+        {
+          "mesh": 0,
+          "name": "GEO-kit-3-continuous-stepped-crust"
+        }
+      ]
+    },
+    {
+      "file": "variant-4.glb",
+      "triangles": 5898,
+      "materials": [
+        "powder-snow",
+        "cobalt-ice",
+        "cyan-ice-face",
+        "deep-ice"
+      ],
+      "meshNodes": [
+        {
+          "mesh": 0,
+          "name": "GEO-kit-4-continuous-stepped-crust"
+        }
+      ]
+    },
+    {
+      "file": "variant-5.glb",
+      "triangles": 5148,
+      "materials": [
+        "powder-snow",
+        "cobalt-ice",
+        "cyan-ice-face"
+      ],
+      "meshNodes": [
+        {
+          "mesh": 0,
+          "name": "GEO-kit-5-continuous-stepped-crust"
+        }
+      ]
+    }
+  ]
+}

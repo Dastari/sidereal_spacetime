@@ -1,0 +1,110 @@
+{
+  "schema": "sidereal.crystal-r010-checkpoint-proposal.v1",
+  "prepared_at": "2026-09-14T08:13:19.741013+00:00",
+  "status": "PREPARATION ONLY; no canonical writes until explicit root verdict",
+  "families": [
+    {
+      "family": "crystal",
+      "current_checkpoint": 15,
+      "next_checkpoint": 16,
+      "pinned_main_revision": 13,
+      "sources": [
+        {
+          "source": "output/playwright/planet-reference-20260914/crystal-moon-1-r006",
+          "reference_id": "planets--crystal-moon-1",
+          "source_revision": 6,
+          "trial_suffix": null,
+          "working_gate": "meaningful native failed iteration; preserve exact review",
+          "files": 29
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/crystal-moon-1-r007",
+          "reference_id": "planets--crystal-moon-1",
+          "source_revision": 7,
+          "trial_suffix": null,
+          "working_gate": "meaningful native failed iteration; preserve exact review",
+          "files": 28
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/crystal-moon-1-r008",
+          "reference_id": "planets--crystal-moon-1",
+          "source_revision": 8,
+          "trial_suffix": null,
+          "working_gate": "native-ready checkpoint; actual acceptance only in attached verdict",
+          "files": 28
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/crystal-moon-1-r009",
+          "reference_id": "planets--crystal-moon-1",
+          "source_revision": 9,
+          "trial_suffix": null,
+          "working_gate": "root and independent morphology PASS; full visual gate OPEN for localized bright mineral edge exposure",
+          "files": 34
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/crystal-moon-2-r006",
+          "reference_id": "planets--crystal-moon-2",
+          "source_revision": 6,
+          "trial_suffix": null,
+          "working_gate": "meaningful native failed iteration; preserve exact review",
+          "files": 29
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/crystal-moon-2-r007",
+          "reference_id": "planets--crystal-moon-2",
+          "source_revision": 7,
+          "trial_suffix": null,
+          "working_gate": "meaningful native failed iteration; preserve exact review",
+          "files": 28
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/crystal-moon-2-r008",
+          "reference_id": "planets--crystal-moon-2",
+          "source_revision": 8,
+          "trial_suffix": null,
+          "working_gate": "native-ready checkpoint; actual acceptance only in attached verdict",
+          "files": 28
+        },
+        {
+          "source": "output/playwright/planet-reference-20260914/crystal-moon-2-r009",
+          "reference_id": "planets--crystal-moon-2",
+          "source_revision": 9,
+          "trial_suffix": null,
+          "working_gate": "root and independent morphology PASS; full visual gate OPEN for localized bright mineral edge exposure",
+          "files": 34
+        }
+      ],
+      "associated_evidence": [
+        "scripts/art_library/build_crystal_moon_fractures_r006.py",
+        "scripts/art_library/build_crystal_moon_fractures_r007.py",
+        "scripts/art_library/build_crystal_moon_fractures_r008.py",
+        "scripts/art_library/build_crystal_moon_fractures_r009.py",
+        "scripts/art_library/crystal_moon_reference_composition_r006.test.ts",
+        "scripts/art_library/crystal_moon_reference_composition_r006.ts",
+        "scripts/art_library/crystal_moon_reference_composition_r007.test.ts",
+        "scripts/art_library/crystal_moon_reference_composition_r007.ts",
+        "scripts/art_library/crystal_moon_reference_composition_r008.test.ts",
+        "scripts/art_library/crystal_moon_reference_composition_r008.ts",
+        "scripts/art_library/crystal_moon_reference_composition_r009.test.ts",
+        "scripts/art_library/crystal_moon_reference_r006.tsconfig.json",
+        "scripts/art_library/crystal_moon_reference_r006.vitest.config.ts",
+        "scripts/art_library/crystal_moon_reference_r007.tsconfig.json",
+        "scripts/art_library/crystal_moon_reference_r007.vitest.config.ts",
+        "scripts/art_library/crystal_moon_reference_r008.tsconfig.json",
+        "scripts/art_library/crystal_moon_reference_r008.vitest.config.ts",
+        "scripts/art_library/crystal_moon_reference_r009.tsconfig.json",
+        "scripts/art_library/crystal_moon_reference_r009.vitest.config.ts",
+        "output/playwright/planet-reference-20260914/crystal-moons-r006-parity",
+        "output/playwright/planet-reference-20260914/crystal-moons-r007-parity",
+        "output/playwright/planet-reference-20260914/crystal-moons-r008-parity",
+        "output/playwright/planet-reference-20260914/crystal-moons-r009-parity"
+      ],
+      "review_reports": [
+        "output/playwright/planet-reference-20260914/reviews/crystal-moons-r006-native.md",
+        "output/playwright/planet-reference-20260914/reviews/crystal-moons-r007-native.md",
+        "output/playwright/planet-reference-20260914/reviews/crystal-moons-r008-native.md",
+        "output/playwright/planet-reference-20260914/reviews/crystal-moons-r009-runtime.md"
+      ]
+    }
+  ]
+}

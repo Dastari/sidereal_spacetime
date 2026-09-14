@@ -1,0 +1,9 @@
+# Crystal moon1/2 r004 actual runtime — 2026-09-14
+
+Independently viewed each exact crop, native-body-preview.png and both actual native-body-seed38 close/angle2/reference-scale triplets. These are actual runtime candidate views, distinct from the earlier native-only r003 direction review.
+
+Both full visual gates remain OPEN. The change away from gray cratered core with purple stump clusters succeeds: both now read as purple crystalline bodies, and moon2 has a distinct compact angular silhouette. Moon1 has real selected pink bright faces at reference scale. However runtime faces look like separated thin sheets/plates around an open interior rather than the solid connected crystalline volumes suggested by the native previews. Moon1 top/upper-left has narrow needle-like edges and visible internal sheet crossings; moon2 angle2 has a large open lower-central region with thin interior edges. Native previews show thicker and more continuously solid-looking masses.
+
+First resolve parity, before prescribing further geometry changes. The camera is not matched, so these stills do not prove a particular winding/normal/material/projection defect. Capture the exact native body under a matching runtime camera and opaque material/winding diagnostic or direct GLB comparison; verify closed volume and authoring transform/triangle orientation preservation. Do not author thicker plates blindly around a potentially technical discrepancy.
+
+After parity is established, any remaining art gap is selected medium-scale chipped/stepped fracture hierarchy and coherent luminous mineral edges. The reference has irregular chunky crystalline structure, not an evenly tiled armored sphere. Current moon1 broad faces and moon2 very large facets remain coarser than exact crops, but the first required action is the technical appearance comparison. No hardware/LOD or owner acceptance inferred.

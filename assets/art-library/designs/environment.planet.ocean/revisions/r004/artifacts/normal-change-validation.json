@@ -1,0 +1,12 @@
+{
+  "change": "Normals only; exact existing native kit geometry and placement retained",
+  "source": "scripts/art_library/ocean_reference_composition_r004.ts",
+  "sourceSha256": "b646e952fcd113ff143558b8119517ebf134c840ef24f24f8d4c65219e21a568",
+  "helper": "scripts/art_library/native_deformation_normals.ts",
+  "helperSha256": "ebedef67ea728b2937058dc0c0868decb7434d4f6955b7b41e7823560e028200",
+  "kit": "output/playwright/planet-reference-20260914/ocean-r003/kit.json",
+  "kitSha256": "f14271a00093b482ccc04b9d603994a44cc9df141e886b42207826cc092c4c00",
+  "typecheck": "Passed",
+  "parity": "Positions and indices byte-identical, placement ranges equal, all three LODs; changed normals finite and unit length",
+  "hardware": "Unmeasured; parent captures and independently reviews actual complete candidate"
+}

@@ -1,0 +1,1121 @@
+{
+  "family": "gas-giant",
+  "current_checkpoint": 6,
+  "next_checkpoint": 7,
+  "pinned_main_revision": 5,
+  "sources": [
+    {
+      "source": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005",
+      "reference_id": "planets--gas-giant-moon-1",
+      "source_revision": 5,
+      "trial_suffix": null,
+      "files": 60
+    },
+    {
+      "source": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic",
+      "reference_id": "planets--gas-giant-moon-1",
+      "source_revision": 5,
+      "trial_suffix": "-emission-only-diagnostic",
+      "files": 40
+    },
+    {
+      "source": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005",
+      "reference_id": "planets--gas-giant-moon-3",
+      "source_revision": 5,
+      "trial_suffix": null,
+      "files": 60
+    }
+  ],
+  "associated_evidence": [
+    "output/playwright/planet-reference-20260914/gas-moon-1-mineral-build.log",
+    "output/playwright/planet-reference-20260914/gas-moon-1-optical-build.log",
+    "output/playwright/planet-reference-20260914/gas-moon-3-mineral-build.log",
+    "output/playwright/planet-reference-20260914/gas-moon-3-optical-build.log",
+    "output/playwright/planet-reference-20260914/gas-moon-mineral-r002-attribute-audit",
+    "output/playwright/planet-reference-20260914/gas-moon-mineral-r002-audit.log",
+    "output/playwright/planet-reference-20260914/gas-moon-mineral-r002-tests-retry.log",
+    "output/playwright/planet-reference-20260914/gas-moon-mineral-r002-tests.log",
+    "output/playwright/planet-reference-20260914/gas-moons-r005-attribute-audit"
+  ],
+  "review_reports": [
+    "output/playwright/planet-reference-20260914/reviews/crystal-moons-r003-native-gas-moon1-r004.md",
+    "output/playwright/planet-reference-20260914/reviews/gas-moons-parent-light-diagnostic.md",
+    "output/playwright/planet-reference-20260914/reviews/gas-moons-r005-corrected-scale.md",
+    "output/playwright/planet-reference-20260914/reviews/gas-moons-r005-luminous-trial.md",
+    "output/playwright/planet-reference-20260914/reviews/ice-volcanic-moons-r001-gas-mineral-r002.md"
+  ],
+  "schema": "sidereal.late-moon-preservation.v1",
+  "recorded_at": "2026-09-14T07:43:52.699222+00:00",
+  "scope": "Candidate/history checkpoint only; no main-world pin change, owner approval or hardware LOD acceptance. Gates are recorded in exact attached root/independent reviews.",
+  "prior_ledger_sha256": "0d541006d5868dca73bdf557aba65032b749ece2c34a9794c142863bbad0ebb0",
+  "files": [
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/angular-outcrops.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/angular-outcrops.glb",
+      "sha256": "e8d504aaa3f2d27c8a2ffb12db79befbe7bf7b4a86a4a98f024001380263df41",
+      "bytes": 328992
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/battered-region-a.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/battered-region-a.glb",
+      "sha256": "ebc0e9f743d58a003ed2f8d3e97f0c8a9a0381e51202eb1cfaf32ed3f6ece264",
+      "bytes": 1268240
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/battered-region-b.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/battered-region-b.glb",
+      "sha256": "c33ff2c0b13527b01c788bc16a6428091bc872adc53625426834446eaa3ab97b",
+      "bytes": 1094628
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/build_gas_moon_luminous_trial_r005.py",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/build_gas_moon_luminous_trial_r005.py",
+      "sha256": "06f04dbf68ee9bdfc3a899421ad2532a2f64251c23a360b2887f83dc72cc9d5a",
+      "bytes": 5178
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/corrected-scale-capture.log",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/corrected-scale-capture.log",
+      "sha256": "befb8d0b5989a21d1dc3ff91336a23fdba8c25b277fdb08bd5f1fbfcac8d95de",
+      "bytes": 658
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/corrected-scale-seed38-angle2.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/corrected-scale-seed38-angle2.png",
+      "sha256": "1affbefe07c27bae0221ff950f6cde630b83872e83a55ed0e0b257cbf97006d5",
+      "bytes": 406658
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/corrected-scale-seed38-capture.log",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/corrected-scale-seed38-capture.log",
+      "sha256": "38c73b67964ed2cb6cb49fc6fbd68549ab339ac8c6d7e206934a46e9e2f9946d",
+      "bytes": 2949
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/corrected-scale-seed38-reference-scale.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/corrected-scale-seed38-reference-scale.png",
+      "sha256": "7056dd596de6f31a92c8955f1c00d9ba4cf60e78cc2c0ffe893d81990c924f55",
+      "bytes": 11454
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/corrected-scale-seed38.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/corrected-scale-seed38.json",
+      "sha256": "c03e721b8cadf09ba42a6cc8b754cc5c8f733be9fa992a1293a0e81ebad65052",
+      "bytes": 2541
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/corrected-scale-seed38.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/corrected-scale-seed38.png",
+      "sha256": "6061723b290d2661fbe7a2f34f268a09620c59714d8a2df736a44de60f9121da",
+      "bytes": 407736
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/crater-broken.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/crater-broken.glb",
+      "sha256": "0b95fa315a472085670b0f4e25d7c96d786aad4818cc920522d854b74fb059bc",
+      "bytes": 699720
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/crater-large.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/crater-large.glb",
+      "sha256": "ddc1a2a70534c24fffc457b461ed4b80d29b04f61ba35cc1db384c2b23a5aba2",
+      "bytes": 540600
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/crater-small.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/crater-small.glb",
+      "sha256": "4c6a51dc43112a57d512dba77bdbecd2cea5d1f1ebce6523c865d0b610f7251a",
+      "bytes": 540612
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/focused-tests.log",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/focused-tests.log",
+      "sha256": "4a14d050959ab132c6be3901a7558603fba6bb0b7305803d405f78c2b388f63c",
+      "bytes": 208
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/foundation-source-r004.py",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/foundation-source-r004.py",
+      "sha256": "6f5451f754a8f7b4dd90a9396814cb67ffa905426db2bcbc69fbd8f954dd2c2e",
+      "bytes": 20916
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/fractured-shelf.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/fractured-shelf.glb",
+      "sha256": "cfed8f3883e476ba68ef15e06e35b01eb7097562001a629f1d1b4d01d9564a1d",
+      "bytes": 328984
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/gas_moon_luminous_trial_r005.test.ts",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/gas_moon_luminous_trial_r005.test.ts",
+      "sha256": "94202ea2a4da01b01284eb7c5a1a49090f400e60af22f7256f9bd2b3be26b0d8",
+      "bytes": 3381
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/gas_moon_luminous_trial_r005.tsconfig.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/gas_moon_luminous_trial_r005.tsconfig.json",
+      "sha256": "bf7089cec6107417c3bbc1760683e879d6e87d63be6e759075b492630df16c18",
+      "bytes": 119
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/gas_moon_luminous_trial_r005.vitest.config.ts",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/gas_moon_luminous_trial_r005.vitest.config.ts",
+      "sha256": "a7339a8dee97a7e00c6b2c4247c78ac7029577234d22baa04ed24ed4154fb88a",
+      "bytes": 166
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/generator.py",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/generator.py",
+      "sha256": "9430013178bd436d80a8a1eefd9615986e79dc3fe8f0431df8bf94b66c514eee",
+      "bytes": 21434
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/geometry-parity.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/geometry-parity.json",
+      "sha256": "d4cdbcacb2867ec78361c1d72156dbcd503c0c230992ce0a68fe8268187c9d7b",
+      "bytes": 351
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/ground-sphere-low.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/ground-sphere-low.glb",
+      "sha256": "8de9dd5febd301cc38e2ddcc6cd2a92db90fee9d3e32b7947f50a7df7a2ddba6",
+      "bytes": 117324
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/ground-sphere-medium.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/ground-sphere-medium.glb",
+      "sha256": "4dbe6d5c82b8de65ed680958cc03f533c6d549c6dd3ec2cd49b4ceaf5e7de870",
+      "bytes": 139924
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/ground-sphere.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/ground-sphere.glb",
+      "sha256": "ad375f585cfd035bd044b5f6bd99f6ee8081e16bcfec1f0ea422e3a5a978a8d2",
+      "bytes": 229140
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/intended-glow-capture.log",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/intended-glow-capture.log",
+      "sha256": "2d7dd50b677e7f33be3f4e85b7fa3ebf33fbacdaf7f92acd59e33d0a7fa41759",
+      "bytes": 655
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/intended-glow-seed38-angle2.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/intended-glow-seed38-angle2.png",
+      "sha256": "1affbefe07c27bae0221ff950f6cde630b83872e83a55ed0e0b257cbf97006d5",
+      "bytes": 406658
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/intended-glow-seed38-capture.log",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/intended-glow-seed38-capture.log",
+      "sha256": "b0e619fa8de7334216c47b2783fb4318f09fc5fa9baab9dfcf3daf26db31da98",
+      "bytes": 2943
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/intended-glow-seed38-reference-scale.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/intended-glow-seed38-reference-scale.png",
+      "sha256": "94be4117e33ed27717ce547af73760ce889bbb26833586e02ed5c0e7815443ab",
+      "bytes": 20357
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/intended-glow-seed38.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/intended-glow-seed38.json",
+      "sha256": "d434b381fa7d56f0437d7aa4dc61d20e5e09a5c108316805a74ad7080e606348",
+      "bytes": 2532
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/intended-glow-seed38.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/intended-glow-seed38.png",
+      "sha256": "6061723b290d2661fbe7a2f34f268a09620c59714d8a2df736a44de60f9121da",
+      "bytes": 407736
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/interpretation.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/interpretation.json",
+      "sha256": "83a3ca4a9b1b83d30a8b606980169b5477456730f361576aa5cedd39987b68d7",
+      "bytes": 1840
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/ior-preservation.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/ior-preservation.json",
+      "sha256": "775ca6c60b694c448ba3997577da5eee4df5dff8f1ede74a7e9b948b81c4e102",
+      "bytes": 1008
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/kit-preview.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/kit-preview.png",
+      "sha256": "addd9819b970f3df57ccc380d26c9375ebde89ed627ab8c4215c0a07b0da4b58",
+      "bytes": 1120505
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/kit.blend",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/kit.blend",
+      "sha256": "6b0a32872c5cb68e3e66fc15bfcd817cc9628c4d99d23101c59c320d3ff964b2",
+      "bytes": 4645644
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/kit.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/kit.json",
+      "sha256": "6f5385ee9f65def88c0e33c9b2bed391bec75103ddab2de50cfb36f63f4f596e",
+      "bytes": 16269055
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/mineral-seam.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/mineral-seam.glb",
+      "sha256": "558d94f2d0902418d564b750fba2f16df00eb1b67acf70990e4e0b560bdbc42b",
+      "bytes": 216360
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/native-mineral-emission-off.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/native-mineral-emission-off.png",
+      "sha256": "f86ebd834c9b925d6cef319aaa5af8cfa1c6ce270d72b8e004debc18114d6e88",
+      "bytes": 345740
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/native-mineral-emission-on.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/native-mineral-emission-on.png",
+      "sha256": "610dffd64eecca6981a25cfbb4eed538dec8cc533ce3d3958e4fd365d34ba88c",
+      "bytes": 355564
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/native-mineral-small.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/native-mineral-small.png",
+      "sha256": "298e3856a00bf536ce37ddb43cbe967af06a46ca03bef16b25b7f67d1d78f783",
+      "bytes": 9604
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/notes.md",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/notes.md",
+      "sha256": "f0e45acca4ab9214491953e3dd25bce61710dd1ff4bf002a208b1c05ace65cfc",
+      "bytes": 2129
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/rocky-0-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/rocky-0-albedo.png",
+      "sha256": "386ff2b85d33920ad1f801bfdce94b3826fb3e56e7ec537538fbe4dadb6037af",
+      "bytes": 72896
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/rocky-0-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/rocky-0-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+      "bytes": 33670
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/rocky-1-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/rocky-1-albedo.png",
+      "sha256": "04083e93be7050aea3b3cebe4e89e399f3a112e58840e0b11fcdfe0a1cea2589",
+      "bytes": 73095
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/rocky-1-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/rocky-1-orm.png",
+      "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717",
+      "bytes": 33991
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/rocky-2-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/rocky-2-albedo.png",
+      "sha256": "1e9b32afc99fa903b6def16c4194a38877a6ce62a3e5e98e68890acd0eb4dec5",
+      "bytes": 52924
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/rocky-2-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/rocky-2-orm.png",
+      "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8",
+      "bytes": 33022
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/rocky-3-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/rocky-3-albedo.png",
+      "sha256": "7ff6c81218c41398d38f50890c2fa626457f9d85bedba034a1824b002bff541c",
+      "bytes": 65270
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/rocky-3-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/rocky-3-orm.png",
+      "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9",
+      "bytes": 33213
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/rocky-4-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/rocky-4-albedo.png",
+      "sha256": "6ef35503245ee5aa19637c882631ff0afa60e3f82f5e80da5ab8adb072127ced",
+      "bytes": 69321
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/rocky-4-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/rocky-4-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+      "bytes": 33670
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/rocky-5-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/rocky-5-albedo.png",
+      "sha256": "9ef0a5d2017ef86325460792d060c8ac5c7cfb839b47a5630851aed6934d54c7",
+      "bytes": 64554
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/rocky-5-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/rocky-5-orm.png",
+      "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66",
+      "bytes": 33335
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/rocky-6-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/rocky-6-albedo.png",
+      "sha256": "016503b23952e6224c8b3187d69da233374b8295cce6616c81d71fdf6ea30bae",
+      "bytes": 66745
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/rocky-6-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/rocky-6-orm.png",
+      "sha256": "6b9853f449130a4976c5db69912b29733a291889c5723f1de65844a9f8ecf663",
+      "bytes": 1781
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/rocky-7-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/rocky-7-albedo.png",
+      "sha256": "cc55054a782eca403bfcce80e34ac4ed2379ecd6c3ce6ecdef9ac89880e94913",
+      "bytes": 66357
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/rocky-7-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/rocky-7-orm.png",
+      "sha256": "6abdbb32f57a31613bfa76360d98152f41d0a3f23aab4a173aa0f89326e0424c",
+      "bytes": 21267
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/source-hashes.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/source-hashes.json",
+      "sha256": "66d922d2cc8f66bae846e2feb646922169880a36d554f0baa3c8a38b0636ceeb",
+      "bytes": 539
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/unmodified-blender-exports/battered-region-a.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/unmodified-blender-exports/battered-region-a.glb",
+      "sha256": "49e4f902afbb5267f154167e62b68fc61bc271155459f9166bca4e0529794d1f",
+      "bytes": 1268156
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/unmodified-blender-exports/crater-broken.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/unmodified-blender-exports/crater-broken.glb",
+      "sha256": "fe59f5a5713365c2a4eaa57b41b94dea6e8fb708b5c3ae7e370f4716329d8c70",
+      "bytes": 699636
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/validation.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/validation.json",
+      "sha256": "0491d3859cda2b49b666923c8cc58d9ebc64234485b01baf3da5e185e15d48fa",
+      "bytes": 7236
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/angular-outcrops.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/angular-outcrops.glb",
+      "sha256": "e8d504aaa3f2d27c8a2ffb12db79befbe7bf7b4a86a4a98f024001380263df41",
+      "bytes": 328992
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/battered-region-a.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/battered-region-a.glb",
+      "sha256": "52c3421aa843ba63f8bbf5b03127b99576926c13b763d36f41b75707138f85b0",
+      "bytes": 1264296
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/battered-region-b.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/battered-region-b.glb",
+      "sha256": "c33ff2c0b13527b01c788bc16a6428091bc872adc53625426834446eaa3ab97b",
+      "bytes": 1094628
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/crater-broken.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/crater-broken.glb",
+      "sha256": "b65a6f8696f0058dda6d06f0f05242cbcfdd33fb6c3f72443edad550b49c7591",
+      "bytes": 699716
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/crater-large.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/crater-large.glb",
+      "sha256": "ddc1a2a70534c24fffc457b461ed4b80d29b04f61ba35cc1db384c2b23a5aba2",
+      "bytes": 540600
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/crater-small.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/crater-small.glb",
+      "sha256": "4c6a51dc43112a57d512dba77bdbecd2cea5d1f1ebce6523c865d0b610f7251a",
+      "bytes": 540612
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/foundation-source-r004.py",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/foundation-source-r004.py",
+      "sha256": "6f5451f754a8f7b4dd90a9396814cb67ffa905426db2bcbc69fbd8f954dd2c2e",
+      "bytes": 20916
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/fractured-shelf.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/fractured-shelf.glb",
+      "sha256": "cfed8f3883e476ba68ef15e06e35b01eb7097562001a629f1d1b4d01d9564a1d",
+      "bytes": 328984
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/generator.py",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/generator.py",
+      "sha256": "31f88adfaa88e91d30fd6ee33085d68127d3b0aba70ff3208aceecf02d45b242",
+      "bytes": 21432
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/ground-sphere-low.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/ground-sphere-low.glb",
+      "sha256": "8de9dd5febd301cc38e2ddcc6cd2a92db90fee9d3e32b7947f50a7df7a2ddba6",
+      "bytes": 117324
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/ground-sphere-medium.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/ground-sphere-medium.glb",
+      "sha256": "4dbe6d5c82b8de65ed680958cc03f533c6d549c6dd3ec2cd49b4ceaf5e7de870",
+      "bytes": 139924
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/ground-sphere.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/ground-sphere.glb",
+      "sha256": "ad375f585cfd035bd044b5f6bd99f6ee8081e16bcfec1f0ea422e3a5a978a8d2",
+      "bytes": 229140
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/interpretation.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/interpretation.json",
+      "sha256": "a8615e8fc178e3dc226155897438236e9099cde2cd99bf261d74ca4961374585",
+      "bytes": 1683
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/ior-preservation.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/ior-preservation.json",
+      "sha256": "5020af224816ef090488e1eb146bc7deb47724fe181dc21bd9206384830bbf25",
+      "bytes": 1008
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/kit-preview.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/kit-preview.png",
+      "sha256": "88a005279f2b1edaa2b4e59faba2de76408cfffd22a3ba8fd346fa5f3a3048f8",
+      "bytes": 1112416
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/kit.blend",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/kit.blend",
+      "sha256": "c59289854f0e336c04fb1fc7f6c7d95cb048a20b63b62c4887a29f9ad9afa0e5",
+      "bytes": 4645644
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/kit.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/kit.json",
+      "sha256": "b15f2724774fe47369dada97af027acd8afcb251793d5db81f57fb192b14751b",
+      "bytes": 16269055
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/mineral-seam.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/mineral-seam.glb",
+      "sha256": "558d94f2d0902418d564b750fba2f16df00eb1b67acf70990e4e0b560bdbc42b",
+      "bytes": 216360
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/native-mineral-emission-off.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/native-mineral-emission-off.png",
+      "sha256": "c4e10cdd40813710f6f273fd8fb0b040d87bc84e2105667e478e23c693788a18",
+      "bytes": 342530
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/native-mineral-emission-on.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/native-mineral-emission-on.png",
+      "sha256": "6c43031b660da078217e8a25053c5ffded7a9db16c82f585f9e95822ee358828",
+      "bytes": 351193
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/native-mineral-small.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/native-mineral-small.png",
+      "sha256": "fbaff9568f14717f9fdb73fbff79ae71a5e7e6593ad4ba15a7bf538b52c36304",
+      "bytes": 9503
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-0-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-0-albedo.png",
+      "sha256": "386ff2b85d33920ad1f801bfdce94b3826fb3e56e7ec537538fbe4dadb6037af",
+      "bytes": 72896
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-0-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-0-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+      "bytes": 33670
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-1-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-1-albedo.png",
+      "sha256": "04083e93be7050aea3b3cebe4e89e399f3a112e58840e0b11fcdfe0a1cea2589",
+      "bytes": 73095
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-1-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-1-orm.png",
+      "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717",
+      "bytes": 33991
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-2-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-2-albedo.png",
+      "sha256": "1e9b32afc99fa903b6def16c4194a38877a6ce62a3e5e98e68890acd0eb4dec5",
+      "bytes": 52924
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-2-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-2-orm.png",
+      "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8",
+      "bytes": 33022
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-3-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-3-albedo.png",
+      "sha256": "7ff6c81218c41398d38f50890c2fa626457f9d85bedba034a1824b002bff541c",
+      "bytes": 65270
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-3-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-3-orm.png",
+      "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9",
+      "bytes": 33213
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-4-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-4-albedo.png",
+      "sha256": "6ef35503245ee5aa19637c882631ff0afa60e3f82f5e80da5ab8adb072127ced",
+      "bytes": 69321
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-4-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-4-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+      "bytes": 33670
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-5-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-5-albedo.png",
+      "sha256": "9ef0a5d2017ef86325460792d060c8ac5c7cfb839b47a5630851aed6934d54c7",
+      "bytes": 64554
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-5-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-5-orm.png",
+      "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66",
+      "bytes": 33335
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-6-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-6-albedo.png",
+      "sha256": "016503b23952e6224c8b3187d69da233374b8295cce6616c81d71fdf6ea30bae",
+      "bytes": 66745
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-6-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-6-orm.png",
+      "sha256": "6b9853f449130a4976c5db69912b29733a291889c5723f1de65844a9f8ecf663",
+      "bytes": 1781
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-7-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-7-albedo.png",
+      "sha256": "cc55054a782eca403bfcce80e34ac4ed2379ecd6c3ce6ecdef9ac89880e94913",
+      "bytes": 66357
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-7-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/rocky-7-orm.png",
+      "sha256": "6abdbb32f57a31613bfa76360d98152f41d0a3f23aab4a173aa0f89326e0424c",
+      "bytes": 21267
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/unmodified-blender-exports/battered-region-a.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/unmodified-blender-exports/battered-region-a.glb",
+      "sha256": "353ceda946e6333d643e063e139325c829d0b7cd2a8518073a5baa72f86aa55c",
+      "bytes": 1264212
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/unmodified-blender-exports/crater-broken.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/unmodified-blender-exports/crater-broken.glb",
+      "sha256": "4333eb5bc83c6353a4c3e1ebd5beb2b104d1281453e5e3a65536f327c12454b4",
+      "bytes": 699632
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005-emission-only-diagnostic/validation.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005-emission-only-diagnostic/validation.json",
+      "sha256": "ef6e5b6e7868e2b24babe93350eced63b1d82c30a92c82c27bb1175f30b3488d",
+      "bytes": 7236
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/angular-outcrops.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/angular-outcrops.glb",
+      "sha256": "ad167d57db599d7f83b873752184b7a88f71facdacb0d56f03a61599f2722ef3",
+      "bytes": 333428
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/battered-region-a.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/battered-region-a.glb",
+      "sha256": "e2cb8d96a664bc8d518126f678f0cb869c0d71d8e341704e52deb427fa0caefd",
+      "bytes": 1277812
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/battered-region-b.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/battered-region-b.glb",
+      "sha256": "0a995b2a47bfa23ce8adf41d582a5d4f438b015b5468dd92a247fb5fb990cc68",
+      "bytes": 1104204
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/build_gas_moon_luminous_trial_r005.py",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/build_gas_moon_luminous_trial_r005.py",
+      "sha256": "06f04dbf68ee9bdfc3a899421ad2532a2f64251c23a360b2887f83dc72cc9d5a",
+      "bytes": 5178
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/corrected-scale-capture.log",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/corrected-scale-capture.log",
+      "sha256": "6c965a6bfe9bb9f85fad0a5d461a3aa7eaa9dac39c6e4aa1b81cd354aafdd5c8",
+      "bytes": 657
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/corrected-scale-seed38-angle2.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/corrected-scale-seed38-angle2.png",
+      "sha256": "26fb29035e0b300ac2fcde9fb5f2c4316be3f59102fb48d732dcfce7e6e81050",
+      "bytes": 416526
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/corrected-scale-seed38-capture.log",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/corrected-scale-seed38-capture.log",
+      "sha256": "1a71b04de63d477fd015c5a3b8afdd9cd3957027dbf6a4efd58a5ec6ae26dff8",
+      "bytes": 2949
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/corrected-scale-seed38-reference-scale.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/corrected-scale-seed38-reference-scale.png",
+      "sha256": "83fd183ed876fa16352321fa6371d184bf1901167410d124a541704c68b066a0",
+      "bytes": 21052
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/corrected-scale-seed38.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/corrected-scale-seed38.json",
+      "sha256": "254fe6d85ca7b440e884b6ca5ab2a4e34db63eef88dc1b60f5bba963c76b4c19",
+      "bytes": 2540
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/corrected-scale-seed38.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/corrected-scale-seed38.png",
+      "sha256": "31680a90196a785cd7f27c26448f99892d7eb80fcec65ed2ffc8171c123ce094",
+      "bytes": 419322
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/crater-broken.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/crater-broken.glb",
+      "sha256": "34cdffec280e5106fcbe96d0b277390ab8b271995e7d1c26ab4c602b25b1eb0f",
+      "bytes": 723208
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/crater-large.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/crater-large.glb",
+      "sha256": "ee06e93a5771ee76259fbed010185865995da3cd3184953791ba3af0d13ea832",
+      "bytes": 564088
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/crater-small.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/crater-small.glb",
+      "sha256": "e42b91c0638517d639f6cc81b3f45427d854fcbebd7f0e9d3a685b769a33920d",
+      "bytes": 564100
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/focused-tests.log",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/focused-tests.log",
+      "sha256": "4a14d050959ab132c6be3901a7558603fba6bb0b7305803d405f78c2b388f63c",
+      "bytes": 208
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/foundation-source-r004.py",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/foundation-source-r004.py",
+      "sha256": "59c9f23b12ce9e09144bae45d90b2ae917c12d4c1064a6917470f506d85866b3",
+      "bytes": 20919
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/fractured-shelf.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/fractured-shelf.glb",
+      "sha256": "a52c5b05be58a4b3f689cc0c0ccf6e7f5f9989d73aa215d20c408d83d754aa11",
+      "bytes": 333420
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/gas_moon_luminous_trial_r005.test.ts",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/gas_moon_luminous_trial_r005.test.ts",
+      "sha256": "94202ea2a4da01b01284eb7c5a1a49090f400e60af22f7256f9bd2b3be26b0d8",
+      "bytes": 3381
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/gas_moon_luminous_trial_r005.tsconfig.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/gas_moon_luminous_trial_r005.tsconfig.json",
+      "sha256": "bf7089cec6107417c3bbc1760683e879d6e87d63be6e759075b492630df16c18",
+      "bytes": 119
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/gas_moon_luminous_trial_r005.vitest.config.ts",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/gas_moon_luminous_trial_r005.vitest.config.ts",
+      "sha256": "a7339a8dee97a7e00c6b2c4247c78ac7029577234d22baa04ed24ed4154fb88a",
+      "bytes": 166
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/generator.py",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/generator.py",
+      "sha256": "684b54b780b85f028e9823c8aaf632d96f8e9d487f5063a1ecebb3907069da13",
+      "bytes": 21437
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/geometry-parity.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/geometry-parity.json",
+      "sha256": "d4cdbcacb2867ec78361c1d72156dbcd503c0c230992ce0a68fe8268187c9d7b",
+      "bytes": 351
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/ground-sphere-low.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/ground-sphere-low.glb",
+      "sha256": "21698dd33e4b4566a4f03ca25f86419effc737bd1604b28998ad1b435902413e",
+      "bytes": 116624
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/ground-sphere-medium.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/ground-sphere-medium.glb",
+      "sha256": "c7d5691bf8ef44f3dfa0f4b50a4845e0e2cf76274a64b9b995bbae48d753651c",
+      "bytes": 139224
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/ground-sphere.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/ground-sphere.glb",
+      "sha256": "ae5a423c37b32c7b7ec83db27e205d51d3d42e268c99b81a5506a19db9fa0ed5",
+      "bytes": 228440
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/intended-glow-capture.log",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/intended-glow-capture.log",
+      "sha256": "a0b885f263f0b01ef4241965c3a4dc517a96a01efceaa489665018179534d4f9",
+      "bytes": 655
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/intended-glow-seed38-angle2.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/intended-glow-seed38-angle2.png",
+      "sha256": "26fb29035e0b300ac2fcde9fb5f2c4316be3f59102fb48d732dcfce7e6e81050",
+      "bytes": 416526
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/intended-glow-seed38-capture.log",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/intended-glow-seed38-capture.log",
+      "sha256": "150c11e16b37a61c214a63ffc25b034d5dd0ef8b8bf33806e610a9d90a7bc2be",
+      "bytes": 2943
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/intended-glow-seed38-reference-scale.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/intended-glow-seed38-reference-scale.png",
+      "sha256": "1dcf51e277fef82ec1173d04d9a2ab26567f892e9198f29a32e6e4c28788d5f5",
+      "bytes": 11365
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/intended-glow-seed38.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/intended-glow-seed38.json",
+      "sha256": "aed3cbf4661f407771628e98838e6bd7b2626bcbb8163177deb194cc5725c21d",
+      "bytes": 2532
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/intended-glow-seed38.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/intended-glow-seed38.png",
+      "sha256": "31680a90196a785cd7f27c26448f99892d7eb80fcec65ed2ffc8171c123ce094",
+      "bytes": 419322
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/interpretation.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/interpretation.json",
+      "sha256": "b0251dda066b5d44a711e8c3656e9bd500f3682996a15a67099d6a305e9982db",
+      "bytes": 1840
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/ior-preservation.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/ior-preservation.json",
+      "sha256": "2656633f6f2588daf60a2c7802d2e6a41803d0dd4a4555bbe86e99b5298222e5",
+      "bytes": 1008
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/kit-preview.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/kit-preview.png",
+      "sha256": "e818b89ab9dd0d3f2ca43f35075cab77110c67f0e8dfcc5b5be2e8725d3b63dd",
+      "bytes": 1122810
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/kit.blend",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/kit.blend",
+      "sha256": "bd53b127cdc7856b6b8ae7fbb9ac80dbfbab6fa4e763869be96a42719c3df068",
+      "bytes": 4670436
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/kit.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/kit.json",
+      "sha256": "9391022b5a57b77b346a469fac91860164696c31bb46388a60bcb4d153f72e59",
+      "bytes": 16269055
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/mineral-seam.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/mineral-seam.glb",
+      "sha256": "abb48218e17384bbd0429188d0553ea79a433c95a7a129199c2a52001a6662e0",
+      "bytes": 216524
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/native-mineral-emission-off.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/native-mineral-emission-off.png",
+      "sha256": "7225a2be00c0c05865f5850388dbd94bcba86219cb9e30cc71d1be7c88440a67",
+      "bytes": 346080
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/native-mineral-emission-on.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/native-mineral-emission-on.png",
+      "sha256": "b43ca4a4a621f672dcf0f0dec8e119db30c401e79b067561726d8a36778a155c",
+      "bytes": 355148
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/native-mineral-small.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/native-mineral-small.png",
+      "sha256": "e318fe3f4295b613a86bcae00af4a8c4d47a976466cdac74888a9e573904fa44",
+      "bytes": 9474
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/notes.md",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/notes.md",
+      "sha256": "f0e45acca4ab9214491953e3dd25bce61710dd1ff4bf002a208b1c05ace65cfc",
+      "bytes": 2129
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/rocky-0-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/rocky-0-albedo.png",
+      "sha256": "9bc6fad73f6e48ec7c1dd8c8121fd5e25c077397cb772898aa2a0c200872d971",
+      "bytes": 72196
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/rocky-0-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/rocky-0-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+      "bytes": 33670
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/rocky-1-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/rocky-1-albedo.png",
+      "sha256": "99afd56fd84b1c984d8517d327df01b5dc28cd03309d52f6fe795adbbe2246fd",
+      "bytes": 79368
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/rocky-1-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/rocky-1-orm.png",
+      "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717",
+      "bytes": 33991
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/rocky-2-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/rocky-2-albedo.png",
+      "sha256": "a81ada705c9a7d22069ce0dabd059c7cce192db07b5c0c3f96d4142e3afe62de",
+      "bytes": 56734
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/rocky-2-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/rocky-2-orm.png",
+      "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8",
+      "bytes": 33022
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/rocky-3-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/rocky-3-albedo.png",
+      "sha256": "88176172beffa7861b947b557e8aa3dc6c72fc03fd528193e166d4ec7c87a598",
+      "bytes": 64134
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/rocky-3-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/rocky-3-orm.png",
+      "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9",
+      "bytes": 33213
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/rocky-4-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/rocky-4-albedo.png",
+      "sha256": "7a31ad70f638b0503edd21e755df45e458333756e015f0f2f3a411a9df5a6686",
+      "bytes": 70626
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/rocky-4-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/rocky-4-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+      "bytes": 33670
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/rocky-5-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/rocky-5-albedo.png",
+      "sha256": "e5646053bde5fbc0ed52b56f05f9c64001befb838eaaf2d4433c53ad6487dcce",
+      "bytes": 79794
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/rocky-5-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/rocky-5-orm.png",
+      "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66",
+      "bytes": 33335
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/rocky-6-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/rocky-6-albedo.png",
+      "sha256": "016503b23952e6224c8b3187d69da233374b8295cce6616c81d71fdf6ea30bae",
+      "bytes": 66745
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/rocky-6-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/rocky-6-orm.png",
+      "sha256": "6b9853f449130a4976c5db69912b29733a291889c5723f1de65844a9f8ecf663",
+      "bytes": 1781
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/rocky-7-albedo.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/rocky-7-albedo.png",
+      "sha256": "cc55054a782eca403bfcce80e34ac4ed2379ecd6c3ce6ecdef9ac89880e94913",
+      "bytes": 66357
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/rocky-7-orm.png",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/rocky-7-orm.png",
+      "sha256": "6abdbb32f57a31613bfa76360d98152f41d0a3f23aab4a173aa0f89326e0424c",
+      "bytes": 21267
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/source-hashes.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/source-hashes.json",
+      "sha256": "66d922d2cc8f66bae846e2feb646922169880a36d554f0baa3c8a38b0636ceeb",
+      "bytes": 539
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/unmodified-blender-exports/battered-region-a.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/unmodified-blender-exports/battered-region-a.glb",
+      "sha256": "2ae242a22ab988064854f3fc8ac52c7229f0c7c1924a99132594d1017bd36cac",
+      "bytes": 1277728
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/unmodified-blender-exports/crater-broken.glb",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/unmodified-blender-exports/crater-broken.glb",
+      "sha256": "d2948d0cdb6fde417a8554982fd4ad714196160dced0ae28f5ba1b351ccf8a9a",
+      "bytes": 723124
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/validation.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/validation.json",
+      "sha256": "12698481d5c28dbe831ddaca2d4335e69ce37ed0f5bf7bc3a9bcca58665f65ae",
+      "bytes": 7236
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-moon-1-mineral-build.log",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/associated-evidence/gas-moon-1-mineral-build.log",
+      "sha256": "107ce3d2d0f735bfdf0b9fc0dd63f77515d4970b673ba4a6614cd4c1364e017a",
+      "bytes": 32281
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-moon-1-optical-build.log",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/associated-evidence/gas-moon-1-optical-build.log",
+      "sha256": "cf55af1932a2c1159922dbc3698ff562d374db96429a93c50ba4d1b69e040a79",
+      "bytes": 33300
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-moon-3-mineral-build.log",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/associated-evidence/gas-moon-3-mineral-build.log",
+      "sha256": "7d1532246c0e526dd7310cbb5392fb5578569b36aa48a4f20f065bfe0a46ef4b",
+      "bytes": 32540
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-moon-3-optical-build.log",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/associated-evidence/gas-moon-3-optical-build.log",
+      "sha256": "41a0a570e84596324fd670644d4407de6a1a1f3134322bc435ae203b469e36d6",
+      "bytes": 32559
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-moon-mineral-r002-attribute-audit/report.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/associated-evidence/gas-moon-mineral-r002-attribute-audit/report.json",
+      "sha256": "f23c747fe7b192f58210d6f3a665447578a7b39b72f320a5382837672384ed99",
+      "bytes": 54747
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-moon-mineral-r002-attribute-audit/report.md",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/associated-evidence/gas-moon-mineral-r002-attribute-audit/report.md",
+      "sha256": "789761fa6e8a57788a882c7cafec08a2631bffec1eff4d4ad93572d6c9a2e43f",
+      "bytes": 11304
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-moon-mineral-r002-audit.log",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/associated-evidence/gas-moon-mineral-r002-audit.log",
+      "sha256": "bd3f3a4ad028df400430d6a0f152f5f6cb16e60ce1052a5d8eeebfec3d6ee429",
+      "bytes": 531
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-moon-mineral-r002-tests-retry.log",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/associated-evidence/gas-moon-mineral-r002-tests-retry.log",
+      "sha256": "8232ea4725e68ede943aeac5f6bea24418f931107564239a830e76bf0c2b5c8c",
+      "bytes": 209
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-moon-mineral-r002-tests.log",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/associated-evidence/gas-moon-mineral-r002-tests.log",
+      "sha256": "da1180ba1098f4d364fe165c93f301f8ca902654103ff6e935b63671edd7477c",
+      "bytes": 41
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-moons-r005-attribute-audit/report.json",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/associated-evidence/gas-moons-r005-attribute-audit/report.json",
+      "sha256": "7d3b6b54ab5c9f7e92eb3699f7442e2a6b454a3fbc1da30078173c429867b9e7",
+      "bytes": 54747
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/gas-moons-r005-attribute-audit/report.md",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/associated-evidence/gas-moons-r005-attribute-audit/report.md",
+      "sha256": "2de5b116169fd8a9ef1730577c90cce6c5b85ed0d7c1023680bef52b8847722c",
+      "bytes": 11304
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/reviews/crystal-moons-r003-native-gas-moon1-r004.md",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/reviews/crystal-moons-r003-native-gas-moon1-r004.md",
+      "sha256": "187ca2f199d1da6fa2aaf9fd2f11033ff4b623786a9ddc056b114377d5d12635",
+      "bytes": 3300
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/reviews/gas-moons-parent-light-diagnostic.md",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/reviews/gas-moons-parent-light-diagnostic.md",
+      "sha256": "8ab0eca484fa4776731c3cbd28e9b2fd3c4b171dbf524d301557caf188c706d3",
+      "bytes": 1926
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/reviews/gas-moons-r005-corrected-scale.md",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/reviews/gas-moons-r005-corrected-scale.md",
+      "sha256": "01cdc3f545fab4665f6d8f184d989cdbf8d3cc8375bee90ad619e879eb9ee570",
+      "bytes": 2044
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/reviews/gas-moons-r005-luminous-trial.md",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/reviews/gas-moons-r005-luminous-trial.md",
+      "sha256": "9cf4530e401deb3e49b6ab032f5c5632cc6c427565202582b6e8c79ab90ccd12",
+      "bytes": 2414
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/reviews/ice-volcanic-moons-r001-gas-mineral-r002.md",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/reviews/ice-volcanic-moons-r001-gas-mineral-r002.md",
+      "sha256": "3135c0193a05ff766208ce522f61883968d4126997272d7e719c3569ff289979",
+      "bytes": 3087
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/reviews/root-r005-checkpoint-verdict.md",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/reviews/root-final-review-verdict.md",
+      "sha256": "02417da619028a0b255db4ea27560cf75f006295a9df4e107a77d96594b99958",
+      "bytes": 1436
+    },
+    {
+      "original_path": "output/playwright/planet-reference-20260914/reviews/checkpoint_late_moon_history.py",
+      "path": "designs/environment.planet.gas-giant/revisions/r007/checkpoint_late_moon_history.py",
+      "sha256": "d45dff422dd2d6c385905ad0f01e8e9ed3ca7ced58f985c434048b99bf2b0404",
+      "bytes": 8013
+    }
+  ]
+}

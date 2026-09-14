@@ -1,0 +1,18 @@
+[
+  {
+    "id": "ice-moon-1",
+    "equalityEvidence": "output/playwright/planet-reference-20260914/runtime-projections/ice-moon-1-r002/equality.json",
+    "equalitySHA256": "55bd56f68d2aa3d649ebb7a37c60fe0fd0cf7d4fba910be3733ec802b421ec7a",
+    "projectedFullCases": 18,
+    "frozenOptimizedCases": 9,
+    "allBuffersAndRangesEqual": true
+  },
+  {
+    "id": "ice-moon-2",
+    "equalityEvidence": "output/playwright/planet-reference-20260914/runtime-projections/ice-moon-2-r002/equality.json",
+    "equalitySHA256": "ec8af4494dee272f6a2958fc90568e5e3e46253ccb4a8849ce3ffb9bb2d7d388",
+    "projectedFullCases": 18,
+    "frozenOptimizedCases": 9,
+    "allBuffersAndRangesEqual": true
+  }
+]

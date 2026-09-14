@@ -1,0 +1,70 @@
+{
+  "body": {
+    "id": "54d7c057-bac4-4d29-9e26-175e000be829",
+    "appearance": "volcanic",
+    "x": 1700,
+    "y": -3800,
+    "height": -155,
+    "radius": 62,
+    "seed": 89
+  },
+  "native": {
+    "revision": "volcanic-r018",
+    "lod": 0,
+    "triangles": 131840,
+    "smokeImplemented": true
+  },
+  "cameraObserved": {
+    "target": [
+      1700,
+      -155,
+      3800
+    ],
+    "radius": 310,
+    "alpha": 0.45,
+    "beta": 0.9553166181245092
+  },
+  "cameraBefore": {
+    "target": [
+      0,
+      0.8,
+      -6.1499999999999995
+    ],
+    "radius": 46.99580837575128,
+    "alpha": 3.5915926535897933,
+    "beta": 0.9553166181245092
+  },
+  "orbit": {
+    "target": [
+      1700,
+      -155,
+      3800
+    ],
+    "radius": 216.27966108201963,
+    "alpha": -0.03999999999999998,
+    "beta": 0.8453166181245093
+  },
+  "cameraReturn": {
+    "target": [
+      0,
+      0.8,
+      -6.1499999999999995
+    ],
+    "radius": 46.99580837575128,
+    "alpha": -2.691592653589794,
+    "beta": 0.9553166181245092
+  },
+  "authorityUnchanged": true,
+  "authorityTablesCompared": [
+    "ownCharacters",
+    "ownShips",
+    "ownSpaceBodies",
+    "ownInventoryItems"
+  ],
+  "environment": "/assets/materials/frontier-workshop.hdr",
+  "environmentReady": true,
+  "method": "Actual App on required tailnet; existing Pose Integration Review identity. Actual pointer Map/page2/Cinder/Observe selection, pointer wheel/right-drag and Return; manual presentation callbacks while continuous rendering paused, one actual full scene render. No direct focusBody selection and no authoritative mutations.",
+  "image": "output/playwright/native-volcanic-r018-actual-observe.png",
+  "artStatus": "Root-approved local working candidate; final owner art unapproved; fine ledges/smooth fissures/inherited smoke gaps remain.",
+  "cameraPreferenceRestored": true
+}

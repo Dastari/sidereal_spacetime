@@ -1,0 +1,15 @@
+{
+  "referenceId": "planets--gas-giant-moon-1",
+  "priorSourceSha256": "3c607237c4cd589bff015e027e62b843afbf962528878b648388d7c92935e458",
+  "hypothesis": "Test whether native high-IOR polished mineral optics localize highlights under existing review lighting. No emission and no original crust changes.",
+  "changes": {
+    "ior": 2.2,
+    "roughness": [
+      0.1,
+      0.12
+    ],
+    "clearcoat": 1,
+    "coatRoughness": 0.08
+  },
+  "approval": "none"
+}

@@ -1,0 +1,75 @@
+{
+  "referenceId": "planets--temperate-moon-2",
+  "sourceFoundation": "Rocky10 native cavities plus original Ocean7 sparse groves",
+  "foundationSha256": "591061696339368d9f7570392726b5ee11038e992987e21b92a6ebbb8bc2af50",
+  "candidateRevision": "r001",
+  "runtimeStyle": "moon",
+  "publication": "isolated candidate; independent visual review pending",
+  "seed": 967,
+  "cover": 0.44,
+  "groves": 2,
+  "palette": [
+    [
+      0.2,
+      0.29,
+      0.35
+    ],
+    [
+      0.46,
+      0.56,
+      0.59
+    ],
+    [
+      0.011,
+      0.025,
+      0.031
+    ],
+    [
+      0.055,
+      0.11,
+      0.14
+    ],
+    [
+      0.1,
+      0.25,
+      0.29
+    ],
+    [
+      0.66,
+      0.72,
+      0.65
+    ]
+  ],
+  "coverColors": [
+    [
+      0.19,
+      0.37,
+      0.025
+    ],
+    [
+      0.43,
+      0.57,
+      0.065
+    ],
+    [
+      0.033,
+      0.26,
+      0.37
+    ]
+  ],
+  "cue": "Smaller cooler crater companion, restrained green cap districts and sparse vegetation",
+  "scales": [
+    0.4,
+    0.38,
+    0.42,
+    0.39,
+    0.41,
+    0.38,
+    0.43,
+    0.39,
+    0.4,
+    0.37,
+    0.42,
+    0.4
+  ]
+}

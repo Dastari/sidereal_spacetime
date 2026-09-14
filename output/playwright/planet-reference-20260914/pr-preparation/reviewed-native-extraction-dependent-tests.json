@@ -1,0 +1,14 @@
+[
+  "scripts/art_library/crystal_reference_composition_r013.test.ts",
+  "scripts/art_library/gas_reference_composition.test.ts",
+  "scripts/art_library/ice_reference_composition_r025.test.ts",
+  "scripts/art_library/ice_reference_optics_r026.test.ts",
+  "scripts/art_library/native_deformation_normals.test.ts",
+  "scripts/art_library/ocean_reference_composition_r007.test.ts",
+  "scripts/art_library/planet_reference_composition.test.ts",
+  "scripts/art_library/reference_shadow_radius.test.ts",
+  "scripts/art_library/rocky_reference_composition_r010.test.ts",
+  "scripts/art_library/temperate_reference_composition_r003.test.ts",
+  "scripts/art_library/toxic_reference_composition_r007.test.ts",
+  "scripts/art_library/volcanic_reference_composition_r023.test.ts"
+]

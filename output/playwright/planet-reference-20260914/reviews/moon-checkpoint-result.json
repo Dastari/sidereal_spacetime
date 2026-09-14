@@ -1,0 +1,74 @@
+[
+  {
+    "family": "rocky",
+    "revision": 11,
+    "main_revision": 10,
+    "source_revisions": 3,
+    "evidence_files": 114,
+    "bytes": 73724074
+  },
+  {
+    "family": "temperate",
+    "revision": 4,
+    "main_revision": 3,
+    "source_revisions": 4,
+    "evidence_files": 175,
+    "bytes": 129053208
+  },
+  {
+    "family": "desert",
+    "revision": 15,
+    "main_revision": 14,
+    "source_revisions": 2,
+    "evidence_files": 86,
+    "bytes": 57079220
+  },
+  {
+    "family": "ice",
+    "revision": 27,
+    "main_revision": 26,
+    "source_revisions": 4,
+    "evidence_files": 160,
+    "bytes": 337189994
+  },
+  {
+    "family": "volcanic",
+    "revision": 24,
+    "main_revision": 23,
+    "source_revisions": 4,
+    "evidence_files": 183,
+    "bytes": 114813176
+  },
+  {
+    "family": "gas-giant",
+    "revision": 6,
+    "main_revision": 5,
+    "source_revisions": 9,
+    "evidence_files": 369,
+    "bytes": 260156359
+  },
+  {
+    "family": "ocean",
+    "revision": 8,
+    "main_revision": 7,
+    "source_revisions": 3,
+    "evidence_files": 132,
+    "bytes": 85048325
+  },
+  {
+    "family": "toxic",
+    "revision": 8,
+    "main_revision": 7,
+    "source_revisions": 2,
+    "evidence_files": 88,
+    "bytes": 56396083
+  },
+  {
+    "family": "crystal",
+    "revision": 14,
+    "main_revision": 13,
+    "source_revisions": 4,
+    "evidence_files": 179,
+    "bytes": 116020615
+  }
+]

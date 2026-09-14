@@ -1,0 +1,46 @@
+
+> sidereal-spacetime@0.1.0 art:reference:check
+> tsc -p scripts/art_library/reference_review.tsconfig.json && vitest run --config scripts/art_library/reference_review.vitest.config.ts && python3 -m unittest discover -s scripts/art_library -p test_*reference*.py && python3 -m unittest discover -s scripts/art_library -p test_native_kit_attribute_audit.py && python3 -m unittest discover -s scripts/art_library -p test_preserve_native_kit_ior.py
+
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+ ❯ scripts/art_library/crystal_moon_reference_composition_r004.test.ts (5 tests | 2 failed) 53ms
+   × crystal-moon-1 retains exact native PBR and all attribute channels across LOD 3ms
+   × crystal-moon-2 retains exact native PBR and all attribute channels across LOD 1ms
+ ❯ scripts/art_library/planet_reference_hardware_review.test.ts (2 tests | 1 failed) 21ms
+   × accepts only fixed-root supported revision folders and keeps CLI defaults unchanged 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  scripts/art_library/crystal_moon_reference_composition_r004.test.ts > crystal-moon-1 retains exact native PBR and all attribute channels across LOD
+Error: ENOENT: no such file or directory, open 'output/playwright/planet-reference-20260914/crystal-moon-1-r003/kit.json'
+ ❯ scripts/art_library/crystal_moon_reference_composition_r004.test.ts:7:26
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  scripts/art_library/crystal_moon_reference_composition_r004.test.ts > crystal-moon-2 retains exact native PBR and all attribute channels across LOD
+Error: ENOENT: no such file or directory, open 'output/playwright/planet-reference-20260914/crystal-moon-2-r003/kit.json'
+ ❯ scripts/art_library/crystal_moon_reference_composition_r004.test.ts:7:26
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  scripts/art_library/planet_reference_hardware_review.test.ts > accepts only fixed-root supported revision folders and keeps CLI defaults unchanged
+AssertionError: expected '/@fs/root/sidereal-planet-reference-r…' to be '/@fs/root/sidereal_spacetime/scripts/…' // Object.is equality
+
+Expected: "/@fs/root/sidereal_spacetime/scripts/art_library/review-staging/ice-r025/kit.json"
+Received: "/@fs/root/sidereal-planet-reference-review/scripts/art_library/review-staging/ice-r025/kit.json"
+
+ ❯ scripts/art_library/planet_reference_hardware_review.test.ts:4:114
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  2 failed | 29 passed (31)
+      Tests  3 failed | 162 passed (165)
+   Start at  16:00:56
+   Duration  184.27s (transform 861ms, setup 0ms, import 7.94s, tests 173.38s, environment 2ms)
+

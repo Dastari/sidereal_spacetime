@@ -1,0 +1,24 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  17:34:05
+   Duration  4.37s (transform 73ms, setup 0ms, import 266ms, tests 4.03s, environment 0ms)
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  17:34:09
+   Duration  5.48s (transform 114ms, setup 0ms, import 236ms, tests 5.19s, environment 0ms)
+

@@ -1,0 +1,22 @@
+{
+  "nativeOpenCards": true,
+  "boundaryReason": "Intentional alpha density cards; no closed-solid claim",
+  "alphaMin": 0.0,
+  "alphaMax": 0.45998097503451973,
+  "alphaMean": 0.07241659696820535,
+  "triangles": {
+    "toxic-fog-low-bank": 576,
+    "toxic-fog-vent-plume": 576,
+    "toxic-fog-broken-wisp": 576
+  },
+  "scope": "Toxic-only isolated native translucent surface approximation; no true volumetric scattering or acceptance",
+  "sha256": {
+    "toxic-fog-low-bank.glb": "63363685da4e5572d0e7117ab5dc2ff7ed80a63224cbc52dcd661579c30b7388",
+    "kit-preview.png": "fa6daed0689355dee6d01333c0f7e3aa9e991eda79ee777f179242b6600fb5d1",
+    "toxic-fog-broken-wisp.glb": "73d9923f52c24266626496db7610bbcc1a5c530fee214d809a2c155a60565204",
+    "toxic-fog-density.png": "55dda2e150e20197164a2026e05983d2ce18baf2d41a5c151691f1634721ddb5",
+    "kit.json": "f4f47fdf8a2652d91284c77ac591b522adae45795495c4fd45c3c8a258deb731",
+    "kit.blend": "242c841ea2eb5b77b466a861624054191be199424aa2482c093df94fefe168b1",
+    "toxic-fog-vent-plume.glb": "e87288fe139480a777c6f0509ad62d100f21a19b3494014f86f116ffc9d0732e"
+  }
+}

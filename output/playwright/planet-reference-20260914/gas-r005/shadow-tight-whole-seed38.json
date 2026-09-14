@@ -1,0 +1,117 @@
+{
+  "viewport": {
+    "width": 900,
+    "height": 900
+  },
+  "canvas": {
+    "width": 900,
+    "height": 900
+  },
+  "stats": {
+    "style": "gas",
+    "seed": 38,
+    "frames": 35,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 0,
+      "requestedLOD": 0,
+      "fixedDetail": true,
+      "workerPending": 0,
+      "buildMs": 12,
+      "localLights": 0,
+      "transmissionMaterials": 0,
+      "transmissionTargets": 0
+    },
+    "baselineEnvironmentEnabled": false,
+    "meshes": 7,
+    "triangles": 39810,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": []
+  },
+  "shadowsEnabled": true,
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 7.5
+  },
+  "shadows": [
+    {
+      "casters": 6,
+      "normalBias": 0.0008,
+      "bias": 0.0005
+    }
+  ],
+  "checkoutHead": "2af5fb3e98057f577b61a657e71f61067c7d338b",
+  "sourceRoot": "/root/sidereal_spacetime",
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "gas",
+    "revision": "gas-r005",
+    "seed": 38,
+    "radius": 7.5,
+    "alpha": null,
+    "beta": null,
+    "bias": null,
+    "depth_bias": null,
+    "glow": false,
+    "local_light": false,
+    "prefix": "shadow-tight-whole",
+    "reference_scale": false,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": false,
+    "unit": false,
+    "staged": true,
+    "target": null,
+    "shadows_off": false,
+    "reference_radius": 13.5
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=gas&seed=38&candidate=1&reviewRevision=gas-r005&capture=1789390522591307357&kit=gas-r005",
+  "images": {
+    "shadow-tight-whole-seed38.png": "bb4db748223d874ba1e9669b8d2033e79afc4de6a77389a2271dc60adfc1092e",
+    "shadow-tight-whole-seed38-angle2.png": "3915a78521c1e4da30585532152ee5d2fa099a6e4b02edb03d4cc84d92fb15d3"
+  },
+  "kitSha256": "516f79ced2b76c0e82e2d3bc4399b306d137d901f281c1d34c466a76b1477130",
+  "sourceKitSha256": "516f79ced2b76c0e82e2d3bc4399b306d137d901f281c1d34c466a76b1477130",
+  "stagingManifest": {
+    "scope": "explicit isolated local review; no production publication",
+    "revision": "gas-r005",
+    "source": "output/playwright/planet-reference-20260914/gas-r005",
+    "files": {
+      "frontier-workshop.hdr": {
+        "sha256": "11f358cce19278c6115633430d1b1d5c7fc2dc35a16f73468b46dcf6724a4364",
+        "bytes": 55248
+      },
+      "gas-albedo-generated.png": {
+        "sha256": "1043b2f9253ff2bb8197335016fc0819b05984e9b77f2489e06758e3d7aba7da",
+        "bytes": 2383804
+      },
+      "kit.json": {
+        "sha256": "516f79ced2b76c0e82e2d3bc4399b306d137d901f281c1d34c466a76b1477130",
+        "bytes": 8745362
+      },
+      "ring-dust-0.png": {
+        "sha256": "7041fa1d8a8f2fdd0f2dbcbc8c77ce4b491e78b79759b44d3e4ae4f6d853c73e",
+        "bytes": 3267917
+      },
+      "ring-dust-1.png": {
+        "sha256": "27e20a0ac8a669a94866bc80ddb9078f34b12b32df537ff8beefa25e38518d79",
+        "bytes": 3275831
+      },
+      "ring-dust-2.png": {
+        "sha256": "dd37b7192e49d7fa4114d384d9ba61ec6147859ca9d5261529b9ea1badb455b4",
+        "bytes": 3258461
+      }
+    }
+  }
+}

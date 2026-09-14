@@ -1,0 +1,467 @@
+{
+  "schema": "sidereal.planet-moon-preservation.v1",
+  "recorded_at": "2026-09-14T05:38:17.015631+00:00",
+  "design_id": "environment.planet.toxic",
+  "canonical_checkpoint_revision": 8,
+  "pinned_main_revision": 7,
+  "pre_checkpoint_ledger_sha256": "407967206c92b54676617fd6d74672306ca14964c9c99959849e44aa8e13b0e3",
+  "scope": "Retrospective moon candidate preservation; no main-world replacement, owner approval, production publication or hardware/LOD acceptance. Original source-art revision numbering retained separately.",
+  "variants": [
+    {
+      "reference_id": "planets--toxic-moon-1",
+      "source_revision": 1,
+      "original_output_directory": "output/playwright/planet-reference-20260914/toxic-moon-1-r001",
+      "artifact_directory": "designs/environment.planet.toxic/revisions/r008/toxic-moon-1/source-r001",
+      "working_gate": "bounded agent working visual pass; no owner sign-off",
+      "source_timestamp_note": "Original files copied with metadata; capture JSON retains actual timestamps/context where present. Checkpoint time is not authoring time.",
+      "files": [
+        {
+          "filename": "angular-outcrops.glb",
+          "sha256": "c4ed486a06c6e2c3c731c9d860acf8710b1f51ef8618558e3fe6eaf85183fc8b",
+          "bytes": 286812
+        },
+        {
+          "filename": "battered-region-a.glb",
+          "sha256": "995fec5bd52653ee7fc142f55090a4549d07029f352b5e3802782368e9dd43c3",
+          "bytes": 1143316
+        },
+        {
+          "filename": "battered-region-b.glb",
+          "sha256": "1b24b994d908dbbd68d9fd129782706fa200f76e864bb849ebf83317a21cd4fa",
+          "bytes": 1139256
+        },
+        {
+          "filename": "build_exotic_moon_native_variants_r001.py",
+          "sha256": "f099eb963af5fc711cbffa1f803d48f5cc68e063445b4c42cd7dea0d93a583dd",
+          "bytes": 4590
+        },
+        {
+          "filename": "corrected-run.log",
+          "sha256": "f2ed71f8930136089b759aa67b1f7c672f417ffe1ba8e4fbd8e906884df07321",
+          "bytes": 539
+        },
+        {
+          "filename": "corrected-seed38-angle2.png",
+          "sha256": "027f7e6def37533ee7543c2eaff166fd4ada20b436fb663d68f5387567601d9b",
+          "bytes": 335041
+        },
+        {
+          "filename": "corrected-seed38-capture.log",
+          "sha256": "007023204dfa2b6fbc7b077c819d82f6dc61a7a6a4b45c64506747967599f3df",
+          "bytes": 2790
+        },
+        {
+          "filename": "corrected-seed38-reference-scale.png",
+          "sha256": "cc7b818923a2e13c8aaa452ae54f81ad04782a8d0133f05592ab8bdf49637693",
+          "bytes": 17532
+        },
+        {
+          "filename": "corrected-seed38.json",
+          "sha256": "26bfa6e23a4554d97b653e161ddff4a18cd7958548f89ffddf115d86817d12f5",
+          "bytes": 1990
+        },
+        {
+          "filename": "corrected-seed38.png",
+          "sha256": "0595e56ce43e9955d617b838963468f866c0c1f0a28a4fd0bf1190317301b059",
+          "bytes": 350787
+        },
+        {
+          "filename": "crater-broken.glb",
+          "sha256": "872dc30a627c95dd85ce53d5cf7a457c43772750182f5170c405bf1fb4003957",
+          "bytes": 495988
+        },
+        {
+          "filename": "crater-large.glb",
+          "sha256": "5a9ffa0df03341d2ea258b7c0fbe524f4786eabf440b9f224322e8880d99087b",
+          "bytes": 495984
+        },
+        {
+          "filename": "crater-small.glb",
+          "sha256": "878b545f5fd0080179d4a6b686002121fb555812b0fee90fce7d49b87e3db362",
+          "bytes": 495996
+        },
+        {
+          "filename": "exact-reference.png",
+          "sha256": "a6914ada5a90a0dbb960b8b1feb11771bb1c7adae86ec38b5a3ec78e25436367",
+          "bytes": 10501
+        },
+        {
+          "filename": "foundation-source.py",
+          "sha256": "591061696339368d9f7570392726b5ee11038e992987e21b92a6ebbb8bc2af50",
+          "bytes": 19405
+        },
+        {
+          "filename": "fractured-shelf.glb",
+          "sha256": "0ba69c26d938ce767b02003b2c4989cc280a08105f86010f2760c708924fbad0",
+          "bytes": 286804
+        },
+        {
+          "filename": "generator.py",
+          "sha256": "7bd1fcdd7a88ad18f1df72fe4e23f72f250e5877084e220a53a475bf08e92313",
+          "bytes": 20326
+        },
+        {
+          "filename": "ground-sphere-low.glb",
+          "sha256": "79b0de53ba70b8c155e31ffc528f720ee2f1f16d1949aa7f079d0fd9a2ed2d85",
+          "bytes": 97264
+        },
+        {
+          "filename": "ground-sphere-medium.glb",
+          "sha256": "e1b251c816fc4fa7207a10ccb1a2babef524eb8059f3ec3b34441235d86f01d9",
+          "bytes": 119864
+        },
+        {
+          "filename": "ground-sphere.glb",
+          "sha256": "525cadf62d93ccddd6ff32a5976cace1ddeaef30ce6453ab1ccca87316b7e13a",
+          "bytes": 209080
+        },
+        {
+          "filename": "kit-preview.png",
+          "sha256": "0959cc17c505f23baa7f7563c4f80a6bc2b4799c18f6d2e93550c38bf551692b",
+          "bytes": 1111545
+        },
+        {
+          "filename": "kit.blend",
+          "sha256": "abd9c36a7bc0b401d10b825e609ed8a0d7e40b5037e8d6cf78efb0979ab75761",
+          "bytes": 4349038
+        },
+        {
+          "filename": "kit.json",
+          "sha256": "b3d7eb42691d2bf24d2d7e6119180452d712f50e88ad80901dfc9a7a8993e213",
+          "bytes": 16268394
+        },
+        {
+          "filename": "mineral-seam.glb",
+          "sha256": "7bb07c5eef96ace57a59e16e092c4a4d3b19a2e531eac0485545e950faa5d301",
+          "bytes": 190824
+        },
+        {
+          "filename": "revision-notes.md",
+          "sha256": "8a27ec192d4efce7a9e497cd11080d92458ec9c9a0f8e766b5c87edc0465b54a",
+          "bytes": 1549
+        },
+        {
+          "filename": "rocky-0-albedo.png",
+          "sha256": "ea6e7761eca1e98b2ba1584d6b5eed44833cecc1a6ee43578c8023eb44d90cd9",
+          "bytes": 54561
+        },
+        {
+          "filename": "rocky-0-orm.png",
+          "sha256": "dead442146c9926458d67859f76197f153cc8a2dda4ddd3dc4041c0882270d32",
+          "bytes": 31938
+        },
+        {
+          "filename": "rocky-1-albedo.png",
+          "sha256": "30783193aec2decd5e7d2ca84d6e25750b21817a5053b18e2c32162d61234d80",
+          "bytes": 66232
+        },
+        {
+          "filename": "rocky-1-orm.png",
+          "sha256": "b68c6f555d3c98f2a16eb31379f1700468e86f56c0020be4debf92bab8ce29fd",
+          "bytes": 29562
+        },
+        {
+          "filename": "rocky-2-albedo.png",
+          "sha256": "bccdaf24748ad02c0b92de8d78f2b83094f396e67f6eeceac0a10727b3b011a6",
+          "bytes": 44100
+        },
+        {
+          "filename": "rocky-2-orm.png",
+          "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+          "bytes": 33670
+        },
+        {
+          "filename": "rocky-3-albedo.png",
+          "sha256": "94e1f59bf23b26d5170c7bed1744b23c14a65e443b73748b90210fd59bda5e55",
+          "bytes": 56202
+        },
+        {
+          "filename": "rocky-3-orm.png",
+          "sha256": "88c877540fbe4c86d6be0dcd63825723359defd1b6f93b590de39ff5535b4622",
+          "bytes": 31473
+        },
+        {
+          "filename": "rocky-4-albedo.png",
+          "sha256": "568ceb03dde6cbaa11467ac201097cdd42f81325c2fe16ad33428cc35a28d3e3",
+          "bytes": 65662
+        },
+        {
+          "filename": "rocky-4-orm.png",
+          "sha256": "c620af34271b70bc4dfd84640a61a410b4b568e6acd06b084d52eea61ff2dbcf",
+          "bytes": 22619
+        },
+        {
+          "filename": "rocky-5-albedo.png",
+          "sha256": "babb65330237305f52fff28a2781932da6fddb9212f60b99c7fa2bfd2bffd107",
+          "bytes": 74307
+        },
+        {
+          "filename": "rocky-5-orm.png",
+          "sha256": "c93273168546709e80da00d5b8fab868efadbc9fad34411e2162047a8750956d",
+          "bytes": 29303
+        },
+        {
+          "filename": "toxic_moon_reference_composition_r001.test.ts",
+          "sha256": "1e05379fe241ea1731147d988faeba1c00ab424927a639b6ebe38266612f726c",
+          "bytes": 5142
+        },
+        {
+          "filename": "toxic_moon_reference_composition_r001.ts",
+          "sha256": "52fc253f62350809f496c2e920d4d6658e52e9ea1d37c6f1272f5c5dfcfb25c7",
+          "bytes": 5143
+        },
+        {
+          "filename": "toxic_moon_reference_r001.tsconfig.json",
+          "sha256": "579ac8a4c25e6a2067edbc6a6184280bd8055a68cbd45a6412b12c2d3e9d83bd",
+          "bytes": 170
+        },
+        {
+          "filename": "toxic_moon_reference_r001.vitest.config.ts",
+          "sha256": "cc141ea9b26b18e3aee59656f1a0fbb1b691de9325e8e251863a02ac38f125ad",
+          "bytes": 179
+        },
+        {
+          "filename": "validation.json",
+          "sha256": "d4f7ccaa8baf16dd574c17ee51952b74e87f78c908ab3b5e0ec4cefdc7e4865b",
+          "bytes": 6956
+        },
+        {
+          "filename": "variant-recipe.json",
+          "sha256": "1ce070ab411d6942405f854d21a2a82adb0e8d848454d54d3769cdf2788db008",
+          "bytes": 618
+        }
+      ]
+    },
+    {
+      "reference_id": "planets--toxic-moon-2",
+      "source_revision": 1,
+      "original_output_directory": "output/playwright/planet-reference-20260914/toxic-moon-2-r001",
+      "artifact_directory": "designs/environment.planet.toxic/revisions/r008/toxic-moon-2/source-r001",
+      "working_gate": "bounded agent working visual pass; no owner sign-off",
+      "source_timestamp_note": "Original files copied with metadata; capture JSON retains actual timestamps/context where present. Checkpoint time is not authoring time.",
+      "files": [
+        {
+          "filename": "angular-outcrops.glb",
+          "sha256": "a1082e253e51329631f3bed291144c77d22b31d3f4649ef8031e1bb2800c7269",
+          "bytes": 302044
+        },
+        {
+          "filename": "battered-region-a.glb",
+          "sha256": "c682b9338bd042b3bb50fc056261ae2408caa4de3a083ca5fa4d5739c596ae88",
+          "bytes": 1166908
+        },
+        {
+          "filename": "battered-region-b.glb",
+          "sha256": "c96a99b425104b8a8b0459e78b2c7a81ef794deb92c0b08a2750bff464f1e480",
+          "bytes": 1162848
+        },
+        {
+          "filename": "build_exotic_moon_native_variants_r001.py",
+          "sha256": "f099eb963af5fc711cbffa1f803d48f5cc68e063445b4c42cd7dea0d93a583dd",
+          "bytes": 4590
+        },
+        {
+          "filename": "corrected-run.log",
+          "sha256": "fb3d9f103d126c9abaff0fa051f4b366c5e997d29fda24473a63ae80eb05e780",
+          "bytes": 551
+        },
+        {
+          "filename": "corrected-seed38-angle2.png",
+          "sha256": "acb48dfe801c0700c79127a03d9e738897d50ed70822615acacc99b43a4eeda6",
+          "bytes": 393031
+        },
+        {
+          "filename": "corrected-seed38-capture.log",
+          "sha256": "61f08b6e37cba93009ac811acb650c8c79548e795e764940821687656a75d918",
+          "bytes": 2790
+        },
+        {
+          "filename": "corrected-seed38-reference-scale.png",
+          "sha256": "893456ea06dd742f99604873e3560097ba525e198d0bb3ecfe0e2d089b89e80f",
+          "bytes": 22714
+        },
+        {
+          "filename": "corrected-seed38.json",
+          "sha256": "ceacbf6388df82dc45ea881c2f03e542313101086cf08a650eb47980e21f603e",
+          "bytes": 2002
+        },
+        {
+          "filename": "corrected-seed38.png",
+          "sha256": "26a73f17ffbeab653be1e410c543b95472e3461f12d292398ebc2eb307ed8638",
+          "bytes": 421192
+        },
+        {
+          "filename": "crater-broken.glb",
+          "sha256": "279de48bcf3a320b480dcd863f3c19360d809631deb98088bcff3ee9748b8d39",
+          "bytes": 512124
+        },
+        {
+          "filename": "crater-large.glb",
+          "sha256": "86392f7ad2487955ef46a0ccc12ff06112f8f5ab0df79e7ea07f111e82ce55d4",
+          "bytes": 512120
+        },
+        {
+          "filename": "crater-small.glb",
+          "sha256": "58fcbca16621c197a4a3b957f4d4026c3f59fba0bdc794e69d04d7f387646d1e",
+          "bytes": 512132
+        },
+        {
+          "filename": "exact-reference.png",
+          "sha256": "d860bc92d34ce4e5bf75b9dffeae5a9e6c58635e6eaeb3d0d72c51ea2a6cda50",
+          "bytes": 14899
+        },
+        {
+          "filename": "foundation-source.py",
+          "sha256": "591061696339368d9f7570392726b5ee11038e992987e21b92a6ebbb8bc2af50",
+          "bytes": 19405
+        },
+        {
+          "filename": "fractured-shelf.glb",
+          "sha256": "e0b4b93d98494c028c87c734a9be2272759a348b2272e1e54f2c4f5b4c26aa2e",
+          "bytes": 302036
+        },
+        {
+          "filename": "generator.py",
+          "sha256": "44680af684566c6b1f612e20fc69eabdc8b733eb32c87f3dc38cdf9d406e3529",
+          "bytes": 20325
+        },
+        {
+          "filename": "ground-sphere-low.glb",
+          "sha256": "e9a9556297b333df819c6a307210635827c507c95d01938c1f9a44cab6f103f6",
+          "bytes": 101404
+        },
+        {
+          "filename": "ground-sphere-medium.glb",
+          "sha256": "09934ffc53d9f326b5e08572fbd4a0e5f120f653b64c02656cdf75d352b838e0",
+          "bytes": 124004
+        },
+        {
+          "filename": "ground-sphere.glb",
+          "sha256": "b5c3d652783a072a3815144379f5776f06869281f07c52693c2ebe16a87468bd",
+          "bytes": 213220
+        },
+        {
+          "filename": "kit-preview.png",
+          "sha256": "68cef42c1c0561a36c6d2bc1537c9dddfadaecb58c8dc4c47ed4006e49c4089d",
+          "bytes": 1134867
+        },
+        {
+          "filename": "kit.blend",
+          "sha256": "1eaf14f4fc6a1876982bdb83ad2d96a714dfec843dd4ba88666776e290d925de",
+          "bytes": 4369874
+        },
+        {
+          "filename": "kit.json",
+          "sha256": "d97fbcc129c4876fb4b217ecb81de63d7f9b4e62abe5f336984c9c5e2b5957fe",
+          "bytes": 16268395
+        },
+        {
+          "filename": "mineral-seam.glb",
+          "sha256": "310793a2c6895ab10d126da8cd9a6cd0e6bbe053c28ad5c64995e54dbdbaa8a6",
+          "bytes": 199420
+        },
+        {
+          "filename": "revision-notes.md",
+          "sha256": "b3b581b5ff351d73f1e876b4e007cd19f2cbc11b209bbc467cedeafa15906451",
+          "bytes": 1548
+        },
+        {
+          "filename": "rocky-0-albedo.png",
+          "sha256": "cafd4e4687a575948d2924611a72b7b8fcd704cc8ac2be3a88d093b8c59fa4b8",
+          "bytes": 58703
+        },
+        {
+          "filename": "rocky-0-orm.png",
+          "sha256": "dead442146c9926458d67859f76197f153cc8a2dda4ddd3dc4041c0882270d32",
+          "bytes": 31938
+        },
+        {
+          "filename": "rocky-1-albedo.png",
+          "sha256": "8729624fcef266f7eaea14afc0d3e6402f501349995a75686bcf7817f289e519",
+          "bytes": 73426
+        },
+        {
+          "filename": "rocky-1-orm.png",
+          "sha256": "b68c6f555d3c98f2a16eb31379f1700468e86f56c0020be4debf92bab8ce29fd",
+          "bytes": 29562
+        },
+        {
+          "filename": "rocky-2-albedo.png",
+          "sha256": "1015fce33ce07f85e841aae4b68a265e9172cc841f6c0918ab023bd9b05e94f7",
+          "bytes": 43078
+        },
+        {
+          "filename": "rocky-2-orm.png",
+          "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+          "bytes": 33670
+        },
+        {
+          "filename": "rocky-3-albedo.png",
+          "sha256": "8f3f99d79507b0b8f919b46e21b10f00b513be7caabfe9fe1320a08117ba871c",
+          "bytes": 60098
+        },
+        {
+          "filename": "rocky-3-orm.png",
+          "sha256": "88c877540fbe4c86d6be0dcd63825723359defd1b6f93b590de39ff5535b4622",
+          "bytes": 31473
+        },
+        {
+          "filename": "rocky-4-albedo.png",
+          "sha256": "8bed10e91b1c648b6a037cc1dee31625d64bb035a4951b31f355b041c4cb1eb7",
+          "bytes": 70362
+        },
+        {
+          "filename": "rocky-4-orm.png",
+          "sha256": "c620af34271b70bc4dfd84640a61a410b4b568e6acd06b084d52eea61ff2dbcf",
+          "bytes": 22619
+        },
+        {
+          "filename": "rocky-5-albedo.png",
+          "sha256": "787e981d7f9f2dfa362eb0cd3176b5e748f8c8c1b23fcece09cba2044d614c34",
+          "bytes": 76230
+        },
+        {
+          "filename": "rocky-5-orm.png",
+          "sha256": "c93273168546709e80da00d5b8fab868efadbc9fad34411e2162047a8750956d",
+          "bytes": 29303
+        },
+        {
+          "filename": "toxic_moon_reference_composition_r001.test.ts",
+          "sha256": "1e05379fe241ea1731147d988faeba1c00ab424927a639b6ebe38266612f726c",
+          "bytes": 5142
+        },
+        {
+          "filename": "toxic_moon_reference_composition_r001.ts",
+          "sha256": "52fc253f62350809f496c2e920d4d6658e52e9ea1d37c6f1272f5c5dfcfb25c7",
+          "bytes": 5143
+        },
+        {
+          "filename": "toxic_moon_reference_r001.tsconfig.json",
+          "sha256": "579ac8a4c25e6a2067edbc6a6184280bd8055a68cbd45a6412b12c2d3e9d83bd",
+          "bytes": 170
+        },
+        {
+          "filename": "toxic_moon_reference_r001.vitest.config.ts",
+          "sha256": "cc141ea9b26b18e3aee59656f1a0fbb1b691de9325e8e251863a02ac38f125ad",
+          "bytes": 179
+        },
+        {
+          "filename": "validation.json",
+          "sha256": "2c42a4100c427a94f4e0286bac446cc3e5397144b613a2ba0eac8c71b1224a24",
+          "bytes": 6956
+        },
+        {
+          "filename": "variant-recipe.json",
+          "sha256": "63be5ea37d17605154955faa3672792b13dde34cacb8af60501979a4c54716ab",
+          "bytes": 618
+        }
+      ]
+    }
+  ],
+  "review_reports": [
+    {
+      "path": "designs/environment.planet.toxic/revisions/r008/reviews/exotic-moons-r001-gas-reflection.md",
+      "sha256": "d5216201d4bc4fc6c13d4023e6927b7d92c11b3e1eb490a88baec389ec351f20"
+    }
+  ]
+}

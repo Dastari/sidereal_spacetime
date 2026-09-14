@@ -1,0 +1,554 @@
+[
+  {
+    "candidate": "toxic-r006",
+    "kit": "output/playwright/planet-reference-20260914/toxic-r006/kit.json",
+    "kitSha256": "06897a7646af9c6608278768f3642a6df9a574ed16749468f60e68ac03d079c4",
+    "materialDifferences": [],
+    "attributeGaps": [],
+    "variants": [
+      {
+        "name": "toxic-basin-group-a",
+        "glb": "output/playwright/planet-reference-20260914/toxic-r006/toxic-basin-group-a.glb",
+        "glbSha256": "c40672062fa5616c5b8b86658905e57be8edca7e17b648749f0751f96fc27372",
+        "jsonCorners": 20088,
+        "glbCorners": 20088,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.39590082510007e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "toxic-dark-plateau",
+            "field": "baseColorTexture",
+            "expected": "corrosion-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "toxic-dark-plateau",
+            "field": "normalTexture",
+            "expected": "corrosion-0-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "toxic-dark-plateau",
+            "field": "metallicRoughnessTexture",
+            "expected": "corrosion-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chimney-wall",
+            "field": "baseColorTexture",
+            "expected": "corrosion-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chimney-wall",
+            "field": "normalTexture",
+            "expected": "corrosion-2-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chimney-wall",
+            "field": "metallicRoughnessTexture",
+            "expected": "corrosion-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-chemical-cleft",
+            "field": "baseColorTexture",
+            "expected": "corrosion-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-chemical-cleft",
+            "field": "normalTexture",
+            "expected": "corrosion-3-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-chemical-cleft",
+            "field": "metallicRoughnessTexture",
+            "expected": "corrosion-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chimney-cap",
+            "field": "baseColorTexture",
+            "expected": "corrosion-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chimney-cap",
+            "field": "normalTexture",
+            "expected": "corrosion-4-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chimney-cap",
+            "field": "metallicRoughnessTexture",
+            "expected": "corrosion-4-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "weathered-olive-rock",
+            "field": "baseColorTexture",
+            "expected": "corrosion-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "weathered-olive-rock",
+            "field": "normalTexture",
+            "expected": "corrosion-1-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "weathered-olive-rock",
+            "field": "metallicRoughnessTexture",
+            "expected": "corrosion-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chemical-crust",
+            "field": "baseColorTexture",
+            "expected": "corrosion-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chemical-crust",
+            "field": "normalTexture",
+            "expected": "corrosion-5-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chemical-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "corrosion-5-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "toxic-basin-group-b",
+        "glb": "output/playwright/planet-reference-20260914/toxic-r006/toxic-basin-group-b.glb",
+        "glbSha256": "1335818f07c49cada66f8fb57ad1e1e4314b456ef76b33e238e360dc18fb71f1",
+        "jsonCorners": 19314,
+        "glbCorners": 19314,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.561449807970894e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "toxic-dark-plateau",
+            "field": "baseColorTexture",
+            "expected": "corrosion-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "toxic-dark-plateau",
+            "field": "normalTexture",
+            "expected": "corrosion-0-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "toxic-dark-plateau",
+            "field": "metallicRoughnessTexture",
+            "expected": "corrosion-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chimney-wall",
+            "field": "baseColorTexture",
+            "expected": "corrosion-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chimney-wall",
+            "field": "normalTexture",
+            "expected": "corrosion-2-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chimney-wall",
+            "field": "metallicRoughnessTexture",
+            "expected": "corrosion-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-chemical-cleft",
+            "field": "baseColorTexture",
+            "expected": "corrosion-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-chemical-cleft",
+            "field": "normalTexture",
+            "expected": "corrosion-3-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-chemical-cleft",
+            "field": "metallicRoughnessTexture",
+            "expected": "corrosion-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chimney-cap",
+            "field": "baseColorTexture",
+            "expected": "corrosion-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chimney-cap",
+            "field": "normalTexture",
+            "expected": "corrosion-4-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chimney-cap",
+            "field": "metallicRoughnessTexture",
+            "expected": "corrosion-4-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "weathered-olive-rock",
+            "field": "baseColorTexture",
+            "expected": "corrosion-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "weathered-olive-rock",
+            "field": "normalTexture",
+            "expected": "corrosion-1-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "weathered-olive-rock",
+            "field": "metallicRoughnessTexture",
+            "expected": "corrosion-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chemical-crust",
+            "field": "baseColorTexture",
+            "expected": "corrosion-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chemical-crust",
+            "field": "normalTexture",
+            "expected": "corrosion-5-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chemical-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "corrosion-5-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "toxic-basin-group-c",
+        "glb": "output/playwright/planet-reference-20260914/toxic-r006/toxic-basin-group-c.glb",
+        "glbSha256": "3f1da371d9680c8006021bcb4103f5433e5be840a8ad1a2c053aed8fa812da0c",
+        "jsonCorners": 19752,
+        "glbCorners": 19752,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.561449807970894e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "toxic-dark-plateau",
+            "field": "baseColorTexture",
+            "expected": "corrosion-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "toxic-dark-plateau",
+            "field": "normalTexture",
+            "expected": "corrosion-0-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "toxic-dark-plateau",
+            "field": "metallicRoughnessTexture",
+            "expected": "corrosion-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chimney-wall",
+            "field": "baseColorTexture",
+            "expected": "corrosion-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chimney-wall",
+            "field": "normalTexture",
+            "expected": "corrosion-2-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chimney-wall",
+            "field": "metallicRoughnessTexture",
+            "expected": "corrosion-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-chemical-cleft",
+            "field": "baseColorTexture",
+            "expected": "corrosion-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-chemical-cleft",
+            "field": "normalTexture",
+            "expected": "corrosion-3-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-chemical-cleft",
+            "field": "metallicRoughnessTexture",
+            "expected": "corrosion-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chimney-cap",
+            "field": "baseColorTexture",
+            "expected": "corrosion-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chimney-cap",
+            "field": "normalTexture",
+            "expected": "corrosion-4-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chimney-cap",
+            "field": "metallicRoughnessTexture",
+            "expected": "corrosion-4-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "weathered-olive-rock",
+            "field": "baseColorTexture",
+            "expected": "corrosion-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "weathered-olive-rock",
+            "field": "normalTexture",
+            "expected": "corrosion-1-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "weathered-olive-rock",
+            "field": "metallicRoughnessTexture",
+            "expected": "corrosion-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chemical-crust",
+            "field": "baseColorTexture",
+            "expected": "corrosion-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chemical-crust",
+            "field": "normalTexture",
+            "expected": "corrosion-5-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "chemical-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "corrosion-5-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere",
+        "glb": "output/playwright/planet-reference-20260914/toxic-r006/ground-sphere.glb",
+        "glbSha256": "5f7cc73bc0c0c7daed64b19da6d2b8b4b7ce751a408ad7d8e4e368a4aedfe31e",
+        "jsonCorners": 61440,
+        "glbCorners": 61440,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 8.600455008449001e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "toxic-dark-plateau",
+            "field": "baseColorTexture",
+            "expected": "corrosion-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "toxic-dark-plateau",
+            "field": "normalTexture",
+            "expected": "corrosion-0-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "toxic-dark-plateau",
+            "field": "metallicRoughnessTexture",
+            "expected": "corrosion-0-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere-medium",
+        "glb": "output/playwright/planet-reference-20260914/toxic-r006/ground-sphere-medium.glb",
+        "glbSha256": "4bc5cc2b4aa7bac42442ff15363f271a5851cd8415628b7eaf5b5a2fdee7e968",
+        "jsonCorners": 15360,
+        "glbCorners": 15360,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.969896464190269e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "toxic-dark-plateau",
+            "field": "baseColorTexture",
+            "expected": "corrosion-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "toxic-dark-plateau",
+            "field": "normalTexture",
+            "expected": "corrosion-0-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "toxic-dark-plateau",
+            "field": "metallicRoughnessTexture",
+            "expected": "corrosion-0-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere-low",
+        "glb": "output/playwright/planet-reference-20260914/toxic-r006/ground-sphere-low.glb",
+        "glbSha256": "e9f73fe5ce941c0ddba32eeb55ce8ef91e3e63a8e06122f1f6041c997c422347",
+        "jsonCorners": 3840,
+        "glbCorners": 3840,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.695697840018373e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "toxic-dark-plateau",
+            "field": "baseColorTexture",
+            "expected": "corrosion-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "toxic-dark-plateau",
+            "field": "normalTexture",
+            "expected": "corrosion-0-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "toxic-dark-plateau",
+            "field": "metallicRoughnessTexture",
+            "expected": "corrosion-0-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      }
+    ],
+    "limitations": [
+      "Material/position-matched corner multisets check values at explicit tolerances independently of index ordering, not mesh topology equivalence.",
+      "Only explicit JSON material fields are compared; source-side omissions remain unspecified.",
+      "Normals compared only when carried in JSON. Reconstruction of omitted normals by a renderer is outside this artifact audit.",
+      "Geometry converted from BlenderZ-up JSON to glTFY-up and accumulated node transforms; UVs follow recorded glTF convention."
+    ],
+    "summary": {
+      "variants": 6,
+      "materialDifferenceOccurrences": 0,
+      "attributeGaps": 0,
+      "variantErrors": 0,
+      "positionMismatchVariants": 0,
+      "normalMismatchVariants": 0,
+      "uvMismatchVariants": 0
+    }
+  }
+]

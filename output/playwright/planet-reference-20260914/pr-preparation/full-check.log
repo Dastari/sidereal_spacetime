@@ -1,0 +1,185 @@
+
+> sidereal-spacetime@0.1.0 check
+> npm run typecheck && npm test && python3 scripts/check_docs.py
+
+
+> sidereal-spacetime@0.1.0 typecheck
+> tsc --noEmit
+
+apps/dashboard/src/shipyard/layout/HullWorkspace.tsx(406,54): error TS2554: Expected 3 arguments, but got 4.
+apps/dashboard/src/shipyard/layout/LayoutEditor.tsx(106,19): error TS2345: Argument of type '(current: LayoutDocument) => LayoutDocument' is not assignable to parameter of type '(d: LayoutDocument) => LayoutDocument'.
+  Call signature return types 'LayoutDocument' and 'LayoutDocument' are incompatible.
+    The types of 'structure' are incompatible between these types.
+      Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+        Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+          Types of property 'schema' are incompatible.
+            Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+apps/dashboard/src/shipyard/layout/LayoutEditor.tsx(548,40): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+  Types of property 'structure' are incompatible.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+apps/dashboard/src/shipyard/layout/LayoutPalette.tsx(546,17): error TS2322: Type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument | null' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument | null'.
+  Type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+    Types of property 'structure' are incompatible.
+      Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+        Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+          Types of property 'schema' are incompatible.
+            Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+apps/dashboard/src/shipyard/layout/useLayout.ts(269,44): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+  Types of property 'structure' are incompatible.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+apps/dashboard/src/shipyard/layout/useLayout.ts(351,25): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+  Types of property 'structure' are incompatible.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+apps/dashboard/src/shipyard/layout/useLayout.ts(353,34): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+  Types of property 'structure' are incompatible.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+apps/dashboard/src/shipyard/layout/useLayout.ts(354,24): error TS2322: Type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+  Types of property 'structure' are incompatible.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+apps/dashboard/src/shipyard/layout/useLayout.ts(480,22): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+  Types of property 'structure' are incompatible.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+apps/dashboard/src/shipyard/layout/useLayout.ts(534,11): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+  Types of property 'structure' are incompatible.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+apps/dashboard/src/shipyard/layout/useLayout.ts(544,11): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+  Types of property 'structure' are incompatible.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+apps/dashboard/src/shipyard/layout/useLayout.ts(556,11): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+  Types of property 'structure' are incompatible.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+apps/dashboard/src/shipyard/layout/useLayout.ts(597,22): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+  Types of property 'structure' are incompatible.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+packages/render/src/construction-authored-assembly.test.ts(70,7): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/construction").ConstructionDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/construction").ConstructionDocument'.
+  The types of 'layout.structure' are incompatible between these types.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+packages/render/src/construction-authored-assembly.test.ts(142,53): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/construction").ConstructionDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/construction").ConstructionDocument'.
+  The types of 'layout.structure' are incompatible between these types.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+packages/render/src/construction-instance.ts(192,5): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/construction").ConstructionDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/construction").ConstructionDocument'.
+  The types of 'layout.structure' are incompatible between these types.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+packages/render/src/flight-collision-debug.test.ts(6,40): error TS2307: Cannot find module './debug-collision-geometry' or its corresponding type declarations.
+packages/render/src/flight-collision-debug.test.ts(28,34): error TS7006: Parameter 'p' implicitly has an 'any' type.
+packages/render/src/flight-collision-debug.test.ts(29,34): error TS7006: Parameter 'p' implicitly has an 'any' type.
+packages/render/src/flight-collision-debug.test.ts(30,34): error TS7006: Parameter 'p' implicitly has an 'any' type.
+packages/render/src/flight-collision-debug.test.ts(31,34): error TS7006: Parameter 'p' implicitly has an 'any' type.
+packages/render/src/flight-collision-debug.test.ts(43,34): error TS7006: Parameter 'p' implicitly has an 'any' type.
+packages/render/src/flight-collision-debug.test.ts(44,34): error TS7006: Parameter 'p' implicitly has an 'any' type.
+packages/render/src/flight-collision-debug.test.ts(45,34): error TS7006: Parameter 'p' implicitly has an 'any' type.
+packages/render/src/flight-collision-debug.test.ts(46,34): error TS7006: Parameter 'p' implicitly has an 'any' type.
+packages/render/src/flight-collision-debug.ts(4,42): error TS2307: Cannot find module './debug-collision-geometry' or its corresponding type declarations.
+packages/render/src/layout-native-walls.ts(17,49): error TS2307: Cannot find module './scene-material-registration' or its corresponding type declarations.
+packages/render/src/native-wall-batches.ts(6,49): error TS2307: Cannot find module './scene-material-registration' or its corresponding type declarations.
+packages/sim/src/construction-airlock-document.ts(83,35): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+  Types of property 'structure' are incompatible.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+packages/sim/src/construction-boundary-family-native.test.ts(62,32): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+  Types of property 'structure' are incompatible.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+packages/sim/src/construction-boundary-family-native.test.ts(66,32): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+  Types of property 'structure' are incompatible.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+packages/sim/src/construction-instance.test.ts(50,59): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+  Types of property 'structure' are incompatible.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+packages/sim/src/construction-instance.ts(289,26): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+  Types of property 'structure' are incompatible.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+packages/sim/src/construction-stairs-document.test.ts(233,28): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+  Types of property 'structure' are incompatible.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+packages/sim/src/construction-traversal-document.test.ts(163,30): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+  Types of property 'structure' are incompatible.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+packages/sim/src/wayfarer-cockpit-collision.test.ts(25,26): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+  Types of property 'structure' are incompatible.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+packages/sim/src/wayfarer-refit.ts(91,26): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+  Types of property 'structure' are incompatible.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+packages/sim/src/wayfarer-threshold.test.ts(36,26): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+  Types of property 'structure' are incompatible.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+packages/world/src/construction-pilot.test.ts(73,26): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+  Types of property 'structure' are incompatible.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.
+scripts/review_wayfarer_walking.ts(44,24): error TS2345: Argument of type 'import("/root/sidereal_spacetime/packages/content/src/ship-layout").LayoutDocument' is not assignable to parameter of type 'import("/root/sidereal-planet-reference-review/packages/content/src/ship-layout").LayoutDocument'.
+  Types of property 'structure' are incompatible.
+    Type 'import("/root/sidereal_spacetime/packages/content/src/layout-structure").LayoutStructure | undefined' is not assignable to type 'import("/root/sidereal-planet-reference-review/packages/content/src/layout-structure").LayoutStructure | undefined'.
+      Type 'LayoutStructureV2' is not assignable to type 'LayoutStructure'.
+        Types of property 'schema' are incompatible.
+          Type '"sidereal.layout-structure.v2"' is not assignable to type '"sidereal.layout-structure.v1"'.

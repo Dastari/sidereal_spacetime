@@ -1,0 +1,847 @@
+{
+  "prior": "/root/sidereal_spacetime/output/playwright/planet-reference-20260914/volcanic-moon-2-r004",
+  "priorKitSHA256": "de834c54cdda984529cf2f5ce374cd7e08fff20be8d9c4196b595fc96a7aa0cf",
+  "scope": "material-only immediately adjacent cold faces on B-edge, placements2 and9",
+  "changedTriangles": 139,
+  "totalVariantTriangles": 14194,
+  "maximumCenterDistance": 0.095,
+  "maximumCornerDistance": 0.15,
+  "selectedFaces": [
+    {
+      "object": "GEO-battered-region-b-edge-exposed-hot-fracture-0",
+      "face": 0,
+      "previousRole": 3,
+      "distance": 0.009333327412605286
+    },
+    {
+      "object": "GEO-battered-region-b-edge-exposed-hot-fracture-0",
+      "face": 21,
+      "previousRole": 3,
+      "distance": 0.008480117656290531
+    },
+    {
+      "object": "GEO-battered-region-b-edge-exposed-hot-fracture-0",
+      "face": 22,
+      "previousRole": 3,
+      "distance": 0.00466667115688324
+    },
+    {
+      "object": "GEO-battered-region-b-edge-exposed-hot-fracture-0",
+      "face": 43,
+      "previousRole": 3,
+      "distance": 0.004666656255722046
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 17,
+      "previousRole": 1,
+      "distance": 0.06426944583654404
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 25,
+      "previousRole": 0,
+      "distance": 0.005999907851219177
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 26,
+      "previousRole": 0,
+      "distance": 0.05720674991607666
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 106,
+      "previousRole": 1,
+      "distance": 0.06398841738700867
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 113,
+      "previousRole": 0,
+      "distance": 0.005999729037284851
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 114,
+      "previousRole": 0,
+      "distance": 0.003968722652643919
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 115,
+      "previousRole": 0,
+      "distance": 0.04607696831226349
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 116,
+      "previousRole": 0,
+      "distance": 0.0139946099370718
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 117,
+      "previousRole": 0,
+      "distance": 0.006000012159347534
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 160,
+      "previousRole": 0,
+      "distance": 0.005999937653541565
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 161,
+      "previousRole": 0,
+      "distance": 0.005999967455863953
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 162,
+      "previousRole": 0,
+      "distance": 0.005999937653541565
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 163,
+      "previousRole": 0,
+      "distance": 0.003554425435140729
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 165,
+      "previousRole": 0,
+      "distance": 0.005999907851219177
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 168,
+      "previousRole": 0,
+      "distance": 0.08925692737102509
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 169,
+      "previousRole": 0,
+      "distance": 0.030377602204680443
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 170,
+      "previousRole": 0,
+      "distance": 0.006000027060508728
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 265,
+      "previousRole": 0,
+      "distance": 0.013729861006140709
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 266,
+      "previousRole": 0,
+      "distance": 0.04194912686944008
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 267,
+      "previousRole": 0,
+      "distance": 0.0782240778207779
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 268,
+      "previousRole": 0,
+      "distance": 0.005488011986017227
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 269,
+      "previousRole": 0,
+      "distance": 0.005999907851219177
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 312,
+      "previousRole": 0,
+      "distance": 0.07867789268493652
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 314,
+      "previousRole": 0,
+      "distance": 0.07861465960741043
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 315,
+      "previousRole": 0,
+      "distance": 0.031950872391462326
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 319,
+      "previousRole": 1,
+      "distance": 0.01284605823457241
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 320,
+      "previousRole": 1,
+      "distance": 0.011739692650735378
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 378,
+      "previousRole": 0,
+      "distance": 0.006000041961669922
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 386,
+      "previousRole": 1,
+      "distance": 0.0032407448161393404
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 387,
+      "previousRole": 1,
+      "distance": 0.0172074306756258
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 434,
+      "previousRole": 0,
+      "distance": 0.03604339435696602
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 442,
+      "previousRole": 0,
+      "distance": 0.035144928842782974
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 454,
+      "previousRole": 0,
+      "distance": 0.05749296769499779
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 455,
+      "previousRole": 0,
+      "distance": 0.03134388476610184
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 456,
+      "previousRole": 0,
+      "distance": 0.09271316975355148
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 459,
+      "previousRole": 0,
+      "distance": 0.005999907851219177
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 466,
+      "previousRole": 0,
+      "distance": 0.09013611078262329
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 478,
+      "previousRole": 0,
+      "distance": 0.032204825431108475
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 479,
+      "previousRole": 0,
+      "distance": 0.03440504148602486
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 480,
+      "previousRole": 0,
+      "distance": 0.03705593943595886
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 482,
+      "previousRole": 1,
+      "distance": 0.00958716869354248
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 488,
+      "previousRole": 1,
+      "distance": 0.007362556178122759
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 493,
+      "previousRole": 1,
+      "distance": 0.014053760096430779
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 500,
+      "previousRole": 1,
+      "distance": 0.0567290298640728
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 554,
+      "previousRole": 1,
+      "distance": 0.008755055256187916
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 638,
+      "previousRole": 1,
+      "distance": 0.01678941771388054
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 654,
+      "previousRole": 1,
+      "distance": 0.009671562351286411
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 684,
+      "previousRole": 1,
+      "distance": 0.0072623370215296745
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 719,
+      "previousRole": 0,
+      "distance": 0.004292423836886883
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 739,
+      "previousRole": 1,
+      "distance": 0.013597792014479637
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 778,
+      "previousRole": 1,
+      "distance": 0.006764736492186785
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 800,
+      "previousRole": 1,
+      "distance": 0.009931952692568302
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 823,
+      "previousRole": 1,
+      "distance": 0.0536983497440815
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-0-hot-edge",
+      "face": 828,
+      "previousRole": 1,
+      "distance": 0.05053795874118805
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 12,
+      "previousRole": 1,
+      "distance": 0.02105526626110077
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 23,
+      "previousRole": 0,
+      "distance": 0.005999743938446045
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 24,
+      "previousRole": 0,
+      "distance": 0.030763376504182816
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 103,
+      "previousRole": 1,
+      "distance": 0.013777908869087696
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 116,
+      "previousRole": 0,
+      "distance": 0.017972135916352272
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 119,
+      "previousRole": 0,
+      "distance": 0.0025256809312850237
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 120,
+      "previousRole": 0,
+      "distance": 0.005999922752380371
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 121,
+      "previousRole": 0,
+      "distance": 0.0066986228339374065
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 122,
+      "previousRole": 0,
+      "distance": 0.006000027060508728
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 124,
+      "previousRole": 0,
+      "distance": 0.0059997886419296265
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 125,
+      "previousRole": 0,
+      "distance": 0.08008615672588348
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 311,
+      "previousRole": 0,
+      "distance": 0.06670452654361725
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 313,
+      "previousRole": 0,
+      "distance": 0.0527685284614563
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 314,
+      "previousRole": 0,
+      "distance": 0.08446798473596573
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 315,
+      "previousRole": 0,
+      "distance": 0.0059997886419296265
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 316,
+      "previousRole": 0,
+      "distance": 0.010122301056981087
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 317,
+      "previousRole": 0,
+      "distance": 0.006000086665153503
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 318,
+      "previousRole": 0,
+      "distance": 0.007173010613769293
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 327,
+      "previousRole": 0,
+      "distance": 0.051832813769578934
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 339,
+      "previousRole": 1,
+      "distance": 0.017893793061375618
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 403,
+      "previousRole": 0,
+      "distance": 0.02878466062247753
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 404,
+      "previousRole": 0,
+      "distance": 0.005999892950057983
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 405,
+      "previousRole": 0,
+      "distance": 0.033790793269872665
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 416,
+      "previousRole": 1,
+      "distance": 0.024095410481095314
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 453,
+      "previousRole": 1,
+      "distance": 0.02591109834611416
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 459,
+      "previousRole": 0,
+      "distance": 0.06287871301174164
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 467,
+      "previousRole": 0,
+      "distance": 0.0059997886419296265
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 468,
+      "previousRole": 0,
+      "distance": 0.047552745789289474
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 470,
+      "previousRole": 0,
+      "distance": 0.026160849258303642
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 505,
+      "previousRole": 0,
+      "distance": 0.005999818444252014
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 506,
+      "previousRole": 0,
+      "distance": 0.04243375360965729
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 513,
+      "previousRole": 1,
+      "distance": 0.013215838931500912
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 523,
+      "previousRole": 1,
+      "distance": 0.02287471666932106
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 532,
+      "previousRole": 1,
+      "distance": 0.021960726007819176
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 611,
+      "previousRole": 1,
+      "distance": 0.03012538142502308
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 746,
+      "previousRole": 1,
+      "distance": 0.02667864039540291
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 760,
+      "previousRole": 1,
+      "distance": 0.014601701870560646
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 809,
+      "previousRole": 1,
+      "distance": 0.01703067682683468
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 836,
+      "previousRole": 1,
+      "distance": 0.020010992884635925
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 839,
+      "previousRole": 1,
+      "distance": 0.07728710025548935
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 847,
+      "previousRole": 0,
+      "distance": 0.005999892950057983
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 859,
+      "previousRole": 0,
+      "distance": 0.006627670489251614
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 860,
+      "previousRole": 0,
+      "distance": 0.005999892950057983
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 861,
+      "previousRole": 0,
+      "distance": 0.009576110169291496
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 868,
+      "previousRole": 1,
+      "distance": 0.01676078513264656
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 886,
+      "previousRole": 1,
+      "distance": 0.02460560016334057
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 895,
+      "previousRole": 1,
+      "distance": 0.0708964467048645
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 899,
+      "previousRole": 1,
+      "distance": 0.02903994359076023
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 905,
+      "previousRole": 1,
+      "distance": 0.017661169171333313
+    },
+    {
+      "object": "GEO-battered-region-b-directional-crust-1-hot-edge",
+      "face": 937,
+      "previousRole": 1,
+      "distance": 0.011980605311691761
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 7,
+      "previousRole": 3,
+      "distance": 0.037078794091939926
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 8,
+      "previousRole": 3,
+      "distance": 0.04335394501686096
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 16,
+      "previousRole": 1,
+      "distance": 0.03744545951485634
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 17,
+      "previousRole": 1,
+      "distance": 0.03459744155406952
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 42,
+      "previousRole": 3,
+      "distance": 0.07015740126371384
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 43,
+      "previousRole": 3,
+      "distance": 0.04423698037862778
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 44,
+      "previousRole": 3,
+      "distance": 0.06366576999425888
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 52,
+      "previousRole": 1,
+      "distance": 0.030715910717844963
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 53,
+      "previousRole": 1,
+      "distance": 0.0062412479892373085
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 61,
+      "previousRole": 0,
+      "distance": 0.07665861397981644
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 62,
+      "previousRole": 0,
+      "distance": 0.008359260857105255
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 63,
+      "previousRole": 0,
+      "distance": 0.06531517952680588
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 66,
+      "previousRole": 0,
+      "distance": 0.06683419644832611
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 67,
+      "previousRole": 0,
+      "distance": 0.009199926629662514
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 68,
+      "previousRole": 0,
+      "distance": 0.07326309382915497
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 69,
+      "previousRole": 0,
+      "distance": 0.05154230818152428
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 86,
+      "previousRole": 1,
+      "distance": 0.03278997540473938
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 100,
+      "previousRole": 1,
+      "distance": 0.0032866850960999727
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 101,
+      "previousRole": 3,
+      "distance": 0.03287971019744873
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 118,
+      "previousRole": 3,
+      "distance": 0.011533263139426708
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 125,
+      "previousRole": 3,
+      "distance": 0.0014819605275988579
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 133,
+      "previousRole": 1,
+      "distance": 0.03820990025997162
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 143,
+      "previousRole": 3,
+      "distance": 0.008750714361667633
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-1-hot-edge",
+      "face": 144,
+      "previousRole": 3,
+      "distance": 0.06623303890228271
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-2-hot-edge",
+      "face": 4,
+      "previousRole": 3,
+      "distance": 0.04001973196864128
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-2-hot-edge",
+      "face": 40,
+      "previousRole": 3,
+      "distance": 0.07675038278102875
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-2-hot-edge",
+      "face": 95,
+      "previousRole": 3,
+      "distance": 0.03698532655835152
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-2-hot-edge",
+      "face": 119,
+      "previousRole": 3,
+      "distance": 0.0867995172739029
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-2-hot-edge",
+      "face": 120,
+      "previousRole": 3,
+      "distance": 0.0607115738093853
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-2-hot-edge",
+      "face": 121,
+      "previousRole": 3,
+      "distance": 0.029697759076952934
+    },
+    {
+      "object": "GEO-battered-region-b-unequal-broken-ledge-2-hot-edge",
+      "face": 128,
+      "previousRole": 3,
+      "distance": 0.04901519790291786
+    }
+  ],
+  "geometryNormalsUvs": "exact JSON unchanged; native mesh untouched",
+  "publication": "isolated draft, no owner sign-off"
+}

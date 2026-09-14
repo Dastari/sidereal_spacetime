@@ -1,0 +1,6 @@
+### Result
+"[{\"x\":300,\"y\":450,\"mesh\":\"native-powder-snow\",\"face\":320,\"placement\":\"reference-review:38:ground\"},{\"x\":450,\"y\":450,\"mesh\":\"native-powder-snow\",\"face\":29541,\"placement\":\"reference-review:38:region-5\"},{\"x\":560,\"y\":400,\"mesh\":\"native-powder-snow\",\"face\":30501,\"placement\":\"reference-review:38:region-5\"},{\"x\":350,\"y\":330,\"mesh\":\"native-cobalt-ice\",\"face\":484,\"placement\":\"reference-review:38:region-0\"}]"
+### Ran Playwright code
+```js
+await page.evaluate('() => (JSON.stringify([[300,450],[450,450],[560,400],[350,330]].map(([x,y])=>{const r=window.planetReview;r.camera.radius=5.5;r.camera.alpha-=1.6;r.scene.render();const hit=r.scene.pick(x,y,m=>m.isEnabled()&&m.metadata?.trianglePlacementRanges);r.camera.alpha+=1.6;return {x,y,mesh:hit.pickedMesh?.name,face:hit.faceId,placement:hit.pickedMesh?.metadata?.trianglePlacementRanges.find(t=>hit.faceId>=t.firstTriangle&&hit.faceId<t.firstTriangle+t.triangleCount)?.partId};})))');
+```

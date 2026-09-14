@@ -1,0 +1,134 @@
+[
+  {
+    "function": "",
+    "file": "file:///root/sidereal_spacetime/scripts/art_library/ice_moon_reference_composition_r002.ts",
+    "line": 1,
+    "selfMs": 3730.904
+  },
+  {
+    "function": "emit",
+    "file": "file:///root/sidereal_spacetime/scripts/art_library/ice_moon_reference_composition_r002.ts",
+    "line": 1,
+    "selfMs": 207.895
+  },
+  {
+    "function": "(garbage collector)",
+    "file": "",
+    "line": 0,
+    "selfMs": 124.236
+  },
+  {
+    "function": "deformedNormalAt",
+    "file": "file:///root/sidereal_spacetime/scripts/art_library/native_deformation_normals.ts",
+    "line": 1,
+    "selfMs": 108.123
+  },
+  {
+    "function": "",
+    "file": "file:///root/sidereal_spacetime/scripts/art_library/native_reference_assembly.ts",
+    "line": 1,
+    "selfMs": 99.235
+  },
+  {
+    "function": "",
+    "file": "file:///root/sidereal_spacetime/output/playwright/planet-reference-20260914/ice-moon-r002-worker-audit/benchmark.ts",
+    "line": 1,
+    "selfMs": 97.206
+  },
+  {
+    "function": "read",
+    "file": "",
+    "line": 0,
+    "selfMs": 51.357
+  },
+  {
+    "function": "runCallSync",
+    "file": "file:///root/sidereal_spacetime/node_modules/esbuild/lib/main.js",
+    "line": 2428,
+    "selfMs": 49.546
+  },
+  {
+    "function": "update",
+    "file": "node:internal/crypto/hash",
+    "line": 136,
+    "selfMs": 42.084
+  },
+  {
+    "function": "composeIceMoonReference",
+    "file": "file:///root/sidereal_spacetime/scripts/art_library/ice_moon_reference_composition_r002.ts",
+    "line": 1,
+    "selfMs": 41.301
+  },
+  {
+    "function": "utf8Slice",
+    "file": "",
+    "line": 0,
+    "selfMs": 23.642
+  },
+  {
+    "function": "compileForInternalLoader",
+    "file": "node:internal/bootstrap/realm",
+    "line": 383,
+    "selfMs": 20.007
+  },
+  {
+    "function": "(program)",
+    "file": "",
+    "line": 0,
+    "selfMs": 17.439
+  },
+  {
+    "function": "(idle)",
+    "file": "",
+    "line": 0,
+    "selfMs": 9.881
+  },
+  {
+    "function": "floorSampler",
+    "file": "file:///root/sidereal_spacetime/scripts/art_library/ice_moon_reference_composition_r002.ts",
+    "line": 1,
+    "selfMs": 8.438
+  },
+  {
+    "function": "",
+    "file": "file:///root/sidereal_spacetime/scripts/art_library/native_deformation_normals.ts",
+    "line": 1,
+    "selfMs": 3.242
+  },
+  {
+    "function": "readFileUtf8",
+    "file": "",
+    "line": 0,
+    "selfMs": 2.168
+  },
+  {
+    "function": "Dirent",
+    "file": "node:internal/fs/utils",
+    "line": 160,
+    "selfMs": 2.115
+  },
+  {
+    "function": "compileSourceTextModule",
+    "file": "node:internal/modules/esm/utils",
+    "line": 316,
+    "selfMs": 2.11
+  },
+  {
+    "function": "",
+    "file": "file:///root/sidereal_spacetime/node_modules/tsx/dist/register-OY9cqBEN.cjs",
+    "line": 7,
+    "selfMs": 2.088
+  },
+  {
+    "function": "",
+    "file": "file:///root/sidereal_spacetime/node_modules/tsx/dist/register-DHgpdRjs.mjs",
+    "line": 7,
+    "selfMs": 2.075
+  },
+  {
+    "function": "",
+    "file": "node:internal/modules/cjs/loader",
+    "line": 1267,
+    "selfMs": 2.062
+  }
+]

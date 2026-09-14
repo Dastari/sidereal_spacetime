@@ -1,0 +1,26 @@
+[
+  {
+    "referenceId": "planets--crystal-moon-1",
+    "candidate": "output/playwright/planet-reference-20260914/crystal-moon-1-r002",
+    "runtimeStyle": "moon",
+    "layout": "crystal-moon-geology",
+    "composeExport": "composeCrystalMoonReference",
+    "composer": "crystal_moon_reference_composition_r002.ts",
+    "kitSha256": "28606fbfbb91108acb7f0521b11de372e9ce163a0b824cdf984120e300d8b77b",
+    "triangles": 168450,
+    "districts": 77,
+    "retainedLOD": true
+  },
+  {
+    "referenceId": "planets--crystal-moon-2",
+    "candidate": "output/playwright/planet-reference-20260914/crystal-moon-2-r002",
+    "runtimeStyle": "moon",
+    "layout": "crystal-moon-geology",
+    "composeExport": "composeCrystalMoonReference",
+    "composer": "crystal_moon_reference_composition_r002.ts",
+    "kitSha256": "687daa73c98cd67e19ef4e6e1f4f98478fd3b1574b1dbf23501e34fab90a05aa",
+    "triangles": 106684,
+    "districts": 61,
+    "retainedLOD": true
+  }
+]

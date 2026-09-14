@@ -1,0 +1,42 @@
+[
+  {
+    "file": "medium-cluster.glb",
+    "material": "crystal-bright-edge",
+    "sameAuthoredCoreImageUsedForBaseColorAndEmission": true
+  },
+  {
+    "file": "medium-cluster.glb",
+    "material": "crystal-core-plane",
+    "sameAuthoredCoreImageUsedForBaseColorAndEmission": true
+  },
+  {
+    "file": "colossal-cluster.glb",
+    "material": "crystal-bright-edge",
+    "sameAuthoredCoreImageUsedForBaseColorAndEmission": true
+  },
+  {
+    "file": "colossal-cluster.glb",
+    "material": "crystal-core-plane",
+    "sameAuthoredCoreImageUsedForBaseColorAndEmission": true
+  },
+  {
+    "file": "leaning-colossal-cluster.glb",
+    "material": "crystal-bright-edge",
+    "sameAuthoredCoreImageUsedForBaseColorAndEmission": true
+  },
+  {
+    "file": "leaning-colossal-cluster.glb",
+    "material": "crystal-core-plane",
+    "sameAuthoredCoreImageUsedForBaseColorAndEmission": true
+  },
+  {
+    "file": "single-crystal.glb",
+    "material": "crystal-bright-edge",
+    "sameAuthoredCoreImageUsedForBaseColorAndEmission": true
+  },
+  {
+    "file": "single-crystal.glb",
+    "material": "crystal-core-plane",
+    "sameAuthoredCoreImageUsedForBaseColorAndEmission": true
+  }
+]

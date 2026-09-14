@@ -1,0 +1,692 @@
+[
+  {
+    "candidate": "temperate-r002",
+    "kit": "output/playwright/planet-reference-20260914/temperate-r002/kit.json",
+    "kitSha256": "426d18faaa123a9277f5b7cebc52e9ad0656a2c937f3168e8585021f113f3446",
+    "materialDifferences": [],
+    "attributeGaps": [],
+    "variants": [
+      {
+        "name": "tree-grove",
+        "glb": "output/playwright/planet-reference-20260914/temperate-r002/tree-grove.glb",
+        "glbSha256": "ef1f3c825210d5aa9f4ae848c3801b6c3a8a961ca28d89ca39676ab9912b83a1",
+        "jsonCorners": 2976,
+        "glbCorners": 2976,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 3.414284955677271e-08,
+        "maximumMatchedNormalDelta": 8.127349208310337e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": []
+      },
+      {
+        "name": "small-grove",
+        "glb": "output/playwright/planet-reference-20260914/temperate-r002/small-grove.glb",
+        "glbSha256": "136c588d9fd44d5e8ef9d6cedc852333a399fbfd191e57e253d83128150f7c2b",
+        "jsonCorners": 1488,
+        "glbCorners": 1488,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 2.9802322387695312e-08,
+        "maximumMatchedNormalDelta": 7.092377871751133e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": []
+      },
+      {
+        "name": "ground-sphere",
+        "glb": "output/playwright/planet-reference-20260914/temperate-r002/ground-sphere.glb",
+        "glbSha256": "22ec0dcb11d5fbbb669c36e095bfad24c01009e7c5554eea991072beed461775",
+        "jsonCorners": 15360,
+        "glbCorners": 15360,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.969896464190269e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "deep-cobalt",
+            "field": "baseColorTexture",
+            "expected": "water-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "normalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "metallicRoughnessTexture",
+            "expected": "water-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "clearcoatNormalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere-medium",
+        "glb": "output/playwright/planet-reference-20260914/temperate-r002/ground-sphere-medium.glb",
+        "glbSha256": "e9841cb038ad5f038c884212f02ddb9ee57d5a9bea763e38ecc882cf18b766cd",
+        "jsonCorners": 3840,
+        "glbCorners": 3840,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.695697840018373e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "deep-cobalt",
+            "field": "baseColorTexture",
+            "expected": "water-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "normalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "metallicRoughnessTexture",
+            "expected": "water-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "clearcoatNormalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere-low",
+        "glb": "output/playwright/planet-reference-20260914/temperate-r002/ground-sphere-low.glb",
+        "glbSha256": "03138956e4425d3ecc9e8b98b8738f9ee1d356307d10b1a876fb185e06b57386",
+        "jsonCorners": 960,
+        "glbCorners": 960,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.110542189241277e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "deep-cobalt",
+            "field": "baseColorTexture",
+            "expected": "water-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "normalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "metallicRoughnessTexture",
+            "expected": "water-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "clearcoatNormalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "continent-a",
+        "glb": "output/playwright/planet-reference-20260914/temperate-r002/continent-a.glb",
+        "glbSha256": "a13d0395b45dafe1ef5388985c85de9115a28c83341686424323029b0c78d415",
+        "jsonCorners": 13242,
+        "glbCorners": 13242,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 3,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 0.00012350127017782885,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "deep-cobalt",
+            "field": "baseColorTexture",
+            "expected": "water-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "normalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "metallicRoughnessTexture",
+            "expected": "water-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "clearcoatNormalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-shelf-blue",
+            "field": "baseColorTexture",
+            "expected": "island-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-shelf-blue",
+            "field": "normalTexture",
+            "expected": "island-1-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-shelf-blue",
+            "field": "metallicRoughnessTexture",
+            "expected": "island-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-shallow-turquoise",
+            "field": "baseColorTexture",
+            "expected": "island-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-shallow-turquoise",
+            "field": "normalTexture",
+            "expected": "island-2-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-shallow-turquoise",
+            "field": "metallicRoughnessTexture",
+            "expected": "island-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-pale-beach",
+            "field": "baseColorTexture",
+            "expected": "island-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-pale-beach",
+            "field": "normalTexture",
+            "expected": "island-3-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-pale-beach",
+            "field": "metallicRoughnessTexture",
+            "expected": "island-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-grey-coastal-rock",
+            "field": "baseColorTexture",
+            "expected": "island-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-grey-coastal-rock",
+            "field": "normalTexture",
+            "expected": "island-4-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-grey-coastal-rock",
+            "field": "metallicRoughnessTexture",
+            "expected": "island-4-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-cliff-shadow",
+            "field": "baseColorTexture",
+            "expected": "island-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-cliff-shadow",
+            "field": "normalTexture",
+            "expected": "island-5-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-cliff-shadow",
+            "field": "metallicRoughnessTexture",
+            "expected": "island-5-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-plateau-green",
+            "field": "baseColorTexture",
+            "expected": "island-6-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-plateau-green",
+            "field": "normalTexture",
+            "expected": "island-6-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-plateau-green",
+            "field": "metallicRoughnessTexture",
+            "expected": "island-6-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "continent-b",
+        "glb": "output/playwright/planet-reference-20260914/temperate-r002/continent-b.glb",
+        "glbSha256": "126d46cbe8a264ad4f38d0120fd2a1993739c844526470c2814ddedc4e030b32",
+        "jsonCorners": 13110,
+        "glbCorners": 13110,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 9.23375291897649e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "deep-cobalt",
+            "field": "baseColorTexture",
+            "expected": "water-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "normalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "metallicRoughnessTexture",
+            "expected": "water-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "clearcoatNormalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-shelf-blue",
+            "field": "baseColorTexture",
+            "expected": "island-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-shelf-blue",
+            "field": "normalTexture",
+            "expected": "island-1-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-shelf-blue",
+            "field": "metallicRoughnessTexture",
+            "expected": "island-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-shallow-turquoise",
+            "field": "baseColorTexture",
+            "expected": "island-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-shallow-turquoise",
+            "field": "normalTexture",
+            "expected": "island-2-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-shallow-turquoise",
+            "field": "metallicRoughnessTexture",
+            "expected": "island-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-pale-beach",
+            "field": "baseColorTexture",
+            "expected": "island-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-pale-beach",
+            "field": "normalTexture",
+            "expected": "island-3-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-pale-beach",
+            "field": "metallicRoughnessTexture",
+            "expected": "island-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-grey-coastal-rock",
+            "field": "baseColorTexture",
+            "expected": "island-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-grey-coastal-rock",
+            "field": "normalTexture",
+            "expected": "island-4-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-grey-coastal-rock",
+            "field": "metallicRoughnessTexture",
+            "expected": "island-4-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-cliff-shadow",
+            "field": "baseColorTexture",
+            "expected": "island-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-cliff-shadow",
+            "field": "normalTexture",
+            "expected": "island-5-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-cliff-shadow",
+            "field": "metallicRoughnessTexture",
+            "expected": "island-5-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-plateau-green",
+            "field": "baseColorTexture",
+            "expected": "island-6-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-plateau-green",
+            "field": "normalTexture",
+            "expected": "island-6-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-plateau-green",
+            "field": "metallicRoughnessTexture",
+            "expected": "island-6-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "continent-c",
+        "glb": "output/playwright/planet-reference-20260914/temperate-r002/continent-c.glb",
+        "glbSha256": "8fb9a0a4dd5ea6b4d0289c23b6592c79286d610ce041d348cd127af47566ae49",
+        "jsonCorners": 12960,
+        "glbCorners": 12960,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 8.347838847717811e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "deep-cobalt",
+            "field": "baseColorTexture",
+            "expected": "water-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "normalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "metallicRoughnessTexture",
+            "expected": "water-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "clearcoatNormalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-shelf-blue",
+            "field": "baseColorTexture",
+            "expected": "island-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-shelf-blue",
+            "field": "normalTexture",
+            "expected": "island-1-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-shelf-blue",
+            "field": "metallicRoughnessTexture",
+            "expected": "island-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-shallow-turquoise",
+            "field": "baseColorTexture",
+            "expected": "island-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-shallow-turquoise",
+            "field": "normalTexture",
+            "expected": "island-2-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-shallow-turquoise",
+            "field": "metallicRoughnessTexture",
+            "expected": "island-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-pale-beach",
+            "field": "baseColorTexture",
+            "expected": "island-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-pale-beach",
+            "field": "normalTexture",
+            "expected": "island-3-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-pale-beach",
+            "field": "metallicRoughnessTexture",
+            "expected": "island-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-grey-coastal-rock",
+            "field": "baseColorTexture",
+            "expected": "island-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-grey-coastal-rock",
+            "field": "normalTexture",
+            "expected": "island-4-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-grey-coastal-rock",
+            "field": "metallicRoughnessTexture",
+            "expected": "island-4-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-cliff-shadow",
+            "field": "baseColorTexture",
+            "expected": "island-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-cliff-shadow",
+            "field": "normalTexture",
+            "expected": "island-5-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-cliff-shadow",
+            "field": "metallicRoughnessTexture",
+            "expected": "island-5-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-plateau-green",
+            "field": "baseColorTexture",
+            "expected": "island-6-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-plateau-green",
+            "field": "normalTexture",
+            "expected": "island-6-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "island-finish-plateau-green",
+            "field": "metallicRoughnessTexture",
+            "expected": "island-6-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      }
+    ],
+    "limitations": [
+      "Material/position-matched corner multisets check values at explicit tolerances independently of index ordering, not mesh topology equivalence.",
+      "Only explicit JSON material fields are compared; source-side omissions remain unspecified.",
+      "Normals compared only when carried in JSON. Reconstruction of omitted normals by a renderer is outside this artifact audit.",
+      "Geometry converted from BlenderZ-up JSON to glTFY-up and accumulated node transforms; UVs follow recorded glTF convention."
+    ],
+    "summary": {
+      "variants": 8,
+      "materialDifferenceOccurrences": 0,
+      "attributeGaps": 0,
+      "variantErrors": 0,
+      "positionMismatchVariants": 0,
+      "normalMismatchVariants": 1,
+      "uvMismatchVariants": 0
+    }
+  }
+]

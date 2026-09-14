@@ -1,0 +1,179 @@
+{
+  "viewSettlements": [
+    {
+      "label": "close",
+      "startFrame": 57,
+      "endFrame": 63,
+      "stableFrames": 3,
+      "camera": {
+        "alpha": 1.0529033447245055,
+        "beta": 1.1694941410002127,
+        "radius": 5.5
+      },
+      "candidate": {
+        "active": 0,
+        "pendingBuilds": 0,
+        "retained": [
+          0
+        ],
+        "smokeImplemented": true,
+        "smokeMeshes": 0,
+        "smokeTriangles": 0,
+        "retainedSmokeMeshes": 0,
+        "requestedLOD": 0,
+        "fixedDetail": true,
+        "workerPending": 0,
+        "buildMs": 602.5,
+        "localLights": 0,
+        "transmissionMaterials": 0,
+        "transmissionTargets": 0
+      }
+    },
+    {
+      "label": "angle2",
+      "startFrame": 63,
+      "endFrame": 66,
+      "stableFrames": 3,
+      "camera": {
+        "alpha": 2.6529033447245056,
+        "beta": 1.1694941410002127,
+        "radius": 5.5
+      },
+      "candidate": {
+        "active": 0,
+        "pendingBuilds": 0,
+        "retained": [
+          0
+        ],
+        "smokeImplemented": true,
+        "smokeMeshes": 0,
+        "smokeTriangles": 0,
+        "retainedSmokeMeshes": 0,
+        "requestedLOD": 0,
+        "fixedDetail": true,
+        "workerPending": 0,
+        "buildMs": 602.5,
+        "localLights": 0,
+        "transmissionMaterials": 0,
+        "transmissionTargets": 0
+      }
+    },
+    {
+      "label": "reference-scale",
+      "startFrame": 66,
+      "endFrame": 69,
+      "stableFrames": 3,
+      "camera": {
+        "alpha": 2.6529033447245056,
+        "beta": 1.1694941410002127,
+        "radius": 42.3414634146
+      },
+      "candidate": {
+        "active": 0,
+        "pendingBuilds": 0,
+        "retained": [
+          0
+        ],
+        "smokeImplemented": true,
+        "smokeMeshes": 0,
+        "smokeTriangles": 0,
+        "retainedSmokeMeshes": 0,
+        "requestedLOD": 1,
+        "fixedDetail": true,
+        "workerPending": 0,
+        "buildMs": 602.5,
+        "localLights": 0,
+        "transmissionMaterials": 0,
+        "transmissionTargets": 0
+      }
+    }
+  ],
+  "viewport": {
+    "width": 900,
+    "height": 900
+  },
+  "canvas": {
+    "width": 900,
+    "height": 900
+  },
+  "stats": {
+    "style": "moon",
+    "seed": 904,
+    "frames": 69,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 0,
+      "requestedLOD": 1,
+      "fixedDetail": true,
+      "workerPending": 0,
+      "buildMs": 602.5,
+      "localLights": 0,
+      "transmissionMaterials": 0,
+      "transmissionTargets": 0
+    },
+    "baselineEnvironmentEnabled": false,
+    "meshes": 6,
+    "triangles": 358242,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": []
+  },
+  "shadowsEnabled": true,
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 42.3414634146
+  },
+  "shadows": [],
+  "checkoutHead": "2af5fb3e98057f577b61a657e71f61067c7d338b",
+  "sourceRoot": "/root/sidereal_spacetime",
+  "sourceHashesAtStart": {
+    "scripts/art_library/planet_reference_review.ts": "9b379b9de4c6de06870922d9e319b3151c31915a3163d0ad788bc237bc1a72b3",
+    "scripts/art_library/planet_reference_worker.ts": "12c0e4ec46e0ef413c965afd5b4d788b96079dabdc61e91cde6ee6379e56b847",
+    "scripts/art_library/planet_reference_candidate.ts": "9c4691f54f799846ebb798ca511af417f49dcaf2865a906c65d503c5d8b1da2d",
+    "scripts/art_library/planet_reference_worker_lifetime.ts": "04ca166e3d0924c555b436be134ed9d1d6089c5a74cb98dcb23f0a25cf53290d",
+    "scripts/art_library/capture_planet_reference_settle.py": "fbf895cfa73f3e2e6b1f227c5869d1cbc26656be34ccedcd1470e0a0a98c9ba2",
+    "packages/render/src/environment/planet-shadows.ts": "f407287a1c872d4b15058ecb5d2cb43e7466f4c93bec56f711e7db61229a4bf6",
+    "packages/render/src/environment/planet-shadow-coverage.ts": "1eb6337d43213a3583e638c8680af6542efab8e4b6c6c7bfac249090220520af",
+    "packages/render/src/environment/planet-shadow-depth-offset.ts": "c7a541d9d183ff489e1295a648a28637ccf62c16f6365de74d42c6cebd316445"
+  },
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "moon",
+    "revision": "volcanic-moon-1-r003",
+    "seed": 904,
+    "radius": 5.5,
+    "alpha": null,
+    "beta": null,
+    "bias": null,
+    "depth_bias": null,
+    "glow": true,
+    "local_light": false,
+    "prefix": "broader-shadow-fixed",
+    "reference_scale": true,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": false,
+    "unit": false,
+    "staged": false,
+    "target": null,
+    "shadows_off": false,
+    "reference_radius": 42.3414634146
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=moon&seed=904&candidate=1&reviewRevision=volcanic-moon-1-r003&capture=1789394614180163566&glow=1",
+  "images": {
+    "broader-shadow-fixed-seed904.png": "67684b037316dd4fd702fbbcd78fa69270e0d41aeef4de81474053c8c333d65d",
+    "broader-shadow-fixed-seed904-angle2.png": "31058ca1061da02781e0a9180abd83a58984250ba24800b1628db7dcb417331b",
+    "broader-shadow-fixed-seed904-reference-scale.png": "e36ea743e631ce1acfc6027b0095e39c06f0b5a482700774b07c648da9c57b0a"
+  },
+  "kitSha256": "73ecf286225a9daf4d1be1d2479a691747f34614f8782ec21f8c7e732721d7fc"
+}

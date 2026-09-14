@@ -1,0 +1,18 @@
+[
+  {
+    "path": "assets/art-library/planet-geology-studies/basalt-forms-02/basalt-forms.blend",
+    "sha256": "b3af6418b361740eeac85424bc360b84710b552b1d27aecb4bfa9b5c0deb0bab"
+  },
+  {
+    "path": "assets/art-library/planet-geology-studies/basalt-forms-02/geometry.json",
+    "sha256": "c076dbb1e3a567dc9ba702593581b851689e9dec9ba5b28ba9902994c0604a27"
+  },
+  {
+    "path": "assets/art-library/planet-geology-studies/basalt-forms-02/source-exposed-sheet.png",
+    "sha256": "73b97ddd14221a793e9abefe5abff73b1713b4bae0eb3ac525fd5b02b6083527"
+  },
+  {
+    "path": "scripts/art_library/basalt_forms_study.py",
+    "sha256": "381a5444f970b6a62eec092f46c51636570da926ac875dbee5f9b90389bd1d84"
+  }
+]

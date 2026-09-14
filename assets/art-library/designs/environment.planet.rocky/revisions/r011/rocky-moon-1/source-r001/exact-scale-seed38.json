@@ -1,0 +1,82 @@
+{
+  "stats": {
+    "style": "moon",
+    "seed": 38,
+    "frames": 23,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "requestedLOD": 0,
+      "buildMs": 344.3999996185303,
+      "localLights": 0
+    },
+    "build": {
+      "lastBuildMs": 1329.1999988555908,
+      "pendingBuilds": 0,
+      "pendingWeatherBuilds": 0
+    },
+    "meshes": 5,
+    "triangles": 192298,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": [
+      {
+        "name": "reference-review-layers",
+        "role": "planet",
+        "layeredPlanet": true,
+        "enabled": false
+      },
+      {
+        "name": "reference-review-layers",
+        "role": "planet",
+        "layeredPlanet": true,
+        "lod": 0,
+        "resolution": 54,
+        "requestedResolution": 96,
+        "budgetReduced": true,
+        "trees": 0,
+        "terrainFaces": 74621,
+        "enabled": false
+      }
+    ]
+  },
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 56
+  },
+  "shadows": [
+    {
+      "casters": 4,
+      "normalBias": 0.006
+    }
+  ],
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "moon",
+    "revision": "rocky-moon-r001",
+    "seed": 38,
+    "radius": 5.5,
+    "bias": 0.006,
+    "glow": false,
+    "local_light": false,
+    "prefix": "exact-scale",
+    "reference_scale": true,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": false,
+    "reference_radius": 56.0
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=moon&seed=38&candidate=1&capture=1789358943144163825&shadowBias=0.006",
+  "images": {
+    "exact-scale-seed38.png": "216e42a7ddb893af7cea973a202b9d7624506cef11487ce1698f134690024ffc",
+    "exact-scale-seed38-angle2.png": "d2760c6b104f8242fe20d6799ec9458ebd0a3a681deabee31db52d49f6845366",
+    "exact-scale-seed38-reference-scale.png": "7a739ae4d4dd7da37b8f81d1b5ff485e933b82c4d88eafd48798574991707fd3"
+  },
+  "kitSha256": "76d4bcfec164759f6fb7e151533e212ed42809ea41baa65ab7e18b11c683f0c4"
+}

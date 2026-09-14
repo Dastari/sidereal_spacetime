@@ -1,0 +1,7 @@
+# Toxic4 bounded native finish candidate
+
+2026-09-14. Preserves Toxic3 and its placement/substrate algorithm. Unequal intermediate pool-edge breaks and channel widths replace straight six-corner outlines. Broad olive wet perimeter strips surround two open basin footprints, and three medium buttresses support each region’s chimney clusters. Fine irregular fracture modulation augments the existing corrosion PBR albedo/normal/ORM maps. Ground remains dark and all source material roles remain stable.
+
+Source PNG validation reloads every albedo export, decodes sRGB and compares to the authored linear palette within .007 maximum error. Toxic3 already encoded linear colors correctly; no missing-encoding defect was reproduced there. Native manifold validation and six-variant JSON↔GLB attribute/material/texture audit pass without gaps. Four NullEngine/LOD tests and focused TypeScript pass, including exposed basin rays in every seeded region. Global native geometry is81,640 triangles retained across all LODs.
+
+Self-review of single-native-region.png: pools remain open and contours are less mechanical, buttresses connect chimney feet. Wet olive margins still look like distinct bands and overall regional crust is strongly stepped. This candidate needs actual globe comparison and independent Astra review; no artistic acceptance, hardware timing or production release is claimed. Root owns viewer integration and review.

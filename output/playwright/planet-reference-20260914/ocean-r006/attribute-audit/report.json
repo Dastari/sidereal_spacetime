@@ -1,0 +1,466 @@
+[
+  {
+    "candidate": "ocean-r006",
+    "kit": "output/playwright/planet-reference-20260914/ocean-r006/kit.json",
+    "kitSha256": "c1bca6539f8654a22f96ff831e79564c5dbdfd0ed95447dd2c93c8b9da367adf",
+    "materialDifferences": [],
+    "attributeGaps": [],
+    "variants": [
+      {
+        "name": "steep-island",
+        "glb": "output/playwright/planet-reference-20260914/ocean-r006/steep-island.glb",
+        "glbSha256": "8a8c9ddf694122cd0d1dce2b224c65d383fb530695c8af74d7850798f839ef5f",
+        "jsonCorners": 8802,
+        "glbCorners": 8802,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.777140012942974e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "deep-cobalt",
+            "field": "baseColorTexture",
+            "expected": "water-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "normalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "metallicRoughnessTexture",
+            "expected": "water-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "clearcoatNormalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "long-island",
+        "glb": "output/playwright/planet-reference-20260914/ocean-r006/long-island.glb",
+        "glbSha256": "e7cff73f331627374e01b10efd591016cd385d924de87b45363cd5c6ba858bf6",
+        "jsonCorners": 8802,
+        "glbCorners": 8802,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.532728125829128e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "deep-cobalt",
+            "field": "baseColorTexture",
+            "expected": "water-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "normalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "metallicRoughnessTexture",
+            "expected": "water-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "clearcoatNormalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "archipelago",
+        "glb": "output/playwright/planet-reference-20260914/ocean-r006/archipelago.glb",
+        "glbSha256": "85204374ec72fc42531795282832ac9a88c5031aa557165ece3793bfe0382fdc",
+        "jsonCorners": 44010,
+        "glbCorners": 44010,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 9.118049554228116e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "deep-cobalt",
+            "field": "baseColorTexture",
+            "expected": "water-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "normalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "metallicRoughnessTexture",
+            "expected": "water-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "clearcoatNormalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "tiny-islet",
+        "glb": "output/playwright/planet-reference-20260914/ocean-r006/tiny-islet.glb",
+        "glbSha256": "fab1ee075701ac99bb104f1c777e3d224cbc6872631e7483ce4069890dfea7a5",
+        "jsonCorners": 8802,
+        "glbCorners": 8802,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.610973847188118e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "deep-cobalt",
+            "field": "baseColorTexture",
+            "expected": "water-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "normalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "metallicRoughnessTexture",
+            "expected": "water-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "clearcoatNormalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "lagoon-atoll",
+        "glb": "output/playwright/planet-reference-20260914/ocean-r006/lagoon-atoll.glb",
+        "glbSha256": "c570ebf34cbb6fdabd2b2c11189e333411d48a440f037e351300b0e9ae91dd18",
+        "jsonCorners": 35964,
+        "glbCorners": 35964,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 8.49485963373786e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "deep-cobalt",
+            "field": "baseColorTexture",
+            "expected": "water-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "normalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "metallicRoughnessTexture",
+            "expected": "water-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "clearcoatNormalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "tree-grove",
+        "glb": "output/playwright/planet-reference-20260914/ocean-r006/tree-grove.glb",
+        "glbSha256": "ef1f3c825210d5aa9f4ae848c3801b6c3a8a961ca28d89ca39676ab9912b83a1",
+        "jsonCorners": 2976,
+        "glbCorners": 2976,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 3.414284955677271e-08,
+        "maximumMatchedNormalDelta": 8.127349208310337e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": []
+      },
+      {
+        "name": "small-grove",
+        "glb": "output/playwright/planet-reference-20260914/ocean-r006/small-grove.glb",
+        "glbSha256": "136c588d9fd44d5e8ef9d6cedc852333a399fbfd191e57e253d83128150f7c2b",
+        "jsonCorners": 1488,
+        "glbCorners": 1488,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 2.9802322387695312e-08,
+        "maximumMatchedNormalDelta": 7.092377871751133e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": []
+      },
+      {
+        "name": "ground-sphere",
+        "glb": "output/playwright/planet-reference-20260914/ocean-r006/ground-sphere.glb",
+        "glbSha256": "22ec0dcb11d5fbbb669c36e095bfad24c01009e7c5554eea991072beed461775",
+        "jsonCorners": 15360,
+        "glbCorners": 15360,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.969896464190269e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "deep-cobalt",
+            "field": "baseColorTexture",
+            "expected": "water-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "normalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "metallicRoughnessTexture",
+            "expected": "water-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "clearcoatNormalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere-medium",
+        "glb": "output/playwright/planet-reference-20260914/ocean-r006/ground-sphere-medium.glb",
+        "glbSha256": "e9841cb038ad5f038c884212f02ddb9ee57d5a9bea763e38ecc882cf18b766cd",
+        "jsonCorners": 3840,
+        "glbCorners": 3840,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.695697840018373e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "deep-cobalt",
+            "field": "baseColorTexture",
+            "expected": "water-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "normalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "metallicRoughnessTexture",
+            "expected": "water-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "clearcoatNormalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere-low",
+        "glb": "output/playwright/planet-reference-20260914/ocean-r006/ground-sphere-low.glb",
+        "glbSha256": "03138956e4425d3ecc9e8b98b8738f9ee1d356307d10b1a876fb185e06b57386",
+        "jsonCorners": 960,
+        "glbCorners": 960,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.110542189241277e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "deep-cobalt",
+            "field": "baseColorTexture",
+            "expected": "water-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "normalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "metallicRoughnessTexture",
+            "expected": "water-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "deep-cobalt",
+            "field": "clearcoatNormalTexture",
+            "expected": "water-normal.png",
+            "status": "byte-identical"
+          }
+        ]
+      }
+    ],
+    "limitations": [
+      "Material/position-matched corner multisets check values at explicit tolerances independently of index ordering, not mesh topology equivalence.",
+      "Only explicit JSON material fields are compared; source-side omissions remain unspecified.",
+      "Normals compared only when carried in JSON. Reconstruction of omitted normals by a renderer is outside this artifact audit.",
+      "Geometry converted from BlenderZ-up JSON to glTFY-up and accumulated node transforms; UVs follow recorded glTF convention."
+    ],
+    "summary": {
+      "variants": 10,
+      "materialDifferenceOccurrences": 0,
+      "attributeGaps": 0,
+      "variantErrors": 0,
+      "positionMismatchVariants": 0,
+      "normalMismatchVariants": 0,
+      "uvMismatchVariants": 0
+    }
+  }
+]

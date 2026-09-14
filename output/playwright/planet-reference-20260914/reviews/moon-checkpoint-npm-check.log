@@ -1,0 +1,42 @@
+
+> sidereal-spacetime@0.1.0 check
+> npm run typecheck && npm test && python3 scripts/check_docs.py
+
+
+> sidereal-spacetime@0.1.0 typecheck
+> tsc --noEmit
+
+
+> sidereal-spacetime@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.11 /root/sidereal_spacetime
+
+stdout | packages/render/src/environment/planet-terrain.test.ts > layered cube-sphere terrain > degrades excessive hero detail deterministically instead of leaving any solid family blank
+BJS - [15:38:45]: Babylon.js v9.25.0 - Null engine
+
+ ❯ packages/render/src/environment/planet-terrain.test.ts (5 tests | 1 failed) 21730ms
+     × degrades excessive hero detail deterministically instead of leaving any solid family blank 20864ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/render/src/environment/planet-terrain.test.ts > layered cube-sphere terrain > degrades excessive hero detail deterministically instead of leaving any solid family blank
+Error: Test timed out in 20000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ packages/render/src/environment/planet-terrain.test.ts:110:3
+    108|     expect(mixed.terrain.faces).toBeGreaterThan(0);
+    109|   });
+    110|   it("degrades excessive hero detail deterministically instead of leav…
+       |   ^
+    111|     const engine = new NullEngine(),
+    112|       scene = new Scene(engine);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 344 passed (345)
+      Tests  1 failed | 2047 passed (2048)
+   Start at  15:38:43
+   Duration  30.79s (transform 14.86s, setup 0ms, import 57.54s, tests 121.57s, environment 21ms)
+

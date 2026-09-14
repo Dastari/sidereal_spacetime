@@ -1,0 +1,31 @@
+{
+  "geometryUVNormalsExactGas3": true,
+  "bodyAndDebrisGLBByteExact": true,
+  "bodyTextureByteExact": true,
+  "generatedSourceSha256": "afd0ea7b7cf42988b38b7b4ebad4a58125a57787d86465f9fb88d7da999319ff",
+  "densityInterpretation": "alpha=clamp((max(linear RGB)-.002)/.68,0,1)^.48 multiplied by zone density [.92,1,.82]; RGB unchanged",
+  "alphaStatistics": {
+    "emptyFraction": 0.3155708515206089,
+    "sparseFraction": 0.2229429301099885,
+    "denseFraction": 0.4614862183694026,
+    "maximum": 1.0
+  },
+  "emission": "zero: illumination and planet shadow remain runtime PBR behavior",
+  "publication": "isolated unapproved draft",
+  "sha256": {
+    "ring-dust-generated-black.png": "afd0ea7b7cf42988b38b7b4ebad4a58125a57787d86465f9fb88d7da999319ff",
+    "ring-rocks.glb": "f407398bf8eb21313d2ee8b85b427db6686404d653f860c3b2d0c8b6e15f9b5b",
+    "kit-preview.png": "efe416a49cb8d0337005f697c31879924dfa2349787ceb7e9fd377085f46d53d",
+    "ring-dust-2.png": "dd37b7192e49d7fa4114d384d9ba61ec6147859ca9d5261529b9ea1badb455b4",
+    "ring-dust-2.glb": "3fea177cb094ca69f50e67133f623526ea00bfcd5dd441e1dcb92ac7438b4372",
+    "gas-albedo-generated.png": "1043b2f9253ff2bb8197335016fc0819b05984e9b77f2489e06758e3d7aba7da",
+    "ring-dust-rejected-checkerboard.png": "bad9633274996360ac6bd013853d611fc08632a73a1b39b3832a52651facbf73",
+    "ring-dust-1.png": "27e20a0ac8a669a94866bc80ddb9078f34b12b32df537ff8beefa25e38518d79",
+    "kit.blend": "c64cfa410f8819d54b70e3903df64580c26a77ecf01aecf90a3ce4f6d4954759",
+    "kit.json": "11be9df19656017e5ed15e6cc039d1ecf67172cdf141491905f01db7658a1995",
+    "ring-dust-1.glb": "a7e77dc12639b2fac8d71b936453561b5641912f14d050cbf12b53b8f1be373b",
+    "gas-body.glb": "5331d888d72819809abb50b37521b7b5fb636ce91f566ce6c572593b0bcfa190",
+    "ring-dust-0.glb": "8c44be5bbc1fc98521a4c33a7c60d03a032c9a8f67cc865a8da34f6df83b70ce",
+    "ring-dust-0.png": "7041fa1d8a8f2fdd0f2dbcbc8c77ce4b491e78b79759b44d3e4ae4f6d853c73e"
+  }
+}

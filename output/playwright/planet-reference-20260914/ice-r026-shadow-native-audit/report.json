@@ -1,0 +1,207 @@
+{
+  "kitSha256": "cd6210c54b001bbaa7e753de0a5af3965b572a19d1d4913427ac4d7398cd3574",
+  "note": "Exact-position diagnostic, does not modify topology; separate native overlaps can have shared positional edges. Normals compared with source geometric triangle plane, not smooth intended surface.",
+  "variants": [
+    {
+      "variant": "snow-cut-region",
+      "materialStats": {
+        "4": {
+          "triangles": 1532,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999290874279
+        },
+        "3": {
+          "triangles": 1343,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999239884116
+        },
+        "2": {
+          "triangles": 1304,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999268313423
+        },
+        "1": {
+          "triangles": 1323,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999311578175
+        },
+        "0": {
+          "triangles": 4482,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999199232734
+        },
+        "6": {
+          "triangles": 72,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999296702268
+        },
+        "5": {
+          "triangles": 48,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999702099687
+        }
+      },
+      "duplicateTriangleExtras": 0,
+      "positionalBoundaryEdges": 0,
+      "positionalEdgesOverTwoFaces": 0,
+      "snowNormalMismatchExamples": []
+    },
+    {
+      "variant": "snow-open-gorge",
+      "materialStats": {
+        "4": {
+          "triangles": 2288,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999266623786
+        },
+        "3": {
+          "triangles": 3787,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999263664037
+        },
+        "2": {
+          "triangles": 5272,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999264195175
+        },
+        "0": {
+          "triangles": 3980,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999137525313
+        },
+        "1": {
+          "triangles": 601,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999313202855
+        },
+        "6": {
+          "triangles": 648,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999267230967
+        },
+        "5": {
+          "triangles": 504,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999314560203
+        }
+      },
+      "duplicateTriangleExtras": 0,
+      "positionalBoundaryEdges": 0,
+      "positionalEdgesOverTwoFaces": 38,
+      "snowNormalMismatchExamples": []
+    },
+    {
+      "variant": "ground-sphere",
+      "materialStats": {
+        "2": {
+          "triangles": 9152,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9988697044066595
+        },
+        "1": {
+          "triangles": 2364,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999153912208
+        },
+        "3": {
+          "triangles": 2264,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999152612139
+        },
+        "0": {
+          "triangles": 8660,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999147909974
+        }
+      },
+      "duplicateTriangleExtras": 0,
+      "positionalBoundaryEdges": 0,
+      "positionalEdgesOverTwoFaces": 0,
+      "snowNormalMismatchExamples": []
+    },
+    {
+      "variant": "ground-sphere-medium",
+      "materialStats": {
+        "2": {
+          "triangles": 5312,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9955893577925233
+        },
+        "1": {
+          "triangles": 2364,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999153912208
+        },
+        "3": {
+          "triangles": 2264,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999152612139
+        },
+        "0": {
+          "triangles": 8660,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999147909974
+        }
+      },
+      "duplicateTriangleExtras": 0,
+      "positionalBoundaryEdges": 0,
+      "positionalEdgesOverTwoFaces": 0,
+      "snowNormalMismatchExamples": []
+    },
+    {
+      "variant": "ground-sphere-low",
+      "materialStats": {
+        "2": {
+          "triangles": 4352,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9831038799005888
+        },
+        "1": {
+          "triangles": 2364,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999153912208
+        },
+        "3": {
+          "triangles": 2264,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999152612139
+        },
+        "0": {
+          "triangles": 8660,
+          "degenerate": 0,
+          "invertedCornerNormals": 0,
+          "minNormalDot": 0.9999999147909974
+        }
+      },
+      "duplicateTriangleExtras": 0,
+      "positionalBoundaryEdges": 0,
+      "positionalEdgesOverTwoFaces": 0,
+      "snowNormalMismatchExamples": []
+    }
+  ]
+}

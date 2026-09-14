@@ -1,0 +1,83 @@
+{
+  "viewport": {
+    "width": 900,
+    "height": 900
+  },
+  "canvas": {
+    "width": 900,
+    "height": 900
+  },
+  "stats": {
+    "style": "moon",
+    "seed": 38,
+    "frames": 77,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 0,
+      "requestedLOD": 0,
+      "buildMs": 959.6000003814697,
+      "localLights": 0,
+      "transmissionMaterials": 0,
+      "transmissionTargets": 0
+    },
+    "baselineEnvironmentEnabled": false,
+    "meshes": 10,
+    "triangles": 505352,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": []
+  },
+  "shadowsEnabled": true,
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 43.9493670886
+  },
+  "shadows": [
+    {
+      "casters": 9,
+      "normalBias": 0.006,
+      "bias": 0.0005
+    }
+  ],
+  "checkoutHead": "cd09510ca30705a49bbd38a010d775be30aef0c7",
+  "sourceRoot": "/root/sidereal_spacetime",
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "moon",
+    "revision": "crystal-moon-1-r002",
+    "seed": 38,
+    "radius": 5.5,
+    "alpha": null,
+    "beta": null,
+    "bias": 0.006,
+    "depth_bias": null,
+    "glow": true,
+    "local_light": false,
+    "prefix": "corrected",
+    "reference_scale": true,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": false,
+    "unit": false,
+    "target": null,
+    "shadows_off": false,
+    "reference_radius": 43.9493670886
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=moon&seed=38&candidate=1&reviewRevision=crystal-moon-1-r002&capture=1789363942160950715&shadowBias=0.006&glow=1",
+  "images": {
+    "corrected-seed38.png": "9fb0024b703f9cbcd9c2f6003fc7da969bac0bb64fde8bae65fc9592e0421b98",
+    "corrected-seed38-angle2.png": "b2b9e8a8b6d7809e111cd14a94e7862970675e0314a9deff61a7a3b3d92d262e",
+    "corrected-seed38-reference-scale.png": "d3fd49d2e1951f93c154c5c7752fce950b34126f183f5d25db84a92f5017e991"
+  },
+  "kitSha256": "28606fbfbb91108acb7f0521b11de372e9ce163a0b824cdf984120e300d8b77b"
+}

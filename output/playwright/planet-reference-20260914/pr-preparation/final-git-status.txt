@@ -1,0 +1,56 @@
+ M assets/art-library/designs/environment.planet.crystal/DESIGN.md
+ M assets/art-library/designs/environment.planet.crystal/design.json
+ M assets/art-library/designs/environment.planet.gas-giant/DESIGN.md
+ M assets/art-library/designs/environment.planet.gas-giant/design.json
+ M assets/art-library/designs/environment.planet.ice/DESIGN.md
+ M assets/art-library/designs/environment.planet.ice/design.json
+ M assets/art-library/designs/environment.planet.volcanic/DESIGN.md
+ M assets/art-library/designs/environment.planet.volcanic/design.json
+ M assets/source/blender/industrial_kit.blend
+ M assets/source/blender/ship_3d_study.blend
+ M assets/source/blender/ship_top.png
+ M assets/source/blender/station_3d_study.blend
+ M docs/planet_lod_authoring.md
+ M docs/planet_reference_iteration_20260914.md
+ M docs/rendering_performance_plan.md
+ M output/playwright/planet-reference-20260914/pr-preparation/PR-body.md
+ M scripts/art_library/planet_reference_worker.ts
+ M scripts/art_library/planet_reference_worker_lifetime.test.ts
+ M scripts/art_library/planet_reference_worker_lifetime.ts
+ M scripts/art_library/reference_review.tsconfig.json
+ M scripts/art_library/reference_review_test_files.json
+?? docs/handoffs/planet_reference_recovery_20260914.md
+?? scripts/art_library/build_crystal_moon_fractures_r006.py
+?? scripts/art_library/build_crystal_moon_fractures_r007.py
+?? scripts/art_library/build_crystal_moon_fractures_r008.py
+?? scripts/art_library/build_crystal_moon_fractures_r009.py
+?? scripts/art_library/build_volcanic_moon2_shoulders_r005.py
+?? scripts/art_library/build_volcanic_moon2_shoulders_r006.py
+?? scripts/art_library/crystal_moon_reference_composition_r005.test.ts
+?? scripts/art_library/crystal_moon_reference_composition_r006.test.ts
+?? scripts/art_library/crystal_moon_reference_composition_r006.ts
+?? scripts/art_library/crystal_moon_reference_composition_r007.test.ts
+?? scripts/art_library/crystal_moon_reference_composition_r007.ts
+?? scripts/art_library/crystal_moon_reference_composition_r008.test.ts
+?? scripts/art_library/crystal_moon_reference_composition_r008.ts
+?? scripts/art_library/crystal_moon_reference_composition_r009.test.ts
+?? scripts/art_library/crystal_moon_reference_composition_r010.test.ts
+?? scripts/art_library/crystal_moon_reference_r005.tsconfig.json
+?? scripts/art_library/crystal_moon_reference_r005.vitest.config.ts
+?? scripts/art_library/crystal_moon_reference_r006.tsconfig.json
+?? scripts/art_library/crystal_moon_reference_r006.vitest.config.ts
+?? scripts/art_library/crystal_moon_reference_r007.tsconfig.json
+?? scripts/art_library/crystal_moon_reference_r007.vitest.config.ts
+?? scripts/art_library/crystal_moon_reference_r008.tsconfig.json
+?? scripts/art_library/crystal_moon_reference_r008.vitest.config.ts
+?? scripts/art_library/crystal_moon_reference_r009.tsconfig.json
+?? scripts/art_library/crystal_moon_reference_r009.vitest.config.ts
+?? scripts/art_library/crystal_moon_reference_r010.tsconfig.json
+?? scripts/art_library/crystal_moon_reference_r010.vitest.config.ts
+?? scripts/art_library/expose_crystal_moon_minerals_r010.py
+?? scripts/art_library/preview_volcanic_moon2_shoulders_r006.py
+?? scripts/art_library/repair_crystal_moon_orientation_r005.py
+?? scripts/art_library/volcanic_moon2_shoulders_r005.test.ts
+?? scripts/art_library/volcanic_moon2_shoulders_r005.vitest.config.ts
+?? scripts/art_library/volcanic_moon2_shoulders_r006.test.ts
+?? scripts/art_library/volcanic_moon2_shoulders_r006.vitest.config.ts

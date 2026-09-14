@@ -1,0 +1,24 @@
+[
+  {
+    "moon": 1,
+    "nativePolygons": 1356,
+    "allCacheCornersMatchSourcePolygonPositionUVNormalMaterial": true,
+    "nativeNormalTolerance": 0.0001,
+    "maximumNativeNormalCacheDelta": 1.2902480430165543e-05,
+    "nativeDiagnosticRecalcReversals": 0,
+    "sourceEvaluatedTriangles": 3208,
+    "frozenExportTriangles": 3208,
+    "evaluatedTriangulationDifferences": 115
+  },
+  {
+    "moon": 2,
+    "nativePolygons": 424,
+    "allCacheCornersMatchSourcePolygonPositionUVNormalMaterial": true,
+    "nativeNormalTolerance": 0.0001,
+    "maximumNativeNormalCacheDelta": 2.6251136132254042e-05,
+    "nativeDiagnosticRecalcReversals": 0,
+    "sourceEvaluatedTriangles": 1012,
+    "frozenExportTriangles": 1012,
+    "evaluatedTriangulationDifferences": 43
+  }
+]

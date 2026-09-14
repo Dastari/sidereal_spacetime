@@ -1,0 +1,22 @@
+{
+  "first": {
+    "seed": 131,
+    "revision": "ice-r012",
+    "triangles": 104994,
+    "meshes": 5,
+    "materials": 5,
+    "drawCalls": 10,
+    "activeIndices": 629964,
+    "shadowMapSize": 1024
+  },
+  "second": {
+    "seed": 9187,
+    "revision": "ice-r012",
+    "triangles": 103642,
+    "meshes": 5,
+    "materials": 5,
+    "drawCalls": 10,
+    "activeIndices": 621852,
+    "shadowMapSize": 1024
+  }
+}

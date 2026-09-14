@@ -1,0 +1,12 @@
+{
+  "scope": "Fresh post-OOM isolated preview; not Flight/Map or timing acceptance",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "\"{\\\"at\\\":\\\"2026-09-14T07:49:54.316Z\\\",\\\"visibility\\\":\\\"visible\\\",\\\"stats\\\":{\\\"style\\\":\\\"ice\\\",\\\"seed\\\":38,\\\"frames\\\":27,\\\"candidate\\\":{\\\"pendingBuilds\\\":1,\\\"retained\\\":[],\\\"smokeImplemented\\\":true,\\\"smokeMeshes\\\":0,\\\"smokeTriangles\\\":0,\\\"retainedSmokeMeshes\\\":0,\\\"requestedLOD\\\":0,\\\"fixedDetail\\\":true,\\\"workerPending\\\":0,\\\"buildMs\\\":13237.899999856949,\\\"localLights\\\":0,\\\"transmissionMaterials\\\":2,\\\"transmissionTargets\\\":1},\\\"baselineEnvironmentEnabled\\\":false,\\\"meshes\\\":1,\\\"triangles\\\":2,\\\"renderer\\\":{\\\"vendor\\\":\\\"Google Inc. (NVIDIA)\\\",\\\"renderer\\\":\\\"ANGLE (NVIDIA, NVIDIA GeForce GT 730 (0x00001287) Direct3D11 vs_5_0 ps_5_0, D3D11)\\\",\\\"version\\\":\\\"WebGL 2.0 (OpenGL ES 3.0 Chromium)\\\"},\\\"lods\\\":[]}}\""
+      }
+    ],
+    "isError": false
+  }
+}

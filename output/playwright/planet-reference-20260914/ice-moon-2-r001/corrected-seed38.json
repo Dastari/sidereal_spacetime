@@ -1,0 +1,65 @@
+{
+  "stats": {
+    "style": "moon",
+    "seed": 38,
+    "frames": 17,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 0,
+      "requestedLOD": 0,
+      "buildMs": 872.7000007629395,
+      "localLights": 0
+    },
+    "baselineEnvironmentEnabled": false,
+    "meshes": 6,
+    "triangles": 185442,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": []
+  },
+  "shadowsEnabled": true,
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 69.44
+  },
+  "shadows": [
+    {
+      "casters": 5,
+      "normalBias": 0.006
+    }
+  ],
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "moon",
+    "revision": "ice-moon-2-r001",
+    "seed": 38,
+    "radius": 5.5,
+    "bias": 0.006,
+    "glow": false,
+    "local_light": false,
+    "prefix": "corrected",
+    "reference_scale": true,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": false,
+    "shadows_off": false,
+    "reference_radius": 69.44
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=moon&seed=38&candidate=1&capture=1789360986923059243&shadowBias=0.006",
+  "images": {
+    "corrected-seed38.png": "ff1155132be31614f820c5567f36332073d12a486c211578c2abe523705d0b52",
+    "corrected-seed38-angle2.png": "b1d213a4c0571cb65b9c3a971f251a112cefcf3a28fbe049dc9b26d5ad4da1ac",
+    "corrected-seed38-reference-scale.png": "a2ac8cbd6e88c8710ebf6d34239ec22ff6fa523b103e310982fb15a72637788d"
+  },
+  "kitSha256": "6258e8c5a48bf5300e904dd64a71465178aace03c9243ecb1aa4235cc409082d"
+}

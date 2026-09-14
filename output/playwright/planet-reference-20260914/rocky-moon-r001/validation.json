@@ -1,0 +1,125 @@
+{
+  "publication": "isolated draft; no owner final sign-off",
+  "coordinates": "Blender Z up, formation roots buried below Z0; ground sphere radius1",
+  "partsManifold": true,
+  "lodContract": "Dominant crater variants retained unchanged at all levels; ground-sphere high/medium/low are authored originals; small outcrop density may decrease; no decimation.",
+  "variants": [
+    {
+      "name": "lunar-impact-a",
+      "vertices": 19638,
+      "triangles": 6546,
+      "bounds": [
+        [
+          -0.916375994682312,
+          0.7797433733940125
+        ],
+        [
+          -0.7664080262184143,
+          0.7215579748153687
+        ],
+        [
+          -0.4300000071525574,
+          0.10000000149011612
+        ]
+      ]
+    },
+    {
+      "name": "lunar-impact-b",
+      "vertices": 19374,
+      "triangles": 6458,
+      "bounds": [
+        [
+          -0.916375994682312,
+          0.7365722060203552
+        ],
+        [
+          -0.7664080262184143,
+          0.7215579748153687
+        ],
+        [
+          -0.4300000071525574,
+          0.10000000149011612
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere",
+      "vertices": 15360,
+      "triangles": 5120,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-medium",
+      "vertices": 3840,
+      "triangles": 1280,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-low",
+      "vertices": 960,
+      "triangles": 320,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "sha256": {
+    "rocky-1-orm.png": "c983a22bb5aa5d0e34cf8fb695be861660af0ad421a06b4a33c7bf6da93dc8ea",
+    "rocky-5-orm.png": "fc327a4ba561dc020b0db54f5311c62e425ce2af50f323c8fbfffc801c90156c",
+    "ground-sphere-medium.glb": "ceea5c972e7759a4868b3bb7b18c3db8e8bc5dc59a0f3045c7fd80d41aa8fcbc",
+    "rocky-5-albedo.png": "ff1363397e3ee8b19e513970b928086f4a644972030fb7c80cfe74628d508127",
+    "lunar-impact-a.glb": "98d8f7205c8b522da9924e955267fcc8465c867cceb43d79270cae2e99931ce0",
+    "rocky-2-albedo.png": "914cb37fb9b934cd46bbe0c1c0b20ed7625704e5ded654431b2cf6e9b106cc9e",
+    "rocky-0-orm.png": "15cb6d98d71a9607568670020db29a4a1ab054e393bdffaa2d295fa6aacc8606",
+    "rocky-4-orm.png": "15cb6d98d71a9607568670020db29a4a1ab054e393bdffaa2d295fa6aacc8606",
+    "kit-preview.png": "4e465d09934da5894a8a2a0f18bd0b7eabd05b9c32d2e2071f28c2f94001a960",
+    "ground-sphere.glb": "c8466b36259f4e6708a2c33c2aa7eb88061bf70ea536dbd9b112c36ff604eedb",
+    "rocky-0-albedo.png": "4079da6558f5959668e0ba4dca236df319489c1da9dc00a520b478a972c47dea",
+    "ground-sphere-low.glb": "ed7a3ff218b953febde867be02b2c253db4e65c0533a28fa32d274a5cff7bc87",
+    "rocky-1-albedo.png": "ed0448acfa77505b10b6bab0e8f58f4b3ffaa298540506453c99704ae90f1efa",
+    "rocky-2-orm.png": "14508288e8596c5ea9913d8dcb8d2a023c7e4f947ac6ff293445a3fa23410bec",
+    "kit.blend": "27588448e61f050c451bdaed535b457f87c5e660a20ed287b566b9094c12c147",
+    "rocky-3-orm.png": "1b7907a1d2638cd5ca9913b333ef60914e32be35d2b80d41f79fc3dcb7b0d8f5",
+    "rocky-3-albedo.png": "ca62cb9723b89c2f053b18e11cc5696ab3951195e91f994992ae9074dbf2d743",
+    "lunar-impact-b.glb": "df440f8a2efd109866180b83f2dad270c6b1ad51082cf376ddb1e4d19ea59fbb",
+    "rocky-4-albedo.png": "ad7e017a0137cdb5862524a7a7aef5822a6a6db310ae7e47eab4540b46891b03",
+    "kit.json": "76d4bcfec164759f6fb7e151533e212ed42809ea41baa65ab7e18b11c683f0c4"
+  }
+}

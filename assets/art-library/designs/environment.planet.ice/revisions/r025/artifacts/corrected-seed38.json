@@ -1,0 +1,92 @@
+{
+  "stats": {
+    "style": "ice",
+    "seed": 38,
+    "frames": 17,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 0,
+      "requestedLOD": 0,
+      "buildMs": 3161.8999996185303,
+      "localLights": 0
+    },
+    "build": {
+      "lastBuildMs": 251.5,
+      "pendingBuilds": 0,
+      "pendingWeatherBuilds": 0
+    },
+    "meshes": 6,
+    "triangles": 371090,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": [
+      {
+        "name": "reference-review-ice-lods",
+        "role": "planet",
+        "nativePlanet": true,
+        "nativeRevision": "ice-r015",
+        "activeLOD": 0,
+        "enabled": false
+      },
+      {
+        "name": "reference-review-native-ice",
+        "role": "planet",
+        "nativePlanet": true,
+        "nativeRevision": "ice-r015",
+        "lod": 0,
+        "triangles": 74720,
+        "seed": 38,
+        "source": "Blender authored native forms",
+        "artApproval": "local review candidate, final art unapproved",
+        "enabled": false
+      }
+    ]
+  },
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 13.5
+  },
+  "shadows": [
+    {
+      "casters": 4,
+      "normalBias": 0.006
+    },
+    {
+      "casters": 5,
+      "normalBias": 0.006
+    }
+  ],
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "ice",
+    "revision": "ice-r025",
+    "seed": 38,
+    "radius": 5.5,
+    "bias": 0.006,
+    "glow": false,
+    "local_light": false,
+    "prefix": "corrected",
+    "reference_scale": true,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": false,
+    "reference_radius": 13.5
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=ice&seed=38&candidate=1&capture=1789359714108662500&shadowBias=0.006",
+  "images": {
+    "corrected-seed38.png": "0b944ac7688cd7b83256d40db64280345f13b6f72dccdffb386c8614a8e8bbb5",
+    "corrected-seed38-angle2.png": "b3b4b89697349aa5b27b56ef3650c6f02cf59bea451868c66b41b09677abc778",
+    "corrected-seed38-reference-scale.png": "ca6032cf830f09608b55908518b687f88ea8a0c9bbc3d369c703aabbb3a8b95d"
+  },
+  "kitSha256": "c347e6a56256d9d3781c2c67c57aab3dc36240d26001922979efedbefdcc92a1"
+}

@@ -19,6 +19,7 @@ export function createPlanetSmoke(scene: Scene, name: string, recipe: PlanetReci
   material.backFaceCulling = true; material.disableDepthWrite = true;
   const haze = new Mesh(name + "-smoke", scene), data = new VertexData();
   setMeshRole(haze, "planet");
+  haze.metadata = { ...haze.metadata, planetShadow: { cast: false, receive: true } };
   data.positions = geometry.positions; data.normals = geometry.normals;
   data.colors = prepared ? prepared.colors : geometry.colors.map((v,i) => i % 4 === 3 ? v : v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4));
   data.indices = prepared ? prepared.indices : geometry.indices.map((_,i) => geometry.indices[i % 3 === 1 ? i + 1 : i % 3 === 2 ? i - 1 : i]);

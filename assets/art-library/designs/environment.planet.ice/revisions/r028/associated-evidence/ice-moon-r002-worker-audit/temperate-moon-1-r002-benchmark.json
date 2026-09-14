@@ -1,0 +1,52 @@
+{
+  "name": "temperate-moon-1-r002",
+  "node": "v24.18.0",
+  "seed": 38,
+  "lod": 0,
+  "jsonBytes": 18173364,
+  "kitSha256": "b686cf85d77a2d116bd18602592a3dcada882fa2eb2a8d71ba7b92847368949d",
+  "parseMs": 33.389731,
+  "composeMs": 735.881841,
+  "triangles": 206840,
+  "outputBytes": 22338720,
+  "before": {
+    "rss": 100442112,
+    "heapTotal": 35000320,
+    "heapUsed": 16765784,
+    "external": 38888802,
+    "arrayBuffers": 18317235
+  },
+  "after": {
+    "rss": 358379520,
+    "heapTotal": 261427200,
+    "heapUsed": 130162424,
+    "external": 43054198,
+    "arrayBuffers": 40655955
+  },
+  "retained": {
+    "rss": 252579840,
+    "heapTotal": 153489408,
+    "heapUsed": 16903392,
+    "external": 43054198,
+    "arrayBuffers": 40655955
+  },
+  "peakRss": 358379520,
+  "resourceUsage": {
+    "userCPUTime": 920408,
+    "systemCPUTime": 79466,
+    "maxRSS": 349980,
+    "sharedMemorySize": 0,
+    "unsharedDataSize": 0,
+    "unsharedStackSize": 0,
+    "minorPageFault": 98381,
+    "majorPageFault": 0,
+    "swappedOut": 0,
+    "fsRead": 17480,
+    "fsWrite": 0,
+    "ipcSent": 0,
+    "ipcReceived": 0,
+    "signalsCount": 0,
+    "voluntaryContextSwitches": 719,
+    "involuntaryContextSwitches": 85
+  }
+}

@@ -1,0 +1,1 @@
+{"extends":"../../tsconfig.json","compilerOptions":{"noEmit":true},"include":["rocky_reference_composition_r008.ts","rocky_reference_composition_r008.test.ts","rocky_reference_r008.vitest.config.ts"]}

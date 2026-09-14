@@ -1,0 +1,38 @@
+{
+  "publication": "isolated draft",
+  "fixedDetail": true,
+  "coordinates": "Blender Z up; body radius1, ring planeXY; all exports keep origin at body centre",
+  "variants": [
+    {
+      "name": "gas-body",
+      "triangles": 16128
+    },
+    {
+      "name": "ring-dust-0",
+      "triangles": 512
+    },
+    {
+      "name": "ring-dust-1",
+      "triangles": 512
+    },
+    {
+      "name": "ring-dust-2",
+      "triangles": 422
+    },
+    {
+      "name": "ring-rocks",
+      "triangles": 2240
+    }
+  ],
+  "sha256": {
+    "ring-dust-1.glb": "ae48d5de5ec06eea010eaf8a10f65d4901cb6db47f55223ff5f0ac5c82814d5c",
+    "ring-rocks.glb": "edebfa6f0997697dcf5a3c272a57280c4183226ec8802a5206599c2bc3fd7d2f",
+    "ring-dust-0.glb": "5cbca6d7e488d9efa7f9e9f025a82c56f79c125dd40f39cde9517b6338977a84",
+    "gas-albedo.png": "331f0d28346598476bcc90f3f07e5ca565bb431c790fcfd98d1c682309881e3b",
+    "gas-body.glb": "62dc6d34e647303bf45eddb8302fc9579f9075763b39d1aee2cd17a5d9903657",
+    "kit-preview.png": "99eca2e97dcb4db6353d58e427f86054df757ab02d6a74f6b3260aafdd99816e",
+    "kit.blend": "7465e0229273596f307ebdd7dd8563edf3fb22a5dfe9decd70827bac4629fc8b",
+    "ring-dust-2.glb": "04dea4b17bacdc2b6e15037699c35ebd51ab1024eea538548ec636c0af7fef3a",
+    "kit.json": "2a09fdb85d2a5f3c6225f8da2c516347ae87404f6570d67a8784dd22a79ce130"
+  }
+}

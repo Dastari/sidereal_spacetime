@@ -1,0 +1,15 @@
+# Planet reference PR preparation handoff
+
+Prepared only in `/root/sidereal-planet-reference-review` on `art/planet-reference-alignment-20260914`, base `599d2c7a`. No commit, staging, push, service launch or browser capture performed. Root owns review, final full check/build, commit and draft PR.
+
+`final-allowlist-manifest.json` is the exact path/SHA/byte allowlist for this preparation. It excludes itself from its own hashes, node_modules, caches, and the four pre-existing dirty construction/art files. Do not use blanket git add. Existing .gitattributes already assigns Blender/GLB/image/HDR binaries to LFS; no history rewrite or new binary policy was introduced. No JSON exceeds100MiB.
+
+Current runtime closure includes native Crystal3 whole-body branch, old Crystal2 retained branch, IceMoon4 blue-cut successor, fixed-detail worker lifecycle and actual transmission support. No packages/world, sim, content or render source was copied/modified: referenced package dependencies match the base. Package.json only gains art:reference:check; dedicated configs collect nested tests ignored by the default config.
+
+Validation: TypeScript passes.31 focused files/165 tests pass together; the subsequently added currently imported Crystal2 legacy composer suite passes8 tests separately (32 files/173 tests total).18 Python staging/projection/attribute/IOR tests pass. All3179 registered canonical evidence items across nine families have exact ledger hashes. Latest capture_planet_reference_lod.py was refreshed from root, including unique prefix and explicit Ice26 review selection; Python compilation passes. No hardware result is attributed to this worktree.
+
+One worktree-only source change fixes the stale absolute-root assertion in planet_reference_hardware_review.test.ts to assert the actual checkout path via process.cwd(). Runtime tools were already portable in the parent source. Two missing Crystal3 predecessor fixture kits were added after the first run. Initial failure logs are preserved as diagnostic history. The first, accidentally broad config also collected archived source snapshots; it was interrupted and replaced with the exact scripts/art_library test list.
+
+Canonical nine-family ledgers and full registered history include existing moon checkpoints. Selected output sources retain their native .blend, GLBs, maps and evidence; meaningful rejected attempts remain. This is a large artifact PR; hashes identify duplicate content. Historical authoring scripts may retain absolute source dependencies: no one-command replay of every historical Blender build is claimed. Runtime/test fixture closure is checked. Main-world integration, exact current moon visual gates, glass/hardware Flight/Map transitions and any current candidate visual defects remain open per parent review. Working visual passes do not constitute owner artistic approval.
+
+Source snapshots can differ from further parent iterations. Review post-copy-differences.json for the sole test-path fix and explicitly refreshed LOD capture tool. Further Crystal art is paused pending parent parity diagnosis; this prepared snapshot is not a claim of Crystal4 visual acceptance.
