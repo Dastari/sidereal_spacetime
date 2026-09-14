@@ -3,7 +3,7 @@ import {
   LAB_FLIGHT_ACTUATORS as actuators,
   LAB_FLIGHT_MASS as mass,
   LAB_FLIGHT_PROFILE as profile,
-} from "../../content/src/flight";
+} from "@sidereal/content/flight";
 import {
   actuatorWrench,
   allocateThrust,

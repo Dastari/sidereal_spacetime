@@ -9,8 +9,8 @@ import { createCrewVisual } from "./index";
 import { bindPoseEquipment } from "../equipment/pose-anchors";
 import type { EquipmentPoseDiagnostics, PoseIntent } from "./equipment-pose";
 import type { AuthoredAimSpace } from "./aim-space";
-import type { EquipmentPoseItem } from "../../../content/src/equipment-poses";
-import { CHARACTER_COMPONENT_SETS } from "../../../content/src/character-components";
+import type { EquipmentPoseItem } from "@sidereal/content/equipment-poses";
+import { CHARACTER_COMPONENT_SETS } from "@sidereal/content/character-components";
 
 const installed = new URL(
   "../../../../assets/runtime/crew/components/",

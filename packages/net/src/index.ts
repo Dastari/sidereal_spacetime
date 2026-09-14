@@ -24,7 +24,7 @@ export type {
   VisibleIdentityLink as IdentityLinkRow,
   CharacterAppearanceStatus as AppearanceRow,
   CombatStatus as CombatRow,
-  Ship as ShipRow,
+  OwnedShip as ShipRow,
   Character as CharacterRow,
   Station as StationRow,
   EditReceipt as ReceiptRow,

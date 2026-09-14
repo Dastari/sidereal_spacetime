@@ -160,33 +160,91 @@ export function createDiagnosticsUI(
             : `${data.gpuFrameMs.toFixed(2)} ms`,
         ],
         ["Draw calls", String(data.drawCalls)],
-        ["Last planet build", data.planetBuild?.lastBuildMs === undefined ? "—" : `${data.planetBuild.lastBuildMs.toFixed(2)} ms`],
+        [
+          "Last planet build",
+          data.planetBuild?.lastBuildMs === undefined
+            ? "—"
+            : `${data.planetBuild.lastBuildMs.toFixed(2)} ms`,
+        ],
         ["Pending planet builds", String(data.planetBuild?.pendingBuilds ?? 0)],
         ["Active / total meshes", `${data.activeMeshes} / ${data.totalMeshes}`],
         ["Meshes by role", "Active / total"],
-        ...Object.entries(data.meshesByRole ?? {}).filter(([, count]) => count.total > 0).map(([role, count]): [string, string] => [role, `${count.active} / ${count.total}`]),
+        ...Object.entries(data.meshesByRole ?? {})
+          .filter(([, count]) => count.total > 0)
+          .map(([role, count]): [string, string] => [
+            role,
+            `${count.active} / ${count.total}`,
+          ]),
         ["Active indices", data.activeIndices.toLocaleString()],
         ["Materials / textures", `${data.materials} / ${data.textures}`],
         ["Lit lights / eligible maps", `${data.lights} / ${data.shadowMaps}`],
-        ["Local light limit", data.localLightBudget ? String(data.localLightBudget.limit === 'all' ? 'All' : data.localLightBudget.limit) : "—"],
-        ["Local enabled / eligible", data.localLightBudget ? `${data.localLightBudget.enabledLights} / ${data.localLightBudget.eligibleLights}` : "—"],
-        ["Local shadow lights", data.localLightBudget ? String(data.localLightBudget.enabledShadowLights) : "—"],
+        [
+          "Local light limit",
+          data.localLightBudget
+            ? String(
+                data.localLightBudget.limit === "all"
+                  ? "All"
+                  : data.localLightBudget.limit,
+              )
+            : "—",
+        ],
+        [
+          "Local enabled / eligible",
+          data.localLightBudget
+            ? `${data.localLightBudget.enabledLights} / ${data.localLightBudget.eligibleLights}`
+            : "—",
+        ],
+        [
+          "Local shadow lights",
+          data.localLightBudget
+            ? String(data.localLightBudget.enabledShadowLights)
+            : "—",
+        ],
         ["Allocated shadow maps", String(data.allocatedShadowMaps ?? "—")],
         ["Transparent meshes", String(data.transparentMeshes ?? "—")],
         ["Render resolution", `${data.renderWidth} × ${data.renderHeight}`],
         ["Hardware scale", data.hardwareScale.toFixed(2)],
-        ["Scene IBL texture", data.environmentTexturePresent === undefined ? "—" : data.environmentTexturePresent ? "Present" : "None"],
-        ["Attached camera passes", String(data.cameraPostProcesses?.length ?? "—")],
+        [
+          "Scene IBL texture",
+          data.environmentTexturePresent === undefined
+            ? "—"
+            : data.environmentTexturePresent
+              ? "Present"
+              : "None",
+        ],
+        [
+          "Attached camera passes",
+          String(data.cameraPostProcesses?.length ?? "—"),
+        ],
         ["Camera pass names", data.cameraPostProcesses?.join(", ") || "None"],
         ["Scene capture", data.sceneCapture?.name ?? "None"],
         ["Renderer", data.renderBackend === "webgpu" ? "WebGPU" : "WebGL"],
-        ["Snapshot rendering", !data.snapshotRendering ? "Unavailable" : data.snapshotRendering.enabled
-          ? "Enabled" : data.snapshotRendering.armed ? "Preparing" : data.snapshotRendering.reason],
-        ["Capture size / MSAA", !data.sceneCapture ? "None" : data.sceneCapture.width === undefined
-          ? "Awaiting allocation"
-          : `${data.sceneCapture.width} × ${data.sceneCapture.height} / ${data.sceneCapture.samples}×`],
+        [
+          "Snapshot rendering",
+          !data.snapshotRendering
+            ? "Unavailable"
+            : data.snapshotRendering.enabled
+              ? "Enabled"
+              : data.snapshotRendering.armed
+                ? "Preparing"
+                : data.snapshotRendering.reason,
+        ],
+        [
+          "Capture size / MSAA",
+          !data.sceneCapture
+            ? "None"
+            : data.sceneCapture.width === undefined
+              ? "Awaiting allocation"
+              : `${data.sceneCapture.width} × ${data.sceneCapture.height} / ${data.sceneCapture.samples}×`,
+        ],
         ["Custom targets", String(data.customRenderTargets ?? "—")],
-        ["Camera radius / elev", data.cameraRadius === undefined || data.cameraElevationDegrees === undefined ? "—" : `${data.cameraRadius.toFixed(1)} m / ${data.cameraElevationDegrees.toFixed(1)}°`],
+        [
+          "Camera radius / elev",
+          data.cameraRadius === undefined ||
+          data.cameraElevationDegrees === undefined
+            ? "—"
+            : `${data.cameraRadius.toFixed(1)} m / ${data.cameraElevationDegrees.toFixed(1)}°`,
+        ],
       ];
       const viewport = {
         x: r.x + 16,

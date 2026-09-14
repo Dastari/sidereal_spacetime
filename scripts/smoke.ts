@@ -228,6 +228,14 @@ if (restore) {
     );
     const ship = [...a.db.ownShips.iter()][0];
     const other = [...b.db.ownShips.iter()][0];
+    for (const row of [ship, other])
+      for (const column of ["massKg", "thrustN", "turnAcceleration"])
+        assert.equal(
+          Object.hasOwn(row, column),
+          false,
+          "obsolete flight rating leaked: " + column,
+        );
+    summary.compiled_only_ship_projection = true;
     assert.notEqual(ship.id, other.id);
     assert.deepEqual(
       [ship.x, ship.y, other.x, other.y],
@@ -376,12 +384,21 @@ if (restore) {
       };
       for (let i = 0; i < 6; i++) await commandFlight(1, 1);
       const moving = [...flight.db.ownShips.iter()][0];
-      const physics = [...flight.db.ownAuthoredFlightPhysics.iter()].find(p=>p.shipId===moving.id)!;
-      assert.equal(physics.status,"ready","live physical compilation is ready");
+      const physics = [...flight.db.ownAuthoredFlightPhysics.iter()].find(
+        (p) => p.shipId === moving.id,
+      )!;
+      assert.equal(
+        physics.status,
+        "ready",
+        "live physical compilation is ready",
+      );
       const envelope = JSON.parse(physics.envelopeJson);
-      const turnLimit = Math.min(envelope.left,envelope.right) / WAYFARER_FLIGHT_SPEED.forward;
+      const turnLimit =
+        Math.min(envelope.left, envelope.right) / WAYFARER_FLIGHT_SPEED.forward;
       assert(
-        Math.hypot(moving.vx, moving.vy) > 0.5 && moving.omega > turnLimit * 0.5 && moving.omega <= turnLimit + 1e-6,
+        Math.hypot(moving.vx, moving.vy) > 0.5 &&
+          moving.omega > turnLimit * 0.5 &&
+          moving.omega <= turnLimit + 1e-6,
         "available engines accelerate and turn within the derived envelope",
       );
       for (let i = 0; i < 45; i++) await commandFlight(0, 0);
@@ -416,8 +433,14 @@ if (restore) {
       const coast = [...flight.db.ownShips.iter()][0];
       const expiredCOM = toCenterOfMassMotion(expired, physics);
       const coastCOM = toCenterOfMassMotion(coast, physics);
-      assert(Math.abs(coastCOM.vx-expiredCOM.vx)<1e-10, "expired control preserves COM velocity X");
-      assert(Math.abs(coastCOM.vy-expiredCOM.vy)<1e-10, "expired control preserves COM velocity Y");
+      assert(
+        Math.abs(coastCOM.vx - expiredCOM.vx) < 1e-10,
+        "expired control preserves COM velocity X",
+      );
+      assert(
+        Math.abs(coastCOM.vy - expiredCOM.vy) < 1e-10,
+        "expired control preserves COM velocity Y",
+      );
       assert.equal(
         coast.omega,
         expired.omega,

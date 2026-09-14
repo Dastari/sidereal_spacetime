@@ -8,9 +8,9 @@ import {
   verifyWayfarerRebuildSource,
 } from "./wayfarer-rebuild-contract";
 import { planWayfarerRebuildGame } from "./wayfarer-rebuild-game";
-import proof from "../../content/src/wayfarer-walking-proof.json";
-import type { Point } from "../../content/src/ship-layout";
-import type { ConstructionSnapshot } from "../../content/src/construction";
+import proof from "@sidereal/content/wayfarer-walking-proof.json";
+import type { Point } from "@sidereal/content/ship-layout";
+import type { ConstructionSnapshot } from "@sidereal/content/construction";
 import {
   compileConstruction,
   constructionHash,

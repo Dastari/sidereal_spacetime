@@ -69,7 +69,10 @@ function entities(doc: ConstructionDocument): Record<Domain, { id: string }[]> {
       !doc.pressureRoom,
     "Native room adapters need a separate conservation qualification",
   );
-  check(!doc.wayfarerExterior && !doc.layout.serviceConnections?.length, "Logical device circuits need a separate refit conservation qualification");
+  check(
+    !doc.wayfarerExterior && !doc.layout.serviceConnections?.length,
+    "Logical device circuits need a separate refit conservation qualification",
+  );
   const l = doc.layout,
     v2 =
       l.structure?.schema === "sidereal.layout-structure.v2"

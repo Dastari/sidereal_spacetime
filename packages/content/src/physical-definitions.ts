@@ -4,8 +4,8 @@ import type {
   FlightPhysicalDefinition,
   FlightHullDefinition,
   ActuatorDefinition,
-} from "../../sim/src/flight-definition";
-import type { FlightProfile } from "../../sim/src/ifcs";
+} from "@sidereal/sim/flight-definition";
+import type { FlightProfile } from "@sidereal/sim/ifcs";
 
 /** Version 1 physical balance, authored from retained asset-local bounds, exact
  * native module footprints and the structural floor kit. These are explicit

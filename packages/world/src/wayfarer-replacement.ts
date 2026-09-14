@@ -1,7 +1,7 @@
 import type { InferSchema, ReducerCtx } from "spacetimedb/server";
 import type world from "./index";
-import { CURRENT_WAYFARER_STARTER } from "../../content/src/wayfarer-current-starter";
-import { WAYFARER_STARTER } from "../../content/src/wayfarer-starter";
+import { CURRENT_WAYFARER_STARTER } from "@sidereal/content/wayfarer-current-starter";
+import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
 import { requireWayfarerReplacementOperator } from "./wayfarer-replacement-operator";
 import { installReplacementWayfarer } from "./wayfarer-starter-authority";
 

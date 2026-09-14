@@ -8,7 +8,7 @@ import {
 } from "./native-volcanic-build";
 import type { NativePlanetKit } from "./native-planet-composition";
 import { createPlanetBuildScheduler } from "./planet-build-scheduler";
-import type { PlanetRecipe } from "../../../content/src/environment";
+import type { PlanetRecipe } from "@sidereal/content/environment";
 import {
   buildPlanetData,
   buildPlanetWeather,

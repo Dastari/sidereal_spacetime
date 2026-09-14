@@ -1,10 +1,13 @@
-import { commitFlightCharacter, markShipFlightDirty } from "./construction-flight-dirty";
+import {
+  commitFlightCharacter,
+  markShipFlightDirty,
+} from "./construction-flight-dirty";
 import { compileShipFlight } from "./construction-flight-compilation";
 import { readConstructionFlightInput } from "./construction-flight-input";
 import {
   CURRENT_WAYFARER_STARTER,
   type WayfarerStarterTemplate,
-} from "../../content/src/wayfarer-current-starter";
+} from "@sidereal/content/wayfarer-current-starter";
 import { requireWayfarerReplacementOperator } from "./wayfarer-replacement-operator";
 import type { Infer, InferSchema, ReducerCtx } from "spacetimedb/server";
 import type world from "./index";
@@ -193,7 +196,9 @@ function installStarter(
           binding.deckId !== p.instance.spawn.deckId
         )
           throw Error("Complete empty dormant starter flight required");
-        compileShipFlight(ctx.db, i.id, id => readConstructionFlightInput(ctx, id));
+        compileShipFlight(ctx.db, i.id, (id) =>
+          readConstructionFlightInput(ctx, id),
+        );
         const definition = resolveShipFlightDefinition(
           {
             binding: () => b,
@@ -207,7 +212,10 @@ function installStarter(
           i.id,
         );
         if (definition.status !== "dormant")
-          throw Error("Qualified starter flight definition required: " + definition.reason);
+          throw Error(
+            "Qualified starter flight definition required: " +
+              definition.reason,
+          );
         qualifyPilotGeometry({
           instance: i,
           frame: constructionCollision(ctx, i, b.deckId),
@@ -234,7 +242,10 @@ function installStarter(
           connected: true,
           sprinting: false,
         };
-        if (replacement) commitFlightCharacter(ctx, characterRow, row => ctx.db.character.id.update(row));
+        if (replacement)
+          commitFlightCharacter(ctx, characterRow, (row) =>
+            ctx.db.character.id.update(row),
+          );
         else ctx.db.character.insert(characterRow);
         markShipFlightDirty(ctx, characterRow.shipId);
         // Permanent owned location has no review-return destination. Ownership

@@ -5,7 +5,7 @@ import {
   pilotRecoveryPoint,
   QUALIFIED_PILOT_POSITION,
   type PilotGeometry,
-} from "../../sim/src/construction-pilot";
+} from "@sidereal/sim/construction-pilot";
 export interface PilotActor {
   id: string;
   ownerId: string;

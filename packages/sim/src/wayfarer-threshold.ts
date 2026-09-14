@@ -1,8 +1,8 @@
-import walking from "../../content/src/wayfarer-walking-proof.json";
-import type { ConstructionSnapshot } from "../../content/src/construction";
+import walking from "@sidereal/content/wayfarer-walking-proof.json";
+import type { ConstructionSnapshot } from "@sidereal/content/construction";
 import { constructionHash } from "./construction-transactions";
-import threshold from "../../content/src/wayfarer-threshold-proof.json";
-import type { Point } from "../../content/src/ship-layout";
+import threshold from "@sidereal/content/wayfarer-threshold-proof.json";
+import type { Point } from "@sidereal/content/ship-layout";
 import type { SpawnObjectCollisionBinding } from "./construction-instance";
 const FLOOR = threshold.floorElevationM;
 /** Native top-triangle support at accepted actor XY. Called only for this exact

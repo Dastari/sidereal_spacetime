@@ -230,9 +230,18 @@ export function stepSystemSpace(
       const achievedCommands = new Map(
         flight.commands.map((c) => [c.id, c.throttle]),
       );
-      attemptedConsumption.set(body.id, new Map(control.actuators.map(a => [
-        a.id, a.maxThrustN * a.availability * (achievedCommands.get(a.id) ?? 0) * DT,
-      ])));
+      attemptedConsumption.set(
+        body.id,
+        new Map(
+          control.actuators.map((a) => [
+            a.id,
+            a.maxThrustN *
+              a.availability *
+              (achievedCommands.get(a.id) ?? 0) *
+              DT,
+          ]),
+        ),
+      );
       commandMap.set(
         body.id,
         control.actuators
@@ -299,8 +308,9 @@ export function stepSystemSpace(
     // its accepted velocity kick, even if no complete drift substep is counted.
     for (const [bodyId, values] of attemptedConsumption) {
       let total = consumption.get(bodyId);
-      if (!total) consumption.set(bodyId, total = new Map());
-      for (const [id, value] of values) total.set(id, (total.get(id) ?? 0) + value);
+      if (!total) consumption.set(bodyId, (total = new Map()));
+      for (const [id, value] of values)
+        total.set(id, (total.get(id) ?? 0) + value);
     }
     impacts += result.impacts;
     if (result.exhausted) {
@@ -318,10 +328,14 @@ export function stepSystemSpace(
       bodyId,
       actuators,
     })),
-    consumption: [...consumption].map(([bodyId, values]) => ({
-      bodyId,
-      actuators: [...values].map(([id, newtonSeconds]) => ({ id, newtonSeconds })).sort(compareIds),
-    })).sort((a, b) => a.bodyId < b.bodyId ? -1 : a.bodyId > b.bodyId ? 1 : 0),
+    consumption: [...consumption]
+      .map(([bodyId, values]) => ({
+        bodyId,
+        actuators: [...values]
+          .map(([id, newtonSeconds]) => ({ id, newtonSeconds }))
+          .sort(compareIds),
+      }))
+      .sort((a, b) => (a.bodyId < b.bodyId ? -1 : a.bodyId > b.bodyId ? 1 : 0)),
     impacts,
     exhausted: reason !== undefined,
     ...(reason ? { reason } : {}),

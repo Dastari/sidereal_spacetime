@@ -1,6 +1,6 @@
 # Component-driven IFCS integration
 
-Status: Phases 0–3 implemented and verified in isolation; phase 3 published with owner approval; phase 4 implemented and verified; phase 5 presentation implemented and verified; phase 6 planned
+Status: Phases 0–3 implemented and verified in isolation; phase 3 published with owner approval; phase 4 implemented and verified; phase 5 presentation implemented and verified; phase 6 cleanup implemented and verified
 Last updated: 2026-09-14
 Owners: Sidereal simulation and ship assembly
 
@@ -131,4 +131,31 @@ full build pass; fresh isolated two-client computer-power smoke passes.
 
 Phase 5 full gates pass: 2,061 tests, TypeScript, 88 document checks, build,
 voxel export in isolation, canonical art validation and the three required real
-browser flight checks. Phase 6 cleanup remains planned.
+browser flight checks. Phase 6 cleanup is implemented and verified.
+
+## Phase 6 compatibility boundary
+
+The unused `integrate` and `stepLabSpace` implementations and their obsolete tests
+are removed. Every currently live shared ship has a shipWorldMotion row. Both
+review installation and starter installation delegate to the canonical qualified
+writer, which reconstructs the plan before writing. Actuator installation seeds
+come from the actual placed transform and versioned physical definition; no live
+world/render dependency imports the LAB_FLIGHT fixtures. Device service metadata
+and retained mesh selection also use versioned definitions.
+
+The deployed installation protocol ID/hash remain unchanged, independently of the
+compiled physical catalog hash. Obsolete ship base columns remain private for
+non-destructive compatibility, with zero sentinels on new rows. ownShips and its
+generated client row omit massKg, thrustN and turnAcceleration; the primary key
+and owner-only membership remain. The old refit comparison against those unused
+ratings is removed as approved. Native/collision pins and all pilot consumption
+validators remain unchanged. Base-column deletion requires a later scheduled
+schema migration and is not performed by this update.
+
+Phase 6 final gates pass: 2,055 tests, TypeScript, 88 document/provenance checks,
+full working and independent staged builds, fresh standard and two-client isolated
+smokes, lint and formatting. No LAB_FLIGHT fixture imports remain on live paths.
+The PR remains draft for separate missing owner-managed Python/art dependencies;
+the independent documentation export still has 33 preexisting missing links.
+These limitations and the mechanical package-boundary/formatting cleanup are
+recorded in the progress ledger, not represented as passing clean-clone CI.

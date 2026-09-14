@@ -1,6 +1,6 @@
 # Wayfarer flight computer implementation
 
-Status: Compiled authority verified through phase 3 in isolation; phase 3 published with owner approval; resource gating implemented and verified; presentation implemented and verified; cleanup planned
+Status: Compiled authority verified through phase 3 in isolation; phase 3 published with owner approval; resource gating implemented and verified; presentation implemented and verified; cleanup implemented and verified
 Last updated: 2026-09-14
 
 The implementation follows the [IFCS integration contract](ifcs_integration.md)
@@ -102,7 +102,7 @@ until M4. A private latest-nonzero consumption sample records actual accepted
 per-actuator newton-seconds across substeps, including rollback/contact exhaustion
 semantics, with tick and compiled revision/hash. Idle samples keep the last burn
 stamped. No fuel or energy is deducted. Phase 5 client/browser work is implemented and verified; its full check/build
-gates pass. Phase 6 dead-code/projection cleanup remains pending. Dead ship base columns remain by
+gates pass. Phase 6 dead-code/projection cleanup is implemented and verified. Dead ship base columns remain by
 explicit owner decision.
 
 Phase 4 final gates: 2,058 tests, TypeScript, 88 document/provenance checks and
@@ -110,4 +110,31 @@ full build pass; fresh isolated two-client computer-power smoke passes.
 
 Phase 5 full gates pass: 2,061 tests, TypeScript, 88 document checks, build,
 voxel export in isolation, canonical art validation and the three required real
-browser flight checks. Phase 6 cleanup remains planned.
+browser flight checks. Phase 6 cleanup is implemented and verified.
+
+## Phase 6 compatibility boundary
+
+The unused `integrate` and `stepLabSpace` implementations and their obsolete tests
+are removed. Every currently live shared ship has a shipWorldMotion row. Both
+review installation and starter installation delegate to the canonical qualified
+writer, which reconstructs the plan before writing. Actuator installation seeds
+come from the actual placed transform and versioned physical definition; no live
+world/render dependency imports the LAB_FLIGHT fixtures. Device service metadata
+and retained mesh selection also use versioned definitions.
+
+The deployed installation protocol ID/hash remain unchanged, independently of the
+compiled physical catalog hash. Obsolete ship base columns remain private for
+non-destructive compatibility, with zero sentinels on new rows. ownShips and its
+generated client row omit massKg, thrustN and turnAcceleration; the primary key
+and owner-only membership remain. The old refit comparison against those unused
+ratings is removed as approved. Native/collision pins and all pilot consumption
+validators remain unchanged. Base-column deletion requires a later scheduled
+schema migration and is not performed by this update.
+
+Phase 6 final gates pass: 2,055 tests, TypeScript, 88 document/provenance checks,
+full working and independent staged builds, fresh standard and two-client isolated
+smokes, lint and formatting. No LAB_FLIGHT fixture imports remain on live paths.
+The PR remains draft for separate missing owner-managed Python/art dependencies;
+the independent documentation export still has 33 preexisting missing links.
+These limitations and the mechanical package-boundary/formatting cleanup are
+recorded in the progress ledger, not represented as passing clean-clone CI.

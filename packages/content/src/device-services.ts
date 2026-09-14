@@ -1,6 +1,6 @@
 import type { LayoutDocument, ServiceChannel } from "./ship-layout";
 import type { PartCatalog } from "./assembly";
-import { LAB_FLIGHT_ACTUATORS } from "./flight";
+import { WAYFARER_ACTUATOR_DEFINITIONS } from "./physical-definitions";
 
 /** Connection semantics only. No electrical/fuel ratings have been approved. */
 export interface DeviceServicePortDefinition {
@@ -28,7 +28,7 @@ const engineAssets = new Set([
   "part-393498d8c8af6149ef28",
 ]);
 const engineDefinitions = new Set(
-  LAB_FLIGHT_ACTUATORS.map((a) => a.definitionId),
+  WAYFARER_ACTUATOR_DEFINITIONS.map((a) => a.fittingDefinitionId),
 );
 export const deviceServicePortId = (placedObjectId: string, portId: string) =>
   `${placedObjectId}:${portId}`;

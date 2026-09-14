@@ -1,7 +1,10 @@
 import * as passengerViews from "./construction-passenger-views";
 import * as passengers from "./construction-passenger-authority";
 import { commitFlightCharacter } from "./construction-flight-dirty";
-import { setConstructionEnginePower as setEnginePower, setConstructionComputerPower as setComputerPower } from "./construction-device-power";
+import {
+  setConstructionEnginePower as setEnginePower,
+  setConstructionComputerPower as setComputerPower,
+} from "./construction-device-power";
 import { replacePlayerWayfarer } from "./wayfarer-replacement";
 import * as rebuiltWayfarer from "./wayfarer-rebuild-installation";
 import { constructionCargoAssembly } from "./construction-cargo-assembly-tables";
@@ -73,14 +76,24 @@ import {
 import { installConstructionFlightAuthority } from "./construction-flight-authority";
 import { activateConstructionFlight } from "./construction-flight-activation";
 import { resolveShipFlightDefinition } from "./construction-flight-resolver";
-import { compileDirtyFlights, markFlightDirty } from "./construction-flight-compilation";
+import {
+  compileDirtyFlights,
+  markFlightDirty,
+} from "./construction-flight-compilation";
 import { readConstructionFlightInput } from "./construction-flight-input";
-import { SHARED_SYSTEM_SEED } from "../../content/src/shared-system";
+import { SHARED_SYSTEM_SEED } from "@sidereal/content/shared-system";
 import { constructionFlightDamageEvent } from "./construction-flight-damage-tables";
 import { constructionFlightConsumption } from "./construction-flight-consumption-tables";
 import { recordFlightConsumption } from "./construction-flight-consumption";
-import { constructionPassengerGrant, constructionPassengerVisit, constructionPassengerReceipt } from "./construction-passenger-tables";
-import { changeFlightFittingDisposition, consumeFlightDamage } from "./construction-flight-availability";
+import {
+  constructionPassengerGrant,
+  constructionPassengerVisit,
+  constructionPassengerReceipt,
+} from "./construction-passenger-tables";
+import {
+  changeFlightFittingDisposition,
+  consumeFlightDamage,
+} from "./construction-flight-availability";
 import {
   enterConstructionPilotAuthority,
   canConsumeConstructionPilot,
@@ -411,28 +424,42 @@ export const ownCharacters = db.view(
       ? []
       : [...ctx.db.character.by_owner.filter(ctx.sender)],
 );
+// Compatibility columns remain private on ship; physical ratings come from compiled state.
 export const ownShips = db.view(
   { name: "own_ships", public: true },
-  t.array(ship.rowType),
+  t.array(
+    t.row("OwnedShip", {
+      id: t.string().primaryKey(),
+      owner: t.identity(),
+      name: t.string(),
+      revision: t.u64(),
+      x: t.f64(),
+      y: t.f64(),
+      vx: t.f64(),
+      vy: t.f64(),
+      heading: t.f64(),
+      omega: t.f64(),
+      tick: t.u64(),
+    }),
+  ),
   (ctx) =>
     !auth.canReadGame(ctx)
       ? []
       : [...ctx.db.ship.by_owner.filter(ctx.sender)].map((s) => {
           const m = ctx.db.shipWorldMotion.shipId.find(s.id);
-          // Preserve owner-only membership and the legacy projection shape. The static
-          // ship row remains migration evidence; only the lean motion row advances.
-          return m
-            ? {
-                ...s,
-                x: m.x,
-                y: m.y,
-                vx: m.vx,
-                vy: m.vy,
-                heading: m.heading,
-                omega: m.omega,
-                tick: m.serverTick,
-              }
-            : s;
+          return {
+            id: s.id,
+            owner: s.owner,
+            name: s.name,
+            revision: s.revision,
+            x: m?.x ?? s.x,
+            y: m?.y ?? s.y,
+            vx: m?.vx ?? s.vx,
+            vy: m?.vy ?? s.vy,
+            heading: m?.heading ?? s.heading,
+            omega: m?.omega ?? s.omega,
+            tick: m?.serverTick ?? s.tick,
+          };
         }),
 );
 export const ownStations = db.view(
@@ -589,12 +616,16 @@ export const useStation = db.reducer((ctx) => {
     )
       throw new SenderError("Move closer to the control station");
     ctx.db.station.id.update({ ...seat, occupantId: actor.id });
-    commitFlightCharacter(ctx, {
-      ...actor,
-      localX: seat.localX,
-      localY: seat.localY,
-      sprinting: false,
-    }, row => ctx.db.character.id.update(row));
+    commitFlightCharacter(
+      ctx,
+      {
+        ...actor,
+        localX: seat.localX,
+        localY: seat.localY,
+        sprinting: false,
+      },
+      (row) => ctx.db.character.id.update(row),
+    );
   }
   if (actor.sprinting)
     ctx.db.character.id.update({
@@ -685,14 +716,23 @@ export const stepWorld = db.reducer(
     stepSharedWorld(ctx, undefined, {
       compileDirty: () => {
         let count = 0;
-        for (const ship of ctx.db.shipWorldMotion.by_system.filter(SHARED_SYSTEM_SEED.systemId)) {
+        for (const ship of ctx.db.shipWorldMotion.by_system.filter(
+          SHARED_SYSTEM_SEED.systemId,
+        )) {
           if (++count > 60) throw Error("Flight migration admission budget");
           if (!ctx.db.constructionFlightCompiled.shipId.find(ship.shipId))
-            markFlightDirty(ctx.db, ship.shipId, ctx.timestamp.microsSinceUnixEpoch);
+            markFlightDirty(
+              ctx.db,
+              ship.shipId,
+              ctx.timestamp.microsSinceUnixEpoch,
+            );
         }
-        compileDirtyFlights(ctx.db, shipId => readConstructionFlightInput(ctx, shipId));
+        compileDirtyFlights(ctx.db, (shipId) =>
+          readConstructionFlightInput(ctx, shipId),
+        );
       },
-      recordConsumption: (sampleTick, usage) => recordFlightConsumption(ctx, sampleTick, usage),
+      recordConsumption: (sampleTick, usage) =>
+        recordFlightConsumption(ctx, sampleTick, usage),
       definitionForShip: (shipId) =>
         resolveShipFlightDefinition(
           {
@@ -773,12 +813,16 @@ export const stepWorld = db.reducer(
         point.y !== actor.localY ||
         sprinting !== actor.sprinting
       )
-        commitFlightCharacter(ctx, {
-          ...actor,
-          localX: point.x,
-          localY: point.y,
-          sprinting,
-        }, row => ctx.db.character.id.update(row));
+        commitFlightCharacter(
+          ctx,
+          {
+            ...actor,
+            localX: point.x,
+            localY: point.y,
+            sprinting,
+          },
+          (row) => ctx.db.character.id.update(row),
+        );
     }
   },
 );
@@ -1363,34 +1407,114 @@ export const moveCargoCarrier = db.reducer(
 );
 
 /** Explicit deployment maintenance; ordinary game identities cannot invoke it. */
-export const replaceLegacyPlayerWayfarer = db.reducer({ characterId: t.string(), expectedShipId: t.string(), expectedShipRevision: t.u64() }, replacePlayerWayfarer);
+export const replaceLegacyPlayerWayfarer = db.reducer(
+  {
+    characterId: t.string(),
+    expectedShipId: t.string(),
+    expectedShipRevision: t.u64(),
+  },
+  replacePlayerWayfarer,
+);
 
-export const setConstructionEnginePower = db.reducer({ shipId: t.string(), enginePlacedObjectId: t.string(), connected: t.bool(), expectedRevision: t.u64(), operationId: t.string() }, setEnginePower);
-export const setConstructionComputerPower = db.reducer({ shipId: t.string(), computerPlacedObjectId: t.string(), connected: t.bool(), expectedRevision: t.u64(), operationId: t.string() }, setComputerPower);
+export const setConstructionEnginePower = db.reducer(
+  {
+    shipId: t.string(),
+    enginePlacedObjectId: t.string(),
+    connected: t.bool(),
+    expectedRevision: t.u64(),
+    operationId: t.string(),
+  },
+  setEnginePower,
+);
+export const setConstructionComputerPower = db.reducer(
+  {
+    shipId: t.string(),
+    computerPlacedObjectId: t.string(),
+    connected: t.bool(),
+    expectedRevision: t.u64(),
+    operationId: t.string(),
+  },
+  setComputerPower,
+);
 
 export const changeShipFlightFitting = db.reducer(
-  { shipId:t.string(), fittingId:t.string(), action:t.string(), expectedRevision:t.u64(), expectedFittingRevision:t.u64(), operationId:t.string() },
-  (ctx,args)=>changeFlightFittingDisposition(ctx,args),
+  {
+    shipId: t.string(),
+    fittingId: t.string(),
+    action: t.string(),
+    expectedRevision: t.u64(),
+    expectedFittingRevision: t.u64(),
+    operationId: t.string(),
+  },
+  (ctx, args) => changeFlightFittingDisposition(ctx, args),
 );
 
 export const ownAuthoredFlightPhysics = db.view(
-  {name:"own_authored_flight_physics",public:true},t.array(authoredFlightPhysicsProjection),
+  { name: "own_authored_flight_physics", public: true },
+  t.array(authoredFlightPhysicsProjection),
   auth.gameView(readAuthoredFlightPhysics),
 );
 export const ownAuthoredFlightActuators = db.view(
-  {name:"own_authored_flight_actuators",public:true},t.array(authoredFlightActuatorProjection),
+  { name: "own_authored_flight_actuators", public: true },
+  t.array(authoredFlightActuatorProjection),
   auth.gameView(readAuthoredFlightActuators),
 );
 
-export const grantShipPassenger = db.reducer({shipId:t.string(),granteeId:t.string(),expectedInstanceRevision:t.u64(),expectedFlightRevision:t.u64(),durationSeconds:t.u32(),operationId:t.string()}, passengers.grantShipPassenger);
-export const boardShipPassenger = db.reducer({grantId:t.string(),expectedGrantRevision:t.u64(),expectedVisitId:t.string(),expectedLocationRevision:t.u64(),expectedAdmissionRevision:t.u64(),operationId:t.string()}, passengers.boardShipPassenger);
-export const revokeShipPassenger = db.reducer({grantId:t.string(),expectedRevision:t.u64(),operationId:t.string()}, passengers.revokeShipPassenger);
-export const returnShipPassenger = db.reducer({expectedVisitId:t.string(),expectedRevision:t.u64(),operationId:t.string()}, passengers.returnShipPassenger);
+export const grantShipPassenger = db.reducer(
+  {
+    shipId: t.string(),
+    granteeId: t.string(),
+    expectedInstanceRevision: t.u64(),
+    expectedFlightRevision: t.u64(),
+    durationSeconds: t.u32(),
+    operationId: t.string(),
+  },
+  passengers.grantShipPassenger,
+);
+export const boardShipPassenger = db.reducer(
+  {
+    grantId: t.string(),
+    expectedGrantRevision: t.u64(),
+    expectedVisitId: t.string(),
+    expectedLocationRevision: t.u64(),
+    expectedAdmissionRevision: t.u64(),
+    operationId: t.string(),
+  },
+  passengers.boardShipPassenger,
+);
+export const revokeShipPassenger = db.reducer(
+  { grantId: t.string(), expectedRevision: t.u64(), operationId: t.string() },
+  passengers.revokeShipPassenger,
+);
+export const returnShipPassenger = db.reducer(
+  {
+    expectedVisitId: t.string(),
+    expectedRevision: t.u64(),
+    operationId: t.string(),
+  },
+  passengers.returnShipPassenger,
+);
 
-export const ownPassengerGrants = db.view({name:"own_passenger_grants",public:true},t.array(passengerViews.passengerGrantProjection),auth.gameView(passengerViews.ownPassengerGrants));
+export const ownPassengerGrants = db.view(
+  { name: "own_passenger_grants", public: true },
+  t.array(passengerViews.passengerGrantProjection),
+  auth.gameView(passengerViews.ownPassengerGrants),
+);
 
-export const ownPassengerVisit = db.view({name:"own_passenger_visit",public:true},t.array(passengerViews.passengerVisitProjection),auth.gameView(passengerViews.ownPassengerVisit));
+export const ownPassengerVisit = db.view(
+  { name: "own_passenger_visit", public: true },
+  t.array(passengerViews.passengerVisitProjection),
+  auth.gameView(passengerViews.ownPassengerVisit),
+);
 
-export const currentPassengerInterior = db.view({name:"current_passenger_interior",public:true},t.array(passengerViews.passengerInteriorProjection),auth.gameView(passengerViews.currentPassengerInterior));
+export const currentPassengerInterior = db.view(
+  { name: "current_passenger_interior", public: true },
+  t.array(passengerViews.passengerInteriorProjection),
+  auth.gameView(passengerViews.currentPassengerInterior),
+);
 
-export const currentInteriorCrew = db.view({name:"current_interior_crew",public:true},t.array(passengerViews.interiorCrewProjection),auth.gameView(passengerViews.currentInteriorCrew));
+export const currentInteriorCrew = db.view(
+  { name: "current_interior_crew", public: true },
+  t.array(passengerViews.interiorCrewProjection),
+  auth.gameView(passengerViews.currentInteriorCrew),
+);

@@ -1,4 +1,4 @@
-vi.mock("spacetimedb/server",()=>({Range:class{}}));
+vi.mock("spacetimedb/server", () => ({ Range: class {} }));
 import { expect, test, vi } from "vitest";
 import { Identity } from "spacetimedb";
 import { planWayfarerStarter } from "@sidereal/sim/wayfarer-starter";
@@ -54,7 +54,11 @@ function setup() {
     name: plan.instance.document.layout.name,
   });
   return {
-    ctx: { sender, db, timestamp: {microsSinceUnixEpoch:1n} } as unknown as ConstructionFlightContext,
+    ctx: {
+      sender,
+      db,
+      timestamp: { microsSinceUnixEpoch: 1n },
+    } as unknown as ConstructionFlightContext,
     plan: plan.flight,
     rows,
   };

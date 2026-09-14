@@ -1,6 +1,6 @@
 import type { ConstructionDocument } from "@sidereal/content/construction";
 import type { Point } from "@sidereal/content/ship-layout";
-import visuals from "../../content/src/construction-wayfarer-rebuild-visuals.json";
+import visuals from "@sidereal/content/construction-wayfarer-rebuild-visuals.json";
 import { CONSTRUCTION_INSET_VISUALS } from "@sidereal/content/construction-inset-visuals";
 import { sha256 } from "@noble/hashes/sha2.js";
 import { bytesToHex } from "@noble/hashes/utils.js";

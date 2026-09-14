@@ -1343,6 +1343,21 @@ export type OwnWayfarerRefitOffer = __Infer<typeof OwnWayfarerRefitOffer>;
 export const OwnWorldAdmission = __t.object("OwnWorldAdmission", {});
 export type OwnWorldAdmission = __Infer<typeof OwnWorldAdmission>;
 
+export const OwnedShip = __t.object("OwnedShip", {
+  id: __t.string(),
+  owner: __t.identity(),
+  name: __t.string(),
+  revision: __t.u64(),
+  x: __t.f64(),
+  y: __t.f64(),
+  vx: __t.f64(),
+  vy: __t.f64(),
+  heading: __t.f64(),
+  omega: __t.f64(),
+  tick: __t.u64(),
+});
+export type OwnedShip = __Infer<typeof OwnedShip>;
+
 export const PassengerAdmission = __t.object("PassengerAdmission", {
   id: __t.string(),
   shipId: __t.string(),

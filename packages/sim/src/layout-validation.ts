@@ -2,7 +2,7 @@ import { readLayoutStructure } from "./layout-structure-admission";
 import {
   deviceServicePortId,
   placedDeviceServices,
-} from "../../content/src/device-services";
+} from "@sidereal/content/device-services";
 import {
   LAYOUT_SCHEMA,
   LAYOUT_LIMITS as L,

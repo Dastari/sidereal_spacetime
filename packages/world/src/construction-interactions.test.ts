@@ -1,4 +1,4 @@
-import { planQualifiedWayfarerFunctionalSeeds } from "../../sim/src/construction-functional-instances";
+import { planQualifiedWayfarerFunctionalSeeds } from "@sidereal/sim/construction-functional-instances";
 import { randomUUID } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { Identity } from "spacetimedb";
@@ -31,13 +31,13 @@ import {
   constructionInteractionView,
   ownConstructionSeat,
 } from "./construction-interactions";
-import { WAYFARER_CONVERSION_PIN as PIN } from "../../content/src/wayfarer-conversion-candidate";
+import { WAYFARER_CONVERSION_PIN as PIN } from "@sidereal/content/wayfarer-conversion-candidate";
 import {
   createWayfarerConversionCandidate,
   type WayfarerPinnedInputs,
-} from "../../sim/src/wayfarer-conversion-candidate";
-import { qualifiedWayfarerWalkingBindings } from "../../sim/src/wayfarer-walking-bindings";
-import { planConstructionInstance } from "../../sim/src/construction-instance";
+} from "@sidereal/sim/wayfarer-conversion-candidate";
+import { qualifiedWayfarerWalkingBindings } from "@sidereal/sim/wayfarer-walking-bindings";
+import { planConstructionInstance } from "@sidereal/sim/construction-instance";
 function store(
   primary = "id",
   indices: Record<string, string> = {},
@@ -105,7 +105,7 @@ function fixture() {
     );
   const owner = Identity.fromString("1".repeat(64));
   const db: any = {
-    constructionFlightBinding: {shipId:{find:()=>undefined}},
+    constructionFlightBinding: { shipId: { find: () => undefined } },
     constructionCargoAssembly: store("containerId", {
       by_instance: "instanceId",
     }),

@@ -1,13 +1,13 @@
 import { SenderError, t } from "spacetimedb/server";
 import { access, transaction, commitItems, equip } from "./inventory";
 import { prepareGroundDrop } from "./inventory-ground";
-import { firstInventoryPlacement } from "../../sim/src/inventory";
+import { firstInventoryPlacement } from "@sidereal/sim/inventory";
 import {
   INVENTORY_DEFINITIONS,
   inventoryDefinition,
   LIQUID_DENSITY_KG_PER_LITRE,
   CHARACTER_CARRY_LIMIT_KG,
-} from "../../content/src/inventory";
+} from "@sidereal/content/inventory";
 type Context = Parameters<typeof transaction>[0];
 type Mutation = Parameters<typeof transaction>[1];
 type Access = NonNullable<ReturnType<typeof access>>;

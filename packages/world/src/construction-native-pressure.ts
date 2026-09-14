@@ -442,7 +442,10 @@ export function stepNativePressure(
     }
   }
   const gasChanges = stepAtmosphere(
-    scopedAtmosphereTable(ctx.db.constructionAtmosphere, installations.map(i=>i.id)),
+    scopedAtmosphereTable(
+      ctx.db.constructionAtmosphere,
+      installations.map((i) => i.id),
+    ),
     tick,
     STEP_SECONDS,
   );

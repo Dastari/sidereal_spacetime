@@ -10,8 +10,8 @@ import type {
   NativePlanetKit,
 } from "./native-planet-composition";
 import { composeNativeVolcanic } from "./native-volcanic-composition";
-import type { PlanetRecipe } from "../../../content/src/environment";
-import { planetEffects } from "../../../content/src/environment";
+import type { PlanetRecipe } from "@sidereal/content/environment";
+import { planetEffects } from "@sidereal/content/environment";
 import { buildPlanetClouds } from "./planet-clouds";
 import { packPlanetGeometry } from "./planet-build";
 const unit = (v: VolcanicVector): VolcanicVector => {

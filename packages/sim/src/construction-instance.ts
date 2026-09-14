@@ -264,14 +264,14 @@ export function planConstructionInstance(
             : planWayfarerRebuildGame(source)
           ).sourceObstacles.filter((o) => o.id.startsWith("rebuild-"))
         : source.stairRoom
-            ? nativeStairRoomCollision(source, request.sourceDeckId)
-            : source.traversalRoom
-              ? nativeTraversalRoomCollision(source, request.sourceDeckId)
-              : source.pressureRoom
-                ? nativePressureRoomCollision(source, request.sourceDeckId)
-                : source.boundaryKit?.revision === "r004"
-                  ? pinnedFamilyCollision(source.layout, request.sourceDeckId)
-                  : [];
+          ? nativeStairRoomCollision(source, request.sourceDeckId)
+          : source.traversalRoom
+            ? nativeTraversalRoomCollision(source, request.sourceDeckId)
+            : source.pressureRoom
+              ? nativePressureRoomCollision(source, request.sourceDeckId)
+              : source.boundaryKit?.revision === "r004"
+                ? pinnedFamilyCollision(source.layout, request.sourceDeckId)
+                : [];
   for (const [i, binding] of [...request.objectCollisionBindings]
     .sort((a, b) => compareText(a.sourceObjectId, b.sourceObjectId))
     .entries()) {

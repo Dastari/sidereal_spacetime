@@ -2,7 +2,7 @@ import { buildNativeIceData } from "./native-ice-build";
 import { buildNativeVolcanicData } from "./native-volcanic-build";
 import type { NativePlanetKit } from "./native-planet-composition";
 import { buildPlanetData, buildPlanetWeather } from "./planet-build";
-import type { PlanetRecipe } from "../../../content/src/environment";
+import type { PlanetRecipe } from "@sidereal/content/environment";
 /** Rendering data only. A request revision rejects stale results after body edits/removal. */
 self.onmessage = (
   event: MessageEvent<{

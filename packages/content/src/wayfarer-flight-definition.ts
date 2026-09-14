@@ -5,7 +5,7 @@ import {
   type FlightFitting,
   type FlightCargoMass,
   type FlightCrewMass,
-} from "../../sim/src/flight-definition";
+} from "@sidereal/sim/flight-definition";
 const order = (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0);
 const identifier = (v: unknown): v is string =>
   typeof v === "string" &&
@@ -21,7 +21,7 @@ import {
 import historicalSource from "./wayfarer-starter-r001.json";
 import rebuiltSource from "./wayfarer-rebuild-r002.json";
 import exteriorSource from "./wayfarer-exterior-r005.json";
-import { planWayfarerRebuildGame } from "../../sim/src/wayfarer-rebuild-game";
+import { planWayfarerRebuildGame } from "@sidereal/sim/wayfarer-rebuild-game";
 
 export type WayfarerPhysicalVariant = "r001" | "r002" | "r005";
 const variantSources = {
@@ -211,7 +211,7 @@ export function wayfarerFlightInput(
     fittings: readonly FlightFitting[];
     cargo?: readonly FlightCargoMass[];
     crew?: readonly FlightCrewMass[];
-    supply?: Readonly<Record<string,number>>;
+    supply?: Readonly<Record<string, number>>;
   },
 ): FlightDefinitionInput {
   return {

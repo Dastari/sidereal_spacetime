@@ -1,5 +1,5 @@
-import type { GroundItemLabel } from "../../render/src/ground-items";
-import { INVENTORY_DEFINITIONS } from "../../content/src/inventory";
+import type { GroundItemLabel } from "@sidereal/render/ground-items";
+import { INVENTORY_DEFINITIONS } from "@sidereal/content/inventory";
 import { itemRarity } from "./character-data";
 import { ITEM_RARITY_PALETTES } from "./item-frame";
 import type { CanvasUI } from "./toolkit";

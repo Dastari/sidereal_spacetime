@@ -4,8 +4,8 @@ import type {
   constructionPassengerGrant,
   constructionPassengerVisit,
 } from "./construction-passenger-tables";
-import { passengerAdmission } from "../../sim/src/passenger-admission";
-import type { PassengerAdmissionFacts } from "../../sim/src/passenger-admission";
+import { passengerAdmission } from "@sidereal/sim/passenger-admission";
+import type { PassengerAdmissionFacts } from "@sidereal/sim/passenger-admission";
 type Find<T> = { find(id: string): T | undefined | null };
 type Owned<T> = Omit<T, "ownerId"> & { owner: Identity };
 type Fact<K extends keyof PassengerAdmissionFacts> = NonNullable<

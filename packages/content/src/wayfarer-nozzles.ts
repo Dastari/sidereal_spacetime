@@ -1,6 +1,6 @@
 import source from "./wayfarer-rebuild-r002.json";
 import { WAYFARER_ACTUATOR_DEFINITIONS } from "./physical-definitions";
-import { transformFlightVector } from "../../sim/src/flight-definition";
+import { transformFlightVector } from "@sidereal/sim/flight-definition";
 
 /** Historical shell authoring references only. Live rendering reads the ship's
  * compiled projection; these mounts keep the retained generator on the same v1

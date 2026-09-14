@@ -60,7 +60,17 @@
     "./layout-opening-treatments": "./src/layout-opening-treatments.ts",
     "./wayfarer-rebuild-contract": "./src/wayfarer-rebuild-contract.ts",
     "./wayfarer-rebuild-game": "./src/wayfarer-rebuild-game.ts",
-    "./wayfarer-conversion-candidate": "./src/wayfarer-conversion-candidate.ts"
+    "./wayfarer-conversion-candidate": "./src/wayfarer-conversion-candidate.ts",
+    "./ifcs": "./src/ifcs.ts",
+    "./flight-definition": "./src/flight-definition.ts",
+    "./construction-flight-admission": "./src/construction-flight-admission.ts",
+    "./construction-functional-instances": "./src/construction-functional-instances.ts",
+    "./interactions": "./src/interactions.ts",
+    "./passenger-admission": "./src/passenger-admission.ts",
+    "./ground-placement": "./src/ground-placement.ts",
+    "./backpack-swap": "./src/backpack-swap.ts",
+    "./flight-frame": "./src/flight-frame.ts",
+    "./construction-refit-identities": "./src/construction-refit-identities.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",

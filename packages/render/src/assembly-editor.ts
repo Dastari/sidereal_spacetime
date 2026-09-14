@@ -1,6 +1,6 @@
-import { categoryMeshRole, setMeshRole } from './mesh-roles';
-import { updateHullDecals } from './hull-decals';
-import { loadEquipmentPrototypes } from './installed-equipment';
+import { categoryMeshRole, setMeshRole } from "./mesh-roles";
+import { updateHullDecals } from "./hull-decals";
+import { loadEquipmentPrototypes } from "./installed-equipment";
 import "@babylonjs/core/Culling/ray";
 import { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
@@ -101,11 +101,23 @@ export async function createAssemblyEditor(
     list.push(mesh);
     prototypes.set(id, list);
   }
-  for (const [id, meshes] of await loadEquipmentPrototypes(scene, catalog.assets.filter(a=>a.category!=='cargo'))) prototypes.set(id, meshes);
+  for (const [id, meshes] of await loadEquipmentPrototypes(
+    scene,
+    catalog.assets.filter((a) => a.category !== "cargo"),
+  ))
+    prototypes.set(id, meshes);
   // The cargo catalog is a library, not 73 simultaneously visible models.
-  for(const asset of catalog.assets)if(asset.category==='cargo'&&asset.visual)prototypes.delete(asset.id);
-  const pendingCargo=new Map<string,Promise<void>>();
-  const nodes = new Map<string, { assetId: string; node: TransformNode; lighting: ReturnType<typeof createEquipmentLighting> }>();
+  for (const asset of catalog.assets)
+    if (asset.category === "cargo" && asset.visual) prototypes.delete(asset.id);
+  const pendingCargo = new Map<string, Promise<void>>();
+  const nodes = new Map<
+    string,
+    {
+      assetId: string;
+      node: TransformNode;
+      lighting: ReturnType<typeof createEquipmentLighting>;
+    }
+  >();
   const worker = new Worker(new URL("./voxel-worker.ts", import.meta.url), {
       type: "module",
     }),
@@ -147,7 +159,7 @@ export async function createAssemblyEditor(
       data.applyToMesh(mesh);
       mesh.material = previewMaterials.get(chunk.surface)!;
       mesh.parent = entry.node;
-      mesh.metadata = { damagePreview: true, role: 'effect' };
+      mesh.metadata = { damagePreview: true, role: "effect" };
       mesh.isPickable = true;
     }
     entry.lighting.setMeshes(entry.node.getChildMeshes());
@@ -189,7 +201,7 @@ export async function createAssemblyEditor(
         entry.node.position.y,
       );
       if (damageTool && info.pickInfo?.pickedPoint) {
-        if (catalog.assets.find(a => a.id === entry.assetId)?.visual) return;
+        if (catalog.assets.find((a) => a.id === entry.assetId)?.visual) return;
         const source = voxelLibrary.volumes[entry.assetId],
           position = Vector3.TransformCoordinates(
             info.pickInfo.pickedPoint,
@@ -279,30 +291,45 @@ export async function createAssemblyEditor(
         }
         if (!entry) {
           const sources = prototypes.get(part.assetId);
-          if(!sources){
-            const asset=catalog.assets.find(a=>a.id===part.assetId);
-            if(asset?.visual&&asset.category==='cargo'){
-              if(!pendingCargo.has(asset.id)){
-                const pending=loadEquipmentPrototypes(scene,[asset]).then(result=>{
-                  if(scene.isDisposed)return;
-                  prototypes.set(asset.id,result.get(asset.id)!);
-                  if(doc)handle.update(doc,selected,visible);
-                }).catch(error=>{if(!scene.isDisposed)onError(String(error));});
-                pendingCargo.set(asset.id,pending);
+          if (!sources) {
+            const asset = catalog.assets.find((a) => a.id === part.assetId);
+            if (asset?.visual && asset.category === "cargo") {
+              if (!pendingCargo.has(asset.id)) {
+                const pending = loadEquipmentPrototypes(scene, [asset])
+                  .then((result) => {
+                    if (scene.isDisposed) return;
+                    prototypes.set(asset.id, result.get(asset.id)!);
+                    if (doc) handle.update(doc, selected, visible);
+                  })
+                  .catch((error) => {
+                    if (!scene.isDisposed) onError(String(error));
+                  });
+                pendingCargo.set(asset.id, pending);
               }
               continue;
             }
-            throw new Error('Part asset missing: '+part.assetId);
+            throw new Error("Part asset missing: " + part.assetId);
           }
           const node = new TransformNode("placement-" + part.id, scene);
           node.metadata = { partId: part.id };
-          const fixtures = catalog.assets.find(a => a.id === part.assetId)?.lights;
+          const fixtures = catalog.assets.find(
+            (a) => a.id === part.assetId,
+          )?.lights;
           for (const source of sources) {
             // Babylon hardware instances bind source-mesh lighting. A lightweight
             // clone shares geometry but permits lights scoped to this placement.
             const name = part.id + "--" + source.name;
-            const instance = fixtures?.length ? source.clone(name, node, true)! : source.createInstance(name);
-            instance.metadata = {...source.metadata, partId: part.id, role: categoryMeshRole(catalog.assets.find(a => a.id === part.assetId)?.category ?? 'equipment')};
+            const instance = fixtures?.length
+              ? source.clone(name, node, true)!
+              : source.createInstance(name);
+            instance.metadata = {
+              ...source.metadata,
+              partId: part.id,
+              role: categoryMeshRole(
+                catalog.assets.find((a) => a.id === part.assetId)?.category ??
+                  "equipment",
+              ),
+            };
             instance.parent = node;
             instance.isPickable = true;
             instance.isVisible = true;
@@ -332,7 +359,10 @@ export async function createAssemblyEditor(
         if (signature !== last?.signature) {
           const revision = ++jobSerial;
           jobs.set(part.id, { signature, revision });
-          if (part.removedCells.length && !catalog.assets.find(a => a.id === part.assetId)?.visual)
+          if (
+            part.removedCells.length &&
+            !catalog.assets.find((a) => a.id === part.assetId)?.visual
+          )
             worker.postMessage({
               id: part.id,
               revision,

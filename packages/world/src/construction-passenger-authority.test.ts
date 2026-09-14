@@ -51,7 +51,7 @@ import {
   ownedGameShipAccess,
   GAME_OWNED_TEMPLATE_NAMESPACE,
 } from "./game-ship-access-authority";
-import { WAYFARER_REBUILD_SHA256 } from "../../sim/src/wayfarer-rebuild-contract";
+import { WAYFARER_REBUILD_SHA256 } from "@sidereal/sim/wayfarer-rebuild-contract";
 function table(key = "id") {
   const rows = new Map<any, any>();
   const equal = (a: any, b: any) => (a?.isEqual ? a.isEqual(b) : a === b);

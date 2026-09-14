@@ -17,21 +17,21 @@ import { requireGame } from "./auth";
 import { requireGrant } from "./construction";
 import { clearAim } from "./combat";
 import { consumeInputControl } from "./input-control";
-import { LAB_INTERACTIONS } from "../../content/src/interactions";
-import { validateInteraction } from "../../sim/src/interactions";
-import { planQualifiedWayfarerFunctionalSeeds } from "../../sim/src/construction-functional-instances";
-import type { ConstructionInstancePlan } from "../../sim/src/construction-instance";
+import { LAB_INTERACTIONS } from "@sidereal/content/interactions";
+import { validateInteraction } from "@sidereal/sim/interactions";
+import { planQualifiedWayfarerFunctionalSeeds } from "@sidereal/sim/construction-functional-instances";
+import type { ConstructionInstancePlan } from "@sidereal/sim/construction-instance";
 import {
   isQualifiedWayfarerBlueprint,
   qualifiedWayfarerInstanceObstacles,
-} from "../../sim/src/wayfarer-walking-bindings";
+} from "@sidereal/sim/wayfarer-walking-bindings";
 import {
   canOccupyDeck,
   sweepDeckCircle,
   type DeckCollisionFrame,
-} from "../../sim/src/construction-collision";
+} from "@sidereal/sim/construction-collision";
 import { constructionCollision } from "./construction-doors";
-import { stableStringify } from "../../sim/src/layout-geometry";
+import { stableStringify } from "@sidereal/sim/layout-geometry";
 
 /** Private binding only. Canonical interaction state and unique seat occupancy
  * continue to use interactionObject/couchSeat, never a second occupancy store. */
@@ -368,12 +368,16 @@ export function releaseConstructionSeat(
     return { handled: true, released: false };
   }
   ctx.db.couchSeat.characterId.delete(characterId);
-  commitFlightCharacter(ctx, {
-    ...actor,
-    localX: exit[0],
-    localY: exit[1],
-    sprinting: false,
-  }, row => ctx.db.character.id.update(row));
+  commitFlightCharacter(
+    ctx,
+    {
+      ...actor,
+      localX: exit[0],
+      localY: exit[1],
+      sprinting: false,
+    },
+    (row) => ctx.db.character.id.update(row),
+  );
   ctx.db.interactionObject.id.update({
     ...q.object,
     revision: q.object.revision + 1n,
@@ -520,12 +524,16 @@ export function interactWithConstructionObject(
         characterId: actor.id,
         objectId: args.objectId,
       });
-      commitFlightCharacter(ctx, {
-        ...actor,
-        localX: q.definition.seatX,
-        localY: q.definition.seatY,
-        sprinting: false,
-      }, row => ctx.db.character.id.update(row));
+      commitFlightCharacter(
+        ctx,
+        {
+          ...actor,
+          localX: q.definition.seatX,
+          localY: q.definition.seatY,
+          sprinting: false,
+        },
+        (row) => ctx.db.character.id.update(row),
+      );
       ctx.db.interactionObject.id.update({
         ...q.object,
         revision: q.object.revision + 1n,
@@ -569,20 +577,25 @@ export function constructionInteractionView(ctx: ReadContext) {
     ...ctx.db.constructionGrant.by_principal.filter(ctx.sender),
   ].filter((g) => !g.revoked && g.workspaceId === instance.workspaceId);
   const gameAccess = ownedGameShipAccess(ctx, instance.id, visit.deckId);
-  const passenger = !instance.owner.isEqual(ctx.sender) && acceptedPassengerAccess(ctx,actor.id).readInterior;
+  const passenger =
+    !instance.owner.isEqual(ctx.sender) &&
+    acceptedPassengerAccess(ctx, actor.id).readInterior;
   if (
     instance.workspaceId === GAME_OWNED_TEMPLATE_NAMESPACE &&
-    !gameAccess.readInterior && !passenger
+    !gameAccess.readInterior &&
+    !passenger
   )
     return [];
   if (
-    !gameAccess.readInterior && !passenger &&
+    !gameAccess.readInterior &&
+    !passenger &&
     !grants.some((g) => g.capability === "draft.read")
   )
     return [];
-  const canInteract = !passenger && (
-    gameAccess.useObjects ||
-    grants.some((g) => g.capability === "instance.spawn"));
+  const canInteract =
+    !passenger &&
+    (gameAccess.useObjects ||
+      grants.some((g) => g.capability === "instance.spawn"));
   return [
     ...ctx.db.constructionInteractionBinding.by_instance.filter(instance.id),
   ].flatMap((binding) => {

@@ -10,10 +10,10 @@ vi.mock("spacetimedb/server", () => {
 });
 vi.mock("./auth", () => ({ requireGame: () => {}, canReadGame: () => true }));
 import { readConstructionFlightInput } from "./construction-flight-input";
-import { compileFlightDefinition } from "../../sim/src/flight-definition";
-import source from "../../content/src/wayfarer-rebuild-r002.json";
-import { WAYFARER_REBUILD_SHA256 } from "../../sim/src/wayfarer-rebuild-contract";
-import { INVENTORY_DEFINITIONS } from "../../content/src/inventory";
+import { compileFlightDefinition } from "@sidereal/sim/flight-definition";
+import source from "@sidereal/content/wayfarer-rebuild-r002.json";
+import { WAYFARER_REBUILD_SHA256 } from "@sidereal/sim/wayfarer-rebuild-contract";
+import { INVENTORY_DEFINITIONS } from "@sidereal/content/inventory";
 function fixture() {
   const tables: Record<string, any[]> = {
     constructionInstance: [
@@ -207,24 +207,46 @@ test("missing cargo membership and unrecognized structure fail closed", () => {
 });
 
 test("database metadata and bigint fitting revisions never enter the pure physical hash", () => {
-  const f=fixture();
-  const part=source.layout.assembly.parts.find(p=>p.assetId==="part-e8b51ac6443c73becfcb")!;
-  f.tables.constructionFlightFitting=[{id:"fitted-main",placedObjectId:part.id,sourceDeviceId:part.id,shipId:"ship",definitionId:"main-drive-v1",definitionRevision:1,kind:"actuator",installed:true,powered:true,availability:1,revision:37n}];
-  const result=f.compile();
+  const f = fixture();
+  const part = source.layout.assembly.parts.find(
+    (p) => p.assetId === "part-e8b51ac6443c73becfcb",
+  )!;
+  f.tables.constructionFlightFitting = [
+    {
+      id: "fitted-main",
+      placedObjectId: part.id,
+      sourceDeviceId: part.id,
+      shipId: "ship",
+      definitionId: "main-drive-v1",
+      definitionRevision: 1,
+      kind: "actuator",
+      installed: true,
+      powered: true,
+      availability: 1,
+      revision: 37n,
+    },
+  ];
+  const result = f.compile();
   expect(result.actuators).toHaveLength(1);
-  expect(result.actuators[0]).toMatchObject({id:"fitted-main",maxThrustN:14000});
-  expect(result.mass.massKg).toBeCloseTo(12000,7);
+  expect(result.actuators[0]).toMatchObject({
+    id: "fitted-main",
+    maxThrustN: 14000,
+  });
+  expect(result.mass.massKg).toBeCloseTo(12000, 7);
 });
 
 test("flight inventory unit mass remains bound to physical v1 when unrelated inventory metadata changes", () => {
-  const f=fixture();
-  f.tables.inventoryContainer=[f.container("ground","departed",false)];
-  f.tables.inventoryItem=[f.item("payload","departed","ground")];
-  const before=f.compile(),original=f.definition.massKg;
+  const f = fixture();
+  f.tables.inventoryContainer = [f.container("ground", "departed", false)];
+  f.tables.inventoryItem = [f.item("payload", "departed", "ground")];
+  const before = f.compile(),
+    original = f.definition.massKg;
   try {
-    f.definition.massKg=original+50;
-    const after=f.compile();
+    f.definition.massKg = original + 50;
+    const after = f.compile();
     expect(after.mass).toEqual(before.mass);
     expect(after.inputHash).toBe(before.inputHash);
-  } finally { f.definition.massKg=original; }
+  } finally {
+    f.definition.massKg = original;
+  }
 });

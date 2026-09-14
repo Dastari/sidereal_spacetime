@@ -1,6 +1,6 @@
-import { CONSTRUCTION_INSET_VISUAL_PIN } from "../../content/src/construction-inset-visuals";
-import visualExtension from "../../content/src/construction-wayfarer-rebuild-visuals.json";
-import source from "../../content/src/wayfarer-rebuild-r002.json";
+import { CONSTRUCTION_INSET_VISUAL_PIN } from "@sidereal/content/construction-inset-visuals";
+import visualExtension from "@sidereal/content/construction-wayfarer-rebuild-visuals.json";
+import source from "@sidereal/content/wayfarer-rebuild-r002.json";
 import type { ConstructionDocument } from "@sidereal/content/construction";
 import { stableStringify } from "./layout-geometry";
 import { sha256 } from "@noble/hashes/sha2.js";

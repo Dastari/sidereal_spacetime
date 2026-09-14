@@ -1,5 +1,5 @@
-import { LAB_STORAGE_FIXTURES } from "../../content/src/storage-fixtures";
-import { LAB_INTERACTIONS } from "../../content/src/interactions";
+import { LAB_STORAGE_FIXTURES } from "@sidereal/content/storage-fixtures";
+import { LAB_INTERACTIONS } from "@sidereal/content/interactions";
 import { qualifiedWayfarerInstanceObstacles } from "./wayfarer-walking-bindings";
 import type { ConstructionInstancePlan } from "./construction-instance";
 

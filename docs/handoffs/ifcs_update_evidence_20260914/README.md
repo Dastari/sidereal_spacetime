@@ -16,3 +16,6 @@ sign-off. No client-authored transforms, force or damage was used.
 [Sampled evidence](browser-evidence.json) preserves the actual actuator UUIDs,
 compiled mounts and before/after mass. The progress ledger records full checks,
 source/provenance preservation and the isolated browser setup.
+
+[Phase 6 verification](phase6-verification.json) records the final schema boundary,
+check/build/smoke results and the preexisting independent documentation limitation.

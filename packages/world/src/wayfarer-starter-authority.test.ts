@@ -1,5 +1,5 @@
-import { WAYFARER_STARTER } from "../../content/src/wayfarer-starter";
-import { CURRENT_WAYFARER_STARTER } from "../../content/src/wayfarer-current-starter";
+import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
+import { CURRENT_WAYFARER_STARTER } from "@sidereal/content/wayfarer-current-starter";
 import {
   replacePlayerWayfarer,
   replacementRows,

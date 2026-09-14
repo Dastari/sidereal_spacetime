@@ -81,7 +81,9 @@ test("installed ship loader resource budget", async () => {
     for (const mesh of base.meshes) {
       setMeshRole(mesh, legacyMeshRole(mesh));
       if (mesh.getTotalVertices() > 0)
-        expect(legacyCutawayFade(mesh)).toBe(/GEO-(roof|markings)/.test(mesh.name));
+        expect(legacyCutawayFade(mesh)).toBe(
+          /GEO-(roof|markings)/.test(mesh.name),
+        );
     }
     const equipment = await loadInstalledEquipment(scene, ship, base.meshes);
     const cargo = await loadInstalledModules(scene, ship, "cargo");
@@ -93,14 +95,25 @@ test("installed ship loader resource budget", async () => {
       ...floor.meshes,
       ...hull.meshes,
     ];
-    const fadeRoofs = meshes.filter(m => m.metadata?.role === "roof" && m.metadata?.cutawayFade);
-    expect(fadeRoofs.map(m => m.uniqueId).sort()).toEqual(meshes.filter(m => /GEO-(roof|markings)/.test(m.name) && m.getTotalVertices() > 0).map(m => m.uniqueId).sort());
+    const fadeRoofs = meshes.filter(
+      (m) => m.metadata?.role === "roof" && m.metadata?.cutawayFade,
+    );
+    expect(fadeRoofs.map((m) => m.uniqueId).sort()).toEqual(
+      meshes
+        .filter(
+          (m) => /GEO-(roof|markings)/.test(m.name) && m.getTotalVertices() > 0,
+        )
+        .map((m) => m.uniqueId)
+        .sort(),
+    );
     const beforeFadeMaterials = scene.materials.length;
     prepareCutawayMeshes(fadeRoofs);
     expect(scene.materials.length).toBe(beforeFadeMaterials);
     for (const mesh of meshes) {
       prepareShadowPolicy(mesh);
-      expect(isStructuralShadowSource(mesh), mesh.name).toBe(/GEO-(walls|partitions|cutaway|roof)/.test(mesh.name));
+      expect(isStructuralShadowSource(mesh), mesh.name).toBe(
+        /GEO-(walls|partitions|cutaway|roof)/.test(mesh.name),
+      );
     }
     createShipLighting(scene, ship, meshes);
     const glow = createShipGlowOccluders(
@@ -140,13 +153,13 @@ test("installed ship loader resource budget", async () => {
   }
 }, 120000);
 
-import { WAYFARER_CONVERSION_PIN as PIN } from "../../content/src/wayfarer-conversion-candidate";
+import { WAYFARER_CONVERSION_PIN as PIN } from "@sidereal/content/wayfarer-conversion-candidate";
 import {
   createWayfarerConversionCandidate,
   type WayfarerPinnedInputs,
-} from "../../sim/src/wayfarer-conversion-candidate";
-import { qualifiedWayfarerWalkingBindings } from "../../sim/src/wayfarer-walking-bindings";
-import { planConstructionInstance } from "../../sim/src/construction-instance";
+} from "@sidereal/sim/wayfarer-conversion-candidate";
+import { qualifiedWayfarerWalkingBindings } from "@sidereal/sim/wayfarer-walking-bindings";
+import { planConstructionInstance } from "@sidereal/sim/construction-instance";
 import {
   loadConstructionInstance,
   createConstructionLighting,
@@ -224,7 +237,13 @@ test("current semantic Wayfarer loader resource budget and complete role attribu
     expect(meshesByRole(scene).unclassified.total).toBe(0);
     for (const placement of ship.placements)
       for (const mesh of placement.meshes)
-        expect(mesh.metadata.partId === placement.node.metadata.partId || mesh.metadata.trianglePlacements?.some((r: { placementId: string }) => r.placementId === placement.node.metadata.partId)).toBe(true);
+        expect(
+          mesh.metadata.partId === placement.node.metadata.partId ||
+            mesh.metadata.trianglePlacements?.some(
+              (r: { placementId: string }) =>
+                r.placementId === placement.node.metadata.partId,
+            ),
+        ).toBe(true);
   } finally {
     scene.dispose();
     engine.dispose();

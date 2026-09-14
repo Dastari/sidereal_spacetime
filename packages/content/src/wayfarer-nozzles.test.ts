@@ -3,7 +3,7 @@ import source from "./wayfarer-rebuild-r002.json";
 import { WAYFARER_V1_NOZZLES } from "./wayfarer-nozzles";
 import { wayfarerFlightInput } from "./wayfarer-flight-definition";
 import { WAYFARER_PHYSICAL_CATALOG } from "./physical-definitions";
-import { compileFlightDefinition } from "../../sim/src/flight-definition";
+import { compileFlightDefinition } from "@sidereal/sim/flight-definition";
 import type { ConstructionDocument } from "./construction";
 
 test("retained visual nozzle references equal compiled v1 placed-part mounts", () => {

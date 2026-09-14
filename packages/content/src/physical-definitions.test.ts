@@ -15,7 +15,7 @@ import {
   type CompiledFlightDefinition,
   type ActuatorDefinition,
   type ComputerDefinition,
-} from "../../sim/src/flight-definition";
+} from "@sidereal/sim/flight-definition";
 import {
   wayfarerFlightInput,
   wayfarerFlightParts,
@@ -270,9 +270,9 @@ describe("Wayfarer version 1 physical source catalog", () => {
   });
 });
 
-import { planConstructionInstance } from "../../sim/src/construction-instance";
-import { compileConstruction } from "../../sim/src/construction-transactions";
-import { qualifiedWayfarerWalkingBindings } from "../../sim/src/wayfarer-walking-bindings";
+import { planConstructionInstance } from "@sidereal/sim/construction-instance";
+import { compileConstruction } from "@sidereal/sim/construction-transactions";
+import { qualifiedWayfarerWalkingBindings } from "@sidereal/sim/wayfarer-walking-bindings";
 it.each([
   ["r001", historical, 262],
   ["r002", source, 301],

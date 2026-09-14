@@ -1,14 +1,14 @@
-import { canReachOnDeck } from "../../sim/src/construction-collision";
-import { interactionLineOfSight } from "../../sim/src/interactions";
-import { CABIN_PARTITIONS } from "../../content/src/interior";
+import { canReachOnDeck } from "@sidereal/sim/construction-collision";
+import { interactionLineOfSight } from "@sidereal/sim/interactions";
+import { CABIN_PARTITIONS } from "@sidereal/content/interior";
 import {
   readGroundPlacement,
   writeGroundPlacement,
-} from "../../sim/src/ground-placement";
+} from "@sidereal/sim/ground-placement";
 import {
   isQualifiedWayfarerBlueprint,
   qualifiedWayfarerInstanceObstacles,
-} from "../../sim/src/wayfarer-walking-bindings";
+} from "@sidereal/sim/wayfarer-walking-bindings";
 import { readCargo } from "./scoped-inventory-authority";
 import { resolveCargoAccess } from "./scoped-inventory";
 import type { access } from "./inventory";

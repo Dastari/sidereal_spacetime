@@ -28,7 +28,13 @@ export const inventoryItem = table(
   },
 );
 export const inventoryContainer = table(
-  { name: "inventory_container", indexes: [...byCharacter, { accessor: "by_ship", algorithm: "btree", columns: ["shipId"] }] },
+  {
+    name: "inventory_container",
+    indexes: [
+      ...byCharacter,
+      { accessor: "by_ship", algorithm: "btree", columns: ["shipId"] },
+    ],
+  },
   {
     id: t.string().primaryKey(),
     characterId: t.string(),

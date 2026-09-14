@@ -4,10 +4,13 @@ import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 
 /** Immutable authored placements only. Their common parent can move or be hidden;
  * placement/deck edits rebuild the owning loader and dispose this cache. */
-export function cacheStaticTransforms(root: TransformNode, meshes: readonly AbstractMesh[]) {
+export function cacheStaticTransforms(
+  root: TransformNode,
+  meshes: readonly AbstractMesh[],
+) {
   const scene = root.getScene();
   const inverse = Matrix.Invert(root.computeWorldMatrix(true));
-  const entries = meshes.map(mesh => ({
+  const entries = meshes.map((mesh) => ({
     mesh,
     local: mesh.computeWorldMatrix(true).multiply(inverse),
     world: Matrix.Identity(),
@@ -15,7 +18,8 @@ export function cacheStaticTransforms(root: TransformNode, meshes: readonly Abst
     cullingStrategy: mesh.cullingStrategy,
   }));
   for (const entry of entries)
-    entry.mesh.cullingStrategy = AbstractMesh.CULLINGSTRATEGY_BOUNDINGSPHERE_ONLY;
+    entry.mesh.cullingStrategy =
+      AbstractMesh.CULLINGSTRATEGY_BOUNDINGSPHERE_ONLY;
   let previous: Matrix | undefined;
   const refresh = () => {
     const world = root.computeWorldMatrix(true);
@@ -37,11 +41,12 @@ export function cacheStaticTransforms(root: TransformNode, meshes: readonly Abst
     refresh,
     dispose() {
       scene.onBeforeRenderObservable.remove(observer);
-      for (const entry of entries) if (!entry.mesh.isDisposed()) {
-        entry.mesh.doNotSyncBoundingInfo = entry.syncBounds;
-        entry.mesh.cullingStrategy = entry.cullingStrategy;
-        entry.mesh.unfreezeWorldMatrix();
-      }
+      for (const entry of entries)
+        if (!entry.mesh.isDisposed()) {
+          entry.mesh.doNotSyncBoundingInfo = entry.syncBounds;
+          entry.mesh.cullingStrategy = entry.cullingStrategy;
+          entry.mesh.unfreezeWorldMatrix();
+        }
     },
   };
 }

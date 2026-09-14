@@ -7,7 +7,7 @@ import {
   compileFlightDefinition,
   flightDefinitionInputHash,
   type FlightDefinitionInput,
-} from "../../sim/src/flight-definition";
+} from "@sidereal/sim/flight-definition";
 
 export type CompiledFlightRow = Infer<
   typeof constructionFlightCompiled.rowType

@@ -300,22 +300,80 @@ test("owner index results are checked and bounded; no foreign flight or unbounde
   expect(ownAuthoredFlights(f.ctx)).toEqual([]);
 });
 
-
-test("compiled physics rejection is owner-visible before admission; actuator mounts stay owner-admitted only",()=>{
-  const f=fixture();
-  let pending=false;
-  const compiled:any={shipId:"ship",revision:2n,status:"ready",reason:"",massKg:1234,centerX:1,centerY:2,inertiaKgM2:4567,envelopeJson:"{}",definitionHash:"physical-v1",actuatorsJson:JSON.stringify([{id:"device1",placedObjectId:"part1",x:3,y:4,nozzleX:3,nozzleY:3.5,height:1,exhaustX:0,exhaustY:-1}])};
-  const ctx={...f.ctx,db:{...f.ctx.db,constructionFlightCompiled:{shipId:{find:()=>compiled}},constructionFlightDirty:{shipId:{find:()=>pending?{shipId:"ship"}:undefined}},actuatorOutput:{id:{find:()=>({throttle:.5})}}}};
-  expect(ownAuthoredFlightPhysics(ctx)[0]).toMatchObject({massKg:1234,centerX:1,centerY:2,status:"ready"});
-  expect(ownAuthoredFlightActuators(ctx)).toEqual([{id:"device1",shipId:"ship",placedObjectId:"part1",x:3,y:4,nozzleX:3,nozzleY:3.5,height:1,exhaustX:0,exhaustY:-1,throttle:.5}]);
-  pending=true;
-  expect(ownAuthoredFlightPhysics(ctx)[0].reason).toBe("flight-compilation-pending");
+test("compiled physics rejection is owner-visible before admission; actuator mounts stay owner-admitted only", () => {
+  const f = fixture();
+  let pending = false;
+  const compiled: any = {
+    shipId: "ship",
+    revision: 2n,
+    status: "ready",
+    reason: "",
+    massKg: 1234,
+    centerX: 1,
+    centerY: 2,
+    inertiaKgM2: 4567,
+    envelopeJson: "{}",
+    definitionHash: "physical-v1",
+    actuatorsJson: JSON.stringify([
+      {
+        id: "device1",
+        placedObjectId: "part1",
+        x: 3,
+        y: 4,
+        nozzleX: 3,
+        nozzleY: 3.5,
+        height: 1,
+        exhaustX: 0,
+        exhaustY: -1,
+      },
+    ]),
+  };
+  const ctx = {
+    ...f.ctx,
+    db: {
+      ...f.ctx.db,
+      constructionFlightCompiled: { shipId: { find: () => compiled } },
+      constructionFlightDirty: {
+        shipId: { find: () => (pending ? { shipId: "ship" } : undefined) },
+      },
+      actuatorOutput: { id: { find: () => ({ throttle: 0.5 }) } },
+    },
+  };
+  expect(ownAuthoredFlightPhysics(ctx)[0]).toMatchObject({
+    massKg: 1234,
+    centerX: 1,
+    centerY: 2,
+    status: "ready",
+  });
+  expect(ownAuthoredFlightActuators(ctx)).toEqual([
+    {
+      id: "device1",
+      shipId: "ship",
+      placedObjectId: "part1",
+      x: 3,
+      y: 4,
+      nozzleX: 3,
+      nozzleY: 3.5,
+      height: 1,
+      exhaustX: 0,
+      exhaustY: -1,
+      throttle: 0.5,
+    },
+  ]);
+  pending = true;
+  expect(ownAuthoredFlightPhysics(ctx)[0].reason).toBe(
+    "flight-compilation-pending",
+  );
   expect(ownAuthoredFlightActuators(ctx)).toEqual([]);
-  pending=false;compiled.status="rejected";compiled.reason="missing-physical-definition";
+  pending = false;
+  compiled.status = "rejected";
+  compiled.reason = "missing-physical-definition";
   f.setReview(undefined);
-  expect(ownAuthoredFlightPhysics(ctx)[0].reason).toBe("missing-physical-definition");
+  expect(ownAuthoredFlightPhysics(ctx)[0].reason).toBe(
+    "missing-physical-definition",
+  );
   expect(ownAuthoredFlightActuators(ctx)).toEqual([]);
-  f.a.owner=f.foreign;
-  expect(ownAuthoredFlightPhysics({...ctx,sender:f.foreign})).toEqual([]);
-  expect(ownAuthoredFlightActuators({...ctx,sender:f.foreign})).toEqual([]);
+  f.a.owner = f.foreign;
+  expect(ownAuthoredFlightPhysics({ ...ctx, sender: f.foreign })).toEqual([]);
+  expect(ownAuthoredFlightActuators({ ...ctx, sender: f.foreign })).toEqual([]);
 });

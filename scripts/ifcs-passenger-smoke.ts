@@ -316,27 +316,59 @@ try {
   );
   assert([...a.db.ownActuatorOutputs.iter()].every((o) => o.throttle === 0));
   await power(true);
-  const computer = [...a.db.ownAuthoredFlightPowerFittings.iter()].find(f => f.kind === "computer")!;
+  const computer = [...a.db.ownAuthoredFlightPowerFittings.iter()].find(
+    (f) => f.kind === "computer",
+  )!;
   async function computerPower(connected: boolean) {
     const revision = flight(a).revision;
     await a.reducers.setConstructionComputerPower({
-      shipId, computerPlacedObjectId: computer.placedObjectId, connected,
-      expectedRevision: revision, operationId: crypto.randomUUID(),
+      shipId,
+      computerPlacedObjectId: computer.placedObjectId,
+      connected,
+      expectedRevision: revision,
+      operationId: crypto.randomUUID(),
     });
-    await wait(() => flight(a).revision > revision && physics(a, shipId).status === "ready", "computer circuit compiled");
+    await wait(
+      () =>
+        flight(a).revision > revision && physics(a, shipId).status === "ready",
+      "computer circuit compiled",
+    );
   }
   await intent(a, 1, 0);
-  await wait(() => [...a.db.ownActuatorOutputs.iter()].some(o => o.throttle > 0), "powered computer commands thrust");
+  await wait(
+    () => [...a.db.ownActuatorOutputs.iter()].some((o) => o.throttle > 0),
+    "powered computer commands thrust",
+  );
   await computerPower(false);
-  await wait(() => [...a.db.ownActuatorOutputs.iter()].every(o => o.throttle === 0), "unpowered computer cuts all actuation");
-  await assert.rejects(() => intent(a, 1, 1), "unpowered computer rejects fresh pilot intent");
-  const off0 = toCenterOfMassMotion([...a.db.ownShips.iter()][0]!, physics(a, shipId));
+  await wait(
+    () => [...a.db.ownActuatorOutputs.iter()].every((o) => o.throttle === 0),
+    "unpowered computer cuts all actuation",
+  );
+  await assert.rejects(
+    () => intent(a, 1, 1),
+    "unpowered computer rejects fresh pilot intent",
+  );
+  const off0 = toCenterOfMassMotion(
+    [...a.db.ownShips.iter()][0]!,
+    physics(a, shipId),
+  );
   await pause(250);
-  const off1 = toCenterOfMassMotion([...a.db.ownShips.iter()][0]!, physics(a, shipId));
-  assert(Math.abs(off0.vx - off1.vx) < 1e-9 && Math.abs(off0.vy - off1.vy) < 1e-9 && Math.abs(off0.omega - off1.omega) < 1e-12, "unpowered computer coasts");
+  const off1 = toCenterOfMassMotion(
+    [...a.db.ownShips.iter()][0]!,
+    physics(a, shipId),
+  );
+  assert(
+    Math.abs(off0.vx - off1.vx) < 1e-9 &&
+      Math.abs(off0.vy - off1.vy) < 1e-9 &&
+      Math.abs(off0.omega - off1.omega) < 1e-12,
+    "unpowered computer coasts",
+  );
   await computerPower(true);
   await intent(a, 1, 0);
-  await wait(() => [...a.db.ownActuatorOutputs.iter()].some(o => o.throttle > 0), "restored computer accepts fresh pilot intent");
+  await wait(
+    () => [...a.db.ownActuatorOutputs.iter()].some((o) => o.throttle > 0),
+    "restored computer accepts fresh pilot intent",
+  );
   await intent(a, 0, 0);
   await a.reducers.revokeShipPassenger({
     grantId: grant.id,

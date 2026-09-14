@@ -5,7 +5,7 @@ import {
   WAYFARER_REACTOR_ASSET_ID,
   WAYFARER_REACTOR_SOURCE_ID,
 } from "@sidereal/content/device-services";
-import { WAYFARER_PHYSICAL_CATALOG } from "../../content/src/physical-definitions";
+import { WAYFARER_PHYSICAL_CATALOG } from "@sidereal/content/physical-definitions";
 import { markShipFlightDirty } from "./construction-flight-dirty";
 import type { ConstructionDocument } from "@sidereal/content/construction";
 import type { ConstructionInstanceMappings } from "@sidereal/sim/construction-instance";
@@ -38,13 +38,17 @@ export function setConstructionComputerPower(
   ctx: ConstructionPilotContext,
   args: ConstructionComputerPowerArgs,
 ) {
-  return setDevicePower(ctx, {
-    shipId: args.shipId,
-    enginePlacedObjectId: args.computerPlacedObjectId,
-    connected: args.connected,
-    expectedRevision: args.expectedRevision,
-    operationId: args.operationId,
-  }, "computer");
+  return setDevicePower(
+    ctx,
+    {
+      shipId: args.shipId,
+      enginePlacedObjectId: args.computerPlacedObjectId,
+      connected: args.connected,
+      expectedRevision: args.expectedRevision,
+      operationId: args.operationId,
+    },
+    "computer",
+  );
 }
 function setDevicePower(
   ctx: ConstructionPilotContext,
@@ -113,24 +117,74 @@ function setDevicePower(
   )
     throw Error("Installed qualified reactor required");
   const fittings = [];
-  for (const row of ctx.db.constructionFlightFitting.by_ship.filter(args.shipId)) {
-    if (fittings.length === 256) throw Error("Bounded qualified power installation required");
+  for (const row of ctx.db.constructionFlightFitting.by_ship.filter(
+    args.shipId,
+  )) {
+    if (fittings.length === 256)
+      throw Error("Bounded qualified power installation required");
     fittings.push(row);
   }
-  if (new Set(fittings.map(f=>f.id)).size!==fittings.length || new Set(fittings.map(f=>f.placedObjectId)).size!==fittings.length || new Set(fittings.map(f=>f.sourceDeviceId)).size!==fittings.length || fittings.some(f=>f.shipId!==args.shipId))
+  if (
+    new Set(fittings.map((f) => f.id)).size !== fittings.length ||
+    new Set(fittings.map((f) => f.placedObjectId)).size !== fittings.length ||
+    new Set(fittings.map((f) => f.sourceDeviceId)).size !== fittings.length ||
+    fittings.some((f) => f.shipId !== args.shipId)
+  )
     throw Error("Unique qualified power fitting set required");
   for (const fitting of fittings) {
     if (!fitting.installed) continue;
-    const part = document.layout.assembly?.parts.find(p=>p.id===fitting.placedObjectId);
-    const physical = part && WAYFARER_PHYSICAL_CATALOG.definitions.find(d=>d.id==="physical:"+part.assetId && d.revision===fitting.definitionRevision);
-    if (!physical || physical.kind!==fitting.kind || !("fittingDefinitionId" in physical) || physical.fittingDefinitionId!==fitting.definitionId || !mappings.objects.some(m=>m.instanceId===fitting.placedObjectId))
+    const part = document.layout.assembly?.parts.find(
+      (p) => p.id === fitting.placedObjectId,
+    );
+    const physical =
+      part &&
+      WAYFARER_PHYSICAL_CATALOG.definitions.find(
+        (d) =>
+          d.id === "physical:" + part.assetId &&
+          d.revision === fitting.definitionRevision,
+      );
+    if (
+      !physical ||
+      physical.kind !== fitting.kind ||
+      !("fittingDefinitionId" in physical) ||
+      physical.fittingDefinitionId !== fitting.definitionId ||
+      !mappings.objects.some((m) => m.instanceId === fitting.placedObjectId)
+    )
       throw Error("Definition-bound power fitting set required");
   }
-  const engine = fittings.find(f=>f.placedObjectId===args.enginePlacedObjectId && f.kind===kind);
-  const placed = document.layout.assembly?.parts.find(p=>p.id===args.enginePlacedObjectId);
-  const source = placed && WAYFARER_PHYSICAL_CATALOG.definitions.find(d=>d.id==="physical:"+placed.assetId && d.revision===engine?.definitionRevision && d.kind===kind);
-  if (!engine || !source || !("fittingDefinitionId" in source) || source.fittingDefinitionId!==engine.definitionId || !engine.installed || !mappings.objects.some(m=>m.sourceId===(kind === "computer" ? "equipment-control-console" : engine.sourceDeviceId) && m.instanceId===engine.placedObjectId))
-    throw Error(kind === "computer" ? "Installed qualified computer required" : "Installed qualified engine required");
+  const engine = fittings.find(
+    (f) => f.placedObjectId === args.enginePlacedObjectId && f.kind === kind,
+  );
+  const placed = document.layout.assembly?.parts.find(
+    (p) => p.id === args.enginePlacedObjectId,
+  );
+  const source =
+    placed &&
+    WAYFARER_PHYSICAL_CATALOG.definitions.find(
+      (d) =>
+        d.id === "physical:" + placed.assetId &&
+        d.revision === engine?.definitionRevision &&
+        d.kind === kind,
+    );
+  if (
+    !engine ||
+    !source ||
+    !("fittingDefinitionId" in source) ||
+    source.fittingDefinitionId !== engine.definitionId ||
+    !engine.installed ||
+    !mappings.objects.some(
+      (m) =>
+        m.sourceId ===
+          (kind === "computer"
+            ? "equipment-control-console"
+            : engine.sourceDeviceId) && m.instanceId === engine.placedObjectId,
+    )
+  )
+    throw Error(
+      kind === "computer"
+        ? "Installed qualified computer required"
+        : "Installed qualified engine required",
+    );
   // Permission, stale revision, exact mappings and complete source checks precede writes.
   ctx.db.constructionFlightFitting.id.update({
     ...engine,

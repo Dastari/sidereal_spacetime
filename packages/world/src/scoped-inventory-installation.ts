@@ -1,9 +1,9 @@
 import { SenderError } from "spacetimedb/server";
-import { isQualifiedWayfarerBlueprint } from "../../sim/src/wayfarer-walking-bindings";
-import { wayfarerThresholdElevation } from "../../sim/src/wayfarer-threshold";
-import { planQualifiedWayfarerFunctionalSeeds } from "../../sim/src/construction-functional-instances";
-import type { ConstructionInstancePlan } from "../../sim/src/construction-instance";
-import { LAB_STORAGE_FIXTURES } from "../../content/src/storage-fixtures";
+import { isQualifiedWayfarerBlueprint } from "@sidereal/sim/wayfarer-walking-bindings";
+import { wayfarerThresholdElevation } from "@sidereal/sim/wayfarer-threshold";
+import { planQualifiedWayfarerFunctionalSeeds } from "@sidereal/sim/construction-functional-instances";
+import type { ConstructionInstancePlan } from "@sidereal/sim/construction-instance";
+import { LAB_STORAGE_FIXTURES } from "@sidereal/content/storage-fixtures";
 import { constructionCollision } from "./construction-doors";
 import { qualifyCargoAccessPoint } from "./scoped-inventory";
 import type { synchronizeLegacyInventory } from "./scoped-inventory-authority";

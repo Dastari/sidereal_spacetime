@@ -260,11 +260,6 @@ export function refitExistingWayfarer(ctx: RefitContext, args: RefitRequest) {
         ctx.db.constructionFlightFitting.id.find(id)
       ),
   });
-  for (const key of ["massKg", "thrustN", "turnAcceleration"] as const)
-    if (s.ship[key] !== p.flight.ship[key])
-      throw Error(
-        "Changed legacy flight ratings require a separate qualified conversion",
-      );
   // Telemetry is a replaceable projection, not an installed component identity.
   // Legacy output keys use source labels; native outputs use fitting UUIDs.
   // Reject unknown keys, then replace the complete set atomically so obsolete

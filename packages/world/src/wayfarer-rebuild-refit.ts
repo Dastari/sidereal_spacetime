@@ -7,14 +7,14 @@ import type {
 } from "spacetimedb/server";
 import type world from "./index";
 import type { constructionDoor } from "./construction-tables";
-import type { ConstructionDocument } from "../../content/src/construction";
-import { WAYFARER_STARTER } from "../../content/src/wayfarer-starter";
+import type { ConstructionDocument } from "@sidereal/content/construction";
+import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
 import {
   readConstructionDraft,
   constructionHash,
-} from "../../sim/src/construction-transactions";
-import { planConstructionRefitIdentities } from "../../sim/src/construction-refit-identities";
-import type { ConstructionInstanceMappings } from "../../sim/src/construction-instance";
+} from "@sidereal/sim/construction-transactions";
+import { planConstructionRefitIdentities } from "@sidereal/sim/construction-refit-identities";
+import type { ConstructionInstanceMappings } from "@sidereal/sim/construction-instance";
 import { requireGame } from "./auth";
 import { ownedGameShipAccess } from "./game-ship-access-authority";
 

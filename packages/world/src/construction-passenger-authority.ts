@@ -5,9 +5,9 @@ import type { constructionPassengerVisit } from "./construction-passenger-tables
 import { requireGame } from "./auth";
 import { clearAim } from "./combat";
 import { ownedGameShipAccess } from "./game-ship-access-authority";
-import { gameShipAccess } from "../../sim/src/game-ship-access";
-import { isQualifiedWayfarerBlueprint } from "../../sim/src/wayfarer-walking-bindings";
-import { canOccupyDeck } from "../../sim/src/construction-collision";
+import { gameShipAccess } from "@sidereal/sim/game-ship-access";
+import { isQualifiedWayfarerBlueprint } from "@sidereal/sim/wayfarer-walking-bindings";
+import { canOccupyDeck } from "@sidereal/sim/construction-collision";
 import { constructionCollision } from "./construction-doors";
 import { createConstructionStandingSupport } from "./construction-standing-support";
 import { commitFlightCharacter } from "./construction-flight-dirty";

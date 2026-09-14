@@ -2,9 +2,9 @@ import { Range, type InferSchema, type ReducerCtx } from "spacetimedb/server";
 import type world from "./index";
 import { requireGame } from "./auth";
 import { markShipFlightDirty } from "./construction-flight-dirty";
-import { isQualifiedWayfarerBlueprint } from "../../sim/src/wayfarer-walking-bindings";
-import { WAYFARER_PHYSICAL_CATALOG } from "../../content/src/physical-definitions";
-import type { ActuatorDefinition } from "../../sim/src/flight-definition";
+import { isQualifiedWayfarerBlueprint } from "@sidereal/sim/wayfarer-walking-bindings";
+import { WAYFARER_PHYSICAL_CATALOG } from "@sidereal/content/physical-definitions";
+import type { ActuatorDefinition } from "@sidereal/sim/flight-definition";
 type Context = ReducerCtx<InferSchema<typeof world>>;
 const encode = (v: unknown) =>
   JSON.stringify(v, (_, x) => (typeof x === "bigint" ? x.toString() : x));

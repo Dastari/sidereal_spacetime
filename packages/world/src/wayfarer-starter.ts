@@ -1,7 +1,7 @@
 import {
   CURRENT_WAYFARER_STARTER,
   type WayfarerStarterTemplate,
-} from "../../content/src/wayfarer-current-starter";
+} from "@sidereal/content/wayfarer-current-starter";
 import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
 import {
   planWayfarerStarter,

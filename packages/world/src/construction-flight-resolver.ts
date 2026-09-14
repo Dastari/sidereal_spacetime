@@ -6,20 +6,20 @@ import type {
 import {
   CONSTRUCTION_FLIGHT_DEFINITION,
   CONSTRUCTION_FLIGHT_DEFINITION_SHA256,
-} from "../../sim/src/construction-flight";
-import { isQualifiedWayfarerBlueprint } from "../../sim/src/wayfarer-walking-bindings";
+} from "@sidereal/sim/construction-flight";
+import { isQualifiedWayfarerBlueprint } from "@sidereal/sim/wayfarer-walking-bindings";
 import {
   WAYFARER_FLIGHT_PROFILE,
   WAYFARER_FLIGHT_SPEED,
   WAYFARER_PHYSICAL_CATALOG,
-} from "../../content/src/physical-definitions";
+} from "@sidereal/content/physical-definitions";
 import {
   flightDefinitionCatalogHash,
   type CompiledFlightActuator,
   type CompiledFlightComputer,
   type CompiledFlightHull,
-} from "../../sim/src/flight-definition";
-import type { FlightEnvelope } from "../../sim/src/ifcs";
+} from "@sidereal/sim/flight-definition";
+import type { FlightEnvelope } from "@sidereal/sim/ifcs";
 import type { CompiledFlightRow } from "./construction-flight-compilation";
 export type ConstructionFlightBindingRow = Infer<
   typeof constructionFlightBinding.rowType

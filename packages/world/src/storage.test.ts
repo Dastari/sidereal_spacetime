@@ -7,7 +7,12 @@ vi.mock("spacetimedb/server", () => ({
     {},
     {
       get: () => () => ({
-        primaryKey() { return this; }, unique() { return this; },
+        primaryKey() {
+          return this;
+        },
+        unique() {
+          return this;
+        },
       }),
     },
   ),
@@ -42,7 +47,7 @@ test("fixture migration retains the original container and creates only empty st
   let state = { characterId: "actor", revision: 12n, kitGranted: true },
     sequence = 0;
   const db = {
-    constructionFlightBinding: {shipId:{find:()=>undefined}},
+    constructionFlightBinding: { shipId: { find: () => undefined } },
     ...inventoryMetadataTestTables(),
     inventoryItem: { by_character: { filter: () => [] } },
     character: { id: { find: () => ({ id: "actor", shipId: "ship" }) } },

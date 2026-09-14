@@ -1,4 +1,4 @@
-import { setMeshRole } from './mesh-roles';
+import { setMeshRole } from "./mesh-roles";
 import type { RefitAttachmentVisual } from "./construction-refit-attachments";
 import {
   bindNativeAirlockPlan,

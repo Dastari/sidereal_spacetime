@@ -5,7 +5,7 @@ import {
   markFlightDirty,
   type CompiledFlightRow,
 } from "./construction-flight-compilation";
-import type { FlightDefinitionInput } from "../../sim/src/flight-definition";
+import type { FlightDefinitionInput } from "@sidereal/sim/flight-definition";
 function fixture() {
   const rows = new Map<string, CompiledFlightRow>();
   const dirty = new Map<string, { shipId: string; revision: bigint }>();

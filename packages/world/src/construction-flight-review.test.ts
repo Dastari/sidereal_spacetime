@@ -193,7 +193,7 @@ function fixture() {
     db,
     sender: owner,
     live: true,
-    timestamp: {microsSinceUnixEpoch:1n},
+    timestamp: { microsSinceUnixEpoch: 1n },
     grants: new Set(["draft.read", "instance.spawn"]),
   };
   const args = {

@@ -1,28 +1,26 @@
 import type { InferSchema, ReducerCtx } from "spacetimedb/server";
 import type world from "./index";
-import type { ConstructionDocument } from "../../content/src/construction";
-import type { ConstructionInstanceMappings } from "../../sim/src/construction-instance";
+import type { ConstructionDocument } from "@sidereal/content/construction";
+import type { ConstructionInstanceMappings } from "@sidereal/sim/construction-instance";
 import {
   wayfarerFlightInput,
   type WayfarerPhysicalVariant,
-} from "../../content/src/wayfarer-flight-definition";
+} from "@sidereal/content/wayfarer-flight-definition";
 import {
   WAYFARER_PHYSICAL_CATALOG,
   WAYFARER_CREW_BODY_DEFINITION,
-} from "../../content/src/physical-definitions";
-import { WAYFARER_REBUILD_SHA256 } from "../../sim/src/wayfarer-rebuild-contract";
-import { WAYFARER_EXTERIOR_SHA256 } from "../../sim/src/wayfarer-exterior-qualification";
-import { QUALIFIED_WAYFARER_SHA256 } from "../../sim/src/wayfarer-walking-bindings";
-import {
-  INVENTORY_DEFINITIONS,
-} from "../../content/src/inventory";
-import { inventoryMass, type InventorySnapshot } from "../../sim/src/inventory";
+} from "@sidereal/content/physical-definitions";
+import { WAYFARER_REBUILD_SHA256 } from "@sidereal/sim/wayfarer-rebuild-contract";
+import { WAYFARER_EXTERIOR_SHA256 } from "@sidereal/sim/wayfarer-exterior-qualification";
+import { QUALIFIED_WAYFARER_SHA256 } from "@sidereal/sim/wayfarer-walking-bindings";
+import { INVENTORY_DEFINITIONS } from "@sidereal/content/inventory";
+import { inventoryMass, type InventorySnapshot } from "@sidereal/sim/inventory";
 import {
   transformFlightVector,
   type FlightPlacedPart,
   type FlightCargoMass,
   type FlightCrewMass,
-} from "../../sim/src/flight-definition";
+} from "@sidereal/sim/flight-definition";
 import { legacyInventorySnapshot } from "./scoped-inventory-authority";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
@@ -38,16 +36,34 @@ function payloadMass(snapshot: InventorySnapshot) {
   const definitions = new Map<string, (typeof INVENTORY_DEFINITIONS)[number]>();
   const densities: Record<string, number> = {};
   for (const item of snapshot.items) {
-    const inventory = INVENTORY_DEFINITIONS.find(d => d.id === item.definitionId);
-    const physical = WAYFARER_PHYSICAL_CATALOG.definitions.find(d => d.id === "inventory:" + item.definitionId && d.revision === 1 && d.kind === "inventory");
-    if (!inventory || !physical) throw Error("missing-inventory-physical-definition:" + item.definitionId);
-    definitions.set(item.definitionId, { ...inventory, massKg: physical.massKg });
+    const inventory = INVENTORY_DEFINITIONS.find(
+      (d) => d.id === item.definitionId,
+    );
+    const physical = WAYFARER_PHYSICAL_CATALOG.definitions.find(
+      (d) =>
+        d.id === "inventory:" + item.definitionId &&
+        d.revision === 1 &&
+        d.kind === "inventory",
+    );
+    if (!inventory || !physical)
+      throw Error("missing-inventory-physical-definition:" + item.definitionId);
+    definitions.set(item.definitionId, {
+      ...inventory,
+      massKg: physical.massKg,
+    });
   }
-  for (const c of snapshot.containers) if (c.kind === "liquid") {
-    const physical = WAYFARER_PHYSICAL_CATALOG.definitions.find(d => d.id === "liquid:" + c.liquidType && d.revision === 1 && d.kind === "liquid");
-    if (!physical) throw Error("missing-liquid-physical-definition:" + c.liquidType);
-    densities[c.liquidType] = physical.massKg;
-  }
+  for (const c of snapshot.containers)
+    if (c.kind === "liquid") {
+      const physical = WAYFARER_PHYSICAL_CATALOG.definitions.find(
+        (d) =>
+          d.id === "liquid:" + c.liquidType &&
+          d.revision === 1 &&
+          d.kind === "liquid",
+      );
+      if (!physical)
+        throw Error("missing-liquid-physical-definition:" + c.liquidType);
+      densities[c.liquidType] = physical.massKg;
+    }
   for (const c of snapshot.containers) {
     if (c.kind !== "grid" && c.kind !== "liquid")
       throw Error("invalid-flight-container-kind");
@@ -95,8 +111,29 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
         : [],
     ),
   );
-  const fittingRows = bounded(ctx.db.constructionFlightFitting.by_ship.filter(shipId), 256);
-  const fittings = fittingRows.map(({id,placedObjectId,definitionId,definitionRevision,installed,powered,availability})=>({id,placedObjectId,definitionId,definitionRevision,installed,powered,availability}));
+  const fittingRows = bounded(
+    ctx.db.constructionFlightFitting.by_ship.filter(shipId),
+    256,
+  );
+  const fittings = fittingRows.map(
+    ({
+      id,
+      placedObjectId,
+      definitionId,
+      definitionRevision,
+      installed,
+      powered,
+      availability,
+    }) => ({
+      id,
+      placedObjectId,
+      definitionId,
+      definitionRevision,
+      installed,
+      powered,
+      availability,
+    }),
+  );
   if (fittingRows.some((f) => f.shipId !== shipId))
     throw Error("flight-fitting-ship-mismatch");
   const attachments: FlightPlacedPart[] = bounded(
@@ -263,10 +300,14 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
     document,
     { variant, identities, replacements, attachments },
     {
-      fittings, cargo, crew,
+      fittings,
+      cargo,
+      crew,
       // M4 will replace this explicit full supply with bounded fuel-network facts.
       // No fuel is consumed or inferred from inventory in this phase.
-      supply: Object.fromEntries(fittingRows.filter(f => f.kind === "actuator").map(f => [f.id, 1])),
+      supply: Object.fromEntries(
+        fittingRows.filter((f) => f.kind === "actuator").map((f) => [f.id, 1]),
+      ),
     },
   );
 }

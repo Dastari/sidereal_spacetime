@@ -1,25 +1,24 @@
-import { requireQualifiedPreservedFuelMount } from "../../sim/src/wayfarer-refit-mount";
+import { requireQualifiedPreservedFuelMount } from "@sidereal/sim/wayfarer-refit-mount";
 import {
   compileDeckCollision,
   resolveDeckCollision,
-} from "../../sim/src/construction-collision";
+} from "@sidereal/sim/construction-collision";
 import { t } from "spacetimedb/server";
 import {
   WAYFARER_REBUILD_SOURCE,
   WAYFARER_REBUILD_SHA256,
-} from "../../sim/src/wayfarer-rebuild-contract";
-import { planWayfarerRebuildGame } from "../../sim/src/wayfarer-rebuild-game";
-import { compileConstruction } from "../../sim/src/construction-transactions";
-import { canOccupyDeck } from "../../sim/src/construction-collision";
-import {
-  LAB_FLIGHT_ACTUATORS,
-  LAB_FLIGHT_COMPUTER,
-} from "../../content/src/flight";
+} from "@sidereal/sim/wayfarer-rebuild-contract";
+import { planWayfarerRebuildGame } from "@sidereal/sim/wayfarer-rebuild-game";
+import { compileConstruction } from "@sidereal/sim/construction-transactions";
+import { canOccupyDeck } from "@sidereal/sim/construction-collision";
+import { WAYFARER_V1_NOZZLES } from "@sidereal/content/wayfarer-nozzles";
+import { WAYFARER_PHYSICAL_CATALOG } from "@sidereal/content/physical-definitions";
+import type { ComputerDefinition } from "@sidereal/sim/flight-definition";
 import {
   CONSTRUCTION_FLIGHT_DEFINITION,
   CONSTRUCTION_FLIGHT_DEFINITION_SHA256,
-} from "../../sim/src/construction-flight";
-import removals from "../../content/src/wayfarer-rebuild-removals.json";
+} from "@sidereal/sim/construction-flight";
+import removals from "@sidereal/content/wayfarer-rebuild-removals.json";
 import {
   offerWayfarerRebuildRefit,
   refitWayfarerRebuild,
@@ -113,13 +112,22 @@ export function qualifiedWayfarerRebuildHooks(): WayfarerRebuildRefitHooks {
         state.flight.definitionSha256 !== CONSTRUCTION_FLIGHT_DEFINITION_SHA256
       )
         throw Error("Preserved development flight definition mismatch");
+      const consolePart = document.layout.assembly!.parts.find(
+        (p) => p.id === geometry.identities["equipment-control-console"],
+      );
+      const computer = WAYFARER_PHYSICAL_CATALOG.definitions.find(
+        (d) =>
+          d.kind === "computer" && d.id === "physical:" + consolePart?.assetId,
+      ) as ComputerDefinition | undefined;
+      if (!computer)
+        throw Error("Missing retained computer physical definition");
       const expected = [
         {
-          id: LAB_FLIGHT_COMPUTER.id,
+          id: "computer-flight-01",
           placed: "equipment-control-console",
-          definition: LAB_FLIGHT_COMPUTER.definitionId,
+          definition: computer.fittingDefinitionId,
         },
-        ...LAB_FLIGHT_ACTUATORS.map((a) => ({
+        ...WAYFARER_V1_NOZZLES.map((a) => ({
           id: a.id,
           placed: a.id,
           definition: a.definitionId,

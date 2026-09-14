@@ -118,7 +118,10 @@ describe("once-per-system space stepping", () => {
     const result = stepSystemSpace(input, [control("ship")]);
     expect(result.reason).toBe("contact-budget");
     expect(result.completedSubsteps).toBe(0);
-    expect(result.consumption[0].actuators[0].newtonSeconds).toBeCloseTo(1000 / 60, 12);
+    expect(result.consumption[0].actuators[0].newtonSeconds).toBeCloseTo(
+      1000 / 60,
+      12,
+    );
     expect(result.bodies.find((b) => b.id === "a")!.vx).toBe(
       1000 * Math.SQRT1_2,
     );
@@ -222,28 +225,41 @@ it("rolls back output telemetry together with a rejected force kick", () => {
 });
 
 it("retains the last completed command sample when a later kick is rolled back", () => {
-  const ship = body("ship", 1e9 - .2, { vx: 10 });
-  const result = stepSystemSpace([ship], [control("ship", { intent: { throttle: .01, turn: 0 } })]);
+  const ship = body("ship", 1e9 - 0.2, { vx: 10 });
+  const result = stepSystemSpace(
+    [ship],
+    [control("ship", { intent: { throttle: 0.01, turn: 0 } })],
+  );
   expect(result.reason).toBe("coordinate-bound");
   expect(result.completedSubsteps).toBe(1);
   // One 1000 N engine on 1000 kg: committed delta-v / DT equals throttle.
   // A later uncommitted feedback kick differs as forward speed rises.
   expect(result.commands[0].actuators[0].throttle).toBeGreaterThan(0);
-  expect(result.commands[0].actuators[0].throttle).toBeCloseTo(result.bodies[0].vy * 60, 10);
-  expect(result.consumption[0].actuators[0].newtonSeconds).toBeCloseTo(result.bodies[0].vy * ship.massKg, 10);
+  expect(result.commands[0].actuators[0].throttle).toBeCloseTo(
+    result.bodies[0].vy * 60,
+    10,
+  );
+  expect(result.consumption[0].actuators[0].newtonSeconds).toBeCloseTo(
+    result.bodies[0].vy * ship.massKg,
+    10,
+  );
 });
 
 it("sums changing throttle across accepted kicks and scales availability once", () => {
   const ship = body("ship", 0);
-  const c = control("ship", { intent: { throttle: .01, turn: 0 } });
-  c.actuators = c.actuators.map(a => ({ ...a, availability: .5 }));
+  const c = control("ship", { intent: { throttle: 0.01, turn: 0 } });
+  c.actuators = c.actuators.map((a) => ({ ...a, availability: 0.5 }));
   const result = stepSystemSpace([ship], [c]);
   const used = result.consumption[0].actuators[0].newtonSeconds;
   expect(used).toBeGreaterThan(0);
   // Independent momentum check: the single forward engine is the only force.
   expect(used).toBeCloseTo(result.bodies[0].vy * ship.massKg, 10);
-  const finalThrottleApproximation = result.commands[0].actuators[0].throttle * 500 * .05;
-  expect(Math.abs(used - finalThrottleApproximation)).toBeGreaterThan(.001);
-  const off = stepSystemSpace([ship], [{ ...c, actuators: c.actuators.map(a => ({ ...a, availability: 0 })) }]);
+  const finalThrottleApproximation =
+    result.commands[0].actuators[0].throttle * 500 * 0.05;
+  expect(Math.abs(used - finalThrottleApproximation)).toBeGreaterThan(0.001);
+  const off = stepSystemSpace(
+    [ship],
+    [{ ...c, actuators: c.actuators.map((a) => ({ ...a, availability: 0 })) }],
+  );
   expect(off.consumption[0].actuators[0].newtonSeconds).toBe(0);
 });

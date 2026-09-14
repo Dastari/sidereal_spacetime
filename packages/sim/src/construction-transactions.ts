@@ -1,4 +1,8 @@
-import { planWayfarerExteriorGame, verifyQualifiedWayfarerExterior, type WayfarerExteriorDocument } from "./wayfarer-exterior-qualification";
+import {
+  planWayfarerExteriorGame,
+  verifyQualifiedWayfarerExterior,
+  type WayfarerExteriorDocument,
+} from "./wayfarer-exterior-qualification";
 import { planWayfarerRebuildGame } from "./wayfarer-rebuild-game";
 import { verifyWayfarerRebuildSource } from "./wayfarer-rebuild-contract";
 import { CONSTRUCTION_INSET_VISUAL_PIN } from "@sidereal/content/construction-inset-visuals";
@@ -228,7 +232,8 @@ export function readConstructionDraft(raw: string): {
   normalized.floors.sort((a, b) => compareText(a.id, b.id));
   normalized.layout.serviceConnections?.sort((a, b) => compareText(a.id, b.id));
   if (normalized.wayfarerRebuild) verifyWayfarerRebuildSource(normalized);
-  if (normalized.wayfarerExterior) verifyQualifiedWayfarerExterior(normalized as WayfarerExteriorDocument);
+  if (normalized.wayfarerExterior)
+    verifyQualifiedWayfarerExterior(normalized as WayfarerExteriorDocument);
   const canonical = stableStringify(normalized);
   return { canonical, sha256: constructionHash(canonical) };
 }
@@ -298,7 +303,8 @@ export function compileConstruction(raw: string): ConstructionSnapshot {
   if (input.stairRoom) validateNativeStairRoomDocument(input);
   if (input.pressureRoom) validateNativePressureRoomDocument(input);
   if (input.traversalRoom) validateNativeTraversalRoomDocument(input);
-  if (input.wayfarerExterior) planWayfarerExteriorGame(input as WayfarerExteriorDocument);
+  if (input.wayfarerExterior)
+    planWayfarerExteriorGame(input as WayfarerExteriorDocument);
   else if (input.wayfarerRebuild) planWayfarerRebuildGame(input);
   else if (inset)
     for (const deck of layout.decks) planPinnedInsetBoundaries(input, deck.id);

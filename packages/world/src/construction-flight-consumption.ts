@@ -1,6 +1,6 @@
 import type { InferSchema, ReducerCtx } from "spacetimedb/server";
 import type world from "./index";
-import type { SystemActuatorConsumption } from "../../sim/src/system-space";
+import type { SystemActuatorConsumption } from "@sidereal/sim/system-space";
 
 type Context = Pick<ReducerCtx<InferSchema<typeof world>>, "db">;
 /** Bounded latest-sample telemetry for M4's future accounting hook. No fuel or

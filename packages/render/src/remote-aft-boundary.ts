@@ -1,4 +1,4 @@
-import { setMeshRole } from './mesh-roles';
+import { setMeshRole } from "./mesh-roles";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
 /** Exact pinned stock shell datum, renderer metres. Copy existing outward aft

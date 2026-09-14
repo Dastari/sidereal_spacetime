@@ -3,7 +3,7 @@ import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { SceneLoader } from "@babylonjs/core/Loading/sceneLoader";
 import type { AssetContainer } from "@babylonjs/core/assetContainer";
 import { Vector3, Matrix } from "@babylonjs/core/Maths/math.vector";
-import { INVENTORY_DEFINITIONS } from "../../content/src/inventory";
+import { INVENTORY_DEFINITIONS } from "@sidereal/content/inventory";
 import type { EquipmentPoseConfiguration } from "./crew/pose-review-config";
 export type GroundItem = {
   id: string;
@@ -85,7 +85,11 @@ export function createGroundItems(
             );
             placement.parent = owned.root;
             for (const mesh of placement.getChildMeshes())
-              mesh.metadata = { ...mesh.metadata, partId: "ground:" + row.id, role: "equipment" };
+              mesh.metadata = {
+                ...mesh.metadata,
+                partId: "ground:" + row.id,
+                role: "equipment",
+              };
           })
           .catch(() => {});
       }

@@ -1,4 +1,4 @@
-import type { FlightPhysicalDefinition } from "../../sim/src/flight-definition";
+import type { FlightPhysicalDefinition } from "@sidereal/sim/flight-definition";
 /** Explicit v1 item unit masses and liquid kg/litre definitions. Snapshot of the
  * accepted inventory definitions; future gameplay/visual edits cannot silently
  * retune installed flight mass. Roots supply quantities and actual positions. */

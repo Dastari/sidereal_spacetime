@@ -333,7 +333,9 @@ export function detailWayfarerShell(
   }
   // Hollow bells, continuous machinery bodies and purpose-built raised mounting
   // collars. Three sizes read as a propulsion cluster; nothing crosses the cabin.
-  for (const nozzle of WAYFARER_V1_NOZZLES.filter(n => n.id.startsWith("drives-main"))) {
+  for (const nozzle of WAYFARER_V1_NOZZLES.filter((n) =>
+    n.id.startsWith("drives-main"),
+  )) {
     const { x, y: rear, height: centerZ } = nozzle;
     const scale = nozzle.definitionId === "main-drive-small-v1" ? 0.7 : 1;
     const name = `drives-main-${x}`;
@@ -414,32 +416,56 @@ export function detailWayfarerShell(
       box(name, x, y, 2.6875 * scale, 0.625 * scale, 0.0625, 0.125, 27);
   }
   // Compact side thrusters mounted beyond the armored wall, with visible open mouths.
-  for (const nozzle of WAYFARER_V1_NOZZLES.filter(n => n.id.startsWith("drives-maneuver"))) {
-      const { y, height } = nozzle, side = Math.sign(nozzle.x);
-      const name = `drives-maneuver-${side}-${y}`;
-      box(name, nozzle.x - side * 0.8125, y, height - 0.5, 0.5, 1, 0.9375, 13);
-      box(name, nozzle.x - side * 0.5, y, height - 0.4375, 0.5, 0.875, 0.8125, 27);
-      for (let x = Math.abs(nozzle.x) - 0.5; x < Math.abs(nozzle.x) + 0.125; x += pitch)
-        for (let dy = -0.5; dy <= 0.5; dy += pitch)
-          for (let dz = -0.5; dz <= 0.5; dz += pitch) {
-            const r = Math.hypot(dy, dz);
-            if (r < 0.375 && r > 0.1875)
-              cell(name, side * x, y + dy, height + dz, x > Math.abs(nozzle.x) - 0.0625 ? 25 : 6);
-          }
-    }
+  for (const nozzle of WAYFARER_V1_NOZZLES.filter((n) =>
+    n.id.startsWith("drives-maneuver"),
+  )) {
+    const { y, height } = nozzle,
+      side = Math.sign(nozzle.x);
+    const name = `drives-maneuver-${side}-${y}`;
+    box(name, nozzle.x - side * 0.8125, y, height - 0.5, 0.5, 1, 0.9375, 13);
+    box(
+      name,
+      nozzle.x - side * 0.5,
+      y,
+      height - 0.4375,
+      0.5,
+      0.875,
+      0.8125,
+      27,
+    );
+    for (
+      let x = Math.abs(nozzle.x) - 0.5;
+      x < Math.abs(nozzle.x) + 0.125;
+      x += pitch
+    )
+      for (let dy = -0.5; dy <= 0.5; dy += pitch)
+        for (let dz = -0.5; dz <= 0.5; dz += pitch) {
+          const r = Math.hypot(dy, dz);
+          if (r < 0.375 && r > 0.1875)
+            cell(
+              name,
+              side * x,
+              y + dy,
+              height + dz,
+              x > Math.abs(nozzle.x) - 0.0625 ? 25 : 6,
+            );
+        }
+  }
   // Forward-facing retro mouths match authoritative IFCS mounts (exhaust +Y).
-  for (const nozzle of WAYFARER_V1_NOZZLES.filter(n => n.id.startsWith("drives-retro"))) {
-    const { x, height } = nozzle, name = `drives-retro-${Math.sign(x)}`;
-    box(name, x, nozzle.y - 0.625, height - 0.4375, .875, .75, .875, 13);
+  for (const nozzle of WAYFARER_V1_NOZZLES.filter((n) =>
+    n.id.startsWith("drives-retro"),
+  )) {
+    const { x, height } = nozzle,
+      name = `drives-retro-${Math.sign(x)}`;
+    box(name, x, nozzle.y - 0.625, height - 0.4375, 0.875, 0.75, 0.875, 13);
     for (let y = nozzle.y - 0.375; y < nozzle.y + 0.0625; y += pitch)
-      for (let dx = -.4375; dx <= .4375; dx += pitch)
-        for (let dz = -.4375; dz <= .4375; dz += pitch) {
+      for (let dx = -0.4375; dx <= 0.4375; dx += pitch)
+        for (let dz = -0.4375; dz <= 0.4375; dz += pitch) {
           const radius = Math.hypot(dx, dz);
-          if (radius <= .4375 && radius >= .25)
+          if (radius <= 0.4375 && radius >= 0.25)
             cell(name, x + dx, y, height + dz, y >= nozzle.y - 0.0625 ? 27 : 6);
-          else if (y === nozzle.y - 0.375 && radius < .25)
+          else if (y === nozzle.y - 0.375 && radius < 0.25)
             cell(name, x + dx, y, height + dz, 7);
         }
   }
-
 }

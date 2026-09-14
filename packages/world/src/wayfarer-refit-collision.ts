@@ -1,4 +1,4 @@
-import { WAYFARER_REBUILD_SHA256 } from "../../sim/src/wayfarer-rebuild-contract";
+import { WAYFARER_REBUILD_SHA256 } from "@sidereal/sim/wayfarer-rebuild-contract";
 import { requireQualifiedPreservedFuelMount } from "@sidereal/sim/wayfarer-refit-mount";
 import type { DeckCollisionFrame } from "@sidereal/sim/construction-collision";
 import { REFIT_FUEL_ATTACHMENT } from "@sidereal/sim/wayfarer-refit-audit";

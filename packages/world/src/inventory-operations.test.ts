@@ -24,12 +24,12 @@ import {
   groundItemsView,
 } from "./inventory-operations";
 import { equipItem } from "./inventory";
-import { validateInventory } from "../../sim/src/inventory";
+import { validateInventory } from "@sidereal/sim/inventory";
 import {
   INVENTORY_DEFINITIONS,
   LIQUID_DENSITY_KG_PER_LITRE,
   CHARACTER_CARRY_LIMIT_KG,
-} from "../../content/src/inventory";
+} from "@sidereal/content/inventory";
 function fixture() {
   const actor = {
     id: "actor",
@@ -138,9 +138,9 @@ function fixture() {
     timestamp: { microsSinceUnixEpoch: 1n },
     newUuidV4: () => `uuid-${++n}`,
     db: {
-      constructionFlightBinding: {shipId:{find:()=>undefined}},
+      constructionFlightBinding: { shipId: { find: () => undefined } },
       character: {
-        id: {find:(id:string)=>id===actor.id?actor:undefined},
+        id: { find: (id: string) => (id === actor.id ? actor : undefined) },
         by_owner: {
           filter: (owner: string) => (owner === "owner" ? [actor] : []),
         },

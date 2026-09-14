@@ -819,7 +819,11 @@ export function stepConstructionStairs(
       writes++;
     } else if (pendingUpdate) {
       ctx.db.constructionStairWalk.characterId.update(pendingUpdate);
-      if (pendingUpdate.acceptedX !== row.acceptedX || pendingUpdate.acceptedY !== row.acceptedY) h.physicalChanged(row.instanceId);
+      if (
+        pendingUpdate.acceptedX !== row.acceptedX ||
+        pendingUpdate.acceptedY !== row.acceptedY
+      )
+        h.physicalChanged(row.instanceId);
       writes++;
     }
   }

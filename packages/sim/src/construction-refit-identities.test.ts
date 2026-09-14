@@ -1,5 +1,5 @@
 import { expect, test, vi } from "vitest";
-import { emptyLayout, stampTile } from "../../content/src/ship-layout";
+import { emptyLayout, stampTile } from "@sidereal/content/ship-layout";
 import { bindConstructionLayout } from "./construction-layout";
 import {
   compileConstruction,

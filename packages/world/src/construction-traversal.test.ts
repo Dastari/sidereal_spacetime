@@ -13,7 +13,10 @@ import {
 vi.mock("spacetimedb/server", () => ({
   SenderError: class extends Error {},
   table: () => ({}),
-  t: new Proxy({}, { get: () => () => ({ primaryKey: () => ({}), unique: () => ({}) }) }),
+  t: new Proxy(
+    {},
+    { get: () => () => ({ primaryKey: () => ({}), unique: () => ({}) }) },
+  ),
 }));
 vi.mock("./auth", () => ({
   requireGame: (ctx: any) => {

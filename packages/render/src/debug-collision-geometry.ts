@@ -1,7 +1,7 @@
 import type {
   DeckCollisionFrame,
   DeckColliderSegment,
-} from "../../sim/src/construction-collision";
+} from "@sidereal/sim/construction-collision";
 import { Matrix, Vector3 } from "@babylonjs/core/Maths/math.vector";
 
 export interface DebugCollisionFrame {

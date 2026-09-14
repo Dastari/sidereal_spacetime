@@ -1,4 +1,4 @@
-import { categoryMeshRole, setMeshRole } from './mesh-roles';
+import { categoryMeshRole, setMeshRole } from "./mesh-roles";
 /** Disposable local design preview. Proxies never replace approved asset exports or authority. */
 import { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
@@ -221,7 +221,11 @@ export function createLayoutPreview(
         node.metadata = { draftPlacementId: f.id };
         for (const source of sources) {
           const mesh = source.createInstance("native-draft-" + f.id);
-          mesh.metadata = {...source.metadata, partId: f.id, role: categoryMeshRole(asset.category)};
+          mesh.metadata = {
+            ...source.metadata,
+            partId: f.id,
+            role: categoryMeshRole(asset.category),
+          };
           mesh.parent = node;
           mesh.isVisible = true;
           mesh.isPickable = false;

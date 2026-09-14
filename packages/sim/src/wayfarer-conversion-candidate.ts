@@ -2,14 +2,14 @@ import {
   WAYFARER_CONVERSION_PIN as PIN,
   type WayfarerPlacementRole,
   type WayfarerConversionGap,
-} from "../../content/src/wayfarer-conversion-candidate";
+} from "@sidereal/content/wayfarer-conversion-candidate";
 import {
   validateAssembly,
   type PartCatalog,
   type PartPlacement,
-} from "../../content/src/assembly";
-import { importShipAssembly } from "../../content/src/layout-assembly";
-import { SHAPE_REVISION, type Point } from "../../content/src/ship-layout";
+} from "@sidereal/content/assembly";
+import { importShipAssembly } from "@sidereal/content/layout-assembly";
+import { SHAPE_REVISION, type Point } from "@sidereal/content/ship-layout";
 import { bindConstructionLayout } from "./construction-layout";
 import {
   compileConstruction,

@@ -15,7 +15,11 @@
     "./antialiasing-settings": "./src/antialiasing-settings.ts",
     "./graphics-settings": "./src/graphics-settings.ts",
     "./local-light-budget": "./src/local-light-budget.ts",
-    "./layout-assembly-preview": "./src/layout-assembly-preview.ts"
+    "./layout-assembly-preview": "./src/layout-assembly-preview.ts",
+    "./diagnostics": "./src/diagnostics.ts",
+    "./mesh-roles": "./src/mesh-roles.ts",
+    "./ground-items": "./src/ground-items.ts",
+    "./render-backend": "./src/render-backend.ts"
   },
   "dependencies": {
     "@babylonjs/core": "9.25.0",

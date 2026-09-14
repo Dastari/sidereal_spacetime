@@ -11,8 +11,8 @@ import { SHARED_SYSTEM_SEED } from "@sidereal/content/shared-system";
 import {
   toCenterOfMassMotion,
   toAuthoredFrameMotion,
-} from "../../sim/src/flight-frame";
-import type { MassProperties } from "../../sim/src/ifcs";
+} from "@sidereal/sim/flight-frame";
+import type { MassProperties } from "@sidereal/sim/ifcs";
 import { consumeInputControl, type InputControlContext } from "./input-control";
 import type {
   SharedWorldDatabase,
@@ -98,7 +98,10 @@ export function stepSharedWorld(
       shipId: string,
     ): ReturnType<typeof resolveShipFlightDefinition>;
     canPilot(characterId: string): boolean;
-    recordConsumption(sampleTick: bigint, usage: readonly SystemActuatorConsumption[]): void;
+    recordConsumption(
+      sampleTick: bigint,
+      usage: readonly SystemActuatorConsumption[],
+    ): void;
   },
 ): SharedPhysicsReport {
   const report: SharedPhysicsReport = {
@@ -137,7 +140,10 @@ export function stepSharedWorld(
     // No command was integrated. Clear retained telemetry for the entire island
     // so a rejected initial definition cannot leave another ship's old burn lit.
     for (const ship of ships) {
-      const outputs = limited(ctx.db.actuatorOutput.by_ship.filter(ship.shipId), 256);
+      const outputs = limited(
+        ctx.db.actuatorOutput.by_ship.filter(ship.shipId),
+        256,
+      );
       if (!outputs) throw Error("Flight output budget");
       for (const output of outputs) {
         ctx.db.actuatorOutput.id.delete(output.id);
@@ -155,8 +161,7 @@ export function stepSharedWorld(
     if (ship.systemId !== systemId || !ctx.db.ship.id.find(ship.shipId))
       return rejectIsland("invalid-system-ship");
     const definition = hooks.definitionForShip(ship.shipId);
-    if (definition.status === "invalid")
-      return rejectIsland(definition.reason);
+    if (definition.status === "invalid") return rejectIsland(definition.reason);
     shipRows.set(ship.shipId, ship);
     masses.set(ship.shipId, definition.mass);
     bodies.push({
@@ -210,8 +215,7 @@ export function stepSharedWorld(
       });
   }
   for (const body of descriptions) {
-    if (body.systemId !== systemId)
-      return rejectIsland("invalid-system-body");
+    if (body.systemId !== systemId) return rejectIsland("invalid-system-body");
     if (body.kind !== "asteroid") continue;
     const motion = ctx.db.bodyWorldMotion.bodyId.find(body.id);
     if (!motion || motion.systemId !== systemId)
@@ -228,11 +232,12 @@ export function stepSharedWorld(
   }
   report.bodyCount = bodies.length;
   // Do not truncate/partition an over-budget shared island or move a subset of it.
-  if (bodies.length > 64)
-    return rejectIsland("body-budget");
+  if (bodies.length > 64) return rejectIsland("body-budget");
   const result = stepSystemSpace(bodies, controls);
   hooks.recordConsumption(sampleTick, result.consumption);
-  const consumed = result.consumption.some(s => s.actuators.some(a => a.newtonSeconds > 0));
+  const consumed = result.consumption.some((s) =>
+    s.actuators.some((a) => a.newtonSeconds > 0),
+  );
   report.status = result.exhausted
     ? "exhausted"
     : result.changedBodyIds.length

@@ -6,10 +6,10 @@ import { packArmorIssue } from "@sidereal/sim/armor-issue";
 import { LAB_STORAGE_FIXTURES } from "../../content/src/storage-fixtures";
 import { CABIN_PARTITIONS } from "../../content/src/interior";
 import { interactionLineOfSight } from "../../sim/src/interactions";
-import { planBackpackEquip } from "../../sim/src/backpack-swap";
+import { planBackpackEquip } from "@sidereal/sim/backpack-swap";
 import { prepareGroundDrop } from "./inventory-ground";
 import { createGroundAccess } from "./inventory-ground-access";
-import { retargetGroundPlacement } from "../../sim/src/ground-placement";
+import { retargetGroundPlacement } from "@sidereal/sim/ground-placement";
 import {
   SenderError,
   t,

@@ -1,8 +1,8 @@
 import {
   isQualifiedWayfarerBlueprint,
   qualifiedWayfarerInstanceObstacles,
-} from "../../sim/src/wayfarer-walking-bindings";
-import { wayfarerThresholdElevation } from "../../sim/src/wayfarer-threshold";
+} from "@sidereal/sim/wayfarer-walking-bindings";
+import { wayfarerThresholdElevation } from "@sidereal/sim/wayfarer-threshold";
 
 interface Instance {
   id: string;

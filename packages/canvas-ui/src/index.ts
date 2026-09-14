@@ -6,7 +6,7 @@ import {
 } from "./shared-entry";
 import { drawAppearanceControls } from "./appearance-controls";
 import { drawGroundLoot } from "./ground-loot";
-import type { GroundItemLabel } from "../../render/src/ground-items";
+import type { GroundItemLabel } from "@sidereal/render/ground-items";
 import type { LocalLightLimit } from "../../render/src/local-light-budget";
 import { topHudLayout } from "./system-menu-layout";
 import { drawGraphicsMenu, GRAPHICS_MENU_HEIGHT } from "./graphics-menu";
@@ -15,7 +15,10 @@ import type {
   AntialiasingSnapshot,
 } from "@sidereal/render/antialiasing-settings";
 import type { GraphicsSettings } from "../../render/src/graphics-settings";
-import type { RenderBackend, RenderBackendSnapshot } from "../../render/src/render-backend";
+import type {
+  RenderBackend,
+  RenderBackendSnapshot,
+} from "@sidereal/render/render-backend";
 import {
   createObjectDetailsUI,
   type ObjectDetailsState,
@@ -736,7 +739,8 @@ export function createGameUI(
       ui.ctx.rect(viewport.x, viewport.y, viewport.w, viewport.h);
       ui.ctx.clip();
       if (tab === "Graphics") {
-        const antialiasingState = actions.readAntialiasing?.() ?? state.antialiasing;
+        const antialiasingState =
+          actions.readAntialiasing?.() ?? state.antialiasing;
         const backendState = actions.readRenderBackend?.();
         drawGraphicsMenu(
           ui,
@@ -750,7 +754,12 @@ export function createGameUI(
             ? { state: antialiasingState, set: actions.antialiasing }
             : undefined,
           backendState && actions.renderBackend && actions.applyRenderBackend
-            ? {state:backendState,set:actions.renderBackend,apply:actions.applyRenderBackend} : undefined,
+            ? {
+                state: backendState,
+                set: actions.renderBackend,
+                apply: actions.applyRenderBackend,
+              }
+            : undefined,
         );
       } else if (tab === "Display") {
         ui.slider(

@@ -433,7 +433,13 @@ export function compileFlightDefinition(
           y: mount[1],
           rotation: Math.atan2(-force[0], force[1]),
           maxThrustN: a.maxThrustN,
-          availability: f.powered && !f.detached ? f.availability * (input.supply && Object.hasOwn(input.supply,f.id) ? input.supply[f.id] : 1) : 0,
+          availability:
+            f.powered && !f.detached
+              ? f.availability *
+                (input.supply && Object.hasOwn(input.supply, f.id)
+                  ? input.supply[f.id]
+                  : 1)
+              : 0,
           nozzleX: nozzle[0],
           nozzleY: nozzle[1],
           height: p.position[2] + a.nozzleHeight,

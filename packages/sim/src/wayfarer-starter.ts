@@ -1,11 +1,11 @@
-import { CURRENT_WAYFARER_STARTER } from "../../content/src/wayfarer-current-starter";
+import { CURRENT_WAYFARER_STARTER } from "@sidereal/content/wayfarer-current-starter";
 import { planWayfarerRebuildGame } from "./wayfarer-rebuild-game";
 import {
   compileDeckCollision,
   resolveDeckCollision,
   canOccupyDeck,
 } from "./construction-collision";
-import type { WayfarerStarterTemplate } from "../../content/src/wayfarer-current-starter";
+import type { WayfarerStarterTemplate } from "@sidereal/content/wayfarer-current-starter";
 import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
 import { compileConstruction } from "./construction-transactions";
 import { planConstructionInstance } from "./construction-instance";

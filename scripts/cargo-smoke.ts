@@ -196,13 +196,31 @@ export async function cargoAuthorityJourney(
 }
 
 export async function cargoPrivateBaseDenials(c: DbConnection) {
-  const names = ["inventory_container_scope", "inventory_item_membership", "instance_inventory_binding", "scoped_inventory_receipt"];
+  const names = [
+    "inventory_container_scope",
+    "inventory_item_membership",
+    "instance_inventory_binding",
+    "scoped_inventory_receipt",
+  ];
   for (const name of names) {
     await new Promise<void>((resolve, reject) => {
       let h: { unsubscribe(): void } | undefined;
-      const timer = setTimeout(() => { h?.unsubscribe(); reject(Error("Private cargo denial timeout")); }, 5000);
-      h = c.subscriptionBuilder().onApplied(() => { clearTimeout(timer); h?.unsubscribe(); reject(Error("Private cargo table exposed: " + name)); })
-        .onError(() => { clearTimeout(timer); resolve(); }).subscribe("SELECT * FROM " + name);
+      const timer = setTimeout(() => {
+        h?.unsubscribe();
+        reject(Error("Private cargo denial timeout"));
+      }, 5000);
+      h = c
+        .subscriptionBuilder()
+        .onApplied(() => {
+          clearTimeout(timer);
+          h?.unsubscribe();
+          reject(Error("Private cargo table exposed: " + name));
+        })
+        .onError(() => {
+          clearTimeout(timer);
+          resolve();
+        })
+        .subscribe("SELECT * FROM " + name);
     });
   }
   return names;

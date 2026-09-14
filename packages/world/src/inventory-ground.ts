@@ -1,5 +1,5 @@
 import { SenderError } from "spacetimedb/server";
-import { inventoryDefinition } from "../../content/src/inventory";
+import { inventoryDefinition } from "@sidereal/content/inventory";
 import type { access, transaction } from "./inventory";
 
 /** Build, but do not insert, the same server-positioned private drop wrapper for

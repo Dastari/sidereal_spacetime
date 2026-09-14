@@ -525,7 +525,8 @@ export function moveCargoCarriers(
     });
   }
   assertCargoStackMass(ctx, result.changedContainerIds);
-  if (result.changedContainerIds.length) markShipFlightDirty(ctx, access.instanceId);
+  if (result.changedContainerIds.length)
+    markShipFlightDirty(ctx, access.instanceId);
   return result;
 }
 export const CARGO_GRID_DEFINITION =

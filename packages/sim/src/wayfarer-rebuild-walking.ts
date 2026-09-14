@@ -1,10 +1,10 @@
-import source from "../../content/src/wayfarer-starter-r001.json";
-import proof from "../../content/src/wayfarer-walking-proof.json";
-import threshold from "../../content/src/wayfarer-threshold-proof.json";
-import type { ConstructionDocument } from "../../content/src/construction";
-import type { Point } from "../../content/src/ship-layout";
-import { LAB_STORAGE_FIXTURES } from "../../content/src/storage-fixtures";
-import { LAB_INTERACTIONS } from "../../content/src/interactions";
+import source from "@sidereal/content/wayfarer-starter-r001.json";
+import proof from "@sidereal/content/wayfarer-walking-proof.json";
+import threshold from "@sidereal/content/wayfarer-threshold-proof.json";
+import type { ConstructionDocument } from "@sidereal/content/construction";
+import type { Point } from "@sidereal/content/ship-layout";
+import { LAB_STORAGE_FIXTURES } from "@sidereal/content/storage-fixtures";
+import { LAB_INTERACTIONS } from "@sidereal/content/interactions";
 import type { SpawnObjectCollisionBinding } from "./construction-instance";
 import type { DeckCollisionFrame } from "./construction-collision";
 import { canOccupyDeck, sweepDeckCircle } from "./construction-collision";

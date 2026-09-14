@@ -102,7 +102,7 @@ function fixture() {
   };
   const hooks: StairAuthorityHooks = {
     physicalChanged: () => {},
-  mayConsumeMovement: (p) => admitted && p.isEqual(owner),
+    mayConsumeMovement: (p) => admitted && p.isEqual(owner),
     mayEnter: () => permission,
     incompatibleActivity: () => incompatible,
     suspendCombat: () => {

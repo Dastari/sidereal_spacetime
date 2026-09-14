@@ -13,7 +13,7 @@ Implementation contract: [plan](ifcs_update_plan_20260914.md).
 | 3 Authority switch | Complete; owner-approved non-destructive shared publication succeeded | 2,048 full-check tests; 1,511 staged-source tests; build, smoke variants, additive migration and shared schema comparison pass |
 | 4 Resource gating | Complete: 2,058 tests, build and isolated two-client smoke pass | phase4-check-final.log, phase4-build-final.log, phase4-smoke-r0002.log |
 | 5 Presentation | Complete: 2,061 tests, build, art checks and real browser evidence pass | phase5-check.log, phase5-build.log, committed screenshots and telemetry |
-| 6 Cleanup | Not started | Depends on phases 3 and 5 |
+| 6 Cleanup | Complete: 2,055 tests, both full builds, isolated standard/two-client smoke, lint and format pass; separate repository CI art dependency blocker recorded below | phase6-check-verified.log, phase6-build-workspace-final.log, phase6-build-verified.log, phase6-smoke-verified.log |
 
 ## Owner decisions
 
@@ -30,9 +30,10 @@ session on 2026-09-14:
 
 Any non-additive schema change, validator relaxation, collision revision/native
 pin change requires escalation. The passenger admission and bounded fitting-set
-changes were explicitly approved below. No non-additive schema or collision/native
-pin change was made. Shared DB publication remains gated by the explicit phase 3
-owner check-in.
+changes were explicitly approved below. Phase 6 makes only the approved ownShips
+column removal; base rows, keys and native/collision pins are unchanged. The phase 3
+owner check-in was approved and its non-destructive shared publication succeeded.
+Phases 4–6 have only been deployed to isolated smoke databases.
 
 ## Source inspection and shared edits
 
@@ -780,3 +781,96 @@ Independent staged source also passes TypeScript, all 13 focused presentation/
 nozzle tests and the client build (phase5-staged-check.log, phase5-staged-build.log).
 The preexisting independent documentation-export gap recorded in phase 3 remains
 separate from these implemented flight exit criteria.
+
+Phase 5 committed/pushed as c2d26673. Phase 6 in progress under root ownership:
+sim legacy integration/installation, canonical world install writer, ownShips
+projection/bindings, legacy refit guard, render selection metadata and final docs.
+No subagents assigned. Shared SQL confirms both ship IDs have ship_world_motion:
+633a9cd9-ee3a-49c6-bd13-6bc4d5db3aa7 and a432a310-937b-40c3-93ef-d3da495cdb63.
+The legacy installation protocol hash is frozen at its existing value
+8aee8337485375adcea4b3408ffc4589f08da8391057d9ef407fd8d002c311d0;
+this preserves existing qualification bindings, independently of physical catalog
+hashes. No native/collision pins change. Obsolete base columns remain, with zero
+sentinels for new installations; only compiled rows supply physical ratings.
+
+Phase 6 first full gate passes 346 files / 2,055 tests, TypeScript and 88 document
+checks (phase6-check.log). The six fewer tests are the four removed integrate tests
+and two retired lab-step tests; shared-world authority/coasting tests remain. Full
+build passes (phase6-build.log). Fresh standard smoke passes in
+sidereal-spacetime-dev-ifcs-phase6-r0001-r0001-smoke (phase6-smoke.log), including
+actual client row absence of all three obsolete fields, private-table denial,
+unauthorized edits/control, station expiry/braking/coasting, native collisions,
+walking, inventory and reconnect preservation. The repeated r0001 is the managed
+fresh-name allocator suffix, not database reuse or reset.
+
+phase6-schema-comparison.json compares deployed phase 4 and phase 6 schemas:
+no removed tables or changed base rows, only ownShips return fields changed,
+ship remains Private and ownShips retains primary key id. No LAB_FLIGHT_ references
+remain in non-test live world/render sources or the built world bundle, including
+the indirect device-service and installation imports. The historical fixture file
+remains solely for explicit tests/benchmarks.
+
+Independent final staged source passes TypeScript, all **280 files / 1,523 tests**
+and full world/generated/client/dashboard build in /tmp/ifcs-phase5-staged-check
+(phase6-staged-check.log, phase6-staged-build.log). The independent documentation
+step reproduces exactly the same 33 preexisting missing links from phase 3; this
+is a recorded clean-clone documentation limitation, not an IFCS test failure or
+a claim that the exported full check passes. No unrelated owner draft/reference
+files were staged to hide it. Machine-readable final schema/test evidence is
+[phase6-verification.json](ifcs_update_evidence_20260914/phase6-verification.json).
+
+Phase 6 CI discovery and deviation: GitHub's phase 5 source workflow failed before
+testing because scripts/art_library/requirements.txt was absent from the committed
+repository. Exact original main 599d2c7a also reports 137 unbaselined lint violations
+and 129 changed-format violations; the IFCS staged source reported 253 and 183.
+Root corrected package import boundaries through explicit exports and applied
+Prettier mechanically to 247 source/config paths, including the inherited failures.
+No lint rule or debt baseline was changed. The formatting ignore list now names
+13 immutable authored JSON snapshots/proof artifacts, whose exact bytes must be
+preserved alongside native sources. The staged lint and format gates
+now report zero new/changed violations (phase6-quality-lint.log,
+phase6-quality-format.log). Every non-package formatted JSON value is unchanged.
+Selective index writes retain 30 files' independent working edits; exact paths are
+in phase6-quality-preserved-work.json. This enlarges phase 6's mechanical diff to
+make the existing source-quality gates usable rather than weakening their rules.
+The missing one-line Pillow requirements file is included as workflow dependency.
+
+The independent Python suite exposes further preexisting publication dependencies:
+art_catalog imports uncommitted art_library/profiles.py, and the airlock provenance
+test requires assets/art-library/designs/shipyard.hull.side-armor/revisions/r003/
+blender-source.blend. Its first suite runs 62 tests with those two errors
+(phase6-quality-python.log). No Python/provenance check was skipped or relaxed,
+and no unrelated reference/draft/native art source was published. These owner-managed
+repository dependencies remain an explicit CI integration blocker outside the IFCS
+exit checks. Keep the PR draft until that ownership/publication issue is resolved;
+passing flight checks does not imply CI is green.
+
+The first mechanical formatting pass preserved JSON values but changed a raw
+qualified exterior file hash, caught by framed-wayfarer-stock.test.ts. All 13
+authored/proof JSON files were restored byte-for-byte, with no staged JSON data
+diff; the five stock provenance tests then passed (phase6-native-pins-restored.log).
+Only those exact immutable paths were added to .prettierignore, matching the
+existing asset/reference exclusions. Provenance/qualification tests still enforce
+their hashes. No collision/native revision or pin was changed.
+
+Phase 6 final verified exit: **346 files / 2,055 tests**, TypeScript and all 88
+document/provenance checks pass after restoring exact authored JSON bytes
+(phase6-check-verified.log). Full `npm run build` passes in both the shared working
+checkout (phase6-build-workspace-final.log) and the independently staged source
+(phase6-build-verified.log); generated bindings are byte-identical to the index.
+The final staged-source standard `npm run smoke` passes against fresh isolated
+sidereal-spacetime-dev-ifcs-phase6-final-r0001-smoke (phase6-smoke-verified.log),
+including compiled-only client projection, all authority denials and real flight.
+The earlier independent two-client phase6-passenger-r0001 smoke also passes cargo,
+passenger motion, removal, engine/computer power cutoff/recovery and revocation
+(phase6-staged-passenger-smoke.log). Lint and formatting pass; both quality-rule
+tests pass (phase6-quality-rules.log). No live fixture import, base schema removal,
+native/collision pin change, shared phase 4–6 publication or merge occurred.
+
+Delivery: phases 0–6 each have one commit on ifcs-update. PR
+[\#1](https://github.com/Dastari/sidereal_spacetime/pull/1) remains a draft solely
+for the separately recorded repository Python/art and documentation dependency
+gaps; IFCS phase exit gates are complete. The owner-authorized original main is
+published at 599d2c7a; the final fetch confirms it is unchanged. Other sessions'
+uncommitted work remains in the checkout. No review browser/client is left running
+by this IFCS session; the managed shared database is preserved.

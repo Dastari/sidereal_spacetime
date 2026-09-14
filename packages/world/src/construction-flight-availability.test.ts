@@ -11,10 +11,10 @@ import {
   queueFlightDamage,
   consumeFlightDamage,
 } from "./construction-flight-availability";
-import { WAYFARER_REBUILD_SHA256 } from "../../sim/src/wayfarer-rebuild-contract";
-import source from "../../content/src/wayfarer-rebuild-r002.json";
-import { wayfarerFlightInput } from "../../content/src/wayfarer-flight-definition";
-import { compileFlightDefinition } from "../../sim/src/flight-definition";
+import { WAYFARER_REBUILD_SHA256 } from "@sidereal/sim/wayfarer-rebuild-contract";
+import source from "@sidereal/content/wayfarer-rebuild-r002.json";
+import { wayfarerFlightInput } from "@sidereal/content/wayfarer-flight-definition";
+import { compileFlightDefinition } from "@sidereal/sim/flight-definition";
 function table(primary = "id") {
   const rows = new Map<string, any>();
   return {
