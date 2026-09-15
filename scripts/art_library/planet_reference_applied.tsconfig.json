@@ -1,1 +1,12 @@
-{"extends": "../../tsconfig.json", "compilerOptions": {"noEmit": true}, "include": ["planet_reference_candidate.ts", "planet_reference_review.ts", "planet_reference_worker.ts", "planet_reference_pbr_channels.test.ts", "planet_reference_direct_paths.ts", "planet_reference_lod_recorder.ts"]}
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": { "noEmit": true },
+  "include": [
+    "planet_reference_candidate.ts",
+    "planet_reference_review.ts",
+    "planet_reference_worker.ts",
+    "planet_reference_pbr_channels.test.ts",
+    "planet_reference_direct_paths.ts",
+    "planet_reference_lod_recorder.ts"
+  ]
+}

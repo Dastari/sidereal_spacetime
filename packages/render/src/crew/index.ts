@@ -1,4 +1,4 @@
-import { setMeshRole } from '../mesh-roles';
+import { setMeshRole } from "../mesh-roles";
 import { MODULAR_CREW_ASSET_URL } from "@sidereal/content/character-components";
 import { createCombatPose } from "./combat-pose";
 import { createEquipmentPoseController } from "./equipment-pose";
@@ -52,7 +52,7 @@ export async function createCrewVisual(
   // glTF export converts Blender forward -Y into +Z; gameplay uses -Z.
   visual.rotation.y = Math.PI;
   container.addAllToScene();
-  for (const mesh of container.meshes) setMeshRole(mesh, 'crew');
+  for (const mesh of container.meshes) setMeshRole(mesh, "crew");
   for (const node of container.rootNodes) node.parent = visual;
   const modular = container.meshes.some((m) => m.name.startsWith("GEO-base-"));
   const clips = new Map(

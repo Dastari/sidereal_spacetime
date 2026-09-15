@@ -2,7 +2,7 @@ import { expect, it } from "vitest";
 import { emptyLayout, stampTile } from "@sidereal/content/ship-layout";
 import { compileLayout } from "@sidereal/sim/layout-compiler";
 import { planLayoutInsetVisuals } from "./layout-inset-visual-plan";
-import { WAYFARER_REBUILD_SOURCE } from "../../sim/src/wayfarer-rebuild-contract";
+import { WAYFARER_REBUILD_SOURCE } from "@sidereal/sim/wayfarer-rebuild-contract";
 function fixture(clearHeight = 96) {
   const doc = emptyLayout("preview", "main");
   doc.decks[0].ceiling = 6 + clearHeight;

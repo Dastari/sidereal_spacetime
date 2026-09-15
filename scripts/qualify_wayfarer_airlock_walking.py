@@ -1,4 +1,5 @@
 """Native3D body-slab silhouettes for a conservative source-qualified adapter."""
+from native_source_paths import checkout_source_path
 import sys,json,hashlib
 import numpy as np,manifold3d as m
 import shapely
@@ -35,7 +36,7 @@ def qualify():
  audit_path=ROOT/'assets/art-library/designs/shipyard.structure.external-airlock/revisions/r000/audit-a007.json';assert hashlib.sha256(audit_path.read_bytes()).hexdigest()=='eb7eab8523d68906a302a84cf06a5b2a507229d15e89fb96f66d1ade8b6e0aa6';audit=json.loads(audit_path.read_text())
  for i,p in enumerate(audit['placements']):
   if i==26:continue
-  pin=audit['sourcePins'][p['source']];assert hashlib.sha256((ROOT/pin['path']).read_bytes()).hexdigest()==pin['sha256'];shape=solid(p['source'],p['nodePrefix']).rotate([0,0,90*p['quarterTurns']]).translate(p['originM']);triangles,area=project(shape)
+  pin=audit['sourcePins'][p['source']];assert hashlib.sha256(checkout_source_path(pin['path'], ROOT).read_bytes()).hexdigest()==pin['sha256'];shape=solid(p['source'],p['nodePrefix']).rotate([0,0,90*p['quarterTurns']]).translate(p['originM']);triangles,area=project(shape)
   rows.append({'sourcePlacedId':f'candidate-extended-new-vestibule-native-{i}','role':p['source'],'sourcePartIndex':i,'nativeSourceSha256':pin['sha256'],'classification':'native-body-slab-obstacle' if triangles else 'proved-outside-body-slab','areaM2':area,'obstacles':[{'vertices':t} for t in triangles],'nativeBoundsCommonM':list(shape.bounding_box()),'dynamicDoorPart':p['nodePrefix'] in ['GEO-door-leaf--surface','GEO-door-perimeter-seal--surface']})
   if pin not in pins:pins.append(pin)
  return {'schema':'sidereal.wayfarer-airlock-native-walking.v1','status':'qualified-isolated-source-projection-not-registered','bodyRadiusM':.3,'bodyHeightM':1.8,'bodySlabCommonM':[.187501,1.9875],'sourcePins':pins,'rows':rows,'method':'Actual native solid intersection with accepted body slab, positive-fill XY silhouette, separate connected-component convex covers with containment check; disjoint jambs remain separate. Existing source wall/floor precision policy unchanged.','dynamicPolicy':'Closed leaf/gasket projections are spawn-state only; replace all four dynamic parts from accepted physical hinge/morph state on every door change. Never omit a moving leaf merely because opening.passable becomes true.','limits':['Caller-supplied colliders are not accepted; authority must pin exact document and this proof.','Negative clearance is conservative around visible shallow details; no fitted-collider shrink.','No whole-ship sealing or damage qualification.']}

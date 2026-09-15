@@ -65,10 +65,20 @@ export class CanvasUI {
     this.updateCursor();
   }
   private updateCursor() {
-    const hit = [...this.hits].reverse().find((h) => contains(h.rect, this.pointer.x, this.pointer.y));
-    this.canvas.style.cursor = hit?.disabled ? "not-allowed"
-      : hit?.edit ? "text" : hit?.drag ? "move" : hit ? "pointer"
-      : this.pointerBlocked() ? "default" : this.worldCursor;
+    const hit = [...this.hits]
+      .reverse()
+      .find((h) => contains(h.rect, this.pointer.x, this.pointer.y));
+    this.canvas.style.cursor = hit?.disabled
+      ? "not-allowed"
+      : hit?.edit
+        ? "text"
+        : hit?.drag
+          ? "move"
+          : hit
+            ? "pointer"
+            : this.pointerBlocked()
+              ? "default"
+              : this.worldCursor;
   }
   pointerPosition() {
     return this.pointer ?? { x: -1, y: -1 };

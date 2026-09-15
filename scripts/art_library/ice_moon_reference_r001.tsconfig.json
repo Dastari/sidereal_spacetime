@@ -1,1 +1,8 @@
-{"extends":"../../tsconfig.json","compilerOptions":{"noEmit":true},"include":["ice_moon_reference_composition_r001.ts","ice_moon_reference_composition_r001.test.ts"]}
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": { "noEmit": true },
+  "include": [
+    "ice_moon_reference_composition_r001.ts",
+    "ice_moon_reference_composition_r001.test.ts"
+  ]
+}

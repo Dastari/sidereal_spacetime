@@ -90,7 +90,9 @@ window.study = {
       for (const node of c.transformNodes) {
         if (!node.name.startsWith("HULL_")) continue;
         node.computeWorldMatrix(true);
-        socketPositions[node.name.split(".")[0]] = node.getAbsolutePosition().asArray();
+        socketPositions[node.name.split(".")[0]] = node
+          .getAbsolutePosition()
+          .asArray();
       }
       rows.push({
         width,

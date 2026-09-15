@@ -23,7 +23,8 @@
     "./diagnostics": "./src/diagnostics.ts",
     "./mesh-roles": "./src/mesh-roles.ts",
     "./ground-items": "./src/ground-items.ts",
-    "./render-backend": "./src/render-backend.ts"
+    "./render-backend": "./src/render-backend.ts",
+    "./debug-features": "./src/debug-features.ts"
   },
   "dependencies": {
     "@babylonjs/core": "9.25.0",

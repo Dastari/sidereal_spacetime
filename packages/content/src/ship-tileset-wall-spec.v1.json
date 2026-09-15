@@ -6,12 +6,7 @@
   "boundary": "outer-construction-edge",
   "reservationSide": "inside-floorplan",
   "thicknessUnits": 8,
-  "heightQuarters": [
-    1,
-    2,
-    3,
-    4
-  ],
+  "heightQuarters": [1, 2, 3, 4],
   "verticalDimensions": "owner-approved-20260911",
   "standardDeck": {
     "floorThicknessUnits": 6,
@@ -39,24 +34,11 @@
       "lengthUnits": 32,
       "heightUnits": 24,
       "reservationUnits": {
-        "min": [
-          0,
-          0,
-          0
-        ],
-        "max": [
-          32,
-          8,
-          24
-        ]
+        "min": [0, 0, 0],
+        "max": [32, 8, 24]
       },
       "placementFloorTopUnits": 6,
-      "allowedQuarterTurns": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "allowedQuarterTurns": [0, 1, 2, 3],
       "reflection": "requires-export-validation",
       "damageMode": "voxel",
       "gameplayQualification": "pending"
@@ -66,24 +48,11 @@
       "lengthUnits": 32,
       "heightUnits": 48,
       "reservationUnits": {
-        "min": [
-          0,
-          0,
-          0
-        ],
-        "max": [
-          32,
-          8,
-          48
-        ]
+        "min": [0, 0, 0],
+        "max": [32, 8, 48]
       },
       "placementFloorTopUnits": 6,
-      "allowedQuarterTurns": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "allowedQuarterTurns": [0, 1, 2, 3],
       "reflection": "requires-export-validation",
       "damageMode": "voxel",
       "gameplayQualification": "pending"
@@ -93,24 +62,11 @@
       "lengthUnits": 32,
       "heightUnits": 72,
       "reservationUnits": {
-        "min": [
-          0,
-          0,
-          0
-        ],
-        "max": [
-          32,
-          8,
-          72
-        ]
+        "min": [0, 0, 0],
+        "max": [32, 8, 72]
       },
       "placementFloorTopUnits": 6,
-      "allowedQuarterTurns": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "allowedQuarterTurns": [0, 1, 2, 3],
       "reflection": "requires-export-validation",
       "damageMode": "voxel",
       "gameplayQualification": "pending"
@@ -120,24 +76,11 @@
       "lengthUnits": 32,
       "heightUnits": 96,
       "reservationUnits": {
-        "min": [
-          0,
-          0,
-          0
-        ],
-        "max": [
-          32,
-          8,
-          96
-        ]
+        "min": [0, 0, 0],
+        "max": [32, 8, 96]
       },
       "placementFloorTopUnits": 6,
-      "allowedQuarterTurns": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "allowedQuarterTurns": [0, 1, 2, 3],
       "reflection": "requires-export-validation",
       "damageMode": "voxel",
       "gameplayQualification": "pending"
@@ -147,24 +90,11 @@
       "lengthUnits": 64,
       "heightUnits": 24,
       "reservationUnits": {
-        "min": [
-          0,
-          0,
-          0
-        ],
-        "max": [
-          64,
-          8,
-          24
-        ]
+        "min": [0, 0, 0],
+        "max": [64, 8, 24]
       },
       "placementFloorTopUnits": 6,
-      "allowedQuarterTurns": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "allowedQuarterTurns": [0, 1, 2, 3],
       "reflection": "requires-export-validation",
       "damageMode": "voxel",
       "gameplayQualification": "pending"
@@ -174,24 +104,11 @@
       "lengthUnits": 64,
       "heightUnits": 48,
       "reservationUnits": {
-        "min": [
-          0,
-          0,
-          0
-        ],
-        "max": [
-          64,
-          8,
-          48
-        ]
+        "min": [0, 0, 0],
+        "max": [64, 8, 48]
       },
       "placementFloorTopUnits": 6,
-      "allowedQuarterTurns": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "allowedQuarterTurns": [0, 1, 2, 3],
       "reflection": "requires-export-validation",
       "damageMode": "voxel",
       "gameplayQualification": "pending"
@@ -201,24 +118,11 @@
       "lengthUnits": 64,
       "heightUnits": 72,
       "reservationUnits": {
-        "min": [
-          0,
-          0,
-          0
-        ],
-        "max": [
-          64,
-          8,
-          72
-        ]
+        "min": [0, 0, 0],
+        "max": [64, 8, 72]
       },
       "placementFloorTopUnits": 6,
-      "allowedQuarterTurns": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "allowedQuarterTurns": [0, 1, 2, 3],
       "reflection": "requires-export-validation",
       "damageMode": "voxel",
       "gameplayQualification": "pending"
@@ -228,24 +132,11 @@
       "lengthUnits": 64,
       "heightUnits": 96,
       "reservationUnits": {
-        "min": [
-          0,
-          0,
-          0
-        ],
-        "max": [
-          64,
-          8,
-          96
-        ]
+        "min": [0, 0, 0],
+        "max": [64, 8, 96]
       },
       "placementFloorTopUnits": 6,
-      "allowedQuarterTurns": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "allowedQuarterTurns": [0, 1, 2, 3],
       "reflection": "requires-export-validation",
       "damageMode": "voxel",
       "gameplayQualification": "pending"

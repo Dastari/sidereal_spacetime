@@ -18,7 +18,12 @@ export function planetShadowCoverage(
     const authoredRadius = mesh.metadata?.planetShadowRadius;
     if (Number.isFinite(authoredRadius) && authoredRadius > 0) {
       const scale = mesh.absoluteScaling;
-      extent = Math.max(extent, Vector3.Distance(center, mesh.getAbsolutePosition()) + authoredRadius * Math.max(Math.abs(scale.x), Math.abs(scale.y), Math.abs(scale.z)));
+      extent = Math.max(
+        extent,
+        Vector3.Distance(center, mesh.getAbsolutePosition()) +
+          authoredRadius *
+            Math.max(Math.abs(scale.x), Math.abs(scale.y), Math.abs(scale.z)),
+      );
       continue;
     }
     const sphere = mesh.getBoundingInfo().boundingSphere;

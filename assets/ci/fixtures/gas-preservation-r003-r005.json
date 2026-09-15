@@ -1,0 +1,212 @@
+{
+  "schema": "sidereal.ci-gas-preservation-fixtures.v1",
+  "archive": "gas-preservation-r003-r005.tar.xz",
+  "archiveBytes": 16348472,
+  "archiveSha256": "9ffb9ff11334ef17afa37c2b69e1f6ddc33902be1f102d4b7ad5e422dde35676",
+  "purpose": "Exact original gas r003/r004/r005 JSON, GLB and PNG inputs needed by the native preservation regressions. Private CI fixtures; no runtime publication. Common identical files share a archive entry.",
+  "members": [
+    {
+      "path": "payload/039b1c01927c788b56dca140cc14255d547db5708a4d57b1d7ae1a08ee7dc379.glb",
+      "bytes": 451360,
+      "sha256": "039b1c01927c788b56dca140cc14255d547db5708a4d57b1d7ae1a08ee7dc379",
+      "sources": [
+        "output/playwright/planet-reference-20260914/gas-r003/ring-dust-1.glb"
+      ]
+    },
+    {
+      "path": "payload/1043b2f9253ff2bb8197335016fc0819b05984e9b77f2489e06758e3d7aba7da.png",
+      "bytes": 2383804,
+      "sha256": "1043b2f9253ff2bb8197335016fc0819b05984e9b77f2489e06758e3d7aba7da",
+      "sources": [
+        "output/playwright/planet-reference-20260914/gas-r003/gas-albedo-generated.png",
+        "output/playwright/planet-reference-20260914/gas-r004/gas-albedo-generated.png",
+        "output/playwright/planet-reference-20260914/gas-r005/gas-albedo-generated.png"
+      ]
+    },
+    {
+      "path": "payload/11be9df19656017e5ed15e6cc039d1ecf67172cdf141491905f01db7658a1995.json",
+      "bytes": 8740754,
+      "sha256": "11be9df19656017e5ed15e6cc039d1ecf67172cdf141491905f01db7658a1995",
+      "sources": [
+        "output/playwright/planet-reference-20260914/gas-r004/kit.json"
+      ]
+    },
+    {
+      "path": "payload/27e20a0ac8a669a94866bc80ddb9078f34b12b32df537ff8beefa25e38518d79.png",
+      "bytes": 3275831,
+      "sha256": "27e20a0ac8a669a94866bc80ddb9078f34b12b32df537ff8beefa25e38518d79",
+      "sources": [
+        "output/playwright/planet-reference-20260914/gas-r004/ring-dust-1.png",
+        "output/playwright/planet-reference-20260914/gas-r005/ring-dust-1.png"
+      ]
+    },
+    {
+      "path": "payload/2a91a3bb3a1c2171aa8ad3a1df5d4b4bb8782c78db9fc8c83a07e1a3adc02a80.glb",
+      "bytes": 429992,
+      "sha256": "2a91a3bb3a1c2171aa8ad3a1df5d4b4bb8782c78db9fc8c83a07e1a3adc02a80",
+      "sources": [
+        "output/playwright/planet-reference-20260914/gas-r003/ring-dust-2.glb"
+      ]
+    },
+    {
+      "path": "payload/3d0089c98c817802708d1f7e6a99199f384cf6f0af1da8756d03ca893f11f710.glb",
+      "bytes": 3288908,
+      "sha256": "3d0089c98c817802708d1f7e6a99199f384cf6f0af1da8756d03ca893f11f710",
+      "sources": [
+        "output/playwright/planet-reference-20260914/gas-r005/ring-dust-0.glb"
+      ]
+    },
+    {
+      "path": "payload/3fea177cb094ca69f50e67133f623526ea00bfcd5dd441e1dcb92ac7438b4372.glb",
+      "bytes": 3279448,
+      "sha256": "3fea177cb094ca69f50e67133f623526ea00bfcd5dd441e1dcb92ac7438b4372",
+      "sources": [
+        "output/playwright/planet-reference-20260914/gas-r004/ring-dust-2.glb"
+      ]
+    },
+    {
+      "path": "payload/483a0a2a5449cc7853d73ecc74761f9595b7398c14a45a7b5bc1c3127a66b1b6.json",
+      "bytes": 8740788,
+      "sha256": "483a0a2a5449cc7853d73ecc74761f9595b7398c14a45a7b5bc1c3127a66b1b6",
+      "sources": [
+        "output/playwright/planet-reference-20260914/gas-r003/kit.json"
+      ]
+    },
+    {
+      "path": "payload/516f79ced2b76c0e82e2d3bc4399b306d137d901f281c1d34c466a76b1477130.json",
+      "bytes": 8745362,
+      "sha256": "516f79ced2b76c0e82e2d3bc4399b306d137d901f281c1d34c466a76b1477130",
+      "sources": [
+        "output/playwright/planet-reference-20260914/gas-r005/kit.json"
+      ]
+    },
+    {
+      "path": "payload/5331d888d72819809abb50b37521b7b5fb636ce91f566ce6c572593b0bcfa190.glb",
+      "bytes": 2750296,
+      "sha256": "5331d888d72819809abb50b37521b7b5fb636ce91f566ce6c572593b0bcfa190",
+      "sources": [
+        "output/playwright/planet-reference-20260914/gas-r003/gas-body.glb",
+        "output/playwright/planet-reference-20260914/gas-r004/gas-body.glb",
+        "output/playwright/planet-reference-20260914/gas-r005/gas-body.glb"
+      ]
+    },
+    {
+      "path": "payload/5808aa9eae7dbb220e886f83a5390732298b7faadb7f37ab6396c79f3463bac9.glb",
+      "bytes": 3296820,
+      "sha256": "5808aa9eae7dbb220e886f83a5390732298b7faadb7f37ab6396c79f3463bac9",
+      "sources": [
+        "output/playwright/planet-reference-20260914/gas-r005/ring-dust-1.glb"
+      ]
+    },
+    {
+      "path": "payload/7041fa1d8a8f2fdd0f2dbcbc8c77ce4b491e78b79759b44d3e4ae4f6d853c73e.png",
+      "bytes": 3267917,
+      "sha256": "7041fa1d8a8f2fdd0f2dbcbc8c77ce4b491e78b79759b44d3e4ae4f6d853c73e",
+      "sources": [
+        "output/playwright/planet-reference-20260914/gas-r004/ring-dust-0.png",
+        "output/playwright/planet-reference-20260914/gas-r005/ring-dust-0.png"
+      ]
+    },
+    {
+      "path": "payload/8c44be5bbc1fc98521a4c33a7c60d03a032c9a8f67cc865a8da34f6df83b70ce.glb",
+      "bytes": 3288908,
+      "sha256": "8c44be5bbc1fc98521a4c33a7c60d03a032c9a8f67cc865a8da34f6df83b70ce",
+      "sources": [
+        "output/playwright/planet-reference-20260914/gas-r004/ring-dust-0.glb"
+      ]
+    },
+    {
+      "path": "payload/a7e77dc12639b2fac8d71b936453561b5641912f14d050cbf12b53b8f1be373b.glb",
+      "bytes": 3296820,
+      "sha256": "a7e77dc12639b2fac8d71b936453561b5641912f14d050cbf12b53b8f1be373b",
+      "sources": [
+        "output/playwright/planet-reference-20260914/gas-r004/ring-dust-1.glb"
+      ]
+    },
+    {
+      "path": "payload/afd0ea7b7cf42988b38b7b4ebad4a58125a57787d86465f9fb88d7da999319ff.png",
+      "bytes": 2388462,
+      "sha256": "afd0ea7b7cf42988b38b7b4ebad4a58125a57787d86465f9fb88d7da999319ff",
+      "sources": [
+        "output/playwright/planet-reference-20260914/gas-r004/ring-dust-generated-black.png"
+      ]
+    },
+    {
+      "path": "payload/d2b10205acbc962ee67ee08e6ca93278ecbcba94a7695a36f19c3045fe04f52e.glb",
+      "bytes": 3279448,
+      "sha256": "d2b10205acbc962ee67ee08e6ca93278ecbcba94a7695a36f19c3045fe04f52e",
+      "sources": [
+        "output/playwright/planet-reference-20260914/gas-r005/ring-dust-2.glb"
+      ]
+    },
+    {
+      "path": "payload/dd37b7192e49d7fa4114d384d9ba61ec6147859ca9d5261529b9ea1badb455b4.png",
+      "bytes": 3258461,
+      "sha256": "dd37b7192e49d7fa4114d384d9ba61ec6147859ca9d5261529b9ea1badb455b4",
+      "sources": [
+        "output/playwright/planet-reference-20260914/gas-r004/ring-dust-2.png",
+        "output/playwright/planet-reference-20260914/gas-r005/ring-dust-2.png"
+      ]
+    },
+    {
+      "path": "payload/e64ee4b6a657816482e3c4f337f9e39d081bed3361d81ad9dbf6fa6045bac0d5.glb",
+      "bytes": 418996,
+      "sha256": "e64ee4b6a657816482e3c4f337f9e39d081bed3361d81ad9dbf6fa6045bac0d5",
+      "sources": [
+        "output/playwright/planet-reference-20260914/gas-r003/ring-dust-0.glb"
+      ]
+    },
+    {
+      "path": "payload/f407398bf8eb21313d2ee8b85b427db6686404d653f860c3b2d0c8b6e15f9b5b.glb",
+      "bytes": 327820,
+      "sha256": "f407398bf8eb21313d2ee8b85b427db6686404d653f860c3b2d0c8b6e15f9b5b",
+      "sources": [
+        "output/playwright/planet-reference-20260914/gas-r003/ring-rocks.glb",
+        "output/playwright/planet-reference-20260914/gas-r004/ring-rocks.glb",
+        "output/playwright/planet-reference-20260914/gas-r005/ring-rocks.glb"
+      ]
+    }
+  ],
+  "aliases": {
+    "gas-r003/kit.json": "payload/483a0a2a5449cc7853d73ecc74761f9595b7398c14a45a7b5bc1c3127a66b1b6.json",
+    "gas-r003/gas-body.glb": "payload/5331d888d72819809abb50b37521b7b5fb636ce91f566ce6c572593b0bcfa190.glb",
+    "gas-r003/ring-rocks.glb": "payload/f407398bf8eb21313d2ee8b85b427db6686404d653f860c3b2d0c8b6e15f9b5b.glb",
+    "gas-r003/gas-albedo-generated.png": "payload/1043b2f9253ff2bb8197335016fc0819b05984e9b77f2489e06758e3d7aba7da.png",
+    "gas-r003/ring-dust-0.glb": "payload/e64ee4b6a657816482e3c4f337f9e39d081bed3361d81ad9dbf6fa6045bac0d5.glb",
+    "gas-r003/ring-dust-1.glb": "payload/039b1c01927c788b56dca140cc14255d547db5708a4d57b1d7ae1a08ee7dc379.glb",
+    "gas-r003/ring-dust-2.glb": "payload/2a91a3bb3a1c2171aa8ad3a1df5d4b4bb8782c78db9fc8c83a07e1a3adc02a80.glb",
+    "gas-r004/kit.json": "payload/11be9df19656017e5ed15e6cc039d1ecf67172cdf141491905f01db7658a1995.json",
+    "gas-r004/gas-body.glb": "payload/5331d888d72819809abb50b37521b7b5fb636ce91f566ce6c572593b0bcfa190.glb",
+    "gas-r004/ring-rocks.glb": "payload/f407398bf8eb21313d2ee8b85b427db6686404d653f860c3b2d0c8b6e15f9b5b.glb",
+    "gas-r004/gas-albedo-generated.png": "payload/1043b2f9253ff2bb8197335016fc0819b05984e9b77f2489e06758e3d7aba7da.png",
+    "gas-r004/ring-dust-generated-black.png": "payload/afd0ea7b7cf42988b38b7b4ebad4a58125a57787d86465f9fb88d7da999319ff.png",
+    "gas-r004/ring-dust-0.glb": "payload/8c44be5bbc1fc98521a4c33a7c60d03a032c9a8f67cc865a8da34f6df83b70ce.glb",
+    "gas-r004/ring-dust-0.png": "payload/7041fa1d8a8f2fdd0f2dbcbc8c77ce4b491e78b79759b44d3e4ae4f6d853c73e.png",
+    "gas-r004/ring-dust-1.glb": "payload/a7e77dc12639b2fac8d71b936453561b5641912f14d050cbf12b53b8f1be373b.glb",
+    "gas-r004/ring-dust-1.png": "payload/27e20a0ac8a669a94866bc80ddb9078f34b12b32df537ff8beefa25e38518d79.png",
+    "gas-r004/ring-dust-2.glb": "payload/3fea177cb094ca69f50e67133f623526ea00bfcd5dd441e1dcb92ac7438b4372.glb",
+    "gas-r004/ring-dust-2.png": "payload/dd37b7192e49d7fa4114d384d9ba61ec6147859ca9d5261529b9ea1badb455b4.png",
+    "gas-r005/kit.json": "payload/516f79ced2b76c0e82e2d3bc4399b306d137d901f281c1d34c466a76b1477130.json",
+    "gas-r005/gas-body.glb": "payload/5331d888d72819809abb50b37521b7b5fb636ce91f566ce6c572593b0bcfa190.glb",
+    "gas-r005/ring-rocks.glb": "payload/f407398bf8eb21313d2ee8b85b427db6686404d653f860c3b2d0c8b6e15f9b5b.glb",
+    "gas-r005/gas-albedo-generated.png": "payload/1043b2f9253ff2bb8197335016fc0819b05984e9b77f2489e06758e3d7aba7da.png",
+    "gas-r005/ring-dust-0.glb": "payload/3d0089c98c817802708d1f7e6a99199f384cf6f0af1da8756d03ca893f11f710.glb",
+    "gas-r005/ring-dust-0.png": "payload/7041fa1d8a8f2fdd0f2dbcbc8c77ce4b491e78b79759b44d3e4ae4f6d853c73e.png",
+    "gas-r005/ring-dust-1.glb": "payload/5808aa9eae7dbb220e886f83a5390732298b7faadb7f37ab6396c79f3463bac9.glb",
+    "gas-r005/ring-dust-1.png": "payload/27e20a0ac8a669a94866bc80ddb9078f34b12b32df537ff8beefa25e38518d79.png",
+    "gas-r005/ring-dust-2.glb": "payload/d2b10205acbc962ee67ee08e6ca93278ecbcba94a7695a36f19c3045fe04f52e.glb",
+    "gas-r005/ring-dust-2.png": "payload/dd37b7192e49d7fa4114d384d9ba61ec6147859ca9d5261529b9ea1badb455b4.png"
+  },
+  "archiveRecipe": {
+    "format": "POSIX PAX tar + XZ/LZMA2",
+    "preset": 6,
+    "dictionaryBytes": 67108864,
+    "order": "lexicographic member path",
+    "fileMode": "0644",
+    "uid": 0,
+    "gid": 0,
+    "uname": "",
+    "gname": "",
+    "mtime": 0
+  }
+}

@@ -159,7 +159,8 @@ test.each([180, 250, 280, 444, 640])(
     // must therefore fit fully, not merely have a visible sliver at the bottom.
     const lastId = `crew-hair-color-${HAIR_COLORS.length - 1}`;
     const visible = ui.hits.filter(
-      ({ rect: hit }) => hit.y >= viewportTop && hit.y + hit.h <= viewportTop + rect.h,
+      ({ rect: hit }) =>
+        hit.y >= viewportTop && hit.y + hit.h <= viewportTop + rect.h,
     );
     expect(visible.some((hit) => hit.id === lastId)).toBe(true);
     click(lastId);

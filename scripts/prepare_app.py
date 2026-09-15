@@ -1457,5 +1457,8 @@ def prepare(app: str, root: Path = ROOT) -> None:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("app", choices=PUBLIC_HELP)
-    prepare(parser.parse_args().app)
+    from prepare_ci_assets import prepare as prepare_native_inputs
+    args = parser.parse_args()
+    prepare_native_inputs()
+    prepare(args.app)
     print("Prepared published runtime assets and allowlisted public help only.")

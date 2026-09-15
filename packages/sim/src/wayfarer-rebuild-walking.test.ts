@@ -1,10 +1,10 @@
 import { expect, test } from "vitest";
-import source from "../../content/src/wayfarer-starter-r001.json";
-import rebuild from "../../content/src/wayfarer-rebuild-r002.json";
-import visuals from "../../content/src/construction-wayfarer-rebuild-visuals.json";
-import proof from "../../content/src/wayfarer-walking-proof.json";
-import threshold from "../../content/src/wayfarer-threshold-proof.json";
-import type { ConstructionDocument } from "../../content/src/construction";
+import source from "@sidereal/content/wayfarer-starter-r001.json";
+import rebuild from "@sidereal/content/wayfarer-rebuild-r002.json";
+import visuals from "@sidereal/content/construction-wayfarer-rebuild-visuals.json";
+import proof from "@sidereal/content/wayfarer-walking-proof.json";
+import threshold from "@sidereal/content/wayfarer-threshold-proof.json";
+import type { ConstructionDocument } from "@sidereal/content/construction";
 import {
   WAYFARER_REBUILD_RETAINED_OBJECT_IDS,
   planWayfarerRebuildRetainedWalking,
