@@ -1,3 +1,5 @@
+import { createReviewedSystemBodies, isReviewedSystemBody } from './reviewed-system-bodies';
+import { orientStellarLight } from './yellow-star-runtime';
 import { createNativeIceLODRuntime } from "./native-ice-lod-runtime";
 import { createNativeVolcanicLODRuntime } from "./native-volcanic-lod-runtime";
 import { createPlanetWorkerClient } from "./planet-worker-client";
@@ -148,6 +150,7 @@ export function createSpaceEnvironment(scene: Scene) {
   const planetOccluders = createGlowOccluders(planetGlow);
   planetGlow.intensity = 0.45;
   planetGlow.isEnabled = false;
+  const reviewedSystem = createReviewedSystemBodies(scene, root, planetWorker, heroShadows, planetGlow);
   const nebula = new Texture(
     "/assets/environment/veil-nebula-v1.png",
     scene,
@@ -603,6 +606,7 @@ export function createSpaceEnvironment(scene: Scene) {
     planetBuildSnapshot() {
       return {
         ...planetWorker.snapshot(),
+        reviewedSystem: reviewedSystem.stats(),
         pendingBuilds:
           planetWorker.snapshot().pendingWeatherBuilds +
           [...entries.values()].reduce(
@@ -667,8 +671,12 @@ export function createSpaceEnvironment(scene: Scene) {
           entries.delete(id);
         }
       const rangePlane = updateBodyRangePlane(scene.activeCamera, farPlane);
+      const star = options.bodies.find(body => body.appearance === 'yellow-main-sequence-r013');
+      if (star && primaryLight) orientStellarLight(primaryLight, new Vector3(star.x-options.x,star.height,-(star.y-options.y)), camera);
+      reviewedSystem.update(options.bodies, options, camera, rangePlane, age, options.planetsEnabled !== false);
       const blend = 1 - Math.exp(-Math.min(options.dt, 0.1) * 18);
       for (const body of options.bodies) {
+        if (isReviewedSystemBody(body)) continue;
         let entry = entries.get(body.id);
         if (body.kind === "planet" && options.planetsEnabled === false) {
           setBodyRenderEnabled(entry?.node, false);
@@ -761,7 +769,7 @@ export function createSpaceEnvironment(scene: Scene) {
             (Math.floor(age * 10) / 10) * entry.cloudSpeed * 0.3;
         for (const mat of entry.materials) {
           mat.setFloat("time", age);
-          mat.setVector3("cameraPosition", camera);
+          mat.setVector3("cameraPosition", scene.floatingOriginMode ? Vector3.Zero() : camera);
           if (primaryLight) {
             mat.setVector3(
               "lightDirection",
@@ -775,7 +783,7 @@ export function createSpaceEnvironment(scene: Scene) {
         }
       }
       heroShadows.update(
-        [...entries.values()].filter((entry) => entry.node.isEnabled()),
+        [...entries.values(), ...reviewedSystem.shadowCandidates()].filter((entry) => entry.node.isEnabled()),
       );
       // Bounded seeded world-cell field with snapped spacing LOD. As the viewport
       // expands, cells cover it without pinning individual particles to the camera.
@@ -788,6 +796,7 @@ export function createSpaceEnvironment(scene: Scene) {
     dispose() {
       disposed = true;
       for (const entry of entries.values()) entry.lodRuntime?.dispose();
+      reviewedSystem.dispose();
       planetWorker.dispose();
       if (typeof document !== "undefined")
         document.removeEventListener("visibilitychange", visibilityRotation);

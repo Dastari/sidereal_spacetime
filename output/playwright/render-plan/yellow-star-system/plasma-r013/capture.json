@@ -1,0 +1,20 @@
+{
+  "nativeRevision": "r010",
+  "runtimeRevision": "plasma-r013",
+  "renderer": "SwiftShader WebGL2",
+  "hardwareTimingAcceptance": false,
+  "playbackActualSeconds": 28.939652,
+  "canvas": [
+    768,
+    768
+  ],
+  "drawCalls": 23,
+  "state": "Rejected by root/Astra: whole-disk brightness oscillation and dense short eruption lobes. Preserve rare timing and absence of native whiskers.",
+  "sourceHashes": {
+    "stellar-corona.ts": "9fec7b45601ffe73fbe3ff16e8cefac6df04173e33774661b516cd41bcad8f66",
+    "stellar-convection.ts": "65610279c7728d096c655a95f5e4c61d3d4c34d782a3b769decf71c485d20fe9",
+    "stellar-eruption.ts": "0aa109e11a66f07555acc34d728f45a304d6a8d763fa17f39307112e3fac2392",
+    "yellow-star-runtime.ts": "789eceb00bc6ff9921a38bc883ee98fda6bd82e330d0e1f182ca3db798db08d1",
+    "reviewed-star-catalog.ts": "2a4026833f3a0f733eb381da2df1c9f848d5e0089e919bd8a52c9ab0aecfdbd3"
+  }
+}

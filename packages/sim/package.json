@@ -56,6 +56,6 @@
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",
-    "@sidereal/content": "0.1.0"
+    "@sidereal/content": "0.2.1"
   }
 }

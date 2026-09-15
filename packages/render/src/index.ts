@@ -1,3 +1,4 @@
+import { celestialObservationRadius } from "./environment/reviewed-star-catalog";
 import { createFlightActiveSet } from "./flight-active-set";
 import { createFastSnapshot } from "./fast-snapshot";
 import { createStaticMaterialFreeze, invalidateStaticMaterials } from "./static-material-freeze";
@@ -925,7 +926,7 @@ async function buildWorld(
         focus.height,
         -(focus.y - displayed.y),
       );
-      const observed = observation.frame(focus.radius, dt, state.reducedMotion);
+      const observed = observation.frame(celestialObservationRadius(focus, aspect), dt, state.reducedMotion);
       camera.alpha = observed.alpha;
       camera.beta = observed.beta;
       camera.radius = observed.radius;

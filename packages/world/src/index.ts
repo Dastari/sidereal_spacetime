@@ -1,3 +1,4 @@
+import { migrateSolarSystem } from './solar-system-migration';
 import { constructionCargoAssembly } from "./construction-cargo-assembly-tables";
 import {
   constructionCargoGrid,
@@ -67,6 +68,7 @@ import {
 } from "./construction-pilot-authority";
 import {
   worldSystem,
+  celestialMigrationReceipt,
   shipWorldMotion,
   systemBody,
   bodyWorldMotion,
@@ -268,6 +270,7 @@ const db = schema({
   constructionPilotSeat,
   constructionFlightReview,
   worldSystem,
+  celestialMigrationReceipt,
   shipWorldMotion,
   systemBody,
   bodyWorldMotion,
@@ -633,6 +636,7 @@ export const stepWorld = db.reducer(
   (ctx) => {
     if (!ctx.sender.isEqual(ctx.databaseIdentity))
       throw new SenderError("Server schedule only");
+    migrateSolarSystem(ctx.db, ctx.timestamp.microsSinceUnixEpoch);
     auth.expireSessions(ctx);
     construction.expireGrants(ctx);
     constructionInteractions.recoverConstructionSeats(ctx);

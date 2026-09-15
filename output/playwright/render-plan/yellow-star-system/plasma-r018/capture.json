@@ -1,0 +1,42 @@
+{
+  "nativeRevision": "r013",
+  "assetSha256": "f651ba13ade02fb918c97dd4d3924879dd9c204527a4e43cef90c8c578505bd2",
+  "renderer": "Chromium SwiftShader",
+  "hardwareTimingAcceptance": false,
+  "canvas": [
+    768,
+    768
+  ],
+  "playbackSeconds": 27.601785,
+  "captureFramesPerSecond": 6,
+  "drawCallsBloomOn": 17,
+  "drawCallsBloomOff": 6,
+  "sceneMeshes": 7,
+  "qualification": "root and independent gpt-6-astra",
+  "ownerFinalSignoff": null,
+  "files": {
+    "frame-02.png": "bc29e9c1cca83148439e695d1d0724116b286af33d4402c4fe1b1dea79c83301",
+    "frame-05.png": "0daa590a3059047b0f82464dba498f9eb392973e6c192462b6b18d6dc1b9e3c3",
+    "playback.webm": "956fc1f4407aa7558cd8e196bfd1c542fa7af4c22a80bdcf979167914116dbaa",
+    "review.md": "aa64242d4989980261664195e32510e035ccec614a2da1addd8880a6d4abd5c8",
+    "close-bloom-off-17.png": "6433f4de128993fb38925ba7aa85beed1775ff48426aa1c24eea75c1499d91a4",
+    "playback.log": "3457be4d52648d94154f4c1fe4ade940ce1d434f28fc70cfe6d97c7dfab36324",
+    "stellar-convection.ts": "7c3bf810f8b5fc5b12ff07b905890122109f7d60ed0bf9c6459b64b744edc102",
+    "frame-04.png": "527d33c8bf2f3c5ee5bbff3c589fce8a40faecd062b4239d43b59c88fced1222",
+    "frame-03.png": "3c30290c11b6712fb277756df1a4197d785f361ce701c6a7c31e0c5cc40464dc",
+    "review-main.ts": "25c52b6caa8f68130f7771247d727dd0dde2e319b9dbf466c98cc8a15f471d1d",
+    "final-views.log": "cc81334ec5152dd773000a77b50bb0aaf8c1c40ce36d04781dad7a10cfacc247",
+    "stellar-eruption.ts": "0aa109e11a66f07555acc34d728f45a304d6a8d763fa17f39307112e3fac2392",
+    "frame-09.png": "7a6941ddf792aac78d8cc2e99d91f3bd4f0351cb73efe113e2c0ebc880654dab",
+    "front.png": "99f5aaf496bced3e8c9980cfa5aec957383d964ce316229f0552f090c5574a4c",
+    "stellar-corona.ts": "de6c923d2ae877678aec771dad8755ade91821b6940ff35589e1a776ba8da363",
+    "yellow-star-runtime.ts": "8258b07b9b2e1ae3726e3500ad51bb9415222ddf4547ad6756c507df2adb78f5",
+    "frame-07.png": "4c3e561138a116f3847913b1d64e7cfa403147f1c22fa6d7a350bd6e42f8e34f",
+    "frame-10.png": "e68f734a8ae9d2c94a1b32b534bede272dbc6908a47476939aa105e3e6db23fe",
+    "alternate.png": "450606e3a8e5abb52c3d88e5dbd0a03d45ef7672b8d34786aa5557f482a22cb1",
+    "frame-06.png": "c7b35045b60041090e381e8c4ad2a7ddb7d401db18dedc97b97c540eb3383405",
+    "frame-01.png": "c3dd4b2306ae68e0c8a40d66248c63b534185e5d6cb2620c61345455b994f18c",
+    "close-bloom-off-2.png": "7c5c27a4ca81c1cd90e953c68f11444f9fdb84f9a20fb8c6242b22d5293c3260",
+    "frame-08.png": "1316f7b2095310ee330666128a0f1a76985e394e08df246f67752cecbc0bb86e"
+  }
+}

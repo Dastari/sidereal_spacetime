@@ -19,3 +19,7 @@ apps/*/public/help/
 # Blender autosaves are recoverable local work, not selected source revisions.
 *.blend1
 *.blend2
+
+# Each app stages these from the shared reviewed celestial asset source.
+apps/*/public/reviewed-planets/
+apps/*/public/reviewed-stars/

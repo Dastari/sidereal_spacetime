@@ -1,0 +1,56 @@
+{
+  "renderer": "Chromium SwiftShader; functionality only, no hardware timing acceptance",
+  "result": {
+    "moonState": {
+      "frames": 108,
+      "selected": "rocky-moon-r002",
+      "seed": 38,
+      "loading": false,
+      "stats": {
+        "active": 0,
+        "pendingBuilds": 0,
+        "retained": [
+          0
+        ],
+        "smokeImplemented": true,
+        "smokeMeshes": 0,
+        "smokeTriangles": 0,
+        "retainedSmokeMeshes": 0,
+        "requestedLOD": 0,
+        "fixedDetail": true,
+        "buildMs": 560.2000007629395,
+        "revision": "rocky-moon-r002",
+        "localLights": 0,
+        "transmissionMaterials": 0,
+        "transmissionTargets": 0
+      },
+      "worker": {
+        "lastBuildMs": 560.2000007629395,
+        "pendingBuilds": 0,
+        "pendingWeatherBuilds": 0
+      },
+      "ready": true
+    },
+    "moonSeedControls": 1,
+    "starState": {
+      "frames": 128,
+      "selected": "yellow-main-sequence-r007",
+      "seed": 3901,
+      "loading": false,
+      "stats": {
+        "active": 0,
+        "requestedLOD": 2,
+        "flareCount": 180,
+        "revision": "r007",
+        "assetSha256": "3f060f0b085b87c13379ce6afa98a574d9338bd2d3335892c3c9975b99c16a47"
+      },
+      "worker": {
+        "lastBuildMs": 560.2000007629395,
+        "pendingBuilds": 0,
+        "pendingWeatherBuilds": 0
+      },
+      "ready": true
+    },
+    "starSeedControls": 0
+  }
+}

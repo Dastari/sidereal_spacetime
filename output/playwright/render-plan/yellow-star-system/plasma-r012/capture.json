@@ -1,0 +1,61 @@
+{
+  "date": "2026-09-15",
+  "renderer": "Chromium SwiftShader WebGL2",
+  "hardwareTimingAcceptance": false,
+  "canvas": [
+    768,
+    768
+  ],
+  "nativeRevision": "r010",
+  "runtimeRevision": "plasma-r012",
+  "nativeSha256": "1bfd0d364052e09943e9e6815cfca482780fcf2f5fef1f4f3bdad262ee258691",
+  "reference": "reference/art/stars.png Yellow Main Sequence exact crop [35,64,462,364]",
+  "playbackRequestedSeconds": 12,
+  "before": {
+    "frames": 161,
+    "ready": true,
+    "flareCount": 180,
+    "ejectaCount": 18,
+    "convectionMaterials": 4,
+    "time": 105.97940000152587,
+    "glow": true,
+    "lighting": true,
+    "meshes": 388,
+    "instances": 358,
+    "drawCalls": 63
+  },
+  "after": {
+    "frames": 175,
+    "ready": true,
+    "flareCount": 180,
+    "ejectaCount": 18,
+    "convectionMaterials": 4,
+    "time": 122.85440000152587,
+    "glow": true,
+    "lighting": true,
+    "meshes": 388,
+    "instances": 358,
+    "drawCalls": 63
+  },
+  "advancedFrames": 14,
+  "sourceHashes": {
+    "stellar-convection.ts": "7065d79500cd4e964715038b2e8394dc29b1850eccd62070ddcb62b4115c556f",
+    "reviewed-star-catalog.ts": "50b55d642c54d7a029046520d69163963fa93aa7b47c24f3de27b26a8f15e91f",
+    "stellar-corona.ts": "4e576d1200d3671216c6ddcf06db4b0280a4712c40619b2597ad0f9c7cdce58e",
+    "yellow-star-runtime.ts": "7ccb18f822cfd03addb1df91271b266313837a3f35fffd085950d93fbc4229b4"
+  },
+  "acceptance": "Root and independent gpt-6-astra working acceptance against original Yellow Main Sequence; no further iteration requested before owner review.",
+  "playbackActualSeconds": 9.949596,
+  "bloomOffDrawCalls": 29,
+  "bloomOnDrawCalls": [
+    61,
+    63
+  ],
+  "ownerFinalApproval": false,
+  "remainingDifferences": [
+    "Cleaner/coarser block relief",
+    "Simpler dark basins",
+    "Some fine flare tips",
+    "Less billowy outer flame than source"
+  ]
+}

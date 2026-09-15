@@ -1,0 +1,6 @@
+### Result
+{"state":"{\"frames\":231,\"ready\":true,\"flareCount\":1,\"activeFlares\":1,\"ejectaCount\":0,\"convectionMaterials\":4,\"time\":25,\"glow\":true,\"lighting\":true,\"meshes\":7,\"instances\":0,\"drawCalls\":17}","shaders":[{"name":"Golden photosphere","lift":true},{"name":"Yellow raised granules","lift":true},{"name":"Amber relief sides","lift":true},{"name":"White yellow hot fissures","lift":true}]}
+### Ran Playwright code
+```js
+await (async page => { for(const [name,time,radius,angle,bloom] of [["front",7,8.8,1.168,true],["close-bloom-off-2",2,4.2,2.1,false],["close-bloom-off-17",17,4.2,2.1,false],["alternate",25,8.8,3.4,true]]) {await page.evaluate(v=>{const r=window.starReview;r.setTime(v[0]);r.camera.radius=v[1];r.camera.alpha=v[2];r.glow.isEnabled=v[3];},[time,radius,angle,bloom]);await page.waitForTimeout(500);await page.screenshot({path:"/root/sidereal_spacetime/.runtime/worktrees/yellow-star-system/output/playwright/render-plan/yellow-star-system/plasma-r018/"+name+".png",fullPage:true});} return await page.evaluate(()=>({state:document.querySelector("canvas").dataset.state,shaders:window.starReview.scene.materials.filter(m=>m.pluginManager?.getPlugin("StellarConvection")).map(m=>({name:m.name,lift:m.getEffect()?.vertexSourceCode.includes("float lift")}))}));})(page);
+```

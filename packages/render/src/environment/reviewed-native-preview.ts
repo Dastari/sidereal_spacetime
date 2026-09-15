@@ -1,3 +1,6 @@
+import { applyReviewedPreviewLighting } from "./reviewed-preview-lighting";
+import { createYellowStarRuntime } from "./yellow-star-runtime";
+import { REVIEWED_YELLOW_STAR } from "./reviewed-star-catalog";
 import { createReviewedNativeSelection } from "./reviewed-native-selection";
 import { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
@@ -90,7 +93,10 @@ export function createReviewedNativePreview(
   const occluders = createGlowOccluders(glow);
   let emitters: Mesh[] = [];
   type Candidate = {
-    runtime: ReviewedPlanetRuntime;
+    runtime: Pick<ReviewedPlanetRuntime, "root" | "dispose"> & {
+      update(projected: number): void;
+      stats(): { active?: number; requestedLOD?: number; error?: string };
+    };
     controller: AbortController;
     id: string;
     seed: number;
@@ -113,21 +119,61 @@ export function createReviewedNativePreview(
   };
   async function select(id: string, seed: number) {
     const descriptor = reviewedNativePlanet(id);
+    const isStar = id === REVIEWED_YELLOW_STAR.id;
     if (
-      !descriptor ||
+      (!descriptor && !isStar) ||
       !Number.isInteger(seed) ||
       seed < 0 ||
       seed > 2147483647
     ) {
-      announce("Choose a valid planet and seed.", true);
+      announce("Choose a valid celestial body and seed.", true);
       return;
     }
     const token = selection.begin();
     request?.abort();
     const controller = new AbortController();
     request = controller;
-    announce(`Loading ${descriptor.label}…`);
+    announce(`Loading ${descriptor?.label ?? REVIEWED_YELLOW_STAR.label}…`);
     try {
+      if (isStar) {
+        const star = await createYellowStarRuntime(scene, {
+          bodyId: `genesis-star:${token}`,
+          radius: 1,
+          signal: controller.signal,
+        });
+        if (disposed || !selection.isCurrent(token)) {
+          star.dispose();
+          return;
+        }
+        selection.stage(token, {
+          runtime: {
+            root: star.root,
+            update: () => star.update(performance.now() / 1000),
+            stats: () => ({
+              active: 0,
+              requestedLOD: 2,
+              flareCount: star.flareCount,
+              revision: REVIEWED_YELLOW_STAR.revision,
+              assetSha256: REVIEWED_YELLOW_STAR.sha256,
+            }),
+            dispose: star.dispose,
+          },
+          controller,
+          id,
+          seed: REVIEWED_YELLOW_STAR.seed,
+          glow: false,
+          radius:
+            2.3 /
+            (Math.tan(camera.fov / 2) *
+              Math.min(1, engine.getRenderWidth() / engine.getRenderHeight())),
+          dispose: () => {
+            controller.abort();
+            star.dispose();
+          },
+        });
+        return;
+      }
+      if (!descriptor) throw new Error("Unknown reviewed celestial body");
       const recipe = planetRecipe(descriptor.style, seed);
       const runtime = await createReviewedPlanetRuntime(scene, {
         bodyId: `genesis:${token}:${id}`,
@@ -200,7 +246,7 @@ export function createReviewedNativePreview(
         !controller.signal.aborted
       ) {
         request = undefined;
-        announce(`Could not load this planet: ${String(error)}`, true);
+        announce(`Could not load this body: ${String(error)}`, true);
       }
     }
   }
@@ -216,7 +262,7 @@ export function createReviewedNativePreview(
     );
     const next = pending?.runtime.stats();
     if (pending && next?.error) {
-      announce(`Could not prepare this planet: ${next.error}`, true);
+      announce(`Could not prepare this body: ${next.error}`, true);
       selection.rejectPending();
       pending = undefined;
       request = undefined;
@@ -229,8 +275,12 @@ export function createReviewedNativePreview(
       pending = undefined;
       request = undefined;
       if (current.radius !== undefined) camera.radius = current.radius;
+      const starSelected = current.id === REVIEWED_YELLOW_STAR.id;
+      applyReviewedPreviewLighting(scene, sun, fill, starSelected);
       announce(
-        `${reviewedNativePlanet(current.id)!.label} · seed ${current.seed}`,
+        starSelected
+          ? `${REVIEWED_YELLOW_STAR.label} · active solar flares`
+          : `${reviewedNativePlanet(current.id)!.label} · seed ${current.seed}`,
       );
     }
     if (!request && !pending && current?.runtime.stats().error)

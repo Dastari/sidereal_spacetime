@@ -1,0 +1,20 @@
+{
+  "baselineCommit": "cd09510c",
+  "baselineSourceFilesVerified": 368,
+  "liveSchemaExactlyMatchesBaseline": true,
+  "isolatedDatabase": "sidereal-spacetime-dev-solar-transition-r0001-smoke",
+  "migrationStatus": "applied",
+  "celestialBodies": 29,
+  "preservedAsteroids": 4,
+  "shipCountBefore": 10,
+  "shipCountAfter": 10,
+  "sameShipUUIDSet": true,
+  "persistentGameplayRows": "passed",
+  "movingAsteroid": {
+    "vx": 0.00029062921143874134,
+    "vy": 2.2985235461905953,
+    "browserDiscoveryCheck": "timed out after body left local discovery; actual database motion retained"
+  },
+  "liveWorldPublished": false,
+  "authorityOverlaySha256": "e44a107dd692a9338d05a1085592bb79323940986ad879ea47539c984c29f296"
+}

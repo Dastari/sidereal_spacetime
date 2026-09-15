@@ -1,0 +1,50 @@
+
+> @sidereal/world@0.1.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+tsc not found in node_modules. Make sure you have the `typescript` package as a dev-dependency and that your dependencies are installed.
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/auth.ts -> src/construction-pilot-authority.ts -> src/construction-flight-input.ts -> src/scoped-inventory-authority.ts -> src/construction-doors.ts -> src/construction-airlock.ts -> src/construction.ts -> src/construction-interactions.ts -> src/auth.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/construction-pilot-authority.ts -> src/construction-flight-input.ts -> src/scoped-inventory-authority.ts -> src/construction-doors.ts -> src/construction-airlock.ts -> src/construction.ts -> src/construction-pilot-authority.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/construction-doors.ts -> src/construction-airlock.ts -> src/construction.ts -> src/construction-interactions.ts -> src/construction-doors.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/auth.ts -> src/construction-pilot-authority.ts -> src/construction-flight-input.ts -> src/scoped-inventory-authority.ts -> src/construction-doors.ts -> src/construction-airlock.ts -> src/construction.ts -> src/auth.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/auth.ts -> src/construction-pilot-authority.ts -> src/auth.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/construction.ts -> src/construction-interactions.ts -> src/construction.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: ../sim/src/construction-transactions.ts -> ../sim/src/construction-airlock-document.ts -> ../sim/src/construction-transactions.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/scoped-inventory-authority.ts -> src/construction-cargo-carriers.ts -> src/scoped-inventory-authority.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/auth.ts -> src/construction-pilot-authority.ts -> src/construction-flight-input.ts -> src/scoped-inventory-authority.ts -> src/construction-cargo-carriers.ts -> src/auth.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/auth.ts -> src/construction-pilot-authority.ts -> src/construction-flight-input.ts -> src/scoped-inventory-authority.ts -> src/construction-doors.ts -> src/construction-airlock.ts -> src/auth.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: ../sim/src/layout-compiler.ts -> ../sim/src/layout-structure.ts -> ../sim/src/layout-compiler.ts.
+
+Build finished successfully.
+Uploading to http://127.0.0.1:3100 => http://127.0.0.1:3100
+Checking for breaking changes...
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0m[1m[34mDatabase Migration Plan[0m
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+▸ [0m[1m[32mCreated[0m user table: [0m[1m[36mcelestial_migration_receipt[0m ([0m[32mprivate[0m)
+    [0m[1m[34mColumns:[0m
+        • id: [0m[35mString[0m
+        • status: [0m[35mString[0m
+        • reason: [0m[35mString[0m
+        • before_json: [0m[35mString[0m
+        • after_sha_256: [0m[35mString[0m
+        • created_micros: [0m[35mU64[0m
+    [0m[1m[34mUnique constraints:[0m
+        • celestial_migration_receipt_id_key on [id]
+    [0m[1m[34mIndexes:[0m
+        • celestial_migration_receipt_id_idx_btree on [id]
+
+
+Publishing module...
+Updated database with name: sidereal-spacetime-dev-solar-star-hex-r0001-smoke, identity: c2004a358fe810da6539744150581dfcdb9621ed56dfafe3bc8db471b4929db2

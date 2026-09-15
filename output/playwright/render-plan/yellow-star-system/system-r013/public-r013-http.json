@@ -1,0 +1,17 @@
+{
+  "public": {
+    "starSha256": "f651ba13ade02fb918c97dd4d3924879dd9c204527a4e43cef90c8c578505bd2",
+    "bytes": 7884752,
+    "contentType": "model/gltf-binary"
+  },
+  "dev": {
+    "starSha256": "f651ba13ade02fb918c97dd4d3924879dd9c204527a4e43cef90c8c578505bd2",
+    "bytes": 7884752,
+    "contentType": "model/gltf-binary"
+  },
+  "genesis": {
+    "starSha256": "f651ba13ade02fb918c97dd4d3924879dd9c204527a4e43cef90c8c578505bd2",
+    "bytes": 7884752,
+    "contentType": "model/gltf-binary"
+  }
+}

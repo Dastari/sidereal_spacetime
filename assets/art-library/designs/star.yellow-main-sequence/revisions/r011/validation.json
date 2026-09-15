@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "files": {
+    "blender-source.blend": "273edf90118367a336b9d225cb77373570afc216e8c4630e0ae38e905e6feb10",
+    "generator.py": "cc7dc705ee4d2a09d9fb764153a0ba0161e508a4246e6f29a0ceb830ac64b341",
+    "blender-close.png": "ce6ec527a189027aace4cea4910ae0819df2e6982eab5e04dda68e0c7a6b8494",
+    "star.glb": "f669b3508ad9613301dd5e6e0fa5446453599e80956fc02b167e306ab54dfee7"
+  },
+  "photosphereRadius": 1,
+  "meshes": 1,
+  "polygons": 20484,
+  "flareCount": 0,
+  "tiles": 2562,
+  "convectionUV": true,
+  "authoredPBR": true,
+  "role": "star",
+  "seed": 3901
+}
