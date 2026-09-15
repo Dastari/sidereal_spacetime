@@ -109,10 +109,13 @@ Reuse the persisted Structure panel widths and accessible resize handle in Hull/
 
 - Isolated `npm run check`: 349 test files / 2,080 tests pass; docs check passes. Initial missing LFS input failures were resolved by hydration, with no validator changes.
 - `npm run build`: world build/bindings and both independent application builds/precompression pass. No world publication or game rollout.
+- `npm run test:python`: all standard, art and native geometry suites passed.
 - `npm run lint` and `npm run format:check`: zero new/changed violations. Eight packaging tests and the native thumbnail coverage/hash test pass.
 - Real Chromium at 1720 × 1020: pointer drag to 368 px; width retained in Objects and after reload; Home/End reach 200/380 px; 200 px drawer has no horizontal overflow; closed handle is not focusable. At 700 × 900, mobile drawer opens with wrapping images and no page overflow; resize handle is hidden.
 - All 76 native palette images decode to 256 × 256. Images are unique and pinned to the exact native GLB, with source selectors and SHA-256 records in `assets/art-library/framed-wayfarer/r005/thumbnails-r001/manifest.json`.
 - Applied only scoped source patches and new thumbnail PNGs to the shared tree. Browser verified all 76 images and resized drawer at the owner’s exact `http://sidereal.tail7a58a6.ts.net:5174/shipyard` URL. The four changed UI/catalog files match the tested isolated candidate byte-for-byte. Other owner planet/public assets preserved.
 - Browser evidence: `output/playwright/palette-live-5174.png`, `palette-mobile-open.png`, `palette-initial.png` in the isolated worktree. These are validation artifacts, not new approved art.
 
-PR delivery: pending creation. This PR is stacked on `shipyard-armor-editor` (PR #4). Main’s newer Genesis change was not replaced or republished. No game or native art contract is marked complete by this UI fix.
+PR delivery: [PR #8](https://github.com/Dastari/sidereal_spacetime/pull/8), implementation commit `46ffd6a6`. Hosted CI pending at handoff update. This PR is stacked on `shipyard-armor-editor` (PR #4). Main’s newer Genesis change was not replaced or republished. No game or native art contract is marked complete by this UI fix.
+
+Live assembled Wayfarer review screenshot: `output/playwright/palette-live-wayfarer.png` (84 components, native exterior visible, image palette loaded). Its status is `169 native boundary pieces · physical qualification pending`; the earlier browser wait expected the wrong status text, so the assembled ship was checked by screenshot instead. Standalone empty-draft placement created an editable part but showed only its selection outline in the isolated browser; this existing renderer path was not changed by the palette patch and is not claimed as gameplay evidence.
