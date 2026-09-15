@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-09-15 — Stable Observe and character preview (render 0.5.2, client 0.4.1, dashboard 0.5.1)
+
+Fixed displaced planetary atmospheres by using separate camera-relative world and view/projection uploads. Nested character portraits now restore Babylon's shared coordinate context after construction, rendering and disposal, and retain high-precision matrices. This prevents opening Character from corrupting world geometry and lighting. Authored surfaces, colors, LOD and simulation state are unchanged. Added numerical orbit and nested-render/disposal regression tests.
+
 ## 2026-09-15 — Stellar Observe framing (render 0.5.1)
 
 Observe fits the enlarged stellar corona, including portrait viewports, while retaining authored physical radii and existing planet framing. Added two NullEngine projection tests. Final r013 solar migration passes isolated baseline/update/persistent-state verification and is now live with the compatible client. All live ship, character and inventory-item rows remain unchanged. Hardware performance acceptance remains unmeasured.

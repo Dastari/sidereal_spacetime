@@ -1,0 +1,9 @@
+
+ RUN  v4.1.11 /root/sidereal_spacetime/.runtime/worktrees/solar-client-deployment
+
+
+ Test Files  2 passed (2)
+      Tests  3 passed (3)
+   Start at  18:25:18
+   Duration  1.35s (transform 88ms, setup 0ms, import 2.42s, tests 55ms, environment 0ms)
+
