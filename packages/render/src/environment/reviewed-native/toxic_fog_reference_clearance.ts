@@ -1,4 +1,4 @@
-import type {NativePlanetKit} from '../native-planet-composition';
+import type {ReviewedComposerInput as NativePlanetKit} from './reviewed-composer-input';
 import {composeToxicFog,type ToxicFogAnchor} from './toxic_fog_composition_r005';
 import {toxicFogAnchors,type ToxicBodyBatch} from './toxic_fog_reference_integration';
 import {unit,cross,type Vec} from './native_reference_assembly';

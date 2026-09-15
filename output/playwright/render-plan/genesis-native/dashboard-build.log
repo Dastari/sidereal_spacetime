@@ -1,0 +1,49 @@
+
+> sidereal-spacetime@0.1.0 build:dashboard
+> npm run build --workspace @sidereal/dashboard
+
+
+> @sidereal/dashboard@0.2.1 build
+> python3 ../../scripts/prepare_app.py dashboard && vite build
+
+Prepared runtime assets and allowlisted public help only.
+vite v8.2.2 building client environment for production...
+transforming...
+✓ 3584 modules transformed.
+✗ Build failed in 798ms
+error during build:
+Build failed with 1 error:
+
+[31m[UNRESOLVED_IMPORT] [0mCould not resolve './scene-material-registration' in ../../../sidereal-planet-reference-review/packages/render/src/layout-native-walls.ts
+    [38;5;246m╭[0m[38;5;246m─[0m[38;5;246m[[0m ../../../sidereal-planet-reference-review/packages/render/src/layout-native-walls.ts:10:49 [38;5;246m][0m
+    [38;5;246m│[0m
+ [38;5;246m10 │[0m [38;5;249mi[0m[38;5;249mm[0m[38;5;249mp[0m[38;5;249mo[0m[38;5;249mr[0m[38;5;249mt[0m[38;5;249m [0m[38;5;249m{[0m[38;5;249m [0m[38;5;249mr[0m[38;5;249me[0m[38;5;249mg[0m[38;5;249mi[0m[38;5;249ms[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mr[0m[38;5;249mR[0m[38;5;249me[0m[38;5;249mf[0m[38;5;249me[0m[38;5;249mr[0m[38;5;249me[0m[38;5;249mn[0m[38;5;249mc[0m[38;5;249me[0m[38;5;249md[0m[38;5;249mS[0m[38;5;249mc[0m[38;5;249me[0m[38;5;249mn[0m[38;5;249me[0m[38;5;249mM[0m[38;5;249ma[0m[38;5;249mt[0m[38;5;249me[0m[38;5;249mr[0m[38;5;249mi[0m[38;5;249ma[0m[38;5;249ml[0m[38;5;249m [0m[38;5;249m}[0m[38;5;249m [0m[38;5;249mf[0m[38;5;249mr[0m[38;5;249mo[0m[38;5;249mm[0m[38;5;249m [0m"./scene-material-registration"[38;5;249m;[0m
+ [38;5;240m   │[0m                                                 ───────────────┬───────────────  
+ [38;5;240m   │[0m                                                                ╰───────────────── Module not found.
+ [38;5;240m   │[0m 
+ [38;5;240m   │[0m [38;5;115mHelp[0m: '../../../sidereal-planet-reference-review/packages/render/src/layout-native-walls.ts' is imported by the following path:
+ [38;5;240m   │[0m         - ../../../sidereal-planet-reference-review/packages/render/src/layout-native-walls.ts
+ [38;5;240m   │[0m         - ../../../sidereal-planet-reference-review/packages/render/src/layout-hull.ts
+ [38;5;240m   │[0m         - src/shipyard/layout/HullWorkspace.tsx
+ [38;5;240m   │[0m         - src/shipyard/layout/LayoutEditor.tsx
+ [38;5;240m   │[0m         - src/App.tsx
+ [38;5;240m   │[0m         - src/main.tsx
+ [38;5;240m   │[0m         - index.html
+[38;5;246m────╯[0m
+
+    at aggregateBindingErrorsIntoJsError (file:///root/sidereal-planet-reference-review/node_modules/rolldown/dist/shared/error-BP8lJHle.mjs:48:18)
+    at unwrapBindingResult (file:///root/sidereal-planet-reference-review/node_modules/rolldown/dist/shared/error-BP8lJHle.mjs:18:128)
+    at #build (file:///root/sidereal-planet-reference-review/node_modules/rolldown/dist/shared/rolldown-DfXO5K1m.mjs:133:34)
+    at async buildEnvironment (file:///root/sidereal-planet-reference-review/node_modules/vite/dist/node/chunks/node.js:33821:66)
+    at async Object.build (file:///root/sidereal-planet-reference-review/node_modules/vite/dist/node/chunks/node.js:34242:19)
+    at async Object.buildApp (file:///root/sidereal-planet-reference-review/node_modules/vite/dist/node/chunks/node.js:34239:153)
+    at async CAC.<anonymous> (file:///root/sidereal-planet-reference-review/node_modules/vite/dist/node/cli.js:776:3) {
+  errors: [Getter/Setter]
+}
+npm error Lifecycle script `build` failed with error:
+npm error code 1
+npm error path /root/sidereal-genesis-native/apps/dashboard
+npm error workspace @sidereal/dashboard@0.2.1
+npm error location /root/sidereal-genesis-native/apps/dashboard
+npm error command failed
+npm error command sh -c python3 ../../scripts/prepare_app.py dashboard && vite build

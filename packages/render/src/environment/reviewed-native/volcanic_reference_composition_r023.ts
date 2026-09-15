@@ -1,4 +1,4 @@
-import type {NativePlanetKit} from '../native-planet-composition';
+import type {ReviewedComposerInput as NativePlanetKit} from './reviewed-composer-input';
 import {deformedFaceNormals,deformedNormalAt} from './native_deformation_normals';
 import {globeAnchor,seeded,tangent,unit,type Vec} from './native_reference_assembly';
 /** Fixed native regional topology at every LOD. Only the quiet substrate changes

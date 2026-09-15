@@ -1,0 +1,95 @@
+{
+  "near": {
+    "frames": 396,
+    "selected": "volcanic-r023",
+    "seed": 38,
+    "loading": false,
+    "stats": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 1,
+      "smokeTriangles": 33440,
+      "retainedSmokeMeshes": 1,
+      "requestedLOD": 0,
+      "fixedDetail": false,
+      "buildMs": 870.3000011444092,
+      "revision": "volcanic-r023",
+      "localLights": 0,
+      "transmissionMaterials": 0,
+      "transmissionTargets": 0
+    },
+    "worker": {
+      "lastBuildMs": 870.3000011444092,
+      "pendingBuilds": 0,
+      "pendingWeatherBuilds": 0
+    },
+    "ready": true
+  },
+  "far": {
+    "frames": 441,
+    "selected": "volcanic-r023",
+    "seed": 38,
+    "loading": false,
+    "stats": {
+      "active": 2,
+      "pendingBuilds": 0,
+      "retained": [
+        0,
+        2
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 1,
+      "requestedLOD": 2,
+      "fixedDetail": false,
+      "buildMs": 600,
+      "revision": "volcanic-r023",
+      "localLights": 0,
+      "transmissionMaterials": 0,
+      "transmissionTargets": 0
+    },
+    "worker": {
+      "lastBuildMs": 600,
+      "pendingBuilds": 0,
+      "pendingWeatherBuilds": 0
+    },
+    "ready": true
+  },
+  "returned": {
+    "frames": 447,
+    "selected": "volcanic-r023",
+    "seed": 38,
+    "loading": false,
+    "stats": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0,
+        2
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 1,
+      "smokeTriangles": 33440,
+      "retainedSmokeMeshes": 1,
+      "requestedLOD": 0,
+      "fixedDetail": false,
+      "buildMs": 600,
+      "revision": "volcanic-r023",
+      "localLights": 0,
+      "transmissionMaterials": 0,
+      "transmissionTargets": 0
+    },
+    "worker": {
+      "lastBuildMs": 600,
+      "pendingBuilds": 0,
+      "pendingWeatherBuilds": 0
+    },
+    "ready": true
+  },
+  "scope": "Actual Genesis UI wheel controls, SwiftShader: behavior/counts only, not hardware timing"
+}

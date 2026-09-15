@@ -1,4 +1,4 @@
-import type {NativePlanetKit} from '../native-planet-composition';
+import type {ReviewedComposerInput as NativePlanetKit} from './reviewed-composer-input';
 export type Vec=[number,number,number];
 export const unit=(v:Vec):Vec=>{const r=Math.hypot(...v);if(r<1e-12)throw new Error('Degenerate native direction');return v.map(x=>x/r) as Vec;};
 export const cross=(a:Vec,b:Vec):Vec=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];

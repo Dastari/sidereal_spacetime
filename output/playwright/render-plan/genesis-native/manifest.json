@@ -1,0 +1,33 @@
+{
+  "date": "2026-09-15",
+  "url": "http://sidereal.tail7a58a6.ts.net:5174/planets",
+  "pr": "https://github.com/Dastari/sidereal_spacetime/pull/6",
+  "sourceCommit": "563a1c2e6f0626ced15c773c799cdd8000e8cb57",
+  "implementedCatalog": {
+    "mainPlanets": 9,
+    "moonVariants": 19,
+    "workerFullDetailValidation": 28
+  },
+  "tests": {
+    "files": 13,
+    "passed": 31,
+    "optionalArchivedSourceSkipped": 2,
+    "previewTypecheck": "pass"
+  },
+  "images": [
+    "ice-genesis-hardware.jpg",
+    "ice-genesis.png",
+    "gas-genesis.png",
+    "temperate-r003.png",
+    "volcanic-r023.png",
+    "desert-moon-1-seed117.png"
+  ],
+  "hardware": "GT730 actual Ice26 appearance/counts; not RTX4080; hidden preview limits frame recording",
+  "software": "SwiftShader appearance/counts only; initial Volcanic and moon scripted waits exceeded60s, Volcanic subsequently verified ready and retained0\u21922\u21920",
+  "remaining": [
+    "RTX4080 baseline transition measurement",
+    "Normal game Flight/Map/F3 revised-asset acceptance",
+    "Existing upstream whole-project check/build gaps"
+  ],
+  "browserFollowup": "Desert Moon1 r001 reached ready, then seed117 regeneration reached ready with zero pending builds; procedural editor restored all original recipe controls. Software initial wait exceeded60s with old Volcanic retained; zoom-out reduced software raster cost and the retry completed."
+}

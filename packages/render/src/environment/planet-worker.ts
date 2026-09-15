@@ -1,12 +1,22 @@
+import {
+  createReviewedWorkerRegistry,
+  type ReviewedAssetDescriptor,
+} from "./reviewed-native/reviewed-worker-registry";
+import type { ReviewedBuildInput } from "./reviewed-native/build-reviewed-planet";
+const reviewedRegistry = createReviewedWorkerRegistry();
 import { buildNativeIceData } from "./native-ice-build";
 import { buildNativeVolcanicData } from "./native-volcanic-build";
 import type { NativePlanetKit } from "./native-planet-composition";
 import { buildPlanetData, buildPlanetWeather } from "./planet-build";
 import type { PlanetRecipe } from "../../../content/src/environment";
 /** Rendering data only. A request revision rejects stale results after body edits/removal. */
-self.onmessage = (
+self.onmessage = async (
   event: MessageEvent<{
     id: number;
+    type?: "reviewed-register" | "reviewed-build" | "reviewed-release";
+    descriptor?: ReviewedAssetDescriptor;
+    assetKey?: string;
+    input?: ReviewedBuildInput;
     recipe: PlanetRecipe;
     lod: 0 | 1 | 2;
     phase?: number;
@@ -15,13 +25,23 @@ self.onmessage = (
 ) => {
   const { id, recipe, lod, phase, nativeKit } = event.data;
   try {
-    const result = nativeKit
-      ? nativeKit.layout === "glacial-interior"
-        ? buildNativeIceData(nativeKit, recipe, lod)
-        : buildNativeVolcanicData(nativeKit, recipe, lod)
-      : phase === undefined
-        ? buildPlanetData(recipe, lod)
-        : buildPlanetWeather(recipe, lod, phase);
+    const result =
+      event.data.type === "reviewed-register"
+        ? await reviewedRegistry.register(event.data.descriptor!)
+        : event.data.type === "reviewed-build"
+          ? await reviewedRegistry.build(
+              event.data.assetKey!,
+              event.data.input!,
+            )
+          : event.data.type === "reviewed-release"
+            ? reviewedRegistry.release(event.data.assetKey!)
+            : nativeKit
+              ? nativeKit.layout === "glacial-interior"
+                ? buildNativeIceData(nativeKit, recipe, lod)
+                : buildNativeVolcanicData(nativeKit, recipe, lod)
+              : phase === undefined
+                ? buildPlanetData(recipe, lod)
+                : buildPlanetWeather(recipe, lod, phase);
     const transfer: ArrayBuffer[] = [];
     const seen = new Set<ArrayBuffer>();
     function buffers(value: unknown) {

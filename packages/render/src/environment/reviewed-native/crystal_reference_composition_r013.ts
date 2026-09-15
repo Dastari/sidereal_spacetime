@@ -1,6 +1,6 @@
 import {nativeRadialSurface} from './native_radial_surface';
 import {deformedNormalAt} from './native_deformation_normals';
-import type {NativePlanetKit} from '../native-planet-composition';
+import type {ReviewedComposerInput as NativePlanetKit} from './reviewed-composer-input';
 type Vec=[number,number,number];
 type Range={firstTriangle:number;triangleCount:number;partId:string};
 const unit=(v:Vec):Vec=>{const n=Math.hypot(...v);if(n<1e-12)throw new Error('Degenerate native triangle');return [v[0]/n,v[1]/n,v[2]/n];};

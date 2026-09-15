@@ -204,3 +204,70 @@
   padding: 6px;
   cursor: pointer;
 }
+
+.planet-studio-modes {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+.planet-studio-modes > nav {
+  display: flex;
+  gap: 8px;
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--creator-border, #293345);
+}
+.planet-studio-modes > nav button[aria-pressed="true"] {
+  border-color: #8bc5d8;
+  color: #c4efff;
+}
+.native-planet-controls {
+  padding: 22px;
+  overflow: auto;
+  background: var(--creator-panel, #121a26);
+}
+.native-planet-controls h2 {
+  margin-top: 0;
+  font-size: 18px;
+}
+.native-planet-controls p {
+  font-size: 13px;
+  line-height: 1.6;
+  opacity: 0.75;
+}
+.native-planet-controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  margin: 20px 0 12px;
+}
+.native-planet-controls select,
+.native-planet-controls input {
+  width: 100%;
+  padding: 9px;
+  background: #0d1420;
+  color: #e6edf7;
+  border: 1px solid #344258;
+  border-radius: 5px;
+}
+.native-planet-revision {
+  overflow-wrap: anywhere;
+}
+.native-planet-status {
+  position: absolute;
+  left: 24px;
+  bottom: 20px;
+  max-width: calc(100% - 48px);
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: #101826df;
+  font-size: 13px;
+}
+.native-planet-status[data-error="true"] {
+  color: #ffbfad;
+}
+.native-planet-status button {
+  margin-left: 12px;
+}
