@@ -50,11 +50,15 @@ const initial = (): Draft => ({
   past: [],
   future: [],
 });
-const fit = (d: SystemMapDocument): Camera => ({
-  x: d.center.x,
-  y: d.center.y,
-  span: d.radius * 3.1,
-});
+const fit = (d: SystemMapDocument): Camera => {
+  const rect = document.querySelector(".map-chart")?.getBoundingClientRect();
+  const aspect = rect?.height ? rect.width / rect.height : 1.6;
+  return {
+    x: d.center.x,
+    y: d.center.y,
+    span: d.radius * 2.3 * Math.max(1, aspect),
+  };
+};
 const clone = (d: SystemMapDocument) =>
   JSON.parse(JSON.stringify(d)) as SystemMapDocument;
 export default function MapEditor() {
@@ -340,7 +344,7 @@ export function SystemMapWorkspace({
         <button
           aria-label="Zoom out"
           onClick={() =>
-            setCamera((c) => ({ ...c, span: Math.min(2e8, c.span * 2) }))
+            setCamera((c) => ({ ...c, span: Math.min(2e9, c.span * 2) }))
           }
         >
           −

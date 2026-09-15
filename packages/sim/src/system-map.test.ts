@@ -120,3 +120,17 @@ test("rejects invalid numeric/unknown inputs and oversized JSON", () => {
   d.backgroundId = "missing";
   expect(() => validateSystemMap(d)).toThrow("background");
 });
+
+test("polygon admission uses real vertices rather than empty bounding-box corners", () => {
+  const d = newSystemMap("triangle"),
+    f = newAsteroidField("triangle-field");
+  f.shape = "polygon";
+  f.vertices = [
+    { x: 0, y: 0 },
+    { x: 9000, y: 0 },
+    { x: 0, y: 9000 },
+  ];
+  f.density = 0;
+  d.fields = [f];
+  expect(() => validateSystemMap(d)).not.toThrow();
+});

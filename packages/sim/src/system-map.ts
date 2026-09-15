@@ -200,14 +200,27 @@ export function validateSystemMap(doc: SystemMapDocument) {
         throw Error("Polygon is too thin for bounded population");
     }
     const bounds = fieldBounds(f);
-    // Bounding corners conservatively contain the entire volume and asteroid surfaces.
-    for (const x of [bounds.minX, bounds.maxX])
-      for (const y of [bounds.minY, bounds.maxY])
+    // Exact prism corners; ellipsoids use a conservative enclosing sphere.
+    // A concave footprint's empty bounding-box corners are not part of its volume.
+    if (f.shape === "ellipsoid")
+      contained(f, Math.max(f.width, f.length, f.depth) / 2 + f.maxRadius);
+    else {
+      const corners =
+        f.shape === "polygon"
+          ? f.vertices
+          : [
+              { x: bounds.minX, y: bounds.minY },
+              { x: bounds.maxX, y: bounds.minY },
+              { x: bounds.maxX, y: bounds.maxY },
+              { x: bounds.minX, y: bounds.maxY },
+            ];
+      for (const p of corners)
         for (const h of [-f.depth / 2, f.depth / 2])
           contained(
-            { x: f.x + x, y: f.y + y, height: f.height + h },
+            { x: f.x + p.x, y: f.y + p.y, height: f.height + h },
             f.maxRadius,
           );
+    }
     if (
       !Array.isArray(f.resources) ||
       f.resources.length > MAP_RESOURCES.length
