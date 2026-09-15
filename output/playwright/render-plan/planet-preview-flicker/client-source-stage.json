@@ -1,0 +1,40 @@
+{
+  "baselineClientSha256": "28e7213e90582861829db00aef661158f0bb4563f9da240460a5c06807c94fe0",
+  "files": [
+    {
+      "path": "packages/render/src/character-preview.ts",
+      "beforeSha256": "38c8e9e5934e0e2f9373bdf071d8529731df19f55f57599076a0bc395c8ddb51",
+      "afterSha256": "3147c75b4852c44c2be768409871af28df35627b25275fb8c193f343e0e5d1c5"
+    },
+    {
+      "path": "packages/render/src/environment/shaders.ts",
+      "beforeSha256": "cc54d09e8329d79d9a2cf558309e0446077109e68be1775dd30bf3920566693e",
+      "afterSha256": "f76cdbebee15d00ddde21317818452b45fd03bf6ff5a24762be2d92ec162cb41"
+    },
+    {
+      "path": "packages/render/src/environment/planet-atmosphere.ts",
+      "beforeSha256": "ca4c4c1599b6de543b5b93009b6672e7f0b5de4c304fc63a4698404bb0f42c2a",
+      "afterSha256": "1600b47d445407b2f5caadab0ef925a5298324a4f4d5fb6281fb1969894d5f67"
+    },
+    {
+      "path": "packages/render/src/environment/stellar-corona.ts",
+      "beforeSha256": "de6c923d2ae877678aec771dad8755ade91821b6940ff35589e1a776ba8da363",
+      "afterSha256": "f76bef2d45814076e3989f30bcf03d1fa33bada4aa0e10f1362d876dbd248f99"
+    },
+    {
+      "path": "packages/render/src/environment/distant-star.ts",
+      "beforeSha256": "5b2f619f0489001ffc5438334c2665f065f99016a1535ae99033ba61e3f37606",
+      "afterSha256": "e08d120c1ebc7b505685dee950b69e679384b61b4b25715eef81ddc47cde2c86"
+    },
+    {
+      "path": "packages/render/src/environment/index.ts",
+      "beforeSha256": "97f0fbc6ed5075a2ee173ad6b1fcc8985a71bf973079a17b38850ff6ad6b5591",
+      "afterSha256": "24f5e720f345bd8dd5310dd56cd0f3ec7c1c010797d7a967c942c1b005430c14"
+    }
+  ],
+  "added": [
+    "packages/render/src/scene-coordinate-context.ts",
+    "packages/render/src/scene-coordinate-context.test.ts",
+    "packages/render/src/environment/planet-atmosphere.test.ts"
+  ]
+}

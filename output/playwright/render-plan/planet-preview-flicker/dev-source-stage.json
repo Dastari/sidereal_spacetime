@@ -1,0 +1,50 @@
+{
+  "files": [
+    {
+      "path": "packages/render/src/character-preview.ts",
+      "beforeSha256": "38c8e9e5934e0e2f9373bdf071d8529731df19f55f57599076a0bc395c8ddb51",
+      "afterSha256": "3147c75b4852c44c2be768409871af28df35627b25275fb8c193f343e0e5d1c5"
+    },
+    {
+      "path": "packages/render/src/environment/shaders.ts",
+      "beforeSha256": "cc54d09e8329d79d9a2cf558309e0446077109e68be1775dd30bf3920566693e",
+      "afterSha256": "f76cdbebee15d00ddde21317818452b45fd03bf6ff5a24762be2d92ec162cb41"
+    },
+    {
+      "path": "packages/render/src/environment/stellar-corona.ts",
+      "beforeSha256": "de6c923d2ae877678aec771dad8755ade91821b6940ff35589e1a776ba8da363",
+      "afterSha256": "f76bef2d45814076e3989f30bcf03d1fa33bada4aa0e10f1362d876dbd248f99"
+    },
+    {
+      "path": "packages/render/src/environment/distant-star.ts",
+      "beforeSha256": "5b2f619f0489001ffc5438334c2665f065f99016a1535ae99033ba61e3f37606",
+      "afterSha256": "e08d120c1ebc7b505685dee950b69e679384b61b4b25715eef81ddc47cde2c86"
+    },
+    {
+      "path": "packages/render/src/environment/planet-atmosphere.ts",
+      "beforeSha256": "dd985399d3e5bfb59368fa82679d55e2b8e8237fa3fa0ef14d6c9d96460e7f39",
+      "afterSha256": "842d2ccf6b088ffd13e127d34237fc63432332106e10e2bfeb0d542ce277a38a"
+    },
+    {
+      "path": "packages/render/src/environment/index.ts",
+      "beforeSha256": "97f0fbc6ed5075a2ee173ad6b1fcc8985a71bf973079a17b38850ff6ad6b5591",
+      "afterSha256": "24f5e720f345bd8dd5310dd56cd0f3ec7c1c010797d7a967c942c1b005430c14"
+    },
+    {
+      "path": "packages/render/src/scene-coordinate-context.ts",
+      "beforeSha256": null,
+      "afterSha256": "a52cd7b76dd66656c9090fa9689701ecc76054a438a45f9cd6667bb795219ee9"
+    },
+    {
+      "path": "packages/render/src/scene-coordinate-context.test.ts",
+      "beforeSha256": null,
+      "afterSha256": "7f509c749cc031811d243bee8982294e487419922283c3cc845265a7059a3f8b"
+    },
+    {
+      "path": "packages/render/src/environment/planet-atmosphere.test.ts",
+      "beforeSha256": null,
+      "afterSha256": "a8d0ead83f067fd732121e0b8dc88560443bba3f578fd8df50067fd4fb42c18a"
+    }
+  ],
+  "note": "Preserved canonical atmosphere formatting with one uniform rename, plus existing environment source changes."
+}
