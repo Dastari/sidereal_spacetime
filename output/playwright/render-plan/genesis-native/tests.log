@@ -1,0 +1,9 @@
+
+ RUN  v4.1.11 /root/sidereal-genesis-native
+
+
+ Test Files  13 passed (13)
+      Tests  31 passed | 2 skipped (33)
+   Start at  10:46:29
+   Duration  4.31s (transform 893ms, setup 0ms, import 2.09s, tests 966ms, environment 1ms)
+

@@ -1,0 +1,29 @@
+{
+  "url": "http://sidereal.tail7a58a6.ts.net:5174/planets",
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce GT 730 (0x00001287) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "canvas": {
+    "width": 1669,
+    "height": 1132
+  },
+  "viewport": {
+    "width": 2019,
+    "height": 1262
+  },
+  "frames": 945,
+  "selected": "ice-r026",
+  "seed": 38,
+  "ready": true,
+  "stats": {
+    "active": 0,
+    "retained": [
+      0
+    ],
+    "pendingBuilds": 0,
+    "fixedDetail": true,
+    "transmissionMaterials": 2,
+    "transmissionTargets": 1,
+    "buildMs": 9148.699999809265
+  },
+  "scope": "Actual Genesis rendered canvas and counts; hidden preview prevents transition timing acceptance; GPU differs from RTX4080 baseline",
+  "peerReview": "Independent Astra: accepted Ice26 one-view surface/material parity passes; no missing region; framing/JPEG differences only"
+}

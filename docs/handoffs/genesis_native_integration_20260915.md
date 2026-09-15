@@ -11,3 +11,5 @@ Validation: all28 packaged worker registrations/builds passed sequentially (1GiB
 Saved actual Genesis Ice26 on GT730 and SwiftShader. Independent Astra confirms one-view rendering parity with accepted Ice26; owner says it looks good. Hardware currently differs from RTX4080 baseline; hidden-preview stalls prevent a trustworthy timing claim. Normal Flight/Map/F3 acceptance remains outstanding. Further UI browser results are recorded in the evidence manifest. Do not resume visual polishing on already agreed planets.
 
 Branch: feat/genesis-reviewed-planets, based on origin/main9e3c40e2. Deliver through a new PR; merge is not authorized for this new PR. Do not stage unrelated dirty source files or the node_modules worktree symlink.
+
+PR: https://github.com/Dastari/sidereal_spacetime/pull/6. Code commit563a1c2e. Evidence manifest includes actual Ice/Gas/Temperate/Volcanic captures and Volcanic ready0→2→retained0 UI zoom. Software60s capture timeouts are retained; no timing inference.
