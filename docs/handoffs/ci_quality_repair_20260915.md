@@ -13,3 +13,8 @@ The extra historical `art:check` audit remains incomplete: after initial native/
 Shared checkout remains at `9c58c07774d7d3c4a58a40c49e90f2a2c647249c`, with exactly its entry dirty list and an empty index. Work occurred only in `/root/sidereal-ci-repair`; no live service was restarted, rebuilt or activated. Existing editor review remains live; game pins remain unchanged. Local logs, baseline reports and entry/final status are under `.runtime/ci-repair-20260915/` in the shared root, excluded from Git.
 
 Next delivery action is owner-reviewed integration of PR #5 into PR #4's branch. Keep Source quality paused until the repair is integrated and notification behavior is settled; then enable it and validate the exact hosted candidate. A disabled workflow must never be described as green CI. Do not infer authority to merge other open PRs or activate game assets from this CI repair request.
+
+
+## Hosted validation follow-up
+
+The owner requested fixing the still-red Actions page. Its newest entries were the historical failed runs at `293a437`; no repair candidate had run while the workflow was disabled. Source quality is now re-enabled for validation of PR #5. Shared HEAD and its dirty list remain as recorded above; isolated repair entry HEAD is `a3810a66dc9ff75610ad3003428a0fa88710bfbf` with no local changes. Fetch confirmed PR #5/#4/#1 are still open at their recorded heads. Native pins and live services are unchanged. This follow-up supersedes the instruction above to keep the workflow paused; hosted results are pending. Historical failed runs are retained as audit history.
