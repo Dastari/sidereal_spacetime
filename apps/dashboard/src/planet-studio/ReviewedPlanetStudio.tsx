@@ -1,3 +1,4 @@
+import { REVIEWED_YELLOW_STAR } from "../../../../packages/render/src/environment/reviewed-star-catalog";
 import { useEffect, useRef, useState } from "react";
 import { REVIEWED_NATIVE_PLANETS } from "../../../../packages/render/src/environment/reviewed-native-planet-catalog";
 import { createReviewedNativePreview } from "../../../../packages/render/src/environment/reviewed-native-preview";
@@ -35,7 +36,10 @@ export function ReviewedPlanetStudio() {
   useEffect(() => {
     void preview.current?.select(id, seed);
   }, [id, seed, attempt]);
-  const selected = REVIEWED_NATIVE_PLANETS.find((item) => item.id === id);
+  const isStar = id === REVIEWED_YELLOW_STAR.id;
+  const selected = isStar
+    ? REVIEWED_YELLOW_STAR
+    : REVIEWED_NATIVE_PLANETS.find((item) => item.id === id);
   function generate() {
     const value = Number(draftSeed);
     if (!Number.isInteger(value) || value < 0 || value > 2147483647) {
@@ -48,11 +52,17 @@ export function ReviewedPlanetStudio() {
   }
   return (
     <main className="planet-studio">
-      <section className="planet-view" aria-label="Reviewed planet preview">
-        <canvas ref={canvas} aria-label="Orbit and zoom the reviewed planet" />
+      <section
+        className="planet-view"
+        aria-label="Reviewed celestial body preview"
+      >
+        <canvas
+          ref={canvas}
+          aria-label={`Orbit and zoom the reviewed ${isStar ? "star" : "planet"}`}
+        />
         <div className="planet-heading">
           <div>
-            <h1>Reviewed planets</h1>
+            <h1>Reviewed planets and stars</h1>
             <p>Drag to orbit · Scroll to zoom</p>
           </div>
         </div>
@@ -69,13 +79,16 @@ export function ReviewedPlanetStudio() {
         </div>
       </section>
       <aside className="native-planet-controls">
-        <h2>Reviewed planets</h2>
+        <h2>Reviewed planets and stars</h2>
         <p>
           Authored Blender surfaces, materials and retained levels of detail.
         </p>
         <label>
-          Planet or moon
+          Planet, moon or star
           <select value={id} onChange={(event) => setId(event.target.value)}>
+            <option value={REVIEWED_YELLOW_STAR.id}>
+              {REVIEWED_YELLOW_STAR.label}
+            </option>
             {REVIEWED_NATIVE_PLANETS.map((item) => (
               <option key={item.id} value={item.id}>
                 {item.label}
@@ -86,29 +99,39 @@ export function ReviewedPlanetStudio() {
         <p className="native-planet-revision">
           Selected revision: {selected?.revision}
         </p>
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            generate();
-          }}
-        >
-          <label>
-            Composition seed
-            <input
-              type="number"
-              min="0"
-              max="2147483647"
-              step="1"
-              value={draftSeed}
-              onChange={(event) => setDraftSeed(event.target.value)}
-            />
-          </label>
-          <button type="submit">Generate composition</button>
-        </form>
-        <p>
-          Zoom out and approach again to inspect the LOD transition. Authored
-          surface details stay intact.
-        </p>
+        {!isStar && (
+          <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              generate();
+            }}
+          >
+            <label>
+              Composition seed
+              <input
+                type="number"
+                min="0"
+                max="2147483647"
+                step="1"
+                value={draftSeed}
+                onChange={(event) => setDraftSeed(event.target.value)}
+              />
+            </label>
+            <button type="submit">Generate composition</button>
+          </form>
+        )}
+        {isStar && <p>A golden main-sequence star with active solar flares.</p>}
+        {isStar ? (
+          <p>
+            Orbit to inspect the surface and animated flares. The star retains
+            its authored detail at every viewing distance.
+          </p>
+        ) : (
+          <p>
+            Zoom out and approach again to inspect the LOD transition. Authored
+            surface details stay intact.
+          </p>
+        )}
       </aside>
     </main>
   );
