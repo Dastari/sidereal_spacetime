@@ -110,3 +110,16 @@ export const legacyBodyAlias = table(
     legacySnapshotJson: t.string(),
   },
 );
+
+/** Private migration recovery evidence; never exposed through gameplay views. */
+export const celestialMigrationReceipt = table(
+  { name: "celestial_migration_receipt" },
+  {
+    id: t.string().primaryKey(),
+    status: t.string(),
+    reason: t.string(),
+    beforeJson: t.string(),
+    afterSha256: t.string(),
+    createdMicros: t.u64(),
+  },
+);

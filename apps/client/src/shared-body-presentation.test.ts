@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { SharedWorldStore } from "@sidereal/net";
-import { SHARED_SYSTEM_SEED } from "@sidereal/content/shared-system";
+import {
+  SHARED_SYSTEM_SEED,
+  SOLAR_SYSTEM,
+} from "@sidereal/content/shared-system";
 import {
   sharedBodyPresentation,
   bodyDestinations,
@@ -84,4 +87,15 @@ describe("accepted shared body presentation", () => {
     store.remove("bodyMotion", canonical.id);
     expect(sharedBodyPresentation(store, 1000)).toEqual([]);
   });
+});
+
+it("labels authored planets and moons while preserving accepted navigation coordinates", () => {
+  const moon = SOLAR_SYSTEM.bodies.find((body) => body.name === "Pelagic I")!;
+  expect(
+    bodyDestinations([
+      { id: moon.id, key: moon.key, kind: "planet", x: 123, y: 456 },
+    ]),
+  ).toEqual([
+    { id: moon.id, kind: "planet", name: "Pelagic I", x: 123, y: 456 },
+  ]);
 });

@@ -7,7 +7,7 @@ import {
 import { spatialCell } from "@sidereal/sim/spatial-cells";
 import type { RigidBody } from "@sidereal/sim/collision";
 import { LAB_HULL } from "@sidereal/content/space";
-import { SHARED_SYSTEM_SEED } from "@sidereal/content/shared-system";
+import { SHARED_SYSTEM_SEED, SOLAR_SYSTEM_BODY_LIMIT } from "@sidereal/content/shared-system";
 import {
   LAB_FLIGHT_ACTUATORS,
   LAB_FLIGHT_COMPUTER,
@@ -122,7 +122,7 @@ export function stepSharedWorld(
   const ships = limited(ctx.db.shipWorldMotion.by_system.filter(systemId), 60);
   const descriptions = limited(
     ctx.db.systemBody.by_system.filter(systemId),
-    32,
+    SOLAR_SYSTEM_BODY_LIMIT,
   );
   if (!ships || !descriptions)
     return {

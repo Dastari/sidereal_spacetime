@@ -6,8 +6,8 @@
     "stars--yellow-main-sequence"
   ],
   "mapping_status": "Explicit S39 yellow main sequence only",
-  "current_revision": 7,
-  "state": "reviewed",
+  "current_revision": 10,
+  "state": "in-progress",
   "owner_final_signoff": null,
   "priority": 1,
   "profile": "star",
@@ -18,6 +18,16 @@
       "source": "Astra independent reviewer",
       "date": "2026-09-15",
       "text": "Astra: body/pits close, no further sculpt needed; runtime corona and playback pending."
+    },
+    {
+      "date": "2026-09-15",
+      "source": "owner and independent gpt-6-astra original-atlas comparison",
+      "text": "r007/plasma-r009 acceptance superseded. Orange body and connected near-white flows, luminous limb blended into turbulent orange corona required; current champagne checkerboard and red annulus materially miss original Yellow Main Sequence reference."
+    },
+    {
+      "source": "independent gpt-6-astra and root",
+      "date": "2026-09-15",
+      "text": "Root/Astra working acceptance against original Yellow Main Sequence after front, alternate, bloom-off and five playback frames. No further correction before owner review. Cleaner/coarser relief, simpler dark basins, fine flare tips and less billowy corona remain. No owner final sign-off or hardware timing acceptance."
     }
   ],
   "approvals": [],
@@ -242,6 +252,120 @@
         }
       ],
       "review": "Root and independent Astra working acceptance: good reference match, no further art iteration requested. Matching front light-on/off probe verifies external warm illumination. Timed frames verify evolving anchored flare states; software playback is not hardware timing acceptance."
+    },
+    {
+      "revision": 8,
+      "created_at": "2026-09-15",
+      "stage": "review",
+      "change": "Coherent orange native material regions and connected white-hot seams preserve existing sculpt. Runtime turbulent corona and analytic limb emission replace detached red annulus.",
+      "hypothesis": "Larger connected hot structures dominate the native relief and blend continuously into orange plasma at the limb.",
+      "covered_reference_ids": [
+        "stars--yellow-main-sequence"
+      ],
+      "evidence": [
+        {
+          "role": "star",
+          "path": "designs/star.yellow-main-sequence/revisions/r008/star.glb",
+          "sha256": "ee3f5eafd9468e3fd41b7143706d615f72e8e8da4d1c6653e0243e446f2eab4f"
+        },
+        {
+          "role": "generator",
+          "path": "designs/star.yellow-main-sequence/revisions/r008/generator.py",
+          "sha256": "85c2217afeb36917cfdfafbf2c2ed61b733ef48e7d585e9aa74b89c48b1f5346"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/star.yellow-main-sequence/revisions/r008/blender-close.png",
+          "sha256": "8bcd4132b7c88eaabcd402d5e1dda85e68e24d3531f5936b86268e47147154d2"
+        },
+        {
+          "role": "validation",
+          "path": "designs/star.yellow-main-sequence/revisions/r008/validation.json",
+          "sha256": "981a892ad408e5c5cacaf2d06df378aa104dc08417f870d5f6b12c5e1b6285ae"
+        },
+        {
+          "role": "blender-source",
+          "path": "designs/star.yellow-main-sequence/revisions/r008/blender-source.blend",
+          "sha256": "a5fdc3e0f07014592d4c356f5067524d0450d03c751894078c83b7a84bb27068"
+        }
+      ],
+      "review": "Actual plasma-r010 render: orange/white and limb continuity improved; direct original-atlas Astra review pending. No acceptance."
+    },
+    {
+      "revision": 9,
+      "created_at": "2026-09-15",
+      "stage": "review",
+      "change": "plasma-r011: original-atlas Astra review finds palette and limb substantially on target; requires connecting selected hot regions and shortening/broadening whisker-like flares.",
+      "hypothesis": "Preserve orange relief and continuous bright limb while resolving the original-reference hot-flow and flare silhouette gaps.",
+      "covered_reference_ids": [
+        "stars--yellow-main-sequence"
+      ],
+      "evidence": [
+        {
+          "role": "generator",
+          "path": "designs/star.yellow-main-sequence/revisions/r009/generator.py",
+          "sha256": "21bb12dfc1c3c9ba5cabfc014580c91ade74f3ced2a43ad6d6dcf2423ae38d7d"
+        },
+        {
+          "role": "validation",
+          "path": "designs/star.yellow-main-sequence/revisions/r009/validation.json",
+          "sha256": "32254fb41ff33d8a1d9ba6dc255dea8846e403a0d2d2659c484b5b25095dcd70"
+        },
+        {
+          "role": "blender-source",
+          "path": "designs/star.yellow-main-sequence/revisions/r009/blender-source.blend",
+          "sha256": "e528ad6d667ffd6a8e2e7de54032fd06dcf4441652d42242431e8351a5070409"
+        },
+        {
+          "role": "star",
+          "path": "designs/star.yellow-main-sequence/revisions/r009/star.glb",
+          "sha256": "87839cb1fb37b6178b32a8012c316d0ff55f61ef4fc8f61df82c5251ab7a1aeb"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/star.yellow-main-sequence/revisions/r009/blender-close.png",
+          "sha256": "1298d99014066ed04755fba84574d8cb5c8e5f567188a31ebe9727a232bd8cfa"
+        }
+      ],
+      "review": "plasma-r011: original-atlas Astra review finds palette and limb substantially on target; requires connecting selected hot regions and shortening/broadening whisker-like flares."
+    },
+    {
+      "revision": 10,
+      "created_at": "2026-09-15",
+      "stage": "review",
+      "change": "plasma-r012 candidate: asymmetric connected hot regions and shorter/wider animated flares; actual review pending, no acceptance.",
+      "hypothesis": "Preserve orange relief and continuous bright limb while resolving the original-reference hot-flow and flare silhouette gaps.",
+      "covered_reference_ids": [
+        "stars--yellow-main-sequence"
+      ],
+      "evidence": [
+        {
+          "role": "blender-source",
+          "path": "designs/star.yellow-main-sequence/revisions/r010/blender-source.blend",
+          "sha256": "f1921047a2a7f2fdf4a4e17dbf1ec2cb2b15d817c3060b25209dc68fec6b3003"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/star.yellow-main-sequence/revisions/r010/blender-close.png",
+          "sha256": "ea20815c6730ba431545c603fdcf7cadc4ea21d0479084cacd070d94841c2032"
+        },
+        {
+          "role": "validation",
+          "path": "designs/star.yellow-main-sequence/revisions/r010/validation.json",
+          "sha256": "f3568e242785670ee88b1ffe2b3307174e96f2c80a8437fdafc9b730df857584"
+        },
+        {
+          "role": "generator",
+          "path": "designs/star.yellow-main-sequence/revisions/r010/generator.py",
+          "sha256": "a91d4cf060051068094b0ef07b15b4f92965c571d41e8731e4a29c117ff41108"
+        },
+        {
+          "role": "star",
+          "path": "designs/star.yellow-main-sequence/revisions/r010/star.glb",
+          "sha256": "1bfd0d364052e09943e9e6815cfca482780fcf2f5fef1f4f3bdad262ee258691"
+        }
+      ],
+      "review": "Root/Astra working acceptance against original Yellow Main Sequence after front, alternate, bloom-off and five playback frames. No further correction before owner review. Cleaner/coarser relief, simpler dark basins, fine flare tips and less billowy corona remain. No owner final sign-off or hardware timing acceptance."
     }
   ]
 }

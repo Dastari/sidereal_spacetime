@@ -1,0 +1,7 @@
+# Original-reference review — plasma-r012 / native r010
+
+2026-09-15. Root and independent gpt-6-astra reviewer `/root/yellow_star_reference_review` inspected the original `reference/art/stars.png` Yellow Main Sequence crop, actual front/alternate/bloom-off captures and five playback frames. Both agree the defining gap is meaningfully closed and stop this iteration: orange-gold surface, connected selective white-hot paths, bright white-yellow limb blending into orange corona. Prior r007/plasma-r009 acceptance remains superseded by the owner rejection; r010 and r011 runtime attempts remain rejected history.
+
+Astra: “No further correction requested before owner review.” Native r010 retains cleaner/coarser relief, simpler dark basins, some fine flare tips and less billowy outer flame than the source. This is working acceptance, not an exact reconstruction or owner final sign-off. Animation frames show changing surface brightness, flares and ejecta locations; the 9.95-second SwiftShader recording does not establish smooth hardware playback.
+
+Native source and PBR export are preserved in the art-library r010 directory. Runtime source snapshots capture the actual image-producing candidate before formatting and the subsequent appearance-ID update; those changes did not alter shader or animation behavior. Genesis staging verifies all existing target hashes before updating eight established preview files; no live authority rows are changed.

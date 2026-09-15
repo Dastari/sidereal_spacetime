@@ -1,0 +1,25 @@
+{
+  "date": "2026-09-15",
+  "renderer": "Chromium SwiftShader WebGL2",
+  "hardwareTimingAcceptance": false,
+  "nativeRevision": "r008",
+  "runtimeRevision": "plasma-r010",
+  "nativeSha256": "ee3f5eafd9468e3fd41b7143706d615f72e8e8da4d1c6653e0243e446f2eab4f",
+  "canvas": [
+    768,
+    768
+  ],
+  "drawCalls": 61,
+  "meshes": 388,
+  "instances": 358,
+  "flareActors": 180,
+  "ejectaActors": 18,
+  "reference": "reference/art/stars.png Yellow Main Sequence exact crop [35,64,462,364]",
+  "state": "independent review pending; not accepted",
+  "sourceHashes": {
+    "packages/render/src/environment/stellar-corona.ts": "bba63b82033f189823adec0f87b4fc47567e5ffb9dde8f7ca3e8da947fc0e496",
+    "packages/render/src/environment/stellar-convection.ts": "cf08170ceb608318334c38a7f7dc784a7679e6e1459b0f3cbfff0a944d3ba7ef",
+    "packages/render/src/environment/yellow-star-runtime.ts": "b92b59bb7805baa1428009a394fe8fe66b79d777e533ecb99f5dc36a4ae4e02b",
+    "packages/render/src/environment/reviewed-star-catalog.ts": "094e02b1581fef1655a41cafe42074a6a621102f8aebd9e59d5aacf3ef11ee6a"
+  }
+}

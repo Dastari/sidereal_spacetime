@@ -119,6 +119,16 @@ export const CargoGridProjection = __t.object("CargoGridProjection", {
 });
 export type CargoGridProjection = __Infer<typeof CargoGridProjection>;
 
+export const CelestialMigrationReceipt = __t.object("CelestialMigrationReceipt", {
+  id: __t.string(),
+  status: __t.string(),
+  reason: __t.string(),
+  beforeJson: __t.string(),
+  afterSha256: __t.string(),
+  createdMicros: __t.u64(),
+});
+export type CelestialMigrationReceipt = __Infer<typeof CelestialMigrationReceipt>;
+
 export const Character = __t.object("Character", {
   id: __t.string(),
   owner: __t.identity(),

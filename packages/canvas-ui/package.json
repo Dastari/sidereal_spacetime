@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@babylonjs/core": "9.25.0",
-    "@sidereal/content": "0.1.0",
+    "@sidereal/content": "0.2.0",
     "@sidereal/render": "*"
   }
 }

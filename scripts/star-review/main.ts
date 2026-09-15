@@ -17,7 +17,8 @@ const light=new DirectionalLight('stellar-illumination',new Vector3(1.4,-.65,0).
 const glow=new GlowLayer('star-corona',scene,{blurKernelSize:64,mainTextureRatio:.5});glow.intensity=.3;
 glow.customEmissiveColorSelector=(mesh,_sub,material,result)=>{
  const c=(material as PBRMaterial)?.emissiveColor;
- if(mesh.metadata?.stellarFlare) result.set(10,2,.025,.6);
+ if(mesh.metadata?.stellarEjecta) result.set(14,4,.08,1);
+ else if(mesh.metadata?.stellarFlare) result.set(10,2,.025,.6);
  else if(c)result.set(c.r*.5,c.g*.5,c.b*.5,1);
  else result.set(0,0,0,1);
 };
@@ -29,7 +30,7 @@ Object.assign(window,{starReview:{scene,engine,glow,camera}});
 document.querySelector('#bloom')!.addEventListener('click',()=>{glow.isEnabled=!glow.isEnabled;});
 document.querySelector('#light')!.addEventListener('click',()=>{scene.lightsEnabled=!scene.lightsEnabled;});
 document.querySelector('#angle')!.addEventListener('click',()=>{camera.alpha+=Math.PI*.65;});
-engine.runRenderLoop(()=>{runtime?.update((performance.now()-start)/1000);(engine as any)._drawCalls.fetchNewFrame();scene.render();frames++;canvas.dataset.state=JSON.stringify({frames,ready:!!runtime,flareCount:runtime?.flareCount,time:(performance.now()-start)/1000,glow:glow.isEnabled,lighting:scene.lightsEnabled,meshes:scene.meshes.length,instances:scene.meshes.filter(m=>!!(m as any).sourceMesh).length,drawCalls:(engine as any)._drawCalls.current});});
+engine.runRenderLoop(()=>{runtime?.update((performance.now()-start)/1000);(engine as any)._drawCalls.fetchNewFrame();scene.render();frames++;canvas.dataset.state=JSON.stringify({frames,ready:!!runtime,flareCount:runtime?.flareCount,ejectaCount:runtime?.ejectaCount,convectionMaterials:runtime?.convectionMaterials,time:(performance.now()-start)/1000,glow:glow.isEnabled,lighting:scene.lightsEnabled,meshes:scene.meshes.length,instances:scene.meshes.filter(m=>!!(m as any).sourceMesh).length,drawCalls:(engine as any)._drawCalls.current});});
 createYellowStarRuntime(scene,{bodyId:'yellow-review',radius:1,signal:controller.signal}).then(r=>{runtime=r;r.root.setEnabled(true);document.querySelector('#status')!.textContent=`Native star · ${r.flareCount} animated flares`;}).catch(e=>{document.querySelector('#status')!.textContent=String(e);});
 
 if(import.meta.hot)import.meta.hot.dispose(()=>{controller.abort();scene.dispose();engine.dispose();});

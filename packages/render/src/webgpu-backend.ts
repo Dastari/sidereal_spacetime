@@ -9,7 +9,7 @@ import twgslWasm from "@babylonjs/core/assets/twgsl/twgsl.wasm?url";
 /** Compiler assets are bundled from the pinned Babylon dependency, never a CDN. */
 export async function createWebGPUEngine(canvas: HTMLCanvasElement) {
   if (!await WebGPUEngine.IsSupportedAsync) return undefined;
-  const engine = new WebGPUEngine(canvas, {antialias:true,stencil:true});
+  const engine = new WebGPUEngine(canvas, {antialias:true,stencil:true,useLargeWorldRendering:true});
   try {
     await engine.initAsync({jsPath:glslangJs,wasmPath:glslangWasm}, {jsPath:twgslJs,wasmPath:twgslWasm});
     return engine;

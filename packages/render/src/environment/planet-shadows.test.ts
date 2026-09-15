@@ -184,3 +184,16 @@ test("semantic shadows follow active descendants across same-root swaps and rest
     engine.dispose();
   }
 });
+
+test('Lighting Off and Shadows Off release actual hero maps, not just reported counters',()=>{
+ const engine=new NullEngine(),scene=new Scene(engine);new FreeCamera('camera',new Vector3(0,0,-5),scene);
+ const primary=new DirectionalLight('primary',new Vector3(-.6,-1,.45),scene),manager=createPlanetShadows(scene);manager.setPrimaryLight(primary);
+ const node=new TransformNode('native-body',scene),surface=CreateBox('surface',{},scene);surface.parent=node;surface.metadata={role:'planet'};surface.material=new PBRMaterial('pbr',scene);
+ const candidates=[{node,radius:1,lod:0}];
+ manager.update(candidates);const hero=scene.lights.find(light=>light!==primary)!;
+ expect(hero.isEnabled()).toBe(true);
+ scene.lightsEnabled=false;manager.update(candidates);expect(hero.isEnabled()).toBe(false);expect(hero.getShadowGenerator()?.getShadowMap()?.renderList).toHaveLength(0);
+ scene.lightsEnabled=true;manager.update(candidates);expect(hero.isEnabled()).toBe(true);
+ scene.shadowsEnabled=false;manager.update(candidates);expect(hero.isEnabled()).toBe(false);expect(hero.getShadowGenerator()?.getShadowMap()?.renderList).toHaveLength(0);
+ manager.dispose();scene.dispose();engine.dispose();
+});

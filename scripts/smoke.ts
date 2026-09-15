@@ -1,4 +1,8 @@
 import {
+  LEGACY_SYSTEM_SEED,
+  solarBodyForLegacyKey,
+} from "@sidereal/content/shared-system";
+import {
   acquireNativePilot,
   nextSequence,
   intentSequences,
@@ -126,7 +130,20 @@ if (restore) {
     );
     assert.equal([...a.db.ownEditReceipts.iter()].length, 1);
     await a.reducers.enterLab({ name: "Smoke Alpha" });
-    const rock = sharedBodies(a).find((b) => b.id === evidence.bodyId);
+    const previousBody = LEGACY_SYSTEM_SEED.bodies.find(
+      (body) => body.id === evidence.bodyId,
+    );
+    const expectedBodyId =
+      process.env.SIDEREAL_SMOKE_SOLAR_MIGRATION === "1" &&
+      previousBody?.kind !== "asteroid"
+        ? (solarBodyForLegacyKey(previousBody?.key ?? "")?.id ??
+          evidence.bodyId)
+        : evidence.bodyId;
+    await wait(
+      () => sharedBodies(a).some((body) => body.id === expectedBodyId),
+      "expected body after module update",
+    );
+    const rock = sharedBodies(a).find((b) => b.id === expectedBodyId);
     assert(rock, "authored body identity survived restart");
     if (process.env.SIDEREAL_SMOKE_PERSISTENT_ROWS_ONLY !== "1") {
       const { connection: b } = await client(evidence.collisionToken);

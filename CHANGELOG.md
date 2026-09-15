@@ -13,3 +13,7 @@ Added separate Blender-authored exterior armor with broad paired bays, recessed 
 - 2026-09-15: Render/dashboard 0.3.1: Genesis planet view now includes the reviewed Yellow Main Sequence Star, active flares, star-specific controls, verified cancellable GLB loading, and restored planet illumination when switching bodies.
 
 - 2026-09-15: Client 0.2.0, render/dashboard 0.3.2: stage exact reviewed planet and star assets independently from shared versioned celestial payloads; preserve public URLs and asset hashes.
+
+## 2026-09-15 — Authored solar system and active stellar plasma
+
+Added a 29-body authored celestial layout with owner-scaled radii and travel gaps, reviewed native planet/moon rendering, bounded retained LODs, distant stellar radiance and large-coordinate camera support. Added a guarded server-scheduled celestial-only migration, validated against an isolated copy of the deployed authority version; live publication remains pending game-view checks. Native r010 and plasma-r012 replace the rejected pale checkerboard/red annulus with orange-gold material regions, connected selective white-hot paths, a turbulent blended corona and shorter, broader active flares. Independent Astra original-atlas review and actual alternate/bloom-off/playback evidence qualify this revision for owner comparison; hardware timing and owner final approval remain unclaimed. Restored the two rendering helpers already referenced by upstream and added renderer startup error diagnostics.
