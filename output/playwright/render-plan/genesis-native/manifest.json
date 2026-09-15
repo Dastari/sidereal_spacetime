@@ -19,7 +19,8 @@
     "ice-genesis.png",
     "gas-genesis.png",
     "temperate-r003.png",
-    "volcanic-r023.png"
+    "volcanic-r023.png",
+    "desert-moon-1-seed117.png"
   ],
   "hardware": "GT730 actual Ice26 appearance/counts; not RTX4080; hidden preview limits frame recording",
   "software": "SwiftShader appearance/counts only; initial Volcanic and moon scripted waits exceeded60s, Volcanic subsequently verified ready and retained0\u21922\u21920",
@@ -27,5 +28,6 @@
     "RTX4080 baseline transition measurement",
     "Normal game Flight/Map/F3 revised-asset acceptance",
     "Existing upstream whole-project check/build gaps"
-  ]
+  ],
+  "browserFollowup": "Desert Moon1 r001 reached ready, then seed117 regeneration reached ready with zero pending builds; procedural editor restored all original recipe controls. Software initial wait exceeded60s with old Volcanic retained; zoom-out reduced software raster cost and the retry completed."
 }

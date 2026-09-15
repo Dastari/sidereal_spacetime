@@ -1,0 +1,30 @@
+{
+  "frames": 561,
+  "selected": "desert-moon-1-r001",
+  "seed": 38,
+  "loading": false,
+  "stats": {
+    "active": 0,
+    "pendingBuilds": 0,
+    "retained": [
+      0
+    ],
+    "smokeImplemented": true,
+    "smokeMeshes": 0,
+    "smokeTriangles": 0,
+    "retainedSmokeMeshes": 0,
+    "requestedLOD": 2,
+    "fixedDetail": true,
+    "buildMs": 530.5,
+    "revision": "desert-moon-1-r001",
+    "localLights": 0,
+    "transmissionMaterials": 0,
+    "transmissionTargets": 0
+  },
+  "worker": {
+    "lastBuildMs": 530.5,
+    "pendingBuilds": 0,
+    "pendingWeatherBuilds": 0
+  },
+  "ready": true
+}

@@ -1,0 +1,33 @@
+{
+  "reseeded": {
+    "frames": 788,
+    "selected": "desert-moon-1-r001",
+    "seed": 117,
+    "loading": false,
+    "stats": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 0,
+      "requestedLOD": 2,
+      "fixedDetail": true,
+      "buildMs": 529.5,
+      "revision": "desert-moon-1-r001",
+      "localLights": 0,
+      "transmissionMaterials": 0,
+      "transmissionTargets": 0
+    },
+    "worker": {
+      "lastBuildMs": 529.5,
+      "pendingBuilds": 0,
+      "pendingWeatherBuilds": 0
+    },
+    "ready": true
+  },
+  "proceduralText": "Genesis\n\nShape a world from a seed.\n\nCompare ten families\n0 worlds \u00b7 0 exposed faces \u00b7 \u00b7 local draft\nDrag to orbit \u00b7 scroll to zoom\nWorld recipe\nFamily\ntemperate\nocean\ndesert\nrock\nice\nvolcanic\ntoxic\ngas\ncrystal\nmoon\nSeed\nNext seed\nReset shape\nSurface relief\n0.65\nMountains & spires\n0.55\nSea level\n0.52\nCloud cover\n0.42\nWeather drift\n0.006\nDeposit radiance\n0.00\nDetail\n24 cells \u00b7 distant\n40 cells \u00b7 balanced\n52 cells \u00b7 detailed\n64 cells \u00b7 fine\n96 cells \u00b7 hero\nSurface effects\nForest coverage\n0.70\nVolcanic zones\n0.00\nCrystal clusters\n0.00\nSmoke & haze\n0.00\nAtmosphere rim\n0.65\nRing system\nSurface palette\nExport recipe\nImport recipe\n\nA reusable local art draft. World placement and publication require the authoring workflow."
+}
