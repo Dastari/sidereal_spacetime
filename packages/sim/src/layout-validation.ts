@@ -1,3 +1,4 @@
+import { validateHullPaint } from "@sidereal/content/hull-paint";
 import { readLayoutStructure } from "./layout-structure-admission";
 import {
   deviceServicePortId,
@@ -218,6 +219,7 @@ export function readLayout(value: unknown): LayoutDocument {
       !string(r.wallTheme)
     )
       fail("Invalid room");
+  for (const f of value.fittings) validateHullPaint(f.paint);
   for (const f of value.fittings)
     if (
       !string(f.definitionId) ||

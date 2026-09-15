@@ -1,3 +1,4 @@
+import { createHullPaintBinding } from "./hull-paint";
 import {
   WAYFARER_EXTERIOR_SHA256,
   verifyQualifiedWayfarerExterior,
@@ -227,6 +228,7 @@ export async function loadConstructionAuthoredAssembly(
           constructionRoof: a.category === "roof",
           authoritativeEntity: false,
         };
+        const paintBinding = createHullPaintBinding(node, a, p.paint);
         const meshes = selected.map((source) => {
           const matrix = source.computeWorldMatrix(true).clone();
           const name = "GEO-" + p.id + "--authored--" + source.name;
@@ -239,9 +241,11 @@ export async function loadConstructionAuthoredAssembly(
               materialRole: "opaque",
             };
           }
-          const mesh = instanceable
-            ? source.createInstance(name)
-            : source.clone(name, node, true)!;
+          const mesh = paintBinding
+            ? paintBinding.clone(source, name)
+            : instanceable
+              ? source.createInstance(name)
+              : source.clone(name, node, true)!;
           mesh.parent = node;
           registerReferencedSceneMaterial(scene, mesh.material);
           const q = new Quaternion();

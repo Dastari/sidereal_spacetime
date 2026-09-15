@@ -1004,3 +1004,35 @@
   outline: 2px solid var(--accent);
   outline-offset: -1px;
 }
+
+.hull-paint-panel {
+  min-width: 0;
+  margin: 12px 0;
+  padding: 10px;
+  border: 1px solid var(--line);
+}
+.hull-paint-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.hull-paint-row label {
+  flex: 1;
+  min-width: 70px;
+  margin: 0;
+}
+.hull-workspace .hull-paint-row input[type="color"] {
+  width: 100%;
+  height: 30px;
+  padding: 2px;
+  cursor: pointer;
+}
+.hull-paint-row span {
+  font-size: 11px;
+}
+.hull-workspace .hull-paint-row button {
+  padding: 5px;
+  font-size: 11px;
+}

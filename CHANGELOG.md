@@ -1,5 +1,9 @@
 # Changelog
 
+## Dashboard/render 0.3.0, content/sim 0.2.0 — component paint, 2026-09-15
+
+Primary and secondary paint controls for placed hull components, engines and thrusters. Optional per-placement colours survive drafts, copies and exports without changing native geometry, snapping or physical state. Native atlas/material masks preserve surface maps, glazing and emissive details. Reset restores the authored appearance; painted copies share immutable meshes/textures and release their own material bindings.
+
 ## Dashboard 0.2.2 — distinct native armor choices, 2026-09-15
 
 Collapse 13 equivalent native armor variants in the palette and label total depth so the 0.5 m bulkheads remain distinct from 1 m exterior armor. All placed native IDs and their exact models remain resolvable.

@@ -1,3 +1,6 @@
+import { canPaintHullAsset } from "@sidereal/content/hull-paint";
+import { paintVisualPart } from "@sidereal/content/layout-assembly";
+import { HullPaintPanel } from "./HullPaintPanel";
 import { isArmorPaletteAlias } from "./armor-review";
 import { PanelResizeHandle } from "@sidereal/ui/editor-controls";
 import { LayoutContextOverlay } from "./LayoutContextOverlay";
@@ -1006,6 +1009,18 @@ export default function HullWorkspace(props: Props) {
                 </p>
               )}
               <p className="hull-id">{selected.id}</p>
+              {selectedAsset && canPaintHullAsset(selectedAsset) && (
+                <HullPaintPanel
+                  paint={selected.paint}
+                  disabled={blocked}
+                  change={(paint) =>
+                    commit((d) =>
+                      paintVisualPart(d, selected.id, paint, catalog!),
+                    )
+                  }
+                />
+              )}
+
               {!fitting && (
                 <HullDecalPanel
                   part={selected}
