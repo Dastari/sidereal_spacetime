@@ -18,3 +18,6 @@ Next delivery action is owner-reviewed integration of PR #5 into PR #4's branch.
 ## Hosted validation follow-up
 
 The owner requested fixing the still-red Actions page. Its newest entries were the historical failed runs at `293a437`; no repair candidate had run while the workflow was disabled. Source quality is now re-enabled for validation of PR #5. Shared HEAD and its dirty list remain as recorded above; isolated repair entry HEAD is `a3810a66dc9ff75610ad3003428a0fa88710bfbf` with no local changes. Fetch confirmed PR #5/#4/#1 are still open at their recorded heads. Native pins and live services are unchanged. This follow-up supersedes the instruction above to keep the workflow paused; hosted results are pending. Historical failed runs are retained as audit history.
+
+
+Hosted run `34912899127` reached the final Python step: all earlier steps passed, but two geometry qualifiers still read source-pin paths from the author checkout. The follow-up maps those historical paths at read time and adds an audit guard for in-process and subprocess geometry tests. Exact native hashes and stored proofs remain unchanged. Three source-path regressions and full local/hosted validation accompany the fix. The latest result is available on PR #5; the workflow stays enabled. This follow-up does not merge PR #5/#4/#1 or erase failed-run history.

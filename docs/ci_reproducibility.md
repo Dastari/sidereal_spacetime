@@ -1,6 +1,6 @@
 # CI reproducibility repair — 2026-09-15
 
-Status: repair implemented and locally validated; GitHub workflow remains paused pending review. Owner requested stopping CI failure emails and investigating/fixing the reported Source quality failure. Workflow quality.yml is disabled manually during repair; this is not a passing check or a change to personal email preferences.
+Status: repair implemented; Source quality re-enabled for hosted validation. See hosted follow-up below. Owner requested stopping CI failure emails and investigating/fixing the reported Source quality failure. Workflow quality.yml is disabled manually during repair; this is not a passing check or a change to personal email preferences.
 
 Entry: shared HEAD9c58c07774d7d3c4a58a40c49e90f2a2c647249c with the previous armor integration unstaged. Full status is saved in `.runtime/ci-repair-20260915/entry.json`. Work occurs only in isolated branch fix/ci-portability, based on armor PR4 commit293a437fca692d60c1de2fe60b3839f2872e726a. Existing shared changes and deployed apps remain untouched.
 
@@ -56,9 +56,9 @@ CI installs the same pinned Pillow dependency in its isolated job Python instead
 
 ## Notification handling and release status
 
-Source quality is `disabled_manually` at the repository level. This stops new runs while the repair is reviewed; it does not mute account email preferences, erase historical failed runs, or make GitHub CI green. No existing PR was merged, and no live game/editor was rebuilt or activated by this repair.
+Source quality was `disabled_manually` during the initial repair and is now active for the owner-requested hosted validation. This stops new runs while the repair is reviewed; it does not mute account email preferences, erase historical failed runs, or make GitHub CI green. No existing PR was merged, and no live game/editor was rebuilt or activated by this repair.
 
-For permanent personal email control while retaining CI, use GitHub **Settings → Notifications → System → Actions** and change email delivery/choose **Don't notify**: [GitHub's Actions notification guidance](https://docs.github.com/en/subscriptions-and-notifications/how-tos/managing-github-actions-notifications). Personal preferences were not changed through repository credentials. Re-enable the workflow only after this repair is integrated and the desired notification behavior is settled, then validate a new exact GitHub run. PR creation while paused deliberately produces no new automatic job.
+For permanent personal email control while retaining CI, use GitHub **Settings → Notifications → System → Actions** and change email delivery/choose **Don't notify**: [GitHub's Actions notification guidance](https://docs.github.com/en/subscriptions-and-notifications/how-tos/managing-github-actions-notifications). Personal preferences were not changed through repository credentials. The owner subsequently requested hosted validation, so the workflow is now enabled and the repair branch is being checked before integration. The earlier PR creation while paused produced no automatic job; the hosted follow-up records subsequent runs.
 
 Independent review confirmed archive preservation, captured-byte verification, argument parsing before bootstrap, the seven bootstrap regressions and exclusion of private fixtures from publication. The shared checkout remains at entry HEAD with the same dirty list and an empty index.
 
@@ -75,3 +75,12 @@ Independent review confirmed archive preservation, captured-byte verification, a
 - Additional `npm run art:check`: the initial mesh/material/source/icon gates pass after hydrating assets/source LFS files, but the separate installed-art historical audit stops at omitted `assets/art-library/shipyard-equipment/inventory.json`. That broader art-library preservation gap is outside Source quality and is not claimed fixed. No art contract, live-game qualification or new artistic approval is claimed here.
 
 The full application check/build and every Source quality step passed locally. GitHub's exact hosted candidate has not run while disabled. The formatting-only commit is separated from functional changes; linked historical documentation retains its content with trailing whitespace cleaned in two restored design documents. Detailed logs remain local under `.runtime/ci-repair-20260915/`, not in Git.
+
+
+## Hosted follow-up: author-checkout leakage
+
+Run [34912899127](https://github.com/Dastari/sidereal_spacetime/actions/runs/34912899127) at `0dd97dbf` passed native restoration, installation, typecheck, every TypeScript test, quality-rule tests, lint and formatting. Python standard/art suites passed, but two geometry tests failed because `qualify_wayfarer_airlock_attachment.py` and `qualify_wayfarer_airlock_walking.py` opened historical absolute source-pin paths. Local tests had inadvertently found these files in the shared author checkout.
+
+`native_source_paths.checkout_source_path` now maps only the known historical prefix to the current repository, supports existing relative pins, and rejects other absolute paths, traversal and escaping symlinks. Both qualifiers retain exact hash validation and leave stored provenance and physical results unchanged. Three focused regressions exercise relocation and rejection. The geometry tests install an open-file audit guard and use it in their subprocesses, so a relocated local run cannot silently fall back to the shared author checkout. HTTP subprocess test failures now include their captured output rather than hiding it behind a generic CalledProcessError.
+
+No workflow step, test assertion, native hash or geometry threshold was removed. Hosted validation is required on the updated PR head; the failed historical run remains visible. Current hosted status is linked from PR #5 and is separate from prior local results.

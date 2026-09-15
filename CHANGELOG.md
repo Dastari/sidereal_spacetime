@@ -2,7 +2,9 @@
 
 ## CI reproducibility repair — 2026-09-15
 
-Restore omitted native build/test inputs from a compact, hash-verified LFS bundle; resolve test assets relative to the checkout and use canonical runtime files. Terrain budget tests retain their assertions with one case per recipe. Correct package-boundary imports and existing changed-file formatting violations without broadening the quality baseline. Private Python image fixtures replace developer-only output paths and Blender-only decoding. Source quality checks run once per PR and on main pushes, cancel superseded runs, and support manual dispatch. The workflow remains manually paused during review; this is not a passing GitHub check or a runtime release.
+Hosted validation found two additional Python native-pin reads that depended on the author checkout. Resolve them against the current repository without changing hashes or provenance, and guard geometry tests against accidental reads from the old checkout. Source quality is re-enabled for hosted verification.
+
+Restore omitted native build/test inputs from a compact, hash-verified LFS bundle; resolve test assets relative to the checkout and use canonical runtime files. Terrain budget tests retain their assertions with one case per recipe. Correct package-boundary imports and existing changed-file formatting violations without broadening the quality baseline. Private Python image fixtures replace developer-only output paths and Blender-only decoding. Source quality checks run once per PR and on main pushes, cancel superseded runs, and support manual dispatch. The workflow was paused during the initial review; hosted verification now runs on the repair PR. This is not a runtime release.
 
 ## Dashboard 0.2.0 — native armor editor review, 2026-09-15
 
