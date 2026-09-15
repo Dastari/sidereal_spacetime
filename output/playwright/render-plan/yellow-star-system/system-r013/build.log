@@ -1,0 +1,866 @@
+
+> sidereal-spacetime@0.4.0 build
+> npm run world:build && npm run world:generate && npm run build:client && npm run build:dashboard
+
+
+> sidereal-spacetime@0.4.0 world:build
+> python3 scripts/dev.py build-world
+
+
+> @sidereal/world@0.2.1 typecheck
+> tsc --noEmit -p tsconfig.json
+
+tsc not found in node_modules. Make sure you have the `typescript` package as a dev-dependency and that your dependencies are installed.
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/auth.ts -> src/interactions.ts -> src/construction-interactions.ts -> src/construction.ts -> src/auth.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/construction-doors.ts -> src/construction-cargo-carriers.ts -> src/auth.ts -> src/interactions.ts -> src/construction-interactions.ts -> src/construction-doors.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: ../sim/src/construction-transactions.ts -> ../sim/src/construction-airlock-document.ts -> ../sim/src/construction-transactions.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/construction-doors.ts -> src/construction-cargo-carriers.ts -> src/auth.ts -> src/construction-pilot-authority.ts -> src/construction-doors.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/construction-cargo-carriers.ts -> src/scoped-inventory-authority.ts -> src/construction-cargo-carriers.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/construction-doors.ts -> src/construction-cargo-carriers.ts -> src/scoped-inventory-authority.ts -> src/construction-doors.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/auth.ts -> src/construction-pilot-authority.ts -> src/auth.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: ../sim/src/layout-compiler.ts -> ../sim/src/layout-structure.ts -> ../sim/src/layout-compiler.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/auth.ts -> src/interactions.ts -> src/construction-interactions.ts -> src/auth.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/construction-interactions.ts -> src/construction.ts -> src/construction-interactions.ts.
+
+Build finished successfully.
+
+> sidereal-spacetime@0.4.0 world:generate
+> python3 scripts/dev.py generate
+
+Using configuration from /root/sidereal_spacetime/.runtime/worktrees/yellow-star-system/spacetime.json
+Generating TypeScript module bindings for module packages/world
+tsc not found in node_modules. Make sure you have the `typescript` package as a dev-dependency and that your dependencies are installed.
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: ../sim/src/layout-compiler.ts -> ../sim/src/layout-structure.ts -> ../sim/src/layout-compiler.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/auth.ts -> src/interactions.ts -> src/construction-interactions.ts -> src/construction.ts -> src/auth.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/construction-doors.ts -> src/construction-cargo-carriers.ts -> src/auth.ts -> src/interactions.ts -> src/construction-interactions.ts -> src/construction-doors.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/construction-doors.ts -> src/construction-cargo-carriers.ts -> src/auth.ts -> src/construction-pilot-authority.ts -> src/construction-doors.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/construction-doors.ts -> src/construction-cargo-carriers.ts -> src/scoped-inventory-authority.ts -> src/construction-doors.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/construction-cargo-carriers.ts -> src/scoped-inventory-authority.ts -> src/construction-cargo-carriers.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/auth.ts -> src/construction-pilot-authority.ts -> src/auth.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/auth.ts -> src/interactions.ts -> src/construction-interactions.ts -> src/auth.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: ../sim/src/construction-transactions.ts -> ../sim/src/construction-airlock-document.ts -> ../sim/src/construction-transactions.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/construction-interactions.ts -> src/construction.ts -> src/construction-interactions.ts.
+
+Build finished successfully.
+Skipping private tables during codegen: actuator_output, appearance_receipt, auth_session, body_world_motion, celestial_migration_receipt, character, character_appearance, character_uniform_issue, combat_aim, combat_receipt, connection_presence, construction_airlock, construction_atmosphere, construction_atmosphere_clock, construction_blueprint, construction_cargo_assembly, construction_cargo_grid, construction_cargo_operation, construction_cargo_placement, construction_deck, construction_door, construction_draft, construction_flight_binding, construction_flight_fitting, construction_flight_receipt, construction_flight_review, construction_flight_station, construction_grant, construction_instance, construction_interaction_binding, construction_location, construction_native_pressure, construction_pilot_seat, construction_receipt, construction_review_origin, construction_stair_audit, construction_stair_link, construction_stair_reservation, construction_stair_walk, construction_traversal, construction_traversal_audit, construction_traversal_clock, construction_traversal_link, construction_traversal_reservation, couch_seat, edit_receipt, game_ship_access, identity_link, input, input_control, input_control_cursor, instance_inventory_binding, interaction_object, interaction_receipt, inventory_container, inventory_container_scope, inventory_hotbar, inventory_item, inventory_item_membership, inventory_receipt, inventory_state, legacy_body_alias, movement_timer, personal_starter_receipt, pilot_layout_receipt, retired_identity, scoped_inventory_receipt, ship, ship_world_motion, space_body, station, storage_binding, system_body, wayfarer_liquid_receipt, wayfarer_refit_attachment, wayfarer_refit_receipt, weapon_energy, world_admission, world_join_receipt, world_system.
+Creating directory packages/net/src/generated/types
+Creating directory packages/net/src/generated/types
+Generate finished successfully.
+
+> sidereal-spacetime@0.4.0 build:client
+> npm run build --workspace @sidereal/client
+
+
+> @sidereal/client@0.4.0 build
+> python3 ../../scripts/prepare_app.py client && vite build
+
+Prepared runtime assets and allowlisted public help only.
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - import "./pose-review-assets" without a file extension (vite.config.ts:5:34). Add the file extension
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+vite v8.2.2 building client environment for production...
+transforming...
+✓ 1690 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                                            2.34 kB │ gzip:   0.73 kB
+dist/assets/barlow-condensed-vietnamese-600-normal-CNlPk46_.woff           6.07 kB
+dist/assets/barlow-vietnamese-400-normal-BFeobeCK.woff                     6.09 kB
+dist/assets/barlow-vietnamese-500-normal-GNfB7rCE.woff                     6.14 kB
+dist/assets/barlow-vietnamese-600-normal-CA_GiK2e.woff                     6.22 kB
+dist/assets/barlow-vietnamese-400-normal-Dpl4UHAZ.woff2                    7.58 kB
+dist/assets/barlow-vietnamese-500-normal-zTViEIzf.woff2                    7.66 kB
+dist/assets/barlow-condensed-vietnamese-600-normal-A5AYRdjN.woff2          7.69 kB
+dist/assets/barlow-vietnamese-600-normal-DcjprdFV.woff2                    7.89 kB
+dist/assets/barlow-condensed-latin-ext-600-normal-Clv9cIcR.woff           11.97 kB
+dist/assets/barlow-latin-ext-400-normal-CvBsJvxq.woff                     12.31 kB
+dist/assets/barlow-latin-ext-500-normal-CJPcKP2Q.woff                     12.41 kB
+dist/assets/barlow-latin-ext-600-normal-DMVRjfRT.woff                     12.60 kB
+dist/assets/barlow-latin-ext-400-normal-HxX4XjxC.woff2                    14.26 kB
+dist/assets/barlow-latin-ext-500-normal-DOaysfXq.woff2                    14.41 kB
+dist/assets/barlow-condensed-latin-ext-600-normal-18ESti3H.woff2          14.51 kB
+dist/assets/barlow-latin-ext-600-normal-B8NK_A3D.woff2                    14.96 kB
+dist/assets/glslang-DqqdIFnr.js                                           16.03 kB
+dist/assets/barlow-condensed-latin-600-normal-BFJEwTuo.woff               18.89 kB
+dist/assets/barlow-latin-500-normal-C1h8hMer.woff                         19.51 kB
+dist/assets/barlow-latin-400-normal-fsAxiSwU.woff                         19.58 kB
+dist/assets/barlow-latin-600-normal-CNwfPWQD.woff                         19.88 kB
+dist/assets/barlow-latin-500-normal-BPAOfeC8.woff2                        22.00 kB
+dist/assets/barlow-latin-400-normal-qiz4-Cze.woff2                        22.19 kB
+dist/assets/barlow-condensed-latin-600-normal-DepVgxBB.woff2              22.30 kB
+dist/assets/barlow-latin-600-normal-DILqtrty.woff2                        22.77 kB
+dist/assets/twgsl-DqdFeK3J.js                                             74.55 kB
+dist/assets/planet-worker-D3oTwKC-.js                                    131.48 kB
+dist/assets/glslang-G7Yt_-32.wasm                                        943.68 kB │ gzip: 304.90 kB
+dist/assets/twgsl-CB--yrSG.wasm                                        1,702.91 kB │ gzip: 600.20 kB
+dist/assets/index-ZGz1-7jh.css                                            11.44 kB │ gzip:   2.92 kB
+dist/assets/typeStore-Cu_sj2zM.js                                          0.08 kB │ gzip:   0.08 kB
+dist/assets/clearQuad.fragment-NkcCwd1e.js                                 0.08 kB │ gzip:   0.10 kB
+dist/assets/clearQuad.vertex-BrfWodsm.js                                   0.08 kB │ gzip:   0.10 kB
+dist/assets/abstractAudioBus--7eTNef0.js                                   0.11 kB │ gzip:   0.13 kB
+dist/assets/guid-BXdVC_j_.js                                               0.15 kB │ gzip:   0.14 kB
+dist/assets/flowGraphExecutionBlockWithOutSignal-BsMVmasD.js               0.15 kB │ gzip:   0.15 kB
+dist/assets/precisionDate-Uyb-ubD0.js                                      0.18 kB │ gzip:   0.14 kB
+dist/assets/kernelBlurVaryingDeclaration-DP2Wr9Oc.js                       0.21 kB │ gzip:   0.17 kB
+dist/assets/kernelBlurVaryingDeclaration-g2Ge9lzd.js                       0.22 kB │ gzip:   0.18 kB
+dist/assets/mainUVVaryingDeclaration-BBamQlxR.js                           0.22 kB │ gzip:   0.19 kB
+dist/assets/mainUVVaryingDeclaration-B_7d0nc3.js                           0.23 kB │ gzip:   0.19 kB
+dist/assets/domManagement-BqltO0ki.js                                      0.25 kB │ gzip:   0.17 kB
+dist/assets/logDepthFragment-C5lxT4l1.js                                   0.27 kB │ gzip:   0.22 kB
+dist/assets/logDepthDeclaration-3gXGtHbI.js                                0.27 kB │ gzip:   0.22 kB
+dist/assets/meshUboDeclaration-BATNZvmb.js                                 0.27 kB │ gzip:   0.23 kB
+dist/assets/abstractEngine.texture.pure-Cy0kIQNK.js                        0.28 kB │ gzip:   0.20 kB
+dist/assets/logDepthDeclaration-DYYUVTrx.js                                0.28 kB │ gzip:   0.22 kB
+dist/assets/math.axis-D9cW-dXd.js                                          0.28 kB │ gzip:   0.21 kB
+dist/assets/flowGraphUnaryOperationBlock-BESUGrK0.js                       0.30 kB │ gzip:   0.21 kB
+dist/assets/logDepthVertex-D5IUM6qd.js                                     0.30 kB │ gzip:   0.24 kB
+dist/assets/logDepthFragment-CxtJswLx.js                                   0.31 kB │ gzip:   0.24 kB
+dist/assets/pass.fragment-Cvd2TCWC.js                                      0.31 kB │ gzip:   0.25 kB
+dist/assets/sceneVertexDeclaration-CluTp-RC.js                             0.33 kB │ gzip:   0.22 kB
+dist/assets/bumpVertexDeclaration-Cb04kLz9.js                              0.34 kB │ gzip:   0.25 kB
+dist/assets/meshUboDeclaration-BmNu2KU_.js                                 0.34 kB │ gzip:   0.25 kB
+dist/assets/oitBackBlend.fragment-DnRDn_Uc.js                              0.34 kB │ gzip:   0.25 kB
+dist/assets/flowGraphKeyUpEventBlock.pure-CtDv91iU.js                      0.35 kB │ gzip:   0.23 kB
+dist/assets/keyboardEvents-CGYiptFb.js                                     0.35 kB │ gzip:   0.20 kB
+dist/assets/engineStore-e38OvQA7.js                                        0.36 kB │ gzip:   0.22 kB
+dist/assets/sceneUboDeclaration-B5VhSG0v.js                                0.36 kB │ gzip:   0.26 kB
+dist/assets/shadowMapFragmentSoftTransparentShadow-R_iOKnyx.js             0.37 kB │ gzip:   0.26 kB
+dist/assets/flowGraphBinaryOperationBlock-MbgbQU4_.js                      0.37 kB │ gzip:   0.24 kB
+dist/assets/logDepthVertex-DSD5XdGw.js                                     0.37 kB │ gzip:   0.26 kB
+dist/assets/fogVertex-NHlgMcT2.js                                          0.38 kB │ gzip:   0.24 kB
+dist/assets/oitFinalSimpleBlend.fragment-Q5Yng1yZ.js                       0.38 kB │ gzip:   0.25 kB
+dist/assets/bumpVertexDeclaration-I4Guxw_q.js                              0.39 kB │ gzip:   0.26 kB
+dist/assets/fresnelFunction-BmNPQIdN.js                                    0.39 kB │ gzip:   0.28 kB
+dist/assets/shadowMapFragmentSoftTransparentShadow-B6k0i9Au.js             0.40 kB │ gzip:   0.28 kB
+dist/assets/oitBackBlend.fragment-CGzcLb9C.js                              0.41 kB │ gzip:   0.27 kB
+dist/assets/flowGraphTernaryOperationBlock-Bq1JZnaj.js                     0.41 kB │ gzip:   0.24 kB
+dist/assets/vertexColorMixing-DPW6Is9y.js                                  0.43 kB │ gzip:   0.27 kB
+dist/assets/glowMapMerge.vertex-XcoH38fZ.js                                0.43 kB │ gzip:   0.29 kB
+dist/assets/sceneUboDeclaration-B96Tfx7b.js                                0.43 kB │ gzip:   0.27 kB
+dist/assets/oitFinalSimpleBlend.fragment-nGYFumis.js                       0.45 kB │ gzip:   0.29 kB
+dist/assets/pass.fragment-C9fRTBUH.js                                      0.45 kB │ gzip:   0.29 kB
+dist/assets/postprocess.vertex-DJCmMhI8.js                                 0.46 kB │ gzip:   0.30 kB
+dist/assets/flowGraphGLTFDataProvider-CR8hGqcp.js                          0.46 kB │ gzip:   0.29 kB
+dist/assets/shaderStore-D-XQlhUT.js                                        0.46 kB │ gzip:   0.17 kB
+dist/assets/procedural.vertex-C47TVAon.js                                  0.47 kB │ gzip:   0.29 kB
+dist/assets/flowGraphCodeExecutionBlock-CEqIVcXz.js                        0.47 kB │ gzip:   0.27 kB
+dist/assets/decalFragment-CvBK6CMD.js                                      0.48 kB │ gzip:   0.28 kB
+dist/assets/iblCdfx.fragment-DwJ2-o2J.js                                   0.49 kB │ gzip:   0.34 kB
+dist/assets/performanceConfigurator-UtxC_Odd.js                            0.50 kB │ gzip:   0.25 kB
+dist/assets/fogVertex-DNAMrhb0.js                                          0.50 kB │ gzip:   0.29 kB
+dist/assets/hdrFiltering.vertex-D0M3wH6A.js                                0.50 kB │ gzip:   0.31 kB
+dist/assets/rgbdEncode.fragment-CVg4Fcse.js                                0.51 kB │ gzip:   0.33 kB
+dist/assets/rgbdDecode.fragment-Cdz2Tveq.js                                0.52 kB │ gzip:   0.34 kB
+dist/assets/bumpVertex-CWhdIpqj.js                                         0.52 kB │ gzip:   0.32 kB
+dist/assets/flowGraphGetSoundVolumeBlock.pure-BqJ1XgiJ.js                  0.52 kB │ gzip:   0.31 kB
+dist/assets/hdrIrradianceFiltering.vertex-DOQV8qQx.js                      0.52 kB │ gzip:   0.32 kB
+dist/assets/packingFunctions-DpGwbupU.js                                   0.52 kB │ gzip:   0.29 kB
+dist/assets/depthBoxBlur.fragment-CLEAG5DG.js                              0.53 kB │ gzip:   0.35 kB
+dist/assets/flowGraphConstantBlock.pure-DvOf-CGf.js                        0.53 kB │ gzip:   0.31 kB
+dist/assets/flowGraphIsSoundPlayingBlock.pure-DToplFoW.js                  0.54 kB │ gzip:   0.32 kB
+dist/assets/glowMapMerge.vertex-CBAYzq55.js                                0.54 kB │ gzip:   0.33 kB
+dist/assets/hdrTextureLoader-69z5c9GH.js                                   0.54 kB │ gzip:   0.39 kB
+dist/assets/flowGraphInteger.pure-CZmJgkLp.js                              0.55 kB │ gzip:   0.29 kB
+dist/assets/flowGraphPauseAnimationBlock.pure-DvJVvaCY.js                  0.56 kB │ gzip:   0.32 kB
+dist/assets/vertexColorMixing-UCrnwszu.js                                  0.56 kB │ gzip:   0.30 kB
+dist/assets/packingFunctions-CINwVZs6.js                                   0.56 kB │ gzip:   0.31 kB
+dist/assets/iblCdfx.fragment-DcN-2ogt.js                                   0.56 kB │ gzip:   0.37 kB
+dist/assets/layer.vertex-VRdlUggn.js                                       0.57 kB │ gzip:   0.35 kB
+dist/assets/postprocess.vertex-CmVXXq2T.js                                 0.58 kB │ gzip:   0.35 kB
+dist/assets/flowGraphGetVariableBlock.pure-DGWs4-WM.js                     0.58 kB │ gzip:   0.33 kB
+dist/assets/flowGraphContextBlock.pure-Dty1W90J.js                         0.58 kB │ gzip:   0.32 kB
+dist/assets/flowGraphStopSoundBlock.pure-CUT6d91y.js                       0.60 kB │ gzip:   0.35 kB
+dist/assets/flowGraphKeyDownEventBlock.pure-BtfGSNck.js                    0.60 kB │ gzip:   0.35 kB
+dist/assets/procedural.vertex-D3o6xkF2.js                                  0.61 kB │ gzip:   0.34 kB
+dist/assets/flowGraphBranchBlock.pure-BLqYyR9C.js                          0.62 kB │ gzip:   0.33 kB
+dist/assets/envTextureLoader-CuLfPmEN.js                                   0.63 kB │ gzip:   0.41 kB
+dist/assets/flowGraphEventBlock-BxfyQSaQ.js                                0.63 kB │ gzip:   0.37 kB
+dist/assets/rgbdEncode.fragment-CxPSfrvR.js                                0.65 kB │ gzip:   0.37 kB
+dist/assets/flowGraphPauseSoundBlock.pure-D1enXP_Y.js                      0.65 kB │ gzip:   0.38 kB
+dist/assets/hdrFiltering.vertex-COSbMAY6.js                                0.66 kB │ gzip:   0.36 kB
+dist/assets/rgbdDecode.fragment-DXl2fYur.js                                0.66 kB │ gzip:   0.38 kB
+dist/assets/drawWrapper-BTn-LiJG.js                                        0.66 kB │ gzip:   0.38 kB
+dist/assets/flowGraphAsyncExecutionBlock-BIrSfbD0.js                       0.66 kB │ gzip:   0.34 kB
+dist/assets/flowGraphConditionalDataBlock.pure-XepHTVoF.js                 0.67 kB │ gzip:   0.33 kB
+dist/assets/hdrIrradianceFiltering.vertex-CFN7uIG9.js                      0.68 kB │ gzip:   0.37 kB
+dist/assets/utils-CLq_UU0_.js                                              0.68 kB │ gzip:   0.36 kB
+dist/assets/flowGraphIndexOfBlock.pure-D_OZqcP9.js                         0.69 kB │ gzip:   0.37 kB
+dist/assets/bumpVertex-DRq4BZvD.js                                         0.69 kB │ gzip:   0.38 kB
+dist/assets/flowGraphSetSoundVolumeBlock.pure-DN7W-4-e.js                  0.70 kB │ gzip:   0.37 kB
+dist/assets/flowGraphStopEventPropagationBlock.pure-B-VmXHFF.js            0.70 kB │ gzip:   0.37 kB
+dist/assets/depthBoxBlur.fragment-D2KJPEQv.js                              0.71 kB │ gzip:   0.41 kB
+dist/assets/flowGraphSceneReadyEventBlock.pure-BiCoUEWG.js                 0.71 kB │ gzip:   0.37 kB
+dist/assets/layer.vertex-DtTr2bD5.js                                       0.71 kB │ gzip:   0.40 kB
+dist/assets/flowGraphSetLinearVelocityBlock.pure-BBM4Ee5k.js               0.73 kB │ gzip:   0.38 kB
+dist/assets/flowGraphCounterBlock.pure-C7k0Nxsa.js                         0.73 kB │ gzip:   0.38 kB
+dist/assets/flowGraphAssetsContext-WtUyuDAI.js                             0.73 kB │ gzip:   0.27 kB
+dist/assets/flowGraphGetLinearVelocityBlock.pure-Cub9HKXG.js               0.73 kB │ gzip:   0.40 kB
+dist/assets/flowGraphSetAngularVelocityBlock.pure-DopzPJMI.js              0.73 kB │ gzip:   0.39 kB
+dist/assets/flowGraphGetAngularVelocityBlock.pure-CxinedRq.js              0.74 kB │ gzip:   0.40 kB
+dist/assets/flowGraphSetPhysicsMotionTypeBlock.pure-Vch-ujye.js            0.74 kB │ gzip:   0.39 kB
+dist/assets/flowGraphFunctionReferenceBlock.pure-kf4-_4_P.js               0.75 kB │ gzip:   0.38 kB
+dist/assets/pointerEvents-TGc55W6F.js                                      0.76 kB │ gzip:   0.40 kB
+dist/assets/flowGraphFlipFlopBlock.pure-CBZeoscb.js                        0.76 kB │ gzip:   0.40 kB
+dist/assets/flowGraphApplyForceBlock.pure-CdoOr9zl.js                      0.77 kB │ gzip:   0.41 kB
+dist/assets/flowGraphApplyImpulseBlock.pure-Bc5n9aut.js                    0.79 kB │ gzip:   0.41 kB
+dist/assets/glowMapMerge.fragment-E4YwFGds.js                              0.80 kB │ gzip:   0.42 kB
+dist/assets/flowGraphGetAssetBlock.pure-C5L8m9cw.js                        0.80 kB │ gzip:   0.42 kB
+dist/assets/hdrFiltering.fragment-cHOWPEWI.js                              0.80 kB │ gzip:   0.42 kB
+dist/assets/flowGraphSequenceBlock.pure-CR44zEV9.js                        0.82 kB │ gzip:   0.40 kB
+dist/assets/layer.fragment-C9-N3foB.js                                     0.82 kB │ gzip:   0.45 kB
+dist/assets/passCube.fragment-B9dBqbCg.js                                  0.82 kB │ gzip:   0.35 kB
+dist/assets/flowGraphGetPhysicsMassPropertiesBlock.pure-B4RB2aPF.js        0.83 kB │ gzip:   0.39 kB
+dist/assets/flowGraphCancelDelayBlock.pure-Bd52mhur.js                     0.85 kB │ gzip:   0.49 kB
+dist/assets/taa.fragment-CP05W5o0.js                                       0.86 kB │ gzip:   0.45 kB
+dist/assets/flowGraphDebounceBlock.pure-CYUaKOw2.js                        0.87 kB │ gzip:   0.41 kB
+dist/assets/flowGraphPlaySoundBlock.pure-BE2qJr34.js                       0.88 kB │ gzip:   0.44 kB
+dist/assets/kernelBlur.vertex-C2dESVl-.js                                  0.88 kB │ gzip:   0.46 kB
+dist/assets/flowGraphSceneTickEventBlock.pure-B4c3zJF2.js                  0.91 kB │ gzip:   0.42 kB
+dist/assets/math.size-BHZaDYSv.js                                          0.91 kB │ gzip:   0.37 kB
+dist/assets/imageProcessing.fragment-Bb9mf-7k.js                           0.91 kB │ gzip:   0.48 kB
+dist/assets/flowGraphCachedOperationBlock-s-B5Hed5.js                      0.91 kB │ gzip:   0.42 kB
+dist/assets/webAudioMainBus-DS1jp06x.js                                    0.91 kB │ gzip:   0.41 kB
+dist/assets/flowGraphDoNBlock.pure-DV24UfbS.js                             0.91 kB │ gzip:   0.45 kB
+dist/assets/color.fragment-CxH-oW8C.js                                     0.92 kB │ gzip:   0.43 kB
+dist/assets/mesh.vertexData.functions-CD4JOR2q.js                          0.93 kB │ gzip:   0.48 kB
+dist/assets/instancesDeclaration-CJBvtBV5.js                               0.93 kB │ gzip:   0.34 kB
+dist/assets/flowGraphArrayIndexBlock.pure-DuKbxdvU.js                      0.93 kB │ gzip:   0.47 kB
+dist/assets/hdrIrradianceFiltering.fragment-Plypi5hS.js                    0.93 kB │ gzip:   0.47 kB
+dist/assets/flowGraphPointerOutEventBlock.pure-BCYW-CsL.js                 0.95 kB │ gzip:   0.46 kB
+dist/assets/flowGraphGetPropertyBlock.pure-furP7xJq.js                     0.95 kB │ gzip:   0.45 kB
+dist/assets/flowGraphPointerOverEventBlock.pure-zXJ59wOw.js                0.96 kB │ gzip:   0.47 kB
+dist/assets/flowGraphDataSwitchBlock.pure-BubeKwoN.js                      0.96 kB │ gzip:   0.48 kB
+dist/assets/layer.fragment-CyjU4kk6.js                                     0.97 kB │ gzip:   0.50 kB
+dist/assets/hdrFiltering.fragment-CFsnQbXs.js                              0.98 kB │ gzip:   0.47 kB
+dist/assets/iblScaledLuminance.fragment-BiR4vIhv.js                        0.98 kB │ gzip:   0.52 kB
+dist/assets/fxaa.vertex-CEYszSUi.js                                        0.99 kB │ gzip:   0.39 kB
+dist/assets/flowGraphWhileLoopBlock.pure-BEK5XZwE.js                       1.00 kB │ gzip:   0.49 kB
+dist/assets/flowGraphSendCustomEventBlock.pure-CPqR4gey.js                 1.01 kB │ gzip:   0.50 kB
+dist/assets/iblDominantDirection.fragment-fkMISSk7.js                      1.02 kB │ gzip:   0.54 kB
+dist/assets/taa.fragment-Byipp7mo.js                                       1.02 kB │ gzip:   0.50 kB
+dist/assets/color.fragment-CbJP31yK.js                                     1.03 kB │ gzip:   0.47 kB
+dist/assets/instancesDeclaration-DsiFqYXH.js                               1.04 kB │ gzip:   0.36 kB
+dist/assets/flowGraphTransformCoordinatesSystemBlock.pure-B8EjO8ig.js      1.04 kB │ gzip:   0.46 kB
+dist/assets/flowGraphPointerUpEventBlock.pure-Bu95EiRn.js                  1.05 kB │ gzip:   0.49 kB
+dist/assets/flowGraphSoundEndedEventBlock.pure-D6xuOE_Q.js                 1.05 kB │ gzip:   0.47 kB
+dist/assets/flowGraphKeyboardEventBlock-Be1xtfC2.js                        1.05 kB │ gzip:   0.43 kB
+dist/assets/kernelBlur.vertex-Cr8ljakh.js                                  1.05 kB │ gzip:   0.50 kB
+dist/assets/flowGraphPointerDownEventBlock.pure-8u0Cb5Wy.js                1.06 kB │ gzip:   0.49 kB
+dist/assets/glowMapMerge.fragment-kUzN8f-0.js                              1.06 kB │ gzip:   0.49 kB
+dist/assets/flowGraphPointerMoveEventBlock.pure-mjUr0AtB.js                1.07 kB │ gzip:   0.49 kB
+dist/assets/fogFragment-CISE_m3s.js                                        1.08 kB │ gzip:   0.49 kB
+dist/assets/imageProcessing.fragment-C2rBLkba.js                           1.08 kB │ gzip:   0.53 kB
+dist/assets/glowBlurPostProcess.fragment-DDN2NxnB.js                       1.11 kB │ gzip:   0.57 kB
+dist/assets/harmonicsFunctions-QSz_WdsQ.js                                 1.12 kB │ gzip:   0.49 kB
+dist/assets/baseTexture.polynomial.pure-BswI2AGG.js                        1.13 kB │ gzip:   0.39 kB
+dist/assets/passCube.fragment-C8Bxt-YC.js                                  1.13 kB │ gzip:   0.39 kB
+dist/assets/iblScaledLuminance.fragment-evIQ2NXg.js                        1.13 kB │ gzip:   0.54 kB
+dist/assets/iblDominantDirection.fragment-BLkqlqmV.js                      1.15 kB │ gzip:   0.57 kB
+dist/assets/hdrIrradianceFiltering.fragment-DVxhclrJ.js                    1.16 kB │ gzip:   0.53 kB
+dist/assets/clipPlaneVertex-C59BO8JS.js                                    1.17 kB │ gzip:   0.34 kB
+dist/assets/clipPlaneFragment-DVK0wgyZ.js                                  1.17 kB │ gzip:   0.35 kB
+dist/assets/preload-helper-Czpn1I53.js                                     1.19 kB │ gzip:   0.67 kB
+dist/assets/fogFragment-EikOP4pH.js                                        1.21 kB │ gzip:   0.54 kB
+dist/assets/flowGraphSwitchBlock.pure-BKN-FHC0.js                          1.24 kB │ gzip:   0.55 kB
+dist/assets/iblCdfy.fragment-HwUiLPS_.js                                   1.25 kB │ gzip:   0.64 kB
+dist/assets/defaultUboDeclaration-C53xcSdv.js                              1.26 kB │ gzip:   0.55 kB
+dist/assets/iblCdfy.fragment-DxSYWO2X.js                                   1.26 kB │ gzip:   0.64 kB
+dist/assets/flowGraphIsKeyPressedBlock.pure-BfvhbPKs.js                    1.27 kB │ gzip:   0.50 kB
+dist/assets/clipPlaneFragment-Ct2VqHzk.js                                  1.27 kB │ gzip:   0.37 kB
+dist/assets/ddsTextureLoader-CO0Rbyg9.js                                   1.27 kB │ gzip:   0.61 kB
+dist/assets/halfFloat-Ce77JD5z.js                                          1.29 kB │ gzip:   0.60 kB
+dist/assets/flowGraphSetVariableBlock.pure-tr1_6Wsb.js                     1.31 kB │ gzip:   0.63 kB
+dist/assets/flowGraphTypeToTypeBlocks.pure-DctOV69N.js                     1.32 kB │ gzip:   0.48 kB
+dist/assets/clipPlaneVertex-DKhVm1NW.js                                    1.35 kB │ gzip:   0.37 kB
+dist/assets/glowBlurPostProcess.fragment-CWHntGEt.js                       1.41 kB │ gzip:   0.65 kB
+dist/assets/harmonicsFunctions-CMr56qfT.js                                 1.42 kB │ gzip:   0.52 kB
+dist/assets/flowGraphBezierCurveEasingBlock.pure-CN3oi_o5.js               1.43 kB │ gzip:   0.71 kB
+dist/assets/fxaa.vertex-BxlD2OIs.js                                        1.43 kB │ gzip:   0.45 kB
+dist/assets/flowGraphThrottleBlock.pure-DkTV0fyw.js                        1.46 kB │ gzip:   0.54 kB
+dist/assets/flowGraphDebugBlock.pure-C6SezT77.js                           1.48 kB │ gzip:   0.64 kB
+dist/assets/abstractSoundSource-C-e4WmeD.js                                1.48 kB │ gzip:   0.48 kB
+dist/assets/flowGraphSetPropertyBlock.pure-BtKodx5k.js                     1.49 kB │ gzip:   0.70 kB
+dist/assets/flowGraphForLoopBlock.pure-B-yq_wx_.js                         1.51 kB │ gzip:   0.67 kB
+dist/assets/flowGraphConsoleLogBlock.pure-Bqoh2c5e.js                      1.52 kB │ gzip:   0.74 kB
+dist/assets/flowGraphMeshPickEventBlock.pure-DbeG4s3C.js                   1.53 kB │ gzip:   0.63 kB
+dist/assets/color.vertex-Dsq_8Wxr.js                                       1.57 kB │ gzip:   0.67 kB
+dist/assets/color.vertex-CYNjCrqH.js                                       1.59 kB │ gzip:   0.67 kB
+dist/assets/defaultUboDeclaration-bEX7kynB.js                              1.62 kB │ gzip:   0.53 kB
+dist/assets/perfCounter-CRcs6GOv.js                                        1.63 kB │ gzip:   0.50 kB
+dist/assets/flowGraphWaitAllBlock.pure-DeCZwOzy.js                         1.67 kB │ gzip:   0.68 kB
+dist/assets/flowGraphEasingBlock.pure-DpTlJ2k3.js                          1.70 kB │ gzip:   0.76 kB
+dist/assets/gaussianSplatting.fragment-DNGQIzqk.js                         1.70 kB │ gzip:   0.73 kB
+dist/assets/flowGraphPhysicsCollisionEventBlock.pure-CiA7lzqI.js           1.75 kB │ gzip:   0.67 kB
+dist/assets/gaussianSplattingVoxel.fragment-B_Om6CDx.js                    1.75 kB │ gzip:   0.59 kB
+dist/assets/flowGraphMultiGateBlock.pure-DYsJJwmV.js                       1.78 kB │ gzip:   0.76 kB
+dist/assets/pbrUboDeclaration--xFZEw0i.js                                  1.80 kB │ gzip:   0.67 kB
+dist/assets/gaussianSplatting.fragment-DO2aPL6S.js                         1.86 kB │ gzip:   0.75 kB
+dist/assets/logger-CuBYPcDK.js                                             1.88 kB │ gzip:   0.82 kB
+dist/assets/gaussianSplattingVoxel.vertex-BWXUcFdc.js                      1.88 kB │ gzip:   0.76 kB
+dist/assets/glowMapGeneration.fragment-CeyBGCV2.js                         1.89 kB │ gzip:   0.73 kB
+dist/assets/spatialWebAudioUpdaterComponent-cwNvmKsp.js                    1.89 kB │ gzip:   0.67 kB
+dist/assets/gaussianSplattingVoxel.fragment-C65sY-Bh.js                    1.97 kB │ gzip:   0.87 kB
+dist/assets/flowGraphStopAnimationBlock.pure-DM0fV8qS.js                   2.01 kB │ gzip:   0.74 kB
+dist/assets/flowGraphInterpolationBlock.pure-BKsGjIqS.js                   2.14 kB │ gzip:   0.87 kB
+dist/assets/webAudioBus-CBPdmGAP.js                                        2.27 kB │ gzip:   0.74 kB
+dist/assets/kernelBlur.fragment-DHQjf6lq.js                                2.29 kB │ gzip:   0.77 kB
+dist/assets/flowGraphReceiveCustomEventBlock.pure-BIYvM4X-.js              2.33 kB │ gzip:   0.93 kB
+dist/assets/pbrUboDeclaration-oed3_f2e.js                                  2.39 kB │ gzip:   0.66 kB
+dist/assets/glowMapGeneration.vertex-B8p9FVmW.js                           2.46 kB │ gzip:   0.82 kB
+dist/assets/iesTextureLoader-CRHVZ2rC.js                                   2.47 kB │ gzip:   1.08 kB
+dist/assets/pbrIBLFunctions-CSlJv7qb.js                                    2.52 kB │ gzip:   0.88 kB
+dist/assets/flowGraphExecutionBlock-BD6yUCnX.js                            2.52 kB │ gzip:   0.87 kB
+dist/assets/glowMapGeneration.fragment-Cp9qHE6X.js                         2.52 kB │ gzip:   0.83 kB
+dist/assets/iblIcdf.fragment-Bo2ls1-U.js                                   2.56 kB │ gzip:   0.98 kB
+dist/assets/gaussianSplattingVoxel.vertex-BraJXBHO.js                      2.60 kB │ gzip:   0.91 kB
+dist/assets/iblCdfDebug.fragment-CWM_JAoW.js                               2.67 kB │ gzip:   0.96 kB
+dist/assets/pbrIBLFunctions-b8fwQKtH.js                                    2.71 kB │ gzip:   0.88 kB
+dist/assets/math.scalar.functions-TvhBAW3K.js                              2.73 kB │ gzip:   1.30 kB
+dist/assets/kernelBlur.fragment-BcdTKoPW.js                                2.83 kB │ gzip:   0.84 kB
+dist/assets/glowMapGeneration.vertex-D_U_TEFi.js                           2.93 kB │ gzip:   0.91 kB
+dist/assets/webRequest-dqz0dHXK.js                                         2.94 kB │ gzip:   1.06 kB
+dist/assets/iblIcdf.fragment-C6GWdBpb.js                                   2.95 kB │ gzip:   1.04 kB
+dist/assets/iblCdfDebug.fragment-DIrn_BEK.js                               3.05 kB │ gzip:   1.00 kB
+dist/assets/abstractSoundInstance-DG7m_0er.js                              3.09 kB │ gzip:   0.91 kB
+dist/assets/observable.pure-B5E8yEYx.js                                    3.20 kB │ gzip:   1.10 kB
+dist/assets/shadowMap.fragment-DX4Yo1bp.js                                 3.30 kB │ gzip:   1.16 kB
+dist/assets/tgaTextureLoader-CqhhocF6.js                                   3.40 kB │ gzip:   1.35 kB
+dist/assets/textureProcessor.fragment-D-awtrDP.js                          3.49 kB │ gzip:   1.00 kB
+dist/assets/bonesVertex-D9u7574l.js                                        3.82 kB │ gzip:   0.83 kB
+dist/assets/shadowMap.fragment-DUFTmQJ_.js                                 3.86 kB │ gzip:   1.25 kB
+dist/assets/openpbrUboDeclaration-CbPGRvOI.js                              3.87 kB │ gzip:   1.03 kB
+dist/assets/decorators-C_ra_8EP.js                                         3.87 kB │ gzip:   1.58 kB
+dist/assets/webAudioParameterComponent-DHJkG40R.js                         3.99 kB │ gzip:   1.67 kB
+dist/assets/gaussianSplatting.vertex-B-Lh4wAN.js                           4.05 kB │ gzip:   1.41 kB
+dist/assets/dumpTools.pure-zjrB0wpt.js                                     4.10 kB │ gzip:   1.94 kB
+dist/assets/flowGraphJsonPointerParserBlock.pure-BsaebbHR.js               4.27 kB │ gzip:   1.67 kB
+dist/assets/textureProcessor.fragment-B-hqHgey.js                          4.37 kB │ gzip:   1.18 kB
+dist/assets/morphTargetsVertex-6N5r7oF1.js                                 4.37 kB │ gzip:   0.98 kB
+dist/assets/reflectionFunction-CivoLMz9.js                                 4.66 kB │ gzip:   1.12 kB
+dist/assets/flowGraphSetDelayBlock.pure-BwI4vxJH.js                        4.72 kB │ gzip:   1.65 kB
+dist/assets/bakedVertexAnimation-C-a6t_tB.js                               4.73 kB │ gzip:   1.09 kB
+dist/assets/flowGraphMatrixMathBlocks.pure-CdgnWtD6.js                     4.74 kB │ gzip:   1.48 kB
+dist/assets/shadowMap.vertex-TZnupHeR.js                                   4.77 kB │ gzip:   1.60 kB
+dist/assets/flowGraphPlayAnimationBlock.pure-CTIo4JRa.js                   4.84 kB │ gzip:   1.55 kB
+dist/assets/shadowMap.vertex-DK_D7gdV.js                                   4.84 kB │ gzip:   1.55 kB
+dist/assets/imageProcessingFunctions-B1IXC_gq.js                           4.93 kB │ gzip:   1.77 kB
+dist/assets/gaussianSplatting.vertex-COkI_LCc.js                           4.94 kB │ gzip:   1.54 kB
+dist/assets/openpbrUboDeclaration-Dnhi8mvk.js                              5.22 kB │ gzip:   1.05 kB
+dist/assets/reflectionFunction-Cd8WyD5Q.js                                 5.23 kB │ gzip:   1.18 kB
+dist/assets/fxaa.fragment-BJI4ON-J.js                                      5.55 kB │ gzip:   1.65 kB
+dist/assets/imageProcessingFunctions-G8WWRV14.js                           5.66 kB │ gzip:   1.99 kB
+dist/assets/sphericalPolynomial.pure-DHaErNQp.js                           5.73 kB │ gzip:   1.35 kB
+dist/assets/morphTargetsVertex-OlIh-Lzh.js                                 6.40 kB │ gzip:   1.15 kB
+dist/assets/fxaa.fragment-Uh7tsKmu.js                                      6.43 kB │ gzip:   1.71 kB
+dist/assets/helperFunctions-BH8P-eyq.js                                    6.48 kB │ gzip:   2.18 kB
+dist/assets/helperFunctions-gEnZbjN3.js                                    6.81 kB │ gzip:   2.31 kB
+dist/assets/shadowsVertex--0nVb1Fg.js                                      6.84 kB │ gzip:   1.67 kB
+dist/assets/bumpFragment-BtJd9tYZ.js                                       6.86 kB │ gzip:   2.41 kB
+dist/assets/dds.pure-DH-FFYea.js                                           6.92 kB │ gzip:   2.54 kB
+dist/assets/buffer.pure-D7x3EEe3.js                                        7.40 kB │ gzip:   2.42 kB
+dist/assets/internalTexture-s3_Okj90.js                                    7.69 kB │ gzip:   1.99 kB
+dist/assets/bakedVertexAnimation-C6l_KSSy.js                               7.71 kB │ gzip:   1.59 kB
+dist/assets/geometry.vertex-CRPaaWiZ.js                                    7.89 kB │ gzip:   1.95 kB
+dist/assets/flowGraphVectorMathBlocks.pure-TSIhgi__.js                     7.97 kB │ gzip:   2.53 kB
+dist/assets/bumpFragment-CZy0KIWh.js                                       8.06 kB │ gzip:   2.52 kB
+dist/assets/flowGraphMathCombineExtractBlocks.pure-CeGhN4PY.js             8.07 kB │ gzip:   1.18 kB
+dist/assets/basisTextureLoader-BtwH5ocm.js                                 8.15 kB │ gzip:   3.17 kB
+dist/assets/default.vertex-BYS4Xaw0.js                                     8.29 kB │ gzip:   2.31 kB
+dist/assets/geometry.fragment-M2-Uu2pW.js                                  8.46 kB │ gzip:   2.62 kB
+dist/assets/webAudioBaseSubGraph-v39coL7T.js                               8.51 kB │ gzip:   2.12 kB
+dist/assets/abstractEngine.dom.pure-BVgwqLRN.js                            8.56 kB │ gzip:   2.73 kB
+dist/assets/hdrFilteringFunctions-Dw0rQ8Bu.js                              8.63 kB │ gzip:   2.56 kB
+dist/assets/hdrFilteringFunctions-Da1yugu7.js                              8.68 kB │ gzip:   2.51 kB
+dist/assets/geometry.vertex-1i2ulg__.js                                    9.14 kB │ gzip:   2.02 kB
+dist/assets/default.vertex-DXLLfL9i.js                                     9.66 kB │ gzip:   2.48 kB
+dist/assets/geometry.fragment-Bh76HPFM.js                                 10.40 kB │ gzip:   2.82 kB
+dist/assets/node-Cz9Hp8AU.js                                              11.55 kB │ gzip:   3.15 kB
+dist/assets/constants-DNxlZnxc.js                                         11.69 kB │ gzip:   3.17 kB
+dist/assets/pbrBRDFFunctions-BCNINF-p.js                                  11.93 kB │ gzip:   4.14 kB
+dist/assets/pbrBRDFFunctions-DxfbxN23.js                                  12.76 kB │ gzip:   4.32 kB
+dist/assets/renderingManager-DCqhFy2o.js                                  12.95 kB │ gzip:   3.32 kB
+dist/assets/exrTextureLoader-CfuHfxjm.js                                  13.14 kB │ gzip:   4.83 kB
+dist/assets/shaderProcessor-BdxprmJx.js                                   13.32 kB │ gzip:   4.71 kB
+dist/assets/flowGraphBlock-B995H03i.js                                    13.38 kB │ gzip:   3.96 kB
+dist/assets/spatialWebAudio-C_XZA8T8.js                                   14.21 kB │ gzip:   3.25 kB
+dist/assets/character-preview-XmuCnJ3m.js                                 14.34 kB │ gzip:   5.89 kB
+dist/assets/gaussianSplatting-Dq1CpTgZ.js                                 14.39 kB │ gzip:   4.34 kB
+dist/assets/pbr.vertex-DbbifnDa.js                                        14.66 kB │ gzip:   3.12 kB
+dist/assets/gaussianSplatting-vJ6yzDcm.js                                 14.70 kB │ gzip:   4.54 kB
+dist/assets/ktxTextureLoader-BK_qOXeb.js                                  15.18 kB │ gzip:   4.41 kB
+dist/assets/animation.pure-Ckx9VkSt.js                                    15.33 kB │ gzip:   4.01 kB
+dist/assets/pbr.vertex-CMQHQtJZ.js                                        17.16 kB │ gzip:   3.62 kB
+dist/assets/openpbrTransmissionLayerData-BRi1vGnu.js                      17.35 kB │ gzip:   4.01 kB
+dist/assets/openpbr.vertex-u9IeGEH7.js                                    17.54 kB │ gzip:   3.40 kB
+dist/assets/openpbrTransmissionLayerData-CbssVoWF.js                      18.46 kB │ gzip:   4.15 kB
+dist/assets/lightFragment-x7Xpl9uU.js                                     20.56 kB │ gzip:   3.35 kB
+dist/assets/openpbr.vertex-TEPiWOP7.js                                    20.64 kB │ gzip:   4.01 kB
+dist/assets/flowGraphMathBlocks.pure-CNs-Or0D.js                          20.87 kB │ gzip:   4.67 kB
+dist/assets/shadowsVertex-CpxL4lAs.js                                     21.61 kB │ gzip:   3.42 kB
+dist/assets/lightFragment-CHI52C6q.js                                     22.14 kB │ gzip:   3.23 kB
+dist/assets/default.fragment-CXn8pVJ-.js                                  24.01 kB │ gzip:   5.77 kB
+dist/assets/default.fragment-D1LQQR_3.js                                  25.51 kB │ gzip:   5.70 kB
+dist/assets/pbrDebug-91h5CJ85.js                                          29.30 kB │ gzip:   6.28 kB
+dist/assets/geometryBufferRenderer.pure-CI_aMFCs.js                       30.40 kB │ gzip:   7.56 kB
+dist/assets/tools.pure-o-84auyM.js                                        31.15 kB │ gzip:  10.24 kB
+dist/assets/renderTargetTexture.pure-BjNjBmM7.js                          31.77 kB │ gzip:   7.86 kB
+dist/assets/animationGroup.pure-DNLECqvP.js                               35.29 kB │ gzip:   8.93 kB
+dist/assets/pbrDebug-DILEZNFS.js                                          36.36 kB │ gzip:   7.85 kB
+dist/assets/oitFragment-CbS3GbFz.js                                       44.96 kB │ gzip:   8.73 kB
+dist/assets/oitFragment-CKv-hLSp.js                                       47.72 kB │ gzip:   9.21 kB
+dist/assets/abstractEngine.pure-DFKSB3FU.js                               59.36 kB │ gzip:  14.55 kB
+dist/assets/math.vector.pure-DhOOkVBk.js                                  64.62 kB │ gzip:  16.08 kB
+dist/assets/thinEngine.pure-vZWYa-Ki.js                                   67.06 kB │ gzip:  16.85 kB
+dist/assets/pushMaterial-APuRCsI0.js                                      76.69 kB │ gzip:  49.35 kB
+dist/assets/openpbr.fragment-De_sRAAj.js                                  88.25 kB │ gzip:  17.62 kB
+dist/assets/openpbr.fragment-C1TQYi1B.js                                  90.75 kB │ gzip:  17.68 kB
+dist/assets/openpbrMaterial.pure-BIRXhRkv.js                              91.51 kB │ gzip:  19.78 kB
+dist/assets/pbr.fragment-CSUegzDf.js                                      93.93 kB │ gzip:  16.69 kB
+dist/assets/pbr.fragment-BcPjSjLI.js                                      96.90 kB │ gzip:  18.07 kB
+dist/assets/scene.pure-Cx5_xeFa.js                                       156.77 kB │ gzip:  33.73 kB
+dist/assets/webgpu-backend-42w_2RfV.js                                   252.47 kB │ gzip:  63.38 kB
+dist/assets/src-BKC05Ca9.js                                              518.42 kB │ gzip: 149.33 kB
+dist/assets/pose-review-config-D3NdGC-x.js                             1,432.38 kB │ gzip: 329.34 kB
+dist/assets/index-TV4xHaUS.js                                          1,434.17 kB │ gzip: 332.70 kB
+
+✓ built in 2.33s
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+
+> sidereal-spacetime@0.4.0 build:dashboard
+> npm run build --workspace @sidereal/dashboard
+
+
+> @sidereal/dashboard@0.5.0 build
+> python3 ../../scripts/prepare_app.py dashboard && vite build
+
+Prepared runtime assets and allowlisted public help only.
+vite v8.2.2 building client environment for production...
+transforming...
+✓ 3520 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                                            0.64 kB │ gzip:   0.38 kB
+dist/assets/voxel-worker-DhegucEa.js                                       3.25 kB
+dist/assets/barlow-condensed-vietnamese-500-normal-CsrJDWc5.woff           6.04 kB
+dist/assets/barlow-condensed-vietnamese-600-normal-CNlPk46_.woff           6.07 kB
+dist/assets/barlow-vietnamese-400-normal-BFeobeCK.woff                     6.09 kB
+dist/assets/barlow-vietnamese-500-normal-GNfB7rCE.woff                     6.14 kB
+dist/assets/barlow-vietnamese-600-normal-CA_GiK2e.woff                     6.22 kB
+dist/assets/barlow-condensed-vietnamese-500-normal-DjeaNLFD.woff2          7.52 kB
+dist/assets/barlow-vietnamese-400-normal-Dpl4UHAZ.woff2                    7.58 kB
+dist/assets/barlow-vietnamese-500-normal-zTViEIzf.woff2                    7.66 kB
+dist/assets/barlow-condensed-vietnamese-600-normal-A5AYRdjN.woff2          7.69 kB
+dist/assets/barlow-vietnamese-600-normal-DcjprdFV.woff2                    7.89 kB
+dist/assets/barlow-condensed-latin-ext-500-normal-B1RE8WP7.woff           11.86 kB
+dist/assets/barlow-condensed-latin-ext-600-normal-Clv9cIcR.woff           11.97 kB
+dist/assets/barlow-latin-ext-400-normal-CvBsJvxq.woff                     12.31 kB
+dist/assets/barlow-latin-ext-500-normal-CJPcKP2Q.woff                     12.41 kB
+dist/assets/barlow-latin-ext-600-normal-DMVRjfRT.woff                     12.60 kB
+dist/assets/barlow-condensed-latin-ext-500-normal-yA5ONLQ9.woff2          14.18 kB
+dist/assets/barlow-latin-ext-400-normal-HxX4XjxC.woff2                    14.26 kB
+dist/assets/barlow-latin-ext-500-normal-DOaysfXq.woff2                    14.41 kB
+dist/assets/barlow-condensed-latin-ext-600-normal-18ESti3H.woff2          14.51 kB
+dist/assets/barlow-latin-ext-600-normal-B8NK_A3D.woff2                    14.96 kB
+dist/assets/glslang-DqqdIFnr.js                                           16.03 kB
+dist/assets/barlow-condensed-latin-500-normal-HIEiP5Ov.woff               18.60 kB
+dist/assets/barlow-condensed-latin-600-normal-BFJEwTuo.woff               18.89 kB
+dist/assets/barlow-latin-500-normal-C1h8hMer.woff                         19.51 kB
+dist/assets/barlow-latin-400-normal-fsAxiSwU.woff                         19.58 kB
+dist/assets/barlow-latin-600-normal-CNwfPWQD.woff                         19.88 kB
+dist/assets/barlow-condensed-latin-500-normal-BgYH2mbd.woff2              21.42 kB
+dist/assets/barlow-latin-500-normal-BPAOfeC8.woff2                        22.00 kB
+dist/assets/barlow-latin-400-normal-qiz4-Cze.woff2                        22.19 kB
+dist/assets/barlow-condensed-latin-600-normal-DepVgxBB.woff2              22.30 kB
+dist/assets/barlow-latin-600-normal-DILqtrty.woff2                        22.77 kB
+dist/assets/compiler.worker-MT-SsLAQ.js                                   44.89 kB
+dist/assets/twgsl-DqdFeK3J.js                                             74.55 kB
+dist/assets/planet-worker-D3oTwKC-.js                                    131.48 kB
+dist/assets/glslang-G7Yt_-32.wasm                                        943.68 kB │ gzip: 304.90 kB
+dist/assets/twgsl-CB--yrSG.wasm                                        1,702.91 kB │ gzip: 600.20 kB
+dist/assets/HullDecalPanel-D0j8QwmQ.css                                    0.77 kB │ gzip:   0.35 kB
+dist/assets/AssemblyEditor-DRNDzGdi.css                                    2.84 kB │ gzip:   0.99 kB
+dist/assets/PlanetStudio-lK89f6ce.css                                      4.05 kB │ gzip:   1.29 kB
+dist/assets/HullWorkspace-CYYunAgb.css                                     4.38 kB │ gzip:   1.30 kB
+dist/assets/index-DkHIO9ZV.css                                            18.11 kB │ gzip:   4.22 kB
+dist/assets/LayoutEditor-C23jMtsb.css                                     30.19 kB │ gzip:   6.16 kB
+dist/assets/typeStore-Cu_sj2zM.js                                          0.08 kB │ gzip:   0.08 kB
+dist/assets/clearQuad.fragment-CdghhbK_.js                                 0.08 kB │ gzip:   0.10 kB
+dist/assets/clearQuad.vertex-B-J80Na7.js                                   0.08 kB │ gzip:   0.10 kB
+dist/assets/abstractAudioBus-s4FxA3RW.js                                   0.11 kB │ gzip:   0.13 kB
+dist/assets/guid-BXdVC_j_.js                                               0.15 kB │ gzip:   0.14 kB
+dist/assets/flowGraphExecutionBlockWithOutSignal-uiUB1omf.js               0.15 kB │ gzip:   0.15 kB
+dist/assets/precisionDate-Uyb-ubD0.js                                      0.18 kB │ gzip:   0.14 kB
+dist/assets/kernelBlurVaryingDeclaration-DP2Wr9Oc.js                       0.21 kB │ gzip:   0.17 kB
+dist/assets/kernelBlurVaryingDeclaration-g2Ge9lzd.js                       0.22 kB │ gzip:   0.18 kB
+dist/assets/mainUVVaryingDeclaration-BBamQlxR.js                           0.22 kB │ gzip:   0.19 kB
+dist/assets/mainUVVaryingDeclaration-B_7d0nc3.js                           0.23 kB │ gzip:   0.19 kB
+dist/assets/domManagement-BqltO0ki.js                                      0.25 kB │ gzip:   0.17 kB
+dist/assets/logDepthFragment-C5lxT4l1.js                                   0.27 kB │ gzip:   0.22 kB
+dist/assets/logDepthDeclaration-3gXGtHbI.js                                0.27 kB │ gzip:   0.22 kB
+dist/assets/meshUboDeclaration-BATNZvmb.js                                 0.27 kB │ gzip:   0.23 kB
+dist/assets/abstractEngine.texture.pure-C6bMneYc.js                        0.28 kB │ gzip:   0.20 kB
+dist/assets/logDepthDeclaration-DYYUVTrx.js                                0.28 kB │ gzip:   0.22 kB
+dist/assets/math.axis-D0aue6IX.js                                          0.28 kB │ gzip:   0.21 kB
+dist/assets/flowGraphUnaryOperationBlock-D5LIHIvF.js                       0.30 kB │ gzip:   0.21 kB
+dist/assets/logDepthVertex-D5IUM6qd.js                                     0.30 kB │ gzip:   0.24 kB
+dist/assets/logDepthFragment-CxtJswLx.js                                   0.31 kB │ gzip:   0.24 kB
+dist/assets/pass.fragment-Cvd2TCWC.js                                      0.31 kB │ gzip:   0.25 kB
+dist/assets/sceneVertexDeclaration-CluTp-RC.js                             0.33 kB │ gzip:   0.22 kB
+dist/assets/bumpVertexDeclaration-Cb04kLz9.js                              0.34 kB │ gzip:   0.25 kB
+dist/assets/meshUboDeclaration-BmNu2KU_.js                                 0.34 kB │ gzip:   0.25 kB
+dist/assets/oitBackBlend.fragment-DnRDn_Uc.js                              0.34 kB │ gzip:   0.25 kB
+dist/assets/flowGraphKeyUpEventBlock.pure-BW-ywIev.js                      0.35 kB │ gzip:   0.23 kB
+dist/assets/keyboardEvents-CGYiptFb.js                                     0.35 kB │ gzip:   0.20 kB
+dist/assets/engineStore-e38OvQA7.js                                        0.36 kB │ gzip:   0.22 kB
+dist/assets/sceneUboDeclaration-B5VhSG0v.js                                0.36 kB │ gzip:   0.26 kB
+dist/assets/shadowMapFragmentSoftTransparentShadow-R_iOKnyx.js             0.37 kB │ gzip:   0.26 kB
+dist/assets/flowGraphBinaryOperationBlock-BcvuRWU1.js                      0.37 kB │ gzip:   0.24 kB
+dist/assets/logDepthVertex-DSD5XdGw.js                                     0.37 kB │ gzip:   0.26 kB
+dist/assets/fogVertex-NHlgMcT2.js                                          0.38 kB │ gzip:   0.24 kB
+dist/assets/oitFinalSimpleBlend.fragment-Q5Yng1yZ.js                       0.38 kB │ gzip:   0.25 kB
+dist/assets/bumpVertexDeclaration-I4Guxw_q.js                              0.39 kB │ gzip:   0.26 kB
+dist/assets/fresnelFunction-BmNPQIdN.js                                    0.39 kB │ gzip:   0.28 kB
+dist/assets/shadowMapFragmentSoftTransparentShadow-B6k0i9Au.js             0.40 kB │ gzip:   0.28 kB
+dist/assets/construction-layout-BaS-eSUO.js                                0.41 kB │ gzip:   0.30 kB
+dist/assets/oitBackBlend.fragment-CGzcLb9C.js                              0.41 kB │ gzip:   0.27 kB
+dist/assets/flowGraphTernaryOperationBlock-Opv2DGCq.js                     0.41 kB │ gzip:   0.24 kB
+dist/assets/vertexColorMixing-DPW6Is9y.js                                  0.43 kB │ gzip:   0.27 kB
+dist/assets/glowMapMerge.vertex-XcoH38fZ.js                                0.43 kB │ gzip:   0.29 kB
+dist/assets/sceneUboDeclaration-B96Tfx7b.js                                0.43 kB │ gzip:   0.27 kB
+dist/assets/oitFinalSimpleBlend.fragment-nGYFumis.js                       0.45 kB │ gzip:   0.29 kB
+dist/assets/pass.fragment-C9fRTBUH.js                                      0.45 kB │ gzip:   0.29 kB
+dist/assets/flowGraphGLTFDataProvider-DwPUU33f.js                          0.45 kB │ gzip:   0.29 kB
+dist/assets/postprocess.vertex-DJCmMhI8.js                                 0.46 kB │ gzip:   0.30 kB
+dist/assets/shaderStore-D-XQlhUT.js                                        0.46 kB │ gzip:   0.17 kB
+dist/assets/procedural.vertex-C47TVAon.js                                  0.47 kB │ gzip:   0.29 kB
+dist/assets/flowGraphCodeExecutionBlock-iK78hrRR.js                        0.47 kB │ gzip:   0.27 kB
+dist/assets/decalFragment-CvBK6CMD.js                                      0.48 kB │ gzip:   0.28 kB
+dist/assets/iblCdfx.fragment-DwJ2-o2J.js                                   0.49 kB │ gzip:   0.34 kB
+dist/assets/performanceConfigurator-UtxC_Odd.js                            0.50 kB │ gzip:   0.25 kB
+dist/assets/fogVertex-DNAMrhb0.js                                          0.50 kB │ gzip:   0.29 kB
+dist/assets/hdrFiltering.vertex-D0M3wH6A.js                                0.50 kB │ gzip:   0.31 kB
+dist/assets/rgbdEncode.fragment-CVg4Fcse.js                                0.51 kB │ gzip:   0.33 kB
+dist/assets/rgbdDecode.fragment-Cdz2Tveq.js                                0.52 kB │ gzip:   0.34 kB
+dist/assets/bumpVertex-CWhdIpqj.js                                         0.52 kB │ gzip:   0.32 kB
+dist/assets/flowGraphGetSoundVolumeBlock.pure-hI1CuH6y.js                  0.52 kB │ gzip:   0.31 kB
+dist/assets/hdrIrradianceFiltering.vertex-DOQV8qQx.js                      0.52 kB │ gzip:   0.32 kB
+dist/assets/packingFunctions-DpGwbupU.js                                   0.52 kB │ gzip:   0.29 kB
+dist/assets/depthBoxBlur.fragment-CLEAG5DG.js                              0.53 kB │ gzip:   0.35 kB
+dist/assets/flowGraphConstantBlock.pure-DUmkI6Pm.js                        0.53 kB │ gzip:   0.31 kB
+dist/assets/hdrTextureLoader-Dv_3TbOM.js                                   0.53 kB │ gzip:   0.38 kB
+dist/assets/flowGraphIsSoundPlayingBlock.pure-BBxX90qw.js                  0.54 kB │ gzip:   0.32 kB
+dist/assets/glowMapMerge.vertex-CBAYzq55.js                                0.54 kB │ gzip:   0.33 kB
+dist/assets/flowGraphInteger.pure-CZmJgkLp.js                              0.55 kB │ gzip:   0.29 kB
+dist/assets/flowGraphPauseAnimationBlock.pure-BE4LI0cT.js                  0.56 kB │ gzip:   0.31 kB
+dist/assets/vertexColorMixing-UCrnwszu.js                                  0.56 kB │ gzip:   0.30 kB
+dist/assets/packingFunctions-CINwVZs6.js                                   0.56 kB │ gzip:   0.31 kB
+dist/assets/iblCdfx.fragment-DcN-2ogt.js                                   0.56 kB │ gzip:   0.37 kB
+dist/assets/postprocess.vertex-CmVXXq2T.js                                 0.58 kB │ gzip:   0.35 kB
+dist/assets/flowGraphGetVariableBlock.pure-DTafOUMy.js                     0.58 kB │ gzip:   0.32 kB
+dist/assets/flowGraphContextBlock.pure-DHA-PqV8.js                         0.58 kB │ gzip:   0.31 kB
+dist/assets/flowGraphStopSoundBlock.pure-i318oJrQ.js                       0.60 kB │ gzip:   0.35 kB
+dist/assets/flowGraphKeyDownEventBlock.pure-BJmDYZGi.js                    0.60 kB │ gzip:   0.35 kB
+dist/assets/procedural.vertex-D3o6xkF2.js                                  0.61 kB │ gzip:   0.34 kB
+dist/assets/flowGraphBranchBlock.pure-4tEClz22.js                          0.62 kB │ gzip:   0.33 kB
+dist/assets/envTextureLoader-D8Wb0GoS.js                                   0.62 kB │ gzip:   0.40 kB
+dist/assets/rgbdEncode.fragment-CxPSfrvR.js                                0.65 kB │ gzip:   0.37 kB
+dist/assets/flowGraphPauseSoundBlock.pure-JOMN8HVs.js                      0.65 kB │ gzip:   0.38 kB
+dist/assets/hdrFiltering.vertex-COSbMAY6.js                                0.66 kB │ gzip:   0.36 kB
+dist/assets/lightConstants-CVIBiHRa.js                                     0.66 kB │ gzip:   0.34 kB
+dist/assets/rgbdDecode.fragment-DXl2fYur.js                                0.66 kB │ gzip:   0.38 kB
+dist/assets/drawWrapper-mzv23xeP.js                                        0.66 kB │ gzip:   0.38 kB
+dist/assets/flowGraphAsyncExecutionBlock-DPs1h3LF.js                       0.66 kB │ gzip:   0.34 kB
+dist/assets/flowGraphConditionalDataBlock.pure-D8f2Bjcs.js                 0.67 kB │ gzip:   0.33 kB
+dist/assets/hdrIrradianceFiltering.vertex-CFN7uIG9.js                      0.68 kB │ gzip:   0.37 kB
+dist/assets/flowGraphIndexOfBlock.pure-BJ1k_LNf.js                         0.69 kB │ gzip:   0.37 kB
+dist/assets/bumpVertex-DRq4BZvD.js                                         0.69 kB │ gzip:   0.38 kB
+dist/assets/flowGraphSetSoundVolumeBlock.pure-B90fE51P.js                  0.70 kB │ gzip:   0.37 kB
+dist/assets/flowGraphSceneReadyEventBlock.pure-BdZeez7Y.js                 0.70 kB │ gzip:   0.38 kB
+dist/assets/flowGraphStopEventPropagationBlock.pure-C8TCJ3zl.js            0.70 kB │ gzip:   0.37 kB
+dist/assets/depthBoxBlur.fragment-D2KJPEQv.js                              0.71 kB │ gzip:   0.41 kB
+dist/assets/rolldown-runtime-hePW80VL.js                                   0.71 kB │ gzip:   0.42 kB
+dist/assets/flowGraphSetLinearVelocityBlock.pure-CDYM_zQx.js               0.73 kB │ gzip:   0.38 kB
+dist/assets/flowGraphCounterBlock.pure-Qk6lK8gQ.js                         0.73 kB │ gzip:   0.38 kB
+dist/assets/flowGraphAssetsContext-WtUyuDAI.js                             0.73 kB │ gzip:   0.27 kB
+dist/assets/flowGraphGetLinearVelocityBlock.pure-ClDfRqOJ.js               0.73 kB │ gzip:   0.40 kB
+dist/assets/flowGraphSetAngularVelocityBlock.pure-BhmxSJXb.js              0.73 kB │ gzip:   0.38 kB
+dist/assets/flowGraphGetAngularVelocityBlock.pure-BssQyu8X.js              0.74 kB │ gzip:   0.40 kB
+dist/assets/flowGraphSetPhysicsMotionTypeBlock.pure-MoH4Z5eb.js            0.74 kB │ gzip:   0.39 kB
+dist/assets/flowGraphFunctionReferenceBlock.pure-Dw8V72He.js               0.75 kB │ gzip:   0.37 kB
+dist/assets/pointerEvents-Dm5KQRoA.js                                      0.76 kB │ gzip:   0.39 kB
+dist/assets/flowGraphFlipFlopBlock.pure-Sx4UCw_T.js                        0.76 kB │ gzip:   0.40 kB
+dist/assets/flowGraphApplyForceBlock.pure-CAoYhDaq.js                      0.77 kB │ gzip:   0.40 kB
+dist/assets/camera-DCKW_6Uu.js                                             0.78 kB │ gzip:   0.42 kB
+dist/assets/flowGraphApplyImpulseBlock.pure-CbZa5-bJ.js                    0.79 kB │ gzip:   0.40 kB
+dist/assets/glowMapMerge.fragment-E4YwFGds.js                              0.80 kB │ gzip:   0.42 kB
+dist/assets/hdrFiltering.fragment-cHOWPEWI.js                              0.80 kB │ gzip:   0.42 kB
+dist/assets/flowGraphCancelDelayBlock.pure-BKo82oHP.js                     0.81 kB │ gzip:   0.47 kB
+dist/assets/flowGraphGetAssetBlock.pure-AhJ3ZILP.js                        0.81 kB │ gzip:   0.43 kB
+dist/assets/flowGraphSequenceBlock.pure-DEPcwL2Z.js                        0.82 kB │ gzip:   0.39 kB
+dist/assets/passCube.fragment-B9dBqbCg.js                                  0.82 kB │ gzip:   0.35 kB
+dist/assets/flowGraphGetPhysicsMassPropertiesBlock.pure-NgN8SbVE.js        0.83 kB │ gzip:   0.39 kB
+dist/assets/taa.fragment-CP05W5o0.js                                       0.86 kB │ gzip:   0.45 kB
+dist/assets/flowGraphDebounceBlock.pure-iL1X54um.js                        0.87 kB │ gzip:   0.41 kB
+dist/assets/flowGraphPlaySoundBlock.pure-Y1ZoWjsL.js                       0.88 kB │ gzip:   0.44 kB
+dist/assets/kernelBlur.vertex-C2dESVl-.js                                  0.88 kB │ gzip:   0.46 kB
+dist/assets/flowGraphSceneTickEventBlock.pure-CINaInw8.js                  0.90 kB │ gzip:   0.42 kB
+dist/assets/flowGraphPointerOutEventBlock.pure-CyEZEyBH.js                 0.90 kB │ gzip:   0.45 kB
+dist/assets/math.size-BHZaDYSv.js                                          0.91 kB │ gzip:   0.37 kB
+dist/assets/imageProcessing.fragment-Bb9mf-7k.js                           0.91 kB │ gzip:   0.48 kB
+dist/assets/flowGraphCachedOperationBlock-CsdcvAkA.js                      0.91 kB │ gzip:   0.41 kB
+dist/assets/webAudioMainBus-BADE-k-M.js                                    0.91 kB │ gzip:   0.41 kB
+dist/assets/flowGraphDoNBlock.pure-B-3mrxjw.js                             0.91 kB │ gzip:   0.45 kB
+dist/assets/flowGraphPointerOverEventBlock.pure-BUBO0FIf.js                0.91 kB │ gzip:   0.46 kB
+dist/assets/color.fragment-CxH-oW8C.js                                     0.92 kB │ gzip:   0.43 kB
+dist/assets/mesh.vertexData.functions-CD4JOR2q.js                          0.93 kB │ gzip:   0.48 kB
+dist/assets/instancesDeclaration-CJBvtBV5.js                               0.93 kB │ gzip:   0.34 kB
+dist/assets/hdrIrradianceFiltering.fragment-Plypi5hS.js                    0.93 kB │ gzip:   0.47 kB
+dist/assets/flowGraphArrayIndexBlock.pure-DC7Akqdu.js                      0.94 kB │ gzip:   0.48 kB
+dist/assets/flowGraphGetPropertyBlock.pure-C477cw0L.js                     0.95 kB │ gzip:   0.45 kB
+dist/assets/flowGraphDataSwitchBlock.pure-DR_lA9bf.js                      0.97 kB │ gzip:   0.49 kB
+dist/assets/hdrFiltering.fragment-CFsnQbXs.js                              0.98 kB │ gzip:   0.47 kB
+dist/assets/iblScaledLuminance.fragment-BiR4vIhv.js                        0.98 kB │ gzip:   0.52 kB
+dist/assets/fxaa.vertex-CEYszSUi.js                                        0.99 kB │ gzip:   0.39 kB
+dist/assets/flowGraphWhileLoopBlock.pure-BD7NiLfq.js                       1.00 kB │ gzip:   0.48 kB
+dist/assets/flowGraphPointerUpEventBlock.pure-DuEFj19B.js                  1.00 kB │ gzip:   0.48 kB
+dist/assets/flowGraphKeyboardEventBlock-XW426Glm.js                        1.01 kB │ gzip:   0.42 kB
+dist/assets/flowGraphPointerDownEventBlock.pure-BGcxngnJ.js                1.01 kB │ gzip:   0.48 kB
+dist/assets/flowGraphSendCustomEventBlock.pure-BlaEplYq.js                 1.01 kB │ gzip:   0.50 kB
+dist/assets/iblDominantDirection.fragment-fkMISSk7.js                      1.02 kB │ gzip:   0.54 kB
+dist/assets/taa.fragment-Byipp7mo.js                                       1.02 kB │ gzip:   0.50 kB
+dist/assets/flowGraphPointerMoveEventBlock.pure-IftUWUjn.js                1.03 kB │ gzip:   0.49 kB
+dist/assets/color.fragment-CbJP31yK.js                                     1.03 kB │ gzip:   0.47 kB
+dist/assets/instancesDeclaration-DsiFqYXH.js                               1.04 kB │ gzip:   0.36 kB
+dist/assets/flowGraphSoundEndedEventBlock.pure-Cf_8tHx6.js                 1.04 kB │ gzip:   0.47 kB
+dist/assets/flowGraphTransformCoordinatesSystemBlock.pure-B_ss5HYq.js      1.04 kB │ gzip:   0.46 kB
+dist/assets/kernelBlur.vertex-Cr8ljakh.js                                  1.05 kB │ gzip:   0.50 kB
+dist/assets/glowMapMerge.fragment-kUzN8f-0.js                              1.06 kB │ gzip:   0.49 kB
+dist/assets/fogFragment-CISE_m3s.js                                        1.08 kB │ gzip:   0.49 kB
+dist/assets/imageProcessing.fragment-C2rBLkba.js                           1.08 kB │ gzip:   0.53 kB
+dist/assets/layout-native-floors-Cr5hAAub.js                               1.09 kB │ gzip:   0.63 kB
+dist/assets/glowBlurPostProcess.fragment-DDN2NxnB.js                       1.11 kB │ gzip:   0.57 kB
+dist/assets/harmonicsFunctions-QSz_WdsQ.js                                 1.12 kB │ gzip:   0.49 kB
+dist/assets/baseTexture.polynomial.pure-C8CBGoJq.js                        1.12 kB │ gzip:   0.39 kB
+dist/assets/passCube.fragment-C8Bxt-YC.js                                  1.13 kB │ gzip:   0.39 kB
+dist/assets/iblScaledLuminance.fragment-evIQ2NXg.js                        1.13 kB │ gzip:   0.54 kB
+dist/assets/iblDominantDirection.fragment-BLkqlqmV.js                      1.15 kB │ gzip:   0.57 kB
+dist/assets/hdrIrradianceFiltering.fragment-DVxhclrJ.js                    1.16 kB │ gzip:   0.53 kB
+dist/assets/clipPlaneVertex-C59BO8JS.js                                    1.17 kB │ gzip:   0.34 kB
+dist/assets/clipPlaneFragment-DVK0wgyZ.js                                  1.17 kB │ gzip:   0.35 kB
+dist/assets/smartArray-BRfcgNbX.js                                         1.18 kB │ gzip:   0.44 kB
+dist/assets/fogFragment-EikOP4pH.js                                        1.21 kB │ gzip:   0.54 kB
+dist/assets/flowGraphSwitchBlock.pure-BPq4s_5n.js                          1.25 kB │ gzip:   0.55 kB
+dist/assets/iblCdfy.fragment-HwUiLPS_.js                                   1.25 kB │ gzip:   0.64 kB
+dist/assets/defaultUboDeclaration-C53xcSdv.js                              1.26 kB │ gzip:   0.55 kB
+dist/assets/iblCdfy.fragment-DxSYWO2X.js                                   1.26 kB │ gzip:   0.64 kB
+dist/assets/flowGraphIsKeyPressedBlock.pure-CQKcICLU.js                    1.27 kB │ gzip:   0.50 kB
+dist/assets/clipPlaneFragment-Ct2VqHzk.js                                  1.27 kB │ gzip:   0.37 kB
+dist/assets/ddsTextureLoader-BgalOnLv.js                                   1.27 kB │ gzip:   0.62 kB
+dist/assets/halfFloat-Ce77JD5z.js                                          1.29 kB │ gzip:   0.60 kB
+dist/assets/flowGraphSetVariableBlock.pure-DHC90Vn-.js                     1.31 kB │ gzip:   0.62 kB
+dist/assets/flowGraphTypeToTypeBlocks.pure-BUh2KPaR.js                     1.32 kB │ gzip:   0.48 kB
+dist/assets/clipPlaneVertex-DKhVm1NW.js                                    1.35 kB │ gzip:   0.37 kB
+dist/assets/glowBlurPostProcess.fragment-CWHntGEt.js                       1.41 kB │ gzip:   0.65 kB
+dist/assets/harmonicsFunctions-CMr56qfT.js                                 1.42 kB │ gzip:   0.52 kB
+dist/assets/flowGraphBezierCurveEasingBlock.pure-qOZ1UmIf.js               1.42 kB │ gzip:   0.71 kB
+dist/assets/fxaa.vertex-BxlD2OIs.js                                        1.43 kB │ gzip:   0.45 kB
+dist/assets/flowGraphThrottleBlock.pure-DTmnMUa_.js                        1.46 kB │ gzip:   0.54 kB
+dist/assets/flowGraphDebugBlock.pure-Dgeq2Sfw.js                           1.48 kB │ gzip:   0.64 kB
+dist/assets/abstractSoundSource-D7bwABE8.js                                1.48 kB │ gzip:   0.48 kB
+dist/assets/flowGraphSetPropertyBlock.pure-H0AKBH6U.js                     1.49 kB │ gzip:   0.70 kB
+dist/assets/trash-ByA6LOBE.js                                              1.50 kB │ gzip:   0.66 kB
+dist/assets/flowGraphMeshPickEventBlock.pure-B2dUETXH.js                   1.50 kB │ gzip:   0.63 kB
+dist/assets/flowGraphConsoleLogBlock.pure-Dx3Km7Zf.js                      1.51 kB │ gzip:   0.73 kB
+dist/assets/flowGraphForLoopBlock.pure-CadPuMQE.js                         1.51 kB │ gzip:   0.68 kB
+dist/assets/color.vertex-Dsq_8Wxr.js                                       1.57 kB │ gzip:   0.67 kB
+dist/assets/color.vertex-CYNjCrqH.js                                       1.59 kB │ gzip:   0.67 kB
+dist/assets/defaultUboDeclaration-bEX7kynB.js                              1.62 kB │ gzip:   0.53 kB
+dist/assets/perfCounter-CRcs6GOv.js                                        1.63 kB │ gzip:   0.50 kB
+dist/assets/layout-assembly-preview-BSHOdWbs.js                            1.66 kB │ gzip:   0.90 kB
+dist/assets/flowGraphWaitAllBlock.pure-mXOCBDDP.js                         1.67 kB │ gzip:   0.67 kB
+dist/assets/flowGraphEasingBlock.pure-C5IJPiM6.js                          1.68 kB │ gzip:   0.75 kB
+dist/assets/gaussianSplatting.fragment-DNGQIzqk.js                         1.70 kB │ gzip:   0.73 kB
+dist/assets/flowGraphPhysicsCollisionEventBlock.pure-Dbe7TpxK.js           1.74 kB │ gzip:   0.68 kB
+dist/assets/gaussianSplattingVoxel.fragment-B_Om6CDx.js                    1.75 kB │ gzip:   0.59 kB
+dist/assets/flowGraphMultiGateBlock.pure-BB3Hwow7.js                       1.78 kB │ gzip:   0.76 kB
+dist/assets/pbrUboDeclaration--xFZEw0i.js                                  1.80 kB │ gzip:   0.67 kB
+dist/assets/math.plane-iMY7tyLk.js                                         1.81 kB │ gzip:   0.77 kB
+dist/assets/gaussianSplatting.fragment-DO2aPL6S.js                         1.86 kB │ gzip:   0.75 kB
+dist/assets/logger-CuBYPcDK.js                                             1.88 kB │ gzip:   0.82 kB
+dist/assets/gaussianSplattingVoxel.vertex-BWXUcFdc.js                      1.88 kB │ gzip:   0.76 kB
+dist/assets/glowMapGeneration.fragment-CeyBGCV2.js                         1.89 kB │ gzip:   0.73 kB
+dist/assets/spatialWebAudioUpdaterComponent-xFKhOeL5.js                    1.89 kB │ gzip:   0.67 kB
+dist/assets/gaussianSplattingVoxel.fragment-C65sY-Bh.js                    1.97 kB │ gzip:   0.87 kB
+dist/assets/flowGraphStopAnimationBlock.pure-DxHVfKD2.js                   2.00 kB │ gzip:   0.72 kB
+dist/assets/math.scalar.functions-BoB7CvbQ.js                              2.09 kB │ gzip:   0.96 kB
+dist/assets/flowGraphInterpolationBlock.pure-BeouhVy3.js                   2.14 kB │ gzip:   0.88 kB
+dist/assets/flowGraphReceiveCustomEventBlock.pure-C-hmSqfn.js              2.27 kB │ gzip:   0.91 kB
+dist/assets/webAudioBus-BQ6-JOkM.js                                        2.28 kB │ gzip:   0.75 kB
+dist/assets/kernelBlur.fragment-DHQjf6lq.js                                2.29 kB │ gzip:   0.77 kB
+dist/assets/pbrUboDeclaration-oed3_f2e.js                                  2.39 kB │ gzip:   0.66 kB
+dist/assets/standardMaterial-D9JDGVwA.js                                   2.43 kB │ gzip:   1.10 kB
+dist/assets/glowMapGeneration.vertex-B8p9FVmW.js                           2.46 kB │ gzip:   0.82 kB
+dist/assets/iesTextureLoader-ChcBdJQS.js                                   2.47 kB │ gzip:   1.07 kB
+dist/assets/pbrIBLFunctions-CSlJv7qb.js                                    2.52 kB │ gzip:   0.88 kB
+dist/assets/flowGraphExecutionBlock-Beh4vgyW.js                            2.52 kB │ gzip:   0.86 kB
+dist/assets/glowMapGeneration.fragment-Cp9qHE6X.js                         2.52 kB │ gzip:   0.83 kB
+dist/assets/iblIcdf.fragment-Bo2ls1-U.js                                   2.56 kB │ gzip:   0.98 kB
+dist/assets/gaussianSplattingVoxel.vertex-BraJXBHO.js                      2.60 kB │ gzip:   0.91 kB
+dist/assets/iblCdfDebug.fragment-CWM_JAoW.js                               2.67 kB │ gzip:   0.96 kB
+dist/assets/pbrIBLFunctions-b8fwQKtH.js                                    2.71 kB │ gzip:   0.88 kB
+dist/assets/kernelBlur.fragment-BcdTKoPW.js                                2.83 kB │ gzip:   0.84 kB
+dist/assets/glowMapGeneration.vertex-D_U_TEFi.js                           2.93 kB │ gzip:   0.91 kB
+dist/assets/webRequest-dqz0dHXK.js                                         2.94 kB │ gzip:   1.06 kB
+dist/assets/iblIcdf.fragment-C6GWdBpb.js                                   2.95 kB │ gzip:   1.04 kB
+dist/assets/iblCdfDebug.fragment-DIrn_BEK.js                               3.05 kB │ gzip:   1.00 kB
+dist/assets/abstractSoundInstance-DSksvipN.js                              3.09 kB │ gzip:   0.90 kB
+dist/assets/HullDecalPanel-DBZgc8c4.js                                     3.14 kB │ gzip:   1.28 kB
+dist/assets/observable.pure-B5E8yEYx.js                                    3.20 kB │ gzip:   1.10 kB
+dist/assets/shadowMap.fragment-DX4Yo1bp.js                                 3.30 kB │ gzip:   1.16 kB
+dist/assets/tgaTextureLoader-CqhhocF6.js                                   3.40 kB │ gzip:   1.35 kB
+dist/assets/textureProcessor.fragment-D-awtrDP.js                          3.49 kB │ gzip:   1.00 kB
+dist/assets/bonesVertex-D9u7574l.js                                        3.82 kB │ gzip:   0.83 kB
+dist/assets/shadowMap.fragment-DUFTmQJ_.js                                 3.86 kB │ gzip:   1.25 kB
+dist/assets/openpbrUboDeclaration-CbPGRvOI.js                              3.87 kB │ gzip:   1.03 kB
+dist/assets/decorators-C_ra_8EP.js                                         3.87 kB │ gzip:   1.58 kB
+dist/assets/webAudioParameterComponent-4hSTHzbD.js                         3.99 kB │ gzip:   1.67 kB
+dist/assets/gaussianSplatting.vertex-B-Lh4wAN.js                           4.05 kB │ gzip:   1.41 kB
+dist/assets/dumpTools.pure-DGU0WhTb.js                                     4.15 kB │ gzip:   1.96 kB
+dist/assets/flowGraphJsonPointerParserBlock.pure-DoRSNwoa.js               4.28 kB │ gzip:   1.66 kB
+dist/assets/textureProcessor.fragment-B-hqHgey.js                          4.37 kB │ gzip:   1.18 kB
+dist/assets/morphTargetsVertex-6N5r7oF1.js                                 4.37 kB │ gzip:   0.98 kB
+dist/assets/reflectionFunction-CivoLMz9.js                                 4.66 kB │ gzip:   1.12 kB
+dist/assets/flowGraphSetDelayBlock.pure-tkERkZ49.js                        4.72 kB │ gzip:   1.65 kB
+dist/assets/bakedVertexAnimation-C-a6t_tB.js                               4.73 kB │ gzip:   1.09 kB
+dist/assets/flowGraphMatrixMathBlocks.pure-C3JZJedt.js                     4.74 kB │ gzip:   1.48 kB
+dist/assets/decorators.serialization-AGg5yod5.js                           4.76 kB │ gzip:   1.79 kB
+dist/assets/shadowMap.vertex-TZnupHeR.js                                   4.77 kB │ gzip:   1.60 kB
+dist/assets/flowGraphPlayAnimationBlock.pure-Bhme-Uv0.js                   4.84 kB │ gzip:   1.54 kB
+dist/assets/shadowMap.vertex-DK_D7gdV.js                                   4.84 kB │ gzip:   1.55 kB
+dist/assets/imageProcessingFunctions-B1IXC_gq.js                           4.93 kB │ gzip:   1.77 kB
+dist/assets/gaussianSplatting.vertex-COkI_LCc.js                           4.94 kB │ gzip:   1.54 kB
+dist/assets/openpbrUboDeclaration-Dnhi8mvk.js                              5.22 kB │ gzip:   1.05 kB
+dist/assets/reflectionFunction-Cd8WyD5Q.js                                 5.23 kB │ gzip:   1.18 kB
+dist/assets/fxaa.fragment-BJI4ON-J.js                                      5.55 kB │ gzip:   1.65 kB
+dist/assets/sha2-DbILs_ht.js                                               5.59 kB │ gzip:   2.74 kB
+dist/assets/imageProcessingFunctions-G8WWRV14.js                           5.66 kB │ gzip:   1.99 kB
+dist/assets/sphericalPolynomial.pure-DtnSj-cz.js                           5.73 kB │ gzip:   1.35 kB
+dist/assets/assembly-CF7ijcYD.js                                           6.08 kB │ gzip:   2.24 kB
+dist/assets/morphTargetsVertex-OlIh-Lzh.js                                 6.40 kB │ gzip:   1.15 kB
+dist/assets/fxaa.fragment-Uh7tsKmu.js                                      6.43 kB │ gzip:   1.71 kB
+dist/assets/helperFunctions-BH8P-eyq.js                                    6.48 kB │ gzip:   2.18 kB
+dist/assets/assembly-editor-CjWdUjnU.js                                    6.72 kB │ gzip:   3.13 kB
+dist/assets/helperFunctions-gEnZbjN3.js                                    6.81 kB │ gzip:   2.31 kB
+dist/assets/shadowsVertex--0nVb1Fg.js                                      6.84 kB │ gzip:   1.67 kB
+dist/assets/bumpFragment-BtJd9tYZ.js                                       6.86 kB │ gzip:   2.41 kB
+dist/assets/dds.pure-BzfPKHIk.js                                           6.91 kB │ gzip:   2.52 kB
+dist/assets/buffer.pure-CRzPLRp5.js                                        7.40 kB │ gzip:   2.43 kB
+dist/assets/internalTexture-s3_Okj90.js                                    7.69 kB │ gzip:   1.99 kB
+dist/assets/bakedVertexAnimation-C6l_KSSy.js                               7.71 kB │ gzip:   1.59 kB
+dist/assets/geometry.vertex-CRPaaWiZ.js                                    7.89 kB │ gzip:   1.95 kB
+dist/assets/jsx-runtime-DE3RlOCf.js                                        7.89 kB │ gzip:   2.99 kB
+dist/assets/flowGraphVectorMathBlocks.pure-DtkaXk5s.js                     7.98 kB │ gzip:   2.54 kB
+dist/assets/bumpFragment-CZy0KIWh.js                                       8.06 kB │ gzip:   2.52 kB
+dist/assets/flowGraphMathCombineExtractBlocks.pure-DI-l_lcv.js             8.07 kB │ gzip:   1.18 kB
+dist/assets/basisTextureLoader-DKnWv3G8.js                                 8.15 kB │ gzip:   3.18 kB
+dist/assets/default.vertex-BYS4Xaw0.js                                     8.29 kB │ gzip:   2.31 kB
+dist/assets/effectRenderer.pure-BC28Yst7.js                                8.39 kB │ gzip:   2.49 kB
+dist/assets/geometry.fragment-M2-Uu2pW.js                                  8.46 kB │ gzip:   2.62 kB
+dist/assets/webAudioBaseSubGraph-CTrmdODO.js                               8.51 kB │ gzip:   2.12 kB
+dist/assets/abstractEngine.dom.pure-DJVTTRrZ.js                            8.56 kB │ gzip:   2.72 kB
+dist/assets/hdrFilteringFunctions-Dw0rQ8Bu.js                              8.63 kB │ gzip:   2.56 kB
+dist/assets/hdrFilteringFunctions-Da1yugu7.js                              8.68 kB │ gzip:   2.51 kB
+dist/assets/geometry.vertex-1i2ulg__.js                                    9.14 kB │ gzip:   2.02 kB
+dist/assets/default.vertex-DXLLfL9i.js                                     9.66 kB │ gzip:   2.48 kB
+dist/assets/geometry.fragment-Bh76HPFM.js                                 10.40 kB │ gzip:   2.82 kB
+dist/assets/node-CDU98PwM.js                                              11.57 kB │ gzip:   3.16 kB
+dist/assets/constants-DNxlZnxc.js                                         11.69 kB │ gzip:   3.17 kB
+dist/assets/pbrBRDFFunctions-BCNINF-p.js                                  11.93 kB │ gzip:   4.14 kB
+dist/assets/math.color.pure-jio8ysyl.js                                   12.51 kB │ gzip:   2.97 kB
+dist/assets/pbrBRDFFunctions-DxfbxN23.js                                  12.76 kB │ gzip:   4.32 kB
+dist/assets/exrTextureLoader-CBt3CTir.js                                  13.14 kB │ gzip:   4.83 kB
+dist/assets/tools.functions-BS_JXLQx.js                                   13.31 kB │ gzip:   4.70 kB
+dist/assets/flowGraphBlock-DKaRE0ki.js                                    13.39 kB │ gzip:   3.99 kB
+dist/assets/selection-silhouette--qdjzG_8.js                              13.77 kB │ gzip:   5.39 kB
+dist/assets/spatialWebAudio-mMuO8Vlc.js                                   14.21 kB │ gzip:   3.25 kB
+dist/assets/gaussianSplatting-Dq1CpTgZ.js                                 14.39 kB │ gzip:   4.34 kB
+dist/assets/AssemblyEditor-Dz7ezBAL.js                                    14.46 kB │ gzip:   5.65 kB
+dist/assets/pbr.vertex-DbbifnDa.js                                        14.66 kB │ gzip:   3.12 kB
+dist/assets/gaussianSplatting-vJ6yzDcm.js                                 14.70 kB │ gzip:   4.54 kB
+dist/assets/uniformBuffer-B-tw5fC3.js                                     15.14 kB │ gzip:   3.18 kB
+dist/assets/baseTexture.pure-BEhiW_uP.js                                  15.14 kB │ gzip:   3.86 kB
+dist/assets/ktxTextureLoader-QXJXMATX.js                                  15.17 kB │ gzip:   4.39 kB
+dist/assets/PlanetStudio-CszN5TK_.js                                      15.80 kB │ gzip:   5.99 kB
+dist/assets/pbr.vertex-CMQHQtJZ.js                                        17.16 kB │ gzip:   3.62 kB
+dist/assets/openpbrTransmissionLayerData-BRi1vGnu.js                      17.35 kB │ gzip:   4.01 kB
+dist/assets/openpbr.vertex-u9IeGEH7.js                                    17.54 kB │ gzip:   3.40 kB
+dist/assets/sceneComponent-DmDyLF4w.js                                    18.00 kB │ gzip:   4.88 kB
+dist/assets/postProcess.pure-DxVE7UP_.js                                  18.44 kB │ gzip:   5.08 kB
+dist/assets/openpbrTransmissionLayerData-CbssVoWF.js                      18.46 kB │ gzip:   4.15 kB
+dist/assets/texture.pure-B2P6kDUP.js                                      19.56 kB │ gzip:   5.43 kB
+dist/assets/lightFragment-x7Xpl9uU.js                                     20.56 kB │ gzip:   3.35 kB
+dist/assets/openpbr.vertex-TEPiWOP7.js                                    20.64 kB │ gzip:   4.01 kB
+dist/assets/flowGraphMathBlocks.pure-GTrWa4NH.js                          20.88 kB │ gzip:   4.68 kB
+dist/assets/shadowsVertex-CpxL4lAs.js                                     21.61 kB │ gzip:   3.42 kB
+dist/assets/layout-hull-CNpzFM6G.js                                       21.64 kB │ gzip:   8.90 kB
+dist/assets/HullWorkspace-C2SC3TVE.js                                     22.10 kB │ gzip:   7.53 kB
+dist/assets/lightFragment-CHI52C6q.js                                     22.14 kB │ gzip:   3.23 kB
+dist/assets/default.fragment-CXn8pVJ-.js                                  24.01 kB │ gzip:   5.77 kB
+dist/assets/default.fragment-D1LQQR_3.js                                  25.51 kB │ gzip:   5.70 kB
+dist/assets/pbrDebug-91h5CJ85.js                                          29.30 kB │ gzip:   6.28 kB
+dist/assets/geometryBufferRenderer.pure-HIoNA5ox.js                       30.52 kB │ gzip:   7.58 kB
+dist/assets/tools.pure-CNW975Tc.js                                        31.15 kB │ gzip:  10.24 kB
+dist/assets/renderTargetTexture.pure--P_yloKc.js                          31.90 kB │ gzip:   7.93 kB
+dist/assets/animationGroup.pure-Cr2neEai.js                               35.27 kB │ gzip:   8.93 kB
+dist/assets/pbrDebug-DILEZNFS.js                                          36.36 kB │ gzip:   7.85 kB
+dist/assets/ray-C75bglRQ.js                                               38.98 kB │ gzip:  14.49 kB
+dist/assets/oitFragment-CbS3GbFz.js                                       44.96 kB │ gzip:   8.73 kB
+dist/assets/oitFragment-CKv-hLSp.js                                       47.72 kB │ gzip:   9.21 kB
+dist/assets/abstractEngine.pure-CUH9CnAZ.js                               59.35 kB │ gzip:  14.55 kB
+dist/assets/math.vector.pure-BbHpAouG.js                                  64.62 kB │ gzip:  16.08 kB
+dist/assets/thinEngine.pure-BNYkLQD1.js                                   67.06 kB │ gzip:  16.87 kB
+dist/assets/imageProcessing-DxzQePni.js                                   76.76 kB │ gzip:  49.34 kB
+dist/assets/material.pure-Cqcgi6rG.js                                     78.90 kB │ gzip:  20.31 kB
+dist/assets/openpbr.fragment-De_sRAAj.js                                  88.25 kB │ gzip:  17.62 kB
+dist/assets/openpbr.fragment-C1TQYi1B.js                                  90.75 kB │ gzip:  17.68 kB
+dist/assets/openpbrMaterial.pure-ClG--bTO.js                              91.68 kB │ gzip:  19.84 kB
+dist/assets/pbr.fragment-CSUegzDf.js                                      93.93 kB │ gzip:  16.69 kB
+dist/assets/pbr.fragment-BcPjSjLI.js                                      96.90 kB │ gzip:  18.07 kB
+dist/assets/scene.pure-BKqSTqrO.js                                       157.00 kB │ gzip:  33.72 kB
+dist/assets/LayoutEditor-xMa2zR82.js                                     169.42 kB │ gzip:  43.81 kB
+dist/assets/index-BV_yWT9c.js                                            213.60 kB │ gzip:  69.15 kB
+dist/assets/ConstructionPanel-C1mzGH5u.js                                224.43 kB │ gzip:  52.68 kB
+dist/assets/environment-ZX0u1Eyi.js                                      233.04 kB │ gzip:  71.85 kB
+dist/assets/webgpu-backend-CM8Vtv0X.js                                   252.91 kB │ gzip:  63.49 kB
+dist/assets/construction-transactions-CFq3AwxP.js                        350.23 kB │ gzip:  62.86 kB
+dist/assets/src-C3GQwVQq.js                                              633.03 kB │ gzip: 132.24 kB
+dist/assets/mesh-roles-7UFNdgo_.js                                     1,351.73 kB │ gzip: 307.93 kB
+
+✓ built in 2.72s
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.

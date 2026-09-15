@@ -1,0 +1,1562 @@
+diff --git a/packages/content/src/legacy-system-seed.ts b/packages/content/src/legacy-system-seed.ts
+new file mode 100644
+index 00000000..f036aa18
+--- /dev/null
++++ b/packages/content/src/legacy-system-seed.ts
+@@ -0,0 +1,204 @@
++/** Pinned canonical system seed r001. Independent of login/account/ship IDs.
++ * Revisions require explicit migration; changing LAB_BODIES does not alter this seed.
++ * Source is the existing lab fixture descriptors; no new art or ratings.
++ */
++export const LEGACY_SYSTEM_SEED = {
++  systemId: "ad7bf00a-caa0-50ee-b307-332afaac71a1",
++  revision: 1,
++  bodies: [
++    {
++      id: "137c6327-9b43-5f9a-82ef-baff2dbc54fb",
++      key: "approach-rock",
++      kind: "asteroid",
++      appearance: "stone",
++      x: 0,
++      y: 30,
++      height: 0,
++      radius: 2.8,
++      massKg: 60000,
++      seed: 31,
++    },
++    {
++      id: "afc638e8-dc6d-5da1-93dd-1d098777df7e",
++      key: "port-rock",
++      kind: "asteroid",
++      appearance: "stone",
++      x: -23,
++      y: 12,
++      height: 0,
++      radius: 3.4,
++      massKg: 85000,
++      seed: 7,
++    },
++    {
++      id: "94c636af-5a35-501f-9e40-293a15ba2e78",
++      key: "aft-rock",
++      kind: "asteroid",
++      appearance: "stone",
++      x: 19,
++      y: -24,
++      height: 0,
++      radius: 2.1,
++      massKg: 24000,
++      seed: 22,
++    },
++    {
++      id: "e9185e95-d4f2-5114-b8c9-37b8e4090d4c",
++      key: "outer-rock",
++      kind: "asteroid",
++      appearance: "stone",
++      x: 35,
++      y: 55,
++      height: 0,
++      radius: 4.2,
++      massKg: 120000,
++      seed: 43,
++    },
++    {
++      id: "5ee42f6b-b7a6-54eb-8fea-e9ee78494f51",
++      key: "amethyst",
++      kind: "planet",
++      appearance: "amethyst",
++      x: 38,
++      y: -28,
++      height: -45,
++      radius: 18,
++      massKg: 0,
++      seed: 38,
++    },
++    {
++      id: "5dc49348-50c1-58d4-8955-dc8b340240fd",
++      key: "pelagic",
++      kind: "planet",
++      appearance: "pelagic",
++      x: -120,
++      y: 210,
++      height: -85,
++      radius: 36,
++      massKg: 0,
++      seed: 17,
++    },
++    {
++      id: "5ad1d7a0-c961-5a34-a0cd-84e07ffd3761",
++      key: "ivory-star",
++      kind: "star",
++      appearance: "cold-star",
++      x: -90,
++      y: 80,
++      height: -150,
++      radius: 13,
++      massKg: 0,
++      seed: 14,
++    },
++    {
++      id: "048f50c7-5114-5353-8fac-2cb718c9b46d",
++      key: "azure-ocean",
++      kind: "planet",
++      appearance: "ocean",
++      x: -1800,
++      y: 2400,
++      height: -150,
++      radius: 65,
++      massKg: 0,
++      seed: 73,
++    },
++    {
++      id: "d9e7f101-ebed-5461-b47c-88c644a9fe7c",
++      key: "dunes-desert",
++      kind: "planet",
++      appearance: "desert",
++      x: 2600,
++      y: 1700,
++      height: -170,
++      radius: 72,
++      massKg: 0,
++      seed: 29,
++    },
++    {
++      id: "554238d7-8be3-5a14-8e20-e82c621e4cc1",
++      key: "basalt-rock",
++      kind: "planet",
++      appearance: "rock",
++      x: 4200,
++      y: -900,
++      height: -120,
++      radius: 48,
++      massKg: 0,
++      seed: 101,
++    },
++    {
++      id: "826fb65c-5865-50bc-a6f8-90c932098453",
++      key: "frost-ice",
++      kind: "planet",
++      appearance: "ice",
++      x: -3400,
++      y: -2400,
++      height: -180,
++      radius: 70,
++      massKg: 0,
++      seed: 47,
++    },
++    {
++      id: "4343699d-f343-5a4c-8037-84bad1842116",
++      key: "cinder-volcanic",
++      kind: "planet",
++      appearance: "volcanic",
++      x: 1700,
++      y: -3800,
++      height: -155,
++      radius: 62,
++      massKg: 0,
++      seed: 89,
++    },
++    {
++      id: "1a2d53d7-384a-5325-acae-40f2b3b76c69",
++      key: "viridian-toxic",
++      kind: "planet",
++      appearance: "toxic",
++      x: -4800,
++      y: 1100,
++      height: -175,
++      radius: 68,
++      massKg: 0,
++      seed: 61,
++    },
++    {
++      id: "fb204dd1-5887-5954-8df8-b9492e030f1b",
++      key: "prism-crystal",
++      kind: "planet",
++      appearance: "crystal",
++      x: 5800,
++      y: 3200,
++      height: -140,
++      radius: 54,
++      massKg: 0,
++      seed: 113,
++    },
++    {
++      id: "a4d0f0de-bfea-583d-a4c8-4b1c364e26db",
++      key: "companion-moon",
++      kind: "planet",
++      appearance: "moon",
++      x: -2600,
++      y: 4100,
++      height: -110,
++      radius: 38,
++      massKg: 0,
++      seed: 137,
++    },
++    {
++      id: "9301e3e8-24f8-597d-bfd5-cdbc28112354",
++      key: "ember-garden",
++      kind: "planet",
++      appearance: "temperate-volcanic",
++      x: 6800,
++      y: -4200,
++      height: -170,
++      radius: 74,
++      massKg: 0,
++      seed: 157,
++    },
++  ],
++} as const;
++export const LEGACY_SYSTEM_SEED_SHA256 =
++  "8a02fde759417e1cf78165dd394093ccb0fef87e34fd4556a8076681d7bb8136";
+diff --git a/packages/content/src/shared-system.ts b/packages/content/src/shared-system.ts
+index 41d4dc71..669c14d1 100644
+--- a/packages/content/src/shared-system.ts
++++ b/packages/content/src/shared-system.ts
+@@ -1,207 +1,39 @@
+-/** Pinned canonical system seed r001. Independent of login/account/ship IDs.
+- * Revisions require explicit migration; changing LAB_BODIES does not alter this seed.
+- * Source is the existing lab fixture descriptors; no new art or ratings.
+- */
++import { LEGACY_SYSTEM_SEED } from "./legacy-system-seed";
++import { SOLAR_SYSTEM } from "./solar-system";
++export {
++  LEGACY_SYSTEM_SEED,
++  LEGACY_SYSTEM_SEED_SHA256,
++} from "./legacy-system-seed";
++export {
++  SOLAR_SYSTEM,
++  SOLAR_SYSTEM_BODY_LIMIT,
++  solarBodyForLegacyKey,
++} from "./solar-system";
++/** r002 replaces only celestial descriptors. Historical r001 remains immutable.
++ * Existing systems require the guarded server migration; login never resets rows. */
+ export const SHARED_SYSTEM_SEED = {
+-  systemId: "ad7bf00a-caa0-50ee-b307-332afaac71a1",
+-  revision: 1,
++  systemId: LEGACY_SYSTEM_SEED.systemId,
++  revision: 2,
+   bodies: [
+-    {
+-      id: "137c6327-9b43-5f9a-82ef-baff2dbc54fb",
+-      key: "approach-rock",
+-      kind: "asteroid",
+-      appearance: "stone",
+-      x: 0,
+-      y: 30,
+-      height: 0,
+-      radius: 2.8,
+-      massKg: 60000,
+-      seed: 31,
+-    },
+-    {
+-      id: "afc638e8-dc6d-5da1-93dd-1d098777df7e",
+-      key: "port-rock",
+-      kind: "asteroid",
+-      appearance: "stone",
+-      x: -23,
+-      y: 12,
+-      height: 0,
+-      radius: 3.4,
+-      massKg: 85000,
+-      seed: 7,
+-    },
+-    {
+-      id: "94c636af-5a35-501f-9e40-293a15ba2e78",
+-      key: "aft-rock",
+-      kind: "asteroid",
+-      appearance: "stone",
+-      x: 19,
+-      y: -24,
+-      height: 0,
+-      radius: 2.1,
+-      massKg: 24000,
+-      seed: 22,
+-    },
+-    {
+-      id: "e9185e95-d4f2-5114-b8c9-37b8e4090d4c",
+-      key: "outer-rock",
+-      kind: "asteroid",
+-      appearance: "stone",
+-      x: 35,
+-      y: 55,
+-      height: 0,
+-      radius: 4.2,
+-      massKg: 120000,
+-      seed: 43,
+-    },
+-    {
+-      id: "5ee42f6b-b7a6-54eb-8fea-e9ee78494f51",
+-      key: "amethyst",
+-      kind: "planet",
+-      appearance: "amethyst",
+-      x: 38,
+-      y: -28,
+-      height: -45,
+-      radius: 18,
+-      massKg: 0,
+-      seed: 38,
+-    },
+-    {
+-      id: "5dc49348-50c1-58d4-8955-dc8b340240fd",
+-      key: "pelagic",
+-      kind: "planet",
+-      appearance: "pelagic",
+-      x: -120,
+-      y: 210,
+-      height: -85,
+-      radius: 36,
+-      massKg: 0,
+-      seed: 17,
+-    },
+-    {
+-      id: "5ad1d7a0-c961-5a34-a0cd-84e07ffd3761",
+-      key: "ivory-star",
+-      kind: "star",
+-      appearance: "cold-star",
+-      x: -90,
+-      y: 80,
+-      height: -150,
+-      radius: 13,
+-      massKg: 0,
+-      seed: 14,
+-    },
+-    {
+-      id: "048f50c7-5114-5353-8fac-2cb718c9b46d",
+-      key: "azure-ocean",
+-      kind: "planet",
+-      appearance: "ocean",
+-      x: -1800,
+-      y: 2400,
+-      height: -150,
+-      radius: 65,
+-      massKg: 0,
+-      seed: 73,
+-    },
+-    {
+-      id: "d9e7f101-ebed-5461-b47c-88c644a9fe7c",
+-      key: "dunes-desert",
+-      kind: "planet",
+-      appearance: "desert",
+-      x: 2600,
+-      y: 1700,
+-      height: -170,
+-      radius: 72,
+-      massKg: 0,
+-      seed: 29,
+-    },
+-    {
+-      id: "554238d7-8be3-5a14-8e20-e82c621e4cc1",
+-      key: "basalt-rock",
+-      kind: "planet",
+-      appearance: "rock",
+-      x: 4200,
+-      y: -900,
+-      height: -120,
+-      radius: 48,
+-      massKg: 0,
+-      seed: 101,
+-    },
+-    {
+-      id: "826fb65c-5865-50bc-a6f8-90c932098453",
+-      key: "frost-ice",
+-      kind: "planet",
+-      appearance: "ice",
+-      x: -3400,
+-      y: -2400,
+-      height: -180,
+-      radius: 70,
+-      massKg: 0,
+-      seed: 47,
+-    },
+-    {
+-      id: "4343699d-f343-5a4c-8037-84bad1842116",
+-      key: "cinder-volcanic",
+-      kind: "planet",
+-      appearance: "volcanic",
+-      x: 1700,
+-      y: -3800,
+-      height: -155,
+-      radius: 62,
+-      massKg: 0,
+-      seed: 89,
+-    },
+-    {
+-      id: "1a2d53d7-384a-5325-acae-40f2b3b76c69",
+-      key: "viridian-toxic",
+-      kind: "planet",
+-      appearance: "toxic",
+-      x: -4800,
+-      y: 1100,
+-      height: -175,
+-      radius: 68,
+-      massKg: 0,
+-      seed: 61,
+-    },
+-    {
+-      id: "fb204dd1-5887-5954-8df8-b9492e030f1b",
+-      key: "prism-crystal",
+-      kind: "planet",
+-      appearance: "crystal",
+-      x: 5800,
+-      y: 3200,
+-      height: -140,
+-      radius: 54,
+-      massKg: 0,
+-      seed: 113,
+-    },
+-    {
+-      id: "a4d0f0de-bfea-583d-a4c8-4b1c364e26db",
+-      key: "companion-moon",
+-      kind: "planet",
+-      appearance: "moon",
+-      x: -2600,
+-      y: 4100,
+-      height: -110,
+-      radius: 38,
+-      massKg: 0,
+-      seed: 137,
+-    },
+-    {
+-      id: "9301e3e8-24f8-597d-bfd5-cdbc28112354",
+-      key: "ember-garden",
+-      kind: "planet",
+-      appearance: "temperate-volcanic",
+-      x: 6800,
+-      y: -4200,
+-      height: -170,
+-      radius: 74,
+-      massKg: 0,
+-      seed: 157,
+-    },
++    ...LEGACY_SYSTEM_SEED.bodies.filter((body) => body.kind === "asteroid"),
++    ...SOLAR_SYSTEM.bodies.map(
++      ({ id, key, kind, appearance, x, y, height, radius, massKg, seed }) => ({
++        id,
++        key,
++        kind,
++        appearance,
++        x,
++        y,
++        height,
++        radius,
++        massKg,
++        seed,
++      }),
++    ),
+   ],
+-} as const;
++};
+ export const SHARED_SYSTEM_SEED_SHA256 =
+-  "8a02fde759417e1cf78165dd394093ccb0fef87e34fd4556a8076681d7bb8136";
++  "822d8146bfc803f2b47cd6a07e01ea362955096fe4e0a89325a1171754b38d4c";
+ /** Four dynamic rocks leave sixty ship slots in the initial 64-body contact island. */
+ export const SHARED_SYSTEM_MAX_SHIPS = 60;
+ 
+diff --git a/packages/content/src/solar-system.json b/packages/content/src/solar-system.json
+new file mode 100644
+index 00000000..00ba3554
+--- /dev/null
++++ b/packages/content/src/solar-system.json
+@@ -0,0 +1,462 @@
++{
++  "revision": 2,
++  "systemId": "ad7bf00a-caa0-50ee-b307-332afaac71a1",
++  "starKey": "helion",
++  "cruiseSpeed": 30000,
++  "bodies": [
++    {
++      "id": "7a99b4e9-c8b8-5bae-8626-9fe2c7f2ee35",
++      "key": "helion",
++      "name": "Helion",
++      "kind": "star",
++      "appearance": "yellow-main-sequence-r013",
++      "x": -15000120,
++      "y": 210,
++      "height": -160,
++      "radius": 72,
++      "massKg": 0,
++      "seed": 3901,
++      "parentId": null,
++      "orbitRadius": 0
++    },
++    {
++      "id": "6e1c58ab-aef5-5df9-b3ec-40775cf582ac",
++      "key": "cinder-volcanic",
++      "name": "Cinder",
++      "kind": "planet",
++      "appearance": "volcanic-r023",
++      "x": -11048928.402572218,
++      "y": -3680706.1047244864,
++      "height": -75,
++      "radius": 26,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "7a99b4e9-c8b8-5bae-8626-9fe2c7f2ee35",
++      "orbitRadius": 5400098
++    },
++    {
++      "id": "30061a60-06fc-5d89-985b-622cf95891c2",
++      "key": "cinder-volcanic-moon-1",
++      "name": "Cinder I",
++      "kind": "planet",
++      "appearance": "volcanic-moon-1-r003",
++      "x": -10772580.888316624,
++      "y": -3563868.249682073,
++      "height": -54.72,
++      "radius": 5.72,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "6e1c58ab-aef5-5df9-b3ec-40775cf582ac",
++      "orbitRadius": 300031.72,
++      "travelGap": 300000
++    },
++    {
++      "id": "e5644b16-4c38-545b-9be2-388ad9afcd38",
++      "key": "cinder-volcanic-moon-2",
++      "name": "Cinder II",
++      "kind": "planet",
++      "appearance": "volcanic-moon-2-r006",
++      "x": -11387982.957703177,
++      "y": -3520425.6487408434,
++      "height": -53.42,
++      "radius": 4.42,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "6e1c58ab-aef5-5df9-b3ec-40775cf582ac",
++      "orbitRadius": 375030.42,
++      "travelGap": 375000
++    },
++    {
++      "id": "5a626553-f791-50dc-b8d1-46c8ec2f552f",
++      "key": "basalt-rock",
++      "name": "Basalt",
++      "kind": "planet",
++      "appearance": "rocky-r010",
++      "x": -16030875.954364197,
++      "y": 7933528.483619749,
++      "height": -73,
++      "radius": 24,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "7a99b4e9-c8b8-5bae-8626-9fe2c7f2ee35",
++      "orbitRadius": 8000000
++    },
++    {
++      "id": "d00e938a-29ab-51b7-962b-48acd827ced6",
++      "key": "basalt-rock-moon-1",
++      "name": "Basalt I",
++      "kind": "planet",
++      "appearance": "rocky-moon-r002",
++      "x": -16318240.16964044,
++      "y": 8019780.304678714,
++      "height": -54.28,
++      "radius": 5.28,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "5a626553-f791-50dc-b8d1-46c8ec2f552f",
++      "orbitRadius": 300029.28,
++      "travelGap": 300000
++    },
++    {
++      "id": "f715117d-0d1a-5e6b-b5d2-777eeb545b68",
++      "key": "basalt-rock-moon-2",
++      "name": "Basalt II",
++      "kind": "planet",
++      "appearance": "rocky-moon-2-r001",
++      "x": -15871947.748081371,
++      "y": 7593840.559141692,
++      "height": -53.08,
++      "radius": 4.08,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "5a626553-f791-50dc-b8d1-46c8ec2f552f",
++      "orbitRadius": 375028.08,
++      "travelGap": 375000
++    },
++    {
++      "id": "04482c63-55de-5807-b5de-14a7917ccd8e",
++      "key": "dunes-desert",
++      "name": "Dunes",
++      "kind": "planet",
++      "appearance": "desert-r014",
++      "x": -23812699.77101627,
++      "y": -6582983.585143522,
++      "height": -81,
++      "radius": 32,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "7a99b4e9-c8b8-5bae-8626-9fe2c7f2ee35",
++      "orbitRadius": 11000000
++    },
++    {
++      "id": "830d3aeb-7565-5eaf-9c03-bcfd23c584e3",
++      "key": "dunes-desert-moon-1",
++      "name": "Dunes I",
++      "kind": "planet",
++      "appearance": "desert-moon-1-r001",
++      "x": -23746989.214867294,
++      "y": -6875738.68473141,
++      "height": -56.04,
++      "radius": 7.04,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "04482c63-55de-5807-b5de-14a7917ccd8e",
++      "orbitRadius": 300039.04,
++      "travelGap": 300000
++    },
++    {
++      "id": "535b72e1-1f83-5373-8654-168a653d9558",
++      "key": "dunes-desert-moon-2",
++      "name": "Dunes II",
++      "kind": "planet",
++      "appearance": "desert-moon-2-r001",
++      "x": -23594546.834252443,
++      "y": -6277922.316571008,
++      "height": -54.44,
++      "radius": 5.44,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "04482c63-55de-5807-b5de-14a7917ccd8e",
++      "orbitRadius": 375037.44,
++      "travelGap": 375000
++    },
++    {
++      "id": "2193aac5-5da2-5ba6-86a4-42d4dc308b48",
++      "key": "pelagic",
++      "name": "Pelagic",
++      "kind": "planet",
++      "appearance": "temperate-r003",
++      "x": -120.0,
++      "y": 210.0,
++      "height": -85,
++      "radius": 36,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "7a99b4e9-c8b8-5bae-8626-9fe2c7f2ee35",
++      "orbitRadius": 15000000
++    },
++    {
++      "id": "f4cdcce4-231b-569d-b4f0-3ce53848aa5f",
++      "key": "pelagic-moon-1",
++      "name": "Pelagic I",
++      "kind": "planet",
++      "appearance": "temperate-moon-1-r002",
++      "x": 122444.17303365085,
++      "y": 274079.2706704125,
++      "height": -56.92,
++      "radius": 7.92,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "2193aac5-5da2-5ba6-86a4-42d4dc308b48",
++      "orbitRadius": 300043.92,
++      "travelGap": 300000
++    },
++    {
++      "id": "f23b5e08-d802-5548-a8aa-ac57e10b425a",
++      "key": "pelagic-moon-2",
++      "name": "Pelagic II",
++      "kind": "planet",
++      "appearance": "temperate-moon-2-r002",
++      "x": -357466.963176063,
++      "y": -113630.85243417611,
++      "height": -55.12,
++      "radius": 6.12,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "2193aac5-5da2-5ba6-86a4-42d4dc308b48",
++      "orbitRadius": 375042.12,
++      "travelGap": 375000
++    },
++    {
++      "id": "181bead1-f8a9-58b5-83a5-14985b64bd20",
++      "key": "azure-ocean",
++      "name": "Azure",
++      "kind": "planet",
++      "appearance": "ocean-r007",
++      "x": -3811140.5711280406,
++      "y": 14100094.373294702,
++      "height": -87,
++      "radius": 38,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "7a99b4e9-c8b8-5bae-8626-9fe2c7f2ee35",
++      "orbitRadius": 18000000
++    },
++    {
++      "id": "0abe3b56-1574-5efa-ac64-8e46e9171a87",
++      "key": "azure-ocean-moon-1",
++      "name": "Azure I",
++      "kind": "planet",
++      "appearance": "ocean-moon-1-r001",
++      "x": -3949483.7538710264,
++      "y": 14366344.222004125,
++      "height": -57.36,
++      "radius": 8.36,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "181bead1-f8a9-58b5-83a5-14985b64bd20",
++      "orbitRadius": 300046.36,
++      "travelGap": 300000
++    },
++    {
++      "id": "deb62ed7-b3d3-545d-bf11-ab5296816dce",
++      "key": "azure-ocean-moon-2",
++      "name": "Azure II",
++      "kind": "planet",
++      "appearance": "ocean-moon-2-r002",
++      "x": -3944097.2319941223,
++      "y": 13749408.084272685,
++      "height": -55.46,
++      "radius": 6.46,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "181bead1-f8a9-58b5-83a5-14985b64bd20",
++      "orbitRadius": 375044.46,
++      "travelGap": 375000
++    },
++    {
++      "id": "e4b37879-64ef-5e35-9e1e-69ebd3c1b792",
++      "key": "amethyst",
++      "name": "Amethyst",
++      "kind": "planet",
++      "appearance": "gas-r005",
++      "x": -35829854.00422028,
++      "y": 15560485.74670287,
++      "height": -103,
++      "radius": 54,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "7a99b4e9-c8b8-5bae-8626-9fe2c7f2ee35",
++      "orbitRadius": 26000000
++    },
++    {
++      "id": "1ee700fd-d300-5f07-994e-39e8542a5ffe",
++      "key": "amethyst-moon-1",
++      "name": "Amethyst I",
++      "kind": "planet",
++      "appearance": "gas-giant-moon-1-r005",
++      "x": -36091967.8210822,
++      "y": 15414417.682601746,
++      "height": -60.88,
++      "radius": 11.88,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "e4b37879-64ef-5e35-9e1e-69ebd3c1b792",
++      "orbitRadius": 300065.88,
++      "travelGap": 300000
++    },
++    {
++      "id": "b094dbc5-38d9-5bf1-82e6-6d4c8081ae36",
++      "key": "amethyst-moon-2",
++      "name": "Amethyst II",
++      "kind": "planet",
++      "appearance": "gas-giant-moon-2-r001",
++      "x": -35475417.285280704,
++      "y": 15437819.527803514,
++      "height": -58.18,
++      "radius": 9.18,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "e4b37879-64ef-5e35-9e1e-69ebd3c1b792",
++      "orbitRadius": 375063.18,
++      "travelGap": 375000
++    },
++    {
++      "id": "f79d3361-1fc3-54b9-90ae-be1bb027486c",
++      "key": "amethyst-moon-3",
++      "name": "Amethyst III",
++      "kind": "planet",
++      "appearance": "gas-giant-moon-3-r005",
++      "x": -36003467.03066733,
++      "y": 15975720.913507313,
++      "height": -63.58,
++      "radius": 14.58,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "e4b37879-64ef-5e35-9e1e-69ebd3c1b792",
++      "orbitRadius": 450068.58,
++      "travelGap": 450000
++    },
++    {
++      "id": "fa8106a1-5917-5189-8f43-3b9ae57366b9",
++      "key": "prism-crystal",
++      "name": "Prism",
++      "kind": "planet",
++      "appearance": "crystal-r013",
++      "x": -22724991.21956496,
++      "y": -33110609.449858636,
++      "height": -79,
++      "radius": 30,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "7a99b4e9-c8b8-5bae-8626-9fe2c7f2ee35",
++      "orbitRadius": 34000000
++    },
++    {
++      "id": "83ebab23-3a86-5d27-a0ae-d0359c3a2684",
++      "key": "prism-crystal-moon-1",
++      "name": "Prism I",
++      "kind": "planet",
++      "appearance": "crystal-moon-1-r010",
++      "x": -22486136.943333216,
++      "y": -33292187.521401897,
++      "height": -55.6,
++      "radius": 6.6,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "fa8106a1-5917-5189-8f43-3b9ae57366b9",
++      "orbitRadius": 300036.6,
++      "travelGap": 300000
++    },
++    {
++      "id": "6b8916ca-8ae6-5856-8aba-05d5e4f655d4",
++      "key": "prism-crystal-moon-2",
++      "name": "Prism II",
++      "kind": "planet",
++      "appearance": "crystal-moon-2-r010",
++      "x": -22754664.330010682,
++      "y": -32736750.074225917,
++      "height": -54.1,
++      "radius": 5.1,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "fa8106a1-5917-5189-8f43-3b9ae57366b9",
++      "orbitRadius": 375035.1,
++      "travelGap": 375000
++    },
++    {
++      "id": "7e7b4c4f-7cbf-535f-b71f-676c0eb089b4",
++      "key": "viridian-toxic",
++      "name": "Viridian",
++      "kind": "planet",
++      "appearance": "toxic-r007",
++      "x": 25526563.736126944,
++      "y": -17134197.061580624,
++      "height": -83,
++      "radius": 34,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "7a99b4e9-c8b8-5bae-8626-9fe2c7f2ee35",
++      "orbitRadius": 44000000
++    },
++    {
++      "id": "47705f74-5cf1-5dd9-a516-7e71346ac1d5",
++      "key": "viridian-toxic-moon-1",
++      "name": "Viridian I",
++      "kind": "planet",
++      "appearance": "toxic-moon-1-r001",
++      "x": 25746100.74724337,
++      "y": -16929677.15919786,
++      "height": -56.480000000000004,
++      "radius": 7.48,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "7e7b4c4f-7cbf-535f-b71f-676c0eb089b4",
++      "orbitRadius": 300041.48,
++      "travelGap": 300000
++    },
++    {
++      "id": "785e893b-2be8-5cb4-ad24-9886c4044550",
++      "key": "viridian-toxic-moon-2",
++      "name": "Viridian II",
++      "kind": "planet",
++      "appearance": "toxic-moon-2-r001",
++      "x": 25153096.001169648,
++      "y": -17099894.182279993,
++      "height": -54.78,
++      "radius": 5.78,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "7e7b4c4f-7cbf-535f-b71f-676c0eb089b4",
++      "orbitRadius": 375039.78,
++      "travelGap": 375000
++    },
++    {
++      "id": "68c229bd-ca74-5d63-b6ed-8146635647e0",
++      "key": "frost-ice",
++      "name": "Frost",
++      "kind": "planet",
++      "appearance": "ice-r026",
++      "x": -5142025.711786021,
++      "y": 57156294.33933069,
++      "height": -85,
++      "radius": 36,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "7a99b4e9-c8b8-5bae-8626-9fe2c7f2ee35",
++      "orbitRadius": 58000000
++    },
++    {
++      "id": "28d33f21-7894-5fe6-8037-22a39c152415",
++      "key": "frost-ice-moon-1",
++      "name": "Frost I",
++      "kind": "planet",
++      "appearance": "ice-moon-1-r002",
++      "x": -5391078.228307854,
++      "y": 57323623.94801698,
++      "height": -56.92,
++      "radius": 7.92,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "68c229bd-ca74-5d63-b6ed-8146635647e0",
++      "orbitRadius": 300043.92,
++      "travelGap": 300000
++    },
++    {
++      "id": "7320d8e3-fd3d-5ffb-85ca-2d5351f08fad",
++      "key": "frost-ice-moon-2",
++      "name": "Frost II",
++      "kind": "planet",
++      "appearance": "ice-moon-2-r003",
++      "x": -5090578.516848219,
++      "y": 56784797.66652308,
++      "height": -55.12,
++      "radius": 6.12,
++      "massKg": 0,
++      "seed": 117,
++      "parentId": "68c229bd-ca74-5d63-b6ed-8146635647e0",
++      "orbitRadius": 375042.12,
++      "travelGap": 375000
++    }
++  ]
++}
+diff --git a/packages/content/src/solar-system.test.ts b/packages/content/src/solar-system.test.ts
+new file mode 100644
+index 00000000..0c1f1e69
+--- /dev/null
++++ b/packages/content/src/solar-system.test.ts
+@@ -0,0 +1,72 @@
++import { expect, it } from "vitest";
++import { createHash } from "node:crypto";
++import {
++  SOLAR_SYSTEM,
++  SHARED_SYSTEM_SEED,
++  SHARED_SYSTEM_SEED_SHA256,
++  LEGACY_SYSTEM_SEED,
++  SOLAR_SYSTEM_BODY_LIMIT,
++  solarBodyForLegacyKey,
++} from "./shared-system";
++it("keeps owner scenic radii and separates 29 celestial bodies beneath the playable plane", () => {
++  const bodies = SOLAR_SYSTEM.bodies,
++    star = bodies.find((b) => b.kind === "star")!,
++    pelagic = bodies.find((b) => b.key === "pelagic")!,
++    gas = bodies.find((b) => b.key === "amethyst")!;
++  expect(bodies).toHaveLength(29);
++  expect(new Set(bodies.map((b) => b.id)).size).toBe(29);
++  expect(pelagic.radius).toBe(36);
++  expect(star.radius).toBe(pelagic.radius * 2);
++  expect(gas.radius).toBe(pelagic.radius * 1.5);
++  expect(pelagic.x).toBe(-120);
++  expect(pelagic.y).toBe(210);
++  for (const b of bodies) {
++    expect(b.height + b.radius * 1.3).toBeLessThan(-20);
++    expect(Math.max(Math.abs(b.x), Math.abs(b.y))).toBeLessThan(1e9);
++  }
++  expect(SHARED_SYSTEM_SEED.bodies.length).toBeLessThanOrEqual(
++    SOLAR_SYSTEM_BODY_LIMIT,
++  );
++  expect(
++    SHARED_SYSTEM_SEED.bodies.filter((b) => b.kind === "asteroid"),
++  ).toEqual(LEGACY_SYSTEM_SEED.bodies.filter((b) => b.kind === "asteroid"));
++});
++it("uses three-minute inner travel and ten-to-fifteen-second parent/moon gaps", () => {
++  const bodies = SOLAR_SYSTEM.bodies,
++    star = bodies.find((b) => b.kind === "star")!;
++  const planets = bodies
++    .filter((b) => b.parentId === star.id)
++    .sort((a, b) => a.orbitRadius - b.orbitRadius);
++  expect(planets[0].appearance).toBe("volcanic-r023");
++  const gap = (a: typeof star, b: typeof star) =>
++    Math.hypot(a.x - b.x, a.y - b.y) - a.radius - b.radius;
++  expect(gap(star, planets[0]) / SOLAR_SYSTEM.cruiseSpeed).toBeCloseTo(180, 8);
++  expect(planets.findIndex((b) => b.key === "amethyst")).toBeGreaterThan(
++    planets.findIndex((b) => b.key === "pelagic"),
++  );
++  expect(planets.at(-1)?.appearance).toBe("ice-r026");
++  for (const moon of bodies.filter(
++    (b) => b.parentId && b.parentId !== star.id,
++  )) {
++    const parent = bodies.find((b) => b.id === moon.parentId)!;
++    expect(moon.radius).toBeLessThan(parent.radius * 0.3);
++    expect(gap(parent, moon) / 30000).toBeGreaterThanOrEqual(9.99999999);
++    expect(gap(parent, moon) / 30000).toBeLessThanOrEqual(15.00000001);
++  }
++  for (let i = 0; i < bodies.length; i++)
++    for (let j = 0; j < i; j++)
++      expect(gap(bodies[i], bodies[j])).toBeGreaterThan(1000);
++});
++it("maps every legacy celestial explicitly without retaining its old placement ID", () => {
++  for (const old of LEGACY_SYSTEM_SEED.bodies.filter(
++    (b) => b.kind !== "asteroid",
++  )) {
++    const replacement = solarBodyForLegacyKey(old.key);
++    expect(replacement?.kind).toBe(old.kind);
++    expect(replacement?.id).not.toBe(old.id);
++  }
++});
++
++it("pins the exact complete authored seed, including reviewed appearance revisions", () => {
++  expect(createHash("sha256").update(JSON.stringify(SHARED_SYSTEM_SEED)).digest("hex")).toBe(SHARED_SYSTEM_SEED_SHA256);
++});
+diff --git a/packages/content/src/solar-system.ts b/packages/content/src/solar-system.ts
+new file mode 100644
+index 00000000..1cfb305d
+--- /dev/null
++++ b/packages/content/src/solar-system.ts
+@@ -0,0 +1,15 @@
++import authored from "./solar-system.json";
++/** Owner-scaled static celestial chart, not N-body mechanics. World XY metres;
++ * negative renderer height supplies scenic depth below the playable plane. */
++export const SOLAR_SYSTEM = authored;
++export const SOLAR_SYSTEM_BODY_LIMIT = 64;
++export const SOLAR_LEGACY_KEY_REPLACEMENTS: Readonly<Record<string, string>> = {
++  "ivory-star": "helion",
++  "companion-moon": "basalt-rock-moon-1",
++  "ember-garden": "pelagic",
++};
++export function solarBodyForLegacyKey(key: string) {
++  return SOLAR_SYSTEM.bodies.find(
++    (body) => body.key === (SOLAR_LEGACY_KEY_REPLACEMENTS[key] ?? key),
++  );
++}
+diff --git a/packages/world/src/index.ts b/packages/world/src/index.ts
+index cf7416c9..65cf45fc 100644
+--- a/packages/world/src/index.ts
++++ b/packages/world/src/index.ts
+@@ -4,6 +4,7 @@ import { commitFlightCharacter } from "./construction-flight-dirty";
+ import { setConstructionEnginePower as setEnginePower } from "./construction-device-power";
+ import { replacePlayerWayfarer } from "./wayfarer-replacement";
+ import * as rebuiltWayfarer from "./wayfarer-rebuild-installation";
++import { migrateSolarSystem } from './solar-system-migration';
+ import { constructionCargoAssembly } from "./construction-cargo-assembly-tables";
+ import {
+   constructionCargoGrid,
+@@ -88,6 +89,7 @@ import {
+ } from "./construction-pilot-authority";
+ import {
+   worldSystem,
++  celestialMigrationReceipt,
+   shipWorldMotion,
+   systemBody,
+   bodyWorldMotion,
+@@ -297,6 +299,7 @@ const db = schema({
+   constructionPilotSeat,
+   constructionFlightReview,
+   worldSystem,
++  celestialMigrationReceipt,
+   shipWorldMotion,
+   systemBody,
+   bodyWorldMotion,
+@@ -662,6 +665,7 @@ export const stepWorld = db.reducer(
+   (ctx) => {
+     if (!ctx.sender.isEqual(ctx.databaseIdentity))
+       throw new SenderError("Server schedule only");
++    migrateSolarSystem(ctx.db, ctx.timestamp.microsSinceUnixEpoch);
+     auth.expireSessions(ctx);
+     construction.expireGrants(ctx);
+     passengers.expireShipPassengers(ctx);
+diff --git a/packages/world/src/shared-world-physics.ts b/packages/world/src/shared-world-physics.ts
+index 2f110f87..dd04ea63 100644
+--- a/packages/world/src/shared-world-physics.ts
++++ b/packages/world/src/shared-world-physics.ts
+@@ -6,7 +6,7 @@ import {
+ } from "@sidereal/sim/system-space";
+ import { spatialCell } from "@sidereal/sim/spatial-cells";
+ import type { RigidBody } from "@sidereal/sim/collision";
+-import { SHARED_SYSTEM_SEED } from "@sidereal/content/shared-system";
++import { SHARED_SYSTEM_SEED, SOLAR_SYSTEM_BODY_LIMIT } from "@sidereal/content/shared-system";
+ import {
+   toCenterOfMassMotion,
+   toAuthoredFrameMotion,
+@@ -123,7 +123,7 @@ export function stepSharedWorld(
+   const ships = limited(ctx.db.shipWorldMotion.by_system.filter(systemId), 60);
+   const descriptions = limited(
+     ctx.db.systemBody.by_system.filter(systemId),
+-    32,
++    SOLAR_SYSTEM_BODY_LIMIT,
+   );
+   if (!ships || !descriptions)
+     return {
+diff --git a/packages/world/src/shared-world-tables.ts b/packages/world/src/shared-world-tables.ts
+index 252939e0..fd17d466 100644
+--- a/packages/world/src/shared-world-tables.ts
++++ b/packages/world/src/shared-world-tables.ts
+@@ -110,3 +110,16 @@ export const legacyBodyAlias = table(
+     legacySnapshotJson: t.string(),
+   },
+ );
++
++/** Private migration recovery evidence; never exposed through gameplay views. */
++export const celestialMigrationReceipt = table(
++  { name: "celestial_migration_receipt" },
++  {
++    id: t.string().primaryKey(),
++    status: t.string(),
++    reason: t.string(),
++    beforeJson: t.string(),
++    afterSha256: t.string(),
++    createdMicros: t.u64(),
++  },
++);
+diff --git a/packages/world/src/shared-world-test-fixture.ts b/packages/world/src/shared-world-test-fixture.ts
+index da11e12e..9411d3b6 100644
+--- a/packages/world/src/shared-world-test-fixture.ts
++++ b/packages/world/src/shared-world-test-fixture.ts
+@@ -1,5 +1,5 @@
+ import { Identity } from "spacetimedb";
+-import { SHARED_SYSTEM_SEED } from "@sidereal/content/shared-system";
++import { LEGACY_SYSTEM_SEED } from "@sidereal/content/shared-system";
+ import type { SharedJoinContext } from "./shared-world";
+ export const owner = Identity.fromString("1".repeat(64)),
+   other = Identity.fromString("2".repeat(64));
+@@ -57,6 +57,7 @@ export function fixture() {
+     constructionFlightBinding: table("shipId"),
+     constructionInstance: table("id"),
+     worldSystem: table("id"),
++    celestialMigrationReceipt: table("id"),
+     shipWorldMotion: table("shipId", {
+       by_system: "systemId",
+       by_cell: ["systemId", "cellX", "cellY"],
+@@ -136,7 +137,7 @@ export function fixture() {
+       game: true,
+       expiresMicros: 1000000n,
+     });
+-    for (const body of SHARED_SYSTEM_SEED.bodies)
++    for (const body of LEGACY_SYSTEM_SEED.bodies)
+       db.spaceBody.insert({
+         ...body,
+         id: `legacy${n}-${body.key}`,
+diff --git a/packages/world/src/shared-world-views.test.ts b/packages/world/src/shared-world-views.test.ts
+index b9ed38c6..45743604 100644
+--- a/packages/world/src/shared-world-views.test.ts
++++ b/packages/world/src/shared-world-views.test.ts
+@@ -132,7 +132,7 @@ describe("authorized shared spatial projections", () => {
+     move(f, "ship1", 100000, 100000);
+     const bodies = visibleBodyDescriptions(f.view());
+     expect(bodies.every((b) => b.kind !== "asteroid")).toBe(true);
+-    expect(bodies).toHaveLength(12);
++    expect(bodies).toHaveLength(SHARED_SYSTEM_SEED.bodies.filter(b=>b.kind!=="asteroid").length);
+     expect(visibleBodyMotion(f.view()).map((b) => b.bodyId)).toEqual(
+       bodies.map((b) => b.bodyId),
+     );
+diff --git a/packages/world/src/shared-world-views.ts b/packages/world/src/shared-world-views.ts
+index 0ed251f9..55a0936b 100644
+--- a/packages/world/src/shared-world-views.ts
++++ b/packages/world/src/shared-world-views.ts
+@@ -1,4 +1,5 @@
+ import { acceptedPassengerAccess, type PassengerAccessDatabase } from "./construction-passenger-access";
++import { SOLAR_SYSTEM_BODY_LIMIT } from '@sidereal/content/shared-system';
+ import {
+   hasAcceptedAuthoredFlight,
+   type AcceptedFlightContext,
+@@ -193,7 +194,7 @@ function bodyContacts(
+       BigInt(cell.cellX),
+       BigInt(cell.cellY),
+     ])) {
+-      if (++examined > 32) return [];
++      if (++examined > SOLAR_SYSTEM_BODY_LIMIT) return [];
+       const body = ctx.db.systemBody.id.find(motion.bodyId);
+       if (
+         !body ||
+@@ -210,7 +211,7 @@ function bodyContacts(
+     }
+   const descriptions = limited(
+     ctx.db.systemBody.by_system.filter(origin.admitted.systemId),
+-    32,
++    SOLAR_SYSTEM_BODY_LIMIT,
+   );
+   if (!descriptions) return [];
+   for (const body of descriptions)
+diff --git a/packages/world/src/shared-world.test.ts b/packages/world/src/shared-world.test.ts
+index ca3a9ab0..fc9c60e6 100644
+--- a/packages/world/src/shared-world.test.ts
++++ b/packages/world/src/shared-world.test.ts
+@@ -21,7 +21,7 @@ describe("canonical shared-system seed and explicit admission", () => {
+     ensureCanonicalSystem(db);
+     const before = writes();
+     expect(db.worldSystem.rows.size).toBe(1);
+-    expect(db.systemBody.rows.size).toBe(16);
++    expect(db.systemBody.rows.size).toBe(SHARED_SYSTEM_SEED.bodies.length);
+     const rock = SHARED_SYSTEM_SEED.bodies[0];
+     const motion = db.bodyWorldMotion.bodyId.find(rock.id);
+     db.bodyWorldMotion.bodyId.update({ ...motion, x: 7, serverTick: 12n });
+@@ -36,7 +36,7 @@ describe("canonical shared-system seed and explicit admission", () => {
+     joinSharedSystem(ctx(), args());
+     joinSharedSystem(ctx(2, other), args(2));
+     expect(db.worldSystem.rows.size).toBe(1);
+-    expect(db.systemBody.rows.size).toBe(16);
++    expect(db.systemBody.rows.size).toBe(SHARED_SYSTEM_SEED.bodies.length);
+     const a = db.shipWorldMotion.shipId.find("ship1"),
+       b = db.shipWorldMotion.shipId.find("ship2");
+     expect(a.systemId).toBe(b.systemId);
+@@ -144,7 +144,7 @@ describe("canonical shared-system seed and explicit admission", () => {
+     expect(() => ensureCanonicalSystem(db)).toThrow(/incomplete/);
+     db.worldSystem.id.update({
+       ...db.worldSystem.id.find(SHARED_SYSTEM_SEED.systemId),
+-      seedRevision: 2n,
++      seedRevision: 99n,
+     });
+     expect(() => ensureCanonicalSystem(db)).toThrow(/migration/);
+   });
+diff --git a/packages/world/src/shared-world.ts b/packages/world/src/shared-world.ts
+index c808b962..2554b071 100644
+--- a/packages/world/src/shared-world.ts
++++ b/packages/world/src/shared-world.ts
+@@ -4,6 +4,8 @@ import {
+   SHARED_SYSTEM_SEED,
+   SHARED_SYSTEM_SEED_SHA256,
+   SHARED_SYSTEM_MAX_SHIPS,
++  SOLAR_SYSTEM_BODY_LIMIT,
++  solarBodyForLegacyKey,
+ } from "@sidereal/content/shared-system";
+ import { LAB_HULL } from "@sidereal/content/space";
+ import { constructionHash } from "@sidereal/sim/construction-transactions";
+@@ -198,7 +200,7 @@ export function ensureCanonicalSystem(db: SharedWorldDatabase): SystemRow {
+     id: SHARED_SYSTEM_SEED.systemId,
+     seedRevision: BigInt(SHARED_SYSTEM_SEED.revision),
+     seedSha256: SHARED_SYSTEM_SEED_SHA256,
+-    migrationRevision: 1n,
++    migrationRevision: 2n,
+     lastSimulationTick: 0n,
+   };
+   const existing = db.worldSystem.id.find(expected.id);
+@@ -286,7 +288,7 @@ export function reserveBerth(db: SharedWorldDatabase, systemId: string) {
+     throw new SenderError("Shared contact island is full");
+   const rockMotions = bounded(
+     db.bodyWorldMotion.by_system.filter(systemId),
+-    32,
++    SOLAR_SYSTEM_BODY_LIMIT,
+     "System body",
+   );
+   const radius =
+@@ -378,9 +380,9 @@ export function joinSharedSystem(
+     "Legacy body",
+   );
+   const aliases: LegacyAliasRow[] = legacy.map((body) => {
+-    const canonical = SHARED_SYSTEM_SEED.bodies.find(
+-      (candidate) => candidate.key === body.key,
+-    );
++    const canonical = body.kind === 'asteroid'
++      ? SHARED_SYSTEM_SEED.bodies.find(candidate => candidate.key === body.key)
++      : solarBodyForLegacyKey(body.key);
+     if (!canonical || body.kind !== canonical.kind)
+       throw new SenderError("Legacy body requires explicit canonical mapping");
+     if (ctx.db.legacyBodyAlias.legacyBodyId.find(body.id))
+diff --git a/packages/world/src/solar-system-migration.test.ts b/packages/world/src/solar-system-migration.test.ts
+new file mode 100644
+index 00000000..ca46a439
+--- /dev/null
++++ b/packages/world/src/solar-system-migration.test.ts
+@@ -0,0 +1,42 @@
++import { expect, it, vi } from 'vitest';
++vi.mock('spacetimedb/server',()=>({SenderError:class SenderError extends Error{}}));
++import { LEGACY_SYSTEM_SEED, LEGACY_SYSTEM_SEED_SHA256, SHARED_SYSTEM_SEED, SHARED_SYSTEM_SEED_SHA256 } from '@sidereal/content/shared-system';
++import { spatialCell } from '@sidereal/sim/spatial-cells';
++import { ensureCanonicalSystem } from './shared-world';
++import { fixture } from './shared-world-test-fixture';
++import { migrateSolarSystem, SOLAR_MIGRATION_ID } from './solar-system-migration';
++function legacy(){
++ const f=fixture(),db=f.db;
++ db.worldSystem.insert({id:LEGACY_SYSTEM_SEED.systemId,seedRevision:1n,seedSha256:LEGACY_SYSTEM_SEED_SHA256,migrationRevision:1n,lastSimulationTick:71n});
++ for(const b of LEGACY_SYSTEM_SEED.bodies){const cell=spatialCell(b);
++  db.systemBody.insert({id:b.id,systemId:LEGACY_SYSTEM_SEED.systemId,authoredKey:b.key,kind:b.kind,appearance:b.appearance,seed:b.seed,radius:b.radius,height:b.height,massKg:b.massKg,charted:b.kind!=='asteroid'});
++  db.bodyWorldMotion.insert({bodyId:b.id,systemId:LEGACY_SYSTEM_SEED.systemId,x:b.x,y:b.y,vx:0,vy:0,heading:0,omega:0,serverTick:71n,cellX:BigInt(cell.cellX),cellY:BigInt(cell.cellY)});
++ }
++ return f;
++}
++it('atomically replaces the expected celestial set, preserves other rows and retains recovery evidence',()=>{
++ const {db}=legacy();const preserved=['character','ship','spaceBody','inventoryItem','worldAdmission','legacyBodyAlias'].filter(name=>db[name]?.rows).map(name=>[name,[...db[name].rows.values()]] as const);
++ const rock=LEGACY_SYSTEM_SEED.bodies[0].id,rockBefore=db.bodyWorldMotion.bodyId.find(rock);
++ db.bodyWorldMotion.bodyId.update({...rockBefore,x:18.5,vx:3});const movingRock=db.bodyWorldMotion.bodyId.find(rock);
++ expect(migrateSolarSystem(db,123n)).toBe('applied');expect(db.systemBody.rows.size).toBe(33);
++ for(const old of LEGACY_SYSTEM_SEED.bodies.filter(b=>b.kind!=='asteroid')){expect(db.systemBody.id.find(old.id)).toBeUndefined();expect(db.bodyWorldMotion.bodyId.find(old.id)).toBeUndefined();}
++ expect(db.bodyWorldMotion.bodyId.find(rock)).toBe(movingRock);
++ for(const [name,rows] of preserved)expect([...db[name].rows.values()]).toEqual(rows);
++ expect(ensureCanonicalSystem(db).seedSha256).toBe(SHARED_SYSTEM_SEED_SHA256);
++ const receipt=db.celestialMigrationReceipt.id.find(SOLAR_MIGRATION_ID);expect(JSON.parse(receipt.beforeJson).bodies).toHaveLength(16);
++ const writes=db.systemBody.writes+db.bodyWorldMotion.writes;
++ expect(migrateSolarSystem(db,999n)).toBe('applied');expect(db.systemBody.writes+db.bodyWorldMotion.writes).toBe(writes);
++});
++it('refuses unknown descriptors and identity collisions before any body mutation',()=>{
++ for(const reason of ['changed','collision']){
++  const {db}=legacy();
++  if(reason==='changed'){const b=db.systemBody.id.find(LEGACY_SYSTEM_SEED.bodies[4].id);db.systemBody.id.update({...b,radius:999});}
++  else db.systemBody.insert({...db.systemBody.id.find(LEGACY_SYSTEM_SEED.bodies[4].id),id:SHARED_SYSTEM_SEED.bodies.find(b=>b.kind==='star')!.id,systemId:'other-system'});
++  const bodies=[...db.systemBody.rows.values()],motion=[...db.bodyWorldMotion.rows.values()];
++  expect(migrateSolarSystem(db,123n)).toBe('refused');expect([...db.systemBody.rows.values()]).toEqual(bodies);expect([...db.bodyWorldMotion.rows.values()]).toEqual(motion);
++  expect(db.worldSystem.id.find(LEGACY_SYSTEM_SEED.systemId).seedRevision).toBe(1n);
++ }
++});
++it('fresh systems install r002 without attempting historical migration',()=>{
++ const {db}=fixture();expect(migrateSolarSystem(db,0n)).toBe('not-installed');ensureCanonicalSystem(db);expect(migrateSolarSystem(db,0n)).toBe('current');expect(db.celestialMigrationReceipt.rows.size).toBe(0);
++});
+diff --git a/packages/world/src/solar-system-migration.ts b/packages/world/src/solar-system-migration.ts
+new file mode 100644
+index 00000000..e3de84cf
+--- /dev/null
++++ b/packages/world/src/solar-system-migration.ts
+@@ -0,0 +1,187 @@
++import {
++  SHARED_SYSTEM_SEED,
++  SHARED_SYSTEM_SEED_SHA256,
++  LEGACY_SYSTEM_SEED,
++  LEGACY_SYSTEM_SEED_SHA256,
++  SOLAR_SYSTEM_BODY_LIMIT,
++} from "@sidereal/content/shared-system";
++import { constructionHash } from "@sidereal/sim/construction-transactions";
++import { spatialCell, validateSpacePoint } from "@sidereal/sim/spatial-cells";
++import type {
++  SharedWorldDatabase,
++  SystemBodyRow,
++  BodyMotionRow,
++} from "./shared-world";
++export const SOLAR_MIGRATION_ID = "solar-system-r002-20260915";
++export interface SolarMigrationReceipt {
++  id: string;
++  status: string;
++  reason: string;
++  beforeJson: string;
++  afterSha256: string;
++  createdMicros: bigint;
++}
++export type SolarMigrationDatabase = SharedWorldDatabase & {
++  systemBody: { id: { delete(id: string): unknown } };
++  bodyWorldMotion: { bodyId: { delete(id: string): unknown } };
++  celestialMigrationReceipt: {
++    id: { find(id: string): SolarMigrationReceipt | null | undefined };
++    insert(row: SolarMigrationReceipt): unknown;
++  };
++};
++const snapshot = (value: unknown) =>
++  JSON.stringify(value, (_key, value) =>
++    typeof value === "bigint" ? value.toString() : value,
++  );
++/** Called only from the authenticated database schedule, after deliberate module
++ * publication. No client parameters, login trigger, player rows or reset paths.
++ * All validation precedes writes; the reducer transaction commits all or none. */
++export function migrateSolarSystem(
++  db: SolarMigrationDatabase,
++  now: bigint,
++): string {
++  const receipt = db.celestialMigrationReceipt.id.find(SOLAR_MIGRATION_ID);
++  if (receipt) return receipt.status;
++  const system = db.worldSystem.id.find(SHARED_SYSTEM_SEED.systemId);
++  if (!system) return "not-installed";
++  if (
++    system.seedRevision === 2n &&
++    system.seedSha256 === SHARED_SYSTEM_SEED_SHA256
++  )
++    return "current";
++  const before: {
++    body: SystemBodyRow;
++    motion: BodyMotionRow | null | undefined;
++  }[] = [];
++  const refuse = (reason: string) => {
++    db.celestialMigrationReceipt.insert({
++      id: SOLAR_MIGRATION_ID,
++      status: "refused",
++      reason,
++      beforeJson: snapshot({ system, bodies: before }),
++      afterSha256: SHARED_SYSTEM_SEED_SHA256,
++      createdMicros: now,
++    });
++    return "refused";
++  };
++  if (
++    system.seedRevision !== 1n ||
++    system.seedSha256 !== LEGACY_SYSTEM_SEED_SHA256 ||
++    system.migrationRevision !== 1n
++  )
++    return refuse("Expected pinned r001 system");
++  if (
++    constructionHash(JSON.stringify(SHARED_SYSTEM_SEED)) !==
++    SHARED_SYSTEM_SEED_SHA256
++  )
++    return refuse("Replacement seed hash mismatch");
++  for (const body of db.systemBody.by_system.filter(system.id)) {
++    if (before.length >= SOLAR_SYSTEM_BODY_LIMIT)
++      return refuse("Body budget exceeded");
++    before.push({ body, motion: db.bodyWorldMotion.bodyId.find(body.id) });
++  }
++  if (before.length !== LEGACY_SYSTEM_SEED.bodies.length)
++    return refuse("Unexpected existing body set");
++  for (const old of LEGACY_SYSTEM_SEED.bodies) {
++    const row = before.find((value) => value.body.id === old.id);
++    if (!row?.motion || row.motion.systemId !== system.id)
++      return refuse("Missing or cross-system body motion");
++    const body = row.body;
++    if (
++      body.authoredKey !== old.key ||
++      body.kind !== old.kind ||
++      body.appearance !== old.appearance ||
++      body.seed !== old.seed ||
++      body.radius !== old.radius ||
++      body.height !== old.height ||
++      body.massKg !== old.massKg ||
++      body.charted !== (old.kind !== "asteroid")
++    )
++      return refuse("Existing body descriptor changed");
++    try {
++      validateSpacePoint(row.motion);
++    } catch {
++      return refuse("Invalid existing body position");
++    }
++  }
++  const replacements = SHARED_SYSTEM_SEED.bodies.filter(
++    (body) => body.kind !== "asteroid",
++  );
++  if (
++    replacements.length +
++      before.filter((row) => row.body.kind === "asteroid").length >
++    SOLAR_SYSTEM_BODY_LIMIT
++  )
++    return refuse("Replacement body budget exceeded");
++  const ids = new Set<string>();
++  for (const body of replacements) {
++    if (
++      ids.has(body.id) ||
++      db.systemBody.id.find(body.id) ||
++      db.bodyWorldMotion.bodyId.find(body.id)
++    )
++      return refuse("Replacement identity collision");
++    ids.add(body.id);
++    try {
++      validateSpacePoint(body);
++    } catch {
++      return refuse("Replacement coordinate outside world bounds");
++    }
++    if (
++      !Number.isFinite(body.radius) ||
++      body.radius <= 0 ||
++      body.height + body.radius * 1.3 >= -20
++    )
++      return refuse("Replacement body intersects playable plane");
++  }
++  // Mutation begins only after the complete plan has passed preflight.
++  for (const old of before)
++    if (old.body.kind !== "asteroid") {
++      db.bodyWorldMotion.bodyId.delete(old.body.id);
++      db.systemBody.id.delete(old.body.id);
++    }
++  for (const body of replacements) {
++    const cell = spatialCell(body);
++    db.systemBody.insert({
++      id: body.id,
++      systemId: system.id,
++      authoredKey: body.key,
++      kind: body.kind,
++      appearance: body.appearance,
++      seed: body.seed,
++      radius: body.radius,
++      height: body.height,
++      massKg: body.massKg,
++      charted: true,
++    });
++    db.bodyWorldMotion.insert({
++      bodyId: body.id,
++      systemId: system.id,
++      x: body.x,
++      y: body.y,
++      vx: 0,
++      vy: 0,
++      heading: 0,
++      omega: 0,
++      serverTick: system.lastSimulationTick,
++      cellX: BigInt(cell.cellX),
++      cellY: BigInt(cell.cellY),
++    });
++  }
++  db.worldSystem.id.update({
++    ...system,
++    seedRevision: 2n,
++    seedSha256: SHARED_SYSTEM_SEED_SHA256,
++    migrationRevision: 2n,
++  });
++  db.celestialMigrationReceipt.insert({
++    id: SOLAR_MIGRATION_ID,
++    status: "applied",
++    reason:
++      "Owner-directed celestial replacement; ships, players, asteroids and historical aliases untouched",
++    beforeJson: snapshot({ system, bodies: before }),
++    afterSha256: SHARED_SYSTEM_SEED_SHA256,
++    createdMicros: now,
++  });
++  return "applied";
++}
+diff --git a/scripts/smoke.ts b/scripts/smoke.ts
+index 6b6358f4..11ecfdec 100644
+--- a/scripts/smoke.ts
++++ b/scripts/smoke.ts
+@@ -1,3 +1,7 @@
++import {
++  LEGACY_SYSTEM_SEED,
++  solarBodyForLegacyKey,
++} from "@sidereal/content/shared-system";
+ import { toCenterOfMassMotion } from "../packages/sim/src/flight-frame";
+ import { WAYFARER_FLIGHT_SPEED } from "../packages/content/src/physical-definitions";
+ import { CURRENT_WAYFARER_STARTER } from "../packages/content/src/wayfarer-current-starter";
+@@ -130,7 +134,20 @@ if (restore) {
+     );
+     assert.equal([...a.db.ownEditReceipts.iter()].length, 1);
+     await a.reducers.enterLab({ name: "Smoke Alpha" });
+-    const rock = sharedBodies(a).find((b) => b.id === evidence.bodyId);
++    const previousBody = LEGACY_SYSTEM_SEED.bodies.find(
++      (body) => body.id === evidence.bodyId,
++    );
++    const expectedBodyId =
++      process.env.SIDEREAL_SMOKE_SOLAR_MIGRATION === "1" &&
++      previousBody?.kind !== "asteroid"
++        ? (solarBodyForLegacyKey(previousBody?.key ?? "")?.id ??
++          evidence.bodyId)
++        : evidence.bodyId;
++    await wait(
++      () => sharedBodies(a).some((body) => body.id === expectedBodyId),
++      "expected body after module update",
++    );
++    const rock = sharedBodies(a).find((b) => b.id === expectedBodyId);
+     assert(rock, "authored body identity survived restart");
+     if (process.env.SIDEREAL_SMOKE_PERSISTENT_ROWS_ONLY !== "1") {
+       const { connection: b } = await client(evidence.collisionToken);
+@@ -376,12 +393,21 @@ if (restore) {
+       };
+       for (let i = 0; i < 6; i++) await commandFlight(1, 1);
+       const moving = [...flight.db.ownShips.iter()][0];
+-      const physics = [...flight.db.ownAuthoredFlightPhysics.iter()].find(p=>p.shipId===moving.id)!;
+-      assert.equal(physics.status,"ready","live physical compilation is ready");
++      const physics = [...flight.db.ownAuthoredFlightPhysics.iter()].find(
++        (p) => p.shipId === moving.id,
++      )!;
++      assert.equal(
++        physics.status,
++        "ready",
++        "live physical compilation is ready",
++      );
+       const envelope = JSON.parse(physics.envelopeJson);
+-      const turnLimit = Math.min(envelope.left,envelope.right) / WAYFARER_FLIGHT_SPEED.forward;
++      const turnLimit =
++        Math.min(envelope.left, envelope.right) / WAYFARER_FLIGHT_SPEED.forward;
+       assert(
+-        Math.hypot(moving.vx, moving.vy) > 0.5 && moving.omega > turnLimit * 0.5 && moving.omega <= turnLimit + 1e-6,
++        Math.hypot(moving.vx, moving.vy) > 0.5 &&
++          moving.omega > turnLimit * 0.5 &&
++          moving.omega <= turnLimit + 1e-6,
+         "available engines accelerate and turn within the derived envelope",
+       );
+       for (let i = 0; i < 45; i++) await commandFlight(0, 0);
+@@ -416,8 +442,14 @@ if (restore) {
+       const coast = [...flight.db.ownShips.iter()][0];
+       const expiredCOM = toCenterOfMassMotion(expired, physics);
+       const coastCOM = toCenterOfMassMotion(coast, physics);
+-      assert(Math.abs(coastCOM.vx-expiredCOM.vx)<1e-10, "expired control preserves COM velocity X");
+-      assert(Math.abs(coastCOM.vy-expiredCOM.vy)<1e-10, "expired control preserves COM velocity Y");
++      assert(
++        Math.abs(coastCOM.vx - expiredCOM.vx) < 1e-10,
++        "expired control preserves COM velocity X",
++      );
++      assert(
++        Math.abs(coastCOM.vy - expiredCOM.vy) < 1e-10,
++        "expired control preserves COM velocity Y",
++      );
+       assert.equal(
+         coast.omega,
+         expired.omega,

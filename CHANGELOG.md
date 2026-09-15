@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-09-15 — Stellar Observe framing (render 0.5.1)
+
+Observe fits the enlarged stellar corona, including portrait viewports, while retaining authored physical radii and existing planet framing. Added two NullEngine projection tests. Final r013 solar migration passes isolated baseline/update/persistent-state verification and is now live with the compatible client. All live ship, character and inventory-item rows remain unchanged. Hardware performance acceptance remains unmeasured.
+
 ## 2026-09-15 — Genesis reviewed native planets (dashboard/render 0.2.1)
 
 Genesis now defaults to all 28 reviewed Blender planet and moon variants, including selective transparent ice shards. Selection and seeded composition use validated worker-owned assets, shared PBR materials, precompiled retained LODs and ready-only replacement. Preserved the procedural editor as a separate mode. Added exact catalog/provenance, lossless bounded payload packaging and worker/NullEngine lifecycle tests.
