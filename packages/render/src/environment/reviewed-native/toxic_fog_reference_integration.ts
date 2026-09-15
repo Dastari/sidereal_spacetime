@@ -1,4 +1,4 @@
-import type {NativePlanetKit} from '../native-planet-composition';
+import type {ReviewedComposerInput as NativePlanetKit} from './reviewed-composer-input';
 import {composeToxicFog,TOXIC_FOG_BANK_LIMIT,type ToxicFogAnchor} from './toxic_fog_composition_r005';
 type Vec=[number,number,number];
 export type ToxicBodyBatch={positions:ArrayLike<number>;indices:ArrayLike<number>;ranges:readonly{firstTriangle:number;triangleCount:number;partId:string}[]};

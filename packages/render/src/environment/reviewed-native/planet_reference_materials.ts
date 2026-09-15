@@ -4,11 +4,11 @@ import { Color3 } from '@babylonjs/core/Maths/math.color';
 import {applyReferenceTransmission,type ReferenceTransmissionRole} from './planet_reference_transmission';
 /** Authoring export values remain linear, matching the native GLB material. */
 export type ReferenceMaterialRole = ReferenceTransmissionRole & {
- name:string; linearColor:number[]; roughness:number; metallic?:number;
+ name:string; linearColor:readonly number[]; roughness:number; metallic?:number;
  clearcoatFactor?:number;clearcoatRoughnessFactor?:number;clearCoat?:{intensity:number;roughness:number};
  alpha?:number;alphaMode?:'OPAQUE'|'MASK'|'BLEND';doubleSided?:boolean;useTextureAlpha?:boolean;alphaCutoff?:number;baseColorTexture?:string;invertY?:boolean;textureColorSpace?:'sRGB'|'linear';
  emissiveTexture?:string;clearcoatNormalTexture?:string;normalTexture?:string;normalScale?:number;metallicRoughnessTexture?:string;
- emissiveColor?:number[]; emissiveStrength?:number; ior?:number;
+ emissiveColor?:readonly number[]; emissiveStrength?:number; ior?:number;
 };
 export function referenceMaterial(scene:Scene,role:ReferenceMaterialRole){
  const material=new PBRMaterial(role.name,scene);material.enableSpecularAntiAliasing=true;material.clearCoat.remapF0OnInterfaceChange=false;material.clearCoat.useRoughnessFromMainTexture=false;

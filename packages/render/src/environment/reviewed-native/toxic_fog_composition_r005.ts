@@ -1,4 +1,4 @@
-import type {NativePlanetKit}from'../native-planet-composition';
+import type {ReviewedComposerInput as NativePlanetKit} from './reviewed-composer-input';
 import {unit,cross,seeded,globeAnchor,tangent,type Vec}from'./native_reference_assembly';
 import {deformedNormalAt}from'./native_deformation_normals';
 export const TOXIC_FOG_BANK_LIMIT=12;

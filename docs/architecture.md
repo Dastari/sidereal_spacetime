@@ -64,3 +64,10 @@ Provisional goals: 50 concurrent players, 100 stress clients; compare dispersed 
 Use the existing Keycloak provider as specified in [authentication](authentication.md). Adopt the event/binding/state/capability model in [scripting lifecycle](scripting_lifecycle.md); full compiled TypeScript and live bounded behavior programs have different trust/deployment properties. Core authority and data privacy remain enforced for both.
 
 Planet reference tooling computes tight shadow envelopes in its body worker and qualifies fixed-detail caching against complete worker output, including weather. The shared planet shadow manager selects active semantic planet meshes and restores prior light/receiver state when changing bodies. See docs/planet_lod_authoring.md for authoring and acceptance constraints.
+
+
+## Reviewed native planets in Genesis (2026-09-15)
+
+Genesis defaults to the renderer-owned reviewed catalog: nine main planets and nineteen explicit moon variants. The dashboard supplies only catalog ID and local seed. One planet worker registers, hashes, validates and caches immutable payloads, then builds compact geometry buffers; one shared upload scheduler prepares retained levels. Materials, authored textures and refraction leases remain shared across a body’s LODs. The current planet remains visible until its replacement is prepared and committed in a render frame. Asset and placement identities remain distinct; triangle placement ranges carry body IDs.
+
+Reviewed payloads live in the dashboard’s versioned `public/reviewed-planets` directory, separate from the generated runtime asset tree. Source and runtime hashes plus lossless transport provenance accompany each revision. Procedural authoring remains an explicit separate mode. No world, simulation or generic-moon authority mapping changes. See [integration specification](genesis_native_planets_spec.md) and [decision](adr/ADR-genesis-reviewed-native.md).
