@@ -41,3 +41,9 @@ port = 3190
 
 [star_review]
 port = 5190
+
+[agent_mail]
+version = "v0.3.35"
+port = 8765
+state_dir = "~/.local/share/sidereal-agent-mail"
+project_key = "/root/sidereal_spacetime"

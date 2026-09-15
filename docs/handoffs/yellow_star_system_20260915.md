@@ -59,3 +59,10 @@ Canonical5173 preview received14 hash-guarded solar presentation/source changes,
 Feature render0.5.1:287suites,1440tests pass,2skip; `npm run build` passes. `npm run check` still ends on inherited missing documentation links after TypeScript/tests pass. Compatible public-client typecheck,26focused tests and independent client build pass. Source conservation audit found5550unchanged existing files and no unexpected changes outside the solar scope.
 
 Shared preview now reports visible and Genesis star reaches ready with advancing frame counters and no pending builds on NVIDIA GT730; exact r013 hash verified. Two Genesis snapshots failed. Public game reached authenticated vessel/connection-ready Deck with occupied control seat; saved actual screenshot `public-hardware-deck.png`. F3/resize automation is unreliable, and snapshot dimensions differ from the requested baseline; no hardware timing or full baseline performance acceptance is claimed. The old public release remains available as managed history, but reverting the client would not undo the intentional celestial migration.
+
+
+### 2026-09-15 — Owner approval and PR merge preparation
+
+Owner explicitly approved the delivered work and requested merge, commit and push. Agent Mail identity SageCanyon reserved the four closeout files without conflicts; startup inbox was empty. Upstream Agent Mail changes are preserved alongside stellar review configuration/scripts and both changelog entries. No game/runtime code changed during conflict resolution. GitHub source CI currently stops before tests because scripts/art_library/requirements.txt is absent in both this branch and upstream main; this inherited setup failure is not a passing CI result. Existing local test/build results and hardware limitations remain as recorded above.
+
+Post-resolution validation: TypeScript and all287suites/1440tests pass (2skipped); full build passes. The check command still fails only at its inherited missing-document links. Both star-review and Agent Mail scripts/configurations are retained.
