@@ -88,3 +88,8 @@ completes world/client work but the dashboard build fails on the latter import.
 Both files are absent from origin/main. The standalone documentation checker also
 reports pre-existing missing linked documents/art ledgers. These integration
 changes do not repair or claim to pass those unrelated baseline failures.
+
+Delivery: [PR #10](https://github.com/Dastari/sidereal_spacetime/pull/10), open
+and not merged. This setup's files/fields were also applied selectively to the
+active checkout without committing its unrelated edits. Agent Mail is running;
+restart agent clients to load it. Any later session can continue from this runbook.
