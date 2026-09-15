@@ -48,4 +48,4 @@ async (page) => {
         .length,
     };
   });
-}
+};

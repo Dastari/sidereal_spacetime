@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/render",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -11,6 +11,7 @@
     "./crew/appearance": "./src/crew/appearance.ts",
     "./native-stair-scene": "./src/native-stair-scene.ts",
     "./layout-native-floors": "./src/layout-native-floors.ts",
+    "./layout-inset-visual-plan": "./src/layout-inset-visual-plan.ts",
     "./construction-refit-attachments": "./src/construction-refit-attachments.ts",
     "./layout-hull": "./src/layout-hull.ts",
     "./layout-measurement": "./src/layout-measurement.ts",
@@ -22,7 +23,8 @@
     "./diagnostics": "./src/diagnostics.ts",
     "./mesh-roles": "./src/mesh-roles.ts",
     "./ground-items": "./src/ground-items.ts",
-    "./render-backend": "./src/render-backend.ts"
+    "./render-backend": "./src/render-backend.ts",
+    "./debug-features": "./src/debug-features.ts"
   },
   "dependencies": {
     "@babylonjs/core": "9.25.0",

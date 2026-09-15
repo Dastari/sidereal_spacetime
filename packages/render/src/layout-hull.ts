@@ -1,5 +1,6 @@
 import { isExteriorAsset } from "@sidereal/content/layout-asset-scope";
 import { framedWayfarerVisual } from "./framed-wayfarer-visuals";
+import { batchStaticMaterials } from "./static-material-batches";
 import { createVertexMeasurement } from "./layout-vertex-measurement";
 import type { MeasurementPoint } from "./layout-measurement";
 import { createLayoutDoorwayPreview } from "./layout-doorway-preview";
@@ -426,7 +427,18 @@ export function createHullViewport(
       const work = loadEquipmentPrototypes(scene, assets)
         .then((found) => {
           if (disposed) return;
-          for (const [id, meshes] of found) prototypes.set(id, meshes);
+          for (const [id, meshes] of found) {
+            const asset = assets.find((a) => a.id === id);
+            // Native armor has many editable Blender objects per block. Batch
+            // its immutable prototypes by material before creating instances;
+            // each placed block keeps its own transform, picking ID and undo.
+            prototypes.set(
+              id,
+              asset?.visual?.designId === "shipyard.hull.armor-block-review"
+                ? batchStaticMaterials(meshes, "hull")
+                : meshes,
+            );
+          }
           if (state) update(state);
         })
         .catch((e) => {

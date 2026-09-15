@@ -1,4 +1,4 @@
-import json,tempfile,unittest
+import ast,json,re,tempfile,unittest
 from pathlib import Path
 from stage_planet_reference import stage_revision, REVISION
 class StagingTests(unittest.TestCase):
@@ -21,7 +21,9 @@ class StagingTests(unittest.TestCase):
   for invalid in ['ice-moon-r002','ice-moon-3-r002','gas-moon-1-r002','gas-giant-moon-4-r002','cloud-moon-1-r002','rocky-moon-0-r002']:
    with self.subTest(invalid=invalid):self.assertIsNone(REVISION.fullmatch(invalid))
   ts=(Path(__file__).parent/'planet_reference_direct_paths.ts').read_text()
-  family_expression=ts.split("const FAMILY='")[1].split("';")[0]
+  declaration=re.search(r'\bconst\s+FAMILY\s*=\s*("(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\')\s*;',ts)
+  self.assertIsNotNone(declaration,'TypeScript FAMILY must remain a quoted string constant')
+  family_expression=ast.literal_eval(declaration.group(1))
   self.assertEqual(REVISION.pattern,family_expression+r'-r[0-9]{3}\Z')
  def test_rejects_paths_schemes_and_encoded_traversal(self):
   for bad in ['../ice-r025','ice-r025/../gas-r005','/etc/passwd','https://a','ice-r025%2f..','ice-r025\\..','ice-r025\0','other-r025']:

@@ -1,1 +1,9 @@
-{"extends":"../../tsconfig.json","compilerOptions":{"noEmit":true},"include":["rocky_moon_reference_composition_r001.ts","rocky_moon_reference_composition_r001.test.ts","rocky_moon_reference_r001.vitest.config.ts"]}
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": { "noEmit": true },
+  "include": [
+    "rocky_moon_reference_composition_r001.ts",
+    "rocky_moon_reference_composition_r001.test.ts",
+    "rocky_moon_reference_r001.vitest.config.ts"
+  ]
+}

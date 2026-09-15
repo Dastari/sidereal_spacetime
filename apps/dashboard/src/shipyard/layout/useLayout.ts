@@ -8,6 +8,7 @@ import {
 } from "./redesign-document";
 import type { HullEnvelope } from "@sidereal/content/layout-structure";
 import rebuiltWayfarer from "@sidereal/content/wayfarer-exterior-r005.json";
+import { createArmorReviewDraft } from "./armor-review";
 import { resetLegacyLocalDrafts } from "./reset-local-drafts";
 import type { PartCatalog } from "@sidereal/content/assembly";
 import {
@@ -32,9 +33,9 @@ import {
   layoutFixture,
   migrateAssembly,
   type LayoutDocument,
-} from "../../../../../packages/content/src/ship-layout";
-import { readLayout } from "../../../../../packages/sim/src/layout-validation";
-import type { CompiledLayout } from "../../../../../packages/sim/src/layout-compiler";
+} from "@sidereal/content/ship-layout";
+import { readLayout } from "@sidereal/sim/layout-validation";
+import type { CompiledLayout } from "@sidereal/sim/layout-compiler";
 import {
   DEFAULT_VIEW,
   push,
@@ -362,6 +363,14 @@ export function useLayout() {
   }
   return {
     adopt,
+    createArmorReview: () => {
+      try {
+        return adoptPreservingCurrent(createArmorReviewDraft(uuid()));
+      } catch (e) {
+        setError(String(e));
+        return false;
+      }
+    },
     adoptServer: (d: LayoutDocument) => adopt(d, false, false, true),
     doc,
     history,

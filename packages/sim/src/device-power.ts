@@ -1,5 +1,5 @@
-import type { PlacedDeviceServices } from "../../content/src/device-services";
-import { deviceServicePortId } from "../../content/src/device-services";
+import type { PlacedDeviceServices } from "@sidereal/content/device-services";
+import { deviceServicePortId } from "@sidereal/content/device-services";
 export interface DevicePowerConnection {
   fromPortId: string;
   toPortId: string;

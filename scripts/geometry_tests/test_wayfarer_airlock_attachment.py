@@ -2,6 +2,7 @@ from pathlib import Path
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import unittest
+import checkout_guard  # Reject hidden reads from the author checkout.
 import numpy as np
 import qualify_wayfarer_airlock_attachment as candidate
 class AttachmentTest(unittest.TestCase):

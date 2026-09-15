@@ -1,0 +1,1087 @@
+
+> sidereal-spacetime@0.1.0 check
+> npm run typecheck && npm test && python3 scripts/check_docs.py
+
+
+> sidereal-spacetime@0.1.0 typecheck
+> tsc --noEmit
+
+
+> sidereal-spacetime@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.11 /root/shipyard-armor-editor-pr
+
+ ❯ packages/sim/src/construction-stairs.test.ts (13 tests | 1 failed) 41ms
+   × actual native a003 dogleg traverses all17 risers, both flights and lateral intermediate landing 13ms
+ ❯ packages/sim/src/construction-traversal.test.ts (12 tests | 1 failed) 49ms
+   × actual delivered a003 ladder and existing slab sources qualify the exact 28-part fixture, without publishing it 5ms
+ ❯ packages/world/src/construction-traversal.test.ts (0 test)
+ ❯ packages/world/src/construction-native-pressure.test.ts (0 test)
+stdout | packages/render/src/crew/crew.test.ts > original crew skeletal visual > places the imported carbine support grip inside the left palm
+BJS - [08:00:01]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/crew/crew.test.ts > original crew skeletal visual > loads weighted geometry and clips, animates limbs without moving gameplay placement, and disposes owned resources
+BJS - [08:00:01]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/crew/crew.test.ts > original crew skeletal visual > supports open/closed helmet, hair, backpack and per-instance material colors
+BJS - [08:00:01]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/crew/crew.test.ts > original crew skeletal visual > selects exclusive modular geometry and preserves a posed hand socket for an external prop
+BJS - [08:00:01]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/crew/crew.test.ts > original crew skeletal visual > exports a distinct sprint gait and two-handed rifle pose without changing placement
+BJS - [08:00:01]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/crew/crew.test.ts > knees flex forward with stable supporting ankles in the exported walk clip
+BJS - [08:00:01]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/crew/crew.test.ts > weapon changes preserve stride phase and interrupted pose fades stay normalized
+BJS - [08:00:01]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/crew/crew.test.ts > preserves ten distinct looks, optical visor material and selective emission
+BJS - [08:00:01]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/crew/crew.test.ts > combat aligns actual muzzle and preserves stance (right handed=false)
+BJS - [08:00:01]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/crew/crew.test.ts > combat aligns actual muzzle and preserves stance (right handed=true)
+BJS - [08:00:01]: Babylon.js v9.25.0 - Null engine
+
+ ❯ packages/render/src/crew/crew.test.ts (10 tests | 10 failed) 26ms
+     × places the imported carbine support grip inside the left palm 10ms
+     × loads weighted geometry and clips, animates limbs without moving gameplay placement, and disposes owned resources 1ms
+     × supports open/closed helmet, hair, backpack and per-instance material colors 1ms
+     × selects exclusive modular geometry and preserves a posed hand socket for an external prop 1ms
+     × exports a distinct sprint gait and two-handed rifle pose without changing placement 1ms
+   × knees flex forward with stable supporting ankles in the exported walk clip 1ms
+   × weapon changes preserve stride phase and interrupted pose fades stay normalized 1ms
+   × preserves ten distinct looks, optical visor material and selective emission 1ms
+   × combat aligns actual muzzle and preserves stance (right handed=false) 7ms
+   × combat aligns actual muzzle and preserves stance (right handed=true) 1ms
+ ❯ packages/render/src/crew/modular-equipment-pose.test.ts (0 test)
+stdout | packages/render/src/remote-ships.test.ts > remote ship lifecycle > loads each pinned source once and shares material/geometry without remote lights or crew
+BJS - [08:00:05]: Babylon.js v9.25.0 - Null engine
+
+ ❯ packages/render/src/remote-ships.test.ts (8 tests | 2 failed) 343ms
+     × verifies every actual GLB hash and existing native selector without substituting geometry 83ms
+     × loads each pinned source once and shares material/geometry without remote lights or crew 68ms
+stdout | packages/render/src/debug-features.test.ts > local rendering feature overrides > invalidates actual container-cloned native wall shader defines when lighting or shadows change
+BJS - [08:00:06]: Babylon.js v9.25.0 - Null engine
+
+ ❯ packages/render/src/debug-features.test.ts (10 tests | 1 failed) 27ms
+     × invalidates actual container-cloned native wall shader defines when lighting or shadows change 8ms
+stdout | packages/render/src/native-stair-scene.test.ts > loads exact60 authored placements from3 source GLBs and preserves native materials/shared geometry/world transforms
+BJS - [08:00:06]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/native-stair-scene.test.ts > cutaway keeps both flights/guards and actual upper landing visible through accepted stair motion
+BJS - [08:00:06]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/native-stair-scene.test.ts > construction loader uses installed runtime bytes through validated stair dispatch
+BJS - [08:00:06]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/native-stair-scene.test.ts > minimum egress pin loads only stair kit and two landings without an instance document
+BJS - [08:00:06]: Babylon.js v9.25.0 - Null engine
+
+ ❯ packages/render/src/native-stair-scene.test.ts (16 tests | 4 failed) 52ms
+   × loads exact60 authored placements from3 source GLBs and preserves native materials/shared geometry/world transforms 12ms
+   × cutaway keeps both flights/guards and actual upper landing visible through accepted stair motion 2ms
+   × construction loader uses installed runtime bytes through validated stair dispatch 15ms
+   × minimum egress pin loads only stair kit and two landings without an instance document 1ms
+stdout | packages/render/src/layout-doorway-preview.test.ts > loads exact authored parts once, preserves hinge bind and uses independent seals for accepted poses
+BJS - [08:00:06]: Babylon.js v9.25.0 - Null engine
+
+ ❯ packages/render/src/layout-doorway-preview.test.ts (6 tests | 2 failed) 51ms
+   × loads exact authored parts once, preserves hinge bind and uses independent seals for accepted poses 8ms
+   × checks source pins and refuses duplicate or invalid placements before loading 3ms
+stdout | packages/render/src/construction-traversal.test.ts > all 28 exact native placements load from three checked GLBs with shared geometry and unchanged material/transform binds
+BJS - [08:00:06]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/construction-traversal.test.ts > selected-deck and transit cutaway expose the accepted path without changing any placed transforms
+BJS - [08:00:06]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/construction-traversal.test.ts > changed source bytes, incomplete installs and missing selectors fail and clean imported resources
+BJS - [08:00:06]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/construction-traversal.test.ts > accepted own traversal coordinates and occupied deck update one loaded fixture; absent or foreign state clears the override
+BJS - [08:00:06]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/construction-traversal.test.ts > normal construction loader delegates the native two-deck fixture and keeps it loaded across occupied-deck updates
+BJS - [08:00:07]: Babylon.js v9.25.0 - Null engine
+
+ ❯ packages/render/src/construction-traversal.test.ts (5 tests | 5 failed) 376ms
+   × all 28 exact native placements load from three checked GLBs with shared geometry and unchanged material/transform binds 10ms
+   × selected-deck and transit cutaway expose the accepted path without changing any placed transforms 4ms
+   × changed source bytes, incomplete installs and missing selectors fail and clean imported resources 6ms
+   × accepted own traversal coordinates and occupied deck update one loaded fixture; absent or foreign state clears the override 1ms
+   × normal construction loader delegates the native two-deck fixture and keeps it loaded across occupied-deck updates 355ms
+ ❯ packages/render/src/crew/combat-r003.test.ts (0 test)
+ ❯ packages/render/src/layout-native-walls.test.ts (11 tests | 1 failed) 78ms
+     × uses the exact installed native GLB and selectors for the pinned profile family 5ms
+stdout | packages/render/src/construction-pressure-room.test.ts > exact native room loads one GLB per source, preserves primitive geometry/materials and installs every unique placement
+BJS - [08:00:08]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/construction-pressure-room.test.ts > accepted hinge and seal states share the native bind and unknown state cannot display a deployed gasket
+BJS - [08:00:08]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/construction-pressure-room.test.ts > changed source bytes, malformed door frame and missing exact native selector fail closed
+BJS - [08:00:08]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/construction-pressure-room.test.ts > published construction instance delegates the complete room without legacy catalogs or duplicate structure
+BJS - [08:00:08]: Babylon.js v9.25.0 - Null engine
+
+ ❯ packages/render/src/construction-pressure-room.test.ts (4 tests | 4 failed) 122ms
+   × exact native room loads one GLB per source, preserves primitive geometry/materials and installs every unique placement 9ms
+   × accepted hinge and seal states share the native bind and unknown state cannot display a deployed gasket 4ms
+   × changed source bytes, malformed door frame and missing exact native selector fail closed 4ms
+   × published construction instance delegates the complete room without legacy catalogs or duplicate structure 105ms
+ ❯ packages/sim/src/construction-stairs-document.test.ts (20 tests | 1 failed) 81ms
+   × native source bytes and compact registry compile the identical immutable source installation 13ms
+stdout | packages/render/src/native-airlock-scene.test.ts > exact native room loads one GLB per source, preserves primitive geometry/materials and installs every unique placement
+BJS - [08:00:08]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/native-airlock-scene.test.ts > accepted hinge and seal states share the native bind and unknown state cannot display a deployed gasket
+BJS - [08:00:08]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/native-airlock-scene.test.ts > changed source bytes, malformed door frame and missing exact native selector fail closed
+BJS - [08:00:08]: Babylon.js v9.25.0 - Null engine
+
+ ❯ packages/render/src/native-airlock-scene.test.ts (3 tests | 3 failed) 14ms
+   × exact native room loads one GLB per source, preserves primitive geometry/materials and installs every unique placement 8ms
+   × accepted hinge and seal states share the native bind and unknown state cannot display a deployed gasket 1ms
+   × changed source bytes, malformed door frame and missing exact native selector fail closed 4ms
+stdout | packages/render/src/render-budget.test.ts > installed ship loader resource budget
+BJS - [08:00:08]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/render-budget.test.ts > current semantic Wayfarer loader resource budget and complete role attribution
+BJS - [08:00:08]: Babylon.js v9.25.0 - Null engine
+
+ ❯ packages/render/src/render-budget.test.ts (2 tests | 2 failed) 177ms
+   × installed ship loader resource budget 9ms
+   × current semantic Wayfarer loader resource budget and complete role attribution 167ms
+stdout | packages/render/src/inset-native-batches.test.ts > merges different native profile geometry only when real GLB material signatures and runtime policy agree
+BJS - [08:00:09]: Babylon.js v9.25.0 - Null engine
+
+ ❯ packages/render/src/inset-native-batches.test.ts (6 tests | 1 failed) 49ms
+   × merges different native profile geometry only when real GLB material signatures and runtime policy agree 6ms
+ ❯ packages/sim/src/construction-native-room.test.ts (0 test)
+ ❯ packages/sim/src/cargo-carrier-assembly.test.ts (5 tests | 1 failed) 11ms
+   × runtime pins match exact native exports and retained original payloads 5ms
+ ❯ packages/render/src/framed-wayfarer-stock.test.ts (5 tests | 2 failed) 413ms
+   × cosmetic stock plan records exact public sources and only known exterior asset contracts 98ms
+   × all replacements resolve to two shared exact native libraries with preserved physical bounds 67ms
+stdout | packages/render/src/crew/equipment-pose.test.ts > actual staged rig preserves looks, physical grips, pause, hidden and disposal (false)
+BJS - [08:00:11]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/crew/equipment-pose.test.ts > actual staged rig preserves looks, physical grips, pause, hidden and disposal (true)
+BJS - [08:00:11]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/crew/equipment-pose.test.ts > all staged profiles have feasible heavy-armor neutral grips and clearance
+BJS - [08:00:11]: Babylon.js v9.25.0 - Null engine
+
+ ❯ packages/render/src/crew/equipment-pose.test.ts (3 tests | 3 failed) 15ms
+   × actual staged rig preserves looks, physical grips, pause, hidden and disposal (false) 13ms
+   × actual staged rig preserves looks, physical grips, pause, hidden and disposal (true) 1ms
+   × all staged profiles have feasible heavy-armor neutral grips and clearance 1ms
+stdout | packages/render/src/construction-authored-assembly.test.ts > all 211 authored objects load from 24 verified libraries with independent IDs, retained materials, roof cutaway and safe disposal
+BJS - [08:00:11]: Babylon.js v9.25.0 - Null engine
+
+ ❯ packages/render/src/construction-authored-assembly.test.ts (2 tests | 1 failed) 206ms
+   × all 211 authored objects load from 24 verified libraries with independent IDs, retained materials, roof cutaway and safe disposal 126ms
+stdout | packages/render/src/inset-native-visuals.test.ts > loads a shared source once and preserves bind transforms, material and independent roots
+BJS - [08:00:12]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/inset-native-visuals.test.ts > cleans a prior import if a later load fails, exposing no partial placements
+BJS - [08:00:12]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/inset-native-visuals.test.ts > awaits in-flight import then disposes it when cancelled
+BJS - [08:00:12]: Babylon.js v9.25.0 - Null engine
+
+ ❯ packages/render/src/inset-native-visuals.test.ts (5 tests | 3 failed) 30ms
+   × loads a shared source once and preserves bind transforms, material and independent roots 15ms
+   × cleans a prior import if a later load fails, exposing no partial placements 6ms
+   × awaits in-flight import then disposes it when cancelled 4ms
+ ❯ packages/sim/src/construction-native-contacts.test.ts (0 test)
+ ❯ packages/sim/src/construction-doorway-motion.test.ts (3 tests | 1 failed) 34ms
+   × native inward leaf and every gasket morph endpoint remain inside the separate conservative collider at closed, intermediate and open poses 11ms
+ ❯ packages/sim/src/wayfarer-rebuild-fuel.test.ts (4 tests | 2 failed) 188ms
+   × the exact exported roof transition really stays above the certified native tank top 3ms
+   × every requested new main roof has an exported lower bound above the conserved tank 55ms
+ ❯ packages/sim/src/construction-airlock-plan.test.ts (4 tests | 4 failed) 17ms
+   × exact new native composite has70 independent placements and unroofed exterior excludes pressure volume 8ms
+   × rejects old room audit, changed native GLB and missing geometry dependencies 7ms
+   × accepted deployed seals retain gas, retraction enables finite transfer and outer opening accounts vented gas 1ms
+   × pump target cannot invent an unaudited port or refill vacuum 1ms
+stdout | packages/render/src/construction-boundaries.test.ts > actual native primitives preserve hinge bind transforms, complete aperture and authored deck datum
+BJS - [08:00:15]: Babylon.js v9.25.0 - Null engine
+
+ ❯ packages/render/src/construction-boundaries.test.ts (2 tests | 1 failed) 10ms
+   × actual native primitives preserve hinge bind transforms, complete aperture and authored deck datum 7ms
+ ❯ packages/render/src/inset-native-materials.test.ts (3 tests | 1 failed) 25ms
+   × matches real embedded native span materials across distinct GLB profiles 2ms
+stdout | packages/render/src/construction-door-seals.test.ts > native morph is independent per opening, shares its physical leaf hinge and never defaults to sealed
+BJS - [08:00:18]: Babylon.js v9.25.0 - Null engine
+
+stdout | packages/render/src/construction-door-seals.test.ts > gasket rejects changed bytes, duplicate opening identities and incompatible bind transforms
+BJS - [08:00:18]: Babylon.js v9.25.0 - Null engine
+
+ ❯ packages/render/src/construction-door-seals.test.ts (2 tests | 2 failed) 12ms
+   × native morph is independent per opening, shares its physical leaf hinge and never defaults to sealed 7ms
+   × gasket rejects changed bytes, duplicate opening identities and incompatible bind transforms 4ms
+stdout | packages/render/src/construction-roofs.test.ts > all native roof groups preserve single-sided materials and exact underside/height
+BJS - [08:00:18]: Babylon.js v9.25.0 - Null engine
+
+ ❯ packages/render/src/construction-roofs.test.ts (2 tests | 1 failed) 9ms
+   × all native roof groups preserve single-sided materials and exact underside/height 7ms
+stdout | packages/render/src/framed-engine-prototype.test.ts > a rigid native engine retains every triangle and material slot in one placed prototype
+BJS - [08:00:19]: Babylon.js v9.25.0 - Null engine
+
+ ❯ packages/render/src/framed-engine-prototype.test.ts (1 test | 1 failed) 11ms
+   × a rigid native engine retains every triangle and material slot in one placed prototype 10ms
+ ❯ packages/render/src/framed-wayfarer-visuals.test.ts (2 tests | 1 failed) 8ms
+   × the framed revision preserves all physical definitions and covers eighteen sides, six bow surfaces and six engine definitions 7ms
+ ❯ apps/client/pose-review-assets.test.ts (2 tests | 2 failed) 5ms
+   × serves the exact paired runtime files and excludes native sources/reference evidence 4ms
+   × rejects a geometry/metadata pair when any delivered bytes were changed 1ms
+ ❯ packages/render/src/native-mesh-group.test.ts (2 tests | 1 failed) 6ms
+     × selects every actual r005 panel mesh from its exact catalog namespace 3ms
+ ❯ packages/render/src/layout-supplemental-floors.test.ts (1 test | 1 failed) 5ms
+   × restores the historic trapezoid with exact native sources in every handed orientation 4ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/world/src/construction-native-pressure.test.ts [ packages/world/src/construction-native-pressure.test.ts ]
+Error: Native pressure fixture: missing or changed native source wall
+ ❯ demand packages/sim/src/construction-native-room.ts:18:18
+     16|   hash(new TextEncoder().encode(JSON.stringify(value)));
+     17| function demand(ok: unknown, reason: string): asserts ok {
+     18|   if (!ok) throw new Error(`Native pressure fixture: ${reason}`);
+       |                  ^
+     19| }
+     20| interface NativePlacement {
+ ❯ Module.createNativePressureRoomCompiler packages/sim/src/construction-native-room.ts:64:5
+ ❯ packages/world/src/construction-native-pressure.test.ts:32:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/72]⎯
+
+ FAIL  packages/world/src/construction-traversal.test.ts [ packages/world/src/construction-traversal.test.ts ]
+Error: Construction traversal: native source hash mismatch
+ ❯ requireTraversal packages/sim/src/construction-traversal.ts:28:18
+     26|   stableStringify(a) === stableStringify(b);
+     27| function requireTraversal(ok: unknown, message: string): asserts ok {
+     28|   if (!ok) throw Error("Construction traversal: " + message);
+       |                  ^
+     29| }
+     30| const validId = (id: unknown) =>
+ ❯ Module.createNativeTraversalCompiler packages/sim/src/construction-traversal.ts:147:5
+ ❯ packages/world/src/construction-traversal.test.ts:52:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/72]⎯
+
+ FAIL  packages/sim/src/construction-native-contacts.test.ts [ packages/sim/src/construction-native-contacts.test.ts ]
+Error: Native floor contacts: wrong glb artifact
+ ❯ demand packages/sim/src/construction-native-contacts.ts:21:18
+     19|   hash(new TextEncoder().encode(JSON.stringify(value)));
+     20| function demand(ok: unknown, reason: string): asserts ok {
+     21|   if (!ok) throw new Error(`Native floor contacts: ${reason}`);
+       |                  ^
+     22| }
+     23| interface Placement {
+ ❯ createNativeContactMatcher packages/sim/src/construction-native-contacts.ts:146:5
+ ❯ packages/sim/src/construction-native-contacts.test.ts:16:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/72]⎯
+
+ FAIL  packages/sim/src/construction-native-room.test.ts [ packages/sim/src/construction-native-room.test.ts ]
+Error: Native pressure fixture: missing or changed native source wall
+ ❯ demand packages/sim/src/construction-native-room.ts:18:18
+     16|   hash(new TextEncoder().encode(JSON.stringify(value)));
+     17| function demand(ok: unknown, reason: string): asserts ok {
+     18|   if (!ok) throw new Error(`Native pressure fixture: ${reason}`);
+       |                  ^
+     19| }
+     20| interface NativePlacement {
+ ❯ createNativePressureRoomCompiler packages/sim/src/construction-native-room.ts:64:5
+ ❯ packages/sim/src/construction-native-room.test.ts:29:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/72]⎯
+
+ FAIL  packages/render/src/crew/combat-r003.test.ts [ packages/render/src/crew/combat-r003.test.ts ]
+Error: ENOENT: no such file or directory, open '/root/shipyard-armor-editor-pr/assets/art-library/designs/crew.animation.aim/revisions/r003/runtime-aim-space.json'
+ ❯ packages/render/src/crew/combat-r003.test.ts:24:3
+     22| );
+     23| const aimSpace = JSON.parse(
+     24|   readFileSync(new URL("runtime-aim-space.json", staged), "utf8"),
+       |   ^
+     25| ) as AuthoredAimSpace;
+     26| const metadata = JSON.parse(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/72]⎯
+
+ FAIL  packages/render/src/crew/modular-equipment-pose.test.ts [ packages/render/src/crew/modular-equipment-pose.test.ts ]
+Error: ENOENT: no such file or directory, open '/root/shipyard-armor-editor-pr/assets/art-library/designs/crew.animation.aim/revisions/r003/runtime-aim-space.json'
+ ❯ packages/render/src/crew/modular-equipment-pose.test.ts:28:18
+     26| );
+     27| const modularBytes = readFileSync(new URL("modular-crew.glb", installe…
+     28| const aimBytes = readFileSync(new URL("runtime-aim-space.json", curren…
+       |                  ^
+     29| const aimSpace = JSON.parse(aimBytes.toString()) as AuthoredAimSpace;
+     30| const metadata = JSON.parse(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/72]⎯
+
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 66 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  apps/client/pose-review-assets.test.ts > serves the exact paired runtime files and excludes native sources/reference evidence
+Error: Paired pose review hash mismatch: crew-poses.glb
+ ❯ apps/client/pose-review-assets.ts:50:15
+     48|             bytes.length !== validated.bytes))
+     49|       )
+     50|         throw new Error(`Paired pose review hash mismatch: ${file}`);
+       |               ^
+     51|       return [file, bytes] as const;
+     52|     }),
+ ❯ readPoseReviewAssets apps/client/pose-review-assets.ts:37:11
+ ❯ apps/client/pose-review-assets.test.ts:22:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/72]⎯
+
+ FAIL  apps/client/pose-review-assets.test.ts > rejects a geometry/metadata pair when any delivered bytes were changed
+Error: Paired pose review hash mismatch: crew-poses.glb
+ ❯ apps/client/pose-review-assets.ts:50:15
+     48|             bytes.length !== validated.bytes))
+     49|       )
+     50|         throw new Error(`Paired pose review hash mismatch: ${file}`);
+       |               ^
+     51|       return [file, bytes] as const;
+     52|     }),
+ ❯ readPoseReviewAssets apps/client/pose-review-assets.ts:37:11
+ ❯ apps/client/pose-review-assets.test.ts:42:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/72]⎯
+
+ FAIL  packages/render/src/construction-authored-assembly.test.ts > all 211 authored objects load from 24 verified libraries with independent IDs, retained materials, roof cutaway and safe disposal
+Error: Authored GLB pin mismatch
+ ❯ loadConstructionAuthoredAssembly packages/render/src/construction-authored-assembly.ts:132:17
+    130|         const bytes = new Uint8Array(await response.arrayBuffer());
+    131|         if (constructionHash(bytes) !== sha)
+    132|           throw Error("Authored GLB pin mismatch");
+       |                 ^
+    133|         const container = await SceneLoader.LoadAssetContainerAsync(
+    134|           "",
+ ❯ packages/render/src/construction-authored-assembly.test.ts:67:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/72]⎯
+
+ FAIL  packages/render/src/construction-boundaries.test.ts > actual native primitives preserve hinge bind transforms, complete aperture and authored deck datum
+Error: Pinned native boundary GLB hash mismatch
+ ❯ loadConstructionBoundaries packages/render/src/construction-boundaries.ts:50:11
+     48|   const bytes = new Uint8Array(await response.arrayBuffer());
+     49|   if (constructionHash(bytes) !== runtimeKit.sha256)
+     50|     throw Error("Pinned native boundary GLB hash mismatch");
+       |           ^
+     51|   const imported = await SceneLoader.ImportMeshAsync(
+     52|     "",
+ ❯ packages/render/src/construction-boundaries.test.ts:33:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/72]⎯
+
+ FAIL  packages/render/src/construction-door-seals.test.ts > native morph is independent per opening, shares its physical leaf hinge and never defaults to sealed
+Error: Native gasket GLB hash mismatch
+ ❯ loadConstructionDoorSeals packages/render/src/construction-door-seals.ts:29:11
+     27|     throw Error("Native gasket requires right-handed frame");
+     28|   if (constructionHash(bytes) !== GLB_SHA)
+     29|     throw Error("Native gasket GLB hash mismatch");
+       |           ^
+     30|   const seen = new Set<string>();
+     31|   for (const binding of bindings) {
+ ❯ packages/render/src/construction-door-seals.test.ts:29:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/72]⎯
+
+ FAIL  packages/render/src/construction-door-seals.test.ts > gasket rejects changed bytes, duplicate opening identities and incompatible bind transforms
+AssertionError: expected [Function] to throw error matching /binding/ but got 'Native gasket GLB hash mismatch'
+
+- Expected:
+/binding/
+
++ Received:
+"Native gasket GLB hash mismatch"
+
+ ❯ packages/render/src/construction-door-seals.test.ts:74:6
+     72|     await expect(
+     73|       loadConstructionDoorSeals(scene, bytes, [a, a]),
+     74|     ).rejects.toThrow(/binding/);
+       |      ^
+     75|     a.hinge.position.x = 0;
+     76|     await expect(loadConstructionDoorSeals(scene, bytes, [a])).rejects…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/72]⎯
+
+ FAIL  packages/render/src/construction-pressure-room.test.ts > exact native room loads one GLB per source, preserves primitive geometry/materials and installs every unique placement
+Error: Native pressure room GLB hash mismatch: floor
+ ❯ loadConstructionPressureRoom packages/render/src/construction-pressure-room.ts:83:13
+     81|     const data = new Uint8Array(await response.arrayBuffer());
+     82|     if (constructionHash(data) !== pin.sha256)
+     83|       throw Error("Native pressure room GLB hash mismatch: " + source);
+       |             ^
+     84|     bytes.set(source, data);
+     85|   }
+ ❯ packages/render/src/construction-pressure-room.test.ts:78:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/72]⎯
+
+ FAIL  packages/render/src/construction-pressure-room.test.ts > accepted hinge and seal states share the native bind and unknown state cannot display a deployed gasket
+Error: Native pressure room GLB hash mismatch: floor
+ ❯ loadConstructionPressureRoom packages/render/src/construction-pressure-room.ts:83:13
+     81|     const data = new Uint8Array(await response.arrayBuffer());
+     82|     if (constructionHash(data) !== pin.sha256)
+     83|       throw Error("Native pressure room GLB hash mismatch: " + source);
+       |             ^
+     84|     bytes.set(source, data);
+     85|   }
+ ❯ packages/render/src/construction-pressure-room.test.ts:135:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/72]⎯
+
+ FAIL  packages/render/src/construction-pressure-room.test.ts > changed source bytes, malformed door frame and missing exact native selector fail closed
+AssertionError: expected [Function] to throw error matching /selector/ but got 'Native pressure room GLB hash mismatc…'
+
+- Expected:
+/selector/
+
++ Received:
+"Native pressure room GLB hash mismatch: floor"
+
+ ❯ packages/render/src/construction-pressure-room.test.ts:212:6
+    210|     await expect(
+    211|       loadConstructionPressureRoom(s.scene, s.parent, missing),
+    212|     ).rejects.toThrow(/selector/);
+       |      ^
+    213|     expect(s.scene.meshes).toHaveLength(0);
+    214|     expect(s.scene.transformNodes).toEqual([s.parent]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/72]⎯
+
+ FAIL  packages/render/src/construction-pressure-room.test.ts > published construction instance delegates the complete room without legacy catalogs or duplicate structure
+Error: Native pressure room GLB hash mismatch: floor
+ ❯ loadConstructionPressureRoom packages/render/src/construction-pressure-room.ts:83:13
+     81|     const data = new Uint8Array(await response.arrayBuffer());
+     82|     if (constructionHash(data) !== pin.sha256)
+     83|       throw Error("Native pressure room GLB hash mismatch: " + source);
+       |             ^
+     84|     bytes.set(source, data);
+     85|   }
+ ❯ packages/render/src/construction-pressure-room.test.ts:259:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/72]⎯
+
+ FAIL  packages/render/src/construction-roofs.test.ts > all native roof groups preserve single-sided materials and exact underside/height
+Error: Pinned native roof GLB hash mismatch
+ ❯ loadConstructionRoofs packages/render/src/construction-roofs.ts:29:11
+     27|   const bytes = new Uint8Array(await response.arrayBuffer());
+     28|   if (constructionHash(bytes) !== CONSTRUCTION_ROOF_GLB_SHA)
+     29|     throw Error("Pinned native roof GLB hash mismatch");
+       |           ^
+     30|   const imported = await SceneLoader.ImportMeshAsync(
+     31|     "",
+ ❯ packages/render/src/construction-roofs.test.ts:28:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/72]⎯
+
+ FAIL  packages/render/src/construction-traversal.test.ts > all 28 exact native placements load from three checked GLBs with shared geometry and unchanged material/transform binds
+Error: Native traversal GLB hash mismatch: ladder-kit
+ ❯ loadConstructionTraversal packages/render/src/construction-traversal.ts:138:13
+    136|     const data = new Uint8Array(await response.arrayBuffer());
+    137|     if (constructionHash(data) !== pin.sha256)
+    138|       throw Error("Native traversal GLB hash mismatch: " + sourceId);
+       |             ^
+    139|     bytes.set(sourceId, data);
+    140|   }
+ ❯ packages/render/src/construction-traversal.test.ts:75:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/72]⎯
+
+ FAIL  packages/render/src/construction-traversal.test.ts > selected-deck and transit cutaway expose the accepted path without changing any placed transforms
+Error: Native traversal GLB hash mismatch: ladder-kit
+ ❯ loadConstructionTraversal packages/render/src/construction-traversal.ts:138:13
+    136|     const data = new Uint8Array(await response.arrayBuffer());
+    137|     if (constructionHash(data) !== pin.sha256)
+    138|       throw Error("Native traversal GLB hash mismatch: " + sourceId);
+       |             ^
+    139|     bytes.set(sourceId, data);
+    140|   }
+ ❯ packages/render/src/construction-traversal.test.ts:143:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/72]⎯
+
+ FAIL  packages/render/src/construction-traversal.test.ts > changed source bytes, incomplete installs and missing selectors fail and clean imported resources
+AssertionError: expected [Function] to throw error matching /selector/ but got 'Native traversal GLB hash mismatch: l…'
+
+- Expected:
+/selector/
+
++ Received:
+"Native traversal GLB hash mismatch: ladder-kit"
+
+ ❯ packages/render/src/construction-traversal.test.ts:218:6
+    216|     await expect(
+    217|       loadConstructionTraversal(s.scene, s.parent, invalid),
+    218|     ).rejects.toThrow(/selector/);
+       |      ^
+    219|     expect(s.scene.meshes).toHaveLength(0);
+    220|     expect(s.scene.transformNodes).toEqual([s.parent]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/72]⎯
+
+ FAIL  packages/render/src/construction-traversal.test.ts > accepted own traversal coordinates and occupied deck update one loaded fixture; absent or foreign state clears the override
+Error: Native traversal GLB hash mismatch: ladder-kit
+ ❯ loadConstructionTraversal packages/render/src/construction-traversal.ts:138:13
+    136|     const data = new Uint8Array(await response.arrayBuffer());
+    137|     if (constructionHash(data) !== pin.sha256)
+    138|       throw Error("Native traversal GLB hash mismatch: " + sourceId);
+       |             ^
+    139|     bytes.set(sourceId, data);
+    140|   }
+ ❯ packages/render/src/construction-traversal.test.ts:229:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/72]⎯
+
+ FAIL  packages/render/src/construction-traversal.test.ts > normal construction loader delegates the native two-deck fixture and keeps it loaded across occupied-deck updates
+Error: Native traversal GLB hash mismatch: ladder-kit
+ ❯ loadConstructionTraversal packages/render/src/construction-traversal.ts:138:13
+    136|     const data = new Uint8Array(await response.arrayBuffer());
+    137|     if (constructionHash(data) !== pin.sha256)
+    138|       throw Error("Native traversal GLB hash mismatch: " + sourceId);
+       |             ^
+    139|     bytes.set(sourceId, data);
+    140|   }
+ ❯ packages/render/src/construction-traversal.test.ts:312:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/72]⎯
+
+ FAIL  packages/render/src/debug-features.test.ts > local rendering feature overrides > invalidates actual container-cloned native wall shader defines when lighting or shadows change
+ FAIL  packages/render/src/framed-engine-prototype.test.ts > a rigid native engine retains every triangle and material slot in one placed prototype
+ FAIL  packages/render/src/render-budget.test.ts > installed ship loader resource budget
+ FAIL  packages/render/src/crew/crew.test.ts > original crew skeletal visual > places the imported carbine support grip inside the left palm
+ FAIL  packages/render/src/crew/crew.test.ts > original crew skeletal visual > loads weighted geometry and clips, animates limbs without moving gameplay placement, and disposes owned resources
+ FAIL  packages/render/src/crew/crew.test.ts > original crew skeletal visual > supports open/closed helmet, hair, backpack and per-instance material colors
+ FAIL  packages/render/src/crew/crew.test.ts > original crew skeletal visual > selects exclusive modular geometry and preserves a posed hand socket for an external prop
+ FAIL  packages/render/src/crew/crew.test.ts > original crew skeletal visual > exports a distinct sprint gait and two-handed rifle pose without changing placement
+ FAIL  packages/render/src/crew/crew.test.ts > knees flex forward with stable supporting ankles in the exported walk clip
+ FAIL  packages/render/src/crew/crew.test.ts > weapon changes preserve stride phase and interrupted pose fades stay normalized
+ FAIL  packages/render/src/crew/crew.test.ts > preserves ten distinct looks, optical visor material and selective emission
+ FAIL  packages/render/src/crew/crew.test.ts > combat aligns actual muzzle and preserves stance (right handed=false)
+ FAIL  packages/render/src/crew/crew.test.ts > combat aligns actual muzzle and preserves stance (right handed=true)
+ FAIL  packages/render/src/crew/equipment-pose.test.ts > actual staged rig preserves looks, physical grips, pause, hidden and disposal (false)
+ FAIL  packages/render/src/crew/equipment-pose.test.ts > actual staged rig preserves looks, physical grips, pause, hidden and disposal (true)
+ FAIL  packages/render/src/crew/equipment-pose.test.ts > all staged profiles have feasible heavy-armor neutral grips and clearance
+RuntimeError: Unable to load from binary data: RuntimeError: Unexpected magic: 1936876918
+ ❯ createLoadError dev/core/src/Loading/sceneLoader.ts:578:11
+ ❯ errorCallback dev/core/src/Loading/sceneLoader.ts:801:33
+ ❯ dev/loaders/src/glTF/glTFFileLoader.pure.ts:940:33
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[23/72]⎯
+
+ FAIL  packages/render/src/framed-wayfarer-stock.test.ts > cosmetic stock plan records exact public sources and only known exterior asset contracts
+AssertionError: expected 'aa27de4fd09db67428659af8e16479217dd7b…' to be '0be540aae8b09717ea96c7f21b613b63a5025…' // Object.is equality
+
+Expected: "0be540aae8b09717ea96c7f21b613b63a50257fe3461eea691d96446c5892c2b"
+Received: "aa27de4fd09db67428659af8e16479217dd7bebd1f764c13744f62b2d621a6db"
+
+ ❯ packages/render/src/framed-wayfarer-stock.test.ts:30:43
+     28|   expect(pins.stockTemplateFileSha256).toBe(constructionHash(templateT…
+     29|   expect(pins.stockHullManifestFileSha256).toBe(constructionHash(hullT…
+     30|   expect(pins.stockLegacyShellFileSha256).toBe(
+       |                                           ^
+     31|     constructionHash(readFileSync("assets/runtime/voxels/wayfarer.glb"…
+     32|   );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[24/72]⎯
+
+ FAIL  packages/render/src/framed-wayfarer-stock.test.ts > all replacements resolve to two shared exact native libraries with preserved physical bounds
+AssertionError: expected '30a9e54fa98fecd60d45113ae387ffc2092fc…' to be '3236a0175f567760c0b4307931e475f492224…' // Object.is equality
+
+Expected: "3236a0175f567760c0b4307931e475f492224b5d607ab771a558685d583fc54c"
+Received: "30a9e54fa98fecd60d45113ae387ffc2092fc12a832f803d018bd4b7c93e0d39"
+
+ ❯ packages/render/src/framed-wayfarer-stock.test.ts:160:7
+    158|         readFileSync("assets/runtime/" + url.slice("/assets/".length)),
+    159|       ),
+    160|     ).toBe(hash);
+       |       ^
+    161|   for (const asset of source.assets) {
+    162|     const visual = FRAMED_WAYFARER_VISUALS.find(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[25/72]⎯
+
+ FAIL  packages/render/src/framed-wayfarer-visuals.test.ts > the framed revision preserves all physical definitions and covers eighteen sides, six bow surfaces and six engine definitions
+AssertionError: expected '61b806746e51275d537b5ca4bada080eac15f…' to be 'c1be29990fc65fc60fe89989c4c9dac740725…' // Object.is equality
+
+Expected: "c1be29990fc65fc60fe89989c4c9dac74072578fa9e3c44db7cd41c536f280b3"
+Received: "61b806746e51275d537b5ca4bada080eac15f2b7d65c5b76dc74bffa4d986fc5"
+
+ ❯ packages/render/src/framed-wayfarer-visuals.test.ts:34:7
+     32|         ),
+     33|       ),
+     34|     ).toBe(visual!.sha256);
+       |       ^
+     35|     for (let axis = 0; axis < 3; axis++) {
+     36|       expect(visual!.bounds.min[axis]).toBeGreaterThanOrEqual(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[26/72]⎯
+
+ FAIL  packages/render/src/inset-native-batches.test.ts > merges different native profile geometry only when real GLB material signatures and runtime policy agree
+Error: ENOENT: no such file or directory, open 'assets/runtime/construction/inset250-r000/convex-r004/span-42c2fafec189-q4.glb'
+ ❯ packages/render/src/inset-native-batches.test.ts:173:7
+    171|     });
+    172|     const bytes = new Uint8Array(
+    173|       readFileSync(
+       |       ^
+    174|         `assets/runtime/construction/inset250-r000/convex-r004/${paths…
+    175|       ),
+ ❯ packages/render/src/inset-native-batches.test.ts:162:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[27/72]⎯
+
+ FAIL  packages/render/src/inset-native-materials.test.ts > matches real embedded native span materials across distinct GLB profiles
+Error: ENOENT: no such file or directory, open 'assets/runtime/construction/inset250-r000/convex-r004/span-42c2fafec189-q4.glb'
+ ❯ packages/render/src/inset-native-materials.test.ts:75:5
+     73| it("matches real embedded native span materials across distinct GLB pr…
+     74|   const a = new Uint8Array(
+     75|     readFileSync(
+       |     ^
+     76|       "assets/runtime/construction/inset250-r000/convex-r004/span-42c2…
+     77|     ),
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[28/72]⎯
+
+ FAIL  packages/render/src/inset-native-visuals.test.ts > loads a shared source once and preserves bind transforms, material and independent roots
+Error: ENOENT: no such file or directory, open 'apps/client/public/assets/construction/inset250-r000/convex-r004/corner-038e1fdb1c66-q1.glb'
+ ❯ packages/render/src/inset-native-visuals.test.ts:27:19
+     25|   const containers: AssetContainer[] = [];
+     26|   const fetcher = vi.fn(async (url: string) => {
+     27|     const bytes = readFileSync("apps/client/public" + url);
+       |                   ^
+     28|     return {
+     29|       ok: true,
+ ❯ loadInsetNativeVisuals packages/render/src/inset-native-visuals.ts:94:30
+ ❯ packages/render/src/inset-native-visuals.test.ts:65:24
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[29/72]⎯
+
+ FAIL  packages/render/src/inset-native-visuals.test.ts > cleans a prior import if a later load fails, exposing no partial placements
+AssertionError: expected [Function] to throw error including 'fetch failed' but got 'ENOENT: no such file or directory, op…'
+
+Expected: "fetch failed"
+Received: "ENOENT: no such file or directory, open 'apps/client/public/assets/construction/inset250-r000/convex-r004/corner-038e1fdb1c66-q1.glb'"
+
+ ❯ packages/render/src/inset-native-visuals.test.ts:126:4
+    124|       request("b", parts[1].key),
+    125|     ]),
+    126|   ).rejects.toThrow("fetch failed");
+       |    ^
+    127|   expect(f.scene.meshes).toHaveLength(0);
+    128|   expect(f.scene.transformNodes).toEqual([f.parent]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[30/72]⎯
+
+ FAIL  packages/render/src/inset-native-visuals.test.ts > awaits in-flight import then disposes it when cancelled
+AssertionError: expected Error: ENOENT: no such file or directory,… { …(4) } to match object { name: 'AbortError' }
+(4 matching properties omitted from actual)
+
+- Expected
++ Received
+
+- {
+-   "name": "AbortError",
++ Error {
++   "message": "ENOENT: no such file or directory, open 'apps/client/public/assets/construction/inset250-r000/convex-r004/corner-038e1fdb1c66-q1.glb'",
++   "errno": -2,
++   "code": "ENOENT",
++   "syscall": "open",
++   "path": "apps/client/public/assets/construction/inset250-r000/convex-r004/corner-038e1fdb1c66-q1.glb",
+  }
+
+ ❯ packages/render/src/inset-native-visuals.test.ts:144:4
+    142|       signal: controller.signal,
+    143|     }),
+    144|   ).rejects.toMatchObject({ name: "AbortError" });
+       |    ^
+    145|   expect(f.scene.meshes).toHaveLength(0);
+    146|   expect(f.scene.transformNodes).toEqual([f.parent]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[31/72]⎯
+
+ FAIL  packages/render/src/layout-doorway-preview.test.ts > loads exact authored parts once, preserves hinge bind and uses independent seals for accepted poses
+Error: Native doorway hash mismatch: frame
+ ❯ packages/render/src/layout-doorway-preview.ts:93:19
+     91|           const bytes = new Uint8Array(await response.arrayBuffer());
+     92|           if (constructionHash(bytes) !== part.sha256)
+     93|             throw Error("Native doorway hash mismatch: " + part.part);
+       |                   ^
+     94|           return { part, bytes };
+     95|         }),
+ ❯ loadLayoutDoorways packages/render/src/layout-doorway-preview.ts:86:21
+ ❯ packages/render/src/layout-doorway-preview.test.ts:322:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[32/72]⎯
+
+ FAIL  packages/render/src/layout-doorway-preview.test.ts > checks source pins and refuses duplicate or invalid placements before loading
+AssertionError: expected '5ee0166636d3b644d4975c85c994365f410fd…' to be '076c7c0b3854c3ca04ea6a792fa0b4a7a7ead…' // Object.is equality
+
+Expected: "076c7c0b3854c3ca04ea6a792fa0b4a7a7ead03205521607e2ccca02ec376e77"
+Received: "5ee0166636d3b644d4975c85c994365f410fd85e0b2c1a60535af6aa9217d018"
+
+ ❯ packages/render/src/layout-doorway-preview.test.ts:374:37
+    372|       "assets/runtime" + part.url.replace(/^\/assets/, ""),
+    373|     );
+    374|     expect(constructionHash(bytes)).toBe(part.sha256);
+       |                                     ^
+    375|   }
+    376|   const f = setup(),
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[33/72]⎯
+
+ FAIL  packages/render/src/layout-native-walls.test.ts > native authoring wall fit preview > uses the exact installed native GLB and selectors for the pinned profile family
+AssertionError: expected '5cb11b5b9fe1e104dff9498864a2d58e88e02…' to be '568d491623f03df932a9c5c120a94e4a60b00…' // Object.is equality
+
+Expected: "568d491623f03df932a9c5c120a94e4a60b00bd0fd421ae3cf928c89543505db"
+Received: "5cb11b5b9fe1e104dff9498864a2d58e88e02c80cf17aec848aef5873dbfaa81"
+
+ ❯ packages/render/src/layout-native-walls.test.ts:92:37
+     90|       "assets/runtime/construction/boundary-r004/kit.glb",
+     91|     );
+     92|     expect(constructionHash(bytes)).toBe(CONSTRUCTION_BOUNDARY_FAMILY_…
+       |                                     ^
+     93|     const length = bytes.readUInt32LE(12);
+     94|     const gltf = JSON.parse(bytes.subarray(20, 20 + length).toString("…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[34/72]⎯
+
+ FAIL  packages/render/src/layout-supplemental-floors.test.ts > restores the historic trapezoid with exact native sources in every handed orientation
+Error: ENOENT: no such file or directory, open 'assets/runtime/construction/complex-preview-r000/legacy-trapezoid-r001/legacy-trapezoid-left.glb'
+ ❯ packages/render/src/layout-supplemental-floors.test.ts:35:11
+     33|       expect(
+     34|         constructionHash(
+     35|           readFileSync("assets/runtime/" + part.url.replace("/assets/"…
+       |           ^
+     36|         ),
+     37|       ).toBe(part.sha256);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[35/72]⎯
+
+ FAIL  packages/render/src/native-airlock-scene.test.ts > exact native room loads one GLB per source, preserves primitive geometry/materials and installs every unique placement
+Error: Native airlock GLB hash mismatch: floor
+ ❯ loadNativeAirlockScene packages/render/src/native-airlock-scene.ts:100:13
+     98|     const data = new Uint8Array(await response.arrayBuffer());
+     99|     if (constructionHash(data) !== pin.sha256)
+    100|       throw Error("Native airlock GLB hash mismatch: " + source);
+       |             ^
+    101|     bytes.set(source, data);
+    102|   }
+ ❯ packages/render/src/native-airlock-scene.test.ts:81:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[36/72]⎯
+
+ FAIL  packages/render/src/native-airlock-scene.test.ts > accepted hinge and seal states share the native bind and unknown state cannot display a deployed gasket
+Error: Native airlock GLB hash mismatch: floor
+ ❯ loadNativeAirlockScene packages/render/src/native-airlock-scene.ts:100:13
+     98|     const data = new Uint8Array(await response.arrayBuffer());
+     99|     if (constructionHash(data) !== pin.sha256)
+    100|       throw Error("Native airlock GLB hash mismatch: " + source);
+       |             ^
+    101|     bytes.set(source, data);
+    102|   }
+ ❯ packages/render/src/native-airlock-scene.test.ts:135:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[37/72]⎯
+
+ FAIL  packages/render/src/native-airlock-scene.test.ts > changed source bytes, malformed door frame and missing exact native selector fail closed
+AssertionError: expected [Function] to throw error matching /selector/ but got 'Native airlock GLB hash mismatch: flo…'
+
+- Expected:
+/selector/
+
++ Received:
+"Native airlock GLB hash mismatch: floor"
+
+ ❯ packages/render/src/native-airlock-scene.test.ts:225:6
+    223|     await expect(
+    224|       loadNativeAirlockScene(s.scene, s.parent, missing),
+    225|     ).rejects.toThrow(/selector/);
+       |      ^
+    226|     expect(s.scene.meshes).toHaveLength(0);
+    227|     expect(s.scene.transformNodes).toEqual([s.parent]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[38/72]⎯
+
+ FAIL  packages/render/src/native-mesh-group.test.ts > native mesh namespaces > selects every actual r005 panel mesh from its exact catalog namespace
+SyntaxError: Unexpected token 'l', "lfs.github"... is not valid JSON
+ ❯ packages/render/src/native-mesh-group.test.ts:33:25
+     31|         "assets/runtime/" + asset.visual.url.slice("/assets/".length),
+     32|       );
+     33|       const gltf = JSON.parse(
+       |                         ^
+     34|         bytes.subarray(20, 20 + bytes.readUInt32LE(12)).toString(),
+     35|       );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[39/72]⎯
+
+ FAIL  packages/render/src/native-stair-scene.test.ts > loads exact60 authored placements from3 source GLBs and preserves native materials/shared geometry/world transforms
+Error: Native stair GLB hash mismatch: floor
+ ❯ loadNativeStairScene packages/render/src/native-stair-scene.ts:181:13
+    179|     const data = new Uint8Array(await response.arrayBuffer());
+    180|     if (constructionHash(data) !== pin.sha256)
+    181|       throw Error("Native stair GLB hash mismatch: " + sourceId);
+       |             ^
+    182|     bytes.set(sourceId, data);
+    183|   }
+ ❯ packages/render/src/native-stair-scene.test.ts:73:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[40/72]⎯
+
+ FAIL  packages/render/src/native-stair-scene.test.ts > cutaway keeps both flights/guards and actual upper landing visible through accepted stair motion
+Error: Native stair GLB hash mismatch: floor
+ ❯ loadNativeStairScene packages/render/src/native-stair-scene.ts:181:13
+    179|     const data = new Uint8Array(await response.arrayBuffer());
+    180|     if (constructionHash(data) !== pin.sha256)
+    181|       throw Error("Native stair GLB hash mismatch: " + sourceId);
+       |             ^
+    182|     bytes.set(sourceId, data);
+    183|   }
+ ❯ packages/render/src/native-stair-scene.test.ts:133:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[41/72]⎯
+
+ FAIL  packages/render/src/native-stair-scene.test.ts > construction loader uses installed runtime bytes through validated stair dispatch
+Error: Native stair GLB hash mismatch: floor
+ ❯ loadNativeStairScene packages/render/src/native-stair-scene.ts:181:13
+    179|     const data = new Uint8Array(await response.arrayBuffer());
+    180|     if (constructionHash(data) !== pin.sha256)
+    181|       throw Error("Native stair GLB hash mismatch: " + sourceId);
+       |             ^
+    182|     bytes.set(sourceId, data);
+    183|   }
+ ❯ packages/render/src/native-stair-scene.test.ts:273:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[42/72]⎯
+
+ FAIL  packages/render/src/native-stair-scene.test.ts > minimum egress pin loads only stair kit and two landings without an instance document
+Error: Native stair GLB hash mismatch: floor
+ ❯ loadNativeStairScene packages/render/src/native-stair-scene.ts:181:13
+    179|     const data = new Uint8Array(await response.arrayBuffer());
+    180|     if (constructionHash(data) !== pin.sha256)
+    181|       throw Error("Native stair GLB hash mismatch: " + sourceId);
+       |             ^
+    182|     bytes.set(sourceId, data);
+    183|   }
+ ❯ packages/render/src/native-stair-scene.test.ts:337:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[43/72]⎯
+
+ FAIL  packages/render/src/remote-ships.test.ts > pinned stock exterior derivation > verifies every actual GLB hash and existing native selector without substituting geometry
+AssertionError: expected '0be540aae8b09717ea96c7f21b613b63a5025…' to be 'aa27de4fd09db67428659af8e16479217dd7b…' // Object.is equality
+
+Expected: "aa27de4fd09db67428659af8e16479217dd7bebd1f764c13744f62b2d621a6db"
+Received: "0be540aae8b09717ea96c7f21b613b63a50257fe3461eea691d96446c5892c2b"
+
+ ❯ packages/render/src/remote-ships.test.ts:158:39
+    156|     for (const [url, hash] of pins) {
+    157|       const bytes = readFileSync(pathFor(url));
+    158|       expect(constructionHash(bytes)).toBe(hash);
+       |                                       ^
+    159|       documents.set(url, glb(bytes));
+    160|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[44/72]⎯
+
+ FAIL  packages/render/src/remote-ships.test.ts > remote ship lifecycle > loads each pinned source once and shares material/geometry without remote lights or crew
+SyntaxError: Unexpected token 'l', "lfs.github"... is not valid JSON
+ ❯ glb packages/render/src/remote-ships.test.ts:43:15
+     41|     bytes.byteLength,
+     42|   ).getUint32(12, true);
+     43|   return JSON.parse(new TextDecoder().decode(bytes.subarray(20, 20 + l…
+       |               ^
+     44| }
+     45| const pathFor = (url: string) =>
+ ❯ packages/render/src/remote-ships.test.ts:268:30
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[45/72]⎯
+
+ FAIL  packages/render/src/render-budget.test.ts > current semantic Wayfarer loader resource budget and complete role attribution
+Error: Native visual hash mismatch: /assets/assembly/floor/r002/kit.glb
+ ❯ loadEquipmentPrototypes packages/render/src/installed-equipment.ts:39:15
+     37|       const bytes = new Uint8Array(await response.arrayBuffer());
+     38|       if (constructionHash(bytes) !== asset.visual.sha256)
+     39|         throw new Error("Native visual hash mismatch: " + url);
+       |               ^
+     40|       const imported = await SceneLoader.ImportMeshAsync(
+     41|         "",
+ ❯ loadConstructionInstance packages/render/src/construction-instance.ts:168:18
+ ❯ packages/render/src/render-budget.test.ts:222:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[46/72]⎯
+
+ FAIL  packages/sim/src/cargo-carrier-assembly.test.ts > runtime pins match exact native exports and retained original payloads
+AssertionError: expected '476673a7661263e672aec3cf18bad8b1d0375…' to be 'faa8a7b7786c4e92cfeb6ec5b25d43739ad07…' // Object.is equality
+
+Expected: "faa8a7b7786c4e92cfeb6ec5b25d43739ad070e202d4e2f1ee1dc98ca6877f78"
+Received: "476673a7661263e672aec3cf18bad8b1d03759d8b5ad9b189e309bd77273fa69"
+
+ ❯ packages/sim/src/cargo-carrier-assembly.test.ts:76:7
+     74|     expect(
+     75|       createHash("sha256").update(readFileSync(source.glbPath)).digest…
+     76|     ).toBe(source.glbSha256);
+       |       ^
+     77|   const proof = JSON.parse(
+     78|     readFileSync(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[47/72]⎯
+
+ FAIL  packages/sim/src/construction-airlock-plan.test.ts > exact new native composite has70 independent placements and unroofed exterior excludes pressure volume
+Error: Airlock plan: missing or changed native wall
+ ❯ planNativeExternalAirlock packages/sim/src/construction-airlock-plan.ts:35:13
+     33|   for (const [name, pin] of Object.entries(audit.sourcePins))
+     34|     if (!sources[name] || hash(sources[name]) !== pin.sha256)
+     35|       throw Error("Airlock plan: missing or changed native " + name);
+       |             ^
+     36|   return compile(instanceId);
+     37| }
+ ❯ packages/sim/src/construction-airlock-plan.test.ts:41:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[48/72]⎯
+
+ FAIL  packages/sim/src/construction-airlock-plan.test.ts > rejects old room audit, changed native GLB and missing geometry dependencies
+AssertionError: expected [Function] to throw error including 'native door' but got 'Airlock plan: missing or changed nati…'
+
+Expected: "native door"
+Received: "Airlock plan: missing or changed native wall"
+
+ ❯ packages/sim/src/construction-airlock-plan.test.ts:75:5
+     73|       door: new Uint8Array(),
+     74|     }),
+     75|   ).toThrow("native door");
+       |     ^
+     76|   const { gasket, ...missing } = sources;
+     77|   expect(() => planNativeExternalAirlock("one", audit, missing)).toThr…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[49/72]⎯
+
+ FAIL  packages/sim/src/construction-airlock-plan.test.ts > accepted deployed seals retain gas, retraction enables finite transfer and outer opening accounts vented gas
+Error: Airlock plan: missing or changed native wall
+ ❯ planNativeExternalAirlock packages/sim/src/construction-airlock-plan.ts:35:13
+     33|   for (const [name, pin] of Object.entries(audit.sourcePins))
+     34|     if (!sources[name] || hash(sources[name]) !== pin.sha256)
+     35|       throw Error("Airlock plan: missing or changed native " + name);
+       |             ^
+     36|   return compile(instanceId);
+     37| }
+ ❯ packages/sim/src/construction-airlock-plan.test.ts:82:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[50/72]⎯
+
+ FAIL  packages/sim/src/construction-airlock-plan.test.ts > pump target cannot invent an unaudited port or refill vacuum
+Error: Airlock plan: missing or changed native wall
+ ❯ planNativeExternalAirlock packages/sim/src/construction-airlock-plan.ts:35:13
+     33|   for (const [name, pin] of Object.entries(audit.sourcePins))
+     34|     if (!sources[name] || hash(sources[name]) !== pin.sha256)
+     35|       throw Error("Airlock plan: missing or changed native " + name);
+       |             ^
+     36|   return compile(instanceId);
+     37| }
+ ❯ packages/sim/src/construction-airlock-plan.test.ts:118:13
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[51/72]⎯
+
+ FAIL  packages/sim/src/construction-doorway-motion.test.ts > native inward leaf and every gasket morph endpoint remain inside the separate conservative collider at closed, intermediate and open poses
+AssertionError: expected '0eee92e9e5297faa5492e8075e9b1806439a5…' to be '6adeb2aeff19237524c7d6cc0e6761dd8c8f0…' // Object.is equality
+
+Expected: "6adeb2aeff19237524c7d6cc0e6761dd8c8f0e3b81219545524fa474da42981f"
+Received: "0eee92e9e5297faa5492e8075e9b1806439a53d409d023bb64b81ce8b457d767"
+
+ ❯ sourcePoints packages/sim/src/construction-doorway-motion.test.ts:27:37
+     25|       "assets/runtime" + part.url.replace(/^\/assets/, ""),
+     26|     );
+     27|     expect(constructionHash(bytes)).toBe(part.sha256);
+       |                                     ^
+     28|     const jsonSize = bytes.readUInt32LE(12),
+     29|       json = JSON.parse(bytes.subarray(20, 20 + jsonSize).toString()),
+ ❯ packages/sim/src/construction-doorway-motion.test.ts:59:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[52/72]⎯
+
+ FAIL  packages/sim/src/construction-stairs-document.test.ts > native source bytes and compact registry compile the identical immutable source installation
+Error: Construction stairs: native source hash mismatch
+ ❯ demand packages/sim/src/construction-stairs.ts:38:18
+     36|   stableStringify(a) === stableStringify(b);
+     37| function demand(ok: unknown, message: string): asserts ok {
+     38|   if (!ok) throw Error("Construction stairs: " + message);
+       |                  ^
+     39| }
+     40| const id = (v: unknown): v is string =>
+ ❯ createNativeStairCompiler packages/sim/src/construction-stairs.ts:187:5
+ ❯ packages/sim/src/construction-stairs-document.test.ts:132:10
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[53/72]⎯
+
+ FAIL  packages/sim/src/construction-stairs.test.ts > actual native a003 dogleg traverses all17 risers, both flights and lateral intermediate landing
+Error: Construction stairs: native source hash mismatch
+ ❯ demand packages/sim/src/construction-stairs.ts:38:18
+     36|   stableStringify(a) === stableStringify(b);
+     37| function demand(ok: unknown, message: string): asserts ok {
+     38|   if (!ok) throw Error("Construction stairs: " + message);
+       |                  ^
+     39| }
+     40| const id = (v: unknown): v is string =>
+ ❯ createNativeStairCompiler packages/sim/src/construction-stairs.ts:187:5
+ ❯ packages/sim/src/construction-stairs.test.ts:595:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[54/72]⎯
+
+ FAIL  packages/sim/src/construction-traversal.test.ts > actual delivered a003 ladder and existing slab sources qualify the exact 28-part fixture, without publishing it
+Error: Construction traversal: native source hash mismatch
+ ❯ requireTraversal packages/sim/src/construction-traversal.ts:28:18
+     26|   stableStringify(a) === stableStringify(b);
+     27| function requireTraversal(ok: unknown, message: string): asserts ok {
+     28|   if (!ok) throw Error("Construction traversal: " + message);
+       |                  ^
+     29| }
+     30| const validId = (id: unknown) =>
+ ❯ createNativeTraversalCompiler packages/sim/src/construction-traversal.ts:147:5
+ ❯ packages/sim/src/construction-traversal.test.ts:575:19
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[55/72]⎯
+
+ FAIL  packages/sim/src/wayfarer-rebuild-fuel.test.ts > the exact exported roof transition really stays above the certified native tank top
+Error: ENOENT: no such file or directory, open 'assets/art-library/designs/shipyard.structure.wayfarer-transition/revisions/r003/wayfarer-transition.glb'
+ ❯ packages/sim/src/wayfarer-rebuild-fuel.test.ts:43:17
+     41| });
+     42| test("the exact exported roof transition really stays above the certif…
+     43|   const bytes = readFileSync(
+       |                 ^
+     44|     "assets/art-library/designs/shipyard.structure.wayfarer-transition…
+     45|   );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[56/72]⎯
+
+ FAIL  packages/sim/src/wayfarer-rebuild-fuel.test.ts > every requested new main roof has an exported lower bound above the conserved tank
+Error: ENOENT: no such file or directory, open 'assets/runtime/construction/inset250-r000/roof-r000/square-2m.glb'
+ ❯ packages/sim/src/wayfarer-rebuild-fuel.test.ts:80:21
+     78|         (p) => p.key === roof.key,
+     79|       )!;
+     80|       const bytes = readFileSync(
+       |                     ^
+     81|         "assets/runtime/" + part.url.replace(/^\/assets\//, ""),
+     82|       );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[57/72]⎯
+
+
+ Test Files  37 failed | 312 passed (349)
+      Tests  66 failed | 1932 passed (1998)
+   Start at  08:00:00
+   Duration  29.07s (transform 13.35s, setup 0ms, import 49.53s, tests 77.78s, environment 23ms)
+

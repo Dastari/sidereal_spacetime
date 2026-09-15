@@ -1,1 +1,7 @@
-import{defineConfig}from'vitest/config';export default defineConfig({test:{testTimeout:30000,include:['scripts/art_library/ice_reference_optics_r026.test.ts']}});
+import { defineConfig } from "vitest/config";
+export default defineConfig({
+  test: {
+    testTimeout: 30000,
+    include: ["scripts/art_library/ice_reference_optics_r026.test.ts"],
+  },
+});

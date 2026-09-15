@@ -1,1 +1,7 @@
-{"extends":"../../tsconfig.json","include":["planet_reference_local_lights.ts","planet_reference_local_lights.test.ts"]}
+{
+  "extends": "../../tsconfig.json",
+  "include": [
+    "planet_reference_local_lights.ts",
+    "planet_reference_local_lights.test.ts"
+  ]
+}

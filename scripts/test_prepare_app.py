@@ -5,7 +5,7 @@ import re
 import tempfile
 import unittest
 
-from prepare_app import PUBLISHED_RUNTIME, ROOT, check_references, prepare
+from prepare_app import EDITOR_NATIVE_ASSETS, PUBLISHED_RUNTIME, ROOT, check_references, prepare
 
 ASSET_LITERAL = re.compile(r'["\'`](/assets/[^"\'`\s]+)')
 
@@ -18,6 +18,8 @@ def write(root: Path, name: str, text: str | None = None) -> None:
 
 def seed_runtime(root: Path) -> None:
     """Every allowlisted entry must exist; a missing one is a broken build, not a skip."""
+    for source in EDITOR_NATIVE_ASSETS:
+        write(root, source)
     for entry in PUBLISHED_RUNTIME:
         path = root / "assets/runtime" / entry
         if entry.endswith(".glb"):
@@ -48,6 +50,10 @@ class PrepareAppTests(unittest.TestCase):
                     for name in ("docs", "reference", "PIVOT.md", "help/stale.md"):
                         self.assertFalse((output / name).exists(), str(output / name))
                 self.assertEqual((public / "help/shipyard.md").exists(), app == "dashboard")
+                for source, destination in EDITOR_NATIVE_ASSETS.items():
+                    self.assertEqual((public / destination).exists(), app == "dashboard")
+                    if app == "dashboard":
+                        self.assertEqual((public / destination).read_text(), source)
             self.assertTrue((root / "docs/handoffs/private.md").exists())
             self.assertTrue((root / "reference/legacy.md").exists())
 

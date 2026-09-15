@@ -5,7 +5,7 @@ import { compileLayout } from "@sidereal/sim/layout-compiler";
 import { deleteLayoutSelection } from "./selection-deletion";
 import { systemsFootprints } from "./systems-footprints";
 import { push, undo } from "./state";
-import { createDoorway250ReviewLayout } from "../../../../../packages/content/src/doorway250-review-layout";
+import { createDoorway250ReviewLayout } from "@sidereal/content/doorway250-review-layout";
 function fixture() {
   const doc = emptyLayout("draft", "deck");
   doc.tiles = [

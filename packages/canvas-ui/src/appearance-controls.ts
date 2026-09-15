@@ -31,9 +31,12 @@ const colorColumns = (width: number) =>
 /** Measure before clamping menu scroll, including every responsive palette row. */
 export function appearanceControlsHeight(width: number) {
   const columns = colorColumns(width);
-  return 248 + [SKIN_TONES, EYE_COLORS, HAIR_COLORS].reduce(
-    (height, colors) => height + 40 + Math.ceil(colors.length / columns) * 44,
-    0,
+  return (
+    248 +
+    [SKIN_TONES, EYE_COLORS, HAIR_COLORS].reduce(
+      (height, colors) => height + 40 + Math.ceil(colors.length / columns) * 44,
+      0,
+    )
   );
 }
 export function drawAppearanceControls(

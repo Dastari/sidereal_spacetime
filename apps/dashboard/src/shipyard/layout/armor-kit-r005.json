@@ -1,0 +1,4092 @@
+{
+  "schema": "sidereal.armor-editor-review.v1",
+  "designId": "shipyard.hull.armor-block-review",
+  "librarySha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+  "assets": [
+    {
+      "id": "armor-block-f94c0ba2aa04f31fb6a5",
+      "label": "Armor \u00b7 2 \u00d7 3 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-f94c0ba2aa04f31fb6a5--"
+      }
+    },
+    {
+      "id": "armor-block-7c657ee01a90318dec3e",
+      "label": "Armor \u00b7 2 \u00d7 3 m \u00b7 vent",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-7c657ee01a90318dec3e--"
+      }
+    },
+    {
+      "id": "armor-block-fe79dfaf2e1542dbd67c",
+      "label": "Armor \u00b7 2 \u00d7 3 m \u00b7 red-service",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-fe79dfaf2e1542dbd67c--"
+      }
+    },
+    {
+      "id": "armor-block-9ca59f6db637d3afceb9",
+      "label": "Armor \u00b7 2 \u00d7 1.5 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 1.5]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 1.5]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-9ca59f6db637d3afceb9--"
+      }
+    },
+    {
+      "id": "armor-block-70b34597548b284a0a7f",
+      "label": "Armor \u00b7 convex 45\u00b0 \u00b7 1.5 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.375, -1.0, 0.0],
+        "max": [0.9722718000411987, 0.2651650309562683, 1.5]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.375, -1.0, 0.0],
+          "max": [0.9722718000411987, 0.2651650309562683, 1.5]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-70b34597548b284a0a7f--"
+      }
+    },
+    {
+      "id": "armor-block-cd2f17ea0cf58cb60b7f",
+      "label": "Armor \u00b7 2.453 \u00d7 1.5 m \u00b7 vent",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.4534270763397217, 0.0, 1.5]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.4534270763397217, 0.0, 1.5]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-cd2f17ea0cf58cb60b7f--"
+      }
+    },
+    {
+      "id": "armor-block-1676c64748013f376c0a",
+      "label": "Armor \u00b7 concave 90\u00b0 \u00b7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-1.125, -1.125, 0.0],
+        "max": [0.0, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-1.125, -1.125, 0.0],
+          "max": [0.0, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-1676c64748013f376c0a--"
+      }
+    },
+    {
+      "id": "armor-block-a6743a347ee2fcdd1ce9",
+      "label": "Armor \u00b7 2 \u00d7 3 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-a6743a347ee2fcdd1ce9--"
+      }
+    },
+    {
+      "id": "armor-block-62ad930c45227d5287a0",
+      "label": "Armor \u00b7 1.25 \u00d7 3 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.25, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.25, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-62ad930c45227d5287a0--"
+      }
+    },
+    {
+      "id": "armor-block-e1affbf19f4b7fa30311",
+      "label": "Armor \u00b7 convex 90\u00b0 \u00b7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.375, -1.0, 0.0],
+        "max": [1.0, 0.375, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.375, -1.0, 0.0],
+          "max": [1.0, 0.375, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-e1affbf19f4b7fa30311--"
+      }
+    },
+    {
+      "id": "armor-block-926961217b49c21a526b",
+      "label": "Armor \u00b7 2 \u00d7 3 m \u00b7 red-service",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-926961217b49c21a526b--"
+      }
+    },
+    {
+      "id": "armor-block-137adc2153a878094d60",
+      "label": "Armor \u00b7 2 \u00d7 3 m \u00b7 utility",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-137adc2153a878094d60--"
+      }
+    },
+    {
+      "id": "armor-block-e40f082abbcbe4f55a62",
+      "label": "Armor \u00b7 2 \u00d7 3 m \u00b7 identity",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-e40f082abbcbe4f55a62--"
+      }
+    },
+    {
+      "id": "armor-block-649dcbda86c17c7952c9",
+      "label": "Armor \u00b7 2 \u00d7 3 m \u00b7 vent",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-649dcbda86c17c7952c9--"
+      }
+    },
+    {
+      "id": "armor-block-2b558e7ac8eb4184c2af",
+      "label": "Armor \u00b7 0.5 \u00d7 3 m \u00b7 utility",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.5, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.5, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-2b558e7ac8eb4184c2af--"
+      }
+    },
+    {
+      "id": "armor-block-b235419d9a165659f2e8",
+      "label": "Armor \u00b7 0.5 \u00d7 1.5 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.5, 0.0, 1.5]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.5, 0.0, 1.5]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-b235419d9a165659f2e8--"
+      }
+    },
+    {
+      "id": "armor-block-fabbd7b0578ea00b5791",
+      "label": "Armor \u00b7 concave 90\u00b0 \u00b7 3 \u2192 1.5 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-1.125, -1.125, 0.0],
+        "max": [0.0, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-1.125, -1.125, 0.0],
+          "max": [0.0, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-fabbd7b0578ea00b5791--"
+      }
+    },
+    {
+      "id": "armor-block-e120acd13dae3b493668",
+      "label": "Armor \u00b7 1.039 \u00d7 1.5 m \u00b7 vent",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.0392135381698608, 0.0, 1.5]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.0392135381698608, 0.0, 1.5]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-e120acd13dae3b493668--"
+      }
+    },
+    {
+      "id": "armor-block-98477a5dd3e88b931589",
+      "label": "Armor \u00b7 1.25 \u00d7 1.5 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.25, 0.0, 1.5]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.25, 0.0, 1.5]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-98477a5dd3e88b931589--"
+      }
+    },
+    {
+      "id": "armor-block-a7ef36310c50dc565d00",
+      "label": "Armor \u00b7 concave 90\u00b0 \u00b7 1.5 \u2192 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-1.125, -1.125, 0.0],
+        "max": [0.0, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-1.125, -1.125, 0.0],
+          "max": [0.0, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-a7ef36310c50dc565d00--"
+      }
+    },
+    {
+      "id": "armor-block-4896cc9388c49fcb9b2e",
+      "label": "Armor \u00b7 1.25 \u00d7 3 m \u00b7 red-service",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.25, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.25, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-4896cc9388c49fcb9b2e--"
+      }
+    },
+    {
+      "id": "armor-block-d3fa0e462a519b5f36f8",
+      "label": "Armor \u00b7 2 \u00d7 3 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-d3fa0e462a519b5f36f8--"
+      }
+    },
+    {
+      "id": "armor-block-9069dfa847efce4fe41e",
+      "label": "Armor \u00b7 0.5 \u00d7 3 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.5, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.5, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-9069dfa847efce4fe41e--"
+      }
+    },
+    {
+      "id": "armor-block-db7ed5477c90dcffe64f",
+      "label": "Armor \u00b7 2 \u00d7 3 m \u00b7 vent",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-db7ed5477c90dcffe64f--"
+      }
+    },
+    {
+      "id": "armor-block-05c9d73568be3ad2e6b8",
+      "label": "Armor \u00b7 1.25 \u00d7 3 m \u00b7 vent",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.25, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.25, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-05c9d73568be3ad2e6b8--"
+      }
+    },
+    {
+      "id": "armor-block-15a405777ecce0335b21",
+      "label": "Armor \u00b7 convex 90\u00b0 \u00b7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.375, -1.0, 0.0],
+        "max": [1.0, 0.375, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.375, -1.0, 0.0],
+          "max": [1.0, 0.375, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-15a405777ecce0335b21--"
+      }
+    },
+    {
+      "id": "armor-block-43965fec43941bd88fcc",
+      "label": "Armor \u00b7 1.25 \u00d7 3 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.25, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.25, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-43965fec43941bd88fcc--"
+      }
+    },
+    {
+      "id": "armor-block-af0cc716991642374212",
+      "label": "Armor \u00b7 2 \u00d7 3 m \u00b7 red-service",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-af0cc716991642374212--"
+      }
+    },
+    {
+      "id": "armor-block-57b9352f1f040b7f0157",
+      "label": "Armor \u00b7 1.5 \u00d7 3 m \u00b7 red-service",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.5, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.5, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-57b9352f1f040b7f0157--"
+      }
+    },
+    {
+      "id": "armor-block-8904b2af208c0ad89e05",
+      "label": "Armor \u00b7 1.75 \u00d7 3 m \u00b7 utility",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.75, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.75, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-8904b2af208c0ad89e05--"
+      }
+    },
+    {
+      "id": "armor-block-d475f516a65773f4c21e",
+      "label": "Armor \u00b7 1.5 \u00d7 3 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.5, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.5, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-d475f516a65773f4c21e--"
+      }
+    },
+    {
+      "id": "armor-block-97e82a0a2ae19def921f",
+      "label": "Armor \u00b7 1.722 \u00d7 3 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.7221359014511108, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.7221359014511108, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-97e82a0a2ae19def921f--"
+      }
+    },
+    {
+      "id": "armor-block-57b42efda0a7a7d9ffdd",
+      "label": "Armor \u00b7 convex 26.6\u00b0 \u00b7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.375, -1.0, 0.0],
+        "max": [0.7826237678527832, 0.16770510375499725, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.375, -1.0, 0.0],
+          "max": [0.7826237678527832, 0.16770510375499725, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-57b42efda0a7a7d9ffdd--"
+      }
+    },
+    {
+      "id": "armor-block-7c3af440c13bfbd854f7",
+      "label": "Armor \u00b7 1.719 \u00d7 3 m \u00b7 red-service",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.7192236185073853, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.7192236185073853, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-7c3af440c13bfbd854f7--"
+      }
+    },
+    {
+      "id": "armor-block-075003ca42dee3ad88d4",
+      "label": "Armor \u00b7 convex 63.4\u00b0 \u00b7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.375, -1.0, 0.0],
+        "max": [1.0621322393417358, 0.3354102075099945, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.375, -1.0, 0.0],
+          "max": [1.0621322393417358, 0.3354102075099945, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-075003ca42dee3ad88d4--"
+      }
+    },
+    {
+      "id": "armor-block-137dbd4b0d514b60c4c3",
+      "label": "Armor \u00b7 2 \u00d7 3 m \u00b7 utility",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-137dbd4b0d514b60c4c3--"
+      }
+    },
+    {
+      "id": "armor-block-cb4ec70047162b4093b9",
+      "label": "Armor \u00b7 0.9692 \u00d7 3 m \u00b7 utility",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.9692236185073853, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.9692236185073853, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-cb4ec70047162b4093b9--"
+      }
+    },
+    {
+      "id": "armor-block-131df6537810373834cb",
+      "label": "Armor \u00b7 concave 76\u00b0 \u00b7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.9057763814926147, -1.1212677955627441, 0.0],
+        "max": [0.21968305110931396, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.9057763814926147, -1.1212677955627441, 0.0],
+          "max": [0.21968305110931396, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-131df6537810373834cb--"
+      }
+    },
+    {
+      "id": "armor-block-79d4507d7b58226cbe80",
+      "label": "Armor \u00b7 1.188 \u00d7 3 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.1884472370147705, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.1884472370147705, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-79d4507d7b58226cbe80--"
+      }
+    },
+    {
+      "id": "armor-block-edc8f579626e43feb839",
+      "label": "Armor \u00b7 concave 14\u00b0 \u00b7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.24810563027858734, -1.030316948890686, 0.0],
+        "max": [0.24069781601428986, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.24810563027858734, -1.030316948890686, 0.0],
+          "max": [0.24069781601428986, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-edc8f579626e43feb839--"
+      }
+    },
+    {
+      "id": "armor-block-e7911c4aae9fd2fecbb8",
+      "label": "Armor \u00b7 1.281 \u00d7 3 m \u00b7 vent",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.2811288833618164, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.2811288833618164, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-e7911c4aae9fd2fecbb8--"
+      }
+    },
+    {
+      "id": "armor-block-649b14141fa27ecd47e6",
+      "label": "Armor \u00b7 convex 82.9\u00b0 \u00b7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.375, -1.0, 0.0],
+        "max": [1.0387909412384033, 0.3721041977405548, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.375, -1.0, 0.0],
+          "max": [1.0387909412384033, 0.3721041977405548, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-649b14141fa27ecd47e6--"
+      }
+    },
+    {
+      "id": "armor-block-fc5a10216de60493ab08",
+      "label": "Armor \u00b7 convex 7.13\u00b0 \u00b7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.375, -1.0, 0.0],
+        "max": [0.49613893032073975, 0.04651302471756935, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.375, -1.0, 0.0],
+          "max": [0.49613893032073975, 0.04651302471756935, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-fc5a10216de60493ab08--"
+      }
+    },
+    {
+      "id": "armor-block-204079fa21328c629295",
+      "label": "Armor \u00b7 0.75 \u00d7 3 m \u00b7 red-service",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.75, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.75, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-204079fa21328c629295--"
+      }
+    },
+    {
+      "id": "armor-block-50c9e43a8c6ba5af5141",
+      "label": "Armor \u00b7 0.5 \u00d7 3 m \u00b7 utility",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.5, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.5, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-50c9e43a8c6ba5af5141--"
+      }
+    },
+    {
+      "id": "armor-block-e9bc6213d0d76ca7f44b",
+      "label": "Armor \u00b7 1.354 \u00d7 3 m \u00b7 red-service",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [1.3541020154953003, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [1.3541020154953003, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-e9bc6213d0d76ca7f44b--"
+      }
+    },
+    {
+      "id": "armor-block-f731b556d8884e7d7557",
+      "label": "Armor \u00b7 0.882 \u00d7 3 m \u00b7 utility",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.8819659948348999, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.8819659948348999, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-f731b556d8884e7d7557--"
+      }
+    },
+    {
+      "id": "armor-block-207cbce0274b3e836291",
+      "label": "Armor \u00b7 concave 63.4\u00b0 \u00b7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.7430340051651001, -1.111803412437439, 0.0],
+        "max": [0.33229491114616394, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.7430340051651001, -1.111803412437439, 0.0],
+          "max": [0.33229491114616394, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-207cbce0274b3e836291--"
+      }
+    },
+    {
+      "id": "armor-block-975ae6c56dd5c22ae720",
+      "label": "Armor \u00b7 2 \u00d7 0.75 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 0.75]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 0.75]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-975ae6c56dd5c22ae720--"
+      }
+    },
+    {
+      "id": "armor-block-0609cba1e9e5472c20b6",
+      "label": "Armor \u00b7 2 \u00d7 2.25 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 2.25]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 2.25]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-0609cba1e9e5472c20b6--"
+      }
+    },
+    {
+      "id": "armor-block-fbbf224dbd286d805ac1",
+      "label": "Armor \u00b7 2 \u00d7 3 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-fbbf224dbd286d805ac1--"
+      }
+    },
+    {
+      "id": "armor-block-49384936da4b4c531fcc",
+      "label": "Armor \u00b7 2 \u00d7 0.75 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -0.5, 0.0],
+        "max": [2.0, 0.0, 0.75]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -0.5, 0.0],
+          "max": [2.0, 0.0, 0.75]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-49384936da4b4c531fcc--"
+      }
+    },
+    {
+      "id": "armor-block-e8152b71edd21a544d55",
+      "label": "Armor \u00b7 2 \u00d7 1.5 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -0.5, 0.0],
+        "max": [2.0, 0.0, 1.5]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -0.5, 0.0],
+          "max": [2.0, 0.0, 1.5]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-e8152b71edd21a544d55--"
+      }
+    },
+    {
+      "id": "armor-block-c2da9d9d47c98c01ceb8",
+      "label": "Armor \u00b7 2 \u00d7 2.25 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -0.5, 0.0],
+        "max": [2.0, 0.0, 2.25]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -0.5, 0.0],
+          "max": [2.0, 0.0, 2.25]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-c2da9d9d47c98c01ceb8--"
+      }
+    },
+    {
+      "id": "armor-block-e7a26fe3b6e058621d39",
+      "label": "Armor \u00b7 2 \u00d7 3 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -0.5, 0.0],
+        "max": [2.0, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -0.5, 0.0],
+          "max": [2.0, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-e7a26fe3b6e058621d39--"
+      }
+    },
+    {
+      "id": "armor-block-8233c1a3a948a91de0c7",
+      "label": "Armor \u00b7 2.016 \u00d7 0.75 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.015564441680908, 0.0, 0.75]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.015564441680908, 0.0, 0.75]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-8233c1a3a948a91de0c7--"
+      }
+    },
+    {
+      "id": "armor-block-a252a121923cfb248f94",
+      "label": "Armor \u00b7 2.062 \u00d7 0.75 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0615527629852295, 0.0, 0.75]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0615527629852295, 0.0, 0.75]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-a252a121923cfb248f94--"
+      }
+    },
+    {
+      "id": "armor-block-981bd24736c640366791",
+      "label": "Armor \u00b7 2.236 \u00d7 0.75 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.2360680103302, 0.0, 0.75]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.2360680103302, 0.0, 0.75]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-981bd24736c640366791--"
+      }
+    },
+    {
+      "id": "armor-block-7bcf58fae727b968e126",
+      "label": "Armor \u00b7 2.828 \u00d7 0.75 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.8284270763397217, 0.0, 0.75]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.8284270763397217, 0.0, 0.75]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-7bcf58fae727b968e126--"
+      }
+    },
+    {
+      "id": "armor-block-825d61aeb52f08f61c14",
+      "label": "Armor \u00b7 2 \u00d7 0.75 m \u00b7 plain",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 0.75]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 0.75]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-825d61aeb52f08f61c14--"
+      }
+    },
+    {
+      "id": "armor-block-bb2e153a868e9214017f",
+      "label": "Armor \u00b7 convex 7.13\u00b0 \u00b7 1.5 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.375, -1.0, 0.0],
+        "max": [0.49613893032073975, 0.04651302471756935, 1.5]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.375, -1.0, 0.0],
+          "max": [0.49613893032073975, 0.04651302471756935, 1.5]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-bb2e153a868e9214017f--"
+      }
+    },
+    {
+      "id": "armor-block-b5debfc1efb6816ed06d",
+      "label": "Armor \u00b7 concave 7.13\u00b0 \u00b7 1.5 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.18725775182247162, -1.0155043601989746, 0.0],
+        "max": [0.18581172823905945, 0.0, 1.5]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.18725775182247162, -1.0155043601989746, 0.0],
+          "max": [0.18581172823905945, 0.0, 1.5]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-b5debfc1efb6816ed06d--"
+      }
+    },
+    {
+      "id": "armor-block-19cb454187f2b808d0f7",
+      "label": "Armor \u00b7 convex 14\u00b0 \u00b7 1.5 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.375, -1.0, 0.0],
+        "max": [0.6063390374183655, 0.0909508615732193, 1.5]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.375, -1.0, 0.0],
+          "max": [0.6063390374183655, 0.0909508615732193, 1.5]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-19cb454187f2b808d0f7--"
+      }
+    },
+    {
+      "id": "armor-block-8c601c2467812dda7c97",
+      "label": "Armor \u00b7 concave 14\u00b0 \u00b7 1.5 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.24810563027858734, -1.030316948890686, 0.0],
+        "max": [0.24069781601428986, 0.0, 1.5]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.24810563027858734, -1.030316948890686, 0.0],
+          "max": [0.24069781601428986, 0.0, 1.5]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-8c601c2467812dda7c97--"
+      }
+    },
+    {
+      "id": "armor-block-04506299cdccdc3362d3",
+      "label": "Armor \u00b7 convex 26.6\u00b0 \u00b7 1.5 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.375, -1.0, 0.0],
+        "max": [0.7826237678527832, 0.16770510375499725, 1.5]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.375, -1.0, 0.0],
+          "max": [0.7826237678527832, 0.16770510375499725, 1.5]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-04506299cdccdc3362d3--"
+      }
+    },
+    {
+      "id": "armor-block-b9889f7ac1379ef477d3",
+      "label": "Armor \u00b7 concave 26.6\u00b0 \u00b7 1.5 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.3610679805278778, -1.0559016466140747, 0.0],
+        "max": [0.32294902205467224, 0.0, 1.5]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.3610679805278778, -1.0559016466140747, 0.0],
+          "max": [0.32294902205467224, 0.0, 1.5]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-b9889f7ac1379ef477d3--"
+      }
+    },
+    {
+      "id": "armor-block-e465b7594b2433a77396",
+      "label": "Armor \u00b7 concave 45\u00b0 \u00b7 1.5 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.5392135381698608, -1.0883883237838745, 0.0],
+        "max": [0.3812815546989441, 0.0, 1.5]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.5392135381698608, -1.0883883237838745, 0.0],
+          "max": [0.3812815546989441, 0.0, 1.5]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-e465b7594b2433a77396--"
+      }
+    },
+    {
+      "id": "armor-block-c3e51deb6848ddb10001",
+      "label": "Armor \u00b7 convex 63.4\u00b0 \u00b7 1.5 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.375, -1.0, 0.0],
+        "max": [1.0621322393417358, 0.3354102075099945, 1.5]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.375, -1.0, 0.0],
+          "max": [1.0621322393417358, 0.3354102075099945, 1.5]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-c3e51deb6848ddb10001--"
+      }
+    },
+    {
+      "id": "armor-block-b8ebf4aa6991e098a6d3",
+      "label": "Armor \u00b7 concave 63.4\u00b0 \u00b7 1.5 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.7430340051651001, -1.111803412437439, 0.0],
+        "max": [0.33229491114616394, 0.0, 1.5]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.7430340051651001, -1.111803412437439, 0.0],
+          "max": [0.33229491114616394, 0.0, 1.5]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-b8ebf4aa6991e098a6d3--"
+      }
+    },
+    {
+      "id": "armor-block-bdffe58423963910d02b",
+      "label": "Armor \u00b7 convex 76\u00b0 \u00b7 1.5 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.375, -1.0, 0.0],
+        "max": [1.0610933303833008, 0.3638034462928772, 1.5]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.375, -1.0, 0.0],
+          "max": [1.0610933303833008, 0.3638034462928772, 1.5]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-bdffe58423963910d02b--"
+      }
+    },
+    {
+      "id": "armor-block-098c86a675e3e951ace9",
+      "label": "Armor \u00b7 concave 76\u00b0 \u00b7 1.5 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.9057763814926147, -1.1212677955627441, 0.0],
+        "max": [0.21968305110931396, 0.0, 1.5]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.9057763814926147, -1.1212677955627441, 0.0],
+          "max": [0.21968305110931396, 0.0, 1.5]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-098c86a675e3e951ace9--"
+      }
+    },
+    {
+      "id": "armor-block-0f4edf0963be28b7952b",
+      "label": "Armor \u00b7 convex 82.9\u00b0 \u00b7 1.5 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.375, -1.0, 0.0],
+        "max": [1.0387909412384033, 0.3721041977405548, 1.5]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.375, -1.0, 0.0],
+          "max": [1.0387909412384033, 0.3721041977405548, 1.5]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-0f4edf0963be28b7952b--"
+      }
+    },
+    {
+      "id": "armor-block-eae57557166988330b70",
+      "label": "Armor \u00b7 concave 82.9\u00b0 \u00b7 1.5 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-1.007782220840454, -1.1240347623825073, 0.0],
+        "max": [0.125, 0.0, 1.5]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-1.007782220840454, -1.1240347623825073, 0.0],
+          "max": [0.125, 0.0, 1.5]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-eae57557166988330b70--"
+      }
+    },
+    {
+      "id": "armor-block-54094cde041737badaf2",
+      "label": "Armor \u00b7 convex 90\u00b0 \u00b7 1.5 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-0.375, -1.0, 0.0],
+        "max": [1.0, 0.375, 1.5]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-0.375, -1.0, 0.0],
+          "max": [1.0, 0.375, 1.5]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-54094cde041737badaf2--"
+      }
+    },
+    {
+      "id": "armor-block-2cce8582f894eec65110",
+      "label": "Armor \u00b7 concave 90\u00b0 \u00b7 1.5 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [-1.125, -1.125, 0.0],
+        "max": [0.0, 0.0, 1.5]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [-1.125, -1.125, 0.0],
+          "max": [0.0, 0.0, 1.5]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-2cce8582f894eec65110--"
+      }
+    },
+    {
+      "id": "armor-block-aabac0a89386b4aa9045",
+      "label": "Armor \u00b7 2 \u00d7 3 m \u00b7 identity",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [2.0, 0.0, 3.0]
+      },
+      "visual": {
+        "url": "/assets/shipyard/armor-r005/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "designId": "shipyard.hull.armor-block-review",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [2.0, 0.0, 3.0]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-block-aabac0a89386b4aa9045--"
+      }
+    }
+  ],
+  "layout": {
+    "appearance": {
+      "accent": "#45d8f5",
+      "kit": "Unassigned / draft proxy",
+      "primary": "#6d8795"
+    },
+    "assembly": {
+      "parts": [
+        {
+          "assetId": "part-c0b6b036f5b3dd8bd2f3",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000066",
+          "position": [0, 10.25, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-d9f37a5f7ea6e8d13254",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000065",
+          "position": [0, 11.25, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c03ec0260cd7329050a8",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000068",
+          "position": [-4.6875, -6, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c03ec0260cd7329050a8",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000067",
+          "position": [-4.6875, -2, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c03ec0260cd7329050a8",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000069",
+          "position": [-4.6875, 2, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c03ec0260cd7329050a8",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000071",
+          "position": [4.6875, -6, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c03ec0260cd7329050a8",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000070",
+          "position": [4.6875, -2, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c03ec0260cd7329050a8",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000072",
+          "position": [4.6875, 2, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-77728ecc8ad36b0ff45f",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000100",
+          "position": [-3.6875, -6, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-acbbef7209c4ef100693",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000103",
+          "position": [-3.6875, -2.375, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-acbbef7209c4ef100693",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000102",
+          "position": [-3.6875, -1.5, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-acbbef7209c4ef100693",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000101",
+          "position": [-3.6875, -0.625, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c06e4f5f6f6dace38e41",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000106",
+          "position": [-4.0625, 2.0625, 0.1875],
+          "removedCells": [],
+          "rotation": 1.5707963267948966
+        },
+        {
+          "assetId": "part-5382f8dbbeb54e663d33",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000107",
+          "position": [-3.3125, 2.0625, 0.1875],
+          "removedCells": [],
+          "rotation": 1.5707963267948966
+        },
+        {
+          "assetId": "part-c06e4f5f6f6dace38e41",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000108",
+          "position": [-4.0625, 3.4375, 0.1875],
+          "removedCells": [],
+          "rotation": 1.5707963267948966
+        },
+        {
+          "assetId": "part-5382f8dbbeb54e663d33",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000109",
+          "position": [-3.3125, 3.4375, 0.1875],
+          "removedCells": [],
+          "rotation": 1.5707963267948966
+        },
+        {
+          "assetId": "part-c41467ac46f6b350df24",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000099",
+          "position": [3.6875, -6, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-cc610ba071b8eb38ab8c",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000105",
+          "position": [3.6875, -1.5, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-73df516feb786d73fc5e",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000104",
+          "position": [3.6875, 3, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-75910d7a0d27dfc17aaf",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000063",
+          "position": [-1.3125, 11.25, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-0f14bf002f4c11854337",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000064",
+          "position": [1.25, 11.25, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-e8b51ac6443c73becfcb",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000054",
+          "position": [-3.625, -12.5, 0.125],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-4d754a140cc642ded990",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000056",
+          "position": [3.625, -12.5, 0.125],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-e15ef10ca93701b58ccb",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000055",
+          "position": [0, -11.9375, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-a9dcbf6707ca20039a5c",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000057",
+          "position": [-6.5625, -6.5, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-a9dcbf6707ca20039a5c",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000058",
+          "position": [-6.5625, 6.5, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-a06cfaab58b430855803",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000059",
+          "position": [6.5625, -6.5, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-a06cfaab58b430855803",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000060",
+          "position": [6.5625, 6.5, 0.25],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-393498d8c8af6149ef28",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000061",
+          "position": [-6.5, 8, 0.3125],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-393498d8c8af6149ef28",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000062",
+          "position": [6.4375, 8, 0.3125],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-48cf8b9cf29d0b226ec4",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000081",
+          "position": [3, 9, 1.3125],
+          "removedCells": [],
+          "rotation": 1.5707963267948966
+        },
+        {
+          "assetId": "part-624989ddf1192dceee75",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000082",
+          "position": [-3, 11, 1.3125],
+          "removedCells": [],
+          "rotation": -1.5707963267948966
+        },
+        {
+          "assetId": "part-b70713e9836547941e3f",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000078",
+          "position": [3, 11, 1.3125],
+          "removedCells": [],
+          "rotation": 1.5707963267948966
+        },
+        {
+          "assetId": "part-b70713e9836547941e3f",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000079",
+          "position": [-1, 13, 1.3125],
+          "removedCells": [],
+          "rotation": 3.141592653589793
+        },
+        {
+          "assetId": "part-4a1d28344c5ee632b249",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000080",
+          "position": [1, 13, 1.3125],
+          "removedCells": [],
+          "rotation": 3.141592653589793
+        },
+        {
+          "assetId": "part-70c422bca2d395c35ecb",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000076",
+          "position": [1, 9, 0.1875],
+          "removedCells": [],
+          "rotation": 3.141592653589793
+        },
+        {
+          "assetId": "part-1d133c308abd8b172d95",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000089",
+          "position": [-3, 9, 2.625],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-14404bc85f3a72ad3ab8",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000073",
+          "position": [-3, 7, 2.625],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-14404bc85f3a72ad3ab8",
+          "decals": [
+            {
+              "color": "#292d3b",
+              "face": "top",
+              "id": "frontier-ship-name",
+              "kind": "text",
+              "position": [1, 1.5, 0.3],
+              "rotation": 0,
+              "size": [5.3, 1.35],
+              "text": "WAYFARER"
+            }
+          ],
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000074",
+          "position": [-1, 7, 2.625],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-14404bc85f3a72ad3ab8",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000075",
+          "position": [1, 7, 2.625],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-e7dddd4628bd6be8efb7",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000090",
+          "position": [-2.625, 8.625, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-e7dddd4628bd6be8efb7",
+          "flipped": false,
+          "id": "30000000-0000-4000-8000-000000000091",
+          "position": [1, 8.625, 0.1875],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "id": "4d26360a-ee6d-5353-943d-4218b68fff38",
+          "assetId": "armor-block-a6743a347ee2fcdd1ce9",
+          "position": [-4.625, -9.0, 0.1875],
+          "rotation": 0.0,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "a8ccd504-931d-570b-b59a-a6f87f6b35f9",
+          "assetId": "armor-block-a6743a347ee2fcdd1ce9",
+          "position": [-2.625, -9.0, 0.1875],
+          "rotation": 0.0,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "ddbbba45-afbd-53ec-b46a-04d9f3b18440",
+          "assetId": "armor-block-a6743a347ee2fcdd1ce9",
+          "position": [-0.625, -9.0, 0.1875],
+          "rotation": 0.0,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "f8457df6-6471-5307-ae80-c62b3353dd34",
+          "assetId": "armor-block-a6743a347ee2fcdd1ce9",
+          "position": [1.375, -9.0, 0.1875],
+          "rotation": 0.0,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "e2570aaf-c2a5-555c-9294-d1ffdb55f6f6",
+          "assetId": "armor-block-62ad930c45227d5287a0",
+          "position": [3.375, -9.0, 0.1875],
+          "rotation": 0.0,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "2af0db24-e7f9-57b8-a867-a3d01eeb5acc",
+          "assetId": "armor-block-e1affbf19f4b7fa30311",
+          "position": [-5.0, -9.0, 0.1875],
+          "rotation": -1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "1f2e1afc-4a51-5778-8930-5d17c5fe6871",
+          "assetId": "armor-block-926961217b49c21a526b",
+          "position": [5.0, -8.625, 0.1875],
+          "rotation": 1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "88240657-87e5-56ad-981e-656772ce9356",
+          "assetId": "armor-block-926961217b49c21a526b",
+          "position": [5.0, -6.625, 0.1875],
+          "rotation": 1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "6ce22580-82ce-5405-8de6-17d58644880c",
+          "assetId": "armor-block-137adc2153a878094d60",
+          "position": [5.0, -4.625, 0.1875],
+          "rotation": 1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "7ff4bda4-a283-5958-b83d-4071f626424a",
+          "assetId": "armor-block-137adc2153a878094d60",
+          "position": [5.0, -2.625, 0.1875],
+          "rotation": 1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "82be8b90-3cc1-5017-9872-045ba553576e",
+          "assetId": "armor-block-e40f082abbcbe4f55a62",
+          "position": [5.000000000000001, -0.625, 0.1875],
+          "rotation": 1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "9ce272e3-1d1e-5081-aa5f-558ae0133742",
+          "assetId": "armor-block-a6743a347ee2fcdd1ce9",
+          "position": [5.000000000000001, 1.375, 0.1875],
+          "rotation": 1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "e9300146-936a-5c7f-921a-0bc63ecbd51d",
+          "assetId": "armor-block-649dcbda86c17c7952c9",
+          "position": [5.000000000000001, 3.375, 0.1875],
+          "rotation": 1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "d5145302-6f18-54ba-9360-500a7522c477",
+          "assetId": "armor-block-a6743a347ee2fcdd1ce9",
+          "position": [5.000000000000001, 5.375, 0.1875],
+          "rotation": 1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "ce8dcbb5-68dd-546d-8418-5cf990a6e83a",
+          "assetId": "armor-block-62ad930c45227d5287a0",
+          "position": [5.000000000000001, 7.375, 0.1875],
+          "rotation": 1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "e253a836-e527-5868-8ecf-5f19aebc1ec4",
+          "assetId": "armor-block-e1affbf19f4b7fa30311",
+          "position": [5.0, -9.0, 0.1875],
+          "rotation": 0.0,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "4924f276-3a5e-50dc-894c-580617991a66",
+          "assetId": "armor-block-2b558e7ac8eb4184c2af",
+          "position": [4.625, 9.0, 0.1875],
+          "rotation": 3.141592653589793,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "adb9cfc7-6c0a-51da-ab70-fe58fa6b9ed7",
+          "assetId": "armor-block-e1affbf19f4b7fa30311",
+          "position": [5.0, 9.0, 0.1875],
+          "rotation": 1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "a7c04f24-ea6f-56e9-95e8-3f5d8a70171a",
+          "assetId": "armor-block-b235419d9a165659f2e8",
+          "position": [3.0, 10.125, 0.1875],
+          "rotation": 1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "cfecc6a1-d510-547e-89b0-f4f66d1cf0a4",
+          "assetId": "armor-block-fabbd7b0578ea00b5791",
+          "position": [3.0, 9.0, 0.1875],
+          "rotation": 3.141592653589793,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "2ed2e3ee-5a74-5795-984d-1834bbbc58ee",
+          "assetId": "armor-block-e120acd13dae3b493668",
+          "position": [2.7348349570550448, 11.265165042944956, 0.1875],
+          "rotation": 2.356194490192345,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "a6ed5671-88ad-5785-a34a-2f7c486f3c32",
+          "assetId": "armor-block-e120acd13dae3b493668",
+          "position": [2.0, 12.0, 0.1875],
+          "rotation": 2.356194490192345,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "1e4c0415-5de8-563c-82bf-e257272df1b4",
+          "assetId": "armor-block-70b34597548b284a0a7f",
+          "position": [3.0, 11.0, 0.1875],
+          "rotation": 1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "4e07a840-01fd-5ec1-b366-38d1fd8e162e",
+          "assetId": "armor-block-98477a5dd3e88b931589",
+          "position": [0.625, 13.0, 0.1875],
+          "rotation": 3.141592653589793,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "15f8b790-24ef-5103-858e-929974a1f6b6",
+          "assetId": "armor-block-70b34597548b284a0a7f",
+          "position": [1.0, 13.0, 0.1875],
+          "rotation": 2.356194490192345,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "3b00c4bf-fa33-5b02-a3d8-665e4fc29b18",
+          "assetId": "armor-block-e120acd13dae3b493668",
+          "position": [-1.2651650429449552, 12.734834957055044, 0.1875],
+          "rotation": -2.356194490192345,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "ce92e773-9665-552b-84cd-be82f8ce12a0",
+          "assetId": "armor-block-e120acd13dae3b493668",
+          "position": [-2.0, 12.0, 0.1875],
+          "rotation": -2.356194490192345,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "0789704f-f3f0-5e27-9976-448a195213be",
+          "assetId": "armor-block-70b34597548b284a0a7f",
+          "position": [-1.0, 13.0, 0.1875],
+          "rotation": 3.141592653589793,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "4c9cb3e0-9d7e-56bf-a59b-3f44615aae1a",
+          "assetId": "armor-block-b235419d9a165659f2e8",
+          "position": [-3.0, 10.625, 0.1875],
+          "rotation": -1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "9a19aaf1-f069-5f1d-8cc3-a47181237356",
+          "assetId": "armor-block-70b34597548b284a0a7f",
+          "position": [-3.0, 11.0, 0.1875],
+          "rotation": -2.356194490192345,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "e433fca5-e2a1-53e2-9180-41e77ece62c6",
+          "assetId": "armor-block-2b558e7ac8eb4184c2af",
+          "position": [-4.125, 9.0, 0.1875],
+          "rotation": 3.141592653589793,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "9d522ba9-8986-5add-818b-d6d14bbea871",
+          "assetId": "armor-block-a7ef36310c50dc565d00",
+          "position": [-3.0, 9.0, 0.1875],
+          "rotation": -1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "040aaeb9-4d78-52a8-a2ac-897b2f0e2f2d",
+          "assetId": "armor-block-a6743a347ee2fcdd1ce9",
+          "position": [-5.0, 8.625, 0.1875],
+          "rotation": -1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "c3a53f02-2e84-5ce6-b282-09d90d8fae79",
+          "assetId": "armor-block-a6743a347ee2fcdd1ce9",
+          "position": [-5.0, 6.625, 0.1875],
+          "rotation": -1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "f803974a-d174-5fdf-9250-853349a936aa",
+          "assetId": "armor-block-649dcbda86c17c7952c9",
+          "position": [-5.0, 4.625, 0.1875],
+          "rotation": -1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "ee057564-94c4-5158-93c9-1f09961a71b3",
+          "assetId": "armor-block-a6743a347ee2fcdd1ce9",
+          "position": [-5.0, 2.625, 0.1875],
+          "rotation": -1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "b0ebe8ef-27a2-598d-a857-940270f3b2b6",
+          "assetId": "armor-block-e40f082abbcbe4f55a62",
+          "position": [-4.999999999999999, 0.625, 0.1875],
+          "rotation": -1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "085f8d42-2eb0-5ae6-8d28-d49f52765254",
+          "assetId": "armor-block-137adc2153a878094d60",
+          "position": [-4.999999999999999, -1.375, 0.1875],
+          "rotation": -1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "640491f1-4319-5051-bf66-cbae7f499ea7",
+          "assetId": "armor-block-137adc2153a878094d60",
+          "position": [-4.999999999999999, -3.375, 0.1875],
+          "rotation": -1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "e4659762-0a4b-5831-b8f4-d211db60354a",
+          "assetId": "armor-block-926961217b49c21a526b",
+          "position": [-4.999999999999999, -5.375, 0.1875],
+          "rotation": -1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "8d8569e4-434c-5265-926d-39812832dfa5",
+          "assetId": "armor-block-4896cc9388c49fcb9b2e",
+          "position": [-4.999999999999999, -7.375, 0.1875],
+          "rotation": -1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "048e34aa-0716-55e7-9721-ebe169184a8d",
+          "assetId": "armor-block-e1affbf19f4b7fa30311",
+          "position": [-5.0, 9.0, 0.1875],
+          "rotation": 3.141592653589793,
+          "flipped": false,
+          "removedCells": []
+        }
+      ],
+      "revisions": {
+        "part-0211e6d7960f233accb7": "9fc96538375bfdec44b3ac832d9100b1cdfcbd2f751654fa30ff540bddb1440a",
+        "part-08dac7402c764c4d89d7": "c84f5950fa0e31e1f966e043706993f1e2b2edaaf6149aa5f725f93eb472b995",
+        "part-0f14bf002f4c11854337": "5bbe40f3637bc640bc26557c3c20e3d9e452587395b0ca7c05d45793ef5e014a",
+        "part-14404bc85f3a72ad3ab8": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-151314086c02e30e06f4": "3e1fa2b7d8b302e602844c9ae0ae38a5c7c2b6090d86b05fe70bbb5852de4afd",
+        "part-1d133c308abd8b172d95": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-357cf42235c1a190e1d6": "3b25ca7fcde2fd054076d0b84fc463701230ef2f68cfbc638a1d44173a7d74a9",
+        "part-393498d8c8af6149ef28": "retained-part-library-v1",
+        "part-437732483fa4d7acbcbc": "6992c7d5fb25376f3d12d881f66ab002108ed275a63661ca84025968ca3cadfe",
+        "part-48cf8b9cf29d0b226ec4": "65195aefcb5bf72da62839db8fec6123188af9f5ac17024cbe7d6d2cf8959b79",
+        "part-4a1d28344c5ee632b249": "d6859439499041ad474afd3d07b4fa1a67512eb7d90fb99720edfbfe5301a5f4",
+        "part-4c25a5fd9da0bce537f5": "59dd466fd25f5555fd8d29bd4183c2e5c7dd99884586bc7f251a2736fbe396d1",
+        "part-4d754a140cc642ded990": "retained-part-library-v1",
+        "part-5382f8dbbeb54e663d33": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+        "part-540c83fc49ee792d9a4a": "118f1f2406b0c699517be811d77e585f49d5b9c7d650013f873885dbe74329a5",
+        "part-5b7cee528aeb6959eb7c": "ae5e7d1e0100d5a1fcf7cc341a2d3504cbd0eb8f98548e9af2f73c3f8aee861f",
+        "part-5cd7ebc9a8d894fb2b3a": "a47626d013c69d22eeef2a6e55b87b4fc70ccecd0f01ff4ae7b84188e03f6627",
+        "part-624989ddf1192dceee75": "9dcf37d5a749a152be66657b100a8d83c59856b4c3b4dc967387bf000723e792",
+        "part-62c859bcc51b318b2c65": "5f9dcc01666d63a4aa702b92f50a8abb4ccbe99e04b11cb87bb9496ac2c07258",
+        "part-63a0c40bbb71cfeba4dd": "3d0fd05cf021b3b5badf68e2e9f1011b5b621e64355390f61508a18a5e4cf61d",
+        "part-64b068a5a6e987c1d518": "00b58ac661647cf4be62502e7e92face84f918524eb43cabc6440fd6b3571037",
+        "part-679e9e22f0af30b070a3": "b2905c1756dfa3e13467be9e3d35b03017cb38d64d984ffb02e7efeb3322d559",
+        "part-70c422bca2d395c35ecb": "825a836cb96f74363c83c1d5be4efc1a11df0ef71bbdafff8b2abb222cebdad6",
+        "part-73df516feb786d73fc5e": "3692ffd29f75026ef856af18a0a59538814b4836e8315d98c48e3c76d00735a8",
+        "part-75910d7a0d27dfc17aaf": "be3a73faed7b4a2c9e4c7b89477df3c1424284dd3e71ca84438fb049a8b3b5a8",
+        "part-77728ecc8ad36b0ff45f": "02ada2cf811e7893ffd98d8b6231974d111238e2dddf0ecd96739ff6b68a2cd3",
+        "part-77e9c39b3c50d6dd66f7": "83162077528937afc25358b0a88e6b58e7151a4981f3030df853b6438ac5fd77",
+        "part-9ab3a7a3dbc68586c530": "c7bb6a556bb6994ace8c1bdbd41ccd5fd4eba7bf8d6fdf1058e70a470854eb40",
+        "part-9b292ad82d675d682b8b": "25be3e2df4292455bf63148e6934a73599c2ad6dbe09644118f9b3d63efefc79",
+        "part-9f79f3a40a72f9b7ad4a": "1b787888f92e9a7691337c02b297a8895703544003ddcec8eb655ff1ffe91af3",
+        "part-a06cfaab58b430855803": "retained-part-library-v1",
+        "part-a9dcbf6707ca20039a5c": "retained-part-library-v1",
+        "part-acbbef7209c4ef100693": "1e96a18539191ea08d48b4134c2820043674f2c3b0960ce583ae1620ba5a81a8",
+        "part-b3a1decd8a0336ac2030": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-b70713e9836547941e3f": "9495f6771dbeafaa24530562acd95a744414674853d7a13e45d2866f59e42526",
+        "part-b9ca98146302dec24dd6": "9c8a425853a723547b789b872f282ad03e9efafa6d1724ec0364a721b3ec3784",
+        "part-c03ec0260cd7329050a8": "f527af1e44fc1570355c2268055b7b31343c45849a807b40993cf516c263093a",
+        "part-c06e4f5f6f6dace38e41": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+        "part-c0b6b036f5b3dd8bd2f3": "da38770d060f4c5397b2d0ae8ab01258d42ea1f12884cac3ed628c3b110c5a9c",
+        "part-c41467ac46f6b350df24": "a5b58c4707df1e37aa70fa40e7d052e63be141df7703cd75337abe0e7610b4c7",
+        "part-c9e43b70cbc1f9f77b1f": "41127699fdae0a4d31b29a7b9fc1845e3ddfa280f2e7f3f36d1ec857d236dc75",
+        "part-cc610ba071b8eb38ab8c": "a8e5d2fa478e42723ffc82a845b223051a8f8878ece3c9ea80eb75e4a5021a3b",
+        "part-d16f3e3a2db2188e5ed6": "dec0304492e5f58b968d1c547183132e21f9ee9333b607e195bcf14d1517afe2",
+        "part-d3e5e45b0f3f60b3fa0a": "3b6ca75b0a2302fb6f2f4456988f9f19d9266602aff0e1e89da921f4427caad9",
+        "part-d9f37a5f7ea6e8d13254": "713d8a83c902d24bb59e278eb2436b087ebdf06fbbbbbd5daa7d2340fc782a49",
+        "part-e15ef10ca93701b58ccb": "retained-part-library-v1",
+        "part-e43ac94780eb7a1adc50": "47ebe1c2493985afacc9e35b18b33ba32ef52a9bb72a0bbf3706d6cde30741cf",
+        "part-e7dddd4628bd6be8efb7": "53d58e142047665409aadeb232a83f0c5a1901da705234f2ffc8bda4f211e5c9",
+        "part-e8b51ac6443c73becfcb": "retained-part-library-v1",
+        "part-e965a5502d9fe4c25406": "e34ba9c660088550058053cf9dff5a93bdc1b198d9262ba9f6f3acc05644a2fa",
+        "part-ecd751f76e602db806a3": "29ef84b9b36290094d9053f7635fe160ca5a1767af14eecc2d965ae7405f5f1d",
+        "part-f85394947090b7609d41": "61b12a335a653486b1d12371ecd5b9159821294a128fda1e00021e56e613aef7",
+        "armor-block-f94c0ba2aa04f31fb6a5": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-7c657ee01a90318dec3e": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-fe79dfaf2e1542dbd67c": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-9ca59f6db637d3afceb9": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-70b34597548b284a0a7f": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-cd2f17ea0cf58cb60b7f": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-1676c64748013f376c0a": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-a6743a347ee2fcdd1ce9": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-62ad930c45227d5287a0": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-e1affbf19f4b7fa30311": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-926961217b49c21a526b": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-137adc2153a878094d60": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-e40f082abbcbe4f55a62": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-649dcbda86c17c7952c9": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-2b558e7ac8eb4184c2af": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-b235419d9a165659f2e8": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-fabbd7b0578ea00b5791": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-e120acd13dae3b493668": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-98477a5dd3e88b931589": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-a7ef36310c50dc565d00": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-4896cc9388c49fcb9b2e": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-d3fa0e462a519b5f36f8": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-9069dfa847efce4fe41e": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-db7ed5477c90dcffe64f": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-05c9d73568be3ad2e6b8": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-15a405777ecce0335b21": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-43965fec43941bd88fcc": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-af0cc716991642374212": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-57b9352f1f040b7f0157": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-8904b2af208c0ad89e05": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-d475f516a65773f4c21e": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-97e82a0a2ae19def921f": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-57b42efda0a7a7d9ffdd": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-7c3af440c13bfbd854f7": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-075003ca42dee3ad88d4": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-137dbd4b0d514b60c4c3": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-cb4ec70047162b4093b9": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-131df6537810373834cb": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-79d4507d7b58226cbe80": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-edc8f579626e43feb839": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-e7911c4aae9fd2fecbb8": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-649b14141fa27ecd47e6": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-fc5a10216de60493ab08": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-204079fa21328c629295": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-50c9e43a8c6ba5af5141": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-e9bc6213d0d76ca7f44b": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-f731b556d8884e7d7557": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-207cbce0274b3e836291": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-975ae6c56dd5c22ae720": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-0609cba1e9e5472c20b6": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-fbbf224dbd286d805ac1": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-49384936da4b4c531fcc": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-e8152b71edd21a544d55": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-c2da9d9d47c98c01ceb8": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-e7a26fe3b6e058621d39": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-8233c1a3a948a91de0c7": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-a252a121923cfb248f94": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-981bd24736c640366791": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-7bcf58fae727b968e126": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-825d61aeb52f08f61c14": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-bb2e153a868e9214017f": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-b5debfc1efb6816ed06d": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-19cb454187f2b808d0f7": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-8c601c2467812dda7c97": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-04506299cdccdc3362d3": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-b9889f7ac1379ef477d3": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-e465b7594b2433a77396": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-c3e51deb6848ddb10001": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-b8ebf4aa6991e098a6d3": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-bdffe58423963910d02b": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-098c86a675e3e951ace9": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-0f4edf0963be28b7952b": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-eae57557166988330b70": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-54094cde041737badaf2": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-2cce8582f894eec65110": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "armor-block-aabac0a89386b4aa9045": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8"
+      },
+      "schema": "sidereal.layout-assembly.v1",
+      "source": null
+    },
+    "compiler": "floorplan-1",
+    "decks": [
+      {
+        "ceiling": 102,
+        "elevation": 0,
+        "holes": [],
+        "id": "wayfarer-main-deck",
+        "name": "Main deck",
+        "order": 0,
+        "roof": false
+      }
+    ],
+    "dependencies": [
+      {
+        "id": "floor-shapes",
+        "revision": "lattice-shapes-1"
+      },
+      {
+        "id": "shipyard.hull.armor-block-review",
+        "revision": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8"
+      }
+    ],
+    "fittings": [],
+    "id": "30000000-0000-4000-8000-000000000001",
+    "kind": "ship",
+    "legacy": null,
+    "name": "Wayfarer \u00b7 armor review",
+    "nodes": [],
+    "openings": [
+      {
+        "a": [-48, -48],
+        "b": [-48, -16],
+        "clearance": 64,
+        "deckId": "wayfarer-main-deck",
+        "id": "port-door--1",
+        "kind": "passage",
+        "partitionId": "port-corridor",
+        "sill": 0
+      },
+      {
+        "a": [-48, -176],
+        "b": [-48, -144],
+        "clearance": 64,
+        "deckId": "wayfarer-main-deck",
+        "id": "port-door--5",
+        "kind": "passage",
+        "partitionId": "port-corridor",
+        "sill": 0
+      },
+      {
+        "a": [-48, 80],
+        "b": [-48, 112],
+        "clearance": 64,
+        "deckId": "wayfarer-main-deck",
+        "id": "port-door-3",
+        "kind": "passage",
+        "partitionId": "port-corridor",
+        "sill": 0
+      },
+      {
+        "a": [-48, 208],
+        "b": [-48, 240],
+        "clearance": 64,
+        "deckId": "wayfarer-main-deck",
+        "id": "port-door-7",
+        "kind": "passage",
+        "partitionId": "port-corridor",
+        "sill": 0
+      },
+      {
+        "a": [64, -48],
+        "b": [64, -16],
+        "clearance": 64,
+        "deckId": "wayfarer-main-deck",
+        "id": "starboard-door--1",
+        "kind": "passage",
+        "partitionId": "starboard-corridor",
+        "sill": 0
+      },
+      {
+        "a": [64, -176],
+        "b": [64, -144],
+        "clearance": 64,
+        "deckId": "wayfarer-main-deck",
+        "id": "starboard-door--5",
+        "kind": "passage",
+        "partitionId": "starboard-corridor",
+        "sill": 0
+      },
+      {
+        "a": [64, 80],
+        "b": [64, 112],
+        "clearance": 64,
+        "deckId": "wayfarer-main-deck",
+        "id": "starboard-door-3",
+        "kind": "passage",
+        "partitionId": "starboard-corridor",
+        "sill": 0
+      },
+      {
+        "a": [64, 208],
+        "b": [64, 240],
+        "clearance": 64,
+        "deckId": "wayfarer-main-deck",
+        "id": "starboard-door-7",
+        "kind": "passage",
+        "partitionId": "starboard-corridor",
+        "sill": 0
+      }
+    ],
+    "partitions": [
+      {
+        "a": [-48, -224],
+        "b": [-48, 256],
+        "deckId": "wayfarer-main-deck",
+        "id": "port-corridor",
+        "seal": "design-sealed"
+      },
+      {
+        "a": [-160, -128],
+        "b": [-48, -128],
+        "deckId": "wayfarer-main-deck",
+        "id": "port-divider--4",
+        "seal": "design-sealed"
+      },
+      {
+        "a": [-160, -224],
+        "b": [-48, -224],
+        "deckId": "wayfarer-main-deck",
+        "id": "port-divider--7",
+        "seal": "design-sealed"
+      },
+      {
+        "a": [-160, 32],
+        "b": [-48, 32],
+        "deckId": "wayfarer-main-deck",
+        "id": "port-divider-1",
+        "seal": "design-sealed"
+      },
+      {
+        "a": [-160, 160],
+        "b": [-48, 160],
+        "deckId": "wayfarer-main-deck",
+        "id": "port-divider-5",
+        "seal": "design-sealed"
+      },
+      {
+        "a": [-160, 256],
+        "b": [-48, 256],
+        "deckId": "wayfarer-main-deck",
+        "id": "port-divider-8",
+        "seal": "design-sealed"
+      },
+      {
+        "a": [64, -224],
+        "b": [64, 256],
+        "deckId": "wayfarer-main-deck",
+        "id": "starboard-corridor",
+        "seal": "design-sealed"
+      },
+      {
+        "a": [64, -128],
+        "b": [160, -128],
+        "deckId": "wayfarer-main-deck",
+        "id": "starboard-divider--4",
+        "seal": "design-sealed"
+      },
+      {
+        "a": [64, -224],
+        "b": [160, -224],
+        "deckId": "wayfarer-main-deck",
+        "id": "starboard-divider--7",
+        "seal": "design-sealed"
+      },
+      {
+        "a": [64, 32],
+        "b": [160, 32],
+        "deckId": "wayfarer-main-deck",
+        "id": "starboard-divider-1",
+        "seal": "design-sealed"
+      },
+      {
+        "a": [64, 160],
+        "b": [160, 160],
+        "deckId": "wayfarer-main-deck",
+        "id": "starboard-divider-5",
+        "seal": "design-sealed"
+      },
+      {
+        "a": [64, 256],
+        "b": [160, 256],
+        "deckId": "wayfarer-main-deck",
+        "id": "starboard-divider-8",
+        "seal": "design-sealed"
+      }
+    ],
+    "playableDeckId": "wayfarer-main-deck",
+    "rooms": [
+      {
+        "access": "crew",
+        "boundaryIds": [],
+        "deckId": "wayfarer-main-deck",
+        "floorTheme": "native-floor-r002",
+        "id": "30000000-0000-4000-8000-000000000148",
+        "name": "bridge",
+        "seed": [0, 320],
+        "type": "bridge",
+        "wallTheme": "inset250"
+      },
+      {
+        "access": "crew",
+        "boundaryIds": [],
+        "deckId": "wayfarer-main-deck",
+        "floorTheme": "native-floor-r002",
+        "id": "30000000-0000-4000-8000-000000000149",
+        "name": "central corridor",
+        "seed": [0, 0],
+        "type": "central corridor",
+        "wallTheme": "inset250"
+      },
+      {
+        "access": "crew",
+        "boundaryIds": [],
+        "deckId": "wayfarer-main-deck",
+        "floorTheme": "native-floor-r002",
+        "id": "30000000-0000-4000-8000-000000000150",
+        "name": "crew",
+        "seed": [112, -192],
+        "type": "crew",
+        "wallTheme": "inset250"
+      },
+      {
+        "access": "crew",
+        "boundaryIds": [],
+        "deckId": "wayfarer-main-deck",
+        "floorTheme": "native-floor-r002",
+        "id": "30000000-0000-4000-8000-000000000151",
+        "name": "engineering",
+        "seed": [-112, -192],
+        "type": "engineering",
+        "wallTheme": "inset250"
+      },
+      {
+        "access": "crew",
+        "boundaryIds": [],
+        "deckId": "wayfarer-main-deck",
+        "floorTheme": "native-floor-r002",
+        "id": "30000000-0000-4000-8000-000000000152",
+        "name": "hydroponics",
+        "seed": [-112, -64],
+        "type": "hydroponics",
+        "wallTheme": "inset250"
+      },
+      {
+        "access": "crew",
+        "boundaryIds": [],
+        "deckId": "wayfarer-main-deck",
+        "floorTheme": "native-floor-r002",
+        "id": "30000000-0000-4000-8000-000000000153",
+        "name": "lounge",
+        "seed": [112, 104],
+        "type": "lounge",
+        "wallTheme": "inset250"
+      },
+      {
+        "access": "crew",
+        "boundaryIds": [],
+        "deckId": "wayfarer-main-deck",
+        "floorTheme": "native-floor-r002",
+        "id": "30000000-0000-4000-8000-000000000154",
+        "name": "medbay",
+        "seed": [112, -64],
+        "type": "medbay",
+        "wallTheme": "inset250"
+      },
+      {
+        "access": "crew",
+        "boundaryIds": [],
+        "deckId": "wayfarer-main-deck",
+        "floorTheme": "native-floor-r002",
+        "id": "30000000-0000-4000-8000-000000000155",
+        "name": "port service",
+        "seed": [-112, 192],
+        "type": "port service",
+        "wallTheme": "inset250"
+      },
+      {
+        "access": "crew",
+        "boundaryIds": [],
+        "deckId": "wayfarer-main-deck",
+        "floorTheme": "native-floor-r002",
+        "id": "30000000-0000-4000-8000-000000000156",
+        "name": "starboard service",
+        "seed": [112, 192],
+        "type": "starboard service",
+        "wallTheme": "inset250"
+      },
+      {
+        "access": "crew",
+        "boundaryIds": [],
+        "deckId": "wayfarer-main-deck",
+        "floorTheme": "native-floor-r002",
+        "id": "30000000-0000-4000-8000-000000000157",
+        "name": "storage",
+        "seed": [-112, 104],
+        "type": "storage",
+        "wallTheme": "inset250"
+      }
+    ],
+    "routes": [],
+    "schema": "sidereal.layout-draft.v1",
+    "serviceConnections": [
+      {
+        "channel": "power",
+        "fromDeviceId": "30000000-0000-4000-8000-000000000100",
+        "fromPortId": "power-out",
+        "id": "30000000-0000-4000-8000-000000000158",
+        "toDeviceId": "30000000-0000-4000-8000-000000000054",
+        "toPortId": "power-in"
+      },
+      {
+        "channel": "power",
+        "fromDeviceId": "30000000-0000-4000-8000-000000000100",
+        "fromPortId": "power-out",
+        "id": "30000000-0000-4000-8000-000000000159",
+        "toDeviceId": "30000000-0000-4000-8000-000000000055",
+        "toPortId": "power-in"
+      },
+      {
+        "channel": "power",
+        "fromDeviceId": "30000000-0000-4000-8000-000000000100",
+        "fromPortId": "power-out",
+        "id": "30000000-0000-4000-8000-000000000160",
+        "toDeviceId": "30000000-0000-4000-8000-000000000056",
+        "toPortId": "power-in"
+      },
+      {
+        "channel": "power",
+        "fromDeviceId": "30000000-0000-4000-8000-000000000100",
+        "fromPortId": "power-out",
+        "id": "30000000-0000-4000-8000-000000000161",
+        "toDeviceId": "30000000-0000-4000-8000-000000000057",
+        "toPortId": "power-in"
+      },
+      {
+        "channel": "power",
+        "fromDeviceId": "30000000-0000-4000-8000-000000000100",
+        "fromPortId": "power-out",
+        "id": "30000000-0000-4000-8000-000000000162",
+        "toDeviceId": "30000000-0000-4000-8000-000000000058",
+        "toPortId": "power-in"
+      },
+      {
+        "channel": "power",
+        "fromDeviceId": "30000000-0000-4000-8000-000000000100",
+        "fromPortId": "power-out",
+        "id": "30000000-0000-4000-8000-000000000163",
+        "toDeviceId": "30000000-0000-4000-8000-000000000059",
+        "toPortId": "power-in"
+      },
+      {
+        "channel": "power",
+        "fromDeviceId": "30000000-0000-4000-8000-000000000100",
+        "fromPortId": "power-out",
+        "id": "30000000-0000-4000-8000-000000000164",
+        "toDeviceId": "30000000-0000-4000-8000-000000000060",
+        "toPortId": "power-in"
+      },
+      {
+        "channel": "power",
+        "fromDeviceId": "30000000-0000-4000-8000-000000000100",
+        "fromPortId": "power-out",
+        "id": "30000000-0000-4000-8000-000000000165",
+        "toDeviceId": "30000000-0000-4000-8000-000000000061",
+        "toPortId": "power-in"
+      },
+      {
+        "channel": "power",
+        "fromDeviceId": "30000000-0000-4000-8000-000000000100",
+        "fromPortId": "power-out",
+        "id": "30000000-0000-4000-8000-000000000166",
+        "toDeviceId": "30000000-0000-4000-8000-000000000062",
+        "toPortId": "power-in"
+      }
+    ],
+    "source": null,
+    "structure": {
+      "armor": [],
+      "boundaryTreatments": [
+        {
+          "a": [-48, -144],
+          "b": [-48, -48],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:port-corridor:-48,-144:-48,-48:treatment:-48,-144:-48,-48",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "port-corridor",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [-48, -16],
+          "b": [-48, 80],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:port-corridor:-48,-16:-48,80:treatment:-48,-16:-48,80",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "port-corridor",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [-48, -224],
+          "b": [-48, -176],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:port-corridor:-48,-224:-48,-176:treatment:-48,-224:-48,-176",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "port-corridor",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [-48, 112],
+          "b": [-48, 208],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:port-corridor:-48,112:-48,208:treatment:-48,112:-48,208",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "port-corridor",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [-48, 240],
+          "b": [-48, 256],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:port-corridor:-48,240:-48,256:treatment:-48,240:-48,256",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "port-corridor",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [-160, -128],
+          "b": [-48, -128],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:port-divider--4:-160,-128:-48,-128:treatment:-160,-128:-48,-128",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "port-divider--4",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [-160, -224],
+          "b": [-48, -224],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:port-divider--7:-160,-224:-48,-224:treatment:-160,-224:-48,-224",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "port-divider--7",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [-160, 32],
+          "b": [-48, 32],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:port-divider-1:-160,32:-48,32:treatment:-160,32:-48,32",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "port-divider-1",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [-160, 160],
+          "b": [-48, 160],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:port-divider-5:-160,160:-48,160:treatment:-160,160:-48,160",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "port-divider-5",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [-160, 256],
+          "b": [-48, 256],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:port-divider-8:-160,256:-48,256:treatment:-160,256:-48,256",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "port-divider-8",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [64, -144],
+          "b": [64, -48],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:starboard-corridor:64,-144:64,-48:treatment:64,-144:64,-48",
+          "reservationSide": "right",
+          "source": "partition",
+          "sourceAnchorId": "starboard-corridor",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [64, -16],
+          "b": [64, 80],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:starboard-corridor:64,-16:64,80:treatment:64,-16:64,80",
+          "reservationSide": "right",
+          "source": "partition",
+          "sourceAnchorId": "starboard-corridor",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [64, -224],
+          "b": [64, -176],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:starboard-corridor:64,-224:64,-176:treatment:64,-224:64,-176",
+          "reservationSide": "right",
+          "source": "partition",
+          "sourceAnchorId": "starboard-corridor",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [64, 112],
+          "b": [64, 208],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:starboard-corridor:64,112:64,208:treatment:64,112:64,208",
+          "reservationSide": "right",
+          "source": "partition",
+          "sourceAnchorId": "starboard-corridor",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [64, 240],
+          "b": [64, 256],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:starboard-corridor:64,240:64,256:treatment:64,240:64,256",
+          "reservationSide": "right",
+          "source": "partition",
+          "sourceAnchorId": "starboard-corridor",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [64, -128],
+          "b": [160, -128],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:starboard-divider--4:64,-128:160,-128:treatment:64,-128:160,-128",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "starboard-divider--4",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [64, -224],
+          "b": [160, -224],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:starboard-divider--7:64,-224:160,-224:treatment:64,-224:160,-224",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "starboard-divider--7",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [64, 32],
+          "b": [160, 32],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:starboard-divider-1:64,32:160,32:treatment:64,32:160,32",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "starboard-divider-1",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [64, 160],
+          "b": [160, 160],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:starboard-divider-5:64,160:160,160:treatment:64,160:160,160",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "starboard-divider-5",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [64, 256],
+          "b": [160, 256],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:starboard-divider-8:64,256:160,256:treatment:64,256:160,256",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "starboard-divider-8",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [96, 288],
+          "b": [96, 352],
+          "deckId": "wayfarer-main-deck",
+          "id": "cockpit:starboard-side",
+          "source": "perimeter",
+          "sourceAnchorId": "wayfarer-main-deck:96,288:96,352",
+          "treatment": "cockpit-glass"
+        },
+        {
+          "a": [-96, 288],
+          "b": [-96, 352],
+          "deckId": "wayfarer-main-deck",
+          "id": "cockpit:port-side",
+          "source": "perimeter",
+          "sourceAnchorId": "wayfarer-main-deck:-96,288:-96,352",
+          "treatment": "cockpit-glass"
+        },
+        {
+          "a": [96, 352],
+          "b": [32, 416],
+          "deckId": "wayfarer-main-deck",
+          "id": "cockpit:starboard-diagonal",
+          "source": "perimeter",
+          "sourceAnchorId": "wayfarer-main-deck:32,416:96,352",
+          "treatment": "cockpit-glass"
+        },
+        {
+          "a": [-32, 416],
+          "b": [-96, 352],
+          "deckId": "wayfarer-main-deck",
+          "id": "cockpit:port-diagonal",
+          "source": "perimeter",
+          "sourceAnchorId": "wayfarer-main-deck:-96,352:-32,416",
+          "treatment": "cockpit-glass"
+        },
+        {
+          "a": [32, 416],
+          "b": [-32, 416],
+          "deckId": "wayfarer-main-deck",
+          "id": "cockpit:nose",
+          "source": "perimeter",
+          "sourceAnchorId": "wayfarer-main-deck:-32,416:32,416",
+          "treatment": "cockpit-glass"
+        }
+      ],
+      "deckProfiles": [
+        {
+          "clearHeight": 96,
+          "deckId": "wayfarer-main-deck",
+          "floorThickness": 6,
+          "pitch": 112,
+          "roofThickness": 4,
+          "serviceVoid": 6
+        }
+      ],
+      "grid": 16,
+      "hull": {
+        "height": 112,
+        "id": "wayfarer-structural-envelope",
+        "length": 704,
+        "name": "Wayfarer",
+        "origin": [-160, -288, 0],
+        "revision": "r002",
+        "width": 320
+      },
+      "navigationReservations": [
+        {
+          "deckId": "wayfarer-main-deck",
+          "id": "navigation-reservation:pilot-r004-floor-corner45-05",
+          "reason": "nonwalkable",
+          "vertices": [
+            [32, 352],
+            [96, 352],
+            [32, 416]
+          ]
+        },
+        {
+          "deckId": "wayfarer-main-deck",
+          "id": "navigation-reservation:pilot-r004-floor-corner45-06",
+          "reason": "nonwalkable",
+          "vertices": [
+            [-96, 352],
+            [-32, 352],
+            [-32, 416]
+          ]
+        }
+      ],
+      "schema": "sidereal.layout-structure.v2",
+      "tileStyles": {},
+      "wallConvention": "inset250-v1",
+      "wallFaces": {}
+    },
+    "tiles": [
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1--1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-96, -96],
+          [-32, -96],
+          [-32, -32],
+          [-96, -32]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1--2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-96, -160],
+          [-32, -160],
+          [-32, -96],
+          [-96, -96]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1--3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-96, -224],
+          [-32, -224],
+          [-32, -160],
+          [-96, -160]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1--4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-96, -288],
+          [-32, -288],
+          [-32, -224],
+          [-96, -224]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1-0",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-96, -32],
+          [-32, -32],
+          [-32, 32],
+          [-96, 32]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1-1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-96, 32],
+          [-32, 32],
+          [-32, 96],
+          [-96, 96]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1-2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-96, 96],
+          [-32, 96],
+          [-32, 160],
+          [-96, 160]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1-3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-96, 160],
+          [-32, 160],
+          [-32, 224],
+          [-96, 224]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1-4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-96, 224],
+          [-32, 224],
+          [-32, 288],
+          [-96, 288]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2--1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-160, -96],
+          [-96, -96],
+          [-96, -32],
+          [-160, -32]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2--2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-160, -160],
+          [-96, -160],
+          [-96, -96],
+          [-160, -96]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2--3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-160, -224],
+          [-96, -224],
+          [-96, -160],
+          [-160, -160]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2--4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-160, -288],
+          [-96, -288],
+          [-96, -224],
+          [-160, -224]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2-0",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-160, -32],
+          [-96, -32],
+          [-96, 32],
+          [-160, 32]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2-1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-160, 32],
+          [-96, 32],
+          [-96, 96],
+          [-160, 96]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2-2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-160, 96],
+          [-96, 96],
+          [-96, 160],
+          [-160, 160]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2-3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-160, 160],
+          [-96, 160],
+          [-96, 224],
+          [-160, 224]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2-4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-160, 224],
+          [-96, 224],
+          [-96, 288],
+          [-160, 288]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0--1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, -96],
+          [32, -96],
+          [32, -32],
+          [-32, -32]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0--2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, -160],
+          [32, -160],
+          [32, -96],
+          [-32, -96]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0--3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, -224],
+          [32, -224],
+          [32, -160],
+          [-32, -160]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0--4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, -288],
+          [32, -288],
+          [32, -224],
+          [-32, -224]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0-0",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, -32],
+          [32, -32],
+          [32, 32],
+          [-32, 32]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0-1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, 32],
+          [32, 32],
+          [32, 96],
+          [-32, 96]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0-2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, 96],
+          [32, 96],
+          [32, 160],
+          [-32, 160]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0-3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, 160],
+          [32, 160],
+          [32, 224],
+          [-32, 224]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1--1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, -96],
+          [96, -96],
+          [96, -32],
+          [32, -32]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1--2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, -160],
+          [96, -160],
+          [96, -96],
+          [32, -96]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1--3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, -224],
+          [96, -224],
+          [96, -160],
+          [32, -160]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1--4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, -288],
+          [96, -288],
+          [96, -224],
+          [32, -224]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1-0",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, -32],
+          [96, -32],
+          [96, 32],
+          [32, 32]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1-1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, 32],
+          [96, 32],
+          [96, 96],
+          [32, 96]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1-2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, 96],
+          [96, 96],
+          [96, 160],
+          [32, 160]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1-3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, 160],
+          [96, 160],
+          [96, 224],
+          [32, 224]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1-4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, 224],
+          [96, 224],
+          [96, 288],
+          [32, 288]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2--1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [96, -96],
+          [160, -96],
+          [160, -32],
+          [96, -32]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2--2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [96, -160],
+          [160, -160],
+          [160, -96],
+          [96, -96]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2--3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [96, -224],
+          [160, -224],
+          [160, -160],
+          [96, -160]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2--4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [96, -288],
+          [160, -288],
+          [160, -224],
+          [96, -224]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2-0",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [96, -32],
+          [160, -32],
+          [160, 32],
+          [96, 32]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2-1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [96, 32],
+          [160, 32],
+          [160, 96],
+          [96, 96]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2-2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [96, 96],
+          [160, 96],
+          [160, 160],
+          [96, 160]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2-3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [96, 160],
+          [160, 160],
+          [160, 224],
+          [96, 224]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2-4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [96, 224],
+          [160, 224],
+          [160, 288],
+          [96, 288]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "pilot-r004-floor-corner45-05",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "triangle",
+        "vertices": [
+          [32, 352],
+          [96, 352],
+          [32, 416]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "pilot-r004-floor-corner45-06",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "triangle",
+        "vertices": [
+          [-96, 352],
+          [-32, 352],
+          [-32, 416]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "pilot-r004-floor-square-00",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-96, 288],
+          [-32, 288],
+          [-32, 352],
+          [-96, 352]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "pilot-r004-floor-square-01",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, 288],
+          [32, 288],
+          [32, 352],
+          [-32, 352]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "pilot-r004-floor-square-02",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [32, 288],
+          [96, 288],
+          [96, 352],
+          [32, 352]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "pilot-r004-floor-square-03",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, 352],
+          [32, 352],
+          [32, 416],
+          [-32, 416]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "pilot-r004-floor-square-04",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [-32, 224],
+          [32, 224],
+          [32, 288],
+          [-32, 288]
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "sourceSha256": "f0f381f1f9b38a8b19cb6a91226aafbff082e678e9471b607c0823c15fdbf2ec",
+    "manifestSha256": "83d12b889d4141444363cacd141a844c0f96d12f2bf7f765db50ef0c74aa0754",
+    "removedPlacementIds": [
+      "30000000-0000-4000-8000-000000000077",
+      "30000000-0000-4000-8000-000000000083",
+      "30000000-0000-4000-8000-000000000084",
+      "30000000-0000-4000-8000-000000000085",
+      "30000000-0000-4000-8000-000000000086",
+      "30000000-0000-4000-8000-000000000087",
+      "30000000-0000-4000-8000-000000000088",
+      "30000000-0000-4000-8000-000000000092",
+      "30000000-0000-4000-8000-000000000093",
+      "30000000-0000-4000-8000-000000000094",
+      "30000000-0000-4000-8000-000000000095",
+      "30000000-0000-4000-8000-000000000096",
+      "30000000-0000-4000-8000-000000000097",
+      "30000000-0000-4000-8000-000000000098",
+      "30000000-0000-4000-8000-000000000110",
+      "30000000-0000-4000-8000-000000000111",
+      "30000000-0000-4000-8000-000000000112",
+      "30000000-0000-4000-8000-000000000113",
+      "30000000-0000-4000-8000-000000000114",
+      "30000000-0000-4000-8000-000000000115",
+      "30000000-0000-4000-8000-000000000116",
+      "30000000-0000-4000-8000-000000000117",
+      "30000000-0000-4000-8000-000000000118",
+      "30000000-0000-4000-8000-000000000119",
+      "30000000-0000-4000-8000-000000000120",
+      "30000000-0000-4000-8000-000000000121",
+      "30000000-0000-4000-8000-000000000122",
+      "30000000-0000-4000-8000-000000000123",
+      "30000000-0000-4000-8000-000000000124",
+      "30000000-0000-4000-8000-000000000125",
+      "30000000-0000-4000-8000-000000000126",
+      "30000000-0000-4000-8000-000000000127"
+    ],
+    "equipmentMounts": [
+      {
+        "placementId": "30000000-0000-4000-8000-000000000054",
+        "assetId": "part-e8b51ac6443c73becfcb",
+        "axis": "rendererZ",
+        "previousInnerFaceM": 9.0625,
+        "newMountFaceM": 10,
+        "deltaM": 0.9375,
+        "previousRendererPosition": [-3.625, 0.125, 11.5625],
+        "reviewRendererPosition": [-3.625, 0.125, 12.5],
+        "limitation": "Rigid review placement only; native geometry unchanged, mount authority unqualified."
+      },
+      {
+        "placementId": "30000000-0000-4000-8000-000000000056",
+        "assetId": "part-4d754a140cc642ded990",
+        "axis": "rendererZ",
+        "previousInnerFaceM": 9.0625,
+        "newMountFaceM": 10,
+        "deltaM": 0.9375,
+        "previousRendererPosition": [3.625, 0.125, 11.5625],
+        "reviewRendererPosition": [3.625, 0.125, 12.5],
+        "limitation": "Rigid review placement only; native geometry unchanged, mount authority unqualified."
+      },
+      {
+        "placementId": "30000000-0000-4000-8000-000000000055",
+        "assetId": "part-e15ef10ca93701b58ccb",
+        "axis": "rendererZ",
+        "previousInnerFaceM": 9.0625,
+        "newMountFaceM": 10,
+        "deltaM": 0.9375,
+        "previousRendererPosition": [0, 0.1875, 11],
+        "reviewRendererPosition": [0, 0.1875, 11.9375],
+        "limitation": "Rigid review placement only; native geometry unchanged, mount authority unqualified."
+      },
+      {
+        "placementId": "30000000-0000-4000-8000-000000000057",
+        "assetId": "part-a9dcbf6707ca20039a5c",
+        "axis": "rendererX",
+        "previousInnerFaceM": -5.8125,
+        "newMountFaceM": -6,
+        "deltaM": -0.1875,
+        "previousRendererPosition": [-6.375, 0.25, 6.5],
+        "reviewRendererPosition": [-6.5625, 0.25, 6.5],
+        "limitation": "Rigid review placement only; native geometry unchanged, mount authority unqualified."
+      },
+      {
+        "placementId": "30000000-0000-4000-8000-000000000058",
+        "assetId": "part-a9dcbf6707ca20039a5c",
+        "axis": "rendererX",
+        "previousInnerFaceM": -5.8125,
+        "newMountFaceM": -6,
+        "deltaM": -0.1875,
+        "previousRendererPosition": [-6.375, 0.25, -6.5],
+        "reviewRendererPosition": [-6.5625, 0.25, -6.5],
+        "limitation": "Rigid review placement only; native geometry unchanged, mount authority unqualified."
+      },
+      {
+        "placementId": "30000000-0000-4000-8000-000000000059",
+        "assetId": "part-a06cfaab58b430855803",
+        "axis": "rendererX",
+        "previousInnerFaceM": 5.8125,
+        "newMountFaceM": 6,
+        "deltaM": 0.1875,
+        "previousRendererPosition": [6.375, 0.25, 6.5],
+        "reviewRendererPosition": [6.5625, 0.25, 6.5],
+        "limitation": "Rigid review placement only; native geometry unchanged, mount authority unqualified."
+      },
+      {
+        "placementId": "30000000-0000-4000-8000-000000000060",
+        "assetId": "part-a06cfaab58b430855803",
+        "axis": "rendererX",
+        "previousInnerFaceM": 5.8125,
+        "newMountFaceM": 6,
+        "deltaM": 0.1875,
+        "previousRendererPosition": [6.375, 0.25, -6.5],
+        "reviewRendererPosition": [6.5625, 0.25, -6.5],
+        "limitation": "Rigid review placement only; native geometry unchanged, mount authority unqualified."
+      },
+      {
+        "placementId": "30000000-0000-4000-8000-000000000061",
+        "assetId": "part-393498d8c8af6149ef28",
+        "axis": "rendererX",
+        "previousInnerFaceM": -5,
+        "newMountFaceM": -6,
+        "deltaM": -1,
+        "previousRendererPosition": [-5.5, 0.3125, -8],
+        "reviewRendererPosition": [-6.5, 0.3125, -8],
+        "limitation": "Rigid review placement only; native geometry unchanged, mount authority unqualified."
+      },
+      {
+        "placementId": "30000000-0000-4000-8000-000000000062",
+        "assetId": "part-393498d8c8af6149ef28",
+        "axis": "rendererX",
+        "previousInnerFaceM": 5.0625,
+        "newMountFaceM": 6,
+        "deltaM": 0.9375,
+        "previousRendererPosition": [5.5, 0.3125, -8],
+        "reviewRendererPosition": [6.4375, 0.3125, -8],
+        "limitation": "Rigid review placement only; native geometry unchanged, mount authority unqualified."
+      }
+    ],
+    "structuralIdentityMap": {
+      "30000000-0000-4000-8000-000000000167": "cockpit:nose",
+      "30000000-0000-4000-8000-000000000168": "cockpit:port-diagonal",
+      "30000000-0000-4000-8000-000000000169": "cockpit:port-side",
+      "30000000-0000-4000-8000-000000000170": "cockpit:starboard-diagonal",
+      "30000000-0000-4000-8000-000000000171": "cockpit:starboard-side",
+      "30000000-0000-4000-8000-000000000003": "floor--1--1",
+      "30000000-0000-4000-8000-000000000004": "floor--1--2",
+      "30000000-0000-4000-8000-000000000005": "floor--1--3",
+      "30000000-0000-4000-8000-000000000006": "floor--1--4",
+      "30000000-0000-4000-8000-000000000007": "floor--1-0",
+      "30000000-0000-4000-8000-000000000008": "floor--1-1",
+      "30000000-0000-4000-8000-000000000009": "floor--1-2",
+      "30000000-0000-4000-8000-000000000010": "floor--1-3",
+      "30000000-0000-4000-8000-000000000011": "floor--1-4",
+      "30000000-0000-4000-8000-000000000012": "floor--2--1",
+      "30000000-0000-4000-8000-000000000013": "floor--2--2",
+      "30000000-0000-4000-8000-000000000014": "floor--2--3",
+      "30000000-0000-4000-8000-000000000015": "floor--2--4",
+      "30000000-0000-4000-8000-000000000016": "floor--2-0",
+      "30000000-0000-4000-8000-000000000017": "floor--2-1",
+      "30000000-0000-4000-8000-000000000018": "floor--2-2",
+      "30000000-0000-4000-8000-000000000019": "floor--2-3",
+      "30000000-0000-4000-8000-000000000020": "floor--2-4",
+      "30000000-0000-4000-8000-000000000021": "floor-0--1",
+      "30000000-0000-4000-8000-000000000022": "floor-0--2",
+      "30000000-0000-4000-8000-000000000023": "floor-0--3",
+      "30000000-0000-4000-8000-000000000024": "floor-0--4",
+      "30000000-0000-4000-8000-000000000025": "floor-0-0",
+      "30000000-0000-4000-8000-000000000026": "floor-0-1",
+      "30000000-0000-4000-8000-000000000027": "floor-0-2",
+      "30000000-0000-4000-8000-000000000028": "floor-0-3",
+      "30000000-0000-4000-8000-000000000029": "floor-1--1",
+      "30000000-0000-4000-8000-000000000030": "floor-1--2",
+      "30000000-0000-4000-8000-000000000031": "floor-1--3",
+      "30000000-0000-4000-8000-000000000032": "floor-1--4",
+      "30000000-0000-4000-8000-000000000033": "floor-1-0",
+      "30000000-0000-4000-8000-000000000034": "floor-1-1",
+      "30000000-0000-4000-8000-000000000035": "floor-1-2",
+      "30000000-0000-4000-8000-000000000036": "floor-1-3",
+      "30000000-0000-4000-8000-000000000037": "floor-1-4",
+      "30000000-0000-4000-8000-000000000038": "floor-2--1",
+      "30000000-0000-4000-8000-000000000039": "floor-2--2",
+      "30000000-0000-4000-8000-000000000040": "floor-2--3",
+      "30000000-0000-4000-8000-000000000041": "floor-2--4",
+      "30000000-0000-4000-8000-000000000042": "floor-2-0",
+      "30000000-0000-4000-8000-000000000043": "floor-2-1",
+      "30000000-0000-4000-8000-000000000044": "floor-2-2",
+      "30000000-0000-4000-8000-000000000045": "floor-2-3",
+      "30000000-0000-4000-8000-000000000046": "floor-2-4",
+      "30000000-0000-4000-8000-000000000192": "navigation-reservation:pilot-r004-floor-corner45-05",
+      "30000000-0000-4000-8000-000000000193": "navigation-reservation:pilot-r004-floor-corner45-06",
+      "30000000-0000-4000-8000-000000000047": "pilot-r004-floor-corner45-05",
+      "30000000-0000-4000-8000-000000000048": "pilot-r004-floor-corner45-06",
+      "30000000-0000-4000-8000-000000000049": "pilot-r004-floor-square-00",
+      "30000000-0000-4000-8000-000000000050": "pilot-r004-floor-square-01",
+      "30000000-0000-4000-8000-000000000051": "pilot-r004-floor-square-02",
+      "30000000-0000-4000-8000-000000000052": "pilot-r004-floor-square-03",
+      "30000000-0000-4000-8000-000000000053": "pilot-r004-floor-square-04",
+      "30000000-0000-4000-8000-000000000128": "port-corridor",
+      "30000000-0000-4000-8000-000000000129": "port-divider--4",
+      "30000000-0000-4000-8000-000000000130": "port-divider--7",
+      "30000000-0000-4000-8000-000000000131": "port-divider-1",
+      "30000000-0000-4000-8000-000000000132": "port-divider-5",
+      "30000000-0000-4000-8000-000000000133": "port-divider-8",
+      "30000000-0000-4000-8000-000000000140": "port-door--1",
+      "30000000-0000-4000-8000-000000000141": "port-door--5",
+      "30000000-0000-4000-8000-000000000142": "port-door-3",
+      "30000000-0000-4000-8000-000000000143": "port-door-7",
+      "30000000-0000-4000-8000-000000000134": "starboard-corridor",
+      "30000000-0000-4000-8000-000000000135": "starboard-divider--4",
+      "30000000-0000-4000-8000-000000000136": "starboard-divider--7",
+      "30000000-0000-4000-8000-000000000137": "starboard-divider-1",
+      "30000000-0000-4000-8000-000000000138": "starboard-divider-5",
+      "30000000-0000-4000-8000-000000000139": "starboard-divider-8",
+      "30000000-0000-4000-8000-000000000144": "starboard-door--1",
+      "30000000-0000-4000-8000-000000000145": "starboard-door--5",
+      "30000000-0000-4000-8000-000000000146": "starboard-door-3",
+      "30000000-0000-4000-8000-000000000147": "starboard-door-7",
+      "30000000-0000-4000-8000-000000000172": "treatment:partition:port-corridor:-48,-144:-48,-48:treatment:-48,-144:-48,-48",
+      "30000000-0000-4000-8000-000000000173": "treatment:partition:port-corridor:-48,-16:-48,80:treatment:-48,-16:-48,80",
+      "30000000-0000-4000-8000-000000000174": "treatment:partition:port-corridor:-48,-224:-48,-176:treatment:-48,-224:-48,-176",
+      "30000000-0000-4000-8000-000000000175": "treatment:partition:port-corridor:-48,112:-48,208:treatment:-48,112:-48,208",
+      "30000000-0000-4000-8000-000000000176": "treatment:partition:port-corridor:-48,240:-48,256:treatment:-48,240:-48,256",
+      "30000000-0000-4000-8000-000000000177": "treatment:partition:port-divider--4:-160,-128:-48,-128:treatment:-160,-128:-48,-128",
+      "30000000-0000-4000-8000-000000000178": "treatment:partition:port-divider--7:-160,-224:-48,-224:treatment:-160,-224:-48,-224",
+      "30000000-0000-4000-8000-000000000179": "treatment:partition:port-divider-1:-160,32:-48,32:treatment:-160,32:-48,32",
+      "30000000-0000-4000-8000-000000000180": "treatment:partition:port-divider-5:-160,160:-48,160:treatment:-160,160:-48,160",
+      "30000000-0000-4000-8000-000000000181": "treatment:partition:port-divider-8:-160,256:-48,256:treatment:-160,256:-48,256",
+      "30000000-0000-4000-8000-000000000182": "treatment:partition:starboard-corridor:64,-144:64,-48:treatment:64,-144:64,-48",
+      "30000000-0000-4000-8000-000000000183": "treatment:partition:starboard-corridor:64,-16:64,80:treatment:64,-16:64,80",
+      "30000000-0000-4000-8000-000000000184": "treatment:partition:starboard-corridor:64,-224:64,-176:treatment:64,-224:64,-176",
+      "30000000-0000-4000-8000-000000000185": "treatment:partition:starboard-corridor:64,112:64,208:treatment:64,112:64,208",
+      "30000000-0000-4000-8000-000000000186": "treatment:partition:starboard-corridor:64,240:64,256:treatment:64,240:64,256",
+      "30000000-0000-4000-8000-000000000187": "treatment:partition:starboard-divider--4:64,-128:160,-128:treatment:64,-128:160,-128",
+      "30000000-0000-4000-8000-000000000188": "treatment:partition:starboard-divider--7:64,-224:160,-224:treatment:64,-224:160,-224",
+      "30000000-0000-4000-8000-000000000189": "treatment:partition:starboard-divider-1:64,32:160,32:treatment:64,32:160,32",
+      "30000000-0000-4000-8000-000000000190": "treatment:partition:starboard-divider-5:64,160:160,160:treatment:64,160:160,160",
+      "30000000-0000-4000-8000-000000000191": "treatment:partition:starboard-divider-8:64,256:160,256:treatment:64,256:160,256",
+      "30000000-0000-4000-8000-000000000002": "wayfarer-main-deck"
+    },
+    "authority": "Editor visual review only; unqualified for game installation."
+  }
+}

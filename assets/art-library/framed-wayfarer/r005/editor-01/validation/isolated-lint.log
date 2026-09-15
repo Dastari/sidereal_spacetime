@@ -1,0 +1,52 @@
+
+> sidereal-spacetime@0.1.0 lint
+> node scripts/quality-check.mjs lint
+
+lint: 200 existing debt entries; 47 new/changed violations.
+apps/dashboard/src/shipyard/layout/partition-gesture.test.ts:2 Use a declared package export instead of '../../../../../packages/content/src/doorway250-review-layout'.
+apps/dashboard/src/shipyard/layout/selection-deletion.test.ts:8 Use a declared package export instead of '../../../../../packages/content/src/doorway250-review-layout'.
+packages/canvas-ui/src/diagnostics.ts:2 Use a declared package export instead of '../../render/src/debug-features'.
+packages/canvas-ui/src/diagnostics.ts:3 Use a declared package export instead of '../../render/src/debug-features'.
+packages/render/src/crew/combat-r003.test.ts:12 Use a declared package export instead of '../../../content/src/equipment-poses'.
+packages/render/src/crew/combat-r003.test.ts:13 Use a declared package export instead of '../../../content/src/character-components'.
+packages/render/src/debug-collision-source.test.ts:11 Use a declared package export instead of '../../content/src/interior'.
+packages/render/src/debug-collision-source.test.ts:15 Use a declared package export instead of '../../content/src/pilot-layout'.
+packages/render/src/debug-collision-source.test.ts:50 Use a declared package export instead of '../../sim/src/wayfarer-walking-bindings'.
+packages/render/src/debug-collision-source.ts:2 Use a declared package export instead of '../../content/src/interior'.
+packages/render/src/debug-collision-source.ts:6 Use a declared package export instead of '../../content/src/pilot-layout'.
+packages/render/src/debug-collision-source.ts:37 Use a declared package export instead of '../../sim/src/wayfarer-walking-bindings'.
+packages/render/src/environment/reviewed-native/reference_volcanic_smoke_build.ts:1 Use a declared package export instead of '../../../../content/src/environment'.
+packages/render/src/inset-visual-registry.ts:1 Use a declared package export instead of '../../content/src/construction-wayfarer-rebuild-visuals.json'.
+packages/render/src/layout-doorway-preview.test.ts:21 Use a declared package export instead of '../../content/src/construction-doorway-visuals'.
+packages/render/src/layout-doorway-preview.test.ts:24 Use a declared package export instead of '../../content/src/doorway250-review-layout'.
+packages/render/src/layout-inset-visual-plan.test.ts:5 Use a declared package export instead of '../../sim/src/wayfarer-rebuild-contract'.
+packages/render/src/layout-inset-visual-plan.ts:1 Use a declared package export instead of '../../sim/src/wayfarer-rebuild-contract'.
+packages/render/src/layout-inset-visual-plan.ts:4 Use a declared package export instead of '../../sim/src/wayfarer-rebuild-game'.
+packages/sim/src/construction-doorway-motion.test.ts:3 Use a declared package export instead of '../../content/src/construction-doorway-visuals'.
+packages/sim/src/construction-doorway-motion.test.ts:4 Use a declared package export instead of '../../content/src/doorway250-review-layout'.
+packages/sim/src/construction-doorway-motion.ts:3 Use a declared package export instead of '../../content/src/construction-doorway-visuals'.
+packages/sim/src/device-power.test.ts:2 Use a declared package export instead of '../../content/src/wayfarer-rebuild-r002.json'.
+packages/sim/src/device-power.test.ts:3 Use a declared package export instead of '../../content/src/construction'.
+packages/sim/src/device-power.test.ts:9 Use a declared package export instead of '../../content/src/device-services'.
+packages/sim/src/device-power.ts:1 Use a declared package export instead of '../../content/src/device-services'.
+packages/sim/src/device-power.ts:2 Use a declared package export instead of '../../content/src/device-services'.
+packages/sim/src/layout-opening-treatments.test.ts:2 Use a declared package export instead of '../../content/src/doorway250-review-layout'.
+packages/sim/src/wayfarer-rebuild-native-plan.test.ts:226 Use a declared package export instead of '../../content/src/wayfarer-rebuild-r002.json'.
+packages/sim/src/wayfarer-rebuild-walking.test.ts:2 Use a declared package export instead of '../../content/src/wayfarer-starter-r001.json'.
+packages/sim/src/wayfarer-rebuild-walking.test.ts:3 Use a declared package export instead of '../../content/src/wayfarer-rebuild-r002.json'.
+packages/sim/src/wayfarer-rebuild-walking.test.ts:4 Use a declared package export instead of '../../content/src/construction-wayfarer-rebuild-visuals.json'.
+packages/sim/src/wayfarer-rebuild-walking.test.ts:5 Use a declared package export instead of '../../content/src/wayfarer-walking-proof.json'.
+packages/sim/src/wayfarer-rebuild-walking.test.ts:6 Use a declared package export instead of '../../content/src/wayfarer-threshold-proof.json'.
+packages/sim/src/wayfarer-rebuild-walking.test.ts:7 Use a declared package export instead of '../../content/src/construction'.
+packages/world/src/inventory-ground-access.test.ts:18 Use a declared package export instead of '../../sim/src/ground-placement'.
+packages/world/src/inventory-ground-access.test.ts:19 Use a declared package export instead of '../../sim/src/construction-collision'.
+packages/world/src/inventory-ground-access.test.ts:21 Use a declared package export instead of '../../content/src/wayfarer-conversion-candidate'.
+packages/world/src/inventory-ground-access.test.ts:25 Use a declared package export instead of '../../sim/src/wayfarer-conversion-candidate'.
+packages/world/src/inventory-ground-access.test.ts:26 Use a declared package export instead of '../../sim/src/construction-instance'.
+packages/world/src/inventory-ground-access.test.ts:30 Use a declared package export instead of '../../sim/src/wayfarer-walking-bindings'.
+packages/world/src/inventory-ground-access.test.ts:34 Use a declared package export instead of '../../sim/src/construction-collision'.
+packages/world/src/wayfarer-rebuild-refit.test.ts:1 Use a declared package export instead of '../../content/src/wayfarer-starter'.
+packages/world/src/wayfarer-rebuild-refit.test.ts:130 Use a declared package export instead of '../../sim/src/construction-transactions'.
+packages/world/src/wayfarer-rebuild-refit.test.ts:131 Use a declared package export instead of '../../sim/src/wayfarer-rebuild-contract'.
+packages/world/src/wayfarer-rebuild-refit.test.ts:481 Use a declared package export instead of '../../sim/src/wayfarer-refit-audit'.
+packages/world/src/wayfarer-refit-authority.test.ts:1 Use a declared package export instead of '../../content/src/wayfarer-starter'.

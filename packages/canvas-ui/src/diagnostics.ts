@@ -1,6 +1,6 @@
 import type { RenderDiagnostics } from "../../render/src/diagnostics";
-import type { DebugFeature } from "../../render/src/debug-features";
-export type { DebugFeature } from "../../render/src/debug-features";
+import type { DebugFeature } from "@sidereal/render/debug-features";
+export type { DebugFeature } from "@sidereal/render/debug-features";
 import { CanvasUI, palette } from "./toolkit";
 import { WindowStack } from "./windows";
 const features: readonly [DebugFeature, string][] = [
@@ -133,11 +133,21 @@ export function createDiagnosticsUI(
             : `${data.gpuFrameMs.toFixed(2)} ms`,
         ],
         ["Draw calls", String(data.drawCalls)],
-        ["Last planet build", data.planetBuild?.lastBuildMs === undefined ? "—" : `${data.planetBuild.lastBuildMs.toFixed(2)} ms`],
+        [
+          "Last planet build",
+          data.planetBuild?.lastBuildMs === undefined
+            ? "—"
+            : `${data.planetBuild.lastBuildMs.toFixed(2)} ms`,
+        ],
         ["Pending planet builds", String(data.planetBuild?.pendingBuilds ?? 0)],
         ["Active / total meshes", `${data.activeMeshes} / ${data.totalMeshes}`],
         ["Meshes by role", "Active / total"],
-        ...Object.entries(data.meshesByRole ?? {}).filter(([, count]) => count.total > 0).map(([role, count]): [string, string] => [role, `${count.active} / ${count.total}`]),
+        ...Object.entries(data.meshesByRole ?? {})
+          .filter(([, count]) => count.total > 0)
+          .map(([role, count]): [string, string] => [
+            role,
+            `${count.active} / ${count.total}`,
+          ]),
         ["Active indices", data.activeIndices.toLocaleString()],
         ["Materials / textures", `${data.materials} / ${data.textures}`],
         ["Lit lights / eligible maps", `${data.lights} / ${data.shadowMaps}`],
@@ -182,11 +192,24 @@ export function createDiagnosticsUI(
         ["Camera pass names", data.cameraPostProcesses?.join(", ") || "None"],
         ["Scene capture", data.sceneCapture?.name ?? "None"],
         ["Renderer", data.renderBackend === "webgpu" ? "WebGPU" : "WebGL"],
-        ["Snapshot rendering", !data.snapshotRendering ? "Unavailable" : data.snapshotRendering.enabled
-          ? "Enabled" : data.snapshotRendering.armed ? "Preparing" : data.snapshotRendering.reason],
-        ["Capture size / MSAA", !data.sceneCapture ? "None" : data.sceneCapture.width === undefined
-          ? "Awaiting allocation"
-          : `${data.sceneCapture.width} × ${data.sceneCapture.height} / ${data.sceneCapture.samples}×`],
+        [
+          "Snapshot rendering",
+          !data.snapshotRendering
+            ? "Unavailable"
+            : data.snapshotRendering.enabled
+              ? "Enabled"
+              : data.snapshotRendering.armed
+                ? "Preparing"
+                : data.snapshotRendering.reason,
+        ],
+        [
+          "Capture size / MSAA",
+          !data.sceneCapture
+            ? "None"
+            : data.sceneCapture.width === undefined
+              ? "Awaiting allocation"
+              : `${data.sceneCapture.width} × ${data.sceneCapture.height} / ${data.sceneCapture.samples}×`,
+        ],
         ["Custom targets", String(data.customRenderTargets ?? "—")],
         [
           "Camera radius / elev",

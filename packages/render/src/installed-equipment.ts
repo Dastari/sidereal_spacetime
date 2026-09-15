@@ -88,7 +88,12 @@ export async function loadEquipmentPrototypes(
   const retained = new Set([...result.values()].flat());
   for (const library of libraries.values()) {
     for (const mesh of library.meshes)
-      if (!retained.has(mesh) && !mesh.isDisposed() && mesh.getChildren().length === 0) mesh.dispose(true, false);
+      if (
+        !retained.has(mesh) &&
+        !mesh.isDisposed() &&
+        mesh.getChildren().length === 0
+      )
+        mesh.dispose(true, false);
   }
   return result;
 }

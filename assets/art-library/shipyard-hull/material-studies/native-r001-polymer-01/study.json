@@ -1,0 +1,193 @@
+{
+  "schema": "sidereal.material-study.v1",
+  "status": "reviewed-material-study-not-accepted-for-publication",
+  "design": "shipyard.hull.pilot-section",
+  "sourceRevision": 1,
+  "doesNotAdvanceActiveDesignRevision": 2,
+  "owner": "geometry_snap_bevel finish subtask; structural author retains hull r002",
+  "source": "assets/art-library/designs/shipyard.hull.pilot-section/revisions/r001/blender-source.blend",
+  "sourceSha256": "1b210669f2c36f635cc7b15a97f1e270e5f7ed34e4d8dfa6529cd448f35cd0ed",
+  "geometryDigestBefore": "945b9b654cf35d324239fb785609b23ade7917f61083f44400d36c0ac3a931d8",
+  "geometryDigestAfter": "945b9b654cf35d324239fb785609b23ade7917f61083f44400d36c0ac3a931d8",
+  "changes": [
+    {
+      "material": "clean hull paint",
+      "role": "paint",
+      "before": {
+        "Metallic": 0.3499999940395355,
+        "Roughness": 0.5,
+        "IOR": 1.5,
+        "Coat Weight": 0.0,
+        "Coat Roughness": 0.029999999329447746
+      },
+      "after": {
+        "metallic": 0,
+        "roughness": 0.3,
+        "ior": 1.46,
+        "coat": 0.12,
+        "coatRoughness": 0.2
+      }
+    },
+    {
+      "material": "clean nameplate",
+      "role": "paint",
+      "before": {
+        "Metallic": 0.3499999940395355,
+        "Roughness": 0.5,
+        "IOR": 1.5,
+        "Coat Weight": 0.0,
+        "Coat Roughness": 0.029999999329447746
+      },
+      "after": {
+        "metallic": 0,
+        "roughness": 0.3,
+        "ior": 1.46,
+        "coat": 0.12,
+        "coatRoughness": 0.2
+      }
+    },
+    {
+      "material": "Graphite seals",
+      "role": "seal",
+      "before": {
+        "Metallic": 0.4000000059604645,
+        "Roughness": 0.3700000047683716,
+        "IOR": 1.5,
+        "Coat Weight": 0.0,
+        "Coat Roughness": 0.029999999329447746
+      },
+      "after": {
+        "metallic": 0,
+        "roughness": 0.62,
+        "ior": 1.46,
+        "coat": 0,
+        "coatRoughness": 0.2
+      }
+    },
+    {
+      "material": "Service red",
+      "role": "accent",
+      "before": {
+        "Metallic": 0.20000000298023224,
+        "Roughness": 0.5,
+        "IOR": 1.5,
+        "Coat Weight": 0.0,
+        "Coat Roughness": 0.029999999329447746
+      },
+      "after": {
+        "metallic": 0,
+        "roughness": 0.28,
+        "ior": 1.46,
+        "coat": 0.08,
+        "coatRoughness": 0.2
+      }
+    }
+  ],
+  "untouchedRoles": [
+    "Titanium hardware",
+    "Blue laminated glazing",
+    "Canopy marker emitter",
+    "all equipment"
+  ],
+  "reference": "assets/art-library/assets/3d-rpg-after--wayfarer-target-cutaway/revisions/r000/reference.png",
+  "referenceSha256": "41ee66c6d31acf812b5ebae778831276560f196c4e1e399a1dbc5ede8836e4d1",
+  "exports": [
+    {
+      "assetId": "part-5adddce8ec67610eb184",
+      "url": "/assets/assembly/hull/part-5adddce8ec67610eb184/clean.glb",
+      "candidate": "assets/art-library/shipyard-hull/material-studies/native-r001-polymer-01/part-5adddce8ec67610eb184/clean.glb",
+      "sha256": "08cf2857112533b2000807125ffc67aa27e4e8322a379ee4b6a65693d8b0a64b",
+      "baselineSha256": "77ef8fb7d2ccea9b4f6f534bccb5033d54f2bbb3580ad5808dfc86a742066b2a",
+      "baseline": "assets/art-library/shipyard-hull/material-studies/native-r001-polymer-01/baseline/part-5adddce8ec67610eb184/clean.glb"
+    },
+    {
+      "assetId": "part-4d0b42d4ad4a5f878bf4",
+      "url": "/assets/assembly/hull/part-4d0b42d4ad4a5f878bf4/clean.glb",
+      "candidate": "assets/art-library/shipyard-hull/material-studies/native-r001-polymer-01/part-4d0b42d4ad4a5f878bf4/clean.glb",
+      "sha256": "c279ab4cb81de2c1fc8fd93654f80e713a383fe273558d8f83994eb016268391",
+      "baselineSha256": "c4eabf4560373f53bdf705d469c9f75fbb9d62803788d0032c35bd2c712fb859",
+      "baseline": "assets/art-library/shipyard-hull/material-studies/native-r001-polymer-01/baseline/part-4d0b42d4ad4a5f878bf4/clean.glb"
+    },
+    {
+      "assetId": "part-9f076369bde5b227829a",
+      "url": "/assets/assembly/hull/part-9f076369bde5b227829a/clean.glb",
+      "candidate": "assets/art-library/shipyard-hull/material-studies/native-r001-polymer-01/part-9f076369bde5b227829a/clean.glb",
+      "sha256": "f58fb9dd5f8a4176973f3c9138793a25b726c6ea691279625f9a1e21a82e303f",
+      "baselineSha256": "784dd8b2c80ac94890d6a6b47d27953d8139d092f7184c116f9fdbd999f3f8fb",
+      "baseline": "assets/art-library/shipyard-hull/material-studies/native-r001-polymer-01/baseline/part-9f076369bde5b227829a/clean.glb"
+    },
+    {
+      "assetId": "part-4a8eab4b82796b19ebfe",
+      "url": "/assets/assembly/hull/part-4a8eab4b82796b19ebfe/clean.glb",
+      "candidate": "assets/art-library/shipyard-hull/material-studies/native-r001-polymer-01/part-4a8eab4b82796b19ebfe/clean.glb",
+      "sha256": "60402c33c930d5f3870dcaa59c8cbc00a5da2a822b0536c1307c0be3b877f415",
+      "baselineSha256": "2ff3e7f77b87867191ab8bd4be8fe800f4df27c687b49e452c43b6337ba8118b",
+      "baseline": "assets/art-library/shipyard-hull/material-studies/native-r001-polymer-01/baseline/part-4a8eab4b82796b19ebfe/clean.glb"
+    },
+    {
+      "assetId": "part-e8c0c4395f2521c47b20",
+      "url": "/assets/assembly/hull/part-e8c0c4395f2521c47b20/clean.glb",
+      "candidate": "assets/art-library/shipyard-hull/material-studies/native-r001-polymer-01/part-e8c0c4395f2521c47b20/clean.glb",
+      "sha256": "50d2ebc1b3f37c93f140fbaf3232630ae258fe6b150df92e4ea8dced76336229",
+      "baselineSha256": "f3aef2e608c5e41b1699e0764d060365f8fd6f518a8dd332b84bd40c794fecca",
+      "baseline": "assets/art-library/shipyard-hull/material-studies/native-r001-polymer-01/baseline/part-e8c0c4395f2521c47b20/clean.glb"
+    },
+    {
+      "assetId": "part-9211fc86e04c4b23402b",
+      "url": "/assets/assembly/hull/part-9211fc86e04c4b23402b/clean.glb",
+      "candidate": "assets/art-library/shipyard-hull/material-studies/native-r001-polymer-01/part-9211fc86e04c4b23402b/clean.glb",
+      "sha256": "0fad8da1d28da4061c5ca55adbd70065f8aa3b408139519ec97717321f2e204d",
+      "baselineSha256": "01b77863ca3da67edcd24968f80f6e128ef42f7d32d4750e86bb72b2574295cd",
+      "baseline": "assets/art-library/shipyard-hull/material-studies/native-r001-polymer-01/baseline/part-9211fc86e04c4b23402b/clean.glb"
+    },
+    {
+      "assetId": "part-1c7076c89e3593dd5587",
+      "url": "/assets/assembly/hull/part-1c7076c89e3593dd5587/clean.glb",
+      "candidate": "assets/art-library/shipyard-hull/material-studies/native-r001-polymer-01/part-1c7076c89e3593dd5587/clean.glb",
+      "sha256": "0758f65e296272b4c712a9b8bdbec9c5049a356b8c99b91a78b64f073cdd208c",
+      "baselineSha256": "357305e4dc637db8413fe995e77475019598153b16d6044ee2d7a3b68590f172",
+      "baseline": "assets/art-library/shipyard-hull/material-studies/native-r001-polymer-01/baseline/part-1c7076c89e3593dd5587/clean.glb"
+    },
+    {
+      "assetId": "part-d244db24147e2f1a4b9a",
+      "url": "/assets/assembly/hull/part-d244db24147e2f1a4b9a/clean.glb",
+      "candidate": "assets/art-library/shipyard-hull/material-studies/native-r001-polymer-01/part-d244db24147e2f1a4b9a/clean.glb",
+      "sha256": "8d1a1e4f65fcc1e9ca9663fd12209c226d7d15af0862aac5758dcd1793b7723c",
+      "baselineSha256": "7116019f1c974f46a1c131cdf6e257584b7dd49a3babe84c6b4aca9f04015b8c",
+      "baseline": "assets/art-library/shipyard-hull/material-studies/native-r001-polymer-01/baseline/part-d244db24147e2f1a4b9a/clean.glb"
+    },
+    {
+      "assetId": "part-14404bc85f3a72ad3ab8",
+      "url": "/assets/assembly/hull/part-14404bc85f3a72ad3ab8/clean.glb",
+      "candidate": "assets/art-library/shipyard-hull/material-studies/native-r001-polymer-01/part-14404bc85f3a72ad3ab8/clean.glb",
+      "sha256": "a7ceaab549ca305ca0cb50fa20c0a6514b0a6f0a656ccc4df36f9c411db08bfd",
+      "baselineSha256": "643494ec3fd63bf18ab385df52e2ad44f2e647c54c00245f29e7931c18c2cb86",
+      "baseline": "assets/art-library/shipyard-hull/material-studies/native-r001-polymer-01/baseline/part-14404bc85f3a72ad3ab8/clean.glb"
+    },
+    {
+      "assetId": "part-a71041f7edfcbbd17fd1",
+      "url": "/assets/assembly/hull/part-a71041f7edfcbbd17fd1/clean.glb",
+      "candidate": "assets/art-library/shipyard-hull/material-studies/native-r001-polymer-01/part-a71041f7edfcbbd17fd1/clean.glb",
+      "sha256": "311bbc43aa1ab96d54ce529c7a175328669a864170221ffd16a22f5ffb9945fe",
+      "baselineSha256": "c35d35d0ebb83f83868780b7024a1301f77e4b8cf36556114afcf8d3214194c7",
+      "baseline": "assets/art-library/shipyard-hull/material-studies/native-r001-polymer-01/baseline/part-a71041f7edfcbbd17fd1/clean.glb"
+    }
+  ],
+  "publication": false,
+  "approval": null,
+  "limitations": [
+    "Material-only study; does not redesign or claim reference-matching hull geometry",
+    "Production lighting and shadows unchanged; runtime gate required"
+  ],
+  "ownerFeedback": [
+    {
+      "text": "And also noting that we still don't have our desired \"plastic\" look with beveled edges etc that was outlined in /root/sidereal_spacetime/reference/Astra_Voxel_Space_Game_Art_Technical_Design.md I assume one of the agents is working towards that or has that on its list of things to improve our rendering engine.",
+      "messageReference": "Owner message in this conversation accompanying the original internal hull overlap screenshot; reiterated by root finish-study assignment on 2026-09-08",
+      "resolved": false
+    }
+  ],
+  "nextAction": "Structural author should evaluate finish alongside richer r002 geometry; one warmed interior recapture remains if advancing this candidate. No publication recommended from current result.",
+  "runtimeSummary": "Valid matched closed-hull pair confirms modest brighter dielectric response, not requested full plastic fidelity. Candidate interior shader-warmup frame invalid and retained.",
+  "capture": "capture.json",
+  "comparison": "comparison.png"
+}
