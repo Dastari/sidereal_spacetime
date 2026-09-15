@@ -26,6 +26,15 @@ def prepare(app: str, root: Path = ROOT) -> None:
             elif path.is_dir():
                 shutil.rmtree(path)
     shutil.copytree(root / "assets/runtime", public / "assets", dirs_exist_ok=True)
+    for name in ("reviewed-planets", "reviewed-stars"):
+        source = root / "assets/reviewed-celestials" / name
+        target = public / name
+        if target.is_symlink() or target.is_file():
+            target.unlink()
+        elif target.is_dir():
+            shutil.rmtree(target)
+        if source.is_dir():
+            shutil.copytree(source, target)
     for source, destination in PUBLIC_HELP[app].items():
         target = public / destination
         target.parent.mkdir(parents=True, exist_ok=True)

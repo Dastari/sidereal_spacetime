@@ -63,7 +63,7 @@ def package(revision,expected,source,out):
  return descriptor
 
 def main():
- parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--source-root',type=Path,required=True);parser.add_argument('--output-root',type=Path,default=ROOT/'apps/dashboard/public/reviewed-planets');args=parser.parse_args()
+ parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--source-root',type=Path,required=True);parser.add_argument('--output-root',type=Path,default=ROOT/'assets/reviewed-celestials/reviewed-planets');args=parser.parse_args()
  manifest=json.loads((ROOT/REL/'reviews/broader-seed-capture-manifest.json').read_text());jobs={j['revision']:j for j in manifest['jobs']};catalog=[];weather={}
  if len(jobs)!=28:raise ValueError('Expected exact 28 reviewed candidates')
  for revision,job in jobs.items():

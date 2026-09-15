@@ -49,3 +49,7 @@ The managed public Genesis source preview has the changes staged with a private 
 The authored 29-celestial-body system and guarded authority migration are implemented locally and have 39 focused passing tests, but are not yet published. The live read-only audit found the expected original sixteen bodies, two ships and no legacy private-world bodies. Live authority includes changes from the open IFCS branch; deployment must preserve that source/schema baseline. Shared asset packaging, runtime integration review and isolated database smoke remain required before world publication.
 
 Browser round-trip passed: star → Rocky Moon → star, both ready with no pending builds; moon composition control restored, star composition control hidden, r007 asset hash verified and 180 flare nodes active. Final screenshot and JSON saved in the Genesis evidence directory.
+
+## ADR: Shared reviewed celestial asset source — 2026-09-15
+
+Store the exact reviewed public payloads under `assets/reviewed-celestials/`, separate from private source/reference artwork and generic runtime assets. Each application's preparation command independently stages its own `/reviewed-planets/` and `/reviewed-stars/` directories from this shared versioned source. Preserve payload bytes, public URL contracts and catalog hashes. Neither app imports, builds or reads the other's source/public directory. Packaging tests verify stale output removal, exact bytes and sibling-app isolation.

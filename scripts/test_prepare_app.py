@@ -42,6 +42,24 @@ class PrepareAppTests(unittest.TestCase):
             prepare("client", root)
             self.assertEqual(other.read_text(), "sibling")
 
+    def test_shared_celestials_are_exact_and_do_not_require_the_sibling_app(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            (root / "assets/runtime").mkdir(parents=True)
+            for name in ("reviewed-planets", "reviewed-stars"):
+                source = root / "assets/reviewed-celestials" / name / "revision/asset.bin"
+                source.parent.mkdir(parents=True)
+                source.write_bytes(bytes(range(256)))
+                stale = root / "apps/client/public" / name / "old.bin"
+                stale.parent.mkdir(parents=True)
+                stale.write_text("stale")
+            prepare("client", root)
+            self.assertFalse((root / "apps/dashboard").exists())
+            for name in ("reviewed-planets", "reviewed-stars"):
+                output = root / "apps/client/public" / name
+                self.assertFalse((output / "old.bin").exists())
+                self.assertEqual((output / "revision/asset.bin").read_bytes(), bytes(range(256)))
+
     def test_invalid_app_cannot_choose_an_arbitrary_destination(self):
         with tempfile.TemporaryDirectory() as folder:
             with self.assertRaises(ValueError):

@@ -62,7 +62,7 @@ it("keeps loaded star disabled until caller publishes and releases cancelled lat
       new Response(
         readFileSync(
           new URL(
-            "../../../../apps/dashboard/public/reviewed-stars/yellow-main-sequence/star.glb",
+            "../../../../assets/reviewed-celestials/reviewed-stars/yellow-main-sequence/star.glb",
             import.meta.url,
           ),
         ),

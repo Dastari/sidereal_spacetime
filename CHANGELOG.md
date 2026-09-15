@@ -11,3 +11,5 @@ Added separate Blender-authored exterior armor with broad paired bays, recessed 
 - 2026-09-15: Render/dashboard0.3.0: native yellow-main-sequence star r007 passes independent Astra reference working review; animated shared flares, optically thin corona, warm-light evidence and NullEngine lifetime tests. System integration pending.
 
 - 2026-09-15: Render/dashboard 0.3.1: Genesis planet view now includes the reviewed Yellow Main Sequence Star, active flares, star-specific controls, verified cancellable GLB loading, and restored planet illumination when switching bodies.
+
+- 2026-09-15: Client 0.2.0, render/dashboard 0.3.2: stage exact reviewed planet and star assets independently from shared versioned celestial payloads; preserve public URLs and asset hashes.
