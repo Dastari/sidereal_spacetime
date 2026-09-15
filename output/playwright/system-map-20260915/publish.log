@@ -1,0 +1,11 @@
+(JS) Skipping build. Instead we are publishing /root/system-map-editor/.runtime/review-modules/63a762675ac5bf611ce00586ebfe42ea30268761ebd644185a6e3278ea27a79a.js
+Uploading to http://127.0.0.1:3100 => http://127.0.0.1:3100
+Checking for breaking changes...
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[0m[1m[34mDatabase Migration Plan[0m
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+Publishing module...
+Updated database with name: sidereal-spacetime-dev-review-system-map-ui, identity: c200ec7d43a4757306744e22d6378a312ba8e50619729c1bc3664699bb4a24cb
+{"database": "sidereal-spacetime-dev-review-system-map-ui", "artifactSha256": "63a762675ac5bf611ce00586ebfe42ea30268761ebd644185a6e3278ea27a79a", "reset": false}

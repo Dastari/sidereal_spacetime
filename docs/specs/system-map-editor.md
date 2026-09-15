@@ -1,6 +1,6 @@
 # System map editor
 
-Status: implementation in progress. Owner request 2026-09-15.
+Status: implemented review candidate; normal-provider acceptance and production deployment pending. Owner request 2026-09-15.
 
 ## Outcome
 Add `/map` to Creator navigation. A top-down metric grid displays the authoritative celestial chart and live ships. Selection exposes exact X/Y/height fields; celestial bodies drag on the grid. Ships are read-only live overlays. Local undo/redo and draft recovery precede an explicit Apply action.

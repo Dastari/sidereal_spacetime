@@ -1,6 +1,6 @@
 # System map progress
 
-In progress. Work isolated from shared tree. Base: upstream main plus PR7 solar-system dependency; delivery will be stacked on PR7.
+Implemented review candidate in `/root/system-map-editor`, branch `feat/system-map-editor`. Solar dependency PR #7 has merged; this branch includes upstream main `f19a4b21`. Production is unchanged. No new art or native revision changes.
 
 ## Initial shared checkout
 ```json
@@ -12,3 +12,41 @@ In progress. Work isolated from shared tree. Base: upstream main plus PR7 solar-
 ```
 
 Native revisions are unchanged: solar seed 822d8146bfc803f2b47cd6a07e01ea362955096fe4e0a89325a1171754b38d4c; native yellow star r013. No visual art authored in this task.
+
+
+## Delivered behavior
+
+Creator has a separate `/map` route, a top-down metric grid, independently visible celestials/live ships/fields, pan/zoom/focus and exact position inputs. Existing stars, planets and moons can move; live ships are read-only references. New systems define a spherical extent and one of the existing space backgrounds. Box, ellipsoid and concave polygon-prism asteroid fields support depth, density, seed, radius range and independent resource occurrence percentages. Draft save/restore and undo/redo remain local; Apply is an explicit server edit.
+
+Authority requires explicit `universe-map` draft.read/draft.write grants through the existing grant mechanism. The map does not inherit access from ordinary Shipyard grants. Revision/source conflicts, payload limits, ship safety zones and operation idempotency are checked. Base tables and resource assignments remain private. Server audit entries capture before/after documents. Nearby admitted game clients receive bounded static asteroid projections and the chosen background.
+
+## Review and evidence
+
+The normal signed-out route was reviewed at `http://localhost:5274/map`; its labeled local reference cannot mutate a world. Browser evidence is under `output/playwright/system-map-20260915/`. Authorized tests used the exact exported workspace component connected to the real isolated database `sidereal-spacetime-dev-review-system-map-ui`, with a separate development identity. A temporary bootstrap reducer seeded its grants, then was removed and the candidate republished. Neither that reducer nor its browser adapter ships in the feature. No production grants/accounts were changed.
+
+Verified actual editor actions: move Helion +300 m, Apply/reload, create a 10-asteroid iron field, Apply/reload, change the background to Ash Belt, and author/save/reload a six-vertex concave field. The normal game loaded the same isolated population and background; read-only scene inspection found all ten native asteroid transforms enabled and one canvas. The final system overview captures 29 celestial bodies, one live ship and ten generated asteroids. A later game screenshot attempt timed out under software rendering; earlier successful game screenshots and the exact-world read-only inspection are retained. Hardware performance is unmeasured.
+
+The normal OIDC login path is wired through the existing provider proof flow. Its browser acceptance remains unverified: the stored review credentials were rejected. No identity was reset or promoted to bypass it.
+
+## Limits and next deployment gate
+
+- Populations are persistent static authored entities with nearby native visuals. Physical collision activation, mining quantities and depletion are subsequent gameplay work.
+- Existing celestial positions are editable. Adding/transfering celestial identities, orbital mechanics and interstellar travel are outside this change.
+- Field limits are 16/system, 2,048 rocks/field and 8,192/system. Resource percentages represent independent occurrences, not quantities. Ellipsoid containment uses a conservative enclosing sphere; polygon-prism containment uses actual vertices.
+- Review port 5274 is separate from live Creator 5174. The shared live server has a phase3-compatible authority release; never replace it with this full branch incidentally. Production requires an explicit compatible deployment and an authorized map-workspace grant.
+- Agent Mail service is running but this session has no callable Agent Mail tools after discovery. No registration, reservation or inbox result is claimed. Feature work stayed isolated from other owners' dirty files.
+
+## Fresh-session continuation
+
+Use `/root/system-map-editor`. Read AGENTS.md, docs/agent_mail.md, this handoff, docs/specs/system-map-editor.md and docs/adr/ADR-20260915-system-map.md. Current commands beat historical notes. Run `git status --short`, `git log -5`, `git fetch origin`, and `gh pr list --head feat/system-map-editor --json number,url,state,baseRefName`. Inspect the PR and current checks before making changes. Keep local dev.toml ports 5274/5373 uncommitted; hydrated canonical LFS kit.json files may appear modified while `git diff --numstat -- assets/reviewed-celestials` is empty. Do not stage those raw assets or temporary browser adapters.
+
+Next objective: resolve inherited repository quality gates through their owning changes, complete normal-provider authoring acceptance with an authorized workspace grant, and prepare a compatible live release for owner review. Do not merge without owner instruction, change personal accounts, publish over the live database, or activate mining/collision as a side effect. Run `npm run check`, `npm run build`, isolated `npm run smoke -- --smoke-name system-map-review --fresh-smoke`, and browser/game review for any changed candidate. Record exact hashes and PR state here.
+
+
+## Final validation
+
+Candidate code `55b0499c`, integrated with main `f19a4b21`. Full build passes. TypeScript and all 289 test suites pass: 1,451 passed, two skipped. `npm run check` then fails on inherited missing documentation links. Repository lint reports 150 new/changed violations against its existing baseline, and formatting 280; none are in the new map modules. Map-specific lint/format checks pass. No debt baseline was widened. Validation logs and a SHA-256 manifest are committed with selected browser evidence.
+
+Exact isolated world bundle: `63a762675ac5bf611ce00586ebfe42ea30268761ebd644185a6e3278ea27a79a`, republished through `publish-review` after the upstream merge. The source merge did not alter the world bundle. Earlier full isolated smoke passed including map read/all-ship enumeration/Apply denials; the post-merge fresh run is recorded below once complete.
+
+Post-merge fresh smoke passed: `sidereal-spacetime-dev-system-map-merged-r0001-smoke`. The evidence package includes its full log and SHA-256.
