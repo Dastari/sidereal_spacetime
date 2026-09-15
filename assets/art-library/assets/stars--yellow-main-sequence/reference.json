@@ -1,0 +1,31 @@
+{
+  "id": "stars--yellow-main-sequence",
+  "name": "Yellow main sequence star",
+  "source": "stars.png",
+  "box": [
+    35,
+    64,
+    462,
+    364
+  ],
+  "category": "environment",
+  "observation": "S39 upper-left 01. Exact original pixels.",
+  "kind": "object",
+  "family": "yellow-main-sequence",
+  "schema": "sidereal.art-library.v1",
+  "reference_uuid": "9f6f52fd-2a61-5812-bbba-c7d1572b913b",
+  "source_sha256": "e2234801d565d7a790edb021a39da5e230258cfac739a545881e010ffa099ba2",
+  "source_dimensions_px": [
+    1448,
+    1086
+  ],
+  "crop_revision": 0,
+  "crop_sha256": "b8d3e0e863f06ceb44469dab47c04bc5f5bb6ae4460178e55636dad90ea3d44e",
+  "crop_path": "assets/stars--yellow-main-sequence/revisions/r000/reference.png",
+  "style": "studless-native",
+  "design_id": "star.yellow-main-sequence",
+  "proposal": {
+    "radius_m": 72,
+    "status": "owner-directed presentation scale"
+  }
+}

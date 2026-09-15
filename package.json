@@ -1,6 +1,6 @@
 {
   "name": "sidereal-spacetime",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "workspaces": [
@@ -71,7 +71,9 @@
     "lint:all": "eslint \"apps/**/*.{ts,tsx}\" \"packages/**/*.{ts,tsx}\"",
     "test:python": "python3 scripts/run_python_tests.py",
     "art:character-components": "python3 scripts/character_components/run.py",
-    "art:reference:check": "python3 scripts/art_library/run_reference_checks.py"
+    "art:reference:check": "python3 scripts/art_library/run_reference_checks.py",
+    "art:yellow-star": "python3 scripts/art_library/run_yellow_star.py",
+    "art:yellow-star:review": "python3 scripts/art_library/run_star_review.py"
   },
   "devDependencies": {
     "@types/node": "26.5.0",

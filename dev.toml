@@ -38,3 +38,6 @@ port = 5183
 [restore_review]
 host = "127.0.0.1"
 port = 3190
+
+[star_review]
+port = 5190

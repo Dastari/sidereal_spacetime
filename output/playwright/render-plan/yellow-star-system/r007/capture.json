@@ -1,0 +1,38 @@
+{
+  "renderer": "SwiftShader; counts and visual functionality only, not hardware timing",
+  "records": [
+    {
+      "frames": 173,
+      "ready": true,
+      "flareCount": 180,
+      "time": 88.60089999961853,
+      "glow": true,
+      "lighting": true,
+      "meshes": 388,
+      "instances": 358,
+      "drawCalls": 63
+    },
+    {
+      "frames": 182,
+      "ready": true,
+      "flareCount": 180,
+      "time": 93.93679999923707,
+      "glow": true,
+      "lighting": true,
+      "meshes": 388,
+      "instances": 358,
+      "drawCalls": 63
+    },
+    {
+      "frames": 191,
+      "ready": true,
+      "flareCount": 180,
+      "time": 99.30210000038147,
+      "glow": true,
+      "lighting": true,
+      "meshes": 388,
+      "instances": 358,
+      "drawCalls": 63
+    }
+  ]
+}
