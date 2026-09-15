@@ -210,7 +210,7 @@ export default function MapCanvas({
             ...camera,
             span: Math.max(
               10,
-              Math.min(2e8, camera.span * Math.exp(e.deltaY * 0.001)),
+              Math.min(2e9, camera.span * Math.exp(e.deltaY * 0.001)),
             ),
           });
         }}
