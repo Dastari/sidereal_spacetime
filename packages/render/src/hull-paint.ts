@@ -28,15 +28,7 @@ export function hullAtlasPaintRole(u: number, v: number): HullPaintRole {
 }
 export function hullMaterialPaintRole(material: Material): HullPaintRole {
   const n = material.name.toLowerCase();
-  if (/titanium hardware|clean hull paint|clean nameplate/.test(n))
-    return "surface";
-  if (
-    material.alpha < 1 ||
-    /glass|glaz|window|lens|emitt|emissi|cyan|amber|instrument|fixture|steel|metal|titanium|rubber|seal|black|core|nameplate|sign|logo|identity/.test(
-      n,
-    )
-  )
-    return "protected";
+  if (material.alpha < 1) return "protected";
   if (
     material instanceof PBRMaterial &&
     (material.subSurface.isRefractionEnabled ||
@@ -51,6 +43,14 @@ export function hullMaterialPaintRole(material: Material): HullPaintRole {
     (material.emissiveColor.r > 0 ||
       material.emissiveColor.g > 0 ||
       material.emissiveColor.b > 0)
+  )
+    return "protected";
+  if (/titanium hardware|clean hull paint|clean nameplate/.test(n))
+    return "surface";
+  if (
+    /glass|glaz|window|lens|emitt|emissi|cyan|amber|instrument|fixture|steel|metal|titanium|rubber|seal|black|core|nameplate|sign|logo|identity/.test(
+      n,
+    )
   )
     return "protected";
   if (n.startsWith("armor cassette / enamel")) return "atlas";

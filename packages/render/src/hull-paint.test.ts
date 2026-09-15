@@ -137,6 +137,12 @@ test("native atlas masks separate panel faces, backing and protected metal", () 
   expect(hullMaterialPaintRole(new PBRMaterial("Graphite seals", scene))).toBe(
     "protected",
   );
+  const optical = new PBRMaterial("Titanium hardware", scene);
+  optical.alpha = 0.5;
+  expect(hullMaterialPaintRole(optical)).toBe("protected");
+  optical.alpha = 1;
+  optical.subSurface.isRefractionEnabled = true;
+  expect(hullMaterialPaintRole(optical)).toBe("protected");
   scene.dispose();
   engine.dispose();
 });

@@ -1,6 +1,6 @@
 # Shipyard primary and secondary paint
 
-Status: implemented; live dashboard verified; PR delivery in progress. Owner explicitly requested paint controls for every Hull object and engines/thrusters. No new native geometry or game release approved by this document.
+Status: implemented; live dashboard verified; delivered in [PR #9](https://github.com/Dastari/sidereal_spacetime/pull/9). Owner explicitly requested paint controls for every Hull object and engines/thrusters. No new native geometry or game release approved by this document.
 
 ## Entry record
 
@@ -132,6 +132,8 @@ Candidate implementation SHA-256:
 
 ```text
 56c589d22fd174f54c2003bbe0172e12f17a4b36509d70c302d5db6095391653  packages/content/src/hull-paint.ts
-fc2b902e280af26794ae2086b612be1ddfc190511bcdbae064920fc0aa606e8b  packages/render/src/hull-paint.ts
+f32846b4e48bc6aa23f7ab0568c801293eb150ce3b49bc1c5e960ea9a1ea605f  packages/render/src/hull-paint.ts
 a86b60094f20a1a311c0db4281ad97ec36e591b46abd76a6a798fcf226f59e25  apps/dashboard/src/shipyard/layout/HullPaintPanel.tsx
 ```
+
+Live small-thruster evidence: `output/playwright/paint-live-thruster.png`; primary/secondary survive a fresh page reload alongside the separately painted main engine. Explicit optical flags take precedence over paintable hardware names.
