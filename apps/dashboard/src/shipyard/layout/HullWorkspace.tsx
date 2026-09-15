@@ -1,3 +1,4 @@
+import { isArmorPaletteAlias } from "./armor-review";
 import { PanelResizeHandle } from "@sidereal/ui/editor-controls";
 import { LayoutContextOverlay } from "./LayoutContextOverlay";
 import { WallFitNotes } from "./WallFitNotes";
@@ -673,6 +674,7 @@ export default function HullWorkspace(props: Props) {
       .filter(
         (a) =>
           !structural(a.id) &&
+          !isArmorPaletteAlias(a.id) &&
           (category === "all" || a.category === category) &&
           (library === "all" ||
             a.visual?.designId !== "shipyard.hull.side-armor" ||

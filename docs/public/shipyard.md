@@ -56,3 +56,7 @@ Drag the divider beside the library to resize it in Structure, Objects or Hull.
 The width is remembered across tabs and reloads. You can also focus the divider
 and use arrow keys, Home or End. Hull armor cards show the actual native panel,
 including its finish and corner shape.
+
+Armor choices show total depth as well as width, height and finish. Equivalent
+native variants share one palette card; existing placed parts retain their original
+asset references. Thinner bulkhead panels remain separate choices.

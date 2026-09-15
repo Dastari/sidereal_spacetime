@@ -25,3 +25,10 @@ export function hasArmorReviewParts(doc?: LayoutDocument | null): boolean {
     kit.assets.some((a) => a.id === p.assetId),
   );
 }
+
+const paletteAliases: Readonly<Record<string, string>> = kit.paletteAliases;
+
+/** Keep legacy native IDs resolvable for placed parts without duplicate palette cards. */
+export function isArmorPaletteAlias(id: string): boolean {
+  return Object.hasOwn(paletteAliases, id);
+}

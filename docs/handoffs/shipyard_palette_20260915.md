@@ -119,3 +119,11 @@ Reuse the persisted Structure panel widths and accessible resize handle in Hull/
 PR delivery: [PR #8](https://github.com/Dastari/sidereal_spacetime/pull/8), implementation commit `46ffd6a6`. Hosted CI pending at handoff update. This PR is stacked on `shipyard-armor-editor` (PR #4). Main’s newer Genesis change was not replaced or republished. No game or native art contract is marked complete by this UI fix.
 
 Live assembled Wayfarer review screenshot: `output/playwright/palette-live-wayfarer.png` (84 components, native exterior visible, image palette loaded). Its status is `169 native boundary pieces · physical qualification pending`; the earlier browser wait expected the wrong status text, so the assembled ship was checked by screenshot instead. Standalone empty-draft placement created an editable part but showed only its selection outline in the isolated browser; this existing renderer path was not changed by the palette patch and is not claimed as gameplay evidence.
+
+## Duplicate palette follow-up
+
+Entry: isolated HEAD 82c11593c7a42f766731abda9213b8971a1f8416, shared HEAD 9c58c077; shared dirty files still preserved, including newer planet and renderer work. Native source remains dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8.
+
+Diagnosis: native parameter hashing distinguished integer and floating-point spellings of the same dimensions. Collapse equivalent complete parameter records in the palette, preserve all placed asset IDs and GLB selectors, and label total depth to distinguish real bulkhead variants. Add regeneration and regression checks; verify the live palette and deliver through the existing PR #8.
+
+Follow-up verification: `npm run check` passes 349 suites / 2,082 tests plus documentation checks; full `npm run build` passes. Thumbnail and packaging Python tests pass; lint/format report no new violations. All 13 alias pairs have identical native mesh attribute/index buffers. Real browser at owner port 5174 verifies 63 unique card labels, exactly one 2 × 3 m red-service/utility/vent at 1 m depth, all 63 images decoded, and no horizontal overflow at 200 px. Screenshot: `output/playwright/shipyard-palette-20260915/duplicates-fixed.png` in the shared workspace. Preserved all 76 native asset records and all placement IDs. This is a palette fix, not an art or gameplay completion claim.

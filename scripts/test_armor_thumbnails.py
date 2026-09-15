@@ -29,3 +29,19 @@ class ArmorThumbnailTests(unittest.TestCase):
             self.assertEqual('/' + EDITOR_NATIVE_ASSETS[f"{ARMOR_THUMBNAILS}/{preview['file']}"], asset['thumbnail'])
             hashes.add(preview['sha256'])
         self.assertEqual(len(hashes), len(previews), 'A generic/repeated image replaced a native variant')
+
+    def test_palette_grouping_normalizes_numeric_spelling_only(self):
+        from art_library.build_armor_editor import palette_aliases
+        base = {'lengthM': 2, 'heightM': 3, 'backingDepthM': .75, 'finish': 'plain'}
+        models = [
+            {'modelId': 'canonical', 'parameters': base},
+            {'modelId': 'alias', 'parameters': {**base, 'lengthM': 2.0, 'heightM': 3.0}},
+            {'modelId': 'thin', 'parameters': {**base, 'backingDepthM': .25}},
+            {'modelId': 'vent', 'parameters': {**base, 'finish': 'vent'}},
+            {'modelId': 'other-span', 'parameters': {**base, 'lengthM': 2.00001}},
+        ]
+        self.assertEqual(palette_aliases(models), {'alias': 'canonical'})
+        catalog = json.loads((ROOT / 'apps/dashboard/src/shipyard/layout/armor-kit-r005.json').read_text())
+        native = json.loads((ROOT / 'assets/art-library/framed-wayfarer/r005/library-02/models.json').read_text())
+        self.assertEqual(catalog['paletteAliases'], palette_aliases(native['models']))
+        self.assertEqual(len(catalog['paletteAliases']), 13)

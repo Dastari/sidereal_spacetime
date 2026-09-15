@@ -1,5 +1,9 @@
 # Changelog
 
+## Dashboard 0.2.2 — distinct native armor choices, 2026-09-15
+
+Collapse 13 equivalent native armor variants in the palette and label total depth so the 0.5 m bulkheads remain distinct from 1 m exterior armor. All placed native IDs and their exact models remain resolvable.
+
 ## Dashboard 0.2.1 — palette sizing and native previews, 2026-09-15
 
 Hull and Objects now share Structure’s persisted, keyboard-accessible drawer resize controls. Palette cards wrap within narrow drawers. All 76 r005 armor variants have static previews rendered from their exact native GLB, published only to the dashboard without extra WebGL canvases.
