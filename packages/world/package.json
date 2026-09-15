@@ -1,13 +1,13 @@
 {
   "name": "@sidereal/world",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "exports": "./src/index.ts",
   "dependencies": {
     "spacetimedb": "2.10.0",
-    "@sidereal/content": "0.2.1",
-    "@sidereal/sim": "0.1.0"
+    "@sidereal/content": "0.3.0",
+    "@sidereal/sim": "0.2.0"
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json"

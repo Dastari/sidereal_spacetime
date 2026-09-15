@@ -35,6 +35,7 @@ import "./editor/theme.css";
 import "./style.css";
 const AssemblyEditor = lazy(() => import("./shipyard/AssemblyEditor"));
 const LayoutEditor = lazy(() => import("./shipyard/layout/LayoutEditor"));
+const MapEditor = lazy(() => import("./map-editor/MapEditor"));
 const PlanetStudio = lazy(() => import("./planet-studio/PlanetStudio"));
 const tools = [
   [
@@ -111,20 +112,28 @@ const tools = [
   ],
 ] as const;
 type Route =
-  "planets" | "dashboard" | "shipyard" | "assembly" | "models" | "components";
+  | "map"
+  | "planets"
+  | "dashboard"
+  | "shipyard"
+  | "assembly"
+  | "models"
+  | "components";
 const currentRoute = (): Route =>
-  location.pathname.includes("shipyard") &&
-  new URLSearchParams(location.search).has("assembly")
-    ? "assembly"
-    : location.pathname.includes("planets")
-      ? "planets"
-      : location.pathname.includes("models")
-        ? "models"
-        : location.pathname.includes("shipyard")
-          ? "shipyard"
-          : location.pathname.includes("components")
-            ? "components"
-            : "dashboard";
+  location.pathname === "/map"
+    ? "map"
+    : location.pathname.includes("shipyard") &&
+        new URLSearchParams(location.search).has("assembly")
+      ? "assembly"
+      : location.pathname.includes("planets")
+        ? "planets"
+        : location.pathname.includes("models")
+          ? "models"
+          : location.pathname.includes("shipyard")
+            ? "shipyard"
+            : location.pathname.includes("components")
+              ? "components"
+              : "dashboard";
 export default function App() {
   const [route, setRoute] = useState<Route>(currentRoute);
   const [toolDetail, setToolDetail] = useState<(typeof tools)[number] | null>(
@@ -227,6 +236,12 @@ export default function App() {
           >
             Genesis
           </button>
+          <button
+            className={route === "map" ? "selected" : ""}
+            onClick={() => navigate("map")}
+          >
+            Map editor
+          </button>
           <a
             className="nav-link"
             href={import.meta.env.VITE_CLIENT_URL ?? clientUrl.href}
@@ -279,7 +294,9 @@ export default function App() {
               </div>
             }
           >
-            {route === "planets" ? (
+            {route === "map" ? (
+              <MapEditor />
+            ) : route === "planets" ? (
               <PlanetStudio />
             ) : route === "shipyard" || route === "assembly" ? (
               route === "assembly" ? (
@@ -418,11 +435,13 @@ export default function App() {
                         key={title}
                         className="suite-row"
                         onClick={() =>
-                          title === "Shipyard"
-                            ? navigate("shipyard")
-                            : title === "Genesis"
-                              ? navigate("planets")
-                              : setToolDetail(tool)
+                          title === "Firmament" || title === "World explorer"
+                            ? navigate("map")
+                            : title === "Shipyard"
+                              ? navigate("shipyard")
+                              : title === "Genesis"
+                                ? navigate("planets")
+                                : setToolDetail(tool)
                         }
                       >
                         <span className="suite-icon">
@@ -433,11 +452,13 @@ export default function App() {
                           <p>{description}</p>
                         </div>
                         <Status>
-                          {title === "Shipyard"
-                            ? "Layout planner ready"
-                            : title === "Genesis"
-                              ? "Generator ready"
-                              : milestone + " planned"}
+                          {title === "Firmament" || title === "World explorer"
+                            ? "Map editor"
+                            : title === "Shipyard"
+                              ? "Layout planner ready"
+                              : title === "Genesis"
+                                ? "Generator ready"
+                                : milestone + " planned"}
                         </Status>
                         <ArrowUpRight size={18} />
                       </button>
