@@ -196,6 +196,36 @@ export default function App({
     session.current?.authenticate(auth);
   }, [auth?.token]);
   const c = connection.current;
+  const systemScape = c
+    ? [...c.db.admittedSystemScapes.iter()].find(
+        (s) => s.id === sharedAdmission?.systemId,
+      )?.backgroundId
+    : undefined;
+  useEffect(() => {
+    if (systemScape) setVistaId(systemScape);
+  }, [systemScape]);
+  const fieldBodies = () =>
+    connection.current
+      ? [...connection.current.db.nearbyFieldAsteroids.iter()].map((r) => ({
+          id: r.id,
+          key: r.id,
+          shipId: "",
+          kind: "asteroid",
+          appearance: "stone",
+          x: r.x,
+          y: r.y,
+          height: r.height,
+          radius: r.radius,
+          seed: r.seed,
+          vx: 0,
+          vy: 0,
+          heading: 0,
+          omega: 0,
+          massKg: 0,
+          tick: 0n,
+        }))
+      : [];
+
   const ownedActors = c ? [...c.db.ownCharacters.iter()] : [];
   const actor = (
     sharedAdmission
@@ -744,7 +774,13 @@ export default function App({
                       ?.shipId ?? localShipId.current,
                   bodies: (nowMs) =>
                     sharedPresentation.store.getSnapshot().admission.length
-                      ? sharedBodyPresentation(sharedPresentation.store, nowMs)
+                      ? [
+                          ...sharedBodyPresentation(
+                            sharedPresentation.store,
+                            nowMs,
+                          ),
+                          ...fieldBodies(),
+                        ]
                       : undefined,
                 }
               : undefined,

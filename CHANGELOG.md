@@ -1,3 +1,10 @@
+# 0.5.0 — System map editor candidate (2026-09-15)
+
+- Add Creator `/map` with metric chart, celestial movement, live ships, spherical systems and space backgrounds.
+- Author box, ellipsoid and concave polygon asteroid volumes with seeded density, radius and resource occurrence controls.
+- Validate privileged edits atomically, preserve ships, record source/revision checks and before/after history; expose nearby visual asteroids without resource metadata.
+- Correct LFS attributes for canonical native JSON payloads and replace an obsolete smoke assertion with the pinned current celestial chart.
+
 # Changelog
 
 ## 2026-09-15 — Genesis reviewed native planets (dashboard/render 0.2.1)

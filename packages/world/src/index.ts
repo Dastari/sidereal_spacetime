@@ -1,4 +1,10 @@
-import { migrateSolarSystem } from './solar-system-migration';
+import {
+  systemMapDefinition,
+  fieldAsteroid,
+  systemMapEdit,
+} from "./system-map-tables";
+import * as systemMap from "./system-map";
+import { migrateSolarSystem } from "./solar-system-migration";
 import { constructionCargoAssembly } from "./construction-cargo-assembly-tables";
 import {
   constructionCargoGrid,
@@ -269,6 +275,9 @@ const db = schema({
   constructionFlightReceipt,
   constructionPilotSeat,
   constructionFlightReview,
+  systemMapDefinition,
+  systemMapEdit,
+  fieldAsteroid,
   worldSystem,
   celestialMigrationReceipt,
   shipWorldMotion,
@@ -1382,4 +1391,35 @@ export const moveCargoCarrier = db.reducer(
       ],
     });
   }, true),
+);
+
+export const ownSystemMaps = db.view(
+  { name: "own_system_maps", public: true },
+  t.array(systemMap.mapProjection),
+  auth.gameView(systemMap.ownMaps),
+);
+export const ownMapShips = db.view(
+  { name: "own_map_ships", public: true },
+  t.array(systemMap.mapShipProjection),
+  auth.gameView(systemMap.ownMapShips),
+);
+export const admittedSystemScapes = db.view(
+  { name: "admitted_system_scapes", public: true },
+  t.array(systemMap.systemScapeProjection),
+  auth.gameView(systemMap.admittedSystemScapes),
+);
+export const applySystemMap = db.reducer(
+  {
+    documentJson: t.string(),
+    expectedRevision: t.u64(),
+    sourceFingerprint: t.string(),
+    operationId: t.string(),
+  },
+  auth.gameAction(systemMap.applySystemMap, true),
+);
+
+export const nearbyFieldAsteroids = db.view(
+  { name: "nearby_field_asteroids", public: true },
+  t.array(systemMap.nearbyFieldProjection),
+  auth.gameView(systemMap.nearbyFieldAsteroids),
 );

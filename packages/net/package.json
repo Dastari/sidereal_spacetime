@@ -1,11 +1,16 @@
 {
   "name": "@sidereal/net",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
-  "exports": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./system-map": "./src/system-map.ts",
+    "./connection-session": "./src/connection-session.ts",
+    "./generated": "./src/generated/index.ts"
+  },
   "dependencies": {
-    "@sidereal/sim": "0.1.0",
+    "@sidereal/sim": "0.2.0",
     "spacetimedb": "2.10.0"
   }
 }
