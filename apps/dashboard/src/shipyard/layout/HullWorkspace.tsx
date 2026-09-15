@@ -1,3 +1,4 @@
+import { PanelResizeHandle } from "@sidereal/ui/editor-controls";
 import { LayoutContextOverlay } from "./LayoutContextOverlay";
 import { WallFitNotes } from "./WallFitNotes";
 import { MeasurementReadout } from "./MeasurementReadout";
@@ -61,6 +62,10 @@ type Handle = ReturnType<
   (typeof import("@sidereal/render/layout-hull"))["createHullViewport"]
 >;
 interface Props {
+  leftWidth: number;
+  rightWidth: number;
+  onLeftResize: (width: number) => void;
+  onRightResize: (width: number) => void;
   onDeckChange: (id: string) => void;
   sharedViewport?: RefObject<SharedLayoutViewport>;
   layers?: ViewState["layers"];
@@ -792,6 +797,13 @@ export default function HullWorkspace(props: Props) {
           ))}
         </div>
       </aside>
+      {showLibrary && (
+        <PanelResizeHandle
+          side="left"
+          width={props.leftWidth}
+          onResize={props.onLeftResize}
+        />
+      )}
       <section className="hull-center">
         <ViewportDeckControl
           doc={doc}
@@ -941,6 +953,13 @@ export default function HullWorkspace(props: Props) {
           {status}
         </div>
       </section>
+      {showInspector && (
+        <PanelResizeHandle
+          side="right"
+          width={props.rightWidth}
+          onResize={props.onRightResize}
+        />
+      )}
       <aside
         hidden={!showInspector}
         className="hull-inspector"

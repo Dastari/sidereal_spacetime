@@ -1,5 +1,9 @@
 # Changelog
 
+## Dashboard 0.2.1 — palette sizing and native previews, 2026-09-15
+
+Hull and Objects now share Structure’s persisted, keyboard-accessible drawer resize controls. Palette cards wrap within narrow drawers. All 76 r005 armor variants have static previews rendered from their exact native GLB, published only to the dashboard without extra WebGL canvases.
+
 ## CI reproducibility repair — 2026-09-15
 
 Hosted validation found two additional Python native-pin reads that depended on the author checkout. Resolve them against the current repository without changing hashes or provenance, and guard geometry tests against accidental reads from the old checkout. Source quality is re-enabled for hosted verification.

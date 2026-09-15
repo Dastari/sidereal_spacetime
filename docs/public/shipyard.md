@@ -51,3 +51,8 @@ publishing, and retain unsupported drafts when a catalog changes.
 ## Review the new Wayfarer armor
 
 Choose **New → Open Wayfarer armor review**. Your current design stays saved. The new design opens in Hull / 3D with the reviewed armor assembled. Select a block to move it, use its Height field or Shift-drag to lift it, and use Undo to restore the assembly. Search the Hull palette for **Armor** to try other native heights, spans and corners. These are editable local visual parts; automatic corner assembly and game installation are still pending. The Publish button explains this restriction. Save draft and export remain available.
+
+Drag the divider beside the library to resize it in Structure, Objects or Hull.
+The width is remembered across tabs and reloads. You can also focus the divider
+and use arrow keys, Home or End. Hull armor cards show the actual native panel,
+including its finish and corner shape.

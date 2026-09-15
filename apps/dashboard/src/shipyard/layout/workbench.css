@@ -268,7 +268,9 @@
   font-size: 11px;
 }
 .layout-editor .hull-workspace {
-  grid-template-columns: var(--layout-left) minmax(0, 1fr) var(--layout-right);
+  grid-template-columns: var(--layout-left) 4px minmax(0, 1fr) 4px var(
+      --layout-right
+    );
 }
 .layout-editor .hull-library,
 .layout-editor .hull-inspector {
@@ -304,7 +306,7 @@
   display: none;
 }
 .layout-editor .hull-palette img {
-  height: 66px;
+  height: 100px;
 }
 .layout-editor .hull-toolbar {
   padding: 7px 8px;
@@ -381,24 +383,24 @@
   padding: 6px;
 }
 .layout-editor .hull-workspace[data-left="closed"] {
-  grid-template-columns: 0 minmax(0, 1fr) var(--layout-right);
+  grid-template-columns: 0 0 minmax(0, 1fr) 4px var(--layout-right);
 }
 .layout-editor .hull-workspace[data-right="closed"] {
-  grid-template-columns: var(--layout-left) minmax(0, 1fr) 0;
+  grid-template-columns: var(--layout-left) 4px minmax(0, 1fr) 0 0;
 }
 .layout-editor .hull-workspace[data-left="closed"][data-right="closed"] {
-  grid-template-columns: 0 minmax(0, 1fr) 0;
+  grid-template-columns: 0 0 minmax(0, 1fr) 0 0;
 }
 .layout-editor .hull-library {
   grid-column: 1;
   grid-row: 1;
 }
 .layout-editor .hull-center {
-  grid-column: 2;
+  grid-column: 3;
   grid-row: 1;
 }
 .layout-editor .hull-inspector {
-  grid-column: 3;
+  grid-column: 5;
   grid-row: 1;
 }
 @media (max-width: 1100px) {
@@ -535,7 +537,7 @@
     display: none;
   }
   .layout-editor .hull-palette {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
   .layout-statusbar > span:nth-child(2) {
     display: none;
@@ -827,7 +829,7 @@
   display: none;
 }
 .layout-editor[data-canvas-only="true"] .hull-workspace {
-  grid-template-columns: 0 minmax(0, 1fr) 0;
+  grid-template-columns: 0 0 minmax(0, 1fr) 0 0;
 }
 .layout-editor[data-canvas-only="true"] > .layout-statusbar {
   min-height: 34px;
@@ -979,4 +981,26 @@
 .layout-file-menu > div > button {
   justify-content: flex-start;
   white-space: nowrap;
+}
+
+/* Native cards must shrink with the drawer instead of widening its scroll area. */
+.layout-editor .hull-library {
+  min-width: 0;
+}
+.layout-editor .hull-palette {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.layout-editor .hull-palette button {
+  min-width: 0;
+  min-height: 144px;
+  contain-intrinsic-size: auto 144px;
+}
+.layout-editor .hull-palette span {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-transform: none;
+}
+.layout-editor .layout-resizer:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
 }

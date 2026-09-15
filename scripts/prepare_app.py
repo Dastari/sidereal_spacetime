@@ -2,6 +2,7 @@
 from pathlib import Path
 import argparse
 import fnmatch
+import json
 import re
 import shutil
 
@@ -15,6 +16,13 @@ EDITOR_NATIVE_ASSETS = {
     "assets/art-library/framed-wayfarer/r005/library-02/hull.glb":
         "assets/shipyard/armor-r005/hull.glb",
 }
+# Only reviewed per-model palette PNGs are public, never the source manifest/renders.
+ARMOR_THUMBNAILS = "assets/art-library/framed-wayfarer/r005/thumbnails-r001"
+for thumbnail in json.loads((ROOT / ARMOR_THUMBNAILS / "manifest.json").read_text())["assets"]:
+    filename = thumbnail["file"]
+    if not re.fullmatch(r"armor-block-[0-9a-f]{20}\.png", filename):
+        raise ValueError("Unexpected native armor thumbnail filename")
+    EDITOR_NATIVE_ASSETS[f"{ARMOR_THUMBNAILS}/{filename}"] = f"assets/shipyard/armor-r005/thumbnails/{filename}"
 # Publication is explicit. Only these `assets/runtime` entries (files or whole
 # directories) are copied into an app's public tree; anything else written into
 # `assets/runtime` (review packages, preview builds, rebuild experiments) stays

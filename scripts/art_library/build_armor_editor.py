@@ -89,6 +89,7 @@ def build():
                 heights += f" → {p['outgoingHeightM']:g}"
             label = f"Armor · {p['convexity']} {angle:.3g}° · {heights} m"
         assets.append({"id": model["modelId"], "label": label, "category": "superstructure",
+                       "thumbnail": f"/assets/shipyard/armor-r005/thumbnails/{model['modelId']}.png",
                        "nodes": [], "bounds": model["bounds"], "visual": {
                            "url": "/assets/shipyard/armor-r005/hull.glb", "sha256": LIBRARY_SHA,
                            "designId": DESIGN, "revision": 5, "bounds": model["bounds"],
