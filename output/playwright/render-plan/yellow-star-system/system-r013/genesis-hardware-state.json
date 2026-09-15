@@ -1,0 +1,33 @@
+{
+  "date": "2026-09-15",
+  "canvas": {
+    "height": 1132,
+    "width": 1669
+  },
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce GT 730 (0x00001287) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "state": {
+    "frames": 92,
+    "loading": false,
+    "ready": true,
+    "seed": 3901,
+    "selected": "yellow-main-sequence-r013",
+    "stats": {
+      "active": 0,
+      "assetSha256": "f651ba13ade02fb918c97dd4d3924879dd9c204527a4e43cef90c8c578505bd2",
+      "flareCount": 1,
+      "requestedLOD": 2,
+      "revision": "r013"
+    },
+    "worker": {
+      "lastBuildMs": 4751,
+      "pendingBuilds": 0,
+      "pendingWeatherBuilds": 0
+    }
+  },
+  "viewport": {
+    "height": 1262,
+    "width": 2019
+  },
+  "visibility": "visible",
+  "snapshot": "Two preview_snapshot calls failed; no hardware screenshot or timing acceptance claimed."
+}
