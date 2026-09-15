@@ -13,6 +13,7 @@ import { compileLayout } from "@sidereal/sim/layout-compiler";
 import { planLayoutInsetVisuals } from "@sidereal/render/layout-inset-visual-plan";
 import {
   createArmorReviewDraft,
+  isArmorPaletteAlias,
   hasArmorReviewParts,
   withArmorReviewCatalog,
 } from "./armor-review";
@@ -149,5 +150,37 @@ describe("editor native armor review", () => {
     expect(base.assets.some((a) => a.id.startsWith("armor-block-"))).toBe(
       false,
     );
+  });
+});
+
+describe("native armor palette choices", () => {
+  it("collapses equivalent dimensions while retaining every placed asset definition", () => {
+    const native = catalog.assets.filter(
+      (a) => a.visual?.designId === kit.designId,
+    );
+    const palette = native.filter((a) => !isArmorPaletteAlias(a.id));
+    expect(native).toHaveLength(76);
+    expect(palette).toHaveLength(63);
+    expect(new Set(palette.map((a) => a.label)).size).toBe(63);
+    for (const [alias, canonical] of Object.entries(kit.paletteAliases)) {
+      expect(native.find((a) => a.id === alias)).toBeDefined();
+      expect(palette.find((a) => a.id === canonical)).toBeDefined();
+    }
+    expect(isArmorPaletteAlias("unrelated-future-model")).toBe(false);
+  });
+  it("keeps genuinely different depth and finish options selectable", () => {
+    const choices = catalog.assets.filter((a) => !isArmorPaletteAlias(a.id));
+    expect(
+      choices.filter((a) => a.label === "Armor · 2 × 3 m · plain · 1 m deep"),
+    ).toHaveLength(1);
+    expect(
+      choices.filter((a) => a.label === "Armor · 2 × 3 m · plain · 0.5 m deep"),
+    ).toHaveLength(1);
+    for (const finish of ["red-service", "utility", "vent"])
+      expect(
+        choices.filter(
+          (a) => a.label === `Armor · 2 × 3 m · ${finish} · 1 m deep`,
+        ),
+      ).toHaveLength(1);
   });
 });

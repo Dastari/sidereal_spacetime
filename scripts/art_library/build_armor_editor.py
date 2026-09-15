@@ -13,6 +13,28 @@ LIBRARY_SHA = "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8"
 DESIGN = "shipyard.hull.armor-block-review"
 
 
+def palette_aliases(models):
+    """Equivalent numeric parameters share one palette choice; native IDs stay intact."""
+    def normalize(value):
+        if isinstance(value, float) and value.is_integer():
+            return int(value)
+        if isinstance(value, dict):
+            return {k: normalize(v) for k, v in value.items()}
+        if isinstance(value, list):
+            return [normalize(v) for v in value]
+        return value
+
+    canonical, aliases = {}, {}
+    for model in models:
+        key = json.dumps(normalize(model["parameters"]), sort_keys=True)
+        ident = model["modelId"]
+        if key in canonical:
+            aliases[ident] = canonical[key]
+        else:
+            canonical[key] = ident
+    return aliases
+
+
 def build():
     library = NATIVE / "library-02/hull.glb"
     if hashlib.sha256(library.read_bytes()).hexdigest() != LIBRARY_SHA:
@@ -88,7 +110,9 @@ def build():
             if p['outgoingHeightM'] != p['incomingHeightM']:
                 heights += f" → {p['outgoingHeightM']:g}"
             label = f"Armor · {p['convexity']} {angle:.3g}° · {heights} m"
+        label += f" · {p['backingDepthM'] + p['finishDepthM']:g} m deep"
         assets.append({"id": model["modelId"], "label": label, "category": "superstructure",
+                       "thumbnail": f"/assets/shipyard/armor-r005/thumbnails/{model['modelId']}.png",
                        "nodes": [], "bounds": model["bounds"], "visual": {
                            "url": "/assets/shipyard/armor-r005/hull.glb", "sha256": LIBRARY_SHA,
                            "designId": DESIGN, "revision": 5, "bounds": model["bounds"],
@@ -108,6 +132,7 @@ def build():
     layout["dependencies"].append({"id": DESIGN, "revision": LIBRARY_SHA})
     result = {"schema": "sidereal.armor-editor-review.v1", "designId": DESIGN,
               "librarySha256": LIBRARY_SHA, "assets": assets, "layout": layout,
+              "paletteAliases": palette_aliases(manifest["models"]),
               "provenance": {"sourceSha256": manifest["sourceSha256"],
                              "manifestSha256": hashlib.sha256((NATIVE / "library-02/models.json").read_bytes()).hexdigest(),
                              "removedPlacementIds": sorted(removed), "equipmentMounts": capture["mounts"],
