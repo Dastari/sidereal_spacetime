@@ -10,8 +10,10 @@ Validation: all28 packaged worker registrations/builds passed sequentially (1GiB
 
 Saved actual Genesis Ice26 on GT730 and SwiftShader. Independent Astra confirms one-view rendering parity with accepted Ice26; owner says it looks good. Hardware currently differs from RTX4080 baseline; hidden-preview stalls prevent a trustworthy timing claim. Normal Flight/Map/F3 acceptance remains outstanding. Further UI browser results are recorded in the evidence manifest. Do not resume visual polishing on already agreed planets.
 
-Branch: feat/genesis-reviewed-planets, based on origin/main9e3c40e2. Deliver through a new PR; merge is not authorized for this new PR. Do not stage unrelated dirty source files or the node_modules worktree symlink.
+Branch: feat/genesis-reviewed-planets, based on origin/main9e3c40e2. Owner authorized merging PR6 on 2026-09-15 after accepting observed GT730 performance. Do not stage unrelated dirty source files or the node_modules worktree symlink.
 
 PR: https://github.com/Dastari/sidereal_spacetime/pull/6. Code commit563a1c2e. Evidence manifest includes actual Ice/Gas/Temperate/Volcanic captures and Volcanic ready0→2→retained0 UI zoom. Software60s capture timeouts are retained; no timing inference.
 
 Final Genesis UI follow-up: Desert Moon1 r001 completes, seed117 regeneration completes with zero pending builds, and switching back to Procedural editor restores the original recipe controls. Saved JSON and screenshot include the initial software timeout and successful retry; reducing the software raster load by zooming out allowed the queued preparation to finish. No GPU timing conclusion follows.
+
+Owner merge acceptance (2026-09-15): the current machine has a GT730 and is unsuitable for the RTX4080 benchmark, but the owner is comfortable with its observed performance and explicitly requests merge. This accepts this release without claiming the benchmark passed. Pre-merge CI exposed a stale canvas-ui pin to render0.1.0 after the0.2.1 bump; it now follows the local workspace renderer, consistent with the applications.
