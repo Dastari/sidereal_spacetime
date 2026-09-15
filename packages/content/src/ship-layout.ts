@@ -1,3 +1,4 @@
+import type { HullPaint } from "./hull-paint";
 /** Versioned design intent only. No layout object is an installed world instance. */
 export const LAYOUT_SCHEMA = "sidereal.layout-draft.v1" as const;
 export const LAYOUT_COMPILER = "floorplan-1" as const;
@@ -136,6 +137,7 @@ export interface LayoutRoute {
   capacity: number | null;
 }
 export interface LayoutFitting {
+  paint?: HullPaint;
   id: string;
   deckId: string;
   definitionId: string;

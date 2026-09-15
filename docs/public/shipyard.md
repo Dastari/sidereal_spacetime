@@ -60,3 +60,9 @@ including its finish and corner shape.
 Armor choices show total depth as well as width, height and finish. Equivalent
 native variants share one palette card; existing placed parts retain their original
 asset references. Thinner bulkhead panels remain separate choices.
+
+## Component paint
+
+Select a hull component in **Hull**, or an engine/thruster in **Objects**, then use **Properties → Paint**. Primary and Secondary colour swatches apply to that placement. Reset one colour or **Reset all paint** to restore its original finish. Paint follows copy/duplicate, undo/redo, saved drafts and JSON exports.
+
+Armor uses Primary for its inset panel and Secondary for its backing/frame. Engine paint follows the authored body and accent materials. Older single-material hull pieces use face and top/bottom-edge regions; glass, lights, seals and exposed machinery retain their original materials. Paint changes appearance only, so repainting never moves a snapped component. Publishing a design or refitting a live ship remains a separate action.

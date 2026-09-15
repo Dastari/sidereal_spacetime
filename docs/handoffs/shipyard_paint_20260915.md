@@ -1,6 +1,6 @@
 # Shipyard primary and secondary paint
 
-Status: implementation in progress. Owner explicitly requested paint controls for every Hull object and engines/thrusters. No new native geometry or game release approved by this document.
+Status: implemented; live dashboard verified; PR delivery in progress. Owner explicitly requested paint controls for every Hull object and engines/thrusters. No new native geometry or game release approved by this document.
 
 ## Entry record
 
@@ -114,3 +114,24 @@ Immutable geometry and textures are shared. Painted placements clone mesh nodes/
 ## Acceptance evidence
 
 Meaningful tests cover invalid colours, save/export/default migration, independent identical parts, painted native atlas/engine material masks, protected glass/lights, restored unpainted geometry, and material disposal. Browser: paint two identical panels differently; primary/secondary separately; paint main engine and small thruster; undo/reset/copy/reload; narrow inspector; verify Wayfarer and all Hull catalog families. Run check/build/lint and relevant Python tests. Publish scoped changes to owner port 5174 and deliver a separate PR against PR #8. Game publication remains a distinct operation; do not claim game integration without exact game evidence.
+
+## Validation and delivery — 2026-09-15
+
+- Final isolated `npm run check`: 351 suites / 2,089 tests pass; documentation/provenance check passes.
+- `npm run build`: world, generated bindings, independent client and dashboard builds pass. Lint and formatting: no new violations. Nine focused paint/material/default-migration tests pass.
+- `npm run smoke -- --smoke-name shipyard-paint --fresh-smoke`: passes against new isolated database `sidereal-spacetime-dev-shipyard-paint-r0001-smoke`; no live world publication. This exercises existing authority/denial paths, not an administrator publish/refit happy path.
+- Browser on candidate port 5274: two identical armor copies keep different face colours; separate backing colour; save/reload, duplicate, reset and undo; painted Wayfarer canopy hardware preserves glass; engine body/accent separation preserves machinery/lights. Discovered and fixed shader role-cache sharing and constructor-time varying registration before delivery.
+- Scoped patches applied to shared dashboard port 5174, preserving the other owner's layout-hull changes and planet/client work. Live browser confirmed main engine and small maneuvering thruster controls, reset/undo and a 200 px inspector without horizontal overflow. Shared checkout typecheck reports an unrelated missing `packages/render/src/environment/fixtures/modern-native-planet-headers.json` in the other owner's planet tests; isolated feature checkout typechecks cleanly.
+- No native GLB or physical revision changed; r005 armor publication remains distinct from game qualification. No live ship refit or game deployment claimed. Painted authored placements are wired into common equipment/construction rendering, but no new live game paint release is claimed without game evidence.
+
+Browser images are retained in `output/playwright/paint-neighbours.png`, `paint-canopy.png`, `paint-engine-final.png` and `paint-live-engine.png` under the isolated worktree and copied to the shared evidence folder on delivery. Earlier `paint-engine.png` shows the shader-cache defect and is superseded by `paint-engine-final.png`.
+
+Single-material native hull surfaces and canopy titanium hardware use local face versus top/bottom edge masks. The coating changes albedo while retaining metallic/roughness properties. Glazing, rubber seals and exposed machine materials stay authored. Printed atlas details retain a bounded contrast mask. This is two-colour paint, not a texture-picker or a new native-art revision.
+
+Candidate implementation SHA-256:
+
+```text
+56c589d22fd174f54c2003bbe0172e12f17a4b36509d70c302d5db6095391653  packages/content/src/hull-paint.ts
+fc2b902e280af26794ae2086b612be1ddfc190511bcdbae064920fc0aa606e8b  packages/render/src/hull-paint.ts
+a86b60094f20a1a311c0db4281ad97ec36e591b46abd76a6a798fcf226f59e25  apps/dashboard/src/shipyard/layout/HullPaintPanel.tsx
+```
