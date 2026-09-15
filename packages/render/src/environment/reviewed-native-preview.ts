@@ -162,7 +162,10 @@ export function createReviewedNativePreview(
           id,
           seed: REVIEWED_YELLOW_STAR.seed,
           glow: false,
-          radius: 5.5,
+          radius:
+            2.3 /
+            (Math.tan(camera.fov / 2) *
+              Math.min(1, engine.getRenderWidth() / engine.getRenderHeight())),
           dispose: () => {
             controller.abort();
             star.dispose();

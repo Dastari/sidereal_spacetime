@@ -9,17 +9,8 @@ import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { DirectionalLight } from "@babylonjs/core/Lights/directionalLight";
 import {
   createYellowStarRuntime,
-  flareScale,
   orientStellarLight,
 } from "./yellow-star-runtime";
-it("animates independent flares continuously along exported Blender Z -> renderer Y", () => {
-  const a = flareScale(1, 0, 5),
-    b = flareScale(1, Math.PI, 5);
-  expect(a.y).not.toBeCloseTo(b.y);
-  expect(a.x).toBe(a.z);
-  expect(Vector3.Distance(a, flareScale(1.00001, 0, 5))).toBeLessThan(0.0001);
-  expect(Vector3.Distance(a, flareScale(6, 0, 5))).toBeLessThan(1e-10);
-});
 it("derives warm illumination without changing positions or overriding Lighting Off", () => {
   const engine = new NullEngine(),
     scene = new Scene(engine),
@@ -82,7 +73,14 @@ it("keeps loaded star disabled until caller publishes and releases cancelled lat
     expect(star.flareCount).toBe(1);
     expect(source.metadata.partId).toBe("body-a:flare-a");
     star.update(0);
-    expect(source.scaling.y).toBeCloseTo(flareScale(0, 0, 5).y * 4);
+    expect(source.isEnabled()).toBe(false);
+    expect(source.metadata.role).toBe("effect");
+    expect(star.activeFlares).toBe(0);
+    star.update(7);
+    expect(star.activeFlares).toBe(1);
+    expect(source.isEnabled()).toBe(false);
+    star.update(12);
+    expect(star.activeFlares).toBe(0);
     signal.abort();
     expect(star.root.isDisposed()).toBe(true);
     const late = new AssetContainer(scene),
@@ -111,4 +109,30 @@ it("keeps loaded star disabled until caller publishes and releases cancelled lat
     scene.dispose();
     engine.dispose();
   }
+});
+
+it("keeps the authored dynamic tile asset inside its upload budget with explicit surface semantics", () => {
+  const bytes = readFileSync(
+    new URL(
+      "../../../../assets/reviewed-celestials/reviewed-stars/yellow-main-sequence/star.glb",
+      import.meta.url,
+    ),
+  );
+  expect(bytes.byteLength).toBeLessThanOrEqual(8 * 1024 * 1024);
+  const length = bytes.readUInt32LE(12);
+  const gltf = JSON.parse(bytes.subarray(20, 20 + length).toString());
+  expect(gltf.meshes).toHaveLength(1);
+  expect(
+    gltf.materials.every((m: any) => m.extras.stellarSurface === true),
+  ).toBe(true);
+  expect(
+    gltf.meshes[0].primitives.every((p: any) =>
+      Number.isInteger(p.attributes.TEXCOORD_0),
+    ),
+  ).toBe(true);
+  expect(
+    gltf.nodes.some(
+      (n: any) => n.extras?.stellarSurface === "hexagonal-convection-v1",
+    ),
+  ).toBe(true);
 });

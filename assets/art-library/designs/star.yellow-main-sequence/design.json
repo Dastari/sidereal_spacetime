@@ -6,7 +6,7 @@
     "stars--yellow-main-sequence"
   ],
   "mapping_status": "Explicit S39 yellow main sequence only",
-  "current_revision": 10,
+  "current_revision": 13,
   "state": "in-progress",
   "owner_final_signoff": null,
   "priority": 1,
@@ -28,6 +28,21 @@
       "source": "independent gpt-6-astra and root",
       "date": "2026-09-15",
       "text": "Root/Astra working acceptance against original Yellow Main Sequence after front, alternate, bloom-off and five playback frames. No further correction before owner review. Cleaner/coarser relief, simpler dark basins, fine flare tips and less billowy corona remain. No owner final sign-off or hardware timing acceptance."
+    },
+    {
+      "date": "2026-09-15",
+      "source": "owner, new corona reference; independent Astra concurs",
+      "text": "r012 acceptance superseded. Flares must be much rarer, larger, dramatic and integrated with a larger corona; stronger surface fluctuation and deeply saturated orange/yellow glow. Persistent small tentacles are rejected."
+    },
+    {
+      "date": "2026-09-15",
+      "source": "owner / root implementation review",
+      "text": "Owner requests dynamic hexagonal tile heights and evolving spots, twice visible corona, longer curling orange flares. Native r011 too coarse; r012 rejected upload cap; r013 closed native tiles fit 8MiB. Plasma r016 exposed missing vertex injection at base construction; r017 fixes actual lift and passes compiled NullEngine regression. Astra review pending; no final signoff."
+    },
+    {
+      "date": "2026-09-15",
+      "source": "root and independent gpt-6-astra",
+      "text": "Native r013 / plasma-r018 passes working visual qualification against revised owner brief. No further art iteration requested. Actual playback/front/alternate/two close bloom-off captures prove raised moving relief, evolving spots and textured hot fields, broad corona and rare orange curling eruptions. Owner final signoff and hardware performance remain unclaimed."
     }
   ],
   "approvals": [],
@@ -366,6 +381,13 @@
         }
       ],
       "review": "Root/Astra working acceptance against original Yellow Main Sequence after front, alternate, bloom-off and five playback frames. No further correction before owner review. Cleaner/coarser relief, simpler dark basins, fine flare tips and less billowy corona remain. No owner final sign-off or hardware timing acceptance."
+    }
+  ],
+  "additional_references": [
+    {
+      "path": "designs/star.yellow-main-sequence/references/owner-corona-20260915.png",
+      "sha256": "81ebe95c370a0fec1bcc2724a764f6aad8fdec32dc34ce608b53dbe855c9c982",
+      "purpose": "Owner supplementary direction for broad eruptions, saturation and larger corona; original Yellow Main Sequence atlas remains surface-detail reference."
     }
   ]
 }

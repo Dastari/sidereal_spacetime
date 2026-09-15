@@ -59,7 +59,7 @@ const colors = {
 export const isReviewedSystemBody = (
   body: Pick<SpaceBodyState, "appearance">,
 ) =>
-  body.appearance === "yellow-main-sequence-r010" ||
+  body.appearance === "yellow-main-sequence-r013" ||
   !!reviewedNativePlanet(body.appearance);
 /** Camera-selected native bodies share the existing worker/shadow scheduler.
  * Three retained bodies bound memory. Each body retains its own ready LOD levels;
@@ -95,7 +95,7 @@ export function createReviewedSystemBodies(
     const abortUpload = () => upload.dispose();
     signal.addEventListener("abort", abortUpload, { once: true });
     try {
-      if (body.appearance === "yellow-main-sequence-r010") {
+      if (body.appearance === "yellow-main-sequence-r013") {
         const star = await createYellowStarRuntime(scene, {
           bodyId: body.id,
           radius: body.radius,

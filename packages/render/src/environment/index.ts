@@ -671,7 +671,7 @@ export function createSpaceEnvironment(scene: Scene) {
           entries.delete(id);
         }
       const rangePlane = updateBodyRangePlane(scene.activeCamera, farPlane);
-      const star = options.bodies.find(body => body.appearance === 'yellow-main-sequence-r010');
+      const star = options.bodies.find(body => body.appearance === 'yellow-main-sequence-r013');
       if (star && primaryLight) orientStellarLight(primaryLight, new Vector3(star.x-options.x,star.height,-(star.y-options.y)), camera);
       reviewedSystem.update(options.bodies, options, camera, rangePlane, age, options.planetsEnabled !== false);
       const blend = 1 - Math.exp(-Math.min(options.dt, 0.1) * 18);

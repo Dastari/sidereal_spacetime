@@ -1,0 +1,1 @@
+Initial dynamic native hex surface. Actual browser shows working UV-driven spots and 17 draw calls, but tiles are too large and regular compared with the original atlas. Refine to smaller cells before acceptance; no final approval.

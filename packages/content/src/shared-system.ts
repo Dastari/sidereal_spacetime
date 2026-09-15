@@ -33,7 +33,7 @@ export const SHARED_SYSTEM_SEED = {
   ],
 };
 export const SHARED_SYSTEM_SEED_SHA256 =
-  "57c070f18dc3aa41cdfa219201f28a581fab48274459a1e130954791443d25b5";
+  "822d8146bfc803f2b47cd6a07e01ea362955096fe4e0a89325a1171754b38d4c";
 /** Four dynamic rocks leave sixty ship slots in the initial 64-body contact island. */
 export const SHARED_SYSTEM_MAX_SHIPS = 60;
 

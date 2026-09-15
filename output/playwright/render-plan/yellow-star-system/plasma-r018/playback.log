@@ -1,0 +1,25 @@
+### Result
+"{\"frames\":137,\"ready\":true,\"flareCount\":1,\"activeFlares\":0,\"ejectaCount\":0,\"convectionMaterials\":4,\"time\":35.25820000076294,\"glow\":true,\"lighting\":true,\"meshes\":7,\"instances\":0,\"drawCalls\":17}"
+### Ran Playwright code
+```js
+await (async page => {
+ await page.waitForFunction(() => JSON.parse(document.querySelector('canvas').dataset.state || '{}').ready);
+ const downloadPromise=page.waitForEvent('download',{timeout:100000});
+ await page.evaluate(()=>{
+  window.starReview.resetTime();
+  const canvas=document.querySelector('canvas'),chunks=[],stream=canvas.captureStream(6),recorder=new MediaRecorder(stream,{mimeType:'video/webm'});
+  recorder.ondataavailable=e=>chunks.push(e.data);
+  recorder.onstop=()=>{
+   const url=URL.createObjectURL(new Blob(chunks,{type:'video/webm'})),a=document.createElement('a');
+   a.href=url;a.download='playback.webm';a.click();stream.getTracks().forEach(t=>t.stop());setTimeout(()=>URL.revokeObjectURL(url),30000);
+  };
+  recorder.start();setTimeout(()=>recorder.stop(),30000);
+ });
+ const download=await downloadPromise;await download.saveAs("/root/sidereal_spacetime/.runtime/worktrees/yellow-star-system/output/playwright/render-plan/yellow-star-system/plasma-r018/playback.webm");
+ return await page.locator('canvas').getAttribute('data-state');
+})(page);
+```
+### Events
+- New console entries: .playwright-cli/console-2026-09-15T05-38-58-783Z.log#L7
+- Downloading file playback.webm ...
+- Downloaded file playback.webm to ".playwright-cli/playback.webm"
