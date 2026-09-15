@@ -57,3 +57,7 @@ Cover input focus, viewport DPI/resize, every drag/rotate/flip gesture, replacin
 ## 2026-09-08 script and application refinement
 
 All tools run in the independent `apps/dashboard` application on port 5174; rebuilding it never rebuilds or restarts the game app. Script Studio starts in M3 with early lifecycle integration in M1/M2. Its complete source/hook/state/version/trace workflow is specified in [scripting lifecycle](scripting_lifecycle.md), including trusted compiled code versus bounded live behavior. Reuse the [existing OIDC provider](authentication.md) with distinct dashboard scopes.
+
+## Map editor candidate
+
+The first Firmament/world explorer surface is `/map`: metric top-down chart, live ship overlay, celestial movement, spherical system/background authoring and deterministic asteroid volumes. See [user guide](public/system-map.md) and [implementation specification](specs/system-map-editor.md). This does not complete the broader M8 universe or economy milestones.

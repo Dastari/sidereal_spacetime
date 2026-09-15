@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/sim",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -52,10 +52,11 @@
     "./construction-cargo": "./src/construction-cargo.ts",
     "./construction-instance": "./src/construction-instance.ts",
     "./layout-structure": "./src/layout-structure.ts",
-    "./layout-native-floor": "./src/layout-native-floor.ts"
+    "./layout-native-floor": "./src/layout-native-floor.ts",
+    "./system-map": "./src/system-map.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",
-    "@sidereal/content": "0.2.1"
+    "@sidereal/content": "0.3.0"
   }
 }

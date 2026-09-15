@@ -1,0 +1,98 @@
+
+> sidereal-spacetime@0.5.0 smoke
+> python3 scripts/dev.py smoke --smoke-name system-map-merged --fresh-smoke
+
+{"freshSmoke": {"database": "sidereal-spacetime-dev-system-map-merged-r0001-smoke", "smokeName": "system-map-merged-r0001", "state": "reserved", "reset": false, "evidenceDirectory": "/root/system-map-editor/.runtime/smoke-runs/sidereal-spacetime-dev-system-map-merged-r0001-smoke"}, "restartCommand": "python3 scripts/dev.py smoke-restart --smoke-name system-map-merged-r0001"}
+
+> @sidereal/world@0.3.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+tsc not found in node_modules. Make sure you have the `typescript` package as a dev-dependency and that your dependencies are installed.
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/construction.ts -> src/construction-pilot-authority.ts -> src/auth.ts -> src/interactions.ts -> src/construction-interactions.ts -> src/construction-doors.ts -> src/construction.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/construction-pilot-authority.ts -> src/auth.ts -> src/construction-pilot-authority.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/construction-doors.ts -> src/construction-cargo-carriers.ts -> src/scoped-inventory-authority.ts -> src/construction-doors.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: ../sim/src/construction-transactions.ts -> ../sim/src/construction-airlock-document.ts -> ../sim/src/construction-transactions.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/construction-cargo-carriers.ts -> src/scoped-inventory-authority.ts -> src/construction-cargo-carriers.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/construction.ts -> src/construction-pilot-authority.ts -> src/auth.ts -> src/interactions.ts -> src/construction-interactions.ts -> src/construction-doors.ts -> src/construction-airlock.ts -> src/construction.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: ../sim/src/layout-compiler.ts -> ../sim/src/layout-structure.ts -> ../sim/src/layout-compiler.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/auth.ts -> src/interactions.ts -> src/construction-interactions.ts -> src/auth.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/auth.ts -> src/interactions.ts -> src/construction-interactions.ts -> src/construction-doors.ts -> src/construction-airlock.ts -> src/auth.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/construction.ts -> src/construction-pilot-authority.ts -> src/auth.ts -> src/interactions.ts -> src/construction-interactions.ts -> src/construction.ts.
+
+[CIRCULAR_DEPENDENCY] Warning: Circular dependency: src/auth.ts -> src/interactions.ts -> src/construction-interactions.ts -> src/construction-doors.ts -> src/construction-cargo-carriers.ts -> src/auth.ts.
+
+Build finished successfully.
+Uploading to http://127.0.0.1:3100 => http://127.0.0.1:3100
+Checking for breaking changes...
+Publishing module...
+Created new database with name: sidereal-spacetime-dev-system-map-merged-r0001-smoke, identity: c20090e808653048b31d917323dd05f1b2774552e97908ba335c961fc6c9ee96
+ℹ️ INFO Connecting to SpacetimeDB WS...
+ℹ️ INFO Connecting to SpacetimeDB WS...
+ℹ️ INFO Connecting to SpacetimeDB WS...
+ℹ️ INFO Connecting to SpacetimeDB WS...
+ℹ️ INFO Connecting to SpacetimeDB WS...
+ℹ️ INFO Connecting to SpacetimeDB WS...
+ℹ️ INFO Connecting to SpacetimeDB WS...
+ℹ️ INFO Connecting to SpacetimeDB WS...
+ℹ️ INFO Connecting to SpacetimeDB WS...
+ℹ️ INFO Connecting to SpacetimeDB WS...
+ℹ️ INFO Connecting to SpacetimeDB WS...
+ℹ️ INFO Connecting to SpacetimeDB WS...
+ℹ️ INFO Connecting to SpacetimeDB WS...
+ℹ️ INFO Connecting to SpacetimeDB WS...
+ℹ️ INFO Connecting to SpacetimeDB WS...
+ℹ️ INFO Connecting to SpacetimeDB WS...
+ℹ️ INFO Connecting to SpacetimeDB WS...
+ℹ️ INFO Connecting to SpacetimeDB WS...
+{
+  "date": "2026-09-15T07:48:00.978Z",
+  "database": "sidereal-spacetime-dev-system-map-merged-r0001-smoke",
+  "isolated_views": true,
+  "unauthorized_edit_rejected": true,
+  "private_table_rejected": true,
+  "canonical_shared_bodies": true,
+  "server_asteroid_collision": true,
+  "ifcs_engine_braking_and_authority_expiry": true,
+  "revision_idempotency": true,
+  "authoritative_flight": true,
+  "unseated_control_rejected": true,
+  "authoritative_walk": true,
+  "invalid_input_rejected": true,
+  "stale_input_is_noop": true,
+  "authoritative_sprint_and_resets": true,
+  "authoritative_native_bow_collision": true,
+  "authoritative_room_collision": true,
+  "inventory_authority_packing_equipment_hotbar_privacy": true,
+  "interaction_authority_reach_seating_lights_retry_privacy": true,
+  "combat_authority_energy_aim_cooldown_retry_persistence": true,
+  "system_map_denial": {
+    "mapReadDenied": true,
+    "shipEnumerationDenied": true,
+    "mapApplyDenied": true
+  },
+  "construction_authority_denials": {
+    "ungrantedPublishDenied": true,
+    "selfGrantDenied": true,
+    "authoringProjectionsEmpty": true,
+    "gameOwnedInteriorOnly": true,
+    "providerAdminHappyPath": "separate actual browser evidence; not part of this denial run"
+  },
+  "character_components": {
+    "passed": true,
+    "bodyTypes": 2,
+    "reconnectPreserved": true,
+    "nativeArmoryIssued": false,
+    "components": 0,
+    "limitation": "Native scoped armory issuance is not implemented; legacy 90-component equipment journey remains separate."
+  },
+  "two_account_appearance_inventory_equipment_reconnect": true
+}

@@ -1,0 +1,57 @@
+
+> sidereal-spacetime@0.5.0 check
+> npm run typecheck && npm test && python3 scripts/check_docs.py
+
+
+> sidereal-spacetime@0.5.0 typecheck
+> tsc --noEmit
+
+
+> sidereal-spacetime@0.5.0 test
+> vitest run --maxWorkers=2
+
+
+ RUN  v4.1.11 /root/system-map-editor
+
+
+ Test Files  289 passed (289)
+      Tests  1451 passed | 2 skipped (1453)
+   Start at  17:46:03
+   Duration  59.00s (transform 5.18s, setup 0ms, import 28.32s, tests 64.35s, environment 18ms)
+
+README.md missing docs/visual_theme.md
+README.md missing docs/voxel_construction.md
+README.md missing docs/ifcs_integration.md
+AGENTS.md missing docs/blender_asset_migration.md
+AGENTS.md missing assets/art-library/INDEX.md
+AGENTS.md missing assets/art-library/WORKFLOW.md
+PIVOT.md missing docs/blender_asset_migration.md
+PIVOT.md missing docs/visual_theme.md
+PIVOT.md missing docs/art_reference_guide.md
+PIVOT.md missing docs/voxel_construction.md
+PIVOT.md missing docs/space_environment.md
+PIVOT.md missing docs/ifcs_integration.md
+docs/public_game_routing.md missing handoffs/public_login_verification.md
+docs/implementation_plan.md missing visual_theme.md
+docs/implementation_plan.md missing voxel_construction.md
+docs/implementation_plan.md missing ifcs_integration.md
+docs/implementation_plan.md missing handoffs/2026-09-08_astra_visual_iteration.md
+docs/implementation_plan.md missing inventory_authority.md
+docs/implementation_plan.md missing handoffs/2026-09-08_astra_visual_iteration.md
+docs/implementation_plan.md missing releases/native-ship-2026-09-08/README.md
+docs/implementation_plan.md missing handoffs/character_components.md
+docs/implementation_plan.md missing ../assets/art-library/character-components/INDEX.md
+docs/authentication.md missing handoffs/public_login_verification.md
+docs/authentication.md missing character_persistence.md
+docs/authoring.md missing ship_layout_editor_design.md
+docs/authoring.md missing handoffs/ship_layout_editor_implementation_prompt.md
+docs/graphics_ui.md missing visual_theme.md
+docs/graphics_ui.md missing space_environment.md
+docs/graphics_ui.md missing visual_theme.md
+docs/graphics_ui.md missing handoffs/character_ui_refresh.md
+docs/graphics_ui.md missing ../assets/art-library/designs/ui.character-status-and-equipment/DESIGN.md
+docs/assets.md missing blender_asset_migration.md
+docs/rendering_performance_plan.md missing handoffs/render_light_budget.md
+docs/rendering_performance_plan.md missing handoffs/render_performance_resume.md
+docs/rendering_performance_plan.md missing ../output/playwright/render-plan/phase-1a/
+docs/ship_construction_rebuild.md missing voxel_construction.md

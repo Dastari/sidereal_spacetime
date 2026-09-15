@@ -37,6 +37,7 @@ import {
 import AcceptIdentityLinkReducer from "./accept_identity_link_reducer";
 import ActivateAuthoredShipFlightReducer from "./activate_authored_ship_flight_reducer";
 import ActivateInventoryHotbarReducer from "./activate_inventory_hotbar_reducer";
+import ApplySystemMapReducer from "./apply_system_map_reducer";
 import AssignInventoryHotbarReducer from "./assign_inventory_hotbar_reducer";
 import BeginAuthoredFlightReviewReducer from "./begin_authored_flight_review_reducer";
 import BeginConstructionTraversalReducer from "./begin_construction_traversal_reducer";
@@ -82,6 +83,8 @@ import UseStationReducer from "./use_station_reducer";
 // Import all procedure arg schemas
 
 // Import all table schema definitions
+import AdmittedSystemScapesRow from "./admitted_system_scapes_table";
+import NearbyFieldAsteroidsRow from "./nearby_field_asteroids_table";
 import OwnActuatorOutputsRow from "./own_actuator_outputs_table";
 import OwnAppearanceRow from "./own_appearance_table";
 import OwnAuthoredFlightFittingsRow from "./own_authored_flight_fittings_table";
@@ -113,12 +116,14 @@ import OwnInventoryContainersRow from "./own_inventory_containers_table";
 import OwnInventoryHotbarRow from "./own_inventory_hotbar_table";
 import OwnInventoryItemsRow from "./own_inventory_items_table";
 import OwnInventoryStateRow from "./own_inventory_state_table";
+import OwnMapShipsRow from "./own_map_ships_table";
 import OwnNativeAirlocksRow from "./own_native_airlocks_table";
 import OwnReachableCargoContainersRow from "./own_reachable_cargo_containers_table";
 import OwnReachableCargoItemsRow from "./own_reachable_cargo_items_table";
 import OwnShipsRow from "./own_ships_table";
 import OwnSpaceBodiesRow from "./own_space_bodies_table";
 import OwnStationsRow from "./own_stations_table";
+import OwnSystemMapsRow from "./own_system_maps_table";
 import OwnWayfarerRefitAttachmentsRow from "./own_wayfarer_refit_attachments_table";
 import OwnWayfarerRefitOfferRow from "./own_wayfarer_refit_offer_table";
 import OwnWorldAdmissionRow from "./own_world_admission_table";
@@ -131,6 +136,20 @@ import VisibleShipMotionRow from "./visible_ship_motion_table";
 
 /** The schema information for all tables in this module. This is defined the same was as the tables would have been defined in the server. */
 const tablesSchema = __schema({
+  admittedSystemScapes: __table({
+    name: 'admitted_system_scapes',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, AdmittedSystemScapesRow),
+  nearbyFieldAsteroids: __table({
+    name: 'nearby_field_asteroids',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, NearbyFieldAsteroidsRow),
   ownActuatorOutputs: __table({
     name: 'own_actuator_outputs',
     indexes: [
@@ -348,6 +367,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnInventoryStateRow),
+  ownMapShips: __table({
+    name: 'own_map_ships',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnMapShipsRow),
   ownNativeAirlocks: __table({
     name: 'own_native_airlocks',
     indexes: [
@@ -390,6 +416,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnStationsRow),
+  ownSystemMaps: __table({
+    name: 'own_system_maps',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnSystemMapsRow),
   ownWayfarerRefitAttachments: __table({
     name: 'own_wayfarer_refit_attachments',
     indexes: [
@@ -446,6 +479,7 @@ const reducersSchema = __reducers(
   __reducerSchema("accept_identity_link", AcceptIdentityLinkReducer),
   __reducerSchema("activate_authored_ship_flight", ActivateAuthoredShipFlightReducer),
   __reducerSchema("activate_inventory_hotbar", ActivateInventoryHotbarReducer),
+  __reducerSchema("apply_system_map", ApplySystemMapReducer),
   __reducerSchema("assign_inventory_hotbar", AssignInventoryHotbarReducer),
   __reducerSchema("begin_authored_flight_review", BeginAuthoredFlightReviewReducer),
   __reducerSchema("begin_construction_traversal", BeginConstructionTraversalReducer),

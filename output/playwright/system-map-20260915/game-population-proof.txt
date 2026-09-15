@@ -1,0 +1,22 @@
+### Result
+{
+  "background": "ash-belt",
+  "generatedRocks": 10,
+  "rockNames": [
+    "physical-asteroid-ad7bf00a-caa0-50ee-b307-332afaac71a1:field-1789457046778:0",
+    "physical-asteroid-ad7bf00a-caa0-50ee-b307-332afaac71a1:field-1789457046778:1",
+    "physical-asteroid-ad7bf00a-caa0-50ee-b307-332afaac71a1:field-1789457046778:2",
+    "physical-asteroid-ad7bf00a-caa0-50ee-b307-332afaac71a1:field-1789457046778:3",
+    "physical-asteroid-ad7bf00a-caa0-50ee-b307-332afaac71a1:field-1789457046778:4",
+    "physical-asteroid-ad7bf00a-caa0-50ee-b307-332afaac71a1:field-1789457046778:5",
+    "physical-asteroid-ad7bf00a-caa0-50ee-b307-332afaac71a1:field-1789457046778:6",
+    "physical-asteroid-ad7bf00a-caa0-50ee-b307-332afaac71a1:field-1789457046778:7",
+    "physical-asteroid-ad7bf00a-caa0-50ee-b307-332afaac71a1:field-1789457046778:8",
+    "physical-asteroid-ad7bf00a-caa0-50ee-b307-332afaac71a1:field-1789457046778:9"
+  ],
+  "enabled": 10
+}
+### Ran Playwright code
+```js
+await page.evaluate('async()=>{const url=performance.getEntriesByType("resource").find(r=>r.name.includes("engineStore-")).name;const {t:EngineStore}=await import(url);const scene=EngineStore.LastCreatedScene;const rocks=scene.transformNodes.filter(n=>n.name.startsWith("physical-asteroid-")&&n.name.includes(":field-"));return {background:localStorage.getItem("sidereal.vista"),generatedRocks:rocks.length,rockNames:rocks.map(n=>n.name),enabled:rocks.filter(n=>n.isEnabled()).length};}');
+```
