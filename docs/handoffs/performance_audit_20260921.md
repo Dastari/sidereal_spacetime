@@ -1,6 +1,7 @@
 # Game performance: character clearance optimization — 2026-09-21
 
-Status: measured CPU optimization, pending PR review; public client unchanged.
+Status: measured CPU optimization, [PR #14](https://github.com/Dastari/sidereal_spacetime/pull/14)
+open for review; public client unchanged.
 Agent Mail identity: GrayLotus. Branch: `perf/character-pose-clearance`, based on
 upstream `f19a4b21`. The owner redirected the initial regression investigation to
 further measurable optimization. This delivery does not identify a single cause
@@ -116,7 +117,8 @@ run uses two workers without changing its timeout or assertion.
   attempt identified the fresh worktree's missing tool installation; reusing the
   installed binary resolved that environmental prerequisite.
 - Focused pose math/system tests: **10 passed**, including the final near-parallel
-  threshold sweep. Scoped ESLint, Prettier and `git diff --check` pass.
+  threshold sweep. Scoped runtime/test ESLint, Prettier and `git diff --check`
+  pass. The benchmark script is outside the inherited ESLint file configuration.
 - No server authority changes, so no smoke database is required. No public
   activation or merge was performed.
 
