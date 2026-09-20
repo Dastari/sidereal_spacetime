@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/content",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -34,7 +34,8 @@
     "./layout-assembly": "./src/layout-assembly.ts",
     "./tileset-interfaces": "./src/tileset-interfaces.ts",
     "./pilot-layout": "./src/pilot-layout.ts",
-    "./system-map": "./src/system-map.ts"
+    "./system-map": "./src/system-map.ts",
+    "./environment": "./src/environment.ts"
   },
   "dependencies": {}
 }

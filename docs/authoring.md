@@ -61,3 +61,11 @@ All tools run in the independent `apps/dashboard` application on port 5174; rebu
 ## Map editor candidate
 
 The first Firmament/world explorer surface is `/map`: metric top-down chart, live ship overlay, celestial movement, spherical system/background authoring and deterministic asteroid volumes. See [user guide](public/system-map.md) and [implementation specification](specs/system-map-editor.md). This does not complete the broader M8 universe or economy milestones.
+
+## Studio spatial and template workflows (2026-09-21 candidate)
+
+The persistent left rail opens Shipyard, Map editor and Genesis. Each workspace keeps its own document tools. The Map editor selects a primary star and system radius, parent relationships and static orbit guides. Deep space is the stars-only fallback outside systems. System backgrounds can be overridden by fields (including concave polygons) with explicit priority and inward feather distance. Preview height selects the editor's horizontal background slice; flight currently samples its planar height of zero.
+
+In Shipyard, **Templates** opens the same workspace save/publish workflow from Structure, Rooms, Objects, Hull and Systems. Save a workspace draft, publish the exact saved revision, then create an independent test ship. In the game, **Test ships** opens owned test designs; enter one, stand clear of seats/traversal/flight review, and switch to another. **Return to original ship** restores your original visit without rolling back home motion, inventory or grants. Template publishing never refits the normal ship. Incomplete drafts can save for recovery; publication still requires valid native floor bindings and geometry. Flight, pressure and traversal require their existing qualified adapters.
+
+Import/export carries the full construction wrapper, including pressure/traversal/airlock bindings. Imported recovery metadata must match the draft identity and is written under a fresh ID. Unsupported edits remain subject to the server compiler. This candidate targets upstream main plus map PR11; the separate unmerged R16/v2 construction work is not implicitly incorporated or validated.

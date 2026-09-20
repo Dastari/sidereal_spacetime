@@ -1,3 +1,4 @@
+import { spaceRegion } from "@sidereal/sim/space-background";
 import {
   t,
   SenderError,
@@ -8,6 +9,7 @@ import {
 import type world from "./index";
 import {
   mapBodyName,
+  mapBodyMetadata,
   MAP_WORKSPACE,
   newSystemMap,
   type MapBody,
@@ -41,6 +43,7 @@ export const mapShipProjection = t.row("MapShipProjection", {
 export const systemScapeProjection = t.row("SystemScapeProjection", {
   id: t.string().primaryKey(),
   backgroundId: t.string(),
+  regionsJson: t.string(),
 });
 function canRead(ctx: ReadContext) {
   return [...ctx.db.constructionGrant.by_principal.filter(ctx.sender)].some(
@@ -58,6 +61,9 @@ function liveBodies(ctx: ReadContext, systemId: string): MapBody[] {
       if (!m || m.systemId !== systemId)
         throw Error("Missing celestial motion");
       return {
+        ...mapBodyMetadata(b.id),
+        appearance: b.appearance,
+        seed: b.seed,
         id: b.id,
         name: mapBodyName(b.id, b.authoredKey),
         kind: b.kind,
@@ -81,6 +87,10 @@ function projection(ctx: ReadContext, id: string) {
   doc.bodies = bodies.map((b) => ({
     ...b,
     name: doc.bodies.find((old) => old.id === b.id)?.name ?? b.name,
+    parentId:
+      doc.bodies.find((old) => old.id === b.id)?.parentId === undefined
+        ? b.parentId
+        : doc.bodies.find((old) => old.id === b.id)!.parentId,
   }));
   return {
     id,
@@ -106,24 +116,33 @@ export function ownMapShips(ctx: ReadContext) {
   }));
 }
 export function admittedSystemScapes(ctx: ReadContext) {
-  const ids = new Set(
-    [...ctx.db.worldAdmission.by_owner.filter(ctx.sender)].map(
-      (a) => a.systemId,
-    ),
-  );
+  const ids = new Set<string>();
+  for (const a of ctx.db.worldAdmission.by_owner.filter(ctx.sender)) {
+    const actor = ctx.db.character.id.find(a.characterId),
+      ship = ctx.db.shipWorldMotion.shipId.find(a.shipId);
+    if (
+      actor?.connected &&
+      actor.owner.isEqual(ctx.sender) &&
+      actor.shipId === a.shipId &&
+      ship?.systemId === a.systemId
+    )
+      ids.add(a.systemId);
+  }
   return [...ids].flatMap((id) => {
     const row = ctx.db.systemMapDefinition.id.find(id);
-    return row
-      ? [
-          {
-            id,
-            backgroundId: (JSON.parse(row.documentJson) as SystemMapDocument)
-              .backgroundId,
-          },
-        ]
-      : [];
+    if (!row) return [];
+    const doc = JSON.parse(row.documentJson) as SystemMapDocument;
+    // Geometry and public presentation only: no resources, body roster or edit history.
+    return [
+      {
+        id,
+        backgroundId: doc.backgroundId,
+        regionsJson: JSON.stringify(spaceRegion(doc)),
+      },
+    ];
   });
 }
+
 export function applySystemMap(
   ctx: Context,
   args: {
@@ -164,7 +183,11 @@ export function applySystemMap(
       (b) =>
         !bodies.some(
           (old) =>
-            old.id === b.id && old.kind === b.kind && old.radius === b.radius,
+            old.id === b.id &&
+            old.kind === b.kind &&
+            old.radius === b.radius &&
+            (b.appearance === undefined || old.appearance === b.appearance) &&
+            (b.seed === undefined || old.seed === b.seed),
         ),
     )
   )

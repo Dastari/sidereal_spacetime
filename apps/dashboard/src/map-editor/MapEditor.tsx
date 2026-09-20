@@ -1,7 +1,11 @@
+import { systemCenter } from "@sidereal/sim/space-background";
 import { useMemo, useState, useEffect, useRef } from "react";
 import { SHARED_SYSTEM_SEED } from "@sidereal/content/shared-system";
 import {
   mapBodyName,
+  mapBodyOutline,
+  mapBodyMetadata,
+  moveMapBody,
   mapBodyRole,
   MAP_WORKSPACE,
   newSystemMap,
@@ -54,8 +58,8 @@ const fit = (d: SystemMapDocument): Camera => {
   const rect = document.querySelector(".map-chart")?.getBoundingClientRect();
   const aspect = rect?.height ? rect.width / rect.height : 1.6;
   return {
-    x: d.center.x,
-    y: d.center.y,
+    x: systemCenter(d).x,
+    y: systemCenter(d).y,
     span: d.radius * 2.3 * Math.max(1, aspect),
   };
 };
@@ -78,7 +82,9 @@ export function SystemMapWorkspace({
       ships: true,
       fields: true,
       grid: true,
+      orbits: true,
     }),
+    [previewHeight, setPreviewHeight] = useState(0),
     [search, setSearch] = useState(""),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
@@ -92,7 +98,11 @@ export function SystemMapWorkspace({
       const raw = localStorage.getItem(key);
       if (raw) {
         const data = JSON.parse(raw) as Draft;
-        readSystemMap(JSON.stringify(data.doc));
+        data.doc = readSystemMap(JSON.stringify(data.doc));
+        data.doc.bodies = data.doc.bodies.map((b) => ({
+          ...mapBodyMetadata(b.id),
+          ...b,
+        }));
         if (
           typeof data.revision !== "string" ||
           !/^\d+$/.test(data.revision) ||
@@ -362,9 +372,27 @@ export function SystemMapWorkspace({
                 ? "Live ships"
                 : k === "fields"
                   ? "Asteroid fields"
-                  : "Grid"}
+                  : k === "orbits"
+                    ? "Orbit guides"
+                    : "Grid"}
           </label>
         ))}
+        <label className="map-toggle">
+          Preview height (m)
+          <input
+            aria-label="Preview height (m)"
+            type="number"
+            value={previewHeight}
+            min={-1e9}
+            max={1e9}
+            style={{ width: 100 }}
+            onChange={(e) => {
+              const h = Number(e.target.value);
+              if (Number.isFinite(h))
+                setPreviewHeight(Math.max(-1e9, Math.min(1e9, h)));
+            }}
+          />
+        </label>
         <span>Drag to move · drag empty space to pan · wheel to zoom</span>
       </div>
       {(error || live.error) && (
@@ -425,7 +453,7 @@ export function SystemMapWorkspace({
           />
           <h2>Celestials</h2>
           <div className="map-body-list">
-            {doc.bodies
+            {mapBodyOutline(doc.bodies)
               .filter((b) =>
                 b.name.toLowerCase().includes(search.toLowerCase()),
               )
@@ -433,6 +461,13 @@ export function SystemMapWorkspace({
                 <button
                   className={selected === b.id ? "selected" : ""}
                   key={b.id}
+                  data-depth={
+                    b.parentId
+                      ? doc.bodies.find((p) => p.id === b.parentId)?.parentId
+                        ? 2
+                        : 1
+                      : 0
+                  }
                   onClick={() => {
                     setSelected(b.id);
                     setCamera({
@@ -442,9 +477,9 @@ export function SystemMapWorkspace({
                     });
                   }}
                 >
-                  <span className={`map-dot ${mapBodyRole(b)}`} />
+                  <span className={`map-dot ${mapBodyRole(b, doc.bodies)}`} />
                   {b.name}
-                  <small>{mapBodyRole(b)}</small>
+                  <small>{mapBodyRole(b, doc.bodies)}</small>
                 </button>
               ))}
           </div>
@@ -506,6 +541,10 @@ export function SystemMapWorkspace({
                 const target =
                   d.bodies.find((b) => b.id === id) ??
                   d.fields.find((f) => f.id === id);
+                if (d.bodies.some((b) => b.id === id) && target) {
+                  moveMapBody(d, id, { x, y, height: target.height });
+                  return;
+                }
                 if (target) {
                   target.x = x;
                   target.y = y;
@@ -521,6 +560,7 @@ export function SystemMapWorkspace({
             camera={camera}
             setCamera={setCamera}
             layers={layers}
+            previewHeight={previewHeight}
             drawing={drawing}
             onDraw={(p) =>
               setDrawing((v) => [

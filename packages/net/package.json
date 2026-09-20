@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/net",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -10,7 +10,7 @@
     "./generated": "./src/generated/index.ts"
   },
   "dependencies": {
-    "@sidereal/sim": "0.2.0",
+    "@sidereal/sim": "0.3.0",
     "spacetimedb": "2.10.0"
   }
 }

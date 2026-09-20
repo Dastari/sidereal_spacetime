@@ -13,4 +13,5 @@ import {
 export default __t.row({
   id: __t.string().primaryKey(),
   backgroundId: __t.string().name("background_id"),
+  regionsJson: __t.string().name("regions_json"),
 });

@@ -1056,6 +1056,16 @@ export const enterConstructionReview = db.reducer(
   },
   auth.gameAction(constructionInstances.enterReview, true),
 );
+export const switchConstructionReview = db.reducer(
+  {
+    instanceId: t.string(),
+    expectedInstanceRevision: t.u64(),
+    expectedVisitId: t.string(),
+    expectedRevision: t.u64(),
+    operationId: t.string(),
+  },
+  auth.gameAction(constructionInstances.switchReview, true),
+);
 export const leaveConstructionReview = db.reducer(
   {
     expectedVisitId: t.string(),

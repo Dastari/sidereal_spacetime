@@ -9,3 +9,9 @@ Add an ellipsoid or box, or draw a polygon with at least three points and choose
 **Save draft** stores work locally. **Apply to world** validates and commits a new server revision. A revision conflict requires reloading the live map; it never silently overwrites another editor. Undo/redo changes the local draft; applying the result is another audited world edit.
 
 Fields are currently authored static populations with nearby game visuals and private resource occurrences. Physical activation, mining quantities and depletion need a subsequent gameplay implementation. Limits:16 fields,2,048 asteroids per field,8,192 per system; excess density is rejected with a visible error.
+
+## Backgrounds and orbital layout
+
+Choose **Deep space** for stars without nebulae. Pick another system background, then select any asteroid field to inherit it or override it with a different background. Feather distance blends inward from the region edge; higher priority wins overlapping fields. **Preview height (m)** shows a horizontal slice through elevated volumes.
+
+A system can anchor its center to a selected star and use an explicit radius. Set each planet/moon's parent with **Orbits around**; enable **Orbit guides** for design circles. These are static design guides. Moving a parent moves its descendants together and can be undone. Celestial portraits come from the actual asset renders (reference seed), with physical radius shown separately.

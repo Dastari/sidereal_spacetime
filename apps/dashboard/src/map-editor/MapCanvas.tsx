@@ -1,3 +1,6 @@
+import { useCelestialSnapshots } from "./useCelestialSnapshots";
+import { MapBackground } from "./MapBackground";
+import { systemCenter } from "@sidereal/sim/space-background";
 import { useRef, useState, useEffect, type PointerEvent } from "react";
 import {
   mapBodyRole,
@@ -31,6 +34,7 @@ export default function MapCanvas({
   camera,
   setCamera,
   layers,
+  previewHeight,
   drawing,
   onDraw,
 }: {
@@ -43,10 +47,18 @@ export default function MapCanvas({
   onVertex: (id: string, index: number, x: number, y: number) => void;
   camera: Camera;
   setCamera: (c: Camera) => void;
-  layers: { bodies: boolean; ships: boolean; fields: boolean; grid: boolean };
+  layers: {
+    bodies: boolean;
+    ships: boolean;
+    fields: boolean;
+    grid: boolean;
+    orbits: boolean;
+  };
+  previewHeight: number;
   drawing: { x: number; y: number }[] | null;
   onDraw: (p: { x: number; y: number }) => void;
 }) {
+  const thumbnails = useCelestialSnapshots(doc.bodies);
   const svg = useRef<SVGSVGElement>(null),
     [ratio, setRatio] = useState(1.5),
     [cursor, setCursor] = useState({ x: 0, y: 0 }),
@@ -147,7 +159,8 @@ export default function MapCanvas({
   for (const b of [...doc.bodies].sort(
     (a, b) =>
       Number(b.id === selection) - Number(a.id === selection) ||
-      Number(mapBodyRole(a) === "moon") - Number(mapBodyRole(b) === "moon"),
+      Number(mapBodyRole(a, doc.bodies) === "moon") -
+        Number(mapBodyRole(b, doc.bodies) === "moon"),
   )) {
     const p = { x: px(b.x), y: py(b.y) };
     if (
@@ -159,6 +172,12 @@ export default function MapCanvas({
   }
   return (
     <div className="map-chart">
+      <MapBackground
+        doc={doc}
+        camera={camera}
+        ratio={ratio}
+        previewHeight={previewHeight}
+      />
       <svg
         ref={svg}
         role="img"
@@ -215,7 +234,7 @@ export default function MapCanvas({
           });
         }}
       >
-        <rect width={1000} height={height} fill="var(--map-space)" />
+        <rect width={1000} height={height} fill="transparent" />
         {layers.grid && (
           <g className="map-grid">
             {linesX.map((x, i) => (
@@ -235,8 +254,8 @@ export default function MapCanvas({
         )}
         <circle
           className="map-system-boundary"
-          cx={px(doc.center.x)}
-          cy={py(doc.center.y)}
+          cx={px(systemCenter(doc).x)}
+          cy={py(systemCenter(doc).y)}
           r={doc.radius * scale}
         />
         {layers.fields &&
@@ -265,14 +284,38 @@ export default function MapCanvas({
             ))}
           </g>
         )}
+        {layers.orbits && (
+          <g className="map-orbits" pointerEvents="none">
+            {doc.bodies.map((b) => {
+              const parent = doc.bodies.find((p) => p.id === b.parentId);
+              if (!parent) return null;
+              const q = position(b.id, b.x, b.y),
+                p = position(parent.id, parent.x, parent.y);
+              return (
+                <circle
+                  key={b.id}
+                  cx={px(p.x)}
+                  cy={py(p.y)}
+                  r={Math.hypot(q.x - p.x, q.y - p.y) * scale}
+                  className={
+                    parent.kind === "star" ? "planet-orbit" : "moon-orbit"
+                  }
+                />
+              );
+            })}
+          </g>
+        )}
         {layers.bodies &&
           doc.bodies.map((b) => {
             const p = position(b.id, b.x, b.y),
-              r = Math.max(b.radius * scale, 5);
+              r = Math.max(
+                b.radius * scale,
+                mapBodyRole(b, doc.bodies) === "moon" ? 8 : 14,
+              );
             return (
               <g
                 key={b.id}
-                className={`map-body ${mapBodyRole(b)} ${selection === b.id ? "selected" : ""}`}
+                className={`map-body ${mapBodyRole(b, doc.bodies)} ${selection === b.id ? "selected" : ""}`}
                 aria-label={b.name}
                 tabIndex={0}
                 onKeyDown={(e) => {
@@ -287,6 +330,22 @@ export default function MapCanvas({
                   r={b.radius * scale}
                 />
                 <circle cx={px(p.x)} cy={py(p.y)} r={r} />
+                {thumbnails[b.id] ? (
+                  <image
+                    className="map-body-image"
+                    href={thumbnails[b.id]}
+                    x={px(p.x) - r}
+                    y={py(p.y) - r}
+                    width={r * 2}
+                    height={r * 2}
+                  >
+                    <title>
+                      {b.name} · asset portrait: {b.appearance}
+                    </title>
+                  </image>
+                ) : (
+                  <title>{b.name} · asset portrait unavailable</title>
+                )}
                 {labels.has(b.id) && (
                   <text x={px(p.x) + r + 5} y={py(p.y) + 4} fontSize={13}>
                     {b.name}

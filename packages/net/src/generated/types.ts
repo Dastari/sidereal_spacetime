@@ -1477,6 +1477,7 @@ export type SystemMapProjection = __Infer<typeof SystemMapProjection>;
 export const SystemScapeProjection = __t.object("SystemScapeProjection", {
   id: __t.string(),
   backgroundId: __t.string(),
+  regionsJson: __t.string(),
 });
 export type SystemScapeProjection = __Infer<typeof SystemScapeProjection>;
 

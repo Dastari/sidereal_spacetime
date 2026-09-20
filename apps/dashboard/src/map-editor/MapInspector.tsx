@@ -1,5 +1,7 @@
+import { systemCenter } from "@sidereal/sim/space-background";
 import {
   mapBodyRole,
+  moveMapBody,
   MAP_BACKGROUNDS,
   MAP_RESOURCES,
   type AsteroidField,
@@ -93,25 +95,97 @@ export default function MapInspector({
         <NumberField
           key={k}
           label={`${k === "height" ? "Height" : k.toUpperCase()} (m)`}
-          value={(field ?? body ?? doc.center)[k]}
+          value={(field ?? body ?? systemCenter(doc))[k]}
           onChange={(n) =>
             edit((d) => {
               const p =
                 d.fields.find((f) => f.id === selected) ??
                 d.bodies.find((b) => b.id === selected) ??
                 d.center;
-              p[k] = n;
+              if (body)
+                moveMapBody(d, body.id, {
+                  x: body.x,
+                  y: body.y,
+                  height: body.height,
+                  [k]: n,
+                });
+              else if (!field && d.primaryStarId)
+                moveMapBody(d, d.primaryStarId, { ...systemCenter(d), [k]: n });
+              else p[k] = n;
             })
           }
         />
       ))}
       {body && (
-        <p>
-          {mapBodyRole(body)} · radius {body.radius} m
-        </p>
+        <>
+          <p>
+            {mapBodyRole(body, doc.bodies)} · radius {body.radius} m
+          </p>
+          {body.kind !== "star" && (
+            <label>
+              Orbits around
+              <select
+                aria-label="Orbits around"
+                value={body.parentId ?? ""}
+                onChange={(e) =>
+                  edit((d) => {
+                    d.bodies.find((b) => b.id === body.id)!.parentId =
+                      e.target.value || null;
+                  })
+                }
+              >
+                <option value="">No parent</option>
+                {doc.bodies
+                  .filter(
+                    (b) =>
+                      b.id !== body.id &&
+                      (b.kind === "star" ||
+                        !b.parentId ||
+                        doc.bodies.find((p) => p.id === b.parentId)?.kind ===
+                          "star"),
+                  )
+                  .map((b) => (
+                    <option key={b.id} value={b.id}>
+                      {b.name}
+                    </option>
+                  ))}
+              </select>
+            </label>
+          )}
+          <p>
+            Moving this body moves its moons. Guides show design distances, not
+            orbital motion.
+          </p>
+        </>
       )}
       {!field && !body && (
         <>
+          <label>
+            System center
+            <select
+              aria-label="System center"
+              value={doc.primaryStarId ?? ""}
+              onChange={(e) =>
+                edit((d) => {
+                  d.center = { ...systemCenter(d) };
+                  d.primaryStarId = e.target.value || undefined;
+                  if (d.primaryStarId) {
+                    const p = systemCenter(d);
+                    d.center = { x: p.x, y: p.y, height: p.height };
+                  }
+                })
+              }
+            >
+              <option value="">Free center</option>
+              {doc.bodies
+                .filter((b) => b.kind === "star")
+                .map((b) => (
+                  <option key={b.id} value={b.id}>
+                    {b.name}
+                  </option>
+                ))}
+            </select>
+          </label>
           <NumberField
             label="System radius (m)"
             value={doc.radius}
@@ -140,10 +214,28 @@ export default function MapInspector({
               ))}
             </select>
           </label>
-          <img
-            className="map-background-preview"
-            alt={MAP_BACKGROUNDS.find((b) => b.id === doc.backgroundId)?.name}
-            src={`/assets/environment/${MAP_BACKGROUNDS.find((b) => b.id === doc.backgroundId)?.asset}`}
+          {MAP_BACKGROUNDS.find((b) => b.id === doc.backgroundId)?.asset ? (
+            <img
+              className="map-background-preview"
+              alt={MAP_BACKGROUNDS.find((b) => b.id === doc.backgroundId)?.name}
+              src={`/assets/environment/${MAP_BACKGROUNDS.find((b) => b.id === doc.backgroundId)?.asset}`}
+            />
+          ) : (
+            <div
+              className="map-background-stars"
+              role="img"
+              aria-label="Deep space starfield"
+            />
+          )}
+          <NumberField
+            label="System feather (m)"
+            min={0}
+            value={doc.feather ?? Math.min(doc.radius * 0.05, 100000)}
+            onChange={(n) =>
+              edit((d) => {
+                d.feather = n;
+              })
+            }
           />
           <p>The outline is the top-down projection of the system sphere.</p>
         </>
@@ -165,6 +257,41 @@ export default function MapInspector({
                 onChange={(n) => updateField({ [k]: n })}
               />
             ))}
+          <label>
+            Field background
+            <select
+              aria-label="Field background"
+              value={field.backgroundId ?? ""}
+              onChange={(e) =>
+                updateField({ backgroundId: e.target.value || undefined })
+              }
+            >
+              <option value="">Inherit system background</option>
+              {MAP_BACKGROUNDS.map((b) => (
+                <option key={b.id} value={b.id}>
+                  {b.name}
+                </option>
+              ))}
+            </select>
+          </label>
+          {field.backgroundId && (
+            <>
+              <NumberField
+                label="Field feather (m)"
+                min={0}
+                value={
+                  field.feather ??
+                  Math.min(field.width, field.length, field.depth) * 0.1
+                }
+                onChange={(n) => updateField({ feather: n })}
+              />
+              <NumberField
+                label="Background priority"
+                value={field.priority ?? 0}
+                onChange={(n) => updateField({ priority: n })}
+              />
+            </>
+          )}
           <NumberField
             label="Depth (m)"
             min={1}

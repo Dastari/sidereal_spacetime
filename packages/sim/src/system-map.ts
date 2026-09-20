@@ -1,3 +1,4 @@
+import { systemCenter } from "@sidereal/content/system-map";
 import {
   MAP_BACKGROUNDS,
   MAP_RESOURCES,
@@ -118,12 +119,6 @@ export function validateSystemMap(doc: SystemMapDocument) {
   id(doc.id);
   name(doc.name);
   point(doc.center);
-  finite(doc.radius, 1, 1e8, "System radius");
-  for (const key of ["x", "y", "height"] as const)
-    if (Math.abs(doc.center[key]) + doc.radius > MAP_LIMITS.coordinate)
-      throw Error("System exceeds world coordinate bounds");
-  if (!MAP_BACKGROUNDS.some((b) => b.id === doc.backgroundId))
-    throw Error("Unknown space background");
   if (
     !Array.isArray(doc.bodies) ||
     doc.bodies.length > MAP_LIMITS.bodies ||
@@ -131,6 +126,21 @@ export function validateSystemMap(doc: SystemMapDocument) {
     doc.fields.length > MAP_LIMITS.fields
   )
     throw Error("System body or field budget exceeded");
+
+  if (
+    doc.primaryStarId !== undefined &&
+    !doc.bodies.some((b) => b.id === doc.primaryStarId && b.kind === "star")
+  )
+    throw Error("Primary star must belong to this system");
+  const center = systemCenter(doc);
+  if (doc.feather !== undefined)
+    finite(doc.feather, 0, doc.radius, "System feather");
+  finite(doc.radius, 1, 1e8, "System radius");
+  for (const key of ["x", "y", "height"] as const)
+    if (Math.abs(center[key]) + doc.radius > MAP_LIMITS.coordinate)
+      throw Error("System exceeds world coordinate bounds");
+  if (!MAP_BACKGROUNDS.some((b) => b.id === doc.backgroundId))
+    throw Error("Unknown space background");
   const ids = new Set<string>();
   const unique = (s: string) => {
     id(s);
@@ -139,12 +149,7 @@ export function validateSystemMap(doc: SystemMapDocument) {
   };
   const contained = (p: MapPoint, r = 0) => {
     if (
-      Math.hypot(
-        p.x - doc.center.x,
-        p.y - doc.center.y,
-        p.height - doc.center.height,
-      ) +
-        r >
+      Math.hypot(p.x - center.x, p.y - center.y, p.height - center.height) + r >
       doc.radius + 1e-7
     )
       throw Error("Body or field is outside the system sphere");
@@ -158,9 +163,51 @@ export function validateSystemMap(doc: SystemMapDocument) {
     finite(b.radius, 0.01, 1e7, "Body radius");
     contained(b, b.radius);
   }
+  const byId = new Map(doc.bodies.map((b) => [b.id, b]));
+  for (const b of doc.bodies) {
+    if (b.parentId != null) {
+      const parent = byId.get(b.parentId);
+      if (
+        !parent ||
+        parent.id === b.id ||
+        b.kind === "star" ||
+        (b.kind === "moon" && parent.kind === "star")
+      )
+        throw Error("Invalid celestial parent");
+      const visited = new Set([b.id]);
+      let next = parent;
+      while (next) {
+        if (visited.has(next.id)) throw Error("Celestial hierarchy cycle");
+        visited.add(next.id);
+        if (!next.parentId) break;
+        next = byId.get(next.parentId)!;
+      }
+    }
+    if (b.seed !== undefined) {
+      finite(b.seed, 0, 2147483647, "Body seed");
+      if (!Number.isInteger(b.seed))
+        throw Error("Body seed must be an integer");
+    }
+    if (
+      b.appearance !== undefined &&
+      (typeof b.appearance !== "string" || b.appearance.length > 100)
+    )
+      throw Error("Invalid body appearance");
+  }
   let count = 0;
   for (const f of doc.fields) {
     unique(f.id);
+    if (
+      f.backgroundId !== undefined &&
+      !MAP_BACKGROUNDS.some((b) => b.id === f.backgroundId)
+    )
+      throw Error("Unknown field background");
+    if (f.feather !== undefined) finite(f.feather, 0, 1e8, "Field feather");
+    if (f.priority !== undefined) {
+      finite(f.priority, -100, 100, "Field priority");
+      if (!Number.isInteger(f.priority))
+        throw Error("Field priority must be an integer");
+    }
     name(f.name);
     point(f);
     if (!["ellipsoid", "box", "polygon"].includes(f.shape))

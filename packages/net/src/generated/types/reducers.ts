@@ -46,6 +46,7 @@ import SetConstructionGrantReducer from "../set_construction_grant_reducer";
 import SetIntentReducer from "../set_intent_reducer";
 import SpawnConstructionBlueprintReducer from "../spawn_construction_blueprint_reducer";
 import StoreAllInventoryItemsReducer from "../store_all_inventory_items_reducer";
+import SwitchConstructionReviewReducer from "../switch_construction_review_reducer";
 import TakeAllInventoryItemsReducer from "../take_all_inventory_items_reducer";
 import TransferInventoryItemReducer from "../transfer_inventory_item_reducer";
 import TransferScopedCargoItemReducer from "../transfer_scoped_cargo_item_reducer";
@@ -92,6 +93,7 @@ export type SetConstructionGrantParams = __Infer<typeof SetConstructionGrantRedu
 export type SetIntentParams = __Infer<typeof SetIntentReducer>;
 export type SpawnConstructionBlueprintParams = __Infer<typeof SpawnConstructionBlueprintReducer>;
 export type StoreAllInventoryItemsParams = __Infer<typeof StoreAllInventoryItemsReducer>;
+export type SwitchConstructionReviewParams = __Infer<typeof SwitchConstructionReviewReducer>;
 export type TakeAllInventoryItemsParams = __Infer<typeof TakeAllInventoryItemsReducer>;
 export type TransferInventoryItemParams = __Infer<typeof TransferInventoryItemReducer>;
 export type TransferScopedCargoItemParams = __Infer<typeof TransferScopedCargoItemReducer>;

@@ -248,3 +248,40 @@ test("population safety rejection leaves no changes; nearby view redacts resourc
   });
   expect(nearbyFieldAsteroids(f.ctx)).toEqual([]);
 });
+
+test("authorized background projection contains only presentation geometry and disappears on disconnect", async () => {
+  const { admittedSystemScapes } = await import("./system-map");
+  const f = fixture();
+  f.doc.fields[0].backgroundId = "orion-veil";
+  applySystemMap(f.ctx, { ...f.args, documentJson: JSON.stringify(f.doc) });
+  f.db.worldAdmission.insert({
+    characterId: "c",
+    owner: f.ctx.sender,
+    shipId: "ship",
+    systemId: "system",
+  });
+  f.db.character.insert({
+    id: "c",
+    owner: f.ctx.sender,
+    shipId: "ship",
+    connected: true,
+  });
+  f.db.shipWorldMotion.insert({
+    shipId: "ship",
+    systemId: "system",
+    x: 0,
+    y: 0,
+  });
+  const rows = admittedSystemScapes(f.ctx);
+  expect(rows).toHaveLength(1);
+  const region = JSON.parse(rows[0].regionsJson);
+  expect(region.fields).toHaveLength(1);
+  expect(region.fields[0]).not.toHaveProperty("resources");
+  expect(region.fields[0]).not.toHaveProperty("seed");
+  expect(region).not.toHaveProperty("bodies");
+  f.db.character.id.update({
+    ...f.db.character.id.find("c"),
+    connected: false,
+  });
+  expect(admittedSystemScapes(f.ctx)).toEqual([]);
+});

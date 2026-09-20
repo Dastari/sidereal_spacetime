@@ -4,7 +4,7 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  height: calc(100dvh - 100px);
+  height: calc(100dvh - 30px);
   color: var(--text, #d5eaf5);
   font-family: Barlow, sans-serif;
 }
@@ -228,7 +228,7 @@
   opacity: 0.4;
 }
 .map-field {
-  fill: #d69f3533;
+  fill: #d69f350d;
   stroke: #d69f35;
   stroke-width: 1.5;
   cursor: move;
@@ -331,7 +331,7 @@
 @media (max-width: 720px) {
   .system-map-editor {
     height: auto;
-    min-height: calc(100dvh - 100px);
+    min-height: calc(100dvh - 30px);
   }
   .map-workbench {
     display: flex;
@@ -359,4 +359,63 @@
 }
 .map-toggle {
   white-space: nowrap;
+}
+
+.map-chart {
+  position: relative;
+  isolation: isolate;
+  background: #02050c;
+}
+.map-space-preview {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+.map-chart > svg {
+  position: relative;
+  background: transparent;
+}
+.map-orbits circle {
+  fill: none;
+  stroke: #8bb6ce;
+  stroke-width: 0.7;
+  opacity: 0.35;
+}
+.map-orbits .moon-orbit {
+  stroke: #d4c4a2;
+  stroke-dasharray: 3 4;
+  opacity: 0.5;
+}
+.map-body-list button[data-depth="1"] {
+  padding-left: 20px;
+}
+.map-body-list button[data-depth="2"] {
+  padding-left: 36px;
+}
+.map-body-image {
+  pointer-events: none;
+}
+.map-background-stars {
+  height: 100px;
+  background:
+    radial-gradient(circle at 25% 30%, #bcd 0 1px, transparent 1.5px),
+    radial-gradient(circle at 72% 63%, #def 0 1px, transparent 1.5px), #02050c;
+  background-size:
+    47px 59px,
+    61px 73px,
+    auto;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+}
+
+.map-library > *,
+.map-inspector > * {
+  flex-shrink: 0;
+}
+.map-body-list {
+  flex-shrink: 0;
+  min-height: 120px;
 }

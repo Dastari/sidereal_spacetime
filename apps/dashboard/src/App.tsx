@@ -201,60 +201,20 @@ export default function App() {
   clientUrl.hash = "";
   return (
     <div className="app">
-      <header className="app-header">
-        <a
-          href="/"
-          className="brand"
-          onClick={(e) => {
-            e.preventDefault();
-            navigate("dashboard");
-          }}
-        >
-          <span className="brand-symbol">
-            <Orbit size={26} />
-          </span>
-          Sidereal<span className="edition">Creator</span>
-        </a>
-        <nav aria-label="Workspace">
-          <button
-            className={route === "dashboard" ? "selected" : ""}
-            onClick={() => navigate("dashboard")}
-          >
-            Workspaces
-          </button>
-          <button
-            className={
-              route === "shipyard" || route === "assembly" ? "selected" : ""
-            }
-            onClick={() => navigate("shipyard")}
-          >
-            Shipyard
-          </button>
-          <button
-            className={route === "planets" ? "selected" : ""}
-            onClick={() => navigate("planets")}
-          >
-            Genesis
-          </button>
-          <button
-            className={route === "map" ? "selected" : ""}
-            onClick={() => navigate("map")}
-          >
-            Map editor
-          </button>
-          <a
-            className="nav-link"
-            href={import.meta.env.VITE_CLIENT_URL ?? clientUrl.href}
-          >
-            Open game <ArrowUpRight size={14} />
-          </a>
-        </nav>
-        <div className="account">
-          <ThemePicker />
-        </div>
-      </header>
       <div className="workspace">
-        <aside className="rail" aria-label="Creator tools">
+        <nav className="rail studio-rail" aria-label="Creator workspaces">
+          <a
+            className="studio-mark"
+            href="/"
+            aria-label="Sidereal Creator home"
+            title="Sidereal Creator"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("dashboard");
+            }}
+          >
+            <Orbit size={26} />
+          </a>
           <ToolButton
             label="Workspaces"
             active={route === "dashboard"}
@@ -269,7 +229,30 @@ export default function App() {
           >
             <Ship />
           </ToolButton>
+          <ToolButton
+            label="Map editor"
+            active={route === "map"}
+            onClick={() => navigate("map")}
+          >
+            <Compass />
+          </ToolButton>
+          <ToolButton
+            label="Genesis"
+            active={route === "planets"}
+            onClick={() => navigate("planets")}
+          >
+            <FlaskConical />
+          </ToolButton>
           <span className="rail-spacer" />
+          <a
+            className="tool-button"
+            aria-label="Open game"
+            title="Open game"
+            href={import.meta.env.VITE_CLIENT_URL ?? clientUrl.href}
+          >
+            <ArrowUpRight />
+          </a>
+          <ThemePicker />
           <ToolButton
             label="UI component workshop"
             active={route === "components"}
@@ -285,7 +268,7 @@ export default function App() {
           >
             <BookOpen />
           </a>
-        </aside>
+        </nav>
         <WorkspaceBoundary key={route}>
           <Suspense
             fallback={
@@ -558,8 +541,8 @@ export default function App() {
         </WorkspaceBoundary>
       </div>
       <footer className="app-footer">
-        <span>Sidereal Creator 0.1</span>
-        <span>New UI · authoring tools are planned phases</span>
+        <span>Sidereal Studio</span>
+        <span>Shipyard · System map · Genesis</span>
         <span>Independent dashboard</span>
       </footer>
     </div>

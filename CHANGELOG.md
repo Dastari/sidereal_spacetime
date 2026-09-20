@@ -1,3 +1,12 @@
+# 0.6.0 — Studio spatial and test-ship workflows (2026-09-21)
+
+- Move workspace navigation to an accessible persistent left icon rail.
+- Add stars-only Deep space as the game default; share system/field background selection and feathering between editor and game, with sanitized actor-admitted geometry.
+- Anchor system boundaries to a chosen star; retain explicit legacy centers, static parent/moon orbit guides and descendant movement. Show lightweight actual asset portraits and an adjustable background preview height.
+- Expose Shipyard template publication from every design stage, preserve complete construction metadata in save/import/export, and retain incomplete drafts for recovery.
+- Add atomic dedicated test-ship switching with revision/permission/control/occupancy checks, preserving original native or legacy home and inventory. Keep qualified flight/traversal requirements intact.
+- Candidate only: no production activation. Includes the existing map-editor PR11 commits. See docs/handoffs/studio_spatial_workflows.md for checks and integration limits.
+
 # 0.5.0 — System map editor candidate (2026-09-15)
 
 - Add Creator `/map` with metric chart, celestial movement, live ships, spherical systems and space backgrounds.

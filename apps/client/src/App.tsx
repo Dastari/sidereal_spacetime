@@ -1,3 +1,4 @@
+import type { SpaceRegion } from "@sidereal/sim/space-background";
 import { GameLoadingScreen } from "./GameLoadingScreen";
 import { ShipRefitPanel } from "./ShipRefitPanel";
 import { MountedFuelPanel } from "./MountedFuelPanel";
@@ -105,9 +106,7 @@ export default function App({
     [error, setError] = useState("");
   const [revision, refresh] = useState(0),
     [interior, setInterior] = useState(true);
-  const [vistaId, setVistaId] = useState(
-    () => localStorage.getItem("sidereal.vista") ?? DEFAULT_SPACE_VISTA,
-  );
+  const [vistaId, setVistaId] = useState(() => DEFAULT_SPACE_VISTA);
   const [reducedMotion, setReducedMotion] = useState(
     () => matchMedia("(prefers-reduced-motion: reduce)").matches,
   );
@@ -199,11 +198,14 @@ export default function App({
   const systemScape = c
     ? [...c.db.admittedSystemScapes.iter()].find(
         (s) => s.id === sharedAdmission?.systemId,
-      )?.backgroundId
+      )
     : undefined;
   useEffect(() => {
-    if (systemScape) setVistaId(systemScape);
-  }, [systemScape]);
+    setVistaId(systemScape?.backgroundId ?? DEFAULT_SPACE_VISTA);
+  }, [systemScape?.backgroundId]);
+  const activeSpaceRegion: SpaceRegion | undefined = systemScape?.regionsJson
+    ? JSON.parse(systemScape.regionsJson)
+    : undefined;
   const fieldBodies = () =>
     connection.current
       ? [...connection.current.db.nearbyFieldAsteroids.iter()].map((r) => ({
@@ -1199,7 +1201,8 @@ export default function App({
           ? (Math.sign((couch ?? constructionSeat)!.localX) * Math.PI) / 2
           : 0,
       sprinting: actor?.sprinting ?? false,
-      vistaId,
+      vistaId: systemScape ? DEFAULT_SPACE_VISTA : vistaId,
+      spaceRegion: activeSpaceRegion,
       reducedMotion,
       bodies: !staticConstruction ? navigationBodies : [],
     };
@@ -1207,6 +1210,7 @@ export default function App({
     gui.current?.update(uiState);
   }, [
     revision,
+    systemScape?.regionsJson,
     interior,
     seated,
     vistaId,

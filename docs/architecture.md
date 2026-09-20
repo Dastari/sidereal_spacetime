@@ -86,3 +86,9 @@ The star retains authored Blender PBR geometry/materials. Shared material plugin
 Creator `/map` reads `own_system_maps` and `own_map_ships` through explicit `universe-map` workspace grants. Content defines the sphere/background/celestial/field document; sim validates and reproducibly generates bounded volumetric populations; world commits expected-revision edits with source fingerprints, receipts and before/after history. The top-down SVG chart subtracts the camera origin before screen projection. Ship motion is a read-only overlay.
 
 Generated field asteroids remain separate from the dynamic contact island. Admitted actors receive at most128 nearby visual records without private resource metadata; `admitted_system_scapes` selects the authored game background. Mining/depletion and physical activation are not implemented. See [system map specification](specs/system-map-editor.md) and [validation record](handoffs/system_map_20260915.md).
+
+## Spatial background and temporary test-ship contracts (2026-09-21 candidate)
+
+`admitted_system_scapes.regions_json` projects only system sphere/field geometry and presentation IDs to the connected admitted actor in that ship/system. It excludes celestial rosters, asteroid resources, population seeds and authoring history. The pure sim resolver blends Deep space → system → fields ordered by priority and stable ID. This presentation never grants discovery, control or movement authority.
+
+`switch_construction_review` validates the owned destination and current temporary visit, expected destination/visit revisions, current spawn grant, standing/no flight/no traversal, valid home and free destination entry. It updates actor/location and the native return target atomically, clears intent, and records an idempotency receipt. Original home and inventory are never copied or replaced. The existing validated native return rechecks home access and source state.

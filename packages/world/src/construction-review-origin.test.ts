@@ -121,8 +121,9 @@ function fixture() {
   });
   const ctx = raw as unknown as WayfarerStarterContext;
   const snapshot = () =>
-    JSON.stringify([...tables].filter(([,rows])=>rows.length), (_, v) =>
-      typeof v === "bigint" ? v.toString() : v,
+    JSON.stringify(
+      [...tables].filter(([, rows]) => rows.length),
+      (_, v) => (typeof v === "bigint" ? v.toString() : v),
     );
   return { ctx, raw, db, tables, snapshot };
 }
@@ -255,4 +256,93 @@ test("changed source/access/admission, unsupported origin and occupied return fa
     expect(f.snapshot()).toBe(before);
     expect(f.db.character.id.find(f.actor.id).shipId).toBe("review-instance");
   }
+});
+
+import {
+  enterReview,
+  switchReview,
+  leaveReview,
+} from "./construction-instances";
+import { compileConstruction } from "@sidereal/sim/construction-transactions";
+import { bindConstructionLayout } from "@sidereal/sim/construction-layout";
+import { emptyLayout, stampTile } from "@sidereal/content/ship-layout";
+test("native home survives A to B to home with current inventory and ship motion", () => {
+  const f = review(),
+    layout = emptyLayout("switch-template", "test-deck");
+  layout.tiles.push(stampTile("test-floor", "test-deck", "rectangle", [0, 0]));
+  f.db.constructionGrant.insert({
+    id: "spawn-grant",
+    principal: f.raw.sender,
+    workspaceId: "test-workspace",
+    capability: "instance.spawn",
+    revoked: false,
+    expiresMicros: 999999999999n,
+  });
+  for (const id of ["test-a", "test-b"]) {
+    const draft = structuredClone(layout);
+    draft.decks[0].id = id + ":deck";
+    draft.playableDeckId = id + ":deck";
+    draft.tiles[0].deckId = id + ":deck";
+    const snapshot = compileConstruction(
+      JSON.stringify(bindConstructionLayout(draft).document),
+    );
+    f.db.constructionInstance.insert({
+      id,
+      owner: f.raw.sender,
+      workspaceId: "test-workspace",
+      revision: 1n,
+      blueprintSha256: snapshot.sha256,
+      documentJson: snapshot.canonical,
+      spawnDeckId: id + ":deck",
+      spawnX: 1,
+      spawnY: 1,
+    });
+    f.db.constructionDeck.insert({
+      id: id + ":deck",
+      instanceId: id,
+      sourceDeckId: "test-deck",
+      name: "Deck",
+      elevation: 0,
+      ceiling: 3,
+    });
+  }
+  const inventory = JSON.stringify(f.db.inventoryItem.rows);
+  enterReview(f.ctx, {
+    instanceId: "test-a",
+    expectedShipId: f.actor.shipId,
+    operationId: "enter-test-a",
+  });
+  const a = f.db.constructionLocation.characterId.find(f.actor.id);
+  const origin = {
+    ...f.db.constructionReviewOrigin.characterId.find(f.actor.id),
+  };
+  switchReview(f.ctx, {
+    instanceId: "test-b",
+    expectedInstanceRevision: 1n,
+    expectedVisitId: a.visitId,
+    expectedRevision: a.revision,
+    operationId: "switch-test-b",
+  });
+  expect(f.db.constructionReviewOrigin.characterId.find(f.actor.id)).toEqual({
+    ...origin,
+    reviewInstanceId: "test-b",
+  });
+  const motion = f.db.shipWorldMotion.shipId.find(f.actor.shipId);
+  f.db.shipWorldMotion.shipId.update({ ...motion, x: 321 });
+  const b = f.db.constructionLocation.characterId.find(f.actor.id);
+  leaveReview(f.ctx, {
+    expectedVisitId: b.visitId,
+    expectedRevision: b.revision,
+    operationId: "return-native",
+  });
+  expect(f.db.constructionLocation.characterId.find(f.actor.id)).toEqual(
+    f.original,
+  );
+  expect(f.db.character.id.find(f.actor.id)).toMatchObject({
+    shipId: f.actor.shipId,
+    localX: f.actor.localX,
+    localY: f.actor.localY,
+  });
+  expect(f.db.shipWorldMotion.shipId.find(f.actor.shipId).x).toBe(321);
+  expect(JSON.stringify(f.db.inventoryItem.rows)).toBe(inventory);
 });

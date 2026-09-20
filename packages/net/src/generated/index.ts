@@ -74,6 +74,7 @@ import SetConstructionGrantReducer from "./set_construction_grant_reducer";
 import SetIntentReducer from "./set_intent_reducer";
 import SpawnConstructionBlueprintReducer from "./spawn_construction_blueprint_reducer";
 import StoreAllInventoryItemsReducer from "./store_all_inventory_items_reducer";
+import SwitchConstructionReviewReducer from "./switch_construction_review_reducer";
 import TakeAllInventoryItemsReducer from "./take_all_inventory_items_reducer";
 import TransferInventoryItemReducer from "./transfer_inventory_item_reducer";
 import TransferScopedCargoItemReducer from "./transfer_scoped_cargo_item_reducer";
@@ -516,6 +517,7 @@ const reducersSchema = __reducers(
   __reducerSchema("set_intent", SetIntentReducer),
   __reducerSchema("spawn_construction_blueprint", SpawnConstructionBlueprintReducer),
   __reducerSchema("store_all_inventory_items", StoreAllInventoryItemsReducer),
+  __reducerSchema("switch_construction_review", SwitchConstructionReviewReducer),
   __reducerSchema("take_all_inventory_items", TakeAllInventoryItemsReducer),
   __reducerSchema("transfer_inventory_item", TransferInventoryItemReducer),
   __reducerSchema("transfer_scoped_cargo_item", TransferScopedCargoItemReducer),
