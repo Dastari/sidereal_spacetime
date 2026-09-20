@@ -1,0 +1,40 @@
+{
+  "kind": "current-development-renderer isolated legacy Deck fixture; not authenticated live player scene",
+  "hardware": "NVIDIA RTX 4080 Laptop GPU, Chromium/Electron, WebGL2",
+  "renderResolution": [
+    1574,
+    907
+  ],
+  "bodies": 0,
+  "remoteShips": 0,
+  "equippedAsset": null,
+  "warmupFramesPerCase": 120,
+  "measuredFramesPerCase": 180,
+  "samples": [
+    {
+      "mode": "all on",
+      "drawCalls": 1500,
+      "renderCpuMedianMs": 12,
+      "renderCpuP95Ms": 13.6
+    },
+    {
+      "mode": "glow off",
+      "drawCalls": 1332,
+      "renderCpuMedianMs": 11.4,
+      "renderCpuP95Ms": 12.8
+    },
+    {
+      "mode": "glow and shadows off",
+      "drawCalls": 462,
+      "renderCpuMedianMs": 6.6,
+      "renderCpuP95Ms": 7.6
+    }
+  ],
+  "shadowObservation": {
+    "frames": 738,
+    "exterior-key": 738,
+    "room-luminaire-hydroponics": 738,
+    "room-luminaire-medbay": 738
+  },
+  "limits": "No whole-game before/after or GPU-time claim. Late browser transport reset ended subsequent origin-mode probes; no results used. The fixture disappeared on reconnect."
+}

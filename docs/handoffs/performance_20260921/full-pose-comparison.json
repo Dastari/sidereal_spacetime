@@ -1,0 +1,66 @@
+[
+  {
+    "version": "baseline-live-math",
+    "active": false,
+    "median": 0.2418840000000273,
+    "p95": 0.38601599999992686,
+    "status": "solved",
+    "iterations": 2
+  },
+  {
+    "version": "baseline-live-math",
+    "active": true,
+    "median": 0.255390000000034,
+    "p95": 0.31228699999996934,
+    "status": "solved",
+    "iterations": 3
+  },
+  {
+    "version": "optimized-math",
+    "active": false,
+    "median": 0.17317499999990105,
+    "p95": 0.30241799999998875,
+    "status": "solved",
+    "iterations": 2
+  },
+  {
+    "version": "optimized-math",
+    "active": true,
+    "median": 0.17800500000021202,
+    "p95": 0.2685039999998935,
+    "status": "solved",
+    "iterations": 3
+  },
+  {
+    "version": "baseline-live-math",
+    "active": false,
+    "median": 0.24101299999983894,
+    "p95": 0.3779500000000553,
+    "status": "solved",
+    "iterations": 2
+  },
+  {
+    "version": "baseline-live-math",
+    "active": true,
+    "median": 0.25419800000008763,
+    "p95": 0.33017100000006394,
+    "status": "solved",
+    "iterations": 3
+  },
+  {
+    "version": "optimized-math",
+    "active": false,
+    "median": 0.16388800000004267,
+    "p95": 0.21159799999986717,
+    "status": "solved",
+    "iterations": 2
+  },
+  {
+    "version": "optimized-math",
+    "active": true,
+    "median": 0.17085099999985687,
+    "p95": 0.2041030000000319,
+    "status": "solved",
+    "iterations": 3
+  }
+]

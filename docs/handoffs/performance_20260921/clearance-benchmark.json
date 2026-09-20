@@ -1,0 +1,72 @@
+{
+  "node": "v24.18.0",
+  "pairs": 2048,
+  "callsPerSample": 81920,
+  "warmupRounds": 2,
+  "measuredRounds": 6,
+  "vectorNs": 4465.300054931642,
+  "scalarNs": 581.0973205566395,
+  "speedup": 7.684255110063633,
+  "results": [
+    {
+      "name": "vector",
+      "nsPerCall": 4469.031738281252,
+      "checksum": 41437.99551203656
+    },
+    {
+      "name": "scalar",
+      "nsPerCall": 689.9794311523433,
+      "checksum": 41437.99551203656
+    },
+    {
+      "name": "scalar",
+      "nsPerCall": 767.0139892578115,
+      "checksum": 41437.99551203656
+    },
+    {
+      "name": "vector",
+      "nsPerCall": 4265.7920043945305,
+      "checksum": 41437.99551203656
+    },
+    {
+      "name": "vector",
+      "nsPerCall": 4461.568371582031,
+      "checksum": 41437.99551203656
+    },
+    {
+      "name": "scalar",
+      "nsPerCall": 548.598010253909,
+      "checksum": 41437.99551203656
+    },
+    {
+      "name": "scalar",
+      "nsPerCall": 554.7137573242211,
+      "checksum": 41437.99551203656
+    },
+    {
+      "name": "vector",
+      "nsPerCall": 4548.524999999998,
+      "checksum": 41437.99551203656
+    },
+    {
+      "name": "vector",
+      "nsPerCall": 4706.517736816407,
+      "checksum": 41437.99551203656
+    },
+    {
+      "name": "scalar",
+      "nsPerCall": 577.5476806640645,
+      "checksum": 41437.99551203656
+    },
+    {
+      "name": "scalar",
+      "nsPerCall": 584.6469604492144,
+      "checksum": 41437.99551203656
+    },
+    {
+      "name": "vector",
+      "nsPerCall": 4339.414855957029,
+      "checksum": 41437.99551203656
+    }
+  ]
+}

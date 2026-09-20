@@ -1,0 +1,94 @@
+[
+  {
+    "catalog": 28,
+    "fixed": 24
+  },
+  {
+    "id": "rocky-r010",
+    "fixed": true,
+    "lod": 2,
+    "registerMs": 147.83095300000002,
+    "buildMs": 745.316049,
+    "triangles": 171128,
+    "weatherTriangles": 0,
+    "bytes": 18481824,
+    "largestBatchIndices": 199644
+  },
+  {
+    "id": "rocky-r010",
+    "fixed": true,
+    "lod": 0,
+    "registerMs": 147.83095300000002,
+    "buildMs": 659.34484,
+    "triangles": 171128,
+    "weatherTriangles": 0,
+    "bytes": 18481824,
+    "largestBatchIndices": 199644
+  },
+  {
+    "id": "ice-r026",
+    "fixed": true,
+    "lod": 2,
+    "registerMs": 275.9907390000001,
+    "buildMs": 2271.891896,
+    "triangles": 185544,
+    "weatherTriangles": 0,
+    "bytes": 20038752,
+    "largestBatchIndices": 178296
+  },
+  {
+    "id": "ice-r026",
+    "fixed": true,
+    "lod": 0,
+    "registerMs": 275.9907390000001,
+    "buildMs": 2242.2101839999996,
+    "triangles": 185544,
+    "weatherTriangles": 0,
+    "bytes": 20038752,
+    "largestBatchIndices": 178296
+  },
+  {
+    "id": "toxic-r007",
+    "fixed": true,
+    "lod": 2,
+    "registerMs": 214.33440599999994,
+    "buildMs": 1642.1413439999997,
+    "triangles": 132490,
+    "weatherTriangles": 4032,
+    "bytes": 14308920,
+    "largestBatchIndices": 117282
+  },
+  {
+    "id": "toxic-r007",
+    "fixed": true,
+    "lod": 0,
+    "registerMs": 214.33440599999994,
+    "buildMs": 1676.4146650000002,
+    "triangles": 132490,
+    "weatherTriangles": 4032,
+    "bytes": 14308920,
+    "largestBatchIndices": 117282
+  },
+  {
+    "id": "temperate-r003",
+    "fixed": false,
+    "lod": 2,
+    "registerMs": 84.51664399999936,
+    "buildMs": 724.2988399999995,
+    "triangles": 245604,
+    "weatherTriangles": 12312,
+    "bytes": 26525232,
+    "largestBatchIndices": 336000
+  },
+  {
+    "id": "temperate-r003",
+    "fixed": false,
+    "lod": 0,
+    "registerMs": 84.51664399999936,
+    "buildMs": 715.2190160000009,
+    "triangles": 250404,
+    "weatherTriangles": 12312,
+    "bytes": 27043632,
+    "largestBatchIndices": 336000
+  }
+]
