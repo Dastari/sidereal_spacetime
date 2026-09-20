@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-09-21 — Character pose clearance CPU (render 0.5.3)
+
+Removed temporary vector/array allocation from pose box-overlap checks while
+preserving all 15 separating axes and exact clearance results. A reproducible
+benchmark measures 7.68× faster checks; a bounded full-pose harness measures
+30–32% lower pose CPU, not whole-game FPS. Added equivalence coverage and retained
+the performance findings in `docs/handoffs/performance_audit_20260921.md`.
+Public deployment is unchanged.
+
 ## 2026-09-15 — Stellar Observe framing (render 0.5.1)
 
 Observe fits the enlarged stellar corona, including portrait viewports, while retaining authored physical radii and existing planet framing. Added two NullEngine projection tests. Final r013 solar migration passes isolated baseline/update/persistent-state verification and is now live with the compatible client. All live ship, character and inventory-item rows remain unchanged. Hardware performance acceptance remains unmeasured.

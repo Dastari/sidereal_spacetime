@@ -9,6 +9,6 @@
   "dependencies": {
     "@babylonjs/core": "9.25.0",
     "@sidereal/content": "0.2.1",
-    "@sidereal/render": "0.5.1"
+    "@sidereal/render": "0.5.3"
   }
 }
