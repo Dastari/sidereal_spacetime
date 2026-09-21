@@ -108,6 +108,7 @@ export function stepSystemSpace(
   input: readonly RigidBody[],
   controls: readonly SystemFlightControl[] = [],
   traceIds?: ReadonlySet<string>,
+  tracePoint?: (body: RigidBody) => { x: number; y: number },
 ): SystemSpaceStep {
   const budgetResult = (
     reason: "body-budget" | "actuator-budget",
@@ -249,7 +250,7 @@ export function stepSystemSpace(
       reason = "coordinate-bound";
       break;
     }
-    const result = stepContacts(kicked, DT, 0.2, traceIds);
+    const result = stepContacts(kicked, DT, 0.2, traceIds, tracePoint);
     // Correction from an overlap can also move a body outside the admitted box.
     try {
       for (const body of result.bodies) bodyValid(body);
