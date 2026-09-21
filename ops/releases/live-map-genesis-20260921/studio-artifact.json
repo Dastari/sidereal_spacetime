@@ -1,18 +1,18 @@
 {
-  "sha256": "0d3c92d5b74b9d0a0283cd58f6509c786b4c82328aa482b0bcfc1c5fbd2e7193",
-  "count": 3491,
+  "sha256": "d03123c4c8b3b711d20ed9aa5bfc9b6d6d68ad64a6ffff62b802294ff6284092",
+  "count": 3492,
   "files": [
     {
-      "path": "assets/AssemblyEditor-BEX1wfYq.js",
-      "sha256": "1b3cecfdd0cebab0d4421f88f8d516e1ea942cbc3575c045f656526dea24a967"
+      "path": "assets/AssemblyEditor-Bw1qu4i7.js",
+      "sha256": "07ee61b76319acc1527156da7992e4d3eefa8fb852052b10f9559b90625bb1a1"
     },
     {
       "path": "assets/AssemblyEditor-DRNDzGdi.css",
       "sha256": "85aa01691641472ae289b82bd1010c88b19478a03d87884eb7176d1b8b26d32f"
     },
     {
-      "path": "assets/ConstructionPanel-GaIJzwVX.js",
-      "sha256": "9b1238951e4c25b30bbb555e85306aacb459c5f709f9b5ce77d2a53c7e6a5602"
+      "path": "assets/ConstructionPanel-Bb6zOMBr.js",
+      "sha256": "b5ab38d7d5345fcb3b21da72115049162427a7d17ad3232921ccaaa1fdaf7006"
     },
     {
       "path": "assets/HullDecalPanel-D0j8QwmQ.css",
@@ -27,28 +27,28 @@
       "sha256": "d4eb79158c3289641a0a195051670ed1cf9c832e22748e4f9a99c27be8a6fbde"
     },
     {
-      "path": "assets/HullWorkspace-CkK0caTM.js",
-      "sha256": "6d71da712d9caf3d400d55a8d45ee56dd35813784f553a96cc637483fa3fb518"
+      "path": "assets/HullWorkspace-wdmfqe9R.js",
+      "sha256": "95ee940e5008cd1104ad6d3c97f787c70c37e78857583518ac06bb47a0ccd282"
+    },
+    {
+      "path": "assets/LayoutEditor-C-uLrcEV.js",
+      "sha256": "380884845b448a6d246beb2e78f0719c251a5a70e99083750aa798a57ac9acea"
     },
     {
       "path": "assets/LayoutEditor-CSKgsXiq.css",
       "sha256": "a1ffce133d49aef5c85663aa83c0d2ab50b04acf84aa645ed1465e39acbdbac9"
     },
     {
-      "path": "assets/LayoutEditor-K75Pv-mi.js",
-      "sha256": "b189ae6ab95a8e503bb2ee8f2766195539985aefbf35cd4790cd2216fae123a3"
-    },
-    {
       "path": "assets/MapEditor-BvMILUu-.css",
       "sha256": "0383ce818b8e5be60292b9764a8f2b460bfd5d89cd6c0c5da01a376e8f28cd9d"
     },
     {
-      "path": "assets/MapEditor-CwWIjFN-.js",
-      "sha256": "096575eb6a87e4c1c2b4b192f60727328404ac807f0efd816f30ede59d46a15f"
+      "path": "assets/MapEditor-CfVEL4iS.js",
+      "sha256": "cc04dd9df6e7a907abfc918af19746a732d2f27baec58c22f7ab13e64977de35"
     },
     {
-      "path": "assets/PlanetStudio-B28SKOct.js",
-      "sha256": "3598f87d36e2cf3171bfdc40f96e0af430e0cbae555d16baf63a1308c3069a6d"
+      "path": "assets/PlanetStudio-CZ4sS-hD.js",
+      "sha256": "e7093965ad66ff576944e0b172c66cc81640e25dddf8015de46c4bc5b90bfce8"
     },
     {
       "path": "assets/abstractAudioBus-s4FxA3RW.js",
@@ -75,8 +75,8 @@
       "sha256": "fbf23a6c2a79764b6c67f82c767ad4175b8e853d5e84660d552922e168bf54b4"
     },
     {
-      "path": "assets/animationGroup.pure-DXKuj1LQ.js",
-      "sha256": "b8bbff73d0991eaaa2e4eee832ee499f3d133f3030b1dce00f80596435071709"
+      "path": "assets/animationGroup.pure-D3dW8DzE.js",
+      "sha256": "080bc5560458af6acc070e157f357674e4463e1e272539f036cf066f55b54300"
     },
     {
       "path": "assets/assembly/cargo/part-091a05481726fc7ccac0/cutout.png",
@@ -3683,8 +3683,8 @@
       "sha256": "5a494d0369ba1c784ced8668128223cfcc11947923f24317332df8ffa6221cbc"
     },
     {
-      "path": "assets/assembly-editor-ChodTg1h.js",
-      "sha256": "cfb46a4c2490ea47b2b6ca22b6b483a0c63b4fb9e6095177bc49ca81eeb0fda8"
+      "path": "assets/assembly-editor-BK7egNje.js",
+      "sha256": "3d7e295446b1d16aa4efeef6b9da54bc309e7e0f9abee45ba21e45357813f975"
     },
     {
       "path": "assets/background.worker-geXTbH7Q.js",
@@ -3815,8 +3815,8 @@
       "sha256": "d9bb523921d15e2b3fca0b22860af8b6f4a878a54c0bddd7c522588988253943"
     },
     {
-      "path": "assets/baseTexture.polynomial.pure-DhFBS7iU.js",
-      "sha256": "79dc65307d2796c2869106ca7693aef2fe7b926375b279cd7a84335c8516eb7b"
+      "path": "assets/baseTexture.polynomial.pure-BLVerRs7.js",
+      "sha256": "23acdde3a1028e4143ffa6a335f4c9cd06175e95a724d147f8b0162032c285e8"
     },
     {
       "path": "assets/baseTexture.pure-BEhiW_uP.js",
@@ -3863,12 +3863,12 @@
       "sha256": "6c461b898e709742c7dbb290f5781388a0dc4c590831d4a39e8129f1064a83aa"
     },
     {
-      "path": "assets/clearQuad.fragment-BPalYr0p.js",
-      "sha256": "3b510689ba06d6f095f148d4179bed8780743fd222684a6eb4a44a3615746e4d"
+      "path": "assets/clearQuad.fragment-BIAd-XVT.js",
+      "sha256": "00e96918262eda9323a0d2f254c9aba5b29ed7f5567418367eaa57614e3b5c90"
     },
     {
-      "path": "assets/clearQuad.vertex-67Uxaz32.js",
-      "sha256": "1a21cb743da7ae01b07ceec088fc6afcef92cc2b66be32dff029ce8c5ca68c4d"
+      "path": "assets/clearQuad.vertex-CaNfy3iQ.js",
+      "sha256": "c839362d8b34a5884600f325c6855105659efa81ff0a7de9a3602956c9a001d6"
     },
     {
       "path": "assets/clipPlaneFragment-Ct2VqHzk.js",
@@ -10427,12 +10427,12 @@
       "sha256": "da9d0f1473f06f05656287cb7294e314fb95b019bfbf25041364fc6d9247d496"
     },
     {
-      "path": "assets/dds.pure-BUjc4jEW.js",
-      "sha256": "6b699229cc266c32c707a756cb5fc031ca9a62a176d4c4703431587ed077844d"
+      "path": "assets/dds.pure-DQp0Q5mq.js",
+      "sha256": "aa3765bb3273216b725a9a80dad24ac324a4ac186caea25d231af955f515bdee"
     },
     {
-      "path": "assets/ddsTextureLoader-ChIn0S-f.js",
-      "sha256": "976f91c0eaba77de15f6e1d071036883a35c5038bc78513e1b862ecd6cd005e1"
+      "path": "assets/ddsTextureLoader-BuJri0TK.js",
+      "sha256": "eb0c119e0523594e6334bd955801f4fdecb348493202c852a5f9d9ffba32607c"
     },
     {
       "path": "assets/decalFragment-CvBK6CMD.js",
@@ -10487,24 +10487,24 @@
       "sha256": "d8c3600058d8b60e0e0615bc75912b35dbd46e8813acd05abd103862cb05f2f6"
     },
     {
-      "path": "assets/dumpTools.pure-BFJ1yDVh.js",
-      "sha256": "39922995ab8267054ff59668b6d490eeaa130e5ef67ad9c2d82e5eb3f38773e6"
+      "path": "assets/dumpTools.pure-giHH1Mee.js",
+      "sha256": "32231c67b251e211854b5ac1fb661f5d9670424676f1118fd2c2cce69b6b7a9f"
     },
     {
       "path": "assets/editor-commands-CsbcPmYM.js",
       "sha256": "4c4b3b320967c637664bcb8c06bfabdbdd8d3970e9305a2fa57e476c8b2a0c67"
     },
     {
-      "path": "assets/effectRenderer.pure-cKLfuu6l.js",
-      "sha256": "50ac57cefe8cf8c087b59100563b0a29a73732e7349b1458bbd2acc13028d7e8"
+      "path": "assets/effectRenderer.pure-DchrS_YP.js",
+      "sha256": "f22151bac5d90913519439ef54d07f23bf9e7c8c92e344a2759f6c956c1bf5a3"
     },
     {
       "path": "assets/engineStore-e38OvQA7.js",
       "sha256": "1149137099e563d52b5aea2b0b1a40716cc6ed18e64ebdca8813a5ea0315e770"
     },
     {
-      "path": "assets/envTextureLoader-BfSzufGt.js",
-      "sha256": "188c5ebf4d593f642fd43c0fc2fe2a2634ac19035f2fee5006274258824eb0fd"
+      "path": "assets/envTextureLoader-zSZ7W4Wz.js",
+      "sha256": "c9f31858fb11ef2195525f7607a9e0e43d91771dd145748dd367f0fbee7a5276"
     },
     {
       "path": "assets/environment/orion-provenance.json",
@@ -10647,8 +10647,8 @@
       "sha256": "fc3f40553b8f6e7d235eb73117ae5c70f4637eaa79c6abd0bc8555a40719ca42"
     },
     {
-      "path": "assets/flowGraphArrayIndexBlock.pure-Dflep1DI.js",
-      "sha256": "8fe131982845dcc4eeedf639bfde39805b61476ca6ac934cb1c20d1ed7e456f4"
+      "path": "assets/flowGraphArrayIndexBlock.pure-BnSDwTF_.js",
+      "sha256": "bb8ee8046246643c7d996e799c275d2eb155685127b1422396976a97089b7f24"
     },
     {
       "path": "assets/flowGraphAssetsContext-WtUyuDAI.js",
@@ -10659,8 +10659,8 @@
       "sha256": "64ba4dda07fd918c94e8ee3e2dda1a9b371648f54a49d54408ae43059b2df401"
     },
     {
-      "path": "assets/flowGraphBezierCurveEasingBlock.pure-BW58vXdm.js",
-      "sha256": "d2bbc2a92860b7a0e34542b06feab2b10115e01c3a00ea3a2ebfe8a9f31a7faf"
+      "path": "assets/flowGraphBezierCurveEasingBlock.pure-CsIzX4it.js",
+      "sha256": "14fc10038f7395484eaf9c0b927b8f15529c9a7bc16a1e0caf0d0aba5731ad03"
     },
     {
       "path": "assets/flowGraphBinaryOperationBlock-BcvuRWU1.js",
@@ -10679,8 +10679,8 @@
       "sha256": "e725e2c021b9406dd116434f35048524318f6adae8578fe203284cc361df5c56"
     },
     {
-      "path": "assets/flowGraphCancelDelayBlock.pure-BQ8kouBJ.js",
-      "sha256": "a156f403c1b3dc4aa6ad6014cbe67e22245c89c774441d721b0966369a9d7140"
+      "path": "assets/flowGraphCancelDelayBlock.pure-Iuv1AdGl.js",
+      "sha256": "05822945860c2747b6bbe273e6c6dff68cd1082581a7e3a6513a3c5edca0909d"
     },
     {
       "path": "assets/flowGraphCodeExecutionBlock-iK78hrRR.js",
@@ -10707,8 +10707,8 @@
       "sha256": "603f0f40ae475a9bc8d240f29ef5a947e3f37f701be4b1f6ac11e17e93db675c"
     },
     {
-      "path": "assets/flowGraphDataSwitchBlock.pure-Cd2Bifkj.js",
-      "sha256": "ff0eb8c24148261bcbca27af23397ea6ca690dbecaa4efc930d9d7571c031088"
+      "path": "assets/flowGraphDataSwitchBlock.pure-x_TJhITZ.js",
+      "sha256": "8a78c1a528d179c2597186f255e44def698eed22269d4cae50b0d6b678545579"
     },
     {
       "path": "assets/flowGraphDebounceBlock.pure-iL1X54um.js",
@@ -10723,8 +10723,8 @@
       "sha256": "8396fe3e6d28affedafeec25c30226efbe0af45b5077c071818e7fadfe24ba49"
     },
     {
-      "path": "assets/flowGraphEasingBlock.pure-cMtz3lUU.js",
-      "sha256": "3fa7f043cbdd22c5856d7d1ef90242a4e8a82eb4a1e1f42261cbc621cbc2ad40"
+      "path": "assets/flowGraphEasingBlock.pure-D4r-CNQD.js",
+      "sha256": "0b88433c0070fe87335cc9efa61d45d0462d0bd7af655dd6fd04fdd1e6695e76"
     },
     {
       "path": "assets/flowGraphExecutionBlock-Beh4vgyW.js",
@@ -10739,24 +10739,24 @@
       "sha256": "b3e6c09b4f552ccfa31d07a395eb2ec28bf6a817f25b513305a5c6ff9aa67b16"
     },
     {
-      "path": "assets/flowGraphForLoopBlock.pure-CdqPKLnE.js",
-      "sha256": "45cafd273c7c614d75349f13a41ef4a8343638ae72d853a3381e3bd8fe2be273"
+      "path": "assets/flowGraphForLoopBlock.pure-Co0-2FYh.js",
+      "sha256": "03c8dad728a4bb77e752141df3a9a1540aca38e6ec16d9061a8fdf2d9de35a11"
     },
     {
       "path": "assets/flowGraphFunctionReferenceBlock.pure-Dw8V72He.js",
       "sha256": "65e2362d635821015dac9487dc7c20987b8e361deb8d50869e05551aaaaa3415"
     },
     {
-      "path": "assets/flowGraphGLTFDataProvider-To89Wb1m.js",
-      "sha256": "de6d61377fba3b3c2f7f90b12b3203b4c1e8f30809bd27d5d3f4b564b2290ecd"
+      "path": "assets/flowGraphGLTFDataProvider-D-ymBs3s.js",
+      "sha256": "ffd98c5f84c9155abf300eddc4f92e8a4004032be72410fe2ad20716b2f6731e"
     },
     {
       "path": "assets/flowGraphGetAngularVelocityBlock.pure-BssQyu8X.js",
       "sha256": "494977ca09eee1d2f563eda9cd644282ae15171507106534462103c3cd3f646d"
     },
     {
-      "path": "assets/flowGraphGetAssetBlock.pure-DF1uUZq-.js",
-      "sha256": "7efca2248e343b4492041a6dc737286173629ec86e1992d2a3dabbc1cfcca6cf"
+      "path": "assets/flowGraphGetAssetBlock.pure-D5e_774u.js",
+      "sha256": "ab3fff9584a0fb726b630d1fbde87c3ec7309fa660e4f8eb2025900b1b89a471"
     },
     {
       "path": "assets/flowGraphGetLinearVelocityBlock.pure-ClDfRqOJ.js",
@@ -10787,8 +10787,8 @@
       "sha256": "1b20ccf248396a186581d2dc9e7ebd3b7343159899099922bafb84db69685ee4"
     },
     {
-      "path": "assets/flowGraphInterpolationBlock.pure-CX0bJvjc.js",
-      "sha256": "ede7fd2d8f7ffef6a021995e6569787a393839c25108e6306b560d866ad13489"
+      "path": "assets/flowGraphInterpolationBlock.pure-8PACIuLS.js",
+      "sha256": "775d15a7794405a0e04744f6f9aceb3a64c78229d744c87f39c5c49393ab5cf5"
     },
     {
       "path": "assets/flowGraphIsKeyPressedBlock.pure-CQKcICLU.js",
@@ -10803,20 +10803,20 @@
       "sha256": "e512f547edc03799d93dada7952d5537268819f0ec1580a53804d552a26a835b"
     },
     {
-      "path": "assets/flowGraphKeyDownEventBlock.pure-DORRCQKX.js",
-      "sha256": "8385a5897797d6d13df391a5f5038be2a0fd9a0c5febee45f5dc11c32a261472"
+      "path": "assets/flowGraphKeyDownEventBlock.pure-UuDy6Swc.js",
+      "sha256": "3061045bc43f24089b72513262bbe8e7e93b065f7d4e0535fbbac6cbb259720e"
     },
     {
-      "path": "assets/flowGraphKeyUpEventBlock.pure-CMTRkoIG.js",
-      "sha256": "2864b7c1a6d6c614a748e6d3ecdc67f761238f269196d9c18aa521d8fa02fee6"
+      "path": "assets/flowGraphKeyUpEventBlock.pure-D7WYPSwz.js",
+      "sha256": "0c8ac54b9083384269568f3c350a7d1df385237b4690f475fb23129099838a3a"
     },
     {
-      "path": "assets/flowGraphKeyboardEventBlock-Bxxd0ih0.js",
-      "sha256": "4e41ffa30ff30c129f00364b9f245a53bac44f0562b91878dd579c4ba4cb4f93"
+      "path": "assets/flowGraphKeyboardEventBlock-DUimM4q5.js",
+      "sha256": "e730350e149933fe9edd2c4b659e9bccb5143698e6d5105fee7ef4e918730928"
     },
     {
-      "path": "assets/flowGraphMathBlocks.pure-CTE9sExw.js",
-      "sha256": "01975267d766faf0f5e3cf43b245bb223215617ce4b3da6d7456e5ccdf73d8f5"
+      "path": "assets/flowGraphMathBlocks.pure-kqZN2MZl.js",
+      "sha256": "c1833196ff0d97975c918e33b49cac919d62e3f104139f7f20bdd11fb17906c7"
     },
     {
       "path": "assets/flowGraphMathCombineExtractBlocks.pure-DI-l_lcv.js",
@@ -10827,8 +10827,8 @@
       "sha256": "8424a0f8282b6db747e5b2505665f8ae83a1a44f301b02d6f1a11ebe8e58a445"
     },
     {
-      "path": "assets/flowGraphMeshPickEventBlock.pure-Dg3IX-wn.js",
-      "sha256": "90458a51d0b2c2469ae006766427c86c62bc0c7b09c317fdaa1555ff2259e995"
+      "path": "assets/flowGraphMeshPickEventBlock.pure-C-bplcKQ.js",
+      "sha256": "ecc52f4d41b584472487e8ca9fe205a99d22359103871645825d360421963e05"
     },
     {
       "path": "assets/flowGraphMultiGateBlock.pure-BB3Hwow7.js",
@@ -10843,48 +10843,48 @@
       "sha256": "797773a5370dff71057fe94bc26a655bc3bc29ae840a38815e1e43941817ee0e"
     },
     {
-      "path": "assets/flowGraphPhysicsCollisionEventBlock.pure-gCPu43AC.js",
-      "sha256": "9d47c5c821312d19be5466a9bc81125ca93d4e4982e3fb77e193136647319106"
+      "path": "assets/flowGraphPhysicsCollisionEventBlock.pure--eUZCRyq.js",
+      "sha256": "647350b5d789b1eb660a56e9b53b82cf2b81befb9aecb07871a66451bee076a2"
     },
     {
-      "path": "assets/flowGraphPlayAnimationBlock.pure-jM5il0AA.js",
-      "sha256": "fe2df2b86791159d0cb4529e66769aec29feb8de4abe12e359c63310c7cf2457"
+      "path": "assets/flowGraphPlayAnimationBlock.pure-B-H8O1gZ.js",
+      "sha256": "3cbac783bf863e6ef02f5072c8c0de9226a692c40e134c6256a46d7cfefa1faa"
     },
     {
       "path": "assets/flowGraphPlaySoundBlock.pure-Y1ZoWjsL.js",
       "sha256": "c084d85a9a04fe040012c59907d7a7597253eb980e14a79729fbdb441b3c4bca"
     },
     {
-      "path": "assets/flowGraphPointerDownEventBlock.pure-v9yNktnq.js",
-      "sha256": "d094b22f08bac0be3ce57c8abd570b556c4b80f3050b144b07ee6bde516f3205"
+      "path": "assets/flowGraphPointerDownEventBlock.pure-D1KfySlG.js",
+      "sha256": "3aa757b288c3c7b1deefe212d635a310738c07f45b93c90673cf4a990c07321d"
     },
     {
-      "path": "assets/flowGraphPointerMoveEventBlock.pure-BuPnS0w0.js",
-      "sha256": "c3d5e17e8a0090ef2f9c8935d15f37a7672a4f594aa1d5b03845b38cc2eba8f7"
+      "path": "assets/flowGraphPointerMoveEventBlock.pure-Cp5PoqKr.js",
+      "sha256": "f11385ee3ab773aad26112ff0b0a6bf77dd048890593aa866d3849f1ec7d6d63"
     },
     {
-      "path": "assets/flowGraphPointerOutEventBlock.pure-DQrJEQhj.js",
-      "sha256": "de2cf662ca33538b96b808626e1b7102c8473e24c00967c256e71f6c25b9c359"
+      "path": "assets/flowGraphPointerOutEventBlock.pure-Fyw-jmyj.js",
+      "sha256": "e3d169bede66bc7cda9b545fd94ee4031cec574895d131b6e707925d0ac2d0ac"
     },
     {
-      "path": "assets/flowGraphPointerOverEventBlock.pure-DlSWtZH4.js",
-      "sha256": "7de93ac882cc0d96a4543682a32a1f1e6daae741cc915cfac5a370c3ef07ee90"
+      "path": "assets/flowGraphPointerOverEventBlock.pure-DONtErku.js",
+      "sha256": "148a80d0c3c7b78a8347b64ff64533e8806ccb2909d30bc697cc159fc920f6fd"
     },
     {
-      "path": "assets/flowGraphPointerUpEventBlock.pure-DqadehwS.js",
-      "sha256": "a53a1e0b89ee48dfd1cbfcdac7b03f9ae40eba9a6291d30f714844895dd5307f"
+      "path": "assets/flowGraphPointerUpEventBlock.pure-B6SoCvq8.js",
+      "sha256": "6650a39617bf438b24495886a7f946983e2ea9d0dc8ee19da18e85dec723ea9e"
     },
     {
-      "path": "assets/flowGraphReceiveCustomEventBlock.pure-ytgGL4RH.js",
-      "sha256": "f07e99e515e38b4809ea1923dd407d6c44ee9cbbc8c7dfb0274351dfa5909a9f"
+      "path": "assets/flowGraphReceiveCustomEventBlock.pure-DimQv5uT.js",
+      "sha256": "b041b570bd8fd77b565ebf9cabbd031012efb8202a1666c4a5926644c1d367da"
     },
     {
-      "path": "assets/flowGraphSceneReadyEventBlock.pure-MXik0vFY.js",
-      "sha256": "0c13995ed49c1d1dc0e374d58dec018eba9dca71bfb8f2104a7822a0deebd561"
+      "path": "assets/flowGraphSceneReadyEventBlock.pure-BVYpnPG8.js",
+      "sha256": "9badcf2625e2f6abc20451e042fc11378386c0a22d7e01e7a15e9a85168253f9"
     },
     {
-      "path": "assets/flowGraphSceneTickEventBlock.pure-Bg-tho0-.js",
-      "sha256": "31c951c7e3a64607256a93754d973a6b11503aadead41428bfd59ca690ff1dd0"
+      "path": "assets/flowGraphSceneTickEventBlock.pure-uDjw7wcF.js",
+      "sha256": "d0d06e1866c2ec24b6b536de16cd4aba36858f81c798ede286e129ca0ebd33b0"
     },
     {
       "path": "assets/flowGraphSendCustomEventBlock.pure-BlaEplYq.js",
@@ -10899,8 +10899,8 @@
       "sha256": "54fb46eb720ef4f43af624369981f75d50d20d4b2cf3a3ecabe6f2aad27e782d"
     },
     {
-      "path": "assets/flowGraphSetDelayBlock.pure-CbFVVwUD.js",
-      "sha256": "3964f5bcd27ffc0d4f3e4306121df34f5b6757d75115cd827a3b60f696fa6932"
+      "path": "assets/flowGraphSetDelayBlock.pure-oOj8w8G2.js",
+      "sha256": "2a0466e8f63363596a245b969f24a3c1ce8e075b3c4509902b6ad7b8a4ebf38f"
     },
     {
       "path": "assets/flowGraphSetLinearVelocityBlock.pure-CDYM_zQx.js",
@@ -10923,8 +10923,8 @@
       "sha256": "884f9a8a90f841b8b523042ab688f145586281ec9ee41796763f35431f5c5457"
     },
     {
-      "path": "assets/flowGraphSoundEndedEventBlock.pure-9l8DGyWv.js",
-      "sha256": "1246be82d07c3cb7021ea45525251b2ab3cf6096a68a6ecbd731ae8e02b9393a"
+      "path": "assets/flowGraphSoundEndedEventBlock.pure-KQJ52UAP.js",
+      "sha256": "c2f0d092f77f55771bdbda7f1943d3794ab64992072a34868964f88af3a324b3"
     },
     {
       "path": "assets/flowGraphStopAnimationBlock.pure-DxHVfKD2.js",
@@ -10939,8 +10939,8 @@
       "sha256": "5a12710184d780fa74d314fe868e388f991183c15326371f11d658934048ca05"
     },
     {
-      "path": "assets/flowGraphSwitchBlock.pure-Do7Z6K6q.js",
-      "sha256": "50b05c206935ec1a89012fb2e9a60b07a749698e9c9853650c955475cbb61412"
+      "path": "assets/flowGraphSwitchBlock.pure-BAVTe26S.js",
+      "sha256": "847a9fde38266e7bb7a48e84c367d84937c1139e9a93e50a0a75644cb5d033c4"
     },
     {
       "path": "assets/flowGraphTernaryOperationBlock-Opv2DGCq.js",
@@ -10963,8 +10963,8 @@
       "sha256": "cdc806bdd9ac2d2b7a2b3c2016fef22bb823b815a732b01592abd34f45ced13b"
     },
     {
-      "path": "assets/flowGraphVectorMathBlocks.pure-D5oJZxGD.js",
-      "sha256": "64ef8fe43770c5a707a85b7903bfee56f656ca8ba8f1545531591bf77eb36a2c"
+      "path": "assets/flowGraphVectorMathBlocks.pure-DmC1KrIC.js",
+      "sha256": "f8f3e95aa415a10998c3c61cc423ab5a5e6bd341728bce768c5268f729b14892"
     },
     {
       "path": "assets/flowGraphWaitAllBlock.pure-mXOCBDDP.js",
@@ -11071,8 +11071,8 @@
       "sha256": "af45420c395f1de893e227cf690d6a538ee7849afdbebe63b5953fd619c221aa"
     },
     {
-      "path": "assets/geometryBufferRenderer.pure-U70tNm5Q.js",
-      "sha256": "cb97bcc6dbf3f67959b0588c27fd32ff7374ff1cabc57e32aa168667ad90f1c8"
+      "path": "assets/geometryBufferRenderer.pure-BqFOyMqG.js",
+      "sha256": "05ebfdbdee6c239bfc88bf74aad735a23e1aac5471b794925e8ae572babcae38"
     },
     {
       "path": "assets/glowBlurPostProcess.fragment-CWHntGEt.js",
@@ -11179,8 +11179,8 @@
       "sha256": "08c46ba76e8bee632bd1e73cfcd0b89c742d54cff8316ab5aa273cb596ceeebe"
     },
     {
-      "path": "assets/hdrTextureLoader-DPftdKTU.js",
-      "sha256": "0570cc203530772ef13d13588f175efa968eef34782e8dca2769fca4ccadabf1"
+      "path": "assets/hdrTextureLoader-DOMQ464s.js",
+      "sha256": "e156e9740488b885c407c52c6b83dde05ff921cf06187d5a5bb223d714d88ba0"
     },
     {
       "path": "assets/helperFunctions-BH8P-eyq.js",
@@ -11243,8 +11243,8 @@
       "sha256": "f51fc5891c226ecd2544984ba6378d18f5244841f68841fc3c7bd161ab782fe9"
     },
     {
-      "path": "assets/imageProcessing-C4RAbxS2.js",
-      "sha256": "b4284432aa934b0a2cd3ac8446ce67600b58ceecb32b81b9ffc13ec256ec52ae"
+      "path": "assets/imageProcessing-Bjs8OB4D.js",
+      "sha256": "e8b3cd0971648c4c39009b4f7bbde08366b3e4a04eb030c343e59cfcf341dbcc"
     },
     {
       "path": "assets/imageProcessing.fragment-Bb9mf-7k.js",
@@ -11263,8 +11263,8 @@
       "sha256": "cfbb2299c4cfcb9ccb69e06ea45f65597a73e58d2ca5a51d0f6df54729bd17bb"
     },
     {
-      "path": "assets/index-BWRO3NPo.js",
-      "sha256": "85a7c028f63a412686e0fc9365a92645334633428ef01d7c6ca4e4726cd3ee28"
+      "path": "assets/index-BTN-PHty.js",
+      "sha256": "fd84a51a7a5ce0d92b201be201d929aa7a0412fe75509c0625dbb51065b5c764"
     },
     {
       "path": "assets/index-TY3XxO0T.css",
@@ -11319,16 +11319,16 @@
       "sha256": "a5244b1dfb47cf04792753301eddc97667f963bf62d0f622aa67df043a568380"
     },
     {
-      "path": "assets/ktxTextureLoader-DlVoThEp.js",
-      "sha256": "7a83945d9f98dfec9c10cc661c84a47dabd7930db62ce9205ef43f6fb1190ff4"
+      "path": "assets/ktxTextureLoader-7PJUtVFk.js",
+      "sha256": "3ca6bd729deca73da65c15f2a3d2fe604339685ba79d6ab200c554bdc4c36028"
     },
     {
-      "path": "assets/layout-assembly-preview-BpKlB7yD.js",
-      "sha256": "bce1a3ec721fcae5623045aaa5e30781552fac197800d12aae97ecd356031a2d"
+      "path": "assets/layout-assembly-preview-CB64Wzi8.js",
+      "sha256": "d8026bdbfe7992eb34cca597ce2407e3f40af952c8e8ab9eb80535e9e3ae55aa"
     },
     {
-      "path": "assets/layout-hull-Cyvc2ery.js",
-      "sha256": "5b6392a891c9b85ab6a10f71ac6466decf10e37557f40b4498627ae7666307ff"
+      "path": "assets/layout-hull-CUQuFkl2.js",
+      "sha256": "8942c7adfc30088a888909e56686d7d9e888e0ed7a61779790df55e25b7b1686"
     },
     {
       "path": "assets/lightConstants-CVIBiHRa.js",
@@ -11423,8 +11423,8 @@
       "sha256": "3637a139632317f513893545c7b412525d7138d923619de1f9b7c845657173c1"
     },
     {
-      "path": "assets/mesh-roles-kYUdSWoT.js",
-      "sha256": "d9fa16d41cd21a44ede4d1e5bbc5b7d8489684c423afef0d7efca3bc722bc3b9"
+      "path": "assets/mesh-roles-Clf04nN2.js",
+      "sha256": "045affe21802b93731d57588d23cec9ce04a614fc817d5661e3ed4240bd1a98f"
     },
     {
       "path": "assets/mesh.vertexData.functions-CD4JOR2q.js",
@@ -11495,8 +11495,8 @@
       "sha256": "1552047a5618fe026f1433dbbded52809502bac34340fcfb1ef87b2e26bcc837"
     },
     {
-      "path": "assets/openpbrMaterial.pure-oozV42Dz.js",
-      "sha256": "a0d876b4d62f8d88437802223e21be95659c3045e8f4a0d996ab7c5c059c8e88"
+      "path": "assets/openpbrMaterial.pure-DQZNlppZ.js",
+      "sha256": "1c80d0c4b8089bbbe4df3b44d0603a7b2f45616d9e76e00afef45f984684d83f"
     },
     {
       "path": "assets/openpbrTransmissionLayerData-BRi1vGnu.js",
@@ -11691,8 +11691,8 @@
       "sha256": "efb20b9290b6201061839c536cc4c544979b1bc8fc2a060fbb6a46f3c0b695b2"
     },
     {
-      "path": "assets/postProcess.pure-BiBMhI2N.js",
-      "sha256": "40f0cd02f8dacc5014bcf562e974a794d74ba2be99abce28756065600229c02c"
+      "path": "assets/postProcess.pure-ctWdp9Ua.js",
+      "sha256": "92346481c45bf34ae8bfaa5708dae87bba190403c47f77811167d5b36a0bb72e"
     },
     {
       "path": "assets/postprocess.vertex-CmVXXq2T.js",
@@ -11715,8 +11715,8 @@
       "sha256": "4fb7d38a1b7e1c89c5ea8627a340763c85e73e5748663b32c965ff9264f026e9"
     },
     {
-      "path": "assets/ray-yBCiQb55.js",
-      "sha256": "f633075d73f8590838539120b07abb52fe3d692f8a7482f09e4a24cdee88bb5a"
+      "path": "assets/ray-BfM2XsOg.js",
+      "sha256": "69d9c5ff528add672e7e875c54812a0271037eea7fa3a4027025f8c32b6ed4ae"
     },
     {
       "path": "assets/reflectionFunction-Cd8WyD5Q.js",
@@ -11727,8 +11727,8 @@
       "sha256": "b01e85098e198270f79403b0f0c6a51421d55dcc83168957f2d88480e08d39cd"
     },
     {
-      "path": "assets/renderTargetTexture.pure-95BwW1RP.js",
-      "sha256": "7d784c58e6c958d123ddcfdd580284e1791f52a1348561c17c5cc0f31c924dae"
+      "path": "assets/renderTargetTexture.pure-CDT4GQjy.js",
+      "sha256": "cf5dd6dcd3d7e01d976f2eeeffa790dedc72e7e5dd2c18ef6ce1b1af963e7872"
     },
     {
       "path": "assets/rgbdDecode.fragment-Cdz2Tveq.js",
@@ -11775,8 +11775,8 @@
       "sha256": "5bdb17ef3666eb02fe861a9c604b19ae4d1c43be4fef336b63df06a1833de3f2"
     },
     {
-      "path": "assets/selection-silhouette-BcIsolGJ.js",
-      "sha256": "b4252f6379af8fcc4ae9aa46854d6ff8b2e072bb3c87609cdc1f9b22999042ac"
+      "path": "assets/selection-silhouette-C7fEdRLb.js",
+      "sha256": "61091469190a7e504e160c485f3698f4176139c2dc83947a8ae89ce3ac5941b9"
     },
     {
       "path": "assets/shaderStore-D-XQlhUT.js",
@@ -12127,8 +12127,8 @@
       "sha256": "8dc20e14af937dfe98d73e0190bd449c7724164eee863b08caa8dd5a4cfc019f"
     },
     {
-      "path": "assets/space-background-BTmab9cy.js",
-      "sha256": "dc594e712a395e67a991f38895185e98739cc62bd04fa7c9b6e8636056bd8244"
+      "path": "assets/space-background-CeggH1t_.js",
+      "sha256": "db5b4ba6dfa736bb13e3f6bc87a0936ce449c5926fd44605c5c1e5ce0d7eb66e"
     },
     {
       "path": "assets/spatialWebAudio-mMuO8Vlc.js",
@@ -12147,8 +12147,8 @@
       "sha256": "61642ff02b57da2c60beb3d6811e21213780f25e15df6e81a22723acf402e868"
     },
     {
-      "path": "assets/src-BK11Cv5b.js",
-      "sha256": "65a9f982a514f11f2df4919e59748b5cb693d6564f8e75dd92babba986128544"
+      "path": "assets/src-DmQl0isB.js",
+      "sha256": "26bf1b287de4999eca9a28825dd55812c08a8092913e964384566aacd092ae28"
     },
     {
       "path": "assets/taa.fragment-Byipp7mo.js",
@@ -12159,8 +12159,8 @@
       "sha256": "10c4eeb7f95cf494637783a5ecfe42a95699157840e313c84b2d670915215bae"
     },
     {
-      "path": "assets/texture-BNmmbvlO.js",
-      "sha256": "636e9ded21ac994dbb08b36ea9ffa1e4130efe55be013c3f3acadbb45dbaff8a"
+      "path": "assets/texture-Da4HMqLH.js",
+      "sha256": "dcd208dd421b7972719720458c0a9f707d60bb1f01e9dc15b1a593a85ca7d6e1"
     },
     {
       "path": "assets/texture.pure-B2P6kDUP.js",
@@ -12359,12 +12359,16 @@
       "sha256": "d4a0d83706cc2f7681ca2895f9b827fbadfe11ed77025bc19fbf9ef40dd9d01d"
     },
     {
-      "path": "assets/webgpu-backend-DsJmqZA9.js",
-      "sha256": "3ec8494591185614cc8e7c595171314086034a0f33eb23616ad3bf423498d9dd"
+      "path": "assets/webgpu-backend-BvYtKuiU.js",
+      "sha256": "3fdecd59096a17e5fa0c092384f6df501b383d39c8e599a277faa3283c2329fa"
+    },
+    {
+      "path": "help/shipyard.md",
+      "sha256": "c3d8a9d589eb581a462e1ef0473dd7c163e1de36168ba4c6d1771b85c354e8c7"
     },
     {
       "path": "index.html",
-      "sha256": "48210523741239864c0da2822bcd34c18d9ed513d6726ae3354b3bfe9f347d4a"
+      "sha256": "e6ccdf548b9dc0b5eb6b1e555d1f8c7385899d2f3a5419e71b363fcfd5a98cd8"
     },
     {
       "path": "reviewed-planets/cloud-r002/kit.json",

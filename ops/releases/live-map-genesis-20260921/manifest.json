@@ -225,8 +225,22 @@
       },
       "artifact": {
         "path": "/root/sidereal-live-map-dashboard-candidate/apps/dashboard/dist",
-        "sha256": "0d3c92d5b74b9d0a0283cd58f6509c786b4c82328aa482b0bcfc1c5fbd2e7193",
-        "count": 3491
+        "sha256": "d03123c4c8b3b711d20ed9aa5bfc9b6d6d68ad64a6ffff62b802294ff6284092",
+        "count": 3492,
+        "publicBuildConfig": {
+          "database": "sidereal-spacetime-dev",
+          "databaseUrl": "http://127.0.0.1:3100",
+          "clientPort": 5173,
+          "publicClientUrl": "https://sidereal.dastari.net",
+          "dashboardPort": 5174,
+          "allowedHosts": [
+            "sidereal.tail7a58a6.ts.net"
+          ],
+          "authoringClientId": "sidereal-shipyard",
+          "authIssuer": "https://auth.dastari.net/realms/dastari",
+          "authClientId": "sidereal-dashboard",
+          "authOrigin": "https://sidereal.tail7a58a6.ts.net:8445"
+        }
       }
     }
   },
