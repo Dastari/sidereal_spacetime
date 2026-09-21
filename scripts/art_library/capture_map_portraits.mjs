@@ -60,7 +60,7 @@ const entries = [
 ].filter((p) => !only.length || only.includes(p.id));
 cli("goto", new URL("/map", url).href);
 run(
-  `async page => {await page.evaluate(async moduleUrl=>{const {createReviewedNativePreview}=await import(moduleUrl);const c=document.createElement("canvas");c.id="portrait-capture";c.width=384;c.height=384;c.style.cssText="position:fixed;left:0;top:0;width:384px;height:384px;z-index:99999";document.body.append(c);window.__portrait=createReviewedNativePreview(c,(message,error)=>{window.__portraitStatus={message,error};},{transparent:true});},${JSON.stringify("/@fs" + path.join(root, "packages/render/src/environment/reviewed-native-preview.ts"))});return true;}`,
+  `async page => {await page.evaluate(async moduleUrl=>{const {createReviewedNativePreview}=await import(moduleUrl);const c=document.createElement("canvas");c.id="portrait-capture";c.width=192;c.height=192;c.style.cssText="position:fixed;left:0;top:0;width:192px;height:192px;z-index:99999";document.body.append(c);window.__portrait=createReviewedNativePreview(c,(message,error)=>{window.__portraitStatus={message,error};},{transparent:true});},${JSON.stringify("/@fs" + path.join(root, "packages/render/src/environment/reviewed-native-preview.ts"))});return true;}`,
 );
 for (const entry of entries) {
   const data = run(

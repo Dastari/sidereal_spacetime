@@ -294,6 +294,7 @@ export default function MapCanvas({
         previewHeight={previewHeight}
       />
       <svg
+        onContextMenu={(e) => e.preventDefault()}
         ref={svg}
         data-gesture-active={!!drag}
         tabIndex={0}
