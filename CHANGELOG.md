@@ -1,5 +1,10 @@
 # 0.6.0 — Studio spatial and test-ship workflows (2026-09-21)
 
+## Studio 0.8.1 / Render 0.7.1 — 2026-09-21
+
+- Keep the map background visible while dragging and zooming; reuse one worker and retain completed frames.
+- Preserve transparent coverage in native planet, moon and star map portraits instead of packaging opaque reference screenshots.
+
 ## 0.7.1 — 2026-09-21
 
 - Published Studio PR #15 with existing IFCS, game and editor features preserved. Added authored-frame zone traces and recorded exact separate release overlays, non-reset migration checks and preserved player records.

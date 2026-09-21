@@ -556,7 +556,14 @@ export default function MapCanvas({
                   cy={py(p.y)}
                   r={b.radius * scale}
                 />
-                <circle cx={px(p.x)} cy={py(p.y)} r={r} />
+                <circle
+                  className={
+                    thumbnails[b.id] ? "map-portrait-outline" : undefined
+                  }
+                  cx={px(p.x)}
+                  cy={py(p.y)}
+                  r={r}
+                />
                 {thumbnails[b.id] ? (
                   <image
                     className="map-body-image"

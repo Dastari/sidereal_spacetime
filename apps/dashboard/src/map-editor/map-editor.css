@@ -451,3 +451,9 @@
   outline: 1px solid #81bad6;
   outline-offset: -1px;
 }
+
+/* A loaded portrait supplies its own silhouette. Keep the circle as an outline
+   and hit target, without filling the transparent pixels behind the asset. */
+.map-body .map-portrait-outline {
+  fill: transparent;
+}
