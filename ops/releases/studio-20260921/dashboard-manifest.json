@@ -1,0 +1,272 @@
+[
+  {
+    "path": "apps/dashboard/package.json",
+    "before": "283b9da690c5318d608a60d680a51be26991008028d44b9f0b5d6c94da4d7d2f",
+    "after": "881da88d788c5e149394715c88c460061353db4591a1182730e32ae187088b35"
+  },
+  {
+    "path": "apps/dashboard/src/App.tsx",
+    "before": "57ec71aba535a18f1af0fac0a742efd66af39f5f6be726accf663559755f9ff3",
+    "after": "021ee3710ce137eae9e6b97d1a434caa81103c833a98ecb0c3da1dc6f3466b04"
+  },
+  {
+    "path": "apps/dashboard/src/authoring/ConstructionPanel.tsx",
+    "before": "ac672b33a02a93fcd37fa0920e94b2b92b2840f756acf488fd987dcf9582a068",
+    "after": "961ba98bdcc1751bf6e2405936ea123ee3f0f327853ff9eec26c3fe9f4adad04"
+  },
+  {
+    "path": "apps/dashboard/src/authoring/auth.ts",
+    "before": "e5d29704371836982174555fa90f4334e112e28ea7a4f6e0d52727ae97e73274",
+    "after": "ff74d0ab5d1a4df8ea7d29f9522c467c96cce6459fd0c1d77aabbc920046d8d4"
+  },
+  {
+    "path": "apps/dashboard/src/authoring/construction-document.test.ts",
+    "before": null,
+    "after": "af9ab32a76df6e3deeb674c1df259d1a9323705c3ddbbbe12420c885e5312dec"
+  },
+  {
+    "path": "apps/dashboard/src/authoring/construction-document.ts",
+    "before": null,
+    "after": "7cd0888cc5aa2fe529b6f1451567605718c9db2035df6d6c808d8005ced89078"
+  },
+  {
+    "path": "apps/dashboard/src/map-editor/MapBackground.tsx",
+    "before": null,
+    "after": "0857183df66f3afd546f80cabf42bcfb8149f0eae1b6f68093a115979841b6fa"
+  },
+  {
+    "path": "apps/dashboard/src/map-editor/MapCanvas.tsx",
+    "before": null,
+    "after": "e2aba78d1a16459cd8d6b39f5e89d272dc12aae26428d7dd4a6be6c538f99af3"
+  },
+  {
+    "path": "apps/dashboard/src/map-editor/MapEditor.tsx",
+    "before": null,
+    "after": "59a6c2fef568f37ffeb78d8525a9fb83f6e6ee20f67e855e65401c3c9a84a551"
+  },
+  {
+    "path": "apps/dashboard/src/map-editor/MapInspector.tsx",
+    "before": null,
+    "after": "1003a6cba6ea14f5348bc0c74ef35757c792247c237495b4811d8f7c16d763fc"
+  },
+  {
+    "path": "apps/dashboard/src/map-editor/ZoneProperties.tsx",
+    "before": null,
+    "after": "6e8ab58da8bd65dc57b1b487f1141dddb17ad193a5c653c9b7f171cfa262a982"
+  },
+  {
+    "path": "apps/dashboard/src/map-editor/background.worker.ts",
+    "before": null,
+    "after": "40e409abc5304caa11fb680825e0ea33298961dfd4a5b3f2a47c33b6a7aed6c3"
+  },
+  {
+    "path": "apps/dashboard/src/map-editor/map-commands.test.ts",
+    "before": null,
+    "after": "4f6f3d2da5bfca98bdf2f897bb6911dc200cd515b53006175c7bdc0c265dde1f"
+  },
+  {
+    "path": "apps/dashboard/src/map-editor/map-commands.ts",
+    "before": null,
+    "after": "3fc509572d2764e177c05c37418284f8a467765ab5a8450ee6663ae94f44f558"
+  },
+  {
+    "path": "apps/dashboard/src/map-editor/map-editor.css",
+    "before": null,
+    "after": "463691b79ae8e66f02c45db5ed0d42c97b68465c1bdfc8e23a7b28ba3b743287"
+  },
+  {
+    "path": "apps/dashboard/src/map-editor/useCelestialSnapshots.ts",
+    "before": null,
+    "after": "722c0de971b94d7b55083aac9f90dab7a33ebd3e24b2e9d3306b458372b62bfc"
+  },
+  {
+    "path": "apps/dashboard/src/map-editor/useMapConnection.ts",
+    "before": null,
+    "after": "7387dea7086dc18f79a179367d632ad4ed55df6790b0ebc829e443acac9fa3ef"
+  },
+  {
+    "path": "apps/dashboard/src/shipyard/AssemblyEditor.tsx",
+    "before": "2cb802eb0934449e0063cc956eec1674fd532a4e01f92e68d5de45f7f4c1a6c5",
+    "after": "c1b13921efb8596409529242f5bad7489cd3e5280cb3e15ccd5281f72d80583f"
+  },
+  {
+    "path": "apps/dashboard/src/shipyard/layout/DocumentBar.tsx",
+    "before": "c1ba47b922e8078614204854c66f3709feb3e9e3e2b3805373cc0e2bed7efa19",
+    "after": "5688015d60db4d6eeed3cbe58f37b53955468d1322501e74b89fc82955ebfe97"
+  },
+  {
+    "path": "apps/dashboard/src/shipyard/layout/HullWorkspace.tsx",
+    "before": "f95566d3a84d0cc21482b652905f07279736e96434daf2e406fa44031f951909",
+    "after": "19e4e3aa92e52ee05cbe42e660377e358f0f3e842ba496ba298af3bcea5439c1"
+  },
+  {
+    "path": "apps/dashboard/src/shipyard/layout/LayoutEditor.tsx",
+    "before": "a7b1aabf943e46a3f147e34f7f35ea56eb6eedd64621d2728200e0aa4343c58f",
+    "after": "e0d57357576b3d3a8c08cbfaa37d8da8014309d7d3a850a61befce8932e492f2"
+  },
+  {
+    "path": "apps/dashboard/src/shipyard/layout/PublicationDialog.tsx",
+    "before": "12f9c921f21c165d38db9a7f15c1884da32d56be4a32e8f463a3fa6f5edcbeff",
+    "after": "b93e902f3819aea257bb831464f2ffd987f91f95a0210b0aa2a055fd18116047"
+  },
+  {
+    "path": "apps/dashboard/src/shipyard/layout/layout.css",
+    "before": "544295d16e2767c7fed53437275a58a171165e032de64817eb775b11e8b34606",
+    "after": "b9fd9f81bbb399c33b24200914917bd5f1f428d79f077aebb94a9873e07220d7"
+  },
+  {
+    "path": "apps/dashboard/src/shipyard/layout/useLayout.ts",
+    "before": "58e03b103d09c741e13a58eb3e94daf3d03f3b9de1395525c7f0e0679a4a346f",
+    "after": "8e4dad21ad4508ea27ac67fd32bded1b7ee7b633ca786637365e8429edad107e"
+  },
+  {
+    "path": "apps/dashboard/src/shipyard/layout/workbench.css",
+    "before": "3bc68c8decb1ddfc1c2a6fe237fa3c11e912e379637b5c92220fa634e4fbe942",
+    "after": "4e1b66e61abd6da2115b477c8a542ef33939b739add89a2b3450455b785970bf"
+  },
+  {
+    "path": "apps/dashboard/src/style.css",
+    "before": "9ee8863081179f3b47eab8303717d620a59a23dea4f7e20c618f7e63ff84861a",
+    "after": "f1f5ac8a0b5633a0467cecbedb02e4127348176cef60dcd99d22aca523816119"
+  },
+  {
+    "path": "packages/canvas-ui/package.json",
+    "before": "9400f23acd37f278f7716e4646deba0fa4bbbec46b0c642cb8ccda9a5d3fb0be",
+    "after": "afa02d46be838be6c54c97d358980142d0afbea7f18d51173f7360f1cd408ab0"
+  },
+  {
+    "path": "packages/content/package.json",
+    "before": "e005b451e4a8115bc2ac4f3d49deab45c1e4d35e089004f712e156b35cfa841e",
+    "after": "9fc803130138c4acabc0c3157a7e624973bd5d29b948b4b30b4df302ae242f9b"
+  },
+  {
+    "path": "packages/content/src/environment.ts",
+    "before": "9a75efeee60725d24afc24f000c72367dafc1dce5e798a2d271ade26c08ceb49",
+    "after": "4e0309f36f5682cb6fe89728581ff9138e262ef208794ceb48bbd415a3a4690d"
+  },
+  {
+    "path": "packages/content/src/system-map.ts",
+    "before": null,
+    "after": "04ee9246a880816b162ec6b18934ec3ae9a35f1bb321aa1cd18aa7dc71948b27"
+  },
+  {
+    "path": "packages/content/src/zones.ts",
+    "before": null,
+    "after": "aa1d454818cb9c4ca21d8ff47c41bcec01b1bcfd13fc20cda12ecb64ddef987a"
+  },
+  {
+    "path": "packages/net/package.json",
+    "before": "708358d5f53cf01f29b094eb5dbe195b8af3bf0e701f138dedabf84f5b0a4edf",
+    "after": "484e5956f714053dc6e60b30e0c70331fc5a0e2f068e3670f96f5ec269f7a48a"
+  },
+  {
+    "path": "packages/net/src/index.ts",
+    "before": "f4d127505514344f65b4c481869b8887c6eafa5c25ab10cec3920699901450f0",
+    "after": "84a31783df0449858e2c0d8004b1f323ceb031214923a34375ebf6a66451d9c6"
+  },
+  {
+    "path": "packages/net/src/system-map.ts",
+    "before": null,
+    "after": "b5ec252278c0419937e922fc5bda59dec5daad7f3dff58f8149355aa5bef058b"
+  },
+  {
+    "path": "packages/render/package.json",
+    "before": "c970c554876061f91e38395c37f78d63510792a6f57c5c2d307ae0d91db3b97b",
+    "after": "37dc876aa8da492ee0ff0403d45863c69b13ffe14b488543a0c0b088e60cf41a"
+  },
+  {
+    "path": "packages/render/src/assembly-editor.ts",
+    "before": "0f699cb3d3b4d583058e1d6c870a04949bd06adb526c63ab18fb593041c5049d",
+    "after": "24b7bd93429840fad4abe068f894a1badb9834e9dfd21087db2835ba2dcbe2e9"
+  },
+  {
+    "path": "packages/render/src/environment/index.ts",
+    "before": "24f5e720f345bd8dd5310dd56cd0f3ec7c1c010797d7a967c942c1b005430c14",
+    "after": "baeac83ac1f92cfbac60bfbb5d26a29dab9aa0276c09e5ba90e374aa9d1fdc28"
+  },
+  {
+    "path": "packages/render/src/environment/shaders.ts",
+    "before": "f76cdbebee15d00ddde21317818452b45fd03bf6ff5a24762be2d92ec162cb41",
+    "after": "3e9aa6417dac679e51e8781378b7eec2675346d0710119480f272d5ea950d4d7"
+  },
+  {
+    "path": "packages/render/src/index.ts",
+    "before": "e5248292f53018c307008648109e7d7ac45b9ddce7674631ce70cd55f52dfa44",
+    "after": "4302174c8b78f8405f3f63126a6c20e10eab8ee7e8bf7227c024c346efc2fa08"
+  },
+  {
+    "path": "packages/render/src/layout-hull.ts",
+    "before": "4d20fdc1f2d76cd639ef845637d28c3e118fb94202f09282e26e209005efd01a",
+    "after": "d0e36365dbf3f1ed29c7ddfa7a3e4782f68cb9714fc9ed9b0dd579e91c577aac"
+  },
+  {
+    "path": "packages/sim/package.json",
+    "before": "464fecbe83bd7eb007f23855437d7bce84005bc0eb5e5d20bc5b55b2e62bc4f6",
+    "after": "bf552a1e30418e92088db75e3fea35466170061fdfedc55911c6ee099cab55e6"
+  },
+  {
+    "path": "packages/sim/src/collision.ts",
+    "before": "1d7591a3a82fe371ffd5807b6c9007be3830f30b428c3c8017e7c6eb861d83f2",
+    "after": "3c99bf5a62d78df4bc2bff98b90e41c477f1927524192def1f8fb130942ff032"
+  },
+  {
+    "path": "packages/sim/src/space-background.test.ts",
+    "before": null,
+    "after": "27ce79bed041d44bc29f38e777e63f2d8f4b102eea79429f27c06aa4905ec612"
+  },
+  {
+    "path": "packages/sim/src/space-background.ts",
+    "before": null,
+    "after": "f25d21271a7f1e94396f4f42760a89732d400bea828957400b0db16ad2e4303b"
+  },
+  {
+    "path": "packages/sim/src/system-map.test.ts",
+    "before": null,
+    "after": "8d7a044acaed45b91d5771c2a5163b8540004d4995ec83b289cbbc8ba7714069"
+  },
+  {
+    "path": "packages/sim/src/system-map.ts",
+    "before": null,
+    "after": "85b59f55934ada4faa62c55ff22a0e338d4d05bd6b59f17c8aa0d9e694683ee8"
+  },
+  {
+    "path": "packages/sim/src/system-space.ts",
+    "before": "2012c06806cb303a988403981636d20b4bce025711e4c3c5dbeab9d4ea839863",
+    "after": "8a44b312cc1dd89d41cbde0f03ca2f04efe048f53379a2109a3f1eaf8ac23eab"
+  },
+  {
+    "path": "packages/sim/src/zone-path.ts",
+    "before": null,
+    "after": "ee6275a86b7d118af7fcfeada85304eec4cbf14ed854f9559c3c041521fecf81"
+  },
+  {
+    "path": "packages/sim/src/zone-traces.test.ts",
+    "before": null,
+    "after": "8d5897fd1a85810732386ee684d2936345e4be9a7361b351e62b31665f81d682"
+  },
+  {
+    "path": "packages/sim/src/zones.test.ts",
+    "before": null,
+    "after": "b4521ec1b565fee77fa613c5c3a74bc88418bf0cb49ad5c2b977c45cf4a7043b"
+  },
+  {
+    "path": "packages/sim/src/zones.ts",
+    "before": null,
+    "after": "03ba711cdb73dd4695c086bf60537094179f2bdc9b6539233bcd3b4d80c7d4ab"
+  },
+  {
+    "path": "packages/ui/package.json",
+    "before": "b99c0872304b6fefd09efcd7abd3970c604fafcc4f115e8ae53ccc72c32ece7a",
+    "after": "34f5f9d83097160aa7a1fecae3b563fb43ac144376f03a1dcf16ccc1a06fd439"
+  },
+  {
+    "path": "packages/ui/src/editor-commands.test.ts",
+    "before": null,
+    "after": "9e866ef1ae3b543a42babaa8cbb31cd440afee589d22488395f300ea519be752"
+  },
+  {
+    "path": "packages/ui/src/editor-commands.ts",
+    "before": null,
+    "after": "43bed71984472462b739b91b13881df399e3167a0a0b37ee158b273fbddfd850"
+  }
+]

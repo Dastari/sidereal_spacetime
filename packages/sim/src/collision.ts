@@ -227,6 +227,7 @@ export function stepContacts(
   dt: number,
   restitution = 0.2,
   traceIds?: ReadonlySet<string>,
+  tracePoint: (body: RigidBody) => { x: number; y: number } = body => body,
 ) {
   if (
     !Number.isFinite(dt) ||
@@ -266,11 +267,13 @@ export function stepContacts(
       throw new Error("Invalid collider");
   const trace: MotionSegment[] = [];
   const record = (a: RigidBody, b: RigidBody, kind: MotionSegment["kind"]) => {
-    if (traceIds?.has(a.id) && (a.x !== b.x || a.y !== b.y))
+    if (!traceIds?.has(a.id)) return;
+    const from = tracePoint(a), to = tracePoint(b);
+    if (from.x !== to.x || from.y !== to.y)
       trace.push({
         bodyId: a.id,
-        from: { x: a.x, y: a.y },
-        to: { x: b.x, y: b.y },
+        from: { x: from.x, y: from.y },
+        to: { x: to.x, y: to.y },
         kind,
       });
   };

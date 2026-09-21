@@ -1,5 +1,9 @@
 # 0.6.0 — Studio spatial and test-ship workflows (2026-09-21)
 
+## 0.7.1 — 2026-09-21
+
+- Preserve live IFCS authored-frame zone traces when integrating Studio PR #15. Record separate authority, game and Studio release overlays and compatibility checks.
+
 - Move workspace navigation to an accessible persistent left icon rail.
 - Add stars-only Deep space as the game default; share system/field background selection and feathering between editor and game, with sanitized actor-admitted geometry.
 - Anchor system boundaries to a chosen star; retain explicit legacy centers, static parent/moon orbit guides and descendant movement. Show lightweight actual asset portraits and an adjustable background preview height.

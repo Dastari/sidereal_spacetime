@@ -75,3 +75,14 @@ test("overlap correction is distinct from drift", () => {
   );
   expect(r.trace.some((s) => s.kind === "correction")).toBe(true);
 });
+
+test("accepted traces may follow an authored point when a COM rotates in place", () => {
+  const point = (b: RigidBody) => ({x: b.x - 3 * Math.cos(b.heading), y: b.y - 3 * Math.sin(b.heading)});
+  const input = [body("ship", 0, {omega: 0.4})];
+  const r = stepSystemSpace(input, [], new Set(["ship"]), point);
+  expect(r.trace.length).toBeGreaterThan(0);
+  expect(r.trace[0].from).toEqual(point(input[0]));
+  expect(r.trace.at(-1)!.to).toEqual(point(r.bodies[0]));
+  expect(r.bodies[0].x).toBe(0);
+  expect(r.bodies[0].y).toBe(0);
+});
