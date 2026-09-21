@@ -1,3 +1,7 @@
+## 2026-09-21 — Studio 0.10.1
+
+- Remove the redundant global Studio footer and reclaim its reserved height in Map and Genesis; retain workspace-specific controls.
+
 # 0.6.0 — Studio spatial and test-ship workflows (2026-09-21)
 
 ## 2026-09-21 — Live map and Genesis (Studio 0.10.0)

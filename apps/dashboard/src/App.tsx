@@ -548,11 +548,6 @@ function StudioApp() {
           </Suspense>
         </WorkspaceBoundary>
       </div>
-      <footer className="app-footer">
-        <span>Sidereal Studio</span>
-        <span>Shipyard · System map · Genesis</span>
-        <span>Independent dashboard</span>
-      </footer>
     </div>
   );
 }

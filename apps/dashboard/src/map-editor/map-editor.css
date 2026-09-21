@@ -4,7 +4,7 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  height: calc(100dvh - 30px);
+  height: 100dvh;
   color: var(--text, #d5eaf5);
   font-family: Barlow, sans-serif;
 }
@@ -331,7 +331,7 @@
 @media (max-width: 720px) {
   .system-map-editor {
     height: auto;
-    min-height: calc(100dvh - 30px);
+    min-height: 100dvh;
   }
   .map-workbench {
     display: flex;
@@ -724,7 +724,7 @@
 }
 @media (max-width: 720px) {
   .system-map-editor {
-    height: calc(100dvh - 30px);
+    height: 100dvh;
     min-height: 0;
   }
   .map-workbench {

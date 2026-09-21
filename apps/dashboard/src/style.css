@@ -486,23 +486,6 @@ input {
   white-space: nowrap;
   font-size: 14px;
 }
-.app-footer {
-  flex-shrink: 0;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 19px;
-  background: var(--creator-canvas);
-  color: #658694;
-  border-top: 1px solid var(--line);
-  font-size: 11px;
-}
-.app-footer b {
-  font-weight: 400;
-  color: #86a3ae;
-  margin-left: 6px;
-}
 .canvas-tools {
   position: absolute;
   left: 18px;
@@ -780,13 +763,6 @@ input {
   }
   .view-footer > span:last-child {
     display: none;
-  }
-  .app-footer > span:nth-child(2) {
-    display: none;
-  }
-  .app-footer {
-    font-size: 9px;
-    padding: 0 10px;
   }
   .component-grid {
     grid-template-columns: 1fr;
