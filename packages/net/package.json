@@ -10,7 +10,7 @@
     "./generated": "./src/generated/index.ts"
   },
   "dependencies": {
-    "@sidereal/sim": "0.4.0",
+    "@sidereal/sim": "0.4.1",
     "spacetimedb": "2.10.0"
   }
 }

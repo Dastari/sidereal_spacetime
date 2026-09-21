@@ -26,3 +26,31 @@ Old map portraits were packaged from opaque reference screenshots and explicitly
 Source branch: `fix/map-background-flicker` in `/root/sidereal-studio-release`, based on upstream main after PR #16. Preserve canonical dirty `ifcs-update` work. The live Studio is managed from `/root/sidereal-studio-dashboard-release`; updates must be limited to this fix and must preserve the prior release's compatibility overlay. No database or game-client change is needed.
 
 Versioned candidate: Studio 0.9.0, UI 0.3.0, Render 0.7.1. The narrow-screen workbench scrolls to both drawers; browser verification confirms inspector reachability at 390px without horizontal overflow. Tree arrow navigation leaves object coordinates unchanged.
+
+## Deployed Studio verification
+
+Published the scoped presentation update from commit `59ea3856` to the managed
+Studio at https://sidereal.tail7a58a6.ts.net:8445. Both the composed live dashboard
+typecheck and dashboard build pass. All 47 deployed source/asset hashes match
+[the release manifest](../../ops/releases/studio-map-context-20260921.json).
+Existing live package fields and prior compatibility additions are retained.
+The world/database and public game release remain unchanged.
+
+The HTTPS deployed browser passes the full drawer/selection/curve/draft flow.
+The same live 35-step drag plus ten wheel events produced **zero blank frames
+out of 201 samples and zero new workers**. Planet and star previews use the new
+alpha catalog. Browser evidence is retained in
+`output/playwright/map-flicker-release/`; exact capture PNG/metadata remain in
+`output/playwright/map-portraits-alpha/`. The browser's signed-out test drafts
+are local to the isolated Playwright sessions; no Apply reducer was invoked.
+
+Repository lint and format gates also expose inherited debt (150 lint and 278
+format baseline violations). No newly authored map/UI file is among those
+violations; the touched native preview's pre-existing relative content import
+is unchanged. These broader gates are not claimed green. Delivery is
+[PR #18](https://github.com/Dastari/sidereal_spacetime/pull/18).
+
+Coordination: GrayLotus; inbox empty at closeout. Release all reservations after
+PR completion. Canonical dirty `ifcs-update` checkout remains untouched.
+
+Clean-install resolution (`npm ci --dry-run --ignore-scripts`) passes after aligning exact render references to 0.7.1 and inherited sim references to 0.4.1. Initial CI failed on the render mismatch; fixed before merge. The composed live source preserves its separate sim 0.4.0 version and matching references, with render aligned to 0.7.1. Neither game client nor world module is deployed.
