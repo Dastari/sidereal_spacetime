@@ -1,0 +1,296 @@
+{
+  "date": "2026-09-21",
+  "studioUrl": "https://sidereal.tail7a58a6.ts.net:8445",
+  "versions": {
+    "dashboard": "0.9.0",
+    "ui": "0.3.0",
+    "render": "0.7.1"
+  },
+  "scope": "Studio map presentation only; no world or game-client release",
+  "files": [
+    {
+      "path": "apps/dashboard/src/map-editor/MapBackground.tsx",
+      "before": "0857183df66f3afd546f80cabf42bcfb8149f0eae1b6f68093a115979841b6fa",
+      "after": "8f1795d316d814d06e25a91d3cd4e9e4b92e631c0f215f021483deb6ef376ba5",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/src/map-editor/background-renderer.ts",
+      "before": null,
+      "after": "5355400aa16c07ecc1a28ef94836e0b0e1e598dc5bad863d78e08959ca189ce7",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/src/map-editor/MapCanvas.tsx",
+      "before": "e2aba78d1a16459cd8d6b39f5e89d272dc12aae26428d7dd4a6be6c538f99af3",
+      "after": "759f274d8ccd3a7f66091a8106c35528ccfb46b49b61a32f10bdc24cbbb2d35b",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/src/map-editor/map-editor.css",
+      "before": "463691b79ae8e66f02c45db5ed0d42c97b68465c1bdfc8e23a7b28ba3b743287",
+      "after": "5fad1852c045d17212becbbaa396efb98549df29007a5fe23b75c85186f17f49",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/src/map-editor/MapEditor.tsx",
+      "before": "59a6c2fef568f37ffeb78d8525a9fb83f6e6ee20f67e855e65401c3c9a84a551",
+      "after": "5d18bf1d79b9b5e23c9a0a238bb2b398e98c3e4bb6732c40be900bb92a279a68",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/src/map-editor/MapInspector.tsx",
+      "before": "1003a6cba6ea14f5348bc0c74ef35757c792247c237495b4811d8f7c16d763fc",
+      "after": "5af1ce26b1bfd76d6c2c8ad21867be7fec3b44c86abb74c73df2c03d0880da6d",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/src/map-editor/ZoneProperties.tsx",
+      "before": "6e8ab58da8bd65dc57b1b487f1141dddb17ad193a5c653c9b7f171cfa262a982",
+      "after": "204e119d5aa5b44fcc16fc06e0d9f85376e8364a211318e50dcab962d44a41d1",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/src/map-editor/UniverseTree.tsx",
+      "before": null,
+      "after": "9f47eab32cf6b5ac062d11e76bff6ac5abe08057d6c5acaebf794b3fa86fc3e8",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/src/map-editor/InspectorIdentity.tsx",
+      "before": null,
+      "after": "6128f24e18a74aa937209ed0baa17b4819394ac610ce27c96b9bb7541606d982",
+      "composedWithLive": false
+    },
+    {
+      "path": "packages/ui/src/property-controls.tsx",
+      "before": null,
+      "after": "3e7490f66862f035126df879c56f6435656d9fa3e431f66bcfeb07c7648b6cfc",
+      "composedWithLive": false
+    },
+    {
+      "path": "packages/render/src/environment/reviewed-native-preview.ts",
+      "before": "0d2c95e7d24d9f34cac42b67edc7e3d35c00d5ce46779556a5d942514a54d7b7",
+      "after": "4ac9f03a866bf7c09d0bf2a3fa96485dcd7027fcd86f9ce8e66e6dccbdad9d93",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/package.json",
+      "before": "881da88d788c5e149394715c88c460061353db4591a1182730e32ae187088b35",
+      "after": "11c02cea225f4d2fb5ae597f7aac93c20a1f554be87e617a735e11bd285b274c",
+      "composedWithLive": true
+    },
+    {
+      "path": "packages/ui/package.json",
+      "before": "34f5f9d83097160aa7a1fecae3b563fb43ac144376f03a1dcf16ccc1a06fd439",
+      "after": "42c115c6794959d21eeb6a94f87bfd84a2e83c2aca4af10c264285616bba4995",
+      "composedWithLive": false
+    },
+    {
+      "path": "packages/render/package.json",
+      "before": "37dc876aa8da492ee0ff0403d45863c69b13ffe14b488543a0c0b088e60cf41a",
+      "after": "41143ce7925e298e85cf15e55dfbec99bf05d80ffc25b47d26a436be62ea0fdd",
+      "composedWithLive": true
+    },
+    {
+      "path": "package-lock.json",
+      "before": "df73ae938f65a1ef616ca074f4dfb848711423c4723c0cf677e3d6642c6f1fb7",
+      "after": "c54940e61b4c9e726665aa0aaafb8f3a92da4e01a0a4cc9cdc3e6e1a27eac241",
+      "composedWithLive": true
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/manifest.json",
+      "before": "afef2df13f0df99f65722389407f03fbe64b009ae412cecb347b21d83521ae4e",
+      "after": "16f7d1659baeb3b56d77b0c8e20b05f509747230ae02cfddf96e2de5fb925477",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/crystal-moon-2-r010-alpha-v1.webp",
+      "before": null,
+      "after": "34f6fcf65625cdd50a3df365e304379dee4645a907b49ea3d20533ba56fc3aa6",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/desert-r014-alpha-v1.webp",
+      "before": null,
+      "after": "8f70dee5f65012a307ec24c391bab182e51b5873fa9845bcf8e2ae5c1426d990",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/temperate-r003-alpha-v1.webp",
+      "before": null,
+      "after": "657b635e9b21c00fa618ccecd7473ae93ef866729f495355153724c197c40a2a",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/crystal-r013-alpha-v1.webp",
+      "before": null,
+      "after": "449ba934b01d44f95e54756f49d80d4af3e4f7fcf59b61a2e4712becdac0e877",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/desert-moon-1-r001-alpha-v1.webp",
+      "before": null,
+      "after": "8a2f98a206a5ed40eba648d5bf494b635304e7064c299e52ecff490f3a3bc1d8",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/ice-moon-2-r003-alpha-v1.webp",
+      "before": null,
+      "after": "2d1821bc8946abd654346c52992a321b45d3bc4636f84199839bdb7122e502c8",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/toxic-moon-1-r001-alpha-v1.webp",
+      "before": null,
+      "after": "e385354482ca53be7f92571a57fec972ea23976f981c8b4cdc50f8b2e11b1ae2",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/volcanic-r023-alpha-v1.webp",
+      "before": null,
+      "after": "92ace291bd4e393c42ebf91000c469247b3097232edd55214e37c9d24cd3885d",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/ice-r026-alpha-v1.webp",
+      "before": null,
+      "after": "0e76cf131c57264c460e54cd8043a37d0f28b954d9141446a98e3f593ce0ab24",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/rocky-moon-2-r001-alpha-v1.webp",
+      "before": null,
+      "after": "9f4ae68495254d154df854f3789533746b323ef045330ade4a3318565913c77c",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/temperate-moon-2-r002-alpha-v1.webp",
+      "before": null,
+      "after": "df8895ac17b8019c7418e1c878eb64075882a2378b0817444a13f9a0251dea90",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/volcanic-moon-2-r006-alpha-v1.webp",
+      "before": null,
+      "after": "5b437fe23e234abbaae93585084cf337234af93a108e691f153145196e8d1bba",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/ice-moon-1-r002-alpha-v1.webp",
+      "before": null,
+      "after": "861446b29caecfc20d159d1f8429e16c760a4ba9e8df7e75e577571857ba449a",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/toxic-r007-alpha-v1.webp",
+      "before": null,
+      "after": "02823c46629d502ea3393591b3b3bea7b05541fc19808043d7724671f1b48866",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/gas-giant-moon-3-r005-alpha-v1.webp",
+      "before": null,
+      "after": "3556af8ec99a92f0ef82510dd67a6748aa26bcf28df10059b599f702bc1660c9",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/gas-giant-moon-2-r001-alpha-v1.webp",
+      "before": null,
+      "after": "49e3c12560e75aaf07e2e493a72b30cee0513ab1dda146df4131838dbee79d17",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/desert-moon-2-r001-alpha-v1.webp",
+      "before": null,
+      "after": "a633b200967b5d4eea709bd515ff8ea7ad6f1e3a629e076baab8288e6aef7687",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/ocean-moon-1-r001-alpha-v1.webp",
+      "before": null,
+      "after": "d584263fc613207a5fe389e33587ca68f649e7cf7e3bfc5b7eaa0296e5bcd83c",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/crystal-moon-1-r010-alpha-v1.webp",
+      "before": null,
+      "after": "a064a433c8caa355ea2bdd3bc8f789aa04a418861a0769ef1dca6271a2e10e23",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/ocean-moon-2-r002-alpha-v1.webp",
+      "before": null,
+      "after": "3835280b3445539a3fd4fcac7e7e0b4248c1c0beaad41850fd2979c2344c2870",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/ocean-r007-alpha-v1.webp",
+      "before": null,
+      "after": "680674023592ea5ea348e7ba04674c90b0a43411e8b7d0e5700b12dd832fc542",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/gas-giant-moon-1-r005-alpha-v1.webp",
+      "before": null,
+      "after": "c4532fbb3b5eb2e0efadc5a19576ab625c868895547397b15bf1865f32a629ad",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/rocky-moon-r002-alpha-v1.webp",
+      "before": null,
+      "after": "c2c348f33b0402b8dc07ccf97246dc3f78724ea3092d14dd94b7237f2de83d8b",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/rocky-r010-alpha-v1.webp",
+      "before": null,
+      "after": "ee85c8a4128aa09da6655dbff57bf4ecb8f06c0709b17ebf7c75c266a0e668a0",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/volcanic-moon-1-r003-alpha-v1.webp",
+      "before": null,
+      "after": "f5afc0af2d3eecf0ec7818e1ca179ac61510a1b4e5643f577e42c5a737b328ac",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/toxic-moon-2-r001-alpha-v1.webp",
+      "before": null,
+      "after": "88ef724ff59a26cb5c3649bb0a3b1c7e0f7b4fcfbe2d11ae5aef4c2ebba05b52",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/temperate-moon-1-r002-alpha-v1.webp",
+      "before": null,
+      "after": "d42e56b04c27c440f7dac8b5bbe4d83e4fab5c23dc8da2daef527bd79d5322ae",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/gas-r005-alpha-v1.webp",
+      "before": null,
+      "after": "e2b14c4faa4d3ca672ab5d6fc5b04e81d6ff423e33b6dd8ec34d97ef9aa23361",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/dashboard/public/map-snapshots/yellow-main-sequence-r013-alpha-v1.webp",
+      "before": null,
+      "after": "436beb1a3e82747769d71ed279c15f5870d58c5fa184bb43ec8d0c8f6ad5013f",
+      "composedWithLive": false
+    },
+    {
+      "path": "apps/client/package.json",
+      "before": "b05c0ce93226de0f96148dd6bc0edaa5d7e331f24831e5bf0d82292931882bf0",
+      "after": "ce27f739f497b8b79d2eae244cbc7f6d2f39115fc7f2d41c0bd606ede28ba13c",
+      "composedWithLive": true
+    },
+    {
+      "path": "packages/canvas-ui/package.json",
+      "before": "afa02d46be838be6c54c97d358980142d0afbea7f18d51173f7360f1cd408ab0",
+      "after": "4d89463c3ea78af52eb024644574657801fa110a97644b3386010f197af98010",
+      "composedWithLive": true
+    }
+  ],
+  "runtimeSourceCommit": "59ea3856",
+  "dependencyAlignment": "Render refs aligned to 0.7.1. Main sim refs align to its 0.4.1 package; composed live source preserves its existing sim 0.4.0 and matching refs."
+}

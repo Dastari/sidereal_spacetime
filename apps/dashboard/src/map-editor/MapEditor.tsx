@@ -1,9 +1,33 @@
+import {
+  MousePointer2,
+  Spline,
+  Hand,
+  Copy,
+  Trash2,
+  Scan,
+  ZoomIn,
+  ZoomOut,
+  Undo2,
+  Redo2,
+  Plus,
+  Save,
+  Upload,
+  LogIn,
+  RefreshCw,
+  Square,
+  Circle,
+  Pentagon,
+  X,
+  Settings2,
+} from "lucide-react";
+import type { ReactNode } from "react";
+import UniverseTree from "./UniverseTree";
+import { NumberField } from "@sidereal/ui/property-controls";
 import { editorCommand, editorKeyTarget } from "@sidereal/ui/editor-commands";
 import { newMapZone } from "@sidereal/content/zones";
 import { splitZoneEdge, setZoneHandle } from "@sidereal/sim/zone-path";
 import {
   mapZones,
-  zoneOutline,
   moveMapSelection,
   duplicateMapSelection,
   deleteMapSelection,
@@ -14,10 +38,7 @@ import { useMemo, useState, useEffect, useRef } from "react";
 import { SHARED_SYSTEM_SEED } from "@sidereal/content/shared-system";
 import {
   mapBodyName,
-  mapBodyOutline,
   mapBodyMetadata,
-  moveMapBody,
-  mapBodyRole,
   MAP_WORKSPACE,
   newSystemMap,
   newAsteroidField,
@@ -192,10 +213,16 @@ export function SystemMapWorkspace({
   const active = maps.find((m) => m.id === doc.id),
     readable = grants.some((g) => g.capability === "draft.read"),
     writable = readable && grants.some((g) => g.capability === "draft.write");
-  const load = (id: string) => {
+  const load = (id: string, selectedId = id) => {
     const row = maps.find((m) => m.id === id);
     if (!row) return;
-    const next = readSystemMap(row.documentJson);
+    let next: SystemMapDocument;
+    try {
+      next = readSystemMap(row.documentJson);
+    } catch (e) {
+      setError(`Unable to load system: ${String(e)}`);
+      return;
+    }
     setDraft({
       doc: next,
       revision: row.revision.toString(),
@@ -204,7 +231,7 @@ export function SystemMapWorkspace({
       future: [],
     });
     setCamera(fit(next));
-    setSelected("");
+    setSelected(selectedId);
     setSaved("Loaded live revision " + row.revision);
   };
   useEffect(() => {
@@ -455,132 +482,6 @@ export function SystemMapWorkspace({
           });
       }}
     >
-      <header className="map-document-bar">
-        <h1>System map</h1>
-        <span role="status">
-          {live.status === "ready" ? "Live connection" : live.status}{" "}
-          {saved && `· ${saved}`}
-        </span>
-        <button disabled={!draft.past.length || busy} onClick={() => undo()}>
-          Undo
-        </button>
-        <button
-          disabled={!draft.future.length || busy}
-          onClick={() => undo(true)}
-        >
-          Redo
-        </button>
-        <button
-          disabled={busy}
-          onClick={() => {
-            const d = newSystemMap(`system-${Date.now()}`);
-            setDraft({
-              doc: d,
-              revision: "0",
-              fingerprint: constructionHash("[]"),
-              past: [],
-              future: [],
-            });
-            setCamera(fit(d));
-            setSelected("");
-          }}
-        >
-          New system
-        </button>
-        <button onClick={save}>Save draft</button>
-        {!live.user ? (
-          <button onClick={() => void live.signIn()}>Sign in</button>
-        ) : (
-          <button
-            className="primary"
-            disabled={
-              !writable ||
-              busy ||
-              !!preview.error ||
-              !draft.fingerprint ||
-              live.status !== "ready"
-            }
-            onClick={() => void apply()}
-          >
-            {busy ? "Applying…" : "Apply to world"}
-          </button>
-        )}
-      </header>
-      <div className="map-toolbar">
-        {(["select", "direct", "pan"] as const).map((t, i) => (
-          <button
-            key={t}
-            aria-pressed={tool === t && !drawing}
-            onClick={() => {
-              setTool(t);
-              setDrawing(null);
-            }}
-          >
-            {["Select (V)", "Points (A)", "Pan (H)"][i]}
-          </button>
-        ))}
-        <button onClick={duplicate} disabled={!selection.length || !!drawing}>
-          Duplicate
-        </button>
-        <button
-          onClick={() => remove(true)}
-          disabled={!selection.length || !!drawing}
-        >
-          Delete
-        </button>
-        <button onClick={() => setCamera(fit(doc))}>Fit system</button>
-        <button
-          aria-label="Zoom in"
-          onClick={() =>
-            setCamera((c) => ({ ...c, span: Math.max(10, c.span / 2) }))
-          }
-        >
-          ＋
-        </button>
-        <button
-          aria-label="Zoom out"
-          onClick={() =>
-            setCamera((c) => ({ ...c, span: Math.min(2e9, c.span * 2) }))
-          }
-        >
-          −
-        </button>
-        {(Object.keys(layers) as (keyof typeof layers)[]).map((k) => (
-          <label className="map-toggle" key={k}>
-            <input
-              type="checkbox"
-              checked={layers[k]}
-              onChange={(e) => setLayers({ ...layers, [k]: e.target.checked })}
-            />
-            {k === "bodies"
-              ? "Celestials"
-              : k === "ships"
-                ? "Live ships"
-                : k === "fields"
-                  ? "Zones"
-                  : k === "orbits"
-                    ? "Orbit guides"
-                    : "Grid"}
-          </label>
-        ))}
-        <label className="map-toggle">
-          Preview height (m)
-          <input
-            aria-label="Preview height (m)"
-            type="number"
-            value={previewHeight}
-            min={-1e9}
-            max={1e9}
-            style={{ width: 100 }}
-            onChange={(e) => {
-              const h = Number(e.target.value);
-              if (Number.isFinite(h))
-                setPreviewHeight(Math.max(-1e9, Math.min(1e9, h)));
-            }}
-          />
-        </label>
-        <span>Shift-click to select · Space-drag to pan · wheel to zoom</span>
-      </div>
       {(error || live.error) && (
         <p role="alert" className="map-error">
           {error || live.error}
@@ -589,156 +490,275 @@ export function SystemMapWorkspace({
       )}
       <div className="map-workbench">
         <aside className="map-library">
-          <label>
-            Live systems
-            <select
-              aria-label="Live systems"
-              disabled={busy}
-              value={active?.id ?? ""}
-              onChange={(e) => load(e.target.value)}
-            >
-              <option value="">
-                {live.status === "ready"
-                  ? "Select a system"
-                  : "Connect to load the world"}
-              </option>
-              {maps.map((m) => (
-                <option key={m.id} value={m.id}>
-                  {JSON.parse(m.documentJson).name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <button disabled={!active || busy} onClick={() => load(doc.id)}>
-            Reload live map
-          </button>
-          {live.status === "ready" && !readable && (
-            <p>
-              Ask an administrator for read/write access to the universe-map
-              workspace.
-            </p>
-          )}
-          {!draft.fingerprint && (
-            <p>
-              Local authored reference. Load the live map before applying
-              changes.
-            </p>
-          )}
-          <button
-            className={selected === "" ? "selected" : ""}
-            onClick={() => setSelected("")}
+          <div
+            className="map-drawer-actions"
+            role="toolbar"
+            aria-label="Map commands"
           >
-            {doc.name}
-          </button>
+            <IconButton
+              label="Undo (Ctrl+Z)"
+              disabled={!draft.past.length || busy}
+              onClick={() => undo()}
+            >
+              <Undo2 />
+            </IconButton>
+            <IconButton
+              label="Redo (Ctrl+Shift+Z)"
+              disabled={!draft.future.length || busy}
+              onClick={() => undo(true)}
+            >
+              <Redo2 />
+            </IconButton>
+            <IconButton
+              label="New system"
+              disabled={busy}
+              onClick={() => {
+                const d = newSystemMap(`system-${crypto.randomUUID()}`);
+                setDraft({
+                  doc: d,
+                  revision: "0",
+                  fingerprint: constructionHash("[]"),
+                  past: [],
+                  future: [],
+                });
+                setCamera(fit(d));
+                setSelected(d.id);
+              }}
+            >
+              <Plus />
+            </IconButton>
+            <IconButton label="Save draft (Ctrl+S)" onClick={save}>
+              <Save />
+            </IconButton>
+            <IconButton
+              label="Reload live map"
+              disabled={!active || busy}
+              onClick={() => load(doc.id)}
+            >
+              <RefreshCw />
+            </IconButton>
+            {!live.user ? (
+              <IconButton label="Sign in" onClick={() => void live.signIn()}>
+                <LogIn />
+              </IconButton>
+            ) : (
+              <IconButton
+                label={busy ? "Applying…" : "Apply to world"}
+                disabled={
+                  !writable ||
+                  busy ||
+                  !!preview.error ||
+                  !draft.fingerprint ||
+                  live.status !== "ready"
+                }
+                onClick={() => void apply()}
+              >
+                <Upload />
+              </IconButton>
+            )}
+            <IconButton
+              label="Select (V)"
+              pressed={tool === "select" && !drawing}
+              onClick={() => {
+                setTool("select");
+                setDrawing(null);
+              }}
+            >
+              <MousePointer2 />
+            </IconButton>
+            <IconButton
+              label="Points (A)"
+              pressed={tool === "direct" && !drawing}
+              onClick={() => {
+                setTool("direct");
+                setDrawing(null);
+              }}
+            >
+              <Spline />
+            </IconButton>
+            <IconButton
+              label="Pan (H)"
+              pressed={tool === "pan" && !drawing}
+              onClick={() => {
+                setTool("pan");
+                setDrawing(null);
+              }}
+            >
+              <Hand />
+            </IconButton>
+            <IconButton
+              label="Deselect (Esc)"
+              disabled={!selection.length && !drawing}
+              onClick={() => {
+                setSelected("");
+                setDrawing(null);
+                setCancelToken((n) => n + 1);
+              }}
+            >
+              <X />
+            </IconButton>
+            <IconButton
+              label="Duplicate (Ctrl+D)"
+              disabled={!selection.length || !!drawing}
+              onClick={duplicate}
+            >
+              <Copy />
+            </IconButton>
+            <IconButton
+              label="Delete selection"
+              disabled={!selection.length || !!drawing}
+              onClick={() => remove(true)}
+            >
+              <Trash2 />
+            </IconButton>
+            <IconButton label="Fit system" onClick={() => setCamera(fit(doc))}>
+              <Scan />
+            </IconButton>
+            <IconButton
+              label="Zoom in"
+              onClick={() =>
+                setCamera((c) => ({ ...c, span: Math.max(10, c.span / 2) }))
+              }
+            >
+              <ZoomIn />
+            </IconButton>
+            <IconButton
+              label="Zoom out"
+              onClick={() =>
+                setCamera((c) => ({ ...c, span: Math.min(2e9, c.span * 2) }))
+              }
+            >
+              <ZoomOut />
+            </IconButton>
+            <IconButton
+              label="Add zone"
+              onClick={() => {
+                const z = newMapZone(
+                  `zone-${crypto.randomUUID()}`,
+                  camera.x,
+                  camera.y,
+                );
+                edit((d) => {
+                  (d.zones ??= []).push(z);
+                });
+                setSelected(z.id);
+              }}
+            >
+              <Square />
+            </IconButton>
+            <IconButton
+              label="Draw polygon zone (P)"
+              pressed={!!drawing}
+              onClick={() => {
+                setDrawing([]);
+                setDrawFuture([]);
+              }}
+            >
+              <Pentagon />
+            </IconButton>
+            <details className="map-add-menu">
+              <summary
+                aria-label="Add asteroid field"
+                title="Add asteroid field"
+              >
+                <Circle size={17} />
+              </summary>
+              <div>
+                <button onClick={() => add("ellipsoid")}>
+                  Add ellipsoid field
+                </button>
+                <button onClick={() => add("box")}>Add box field</button>
+              </div>
+            </details>
+          </div>
           <input
             type="search"
-            aria-label="Search map"
-            placeholder="Find a body or field…"
+            aria-label="Search Universe"
+            placeholder="Search names or IDs…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <h2>Celestials</h2>
-          <div className="map-body-list">
-            {mapBodyOutline(doc.bodies)
-              .filter((b) =>
-                b.name.toLowerCase().includes(search.toLowerCase()),
-              )
-              .map((b) => (
-                <button
-                  className={selected === b.id ? "selected" : ""}
-                  key={b.id}
-                  data-depth={
-                    b.parentId
-                      ? doc.bodies.find((p) => p.id === b.parentId)?.parentId
-                        ? 2
-                        : 1
-                      : 0
+          <UniverseTree
+            doc={doc}
+            maps={maps}
+            ships={
+              live.connection ? [...live.connection.db.ownMapShips.iter()] : []
+            }
+            search={search}
+            selection={selection}
+            onSelect={setSelected}
+            onLoad={load}
+            busy={busy}
+            onFrame={(id) => {
+              if (id === doc.id) {
+                setCamera(fit(doc));
+                return;
+              }
+              const body = doc.bodies.find((b) => b.id === id),
+                zone = mapZones(doc).find((z) => z.id === id),
+                ship = ships.find((s) => s.shipId === id);
+              const target = body ?? zone ?? ship;
+              if (target)
+                setCamera({
+                  x: target.x,
+                  y: target.y,
+                  span: body
+                    ? Math.max(500, body.radius * 10)
+                    : zone
+                      ? Math.max(zone.width, zone.length, 1000) * 2
+                      : 500,
+                });
+            }}
+          />
+          <details className="map-display-options">
+            <summary>
+              <Settings2 size={15} /> Display options
+            </summary>
+            {(Object.keys(layers) as (keyof typeof layers)[]).map((k) => (
+              <label className="map-layer-toggle" key={k}>
+                <input
+                  type="checkbox"
+                  checked={layers[k]}
+                  onChange={(e) =>
+                    setLayers({ ...layers, [k]: e.target.checked })
                   }
-                  onClick={(e) => {
-                    setSelected(b.id, e.shiftKey);
-                    if (e.shiftKey) return;
-                    setCamera({
-                      x: b.x,
-                      y: b.y,
-                      span: Math.max(500, b.radius * 10),
-                    });
-                  }}
-                >
-                  <span className={`map-dot ${mapBodyRole(b, doc.bodies)}`} />
-                  {b.name}
-                  <small>{mapBodyRole(b, doc.bodies)}</small>
-                </button>
-              ))}
-          </div>
-          <h2>Zones</h2>
-          {zoneOutline(doc)
-            .filter(({ zone: z }) =>
-              z.name.toLowerCase().includes(search.toLowerCase()),
-            )
-            .map(({ zone: z, depth }) => (
-              <button
-                key={z.id}
-                style={{ paddingLeft: 12 + depth * 16 }}
-                className={selection.includes(z.id) ? "selected" : ""}
-                onClick={(e) => {
-                  setSelected(z.id, e.shiftKey);
-                  if (!e.shiftKey)
-                    setCamera({
-                      x: z.x,
-                      y: z.y,
-                      span: Math.max(z.width, z.length, 1000) * 2,
-                    });
-                }}
-              >
-                <span style={{ color: z.color ?? "#6ca6cb" }}>◆</span> {z.name}
-                <small>
-                  {doc.fields.some((f) => f.id === z.id)
-                    ? "Asteroid field"
-                    : "Zone"}{" "}
-                  · {z.shape}
-                </small>
-              </button>
+                />
+                {
+                  {
+                    bodies: "Celestials",
+                    ships: "Live ships",
+                    fields: "Zones",
+                    orbits: "Orbit guides",
+                    grid: "Grid",
+                  }[k]
+                }
+              </label>
             ))}
-          <button
-            onClick={() => {
-              const z = newMapZone(
-                `zone-${crypto.randomUUID()}`,
-                camera.x,
-                camera.y,
-              );
-              edit((d) => {
-                (d.zones ??= []).push(z);
-              });
-              setSelected(z.id);
-              setCamera({ x: z.x, y: z.y, span: 2500 });
-            }}
-          >
-            Add zone
-          </button>
-          <button
-            onClick={() => {
-              setDrawing([]);
-              setDrawFuture([]);
-            }}
-          >
-            Draw polygon zone (P)
-          </button>
-          <div className="map-add-fields">
-            <button onClick={() => add("ellipsoid")}>Add ellipsoid</button>
-            <button onClick={() => add("box")}>Add box</button>
-          </div>
-          <h2>Live ships · {ships.length}</h2>
-          {ships.map((s) => (
-            <button
-              key={s.shipId}
-              onClick={() => {
-                setSelected(s.shipId);
-                setCamera({ x: s.x, y: s.y, span: 500 });
-              }}
-            >
-              {s.name}
-            </button>
-          ))}
+            <NumberField
+              label="Preview height (m)"
+              value={previewHeight}
+              min={-1e9}
+              max={1e9}
+              onChange={setPreviewHeight}
+            />
+          </details>
+          <p role="status">
+            {live.status === "ready" ? "Live connection" : live.status}
+            {saved && ` · ${saved}`}
+          </p>
+          {!draft.fingerprint && (
+            <p>Local draft. Load a live system to edit the world.</p>
+          )}
+          {live.status === "ready" && !readable && (
+            <p>Universe-map access is required to load live systems.</p>
+          )}
+          <p className="map-hint">
+            Click to select · Double-click to frame
+            <br />
+            Shift-click to add · Esc to deselect
+            <br />
+            Right-drag or Space-drag to pan
+          </p>
         </aside>
         <div className="map-stage">
           {drawing && (
@@ -761,11 +781,12 @@ export function SystemMapWorkspace({
             pointIndex={pointIndex}
             onPointSelect={setPointIndex}
             cancelToken={cancelToken}
-            onMarquee={(ids, additive) =>
+            onMarquee={(ids, additive) => {
+              setPointIndex(null);
               setSelection((old) =>
                 additive ? [...new Set([...old, ...ids])] : ids,
-              )
-            }
+              );
+            }}
             onHandle={(id, index, side, x, y, independent) =>
               edit((d) => {
                 const z = mapZones(d).find((z) => z.id === id)!;
@@ -856,5 +877,32 @@ export function SystemMapWorkspace({
         )}
       </div>
     </main>
+  );
+}
+
+function IconButton({
+  label,
+  children,
+  onClick,
+  disabled,
+  pressed,
+}: {
+  label: string;
+  children: ReactNode;
+  onClick: () => void;
+  disabled?: boolean;
+  pressed?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      title={label}
+      aria-pressed={pressed}
+      disabled={disabled}
+      onClick={onClick}
+    >
+      {children}
+    </button>
   );
 }

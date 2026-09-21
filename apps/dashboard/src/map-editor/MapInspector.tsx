@@ -1,3 +1,5 @@
+import { NumberField, CoordinateFields } from "@sidereal/ui/property-controls";
+import { InspectorIdentity } from "./InspectorIdentity";
 import { moveMapSelection } from "./map-commands";
 import { ZoneProperties } from "./ZoneProperties";
 import { systemCenter } from "@sidereal/sim/space-background";
@@ -11,33 +13,6 @@ import {
 } from "@sidereal/content/system-map";
 import { fieldCount, fieldVolume } from "@sidereal/sim/system-map";
 import type { MapShip } from "./MapCanvas";
-export function NumberField({
-  label,
-  value,
-  onChange,
-  min,
-  step = 1,
-}: {
-  label: string;
-  value: number;
-  onChange: (n: number) => void;
-  min?: number;
-  step?: number;
-}) {
-  return (
-    <label>
-      {label}
-      <input
-        aria-label={label}
-        type="number"
-        min={min}
-        step={step}
-        value={Number.isFinite(value) ? value : ""}
-        onChange={(e) => onChange(e.target.valueAsNumber)}
-      />
-    </label>
-  );
-}
 export default function MapInspector({
   doc,
   selected,
@@ -68,27 +43,45 @@ export default function MapInspector({
   if (ship)
     return (
       <aside className="map-inspector">
-        <h2>{ship.name}</h2>
+        <InspectorIdentity doc={doc} id={ship.shipId} name={ship.name} />
         <p>Live ship · read only</p>
         <dl>
           <dt>X</dt>
           <dd>{ship.x.toFixed(2)} m</dd>
+          <dt>Heading</dt>
+          <dd>{ship.heading.toFixed(2)} rad</dd>
           <dt>Y</dt>
           <dd>{ship.y.toFixed(2)} m</dd>
         </dl>
       </aside>
     );
+  if (selected !== doc.id && !body && !field)
+    return (
+      <aside className="map-inspector map-inspector-empty">
+        <h2>Nothing selected</h2>
+        <p>
+          Select an object in the Universe tree or on the map to inspect its
+          properties.
+        </p>
+      </aside>
+    );
   return (
     <aside className="map-inspector">
-      {field && (
-        <ZoneProperties
-          doc={doc}
-          zone={field}
-          edit={edit}
-          point={point}
-          setPoint={setPoint}
-        />
-      )}
+      <InspectorIdentity
+        doc={doc}
+        id={field?.id ?? body?.id ?? doc.id}
+        name={field?.name ?? body?.name ?? doc.name}
+        onName={(name) =>
+          edit((d) => {
+            const target =
+              d.fields.find((f) => f.id === selected) ??
+              d.bodies.find((b) => b.id === selected) ??
+              d;
+            target.name = name;
+          })
+        }
+      />
+      <h2>{field ? "Asteroid field" : body ? "Celestial body" : "System"}</h2>
       {!field && !body && (
         <label>
           System color
@@ -104,61 +97,57 @@ export default function MapInspector({
           />
         </label>
       )}
-      <h2>{field ? "Asteroid field" : body ? "Celestial body" : "System"}</h2>
-      <label>
-        Name
-        <input
-          aria-label="Name"
-          value={field?.name ?? body?.name ?? doc.name}
-          onChange={(e) =>
-            edit((d) => {
-              const target =
-                d.fields.find((f) => f.id === selected) ??
-                d.bodies.find((b) => b.id === selected) ??
-                d;
-              target.name = e.target.value;
-            })
-          }
-        />
-      </label>
-      {(["x", "y", "height"] as const).map((k) => (
-        <NumberField
-          key={k}
-          label={`${k === "height" ? "Height" : k.toUpperCase()} (m)`}
-          value={(field ?? body ?? systemCenter(doc))[k]}
-          onChange={(n) =>
-            edit((d) => {
-              const p =
-                d.fields.find((f) => f.id === selected) ??
-                d.bodies.find((b) => b.id === selected) ??
-                d.center;
-              if (body)
-                moveMapBody(d, body.id, {
-                  x: body.x,
-                  y: body.y,
-                  height: body.height,
-                  [k]: n,
-                });
-              else if (!field && d.primaryStarId)
-                moveMapBody(d, d.primaryStarId, { ...systemCenter(d), [k]: n });
-              else if (field)
-                moveMapSelection(
-                  d,
-                  [field.id],
-                  k === "x" ? n - field.x : 0,
-                  k === "y" ? n - field.y : 0,
-                  k === "height" ? n - field.height : 0,
-                );
-              else p[k] = n;
-            })
-          }
-        />
-      ))}
+      <CoordinateFields>
+        {(["x", "y", "height"] as const).map((k) => (
+          <NumberField
+            key={k}
+            label={`${k === "height" ? "Height" : k.toUpperCase()} (m)`}
+            value={(field ?? body ?? systemCenter(doc))[k]}
+            onChange={(n) =>
+              edit((d) => {
+                const p =
+                  d.fields.find((f) => f.id === selected) ??
+                  d.bodies.find((b) => b.id === selected) ??
+                  d.center;
+                if (body)
+                  moveMapBody(d, body.id, {
+                    x: body.x,
+                    y: body.y,
+                    height: body.height,
+                    [k]: n,
+                  });
+                else if (!field && d.primaryStarId)
+                  moveMapBody(d, d.primaryStarId, {
+                    ...systemCenter(d),
+                    [k]: n,
+                  });
+                else if (field)
+                  moveMapSelection(
+                    d,
+                    [field.id],
+                    k === "x" ? n - field.x : 0,
+                    k === "y" ? n - field.y : 0,
+                    k === "height" ? n - field.height : 0,
+                  );
+                else p[k] = n;
+              })
+            }
+          />
+        ))}
+      </CoordinateFields>
       {body && (
         <>
           <p>
-            {mapBodyRole(body, doc.bodies)} · radius {body.radius} m
+            {mapBodyRole(body, doc.bodies)} · catalog components (read only)
           </p>
+          <dl className="map-component-facts">
+            <dt>Radius</dt>
+            <dd>{body.radius} m</dd>
+            <dt>Appearance</dt>
+            <dd>{body.appearance ?? "Unassigned"}</dd>
+            <dt>Seed</dt>
+            <dd>{body.seed ?? "Default"}</dd>
+          </dl>
           {body.kind !== "star" && (
             <label>
               Orbits around
@@ -228,6 +217,7 @@ export default function MapInspector({
             label="System radius (m)"
             value={doc.radius}
             min={1}
+            max={1e8}
             onChange={(n) =>
               edit((d) => {
                 d.radius = n;
@@ -252,21 +242,10 @@ export default function MapInspector({
               ))}
             </select>
           </label>
-          {MAP_BACKGROUNDS.find((b) => b.id === doc.backgroundId)?.asset ? (
-            <img
-              className="map-background-preview"
-              alt={MAP_BACKGROUNDS.find((b) => b.id === doc.backgroundId)?.name}
-              src={`/assets/environment/${MAP_BACKGROUNDS.find((b) => b.id === doc.backgroundId)?.asset}`}
-            />
-          ) : (
-            <div
-              className="map-background-stars"
-              role="img"
-              aria-label="Deep space starfield"
-            />
-          )}
           <NumberField
             label="System feather (m)"
+            max={doc.radius}
+            slider
             min={0}
             value={doc.feather ?? Math.min(doc.radius * 0.05, 100000)}
             onChange={(n) =>
@@ -280,6 +259,13 @@ export default function MapInspector({
       )}
       {field && (
         <>
+          <ZoneProperties
+            doc={doc}
+            zone={field}
+            edit={edit}
+            point={point}
+            setPoint={setPoint}
+          />
           <p>
             {field.shape === "polygon"
               ? `${field.vertices.length} vertices · drag handles to reshape`
@@ -325,6 +311,7 @@ export default function MapInspector({
               />
               <NumberField
                 label="Background priority"
+                integer
                 value={field.priority ?? 0}
                 onChange={(n) => updateField({ priority: n })}
               />
@@ -345,6 +332,8 @@ export default function MapInspector({
           />
           <NumberField
             label="Seed"
+            integer
+            max={4294967295}
             value={field.seed}
             min={0}
             onChange={(n) => updateField({ seed: n })}
@@ -376,6 +365,8 @@ export default function MapInspector({
             <NumberField
               key={resource}
               label={`${resource} (%)`}
+              max={100}
+              slider
               min={0}
               value={
                 field.resources.find((r) => r.resource === resource)?.chance ??
