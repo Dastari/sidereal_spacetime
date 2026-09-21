@@ -1,3 +1,4 @@
+import { editorCommand, editorKeyTarget } from "@sidereal/ui/editor-commands";
 import { deleteLayoutSelection } from "./selection-deletion";
 import type { PartAsset, PartCatalog } from "@sidereal/content/assembly";
 import { assemblyMismatches } from "@sidereal/content/layout-assembly";
@@ -231,45 +232,48 @@ export default function LayoutEditor() {
   useEffect(() => {
     const key = (e: KeyboardEvent) => {
       if (
-        (e.target as HTMLElement).closest(
-          'input,textarea,select,[contenteditable="true"],dialog',
-        ) ||
+        editorKeyTarget(e.target) ||
+        e.defaultPrevented ||
+        !(e.target instanceof Node && shell.current?.contains(e.target)) ||
         newDialog
       )
         return;
       if (e.key === "Escape") setCanvasOnly(false);
       const mod = e.ctrlKey || e.metaKey;
+      const command = editorCommand(e);
       if (
         (view.mode === "Hull" || view.mode === "Objects") &&
         !(mod && ["s", "z", "y"].includes(e.key.toLowerCase()))
       )
         return;
+      if (command === "select" || command === "pan") {
+        e.preventDefault();
+        setTool(command);
+        return;
+      }
       if (e.key === "Escape") {
         cancel();
         select([]);
         return;
       }
       if (document.querySelector('[data-gesture-active="true"]')) return;
-      if (mod && e.key.toLowerCase() === "s") {
+      if (command === "save") {
         e.preventDefault();
         editor.save();
         return;
       }
       if (blocked) return;
-      if (mod && e.key.toLowerCase() === "z") {
+      if (command === "undo" || command === "redo") {
         e.preventDefault();
-        e.shiftKey ? editor.redo() : editor.undo();
-      } else if (mod && e.key.toLowerCase() === "y") {
-        e.preventDefault();
-        editor.redo();
-      } else if (e.key === "Delete" || e.key === "Backspace") {
+        command === "redo" ? editor.redo() : editor.undo();
+      } else if (command === "delete") {
         e.preventDefault();
         remove();
       } else if (e.key.toLowerCase() === "r") {
         selection.length ? transform("rotate") : setTurns((t) => (t + 1) % 4);
       } else if (e.key.toLowerCase() === "f") {
         transform(e.shiftKey ? "mirror-y" : "mirror-x");
-      } else if (mod && e.key.toLowerCase() === "d") {
+      } else if (command === "duplicate") {
         e.preventDefault();
         transform("copy", [64, 0]);
       } else if (
@@ -278,14 +282,14 @@ export default function LayoutEditor() {
         e.preventDefault();
         transform("move", [
           e.key === "ArrowLeft"
-            ? -view.grid
+            ? -view.grid * (e.shiftKey ? 10 : 1)
             : e.key === "ArrowRight"
-              ? view.grid
+              ? view.grid * (e.shiftKey ? 10 : 1)
               : 0,
           e.key === "ArrowDown"
-            ? -view.grid
+            ? -view.grid * (e.shiftKey ? 10 : 1)
             : e.key === "ArrowUp"
-              ? view.grid
+              ? view.grid * (e.shiftKey ? 10 : 1)
               : 0,
         ]);
       }
@@ -405,6 +409,11 @@ export default function LayoutEditor() {
     <main
       className="layout-editor"
       ref={shell}
+      tabIndex={-1}
+      onPointerDownCapture={(e) => {
+        if (!editorKeyTarget(e.target))
+          e.currentTarget.focus({ preventScroll: true });
+      }}
       style={
         {
           "--layout-left": `${view.leftWidth}px`,

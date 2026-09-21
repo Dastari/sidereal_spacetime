@@ -1,3 +1,4 @@
+import type { MapZone, ZoneAnchor } from "./zones";
 import { SOLAR_SYSTEM } from "./solar-system";
 import { SPACE_VISTAS, DEFAULT_SPACE_VISTA } from "./environment";
 export const MAP_WORKSPACE = "universe-map";
@@ -31,6 +32,8 @@ export interface MapBody extends MapPoint {
   radius: number;
 }
 export interface AsteroidField extends MapPoint {
+  parentId?: string;
+  color?: string;
   backgroundId?: string;
   feather?: number;
   priority?: number;
@@ -41,7 +44,7 @@ export interface AsteroidField extends MapPoint {
   width: number;
   length: number;
   depth: number;
-  vertices: { x: number; y: number }[];
+  vertices: ZoneAnchor[];
   density: number;
   seed: number;
   minRadius: number;
@@ -49,6 +52,8 @@ export interface AsteroidField extends MapPoint {
   resources: { resource: string; chance: number }[];
 }
 export interface SystemMapDocument {
+  zones?: MapZone[];
+  color?: string;
   version: 1;
   id: string;
   name: string;

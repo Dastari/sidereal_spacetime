@@ -1,3 +1,4 @@
+import { publishZones } from "./zones";
 import { spaceRegion } from "@sidereal/sim/space-background";
 import {
   t,
@@ -15,7 +16,7 @@ import {
   type MapBody,
   type SystemMapDocument,
 } from "@sidereal/content/system-map";
-import { readSystemMap, generateField } from "@sidereal/sim/system-map";
+import { readSystemMap, generateMapFields } from "@sidereal/sim/system-map";
 import { constructionHash } from "@sidereal/sim/construction-transactions";
 import {
   neighboringSpatialCells,
@@ -213,7 +214,7 @@ export function applySystemMap(
       "System edit history full; operator archival required",
     );
   const beforeJson = system ? projection(ctx, doc.id).documentJson : "";
-  const population = doc.fields.flatMap(generateField);
+  const population = generateMapFields(doc);
   for (const rock of population)
     if (
       ships.some(
@@ -266,6 +267,7 @@ export function applySystemMap(
     row = { id: doc.id, revision, documentJson: JSON.stringify(doc) };
   if (old) ctx.db.systemMapDefinition.id.update(row);
   else ctx.db.systemMapDefinition.insert(row);
+  publishZones(ctx, doc, revision);
   ctx.db.systemMapEdit.insert({
     id: op.key,
     systemId: doc.id,

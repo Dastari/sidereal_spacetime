@@ -28,10 +28,35 @@ export async function systemMapDenialSmoke(c: DbConnection) {
       operationId: "map-denied-smoke",
     }),
   );
+  for (const table of ["system_zone", "ship_zone_state"]) {
+    await new Promise<void>((resolve, reject) => {
+      let denied = false;
+      const timer = setTimeout(
+        () =>
+          reject(Error(`Private zone subscription did not reject: ${table}`)),
+        5000,
+      );
+      const privateSub = c
+        .subscriptionBuilder()
+        .onError(() => {
+          denied = true;
+          clearTimeout(timer);
+          resolve();
+        })
+        .onApplied(() => {
+          clearTimeout(timer);
+          reject(Error(`Private zone table was exposed: ${table}`));
+        })
+        .subscribe(`SELECT * FROM ${table}`);
+      void denied;
+      void privateSub;
+    });
+  }
   sub.unsubscribe();
   return {
     mapReadDenied: true,
     shipEnumerationDenied: true,
     mapApplyDenied: true,
+    privateZonesDenied: true,
   };
 }

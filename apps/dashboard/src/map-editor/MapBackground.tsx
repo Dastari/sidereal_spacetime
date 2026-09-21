@@ -46,12 +46,20 @@ export function MapBackground({
     canvas.height = height;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const region = spaceRegion(doc);
+    let region;
+    try {
+      region = spaceRegion(doc);
+    } catch {
+      worker.terminate();
+      return;
+    }
     const ids = [
       ...new Set([
         "deep-space",
         doc.backgroundId,
-        ...region.fields.map((f) => f.backgroundId!),
+        ...(region.zones ?? region.fields)
+          .map((f) => f.backgroundId)
+          .filter((id): id is string => !!id),
       ]),
     ];
     const draw = async () => {

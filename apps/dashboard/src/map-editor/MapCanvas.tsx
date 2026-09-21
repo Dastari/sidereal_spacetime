@@ -1,3 +1,6 @@
+import type { MapZone } from "@sidereal/content/zones";
+import { mapZones, subtree } from "./map-commands";
+import { cubicAt, setZoneHandle } from "@sidereal/sim/zone-path";
 import { useCelestialSnapshots } from "./useCelestialSnapshots";
 import { MapBackground } from "./MapBackground";
 import { systemCenter } from "@sidereal/sim/space-background";
@@ -6,7 +9,6 @@ import {
   mapBodyRole,
   type SystemMapDocument,
   type FieldAsteroid,
-  type AsteroidField,
 } from "@sidereal/content/system-map";
 export interface MapShip {
   shipId: string;
@@ -31,6 +33,14 @@ export default function MapCanvas({
   onSelect,
   onMove,
   onVertex,
+  tool,
+  selections,
+  pointIndex,
+  onPointSelect,
+  onHandle,
+  onInsert,
+  onMarquee,
+  cancelToken,
   camera,
   setCamera,
   layers,
@@ -42,7 +52,22 @@ export default function MapCanvas({
   ships: MapShip[];
   asteroids: FieldAsteroid[];
   selection: string;
-  onSelect: (id: string) => void;
+  onSelect: (id: string, additive?: boolean) => void;
+  selections: string[];
+  tool: "select" | "direct" | "pan";
+  pointIndex: number | null;
+  cancelToken: number;
+  onPointSelect: (i: number) => void;
+  onHandle: (
+    id: string,
+    index: number,
+    side: "in" | "out",
+    x: number,
+    y: number,
+    independent: boolean,
+  ) => void;
+  onInsert: (id: string, index: number, t: number) => void;
+  onMarquee: (ids: string[], additive: boolean) => void;
   onMove: (id: string, x: number, y: number) => void;
   onVertex: (id: string, index: number, x: number, y: number) => void;
   camera: Camera;
@@ -65,10 +90,29 @@ export default function MapCanvas({
     [drag, setDrag] = useState<{
       id: string;
       vertex?: number;
+      side?: "in" | "out";
+      pointer: number;
+      additive: boolean;
+      independent: boolean;
+      screen: { x: number; y: number };
+      moved: boolean;
       start: { x: number; y: number };
       original: { x: number; y: number };
       preview: { x: number; y: number };
     } | null>(null);
+  const [space, setSpace] = useState(false);
+  useEffect(() => {
+    setDrag(null);
+  }, [cancelToken]);
+  useEffect(() => {
+    const up = () => setSpace(false);
+    window.addEventListener("keyup", up);
+    window.addEventListener("blur", up);
+    return () => {
+      window.removeEventListener("keyup", up);
+      window.removeEventListener("blur", up);
+    };
+  }, []);
   useEffect(() => {
     const target = svg.current;
     if (!target) return;
@@ -100,15 +144,44 @@ export default function MapCanvas({
     id: string,
     original: { x: number; y: number },
     vertex?: number,
+    side?: "in" | "out",
   ) => {
-    if (drawing) return;
+    if (drawing || space || tool === "pan" || e.button !== 0) return;
     e.stopPropagation();
     svg.current!.setPointerCapture(e.pointerId);
-    onSelect(id);
-    setDrag({ id, vertex, start: point(e), original, preview: original });
+    svg.current!.focus();
+    if (!selections.includes(id) || (e.shiftKey && vertex === undefined))
+      onSelect(id, e.shiftKey);
+    if (vertex !== undefined) onPointSelect(vertex);
+    setDrag({
+      id,
+      vertex,
+      side,
+      pointer: e.pointerId,
+      additive: e.shiftKey,
+      independent: e.altKey,
+      screen: { x: e.clientX, y: e.clientY },
+      moved: false,
+      start: point(e),
+      original,
+      preview: original,
+    });
   };
+  const moving = subtree(doc, selections);
+  for (let i = 0; i < doc.bodies.length; i++)
+    for (const b of doc.bodies)
+      if (b.parentId && moving.has(b.parentId)) moving.add(b.id);
   const position = (id: string, x: number, y: number) =>
-    drag?.id === id && drag.vertex === undefined ? drag.preview : { x, y };
+    drag &&
+    drag.id !== "pan" &&
+    drag.id !== "marquee" &&
+    drag.vertex === undefined &&
+    (id === drag.id || moving.has(id))
+      ? {
+          x: x + drag.preview.x - drag.original.x,
+          y: y + drag.preview.y - drag.original.y,
+        }
+      : { x, y };
   const step = 10 ** Math.floor(Math.log10(camera.span / 8)),
     linesX: number[] = [],
     linesY: number[] = [];
@@ -124,7 +197,17 @@ export default function MapCanvas({
     y += step
   )
     linesY.push(y);
-  const fieldShape = (f: AsteroidField) => {
+  const fieldShape = (f: MapZone) => {
+    if (drag?.id === f.id && drag.vertex !== undefined && drag.side) {
+      f = { ...f, vertices: structuredClone(f.vertices) };
+      const a = f.vertices[drag.vertex];
+      setZoneHandle(
+        a,
+        drag.side,
+        { x: drag.preview.x - f.x - a.x, y: drag.preview.y - f.y - a.y },
+        drag.independent,
+      );
+    }
     const p = position(f.id, f.x, f.y);
     return f.shape === "ellipsoid" ? (
       <ellipse
@@ -141,16 +224,48 @@ export default function MapCanvas({
         height={f.length * scale}
       />
     ) : (
-      <polygon
-        points={f.vertices
-          .map((v, i) => {
-            const q =
-              drag?.id === f.id && drag.vertex === i
-                ? drag.preview
-                : { x: p.x + v.x, y: p.y + v.y };
-            return `${px(q.x)},${py(q.y)}`;
-          })
-          .join(" ")}
+      <path
+        d={
+          f.vertices
+            .map((v, i) => {
+              const q =
+                drag?.id === f.id && drag.vertex === i && !drag.side
+                  ? { x: drag.preview.x - p.x, y: drag.preview.y - p.y }
+                  : v;
+              const n = f.vertices[(i + 1) % f.vertices.length];
+              const next =
+                drag?.id === f.id &&
+                drag.vertex === (i + 1) % f.vertices.length &&
+                !drag.side
+                  ? { x: drag.preview.x - p.x, y: drag.preview.y - p.y }
+                  : n;
+              const out =
+                drag?.id === f.id && drag.vertex === i && drag.side === "out"
+                  ? {
+                      x: drag.preview.x - p.x - q.x,
+                      y: drag.preview.y - p.y - q.y,
+                    }
+                  : v.out;
+              const incoming =
+                drag?.id === f.id &&
+                drag.vertex === (i + 1) % f.vertices.length &&
+                drag.side === "in"
+                  ? {
+                      x: drag.preview.x - p.x - next.x,
+                      y: drag.preview.y - p.y - next.y,
+                    }
+                  : n.in;
+              const move =
+                i === 0 ? `M ${px(p.x + q.x)} ${py(p.y + q.y)} ` : "";
+              return (
+                move +
+                (out || incoming
+                  ? `C ${px(p.x + q.x + (out?.x ?? 0))} ${py(p.y + q.y + (out?.y ?? 0))} ${px(p.x + next.x + (incoming?.x ?? 0))} ${py(p.y + next.y + (incoming?.y ?? 0))} ${px(p.x + next.x)} ${py(p.y + next.y)} `
+                  : `L ${px(p.x + next.x)} ${py(p.y + next.y)} `)
+              );
+            })
+            .join("") + "Z"
+        }
       />
     );
   };
@@ -180,18 +295,32 @@ export default function MapCanvas({
       />
       <svg
         ref={svg}
+        data-gesture-active={!!drag}
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.code === "Space") {
+            e.preventDefault();
+            setSpace(true);
+          }
+        }}
         role="img"
         aria-label="System map — top-down spatial grid"
         viewBox={`0 0 1000 ${height}`}
         onPointerDown={(e) => {
+          e.currentTarget.focus();
           const p = point(e);
-          if (drawing) {
+          if (drawing && !space && tool !== "pan" && e.button === 0) {
             onDraw(p);
             return;
           }
           e.currentTarget.setPointerCapture(e.pointerId);
           setDrag({
-            id: "pan",
+            id: space || tool === "pan" || e.button !== 0 ? "pan" : "marquee",
+            pointer: e.pointerId,
+            additive: e.shiftKey,
+            independent: false,
+            screen: { x: e.clientX, y: e.clientY },
+            moved: false,
             start: p,
             original: { x: camera.x, y: camera.y },
             preview: { x: camera.x, y: camera.y },
@@ -200,7 +329,7 @@ export default function MapCanvas({
         onPointerMove={(e) => {
           const p = point(e);
           setCursor(p);
-          if (drag) {
+          if (drag && drag.pointer === e.pointerId) {
             const dx = p.x - drag.start.x,
               dy = p.y - drag.start.y;
             if (drag.id === "pan")
@@ -208,22 +337,64 @@ export default function MapCanvas({
             else
               setDrag({
                 ...drag,
+                moved:
+                  drag.moved ||
+                  Math.hypot(
+                    e.clientX - drag.screen.x,
+                    e.clientY - drag.screen.y,
+                  ) > 3,
                 preview: {
-                  x: Math.round(drag.original.x + dx),
-                  y: Math.round(drag.original.y + dy),
+                  x:
+                    drag.id === "marquee"
+                      ? p.x
+                      : Math.round(drag.original.x + dx),
+                  y:
+                    drag.id === "marquee"
+                      ? p.y
+                      : Math.round(drag.original.y + dy),
                 },
               });
           }
         }}
-        onPointerUp={() => {
-          if (drag && drag.id !== "pan") {
-            if (drag.vertex !== undefined)
+        onPointerUp={(e) => {
+          if (!drag || drag.pointer !== e.pointerId) return;
+          if (drag.id === "marquee") {
+            const within = (p: { x: number; y: number }) =>
+              p.x >= Math.min(drag.start.x, drag.preview.x) &&
+              p.x <= Math.max(drag.start.x, drag.preview.x) &&
+              p.y >= Math.min(drag.start.y, drag.preview.y) &&
+              p.y <= Math.max(drag.start.y, drag.preview.y);
+            onMarquee(
+              drag.moved
+                ? [
+                    ...(layers.bodies ? doc.bodies : []),
+                    ...(layers.fields ? mapZones(doc) : []),
+                  ]
+                    .filter(within)
+                    .map((z) => z.id)
+                : [],
+              drag.additive,
+            );
+          } else if (drag.moved && drag.id !== "pan") {
+            if (drag.vertex !== undefined && drag.side)
+              onHandle(
+                drag.id,
+                drag.vertex,
+                drag.side,
+                drag.preview.x,
+                drag.preview.y,
+                drag.independent,
+              );
+            else if (drag.vertex !== undefined)
               onVertex(drag.id, drag.vertex, drag.preview.x, drag.preview.y);
             else onMove(drag.id, drag.preview.x, drag.preview.y);
           }
           setDrag(null);
+          if (e.currentTarget.hasPointerCapture(e.pointerId))
+            e.currentTarget.releasePointerCapture(e.pointerId);
         }}
         onPointerCancel={() => setDrag(null)}
+        onLostPointerCapture={() => setDrag(null)}
         onWheel={(e) => {
           setCamera({
             ...camera,
@@ -234,6 +405,24 @@ export default function MapCanvas({
           });
         }}
       >
+        <defs>
+          <clipPath id="zone-root-clip">
+            <circle
+              cx={px(systemCenter(doc).x)}
+              cy={py(systemCenter(doc).y)}
+              r={doc.radius * scale}
+            />
+          </clipPath>
+          {mapZones(doc).map((f) => (
+            <clipPath key={f.id} id={`zone-clip-${f.id}`}>
+              <g
+                clipPath={`url(#${f.parentId && f.parentId !== doc.id ? `zone-clip-${f.parentId}` : "zone-root-clip"})`}
+              >
+                {fieldShape(f)}
+              </g>
+            </clipPath>
+          ))}
+        </defs>
         <rect width={1000} height={height} fill="transparent" />
         {layers.grid && (
           <g className="map-grid">
@@ -257,13 +446,51 @@ export default function MapCanvas({
           cx={px(systemCenter(doc).x)}
           cy={py(systemCenter(doc).y)}
           r={doc.radius * scale}
+          style={{ stroke: doc.color ?? "#6ca6cb" }}
         />
         {layers.fields &&
-          doc.fields.map((f) => (
+          mapZones(doc).map((f) => (
             <g
               key={f.id}
+              clipPath={`url(#${f.parentId && f.parentId !== doc.id ? `zone-clip-${f.parentId}` : "zone-root-clip"})`}
               aria-label={f.name}
-              className={`map-field ${selection === f.id ? "selected" : ""}`}
+              className={`map-field ${selections.includes(f.id) ? "selected" : ""}`}
+              style={{
+                stroke: f.color ?? "#6ca6cb",
+                fill: (f.color ?? "#6ca6cb") + "20",
+              }}
+              onDoubleClick={(e) => {
+                if (
+                  tool !== "direct" ||
+                  f.shape !== "polygon" ||
+                  f.vertices.length >= 64
+                )
+                  return;
+                e.stopPropagation();
+                const p = point(e);
+                let best = { distance: Infinity, index: 0, t: 0.5 };
+                f.vertices.forEach((a, i) => {
+                  const b = f.vertices[(i + 1) % f.vertices.length];
+                  for (let step = 1; step < 100; step++) {
+                    const t = step / 100,
+                      q =
+                        a.out || b.in
+                          ? cubicAt(a, b, t)
+                          : {
+                              x: a.x + (b.x - a.x) * t,
+                              y: a.y + (b.y - a.y) * t,
+                            };
+                    const distance = Math.hypot(
+                      q.x + f.x - p.x,
+                      q.y + f.y - p.y,
+                    );
+                    if (distance < best.distance)
+                      best = { distance, index: i, t };
+                  }
+                });
+                if (best.distance * scale < 15)
+                  onInsert(f.id, best.index, best.t);
+              }}
               onPointerDown={(e) => start(e, f.id, { x: f.x, y: f.y })}
             >
               {fieldShape(f)}
@@ -315,7 +542,7 @@ export default function MapCanvas({
             return (
               <g
                 key={b.id}
-                className={`map-body ${mapBodyRole(b, doc.bodies)} ${selection === b.id ? "selected" : ""}`}
+                className={`map-body ${mapBodyRole(b, doc.bodies)} ${selections.includes(b.id) ? "selected" : ""}`}
                 aria-label={b.name}
                 tabIndex={0}
                 onKeyDown={(e) => {
@@ -375,30 +602,70 @@ export default function MapCanvas({
             </g>
           ))}
         {layers.fields &&
-          doc.fields
+          tool === "direct" &&
+          mapZones(doc)
             .filter((f) => f.id === selection && f.shape === "polygon")
             .flatMap((f) =>
-              f.vertices.map((v, i) => (
-                <circle
-                  key={`${f.id}:${i}`}
-                  className="map-vertex"
-                  cx={px(
-                    drag?.id === f.id && drag.vertex === i
-                      ? drag.preview.x
-                      : f.x + v.x,
-                  )}
-                  cy={py(
-                    drag?.id === f.id && drag.vertex === i
-                      ? drag.preview.y
-                      : f.y + v.y,
-                  )}
-                  r={5}
-                  onPointerDown={(e) =>
-                    start(e, f.id, { x: f.x + v.x, y: f.y + v.y }, i)
-                  }
-                />
-              )),
+              f.vertices.map((v, i) => {
+                const p =
+                  drag?.id === f.id && drag.vertex === i && !drag.side
+                    ? drag.preview
+                    : { x: f.x + v.x, y: f.y + v.y };
+                return (
+                  <g key={`${f.id}:${i}`}>
+                    {i === pointIndex &&
+                      (["in", "out"] as const).map((side) => {
+                        const h = v[side];
+                        if (!h) return null;
+                        const q =
+                          drag?.id === f.id &&
+                          drag.vertex === i &&
+                          drag.side === side
+                            ? drag.preview
+                            : { x: p.x + h.x, y: p.y + h.y };
+                        return (
+                          <g key={side}>
+                            <line
+                              x1={px(p.x)}
+                              y1={py(p.y)}
+                              x2={px(q.x)}
+                              y2={py(q.y)}
+                              stroke="#8fc9ed"
+                            />
+                            <circle
+                              aria-label={`${side} handle ${i + 1}`}
+                              cx={px(q.x)}
+                              cy={py(q.y)}
+                              r={4}
+                              fill="#87cceb"
+                              onPointerDown={(e) => start(e, f.id, q, i, side)}
+                            />
+                          </g>
+                        );
+                      })}
+                    <circle
+                      aria-label={`Anchor ${i + 1}`}
+                      className="map-vertex"
+                      cx={px(p.x)}
+                      cy={py(p.y)}
+                      r={i === pointIndex ? 7 : 5}
+                      onPointerDown={(e) => start(e, f.id, p, i)}
+                    />
+                  </g>
+                );
+              }),
             )}
+        {drag?.id === "marquee" && drag.moved && (
+          <rect
+            x={px(Math.min(drag.start.x, drag.preview.x))}
+            y={py(Math.max(drag.start.y, drag.preview.y))}
+            width={Math.abs(drag.preview.x - drag.start.x) * scale}
+            height={Math.abs(drag.preview.y - drag.start.y) * scale}
+            fill="#72b8d522"
+            stroke="#8bd9fa"
+            pointerEvents="none"
+          />
+        )}
         {drawing && (
           <g className="map-drawing">
             <polyline

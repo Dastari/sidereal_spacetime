@@ -1,3 +1,5 @@
+import { moveMapSelection } from "./map-commands";
+import { ZoneProperties } from "./ZoneProperties";
 import { systemCenter } from "@sidereal/sim/space-background";
 import {
   mapBodyRole,
@@ -42,12 +44,16 @@ export default function MapInspector({
   ships,
   edit,
   onDelete,
+  point,
+  setPoint,
 }: {
   doc: SystemMapDocument;
   selected: string;
   ships: MapShip[];
   edit: (update: (d: SystemMapDocument) => void) => void;
   onDelete: () => void;
+  point: number | null;
+  setPoint: (p: number | null) => void;
 }) {
   const body = doc.bodies.find((b) => b.id === selected),
     field = doc.fields.find((f) => f.id === selected),
@@ -74,6 +80,30 @@ export default function MapInspector({
     );
   return (
     <aside className="map-inspector">
+      {field && (
+        <ZoneProperties
+          doc={doc}
+          zone={field}
+          edit={edit}
+          point={point}
+          setPoint={setPoint}
+        />
+      )}
+      {!field && !body && (
+        <label>
+          System color
+          <input
+            aria-label="System color"
+            type="color"
+            value={doc.color ?? "#6ca6cb"}
+            onChange={(e) =>
+              edit((d) => {
+                d.color = e.target.value;
+              })
+            }
+          />
+        </label>
+      )}
       <h2>{field ? "Asteroid field" : body ? "Celestial body" : "System"}</h2>
       <label>
         Name
@@ -111,6 +141,14 @@ export default function MapInspector({
                 });
               else if (!field && d.primaryStarId)
                 moveMapBody(d, d.primaryStarId, { ...systemCenter(d), [k]: n });
+              else if (field)
+                moveMapSelection(
+                  d,
+                  [field.id],
+                  k === "x" ? n - field.x : 0,
+                  k === "y" ? n - field.y : 0,
+                  k === "height" ? n - field.height : 0,
+                );
               else p[k] = n;
             })
           }

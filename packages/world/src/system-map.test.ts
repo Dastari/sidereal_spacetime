@@ -56,6 +56,8 @@ function fixture() {
   };
   const db: any = {
     worldSystem: table("id"),
+    systemZone: table("id", { by_system: "systemId" }),
+    shipZoneState: table("shipId", { by_system: "systemId" }),
     systemMapDefinition: table("id"),
     systemMapEdit: table("id", { by_system: "systemId" }),
     systemBody: table("id", { by_system: "systemId" }),

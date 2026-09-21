@@ -1,3 +1,14 @@
+import { editorCommand, editorKeyTarget } from "@sidereal/ui/editor-commands";
+import { newMapZone } from "@sidereal/content/zones";
+import { splitZoneEdge, setZoneHandle } from "@sidereal/sim/zone-path";
+import {
+  mapZones,
+  zoneOutline,
+  moveMapSelection,
+  duplicateMapSelection,
+  deleteMapSelection,
+} from "./map-commands";
+import { GenericZoneInspector } from "./ZoneProperties";
 import { systemCenter } from "@sidereal/sim/space-background";
 import { useMemo, useState, useEffect, useRef } from "react";
 import { SHARED_SYSTEM_SEED } from "@sidereal/content/shared-system";
@@ -13,9 +24,8 @@ import {
   type SystemMapDocument,
 } from "@sidereal/content/system-map";
 import {
-  fieldVolume,
   validateSystemMap,
-  generateField,
+  generateMapFields,
   readSystemMap,
 } from "@sidereal/sim/system-map";
 import { constructionHash } from "@sidereal/sim/construction-transactions";
@@ -46,6 +56,7 @@ interface Draft {
   fingerprint: string;
   past: SystemMapDocument[];
   future: SystemMapDocument[];
+  editGroup?: string;
 }
 const initial = (): Draft => ({
   doc: stock(),
@@ -74,9 +85,13 @@ export function SystemMapWorkspace({
   live: ReturnType<typeof useMapConnection>;
 }) {
   const [draft, setDraft] = useState<Draft>(initial),
-    [selected, setSelected] = useState(""),
+    [selection, setSelection] = useState<string[]>([]),
+    [tool, setTool] = useState<"select" | "direct" | "pan">("select"),
+    [pointIndex, setPointIndex] = useState<number | null>(null),
+    [cancelToken, setCancelToken] = useState(0),
     [camera, setCamera] = useState<Camera>(() => fit(stock())),
     [drawing, setDrawing] = useState<{ x: number; y: number }[] | null>(null),
+    [drawFuture, setDrawFuture] = useState<{ x: number; y: number }[]>([]),
     [layers, setLayers] = useState({
       bodies: true,
       ships: true,
@@ -90,6 +105,20 @@ export function SystemMapWorkspace({
     [busy, setBusy] = useState(false),
     [saved, setSaved] = useState(""),
     [scope, setScope] = useState("");
+  const selected = selection.at(-1) ?? "";
+  const setSelected = (id: string, additive = false) => {
+    setPointIndex(null);
+    setSelection((old) =>
+      additive
+        ? old.includes(id)
+          ? old.filter((x) => x !== id)
+          : [...old, id]
+        : id
+          ? [id]
+          : [],
+    );
+  };
+  const gesture = useRef<string | null>(null);
   const pending = useRef<{ request: string; operationId: string } | null>(null);
   const doc = draft.doc,
     key = `sidereal:system-map:v1:${live.user?.profile.sub ?? "local"}`;
@@ -122,13 +151,17 @@ export function SystemMapWorkspace({
     setScope(key);
   }, [key]);
   const edit = (update: (d: SystemMapDocument) => void) => {
+    const editGroup = gesture.current ?? undefined;
     setDraft((old) => {
       const next = clone(old.doc);
       update(next);
+      if (JSON.stringify(next) === JSON.stringify(old.doc)) return old;
+      const coalesced = editGroup !== undefined && old.editGroup === editGroup;
       return {
         ...old,
         doc: next,
-        past: [...old.past.slice(-49), old.doc],
+        editGroup,
+        past: coalesced ? old.past : [...old.past.slice(-49), old.doc],
         future: [],
       };
     });
@@ -137,7 +170,7 @@ export function SystemMapWorkspace({
   const preview = useMemo(() => {
     try {
       const count = validateSystemMap(doc);
-      return { count, rocks: doc.fields.flatMap(generateField), error: "" };
+      return { count, rocks: generateMapFields(doc), error: "" };
     } catch (e) {
       return { count: 0, rocks: [], error: String(e) };
     }
@@ -260,7 +293,7 @@ export function SystemMapWorkspace({
   };
   const finish = () => {
     if (!drawing || drawing.length < 3) return;
-    const f = newAsteroidField(`field-${Date.now()}`);
+    const f = newMapZone(`zone-${crypto.randomUUID()}`);
     f.shape = "polygon";
     const xs = drawing.map((p) => p.x),
       ys = drawing.map((p) => p.y);
@@ -269,9 +302,8 @@ export function SystemMapWorkspace({
     f.width = Math.max(...xs) - Math.min(...xs);
     f.length = Math.max(...ys) - Math.min(...ys);
     f.vertices = drawing.map((p) => ({ x: p.x - f.x, y: p.y - f.y }));
-    f.density = Math.min(1e9, 100 / (fieldVolume(f) / 1e9));
     edit((d) => {
-      d.fields.push(f);
+      (d.zones ??= []).push(f);
     });
     setSelected(f.id);
     setDrawing(null);
@@ -284,12 +316,145 @@ export function SystemMapWorkspace({
       return {
         ...old,
         doc: target,
+        editGroup: undefined,
         past: redo ? [...old.past, old.doc] : old.past.slice(0, -1),
         future: redo ? old.future.slice(0, -1) : [...old.future, old.doc],
       };
     });
+  const remove = (wholeObject = false) => {
+    if (!wholeObject && tool === "direct" && pointIndex !== null) {
+      const z = mapZones(doc).find((z) => z.id === selected);
+      if (z && z.vertices.length > 3)
+        edit((d) => {
+          mapZones(d)
+            .find((z) => z.id === selected)!
+            .vertices.splice(pointIndex, 1);
+        });
+      setPointIndex(null);
+      return;
+    }
+    if (!selection.some((id) => mapZones(doc).some((z) => z.id === id))) {
+      setError("Live ships and catalog celestials cannot be deleted here.");
+      return;
+    }
+    edit((d) => deleteMapSelection(d, selection));
+    setSelection([]);
+  };
+  const duplicate = () => {
+    if (!selection.some((id) => mapZones(doc).some((z) => z.id === id))) {
+      setError("Select zones or asteroid fields to duplicate.");
+      return;
+    }
+    const next = clone(doc),
+      ids = duplicateMapSelection(
+        next,
+        selection,
+        () => `zone-${crypto.randomUUID()}`,
+        Math.max(1, camera.span / 100),
+      );
+    edit((d) => Object.assign(d, next));
+    setSelection(ids);
+    setPointIndex(null);
+  };
   return (
-    <main className="system-map-editor">
+    <main
+      className="system-map-editor"
+      tabIndex={-1}
+      onFocusCapture={(e) => {
+        if (editorKeyTarget(e.target)) gesture.current = crypto.randomUUID();
+      }}
+      onBlurCapture={() => {
+        gesture.current = null;
+      }}
+      onKeyDown={(e) => {
+        if (editorKeyTarget(e.target) || busy) return;
+        if (drawing && e.key === "Enter") {
+          e.preventDefault();
+          finish();
+          return;
+        }
+        const command = editorCommand(e);
+        if (!command) return;
+        e.preventDefault();
+        if (
+          document.querySelector(".map-chart [data-gesture-active=true]") &&
+          !["cancel", "undo", "redo"].includes(command)
+        )
+          return;
+        if (drawing) {
+          if (command === "undo" || command === "delete") {
+            const last = drawing.at(-1);
+            if (last) {
+              setDrawing(drawing.slice(0, -1));
+              setDrawFuture((old) => [...old, last]);
+            }
+            return;
+          }
+          if (command === "redo") {
+            const next = drawFuture.at(-1);
+            if (next) {
+              setDrawing([...drawing, next]);
+              setDrawFuture(drawFuture.slice(0, -1));
+            }
+            return;
+          }
+          if (
+            ["duplicate", "left", "right", "up", "down", "draw"].includes(
+              command,
+            )
+          )
+            return;
+        }
+        if (command === "cancel") {
+          setCancelToken((n) => n + 1);
+          if (drawing) setDrawing(null);
+          else {
+            setSelection([]);
+            setPointIndex(null);
+          }
+          return;
+        }
+        if (command === "undo" || command === "redo") {
+          setCancelToken((n) => n + 1);
+          undo(command === "redo");
+          return;
+        }
+        if (command === "select" || command === "direct" || command === "pan") {
+          setTool(command);
+          setDrawing(null);
+          return;
+        }
+        if (command === "draw") {
+          setDrawing([]);
+          setDrawFuture([]);
+          return;
+        }
+        if (command === "save") {
+          save();
+          return;
+        }
+        if (command === "duplicate") {
+          duplicate();
+          return;
+        }
+        if (command === "delete") {
+          remove();
+          return;
+        }
+        const step = e.shiftKey ? 10 : 1,
+          dx = command === "left" ? -step : command === "right" ? step : 0,
+          dy = command === "down" ? -step : command === "up" ? step : 0;
+        if (dx || dy)
+          edit((d) => {
+            const z = mapZones(d).find((z) => z.id === selected),
+              a = pointIndex === null ? undefined : z?.vertices[pointIndex];
+            if (tool === "direct" && a) {
+              a.x += dx;
+              a.y += dy;
+            } else moveMapSelection(d, selection, dx, dy);
+          });
+      }}
+    >
       <header className="map-document-bar">
         <h1>System map</h1>
         <span role="status">
@@ -342,6 +507,27 @@ export function SystemMapWorkspace({
         )}
       </header>
       <div className="map-toolbar">
+        {(["select", "direct", "pan"] as const).map((t, i) => (
+          <button
+            key={t}
+            aria-pressed={tool === t && !drawing}
+            onClick={() => {
+              setTool(t);
+              setDrawing(null);
+            }}
+          >
+            {["Select (V)", "Points (A)", "Pan (H)"][i]}
+          </button>
+        ))}
+        <button onClick={duplicate} disabled={!selection.length || !!drawing}>
+          Duplicate
+        </button>
+        <button
+          onClick={() => remove(true)}
+          disabled={!selection.length || !!drawing}
+        >
+          Delete
+        </button>
         <button onClick={() => setCamera(fit(doc))}>Fit system</button>
         <button
           aria-label="Zoom in"
@@ -371,7 +557,7 @@ export function SystemMapWorkspace({
               : k === "ships"
                 ? "Live ships"
                 : k === "fields"
-                  ? "Asteroid fields"
+                  ? "Zones"
                   : k === "orbits"
                     ? "Orbit guides"
                     : "Grid"}
@@ -393,7 +579,7 @@ export function SystemMapWorkspace({
             }}
           />
         </label>
-        <span>Drag to move · drag empty space to pan · wheel to zoom</span>
+        <span>Shift-click to select · Space-drag to pan · wheel to zoom</span>
       </div>
       {(error || live.error) && (
         <p role="alert" className="map-error">
@@ -468,8 +654,9 @@ export function SystemMapWorkspace({
                         : 1
                       : 0
                   }
-                  onClick={() => {
-                    setSelected(b.id);
+                  onClick={(e) => {
+                    setSelected(b.id, e.shiftKey);
+                    if (e.shiftKey) return;
                     setCamera({
                       x: b.x,
                       y: b.y,
@@ -483,29 +670,62 @@ export function SystemMapWorkspace({
                 </button>
               ))}
           </div>
-          <h2>Asteroid fields</h2>
-          {doc.fields
-            .filter((f) => f.name.toLowerCase().includes(search.toLowerCase()))
-            .map((f) => (
+          <h2>Zones</h2>
+          {zoneOutline(doc)
+            .filter(({ zone: z }) =>
+              z.name.toLowerCase().includes(search.toLowerCase()),
+            )
+            .map(({ zone: z, depth }) => (
               <button
-                className={selected === f.id ? "selected" : ""}
-                key={f.id}
-                onClick={() => {
-                  setSelected(f.id);
-                  setCamera({
-                    x: f.x,
-                    y: f.y,
-                    span: Math.max(f.width, f.length, 2000) * 2,
-                  });
+                key={z.id}
+                style={{ paddingLeft: 12 + depth * 16 }}
+                className={selection.includes(z.id) ? "selected" : ""}
+                onClick={(e) => {
+                  setSelected(z.id, e.shiftKey);
+                  if (!e.shiftKey)
+                    setCamera({
+                      x: z.x,
+                      y: z.y,
+                      span: Math.max(z.width, z.length, 1000) * 2,
+                    });
                 }}
               >
-                {f.name}
+                <span style={{ color: z.color ?? "#6ca6cb" }}>◆</span> {z.name}
+                <small>
+                  {doc.fields.some((f) => f.id === z.id)
+                    ? "Asteroid field"
+                    : "Zone"}{" "}
+                  · {z.shape}
+                </small>
               </button>
             ))}
+          <button
+            onClick={() => {
+              const z = newMapZone(
+                `zone-${crypto.randomUUID()}`,
+                camera.x,
+                camera.y,
+              );
+              edit((d) => {
+                (d.zones ??= []).push(z);
+              });
+              setSelected(z.id);
+              setCamera({ x: z.x, y: z.y, span: 2500 });
+            }}
+          >
+            Add zone
+          </button>
+          <button
+            onClick={() => {
+              setDrawing([]);
+              setDrawFuture([]);
+            }}
+          >
+            Draw polygon zone (P)
+          </button>
           <div className="map-add-fields">
             <button onClick={() => add("ellipsoid")}>Add ellipsoid</button>
             <button onClick={() => add("box")}>Add box</button>
-            <button onClick={() => setDrawing([])}>Draw polygon</button>
           </div>
           <h2>Live ships · {ships.length}</h2>
           {ships.map((s) => (
@@ -525,7 +745,7 @@ export function SystemMapWorkspace({
             <div className="map-draw-toolbar">
               <span>Click vertices · {drawing.length} points</span>
               <button disabled={drawing.length < 3} onClick={finish}>
-                Finish field
+                Finish zone
               </button>
               <button onClick={() => setDrawing(null)}>Cancel</button>
             </div>
@@ -536,25 +756,64 @@ export function SystemMapWorkspace({
             asteroids={preview.rocks}
             selection={selected}
             onSelect={setSelected}
-            onMove={(id, x, y) =>
+            selections={selection}
+            tool={tool}
+            pointIndex={pointIndex}
+            onPointSelect={setPointIndex}
+            cancelToken={cancelToken}
+            onMarquee={(ids, additive) =>
+              setSelection((old) =>
+                additive ? [...new Set([...old, ...ids])] : ids,
+              )
+            }
+            onHandle={(id, index, side, x, y, independent) =>
               edit((d) => {
-                const target =
-                  d.bodies.find((b) => b.id === id) ??
-                  d.fields.find((f) => f.id === id);
-                if (d.bodies.some((b) => b.id === id) && target) {
-                  moveMapBody(d, id, { x, y, height: target.height });
-                  return;
-                }
-                if (target) {
-                  target.x = x;
-                  target.y = y;
-                }
+                const z = mapZones(d).find((z) => z.id === id)!;
+                const a = z.vertices[index];
+                setZoneHandle(
+                  a,
+                  side,
+                  { x: x - z.x - a.x, y: y - z.y - a.y },
+                  independent,
+                );
               })
             }
+            onInsert={(id, index, t) => {
+              if (
+                (mapZones(doc).find((z) => z.id === id)?.vertices.length ??
+                  64) >= 64
+              ) {
+                setError("A path can contain at most 64 anchors.");
+                return;
+              }
+              edit((d) =>
+                splitZoneEdge(
+                  mapZones(d).find((z) => z.id === id)!.vertices,
+                  index,
+                  t,
+                ),
+              );
+              setPointIndex(index + 1);
+            }}
+
+            onMove={(id, x, y) => {
+              const target = [...doc.bodies, ...mapZones(doc)].find(
+                (z) => z.id === id,
+              );
+              if (target)
+                edit((d) =>
+                  moveMapSelection(
+                    d,
+                    selection.includes(id) ? selection : [id],
+                    x - target.x,
+                    y - target.y,
+                  ),
+                );
+            }}
             onVertex={(id, index, x, y) =>
               edit((d) => {
-                const f = d.fields.find((f) => f.id === id)!;
-                f.vertices[index] = { x: x - f.x, y: y - f.y };
+                const z = mapZones(d).find((z) => z.id === id)!;
+                Object.assign(z.vertices[index], { x: x - z.x, y: y - z.y });
               })
             }
             camera={camera}
@@ -562,30 +821,39 @@ export function SystemMapWorkspace({
             layers={layers}
             previewHeight={previewHeight}
             drawing={drawing}
-            onDraw={(p) =>
+            onDraw={(p) => {
+              setDrawFuture([]);
               setDrawing((v) => [
                 ...(v ?? []),
                 { x: Math.round(p.x), y: Math.round(p.y) },
-              ])
-            }
+              ]);
+            }}
           />
           <footer className={preview.error ? "map-error" : "map-summary"}>
             {preview.error ||
               `${doc.bodies.length} celestial bodies · ${ships.length} live ships · ${preview.count} generated asteroids`}
           </footer>
         </div>
-        <MapInspector
-          doc={doc}
-          selected={selected}
-          ships={ships}
-          edit={edit}
-          onDelete={() => {
-            edit((d) => {
-              d.fields = d.fields.filter((f) => f.id !== selected);
-            });
-            setSelected("");
-          }}
-        />
+        {doc.zones?.some((z) => z.id === selected) ? (
+          <GenericZoneInspector
+            doc={doc}
+            zone={doc.zones.find((z) => z.id === selected)!}
+            edit={edit}
+            point={pointIndex}
+            setPoint={setPointIndex}
+            onDelete={() => remove(true)}
+          />
+        ) : (
+          <MapInspector
+            point={pointIndex}
+            setPoint={setPointIndex}
+            doc={doc}
+            selected={selected}
+            ships={ships}
+            edit={edit}
+            onDelete={() => remove(true)}
+          />
+        )}
       </div>
     </main>
   );

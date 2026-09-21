@@ -50,3 +50,9 @@ Added a 29-body authored celestial layout with owner-scaled radii and travel gap
 ## 2026-09-15 — Dynamic stellar relief (render/dashboard0.5.0; client/root0.4.0; content/net/world0.2.1)
 
 Native r013 replaces permanently fixed sunspot basins with5,762 editable hexagonal/pentagonal closed tiles. Shared native PBR plugins animate rigid tile heights, drifting/dissolving dark complexes and connected hot regions without per-frame geometry generation. A wider orange corona carries rare curling eruptions with quiet intervals; retired small persistent flare actors are absent from the new native export. Genesis frames the expanded effect. Added compiled-shader regression for the vertex injection initialization defect, stable topology/shared-material checks and native byte-budget/UV/semantic tests. Actual software-browser playback and close/alternate/bloom-off evidence are saved as plasma-r018; hardware timing and owner final signoff are not claimed. Solar seed appearance now pins r013; its new hash requires isolated migration revalidation before live publication.
+
+## 0.7.0 — 2026-09-21
+
+- Added shared studio select/pan, duplicate/delete, undo/redo and nudge shortcuts, including Shipyard Objects/Hull and Assembly, with focused text/modal handling and gesture cancellation.
+- Added named, colored nested polygon zones with cubic handles, numeric handle angles/lengths, shape-preserving insertion, subtree editing and shared preview/game background clipping.
+- Added private indexed zone definitions and authoritative per-ship membership/transition journals. Accepted movement detects through-crossings, retains reconnect sequence bounds, and preserves existing physics/admission scope.

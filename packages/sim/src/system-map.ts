@@ -1,3 +1,5 @@
+import { compileZonePath } from "./zone-path";
+import { compileZones, zoneContains } from "./zones";
 import { systemCenter } from "@sidereal/content/system-map";
 import {
   MAP_BACKGROUNDS,
@@ -76,6 +78,8 @@ export function insidePolygon(p: XY, vertices: XY[]) {
   return inside;
 }
 export function fieldBounds(f: AsteroidField) {
+  if (f.shape === "polygon" && f.vertices.some((v) => v.in || v.out))
+    f = { ...f, vertices: compileZonePath(f.vertices) };
   return f.shape === "polygon"
     ? {
         minX: Math.min(...f.vertices.map((p) => p.x)),
@@ -95,7 +99,11 @@ export function fieldVolume(f: AsteroidField) {
     ? (Math.PI / 6) * f.width * f.length * f.depth
     : f.shape === "box"
       ? f.width * f.length * f.depth
-      : polygonArea(f.vertices) * f.depth;
+      : polygonArea(
+          f.vertices.some((v) => v.in || v.out)
+            ? compileZonePath(f.vertices)
+            : f.vertices,
+        ) * f.depth;
 }
 export const fieldCount = (f: AsteroidField) =>
   Math.round((fieldVolume(f) / 1e9) * f.density);
@@ -111,12 +119,19 @@ export function containsFieldPoint(f: AsteroidField, p: MapPoint) {
         ((2 * h) / f.depth) ** 2 <=
       1
     );
-  if (f.shape === "polygon") return insidePolygon({ x, y }, f.vertices);
+  if (f.shape === "polygon")
+    return insidePolygon(
+      { x, y },
+      f.vertices.some((v) => v.in || v.out)
+        ? compileZonePath(f.vertices)
+        : f.vertices,
+    );
   return Math.abs(x) <= f.width / 2 && Math.abs(y) <= f.length / 2;
 }
 export function validateSystemMap(doc: SystemMapDocument) {
   if (!doc || doc.version !== 1) throw Error("Unsupported system map version");
   id(doc.id);
+  compileZones(doc);
   name(doc.name);
   point(doc.center);
   if (
@@ -222,7 +237,7 @@ export function validateSystemMap(doc: SystemMapDocument) {
     if (!Array.isArray(f.vertices) || f.vertices.length > MAP_LIMITS.vertices)
       throw Error("Vertex budget exceeded");
     if (f.shape === "polygon") {
-      const v = f.vertices;
+      const v = compileZonePath(f.vertices);
       if (v.length < 3) throw Error("Draw at least three vertices");
       for (const p of v) {
         finite(p.x, -1e8, 1e8, "Vertex X");
@@ -254,7 +269,7 @@ export function validateSystemMap(doc: SystemMapDocument) {
     else {
       const corners =
         f.shape === "polygon"
-          ? f.vertices
+          ? compileZonePath(f.vertices)
           : [
               { x: bounds.minX, y: bounds.minY },
               { x: bounds.maxX, y: bounds.minY },
@@ -306,6 +321,8 @@ function random(seed: number) {
 }
 /** Call only after validation. Fixed bounded work; never silently underpopulate. */
 export function generateField(f: AsteroidField): FieldAsteroid[] {
+  if (f.shape === "polygon" && f.vertices.some((v) => v.in || v.out))
+    f = { ...f, vertices: compileZonePath(f.vertices) };
   const count = fieldCount(f);
   if (!Number.isSafeInteger(count) || count < 0 || count > MAP_LIMITS.perField)
     throw Error("Invalid population budget");
@@ -341,7 +358,8 @@ export function generateField(f: AsteroidField): FieldAsteroid[] {
   return result;
 }
 export function readSystemMap(json: string) {
-  if (json.length > MAP_LIMITS.jsonBytes) throw Error("Map document too large");
+  if (new TextEncoder().encode(json).length > MAP_LIMITS.jsonBytes)
+    throw Error("Map document too large");
   let doc: SystemMapDocument;
   try {
     doc = JSON.parse(json);
@@ -350,4 +368,16 @@ export function readSystemMap(json: string) {
   }
   validateSystemMap(doc);
   return doc;
+}
+
+/** Clip populated fields by ancestors without changing legacy seeded identities. */
+export function generateMapFields(doc: SystemMapDocument): FieldAsteroid[] {
+  const zones = compileZones(doc),
+    byId = new Map(zones.map((z) => [z.id, z]));
+  return doc.fields.flatMap((f) => {
+    const ancestors = byId.get(f.id)!.ancestors.map((id) => byId.get(id)!);
+    return generateField(f).filter((p) =>
+      ancestors.every((z) => zoneContains(z, p)),
+    );
+  });
 }

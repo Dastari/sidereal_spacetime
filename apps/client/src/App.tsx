@@ -206,6 +206,17 @@ export default function App({
   const activeSpaceRegion: SpaceRegion | undefined = systemScape?.regionsJson
     ? JSON.parse(systemScape.regionsJson)
     : undefined;
+  const shipZones =
+    c && sharedAdmission
+      ? c.db.ownShipZones.shipId.find(sharedAdmission.shipId)
+      : undefined;
+  const zoneNames: string[] = shipZones
+    ? JSON.parse(shipZones.activeJson).map(
+        (id: string) =>
+          activeSpaceRegion?.zones?.find((z) => z.id === id)?.name ??
+          (id === sharedAdmission?.systemId ? "System" : id),
+      )
+    : [];
   const fieldBodies = () =>
     connection.current
       ? [...connection.current.db.nearbyFieldAsteroids.iter()].map((r) => ({
@@ -1444,6 +1455,22 @@ export default function App({
               : "Sidereal game. WASD moves. Tab changes view. E uses the control seat. Escape opens the console. F6 focuses interface controls."
           }
         />
+        {shipZones && (
+          <div
+            aria-label="Current zones"
+            style={{
+              position: "absolute",
+              top: 16,
+              left: "50%",
+              transform: "translateX(-50%)",
+              color: "#b8ccdc",
+              fontSize: 12,
+              pointerEvents: "none",
+            }}
+          >
+            {zoneNames.length ? zoneNames.join(" / ") : "Deep space"}
+          </div>
+        )}
         <ConstructionReview connection={c} onError={setError} />
         <ShipRefitPanel connection={c} onError={setError} />
         <MountedFuelPanel

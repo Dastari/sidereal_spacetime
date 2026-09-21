@@ -1,3 +1,4 @@
+import { compileZones, type CompiledZone } from "./zones";
 import { systemCenter } from "@sidereal/content/system-map";
 import { DEFAULT_SPACE_VISTA } from "@sidereal/content/environment";
 import type {
@@ -29,6 +30,7 @@ export interface SpaceRegion {
   backgroundId: string;
   feather?: number;
   fields: BackgroundField[];
+  zones?: CompiledZone[];
 }
 export interface BackgroundWeight {
   id: string;
@@ -42,6 +44,7 @@ export function spaceRegion(doc: SystemMapDocument): SpaceRegion {
     radius: doc.radius,
     backgroundId: doc.backgroundId,
     feather: doc.feather,
+    zones: compileZones(doc),
     fields: doc.fields
       .filter((f) => f.backgroundId)
       .map((f) => ({
@@ -108,10 +111,12 @@ export function fieldInteriorDistance(f: BackgroundField, p: MapPoint) {
 }
 /** Precompute deterministic ordering/bounds once for a raster or repeated position samples. */
 export function prepareSpaceBackground(region: SpaceRegion | undefined) {
-  const fields = (region?.fields ?? [])
+  const zoneById = new Map(region?.zones?.map((z) => [z.id, z]) ?? []);
+  const fields = (region?.zones?.filter((z) => !z.root) ?? region?.fields ?? [])
     .filter((f) => f.backgroundId)
     .sort(
       (a, b) =>
+        ((a as CompiledZone).level ?? 0) - ((b as CompiledZone).level ?? 0) ||
         (a.priority ?? 0) - (b.priority ?? 0) ||
         (a.id < b.id ? -1 : a.id > b.id ? 1 : 0),
     )
@@ -168,9 +173,19 @@ export function prepareSpaceBackground(region: SpaceRegion | undefined) {
             Math.abs(p.height - f.height) > f.depth / 2
           )
             continue;
+          let clipped = system;
+          for (const id of (f as CompiledZone).ancestors ?? []) {
+            const parent = zoneById.get(id);
+            if (parent && !parent.root)
+              clipped *= smooth(
+                fieldInteriorDistance(parent, p),
+                parent.feather ??
+                  Math.min(parent.width, parent.length, parent.depth) * 0.1,
+              );
+          }
           overlay(
             f.backgroundId!,
-            system *
+            clipped *
               smooth(
                 fieldInteriorDistance(f, p),
                 f.feather ?? Math.min(f.width, f.length, f.depth) * 0.1,

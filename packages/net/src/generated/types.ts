@@ -1213,6 +1213,9 @@ export type OwnReachableCargoContainers = __Infer<typeof OwnReachableCargoContai
 export const OwnReachableCargoItems = __t.object("OwnReachableCargoItems", {});
 export type OwnReachableCargoItems = __Infer<typeof OwnReachableCargoItems>;
 
+export const OwnShipZones = __t.object("OwnShipZones", {});
+export type OwnShipZones = __Infer<typeof OwnShipZones>;
+
 export const OwnShips = __t.object("OwnShips", {});
 export type OwnShips = __Infer<typeof OwnShips>;
 
@@ -1396,6 +1399,30 @@ export const ShipWorldMotion = __t.object("ShipWorldMotion", {
 });
 export type ShipWorldMotion = __Infer<typeof ShipWorldMotion>;
 
+export const ShipZoneProjection = __t.object("ShipZoneProjection", {
+  shipId: __t.string(),
+  systemId: __t.string(),
+  mapRevision: __t.u64(),
+  stateRevision: __t.u64(),
+  sequence: __t.u64(),
+  earliestSequence: __t.u64(),
+  activeJson: __t.string(),
+  transitionsJson: __t.string(),
+});
+export type ShipZoneProjection = __Infer<typeof ShipZoneProjection>;
+
+export const ShipZoneState = __t.object("ShipZoneState", {
+  shipId: __t.string(),
+  systemId: __t.string(),
+  mapRevision: __t.u64(),
+  stateRevision: __t.u64(),
+  sequence: __t.u64(),
+  earliestSequence: __t.u64(),
+  activeJson: __t.string(),
+  transitionsJson: __t.string(),
+});
+export type ShipZoneState = __Infer<typeof ShipZoneState>;
+
 export const SpaceBody = __t.object("SpaceBody", {
   id: __t.string(),
   shipId: __t.string(),
@@ -1480,6 +1507,15 @@ export const SystemScapeProjection = __t.object("SystemScapeProjection", {
   regionsJson: __t.string(),
 });
 export type SystemScapeProjection = __Infer<typeof SystemScapeProjection>;
+
+export const SystemZone = __t.object("SystemZone", {
+  id: __t.string(),
+  systemId: __t.string(),
+  zoneId: __t.string(),
+  revision: __t.u64(),
+  definitionJson: __t.string(),
+});
+export type SystemZone = __Infer<typeof SystemZone>;
 
 export const VisibleBodyDescriptions = __t.object("VisibleBodyDescriptions", {});
 export type VisibleBodyDescriptions = __Infer<typeof VisibleBodyDescriptions>;

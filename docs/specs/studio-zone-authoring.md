@@ -1,6 +1,6 @@
 # Studio zone authoring
 
-Status: implementation in progress; extends PR #15. Owner requested shared Photoshop-style editing, curved polygon zones, nested systems/zones and authoritative transitions on 2026-09-21.
+Status: implemented in PR #15; validation and limitations recorded in the handoff. Owner requested shared Photoshop-style editing, curved polygon zones, nested systems/zones and authoritative transitions on 2026-09-21.
 
 ## Contract
 
@@ -26,3 +26,9 @@ Success: one drag is undone once; cancelled drags leave identical draft JSON; su
 ## Decisions and evidence
 
 See [zone authority ADR](../adr/ADR-20260921-zone-authority.md). Two independent read-only plans reviewed controls and server integration. Rejected endpoint-only membership (misses thin zones and collision bounces), changing simulation systemId (breaks scheduler/admission), and generic zones implemented as empty asteroid fields. Ancestor clipping avoids fragile full containment tests for concave curves. Geometric transitions within one simulation scope are implemented here; cross-scope travel needs a separate lifecycle design.
+
+## Implemented bounds and storage
+
+There are at most 48 volumes per document (including root and fields), eight ancestor levels, 64 authored anchors per polygon, 512 compiled edges per polygon and 8,192 total edges. Compiler v1 error tolerance is max(0.01 m, control extent / 16,384); subdivision depth is bounded at 16. Authoritative sweeps use a shared six-million-operation budget per scope tick and preserve pre-step motion on exhaustion. Definitions are indexed private rows; current membership and the newest 128 transitions share one private state row per ship to avoid separate journal/pruning writes. Public sequence bounds identify expired history. A stopped endpoint uses closed membership; tangent enter/exit pairs at contiguous drift joins within the tick are suppressed.
+
+During polygon creation, Backspace/Ctrl+Z removes the last drawn point, redo restores it and Enter finishes a valid three-point-or-more outline. Existing object history stays untouched until the polygon is committed.

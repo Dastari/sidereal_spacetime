@@ -1,3 +1,5 @@
+import { systemZone, shipZoneState, shipZoneProjection } from "./zone-tables";
+import { stepZones, ownShipZones as readOwnShipZones } from "./zones";
 import {
   systemMapDefinition,
   fieldAsteroid,
@@ -260,6 +262,8 @@ const movementTimer = table(
   { scheduledId: t.u64().primaryKey().autoInc(), scheduledAt: t.scheduleAt() },
 );
 const db = schema({
+  systemZone,
+  shipZoneState,
   constructionCargoAssembly,
   constructionCargoGrid,
   constructionCargoPlacement,
@@ -675,6 +679,8 @@ export const stepWorld = db.reducer(
           },
           shipId,
         ),
+      zones: (systemId, ships, trace, tick) =>
+        stepZones(ctx, systemId, ships, trace, tick),
       canPilot: (characterId) => {
         const actor = ctx.db.character.id.find(characterId);
         return (
@@ -1432,4 +1438,10 @@ export const nearbyFieldAsteroids = db.view(
   { name: "nearby_field_asteroids", public: true },
   t.array(systemMap.nearbyFieldProjection),
   auth.gameView(systemMap.nearbyFieldAsteroids),
+);
+
+export const ownShipZones = db.view(
+  { name: "own_ship_zones", public: true },
+  t.array(shipZoneProjection),
+  auth.gameView(readOwnShipZones),
 );

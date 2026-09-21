@@ -121,6 +121,7 @@ import OwnMapShipsRow from "./own_map_ships_table";
 import OwnNativeAirlocksRow from "./own_native_airlocks_table";
 import OwnReachableCargoContainersRow from "./own_reachable_cargo_containers_table";
 import OwnReachableCargoItemsRow from "./own_reachable_cargo_items_table";
+import OwnShipZonesRow from "./own_ship_zones_table";
 import OwnShipsRow from "./own_ships_table";
 import OwnSpaceBodiesRow from "./own_space_bodies_table";
 import OwnStationsRow from "./own_stations_table";
@@ -396,6 +397,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnReachableCargoItemsRow),
+  ownShipZones: __table({
+    name: 'own_ship_zones',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnShipZonesRow),
   ownShips: __table({
     name: 'own_ships',
     indexes: [
