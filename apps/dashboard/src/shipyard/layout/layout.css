@@ -1,7 +1,4 @@
 /* Shared Creator theme; layout rules only. */
-.app:has(.layout-editor) .app-footer {
-  display: none;
-}
 .layout-editor {
   --layout-canvas: var(--creator-canvas);
   --layout-panel: var(--creator-surface);
