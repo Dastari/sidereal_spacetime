@@ -65,8 +65,7 @@ Saves wait for a newer canonical subscription row before completing.
 
 ## Release composition
 
-Status: prepared, not yet published. Prior owner merge/publish authorization
-persists; no new permission is needed for these reviewed scoped changes.
+Status: published and verified. PR #19 merged as `a695c1062b3db53193bcfc9cbc71932f26a2eb70`.
 
 - Authority candidate: `/root/sidereal-live-map-authority-candidate`, based on
   `/root/sidereal_spacetime/.runtime/worktrees/studio-authority-20260921` with IFCS
@@ -83,8 +82,33 @@ persists; no new permission is needed for these reviewed scoped changes.
 - Public game client code/release remains unchanged; existing projections already
   carry mutable radius/appearance/seed. Preserve all live UUIDs/inventory/state.
 
-Next: complete final composition review, merge through GitHub, publish exact
-rehearsed authority via managed lifecycle, apply scoped Studio source changes,
-verify before/after state and public sign-in gate, record release hashes/status.
-Never publish a main-derived world over the preserved IFCS module wholesale.
-Local branch `dev.toml` remains intentionally uncommitted with review ports3291/5494.
+## Published state and continuation
+
+- Current authority source: `/root/sidereal-live-map-authority-candidate`, now
+  configured for live3100/`sidereal-spacetime-dev`. Exact rehearsed artifact
+  `f6dcf1aa58bc44f0e551326060370cd6191d379e403609bf0954c39119b28b7b`
+  was rebuilt and published with `--delete-data=never`; post-publish hash matches.
+- Studio source remains `/root/sidereal-studio-dashboard-release`, managed5174,
+  served at `https://sidereal.tail7a58a6.ts.net:8445`. Scoped sources and complete
+  production-configured build match the release inventory. Preserve its existing
+  public assets:60 files (including alpha map portraits) were absent from the
+  initial candidate copy and are now explicitly pinned unchanged in the manifest.
+- Complete artifact/source inventory ordering is explicitly UTF-8 byte lexical.
+  Independent review verified all five digests after correcting the initial
+  component-wise path ordering mismatch; deployed file bytes did not change.
+- Before/after row values and schemas match for all audited tables:3 characters,
+  3 ships,21 inventory items,33 system bodies,0 map definitions,0 construction
+  grants. SQL execution timing metadata is excluded from state comparison.
+- Public game HTML returns200 with unchanged SHA256
+  `6c64b65b71f309882451a7cae05675282881ef25b6df2c1e836e8656e68a46df`.
+  Public Studio browser shows the sign-in gate with no map/tree/canvas.
+- Reviewer remains provisioned, ordinary/non-admin and signed out. Its runbook
+  and private credentials support future game/editor work; no public character
+  was created for it. Do not retire the account as publication cleanup.
+- Review candidate5594 is stopped. Main-derived review source remains separate.
+  Never publish that main-derived world over this preserved IFCS composition.
+- Private release audit/logs are under canonical
+  `.runtime/releases/live-map-genesis-20260921/`; public manifest is under
+  `ops/releases/live-map-genesis-20260921/`.
+- Canonical dirty IFCS/art work and the public game client release were preserved.
+  The implementation worktree's `dev.toml` remains uncommitted review configuration.

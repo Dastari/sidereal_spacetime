@@ -1,5 +1,5 @@
 {
-  "sha256": "4d2947ee3d69296c42513fa81689483b4ac2355441fc11c38dc04fcd046afa5f",
+  "sha256": "9fc224fdd65d1c27de70955fd138f0f6c633c863cf6053293f8eb1210dce75f4",
   "count": 1181,
   "files": [
     {
@@ -1555,16 +1555,16 @@
       "sha256": "57c53c36b5d51cc38897f1b8eeeca32193d267c7dd060b4982d3c617e9125e04"
     },
     {
+      "path": "packages/net/src/generated/types.ts",
+      "sha256": "6d9de73bd7daafe756cfb32044f85813339b72e81cb096a15d4f14e94fae8492"
+    },
+    {
       "path": "packages/net/src/generated/types/procedures.ts",
       "sha256": "e91691c4d61824f5a9e3ad46be93c1f741d29fdba976b6e11f43da0d8af52903"
     },
     {
       "path": "packages/net/src/generated/types/reducers.ts",
       "sha256": "1246d4cc364fb7989e921088a29a0d463bfe9f422601d56508ed86529aa0ff69"
-    },
-    {
-      "path": "packages/net/src/generated/types.ts",
-      "sha256": "6d9de73bd7daafe756cfb32044f85813339b72e81cb096a15d4f14e94fae8492"
     },
     {
       "path": "packages/net/src/generated/use_station_reducer.ts",
@@ -2191,6 +2191,14 @@
       "sha256": "60366c065aa7440be57713a4c0b05ebd9b7aebceba8705208c6206ce1449b3aa"
     },
     {
+      "path": "packages/render/src/equipment-lighting.test.ts",
+      "sha256": "5f908941ea3890f483c4450064c31dcf994f97963a300a9a684f30cd51618140"
+    },
+    {
+      "path": "packages/render/src/equipment-lighting.ts",
+      "sha256": "f4adaaa517e3d461e070e76fe57b632ae8873981135d463f5b4329bc11642e1e"
+    },
+    {
       "path": "packages/render/src/equipment/anchors.test.ts",
       "sha256": "c09320a102df4de5957afbbcaf53f3299e45e20dc3235d8eaa314e51ab9e2713"
     },
@@ -2213,14 +2221,6 @@
     {
       "path": "packages/render/src/equipment/pose-anchors.ts",
       "sha256": "3a402b5bfd4fdd28f9c89078e09e0e0cd9201e381a077388368b4776906434dc"
-    },
-    {
-      "path": "packages/render/src/equipment-lighting.test.ts",
-      "sha256": "5f908941ea3890f483c4450064c31dcf994f97963a300a9a684f30cd51618140"
-    },
-    {
-      "path": "packages/render/src/equipment-lighting.ts",
-      "sha256": "f4adaaa517e3d461e070e76fe57b632ae8873981135d463f5b4329bc11642e1e"
     },
     {
       "path": "packages/render/src/fast-snapshot.test.ts",
