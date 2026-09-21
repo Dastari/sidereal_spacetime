@@ -1,0 +1,45 @@
+[
+  {
+    "name": "stationary",
+    "maps": {},
+    "changed": 0,
+    "max": 0,
+    "channels": 2304000
+  },
+  {
+    "name": "camera orbit",
+    "maps": {
+      "exterior-key": 1
+    },
+    "changed": 0,
+    "max": 0,
+    "channels": 2304000
+  },
+  {
+    "name": "camera zoom",
+    "maps": {
+      "exterior-key": 1
+    },
+    "changed": 0,
+    "max": 0,
+    "channels": 2304000
+  },
+  {
+    "name": "sun direction",
+    "maps": {
+      "exterior-key": 1
+    },
+    "changed": 0,
+    "max": 0,
+    "channels": 2304000
+  },
+  {
+    "name": "native instance placement",
+    "maps": {
+      "exterior-key": 1
+    },
+    "changed": 0,
+    "max": 0,
+    "channels": 2304000
+  }
+]

@@ -6,6 +6,12 @@ Owners: Sidereal project
 
 This plan is written for a fresh agent. It is self-contained: read this file, `AGENTS.md`, then the referenced source lines, and start with the issue register in priority order. Every claim about the current code was verified against source on 2026-09-10; re-verify line numbers before editing because the tree changes daily.
 
+2026-09-21 candidate: [exterior sun-map reuse](handoffs/render_optimization_20260921.md)
+removes 581 of 1,211 draw calls in an isolated stationary ship fixture with identical
+pixels. Camera/motion invalidation and unsupported-path fallbacks preserve normal
+rendering. The fixture differs from the historical table below; this is not evidence
+that the overall Deck/Flight targets or public-client FPS acceptance have passed.
+
 ## What the hardware measurement says
 
 First measurement on real hardware, 2026-09-10: laptop with an NVIDIA RTX 4080, Chromium, render resolution 1574 × 907, hardware scale 1.0, nothing selected, F3 open.
