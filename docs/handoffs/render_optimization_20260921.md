@@ -3,6 +3,10 @@
 Agent: GrayLotus. Branch: `perf/shadow-and-planet-work`, based on upstream
 `0ea05476`. Renderer candidate 0.7.1; no public deployment or merge.
 
+Delivery: [PR #17](https://github.com/Dastari/sidereal_spacetime/pull/17), open.
+GitHub Source quality checks were still running at closeout; local inherited
+quality blockers are listed below. Implementation commit: `d22a503d`.
+
 ## Scope and acceptance
 
 Continue the owner's requested client performance work after pose-clearance
