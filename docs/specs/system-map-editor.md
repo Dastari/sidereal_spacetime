@@ -21,3 +21,35 @@ Use existing Creator Barlow type and theme tokens. The chart is the main surface
 
 ## Validation/evidence
 Test reproducible populations, concave/invalid polygons, volume/density arithmetic, resource extremes, coordinate bounds, permission isolation, stale revisions, retry mismatches, atomic failure and ship preservation. Browser exercise route, selection/drag, field drawing, settings, undo/redo, saved reload, and authorized isolated Apply with live views. Run npm check/build, CI quality checks and fresh isolated smoke. No live deployment or contract completion is claimed without exact candidate evidence.
+
+## Context drawers (owner refinement, 2026-09-21)
+
+Replace the two horizontal command bars and flat lists with a left drawer: compact
+labelled icon buttons, search, then one expandable Universe tree. Preserve the
+existing Barlow typography and space/cyan/amber palette (#06151e, #0b2230,
+#d5eaf5, #38bddf, #f1b655); hierarchy and selection, rather than decoration,
+carry the visual emphasis. Show systems, celestial parent/child relationships,
+nested zones, asteroid fields and permitted live ships. Search by name or ID,
+retain matching ancestors, and expand search results. Single click selects;
+double click frames. Keyboard arrows navigate the tree. Loaded system documents
+remain the unit of editing and validation; unseen private world nodes are not
+invented or exposed.
+
+No selection is distinct from system selection. Escape, a dedicated deselect
+button and a blank canvas click clear selection and show an empty inspector.
+Right-button panning suppresses the map's context menu and preserves selection.
+The right drawer orders editable Name, immutable unique ID, actual asset or
+boundary/background preview, and typed component properties. Numeric inputs
+have explicit decrement/increment controls and reject non-finite values;
+coordinates are grouped, percentages/angles offer bounded sliders, relations
+use selects and colors use native color pickers. Existing layer toggles remain
+checkboxes in drawer display options. Catalog physical/visual identity and live
+ship telemetry remain read-only because this authoring reducer cannot change
+those components. Do not offer edits the server will invariably reject.
+
+Use the existing draft/undo/save/apply path. Empty numeric input must not put NaN
+into the document. Missing portraits show a labelled fallback; malformed or
+missing tree parents must not make nodes disappear or recurse forever. Validate
+blank/Escape deselection, right-drag context prevention, tree/search/parent
+nesting, numeric stepping and undo, then save/reload in a real browser. Re-run
+full check/build and document inherited failures separately.
