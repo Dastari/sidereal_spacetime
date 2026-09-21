@@ -80,3 +80,21 @@ The star retains authored Blender PBR geometry/materials. Shared material plugin
 
 
 2026-09-15 stellar rendering refinement: native r013 closed relief tiles carry shared tile-center UVs. A PBR material plugin supplies fixed-topology vertex displacement and evolving thermal/dark-complex fields, with permanently registered injection points before the base constructor collects them. Expanded CPU culling bounds cover shader travel. One bounded billboard field integrates the orange corona and rare eruptions; material precompile and ready-only publication retain the prior visible body. No simulation writes or per-frame CPU geometry generation. Genesis fits the expanded2.1-radius effect envelope. See docs/specs/yellow-star-solar-system.md and the r018 evidence for working visual qualification versus unmeasured hardware performance.
+
+## System map authoring (2026-09-15 candidate)
+
+Creator `/map` reads `own_system_maps` and `own_map_ships` through explicit `universe-map` workspace grants. Content defines the sphere/background/celestial/field document; sim validates and reproducibly generates bounded volumetric populations; world commits expected-revision edits with source fingerprints, receipts and before/after history. The top-down SVG chart subtracts the camera origin before screen projection. Ship motion is a read-only overlay.
+
+Generated field asteroids remain separate from the dynamic contact island. Admitted actors receive at most128 nearby visual records without private resource metadata; `admitted_system_scapes` selects the authored game background. Mining/depletion and physical activation are not implemented. See [system map specification](specs/system-map-editor.md) and [validation record](handoffs/system_map_20260915.md).
+
+## Spatial background and temporary test-ship contracts (2026-09-21 candidate)
+
+`admitted_system_scapes.regions_json` projects only system sphere/field geometry and presentation IDs to the connected admitted actor in that ship/system. It excludes celestial rosters, asteroid resources, population seeds and authoring history. The pure sim resolver blends Deep space → system → fields ordered by priority and stable ID. This presentation never grants discovery, control or movement authority.
+
+`switch_construction_review` validates the owned destination and current temporary visit, expected destination/visit revisions, current spawn grant, standing/no flight/no traversal, valid home and free destination entry. It updates actor/location and the native return target atomically, clears intent, and records an idempotency receipt. Original home and inventory are never copied or replaced. The existing validated native return rechecks home access and source state.
+
+### Geometric zones
+
+Systems, asteroid fields and generic nested volumes normalize to bounded compiled zones. Curves compile once to deterministic XY polylines; root spheres remain analytic. Ancestor volumes clip descendants. SpacetimeDB stores private `system_zone` rows indexed by simulation scope and private `ship_zone_state` rows keyed by ship. Each state row includes current membership and a bounded 128-event journal with monotonic sequence bounds; storing the tail in the same row makes each changed ship one atomic state write. `own_ship_zones` reuses authenticated admission checks and exposes only the actor's current ship.
+
+Accepted contact-solver drift traces are swept for zone transitions. Corrections reclassify endpoints, rejected substeps contribute no trace, and tangent-only visits at adjacent drift joins are suppressed. A six-million-operation geometry budget prepares all ship updates before writing them; exhaustion preserves pre-step motion. Zone-only commits stamp the simulation sample to prevent replay. Definitions, background projection and editor previews share geometry. Existing `systemId` continues to partition physics/admission; geometric root exit does not implement cross-partition travel. See [ADR](adr/ADR-20260921-zone-authority.md).

@@ -1,3 +1,4 @@
+import { systemMapDenialSmoke } from "./system-map-smoke";
 import {
   LEGACY_SYSTEM_SEED,
   solarBodyForLegacyKey,
@@ -305,12 +306,16 @@ if (restore) {
     const celestial = sharedBodies(a).filter((r) => r.kind === "planet");
     assert.equal(
       celestial.length,
-      11,
-      "all ten planet families plus a mixed world are admitted for observation",
+      SHARED_SYSTEM_SEED.bodies.filter((b) => b.kind === "planet").length,
+      "the current authored planet and moon chart is admitted for observation",
     );
     assert(
-      celestial.some((r) => r.appearance === "temperate-volcanic"),
-      "mixed terrain/effect preset is server-authored",
+      celestial.every((r) =>
+        SHARED_SYSTEM_SEED.bodies.some(
+          (b) => b.id === r.id && b.appearance === r.appearance,
+        ),
+      ),
+      "every celestial appearance matches its server-authored pin",
     );
     assert(
       celestial.filter((r) => Math.hypot(r.x, r.y) > 1000).length >= 8,
@@ -760,6 +765,7 @@ if (restore) {
       combatReconnect.connection.disconnect();
     }
     summary.combat_authority_energy_aim_cooldown_retry_persistence = true;
+    summary.system_map_denial = await systemMapDenialSmoke(a);
     summary.construction_authority_denials = await constructionDenialSmoke(
       a,
       b,

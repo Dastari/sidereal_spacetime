@@ -747,9 +747,6 @@
   }
 }
 @media (max-width: 719px) {
-  .app:has(.layout-editor) .rail {
-    display: none;
-  }
   .app:has(.layout-editor) .account,
   .app:has(.layout-editor) .edition,
   .app:has(.layout-editor) .app-header nav button:first-child,

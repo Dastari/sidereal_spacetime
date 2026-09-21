@@ -1,3 +1,5 @@
+import { resolveShipFlightDefinition } from "./construction-flight-resolver";
+import { ZoneBudgetError } from "@sidereal/sim/zones";
 import { describe, expect, it, vi } from "vitest";
 vi.mock("spacetimedb/server", () => ({ SenderError: class extends Error {} }));
 import { joinSharedSystem, ensureCanonicalSystem } from "./shared-world";
@@ -262,4 +264,56 @@ it("real stock flight brakes to exact rest and then emits no motion, actuator or
   expect(writes()).toBe(before);
   expect(f.db.shipWorldMotion.shipId.find("ship1")).toEqual(motion);
   expect(step(1, 0).changedMotions).toBeGreaterThan(0);
+});
+
+it("zone-only commits stamp the sample and cannot replay at the same tick", () => {
+  const f = setup();
+  rest(f);
+  stepSharedWorld(f.physics());
+  const zones = vi.fn(() => true),
+    ctx = { ...f.physics(), timestamp: { microsSinceUnixEpoch: 150000n } },
+    hooks = {
+      definitionForShip: () =>
+        resolveShipFlightDefinition(
+          {
+            binding: () => undefined,
+            constructionInstanceExists: () => false,
+            currentInstanceRevision: () => undefined,
+            fittings: () => [],
+          },
+          "ship",
+        ),
+      canPilot: () => false,
+      zones,
+    };
+  expect(stepSharedWorld(ctx, undefined, hooks).changedMotions).toBe(0);
+  expect(zones).toHaveBeenCalledOnce();
+  expect(stepSharedWorld(ctx, undefined, hooks).reason).toBe(
+    "sample-already-applied",
+  );
+  expect(zones).toHaveBeenCalledOnce();
+});
+
+it("zone work exhaustion preserves pre-step motions", () => {
+  const f = setup(),
+    before = [...f.db.shipWorldMotion.rows.values()].map((r) => ({ ...r })),
+    report = stepSharedWorld(f.physics(), undefined, {
+      definitionForShip: () =>
+        resolveShipFlightDefinition(
+          {
+            binding: () => undefined,
+            constructionInstanceExists: () => false,
+            currentInstanceRevision: () => undefined,
+            fittings: () => [],
+          },
+          "ship",
+        ),
+      canPilot: () => false,
+      zones: () => {
+        throw new ZoneBudgetError();
+      },
+    });
+  expect(report.reason).toBe("zone-work-budget");
+  expect(report.status).toBe("exhausted");
+  expect([...f.db.shipWorldMotion.rows.values()]).toEqual(before);
 });

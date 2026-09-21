@@ -19,6 +19,7 @@ import {
   ownInstances,
   ownDecks,
   enterReview,
+  switchReview,
   leaveReview,
   stepActor,
   ownLocation,
@@ -690,4 +691,106 @@ test("ordinary Wayfarer intent crosses the sill, retains stopped support without
     localY: 10.25,
   });
   expect(ownLocation(f.ctx)).toEqual([]);
+});
+
+test("atomic test-ship switch preserves home and inventory, rejects stale/unsafe targets and replays exactly", () => {
+  const { ctx, args } = fixture();
+  spawnBlueprint(ctx, args);
+  spawnBlueprint(ctx, { ...args, operationId: "spawn-b" });
+  const [a, b] = ownInstances(ctx);
+  ctx.db.character.insert({
+    id: "tester",
+    owner: ctx.sender,
+    shipId: "home",
+    localX: 8,
+    localY: 9,
+    connected: true,
+    sprinting: false,
+  });
+  ctx.db.ship.insert({ id: "home" });
+  ctx.db.inventoryItem.insert({
+    id: "kept-item",
+    characterId: "tester",
+    amount: 3,
+  });
+  enterReview(ctx, {
+    instanceId: a.id,
+    expectedShipId: "home",
+    operationId: "enter-a",
+  });
+  const visit = ctx.db.constructionLocation.characterId.find("tester");
+  const request = {
+    instanceId: b.id,
+    expectedInstanceRevision: b.revision,
+    expectedVisitId: visit.visitId,
+    expectedRevision: visit.revision,
+    operationId: "switch-b",
+  };
+  expect(() =>
+    switchReview(ctx, { ...request, expectedRevision: 99n }),
+  ).toThrow(/revision/i);
+  ctx.db.couchSeat.insert({ characterId: "tester" });
+  expect(() => switchReview(ctx, request)).toThrow(/Stand/);
+  ctx.db.couchSeat.characterId.delete("tester");
+  const current = ctx.db.constructionInstance.id.find(b.id);
+  ctx.db.constructionInstance.id.update({
+    ...current,
+    revision: current.revision + 1n,
+  });
+  expect(() => switchReview(ctx, request)).toThrow(/revision/);
+  ctx.db.constructionInstance.id.update(current);
+  const spawnGrant = ctx.db.constructionGrant.rows.find(
+    (g: any) => g.capability === "instance.spawn",
+  );
+  spawnGrant.revoked = true;
+  expect(() => switchReview(ctx, request)).toThrow();
+  spawnGrant.revoked = false;
+  ctx.db.character.id.update({
+    ...ctx.db.character.id.find("tester"),
+    connected: false,
+  });
+  expect(() => switchReview(ctx, request)).toThrow(/connected/);
+  ctx.db.character.id.update({
+    ...ctx.db.character.id.find("tester"),
+    connected: true,
+  });
+  ctx.db.character.insert({
+    id: "occupant",
+    localX: current.spawnX,
+    localY: current.spawnY,
+  });
+  ctx.db.constructionLocation.insert({
+    characterId: "occupant",
+    instanceId: b.id,
+    deckId: b.spawnDeckId,
+  });
+  expect(() => switchReview(ctx, request)).toThrow(/occupied/);
+  ctx.db.constructionLocation.characterId.delete("occupant");
+  ctx.db.character.id.delete("occupant");
+  switchReview(ctx, request);
+  const next = ctx.db.constructionLocation.characterId.find("tester");
+  expect(next).toMatchObject({
+    instanceId: b.id,
+    returnShipId: "home",
+    returnX: 8,
+    returnY: 9,
+    revision: 2n,
+  });
+  expect(next.visitId).not.toBe(visit.visitId);
+  switchReview(ctx, request);
+  expect(ctx.db.constructionLocation.characterId.find("tester")).toEqual(next);
+  expect(ctx.db.inventoryItem.rows).toEqual([
+    { id: "kept-item", characterId: "tester", amount: 3 },
+  ]);
+  leaveReview(ctx, {
+    expectedVisitId: next.visitId,
+    expectedRevision: next.revision,
+    operationId: "return-home",
+  });
+  expect(ctx.db.character.id.find("tester")).toMatchObject({
+    shipId: "home",
+    localX: 8,
+    localY: 9,
+  });
+  expect(ownInstances(ctx)).toHaveLength(2);
 });

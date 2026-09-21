@@ -19,6 +19,9 @@ export const ActuatorOutput = __t.object("ActuatorOutput", {
 });
 export type ActuatorOutput = __Infer<typeof ActuatorOutput>;
 
+export const AdmittedSystemScapes = __t.object("AdmittedSystemScapes", {});
+export type AdmittedSystemScapes = __Infer<typeof AdmittedSystemScapes>;
+
 export const AppearanceReceipt = __t.object("AppearanceReceipt", {
   id: __t.string(),
   characterId: __t.string(),
@@ -835,6 +838,21 @@ export const EditReceipt = __t.object("EditReceipt", {
 });
 export type EditReceipt = __Infer<typeof EditReceipt>;
 
+export const FieldAsteroid = __t.object("FieldAsteroid", {
+  id: __t.string(),
+  systemId: __t.string(),
+  fieldId: __t.string(),
+  x: __t.f64(),
+  y: __t.f64(),
+  height: __t.f64(),
+  radius: __t.f64(),
+  seed: __t.u32(),
+  resourcesJson: __t.string(),
+  cellX: __t.i64(),
+  cellY: __t.i64(),
+});
+export type FieldAsteroid = __Infer<typeof FieldAsteroid>;
+
 export const GameShipAccess = __t.object("GameShipAccess", {
   shipId: __t.string(),
   instanceId: __t.string(),
@@ -1028,6 +1046,17 @@ export const LegacyBodyAlias = __t.object("LegacyBodyAlias", {
 });
 export type LegacyBodyAlias = __Infer<typeof LegacyBodyAlias>;
 
+export const MapShipProjection = __t.object("MapShipProjection", {
+  shipId: __t.string(),
+  systemId: __t.string(),
+  name: __t.string(),
+  x: __t.f64(),
+  y: __t.f64(),
+  heading: __t.f64(),
+  serverTick: __t.u64(),
+});
+export type MapShipProjection = __Infer<typeof MapShipProjection>;
+
 export const MovementTimer = __t.object("MovementTimer", {
   scheduledId: __t.u64(),
   scheduledAt: __t.scheduleAt(),
@@ -1052,6 +1081,20 @@ export const NativeAirlockStatus = __t.object("NativeAirlockStatus", {
   revision: __t.u64(),
 });
 export type NativeAirlockStatus = __Infer<typeof NativeAirlockStatus>;
+
+export const NearbyFieldAsteroid = __t.object("NearbyFieldAsteroid", {
+  id: __t.string(),
+  systemId: __t.string(),
+  x: __t.f64(),
+  y: __t.f64(),
+  height: __t.f64(),
+  radius: __t.f64(),
+  seed: __t.u32(),
+});
+export type NearbyFieldAsteroid = __Infer<typeof NearbyFieldAsteroid>;
+
+export const NearbyFieldAsteroids = __t.object("NearbyFieldAsteroids", {});
+export type NearbyFieldAsteroids = __Infer<typeof NearbyFieldAsteroids>;
 
 export const OwnActuatorOutputs = __t.object("OwnActuatorOutputs", {});
 export type OwnActuatorOutputs = __Infer<typeof OwnActuatorOutputs>;
@@ -1158,6 +1201,9 @@ export type OwnInventoryItems = __Infer<typeof OwnInventoryItems>;
 export const OwnInventoryState = __t.object("OwnInventoryState", {});
 export type OwnInventoryState = __Infer<typeof OwnInventoryState>;
 
+export const OwnMapShips = __t.object("OwnMapShips", {});
+export type OwnMapShips = __Infer<typeof OwnMapShips>;
+
 export const OwnNativeAirlocks = __t.object("OwnNativeAirlocks", {});
 export type OwnNativeAirlocks = __Infer<typeof OwnNativeAirlocks>;
 
@@ -1167,6 +1213,9 @@ export type OwnReachableCargoContainers = __Infer<typeof OwnReachableCargoContai
 export const OwnReachableCargoItems = __t.object("OwnReachableCargoItems", {});
 export type OwnReachableCargoItems = __Infer<typeof OwnReachableCargoItems>;
 
+export const OwnShipZones = __t.object("OwnShipZones", {});
+export type OwnShipZones = __Infer<typeof OwnShipZones>;
+
 export const OwnShips = __t.object("OwnShips", {});
 export type OwnShips = __Infer<typeof OwnShips>;
 
@@ -1175,6 +1224,9 @@ export type OwnSpaceBodies = __Infer<typeof OwnSpaceBodies>;
 
 export const OwnStations = __t.object("OwnStations", {});
 export type OwnStations = __Infer<typeof OwnStations>;
+
+export const OwnSystemMaps = __t.object("OwnSystemMaps", {});
+export type OwnSystemMaps = __Infer<typeof OwnSystemMaps>;
 
 export const OwnWayfarerRefitAttachments = __t.object("OwnWayfarerRefitAttachments", {});
 export type OwnWayfarerRefitAttachments = __Infer<typeof OwnWayfarerRefitAttachments>;
@@ -1347,6 +1399,30 @@ export const ShipWorldMotion = __t.object("ShipWorldMotion", {
 });
 export type ShipWorldMotion = __Infer<typeof ShipWorldMotion>;
 
+export const ShipZoneProjection = __t.object("ShipZoneProjection", {
+  shipId: __t.string(),
+  systemId: __t.string(),
+  mapRevision: __t.u64(),
+  stateRevision: __t.u64(),
+  sequence: __t.u64(),
+  earliestSequence: __t.u64(),
+  activeJson: __t.string(),
+  transitionsJson: __t.string(),
+});
+export type ShipZoneProjection = __Infer<typeof ShipZoneProjection>;
+
+export const ShipZoneState = __t.object("ShipZoneState", {
+  shipId: __t.string(),
+  systemId: __t.string(),
+  mapRevision: __t.u64(),
+  stateRevision: __t.u64(),
+  sequence: __t.u64(),
+  earliestSequence: __t.u64(),
+  activeJson: __t.string(),
+  transitionsJson: __t.string(),
+});
+export type ShipZoneState = __Infer<typeof ShipZoneState>;
+
 export const SpaceBody = __t.object("SpaceBody", {
   id: __t.string(),
   shipId: __t.string(),
@@ -1398,6 +1474,48 @@ export const SystemBody = __t.object("SystemBody", {
   charted: __t.bool(),
 });
 export type SystemBody = __Infer<typeof SystemBody>;
+
+export const SystemMapDefinition = __t.object("SystemMapDefinition", {
+  id: __t.string(),
+  revision: __t.u64(),
+  documentJson: __t.string(),
+});
+export type SystemMapDefinition = __Infer<typeof SystemMapDefinition>;
+
+export const SystemMapEdit = __t.object("SystemMapEdit", {
+  id: __t.string(),
+  systemId: __t.string(),
+  principal: __t.identity(),
+  revision: __t.u64(),
+  beforeJson: __t.string(),
+  afterJson: __t.string(),
+  createdMicros: __t.u64(),
+});
+export type SystemMapEdit = __Infer<typeof SystemMapEdit>;
+
+export const SystemMapProjection = __t.object("SystemMapProjection", {
+  id: __t.string(),
+  revision: __t.u64(),
+  documentJson: __t.string(),
+  sourceFingerprint: __t.string(),
+});
+export type SystemMapProjection = __Infer<typeof SystemMapProjection>;
+
+export const SystemScapeProjection = __t.object("SystemScapeProjection", {
+  id: __t.string(),
+  backgroundId: __t.string(),
+  regionsJson: __t.string(),
+});
+export type SystemScapeProjection = __Infer<typeof SystemScapeProjection>;
+
+export const SystemZone = __t.object("SystemZone", {
+  id: __t.string(),
+  systemId: __t.string(),
+  zoneId: __t.string(),
+  revision: __t.u64(),
+  definitionJson: __t.string(),
+});
+export type SystemZone = __Infer<typeof SystemZone>;
 
 export const VisibleBodyDescriptions = __t.object("VisibleBodyDescriptions", {});
 export type VisibleBodyDescriptions = __Infer<typeof VisibleBodyDescriptions>;

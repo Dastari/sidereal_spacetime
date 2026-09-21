@@ -312,6 +312,108 @@ export function enterReview(
   clearControls(ctx, actor.id);
   receipt(ctx, op.key, op.request, instance.id, 1n);
 }
+/** Atomic A → B review transit. The original home record is retained verbatim. */
+export function switchReview(
+  ctx: Context,
+  args: {
+    instanceId: string;
+    expectedInstanceRevision: bigint;
+    expectedVisitId: string;
+    expectedRevision: bigint;
+    operationId: string;
+  },
+) {
+  const actor = actorFor(ctx),
+    target = ctx.db.constructionInstance.id.find(args.instanceId);
+  if (!actor?.connected || !target?.owner.isEqual(ctx.sender))
+    throw new SenderError("Owned test ship and connected character required");
+  requireGrant(ctx, target.workspaceId, "instance.spawn");
+  const location = ctx.db.constructionLocation.characterId.find(actor.id);
+  const op = operation(
+    ctx,
+    args.operationId,
+    {
+      kind: "switch-construction-review",
+      ...args,
+      expectedRevision: String(args.expectedRevision),
+      expectedInstanceRevision: String(args.expectedInstanceRevision),
+    },
+    args.expectedRevision,
+    location?.revision ?? 0n,
+  );
+  if (op.replay) return;
+  if (
+    !location ||
+    location.visitId !== args.expectedVisitId ||
+    actor.shipId !== location.instanceId ||
+    !location.returnShipId ||
+    target.id === location.instanceId ||
+    target.id === location.returnShipId
+  )
+    throw new SenderError("Current temporary test-ship visit required");
+  if (
+    target.workspaceId === GAME_OWNED_TEMPLATE_NAMESPACE ||
+    !ctx.db.ship.id.find(location.returnShipId)
+  )
+    throw new SenderError("Dedicated test ship and valid home required");
+  if (target.revision !== args.expectedInstanceRevision)
+    throw new SenderError("Test ship revision changed");
+  requireStandingConstructionActor(ctx, actor.id);
+  requireNoConstructionStair(ctx, actor.id);
+  if (
+    ctx.db.couchSeat.characterId.find(actor.id) ||
+    ctx.db.constructionPilotSeat.characterId.find(actor.id) ||
+    ctx.db.constructionFlightReview.characterId.find(actor.id) ||
+    ctx.db.station.shipId.find(actor.shipId)?.occupantId === actor.id
+  )
+    throw new SenderError(
+      "Stand up and end flight review before switching test ships",
+    );
+  const saved = ctx.db.constructionReviewOrigin.characterId.find(actor.id);
+  if (
+    saved &&
+    (!saved.owner.isEqual(ctx.sender) ||
+      saved.reviewInstanceId !== location.instanceId)
+  )
+    throw new SenderError("Original return relation changed");
+  const entry = qualifiedConstructionReviewEntry(
+    constructionCollision(ctx, target, target.spawnDeckId),
+    target,
+  );
+  for (const other of ctx.db.constructionLocation.by_instance.filter(
+    target.id,
+  )) {
+    const occupant = ctx.db.character.id.find(other.characterId);
+    if (
+      other.deckId === target.spawnDeckId &&
+      occupant &&
+      Math.hypot(occupant.localX - entry[0], occupant.localY - entry[1]) < 0.6
+    )
+      throw new SenderError("Test ship entry is occupied");
+  }
+  ctx.db.constructionLocation.characterId.update({
+    ...location,
+    visitId: ctx.newUuidV4().toString(),
+    instanceId: target.id,
+    deckId: target.spawnDeckId,
+    revision: location.revision + 1n,
+  });
+  if (saved)
+    ctx.db.constructionReviewOrigin.characterId.update({
+      ...saved,
+      reviewInstanceId: target.id,
+    });
+  ctx.db.character.id.update({
+    ...actor,
+    shipId: target.id,
+    localX: entry[0],
+    localY: entry[1],
+    sprinting: false,
+  });
+  clearControls(ctx, actor.id);
+  receipt(ctx, op.key, op.request, target.id, location.revision + 1n);
+}
+
 export function leaveReview(
   ctx: Context,
   args: {

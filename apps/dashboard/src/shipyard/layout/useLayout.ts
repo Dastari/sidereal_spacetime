@@ -1,4 +1,9 @@
 import {
+  importConstructionSource,
+  copyConstructionSource,
+  storedConstructionSource,
+} from "../../authoring/construction-document";
+import {
   createBlankLayout,
   createWayfarerFloorplanDraft,
   floorplanOnlyCopy,
@@ -284,7 +289,11 @@ export function useLayout() {
     replaceExisting = false,
   ) {
     try {
-      if (copy) d = { ...d, id: uuid() };
+      if (copy) {
+        const previous = d.id;
+        d = { ...d, id: uuid() };
+        copyConstructionSource(previous, d.id);
+      }
       readLayout(d);
       setRecovery("");
       localStorage.removeItem(
@@ -455,6 +464,9 @@ export function useLayout() {
                   schema: "sidereal.layout-recovery.v1",
                   sequence: sequence.current,
                   writer: writer.current,
+                  constructionSource: doc
+                    ? storedConstructionSource(doc.id)
+                    : undefined,
                   history,
                   view,
                 },
@@ -617,7 +629,14 @@ export function useLayout() {
         const parsed = JSON.parse(raw);
         if (parsed.schema === "sidereal.layout-recovery.v1") {
           const c = readCheckpoint(raw);
+          const metadata = JSON.parse(raw).constructionSource;
           const newId = uuid();
+          if (metadata)
+            importConstructionSource(
+              JSON.stringify(metadata),
+              c.history.present.id,
+              newId,
+            );
           c.history.present.id = newId;
           c.history.past.forEach((d) => (d.id = newId));
           c.history.future.forEach((d) => (d.id = newId));
@@ -633,6 +652,13 @@ export function useLayout() {
           setError(
             "Imported a separate draft with its original history and source revision.",
           );
+        } else if (parsed.schema === "sidereal.construction.v1") {
+          const source = importConstructionSource(
+            raw,
+            parsed.layout.id,
+            uuid(),
+          );
+          adopt(source.layout);
         } else if (
           (parsed.present ?? parsed).schema === "sidereal.assembly-draft.v1"
         )

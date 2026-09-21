@@ -64,6 +64,11 @@ export async function constructionDenialSmoke(
         ),
         "no foreign location",
       );
+    await assert.rejects(c.reducers.switchConstructionReview({
+      instanceId: "missing", expectedInstanceRevision: 1n,
+      expectedVisitId: "missing", expectedRevision: 0n,
+      operationId: crypto.randomUUID(),
+    }));
     await assert.rejects(
       c.reducers.spawnConstructionBlueprint({
         blueprintId: "missing",

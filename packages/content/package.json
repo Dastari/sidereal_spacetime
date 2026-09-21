@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/content",
-  "version": "0.2.1",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -33,7 +33,10 @@
     "./hull-size-catalog": "./src/hull-size-catalog.ts",
     "./layout-assembly": "./src/layout-assembly.ts",
     "./tileset-interfaces": "./src/tileset-interfaces.ts",
-    "./pilot-layout": "./src/pilot-layout.ts"
+    "./pilot-layout": "./src/pilot-layout.ts",
+    "./system-map": "./src/system-map.ts",
+    "./environment": "./src/environment.ts",
+    "./zones": "./src/zones.ts"
   },
   "dependencies": {}
 }

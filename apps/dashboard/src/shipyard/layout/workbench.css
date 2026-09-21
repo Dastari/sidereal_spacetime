@@ -1,7 +1,5 @@
 /* Shipyard composition. Geometry and canvas overlays remain in their own styles. */
-.app:has(.layout-editor) .rail {
-  display: none;
-}
+
 .app:has(.layout-editor) .app-header {
   height: 56px;
   background: var(--creator-surface);
@@ -910,4 +908,42 @@
 }
 .wall-fit-notes li + li {
   margin-top: 6px;
+}
+
+.template-library-dialog {
+  width: min(680px, calc(100vw - 96px));
+  max-height: 85dvh;
+  padding: 22px;
+  background: var(--creator-surface);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: auto;
+}
+.template-library-dialog::backdrop {
+  background: #0009;
+}
+.template-library-dialog > header {
+  display: flex;
+  align-items: start;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.template-library-dialog h3 {
+  margin-top: 24px;
+}
+.template-library-dialog p {
+  white-space: normal;
+}
+.template-library-dialog .construction-online {
+  display: grid;
+  gap: 10px;
+}
+.template-library-dialog button,
+.template-library-dialog select {
+  border: 1px solid var(--line);
+  background: var(--creator-raised);
+  padding: 8px 12px;
+  border-radius: 4px;
+  color: var(--text);
 }

@@ -1,3 +1,19 @@
+# 0.6.0 — Studio spatial and test-ship workflows (2026-09-21)
+
+- Move workspace navigation to an accessible persistent left icon rail.
+- Add stars-only Deep space as the game default; share system/field background selection and feathering between editor and game, with sanitized actor-admitted geometry.
+- Anchor system boundaries to a chosen star; retain explicit legacy centers, static parent/moon orbit guides and descendant movement. Show lightweight actual asset portraits and an adjustable background preview height.
+- Expose Shipyard template publication from every design stage, preserve complete construction metadata in save/import/export, and retain incomplete drafts for recovery.
+- Add atomic dedicated test-ship switching with revision/permission/control/occupancy checks, preserving original native or legacy home and inventory. Keep qualified flight/traversal requirements intact.
+- Candidate only: no production activation. Includes the existing map-editor PR11 commits. See docs/handoffs/studio_spatial_workflows.md for checks and integration limits.
+
+# 0.5.0 — System map editor candidate (2026-09-15)
+
+- Add Creator `/map` with metric chart, celestial movement, live ships, spherical systems and space backgrounds.
+- Author box, ellipsoid and concave polygon asteroid volumes with seeded density, radius and resource occurrence controls.
+- Validate privileged edits atomically, preserve ships, record source/revision checks and before/after history; expose nearby visual asteroids without resource metadata.
+- Correct LFS attributes for canonical native JSON payloads and replace an obsolete smoke assertion with the pinned current celestial chart.
+
 # Changelog
 
 ## 2026-09-15 — Stellar Observe framing (render 0.5.1)
@@ -34,3 +50,9 @@ Added a 29-body authored celestial layout with owner-scaled radii and travel gap
 ## 2026-09-15 — Dynamic stellar relief (render/dashboard0.5.0; client/root0.4.0; content/net/world0.2.1)
 
 Native r013 replaces permanently fixed sunspot basins with5,762 editable hexagonal/pentagonal closed tiles. Shared native PBR plugins animate rigid tile heights, drifting/dissolving dark complexes and connected hot regions without per-frame geometry generation. A wider orange corona carries rare curling eruptions with quiet intervals; retired small persistent flare actors are absent from the new native export. Genesis frames the expanded effect. Added compiled-shader regression for the vertex injection initialization defect, stable topology/shared-material checks and native byte-budget/UV/semantic tests. Actual software-browser playback and close/alternate/bloom-off evidence are saved as plasma-r018; hardware timing and owner final signoff are not claimed. Solar seed appearance now pins r013; its new hash requires isolated migration revalidation before live publication.
+
+## 0.7.0 — 2026-09-21
+
+- Added shared studio select/pan, duplicate/delete, undo/redo and nudge shortcuts, including Shipyard Objects/Hull and Assembly, with focused text/modal handling and gesture cancellation.
+- Added named, colored nested polygon zones with cubic handles, numeric handle angles/lengths, shape-preserving insertion, subtree editing and shared preview/game background clipping.
+- Added private indexed zone definitions and authoritative per-ship membership/transition journals. Accepted movement detects through-crossings, retains reconnect sequence bounds, and preserves existing physics/admission scope.
