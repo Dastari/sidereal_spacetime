@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/render",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -15,12 +15,13 @@
     "./antialiasing-settings": "./src/antialiasing-settings.ts",
     "./graphics-settings": "./src/graphics-settings.ts",
     "./local-light-budget": "./src/local-light-budget.ts",
-    "./layout-assembly-preview": "./src/layout-assembly-preview.ts"
+    "./layout-assembly-preview": "./src/layout-assembly-preview.ts",
+    "./reviewed-native-preview": "./src/environment/reviewed-native-preview.ts"
   },
   "dependencies": {
     "@babylonjs/core": "9.25.0",
     "@babylonjs/loaders": "9.25.0",
-    "@sidereal/content": "0.5.0",
+    "@sidereal/content": "0.6.0",
     "@sidereal/sim": "0.4.1",
     "@noble/hashes": "2.4.0"
   }

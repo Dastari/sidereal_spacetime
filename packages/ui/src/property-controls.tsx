@@ -1,4 +1,4 @@
-import { useEffect, useId, useState, type ReactNode } from "react";
+import { useEffect, useId, useState, useRef, type ReactNode } from "react";
 
 /** Keeps incomplete keyboard input local; documents only receive finite values. */
 export function NumberField({
@@ -11,6 +11,7 @@ export function NumberField({
   integer = false,
   slider = false,
   disabled = false,
+  precision,
 }: {
   label: string;
   value: number;
@@ -21,14 +22,30 @@ export function NumberField({
   integer?: boolean;
   slider?: boolean;
   disabled?: boolean;
+  precision?: number;
 }) {
   const id = useId();
-  const [text, setText] = useState(String(value));
-  useEffect(() => setText(String(value)), [value]);
+  const editing = useRef(false);
+  const format = (n: number) =>
+    precision === undefined ? String(n) : n.toFixed(precision);
+  const [text, setText] = useState(format(value));
+  useEffect(() => {
+    if (!editing.current)
+      setText(
+        precision === undefined ? String(value) : value.toFixed(precision),
+      );
+  }, [value, precision]);
   const normalize = (n: number) =>
     Math.min(
       max ?? Infinity,
-      Math.max(min ?? -Infinity, integer ? Math.round(n) : n),
+      Math.max(
+        min ?? -Infinity,
+        integer
+          ? Math.round(n)
+          : precision === undefined
+            ? n
+            : Number(n.toFixed(precision)),
+      ),
     );
   const change = (n: number) => {
     if (Number.isFinite(n)) onChange(normalize(n));
@@ -58,7 +75,13 @@ export function NumberField({
             setText(e.target.value);
             if (e.target.value !== "") change(e.target.valueAsNumber);
           }}
-          onBlur={() => setText(String(value))}
+          onFocus={() => {
+            editing.current = true;
+          }}
+          onBlur={() => {
+            editing.current = false;
+            setText(format(value));
+          }}
         />
         <button
           type="button"

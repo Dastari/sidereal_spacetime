@@ -1,6 +1,6 @@
 # ADR: Viewport-bounded planar map over live celestial instances
 
-Date: 2026-09-21. Status: Accepted owner direction; authority details under review.
+Date: 2026-09-21. Status: Accepted owner direction; implemented candidate, authenticated browser acceptance pending.
 
 Use the live server celestial UUID as the Genesis instance identity. Reuse its
 existing authoritative state and map edit transaction where possible, rather
@@ -19,3 +19,17 @@ segments, viewport culling and frame-coalesced camera updates over reducing
 planet detail or adding arbitrary camera limits. Consequence: analytic viewport
 helpers need numeric edge-case tests, and preview frames can lag by a bounded
 render interval while camera/selection interaction remains responsive.
+
+The existing `system_body` row is the live Genesis instance. No parallel instance
+store, schema migration or authentication exception is introduced. `sidereal-shipyard`
+uses its already approved game resource audience and existing session proof. Native
+asset, seed and radius edits use the same map transaction, with an approved asset
+allowlist, type/seed validation and ship safety checks when bodies grow or move.
+Body UUIDs and unrelated motion/state survive the edit. Authority tick materializes
+grant expiry for private views; reducers check exact expiry at command consumption.
+
+A successful reducer response alone does not complete a save: wait for a newer map
+projection, then load its canonical document/revision/fingerprint. Preserve retry
+operation identity during delayed subscription delivery. The supported native
+instance properties are name, XY position, radius, native asset, composition seed
+and orbital parent; Blender mesh/material authoring remains its existing pipeline.

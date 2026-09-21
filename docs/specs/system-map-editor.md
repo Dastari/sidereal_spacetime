@@ -43,9 +43,9 @@ boundary/background preview, and typed component properties. Numeric inputs
 have explicit decrement/increment controls and reject non-finite values;
 coordinates are grouped, percentages/angles offer bounded sliders, relations
 use selects and colors use native color pickers. Existing layer toggles remain
-checkboxes in drawer display options. Catalog physical/visual identity and live
-ship telemetry remain read-only because this authoring reducer cannot change
-those components. Do not offer edits the server will invariably reject.
+checkboxes in drawer display options. Celestial UUID/type and live ship telemetry remain read-only. The live refinement
+below permits validated native asset, seed and radius edits; Blender source mesh
+and material authoring remains separate.
 
 Use the existing draft/undo/save/apply path. Empty numeric input must not put NaN
 into the document. Missing portraits show a labelled fallback; malformed or

@@ -1,3 +1,5 @@
+import { portraitRadiusFraction } from "@sidereal/content/celestial-assets";
+import { diskVisible, visibleCirclePath, showOrbit } from "./map-viewport";
 import type { MapZone } from "@sidereal/content/zones";
 import { mapZones, subtree } from "./map-commands";
 import { cubicAt, setZoneHandle } from "@sidereal/sim/zone-path";
@@ -44,10 +46,16 @@ export default function MapCanvas({
   camera,
   setCamera,
   layers,
-  previewHeight,
   drawing,
   onDraw,
+  creationShape,
+  onCreateBounds,
 }: {
+  creationShape: "box" | "ellipsoid" | null;
+  onCreateBounds: (
+    a: { x: number; y: number },
+    b: { x: number; y: number },
+  ) => void;
   doc: SystemMapDocument;
   ships: MapShip[];
   asteroids: FieldAsteroid[];
@@ -79,7 +87,6 @@ export default function MapCanvas({
     grid: boolean;
     orbits: boolean;
   };
-  previewHeight: number;
   drawing: { x: number; y: number }[] | null;
   onDraw: (p: { x: number; y: number }) => void;
 }) {
@@ -123,6 +130,48 @@ export default function MapCanvas({
     observer.observe(target);
     return () => observer.disconnect();
   }, []);
+  const cameraRef = useRef(camera);
+  cameraRef.current = camera;
+  useEffect(() => {
+    const target = svg.current;
+    if (!target) return;
+    let frame = 0,
+      pending: Camera | null = null;
+    const wheel = (event: WheelEvent) => {
+      event.preventDefault();
+      const rect = target.getBoundingClientRect(),
+        c = pending ?? cameraRef.current;
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = 0.5 - (event.clientY - rect.top) / rect.height;
+      const aspect = rect.width / rect.height;
+      const delta =
+        event.deltaY *
+        (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? rect.height : 1);
+      const span = Math.max(
+        10,
+        Math.min(
+          2e9,
+          c.span * Math.exp(Math.max(-600, Math.min(600, delta)) * 0.001),
+        ),
+      );
+      pending = {
+        span,
+        x: c.x + x * (c.span - span),
+        y: c.y + (y * (c.span - span)) / aspect,
+      };
+      if (!frame)
+        frame = requestAnimationFrame(() => {
+          frame = 0;
+          if (pending) setCamera(pending);
+          pending = null;
+        });
+    };
+    target.addEventListener("wheel", wheel, { passive: false });
+    return () => {
+      target.removeEventListener("wheel", wheel);
+      cancelAnimationFrame(frame);
+    };
+  }, [setCamera]);
   // Subtract the f64 camera origin before SVG conversion. Large raw SVG/font coordinates are clamped by browsers.
   const height = 1000 / ratio,
     scale = 1000 / camera.span,
@@ -130,6 +179,7 @@ export default function MapCanvas({
     minY = camera.y - camera.span / ratio / 2;
   const px = (x: number) => (x - camera.x) * scale + 500,
     py = (y: number) => height / 2 - (y - camera.y) * scale;
+  const viewport = { width: 1000, height };
   const point = (e: { clientX: number; clientY: number }) => {
     const r = svg.current!.getBoundingClientRect();
     return {
@@ -146,7 +196,9 @@ export default function MapCanvas({
     vertex?: number,
     side?: "in" | "out",
   ) => {
-    if (drawing || space || tool === "pan" || e.button !== 0) return;
+    if (drawing || creationShape || space || tool === "pan" || e.button !== 0)
+      return;
+    e.preventDefault();
     e.stopPropagation();
     svg.current!.setPointerCapture(e.pointerId);
     svg.current!.focus();
@@ -287,12 +339,7 @@ export default function MapCanvas({
   }
   return (
     <div className="map-chart">
-      <MapBackground
-        doc={doc}
-        camera={camera}
-        ratio={ratio}
-        previewHeight={previewHeight}
-      />
+      <MapBackground doc={doc} camera={camera} ratio={ratio} />
       <svg
         onContextMenu={(e) => e.preventDefault()}
         ref={svg}
@@ -316,15 +363,20 @@ export default function MapCanvas({
           }
           e.currentTarget.setPointerCapture(e.pointerId);
           setDrag({
-            id: space || tool === "pan" || e.button !== 0 ? "pan" : "marquee",
+            id:
+              space || tool === "pan" || e.button !== 0
+                ? "pan"
+                : creationShape
+                  ? "create"
+                  : "marquee",
             pointer: e.pointerId,
             additive: e.shiftKey,
             independent: false,
             screen: { x: e.clientX, y: e.clientY },
             moved: false,
             start: p,
-            original: { x: camera.x, y: camera.y },
-            preview: { x: camera.x, y: camera.y },
+            original: creationShape ? p : { x: camera.x, y: camera.y },
+            preview: creationShape ? p : { x: camera.x, y: camera.y },
           });
         }}
         onPointerMove={(e) => {
@@ -346,11 +398,11 @@ export default function MapCanvas({
                   ) > 3,
                 preview: {
                   x:
-                    drag.id === "marquee"
+                    drag.id === "marquee" || drag.id === "create"
                       ? p.x
                       : Math.round(drag.original.x + dx),
                   y:
-                    drag.id === "marquee"
+                    drag.id === "marquee" || drag.id === "create"
                       ? p.y
                       : Math.round(drag.original.y + dy),
                 },
@@ -359,7 +411,9 @@ export default function MapCanvas({
         }}
         onPointerUp={(e) => {
           if (!drag || drag.pointer !== e.pointerId) return;
-          if (drag.id === "marquee") {
+          if (drag.id === "create") {
+            if (drag.moved) onCreateBounds(drag.start, drag.preview);
+          } else if (drag.id === "marquee") {
             const within = (p: { x: number; y: number }) =>
               p.x >= Math.min(drag.start.x, drag.preview.x) &&
               p.x <= Math.max(drag.start.x, drag.preview.x) &&
@@ -396,15 +450,6 @@ export default function MapCanvas({
         }}
         onPointerCancel={() => setDrag(null)}
         onLostPointerCapture={() => setDrag(null)}
-        onWheel={(e) => {
-          setCamera({
-            ...camera,
-            span: Math.max(
-              10,
-              Math.min(2e9, camera.span * Math.exp(e.deltaY * 0.001)),
-            ),
-          });
-        }}
       >
         <defs>
           <clipPath id="zone-root-clip">
@@ -425,6 +470,25 @@ export default function MapCanvas({
           ))}
         </defs>
         <rect width={1000} height={height} fill="transparent" />
+        {drag?.id === "create" && (
+          <g className="map-drawing" fill="#71ddf320">
+            {creationShape === "ellipsoid" ? (
+              <ellipse
+                cx={(px(drag.start.x) + px(drag.preview.x)) / 2}
+                cy={(py(drag.start.y) + py(drag.preview.y)) / 2}
+                rx={(Math.abs(drag.preview.x - drag.start.x) * scale) / 2}
+                ry={(Math.abs(drag.preview.y - drag.start.y) * scale) / 2}
+              />
+            ) : (
+              <rect
+                x={Math.min(px(drag.start.x), px(drag.preview.x))}
+                y={Math.min(py(drag.start.y), py(drag.preview.y))}
+                width={Math.abs(drag.preview.x - drag.start.x) * scale}
+                height={Math.abs(drag.preview.y - drag.start.y) * scale}
+              />
+            )}
+          </g>
+        )}
         {layers.grid && (
           <g className="map-grid">
             {linesX.map((x, i) => (
@@ -442,11 +506,14 @@ export default function MapCanvas({
             ))}
           </g>
         )}
-        <circle
+        <path
           className="map-system-boundary"
-          cx={px(systemCenter(doc).x)}
-          cy={py(systemCenter(doc).y)}
-          r={doc.radius * scale}
+          d={visibleCirclePath(
+            px(systemCenter(doc).x),
+            py(systemCenter(doc).y),
+            doc.radius * scale,
+            viewport,
+          )}
           style={{ stroke: doc.color ?? "#6ca6cb" }}
         />
         {layers.fields &&
@@ -502,14 +569,23 @@ export default function MapCanvas({
           ))}
         {layers.fields && (
           <g className="map-asteroids" pointerEvents="none">
-            {asteroids.map((a) => (
-              <circle
-                key={a.id}
-                cx={px(a.x)}
-                cy={py(a.y)}
-                r={Math.max(a.radius * scale, 1.5)}
-              />
-            ))}
+            {asteroids
+              .filter((a) =>
+                diskVisible(
+                  px(a.x),
+                  py(a.y),
+                  Math.max(a.radius * scale, 1.5),
+                  viewport,
+                ),
+              )
+              .map((a) => (
+                <circle
+                  key={a.id}
+                  cx={px(a.x)}
+                  cy={py(a.y)}
+                  r={Math.max(a.radius * scale, 1.5)}
+                />
+              ))}
           </g>
         )}
         {layers.orbits && (
@@ -519,12 +595,19 @@ export default function MapCanvas({
               if (!parent) return null;
               const q = position(b.id, b.x, b.y),
                 p = position(parent.id, parent.x, parent.y);
+              const radius = Math.hypot(q.x - p.x, q.y - p.y) * scale;
+              if (!showOrbit(radius, parent.kind !== "star")) return null;
+              const path = visibleCirclePath(
+                px(p.x),
+                py(p.y),
+                radius,
+                viewport,
+              );
+              if (!path) return null;
               return (
-                <circle
+                <path
                   key={b.id}
-                  cx={px(p.x)}
-                  cy={py(p.y)}
-                  r={Math.hypot(q.x - p.x, q.y - p.y) * scale}
+                  d={path}
                   className={
                     parent.kind === "star" ? "planet-orbit" : "moon-orbit"
                   }
@@ -540,23 +623,16 @@ export default function MapCanvas({
                 b.radius * scale,
                 mapBodyRole(b, doc.bodies) === "moon" ? 8 : 14,
               );
+            const imageRadius = r / portraitRadiusFraction(b.appearance);
+            if (!diskVisible(px(p.x), py(p.y), imageRadius, viewport))
+              return null;
             return (
               <g
                 key={b.id}
                 className={`map-body ${mapBodyRole(b, doc.bodies)} ${selections.includes(b.id) ? "selected" : ""}`}
                 aria-label={b.name}
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") onSelect(b.id);
-                }}
                 onPointerDown={(e) => start(e, b.id, { x: b.x, y: b.y })}
               >
-                <circle
-                  className="true-radius"
-                  cx={px(p.x)}
-                  cy={py(p.y)}
-                  r={b.radius * scale}
-                />
                 <circle
                   className={
                     thumbnails[b.id] ? "map-portrait-outline" : undefined
@@ -569,10 +645,10 @@ export default function MapCanvas({
                   <image
                     className="map-body-image"
                     href={thumbnails[b.id]}
-                    x={px(p.x) - r}
-                    y={py(p.y) - r}
-                    width={r * 2}
-                    height={r * 2}
+                    x={px(p.x) - imageRadius}
+                    y={py(p.y) - imageRadius}
+                    width={imageRadius * 2}
+                    height={imageRadius * 2}
                   >
                     <title>
                       {b.name} · asset portrait: {b.appearance}
@@ -581,11 +657,15 @@ export default function MapCanvas({
                 ) : (
                   <title>{b.name} · asset portrait unavailable</title>
                 )}
-                {labels.has(b.id) && (
-                  <text x={px(p.x) + r + 5} y={py(p.y) + 4} fontSize={13}>
-                    {b.name}
-                  </text>
-                )}
+                {labels.has(b.id) &&
+                  px(p.x) + r < 1000 &&
+                  px(p.x) + r > -100 &&
+                  py(p.y) > -20 &&
+                  py(p.y) < height + 20 && (
+                    <text x={px(p.x) + r + 5} y={py(p.y) + 4} fontSize={13}>
+                      {b.name}
+                    </text>
+                  )}
               </g>
             );
           })}

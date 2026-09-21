@@ -1,10 +1,10 @@
+import { CELESTIAL_ASSETS } from "@sidereal/content/celestial-assets";
 import { NumberField, CoordinateFields } from "@sidereal/ui/property-controls";
 import { InspectorIdentity } from "./InspectorIdentity";
 import { moveMapSelection } from "./map-commands";
 import { ZoneProperties } from "./ZoneProperties";
 import { systemCenter } from "@sidereal/sim/space-background";
 import {
-  mapBodyRole,
   moveMapBody,
   MAP_BACKGROUNDS,
   MAP_RESOURCES,
@@ -98,10 +98,12 @@ export default function MapInspector({
         </label>
       )}
       <CoordinateFields>
-        {(["x", "y", "height"] as const).map((k) => (
+        {(["x", "y"] as const).map((k) => (
           <NumberField
             key={k}
-            label={`${k === "height" ? "Height" : k.toUpperCase()} (m)`}
+            label={`${k.toUpperCase()} (m)`}
+            precision={2}
+            step={0.01}
             value={(field ?? body ?? systemCenter(doc))[k]}
             onChange={(n) =>
               edit((d) => {
@@ -127,7 +129,7 @@ export default function MapInspector({
                     [field.id],
                     k === "x" ? n - field.x : 0,
                     k === "y" ? n - field.y : 0,
-                    k === "height" ? n - field.height : 0,
+                    0,
                   );
                 else p[k] = n;
               })
@@ -137,17 +139,69 @@ export default function MapInspector({
       </CoordinateFields>
       {body && (
         <>
-          <p>
-            {mapBodyRole(body, doc.bodies)} · catalog components (read only)
-          </p>
-          <dl className="map-component-facts">
-            <dt>Radius</dt>
-            <dd>{body.radius} m</dd>
-            <dt>Appearance</dt>
-            <dd>{body.appearance ?? "Unassigned"}</dd>
-            <dt>Seed</dt>
-            <dd>{body.seed ?? "Default"}</dd>
-          </dl>
+          <a
+            className="map-genesis-link"
+            href={`/planets?body=${encodeURIComponent(body.id)}`}
+          >
+            Open this instance in Genesis
+          </a>
+          <NumberField
+            label="Radius (m)"
+            min={0.01}
+            max={1e7}
+            precision={2}
+            step={0.01}
+            value={body.radius}
+            onChange={(radius) =>
+              edit((d) => {
+                d.bodies.find((b) => b.id === body.id)!.radius = radius;
+              })
+            }
+          />
+          <label>
+            Genesis asset
+            <select
+              aria-label="Genesis asset"
+              value={body.appearance ?? ""}
+              onChange={(e) =>
+                edit((d) => {
+                  const b = d.bodies.find((b) => b.id === body.id)!;
+                  b.appearance = e.target.value;
+                  const asset = CELESTIAL_ASSETS.find(
+                    (a) => a.id === b.appearance,
+                  );
+                  if (asset && "seed" in asset) b.seed = asset.seed;
+                })
+              }
+            >
+              {!CELESTIAL_ASSETS.some((a) => a.id === body.appearance) && (
+                <option value={body.appearance ?? ""}>
+                  {body.appearance ?? "Choose asset"}
+                </option>
+              )}
+              {CELESTIAL_ASSETS.filter(
+                (a) => (a.kind === "star") === (body.kind === "star"),
+              ).map((a) => (
+                <option key={a.id} value={a.id}>
+                  {a.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          {body.kind !== "star" && (
+            <NumberField
+              label="Composition seed"
+              min={0}
+              max={2147483647}
+              integer
+              value={body.seed ?? 117}
+              onChange={(seed) =>
+                edit((d) => {
+                  d.bodies.find((b) => b.id === body.id)!.seed = seed;
+                })
+              }
+            />
+          )}
           {body.kind !== "star" && (
             <label>
               Orbits around
@@ -242,18 +296,6 @@ export default function MapInspector({
               ))}
             </select>
           </label>
-          <NumberField
-            label="System feather (m)"
-            max={doc.radius}
-            slider
-            min={0}
-            value={doc.feather ?? Math.min(doc.radius * 0.05, 100000)}
-            onChange={(n) =>
-              edit((d) => {
-                d.feather = n;
-              })
-            }
-          />
           <p>The outline is the top-down projection of the system sphere.</p>
         </>
       )}
@@ -301,15 +343,6 @@ export default function MapInspector({
           {field.backgroundId && (
             <>
               <NumberField
-                label="Field feather (m)"
-                min={0}
-                value={
-                  field.feather ??
-                  Math.min(field.width, field.length, field.depth) * 0.1
-                }
-                onChange={(n) => updateField({ feather: n })}
-              />
-              <NumberField
                 label="Background priority"
                 integer
                 value={field.priority ?? 0}
@@ -317,12 +350,6 @@ export default function MapInspector({
               />
             </>
           )}
-          <NumberField
-            label="Depth (m)"
-            min={1}
-            value={field.depth}
-            onChange={(n) => updateField({ depth: n })}
-          />
           <NumberField
             label="Density (asteroids/km³)"
             min={0}

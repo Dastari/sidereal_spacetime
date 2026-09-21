@@ -145,6 +145,8 @@ export function ZoneProperties({
                   <NumberField
                     key={k}
                     label={`Anchor ${k.toUpperCase()} (m)`}
+                    precision={2}
+                    step={0.01}
                     value={anchor[k]}
                     onChange={(n) =>
                       update((z) => {
@@ -253,10 +255,12 @@ export function GenericZoneInspector({
       />
       <h2>Zone</h2>
       <CoordinateFields>
-        {(["x", "y", "height"] as const).map((k) => (
+        {(["x", "y"] as const).map((k) => (
           <NumberField
             key={k}
-            label={`${k === "height" ? "Height" : k.toUpperCase()} (m)`}
+            label={`${k.toUpperCase()} (m)`}
+            precision={2}
+            step={0.01}
             value={zone[k]}
             onChange={(n) =>
               edit((d) =>
@@ -265,15 +269,15 @@ export function GenericZoneInspector({
                   [zone.id],
                   k === "x" ? n - zone.x : 0,
                   k === "y" ? n - zone.y : 0,
-                  k === "height" ? n - zone.height : 0,
+                  0,
                 ),
               )
             }
           />
         ))}
       </CoordinateFields>
-      {(["width", "length", "depth"] as const)
-        .filter((k) => zone.shape !== "polygon" || k === "depth")
+      {(["width", "length"] as const)
+        .filter(() => zone.shape !== "polygon")
         .map((k) => (
           <NumberField
             key={k}
@@ -298,14 +302,6 @@ export function GenericZoneInspector({
           ))}
         </select>
       </label>
-      <NumberField
-        label="Feather (m)"
-        max={Math.max(zone.width, zone.length, zone.depth)}
-        slider
-        min={0}
-        value={zone.feather ?? 50}
-        onChange={(n) => patch({ feather: n })}
-      />
       <NumberField
         label="Priority"
         integer
