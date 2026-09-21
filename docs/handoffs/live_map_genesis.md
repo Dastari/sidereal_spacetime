@@ -1,66 +1,90 @@
-# Live map and Genesis follow-up — 2026-09-21
+# Live map, Genesis and retained reviewer — 2026-09-21
 
-Work in progress: GrayLotus, `/root/sidereal-studio-release`, branch `feat/live-map-genesis` from main faf2b916. Canonical worktree contains unrelated IFCS changes; do not reset or publish it.
+Agent Mail: GrayLotus. Source: `/root/sidereal-studio-release`, branch
+`feat/live-map-genesis`, [PR #19](https://github.com/Dastari/sidereal_spacetime/pull/19).
+Canonical `/root/sidereal_spacetime` has unrelated dirty IFCS/art work; preserve it.
 
-Implemented candidate: viewport-bounded orbit paths/culling and frame-coalesced wheel zoom; naturally scaled alpha portraits; planetary/moon orbit LOD; fixed planar 10% editor feather; compact two-decimal XY controls; draw-in-place zones/fields; authenticated live-world map and Genesis native-instance editing through existing validated map reducer. No schema changes or procedural visual migration.
+## Owner direction and reviewer
 
-Validation so far: 300 suites, 1505 passed and 2 skipped; typecheck and edited-file lint pass. Full `npm run check` reaches the inherited missing-document link failures. Full build succeeds (existing bundle/cycle warnings). Fresh isolated smoke completed against `sidereal-studio-review-live-map-genesis-r0001-smoke`, server3291. Baseline planet-focus probe stalled400ms; candidate same views17ms worst. Signed-out browser gate confirms no tree/canvas mounted.
+Keep authored Blender visuals. Live editable instance values are native asset,
+composition seed, radius, name, XY position and parent. No legacy procedural
+terrain/material UI, new art approval or source-mesh migration is implied.
 
-Browser interaction fixture passes XY same row/two decimals, no height/feather controls, 29 overview bodies and 9 planetary/0 moon guides, 2 moon guides in a planetary neighborhood, exact2× physical portrait scaling, draw without zoom, deselect and undo. Evidence `/tmp/live-map-planar-review.png`, `/tmp/live-map-moon-guides.png`; browser fixture is explicitly not authenticated authority evidence. Genesis loads Desert and edits radius to35.57; Ocean switching completes after reducing the software-WebGL review canvas to192px; full-size preparation is slow and is not claimed performance-complete.
+The owner explicitly authorized a semi-permanent reviewer for future game and
+editor work. **Retain the account until an explicit owner go-live retirement
+decision; never delete it as test cleanup.**
 
-Independent multi-model review completed: corrected subscription-confirmed canonical save, star seed lookup and runtime/authority catalog parity. Existing tick-driven grant expiry verified in code. Edited files pass lint/format; lockfile dry-run resolution passes. Versions Studio0.10.0/content0.6.0/render0.8.0/UI0.4.0/world0.6.0.
+- Username: `sidereal-development-review`.
+- Provider subject: `cd533b9d-db67-4317-ad07-d75b679f6fd2`.
+- Realm: dedicated Dastari provider in managed CT116; Orchard unchanged.
+- Runbook: [review account](../review_account.md), including private credentials,
+  managed reuse, PKCE sign-in and temporary authoring administration.
+- Cleanup completed: temporary provider administrator role removed; isolated
+  read/write grants revoked/expired; provider sign-out verified. Account retained.
+- No public game character was created or edited by this review. Future gameplay
+  scenarios must record their chosen database and persistent character UUIDs.
+- The deleted historical reviewer is not recreated and its password is not reset.
 
-Pending: signed-in integration (retained dedicated Keycloak test account was deleted; requested permission to provision/remove temporary reviewer), authenticated positive acceptance and release. No task changes deployed. Failed role-grant attempt returned404 and changed no account. Existing credential was read privately without password rotation; never copy it into git/logs.
+The retained-account response supersedes every earlier temporary-account or
+pending-permission plan. Repeat ensure preserves ID/password; genuine PKCE proves
+credential acceptance. Interruption recovery and secret-free CLI arguments have
+focused tests and independent review.
 
-Public Studio snapshot `/root/sidereal-studio-dashboard-release` includes additional armor/palette features. Compose scoped changes rather than replacing App wholesale. Live authority source `.runtime/worktrees/studio-authority-20260921` preserves IFCS phase3; candidate world change must be overlaid/rehearsed there. Public client needs no code changes for existing radius/appearance/seed projection. Preserve all character/inventory/body UUIDs. Previous merge/publish authorization remains in conversation; CI inherited failures must be reported honestly.
+## Implementation and acceptance
 
-Delivery: draft [PR #19](https://github.com/Dastari/sidereal_spacetime/pull/19), implementation commit `695b07ef`. CI started and is pending at handoff; inherited full-repository lint/format/docs failures may remain. No merge or publication. Local `dev.toml` remains intentionally uncommitted with review-only ports. Resume here after the account-fixture approval response; reacquire narrow GrayLotus reservations and check inbox before editing. Do not recreate/rotate accounts while the question remains pending.
+Viewport-bounded orbit paths and culling remove giant dashed circles; wheel input
+is coalesced by animation frame. Natural-size alpha portraits, moon guide LOD,
+fixed planar10% editor feather, grouped two-decimal XY, no height/feather controls,
+draw-in-place fields/zones, and clean selection/deselection are implemented.
 
-Next actions: provision only an approved temporary dedicated review identity, genuine PKCE through the existing approved callback with candidate browser routing to isolated3291, short universe-map grants, Apply/reload and stale/revocation checks, then revoke/remove the fixture. Compose/rehearse authority and Studio against their preserved live baselines, record exact artifacts and retained UUID state, merge through GitHub and publish using managed lifecycle only. Existing native preview performance on software WebGL remains a separately recorded limitation.
+Studio requires sign-in; map and Genesis consume live projections. Native
+asset/seed/radius edits reuse the existing grant/revision/fingerprint/replay-checked
+map transaction. Body UUID/type and unrelated motion/state remain protected.
+Saves wait for a newer canonical subscription row before completing.
 
-Owner response (2026-09-21): explicitly confirmed authored Blender visuals with
-editable live asset, seed, radius, name, XY and parent. PR19 already implements
-that scope; no code change needed. The separate temporary-test-account question
-remains unanswered, so authenticated acceptance and publication remain pending.
+- Full check:300 suites,1505 passed,2 existing skips; typecheck passes. The command
+  reaches inherited missing-document links and exits nonzero there.
+- Full build, isolated fresh smoke, edited-file lint/format and lockfile dry-run
+  pass. Python review tests:26 passed. Independent multi-model reviews pass.
+- Real signed-out gate mounts no map/tree. UI browser fixture verifies planar
+  inputs, exact2× portrait scaling, draw without camera changes, deselect and undo.
+  Overview9 planetary/0 moon guides; planetary neighborhood2 moon guides.
+- Same-view zoom probe: baseline400ms worst frame, candidate17ms. This is measured
+  on the review machine, not a universal device-performance guarantee.
+- Genuine PKCE against isolated3291 saved moon name/radius8.12/seed118, reloaded
+  them, opened the same UUID in Genesis, saved radius8.25 and switched native asset
+  to ice-moon-1-r002. Height/XY/parent persisted unchanged.
+- Exact replay, stale rejection, revoked-write rejection/disabled Save, and
+  two-second read-grant expiry/removal all passed against real authority.
+- Evidence: `/tmp/live-map-auth-save-proof.log`, `/tmp/live-map-auth-access-proof.log`,
+  `/tmp/live-map-planar-review.png`, `/tmp/live-map-moon-guides.png`.
+- Full-size native preview switching is slow under software WebGL; Ocean switching
+  completed at192px. No accelerated-GPU performance claim follows from that test.
+- GitHub CI fails before project tests because upstream main lacks
+  `scripts/art_library/requirements.txt`. This inherited failure is not claimed green.
 
-## Retained reviewer — owner authorization implemented
+## Release composition
 
-The owner superseded temporary-account deletion: created and retained
-`sidereal-development-review`, provider subject `cd533b9d-db67-4317-ad07-d75b679f6fd2`.
-See [review account runbook](../review_account.md). Credentials stay private;
-repeat ensure preserves ID/password. Managed provisioning and private-file CLI
-sign-in helpers are included. Temporary construction administration is active
-only while isolated acceptance runs; remove the role/grants afterward, keep the
-account. Signed-in candidate browser now connects to isolated3291 after granting
-loopback permission in that test browser context; genuine provider PKCE passes.
+Status: prepared, not yet published. Prior owner merge/publish authorization
+persists; no new permission is needed for these reviewed scoped changes.
 
+- Authority candidate: `/root/sidereal-live-map-authority-candidate`, based on
+  `/root/sidereal_spacetime/.runtime/worktrees/studio-authority-20260921` with IFCS
+  preserved. Four scoped source/metadata changes; no migration/schema change.
+- Studio candidate: `/root/sidereal-live-map-dashboard-candidate`, based on
+  `/root/sidereal-studio-dashboard-release`, retaining armor/paint/palette/measure
+  functionality.22 scoped source/metadata changes; no new art publication.
+- Exact patches/hashes: `ops/releases/live-map-genesis-20260921/`.
+- Composed authority: typecheck plus364 existing and7 Genesis tests pass. Composed
+  Studio build passes. Pinned old-module→candidate additive publish passed on
+  `sidereal-studio-review-review-genesis-upgrade-20260921` without reset.
+- Normalized schemas retain all91 tables,58 reducers and57 views unchanged.
+- Before-state audit is private under canonical `.runtime/releases/live-map-genesis-20260921/`.
+- Public game client code/release remains unchanged; existing projections already
+  carry mutable radius/appearance/seed. Preserve all live UUIDs/inventory/state.
 
-## Authenticated acceptance and prepared release
-
-Genuine provider PKCE passed using the retained reviewer. Candidate browser
-routing uses isolated3291 (never the public database). The map saved Dunes I name,
-radius8.12 and seed118, reloaded those server values, then Genesis opened the same
-UUID and saved radius8.25. Native asset switch to ice-moon-1-r002 persisted.
-Exact replay succeeds without duplicate edit; stale revision is rejected. Revoked
-write access rejects the reducer and disables Save; a2-second read grant expires,
-removing the map/tree and all map projections. Height/position/parent remain
-unchanged. Evidence `/tmp/live-map-auth-save-proof.log` and
-`/tmp/live-map-auth-access-proof.log` contains no credentials.
-
-Cleanup: isolated read/write grants revoked/expired, temporary provider admin
-removed, genuine provider sign-out returned to the gated Studio. Account retained;
-repeat ensure verifies the same provider ID. Four new focused Python tests plus
-existing review tests pass (26 total); independent rereview found no blocker.
-
-Prepared composition: `/root/sidereal-live-map-authority-candidate` (existing IFCS
-baseline + four scoped files) and `/root/sidereal-live-map-dashboard-candidate`
-(existing live Studio +22 scoped files). Composed authority typecheck,364 existing
-plus7 Genesis tests pass; composed Studio build passes. Pinned old module→candidate
-upgrade passed without reset on `sidereal-studio-review-review-genesis-upgrade-20260921`.
-Normalized schemas retain all91 tables,58 reducers and57 views unchanged.
-Reviewable patches and hashes: `ops/releases/live-map-genesis-20260921/`.
-
-Latest full candidate check:300 suites/1505 tests,2 existing skips; build passes.
-The combined check still fails inherited missing-document links. GitHub CI fails
-before tests at the pre-existing missing `scripts/art_library/requirements.txt`.
-These failures are not introduced by this PR and are not claimed green.
+Next: complete final composition review, merge through GitHub, publish exact
+rehearsed authority via managed lifecycle, apply scoped Studio source changes,
+verify before/after state and public sign-in gate, record release hashes/status.
+Never publish a main-derived world over the preserved IFCS module wholesale.
+Local branch `dev.toml` remains intentionally uncommitted with review ports3291/5494.

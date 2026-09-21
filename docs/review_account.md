@@ -17,7 +17,7 @@ permission to delete it. This supersedes the temporary-account cleanup plan.
 
 ## Reuse
 
-From the active project checkout:
+From a checkout containing PR #19 (currently `/root/sidereal-studio-release`):
 
 ```sh
 python3 scripts/dev.py keycloak-development-review-account
