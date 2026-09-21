@@ -70,11 +70,11 @@ persists; no new permission is needed for these reviewed scoped changes.
 
 - Authority candidate: `/root/sidereal-live-map-authority-candidate`, based on
   `/root/sidereal_spacetime/.runtime/worktrees/studio-authority-20260921` with IFCS
-  preserved. Four scoped source/metadata changes; no migration/schema change.
+  preserved. Eleven scoped source/test/metadata changes; no migration/schema change.
 - Studio candidate: `/root/sidereal-live-map-dashboard-candidate`, based on
   `/root/sidereal-studio-dashboard-release`, retaining armor/paint/palette/measure
-  functionality.22 scoped source/metadata changes; no new art publication.
-- Exact patches/hashes: `ops/releases/live-map-genesis-20260921/`.
+  functionality.27 scoped source/metadata changes; no new art publication.
+- Complete source/build inventories and exact patches/hashes: `ops/releases/live-map-genesis-20260921/`.
 - Composed authority: typecheck plus364 existing and7 Genesis tests pass. Composed
   Studio build passes. Pinned old-module→candidate additive publish passed on
   `sidereal-studio-review-review-genesis-upgrade-20260921` without reset.

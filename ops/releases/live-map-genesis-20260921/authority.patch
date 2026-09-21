@@ -1,87 +1,123 @@
---- a/packages/world/src/system-map.ts
-+++ b/packages/world/src/system-map.ts
-@@ -1,3 +1,4 @@
-+import { celestialAsset } from "@sidereal/content/celestial-assets";
- import { publishZones } from "./zones";
- import { spaceRegion } from "@sidereal/sim/space-background";
- import {
-@@ -46,6 +47,8 @@
-   backgroundId: t.string(),
-   regionsJson: t.string(),
- });
-+// Views have no clock. expireGrants materializes revocation on each authority
-+// tick; reducers additionally enforce exact expiry at command consumption.
- function canRead(ctx: ReadContext) {
-   return [...ctx.db.constructionGrant.by_principal.filter(ctx.sender)].some(
-     (g) =>
-@@ -181,33 +184,40 @@
-   if (
-     bodies.length !== doc.bodies.length ||
-     doc.bodies.some(
--      (b) =>
--        !bodies.some(
--          (old) =>
--            old.id === b.id &&
--            old.kind === b.kind &&
--            old.radius === b.radius &&
--            (b.appearance === undefined || old.appearance === b.appearance) &&
--            (b.seed === undefined || old.seed === b.seed),
--        ),
-+      (b) => !bodies.some((old) => old.id === b.id && old.kind === b.kind),
-     )
-   )
-     throw new SenderError(
--      "Celestial identity, type and radius must match the live chart",
-+      "Celestial identity and type must match the live chart",
-     );
-   if (!system && [...ctx.db.worldSystem.iter()].length >= 32)
-     throw new SenderError("System budget exceeded");
-   const ships = [...ctx.db.shipWorldMotion.by_system.filter(doc.id)];
-   for (const b of doc.bodies) {
-     const prior = bodies.find((p) => p.id === b.id)!;
--    if (prior.x === b.x && prior.y === b.y && prior.height === b.height)
-+    const appearance = b.appearance ?? prior.appearance;
-+    const asset = appearance ? celestialAsset(appearance) : undefined;
-+    if (appearance !== prior.appearance && !asset)
-+      throw new SenderError("Choose an approved Genesis asset");
-+    if (asset && (b.kind === "star") !== (asset.kind === "star"))
-+      throw new SenderError("Genesis asset must match the celestial type");
-+    if (asset?.kind === "star" && b.seed !== undefined && b.seed !== asset.seed)
-+      throw new SenderError(
-+        "The authored star uses its fixed composition seed",
-+      );
-+    if (
-+      prior.x === b.x &&
-+      prior.y === b.y &&
-+      prior.height === b.height &&
-+      b.radius <= prior.radius
-+    )
-       continue;
-     if (
-       ships.some(
-         (s) => Math.hypot(s.x - b.x, s.y - b.y, b.height) < b.radius + 100,
-       )
-     )
--      throw new SenderError("Moved body overlaps a live ship safety area");
-+      throw new SenderError("Celestial edit overlaps a live ship safety area");
+--- a/apps/client/package.json
++++ b/apps/client/package.json
+@@ -6,7 +6,7 @@
+   "dependencies": {
+     "@fontsource/barlow": "5.3.0",
+     "@fontsource/barlow-condensed": "5.3.0",
+-    "@sidereal/content": "0.5.0",
++    "@sidereal/content": "0.6.0",
+     "@sidereal/net": "0.5.0",
+     "@sidereal/render": "0.7.0",
+     "@sidereal/sim": "0.4.0",
+--- a/apps/dashboard/package.json
++++ b/apps/dashboard/package.json
+@@ -6,7 +6,7 @@
+   "dependencies": {
+     "@fontsource/barlow": "5.3.0",
+     "@fontsource/barlow-condensed": "5.3.0",
+-    "@sidereal/content": "0.5.0",
++    "@sidereal/content": "0.6.0",
+     "@sidereal/render": "0.7.0",
+     "@sidereal/sim": "0.4.0",
+     "@sidereal/ui": "*",
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -34,7 +34,7 @@
+       "dependencies": {
+         "@fontsource/barlow": "5.3.0",
+         "@fontsource/barlow-condensed": "5.3.0",
+-        "@sidereal/content": "0.5.0",
++        "@sidereal/content": "0.6.0",
+         "@sidereal/net": "0.5.0",
+         "@sidereal/render": "0.7.0",
+         "@sidereal/sim": "0.4.0",
+@@ -50,7 +50,7 @@
+       "dependencies": {
+         "@fontsource/barlow": "5.3.0",
+         "@fontsource/barlow-condensed": "5.3.0",
+-        "@sidereal/content": "0.5.0",
++        "@sidereal/content": "0.6.0",
+         "@sidereal/render": "0.7.0",
+         "@sidereal/sim": "0.4.0",
+         "@sidereal/ui": "*",
+@@ -3381,13 +3381,13 @@
+       "version": "0.1.2",
+       "dependencies": {
+         "@babylonjs/core": "9.25.0",
+-        "@sidereal/content": "0.5.0",
++        "@sidereal/content": "0.6.0",
+         "@sidereal/render": "0.7.0"
+       }
+     },
+     "packages/content": {
+       "name": "@sidereal/content",
+-      "version": "0.5.0",
++      "version": "0.6.0",
+       "dependencies": {}
+     },
+     "packages/net": {
+@@ -3404,7 +3404,7 @@
+       "dependencies": {
+         "@babylonjs/core": "9.25.0",
+         "@babylonjs/loaders": "9.25.0",
+-        "@sidereal/content": "0.5.0",
++        "@sidereal/content": "0.6.0",
+         "@sidereal/sim": "0.4.0",
+         "@noble/hashes": "2.4.0"
+       }
+@@ -3418,7 +3418,7 @@
+       "version": "0.4.0",
+       "dependencies": {
+         "@noble/hashes": "2.4.0",
+-        "@sidereal/content": "0.5.0"
++        "@sidereal/content": "0.6.0"
+       }
+     },
+     "packages/ui": {
+@@ -3430,10 +3430,10 @@
+     },
+     "packages/world": {
+       "name": "@sidereal/world",
+-      "version": "0.5.0",
++      "version": "0.6.0",
+       "dependencies": {
+         "spacetimedb": "2.10.0",
+-        "@sidereal/content": "0.5.0",
++        "@sidereal/content": "0.6.0",
+         "@sidereal/sim": "0.4.0"
+       },
+       "devDependencies": {
+--- a/packages/canvas-ui/package.json
++++ b/packages/canvas-ui/package.json
+@@ -8,7 +8,7 @@
+   },
+   "dependencies": {
+     "@babylonjs/core": "9.25.0",
+-    "@sidereal/content": "0.5.0",
++    "@sidereal/content": "0.6.0",
+     "@sidereal/render": "0.7.0"
    }
-   if ([...ctx.db.systemMapEdit.by_system.filter(doc.id)].length >= 128)
-     throw new SenderError(
-@@ -236,7 +246,13 @@
-     const row = ctx.db.systemBody.id.find(b.id)!,
-       motion = ctx.db.bodyWorldMotion.bodyId.find(b.id)!,
-       cell = spatialCell(b);
--    ctx.db.systemBody.id.update({ ...row, height: b.height });
-+    ctx.db.systemBody.id.update({
-+      ...row,
-+      height: b.height,
-+      radius: b.radius,
-+      appearance: b.appearance ?? row.appearance,
-+      seed: b.seed ?? row.seed,
-+    });
-     ctx.db.bodyWorldMotion.bodyId.update({
-       ...motion,
-       x: b.x,
+ }
+--- a/packages/content/package.json
++++ b/packages/content/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@sidereal/content",
+-  "version": "0.5.0",
++  "version": "0.6.0",
+   "private": true,
+   "type": "module",
+   "exports": {
+@@ -48,7 +48,8 @@
+     "./wayfarer-exterior-r005.json": "./src/wayfarer-exterior-r005.json",
+     "./wayfarer-hull-r005-proof.json": "./src/wayfarer-hull-r005-proof.json",
+     "./wayfarer-conversion-candidate": "./src/wayfarer-conversion-candidate.ts",
+-    "./wayfarer-walking-proof.json": "./src/wayfarer-walking-proof.json"
++    "./wayfarer-walking-proof.json": "./src/wayfarer-walking-proof.json",
++    "./celestial-assets": "./src/celestial-assets.ts"
+   },
+   "dependencies": {}
+ }
 --- /dev/null
 +++ b/packages/content/src/celestial-assets.ts
 @@ -0,0 +1,195 @@
@@ -280,25 +316,26 @@
 +        : 5.5;
 +  return 1 / (Math.sqrt(distance * distance - 1) * Math.tan(0.26));
 +}
---- a/packages/content/package.json
-+++ b/packages/content/package.json
-@@ -1,6 +1,6 @@
- {
-   "name": "@sidereal/content",
--  "version": "0.5.0",
-+  "version": "0.6.0",
-   "private": true,
-   "type": "module",
-   "exports": {
-@@ -48,7 +48,8 @@
-     "./wayfarer-exterior-r005.json": "./src/wayfarer-exterior-r005.json",
-     "./wayfarer-hull-r005-proof.json": "./src/wayfarer-hull-r005-proof.json",
-     "./wayfarer-conversion-candidate": "./src/wayfarer-conversion-candidate.ts",
--    "./wayfarer-walking-proof.json": "./src/wayfarer-walking-proof.json"
-+    "./wayfarer-walking-proof.json": "./src/wayfarer-walking-proof.json",
-+    "./celestial-assets": "./src/celestial-assets.ts"
+--- a/packages/render/package.json
++++ b/packages/render/package.json
+@@ -20,7 +20,7 @@
+   "dependencies": {
+     "@babylonjs/core": "9.25.0",
+     "@babylonjs/loaders": "9.25.0",
+-    "@sidereal/content": "0.5.0",
++    "@sidereal/content": "0.6.0",
+     "@sidereal/sim": "0.4.0",
+     "@noble/hashes": "2.4.0"
+   }
+--- a/packages/sim/package.json
++++ b/packages/sim/package.json
+@@ -68,6 +68,6 @@
    },
-   "dependencies": {}
+   "dependencies": {
+     "@noble/hashes": "2.4.0",
+-    "@sidereal/content": "0.5.0"
++    "@sidereal/content": "0.6.0"
+   }
  }
 --- a/packages/world/package.json
 +++ b/packages/world/package.json
@@ -317,3 +354,193 @@
      "@sidereal/sim": "0.4.0"
    },
    "scripts": {
+--- a/packages/world/src/system-map.test.ts
++++ b/packages/world/src/system-map.test.ts
+@@ -287,3 +287,103 @@
+   });
+   expect(admittedSystemScapes(f.ctx)).toEqual([]);
+ });
++
++function genesisFixture() {
++  const f = fixture();
++  f.db.worldSystem.insert({ id: "system" });
++  const body = {
++    id: "planet",
++    systemId: "system",
++    authoredKey: "Planet",
++    kind: "planet",
++    radius: 20,
++    height: -100,
++    appearance: "desert-r014",
++    seed: 117,
++    massKg: 1234,
++    charted: true,
++  };
++  const motion = {
++    bodyId: "planet",
++    systemId: "system",
++    x: 2000,
++    y: 2000,
++    vx: 2,
++    vy: 3,
++    heading: 4,
++    serverTick: 5n,
++    cellX: 5n,
++    cellY: 5n,
++  };
++  f.db.systemBody.insert(body);
++  f.db.bodyWorldMotion.insert(motion);
++  const view = ownMaps(f.ctx)[0],
++    doc = JSON.parse(view.documentJson);
++  return {
++    ...f,
++    body,
++    motion,
++    doc,
++    args: {
++      ...f.args,
++      documentJson: JSON.stringify(doc),
++      sourceFingerprint: view.sourceFingerprint,
++    },
++  };
++}
++test("Genesis changes the same live native instance atomically and preserves motion/identity", () => {
++  const f = genesisFixture();
++  Object.assign(f.doc.bodies[0], {
++    radius: 30,
++    appearance: "ocean-r007",
++    seed: 912,
++    name: "Edited ocean",
++  });
++  const args = { ...f.args, documentJson: JSON.stringify(f.doc) };
++  applySystemMap(f.ctx, args);
++  applySystemMap(f.ctx, args);
++  expect(f.db.systemBody.id.find("planet")).toEqual({
++    ...f.body,
++    radius: 30,
++    appearance: "ocean-r007",
++    seed: 912,
++  });
++  expect(f.db.bodyWorldMotion.bodyId.find("planet")).toEqual(f.motion);
++  const view = ownMaps(f.ctx)[0];
++  expect(JSON.parse(view.documentJson).bodies[0]).toMatchObject({
++    id: "planet",
++    name: "Edited ocean",
++    radius: 30,
++    appearance: "ocean-r007",
++    seed: 912,
++  });
++  expect(view.sourceFingerprint).not.toBe(f.args.sourceFingerprint);
++  expect([...f.db.systemMapEdit.iter()]).toHaveLength(1);
++  expect(() =>
++    applySystemMap(f.ctx, { ...args, operationId: "stale-genesis" }),
++  ).toThrow("revision");
++});
++test("Genesis rejects unapproved/type-mismatched assets and radius growth into a ship before writes", () => {
++  for (const appearance of ["untrusted-asset", "yellow-main-sequence-r013"]) {
++    const f = genesisFixture();
++    f.doc.bodies[0].appearance = appearance;
++    expect(() =>
++      applySystemMap(f.ctx, { ...f.args, documentJson: JSON.stringify(f.doc) }),
++    ).toThrow(/Genesis/);
++    expect(f.db.systemBody.id.find("planet")).toEqual(f.body);
++    expect([...f.db.systemMapEdit.iter()]).toHaveLength(0);
++  }
++  const f = genesisFixture();
++  f.db.shipWorldMotion.insert({
++    shipId: "ship",
++    systemId: "system",
++    x: 2200,
++    y: 2000,
++  });
++  f.doc.bodies[0].radius = 300;
++  expect(() =>
++    applySystemMap(f.ctx, { ...f.args, documentJson: JSON.stringify(f.doc) }),
++  ).toThrow("safety");
++  expect(f.db.systemBody.id.find("planet")).toEqual(f.body);
++  expect(f.db.bodyWorldMotion.bodyId.find("planet")).toEqual(f.motion);
++});
+--- a/packages/world/src/system-map.ts
++++ b/packages/world/src/system-map.ts
+@@ -1,3 +1,4 @@
++import { celestialAsset } from "@sidereal/content/celestial-assets";
+ import { publishZones } from "./zones";
+ import { spaceRegion } from "@sidereal/sim/space-background";
+ import {
+@@ -46,6 +47,8 @@
+   backgroundId: t.string(),
+   regionsJson: t.string(),
+ });
++// Views have no clock. expireGrants materializes revocation on each authority
++// tick; reducers additionally enforce exact expiry at command consumption.
+ function canRead(ctx: ReadContext) {
+   return [...ctx.db.constructionGrant.by_principal.filter(ctx.sender)].some(
+     (g) =>
+@@ -181,33 +184,40 @@
+   if (
+     bodies.length !== doc.bodies.length ||
+     doc.bodies.some(
+-      (b) =>
+-        !bodies.some(
+-          (old) =>
+-            old.id === b.id &&
+-            old.kind === b.kind &&
+-            old.radius === b.radius &&
+-            (b.appearance === undefined || old.appearance === b.appearance) &&
+-            (b.seed === undefined || old.seed === b.seed),
+-        ),
++      (b) => !bodies.some((old) => old.id === b.id && old.kind === b.kind),
+     )
+   )
+     throw new SenderError(
+-      "Celestial identity, type and radius must match the live chart",
++      "Celestial identity and type must match the live chart",
+     );
+   if (!system && [...ctx.db.worldSystem.iter()].length >= 32)
+     throw new SenderError("System budget exceeded");
+   const ships = [...ctx.db.shipWorldMotion.by_system.filter(doc.id)];
+   for (const b of doc.bodies) {
+     const prior = bodies.find((p) => p.id === b.id)!;
+-    if (prior.x === b.x && prior.y === b.y && prior.height === b.height)
++    const appearance = b.appearance ?? prior.appearance;
++    const asset = appearance ? celestialAsset(appearance) : undefined;
++    if (appearance !== prior.appearance && !asset)
++      throw new SenderError("Choose an approved Genesis asset");
++    if (asset && (b.kind === "star") !== (asset.kind === "star"))
++      throw new SenderError("Genesis asset must match the celestial type");
++    if (asset?.kind === "star" && b.seed !== undefined && b.seed !== asset.seed)
++      throw new SenderError(
++        "The authored star uses its fixed composition seed",
++      );
++    if (
++      prior.x === b.x &&
++      prior.y === b.y &&
++      prior.height === b.height &&
++      b.radius <= prior.radius
++    )
+       continue;
+     if (
+       ships.some(
+         (s) => Math.hypot(s.x - b.x, s.y - b.y, b.height) < b.radius + 100,
+       )
+     )
+-      throw new SenderError("Moved body overlaps a live ship safety area");
++      throw new SenderError("Celestial edit overlaps a live ship safety area");
+   }
+   if ([...ctx.db.systemMapEdit.by_system.filter(doc.id)].length >= 128)
+     throw new SenderError(
+@@ -236,7 +246,13 @@
+     const row = ctx.db.systemBody.id.find(b.id)!,
+       motion = ctx.db.bodyWorldMotion.bodyId.find(b.id)!,
+       cell = spatialCell(b);
+-    ctx.db.systemBody.id.update({ ...row, height: b.height });
++    ctx.db.systemBody.id.update({
++      ...row,
++      height: b.height,
++      radius: b.radius,
++      appearance: b.appearance ?? row.appearance,
++      seed: b.seed ?? row.seed,
++    });
+     ctx.db.bodyWorldMotion.bodyId.update({
+       ...motion,
+       x: b.x,

@@ -1,3 +1,36 @@
+--- a/apps/client/package.json
++++ b/apps/client/package.json
+@@ -6,9 +6,9 @@
+   "dependencies": {
+     "@fontsource/barlow": "5.3.0",
+     "@fontsource/barlow-condensed": "5.3.0",
+-    "@sidereal/content": "0.5.0",
++    "@sidereal/content": "0.6.0",
+     "@sidereal/net": "0.5.0",
+-    "@sidereal/render": "0.7.1",
++    "@sidereal/render": "0.8.0",
+     "@sidereal/sim": "0.4.0",
+     "oidc-client-ts": "^3.4.1",
+     "react": "19.2.8",
+--- a/apps/dashboard/package.json
++++ b/apps/dashboard/package.json
+@@ -1,13 +1,13 @@
+ {
+   "name": "@sidereal/dashboard",
+-  "version": "0.9.0",
++  "version": "0.10.0",
+   "private": true,
+   "type": "module",
+   "dependencies": {
+     "@fontsource/barlow": "5.3.0",
+     "@fontsource/barlow-condensed": "5.3.0",
+-    "@sidereal/content": "0.5.0",
+-    "@sidereal/render": "0.7.1",
++    "@sidereal/content": "0.6.0",
++    "@sidereal/render": "0.8.0",
+     "@sidereal/sim": "0.4.0",
+     "@sidereal/ui": "*",
+     "lucide-react": "1.42.0",
 --- a/apps/dashboard/src/App.tsx
 +++ b/apps/dashboard/src/App.tsx
 @@ -1,3 +1,4 @@
@@ -2219,6 +2252,123 @@
 +  color: var(--muted);
 +  line-height: 1.5;
 +}
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -34,9 +34,9 @@
+       "dependencies": {
+         "@fontsource/barlow": "5.3.0",
+         "@fontsource/barlow-condensed": "5.3.0",
+-        "@sidereal/content": "0.5.0",
++        "@sidereal/content": "0.6.0",
+         "@sidereal/net": "0.5.0",
+-        "@sidereal/render": "0.7.1",
++        "@sidereal/render": "0.8.0",
+         "@sidereal/sim": "0.4.0",
+         "oidc-client-ts": "^3.4.1",
+         "react": "19.2.8",
+@@ -46,12 +46,12 @@
+     },
+     "apps/dashboard": {
+       "name": "@sidereal/dashboard",
+-      "version": "0.9.0",
++      "version": "0.10.0",
+       "dependencies": {
+         "@fontsource/barlow": "5.3.0",
+         "@fontsource/barlow-condensed": "5.3.0",
+-        "@sidereal/content": "0.5.0",
+-        "@sidereal/render": "0.7.1",
++        "@sidereal/content": "0.6.0",
++        "@sidereal/render": "0.8.0",
+         "@sidereal/sim": "0.4.0",
+         "@sidereal/ui": "*",
+         "lucide-react": "1.42.0",
+@@ -3381,13 +3381,13 @@
+       "version": "0.1.2",
+       "dependencies": {
+         "@babylonjs/core": "9.25.0",
+-        "@sidereal/content": "0.5.0",
+-        "@sidereal/render": "0.7.1"
++        "@sidereal/content": "0.6.0",
++        "@sidereal/render": "0.8.0"
+       }
+     },
+     "packages/content": {
+       "name": "@sidereal/content",
+-      "version": "0.5.0",
++      "version": "0.6.0",
+       "dependencies": {}
+     },
+     "packages/net": {
+@@ -3400,11 +3400,11 @@
+     },
+     "packages/render": {
+       "name": "@sidereal/render",
+-      "version": "0.7.1",
++      "version": "0.8.0",
+       "dependencies": {
+         "@babylonjs/core": "9.25.0",
+         "@babylonjs/loaders": "9.25.0",
+-        "@sidereal/content": "0.5.0",
++        "@sidereal/content": "0.6.0",
+         "@sidereal/sim": "0.4.0",
+         "@noble/hashes": "2.4.0"
+       }
+@@ -3418,12 +3418,12 @@
+       "version": "0.4.0",
+       "dependencies": {
+         "@noble/hashes": "2.4.0",
+-        "@sidereal/content": "0.5.0"
++        "@sidereal/content": "0.6.0"
+       }
+     },
+     "packages/ui": {
+       "name": "@sidereal/ui",
+-      "version": "0.3.0",
++      "version": "0.4.0",
+       "dependencies": {
+         "react": "19.2.8"
+       }
+@@ -3433,7 +3433,7 @@
+       "version": "0.5.0",
+       "dependencies": {
+         "spacetimedb": "2.10.0",
+-        "@sidereal/content": "0.5.0",
++        "@sidereal/content": "0.6.0",
+         "@sidereal/sim": "0.4.0"
+       },
+       "devDependencies": {
+--- a/packages/canvas-ui/package.json
++++ b/packages/canvas-ui/package.json
+@@ -9,7 +9,7 @@
+   },
+   "dependencies": {
+     "@babylonjs/core": "9.25.0",
+-    "@sidereal/content": "0.5.0",
+-    "@sidereal/render": "0.7.1"
++    "@sidereal/content": "0.6.0",
++    "@sidereal/render": "0.8.0"
+   }
+ }
+--- a/packages/content/package.json
++++ b/packages/content/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@sidereal/content",
+-  "version": "0.5.0",
++  "version": "0.6.0",
+   "private": true,
+   "type": "module",
+   "exports": {
+@@ -68,7 +68,8 @@
+     "./wayfarer-flight-definition": "./src/wayfarer-flight-definition.ts",
+     "./interior": "./src/interior.ts",
+     "./wayfarer-rebuild-removals.json": "./src/wayfarer-rebuild-removals.json",
+-    "./hull-paint": "./src/hull-paint.ts"
++    "./hull-paint": "./src/hull-paint.ts",
++    "./celestial-assets": "./src/celestial-assets.ts"
+   },
+   "dependencies": {}
+ }
 --- /dev/null
 +++ b/packages/content/src/celestial-assets.ts
 @@ -0,0 +1,195 @@
@@ -2417,6 +2567,52 @@
 +        : 5.5;
 +  return 1 / (Math.sqrt(distance * distance - 1) * Math.tan(0.26));
 +}
+--- a/packages/render/package.json
++++ b/packages/render/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@sidereal/render",
+-  "version": "0.7.1",
++  "version": "0.8.0",
+   "private": true,
+   "type": "module",
+   "exports": {
+@@ -23,12 +23,13 @@
+     "./diagnostics": "./src/diagnostics.ts",
+     "./mesh-roles": "./src/mesh-roles.ts",
+     "./ground-items": "./src/ground-items.ts",
+-    "./render-backend": "./src/render-backend.ts"
++    "./render-backend": "./src/render-backend.ts",
++    "./reviewed-native-preview": "./src/environment/reviewed-native-preview.ts"
+   },
+   "dependencies": {
+     "@babylonjs/core": "9.25.0",
+     "@babylonjs/loaders": "9.25.0",
+-    "@sidereal/content": "0.5.0",
++    "@sidereal/content": "0.6.0",
+     "@sidereal/sim": "0.4.0",
+     "@noble/hashes": "2.4.0"
+   }
+--- a/packages/sim/package.json
++++ b/packages/sim/package.json
+@@ -86,6 +86,6 @@
+   },
+   "dependencies": {
+     "@noble/hashes": "2.4.0",
+-    "@sidereal/content": "0.5.0"
++    "@sidereal/content": "0.6.0"
+   }
+ }
+--- a/packages/ui/package.json
++++ b/packages/ui/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@sidereal/ui",
+-  "version": "0.3.0",
++  "version": "0.4.0",
+   "private": true,
+   "type": "module",
+   "exports": {
 --- a/packages/ui/src/property-controls.tsx
 +++ b/packages/ui/src/property-controls.tsx
 @@ -1,4 +1,4 @@
@@ -2482,78 +2678,14 @@
          />
          <button
            type="button"
---- a/apps/dashboard/package.json
-+++ b/apps/dashboard/package.json
-@@ -1,13 +1,13 @@
- {
-   "name": "@sidereal/dashboard",
--  "version": "0.9.0",
-+  "version": "0.10.0",
-   "private": true,
-   "type": "module",
+--- a/packages/world/package.json
++++ b/packages/world/package.json
+@@ -6,7 +6,7 @@
+   "exports": "./src/index.ts",
    "dependencies": {
-     "@fontsource/barlow": "5.3.0",
-     "@fontsource/barlow-condensed": "5.3.0",
--    "@sidereal/content": "0.5.0",
--    "@sidereal/render": "0.7.1",
-+    "@sidereal/content": "0.6.0",
-+    "@sidereal/render": "0.8.0",
-     "@sidereal/sim": "0.4.0",
-     "@sidereal/ui": "*",
-     "lucide-react": "1.42.0",
---- a/packages/content/package.json
-+++ b/packages/content/package.json
-@@ -1,6 +1,6 @@
- {
-   "name": "@sidereal/content",
--  "version": "0.5.0",
-+  "version": "0.6.0",
-   "private": true,
-   "type": "module",
-   "exports": {
-@@ -68,7 +68,8 @@
-     "./wayfarer-flight-definition": "./src/wayfarer-flight-definition.ts",
-     "./interior": "./src/interior.ts",
-     "./wayfarer-rebuild-removals.json": "./src/wayfarer-rebuild-removals.json",
--    "./hull-paint": "./src/hull-paint.ts"
-+    "./hull-paint": "./src/hull-paint.ts",
-+    "./celestial-assets": "./src/celestial-assets.ts"
-   },
-   "dependencies": {}
- }
---- a/packages/render/package.json
-+++ b/packages/render/package.json
-@@ -1,6 +1,6 @@
- {
-   "name": "@sidereal/render",
--  "version": "0.7.1",
-+  "version": "0.8.0",
-   "private": true,
-   "type": "module",
-   "exports": {
-@@ -23,12 +23,13 @@
-     "./diagnostics": "./src/diagnostics.ts",
-     "./mesh-roles": "./src/mesh-roles.ts",
-     "./ground-items": "./src/ground-items.ts",
--    "./render-backend": "./src/render-backend.ts"
-+    "./render-backend": "./src/render-backend.ts",
-+    "./reviewed-native-preview": "./src/environment/reviewed-native-preview.ts"
-   },
-   "dependencies": {
-     "@babylonjs/core": "9.25.0",
-     "@babylonjs/loaders": "9.25.0",
+     "spacetimedb": "2.10.0",
 -    "@sidereal/content": "0.5.0",
 +    "@sidereal/content": "0.6.0",
-     "@sidereal/sim": "0.4.0",
-     "@noble/hashes": "2.4.0"
-   }
---- a/packages/ui/package.json
-+++ b/packages/ui/package.json
-@@ -1,6 +1,6 @@
- {
-   "name": "@sidereal/ui",
--  "version": "0.3.0",
-+  "version": "0.4.0",
-   "private": true,
-   "type": "module",
-   "exports": {
+     "@sidereal/sim": "0.4.0"
+   },
+   "scripts": {
