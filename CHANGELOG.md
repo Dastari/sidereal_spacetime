@@ -1,5 +1,17 @@
 # 0.6.0 — Studio spatial and test-ship workflows (2026-09-21)
 
+## 2026-09-21 — Live map and Genesis (Studio 0.10.0)
+
+- Added the owner-retained `sidereal-development-review` game/Studio account workflow, private credential reuse, secret-free CLI arguments, temporary authoring-role management and a durable review-account runbook.
+
+- Keep map rendering bounded to visible arcs and bodies, coalesce wheel input, scale celestial portraits to physical size, and reveal moon orbit guides only at useful zoom levels.
+- Use fixed 10% planar editor background feather; remove height and feather controls. Show X/Y together with two decimal places and remove SVG focus rectangles and drawer instructions.
+- Draw fields and zones in the current viewport without camera jumps; preserve point editing, undo and deselection.
+- Require Studio sign-in and load the live world. Genesis edits the selected live celestial UUID through the same validated transaction as the map (name, XY, radius, native asset, composition seed and parent).
+- Confirm subscription state before completing a save; preserve identity, motion, grants, expected revisions and operation replay. Native asset authority catalog is checked against runtime assets.
+- Versions: content0.6.0, render0.8.0, UI0.4.0, world0.6.0. No table/schema change or public game client release required.
+- Validation: full build and isolated smoke pass; typecheck and tests pass. `npm run check` remains blocked by inherited missing-document links. Authenticated browser acceptance/release status is tracked in `docs/handoffs/live_map_genesis.md`.
+
 ## Studio 0.9.0 / UI 0.3.0 / Render 0.7.1 — 2026-09-21
 
 - Replace map command bars with drawer icon controls, searchable nested Universe tree and a Name/ID/preview context inspector. Add true deselection, suppress the right-drag context menu, and use numeric steppers, grouped coordinates, sliders, relation/shape selectors and color controls.

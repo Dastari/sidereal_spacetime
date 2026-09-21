@@ -43,9 +43,9 @@ boundary/background preview, and typed component properties. Numeric inputs
 have explicit decrement/increment controls and reject non-finite values;
 coordinates are grouped, percentages/angles offer bounded sliders, relations
 use selects and colors use native color pickers. Existing layer toggles remain
-checkboxes in drawer display options. Catalog physical/visual identity and live
-ship telemetry remain read-only because this authoring reducer cannot change
-those components. Do not offer edits the server will invariably reject.
+checkboxes in drawer display options. Celestial UUID/type and live ship telemetry remain read-only. The live refinement
+below permits validated native asset, seed and radius edits; Blender source mesh
+and material authoring remains separate.
 
 Use the existing draft/undo/save/apply path. Empty numeric input must not put NaN
 into the document. Missing portraits show a labelled fallback; malformed or
@@ -53,3 +53,42 @@ missing tree parents must not make nodes disappear or recurse forever. Validate
 blank/Escape deselection, right-drag context prevention, tree/search/parent
 nesting, numeric stepping and undo, then save/reload in a real browser. Re-run
 full check/build and document inherited failures separately.
+
+## Live map / zoom refinement (2026-09-21)
+
+Owner supersedes the earlier offline-catalog and editable-feather UI: require an
+active authenticated world subscription before mounting the map. No stock chart
+or anonymous local draft may masquerade as the live universe. Load current map
+projections on admission; edits are explicitly pending until the revision-checked
+Apply succeeds. Reconnect/live updates refresh a clean draft; external changes
+must never silently overwrite pending edits. The map and Genesis select the same
+stable celestial instance ID, with supported instance properties edited through
+normal privileged transactions. Catalog asset/source IDs remain distinct.
+
+Keep authoring controls planar: grouped X/Y to 0.01m, no height/depth controls in
+this map. Preserve existing nonzero presentation elevations in storage; do not
+silently move live bodies vertically. New volumes retain server-compatible
+internal depth. Remove configurable background feather from the inspector:
+preview blending uses 10% of the XY boundary size in world units, transformed by
+the current zoom. It is an editor presentation choice, independent of persisted
+membership/authority and existing game transition configuration.
+
+Map drawing cost must be bounded by the viewport: cull invisible bodies, labels,
+asteroids and orbit guides; do not draw enormous dashed circles in SVG. Show
+moon guides only when their projected orbit has enough screen space. Images
+transition from minimum markers to physical radius as zoom increases. Selection
+uses an explicit thin outline, never generic HTML selection/focus chrome around
+a celestial group. Coalesce wheel input to animation frames, zoom about the
+pointer, and preserve the last complete background frame.
+
+All zone/field creation tools draw within the current view, with no camera jump:
+box/ellipse drag defines bounds, polygon click defines anchors. Parent defaults
+to the selected zone/system; the normal authority validators check containment.
+Escape cancels creation. Remove passive instruction/status paragraphs from the
+left drawer; failures/conflicts remain actionable visible messages.
+
+Acceptance: before/after browser frame traces at overview, planet, moon and
+close zoom; bounded geometry/node counts across zoom; natural-size calibration;
+moon-orbit thresholds; XY rounding and no height/feather inputs; drawing does
+not change camera; signed-out gate and actual isolated authenticated subscription;
+server permission/stale edit/replay/instance change preservation tests and smoke.

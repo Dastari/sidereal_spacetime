@@ -1,0 +1,2691 @@
+--- a/apps/client/package.json
++++ b/apps/client/package.json
+@@ -6,9 +6,9 @@
+   "dependencies": {
+     "@fontsource/barlow": "5.3.0",
+     "@fontsource/barlow-condensed": "5.3.0",
+-    "@sidereal/content": "0.5.0",
++    "@sidereal/content": "0.6.0",
+     "@sidereal/net": "0.5.0",
+-    "@sidereal/render": "0.7.1",
++    "@sidereal/render": "0.8.0",
+     "@sidereal/sim": "0.4.0",
+     "oidc-client-ts": "^3.4.1",
+     "react": "19.2.8",
+--- a/apps/dashboard/package.json
++++ b/apps/dashboard/package.json
+@@ -1,13 +1,13 @@
+ {
+   "name": "@sidereal/dashboard",
+-  "version": "0.9.0",
++  "version": "0.10.0",
+   "private": true,
+   "type": "module",
+   "dependencies": {
+     "@fontsource/barlow": "5.3.0",
+     "@fontsource/barlow-condensed": "5.3.0",
+-    "@sidereal/content": "0.5.0",
+-    "@sidereal/render": "0.7.1",
++    "@sidereal/content": "0.6.0",
++    "@sidereal/render": "0.8.0",
+     "@sidereal/sim": "0.4.0",
+     "@sidereal/ui": "*",
+     "lucide-react": "1.42.0",
+--- a/apps/dashboard/src/App.tsx
++++ b/apps/dashboard/src/App.tsx
+@@ -1,3 +1,4 @@
++import { StudioAuthGate } from "./authoring/StudioAuthGate";
+ import "@fontsource/barlow-condensed/500.css";
+ import "@fontsource/barlow-condensed/600.css";
+ import "@fontsource/barlow/400.css";
+@@ -135,6 +136,13 @@
+               ? "components"
+               : "dashboard";
+ export default function App() {
++  return (
++    <StudioAuthGate>
++      <StudioApp />
++    </StudioAuthGate>
++  );
++}
++function StudioApp() {
+   const [route, setRoute] = useState<Route>(currentRoute);
+   const [toolDetail, setToolDetail] = useState<(typeof tools)[number] | null>(
+     null,
+--- /dev/null
++++ b/apps/dashboard/src/authoring/StudioAuthGate.tsx
+@@ -0,0 +1,68 @@
++import { useEffect, useState, type ReactNode } from "react";
++import type { User } from "oidc-client-ts";
++import { authoringAuth, loadAuthoringAccount } from "./auth";
++export function StudioAuthGate({ children }: { children: ReactNode }) {
++  const [user, setUser] = useState<User | null>(null),
++    [loading, setLoading] = useState(true),
++    [error, setError] = useState("");
++  useEffect(() => {
++    let active = true;
++    const loaded = (u: User) => {
++      if (active) {
++        setUser(u);
++        setLoading(false);
++      }
++    };
++    const removed = () => {
++      if (active) setUser(null);
++    };
++    const events = authoringAuth().events;
++    events.addUserLoaded(loaded);
++    events.addUserUnloaded(removed);
++    events.addAccessTokenExpired(removed);
++    events.addUserSignedOut(removed);
++    void loadAuthoringAccount()
++      .then((u) => {
++        if (active) setUser(u);
++      })
++      .catch((e) => {
++        if (active) setError(String(e));
++      })
++      .finally(() => {
++        if (active) setLoading(false);
++      });
++    return () => {
++      active = false;
++      events.removeUserLoaded(loaded);
++      events.removeUserUnloaded(removed);
++      events.removeAccessTokenExpired(removed);
++      events.removeUserSignedOut(removed);
++    };
++  }, []);
++  if (user?.id_token && !user.expired) return children;
++  return (
++    <main className="studio-auth-gate">
++      <h1>Sidereal Studio</h1>
++      {loading ? (
++        <p role="status">Checking sign-in…</p>
++      ) : (
++        <>
++          <p>Sign in to open your live world and authoring workspaces.</p>
++          <button
++            className="primary"
++            onClick={() =>
++              void authoringAuth()
++                .signinRedirect({
++                  state: { returnTo: location.pathname + location.search },
++                })
++                .catch((e) => setError(String(e)))
++            }
++          >
++            Sign in
++          </button>
++        </>
++      )}
++      {error && <p role="alert">{error}</p>}
++    </main>
++  );
++}
+--- a/apps/dashboard/src/authoring/auth.ts
++++ b/apps/dashboard/src/authoring/auth.ts
+@@ -20,9 +20,15 @@
+     callback ??= authoringAuth().signinRedirectCallback();
+     const user = await callback;
+     const target = (user.state as { returnTo?: string } | undefined)?.returnTo;
+-    if (target === "/map") {
+-      location.replace("/map");
+-    } else history.replaceState(null, "", "/shipyard");
++    const next = target?.startsWith("/")
++      ? new URL(target, location.origin)
++      : null;
++    if (
++      next?.origin === location.origin &&
++      ["/map", "/planets"].includes(next.pathname)
++    )
++      location.replace(next.pathname + next.search);
++    else history.replaceState(null, "", "/shipyard");
+     return user;
+   }
+   // Panels can unmount while the account renews. Read current storage, not a cached old User.
+--- a/apps/dashboard/src/map-editor/MapBackground.tsx
++++ b/apps/dashboard/src/map-editor/MapBackground.tsx
+@@ -24,9 +24,8 @@
+   doc: SystemMapDocument;
+   camera: Camera;
+   ratio: number;
+-  previewHeight: number;
+ }
+-/** Spatial preview samples the same membership/feather policy as the game. */
++/** Planar editor membership preview; feather is always 10% of projected size. */
+ export function MapBackground(view: View) {
+   const ref = useRef<HTMLCanvasElement>(null);
+   const renderer = useRef<ReturnType<typeof createRenderer> | null>(null);
+@@ -41,7 +40,7 @@
+   }, []);
+   useEffect(() => {
+     renderer.current?.update(view);
+-  }, [view.doc, view.camera, view.ratio, view.previewHeight]);
++  }, [view.doc, view.camera, view.ratio]);
+   return <canvas ref={ref} className="map-space-preview" aria-hidden="true" />;
+ }
+ 
+@@ -58,9 +57,26 @@
+   let platesKey = "";
+   let platesPromise: Promise<Map<string, Uint8ClampedArray>>;
+   const render = backgroundRenderer(
+-    async ({ doc, camera, ratio, previewHeight }: View) => {
++    async ({ doc, camera, ratio }: View) => {
+       if (doc !== cachedDoc) {
+-        cachedRegion = spaceRegion(doc);
++        const source = spaceRegion(doc);
++        const planar = <
++          T extends { height: number; width: number; length: number },
++        >(
++          z: T,
++        ) => ({
++          ...z,
++          height: 0,
++          depth: Math.max(z.width, z.length) * 2,
++          feather: Math.min(z.width, z.length) * 0.1,
++        });
++        cachedRegion = {
++          ...source,
++          center: { ...source.center, height: 0 },
++          feather: source.radius * 0.2,
++          fields: source.fields.map(planar),
++          zones: source.zones?.map(planar),
++        };
+         cachedDoc = doc;
+       }
+       const region = cachedRegion;
+@@ -102,7 +118,7 @@
+         width,
+         height,
+         ratio,
+-        previewHeight,
++        previewHeight: 0,
+         plates: await platesPromise,
+       };
+     },
+--- a/apps/dashboard/src/map-editor/MapCanvas.tsx
++++ b/apps/dashboard/src/map-editor/MapCanvas.tsx
+@@ -1,3 +1,5 @@
++import { portraitRadiusFraction } from "@sidereal/content/celestial-assets";
++import { diskVisible, visibleCirclePath, showOrbit } from "./map-viewport";
+ import type { MapZone } from "@sidereal/content/zones";
+ import { mapZones, subtree } from "./map-commands";
+ import { cubicAt, setZoneHandle } from "@sidereal/sim/zone-path";
+@@ -44,10 +46,16 @@
+   camera,
+   setCamera,
+   layers,
+-  previewHeight,
+   drawing,
+   onDraw,
++  creationShape,
++  onCreateBounds,
+ }: {
++  creationShape: "box" | "ellipsoid" | null;
++  onCreateBounds: (
++    a: { x: number; y: number },
++    b: { x: number; y: number },
++  ) => void;
+   doc: SystemMapDocument;
+   ships: MapShip[];
+   asteroids: FieldAsteroid[];
+@@ -79,7 +87,6 @@
+     grid: boolean;
+     orbits: boolean;
+   };
+-  previewHeight: number;
+   drawing: { x: number; y: number }[] | null;
+   onDraw: (p: { x: number; y: number }) => void;
+ }) {
+@@ -123,6 +130,48 @@
+     observer.observe(target);
+     return () => observer.disconnect();
+   }, []);
++  const cameraRef = useRef(camera);
++  cameraRef.current = camera;
++  useEffect(() => {
++    const target = svg.current;
++    if (!target) return;
++    let frame = 0,
++      pending: Camera | null = null;
++    const wheel = (event: WheelEvent) => {
++      event.preventDefault();
++      const rect = target.getBoundingClientRect(),
++        c = pending ?? cameraRef.current;
++      const x = (event.clientX - rect.left) / rect.width - 0.5;
++      const y = 0.5 - (event.clientY - rect.top) / rect.height;
++      const aspect = rect.width / rect.height;
++      const delta =
++        event.deltaY *
++        (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? rect.height : 1);
++      const span = Math.max(
++        10,
++        Math.min(
++          2e9,
++          c.span * Math.exp(Math.max(-600, Math.min(600, delta)) * 0.001),
++        ),
++      );
++      pending = {
++        span,
++        x: c.x + x * (c.span - span),
++        y: c.y + (y * (c.span - span)) / aspect,
++      };
++      if (!frame)
++        frame = requestAnimationFrame(() => {
++          frame = 0;
++          if (pending) setCamera(pending);
++          pending = null;
++        });
++    };
++    target.addEventListener("wheel", wheel, { passive: false });
++    return () => {
++      target.removeEventListener("wheel", wheel);
++      cancelAnimationFrame(frame);
++    };
++  }, [setCamera]);
+   // Subtract the f64 camera origin before SVG conversion. Large raw SVG/font coordinates are clamped by browsers.
+   const height = 1000 / ratio,
+     scale = 1000 / camera.span,
+@@ -130,6 +179,7 @@
+     minY = camera.y - camera.span / ratio / 2;
+   const px = (x: number) => (x - camera.x) * scale + 500,
+     py = (y: number) => height / 2 - (y - camera.y) * scale;
++  const viewport = { width: 1000, height };
+   const point = (e: { clientX: number; clientY: number }) => {
+     const r = svg.current!.getBoundingClientRect();
+     return {
+@@ -146,7 +196,9 @@
+     vertex?: number,
+     side?: "in" | "out",
+   ) => {
+-    if (drawing || space || tool === "pan" || e.button !== 0) return;
++    if (drawing || creationShape || space || tool === "pan" || e.button !== 0)
++      return;
++    e.preventDefault();
+     e.stopPropagation();
+     svg.current!.setPointerCapture(e.pointerId);
+     svg.current!.focus();
+@@ -287,12 +339,7 @@
+   }
+   return (
+     <div className="map-chart">
+-      <MapBackground
+-        doc={doc}
+-        camera={camera}
+-        ratio={ratio}
+-        previewHeight={previewHeight}
+-      />
++      <MapBackground doc={doc} camera={camera} ratio={ratio} />
+       <svg
+         onContextMenu={(e) => e.preventDefault()}
+         ref={svg}
+@@ -316,15 +363,20 @@
+           }
+           e.currentTarget.setPointerCapture(e.pointerId);
+           setDrag({
+-            id: space || tool === "pan" || e.button !== 0 ? "pan" : "marquee",
++            id:
++              space || tool === "pan" || e.button !== 0
++                ? "pan"
++                : creationShape
++                  ? "create"
++                  : "marquee",
+             pointer: e.pointerId,
+             additive: e.shiftKey,
+             independent: false,
+             screen: { x: e.clientX, y: e.clientY },
+             moved: false,
+             start: p,
+-            original: { x: camera.x, y: camera.y },
+-            preview: { x: camera.x, y: camera.y },
++            original: creationShape ? p : { x: camera.x, y: camera.y },
++            preview: creationShape ? p : { x: camera.x, y: camera.y },
+           });
+         }}
+         onPointerMove={(e) => {
+@@ -346,11 +398,11 @@
+                   ) > 3,
+                 preview: {
+                   x:
+-                    drag.id === "marquee"
++                    drag.id === "marquee" || drag.id === "create"
+                       ? p.x
+                       : Math.round(drag.original.x + dx),
+                   y:
+-                    drag.id === "marquee"
++                    drag.id === "marquee" || drag.id === "create"
+                       ? p.y
+                       : Math.round(drag.original.y + dy),
+                 },
+@@ -359,7 +411,9 @@
+         }}
+         onPointerUp={(e) => {
+           if (!drag || drag.pointer !== e.pointerId) return;
+-          if (drag.id === "marquee") {
++          if (drag.id === "create") {
++            if (drag.moved) onCreateBounds(drag.start, drag.preview);
++          } else if (drag.id === "marquee") {
+             const within = (p: { x: number; y: number }) =>
+               p.x >= Math.min(drag.start.x, drag.preview.x) &&
+               p.x <= Math.max(drag.start.x, drag.preview.x) &&
+@@ -396,15 +450,6 @@
+         }}
+         onPointerCancel={() => setDrag(null)}
+         onLostPointerCapture={() => setDrag(null)}
+-        onWheel={(e) => {
+-          setCamera({
+-            ...camera,
+-            span: Math.max(
+-              10,
+-              Math.min(2e9, camera.span * Math.exp(e.deltaY * 0.001)),
+-            ),
+-          });
+-        }}
+       >
+         <defs>
+           <clipPath id="zone-root-clip">
+@@ -425,6 +470,25 @@
+           ))}
+         </defs>
+         <rect width={1000} height={height} fill="transparent" />
++        {drag?.id === "create" && (
++          <g className="map-drawing" fill="#71ddf320">
++            {creationShape === "ellipsoid" ? (
++              <ellipse
++                cx={(px(drag.start.x) + px(drag.preview.x)) / 2}
++                cy={(py(drag.start.y) + py(drag.preview.y)) / 2}
++                rx={(Math.abs(drag.preview.x - drag.start.x) * scale) / 2}
++                ry={(Math.abs(drag.preview.y - drag.start.y) * scale) / 2}
++              />
++            ) : (
++              <rect
++                x={Math.min(px(drag.start.x), px(drag.preview.x))}
++                y={Math.min(py(drag.start.y), py(drag.preview.y))}
++                width={Math.abs(drag.preview.x - drag.start.x) * scale}
++                height={Math.abs(drag.preview.y - drag.start.y) * scale}
++              />
++            )}
++          </g>
++        )}
+         {layers.grid && (
+           <g className="map-grid">
+             {linesX.map((x, i) => (
+@@ -442,11 +506,14 @@
+             ))}
+           </g>
+         )}
+-        <circle
++        <path
+           className="map-system-boundary"
+-          cx={px(systemCenter(doc).x)}
+-          cy={py(systemCenter(doc).y)}
+-          r={doc.radius * scale}
++          d={visibleCirclePath(
++            px(systemCenter(doc).x),
++            py(systemCenter(doc).y),
++            doc.radius * scale,
++            viewport,
++          )}
+           style={{ stroke: doc.color ?? "#6ca6cb" }}
+         />
+         {layers.fields &&
+@@ -502,14 +569,23 @@
+           ))}
+         {layers.fields && (
+           <g className="map-asteroids" pointerEvents="none">
+-            {asteroids.map((a) => (
+-              <circle
+-                key={a.id}
+-                cx={px(a.x)}
+-                cy={py(a.y)}
+-                r={Math.max(a.radius * scale, 1.5)}
+-              />
+-            ))}
++            {asteroids
++              .filter((a) =>
++                diskVisible(
++                  px(a.x),
++                  py(a.y),
++                  Math.max(a.radius * scale, 1.5),
++                  viewport,
++                ),
++              )
++              .map((a) => (
++                <circle
++                  key={a.id}
++                  cx={px(a.x)}
++                  cy={py(a.y)}
++                  r={Math.max(a.radius * scale, 1.5)}
++                />
++              ))}
+           </g>
+         )}
+         {layers.orbits && (
+@@ -519,12 +595,19 @@
+               if (!parent) return null;
+               const q = position(b.id, b.x, b.y),
+                 p = position(parent.id, parent.x, parent.y);
++              const radius = Math.hypot(q.x - p.x, q.y - p.y) * scale;
++              if (!showOrbit(radius, parent.kind !== "star")) return null;
++              const path = visibleCirclePath(
++                px(p.x),
++                py(p.y),
++                radius,
++                viewport,
++              );
++              if (!path) return null;
+               return (
+-                <circle
++                <path
+                   key={b.id}
+-                  cx={px(p.x)}
+-                  cy={py(p.y)}
+-                  r={Math.hypot(q.x - p.x, q.y - p.y) * scale}
++                  d={path}
+                   className={
+                     parent.kind === "star" ? "planet-orbit" : "moon-orbit"
+                   }
+@@ -540,23 +623,16 @@
+                 b.radius * scale,
+                 mapBodyRole(b, doc.bodies) === "moon" ? 8 : 14,
+               );
++            const imageRadius = r / portraitRadiusFraction(b.appearance);
++            if (!diskVisible(px(p.x), py(p.y), imageRadius, viewport))
++              return null;
+             return (
+               <g
+                 key={b.id}
+                 className={`map-body ${mapBodyRole(b, doc.bodies)} ${selections.includes(b.id) ? "selected" : ""}`}
+                 aria-label={b.name}
+-                tabIndex={0}
+-                onKeyDown={(e) => {
+-                  if (e.key === "Enter") onSelect(b.id);
+-                }}
+                 onPointerDown={(e) => start(e, b.id, { x: b.x, y: b.y })}
+               >
+-                <circle
+-                  className="true-radius"
+-                  cx={px(p.x)}
+-                  cy={py(p.y)}
+-                  r={b.radius * scale}
+-                />
+                 <circle
+                   className={
+                     thumbnails[b.id] ? "map-portrait-outline" : undefined
+@@ -569,10 +645,10 @@
+                   <image
+                     className="map-body-image"
+                     href={thumbnails[b.id]}
+-                    x={px(p.x) - r}
+-                    y={py(p.y) - r}
+-                    width={r * 2}
+-                    height={r * 2}
++                    x={px(p.x) - imageRadius}
++                    y={py(p.y) - imageRadius}
++                    width={imageRadius * 2}
++                    height={imageRadius * 2}
+                   >
+                     <title>
+                       {b.name} · asset portrait: {b.appearance}
+@@ -581,11 +657,15 @@
+                 ) : (
+                   <title>{b.name} · asset portrait unavailable</title>
+                 )}
+-                {labels.has(b.id) && (
+-                  <text x={px(p.x) + r + 5} y={py(p.y) + 4} fontSize={13}>
+-                    {b.name}
+-                  </text>
+-                )}
++                {labels.has(b.id) &&
++                  px(p.x) + r < 1000 &&
++                  px(p.x) + r > -100 &&
++                  py(p.y) > -20 &&
++                  py(p.y) < height + 20 && (
++                    <text x={px(p.x) + r + 5} y={py(p.y) + 4} fontSize={13}>
++                      {b.name}
++                    </text>
++                  )}
+               </g>
+             );
+           })}
+--- a/apps/dashboard/src/map-editor/MapEditor.tsx
++++ b/apps/dashboard/src/map-editor/MapEditor.tsx
+@@ -1,3 +1,5 @@
++import { waitForLiveMap } from "./live-map-save";
++import { LiveGenesis } from "../planet-studio/LiveGenesis";
+ import {
+   MousePointer2,
+   Spline,
+@@ -11,8 +13,6 @@
+   Redo2,
+   Plus,
+   Save,
+-  Upload,
+-  LogIn,
+   RefreshCw,
+   Square,
+   Circle,
+@@ -22,7 +22,6 @@
+ } from "lucide-react";
+ import type { ReactNode } from "react";
+ import UniverseTree from "./UniverseTree";
+-import { NumberField } from "@sidereal/ui/property-controls";
+ import { editorCommand, editorKeyTarget } from "@sidereal/ui/editor-commands";
+ import { newMapZone } from "@sidereal/content/zones";
+ import { splitZoneEdge, setZoneHandle } from "@sidereal/sim/zone-path";
+@@ -35,42 +34,24 @@
+ import { GenericZoneInspector } from "./ZoneProperties";
+ import { systemCenter } from "@sidereal/sim/space-background";
+ import { useMemo, useState, useEffect, useRef } from "react";
+-import { SHARED_SYSTEM_SEED } from "@sidereal/content/shared-system";
+ import {
+-  mapBodyName,
+-  mapBodyMetadata,
+   MAP_WORKSPACE,
+   newSystemMap,
+   newAsteroidField,
+   type SystemMapDocument,
++  type AsteroidField,
+ } from "@sidereal/content/system-map";
+ import {
+   validateSystemMap,
+   generateMapFields,
+   readSystemMap,
++  fieldVolume,
+ } from "@sidereal/sim/system-map";
+ import { constructionHash } from "@sidereal/sim/construction-transactions";
+ import { useMapConnection } from "./useMapConnection";
+ import MapCanvas, { type Camera } from "./MapCanvas";
+ import MapInspector from "./MapInspector";
+ import "./map-editor.css";
+-const stock = () => ({
+-  ...newSystemMap(
+-    SHARED_SYSTEM_SEED.systemId,
+-    SHARED_SYSTEM_SEED.bodies
+-      .filter((b) => b.kind !== "asteroid")
+-      .map((b) => ({
+-        id: b.id,
+-        name: mapBodyName(b.id, b.key),
+-        kind: b.kind,
+-        radius: b.radius,
+-        x: b.x,
+-        y: b.y,
+-        height: b.height,
+-      })),
+-  ),
+-  name: "Helion system",
+-});
+ interface Draft {
+   doc: SystemMapDocument;
+   revision: string;
+@@ -79,10 +60,16 @@
+   future: SystemMapDocument[];
+   editGroup?: string;
+ }
+-const initial = (): Draft => ({
+-  doc: stock(),
+-  revision: "0",
+-  fingerprint: "",
++type LiveMap = {
++  id: string;
++  revision: bigint;
++  sourceFingerprint: string;
++  documentJson: string;
++};
++const initial = (row: LiveMap): Draft => ({
++  doc: readSystemMap(row.documentJson),
++  revision: row.revision.toString(),
++  fingerprint: row.sourceFingerprint,
+   past: [],
+   future: [],
+ });
+@@ -97,21 +84,70 @@
+ };
+ const clone = (d: SystemMapDocument) =>
+   JSON.parse(JSON.stringify(d)) as SystemMapDocument;
+-export default function MapEditor() {
+-  return <SystemMapWorkspace live={useMapConnection()} />;
++export default function MapEditor({ genesis = false }: { genesis?: boolean }) {
++  const live = useMapConnection();
++  const rows = live.connection
++    ? [...live.connection.db.ownSystemMaps.iter()]
++    : [];
++  const requested = new URLSearchParams(location.search).get("body");
++  const row =
++    rows.find(
++      (r) =>
++        requested &&
++        JSON.parse(r.documentJson).bodies.some(
++          (b: { id: string }) => b.id === requested,
++        ),
++    ) ?? rows[0];
++  if (!live.user || live.status !== "ready" || !row)
++    return (
++      <main className="map-live-gate">
++        <h1>{genesis ? "Genesis" : "Universe"}</h1>
++        <p role="status">
++          {live.status === "ready"
++            ? "Universe-map read access is required to open a live system."
++            : "Connecting to the live world…"}
++        </p>
++        {live.error && <p role="alert">{live.error}</p>}
++      </main>
++    );
++  return (
++    <SystemMapWorkspace
++      key={live.user.profile.sub}
++      live={live}
++      initialRow={row}
++      genesis={genesis}
++    />
++  );
+ }
+ export function SystemMapWorkspace({
+   live,
++  initialRow,
++  genesis = false,
+ }: {
+   live: ReturnType<typeof useMapConnection>;
++  initialRow: LiveMap;
++  genesis?: boolean;
+ }) {
+-  const [draft, setDraft] = useState<Draft>(initial),
+-    [selection, setSelection] = useState<string[]>([]),
++  const [draft, setDraft] = useState<Draft>(() => initial(initialRow)),
++    [selection, setSelection] = useState<string[]>(() => {
++      const id = new URLSearchParams(location.search).get("body");
++      return id &&
++        readSystemMap(initialRow.documentJson).bodies.some((b) => b.id === id)
++        ? [id]
++        : [];
++    }),
+     [tool, setTool] = useState<"select" | "direct" | "pan">("select"),
+     [pointIndex, setPointIndex] = useState<number | null>(null),
+     [cancelToken, setCancelToken] = useState(0),
+-    [camera, setCamera] = useState<Camera>(() => fit(stock())),
++    [camera, setCamera] = useState<Camera>(() =>
++      fit(readSystemMap(initialRow.documentJson)),
++    ),
+     [drawing, setDrawing] = useState<{ x: number; y: number }[] | null>(null),
++    [creation, setCreation] = useState<{
++      kind: "zone" | "field";
++      shape: "box" | "ellipsoid" | "polygon";
++      parentId: string;
++    } | null>(null),
+     [drawFuture, setDrawFuture] = useState<{ x: number; y: number }[]>([]),
+     [layers, setLayers] = useState({
+       bodies: true,
+@@ -120,12 +156,10 @@
+       grid: true,
+       orbits: true,
+     }),
+-    [previewHeight, setPreviewHeight] = useState(0),
+     [search, setSearch] = useState(""),
+     [error, setError] = useState(""),
+     [busy, setBusy] = useState(false),
+-    [saved, setSaved] = useState(""),
+-    [scope, setScope] = useState("");
++    [saved, setSaved] = useState("");
+   const selected = selection.at(-1) ?? "";
+   const setSelected = (id: string, additive = false) => {
+     setPointIndex(null);
+@@ -141,37 +175,14 @@
+   };
+   const gesture = useRef<string | null>(null);
+   const pending = useRef<{ request: string; operationId: string } | null>(null);
+-  const doc = draft.doc,
+-    key = `sidereal:system-map:v1:${live.user?.profile.sub ?? "local"}`;
+-  useEffect(() => {
+-    try {
+-      const raw = localStorage.getItem(key);
+-      if (raw) {
+-        const data = JSON.parse(raw) as Draft;
+-        data.doc = readSystemMap(JSON.stringify(data.doc));
+-        data.doc.bodies = data.doc.bodies.map((b) => ({
+-          ...mapBodyMetadata(b.id),
+-          ...b,
+-        }));
+-        if (
+-          typeof data.revision !== "string" ||
+-          !/^\d+$/.test(data.revision) ||
+-          typeof data.fingerprint !== "string"
+-        )
+-          throw Error("Invalid draft revision");
+-        setDraft({ ...data, past: [], future: [] });
+-        setCamera(fit(data.doc));
+-      } else {
+-        setDraft(initial());
+-        setCamera(fit(stock()));
+-      }
+-      setError("");
+-    } catch (e) {
+-      setError(`Saved map could not be restored: ${String(e)}`);
++  const doc = draft.doc;
++  const edit = (update: (d: SystemMapDocument) => void) => {
++    if (!writable || live.status !== "ready" || busy) {
++      setError(
++        "Write access and an active connection are required to edit this system.",
++      );
++      return;
+     }
+-    setScope(key);
+-  }, [key]);
+-  const edit = (update: (d: SystemMapDocument) => void) => {
+     const editGroup = gesture.current ?? undefined;
+     setDraft((old) => {
+       const next = clone(old.doc);
+@@ -236,35 +247,28 @@
+   };
+   useEffect(() => {
+     if (
+-      live.status !== "ready" ||
+       !active ||
+-      scope !== key ||
+-      draft.fingerprint ||
+-      draft.past.length
++      busy ||
++      (active.revision.toString() === draft.revision &&
++        active.sourceFingerprint === draft.fingerprint)
+     )
+       return;
+-    try {
+-      if (!localStorage.getItem(key)) load(active.id);
+-    } catch {
+-      /* Storage availability does not authorize replacing a draft. */
++    if (draft.past.length) {
++      setError(
++        "The live system changed while you were editing. Reload the live map before applying changes.",
++      );
++      return;
+     }
++    setDraft(initial(active));
+   }, [
+-    live.status,
+-    active?.id,
+     active?.revision,
+     active?.sourceFingerprint,
+-    scope,
++    busy,
++    draft.revision,
++    draft.fingerprint,
++    draft.past.length,
+   ]);
+-  const save = () => {
+-    try {
+-      if (scope !== key) throw Error("Account draft is still loading");
+-      if (preview.error) throw Error(preview.error);
+-      localStorage.setItem(key, JSON.stringify(draft));
+-      setSaved("Saved locally");
+-    } catch (e) {
+-      setError(String(e));
+-    }
+-  };
++  const save = () => void apply();
+   const apply = async () => {
+     if (!live.connection || !writable || busy) return;
+     setBusy(true);
+@@ -288,39 +292,88 @@
+         sourceFingerprint: draft.fingerprint,
+         operationId: pending.current.operationId,
+       });
++      // Reducer completion and subscription delivery can arrive separately.
++      // Keep retry identity and disable edits until the authoritative view arrives.
++      const table = live.connection.db.ownSystemMaps;
++      const row = await waitForLiveMap(
++        () => table.id.find(doc.id),
++        (inspect) => {
++          table.onInsert(inspect);
++          table.onUpdate(inspect);
++          return () => {
++            table.removeOnInsert(inspect);
++            table.removeOnUpdate(inspect);
++          };
++        },
++        BigInt(draft.revision),
++      );
++      setDraft(initial(row));
+       setSaved("Applied to world");
+       pending.current = null;
+-      const row = live.connection.db.ownSystemMaps.id.find(doc.id);
+-      if (row)
+-        setDraft((old) =>
+-          old.doc.id !== doc.id
+-            ? old
+-            : {
+-                ...old,
+-                revision: row.revision.toString(),
+-                fingerprint: row.sourceFingerprint,
+-                past: [],
+-                future: [],
+-              },
+-        );
+     } catch (e) {
+       setError(String(e));
+     } finally {
+       setBusy(false);
+     }
+   };
+-  const add = (shape: "box" | "ellipsoid") => {
+-    const f = newAsteroidField(`field-${Date.now()}`, camera.x, camera.y);
+-    f.shape = shape;
+-    setCamera({ x: f.x, y: f.y, span: 2500 });
++  const beginDraw = (
++    kind: "zone" | "field",
++    shape: "box" | "ellipsoid" | "polygon",
++  ) => {
++    if (!writable || busy) return;
++    setCreation({
++      kind,
++      shape,
++      parentId: mapZones(doc).some((z) => z.id === selected)
++        ? selected
++        : doc.id,
++    });
++    setDrawing(shape === "polygon" ? [] : null);
++    setDrawFuture([]);
++    setTool("select");
++  };
++  const createBounds = (
++    a: { x: number; y: number },
++    b: { x: number; y: number },
++  ) => {
++    if (!creation || creation.shape === "polygon") return;
++    const z =
++      creation.kind === "field"
++        ? newAsteroidField(`field-${crypto.randomUUID()}`)
++        : newMapZone(`zone-${crypto.randomUUID()}`);
++    const parent = mapZones(doc).find((z) => z.id === creation.parentId);
++    Object.assign(z, {
++      x: (a.x + b.x) / 2,
++      y: (a.y + b.y) / 2,
++      width: Math.max(1, Math.abs(a.x - b.x)),
++      length: Math.max(1, Math.abs(a.y - b.y)),
++      shape: creation.shape,
++      parentId: creation.parentId,
++      height: parent?.height ?? 0,
++      depth: parent?.depth ?? 500,
++    });
++    if ("density" in z)
++      z.density = Math.min(
++        z.density as number,
++        128e9 / Math.max(1, fieldVolume(z as AsteroidField)),
++      );
+     edit((d) => {
+-      d.fields.push(f);
++      if ("density" in z) d.fields.push(z as AsteroidField);
++      else (d.zones ??= []).push(z);
+     });
+-    setSelected(f.id);
++    setSelected(z.id);
++    setCreation(null);
+   };
+   const finish = () => {
+     if (!drawing || drawing.length < 3) return;
+-    const f = newMapZone(`zone-${crypto.randomUUID()}`);
++    const f =
++      creation?.kind === "field"
++        ? newAsteroidField(`field-${crypto.randomUUID()}`)
++        : newMapZone(`zone-${crypto.randomUUID()}`);
++    f.parentId = creation?.parentId ?? doc.id;
++    const parent = mapZones(doc).find((z) => z.id === f.parentId);
++    f.height = parent?.height ?? 0;
++    f.depth = parent?.depth ?? 500;
+     f.shape = "polygon";
+     const xs = drawing.map((p) => p.x),
+       ys = drawing.map((p) => p.y);
+@@ -329,11 +382,18 @@
+     f.width = Math.max(...xs) - Math.min(...xs);
+     f.length = Math.max(...ys) - Math.min(...ys);
+     f.vertices = drawing.map((p) => ({ x: p.x - f.x, y: p.y - f.y }));
++    if ("density" in f)
++      f.density = Math.min(
++        f.density as number,
++        128e9 / Math.max(1, fieldVolume(f as AsteroidField)),
++      );
+     edit((d) => {
+-      (d.zones ??= []).push(f);
++      if ("density" in f) d.fields.push(f as AsteroidField);
++      else (d.zones ??= []).push(f);
+     });
+     setSelected(f.id);
+     setDrawing(null);
++    setCreation(null);
+   };
+   const undo = (redo = false) =>
+     setDraft((old) => {
+@@ -361,7 +421,7 @@
+       return;
+     }
+     if (!selection.some((id) => mapZones(doc).some((z) => z.id === id))) {
+-      setError("Live ships and catalog celestials cannot be deleted here.");
++      setError("Live ships and celestial instances cannot be deleted here.");
+       return;
+     }
+     edit((d) => deleteMapSelection(d, selection));
+@@ -434,6 +494,7 @@
+         }
+         if (command === "cancel") {
+           setCancelToken((n) => n + 1);
++          setCreation(null);
+           if (drawing) setDrawing(null);
+           else {
+             setSelection([]);
+@@ -449,11 +510,11 @@
+         if (command === "select" || command === "direct" || command === "pan") {
+           setTool(command);
+           setDrawing(null);
++          setCreation(null);
+           return;
+         }
+         if (command === "draw") {
+-          setDrawing([]);
+-          setDrawFuture([]);
++          beginDraw("zone", "polygon");
+           return;
+         }
+         if (command === "save") {
+@@ -511,7 +572,7 @@
+             </IconButton>
+             <IconButton
+               label="New system"
+-              disabled={busy}
++              disabled={busy || !writable}
+               onClick={() => {
+                 const d = newSystemMap(`system-${crypto.randomUUID()}`);
+                 setDraft({
+@@ -527,7 +588,11 @@
+             >
+               <Plus />
+             </IconButton>
+-            <IconButton label="Save draft (Ctrl+S)" onClick={save}>
++            <IconButton
++              label="Save to world (Ctrl+S)"
++              disabled={!writable || busy || !!preview.error}
++              onClick={save}
++            >
+               <Save />
+             </IconButton>
+             <IconButton
+@@ -537,31 +602,13 @@
+             >
+               <RefreshCw />
+             </IconButton>
+-            {!live.user ? (
+-              <IconButton label="Sign in" onClick={() => void live.signIn()}>
+-                <LogIn />
+-              </IconButton>
+-            ) : (
+-              <IconButton
+-                label={busy ? "Applying…" : "Apply to world"}
+-                disabled={
+-                  !writable ||
+-                  busy ||
+-                  !!preview.error ||
+-                  !draft.fingerprint ||
+-                  live.status !== "ready"
+-                }
+-                onClick={() => void apply()}
+-              >
+-                <Upload />
+-              </IconButton>
+-            )}
+             <IconButton
+               label="Select (V)"
+               pressed={tool === "select" && !drawing}
+               onClick={() => {
+                 setTool("select");
+                 setDrawing(null);
++                setCreation(null);
+               }}
+             >
+               <MousePointer2 />
+@@ -572,6 +619,7 @@
+               onClick={() => {
+                 setTool("direct");
+                 setDrawing(null);
++                setCreation(null);
+               }}
+             >
+               <Spline />
+@@ -582,16 +630,18 @@
+               onClick={() => {
+                 setTool("pan");
+                 setDrawing(null);
++                setCreation(null);
+               }}
+             >
+               <Hand />
+             </IconButton>
+             <IconButton
+               label="Deselect (Esc)"
+-              disabled={!selection.length && !drawing}
++              disabled={!selection.length && !creation}
+               onClick={() => {
+                 setSelected("");
+                 setDrawing(null);
++                setCreation(null);
+                 setCancelToken((n) => n + 1);
+               }}
+             >
+@@ -599,14 +649,14 @@
+             </IconButton>
+             <IconButton
+               label="Duplicate (Ctrl+D)"
+-              disabled={!selection.length || !!drawing}
++              disabled={!writable || busy || !selection.length || !!creation}
+               onClick={duplicate}
+             >
+               <Copy />
+             </IconButton>
+             <IconButton
+               label="Delete selection"
+-              disabled={!selection.length || !!drawing}
++              disabled={!writable || busy || !selection.length || !!creation}
+               onClick={() => remove(true)}
+             >
+               <Trash2 />
+@@ -631,27 +681,21 @@
+               <ZoomOut />
+             </IconButton>
+             <IconButton
+-              label="Add zone"
++              label="Draw box zone"
++              disabled={!writable || busy}
++              pressed={creation?.kind === "zone" && creation.shape === "box"}
+               onClick={() => {
+-                const z = newMapZone(
+-                  `zone-${crypto.randomUUID()}`,
+-                  camera.x,
+-                  camera.y,
+-                );
+-                edit((d) => {
+-                  (d.zones ??= []).push(z);
+-                });
+-                setSelected(z.id);
++                beginDraw("zone", "box");
+               }}
+             >
+               <Square />
+             </IconButton>
+             <IconButton
+               label="Draw polygon zone (P)"
++              disabled={!writable || busy}
+               pressed={!!drawing}
+               onClick={() => {
+-                setDrawing([]);
+-                setDrawFuture([]);
++                beginDraw("zone", "polygon");
+               }}
+             >
+               <Pentagon />
+@@ -664,10 +708,18 @@
+                 <Circle size={17} />
+               </summary>
+               <div>
+-                <button onClick={() => add("ellipsoid")}>
+-                  Add ellipsoid field
++                <button onClick={() => beginDraw("field", "ellipsoid")}>
++                  Draw ellipsoid field
+                 </button>
+-                <button onClick={() => add("box")}>Add box field</button>
++                <button onClick={() => beginDraw("field", "box")}>
++                  Draw box field
++                </button>
++                <button onClick={() => beginDraw("field", "polygon")}>
++                  Draw polygon field
++                </button>
++                <button onClick={() => beginDraw("zone", "ellipsoid")}>
++                  Draw ellipsoid zone
++                </button>
+               </div>
+             </details>
+           </div>
+@@ -734,125 +786,125 @@
+                 }
+               </label>
+             ))}
+-            <NumberField
+-              label="Preview height (m)"
+-              value={previewHeight}
+-              min={-1e9}
+-              max={1e9}
+-              onChange={setPreviewHeight}
+-            />
+           </details>
+-          <p role="status">
+-            {live.status === "ready" ? "Live connection" : live.status}
+-            {saved && ` · ${saved}`}
+-          </p>
+-          {!draft.fingerprint && (
+-            <p>Local draft. Load a live system to edit the world.</p>
+-          )}
+-          {live.status === "ready" && !readable && (
+-            <p>Universe-map access is required to load live systems.</p>
+-          )}
+-          <p className="map-hint">
+-            Click to select · Double-click to frame
+-            <br />
+-            Shift-click to add · Esc to deselect
+-            <br />
+-            Right-drag or Space-drag to pan
+-          </p>
+         </aside>
+         <div className="map-stage">
++          {creation && !drawing && (
++            <div className="map-draw-toolbar">
++              <span>
++                Drag to draw {creation.shape} {creation.kind}
++              </span>
++              <button onClick={() => setCreation(null)}>Cancel drawing</button>
++            </div>
++          )}
+           {drawing && (
+             <div className="map-draw-toolbar">
+               <span>Click vertices · {drawing.length} points</span>
+               <button disabled={drawing.length < 3} onClick={finish}>
+                 Finish zone
+               </button>
+-              <button onClick={() => setDrawing(null)}>Cancel</button>
++              <button
++                onClick={() => {
++                  setDrawing(null);
++                  setCreation(null);
++                }}
++              >
++                Cancel
++              </button>
+             </div>
+           )}
+-          <MapCanvas
+-            doc={doc}
+-            ships={ships}
+-            asteroids={preview.rocks}
+-            selection={selected}
+-            onSelect={setSelected}
+-            selections={selection}
+-            tool={tool}
+-            pointIndex={pointIndex}
+-            onPointSelect={setPointIndex}
+-            cancelToken={cancelToken}
+-            onMarquee={(ids, additive) => {
+-              setPointIndex(null);
+-              setSelection((old) =>
+-                additive ? [...new Set([...old, ...ids])] : ids,
+-              );
+-            }}
+-            onHandle={(id, index, side, x, y, independent) =>
+-              edit((d) => {
+-                const z = mapZones(d).find((z) => z.id === id)!;
+-                const a = z.vertices[index];
+-                setZoneHandle(
+-                  a,
+-                  side,
+-                  { x: x - z.x - a.x, y: y - z.y - a.y },
+-                  independent,
++          {genesis ? (
++            <LiveGenesis body={doc.bodies.find((b) => b.id === selected)} />
++          ) : (
++            <MapCanvas
++              doc={doc}
++              ships={ships}
++              asteroids={preview.rocks}
++              selection={selected}
++              onSelect={setSelected}
++              selections={selection}
++              tool={tool}
++              pointIndex={pointIndex}
++              onPointSelect={setPointIndex}
++              cancelToken={cancelToken}
++              onMarquee={(ids, additive) => {
++                setPointIndex(null);
++                setSelection((old) =>
++                  additive ? [...new Set([...old, ...ids])] : ids,
+                 );
+-              })
+-            }
+-            onInsert={(id, index, t) => {
+-              if (
+-                (mapZones(doc).find((z) => z.id === id)?.vertices.length ??
+-                  64) >= 64
+-              ) {
+-                setError("A path can contain at most 64 anchors.");
+-                return;
++              }}
++              onHandle={(id, index, side, x, y, independent) =>
++                edit((d) => {
++                  const z = mapZones(d).find((z) => z.id === id)!;
++                  const a = z.vertices[index];
++                  setZoneHandle(
++                    a,
++                    side,
++                    { x: x - z.x - a.x, y: y - z.y - a.y },
++                    independent,
++                  );
++                })
+               }
+-              edit((d) =>
+-                splitZoneEdge(
+-                  mapZones(d).find((z) => z.id === id)!.vertices,
+-                  index,
+-                  t,
+-                ),
+-              );
+-              setPointIndex(index + 1);
+-            }}
+-
+-            onMove={(id, x, y) => {
+-              const target = [...doc.bodies, ...mapZones(doc)].find(
+-                (z) => z.id === id,
+-              );
+-              if (target)
++              onInsert={(id, index, t) => {
++                if (
++                  (mapZones(doc).find((z) => z.id === id)?.vertices.length ??
++                    64) >= 64
++                ) {
++                  setError("A path can contain at most 64 anchors.");
++                  return;
++                }
+                 edit((d) =>
+-                  moveMapSelection(
+-                    d,
+-                    selection.includes(id) ? selection : [id],
+-                    x - target.x,
+-                    y - target.y,
++                  splitZoneEdge(
++                    mapZones(d).find((z) => z.id === id)!.vertices,
++                    index,
++                    t,
+                   ),
+                 );
+-            }}
+-            onVertex={(id, index, x, y) =>
+-              edit((d) => {
+-                const z = mapZones(d).find((z) => z.id === id)!;
+-                Object.assign(z.vertices[index], { x: x - z.x, y: y - z.y });
+-              })
+-            }
+-            camera={camera}
+-            setCamera={setCamera}
+-            layers={layers}
+-            previewHeight={previewHeight}
+-            drawing={drawing}
+-            onDraw={(p) => {
+-              setDrawFuture([]);
+-              setDrawing((v) => [
+-                ...(v ?? []),
+-                { x: Math.round(p.x), y: Math.round(p.y) },
+-              ]);
+-            }}
+-          />
++                setPointIndex(index + 1);
++              }}
++
++              onMove={(id, x, y) => {
++                const target = [...doc.bodies, ...mapZones(doc)].find(
++                  (z) => z.id === id,
++                );
++                if (target)
++                  edit((d) =>
++                    moveMapSelection(
++                      d,
++                      selection.includes(id) ? selection : [id],
++                      x - target.x,
++                      y - target.y,
++                    ),
++                  );
++              }}
++              onVertex={(id, index, x, y) =>
++                edit((d) => {
++                  const z = mapZones(d).find((z) => z.id === id)!;
++                  Object.assign(z.vertices[index], { x: x - z.x, y: y - z.y });
++                })
++              }
++              camera={camera}
++              setCamera={setCamera}
++              layers={layers}
++              creationShape={
++                creation?.shape === "polygon" ? null : (creation?.shape ?? null)
++              }
++              onCreateBounds={createBounds}
++              drawing={drawing}
++              onDraw={(p) => {
++                setDrawFuture([]);
++                setDrawing((v) => [
++                  ...(v ?? []),
++                  { x: Math.round(p.x), y: Math.round(p.y) },
++                ]);
++              }}
++            />
++          )}
+           <footer className={preview.error ? "map-error" : "map-summary"}>
+             {preview.error ||
+-              `${doc.bodies.length} celestial bodies · ${ships.length} live ships · ${preview.count} generated asteroids`}
++              (saved === "Unsaved changes"
++                ? "Pending changes"
++                : saved || `${doc.bodies.length} celestial bodies`)}
+           </footer>
+         </div>
+         {doc.zones?.some((z) => z.id === selected) ? (
+--- a/apps/dashboard/src/map-editor/MapInspector.tsx
++++ b/apps/dashboard/src/map-editor/MapInspector.tsx
+@@ -1,10 +1,10 @@
++import { CELESTIAL_ASSETS } from "@sidereal/content/celestial-assets";
+ import { NumberField, CoordinateFields } from "@sidereal/ui/property-controls";
+ import { InspectorIdentity } from "./InspectorIdentity";
+ import { moveMapSelection } from "./map-commands";
+ import { ZoneProperties } from "./ZoneProperties";
+ import { systemCenter } from "@sidereal/sim/space-background";
+ import {
+-  mapBodyRole,
+   moveMapBody,
+   MAP_BACKGROUNDS,
+   MAP_RESOURCES,
+@@ -98,10 +98,12 @@
+         </label>
+       )}
+       <CoordinateFields>
+-        {(["x", "y", "height"] as const).map((k) => (
++        {(["x", "y"] as const).map((k) => (
+           <NumberField
+             key={k}
+-            label={`${k === "height" ? "Height" : k.toUpperCase()} (m)`}
++            label={`${k.toUpperCase()} (m)`}
++            precision={2}
++            step={0.01}
+             value={(field ?? body ?? systemCenter(doc))[k]}
+             onChange={(n) =>
+               edit((d) => {
+@@ -127,7 +129,7 @@
+                     [field.id],
+                     k === "x" ? n - field.x : 0,
+                     k === "y" ? n - field.y : 0,
+-                    k === "height" ? n - field.height : 0,
++                    0,
+                   );
+                 else p[k] = n;
+               })
+@@ -137,17 +139,69 @@
+       </CoordinateFields>
+       {body && (
+         <>
+-          <p>
+-            {mapBodyRole(body, doc.bodies)} · catalog components (read only)
+-          </p>
+-          <dl className="map-component-facts">
+-            <dt>Radius</dt>
+-            <dd>{body.radius} m</dd>
+-            <dt>Appearance</dt>
+-            <dd>{body.appearance ?? "Unassigned"}</dd>
+-            <dt>Seed</dt>
+-            <dd>{body.seed ?? "Default"}</dd>
+-          </dl>
++          <a
++            className="map-genesis-link"
++            href={`/planets?body=${encodeURIComponent(body.id)}`}
++          >
++            Open this instance in Genesis
++          </a>
++          <NumberField
++            label="Radius (m)"
++            min={0.01}
++            max={1e7}
++            precision={2}
++            step={0.01}
++            value={body.radius}
++            onChange={(radius) =>
++              edit((d) => {
++                d.bodies.find((b) => b.id === body.id)!.radius = radius;
++              })
++            }
++          />
++          <label>
++            Genesis asset
++            <select
++              aria-label="Genesis asset"
++              value={body.appearance ?? ""}
++              onChange={(e) =>
++                edit((d) => {
++                  const b = d.bodies.find((b) => b.id === body.id)!;
++                  b.appearance = e.target.value;
++                  const asset = CELESTIAL_ASSETS.find(
++                    (a) => a.id === b.appearance,
++                  );
++                  if (asset && "seed" in asset) b.seed = asset.seed;
++                })
++              }
++            >
++              {!CELESTIAL_ASSETS.some((a) => a.id === body.appearance) && (
++                <option value={body.appearance ?? ""}>
++                  {body.appearance ?? "Choose asset"}
++                </option>
++              )}
++              {CELESTIAL_ASSETS.filter(
++                (a) => (a.kind === "star") === (body.kind === "star"),
++              ).map((a) => (
++                <option key={a.id} value={a.id}>
++                  {a.label}
++                </option>
++              ))}
++            </select>
++          </label>
++          {body.kind !== "star" && (
++            <NumberField
++              label="Composition seed"
++              min={0}
++              max={2147483647}
++              integer
++              value={body.seed ?? 117}
++              onChange={(seed) =>
++                edit((d) => {
++                  d.bodies.find((b) => b.id === body.id)!.seed = seed;
++                })
++              }
++            />
++          )}
+           {body.kind !== "star" && (
+             <label>
+               Orbits around
+@@ -242,18 +296,6 @@
+               ))}
+             </select>
+           </label>
+-          <NumberField
+-            label="System feather (m)"
+-            max={doc.radius}
+-            slider
+-            min={0}
+-            value={doc.feather ?? Math.min(doc.radius * 0.05, 100000)}
+-            onChange={(n) =>
+-              edit((d) => {
+-                d.feather = n;
+-              })
+-            }
+-          />
+           <p>The outline is the top-down projection of the system sphere.</p>
+         </>
+       )}
+@@ -301,15 +343,6 @@
+           {field.backgroundId && (
+             <>
+               <NumberField
+-                label="Field feather (m)"
+-                min={0}
+-                value={
+-                  field.feather ??
+-                  Math.min(field.width, field.length, field.depth) * 0.1
+-                }
+-                onChange={(n) => updateField({ feather: n })}
+-              />
+-              <NumberField
+                 label="Background priority"
+                 integer
+                 value={field.priority ?? 0}
+@@ -317,12 +350,6 @@
+               />
+             </>
+           )}
+-          <NumberField
+-            label="Depth (m)"
+-            min={1}
+-            value={field.depth}
+-            onChange={(n) => updateField({ depth: n })}
+-          />
+           <NumberField
+             label="Density (asteroids/km³)"
+             min={0}
+--- a/apps/dashboard/src/map-editor/ZoneProperties.tsx
++++ b/apps/dashboard/src/map-editor/ZoneProperties.tsx
+@@ -145,6 +145,8 @@
+                   <NumberField
+                     key={k}
+                     label={`Anchor ${k.toUpperCase()} (m)`}
++                    precision={2}
++                    step={0.01}
+                     value={anchor[k]}
+                     onChange={(n) =>
+                       update((z) => {
+@@ -253,10 +255,12 @@
+       />
+       <h2>Zone</h2>
+       <CoordinateFields>
+-        {(["x", "y", "height"] as const).map((k) => (
++        {(["x", "y"] as const).map((k) => (
+           <NumberField
+             key={k}
+-            label={`${k === "height" ? "Height" : k.toUpperCase()} (m)`}
++            label={`${k.toUpperCase()} (m)`}
++            precision={2}
++            step={0.01}
+             value={zone[k]}
+             onChange={(n) =>
+               edit((d) =>
+@@ -265,15 +269,15 @@
+                   [zone.id],
+                   k === "x" ? n - zone.x : 0,
+                   k === "y" ? n - zone.y : 0,
+-                  k === "height" ? n - zone.height : 0,
++                  0,
+                 ),
+               )
+             }
+           />
+         ))}
+       </CoordinateFields>
+-      {(["width", "length", "depth"] as const)
+-        .filter((k) => zone.shape !== "polygon" || k === "depth")
++      {(["width", "length"] as const)
++        .filter(() => zone.shape !== "polygon")
+         .map((k) => (
+           <NumberField
+             key={k}
+@@ -299,14 +303,6 @@
+         </select>
+       </label>
+       <NumberField
+-        label="Feather (m)"
+-        max={Math.max(zone.width, zone.length, zone.depth)}
+-        slider
+-        min={0}
+-        value={zone.feather ?? 50}
+-        onChange={(n) => patch({ feather: n })}
+-      />
+-      <NumberField
+         label="Priority"
+         integer
+         value={zone.priority ?? 0}
+--- /dev/null
++++ b/apps/dashboard/src/map-editor/live-map-save.test.ts
+@@ -0,0 +1,45 @@
++import { expect, test, vi } from "vitest";
++import { waitForLiveMap } from "./live-map-save";
++test("waits for delayed authoritative state and returns canonical values", async () => {
++  let row = { revision: 4n, name: "old" };
++  let notify = () => {};
++  const cleanup = vi.fn();
++  let settled = false;
++  const saved = waitForLiveMap(
++    () => row,
++    (inspect) => {
++      notify = inspect;
++      return cleanup;
++    },
++    4n,
++  ).then((value) => {
++    settled = true;
++    return value;
++  });
++  notify();
++  await Promise.resolve();
++  expect(settled).toBe(false);
++  row = { revision: 5n, name: "server canonical" };
++  notify();
++  expect(await saved).toEqual(row);
++  expect(cleanup).toHaveBeenCalledOnce();
++});
++test("accepts already updated cache and cleans up a timed-out confirmation", async () => {
++  const cleanup = vi.fn();
++  expect(
++    await waitForLiveMap(
++      () => ({ revision: 2n }),
++      () => cleanup,
++      1n,
++    ),
++  ).toEqual({ revision: 2n });
++  await expect(
++    waitForLiveMap(
++      () => undefined,
++      () => cleanup,
++      1n,
++      1,
++    ),
++  ).rejects.toThrow("Retry Save");
++  expect(cleanup).toHaveBeenCalledTimes(2);
++});
+--- /dev/null
++++ b/apps/dashboard/src/map-editor/live-map-save.ts
+@@ -0,0 +1,33 @@
++/** A committed reducer can precede its subscription update. Do not unlock another
++ * edit or discard the retry operation ID while the view is still stale. */
++export function waitForLiveMap<T extends { revision: bigint }>(
++  read: () => T | null | undefined,
++  subscribe: (inspect: () => void) => () => void,
++  previousRevision: bigint,
++  timeoutMs = 10000,
++): Promise<T> {
++  return new Promise((resolve, reject) => {
++    let unsubscribe = () => {};
++    const cleanup = () => {
++      clearTimeout(timer);
++      unsubscribe();
++    };
++    const inspect = () => {
++      const next = read();
++      if (next && next.revision > previousRevision) {
++        cleanup();
++        resolve(next);
++      }
++    };
++    const timer = setTimeout(() => {
++      cleanup();
++      reject(
++        Error(
++          "Save accepted; waiting for the live map. Retry Save to confirm the same operation.",
++        ),
++      );
++    }, timeoutMs);
++    unsubscribe = subscribe(inspect);
++    inspect();
++  });
++}
+--- a/apps/dashboard/src/map-editor/map-editor.css
++++ b/apps/dashboard/src/map-editor/map-editor.css
+@@ -748,3 +748,70 @@
+     overflow: visible;
+   }
+ }
++.map-orbits path {
++  fill: none;
++  stroke: #8bb6ce;
++  stroke-width: 0.7;
++  opacity: 0.35;
++}
++.map-body:focus,
++.map-body:focus-visible {
++  outline: none;
++}
++.map-body.selected circle {
++  stroke: #d4f1fa;
++  stroke-width: 1.5;
++}
++.map-workbench {
++  grid-template-columns: 252px minmax(240px, 1fr) 360px;
++}
++.editor-coordinates > div {
++  grid-template-columns: repeat(2, minmax(0, 1fr));
++}
++.editor-coordinates .editor-number-control {
++  grid-template-columns: 19px minmax(0, 1fr) 19px;
++}
++.editor-coordinates .editor-number-control input {
++  font-size: 12px;
++  padding-inline: 3px;
++}
++@media (max-width: 1100px) {
++  .map-workbench {
++    grid-template-columns: 220px minmax(200px, 1fr) 320px;
++  }
++  .editor-coordinates .editor-number-control input {
++    font-size: 11px;
++  }
++}
++.map-live-gate {
++  margin: auto;
++  padding: 32px;
++  max-width: 520px;
++}
++.map-genesis-preview {
++  position: relative;
++  flex: 1;
++  min-height: 240px;
++}
++.map-genesis-preview canvas {
++  width: 100%;
++  height: 100%;
++  display: block;
++}
++.map-genesis-preview > p {
++  position: absolute;
++  bottom: 10px;
++  left: 12px;
++  right: 12px;
++  font-size: 12px;
++  pointer-events: none;
++}
++.map-genesis-empty {
++  position: absolute;
++  inset: 0;
++  display: grid;
++  place-items: center;
++  background: #06151e;
++  color: #98bbc9;
++  padding: 24px;
++}
+--- /dev/null
++++ b/apps/dashboard/src/map-editor/map-viewport.test.ts
+@@ -0,0 +1,34 @@
++import { describe, expect, it } from "vitest";
++import {
++  visibleCirclePath,
++  diskVisible,
++  showOrbit,
++  hundredth,
++} from "./map-viewport";
++const view = { width: 1000, height: 600 };
++describe("bounded map geometry", () => {
++  it("omits enormous invisible boundaries and offscreen sprites", () => {
++    expect(visibleCirclePath(500, 300, 1e10, view)).toBe("");
++    expect(diskVisible(-1000, 300, 10, view)).toBe(false);
++    expect(diskVisible(-10, 300, 30, view)).toBe(true);
++  });
++  it("clips a 100-million pixel orbit crossing the view to a bounded path", () => {
++    const path = visibleCirclePath(500, -1e8 + 300, 1e8, view);
++    expect(path).not.toBe("");
++    const numbers = path.match(/-?\d+(?:\.\d+)?/g)!.map(Number);
++    expect(numbers.length).toBeLessThan(600);
++    for (let i = 0; i < numbers.length; i += 2) {
++      expect(numbers[i]).toBeGreaterThanOrEqual(-2.01);
++      expect(numbers[i]).toBeLessThanOrEqual(1002.01);
++      expect(numbers[i + 1]).toBeGreaterThanOrEqual(-2.01);
++      expect(numbers[i + 1]).toBeLessThanOrEqual(602.01);
++    }
++  });
++  it("keeps local circles and delays moon guides", () => {
++    expect(visibleCirclePath(500, 300, 100, view)).toContain("M");
++    expect(showOrbit(25, false)).toBe(true);
++    expect(showOrbit(25, true)).toBe(false);
++    expect(showOrbit(50, true)).toBe(true);
++    expect(hundredth(-23746989.214867294)).toBe(-23746989.21);
++  });
++});
+--- /dev/null
++++ b/apps/dashboard/src/map-editor/map-viewport.ts
+@@ -0,0 +1,85 @@
++export interface Viewport {
++  width: number;
++  height: number;
++}
++export function diskVisible(
++  x: number,
++  y: number,
++  radius: number,
++  view: Viewport,
++  margin = 24,
++) {
++  return (
++    Math.hypot(
++      x - Math.max(-margin, Math.min(view.width + margin, x)),
++      y - Math.max(-margin, Math.min(view.height + margin, y)),
++    ) <= radius
++  );
++}
++/** Only produce the arc inside the viewport. Huge dashed SVG circles otherwise
++ * tessellate their entire circumference, even when their boundary is invisible. */
++export function visibleCirclePath(
++  cx: number,
++  cy: number,
++  radius: number,
++  view: Viewport,
++): string {
++  if (
++    ![cx, cy, radius, view.width, view.height].every(Number.isFinite) ||
++    radius <= 0
++  )
++    return "";
++  const left = -2,
++    top = -2,
++    right = view.width + 2,
++    bottom = view.height + 2;
++  const nearest = Math.hypot(
++    cx - Math.max(left, Math.min(right, cx)),
++    cy - Math.max(top, Math.min(bottom, cy)),
++  );
++  const farthest = Math.hypot(
++    Math.max(Math.abs(cx - left), Math.abs(cx - right)),
++    Math.max(Math.abs(cy - top), Math.abs(cy - bottom)),
++  );
++  if (radius < nearest || radius > farthest) return "";
++  const tau = Math.PI * 2,
++    angles = [0, tau];
++  for (const x of [left, right]) {
++    const v = (x - cx) / radius;
++    if (Math.abs(v) <= 1) {
++      const a = Math.acos(v);
++      angles.push(a, tau - a);
++    }
++  }
++  for (const y of [top, bottom]) {
++    const v = (y - cy) / radius;
++    if (Math.abs(v) <= 1) {
++      const a = Math.asin(v);
++      angles.push((a + tau) % tau, (Math.PI - a + tau) % tau);
++    }
++  }
++  angles.sort((a, b) => a - b);
++  const inside = (a: number) => {
++    const x = cx + radius * Math.cos(a),
++      y = cy + radius * Math.sin(a);
++    return x >= left && x <= right && y >= top && y <= bottom;
++  };
++  const paths: string[] = [];
++  for (let i = 1; i < angles.length; i++) {
++    const a = angles[i - 1],
++      b = angles[i];
++    if (b - a < Number.EPSILON || !inside((a + b) / 2)) continue;
++    const steps = Math.min(256, Math.max(2, Math.ceil(((b - a) * radius) / 6)));
++    for (let n = 0; n <= steps; n++) {
++      const theta = a + ((b - a) * n) / steps;
++      paths.push(
++        `${n ? "L" : "M"}${(cx + radius * Math.cos(theta)).toFixed(3)} ${(cy + radius * Math.sin(theta)).toFixed(3)}`,
++      );
++    }
++  }
++  return paths.join(" ");
++}
++export function showOrbit(radius: number, moon: boolean) {
++  return radius >= (moon ? 48 : 12);
++}
++export const hundredth = (value: number) => Math.round(value * 100) / 100;
+--- /dev/null
++++ b/apps/dashboard/src/planet-studio/LiveGenesis.tsx
+@@ -0,0 +1,48 @@
++import { useEffect, useRef, useState } from "react";
++import type { MapBody } from "@sidereal/content/system-map";
++import { createReviewedNativePreview } from "@sidereal/render/reviewed-native-preview";
++/** One native preview for the selected live instance; values share the map draft
++ * and are committed by the same revision-checked world transaction. */
++export function LiveGenesis({ body }: { body?: MapBody }) {
++  const canvas = useRef<HTMLCanvasElement>(null);
++  const preview = useRef<ReturnType<typeof createReviewedNativePreview> | null>(
++    null,
++  );
++  const [status, setStatus] = useState("Select a celestial instance"),
++    [failed, setFailed] = useState(false);
++  useEffect(() => {
++    if (!canvas.current) return;
++    const instance = createReviewedNativePreview(
++      canvas.current,
++      (message, error = false) => {
++        setStatus(message);
++        setFailed(error);
++      },
++    );
++    preview.current = instance;
++    return () => {
++      preview.current = null;
++      instance.dispose();
++    };
++  }, []);
++  useEffect(() => {
++    if (body?.appearance)
++      void preview.current?.select(body.appearance, body.seed ?? 117);
++  }, [body?.id, body?.appearance, body?.seed]);
++  return (
++    <section className="map-genesis-preview">
++      <canvas
++        ref={canvas}
++        aria-label={
++          body ? `${body.name} live Genesis preview` : "Genesis preview"
++        }
++      />
++      {!body && (
++        <div className="map-genesis-empty">
++          Select a planet, moon or star in the Universe tree.
++        </div>
++      )}
++      <p role={failed ? "alert" : "status"}>{body ? status : ""}</p>
++    </section>
++  );
++}
+--- a/apps/dashboard/src/planet-studio/PlanetStudio.tsx
++++ b/apps/dashboard/src/planet-studio/PlanetStudio.tsx
+@@ -1,298 +1,4 @@
+-import { ReviewedPlanetStudio } from "./ReviewedPlanetStudio";
+-import { useEffect, useRef, useState } from "react";
+-import {
+-  PLANET_STYLES,
+-  planetRecipe,
+-  validatePlanetRecipe,
+-  planetEffects,
+-  type PlanetRecipe,
+-  type PlanetStyle,
+-} from "../../../../packages/content/src/environment";
+-import { createPlanetPreview } from "../../../../packages/render/src/environment/planet-preview";
+-import "./planet-studio.css";
+-const ranges = [
+-  ["terrain", "Surface relief", 1, 0.01],
+-  ["mountains", "Mountains & spires", 1, 0.01],
+-  ["seaLevel", "Sea level", 1, 0.01],
+-  ["cloudCoverage", "Cloud cover", 1, 0.01],
+-  ["cloudSpeed", "Weather drift", 0.1, 0.001],
+-  ["emission", "Deposit radiance", 4, 0.05],
+-] as const;
+-function ProceduralPlanetStudio() {
+-  const [recipe, setRecipe] = useState<PlanetRecipe>(() => planetRecipe());
+-  const [gallery, setGallery] = useState(false);
+-  const [status, setStatus] = useState("Generating surface…");
+-  const [error, setError] = useState("");
+-  const canvas = useRef<HTMLCanvasElement>(null);
+-  const preview = useRef<ReturnType<typeof createPlanetPreview> | null>(null);
+-  useEffect(() => {
+-    if (!canvas.current) return;
+-    preview.current = createPlanetPreview(canvas.current, setStatus);
+-    return () => {
+-      preview.current?.dispose();
+-      preview.current = null;
+-    };
+-  }, []);
+-  useEffect(() => {
+-    const timer = window.setTimeout(() => {
+-      try {
+-        preview.current?.update(validatePlanetRecipe(recipe), gallery);
+-        setError("");
+-      } catch (e) {
+-        setError(String(e));
+-      }
+-    }, 120);
+-    return () => window.clearTimeout(timer);
+-  }, [recipe, gallery]);
+-  function change(key: keyof PlanetRecipe, value: number | boolean) {
+-    setGallery(false);
+-    setRecipe((r) => ({ ...r, [key]: value }));
+-  }
+-  async function importRecipe(file?: File) {
+-    if (!file) return;
+-    try {
+-      if (file.size > 16000) throw new Error("Recipe file exceeds 16 KB");
+-      const candidate = validatePlanetRecipe(JSON.parse(await file.text()));
+-      setRecipe(candidate);
+-      setGallery(false);
+-      setError("");
+-    } catch (e) {
+-      setError(`Could not import recipe: ${String(e)}`);
+-    }
+-  }
+-  function effect(key: keyof ReturnType<typeof planetEffects>, value: number) {
+-    setGallery(false);
+-    setRecipe((r) => ({
+-      ...r,
+-      effects: { ...planetEffects(r), [key]: value },
+-    }));
+-  }
+-  function exportRecipe() {
+-    try {
+-      const json = JSON.stringify(validatePlanetRecipe(recipe), null, 2);
+-      const url = URL.createObjectURL(
+-        new Blob([json], { type: "application/json" }),
+-      );
+-      const link = document.createElement("a");
+-      link.href = url;
+-      link.download = `${recipe.style}-${recipe.seed}.planet.json`;
+-      link.click();
+-      setTimeout(() => URL.revokeObjectURL(url), 1000);
+-    } catch (e) {
+-      setError(String(e));
+-    }
+-  }
+-  return (
+-    <main className="planet-studio">
+-      <section className="planet-view">
+-        <div className="planet-heading">
+-          <div>
+-            <h1>Genesis</h1>
+-            <p>Shape a world from a seed.</p>
+-          </div>
+-          <button className="secondary" onClick={() => setGallery((v) => !v)}>
+-            {gallery ? "Edit selected world" : "Compare ten families"}
+-          </button>
+-        </div>
+-        <canvas ref={canvas} aria-label="Procedural planet preview" />
+-        {gallery && (
+-          <div className="planet-family-key">
+-            {PLANET_STYLES.map((style) => (
+-              <button
+-                key={style}
+-                onClick={() => {
+-                  setRecipe(planetRecipe(style, recipe.seed));
+-                  setGallery(false);
+-                }}
+-              >
+-                {style}
+-              </button>
+-            ))}
+-          </div>
+-        )}
+-        <div className="planet-view-footer">
+-          <span role="status">{status}</span>
+-          <span>Drag to orbit · scroll to zoom</span>
+-        </div>
+-      </section>
+-      <aside className="planet-controls">
+-        <h2>World recipe</h2>
+-        <label>
+-          Family
+-          <select
+-            value={recipe.style}
+-            onChange={(e) => {
+-              setGallery(false);
+-              setRecipe(
+-                planetRecipe(e.target.value as PlanetStyle, recipe.seed),
+-              );
+-            }}
+-          >
+-            {PLANET_STYLES.map((s) => (
+-              <option key={s}>{s}</option>
+-            ))}
+-          </select>
+-        </label>
+-        <label>
+-          Seed
+-          <input
+-            type="number"
+-            min="0"
+-            max="2147483647"
+-            value={recipe.seed}
+-            onChange={(e) => change("seed", Number(e.target.value))}
+-          />
+-        </label>
+-        <div className="planet-seed-actions">
+-          <button
+-            className="secondary"
+-            onClick={() => change("seed", (recipe.seed + 1) % 2147483648)}
+-          >
+-            Next seed
+-          </button>
+-          <button
+-            className="secondary"
+-            onClick={() => {
+-              setRecipe(planetRecipe(recipe.style, recipe.seed));
+-              setGallery(false);
+-            }}
+-          >
+-            Reset shape
+-          </button>
+-        </div>
+-        {ranges.map(([key, label, max, step]) => (
+-          <label className="planet-range" key={key}>
+-            <span>
+-              {label}
+-              <output>
+-                {recipe[key].toFixed(key === "cloudSpeed" ? 3 : 2)}
+-              </output>
+-            </span>
+-            <input
+-              type="range"
+-              min="0"
+-              max={max}
+-              step={step}
+-              value={recipe[key]}
+-              onChange={(e) => change(key, Number(e.target.value))}
+-            />
+-          </label>
+-        ))}
+-        <label>
+-          Detail
+-          <select
+-            value={recipe.resolution}
+-            onChange={(e) => change("resolution", Number(e.target.value))}
+-          >
+-            <option value="24">24 cells · distant</option>
+-            <option value="40">40 cells · balanced</option>
+-            <option value="52">52 cells · detailed</option>
+-            <option value="64">64 cells · fine</option>
+-            <option value="96">96 cells · hero</option>
+-          </select>
+-        </label>
+-        <h2>Surface effects</h2>
+-        {(
+-          [
+-            ["vegetation", "Forest coverage"],
+-            ["volcanicCoverage", "Volcanic zones"],
+-            ["crystalCoverage", "Crystal clusters"],
+-            ["smoke", "Smoke & haze"],
+-            ["atmosphere", "Atmosphere rim"],
+-          ] as const
+-        ).map(([key, label]) => (
+-          <label className="planet-range" key={key}>
+-            <span>
+-              {label}
+-              <output>{planetEffects(recipe)[key].toFixed(2)}</output>
+-            </span>
+-            <input
+-              type="range"
+-              min="0"
+-              max="1"
+-              step=".01"
+-              value={planetEffects(recipe)[key]}
+-              onChange={(e) => effect(key, Number(e.target.value))}
+-            />
+-          </label>
+-        ))}
+-        <label className="planet-check">
+-          <input
+-            type="checkbox"
+-            checked={recipe.rings}
+-            onChange={(e) => change("rings", e.target.checked)}
+-          />
+-          Ring system
+-        </label>
+-        <fieldset className="planet-palette">
+-          <legend>Surface palette</legend>
+-          {recipe.palette.map((color, index) => (
+-            <input
+-              key={index}
+-              type="color"
+-              aria-label={`Palette color ${index + 1}`}
+-              value={"#" + color}
+-              onChange={(e) => {
+-                setGallery(false);
+-                setRecipe((r) => ({
+-                  ...r,
+-                  palette: r.palette.map((c, i) =>
+-                    i === index ? e.target.value.slice(1) : c,
+-                  ),
+-                }));
+-              }}
+-            />
+-          ))}
+-        </fieldset>
+-        {error && <p role="alert">{error}</p>}
+-        <button className="primary full" onClick={exportRecipe}>
+-          Export recipe
+-        </button>
+-        <label className="planet-import">
+-          Import recipe
+-          <input
+-            type="file"
+-            accept="application/json,.json"
+-            onChange={(e) => {
+-              void importRecipe(e.target.files?.[0]);
+-              e.target.value = "";
+-            }}
+-          />
+-        </label>
+-        <p className="fine-print">
+-          A reusable local art draft. World placement and publication require
+-          the authoring workflow.
+-        </p>
+-      </aside>
+-    </main>
+-  );
++import MapEditor from "../map-editor/MapEditor";
++export default function PlanetStudio() {
++  return <MapEditor genesis />;
+ }
+-
+-export default function PlanetStudio() {
+-  const [mode, setMode] = useState<"reviewed" | "procedural">("reviewed");
+-  return (
+-    <div className="planet-studio-modes">
+-      <nav aria-label="Planet rendering mode">
+-        <button
+-          type="button"
+-          aria-pressed={mode === "reviewed"}
+-          onClick={() => setMode("reviewed")}
+-        >
+-          Reviewed planets
+-        </button>
+-        <button
+-          type="button"
+-          aria-pressed={mode === "procedural"}
+-          onClick={() => setMode("procedural")}
+-        >
+-          Procedural editor
+-        </button>
+-      </nav>
+-      {mode === "reviewed" ? (
+-        <ReviewedPlanetStudio />
+-      ) : (
+-        <ProceduralPlanetStudio />
+-      )}
+-    </div>
+-  );
+-}
+--- a/apps/dashboard/src/style.css
++++ b/apps/dashboard/src/style.css
+@@ -916,3 +916,17 @@
+   outline: 2px solid var(--accent);
+   outline-offset: 2px;
+ }
++.studio-auth-gate {
++  margin: auto;
++  padding: 40px;
++  max-width: 480px;
++}
++.studio-auth-gate h1 {
++  font:
++    600 32px "Barlow Condensed",
++    sans-serif;
++}
++.studio-auth-gate p {
++  color: var(--muted);
++  line-height: 1.5;
++}
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -34,9 +34,9 @@
+       "dependencies": {
+         "@fontsource/barlow": "5.3.0",
+         "@fontsource/barlow-condensed": "5.3.0",
+-        "@sidereal/content": "0.5.0",
++        "@sidereal/content": "0.6.0",
+         "@sidereal/net": "0.5.0",
+-        "@sidereal/render": "0.7.1",
++        "@sidereal/render": "0.8.0",
+         "@sidereal/sim": "0.4.0",
+         "oidc-client-ts": "^3.4.1",
+         "react": "19.2.8",
+@@ -46,12 +46,12 @@
+     },
+     "apps/dashboard": {
+       "name": "@sidereal/dashboard",
+-      "version": "0.9.0",
++      "version": "0.10.0",
+       "dependencies": {
+         "@fontsource/barlow": "5.3.0",
+         "@fontsource/barlow-condensed": "5.3.0",
+-        "@sidereal/content": "0.5.0",
+-        "@sidereal/render": "0.7.1",
++        "@sidereal/content": "0.6.0",
++        "@sidereal/render": "0.8.0",
+         "@sidereal/sim": "0.4.0",
+         "@sidereal/ui": "*",
+         "lucide-react": "1.42.0",
+@@ -3381,13 +3381,13 @@
+       "version": "0.1.2",
+       "dependencies": {
+         "@babylonjs/core": "9.25.0",
+-        "@sidereal/content": "0.5.0",
+-        "@sidereal/render": "0.7.1"
++        "@sidereal/content": "0.6.0",
++        "@sidereal/render": "0.8.0"
+       }
+     },
+     "packages/content": {
+       "name": "@sidereal/content",
+-      "version": "0.5.0",
++      "version": "0.6.0",
+       "dependencies": {}
+     },
+     "packages/net": {
+@@ -3400,11 +3400,11 @@
+     },
+     "packages/render": {
+       "name": "@sidereal/render",
+-      "version": "0.7.1",
++      "version": "0.8.0",
+       "dependencies": {
+         "@babylonjs/core": "9.25.0",
+         "@babylonjs/loaders": "9.25.0",
+-        "@sidereal/content": "0.5.0",
++        "@sidereal/content": "0.6.0",
+         "@sidereal/sim": "0.4.0",
+         "@noble/hashes": "2.4.0"
+       }
+@@ -3418,12 +3418,12 @@
+       "version": "0.4.0",
+       "dependencies": {
+         "@noble/hashes": "2.4.0",
+-        "@sidereal/content": "0.5.0"
++        "@sidereal/content": "0.6.0"
+       }
+     },
+     "packages/ui": {
+       "name": "@sidereal/ui",
+-      "version": "0.3.0",
++      "version": "0.4.0",
+       "dependencies": {
+         "react": "19.2.8"
+       }
+@@ -3433,7 +3433,7 @@
+       "version": "0.5.0",
+       "dependencies": {
+         "spacetimedb": "2.10.0",
+-        "@sidereal/content": "0.5.0",
++        "@sidereal/content": "0.6.0",
+         "@sidereal/sim": "0.4.0"
+       },
+       "devDependencies": {
+--- a/packages/canvas-ui/package.json
++++ b/packages/canvas-ui/package.json
+@@ -9,7 +9,7 @@
+   },
+   "dependencies": {
+     "@babylonjs/core": "9.25.0",
+-    "@sidereal/content": "0.5.0",
+-    "@sidereal/render": "0.7.1"
++    "@sidereal/content": "0.6.0",
++    "@sidereal/render": "0.8.0"
+   }
+ }
+--- a/packages/content/package.json
++++ b/packages/content/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@sidereal/content",
+-  "version": "0.5.0",
++  "version": "0.6.0",
+   "private": true,
+   "type": "module",
+   "exports": {
+@@ -68,7 +68,8 @@
+     "./wayfarer-flight-definition": "./src/wayfarer-flight-definition.ts",
+     "./interior": "./src/interior.ts",
+     "./wayfarer-rebuild-removals.json": "./src/wayfarer-rebuild-removals.json",
+-    "./hull-paint": "./src/hull-paint.ts"
++    "./hull-paint": "./src/hull-paint.ts",
++    "./celestial-assets": "./src/celestial-assets.ts"
+   },
+   "dependencies": {}
+ }
+--- /dev/null
++++ b/packages/content/src/celestial-assets.ts
+@@ -0,0 +1,195 @@
++/** Approved native Genesis visual IDs shared by authority and authoring UI.
++ * Source pins remain in the reviewed native render catalog; no geometry imports. */
++export const CELESTIAL_ASSETS = [
++  {
++    id: "yellow-main-sequence-r013",
++    label: "Yellow Main Sequence Star",
++    kind: "star",
++    style: "star",
++    seed: 3901,
++  },
++  {
++    id: "desert-r014",
++    label: "Desert",
++    kind: "planet",
++    style: "desert",
++  },
++  {
++    id: "rocky-r010",
++    label: "Rocky",
++    kind: "planet",
++    style: "rock",
++  },
++  {
++    id: "ocean-r007",
++    label: "Ocean",
++    kind: "planet",
++    style: "ocean",
++  },
++  {
++    id: "temperate-r003",
++    label: "Temperate",
++    kind: "planet",
++    style: "temperate",
++  },
++  {
++    id: "toxic-r007",
++    label: "Toxic",
++    kind: "planet",
++    style: "toxic",
++  },
++  {
++    id: "crystal-r013",
++    label: "Crystal",
++    kind: "planet",
++    style: "crystal",
++  },
++  {
++    id: "volcanic-r023",
++    label: "Volcanic",
++    kind: "planet",
++    style: "volcanic",
++  },
++  {
++    id: "ice-r026",
++    label: "Ice",
++    kind: "planet",
++    style: "ice",
++  },
++  {
++    id: "gas-r005",
++    label: "Gas",
++    kind: "planet",
++    style: "gas",
++  },
++  {
++    id: "rocky-moon-r002",
++    label: "Rocky Moon",
++    kind: "planet",
++    style: "moon",
++  },
++  {
++    id: "rocky-moon-2-r001",
++    label: "Rocky Moon 2",
++    kind: "planet",
++    style: "moon",
++  },
++  {
++    id: "desert-moon-1-r001",
++    label: "Desert Moon 1",
++    kind: "planet",
++    style: "moon",
++  },
++  {
++    id: "desert-moon-2-r001",
++    label: "Desert Moon 2",
++    kind: "planet",
++    style: "moon",
++  },
++  {
++    id: "gas-giant-moon-1-r005",
++    label: "Gas Giant Moon 1",
++    kind: "planet",
++    style: "moon",
++  },
++  {
++    id: "gas-giant-moon-2-r001",
++    label: "Gas Giant Moon 2",
++    kind: "planet",
++    style: "moon",
++  },
++  {
++    id: "gas-giant-moon-3-r005",
++    label: "Gas Giant Moon 3",
++    kind: "planet",
++    style: "moon",
++  },
++  {
++    id: "ocean-moon-1-r001",
++    label: "Ocean Moon 1",
++    kind: "planet",
++    style: "moon",
++  },
++  {
++    id: "ocean-moon-2-r002",
++    label: "Ocean Moon 2",
++    kind: "planet",
++    style: "moon",
++  },
++  {
++    id: "temperate-moon-1-r002",
++    label: "Temperate Moon 1",
++    kind: "planet",
++    style: "moon",
++  },
++  {
++    id: "temperate-moon-2-r002",
++    label: "Temperate Moon 2",
++    kind: "planet",
++    style: "moon",
++  },
++  {
++    id: "toxic-moon-1-r001",
++    label: "Toxic Moon 1",
++    kind: "planet",
++    style: "moon",
++  },
++  {
++    id: "toxic-moon-2-r001",
++    label: "Toxic Moon 2",
++    kind: "planet",
++    style: "moon",
++  },
++  {
++    id: "ice-moon-1-r002",
++    label: "Ice Moon 1",
++    kind: "planet",
++    style: "moon",
++  },
++  {
++    id: "ice-moon-2-r003",
++    label: "Ice Moon 2",
++    kind: "planet",
++    style: "moon",
++  },
++  {
++    id: "volcanic-moon-1-r003",
++    label: "Volcanic Moon 1",
++    kind: "planet",
++    style: "moon",
++  },
++  {
++    id: "volcanic-moon-2-r006",
++    label: "Volcanic Moon 2",
++    kind: "planet",
++    style: "moon",
++  },
++  {
++    id: "crystal-moon-1-r010",
++    label: "Crystal Moon 1",
++    kind: "planet",
++    style: "moon",
++  },
++  {
++    id: "crystal-moon-2-r010",
++    label: "Crystal Moon 2",
++    kind: "planet",
++    style: "moon",
++  },
++] as const;
++export function celestialAsset(id: string) {
++  return CELESTIAL_ASSETS.find((asset) => asset.id === id);
++}
++/** Fixed square catalog portraits use the native preview's .52 radian FOV.
++ * Compensate its camera framing so the visible sphere reaches its metre radius. */
++export function portraitRadiusFraction(id: string | undefined) {
++  const asset = id ? celestialAsset(id) : undefined;
++  if (!asset) return 1;
++  const distance =
++    asset.kind === "star"
++      ? 2.3 / Math.tan(0.26)
++      : asset.style === "gas"
++        ? 7.5
++        : 5.5;
++  return 1 / (Math.sqrt(distance * distance - 1) * Math.tan(0.26));
++}
+--- a/packages/render/package.json
++++ b/packages/render/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@sidereal/render",
+-  "version": "0.7.1",
++  "version": "0.8.0",
+   "private": true,
+   "type": "module",
+   "exports": {
+@@ -23,12 +23,13 @@
+     "./diagnostics": "./src/diagnostics.ts",
+     "./mesh-roles": "./src/mesh-roles.ts",
+     "./ground-items": "./src/ground-items.ts",
+-    "./render-backend": "./src/render-backend.ts"
++    "./render-backend": "./src/render-backend.ts",
++    "./reviewed-native-preview": "./src/environment/reviewed-native-preview.ts"
+   },
+   "dependencies": {
+     "@babylonjs/core": "9.25.0",
+     "@babylonjs/loaders": "9.25.0",
+-    "@sidereal/content": "0.5.0",
++    "@sidereal/content": "0.6.0",
+     "@sidereal/sim": "0.4.0",
+     "@noble/hashes": "2.4.0"
+   }
+--- a/packages/sim/package.json
++++ b/packages/sim/package.json
+@@ -86,6 +86,6 @@
+   },
+   "dependencies": {
+     "@noble/hashes": "2.4.0",
+-    "@sidereal/content": "0.5.0"
++    "@sidereal/content": "0.6.0"
+   }
+ }
+--- a/packages/ui/package.json
++++ b/packages/ui/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@sidereal/ui",
+-  "version": "0.3.0",
++  "version": "0.4.0",
+   "private": true,
+   "type": "module",
+   "exports": {
+--- a/packages/ui/src/property-controls.tsx
++++ b/packages/ui/src/property-controls.tsx
+@@ -1,4 +1,4 @@
+-import { useEffect, useId, useState, type ReactNode } from "react";
++import { useEffect, useId, useState, useRef, type ReactNode } from "react";
+ 
+ /** Keeps incomplete keyboard input local; documents only receive finite values. */
+ export function NumberField({
+@@ -11,6 +11,7 @@
+   integer = false,
+   slider = false,
+   disabled = false,
++  precision,
+ }: {
+   label: string;
+   value: number;
+@@ -21,14 +22,30 @@
+   integer?: boolean;
+   slider?: boolean;
+   disabled?: boolean;
++  precision?: number;
+ }) {
+   const id = useId();
+-  const [text, setText] = useState(String(value));
+-  useEffect(() => setText(String(value)), [value]);
++  const editing = useRef(false);
++  const format = (n: number) =>
++    precision === undefined ? String(n) : n.toFixed(precision);
++  const [text, setText] = useState(format(value));
++  useEffect(() => {
++    if (!editing.current)
++      setText(
++        precision === undefined ? String(value) : value.toFixed(precision),
++      );
++  }, [value, precision]);
+   const normalize = (n: number) =>
+     Math.min(
+       max ?? Infinity,
+-      Math.max(min ?? -Infinity, integer ? Math.round(n) : n),
++      Math.max(
++        min ?? -Infinity,
++        integer
++          ? Math.round(n)
++          : precision === undefined
++            ? n
++            : Number(n.toFixed(precision)),
++      ),
+     );
+   const change = (n: number) => {
+     if (Number.isFinite(n)) onChange(normalize(n));
+@@ -58,7 +75,13 @@
+             setText(e.target.value);
+             if (e.target.value !== "") change(e.target.valueAsNumber);
+           }}
+-          onBlur={() => setText(String(value))}
++          onFocus={() => {
++            editing.current = true;
++          }}
++          onBlur={() => {
++            editing.current = false;
++            setText(format(value));
++          }}
+         />
+         <button
+           type="button"
+--- a/packages/world/package.json
++++ b/packages/world/package.json
+@@ -6,7 +6,7 @@
+   "exports": "./src/index.ts",
+   "dependencies": {
+     "spacetimedb": "2.10.0",
+-    "@sidereal/content": "0.5.0",
++    "@sidereal/content": "0.6.0",
+     "@sidereal/sim": "0.4.0"
+   },
+   "scripts": {

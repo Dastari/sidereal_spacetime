@@ -1,0 +1,4730 @@
+{
+  "sha256": "4d2947ee3d69296c42513fa81689483b4ac2355441fc11c38dc04fcd046afa5f",
+  "count": 1181,
+  "files": [
+    {
+      "path": "apps/client/index.html",
+      "sha256": "75b9ffd7119b901f8174aa8f69319e270de6c19cfbd6eff13a087aafe4cedbbf"
+    },
+    {
+      "path": "apps/client/package.json",
+      "sha256": "a4cb0358431db1571db48a100bb6206b9c124699abf55f92b46926c6405b2461"
+    },
+    {
+      "path": "apps/client/pose-review-assets.test.ts",
+      "sha256": "69e25abf12c8220efdbba40b87ff9ccbc714f568177b6ab4043d3325d2656238"
+    },
+    {
+      "path": "apps/client/pose-review-assets.ts",
+      "sha256": "3a0e28b889b4b1d71d5243f4381c0b4aacb2dcec39488e5a57680b2521bcd03d"
+    },
+    {
+      "path": "apps/client/src/AccountPanel.tsx",
+      "sha256": "fc6e9a42879d84c6492ef57ab13f3fa975841e52e92d3fd44979fa390f8793f9"
+    },
+    {
+      "path": "apps/client/src/App.tsx",
+      "sha256": "4271db1f33d8977fed3f269a352d39cbc93bb2719fb2c7838e1917f46ab5b78d"
+    },
+    {
+      "path": "apps/client/src/AuthGate.tsx",
+      "sha256": "5cb6ad0cab699f52f845854317802dcd894d905242717fb3a68f9250dc5f15b2"
+    },
+    {
+      "path": "apps/client/src/AuthoredFlightReview.tsx",
+      "sha256": "ed4c646e81ab610b435ee688845cab4b6ae6b3114bb2bf18f6d435d6f4b5d501"
+    },
+    {
+      "path": "apps/client/src/ConstructionReview.tsx",
+      "sha256": "44329cc9b5470377e30b7fd3f90ed4a422f99d313773acc783068a5cb079d7c1"
+    },
+    {
+      "path": "apps/client/src/GameLoadingScreen.tsx",
+      "sha256": "cd040b50ddfe4a957bde24d2e1686dca3bbbc6e141c3c22c50e66594a7b6c3d6"
+    },
+    {
+      "path": "apps/client/src/MountedFuelPanel.tsx",
+      "sha256": "8d624ded95995ea5f119c2f0fc79dd4bd9178367a7015884d6accb64cb5cfd87"
+    },
+    {
+      "path": "apps/client/src/NativeAirlockPanel.tsx",
+      "sha256": "d8e8f9eec63a405a372269e3809d017aa1b044f14cbf43b73cff0ac726ab582f"
+    },
+    {
+      "path": "apps/client/src/SharedWorldReview.tsx",
+      "sha256": "8b5e43761ce7713593f3aa2bc685059b5ed7efc2d4727da130a6e9793cbc81c3"
+    },
+    {
+      "path": "apps/client/src/ShipRefitPanel.tsx",
+      "sha256": "e14e7726b617b099fce32bc4694e9c7f3f3e0a943cb77e45db999601c91a7091"
+    },
+    {
+      "path": "apps/client/src/auth-session.test.ts",
+      "sha256": "cb47ebdc9516517fa9ba2c6bee3f0240900baaa32c4760bbc78c260824dbd436"
+    },
+    {
+      "path": "apps/client/src/auth-session.ts",
+      "sha256": "9dc0f59fffe6c6a1213213ad77bd12ae7d45e99deb5aa11a1b454e9b3600e1f5"
+    },
+    {
+      "path": "apps/client/src/auth.css",
+      "sha256": "544dd946045b115e98decbc22eb658c08aab5880ac4b7614a45370cda0595d20"
+    },
+    {
+      "path": "apps/client/src/auth.ts",
+      "sha256": "2c9e45affc07cc3d7420693001dd9484b28fec271bf46b443e252d68926acf16"
+    },
+    {
+      "path": "apps/client/src/combat-input.test.ts",
+      "sha256": "e86ff823f42d80d52e7c8a3b42adb951f58295d0faf5b744e9b8282dc48a6c34"
+    },
+    {
+      "path": "apps/client/src/combat-input.ts",
+      "sha256": "e16c79de87b9837110602f336ae2201fc6a0302e7560045888fc57aeb190c89c"
+    },
+    {
+      "path": "apps/client/src/connection-session.test.ts",
+      "sha256": "06f4f0337b18bd2aff8e28dc4d689b9382ed5d48ecdab69dc91ffb59a5d06587"
+    },
+    {
+      "path": "apps/client/src/connection-session.ts",
+      "sha256": "0f06095b74c16c2cdb63b2ace3214e5e1a9ea9357891ec33b980cae795fe12f9"
+    },
+    {
+      "path": "apps/client/src/construction-flight-presentation.test.ts",
+      "sha256": "1c8eb572d0fd75a0b1cdc62e1dcb5c9f75e58ac48d16fe1c630e717cb142d1c1"
+    },
+    {
+      "path": "apps/client/src/construction-flight-presentation.ts",
+      "sha256": "0cb1ce0a38c933f9539dd3e5505b5e430a5c463bcebfe1615d6e79e0840bd693"
+    },
+    {
+      "path": "apps/client/src/construction-inspection.test.ts",
+      "sha256": "45b4b3f24b983d9d735c2b6bcc7c369d7b07b884f622d88f9f42297ef0de3228"
+    },
+    {
+      "path": "apps/client/src/construction-inspection.ts",
+      "sha256": "53a54cf81374ccdd9fa0292867d29cec71b406d58507330da3fe1e5aa70e5ba4"
+    },
+    {
+      "path": "apps/client/src/construction-presentation.test.ts",
+      "sha256": "de53475be6769683ee252474aa045e6196eff5f8ed68daea45490bbd6b60a10d"
+    },
+    {
+      "path": "apps/client/src/construction-presentation.ts",
+      "sha256": "857808f5edbf3960cef02cb84da1fa52a6678ce1ed4e8634763e53ba46be7289"
+    },
+    {
+      "path": "apps/client/src/game-loading.css",
+      "sha256": "9df18d6ea20cb95258437ea201ad1c9661f3593d2b528ee01dad6becc50ada2d"
+    },
+    {
+      "path": "apps/client/src/intent-transmitter.test.ts",
+      "sha256": "23a66388461b2404b61f4b8f3d7da47df58637fe01af96ae02e14211ec725587"
+    },
+    {
+      "path": "apps/client/src/intent-transmitter.ts",
+      "sha256": "17dce893531f455dc598e1b2d6dd62daa1ac84d959417055d3d3fb2e4a00c164"
+    },
+    {
+      "path": "apps/client/src/inventory.test.ts",
+      "sha256": "790453661f1282e9ae58dcff2c66fbfb8359309fcec08afd574c8d8515107bcc"
+    },
+    {
+      "path": "apps/client/src/inventory.ts",
+      "sha256": "d7456eb215954d2182419eac87db9b9bd87299db67991c2c4ef9068401418a9f"
+    },
+    {
+      "path": "apps/client/src/main.tsx",
+      "sha256": "e139f82e38e9d326f93e4ce10e1ea55533422e7211edce24b8061599ab7fca7d"
+    },
+    {
+      "path": "apps/client/src/movement-control.test.ts",
+      "sha256": "24274c660aa7502e6be51e2bd0c907efb41df488123896173fd0e0ba2191195b"
+    },
+    {
+      "path": "apps/client/src/movement-control.ts",
+      "sha256": "2a72cf308ee62eeb983deec4aee61701b538c03b6d15f93950af3c143e8673ce"
+    },
+    {
+      "path": "apps/client/src/objects.test.ts",
+      "sha256": "6ea02da0efb69acd3db7f11ad57c1ec404729c52ecde95d50f5b816a6316c802"
+    },
+    {
+      "path": "apps/client/src/objects.ts",
+      "sha256": "47205986b56ae0f951d0ccb6f84a16dd20acdb1aaf1383b625b6caa25b874242"
+    },
+    {
+      "path": "apps/client/src/operation-id.test.ts",
+      "sha256": "71744fbbb2f21b7f654399881ca4be3da8a311f5d9dc724aecac372ea5d444f4"
+    },
+    {
+      "path": "apps/client/src/operation-id.ts",
+      "sha256": "49b273761d55af951c2fc7e783154598b51662470589252a03a12fb275505a47"
+    },
+    {
+      "path": "apps/client/src/scoped-cargo.test.ts",
+      "sha256": "336047da0616c6cee5a2516b875dc9306a69aed940cfafce408471b96417f50c"
+    },
+    {
+      "path": "apps/client/src/scoped-cargo.ts",
+      "sha256": "ac4dc5d002ab34660cfa47eada83561465c3ab48426af486ccbf6b28a78f63b9"
+    },
+    {
+      "path": "apps/client/src/shared-body-presentation.test.ts",
+      "sha256": "060fe4e9e08e3f84b902adccd9e5f506cf7991d9ae60b7b707869eea29ed8061"
+    },
+    {
+      "path": "apps/client/src/shared-body-presentation.ts",
+      "sha256": "1de4fec2cb395060ceb862e055fc10118dfe6c3b017dfd4f4929a217b462f632"
+    },
+    {
+      "path": "apps/client/src/shared-world-join-action.test.ts",
+      "sha256": "9e8b73fd907573760e4b0bf9148c3d1a4363b7734c6b8925d218edb36b2ed945"
+    },
+    {
+      "path": "apps/client/src/shared-world-join-action.ts",
+      "sha256": "f2f4751e10daf171f2d6bef5d40614743cdd022bb96e788c5cac7bb9877342e8"
+    },
+    {
+      "path": "apps/client/src/shared-world-review.test.ts",
+      "sha256": "2b8f61f5c4faa5932b0ddf3604976c84f25199086df6adeed5f649fc4b6301a3"
+    },
+    {
+      "path": "apps/client/src/shared-world-review.ts",
+      "sha256": "b40c3edf20955ec618c4a68a1f48ec7860bd0c4490048fbdc775822cc7c3a836"
+    },
+    {
+      "path": "apps/client/src/ship-refit.css",
+      "sha256": "95bb89fd7da039bcaa68ace4526e7efc2e51077ffa1ebd0a6c20b1cb0f789caf"
+    },
+    {
+      "path": "apps/client/src/style.css",
+      "sha256": "69aaeeb0241103e67a001e66acb33b5846448699a1544213b8069d719b202911"
+    },
+    {
+      "path": "apps/client/src/use-shared-world-entry.ts",
+      "sha256": "56b57b72e2e2f326aab081c6b45149a8e2a88fe6e91b4d609091b5330f05c78b"
+    },
+    {
+      "path": "apps/client/tsconfig.json",
+      "sha256": "6389f8f653e2de9689a34b7d6b3c84b7ce087d45f3db0a98d54ff982e952f43b"
+    },
+    {
+      "path": "apps/client/vite.config.ts",
+      "sha256": "0d088875eeff857fdd07e040bbcfe2a9ef78019d0e6f536f6b6782e2f3e5b017"
+    },
+    {
+      "path": "apps/dashboard/index.html",
+      "sha256": "cf4bb0957344588a4043523a2e2171d340568757c3f1ff5f559bc0409d1a9135"
+    },
+    {
+      "path": "apps/dashboard/package.json",
+      "sha256": "40c5072909198839d6f5440003a4011583ce141cdc3b1ac5bec97d6c82b4897a"
+    },
+    {
+      "path": "apps/dashboard/src/App.tsx",
+      "sha256": "021ee3710ce137eae9e6b97d1a434caa81103c833a98ecb0c3da1dc6f3466b04"
+    },
+    {
+      "path": "apps/dashboard/src/authoring/ConstructionPanel.tsx",
+      "sha256": "961ba98bdcc1751bf6e2405936ea123ee3f0f327853ff9eec26c3fe9f4adad04"
+    },
+    {
+      "path": "apps/dashboard/src/authoring/auth.ts",
+      "sha256": "ff74d0ab5d1a4df8ea7d29f9522c467c96cce6459fd0c1d77aabbc920046d8d4"
+    },
+    {
+      "path": "apps/dashboard/src/authoring/construction-document.test.ts",
+      "sha256": "af9ab32a76df6e3deeb674c1df259d1a9323705c3ddbbbe12420c885e5312dec"
+    },
+    {
+      "path": "apps/dashboard/src/authoring/construction-document.ts",
+      "sha256": "7cd0888cc5aa2fe529b6f1451567605718c9db2035df6d6c808d8005ced89078"
+    },
+    {
+      "path": "apps/dashboard/src/authoring/draft-options.test.ts",
+      "sha256": "8104cd0d8174c39b76d3b7a4c35c8488f781507639c77875c0f462cbfd72ecca"
+    },
+    {
+      "path": "apps/dashboard/src/authoring/draft-options.ts",
+      "sha256": "b771d3e4b3c8a5cb74d52dd98d6fb15f8734dee17c1539cf4ec32643086eaee9"
+    },
+    {
+      "path": "apps/dashboard/src/editor/ThemePicker.tsx",
+      "sha256": "d0263274253f281f4040a0a0620f277436358623f0d8ba454d8006226393318a"
+    },
+    {
+      "path": "apps/dashboard/src/editor/WorkspaceBoundary.tsx",
+      "sha256": "b00d65b6a6b5e2d7d215addfa006cf465cd6d6921f481190b95829f009194fc9"
+    },
+    {
+      "path": "apps/dashboard/src/editor/mountEditorCanvas.ts",
+      "sha256": "423cd6cf42ab009f85bd9ac3345525cd04b3baeb5ea282cd09d1d7939ed94058"
+    },
+    {
+      "path": "apps/dashboard/src/editor/theme.css",
+      "sha256": "a19dba7a998b4771067403327e62a33f42d2a30c06197e16b5600fdd70b4f5a8"
+    },
+    {
+      "path": "apps/dashboard/src/editor/useEditorPanels.ts",
+      "sha256": "4858475bce7dbd3373e2da7d3aff8b49849aad2c9e82571cc94b02bc53ddb1f0"
+    },
+    {
+      "path": "apps/dashboard/src/main.tsx",
+      "sha256": "7a0ab9d114829e39e44d905f8a9fd830d054e36f092256c5ab5a60c6694e34a5"
+    },
+    {
+      "path": "apps/dashboard/src/map-editor/MapBackground.tsx",
+      "sha256": "0857183df66f3afd546f80cabf42bcfb8149f0eae1b6f68093a115979841b6fa"
+    },
+    {
+      "path": "apps/dashboard/src/map-editor/MapCanvas.tsx",
+      "sha256": "e2aba78d1a16459cd8d6b39f5e89d272dc12aae26428d7dd4a6be6c538f99af3"
+    },
+    {
+      "path": "apps/dashboard/src/map-editor/MapEditor.tsx",
+      "sha256": "59a6c2fef568f37ffeb78d8525a9fb83f6e6ee20f67e855e65401c3c9a84a551"
+    },
+    {
+      "path": "apps/dashboard/src/map-editor/MapInspector.tsx",
+      "sha256": "1003a6cba6ea14f5348bc0c74ef35757c792247c237495b4811d8f7c16d763fc"
+    },
+    {
+      "path": "apps/dashboard/src/map-editor/ZoneProperties.tsx",
+      "sha256": "6e8ab58da8bd65dc57b1b487f1141dddb17ad193a5c653c9b7f171cfa262a982"
+    },
+    {
+      "path": "apps/dashboard/src/map-editor/background.worker.ts",
+      "sha256": "40e409abc5304caa11fb680825e0ea33298961dfd4a5b3f2a47c33b6a7aed6c3"
+    },
+    {
+      "path": "apps/dashboard/src/map-editor/map-commands.test.ts",
+      "sha256": "4f6f3d2da5bfca98bdf2f897bb6911dc200cd515b53006175c7bdc0c265dde1f"
+    },
+    {
+      "path": "apps/dashboard/src/map-editor/map-commands.ts",
+      "sha256": "3fc509572d2764e177c05c37418284f8a467765ab5a8450ee6663ae94f44f558"
+    },
+    {
+      "path": "apps/dashboard/src/map-editor/map-editor.css",
+      "sha256": "463691b79ae8e66f02c45db5ed0d42c97b68465c1bdfc8e23a7b28ba3b743287"
+    },
+    {
+      "path": "apps/dashboard/src/map-editor/useCelestialSnapshots.ts",
+      "sha256": "722c0de971b94d7b55083aac9f90dab7a33ebd3e24b2e9d3306b458372b62bfc"
+    },
+    {
+      "path": "apps/dashboard/src/map-editor/useMapConnection.ts",
+      "sha256": "7387dea7086dc18f79a179367d632ad4ed55df6790b0ebc829e443acac9fa3ef"
+    },
+    {
+      "path": "apps/dashboard/src/planet-studio/PlanetStudio.tsx",
+      "sha256": "28c4fa937df847d66ca3f9f817d54f016d82e3f909380113a0d954236f0d53c3"
+    },
+    {
+      "path": "apps/dashboard/src/planet-studio/planet-studio.css",
+      "sha256": "ca1ed5cd42f44b3ee74d3182f1cd6234ef6010f09e74d8606cacfa116bfd808a"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/AssemblyEditor.tsx",
+      "sha256": "c1b13921efb8596409529242f5bad7489cd3e5280cb3e15ccd5281f72d80583f"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/HullDecalPanel.tsx",
+      "sha256": "ecf39a09441dcdb8936f264030c14ebd035e6fbc59e40bcb75093f96825417f9"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/assembly.css",
+      "sha256": "c80b494df8a660f86cd431d96599dddf80c92f98ee9e3dc5cd0842f83c82f058"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/hull-decals.css",
+      "sha256": "def11f5f5f17b92458e4ed2698c813d935c94cd947a04eea8ac7d456aeeeb275"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/DocumentBar.tsx",
+      "sha256": "77a16cb8d8e41067566746a720fde0fc97f64d8a10b0a8e3ead56f3d8c518fd6"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/HullSizePanel.tsx",
+      "sha256": "e7dffe05d4872c6f7346b92351f53e1e65799c051518091cf1fbde2077247baa"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/HullWorkspace.tsx",
+      "sha256": "85cdaf67373d8d88f9910a02ebb897bc59e4d0336bc116a3de85d7ae13bd5683"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/LayoutCanvas.tsx",
+      "sha256": "c058b298ae5b1c3dabed3884d82f8350e01c28ba81a46ef684679fdbed749883"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/LayoutEditor.tsx",
+      "sha256": "675b9da74261db6086ba09ba25aa5cf5391fef8c9de46d2f8e96f31155dcd5b9"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/LayoutInspector.tsx",
+      "sha256": "0b5aeb77fce45ca4f7d6700e77769dbec9f12c242503dafc45a073418c2853b5"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/LayoutPalette.tsx",
+      "sha256": "cb35c2b5df01d82e5d5e15d2f808b2f26c3cbbc431b1e400e0d93bb7b20c5fe2"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/LayoutPanels.tsx",
+      "sha256": "762da4fd5944a9bce8a3781f11e0623d776cce518c082e27c042514529fbe561"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/LayoutToolbar.tsx",
+      "sha256": "2274545a9808f4febd230892e7a5361772cc23179fc813801e8399f362bb6bf3"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/NewLayoutDialog.tsx",
+      "sha256": "d898c81818b51ade2dbcde223eb979e459e722b5090ceec7ef4cfa25f757857d"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/PressureAreas.tsx",
+      "sha256": "6071820d0787c4b9cacb2d731ab07a5f71f6cfd158bfd820e991bc10b7a5cb8a"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/PublicationDialog.tsx",
+      "sha256": "0d7fe809db9de411cf747b73a9deec1df63438464b3b8ae370047cf6adf12e68"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/ShipSummary.tsx",
+      "sha256": "40ce47877bf04e35f17de8378c45afe50927501be3c19f1c53af18da7a617157"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/ViewportDeckControl.tsx",
+      "sha256": "1e58931b020a2cb5e8f0e2532e097c13fd0e838eb53774d9a55a0fdd4eb20671"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/WallFitNotes.tsx",
+      "sha256": "2810cf21d6b8c41281a9d5a33a6c0e7f6c68d12e4354f89a467b7486733cdbe5"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/compiler.worker.ts",
+      "sha256": "1545b16152ad119adfa646c7db742a88665c5f7f555c62e16028c007d911bd88"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/editor-mode-policy.test.ts",
+      "sha256": "d6a7b97e0941469334603fca5137b184f77cc30f1d5970eae54d87b8f548960d"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/editor-mode-policy.ts",
+      "sha256": "bfc7f88aa39e5ebeda400879db1303424d8ffe490c28f1151fd9510242b99e72"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/hull-catalogue.test.ts",
+      "sha256": "61dc66861ce813ebf515569017600c65c74149d95076ed68dc55ec588d4c0e33"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/hull-catalogue.ts",
+      "sha256": "df6a3178390f09a86743f853bf9b3675caff14584e53b14c00d486546b188e1b"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/hull.css",
+      "sha256": "589b1e27fc39afe5f136be453323abb455d24dcbfde330b9fee0ced0d952f8c1"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/layout-gestures.ts",
+      "sha256": "bbe30769d4c01a63a7169c4436727c06119c6bbe097873e70089b867ddd62816"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/layout-placement-contract.test.ts",
+      "sha256": "8a85abbe0cc31408c46eecde6bec54fa806c2b9a8b52ef751a0809ae2ce1ec89"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/layout.css",
+      "sha256": "b9fd9f81bbb399c33b24200914917bd5f1f428d79f077aebb94a9873e07220d7"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/panel-context.ts",
+      "sha256": "476230387b1ff61c818863e3ce21b637013954619f2b440575e3b67228c54a99"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/panel-deletion.test.ts",
+      "sha256": "4c18a1b576cdc7a4200b52709b1efe63f0e8b15c68d6483d9cdd4cd1ef626bb9"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/panel-deletion.ts",
+      "sha256": "de7f100e6337428319912110bb43eb61bc17794956aabe37a5fd25cb58a7f72b"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/pressure-preview.test.ts",
+      "sha256": "21e8b995c1d48b5afb4f70119e1d43ee9bc6557f82ba782fc811a927be7df6c9"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/pressure-preview.ts",
+      "sha256": "93741a6fbfab4fa5986e5acb0c0d51f201da16076f7c1078afa491f0200e67cc"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/redesign-document.test.ts",
+      "sha256": "5773d99cedd09062c29d2658c67cfd3ea1787541727efedc24e388aa19210224"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/redesign-document.ts",
+      "sha256": "cb616672894042698e76572a2275783037594857492dd1f4f74273fdd9e4a9b2"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/selection-deletion.test.ts",
+      "sha256": "0eda5e20e34287417c309d994f052006371f39e9db309681e5d4d12ef8e64711"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/selection-deletion.ts",
+      "sha256": "164a7beff82b02aa09491a9901d4569ee1a024f6ecf970f7fd75dd13c85bc4c4"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/state.test.ts",
+      "sha256": "9e8ba9bc26059bf8bade4eb8ed36023c7ff7f0bdcb4fab49404565a5ad612687"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/state.ts",
+      "sha256": "11290b2cf0f10b9517107b99fdcd7f7ed7eb4c2b310e214eb02489200701efd6"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/structural-edits.test.ts",
+      "sha256": "31698aed5312b165eea85b76464243cde85f6e7e7e1b205b621b379579a007da"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/structural-edits.ts",
+      "sha256": "0913ec5e5a653e01241bb3acf5edaa79ee3a40b04b5a27604d538a84f167e432"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/structural-tools.test.ts",
+      "sha256": "a58bcb62d751f7816204258ccbd99b6526d90f64cc6d0cdbafe080bff58d05c5"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/structural-tools.ts",
+      "sha256": "c472e51dd5e79b4d5e04d544eee35e91a28e670aa185ea1231919fc313b90805"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/systems-footprints.test.ts",
+      "sha256": "7333be6dea85c037fe1ca5f7bfc728731dbd5db5c7d1cb05e2ced85be8e28c14"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/systems-footprints.ts",
+      "sha256": "1641f3dc91f9682b8cc79d43f0d10bf7b1d29ec5c2477685fc3da18000da82a7"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/templates/wayfarer-r001.json",
+      "sha256": "53a636ea9905e9ec953268e65b54ed7c59ed8e0f97158dac914958ad38f1e21b"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/useLayout.ts",
+      "sha256": "b6d2818f9d71e186c473a76fdb6fe376b7a505ed63dbaf7cbc38b57b333a1bec"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/viewport-state.ts",
+      "sha256": "4e00f07fc6f2bcd80bd412ebfa509a3bc48bd3f0df003df3c27f7b593ffe6287"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/wall-edge-placement.test.ts",
+      "sha256": "0102a07c10d1eebef7f4594c02fb326fad62ecaf8f9428867a7cbaee3b520efd"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/wall-edge-placement.ts",
+      "sha256": "ffcab524df8409c573f66a831068b1388290e97206dd3a73d40607c53c5d0114"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/wayfarer-template.test.ts",
+      "sha256": "1f2f1fe1ab23455b8ee3620d485404abf8adbd2673f72d7ede327019c492b7df"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/wayfarer-template.ts",
+      "sha256": "cbcb23c00dd77c312ca5cdbc3c0612fa4e0b03d7a3a7c68ece5f4a2df1c31260"
+    },
+    {
+      "path": "apps/dashboard/src/shipyard/layout/workbench.css",
+      "sha256": "6f978014f0480fd73ac4e8d3b45762a896b28e0ddb9e20666ce9a817729f95bb"
+    },
+    {
+      "path": "apps/dashboard/src/style.css",
+      "sha256": "f1f5ac8a0b5633a0467cecbedb02e4127348176cef60dcd99d22aca523816119"
+    },
+    {
+      "path": "apps/dashboard/tsconfig.json",
+      "sha256": "6389f8f653e2de9689a34b7d6b3c84b7ce087d45f3db0a98d54ff982e952f43b"
+    },
+    {
+      "path": "apps/dashboard/vite.config.ts",
+      "sha256": "144bf118cda9a9581db89219b68b2dd4fcd4e55a3a5fb080e5fcfa5fb901f71c"
+    },
+    {
+      "path": "docs/public/shipyard.md",
+      "sha256": "b7cb54c219abde93b55376cd7a056907809e6d0b71511606cd5732955c13f320"
+    },
+    {
+      "path": "docs/public/system-map.md",
+      "sha256": "0155f4820f6844ef6f61b97f4a5e670ac9ae109b08e873b7b1a093aebb2bad98"
+    },
+    {
+      "path": "eslint.config.mjs",
+      "sha256": "9bcf0519186ca0b93126af504b775a5aab8d57fab31805fd0dba598f55b76c6a"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "9d9d57f1a2319e32ac5554db67c1c3927330b57b486a99690ed82d324ca61003"
+    },
+    {
+      "path": "package.json",
+      "sha256": "bbafda40d2c7e67b6a327b46b0eae631b806da97613bc0929f2624563e1094f4"
+    },
+    {
+      "path": "packages/canvas-ui/package.json",
+      "sha256": "94e1b3ab0edf5960b91b80922b72aa90de8672b52e4882399a12c4b50ab4e84d"
+    },
+    {
+      "path": "packages/canvas-ui/src/action-bar.ts",
+      "sha256": "00e5a289eae7a583c1b1b7ce614d69aa7940ea34e119834ec363b6c2962093bd"
+    },
+    {
+      "path": "packages/canvas-ui/src/antialiasing-menu.test.ts",
+      "sha256": "8cb411338a2f68fada3b10d6c05b13a0a9dbc1e109b865969b3e70108a8314be"
+    },
+    {
+      "path": "packages/canvas-ui/src/antialiasing-menu.ts",
+      "sha256": "0f0d728a99b3637417f3df03c0508bb17ddb91b6ee11796174fa06de173b22ce"
+    },
+    {
+      "path": "packages/canvas-ui/src/appearance-controls.ts",
+      "sha256": "4357ec7a9e18e50ac0763caeae4e73833d74a31f2898c27a65437f9a5e62ff2a"
+    },
+    {
+      "path": "packages/canvas-ui/src/appearance-icons.ts",
+      "sha256": "7c02b13d7e83ccd9d4069e7cdf211cbeda59a51ae3bb6d4f1847cef2f4e1796f"
+    },
+    {
+      "path": "packages/canvas-ui/src/character-data.ts",
+      "sha256": "623085a08d8b7967d97af7da9d79e6e1a57635f55294d89e1f7d07242286f664"
+    },
+    {
+      "path": "packages/canvas-ui/src/character-sheet.test.ts",
+      "sha256": "7d08ae6961d0a34c2c4a4ab0a1d400a5fb6321061d24ef66fdcc433c2f743459"
+    },
+    {
+      "path": "packages/canvas-ui/src/character-sheet.ts",
+      "sha256": "acf792d3380ac0dc34443af78286c8477c6699490b8ed309b12ba9a459336536"
+    },
+    {
+      "path": "packages/canvas-ui/src/compositing.test.ts",
+      "sha256": "a861cb7f710bf068afdcdcc99777225c05dd55f38202829513f62d3c27298358"
+    },
+    {
+      "path": "packages/canvas-ui/src/crew-portrait.test.ts",
+      "sha256": "005501909bec011aa3c74c920f44ae7751a62ea76d1b9a8ae0d86f6c4441df55"
+    },
+    {
+      "path": "packages/canvas-ui/src/crew-portrait.ts",
+      "sha256": "07b743dfa6bb60be1cd76e5c8c27c73de73898fef5306b87d7d6683ec9bd77a3"
+    },
+    {
+      "path": "packages/canvas-ui/src/destinations.test.ts",
+      "sha256": "fbd6742efdd48951e1f8ff820f01f7fc30ed898dc086558cf4831b9da86b0d1b"
+    },
+    {
+      "path": "packages/canvas-ui/src/destinations.ts",
+      "sha256": "ec1014c00128cdd2ebf9fa5f36a9ad150a2d1ff24405497ae29fa837f1d23cff"
+    },
+    {
+      "path": "packages/canvas-ui/src/diagnostics-planets.test.ts",
+      "sha256": "3ef481d73c8f8ae614345f289f0ac9dd67c1928b0360c74b6499b71e6879cf4c"
+    },
+    {
+      "path": "packages/canvas-ui/src/diagnostics-roles.test.ts",
+      "sha256": "572ca6a17dcea4634c9424cfdbcd65a575a0e1ab57b93696016c7b69fa15a3aa"
+    },
+    {
+      "path": "packages/canvas-ui/src/diagnostics.test.ts",
+      "sha256": "d3e429372dd61758112fc4ddfb79f0a6cff2251a1e9cd8eca97c70ca744f2ae9"
+    },
+    {
+      "path": "packages/canvas-ui/src/diagnostics.ts",
+      "sha256": "3e4311b835bacd7584fb6ecbcaa0bbdcb9e2435b84ea363ed324ea53c590d7e0"
+    },
+    {
+      "path": "packages/canvas-ui/src/graphics-menu.ts",
+      "sha256": "20607de9bd3efeae4ad3368ab42bf18d2ec28a4073a9f8adea628dacdf2c16ae"
+    },
+    {
+      "path": "packages/canvas-ui/src/ground-loot.ts",
+      "sha256": "b4653f6c8b92d2a8d437579bfa99a221a08217cb79dabc2e31ac9404a1c5ef3e"
+    },
+    {
+      "path": "packages/canvas-ui/src/hud-icons.ts",
+      "sha256": "8fd547b2eb9a6c52043ab40c4ef1f2646b9a1d5aeae2d308ef5db039595e0d74"
+    },
+    {
+      "path": "packages/canvas-ui/src/index.ts",
+      "sha256": "c84be3762333e3dd8a40f30aa4dcb1efe8e30a9925eae3b30cea3e51eff08dce"
+    },
+    {
+      "path": "packages/canvas-ui/src/inventory-windows.test.ts",
+      "sha256": "03ab745010708ac607a8837e14ed5d5833058af1356c8fd77bf0b07955cd9272"
+    },
+    {
+      "path": "packages/canvas-ui/src/inventory.test.ts",
+      "sha256": "3022583aa94b9e494045c1b6c917f1a643cdab7e10b89c85201d713459d39f38"
+    },
+    {
+      "path": "packages/canvas-ui/src/inventory.ts",
+      "sha256": "62a241086bdd963ab5734f2e812e7f10b439c47636060366da0a10440db5ae88"
+    },
+    {
+      "path": "packages/canvas-ui/src/item-details.ts",
+      "sha256": "61acba8ec196f1d9f2a037a2b149c98022cb10ea2958962a423e6a6f222a1696"
+    },
+    {
+      "path": "packages/canvas-ui/src/item-frame.ts",
+      "sha256": "b47425d5e38aaa4b2502a7c57bb20f5e3e8e675cb8c71e075fd03a496289019f"
+    },
+    {
+      "path": "packages/canvas-ui/src/layout.test.ts",
+      "sha256": "7b88a430d07e875c0fd3af3a83aaf52d7900d9f5b4e4c0592d8de624cf86cc27"
+    },
+    {
+      "path": "packages/canvas-ui/src/layout.ts",
+      "sha256": "3d06621cc511c88589996b760b784154d98f69afd4a457bb2656737b7f8f6288"
+    },
+    {
+      "path": "packages/canvas-ui/src/object-details.test.ts",
+      "sha256": "18242f71b027301cd274cd2746498c2c32bb17f8977e4923c5a2b68a511d65ad"
+    },
+    {
+      "path": "packages/canvas-ui/src/object-details.ts",
+      "sha256": "ee9136a2373d81ccb57e06206b5c3f7262a3586cd4fef0f10fef535d5ce3d368"
+    },
+    {
+      "path": "packages/canvas-ui/src/onboarding-copy.test.ts",
+      "sha256": "65df13075a20a2aa940c63d057bb162b2546a1db2feb35759eaadbf311a9b225"
+    },
+    {
+      "path": "packages/canvas-ui/src/onboarding-copy.ts",
+      "sha256": "9214f3022283e1002587919e4023dae02ba211cc7568c3773accd70c76f23abb"
+    },
+    {
+      "path": "packages/canvas-ui/src/pointer.test.ts",
+      "sha256": "19878147063294a98d5aca8fd87b36e75b7cbd0b0be2b482b2da94d0efa571ce"
+    },
+    {
+      "path": "packages/canvas-ui/src/render-backend-menu.test.ts",
+      "sha256": "92309b17ecf2e81a787974f7b3ef52e4d155c5639cd7131de89287ae362d835d"
+    },
+    {
+      "path": "packages/canvas-ui/src/render-backend-menu.ts",
+      "sha256": "337a16d4bb51a2f7b4e6721b262e3c6fd256dfbed88c62cbb3e90bee6a0190a9"
+    },
+    {
+      "path": "packages/canvas-ui/src/resize.test.ts",
+      "sha256": "e5068e48fe356d3fdce6090fe87142514dca32d300572c8c1e4460ec98bddad5"
+    },
+    {
+      "path": "packages/canvas-ui/src/shared-entry.test.ts",
+      "sha256": "40124afea43217c597c690a30152b7afa6483c540a73519ab7bc55e592cc7a6c"
+    },
+    {
+      "path": "packages/canvas-ui/src/shared-entry.ts",
+      "sha256": "77cc5556eedf4456e7701346b177ef2a47811d7416bd0c66f9bbef9425f8d8cb"
+    },
+    {
+      "path": "packages/canvas-ui/src/system-menu-layout.test.ts",
+      "sha256": "e0e8bf60705dd921b3b7f2e7fb0a3828c7044f21ae80b2c4bde33e758115f386"
+    },
+    {
+      "path": "packages/canvas-ui/src/system-menu-layout.ts",
+      "sha256": "f0c89b58c3ca15cdc8bf91f0ee66e4e4d665d389b017a56db425fcf4e440a825"
+    },
+    {
+      "path": "packages/canvas-ui/src/toolkit.ts",
+      "sha256": "b964e56f76e2409d8be945232a6cbb8874ffe53c1cfb66cbb44c7e0588fb6024"
+    },
+    {
+      "path": "packages/canvas-ui/src/windows.test.ts",
+      "sha256": "9c13f99f4220faa0669fd4e74e7c621fca6cf78b414981660b8f1b13940a0b47"
+    },
+    {
+      "path": "packages/canvas-ui/src/windows.ts",
+      "sha256": "3970bf1cf27f707f06fcfb9cdb3705c635370a87b6d023c3044d1c455b53770c"
+    },
+    {
+      "path": "packages/content/package.json",
+      "sha256": "95b6ddf20972645d4fb99807113371267cba594b5a352218db13f6de22bdcc86"
+    },
+    {
+      "path": "packages/content/src/appearance.ts",
+      "sha256": "22226f1768bd55ffcc2c7e532884c5f15eed9bd59ec852f75a71a3d74942c3ab"
+    },
+    {
+      "path": "packages/content/src/assembly.test.ts",
+      "sha256": "2ff68db384744fccb38ac7c2f8b631e90b86740b59230f3a0aa7675ee9831d56"
+    },
+    {
+      "path": "packages/content/src/assembly.ts",
+      "sha256": "d837804dc31f1f42b12b0fc475490a21a41b4fce0e2644397a34fe3ab5503606"
+    },
+    {
+      "path": "packages/content/src/auth-policy.ts",
+      "sha256": "10b07c5d0aa8d20d0705711d33da5563dd8217634b0e8b0965fa7543aba08200"
+    },
+    {
+      "path": "packages/content/src/cargo-carriers.ts",
+      "sha256": "6ff4731513de6565ecc27cc16b72d6f06bfbb5b402affcf7cb5c816ff1568016"
+    },
+    {
+      "path": "packages/content/src/cargo-handling-fixture-r001.json",
+      "sha256": "c9cee1130c8e288bbe448f056c00a810768aab17a1387711e32d6d9ce8fe0857"
+    },
+    {
+      "path": "packages/content/src/cargo-handling-fixture.ts",
+      "sha256": "80989589695c30bb7ba9445c1ae81ab45cc259a2986a7a8eba5c749adc52f8dd"
+    },
+    {
+      "path": "packages/content/src/celestial-assets.ts",
+      "sha256": "d0fdc8b09d87a5263e9a62aa918ef3c150cbbf894379ae5f00cf82dc50aa9043"
+    },
+    {
+      "path": "packages/content/src/character-components.json",
+      "sha256": "bec7c1b4e1d051adaa141b3acdb38c318b1ea77dbce743804dbc522edf996f52"
+    },
+    {
+      "path": "packages/content/src/character-components.ts",
+      "sha256": "b7926174a496e29f077e0f05eb9832720b4a74b13f81e4f3d6c4c04776ed6f1b"
+    },
+    {
+      "path": "packages/content/src/construction-airlock-room.ts",
+      "sha256": "5402299c5993a36e57c383267b520c070c22b1084479aa18576036690887223f"
+    },
+    {
+      "path": "packages/content/src/construction-boundary-family-interfaces.json",
+      "sha256": "5ea059a89480c1903aa4071b723bb5ed78f5a32f8d43a44299caa12d18fb68bf"
+    },
+    {
+      "path": "packages/content/src/construction-boundary-family.ts",
+      "sha256": "dd8d2e909224845033f39a295c53dc8a3fa9144027d92fd7bdb817545d431827"
+    },
+    {
+      "path": "packages/content/src/construction-boundary-interfaces.json",
+      "sha256": "33347b32b1675fee00d36046a05de37013fa32eca6e2a4d671464da3499972d9"
+    },
+    {
+      "path": "packages/content/src/construction-boundary.ts",
+      "sha256": "24639e38d6dbe1eb74814bb89046d47351dbc1bc1d956267d0ceecca35e86970"
+    },
+    {
+      "path": "packages/content/src/construction-floor-interfaces.json",
+      "sha256": "76f3f46c8e479106059945be0bfe23000d235d7c1731ad3d91524c3d894e1d16"
+    },
+    {
+      "path": "packages/content/src/construction-inset-visuals.json",
+      "sha256": "6b75192961d960c57559c0136d141b1a3de47a2a592c084b21a7b33562625dd3"
+    },
+    {
+      "path": "packages/content/src/construction-inset-visuals.ts",
+      "sha256": "151e93c4e0079f131140bf47d0a41843a76b3f133c4a1a7147107334efe2af48"
+    },
+    {
+      "path": "packages/content/src/construction-pressure-room.ts",
+      "sha256": "306f06677d68f7b96af81f4edd5400273adc0ddbda91b3bdb7c89bb3dfad590c"
+    },
+    {
+      "path": "packages/content/src/construction-roof-interfaces.json",
+      "sha256": "8471481d11d22a2a8077ceb4582f3066053d7c85dc727f8b8b0a51bef2e6efcc"
+    },
+    {
+      "path": "packages/content/src/construction-roof.ts",
+      "sha256": "71b1dc98191115d02fc60f06e8597ea6c2bdbc26850128b3070cf65614236cab"
+    },
+    {
+      "path": "packages/content/src/construction-stairs-room.ts",
+      "sha256": "d2d7944a081034fdc63c94713b39b85421710a517a49d91bbc6ca62eb784c004"
+    },
+    {
+      "path": "packages/content/src/construction-stairs.ts",
+      "sha256": "46b2f6eabc2762f55a47ae5e04cd70be08c69d86018647e92627dff8f7c70db7"
+    },
+    {
+      "path": "packages/content/src/construction-traversal-room.ts",
+      "sha256": "2e3fc781c7b71945903ba416e6245735deced57cfd8189a15c0249211aaa0114"
+    },
+    {
+      "path": "packages/content/src/construction-traversal.ts",
+      "sha256": "6d4529eebdf0756bbb1e61b9ae3d08f560775fbcf3ca3466902c3f7d5c03ad40"
+    },
+    {
+      "path": "packages/content/src/construction-wayfarer-rebuild-visuals.json",
+      "sha256": "c3980fe3040107d7adf12a187dec2c2e696b2700993cbb4c8d81e65bc9002bae"
+    },
+    {
+      "path": "packages/content/src/construction.ts",
+      "sha256": "ccf1affab26ddcd60eb15b228d983b2048d2029f7a81db528ad0016e4cae5b95"
+    },
+    {
+      "path": "packages/content/src/crew-looks.json",
+      "sha256": "d489f22a2eb0585baf38b316c9af2baa7b2d4a4522f9decb1e2391a5ed0fe782"
+    },
+    {
+      "path": "packages/content/src/device-services.ts",
+      "sha256": "e838fab70691c4d05acc199fd359bd198a1f75662160d4688911d0ae9627452a"
+    },
+    {
+      "path": "packages/content/src/environment.test.ts",
+      "sha256": "2cc44ce9316965c729f9e80bab52c9537cf292f676b7a5ad2ed40a4070f44feb"
+    },
+    {
+      "path": "packages/content/src/environment.ts",
+      "sha256": "4e0309f36f5682cb6fe89728581ff9138e262ef208794ceb48bbd415a3a4690d"
+    },
+    {
+      "path": "packages/content/src/equipment-poses.ts",
+      "sha256": "7876f37c2869810e26453521a713c79fa66439d7318ca3b5243f440ffc7221ea"
+    },
+    {
+      "path": "packages/content/src/flight.ts",
+      "sha256": "ed70e13d7a9a883916ac75eabc29436ef96c61d802c7a58d9daeca28059319c3"
+    },
+    {
+      "path": "packages/content/src/hull-decals.test.ts",
+      "sha256": "35c90c5261c12c79220e6769ba09b85c1675b83146b428acd38c32b39c23c1d0"
+    },
+    {
+      "path": "packages/content/src/hull-decals.ts",
+      "sha256": "8dd1d6839d2e5d8572beec8e772bc2fe2d0b1457cc99283e30ba38b3a3da2e60"
+    },
+    {
+      "path": "packages/content/src/hull-publication.test.ts",
+      "sha256": "80412959d3f51ade6a847a9fa56281d6003247b3f8a7fab631c3cc42b35111e9"
+    },
+    {
+      "path": "packages/content/src/hull-publication.ts",
+      "sha256": "9c0745399d9f3a748344d6682aebe91d187940c32dbb095aedb901e911f63704"
+    },
+    {
+      "path": "packages/content/src/hull-size-catalog.ts",
+      "sha256": "69dd5d48d3eed4e85b0622c75776e39892fee3d770b797fbc5979430ab79cc0e"
+    },
+    {
+      "path": "packages/content/src/index.ts",
+      "sha256": "a9f3dc68e6f39a0a50a38796b58b70fb6f6ceac9e5283c59912dab58b3b3503d"
+    },
+    {
+      "path": "packages/content/src/interactions.ts",
+      "sha256": "f6ec473ec39d5ee92ce0dd9e27f0877ca7d33a1b0e6fcf09b66c5d18fbc9b4e7"
+    },
+    {
+      "path": "packages/content/src/interior.ts",
+      "sha256": "275c2e9dd8b5e75aa9daa4be0a22898e2f3adcd8e4784eef8fe5bf0b8dba1b6d"
+    },
+    {
+      "path": "packages/content/src/inventory-physical-definitions.ts",
+      "sha256": "d0bd23c090265c3886269aa7996dbd9866a21737d750b332fb32331c1d4a4a03"
+    },
+    {
+      "path": "packages/content/src/inventory.ts",
+      "sha256": "1e56f06313844c86b12043aea977392ce20297b7ed8ed96372720455b2418f5f"
+    },
+    {
+      "path": "packages/content/src/layout-assembly.test.ts",
+      "sha256": "1684868df64fb8bfc2ce37dbb2e474fa86ccaaf25b14b2c9ed6017898d8935d4"
+    },
+    {
+      "path": "packages/content/src/layout-assembly.ts",
+      "sha256": "f5719c3e095e89377e367cc862971953d6b9a18f3f7a30e2085f015c4b27122d"
+    },
+    {
+      "path": "packages/content/src/layout-boundary-treatments.ts",
+      "sha256": "5bfb8fdfe95c7184f92f6698ce7ad49a17f79b210560b1a6dfd4759d0fbcf244"
+    },
+    {
+      "path": "packages/content/src/layout-structure.ts",
+      "sha256": "7fc211e26b82f743cc8e636207e0dd539f17d149a08bcadc64ee5cbb64ca4a42"
+    },
+    {
+      "path": "packages/content/src/legacy-system-seed.ts",
+      "sha256": "693efe466cb5c0a492f8a89a8c12199ded610cadfd5935db949f24c73112d0c6"
+    },
+    {
+      "path": "packages/content/src/physical-definitions.test.ts",
+      "sha256": "0e1b6e1646d566240c05115cbec9ddd1c23d3fea603ae6c1c8d58243b17c986e"
+    },
+    {
+      "path": "packages/content/src/physical-definitions.ts",
+      "sha256": "2c72d63b001a055f088a498343671308fef9ff614470787e1c507b71bab5d644"
+    },
+    {
+      "path": "packages/content/src/pilot-layout.ts",
+      "sha256": "45f6a4961c097ab0b43791a648b33b4a2fdab90337d29a23b834513dc4d995a5"
+    },
+    {
+      "path": "packages/content/src/shared-system.ts",
+      "sha256": "81f94eecb1f7f3f851d987215010cea1e2be4faedbc6adc81e868a42fbf006dd"
+    },
+    {
+      "path": "packages/content/src/ship-layout.ts",
+      "sha256": "9259967b62e928360dc8ac504716bf16fc87d368a8b35ed3126f59810c4723e8"
+    },
+    {
+      "path": "packages/content/src/ship-tileset-corner-spec.v1.json",
+      "sha256": "3c94dbaba8dfa33c466c23eb83b6b2a10637d27683b8ce055327000e94be2ac4"
+    },
+    {
+      "path": "packages/content/src/ship-tileset-internal-spec.v1.json",
+      "sha256": "f8dc612cf7ce856043431d98180a1f00d3cfac17031a2e1ca96e28118496f200"
+    },
+    {
+      "path": "packages/content/src/ship-tileset-union-junction-spec.v1.json",
+      "sha256": "46b06de54bfd81993716e0acea0d840ded94a6bcf45a0cc13a610ba0bddac6c4"
+    },
+    {
+      "path": "packages/content/src/solar-system.json",
+      "sha256": "7dfb95ae99f457501feb22bd86625f5a6ed2c1de7976e4b73c3540099cd5d04a"
+    },
+    {
+      "path": "packages/content/src/solar-system.test.ts",
+      "sha256": "e4d961166573c899fb14f077c1611a2ed8b5b1ffcc0b836568cfbd7efee8bb89"
+    },
+    {
+      "path": "packages/content/src/solar-system.ts",
+      "sha256": "94e3e9e191456009dba4110820c3aa6b66f329d9fe630a5d19fe90c68f5352f0"
+    },
+    {
+      "path": "packages/content/src/space.ts",
+      "sha256": "f2b1c049ad22a12ce6f072217f738a1d3358a6b68884e32b19938603e77d8204"
+    },
+    {
+      "path": "packages/content/src/storage-fixtures.ts",
+      "sha256": "20485c6b1b9f65ca270617f04231bc056149b2df9fea9e178b952ea52b72c291"
+    },
+    {
+      "path": "packages/content/src/system-map.ts",
+      "sha256": "04ee9246a880816b162ec6b18934ec3ae9a35f1bb321aa1cd18aa7dc71948b27"
+    },
+    {
+      "path": "packages/content/src/tileset-interfaces.ts",
+      "sha256": "1b16c1e80fb73ca55f4e7b5c17097f170b93b2920056311a8d5bd43082c969c2"
+    },
+    {
+      "path": "packages/content/src/upgrade-wayfarer-hull-layout.ts",
+      "sha256": "33e8e3faf83803cd37f8a85363f8e2fa243844f641c58f479127be814497d307"
+    },
+    {
+      "path": "packages/content/src/voxel-ownership.ts",
+      "sha256": "c8d44ceeb1c6ef86656ebc0d6620e936b1e8ba9f795d04a0ea44f0d547702c8e"
+    },
+    {
+      "path": "packages/content/src/voxel-wayfarer-interior.ts",
+      "sha256": "913483d5b37615966367173b266a0f66e4bef3987ee0e243cd6904948a6bd37b"
+    },
+    {
+      "path": "packages/content/src/voxel-wayfarer-props.test.ts",
+      "sha256": "fedbdc2a102c49cf7a88ac0643a248275ec24bd3ee0e4252b1100ad3fc2fd226"
+    },
+    {
+      "path": "packages/content/src/voxel-wayfarer-props.ts",
+      "sha256": "1a182df1103ad0cc7cc2731e87769801f0b220b45bdfefb5f0f458b3bc62f44b"
+    },
+    {
+      "path": "packages/content/src/voxel-wayfarer-shell.ts",
+      "sha256": "d3160f0180ab2d8ffb047d016169fb6e05a1687fe4c8a2dd768b851ae1835a84"
+    },
+    {
+      "path": "packages/content/src/voxel-wayfarer.ts",
+      "sha256": "e180e95f54e1aa7ae6332b8f16ee9c2bdc591e6b5656bffcddd4d7a337fce73e"
+    },
+    {
+      "path": "packages/content/src/wayfarer-cockpit-partition-proof.json",
+      "sha256": "c8f068c5191bc430bf2ca859c0b4e2237091f7803a94e0c1ac32024f76ec15f2"
+    },
+    {
+      "path": "packages/content/src/wayfarer-conversion-candidate.ts",
+      "sha256": "dca7ed7d9ac2a0a8669cecdaeb5dbdef5404040338670f5db430b2906753f9e8"
+    },
+    {
+      "path": "packages/content/src/wayfarer-current-starter.ts",
+      "sha256": "9cabcc629c96c6617c46d72ac20c0cbe26cc1bfb669a450b6bd024aefd74dc5e"
+    },
+    {
+      "path": "packages/content/src/wayfarer-exterior-r005.json",
+      "sha256": "4e30f7d200312b961655219b623eaca60bf78c827170e8a4dea26cce14e33749"
+    },
+    {
+      "path": "packages/content/src/wayfarer-flight-definition.ts",
+      "sha256": "31dc61a551cfb14b8b8724cd90aade02b2784d68bd51be9efc216b1cbac56383"
+    },
+    {
+      "path": "packages/content/src/wayfarer-hull-r005-map.json",
+      "sha256": "7558c45b0e7cb38d956b94c3e95caa634039097250915bed49c84b039fde0c36"
+    },
+    {
+      "path": "packages/content/src/wayfarer-hull-r005-proof.json",
+      "sha256": "97af19d9ccb13fa1fc531d4829b605f5c6bcd0192f61902118b0c450c84e9ca7"
+    },
+    {
+      "path": "packages/content/src/wayfarer-rebuild-r002.json",
+      "sha256": "e939ffcd9b484fd6bbb61038c2bb697f703b39aa020c0045d0e3a7e8a70dfad3"
+    },
+    {
+      "path": "packages/content/src/wayfarer-rebuild-removals.json",
+      "sha256": "68a301fe74df02687ee5651330aee856e1bbc087695d52e2d5e06e3e2c740d52"
+    },
+    {
+      "path": "packages/content/src/wayfarer-starter-r001.json",
+      "sha256": "53a636ea9905e9ec953268e65b54ed7c59ed8e0f97158dac914958ad38f1e21b"
+    },
+    {
+      "path": "packages/content/src/wayfarer-starter.ts",
+      "sha256": "72ed78705210f42ed7a5b8bd5d99550949a61ec7f9787c80c36a5ca6e101a427"
+    },
+    {
+      "path": "packages/content/src/wayfarer-threshold-proof.json",
+      "sha256": "013d53faf5f2367f6b1c7ae808664092321c456d7096db538e19a29e91006099"
+    },
+    {
+      "path": "packages/content/src/wayfarer-walking-proof.json",
+      "sha256": "99b9f964e7b80775b7a034a874b741e22aa4ce64fe95285745c0241527cdac02"
+    },
+    {
+      "path": "packages/content/src/weapons.ts",
+      "sha256": "be9c8a1db71c9a0a47754e7f5fc306aa111840f90b97e60c77636091fff394c6"
+    },
+    {
+      "path": "packages/content/src/zones.ts",
+      "sha256": "aa1d454818cb9c4ca21d8ff47c41bcec01b1bcfd13fc20cda12ecb64ddef987a"
+    },
+    {
+      "path": "packages/net/package.json",
+      "sha256": "484e5956f714053dc6e60b30e0c70331fc5a0e2f068e3670f96f5ec269f7a48a"
+    },
+    {
+      "path": "packages/net/src/bind-shared-world.test.ts",
+      "sha256": "c9b6a7c22d1d039f81dc866f7cf34fb058293f1e16e70df5cad1e3ea4dcf0f2c"
+    },
+    {
+      "path": "packages/net/src/bind-shared-world.ts",
+      "sha256": "b099e02e5eef8e7d745e113a3980290c90dbd6272c84e5e031739cc993131adf"
+    },
+    {
+      "path": "packages/net/src/connection-resources.test.ts",
+      "sha256": "3a048ee077417d6dcf086f5f497a5e1d8328ace6fc08125000b775498082afe7"
+    },
+    {
+      "path": "packages/net/src/connection-resources.ts",
+      "sha256": "8518b2655a8ce8bcb8e986d16e6c61973526d85c682a90b9c9fbb0bb46452ccb"
+    },
+    {
+      "path": "packages/net/src/connection-session.ts",
+      "sha256": "aad21a4ccb01b2b093f2cef3ec55e94c40a52b37fb4b0a974193f2197a961002"
+    },
+    {
+      "path": "packages/net/src/construction.ts",
+      "sha256": "2fdddf6461cac79037b919786bf816d51e0ed839ac0629798f1ddf045a718fa9"
+    },
+    {
+      "path": "packages/net/src/game-session-proof.test.ts",
+      "sha256": "2a66dd1caa22b805857ae8fad7400aec4fd07656c2d50ac0eff8a7aedb689653"
+    },
+    {
+      "path": "packages/net/src/game-session-proof.ts",
+      "sha256": "b41166f11ca270c30c505c6c18d8f9981ec52d71c257df822322d7b03d736022"
+    },
+    {
+      "path": "packages/net/src/generated/accept_identity_link_reducer.ts",
+      "sha256": "336eacd4684e6ed592260f3e6f98c56dbc6df6ceb4dbe943a675ed335258e088"
+    },
+    {
+      "path": "packages/net/src/generated/activate_authored_ship_flight_reducer.ts",
+      "sha256": "0606fa4497d908bc4c055fe2dd99b54162e62ae367dc500c5e64275040a7dad3"
+    },
+    {
+      "path": "packages/net/src/generated/activate_inventory_hotbar_reducer.ts",
+      "sha256": "e11ac1ce663ee5ea0cf4e2d86687f10f3b0837e780c7d171a1763f9fa49a0a7a"
+    },
+    {
+      "path": "packages/net/src/generated/admitted_system_scapes_table.ts",
+      "sha256": "70968b96a7c5f403e77c9b8249bd72c8ab8d8b36d600e7e8fb11bbef4e81045b"
+    },
+    {
+      "path": "packages/net/src/generated/apply_system_map_reducer.ts",
+      "sha256": "abe9cbd346add8190e4326a1f8a5b80073bb12e740a25464d520ce252230f7a8"
+    },
+    {
+      "path": "packages/net/src/generated/assign_inventory_hotbar_reducer.ts",
+      "sha256": "99f37cdb1be1b7b8e4a2855e3871c1decb6a0401d67d1a2eda6b915842ae663a"
+    },
+    {
+      "path": "packages/net/src/generated/begin_authored_flight_review_reducer.ts",
+      "sha256": "5e582c73680b94f986b9621b9a0c171514e40e8796d6ed5fdff7520590ed28ad"
+    },
+    {
+      "path": "packages/net/src/generated/begin_construction_traversal_reducer.ts",
+      "sha256": "614ec0e3644cca16c8d5293fd07213ec3f58117dc5f6c0a0b7c386b08cacc541"
+    },
+    {
+      "path": "packages/net/src/generated/bind_game_session_reducer.ts",
+      "sha256": "89f058974d6fd007c16f1c6fd80461350b9c0338560dd43b77f06ecada0de2a2"
+    },
+    {
+      "path": "packages/net/src/generated/board_ship_passenger_reducer.ts",
+      "sha256": "aabadef309b5e28d813e7a41fb86658df214d6db9514711420ee8827da4e9c8a"
+    },
+    {
+      "path": "packages/net/src/generated/cancel_construction_traversal_reducer.ts",
+      "sha256": "bc1278bf7f347cd992048cf3e9022aa96ec57ee6442ade7d505feaed5fb4d98e"
+    },
+    {
+      "path": "packages/net/src/generated/change_ship_flight_fitting_reducer.ts",
+      "sha256": "c350568c590102db0038e7ef38f10d92133bf22b08ed4aa4c28a601ff6755f26"
+    },
+    {
+      "path": "packages/net/src/generated/claim_character_armory_reducer.ts",
+      "sha256": "f248fb7bde755933e177614a54ff3d67355fcd2bc0518dc390547993e8f9a256"
+    },
+    {
+      "path": "packages/net/src/generated/claim_input_control_reducer.ts",
+      "sha256": "d03a53c3e6123d4b3a9a6e1ca930b65c8fdd34f0c216fb81fb9862120ca98ea6"
+    },
+    {
+      "path": "packages/net/src/generated/claim_starter_kit_reducer.ts",
+      "sha256": "d03a53c3e6123d4b3a9a6e1ca930b65c8fdd34f0c216fb81fb9862120ca98ea6"
+    },
+    {
+      "path": "packages/net/src/generated/current_interior_crew_table.ts",
+      "sha256": "196bf1aeb5d50dc0f15fa8f0e4734e6a9d0fcde772f6e7213137b212f005be8c"
+    },
+    {
+      "path": "packages/net/src/generated/current_passenger_interior_table.ts",
+      "sha256": "999b72d696ef964e5771e5c72dd36b211b1186e4781dee890e47c85f6d362d52"
+    },
+    {
+      "path": "packages/net/src/generated/drop_inventory_item_reducer.ts",
+      "sha256": "5a3c9df095d1dc30c74fc90bc41cf7fc8389774dd445c935fe1c61db5ea0c92e"
+    },
+    {
+      "path": "packages/net/src/generated/enter_authored_pilot_reducer.ts",
+      "sha256": "fb80ae9c50a32c0457c988897c975a0228f9fe68452c397e0b2e13e3ceede275"
+    },
+    {
+      "path": "packages/net/src/generated/enter_construction_review_reducer.ts",
+      "sha256": "e6b52d3fed70430e503ba1df4d431c620a91262e5643935fefc705335c0d6752"
+    },
+    {
+      "path": "packages/net/src/generated/enter_lab_reducer.ts",
+      "sha256": "b8b245e5d36097a2ce01131d4b722ac7c03d17a200e494a2105534d188ce9a0a"
+    },
+    {
+      "path": "packages/net/src/generated/equip_inventory_item_reducer.ts",
+      "sha256": "5a3c9df095d1dc30c74fc90bc41cf7fc8389774dd445c935fe1c61db5ea0c92e"
+    },
+    {
+      "path": "packages/net/src/generated/fire_weapon_reducer.ts",
+      "sha256": "5a3c9df095d1dc30c74fc90bc41cf7fc8389774dd445c935fe1c61db5ea0c92e"
+    },
+    {
+      "path": "packages/net/src/generated/grant_ship_passenger_reducer.ts",
+      "sha256": "dec3400c2539ab0d95f76c5e6a66657ff2a99106124ca4ac9383e5d0aaa7b2e8"
+    },
+    {
+      "path": "packages/net/src/generated/index.ts",
+      "sha256": "11b5d4303dc7c28c61ac6f16d6013ae53ccd90de9ef675e1b937bcf86ed413e6"
+    },
+    {
+      "path": "packages/net/src/generated/install_authored_ship_flight_reducer.ts",
+      "sha256": "aaa3eea7eeffe375d36a0d13d67f3413406a34ed3d1109dde45e92705c68702b"
+    },
+    {
+      "path": "packages/net/src/generated/install_cargo_handling_fixture_reducer.ts",
+      "sha256": "aaa3eea7eeffe375d36a0d13d67f3413406a34ed3d1109dde45e92705c68702b"
+    },
+    {
+      "path": "packages/net/src/generated/interact_object_reducer.ts",
+      "sha256": "47f99e3415da2d6d2dac6bccf4d93fcbbf68e7996ce874a9c3afb47d19e4a250"
+    },
+    {
+      "path": "packages/net/src/generated/join_shared_system_reducer.ts",
+      "sha256": "5b92b6dc7038796dd6c95b92c39a81715a8a0f7ab2c8212c083f2ee58d71fcf2"
+    },
+    {
+      "path": "packages/net/src/generated/leave_authored_pilot_reducer.ts",
+      "sha256": "d03a53c3e6123d4b3a9a6e1ca930b65c8fdd34f0c216fb81fb9862120ca98ea6"
+    },
+    {
+      "path": "packages/net/src/generated/leave_construction_review_reducer.ts",
+      "sha256": "cf732ad5aa7495fbbc45af3406a696dcf09bd1128a226c001fa26e0cbc80f7b9"
+    },
+    {
+      "path": "packages/net/src/generated/move_cargo_carrier_reducer.ts",
+      "sha256": "3223fc7eec04968e2560df55a946887156c5061ff15bad07b921eb170b76f7c8"
+    },
+    {
+      "path": "packages/net/src/generated/move_inventory_item_reducer.ts",
+      "sha256": "16890af629fec5cbd13b07bed72b1e059b345bb75b3aa8e9001ef811bbfbea9a"
+    },
+    {
+      "path": "packages/net/src/generated/nearby_field_asteroids_table.ts",
+      "sha256": "990a9060ff4b9302092942854f004f67fb43b39a084d4048131d53e11370e05a"
+    },
+    {
+      "path": "packages/net/src/generated/own_actuator_outputs_table.ts",
+      "sha256": "f1491ed2504b15b5bed9bdf7202abca488e7eb8e8acda81ba5c83dd5728941c5"
+    },
+    {
+      "path": "packages/net/src/generated/own_appearance_table.ts",
+      "sha256": "8fbbc2061f4d0f4f7f0881ed850b8e00c93a1dac6f55a2c76099f38518fc4a62"
+    },
+    {
+      "path": "packages/net/src/generated/own_authored_flight_actuators_table.ts",
+      "sha256": "e5e43c73f0b53c4d33ebc42ae9dae09d5ae61b7ac8a125ce497a14686bf7fd91"
+    },
+    {
+      "path": "packages/net/src/generated/own_authored_flight_fittings_table.ts",
+      "sha256": "a501f557a0f54e5c7f624175912981f7204750ca6e164a4ea6b27585dd737c02"
+    },
+    {
+      "path": "packages/net/src/generated/own_authored_flight_physics_table.ts",
+      "sha256": "ab67f6ed39a44bb366e322c6219ff165f661eb43b227607948168a46f59ae399"
+    },
+    {
+      "path": "packages/net/src/generated/own_authored_flight_power_fittings_table.ts",
+      "sha256": "f4161e4e6eeeb4e04c114972d85968dca1e4f744d76f0c5dac25f538eecce346"
+    },
+    {
+      "path": "packages/net/src/generated/own_authored_flights_table.ts",
+      "sha256": "142f476e28df6e56b1172cff7b73320a3ed12397117d1217ef4d9e1eb591e9e5"
+    },
+    {
+      "path": "packages/net/src/generated/own_cargo_carriers_table.ts",
+      "sha256": "c5a47cbc6c12c93ed789db291e141c13538bf3f968dbb36fc4c022fd35bc7c16"
+    },
+    {
+      "path": "packages/net/src/generated/own_cargo_grids_table.ts",
+      "sha256": "95b549010b513bb1bedd868bd09d41827a2d4ffdd133957be44127c4c092693b"
+    },
+    {
+      "path": "packages/net/src/generated/own_carried_inventory_revisions_table.ts",
+      "sha256": "8d83043aa56a6844987c269f3f731138596eeb516180c7c5db3786686323f8c1"
+    },
+    {
+      "path": "packages/net/src/generated/own_characters_table.ts",
+      "sha256": "d79e827ad57ac89be5c5f3eeaf8f9dbef7b70b1cf49d19fda2b31ffcdb8227c4"
+    },
+    {
+      "path": "packages/net/src/generated/own_combat_table.ts",
+      "sha256": "d45fa7b46ee7ed9c951002a1b24970e6743e7a77a1098fa81bfb4fbcbd7aa011"
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_blueprints_table.ts",
+      "sha256": "dcf81fe4a19fb67d7a0d55c34bb51b3f360122089082ea618d06b6ca744e6505"
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_decks_table.ts",
+      "sha256": "c9177e2a7fd2d9d7d4484c7295d6606cf6b50fa5922fb7fa6ba11791366aa1f6"
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_doors_table.ts",
+      "sha256": "4c642ad456a3f16664b0af39c2b4dc7ad99c70da78f28a9b3d24d3854d93d76b"
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_drafts_table.ts",
+      "sha256": "dcf2ee4ac1992781919e6e0db4371bf5bc4bd2a8450c168a6f892890651827d4"
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_grants_table.ts",
+      "sha256": "6336e56c73acdc764b443ee1a0f838c5708d2f19b99e99f64533416da2eb4cfc"
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_instances_table.ts",
+      "sha256": "141cd26ec314d479dcc4292d4357232831693119e0f20e90802ba1b143a4d594"
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_location_table.ts",
+      "sha256": "e4f2388ecbb40f1b0089d5b6342c031d2a189eb5df5da332c37ffb1fc2543cbe"
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_native_pressure_table.ts",
+      "sha256": "058186e0abeb6d1bb2a2181c3c7fbd4bd4f04cfa27a2d1b0823b4138388f0a96"
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_seat_table.ts",
+      "sha256": "e1bef3cebad8c343baea59f77b60e05389e1a45c05a5ce1d8bf83f1e039be0c4"
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_stair_egress_geometry_table.ts",
+      "sha256": "b085be75d177b5f0dbd72835bd105a934311ba22fabf578f8bdcaf63758bd803"
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_stair_walks_table.ts",
+      "sha256": "36a481e6c27c73d32371327eef7de1e20f4a18e64d73e8ce75348a05f90bb025"
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_traversal_links_table.ts",
+      "sha256": "12f00f932f512b06852376573b198addd2aa1d986480c3a6f082881d3a053479"
+    },
+    {
+      "path": "packages/net/src/generated/own_construction_traversals_table.ts",
+      "sha256": "b3764eb979b993df6590fb3d93ac0d51ba354d858cf5875123ea512d3ac40060"
+    },
+    {
+      "path": "packages/net/src/generated/own_edit_receipts_table.ts",
+      "sha256": "b55fecb010d82ee022a24c104d95416bbbd2ad6c401c4a9940981740d68d6bf6"
+    },
+    {
+      "path": "packages/net/src/generated/own_game_ship_access_table.ts",
+      "sha256": "643ebe6bbd5cb3927b8e3539ed41dcaa6b53561ac012d32096113e785f1d2e16"
+    },
+    {
+      "path": "packages/net/src/generated/own_ground_items_table.ts",
+      "sha256": "aec54e487028f98f6254ded0145b7abe7b3b178ff7e63bc61566da6debe40464"
+    },
+    {
+      "path": "packages/net/src/generated/own_identity_links_table.ts",
+      "sha256": "50505888c27d93377b9412810837b90103a0e3d02da08ac8308e5ccebb17cbab"
+    },
+    {
+      "path": "packages/net/src/generated/own_interactions_table.ts",
+      "sha256": "fa20a42cc55cc18e1b849b9c61082b737a1f43509bc5cd43fc118b350ffdd83c"
+    },
+    {
+      "path": "packages/net/src/generated/own_inventory_containers_table.ts",
+      "sha256": "706b88ab87f9707d271469e79c8e619a4809b3884542d15fddfb19778ae4aea2"
+    },
+    {
+      "path": "packages/net/src/generated/own_inventory_hotbar_table.ts",
+      "sha256": "1e7dd7e7ddaf976ab16edc0dc3c995cef263a6b6ad03cf75a983934dbf892067"
+    },
+    {
+      "path": "packages/net/src/generated/own_inventory_items_table.ts",
+      "sha256": "196b0ea3be900d7fc590be6d085963e1ceec0e412267f1d8d461350fa739de4e"
+    },
+    {
+      "path": "packages/net/src/generated/own_inventory_state_table.ts",
+      "sha256": "2caa1ff87039fac5fae7b830c658707331aa22b2504d98538c9983761f2ed9c8"
+    },
+    {
+      "path": "packages/net/src/generated/own_map_ships_table.ts",
+      "sha256": "ec8263f5afe51ecc9c1f2b585854dcdb44d40299590407d5d09408f78b4d21a0"
+    },
+    {
+      "path": "packages/net/src/generated/own_native_airlocks_table.ts",
+      "sha256": "2df7c30b51045f54be20e8ce682081139f195d11e9ffc0be23db170fff271356"
+    },
+    {
+      "path": "packages/net/src/generated/own_passenger_grants_table.ts",
+      "sha256": "b8cb3d8004cc1d0192a141fdfdea52c79ebbbf88d93b0b7a8c9233193c373888"
+    },
+    {
+      "path": "packages/net/src/generated/own_passenger_visit_table.ts",
+      "sha256": "a7600704a3e586e6167b744f99bfab223a771ab2ce675232a057501d83352737"
+    },
+    {
+      "path": "packages/net/src/generated/own_reachable_cargo_containers_table.ts",
+      "sha256": "cf272196e168a8e3cecf38f7bb93ebb2e8d91c42bf7aff9d3168febd09d78749"
+    },
+    {
+      "path": "packages/net/src/generated/own_reachable_cargo_items_table.ts",
+      "sha256": "fef4a47dd261f2be3f1acdabc419163c52163031ee97e8b4b73b79a316ada549"
+    },
+    {
+      "path": "packages/net/src/generated/own_ship_zones_table.ts",
+      "sha256": "2cfc10d0b78b9038ffd7bfbbf00d213e8e89fe858152c214bcde476826aed547"
+    },
+    {
+      "path": "packages/net/src/generated/own_ships_table.ts",
+      "sha256": "24c8e6681871c77a53bfe468dd5c4401b0ff1e2f47f5872b6c7674632a9b567a"
+    },
+    {
+      "path": "packages/net/src/generated/own_space_bodies_table.ts",
+      "sha256": "94825a7e31e035797602c3ad14824a622d975854f6b2e93e23e11aac094e8e09"
+    },
+    {
+      "path": "packages/net/src/generated/own_stations_table.ts",
+      "sha256": "58dfa26101913ea4e33669789932927eeb699e0f12e66886fed369b5e410b41e"
+    },
+    {
+      "path": "packages/net/src/generated/own_system_maps_table.ts",
+      "sha256": "b7a283dcc34db06df1fae012c6cd6b43f26a220a8fd5fb208603dcdf94883d8e"
+    },
+    {
+      "path": "packages/net/src/generated/own_wayfarer_rebuild_offer_table.ts",
+      "sha256": "1b8b9fe1dbd38a3ca1e88f9ce2f59999b270f5ddbbd5a84264a80f5548446211"
+    },
+    {
+      "path": "packages/net/src/generated/own_wayfarer_refit_attachments_table.ts",
+      "sha256": "bd32795bfe55408bc3ed2a19ffd690aaf4fa9ee403a30782861fd298eb2da6b8"
+    },
+    {
+      "path": "packages/net/src/generated/own_wayfarer_refit_offer_table.ts",
+      "sha256": "cb3ad5afc719a884ade5a23bd30c98d40768e26aa0c24cb9410357638c196c7e"
+    },
+    {
+      "path": "packages/net/src/generated/own_world_admission_table.ts",
+      "sha256": "6ea7749a75a4e271bc4e5b45c723bdd7c98893f82f6c9cc66ac6cfcb6cbbca5f"
+    },
+    {
+      "path": "packages/net/src/generated/publish_construction_blueprint_reducer.ts",
+      "sha256": "53e31af364d0e5bfcd9f7d5f3b332bda0a53a43af19f056e5447c9204fe04021"
+    },
+    {
+      "path": "packages/net/src/generated/refit_existing_wayfarer_reducer.ts",
+      "sha256": "587caec307068137443a885760e965e3385eb8574594b6df71d578ccb8eb72ec"
+    },
+    {
+      "path": "packages/net/src/generated/refit_rebuilt_wayfarer_reducer.ts",
+      "sha256": "a6465b14d5f3f846033419b9231ee609b050d95b708fe6460ade1c25f1b129d7"
+    },
+    {
+      "path": "packages/net/src/generated/release_input_control_reducer.ts",
+      "sha256": "d03a53c3e6123d4b3a9a6e1ca930b65c8fdd34f0c216fb81fb9862120ca98ea6"
+    },
+    {
+      "path": "packages/net/src/generated/rename_ship_reducer.ts",
+      "sha256": "acbf98da14a6038c3722230e09c1a1bb928e716cea2ee7b5be7ba3c0a74e4734"
+    },
+    {
+      "path": "packages/net/src/generated/replace_legacy_player_wayfarer_reducer.ts",
+      "sha256": "c801a590d65827d99f73314c07019b42054a7274a150a02b7a61d3621c76c811"
+    },
+    {
+      "path": "packages/net/src/generated/request_identity_link_reducer.ts",
+      "sha256": "1b7de02a711868cdadecc739792f4bb81047229c1b090f7bfcb6341e6a6508f4"
+    },
+    {
+      "path": "packages/net/src/generated/return_authored_flight_review_reducer.ts",
+      "sha256": "5e582c73680b94f986b9621b9a0c171514e40e8796d6ed5fdff7520590ed28ad"
+    },
+    {
+      "path": "packages/net/src/generated/return_ship_passenger_reducer.ts",
+      "sha256": "cf732ad5aa7495fbbc45af3406a696dcf09bd1128a226c001fa26e0cbc80f7b9"
+    },
+    {
+      "path": "packages/net/src/generated/revoke_ship_passenger_reducer.ts",
+      "sha256": "1bc582ce070e7d47a286e5a86ba47357689b0a551411cbb5fdebad6bbab89986"
+    },
+    {
+      "path": "packages/net/src/generated/save_construction_draft_reducer.ts",
+      "sha256": "7603623364da35b2f4957f721a7f980236a3ea7e6f1aa53a81efe41aaba64480"
+    },
+    {
+      "path": "packages/net/src/generated/set_character_appearance_reducer.ts",
+      "sha256": "71daf3cae8e147e2c7ce4b74a3108743232ca166c126284a89f7b025c07a5b54"
+    },
+    {
+      "path": "packages/net/src/generated/set_combat_aim_reducer.ts",
+      "sha256": "37c8ce23eec32cc935d52ac15f4b85a19cf6a70e51df10a7447c3587c2a7510f"
+    },
+    {
+      "path": "packages/net/src/generated/set_construction_door_reducer.ts",
+      "sha256": "b9b3a48c47e54d8bd5a02329cd82eb41e12ee1bc2accdc22bf0e962eba0015d1"
+    },
+    {
+      "path": "packages/net/src/generated/set_construction_engine_power_reducer.ts",
+      "sha256": "32e5bab22c20fa583997338021aee39a5827ec658031ad1e15567165d9114395"
+    },
+    {
+      "path": "packages/net/src/generated/set_construction_grant_reducer.ts",
+      "sha256": "a0624048b664b433162a8bdc42e7e3aeb60ad5e40b2688e9446d145875d4e9fe"
+    },
+    {
+      "path": "packages/net/src/generated/set_intent_reducer.ts",
+      "sha256": "6a4e2d5108c7fd5df6049b57ba8800d0d0481f2add38011d971e7d465a0d9396"
+    },
+    {
+      "path": "packages/net/src/generated/spawn_construction_blueprint_reducer.ts",
+      "sha256": "fb505aa17d8d752add9189f046e03dabd32a0024ead5113c79e68a36caae767d"
+    },
+    {
+      "path": "packages/net/src/generated/store_all_inventory_items_reducer.ts",
+      "sha256": "33866cf523c9ea4707365ae118e193f4ed19a4b77e084f315f0342759b20e77e"
+    },
+    {
+      "path": "packages/net/src/generated/switch_construction_review_reducer.ts",
+      "sha256": "2a63662f1142efe17464f2a4330ff0bec5bdd284ab213f0ef44c09c56a8978a6"
+    },
+    {
+      "path": "packages/net/src/generated/take_all_inventory_items_reducer.ts",
+      "sha256": "4c786859a1593f857198d98b865c2ec337c4e42d7ed96e806a6205dd4ec1b7bb"
+    },
+    {
+      "path": "packages/net/src/generated/transfer_inventory_item_reducer.ts",
+      "sha256": "522b7cb3e6413c97f114d4672ef27d35cddee2cc88de089e5430c155e2f5e387"
+    },
+    {
+      "path": "packages/net/src/generated/transfer_scoped_cargo_item_reducer.ts",
+      "sha256": "5824859b9e7abede5a3056b73fb49be6c1096c837ce1a95d4e65ed9bcda4b505"
+    },
+    {
+      "path": "packages/net/src/generated/transfer_wayfarer_liquid_reducer.ts",
+      "sha256": "57c53c36b5d51cc38897f1b8eeeca32193d267c7dd060b4982d3c617e9125e04"
+    },
+    {
+      "path": "packages/net/src/generated/types/procedures.ts",
+      "sha256": "e91691c4d61824f5a9e3ad46be93c1f741d29fdba976b6e11f43da0d8af52903"
+    },
+    {
+      "path": "packages/net/src/generated/types/reducers.ts",
+      "sha256": "1246d4cc364fb7989e921088a29a0d463bfe9f422601d56508ed86529aa0ff69"
+    },
+    {
+      "path": "packages/net/src/generated/types.ts",
+      "sha256": "6d9de73bd7daafe756cfb32044f85813339b72e81cb096a15d4f14e94fae8492"
+    },
+    {
+      "path": "packages/net/src/generated/use_station_reducer.ts",
+      "sha256": "d03a53c3e6123d4b3a9a6e1ca930b65c8fdd34f0c216fb81fb9862120ca98ea6"
+    },
+    {
+      "path": "packages/net/src/generated/visible_body_descriptions_table.ts",
+      "sha256": "0482fb60d7215d32b5c27d6bfd1ec38f25838baa707130ffc03333766df340f8"
+    },
+    {
+      "path": "packages/net/src/generated/visible_body_motion_table.ts",
+      "sha256": "a2ca170b3ff5d223e7a560c669cfada9091feb2642ca0af0c26f9d2c5a577212"
+    },
+    {
+      "path": "packages/net/src/generated/visible_ship_descriptions_table.ts",
+      "sha256": "ad09329f027c8cdb9563295cdd80b672a7506b2d14e2ffb30dd0b4245219b060"
+    },
+    {
+      "path": "packages/net/src/generated/visible_ship_motion_table.ts",
+      "sha256": "4a5c42d6a208ebd8b2a32c95c664114b6e746a7dab90fd28e66d86546e6c773d"
+    },
+    {
+      "path": "packages/net/src/index.ts",
+      "sha256": "ec410387e0f41ef2eccb2bc2e7a38c280126b4167cd128a8e784ae4aee45c334"
+    },
+    {
+      "path": "packages/net/src/shared-world-presentation.test.ts",
+      "sha256": "d24ff01411cd6449334bdf864a7c3ae99e1cc3566e09866f8a53aa3a2d6e36d1"
+    },
+    {
+      "path": "packages/net/src/shared-world-presentation.ts",
+      "sha256": "cefb2d0fb67ab67b6b58aa6550716c504c220fee1a9aff4aea94715550bc9bec"
+    },
+    {
+      "path": "packages/net/src/shared-world-store.test.ts",
+      "sha256": "f7855dbcf43b1b720304384a0c1d3b7c2db17728801f1b6d1397a623379362d3"
+    },
+    {
+      "path": "packages/net/src/shared-world-store.ts",
+      "sha256": "a5eddc17ee66a17657d6d16391ee8b0aaa28f070fd78af7661967583b2e830fb"
+    },
+    {
+      "path": "packages/net/src/system-map.ts",
+      "sha256": "b5ec252278c0419937e922fc5bda59dec5daad7f3dff58f8149355aa5bef058b"
+    },
+    {
+      "path": "packages/net/src/world-subscriptions.test.ts",
+      "sha256": "d2415df37bb8a7c05745be7b8c19699ba9b8e4df12b4113203e23d967a53025c"
+    },
+    {
+      "path": "packages/net/src/world-subscriptions.ts",
+      "sha256": "29bf5937de7c5fc642d1502676da32ee8134d1c2b25610b429fe1018f4074975"
+    },
+    {
+      "path": "packages/render/package.json",
+      "sha256": "e9c138107d6b5759e9c432434fb7890276c926535bc7516aa823af65b47db952"
+    },
+    {
+      "path": "packages/render/src/active-set-revision.ts",
+      "sha256": "e23e2f1c9ccbb9b91b123a698cca5ec2356a195593fe7833c546fe41a5acedc7"
+    },
+    {
+      "path": "packages/render/src/antialiasing-history.test.ts",
+      "sha256": "24723a7d00e8bef15a58060fcfba77fa8f52dffb0ad96912c245ab260bd56a4a"
+    },
+    {
+      "path": "packages/render/src/antialiasing-history.ts",
+      "sha256": "ef511dd510e10eadd92c224d80aaade78ba8c48c4a16d632bbd04abedf953008"
+    },
+    {
+      "path": "packages/render/src/antialiasing-pipeline.test.ts",
+      "sha256": "b3fd0d02045bc4bf919d3c95efd3f206e7afad886a1c7c2cac8b45885743f058"
+    },
+    {
+      "path": "packages/render/src/antialiasing-pipeline.ts",
+      "sha256": "4d0a561ffd4cb0b0cdbdc3435c182d8fda5ddedceb36aa2cb1558fbbf66133f7"
+    },
+    {
+      "path": "packages/render/src/antialiasing-settings.test.ts",
+      "sha256": "85e77df6094f3c9a6b4282f4cebe9354d422ec4fa1c4fbff805332af49ff2364"
+    },
+    {
+      "path": "packages/render/src/antialiasing-settings.ts",
+      "sha256": "a0b391a848730848a6932750565f46e7e11a538c526153942be6e634a1f64a5c"
+    },
+    {
+      "path": "packages/render/src/assembly-editor.ts",
+      "sha256": "4ff1b0a5fb5dfff7b02bf3ce199fa8b09c3af6b13aff44e5d055f1494be3e237"
+    },
+    {
+      "path": "packages/render/src/authored-material-pool.test.ts",
+      "sha256": "1f4ca89d3a8286b6103335d9ac8f2caa935252e771f33475808a2f59ebea7df5"
+    },
+    {
+      "path": "packages/render/src/authored-material-pool.ts",
+      "sha256": "383b573c0c63dd8fb425b173f47ded22d1dc12e2a0988387d70d93f2f18ced9e"
+    },
+    {
+      "path": "packages/render/src/cabin-visibility.test.ts",
+      "sha256": "4fdd26cdff067fc42ad71f5c109b269781cf2eb6642fa78a6b9919148638939f"
+    },
+    {
+      "path": "packages/render/src/cabin-visibility.ts",
+      "sha256": "cd65e0877a1d2871c70ac7972f55444470989f6aab38403d38d55fcf98e4214a"
+    },
+    {
+      "path": "packages/render/src/camera.test.ts",
+      "sha256": "c9fae405d1ef175a86a23602de85f7d83d5eee7be583f5853f9a1fbe8871c83c"
+    },
+    {
+      "path": "packages/render/src/camera.ts",
+      "sha256": "5eb785d467dc5c64a9b7d9d35de6ed32d58f4bf75e72f2bc5b36261c8e82610d"
+    },
+    {
+      "path": "packages/render/src/capture-diagnostics.test.ts",
+      "sha256": "4c3552f594a3858585996a7337914e7edfcf30dcc882f8b35b708e38e496ddf4"
+    },
+    {
+      "path": "packages/render/src/capture-diagnostics.ts",
+      "sha256": "0656baec4075f8154fda10a5182c14d6eecb09af77cdf717bc70252c9c0bd851"
+    },
+    {
+      "path": "packages/render/src/character-preview-state.test.ts",
+      "sha256": "5eb3b7e92ca841f2dd116b34c74d8bf4ffd0e89e8503cd23f2f565fa67fc8d3f"
+    },
+    {
+      "path": "packages/render/src/character-preview-state.ts",
+      "sha256": "59f531e15b52563e1ade3b8129430caca9308d81feb4a5de24b5112ca206977a"
+    },
+    {
+      "path": "packages/render/src/character-preview.ts",
+      "sha256": "38c8e9e5934e0e2f9373bdf071d8529731df19f55f57599076a0bc395c8ddb51"
+    },
+    {
+      "path": "packages/render/src/combat-aim.ts",
+      "sha256": "6c5f0036c9f759825b2a0a9e124ba364a8b94c27fc4a4dd2846a15e515ce1769"
+    },
+    {
+      "path": "packages/render/src/construction-authored-assembly.test.ts",
+      "sha256": "8d00a1e8d6d7c4cc638c30ab09b8ef0bdb2bedd61294ecc2bc070594ae59b7d6"
+    },
+    {
+      "path": "packages/render/src/construction-authored-assembly.ts",
+      "sha256": "7e1ce9c8fd6db5b0120d2dc5dc78aeb1cefda3f7136b8f1bfd5c6416f905e1ca"
+    },
+    {
+      "path": "packages/render/src/construction-boundaries.test.ts",
+      "sha256": "dee5c29618bdaea0ba87f52c0c408bb5a344b3de4cbe1bb33ecaf5c0dbd590bf"
+    },
+    {
+      "path": "packages/render/src/construction-boundaries.ts",
+      "sha256": "9338bc1fb057c3e77782073eb3e787f083e0c52909063fa2ab57dd7c04f440da"
+    },
+    {
+      "path": "packages/render/src/construction-door-seals.test.ts",
+      "sha256": "cb4c95dc76254043cac194d8e19bb4c25694f99778d776f81a74234e0a8ef453"
+    },
+    {
+      "path": "packages/render/src/construction-door-seals.ts",
+      "sha256": "273b9cc9ac635659607b0e3e5e1676014f7869eac2b763e48022375be9271859"
+    },
+    {
+      "path": "packages/render/src/construction-instance.test.ts",
+      "sha256": "0d80ca587886098673c62d33381f15563240e0551648f5fd7f674ad85c4dbc04"
+    },
+    {
+      "path": "packages/render/src/construction-instance.ts",
+      "sha256": "4532757ad9abe4550240f2d62d6e21a9c4660bcaac8291948e6779b7f92ccf15"
+    },
+    {
+      "path": "packages/render/src/construction-pressure-room.test.ts",
+      "sha256": "c849162b69a7549a26253e1711762058ccbddddaf5979f30988e1930d8bb5840"
+    },
+    {
+      "path": "packages/render/src/construction-pressure-room.ts",
+      "sha256": "4dd876ebff6b35302eb25b0b8fb607679f0d2db7d5f55caf7bf3a6c00f6f5945"
+    },
+    {
+      "path": "packages/render/src/construction-refit-attachments.test.ts",
+      "sha256": "09fe730f194cf085372ae719aaf4a65df29e828b2cfd848a024e8b12fddd5dfb"
+    },
+    {
+      "path": "packages/render/src/construction-refit-attachments.ts",
+      "sha256": "d1b2e4fb14b525ad549532f96ea1612b7a29760bbe6a1270d89dfeac6b7d2405"
+    },
+    {
+      "path": "packages/render/src/construction-roofs.test.ts",
+      "sha256": "8e0fcdd6cca612f1f8febc0b3e288f58d2b43e1b9a7d40363d06885ea0f2c078"
+    },
+    {
+      "path": "packages/render/src/construction-roofs.ts",
+      "sha256": "b13da2a9c812167994d4468c637adb94eb69c971946db149b31b5a5983862ed8"
+    },
+    {
+      "path": "packages/render/src/construction-traversal.test.ts",
+      "sha256": "bbbf4d79798fcdbc22b0eec443f76ae892c7cfec2f1686fdf50b3fc6bb91d641"
+    },
+    {
+      "path": "packages/render/src/construction-traversal.ts",
+      "sha256": "a11c9afda799b848d08f2d00923263bec80b9dbfc4a52721f8e61f9ce8d7928d"
+    },
+    {
+      "path": "packages/render/src/crew/aim-space.ts",
+      "sha256": "56dff93dc51a04d0afae7d282f2edbb99b9b27cc13dee9fa37c49a51ab6473a1"
+    },
+    {
+      "path": "packages/render/src/crew/animation.ts",
+      "sha256": "979acbb22e18ac047e954fcae10c5604596eef5d0f36961fd4be2d4d4c1df7ed"
+    },
+    {
+      "path": "packages/render/src/crew/appearance.ts",
+      "sha256": "b53eac7fae004a281857a2f5ee63f112d27debef0f15f117c31169c10f28f0be"
+    },
+    {
+      "path": "packages/render/src/crew/combat-pose.ts",
+      "sha256": "9769a3d043088db00eef9fcc45718954980ff94e9231a930661bfaaa2aa9b003"
+    },
+    {
+      "path": "packages/render/src/crew/components.test.ts",
+      "sha256": "d20bca36e8cba80c6b036fa98a39fa37587ff28ce235808c6b63f060bf5608f2"
+    },
+    {
+      "path": "packages/render/src/crew/crew.test.ts",
+      "sha256": "021d1f5b34adaba3cef8eb80dcd3098049801125826bbcaea95975b3d0cc377e"
+    },
+    {
+      "path": "packages/render/src/crew/equipment-pose-bulk.test.ts",
+      "sha256": "6631975281ebb8618fa32f45a7e715846e2b401607fd8bf24c1a08ff4efc32a0"
+    },
+    {
+      "path": "packages/render/src/crew/equipment-pose-bulk.ts",
+      "sha256": "5a2c1009ed9b091a9f35516e807b0f61219498edb92e8067e74ea08d6ad4da57"
+    },
+    {
+      "path": "packages/render/src/crew/equipment-pose.test.ts",
+      "sha256": "2b28ff9241e81a49141d4bd05db0db23aeba86b1f3c6f9ae974b78a084d815ce"
+    },
+    {
+      "path": "packages/render/src/crew/equipment-pose.ts",
+      "sha256": "0114d3beec9bed8548e094ace8d5c2e39b4a1f60696f28c89e9e786c3fd2438f"
+    },
+    {
+      "path": "packages/render/src/crew/index.ts",
+      "sha256": "07224d320af655c96dfa8b271850c770f6d404f66cd811ab5dd47c4d56c3f6d1"
+    },
+    {
+      "path": "packages/render/src/crew/modular-equipment-pose.test.ts",
+      "sha256": "7515632c85a3330ddccf31f14936de9b03bf041b3b9712e64a5b4a7ebe20d811"
+    },
+    {
+      "path": "packages/render/src/crew/pose-integration-motion.test.ts",
+      "sha256": "19a99992ba603dd184ab5ad5f992ec185f4c400dc76ffb68904930053c75a9ed"
+    },
+    {
+      "path": "packages/render/src/crew/pose-integration-motion.ts",
+      "sha256": "50f19938a52fad284e47b319c8b2323a0ac7afe810b6ab85bb2d032aadf2374b"
+    },
+    {
+      "path": "packages/render/src/crew/pose-math.ts",
+      "sha256": "7adad524ebe8442cb639e71f41f03bf2ef13a85751bc27c8017ad51b68aaaeca"
+    },
+    {
+      "path": "packages/render/src/crew/pose-review-config.ts",
+      "sha256": "c5544e7e63c4c3be2029896c973a5748bfd8a735cde8782f5f9c056fd0a92bbf"
+    },
+    {
+      "path": "packages/render/src/crew/pose-review-items.ts",
+      "sha256": "b91e4f6142d8bc68692b8b30202f618dc9821896b7727408a13678e2f2b26c7a"
+    },
+    {
+      "path": "packages/render/src/crew/pose-review.ts",
+      "sha256": "5af29c4c7be57a49629336403b5a546a0aa85688946a257d9bd4a202118cf8e2"
+    },
+    {
+      "path": "packages/render/src/crew/pose-state.ts",
+      "sha256": "83f6225d581000ada5a86e7d5b17b3f1cc96b06841d7c9f5a82688f9d37944b7"
+    },
+    {
+      "path": "packages/render/src/crew/pose-system.test.ts",
+      "sha256": "54e005e7b071106ee3eb6b2d08910174eef20a85087bd54fc1fe73fd08387410"
+    },
+    {
+      "path": "packages/render/src/cutaway.test.ts",
+      "sha256": "9a05b4147c7c16ac985a0f250144f5be2313d8c10cfcfbd602012a2b24eed7be"
+    },
+    {
+      "path": "packages/render/src/cutaway.ts",
+      "sha256": "0c0d42dbbfe6f5baf5faf99febf1bba5c841e834f04f5eaa56e2a10d25a84ac0"
+    },
+    {
+      "path": "packages/render/src/debug-collision-geometry.ts",
+      "sha256": "7be6e1d8db35728a5fcf886c5ae5cbaa1de7def7eae78d4e6d0ff7a04a191dd6"
+    },
+    {
+      "path": "packages/render/src/debug-features.test.ts",
+      "sha256": "d8317433498766fe0782d7e5ea50ebe1d9087c2f1170b86affbfbf048bccbe12"
+    },
+    {
+      "path": "packages/render/src/debug-features.ts",
+      "sha256": "fd0b5684e0cfc2b7da717625281edb8fa42f74dd76f7e6d0488e10d2cd53c6e7"
+    },
+    {
+      "path": "packages/render/src/debug-visibility-revision.test.ts",
+      "sha256": "e903b6aec29ead042e9e2c6bc5b0056a2987501408d403ed2d1f31b3a7331204"
+    },
+    {
+      "path": "packages/render/src/debug-visibility-revision.ts",
+      "sha256": "945370d761d50f80d3862484b933fd2a974645366ff5b19b65053ae9b96d4964"
+    },
+    {
+      "path": "packages/render/src/diagnostics.test.ts",
+      "sha256": "e727cf3a5bc3b8a524d30416f6ec81b17df37c0a648a340cee4ef98dba6e9679"
+    },
+    {
+      "path": "packages/render/src/diagnostics.ts",
+      "sha256": "6b57ee0c6add53956ade014d6f70e0dd48755abd98636c677b5afe1deccda60b"
+    },
+    {
+      "path": "packages/render/src/editor-surface.test.ts",
+      "sha256": "f7f7c42617177d4e21c22916e16ad5acb875a2f1ff70925f4b2210036e9fd976"
+    },
+    {
+      "path": "packages/render/src/editor-surface.ts",
+      "sha256": "2961d7e0e773aff97cdd338614f325770e3d29c7f07f536060179092b6e9818d"
+    },
+    {
+      "path": "packages/render/src/environment/body-visibility.test.ts",
+      "sha256": "4b08407a42e9534cb2e6963e79426176ddf7d528c6c433b51a98070bde73318d"
+    },
+    {
+      "path": "packages/render/src/environment/body-visibility.ts",
+      "sha256": "b797fc18fcd30f6a143a7b45b5513f7e38d5e714073af36869edaaa9e341dffd"
+    },
+    {
+      "path": "packages/render/src/environment/body-visual-revision.test.ts",
+      "sha256": "f499404e74c1fcbdea84c3b6edd2c88a62bfc3db916f01c67ca6b7cbb095b521"
+    },
+    {
+      "path": "packages/render/src/environment/body-visual-revision.ts",
+      "sha256": "2ad423695e058d92152d6a393e3df8f7356563161b3ee0cc0903e5b6438ade62"
+    },
+    {
+      "path": "packages/render/src/environment/dust-field.test.ts",
+      "sha256": "60e460e201aa52b294e94e5eb1802b874a0baa8fe6b2ff8cbfa458cebb4e4cb7"
+    },
+    {
+      "path": "packages/render/src/environment/dust-field.ts",
+      "sha256": "70564428ceb535e93dcd142d7aece2be619c3cdeedfd81bb192e113d64f00527"
+    },
+    {
+      "path": "packages/render/src/environment/dust.test.ts",
+      "sha256": "e59c96c38a90d426f8e00b4dc97c632ddbfa970d817f5695832b4f77d6f15dfb"
+    },
+    {
+      "path": "packages/render/src/environment/dust.ts",
+      "sha256": "22fe5881f1d5d33584033bc9ef55b573f30fee103fc33b6c82e4a1bbecf49bef"
+    },
+    {
+      "path": "packages/render/src/environment/ice-material.test.ts",
+      "sha256": "d222a798b1ed237940b9dfce0c8eebb2dc113b7c6dcf2373290e34833a8d813a"
+    },
+    {
+      "path": "packages/render/src/environment/ice-material.ts",
+      "sha256": "7fcdda1c0a390736822a689565b8f0716373e67f1bdaa40dcb05a5891e7ac7da"
+    },
+    {
+      "path": "packages/render/src/environment/index.ts",
+      "sha256": "ecc5d229e22207475065d6ee52ff1e277995013dc976dfce520775212f2ed829"
+    },
+    {
+      "path": "packages/render/src/environment/layered-planet.ts",
+      "sha256": "6abd1c586007244f7840ca708d81d6ad885f5cd4e1988da35f3dd1bf66185584"
+    },
+    {
+      "path": "packages/render/src/environment/native-glacial-geography.test.ts",
+      "sha256": "41749d618b7e8c00835eeb43862741cbc4a89b2d418ebe4d8d35742250f2f3a6"
+    },
+    {
+      "path": "packages/render/src/environment/native-glacial-geography.ts",
+      "sha256": "f0f5aaded74064ef9baad0db69c80e0d6c6cd67a9ae94e895ddc4cfc2e0cd453"
+    },
+    {
+      "path": "packages/render/src/environment/native-glacial-interior.test.ts",
+      "sha256": "1a1f62f6ff34d7f591badf0ff8b3329ef36db371f858b2e644b9062db3137423"
+    },
+    {
+      "path": "packages/render/src/environment/native-glacial-interior.ts",
+      "sha256": "2bc5262684697be33a5f87c380cb6b2ee5b42b19611dd884f1a54314f1ed5749"
+    },
+    {
+      "path": "packages/render/src/environment/native-glacier-composition.test.ts",
+      "sha256": "1b9c1824f459a7f70e37d924f8b19cd8f822b9b4e542f21451ab052357c4197d"
+    },
+    {
+      "path": "packages/render/src/environment/native-glacier-composition.ts",
+      "sha256": "6dca6de30201c08ba034fc5e3955439cac99176e3c67d831c69eaa9daa12e786"
+    },
+    {
+      "path": "packages/render/src/environment/native-ice-build.ts",
+      "sha256": "62da6309850a633dac43b71d5d4397d6fe4adc3a54ea6ae9f7673c7e4bc69f7a"
+    },
+    {
+      "path": "packages/render/src/environment/native-ice-lod-runtime.test.ts",
+      "sha256": "e67fecd7a881a38ef9bf8b3335acc25bb09fcc649e7277041020c1ce6556563f"
+    },
+    {
+      "path": "packages/render/src/environment/native-ice-lod-runtime.ts",
+      "sha256": "95d947b4f8e199848637c746a4625c1652e46f1ffbbf881d0c0e8cef8cf54365"
+    },
+    {
+      "path": "packages/render/src/environment/native-ice-material.test.ts",
+      "sha256": "1b5e6e9ca8b7efcb829ab9e40410258231cb44435fe92f4fc8f1fc3a3b96ab6d"
+    },
+    {
+      "path": "packages/render/src/environment/native-ice-material.ts",
+      "sha256": "22606a67037931ea522f56ba0124c8b7b34f826c1b4fd3ad8e94ca7f4ed4cab6"
+    },
+    {
+      "path": "packages/render/src/environment/native-planet-assets.ts",
+      "sha256": "f71c97775671461fa2368dc8536d5c2391311c398f58c54d8c95b7e9eff937e6"
+    },
+    {
+      "path": "packages/render/src/environment/native-planet-composition.test.ts",
+      "sha256": "48890712e404bd486c714eb00b993716196b78b4047a34b0c00a76b3cf1d2601"
+    },
+    {
+      "path": "packages/render/src/environment/native-planet-composition.ts",
+      "sha256": "30005cfebad27d2915d41f47c81596eded8c89888812ef203633608ce6eadbe6"
+    },
+    {
+      "path": "packages/render/src/environment/native-planet.test.ts",
+      "sha256": "8a80810d8aba5e4a2fa48d0421b5c128b606d789b2681e6176ac8dbd7442752d"
+    },
+    {
+      "path": "packages/render/src/environment/native-planet.ts",
+      "sha256": "6d7e3e2f1cb9a2c187d22c4ca6c63ddd24acde63f8c89ddd38ef4a825579e18a"
+    },
+    {
+      "path": "packages/render/src/environment/native-volcanic-build.ts",
+      "sha256": "c72a536d0019f80dae08aba4be38682b1ec505a8d22323953a4dbc3c9d32e957"
+    },
+    {
+      "path": "packages/render/src/environment/native-volcanic-composition.ts",
+      "sha256": "2768707b6fe35258b624e715e5b41cf8f622a09277e597c5b2d05b2aa499c22e"
+    },
+    {
+      "path": "packages/render/src/environment/native-volcanic-field.test.ts",
+      "sha256": "44d1b1544d02923d7fc12df4b74ddb722b6ad5f229fb3562d47089c32d81567a"
+    },
+    {
+      "path": "packages/render/src/environment/native-volcanic-field.ts",
+      "sha256": "5d1723e38132d2c9d611a6072451a18622d473f9fa854c2a4d5580cfc2da2667"
+    },
+    {
+      "path": "packages/render/src/environment/native-volcanic-lod-runtime.test.ts",
+      "sha256": "8f2332483cb698e04a919e18b98072d90b686c4760c6d4f9e5f9a05b92ef78bd"
+    },
+    {
+      "path": "packages/render/src/environment/native-volcanic-lod-runtime.ts",
+      "sha256": "02cd83228da3299a35846f39f9fc571db1d83ba7060876b599fd2057f771d2f1"
+    },
+    {
+      "path": "packages/render/src/environment/native-volcanic-material.ts",
+      "sha256": "7f8c51e610c09d40d5d2b0a9b6d9e786e06339278d56b2564bdc4c04f5e73995"
+    },
+    {
+      "path": "packages/render/src/environment/native-volcanic-planet.ts",
+      "sha256": "53d57a64934441988c9dbf3f5c2575ffb6d8e3507a596ed7ca0395c6ef9f75d1"
+    },
+    {
+      "path": "packages/render/src/environment/native-volcanic-runtime.test.ts",
+      "sha256": "db76cc72c7bad2a8c7bc4b44a801bbb3fc8ae40b56983d344d2da5eed904a311"
+    },
+    {
+      "path": "packages/render/src/environment/native-volcanic-runtime.ts",
+      "sha256": "dfc46eefee2a4d8a54f546ee11af2f8a7be14823e5d06ac1489aa078e3c99ab0"
+    },
+    {
+      "path": "packages/render/src/environment/planet-atmosphere.ts",
+      "sha256": "ca4c4c1599b6de543b5b93009b6672e7f0b5de4c304fc63a4698404bb0f42c2a"
+    },
+    {
+      "path": "packages/render/src/environment/planet-build-scheduler.test.ts",
+      "sha256": "750ad9ac8c6ab1f358e8f21fb779a2cf077a5c24f811d7bf3d38588a93f6718a"
+    },
+    {
+      "path": "packages/render/src/environment/planet-build-scheduler.ts",
+      "sha256": "244e081ca091282cdc3d0be27b6a9705359c64a2b821a570cc5a74ee5c9fd339"
+    },
+    {
+      "path": "packages/render/src/environment/planet-build.test.ts",
+      "sha256": "33476f050cd7ffbf49452906b9bdd977aca37693e8091746c82667bb53894c54"
+    },
+    {
+      "path": "packages/render/src/environment/planet-build.ts",
+      "sha256": "d2b298aa491c773305d70c813bcbec16473f19e56e54b5375f0b7e2684eb9c59"
+    },
+    {
+      "path": "packages/render/src/environment/planet-clouds.test.ts",
+      "sha256": "e3c8f160152c55927d720e43ebf8ce31a126cb9c3a559ad81ac4755bc5a3b24d"
+    },
+    {
+      "path": "packages/render/src/environment/planet-clouds.ts",
+      "sha256": "63da1493cadb0513cf1587e2cf4fa8413aa2820c7367e4c8236130ce9c460e95"
+    },
+    {
+      "path": "packages/render/src/environment/planet-contact-lighting.test.ts",
+      "sha256": "d8c0ffe7825bd2e2a3adb353ec4040bd720a2ed62f0e2727f0dfe67f503f095d"
+    },
+    {
+      "path": "packages/render/src/environment/planet-contact-lighting.ts",
+      "sha256": "482993e2ecc21eb5b2c9aac8081ea82ff57d415307fa02f273da1f22897bb05b"
+    },
+    {
+      "path": "packages/render/src/environment/planet-crystals.test.ts",
+      "sha256": "a860944abd5d085fc75b94899573df619577a11f172e370accd6dc2883aed0de"
+    },
+    {
+      "path": "packages/render/src/environment/planet-crystals.ts",
+      "sha256": "8100a6a94a18b47a3ea0fca4be0590d5b7860e3ffbbd25e8f265a873e35afe14"
+    },
+    {
+      "path": "packages/render/src/environment/planet-decorations.test.ts",
+      "sha256": "02b319ba94596531647af43643257cbe805909e5b283775dfd25664e0d17cd33"
+    },
+    {
+      "path": "packages/render/src/environment/planet-decorations.ts",
+      "sha256": "013f95ba2b5442c8d38704c6d644f47f275707e50fd33dff7051b150d083f20d"
+    },
+    {
+      "path": "packages/render/src/environment/planet-glint-samples.ts",
+      "sha256": "cd12b3dfe51881af5b07b78cdf40ed88c3a5160118824f0fa2bd678e6a71994d"
+    },
+    {
+      "path": "packages/render/src/environment/planet-lava-spill.ts",
+      "sha256": "034f044abccdb372645e5cb322bb818e36ebb3cb9c8eae869c0389acc0140287"
+    },
+    {
+      "path": "packages/render/src/environment/planet-lod-cache.test.ts",
+      "sha256": "64e50f48dab3cd7784026f9a5a7c61ba324da7528f06b4229a57a777af7d5da9"
+    },
+    {
+      "path": "packages/render/src/environment/planet-lod-cache.ts",
+      "sha256": "dfdbd348b29f65e0ab2927d4659fbbd62f79604c9d0d027a91e5def37425096a"
+    },
+    {
+      "path": "packages/render/src/environment/planet-lod-runtime.test.ts",
+      "sha256": "494b248b5984f0d2665fb806286d7cdebf428ce546baf430c62338f546b55004"
+    },
+    {
+      "path": "packages/render/src/environment/planet-lod-runtime.ts",
+      "sha256": "a5252e87652b402cd393f48d77be4df909780e46d0579fec208b11e16ed352d5"
+    },
+    {
+      "path": "packages/render/src/environment/planet-mesh.ts",
+      "sha256": "f1c9f63057824b0c71d4c1b1863913dfd750d9d3aeec72943f2b88f1564f73d8"
+    },
+    {
+      "path": "packages/render/src/environment/planet-preview.ts",
+      "sha256": "404940e22ad5fdba74ee312939e1b2f28dc02f93cea08d320df5958326097687"
+    },
+    {
+      "path": "packages/render/src/environment/planet-rotation.test.ts",
+      "sha256": "8e77d6bb75d2168c2c28378c61105ad5cfdd27baf4d3523cd1107bd03b29d596"
+    },
+    {
+      "path": "packages/render/src/environment/planet-rotation.ts",
+      "sha256": "8d196e1052e93a8912b44270cf0277ddb34e43b3bc49c710a59bc129c7ebb566"
+    },
+    {
+      "path": "packages/render/src/environment/planet-shadows.test.ts",
+      "sha256": "a8f796cf9f104ad2c1fece1878456f46d22c377277173a02cad5d81d5462b5b0"
+    },
+    {
+      "path": "packages/render/src/environment/planet-shadows.ts",
+      "sha256": "d1bfdf1a14d03a5765d65302f15a813c9b2b57edf21a4123c465f30a0339a57c"
+    },
+    {
+      "path": "packages/render/src/environment/planet-smoke.ts",
+      "sha256": "c3de054f6bb3d3134efc4c4e1acd463f426665115182b9e775be5bc6ebdb03b1"
+    },
+    {
+      "path": "packages/render/src/environment/planet-sparkles.test.ts",
+      "sha256": "a33bb9c89ac3e9954a12f889fb6a005307385521c624248f3b820e3f859f14d1"
+    },
+    {
+      "path": "packages/render/src/environment/planet-sparkles.ts",
+      "sha256": "0c131b1bde01711d8d38ecca97a0fcb99b86c5dc0b2c5bc7c9d13cf6dbf25ee8"
+    },
+    {
+      "path": "packages/render/src/environment/planet-terrain.test.ts",
+      "sha256": "aa490a5e8465c37a840004bd7357c17b5fccadfde33293eb6633499f9023dbf0"
+    },
+    {
+      "path": "packages/render/src/environment/planet-terrain.ts",
+      "sha256": "849b138f627b470e1aece671e4a5059e2f979382c77defc74dfc950b251d8515"
+    },
+    {
+      "path": "packages/render/src/environment/planet-worker-client.ts",
+      "sha256": "664e55060891dc93877f5e03f1c59ed2ab8dec0db036f0412ac00a446f89adeb"
+    },
+    {
+      "path": "packages/render/src/environment/planet-worker.ts",
+      "sha256": "f85b5c48982df60b1368142f0c6f2a8956914abede3e31ad7f44e166e14dc6f0"
+    },
+    {
+      "path": "packages/render/src/environment/runtime.test.ts",
+      "sha256": "f8d30e287ee75f1f98702b9dffa57038c8c07ead8bcfa8ccedee3a681eaff823"
+    },
+    {
+      "path": "packages/render/src/environment/shaders.ts",
+      "sha256": "872d3040a0a6e5955162076350c2ad052cec7805ce2b6901aacaf90a265468e4"
+    },
+    {
+      "path": "packages/render/src/environment/voxel-material.ts",
+      "sha256": "46b4c2023a168933b5d0911fac5df2a16c1201ea04a2d32509e7f7d6fd8fe60b"
+    },
+    {
+      "path": "packages/render/src/environment/voxel-planets.test.ts",
+      "sha256": "9cfa8faebf0457003b61a639e5f8ba7a9ccec342b765bfa53d35cb1b9b2ab177"
+    },
+    {
+      "path": "packages/render/src/environment/voxel-planets.ts",
+      "sha256": "60366c065aa7440be57713a4c0b05ebd9b7aebceba8705208c6206ce1449b3aa"
+    },
+    {
+      "path": "packages/render/src/equipment/anchors.test.ts",
+      "sha256": "c09320a102df4de5957afbbcaf53f3299e45e20dc3235d8eaa314e51ab9e2713"
+    },
+    {
+      "path": "packages/render/src/equipment/anchors.ts",
+      "sha256": "66613c03fd21c47a945e4a314d0cce378e4ca7756192e615fa2276e1ba97acea"
+    },
+    {
+      "path": "packages/render/src/equipment/index.ts",
+      "sha256": "93e0bfdd557c1cbc40a2a6122efb38b4f29f106240de78e211d2437473ffae63"
+    },
+    {
+      "path": "packages/render/src/equipment/physical-beam.test.ts",
+      "sha256": "59f9c4fecc48f9ea4ff5f5764dc793c4ae3f62e43afcac9e7013ac6e53e003f2"
+    },
+    {
+      "path": "packages/render/src/equipment/physical-beam.ts",
+      "sha256": "a4ac71fdfb688318bb9705ddd72849e8584d8b6b3fd3f3d2ca8032f8ea6d9471"
+    },
+    {
+      "path": "packages/render/src/equipment/pose-anchors.ts",
+      "sha256": "3a402b5bfd4fdd28f9c89078e09e0e0cd9201e381a077388368b4776906434dc"
+    },
+    {
+      "path": "packages/render/src/equipment-lighting.test.ts",
+      "sha256": "5f908941ea3890f483c4450064c31dcf994f97963a300a9a684f30cd51618140"
+    },
+    {
+      "path": "packages/render/src/equipment-lighting.ts",
+      "sha256": "f4adaaa517e3d461e070e76fe57b632ae8873981135d463f5b4329bc11642e1e"
+    },
+    {
+      "path": "packages/render/src/fast-snapshot.test.ts",
+      "sha256": "4edfef62bec715d0bf0f767b82997018ea4fc9218085b8f9412997d3d509de2a"
+    },
+    {
+      "path": "packages/render/src/fast-snapshot.ts",
+      "sha256": "3e2f396b4e997cdd82346073b4981889423b3661a8324567d3116dec51868d0d"
+    },
+    {
+      "path": "packages/render/src/flight-active-set.test.ts",
+      "sha256": "f88cd4db114a29d5e9854d48e8c9421fbc3f9c04cd5352e89f1bcbad3938d4e5"
+    },
+    {
+      "path": "packages/render/src/flight-active-set.ts",
+      "sha256": "49d9e8b6ad098f4aa07b508b11b1c965e39630c67ab012d11d796db6cd83a226"
+    },
+    {
+      "path": "packages/render/src/flight-collision-debug.test.ts",
+      "sha256": "597561bd85fe333ad1100d99ba471c3728394e9334e349257893e04ef2d343a5"
+    },
+    {
+      "path": "packages/render/src/flight-collision-debug.ts",
+      "sha256": "a462606b6fdb48a18f088ff50e8a1735fa3d29b94e1cf2a352b90b94e7dfdc5c"
+    },
+    {
+      "path": "packages/render/src/flight-effects.test.ts",
+      "sha256": "fbaf2e93ebe418bcded292f0c50c38c010d3bc2f59968fe8c638dc4e160e2fd7"
+    },
+    {
+      "path": "packages/render/src/flight-effects.ts",
+      "sha256": "e41331a6e8438797e385ea8df2f76dabe29190c899e5bcf3d20d4c41fec39ca4"
+    },
+    {
+      "path": "packages/render/src/glow-occluders.test.ts",
+      "sha256": "664e7cd5f711551c5cf24ada1156d7e580109d949a3599f3a2d84ad85e88c4bb"
+    },
+    {
+      "path": "packages/render/src/glow-occluders.ts",
+      "sha256": "3074e2e769830d6412457e7104fb43471029c7121a55d234d210465567ea2e76"
+    },
+    {
+      "path": "packages/render/src/graphics-settings.test.ts",
+      "sha256": "370cbcf4d0b3feb5c03d6df15afdca75a69f65f15cea240388ffcd67b2072b61"
+    },
+    {
+      "path": "packages/render/src/graphics-settings.ts",
+      "sha256": "3adcc014669c957c2aea4936808801032b24e22fbb17c911d9957c6d0b2b4d25"
+    },
+    {
+      "path": "packages/render/src/ground-items.ts",
+      "sha256": "823f129db58864273bd64040e609b02fb808ad9e0290c07d5481d5085327455b"
+    },
+    {
+      "path": "packages/render/src/holographic-disc.test.ts",
+      "sha256": "8999f8c6bc51d5eb9449cb39f3ad23b259397f48485ab3fb22e8fd0d1c0a25fb"
+    },
+    {
+      "path": "packages/render/src/holographic-disc.ts",
+      "sha256": "01676c8d204f9affba4a49b5f183558941aae88b19f570940bfbe0622899247e"
+    },
+    {
+      "path": "packages/render/src/hull-decals.test.ts",
+      "sha256": "264dd369177ebd3bf265bece123646fb03fb82510cf04facad3f0872706fa6ae"
+    },
+    {
+      "path": "packages/render/src/hull-decals.ts",
+      "sha256": "490a63143f6463dcce1e76f980e0d582a3b0234f9740ba68f5b8b7e879955d26"
+    },
+    {
+      "path": "packages/render/src/index.ts",
+      "sha256": "e032cb87b097a69b12dacae62e68cc9bdc9831d7858b83382861e25dfa141292"
+    },
+    {
+      "path": "packages/render/src/installed-equipment.test.ts",
+      "sha256": "a16f431166f381a23445e8b1c977646688f5fc9df622a0d4d25352c76cdcea7e"
+    },
+    {
+      "path": "packages/render/src/installed-equipment.ts",
+      "sha256": "565c9e5077fa920aa2c3e5b1f9259c0c482cabc2d144a5b7d6d5ceec776fb27f"
+    },
+    {
+      "path": "packages/render/src/installed-hull.ts",
+      "sha256": "641c7f67d61a88856508b2fec12430522f427513497d2467f114d4a869d460c0"
+    },
+    {
+      "path": "packages/render/src/installed-modules.ts",
+      "sha256": "c323c20dbe207126cdf25e1f4143a675ec2a185409495895eb8ded4b5b1bd534"
+    },
+    {
+      "path": "packages/render/src/instanceable-assets.json",
+      "sha256": "1ab0599ced57c09dc254ccc01e90f174bbfc50f374dbf7b587f6dca1377c6b4d"
+    },
+    {
+      "path": "packages/render/src/layout-assembly-preview.ts",
+      "sha256": "2e5337c9597950f66895b69708b9c25dfb6146c240220c117c74ff7bce9e9ce3"
+    },
+    {
+      "path": "packages/render/src/layout-camera-motion.test.ts",
+      "sha256": "ac4f8d304c24891dfb3c3859d9737adb05ffcf78b3a6150d3a63944965691bce"
+    },
+    {
+      "path": "packages/render/src/layout-camera-motion.ts",
+      "sha256": "d56030e09236221b191f1f0b9c791101e01a6b171bb9020f3a46257d5832d4e6"
+    },
+    {
+      "path": "packages/render/src/layout-hull.ts",
+      "sha256": "04dbb7ba3f63116d9f9135d7a4bc2db9b8b2625ee1d7f5016463dc532c60af49"
+    },
+    {
+      "path": "packages/render/src/layout-native-floors.test.ts",
+      "sha256": "29e2bfa8c1fc009bcbb4c55ae2af5af6bcfda752958f7ceb296b2e03373aaf2e"
+    },
+    {
+      "path": "packages/render/src/layout-native-floors.ts",
+      "sha256": "9db1d6ca5ade70ac97a07b4afdc46eb710fc06e5241f21ab8fe474a69a23dd13"
+    },
+    {
+      "path": "packages/render/src/layout-native-walls.test.ts",
+      "sha256": "54860e47730c40a018b591983d8f2a943b29ef012c8fa999ecf6f54b1c825286"
+    },
+    {
+      "path": "packages/render/src/layout-native-walls.ts",
+      "sha256": "0cb3d7a9c565ab1f18b33d6b9bada37705c373c86bedc013bea513627cd05552"
+    },
+    {
+      "path": "packages/render/src/layout-picking-coordinates.test.ts",
+      "sha256": "92d595fba503aec87d4cda109706f758cba437db3f61dd7e102d4551120a9627"
+    },
+    {
+      "path": "packages/render/src/layout-picking-coordinates.ts",
+      "sha256": "719bdc5690b4c9e86adc7eee008e3d2d636eb381b51d0432d623f1cb21b5419b"
+    },
+    {
+      "path": "packages/render/src/layout-placement-grid.test.ts",
+      "sha256": "21e0faa3d597747cd32b536ecf4c22cebe6e4979ca5b27ce5f4a8aebd885bf9b"
+    },
+    {
+      "path": "packages/render/src/layout-placement-grid.ts",
+      "sha256": "f7fda374c3ece02350540c6dce8207ebb7c8425ca304742805942aec5a76dd51"
+    },
+    {
+      "path": "packages/render/src/layout-plane-projection.test.ts",
+      "sha256": "571725cf7643ef368b2076f468ccd8eda0907b6b5120196d9e5fe16dcbc61f96"
+    },
+    {
+      "path": "packages/render/src/layout-plane-projection.ts",
+      "sha256": "0a1a3c440d55fa62180721dc978102463fec19e5df412ef9f8fc074d7b9ae924"
+    },
+    {
+      "path": "packages/render/src/layout-preview-policy.test.ts",
+      "sha256": "19ad3e6b99d5e43dd74a24a6a0b20d99b8225c37665cf2d8db89171ba06df9e9"
+    },
+    {
+      "path": "packages/render/src/layout-preview-policy.ts",
+      "sha256": "37e3ccb25d8d90ee715a3e4938a3a15acb024fddbe22a606dbedb11c4e29220f"
+    },
+    {
+      "path": "packages/render/src/layout-preview.ts",
+      "sha256": "cd78de9412a22301e9b580dc122f17e3ffcaa59bc62a0653672d0f1cb528a8a2"
+    },
+    {
+      "path": "packages/render/src/layout-selection.test.ts",
+      "sha256": "caf29c39f86cb961050f9b7787824ce34b4fc6bc1a9968dc4024df965faaa353"
+    },
+    {
+      "path": "packages/render/src/layout-selection.ts",
+      "sha256": "6a3cdb7cc68db5bdbe6a9c15ed8e4a9a1a64dd836430d60f777f71c8ef09e0fd"
+    },
+    {
+      "path": "packages/render/src/layout-structural-guides.test.ts",
+      "sha256": "fa38a5f9292e557de7ec4f07344fea56d71cb78f46129754779a146fdfd43886"
+    },
+    {
+      "path": "packages/render/src/layout-structural-guides.ts",
+      "sha256": "9c04b61bf226f14c69abda5f2ab1fa8f28c2e3660ac6fbdd59091b6a19727d78"
+    },
+    {
+      "path": "packages/render/src/layout-view-orientation.test.ts",
+      "sha256": "acec3ae184c39de1fd9da41a09bb2892c5fb06a24ee7c708680739d946379fa3"
+    },
+    {
+      "path": "packages/render/src/layout-view-orientation.ts",
+      "sha256": "0d9fd54c2023034bb66f3b490474504c8fae17c35c8830e3ccb3474a569fe16d"
+    },
+    {
+      "path": "packages/render/src/legacy-mesh-role.ts",
+      "sha256": "52dccf4fd82d44577c66336d73ffc8e95f6cc744f289adaa5179d6fbcad3c239"
+    },
+    {
+      "path": "packages/render/src/local-light-budget.test.ts",
+      "sha256": "472627c2e8f5ef2ed845ec1021c42114100c1e7bab915075074b96739d27f1ea"
+    },
+    {
+      "path": "packages/render/src/local-light-budget.ts",
+      "sha256": "c6ed9b6597b159b0b0cc0432336b8a560e6be1776552110cdab2c8a2307494e7"
+    },
+    {
+      "path": "packages/render/src/material-setup.test.ts",
+      "sha256": "af24729b753794b54d6cde38b61da107ffbdd9d664b7ff35638e71b91d9a4941"
+    },
+    {
+      "path": "packages/render/src/material-setup.ts",
+      "sha256": "f95608fbbff98af8aa88531209cd894877bea875e41ead947d3836453d2e6516"
+    },
+    {
+      "path": "packages/render/src/mesh-roles.test.ts",
+      "sha256": "84f7b7e3fa7f89e0d4ccf81d8308c6c8a6a38cd88352f9d72f05c20d41232473"
+    },
+    {
+      "path": "packages/render/src/mesh-roles.ts",
+      "sha256": "071028183f930213e8692d530d72ca4abc7eb074a460531daf7629c0204bd4d1"
+    },
+    {
+      "path": "packages/render/src/native-airlock-scene.test.ts",
+      "sha256": "9f195e3076a6e2f9e5af52e1279a50baffa4e9b369e7929d399115256e2a97e6"
+    },
+    {
+      "path": "packages/render/src/native-airlock-scene.ts",
+      "sha256": "58f2accf8bd27c3cbdd029d1e01fbecb2b0f5c74d2ae69e9cdcfe3a82336d5b1"
+    },
+    {
+      "path": "packages/render/src/native-stair-scene.test.ts",
+      "sha256": "c1a7c35f1a8475bb63691f38d7c75788ea6ef32878e3556501b863b5976f1c12"
+    },
+    {
+      "path": "packages/render/src/native-stair-scene.ts",
+      "sha256": "536f0f57b317d4457034743541082e0142ae50cfbde0a4cf0506235513ff1b1c"
+    },
+    {
+      "path": "packages/render/src/native-wall-batches.test.ts",
+      "sha256": "267b21d799ae89a520e6867849aa8ba1c5f86e80e3d98708f826f325a23ba95e"
+    },
+    {
+      "path": "packages/render/src/native-wall-batches.ts",
+      "sha256": "a831c2632471b3a080ac1d35bd79934b5d60dc9b9089160489f8ab26a76e3dc1"
+    },
+    {
+      "path": "packages/render/src/object-presentation.test.ts",
+      "sha256": "ac44cb905e4a08bb1082ec3a621044b141e3e6e28771b928eea6b2b3f6ab3f33"
+    },
+    {
+      "path": "packages/render/src/object-presentation.ts",
+      "sha256": "1a81eaf567b5a6ddb4e05b103509aecdbb34da804cf5bc883ec2fe70611b6a56"
+    },
+    {
+      "path": "packages/render/src/placement-instance.test.ts",
+      "sha256": "d3801f0fde3c8180fc4c4bd6e7db3ccbf6591afd85c4e64348f98864af0223b8"
+    },
+    {
+      "path": "packages/render/src/placement-instance.ts",
+      "sha256": "a8b6282a460212df8128d3294f7a32262c67df840b7a5ac651443e595afb6c9e"
+    },
+    {
+      "path": "packages/render/src/remote-aft-boundary.test.ts",
+      "sha256": "e8893f879fe0cb98803dfb76973397e9dd58999732ffcee344bb027f1ddc7672"
+    },
+    {
+      "path": "packages/render/src/remote-aft-boundary.ts",
+      "sha256": "2424211cf0b9762a4c197d8b0cc7efcb6d53a7e958483b45d5860e89ca506d98"
+    },
+    {
+      "path": "packages/render/src/remote-exterior-batches.test.ts",
+      "sha256": "d9848211c69259b310625a293a1689e72f9074d534969f2b65f4b80a27a0d623"
+    },
+    {
+      "path": "packages/render/src/remote-exterior-batches.ts",
+      "sha256": "1a5b488bdcad161654002e1e631e5c72bfda93dd92a2a63bc7543216feabd0fa"
+    },
+    {
+      "path": "packages/render/src/remote-exterior-glass.ts",
+      "sha256": "3c46bf6509d03e5a69d379a9a535dc9e2922c06fef1bd97992f78bd0da03f66b"
+    },
+    {
+      "path": "packages/render/src/remote-ships.test.ts",
+      "sha256": "3166e1a45f5816fd3ac7f99b10542868f7308b662a39fd0f9424247d497bbd86"
+    },
+    {
+      "path": "packages/render/src/remote-ships.ts",
+      "sha256": "331aecb7eaa3ec6fec10ad8d899b7afe10631120aa3eaefdd38d0f24a8cb04fa"
+    },
+    {
+      "path": "packages/render/src/render-backend.ts",
+      "sha256": "9c60a04d01f227e3dd61e1b0c4851d2e2d8f4983338d4027d17421666de811aa"
+    },
+    {
+      "path": "packages/render/src/render-budget.test.ts",
+      "sha256": "5898168cb500d18a893d9c3bca63ecf2445b5d270704d093efb8dfd79f78dadb"
+    },
+    {
+      "path": "packages/render/src/render-engine.test.ts",
+      "sha256": "242a7406111ba12423c84f56e3d51f964dbb396707038e091e2c5a986ddd3c6a"
+    },
+    {
+      "path": "packages/render/src/render-engine.ts",
+      "sha256": "1fd94848de738708d6327df512f7cb0704bffcdda602d092ba76f0734dd7333e"
+    },
+    {
+      "path": "packages/render/src/scene-material-registration.ts",
+      "sha256": "1b286c8403cdceda8a1a08daef9accefee86cd29de6eb4ff1b61508524f1f7dd"
+    },
+    {
+      "path": "packages/render/src/selection-silhouette.ts",
+      "sha256": "962e7637a61cb7a8bc65f1e3dc5d88c8bdce7ae2eec4243498aafa3d908f7d14"
+    },
+    {
+      "path": "packages/render/src/shadow-batches.test.ts",
+      "sha256": "f1ce562708aef2b4d864ad50d00554a2c609459ca1e3d8430e2ac193a8e53fc6"
+    },
+    {
+      "path": "packages/render/src/shadow-batches.ts",
+      "sha256": "7c9d75af347ba9bfa84d1d88534bcf60aaa0ae4f7606ff1f44e0db4ca853018c"
+    },
+    {
+      "path": "packages/render/src/shadow-policy.ts",
+      "sha256": "390cdb2d006d04c5249dc246d3d72d5623f6035325f02af33ceb83260fb9db88"
+    },
+    {
+      "path": "packages/render/src/ship-glow-occluders.test.ts",
+      "sha256": "41ff32c6db3923f2ed26ad36069b302fd47862f1a9de770474cab8c5ecfeebbf"
+    },
+    {
+      "path": "packages/render/src/ship-glow-occluders.ts",
+      "sha256": "7a8ee049724f43f8c958de4e9ea38157ec7d489399bb0a890d57a5cb2906f714"
+    },
+    {
+      "path": "packages/render/src/ship-lighting.test.ts",
+      "sha256": "1c4cfda105114e747007ba1a952e2e355542a8a0ba3e98cb8c3e5a5e5a8d588f"
+    },
+    {
+      "path": "packages/render/src/ship-lighting.ts",
+      "sha256": "2d4999a3c7fbce46ecdee982b0f0f9b525331d68db8a341ad409ae6ba17db5d9"
+    },
+    {
+      "path": "packages/render/src/ship-occlusion.test.ts",
+      "sha256": "1a4f9e5745596174101535dee8e16b2f2b306b63336192d3fcec944e7ad0435c"
+    },
+    {
+      "path": "packages/render/src/ship-occlusion.ts",
+      "sha256": "52a6661fcdf23b52184d0b60d96a3e746ff1b6fa3dc0529819d921400d3fb735"
+    },
+    {
+      "path": "packages/render/src/ship-shadow-cache.test.ts",
+      "sha256": "1a728b59385808f208ca282a1fc0b1ce7f5e270d4be39402c3b6a30a33dce5f6"
+    },
+    {
+      "path": "packages/render/src/ship-shadow-cache.ts",
+      "sha256": "9edefba6f447bdb96f1163470372a0c2209d1ec4434ef91669fd4f72a81a6518"
+    },
+    {
+      "path": "packages/render/src/ship-shadow-placement.test.ts",
+      "sha256": "82b2f70eaba3f69186008cce8f23e9c8642546cb3da9d33e8ae6e2acb3b90dfe"
+    },
+    {
+      "path": "packages/render/src/snapshot-revision.ts",
+      "sha256": "c40fe619ee8460621d710808891a164a0bf620182aafe5470bb55e255bde0439"
+    },
+    {
+      "path": "packages/render/src/static-material-batches.test.ts",
+      "sha256": "617d1778c2865e38d86958dd2ee2561010e6bf6a45e944bcab6620ed797d9a99"
+    },
+    {
+      "path": "packages/render/src/static-material-batches.ts",
+      "sha256": "ea758ed177e588cce8b5abfd0cc16370c953f4cf21014ae29ad7c610b2182b0f"
+    },
+    {
+      "path": "packages/render/src/static-material-freeze.test.ts",
+      "sha256": "f97df5ad7df1c59d48f72f7f0fa49577054eeb1c64686303e49fa9353ea74f70"
+    },
+    {
+      "path": "packages/render/src/static-material-freeze.ts",
+      "sha256": "d8330a3fbed3242a43bb6aa6ed751fb08e6b909cb37d7fa41d79862464e0a948"
+    },
+    {
+      "path": "packages/render/src/static-transform-cache.test.ts",
+      "sha256": "31310ca045088a12738d2d01782c5d7a2bd319c0a2b58af58572f689b6b0f783"
+    },
+    {
+      "path": "packages/render/src/static-transform-cache.ts",
+      "sha256": "7488467114eeb88b8915b2702904ee50aec197c431e1c0fcfacaa04fe9752002"
+    },
+    {
+      "path": "packages/render/src/structural-batches.test.ts",
+      "sha256": "c1cdfb23f5f80a124c3269a569e87f5944a06d23a315eab70d6b4b1b96b67ed9"
+    },
+    {
+      "path": "packages/render/src/structural-batches.ts",
+      "sha256": "86e3eb4352dbd5c7fa13c74bce2e0ae43453e5d430115c335ca173c906422e79"
+    },
+    {
+      "path": "packages/render/src/temporal-bone-palette.test.ts",
+      "sha256": "e41f3c133edf668284b46e01e747c1bc4c74a3888e79fad0f7a842a88ca09fe0"
+    },
+    {
+      "path": "packages/render/src/temporal-bone-palette.ts",
+      "sha256": "8ebf1091f73c5306de399b394da31282b356a1b3225b31808557f151aa2c92a8"
+    },
+    {
+      "path": "packages/render/src/temporal-instance-attributes.test.ts",
+      "sha256": "4001fb607b62fd86ef218dd22694f014fabc50309562699f297747c517b134a0"
+    },
+    {
+      "path": "packages/render/src/temporal-instance-attributes.ts",
+      "sha256": "bf5fec3b81375fb3205d5c421a50b3a495aa685c153d7a72b46921e1dffbb7af"
+    },
+    {
+      "path": "packages/render/src/temporal-skin-history.test.ts",
+      "sha256": "fd22eba3836f5845401c7258c2327b1949290c43cf2196495a57bd1f84e61a54"
+    },
+    {
+      "path": "packages/render/src/temporal-skin-history.ts",
+      "sha256": "dfbfb990811b9d4e7b3c5bb6e8ae0333f9dd6156d3bdc863e951b1e5b9af0306"
+    },
+    {
+      "path": "packages/render/src/transmission-lifecycle.test.ts",
+      "sha256": "052cc5901dd379d314037b90b122d97c40807ab4a290b032edd5b8ba1c16f465"
+    },
+    {
+      "path": "packages/render/src/transmission-lifecycle.ts",
+      "sha256": "e9494202714044848fd16adac3c231a822acf1b5f903e1372acea47022f0c3a5"
+    },
+    {
+      "path": "packages/render/src/voxel-worker.ts",
+      "sha256": "38a1f3d036d417fad60d5d210973023079c73b2b9764f0bf6b1ed4a89f32f7cc"
+    },
+    {
+      "path": "packages/render/src/webgpu-backend.ts",
+      "sha256": "275f0c6e9a92c0297537fe2c3ec92b0a3cf934875e0a53a5f76738107ab71d5a"
+    },
+    {
+      "path": "packages/scripting/package.json",
+      "sha256": "9f28263ea4808a1f9e84ec5ed97a819adcb4b3a6a765cb7a0e0dc08738e652ab"
+    },
+    {
+      "path": "packages/scripting/src/index.ts",
+      "sha256": "29969f96909533bce420f4d91cf78ea0e552eb9df7ce6718999c9e17bebb3730"
+    },
+    {
+      "path": "packages/scripting/src/lifecycle.test.ts",
+      "sha256": "38f96dcf2448bc69b3c1259888a40a405c40dbf0ed4a25342ff70b3a60c14b87"
+    },
+    {
+      "path": "packages/sim/package.json",
+      "sha256": "4771518b1c4858ebb72f83b398c231a19ae1b21ec1210611ac268a74f29b9148"
+    },
+    {
+      "path": "packages/sim/src/appearance.test.ts",
+      "sha256": "c2f558b2b1851dc0211aaf6752d4e3e33baf5027db84a89936c6c97c1d296c5a"
+    },
+    {
+      "path": "packages/sim/src/appearance.ts",
+      "sha256": "c5b818625c574a6cfad0e66dd9a89086b9f9251df8bde77c2a322a43e2887119"
+    },
+    {
+      "path": "packages/sim/src/armor-issue.test.ts",
+      "sha256": "3480c686cd206b9d4133da14332d466a48819dce71f56f83e297ec934e2f858a"
+    },
+    {
+      "path": "packages/sim/src/armor-issue.ts",
+      "sha256": "a35e8eefe07f2765a575286d5b8345ddf86433c21420cf0115e0741b8eb27cdc"
+    },
+    {
+      "path": "packages/sim/src/auth-policy.test.ts",
+      "sha256": "2cec4b7f635d0837ade5a8089c2f64fbedcd202ab2909a6af04aeabc2d5214ec"
+    },
+    {
+      "path": "packages/sim/src/auth-policy.ts",
+      "sha256": "4dffa2f182bed9effef3868f42fd4eb0db0d1f21e7bbf8c81b7c6308b5aa7c44"
+    },
+    {
+      "path": "packages/sim/src/backpack-swap.ts",
+      "sha256": "680a75bb8d12670dc6d3ce3ae78d9ed50c507a0808b6f907e2ce0a513c349f18"
+    },
+    {
+      "path": "packages/sim/src/cargo-carrier-access.ts",
+      "sha256": "d51c12ca31f7c8fb21cabfc88ea654ac72c95cd30b0406ae690324d6f41d1084"
+    },
+    {
+      "path": "packages/sim/src/cargo-carrier-assembly.test.ts",
+      "sha256": "ec961217fa5ad8d67982c993c3c8268681af94aabbf65c174c82c80859b35d56"
+    },
+    {
+      "path": "packages/sim/src/cargo-carrier-assembly.ts",
+      "sha256": "e02680594d20b798a606459c14b233760bfed28baf04772b43f5a7c33e0b7bb7"
+    },
+    {
+      "path": "packages/sim/src/cargo-carrier-collision.test.ts",
+      "sha256": "0a957d52bbcf370b51c8f789dbc2deadde6a23306d0425f95a758a4cb185de6b"
+    },
+    {
+      "path": "packages/sim/src/cargo-carrier-collision.ts",
+      "sha256": "3c54562fd492936ddfb8c95c19c29935a2e93c9dda49c863b1d862ad8c8286d7"
+    },
+    {
+      "path": "packages/sim/src/cargo-carrier-handling.test.ts",
+      "sha256": "77a5ff7af363016470d13f575900f2b0ab1c423fcf52772cf5db1ed43bf2d521"
+    },
+    {
+      "path": "packages/sim/src/cargo-carrier-handling.ts",
+      "sha256": "2b18c2fefa66b8cbf251a9ddf351dfecd9dd77ac0f28eba8ef465d2937638de3"
+    },
+    {
+      "path": "packages/sim/src/collision-broadphase.test.ts",
+      "sha256": "6faa1b5791c0b833889827743d5194a3dbf2e15a60beb9456c7ccc7351b21b56"
+    },
+    {
+      "path": "packages/sim/src/collision-broadphase.ts",
+      "sha256": "da515d3e970fa47e5c11677c6e42faea901aba4fb814415b3a32e6f5a9ac7de3"
+    },
+    {
+      "path": "packages/sim/src/collision-shared.test.ts",
+      "sha256": "a415eab541a64ffacfdaf76d94e5d1cfd14932f735c535cb05ab724feb174127"
+    },
+    {
+      "path": "packages/sim/src/collision.test.ts",
+      "sha256": "84ed04bec72eaed86f2d5ae5a2dea1645abce631ab8fcaf81c125c7f9f55a187"
+    },
+    {
+      "path": "packages/sim/src/collision.ts",
+      "sha256": "bc7eb8f5f8a0f66b5ab0d5c5e7aa5b79fe274fe9a1eb3c496ca06bdcc3045b98"
+    },
+    {
+      "path": "packages/sim/src/combat.test.ts",
+      "sha256": "2aed157695a4db66890801932e0209735ee295556ee87684ef971629b9789133"
+    },
+    {
+      "path": "packages/sim/src/combat.ts",
+      "sha256": "7212d4c9383a7da5cd0e6c217e68f24ed8528d59dfc6634df941792236dbbfc3"
+    },
+    {
+      "path": "packages/sim/src/construction-airlock-controller.test.ts",
+      "sha256": "3d46c71609fc56999b80a76fb240c6f5db487fc6922a7ba8876dab735505be70"
+    },
+    {
+      "path": "packages/sim/src/construction-airlock-controller.ts",
+      "sha256": "3798ad0f9537d42a2074c1e3ade51d70310916f13a45ee55b1420027b3a39dbf"
+    },
+    {
+      "path": "packages/sim/src/construction-airlock-document.test.ts",
+      "sha256": "3ca749ace746b2ae575b1babff38b6ec1b3c0fa9964efe9439d2e4b699e4456f"
+    },
+    {
+      "path": "packages/sim/src/construction-airlock-document.ts",
+      "sha256": "cb6ca596935072749c0e89f323817a6056c8cacaf015457736b1a71396d622ef"
+    },
+    {
+      "path": "packages/sim/src/construction-airlock-plan.test.ts",
+      "sha256": "2cbdf9bbb1d34f1938d83f0a6ca0b47a2098d76ee0aa901a7d7c4c93b240d4a5"
+    },
+    {
+      "path": "packages/sim/src/construction-airlock-plan.ts",
+      "sha256": "9e7feec1e1ddb4a0bfcf99d0ac80eaf46dd8f774f77c76254d4fac59870bf6ce"
+    },
+    {
+      "path": "packages/sim/src/construction-airlock-published.ts",
+      "sha256": "9b4192378026e32b0f81c41727d86016b787862cee4856268040c702a7c48b20"
+    },
+    {
+      "path": "packages/sim/src/construction-boundaries.test.ts",
+      "sha256": "1455d549175f26d088c237647dbd7204b10a2f3963bf08bac3242fd3a3d20071"
+    },
+    {
+      "path": "packages/sim/src/construction-boundaries.ts",
+      "sha256": "bca2c22e685519e2164280a4aa0d1a91da00cd376b3213803d2f9722729b5bb3"
+    },
+    {
+      "path": "packages/sim/src/construction-boundary-family-native.test.ts",
+      "sha256": "73034228658bf38cc136c75e653eb579e463c52c1a65e68dd799c26cc315b9a3"
+    },
+    {
+      "path": "packages/sim/src/construction-boundary-family.test.ts",
+      "sha256": "f915bb88395ed6db3e5aac80b1c7516b66f1403a04d0fd9347371eed918f1d0e"
+    },
+    {
+      "path": "packages/sim/src/construction-boundary-family.ts",
+      "sha256": "28389ca9d326636c2e5bd1d1dc4e2650293a0470bf324ace5281826b3cfa146f"
+    },
+    {
+      "path": "packages/sim/src/construction-cargo.test.ts",
+      "sha256": "0a63aa939f5a25847c9dcb5abe8106e3de0c18d8cfaa46b3b1559533d5a289e0"
+    },
+    {
+      "path": "packages/sim/src/construction-cargo.ts",
+      "sha256": "b3d217aa0f32d7f38bdc8b5be838f54729de52887eaa00c2780f710316b1f5f7"
+    },
+    {
+      "path": "packages/sim/src/construction-collision.test.ts",
+      "sha256": "48606da0f9e75b84ba7e3d5d0267fa3d497d13e9d00aab710728cbc3d1b4a993"
+    },
+    {
+      "path": "packages/sim/src/construction-collision.ts",
+      "sha256": "813fb97dcc863e87f8b6fdf05d3c4e1c1e880434a01c7b067cabacab4c4f0ad8"
+    },
+    {
+      "path": "packages/sim/src/construction-door-motion.test.ts",
+      "sha256": "685ad9c7383d0f5f76abbe075ab4a591b6904e823a940829b161e017e565539c"
+    },
+    {
+      "path": "packages/sim/src/construction-door-motion.ts",
+      "sha256": "844ccac6b7771460feed07b6d88db1100b1c019e565a4e6ed196051174c166a8"
+    },
+    {
+      "path": "packages/sim/src/construction-flight-admission.test.ts",
+      "sha256": "379321f7565f90f01f6964787f02df24a2840745e5c20a8c08bc1331edc7a92d"
+    },
+    {
+      "path": "packages/sim/src/construction-flight-admission.ts",
+      "sha256": "df400efcdeb2e2a00a175cde43344a8f3193fa3c7b017c7cb296c6e7ad502c4e"
+    },
+    {
+      "path": "packages/sim/src/construction-flight.test.ts",
+      "sha256": "4c73c8a2f5e0d831a51dabf8de75ef232660db070efd42c24a4c709061decad5"
+    },
+    {
+      "path": "packages/sim/src/construction-flight.ts",
+      "sha256": "24db6127beb3b5a621b0fd2206e5912c68dcfbbea0d29cc92f35444f9ebea214"
+    },
+    {
+      "path": "packages/sim/src/construction-functional-instances.test.ts",
+      "sha256": "b4179865e5f27afc5bdfa396ea56cb71970f8dde719862a92395d3c9c5e47551"
+    },
+    {
+      "path": "packages/sim/src/construction-functional-instances.ts",
+      "sha256": "139d146dca9bec2ad2665bfe23ff864b270115100a50dcc6d901324711da2356"
+    },
+    {
+      "path": "packages/sim/src/construction-inset-boundaries.ts",
+      "sha256": "61304add41d9d6701bc9029693ba1c6033530ef17eeb4b7e1d590fdfc635c87c"
+    },
+    {
+      "path": "packages/sim/src/construction-instance.test.ts",
+      "sha256": "ec5adfab78787dea40c50a0366d5b0247ffd8798975b3883cf6e6de377f78a77"
+    },
+    {
+      "path": "packages/sim/src/construction-instance.ts",
+      "sha256": "533976027ec358594bc5300819fad2ee1f961aa368a83ffd71d37bceb1c1243f"
+    },
+    {
+      "path": "packages/sim/src/construction-layout.ts",
+      "sha256": "e21240a4c50fb4fb6a0e4a448f5134ab37c95bb76035e58b2763469318c54a21"
+    },
+    {
+      "path": "packages/sim/src/construction-native-contacts.test.ts",
+      "sha256": "578dad865a27b2fead7fb78011dd914ee5c098c09b2bd213943858e1baaac7b3"
+    },
+    {
+      "path": "packages/sim/src/construction-native-contacts.ts",
+      "sha256": "da60f97d0b9d26e2fd7c422871de78d5190fb56b01487a15b03ca31c643e7cda"
+    },
+    {
+      "path": "packages/sim/src/construction-native-room-published.ts",
+      "sha256": "9ffad638e66b8ad3935f91510b933353b5e406f31e90d4e4d6cf07db0f5c5d6a"
+    },
+    {
+      "path": "packages/sim/src/construction-native-room.test.ts",
+      "sha256": "19f2541812a4828bddf0fde707898ecdf097d35dad4712005a0b7cb65beee858"
+    },
+    {
+      "path": "packages/sim/src/construction-native-room.ts",
+      "sha256": "9e9223514ed3283568b44d4b7e6510f95897cca71baf3361a0aa41df6a7e0cd5"
+    },
+    {
+      "path": "packages/sim/src/construction-pilot.ts",
+      "sha256": "721b53f38172fd905f20b2ba37b610d9d6067733e82e9671ac07622bc6fc4c83"
+    },
+    {
+      "path": "packages/sim/src/construction-pressure-document.test.ts",
+      "sha256": "bdfabd63fc910fcf1590f91c641d54a7e153ec5d06a8e201be9778efcdeb660e"
+    },
+    {
+      "path": "packages/sim/src/construction-pressure-document.ts",
+      "sha256": "496462818885d9dd35f70d62a417fd8ce649de220161e5f99615f165005451fa"
+    },
+    {
+      "path": "packages/sim/src/construction-pressure-layout.test.ts",
+      "sha256": "78488fbfc0f286154ad118a90d222981476a39333e3f9606ffad163b6c32f1ac"
+    },
+    {
+      "path": "packages/sim/src/construction-pressure-layout.ts",
+      "sha256": "a3855b2697878312004d35d53245af64f44a151aa99da30fdb080489f073256d"
+    },
+    {
+      "path": "packages/sim/src/construction-refit-identities.test.ts",
+      "sha256": "2bc2b613db2eb49287e79ef58b3e525409aefe3ad329daf21b4733b2e6cdf871"
+    },
+    {
+      "path": "packages/sim/src/construction-refit-identities.ts",
+      "sha256": "e206fec72e308c41820a8e93ac89b2911968adcb4da2f57fa4eac08de6546d5a"
+    },
+    {
+      "path": "packages/sim/src/construction-roofs.test.ts",
+      "sha256": "001ceae9246ee8b064105ad137cc8a66e52e238e18403229c1cc1d8a07871f61"
+    },
+    {
+      "path": "packages/sim/src/construction-roofs.ts",
+      "sha256": "0c0e7613fefe3044925c28f336e22fbbf07ee9de746dd502d447ba81b1a6a177"
+    },
+    {
+      "path": "packages/sim/src/construction-seal-motion.test.ts",
+      "sha256": "50b37f891e4d717cf5c809da4a4a3936dd21c133847922ea14419c8277c45690"
+    },
+    {
+      "path": "packages/sim/src/construction-seal-motion.ts",
+      "sha256": "fb20ffb676a3b2d7d65526e84507f7f20017b1dd6e6bfaf8eb27065cad360547"
+    },
+    {
+      "path": "packages/sim/src/construction-services.test.ts",
+      "sha256": "f560bef262b653c295eab06dd0a6dddf564e4a1c7d531eee88b1eeb2a074486f"
+    },
+    {
+      "path": "packages/sim/src/construction-services.ts",
+      "sha256": "4605a148e6d195f497f2765c8bbb98230065f6891aa3ef66f92edfbb561db74b"
+    },
+    {
+      "path": "packages/sim/src/construction-stairs-document.test.ts",
+      "sha256": "3c8057c1205227073aa75a00af3e9539b4880d14d6411361786cf43200b9a251"
+    },
+    {
+      "path": "packages/sim/src/construction-stairs-document.ts",
+      "sha256": "456d402e8ec6d7ef120b11f411214664a66f417ec532c7aa1e9d85197f6504a9"
+    },
+    {
+      "path": "packages/sim/src/construction-stairs-integration.test.ts",
+      "sha256": "cf8a2a54a5d64544154d6b3ba84d9164c25e7338a1be86d5056e286f27dfb1b9"
+    },
+    {
+      "path": "packages/sim/src/construction-stairs.test.ts",
+      "sha256": "b756b227752387c91ea3e81e3213df9d2415389c5ad8357cdc3e6c891d12c1a1"
+    },
+    {
+      "path": "packages/sim/src/construction-stairs.ts",
+      "sha256": "4fffa3a9e086aed2649cc9972a89257fb901b2c672da6ae82467ae848ccba09f"
+    },
+    {
+      "path": "packages/sim/src/construction-topology.test.ts",
+      "sha256": "e94a6e5365efd7312ec87f49b2661366c105080b0c15f69967e600b6c980ec2b"
+    },
+    {
+      "path": "packages/sim/src/construction-topology.ts",
+      "sha256": "c8067b29793a9ea7d0c53e9bcb34e41b10f0d6fd596aab08e6912cbd3d5a5e1b"
+    },
+    {
+      "path": "packages/sim/src/construction-transactions.test.ts",
+      "sha256": "4c60654d4814965760ca5603fbb567ad831e7689c940893402cfc32ed4adc755"
+    },
+    {
+      "path": "packages/sim/src/construction-transactions.ts",
+      "sha256": "ab349b3fa3d00d07db5bfad6e1cadda2bebfc3cd21c842fcb6fae593dad85932"
+    },
+    {
+      "path": "packages/sim/src/construction-traversal-document.test.ts",
+      "sha256": "f06412973c0c5f0e45c15f9b0e27929cd94a26889ec129a88c4340e62935674c"
+    },
+    {
+      "path": "packages/sim/src/construction-traversal-document.ts",
+      "sha256": "97a36073935d570395a48a8e1eadd1ef2564f0297eb8ac4f9336684874933763"
+    },
+    {
+      "path": "packages/sim/src/construction-traversal.test.ts",
+      "sha256": "ee39881d37cbc9d2627be3f52914713e033388df22c2fd912c35f2fa634b790d"
+    },
+    {
+      "path": "packages/sim/src/construction-traversal.ts",
+      "sha256": "596b8a5df24d20ab5ad53ecc3d1a6273138e3587b0a21e89a498f60a86a9add8"
+    },
+    {
+      "path": "packages/sim/src/flight-angle.ts",
+      "sha256": "0ee531d743e7212f8021572b0f498c453fa114f5d2a996d42ea1e0486991a172"
+    },
+    {
+      "path": "packages/sim/src/flight-definition.test.ts",
+      "sha256": "d54fc6c2ac50bc75e969275672244e0bc6b34feb901684eee3c089b94965fb64"
+    },
+    {
+      "path": "packages/sim/src/flight-definition.ts",
+      "sha256": "3c73bb97c405a65ffe2fcf943bf055e1fa10aa0f6de92b1d75d0df8add759939"
+    },
+    {
+      "path": "packages/sim/src/flight-frame.test.ts",
+      "sha256": "7281d03e0d20c1307f5837a26d5b1491f42d26764d74f6aec51d28d04bd83596"
+    },
+    {
+      "path": "packages/sim/src/flight-frame.ts",
+      "sha256": "c3f71eaa4f7eb75e4989cb076505bf04bfe77e0460aa22b810cfb9eb30eade3a"
+    },
+    {
+      "path": "packages/sim/src/game-ship-access.test.ts",
+      "sha256": "ec756ccd7e59dee432ba7397bc806a52cff3cc1ba0bc74367f571bf633f63a15"
+    },
+    {
+      "path": "packages/sim/src/game-ship-access.ts",
+      "sha256": "9473601bf3dc200ff78af2706684427edfde1b39344e7128137d1358404d6355"
+    },
+    {
+      "path": "packages/sim/src/ground-placement.ts",
+      "sha256": "f63c04d853d1667b5bd3a6cc6bc2b0d1c468b19685bf2222465c50e06ebb43dc"
+    },
+    {
+      "path": "packages/sim/src/ifcs-allocation.ts",
+      "sha256": "48365a5551e02bd2d65ddecc350255202ef61993bd412141584734d90a32dafb"
+    },
+    {
+      "path": "packages/sim/src/ifcs-baseline.test.ts",
+      "sha256": "3007f3e2fb109d8eff886d39155b2e5cf4808471828859d269a3de278a83f954"
+    },
+    {
+      "path": "packages/sim/src/ifcs.test.ts",
+      "sha256": "da5f58202bc2a91845f05e7b7f69fc29ea102a6ad932be86bf2c2d63e4eb3fdb"
+    },
+    {
+      "path": "packages/sim/src/ifcs.ts",
+      "sha256": "e0ee03116780981d3acf15080fdb1fb1030954a97a076483d6eaa3c0467067b9"
+    },
+    {
+      "path": "packages/sim/src/index.ts",
+      "sha256": "a6097fe21eb369fc0ee7f22c536db9fe1e0ee1007befe774757d56b828ea9d1b"
+    },
+    {
+      "path": "packages/sim/src/interactions.test.ts",
+      "sha256": "f0168938b71c09ae5b1c797f69bd3bc0800e0913894e9b1bff8185bbce8370f9"
+    },
+    {
+      "path": "packages/sim/src/interactions.ts",
+      "sha256": "bb4602963510e752a29bb000203e460263d2f3b4543f8f91f59d6e63c21b53c2"
+    },
+    {
+      "path": "packages/sim/src/inventory.test.ts",
+      "sha256": "84b2b956bb675c7c1c30113955685e24538ddaea198e146b90fbe6a8482ab88f"
+    },
+    {
+      "path": "packages/sim/src/inventory.ts",
+      "sha256": "efde9769f700060b99de99b965f3644d0e2f836cbfaf5526125e60d3a54594d1"
+    },
+    {
+      "path": "packages/sim/src/layout-boundary-treatments.ts",
+      "sha256": "0e8f3b3666795239e2da710c4a23dc44b16e3dbc9e96d4a080a0ae0c23003743"
+    },
+    {
+      "path": "packages/sim/src/layout-compiler.test.ts",
+      "sha256": "a9b56a85dc7d67ceaaafb435f51b91b4f0b2337ea8be7786751576db50b65b0d"
+    },
+    {
+      "path": "packages/sim/src/layout-compiler.ts",
+      "sha256": "4ff7c7c0a7e6d404eb13a68afb4eaaad018e35cbc821a1c8c460b9831505c560"
+    },
+    {
+      "path": "packages/sim/src/layout-envelope-admission.ts",
+      "sha256": "59c7273f6ba7e952a867048bd97a857e3c3813dde8d9d5edc3b511e4b0195dd2"
+    },
+    {
+      "path": "packages/sim/src/layout-geometry.ts",
+      "sha256": "a45ec6de12701c9a41299375a31fe9bf61d2780a5643befbf86d8f2b733d171a"
+    },
+    {
+      "path": "packages/sim/src/layout-inset-native-plan.ts",
+      "sha256": "6e175d36740f9ac820f009a5ae97c9a2040a4c4ef09b7b703258b9daf72c91e8"
+    },
+    {
+      "path": "packages/sim/src/layout-native-floor.test.ts",
+      "sha256": "494ba74f36425a6ea1f47d857823554171077a71b8c26ba2aeb0e77ab5790b8f"
+    },
+    {
+      "path": "packages/sim/src/layout-native-floor.ts",
+      "sha256": "af4c383d985b1a20a0868e05a7630f363345350f65021d18188472a4502f2911"
+    },
+    {
+      "path": "packages/sim/src/layout-opening-treatments.ts",
+      "sha256": "71989564b0639a111a8236233bfff0a96e0f25c0a1254e6b07cf976726c94453"
+    },
+    {
+      "path": "packages/sim/src/layout-structure-admission.ts",
+      "sha256": "9a8bd5ee4e6f582e2c2bafaa8dfba95c090a19c3ec8c531f247d351da27a3605"
+    },
+    {
+      "path": "packages/sim/src/layout-structure.test.ts",
+      "sha256": "2ee9db3cdd9fb82821d76a3534d289ff0c394ccf978fef51d92d80c58055382a"
+    },
+    {
+      "path": "packages/sim/src/layout-structure.ts",
+      "sha256": "71a10ca2d4f2a67807c71cce4d9652a74d3831b7d2cb998684cc28271dc35dfe"
+    },
+    {
+      "path": "packages/sim/src/layout-validation.ts",
+      "sha256": "13407fd29c5a28f3755d3cfb7a66dc8033496778c1b7ef34cec9cfdc93017b7d"
+    },
+    {
+      "path": "packages/sim/src/native-deck.test.ts",
+      "sha256": "35b04f9dfe98d47a516dbfd8b8f17f09299150833acb4e4ad507690a03675307"
+    },
+    {
+      "path": "packages/sim/src/passenger-admission.test.ts",
+      "sha256": "aa82de3901a78cde81988b0a1318205457904dfd7449984579afac9f23646b16"
+    },
+    {
+      "path": "packages/sim/src/passenger-admission.ts",
+      "sha256": "6278d399031ea1c34d534cb98edc39771181867757013fa5843a7a0c51dd2168"
+    },
+    {
+      "path": "packages/sim/src/scoped-inventory.test.ts",
+      "sha256": "a8a9d9d3983a6d7eb433d6c46e1cf4b46840116cb338b0a2b590f23a7db57ef1"
+    },
+    {
+      "path": "packages/sim/src/scoped-inventory.ts",
+      "sha256": "de532707bae7011d38e5311d19e0faa2b56ac366b1ddf13cc7a1264ae6f63b2f"
+    },
+    {
+      "path": "packages/sim/src/sim.test.ts",
+      "sha256": "5df941b211088a9ec4a0a167538fa6f0a802634f771fe51730bdcf844f5c3bc6"
+    },
+    {
+      "path": "packages/sim/src/space-background.test.ts",
+      "sha256": "27ce79bed041d44bc29f38e777e63f2d8f4b102eea79429f27c06aa4905ec612"
+    },
+    {
+      "path": "packages/sim/src/space-background.ts",
+      "sha256": "f25d21271a7f1e94396f4f42760a89732d400bea828957400b0db16ad2e4303b"
+    },
+    {
+      "path": "packages/sim/src/spatial-cells.test.ts",
+      "sha256": "73662f027605bad76804e80837ae48fcd544db33e8223fb73ea50d0e9a43ad25"
+    },
+    {
+      "path": "packages/sim/src/spatial-cells.ts",
+      "sha256": "231c97a5123d0d878dfbaaf4176e2be254ee6dc29bfb8a9a243b2d75a1950ced"
+    },
+    {
+      "path": "packages/sim/src/system-map.test.ts",
+      "sha256": "8d7a044acaed45b91d5771c2a5163b8540004d4995ec83b289cbbc8ba7714069"
+    },
+    {
+      "path": "packages/sim/src/system-map.ts",
+      "sha256": "85b59f55934ada4faa62c55ff22a0e338d4d05bd6b59f17c8aa0d9e694683ee8"
+    },
+    {
+      "path": "packages/sim/src/system-space.test.ts",
+      "sha256": "e76985862409d2a14d8912ca265f9c8562d89f7598c90b2cf43233d51faf3450"
+    },
+    {
+      "path": "packages/sim/src/system-space.ts",
+      "sha256": "80baa5e537512e8cd9aa53fd8717c3af1ce060a815d88aeda46d49981bb770f8"
+    },
+    {
+      "path": "packages/sim/src/template-qualification.test.ts",
+      "sha256": "b317531c491c104e9f29154d01646285c24ae44fa54dce1e9a9d1903d3b57a5d"
+    },
+    {
+      "path": "packages/sim/src/template-qualification.ts",
+      "sha256": "daeb30ed9918ac89db31447745bd5a495d8e6ad0f8be8527109a1d1084159682"
+    },
+    {
+      "path": "packages/sim/src/tileset-fit.test.ts",
+      "sha256": "277c3d4084ab9a7553d2a92430dbb68639c4950fe3644417db08696dc52b2c33"
+    },
+    {
+      "path": "packages/sim/src/tileset-fit.ts",
+      "sha256": "7f13abaa5d31d393bb4c558f545782627d0efe4d55fc681e1bf1263c7742c5d8"
+    },
+    {
+      "path": "packages/sim/src/voxels.test.ts",
+      "sha256": "ac6d2eaa0879574a93c4c833673283961fd168f9825dd5cb7ec78e94892c45e6"
+    },
+    {
+      "path": "packages/sim/src/voxels.ts",
+      "sha256": "d47fb79c0aff3edd7c45b7dc2eabdca927d7d57b5d2e30bae4b73bae2670ea96"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-airlock-candidate.test.ts",
+      "sha256": "da7688d91dc72fcb88cd282a6a0b569e1055d0d53e7703da02d5b383750e5251"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-airlock-candidate.ts",
+      "sha256": "fb2f680d76768a3ce1b7d8ca67f20816f4ecdb575418c7cc633298e4356aa081"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-cockpit-collision.test.ts",
+      "sha256": "9495d0acdd4fc29112132b0b1813f1f4d93efe767d19fa371df5a0e3a57775ef"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-cockpit-collision.ts",
+      "sha256": "8f8835083644224c80784ac98d5d7538ec7eb8e6c2d6b07065c9cc3265781979"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-conversion-candidate.test.ts",
+      "sha256": "53a34394a163a14f7ac718cdac00c0eef113f13ebf6b3b1d46bc508c22f04b4a"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-conversion-candidate.ts",
+      "sha256": "012d16b054b7ddbcb7dfd1f00ba17f3762763a5e81cb647421ff955128da5f66"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-exterior-qualification.ts",
+      "sha256": "cf713736d4d0582a09105d190d6f820f94037a666866cf8ad5db5602a0e907cf"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-rebuild-contract.ts",
+      "sha256": "3a4ff3914ba4e28c0da5672f8fc27b2ef7c8a5acd3692ef1908b768da0d7b9d5"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-rebuild-fuel.ts",
+      "sha256": "4f53361850abde8685ae387d6c5df5c52058d398ae2d3f27492031f8dc86a9a7"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-rebuild-game.ts",
+      "sha256": "223610fcd94d152dca86bf3034bd5e08f545aacfa843d1c1ae489851a18c09c4"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-rebuild-native-plan.ts",
+      "sha256": "736afec7ab6ef70ca89237de1b5cd25fff4317d260aab6f214855cec9992375e"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-rebuild-walking.ts",
+      "sha256": "a4e5dd705ce8cfb02662c82473bfaec1086c44f7d530e8a879a7e8e19ee08a2a"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-refit-audit.test.ts",
+      "sha256": "755969ffe9397c5b8c5c21f01c69a6f1cc75f277643852d8f21fbe8eced8dd55"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-refit-audit.ts",
+      "sha256": "b5c1206a7fe04cd88119372323234a8b98f3ed0d147931b81e9b2ea412cedec9"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-refit-fuel-proof.json",
+      "sha256": "01526e5136e9896d14b271e8986f6c32024b4a8ce506aab8fddabfbcc424c5d9"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-refit-mount.test.ts",
+      "sha256": "65e39385cf5b69844561d4174a377990ff4bca55d1e402cd936e40782ec5b1d3"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-refit-mount.ts",
+      "sha256": "b02e2486b88ad99d7619b2205bab8cfd81eadba9d770fd48781dd6844891a00d"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-refit.ts",
+      "sha256": "4f931c1169dd21920cc15e3892e917661a3b469694e9b93a4415affbbd983251"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-starter.test.ts",
+      "sha256": "dc2475ce40ac7f0d7215375ffbf8506ff976c3edf170321459ce87a79b7f5443"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-starter.ts",
+      "sha256": "5c7dcb2fa978da8a4eb044ad2adb7995f9cde6d1c2a6684f95214b4459cd91d4"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-threshold.test.ts",
+      "sha256": "fa5d1ca9e4685c00d112c3d6382c490b87bab2b9015344f951b157df0a4f9746"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-threshold.ts",
+      "sha256": "1b64d243d82282d7ca2879ebbee8abf10c9f0bd84a337406b521637ca6c0c6c9"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-walking-bindings.test.ts",
+      "sha256": "b2d78f081ca2952cbf15d741e946b51a4df9f6a5bfaa30c7c8406d283c8ee34d"
+    },
+    {
+      "path": "packages/sim/src/wayfarer-walking-bindings.ts",
+      "sha256": "e666979c7094f693ac595949648ed645d3deb27569875c9a5ecc40cdc721d2c7"
+    },
+    {
+      "path": "packages/sim/src/zone-path.ts",
+      "sha256": "ee6275a86b7d118af7fcfeada85304eec4cbf14ed854f9559c3c041521fecf81"
+    },
+    {
+      "path": "packages/sim/src/zone-traces.test.ts",
+      "sha256": "b3804c49d3918af989c5ed646e520c21e26f1716cdc3ca8590db2a88925830c0"
+    },
+    {
+      "path": "packages/sim/src/zones.test.ts",
+      "sha256": "b4521ec1b565fee77fa613c5c3a74bc88418bf0cb49ad5c2b977c45cf4a7043b"
+    },
+    {
+      "path": "packages/sim/src/zones.ts",
+      "sha256": "03ba711cdb73dd4695c086bf60537094179f2bdc9b6539233bcd3b4d80c7d4ab"
+    },
+    {
+      "path": "packages/ui/package.json",
+      "sha256": "34f5f9d83097160aa7a1fecae3b563fb43ac144376f03a1dcf16ccc1a06fd439"
+    },
+    {
+      "path": "packages/ui/src/editor-commands.test.ts",
+      "sha256": "9e866ef1ae3b543a42babaa8cbb31cd440afee589d22488395f300ea519be752"
+    },
+    {
+      "path": "packages/ui/src/editor-commands.ts",
+      "sha256": "43bed71984472462b739b91b13881df399e3167a0a0b37ee158b273fbddfd850"
+    },
+    {
+      "path": "packages/ui/src/editor-controls.tsx",
+      "sha256": "eda4e722d0befbbf2d16b88a9c396918cdbd067711890cf27eedcb5b6910c9a3"
+    },
+    {
+      "path": "packages/ui/src/index.tsx",
+      "sha256": "4721a3005e3f558d81b3dcc6c142de5451bd3fe86c6d4b9a3a7271a46e2b19c9"
+    },
+    {
+      "path": "packages/world/package.json",
+      "sha256": "f01649e2881e690adb48856be52cb58a770fc8ff22c434c721639ebe3f3003f6"
+    },
+    {
+      "path": "packages/world/src/appearance-tables.ts",
+      "sha256": "7dcfb6eb3d85611a32928c3418994df17007f28d0658291fab649b91540bd01a"
+    },
+    {
+      "path": "packages/world/src/appearance.ts",
+      "sha256": "b62a8c61f97cd97c7692a888b12b9827e4fbc30ce83bfc8f26217580eae2e549"
+    },
+    {
+      "path": "packages/world/src/auth-tables.ts",
+      "sha256": "a43bdf81716c4bc52d8a5b2bf4932583748f0660b0a3d2f81b10bdd8863be35c"
+    },
+    {
+      "path": "packages/world/src/auth.test.ts",
+      "sha256": "cce92c6f15fb5ae6500ccaf1d980cbd5ebcb6b2ecaf9fa3347b32ef9dbcd1839"
+    },
+    {
+      "path": "packages/world/src/auth.ts",
+      "sha256": "bcf533891775d4dad8190b8a8b62b450336bbf46fadb2ab62a7eb3d4bf28619b"
+    },
+    {
+      "path": "packages/world/src/combat-tables.ts",
+      "sha256": "9adfc0fa9a031651a52c63e1e1c2cbe1953a24a7cef3b4bc4a3369d03b39c4be"
+    },
+    {
+      "path": "packages/world/src/combat.ts",
+      "sha256": "598d31613e6b177b955e7ce9d50a25f5be5682cefb5818a26f89b1534ae32fb2"
+    },
+    {
+      "path": "packages/world/src/construction-airlock.test.ts",
+      "sha256": "d6ca6902197883dc40a967df66c9888d33b08b6eb1df6b3b7c45fd89fdb7b57d"
+    },
+    {
+      "path": "packages/world/src/construction-airlock.ts",
+      "sha256": "fd40473f84336783c681ee538213adc65c3fc86db283a84ed7e8444cec448f4b"
+    },
+    {
+      "path": "packages/world/src/construction-atmosphere-scope.ts",
+      "sha256": "8dce781f23d93dcc9b9056b4a1dac49faa31738c35cc9a138b31ae5ec0033851"
+    },
+    {
+      "path": "packages/world/src/construction-atmosphere-tables.ts",
+      "sha256": "477ee2a38091563d80db7ce0e49303ca7901237455d45761b45fbd0ade48e72d"
+    },
+    {
+      "path": "packages/world/src/construction-atmosphere.test.ts",
+      "sha256": "f41bec14a8e2df41d4addbd3f16572caaf89809aaa5ea090889b53f718c20b8b"
+    },
+    {
+      "path": "packages/world/src/construction-atmosphere.ts",
+      "sha256": "6bf301af3857c6b18c14f1646a9d352cf7931513720feb92a3f2b449b632cb78"
+    },
+    {
+      "path": "packages/world/src/construction-cargo-access.ts",
+      "sha256": "6c8c71166562f14c3a3a213c27c57b53c34534f0de470cc11c69b06c4a26dd7a"
+    },
+    {
+      "path": "packages/world/src/construction-cargo-assembly-tables.ts",
+      "sha256": "1f6340ce729c81ea4dd5c9d68732cee5eabc524f8dace64f3a7713b8c40bd521"
+    },
+    {
+      "path": "packages/world/src/construction-cargo-carrier-views.ts",
+      "sha256": "d3f1d566c57d069e96d54dc03f35b8874b86f0ecdfb7d17ba3820847f52a5100"
+    },
+    {
+      "path": "packages/world/src/construction-cargo-carriers.test.ts",
+      "sha256": "9b4ed7f2cdb15f81b8e665f59317c8f24643bc199cabe9d148f8ba6952ca3c99"
+    },
+    {
+      "path": "packages/world/src/construction-cargo-carriers.ts",
+      "sha256": "054b9d365d8f7a89c13bee9b342dbe5e4d90710021b451bb3a6812ab3e11d557"
+    },
+    {
+      "path": "packages/world/src/construction-cargo-fixture.test.ts",
+      "sha256": "745b7c9fef2898d28957c57ddccd514563a848206dc0ca39406da8ec3db00bef"
+    },
+    {
+      "path": "packages/world/src/construction-cargo-fixture.ts",
+      "sha256": "3531679e98022d74939b92d0837ec3bad2c13b81bab60639e1596a9a144876cb"
+    },
+    {
+      "path": "packages/world/src/construction-cargo-grid-tables.ts",
+      "sha256": "84d31501bb1985bc6f523fc4631edbc814bf79f7897582b7346b251c7bbc77de"
+    },
+    {
+      "path": "packages/world/src/construction-cargo-grid.test.ts",
+      "sha256": "c3b45ab1aa7cf45f7c68c5d4cbf3dd193f48df5c5053edae2499b3ad13bb7648"
+    },
+    {
+      "path": "packages/world/src/construction-cargo-grid.ts",
+      "sha256": "ef586dc0536a735b0664c31b898cec2bb815621d8df5dc5fe581224b42feebe3"
+    },
+    {
+      "path": "packages/world/src/construction-device-power.test.ts",
+      "sha256": "1296565bc6b2a29d0f40cb24f460adf2db85685013cae24f4ba3f837bd54b678"
+    },
+    {
+      "path": "packages/world/src/construction-device-power.ts",
+      "sha256": "cb131575b2d675f595b73eb8b0db3b21eb53afa0ec11ee20fe9c53121cf656fb"
+    },
+    {
+      "path": "packages/world/src/construction-doors.ts",
+      "sha256": "3b53b46b6fb7b89027b6757303d86ed2a5b833caea0fb5268ccc2dc70e55a202"
+    },
+    {
+      "path": "packages/world/src/construction-flight-activation.ts",
+      "sha256": "cf5b4a2bcd1ca393f2564dbb4cb8ab0523238c2dcad7399f0dcbbb893cf7612f"
+    },
+    {
+      "path": "packages/world/src/construction-flight-authority.test.ts",
+      "sha256": "d552efefa78d725e7b4210b59e5cf8fde09f4e549e04f1a86882257a329ce9af"
+    },
+    {
+      "path": "packages/world/src/construction-flight-authority.ts",
+      "sha256": "02c77926b232981bdbadb9aebf149a21f5dae60f463211a6e2842f54fdcd6bec"
+    },
+    {
+      "path": "packages/world/src/construction-flight-availability.test.ts",
+      "sha256": "ae5832e3c24403e3ede5ea1f2080ead27bcd5adca3e35bcace62292d7007cc0d"
+    },
+    {
+      "path": "packages/world/src/construction-flight-availability.ts",
+      "sha256": "c5f61e7223bbc64ce69905ab1c2349220799b2542399ea50975e5df4bbcfb3d2"
+    },
+    {
+      "path": "packages/world/src/construction-flight-compilation.test.ts",
+      "sha256": "981e0e4aea1f6d53ee4580767d37f08ff8a7d2f183d0ee7afaf1462d8ba50b04"
+    },
+    {
+      "path": "packages/world/src/construction-flight-compilation.ts",
+      "sha256": "c2ddbe11ce636309ebc903206fc2335f9e6f0d1eb6679dfee7ee50011e378c6c"
+    },
+    {
+      "path": "packages/world/src/construction-flight-damage-tables.ts",
+      "sha256": "d3c1fdd94782b47498e8d42e11db5efae585e81d7475cbb2a98b8e07e5932e00"
+    },
+    {
+      "path": "packages/world/src/construction-flight-dirty.test.ts",
+      "sha256": "9f5705ba38919031d4d38dce711ff10367cdd219a723405b15e6b94e7cbc5d3c"
+    },
+    {
+      "path": "packages/world/src/construction-flight-dirty.ts",
+      "sha256": "b1110c1d048253b8c1aa1c9a265cfcbeff6826f6ac5e402fb1693c62a1ffe788"
+    },
+    {
+      "path": "packages/world/src/construction-flight-input.test.ts",
+      "sha256": "9fbd4b39193174fb84ab61e2d249ba836f92c8ea70cef5b8352c76a3be246704"
+    },
+    {
+      "path": "packages/world/src/construction-flight-input.ts",
+      "sha256": "a213c044ee360efdde3fe7a83a7cc7154fd2ad136409ff177e4f894bc25f8164"
+    },
+    {
+      "path": "packages/world/src/construction-flight-resolver.ts",
+      "sha256": "1253f51676b9ef2ca3ac833fece56cfcb679d665be5858e559867601ee8e131f"
+    },
+    {
+      "path": "packages/world/src/construction-flight-review-tables.ts",
+      "sha256": "01fe59487d4476398582aad0487fa3a86c5f07966996b86c6820537c129f308b"
+    },
+    {
+      "path": "packages/world/src/construction-flight-review.test.ts",
+      "sha256": "3cf3d183280ad245c35aa525ce00c17df7832b925694959c77b43af0a396c7c2"
+    },
+    {
+      "path": "packages/world/src/construction-flight-review.ts",
+      "sha256": "68311ff354ae6e0847dc66ee8298e682e79632cb3de9149c07b5175077cf0629"
+    },
+    {
+      "path": "packages/world/src/construction-flight-tables.ts",
+      "sha256": "8f3d234bdf6b36ac94cc3664ba78caf3410b565068a41671178075075b6056be"
+    },
+    {
+      "path": "packages/world/src/construction-flight-views.test.ts",
+      "sha256": "57ab622bf9c28bba9640856bc20e81e1d23a4cb3c6b14b8272c33f5c59e69199"
+    },
+    {
+      "path": "packages/world/src/construction-flight-views.ts",
+      "sha256": "c7746a79ec23523e6dac3bc1eea5af8cc70ad7e8115822d820eebcbfeebee20a"
+    },
+    {
+      "path": "packages/world/src/construction-flight-writer.test.ts",
+      "sha256": "7d021e1669db91a030bcf59b35cade67f870aab13be8f39cddf59e4e988d42aa"
+    },
+    {
+      "path": "packages/world/src/construction-flight-writer.ts",
+      "sha256": "472f89d09a62a93c9b3d3d876a1b06ac12ad467674256af4dfce81f407fbc25b"
+    },
+    {
+      "path": "packages/world/src/construction-flight.test.ts",
+      "sha256": "10c42a16ed338335974f1f4a25eef7ea2db8350627d67a93b7f87b6f0b20e5ff"
+    },
+    {
+      "path": "packages/world/src/construction-flight.ts",
+      "sha256": "672542cd35e32bc089d47bef51cefde1e0670301f9f04d85319221e9d1524ac3"
+    },
+    {
+      "path": "packages/world/src/construction-instances.test.ts",
+      "sha256": "72f50741227aa2854106140a5e816e5b01a8a7feb7aaddf3ca445ee92fb24437"
+    },
+    {
+      "path": "packages/world/src/construction-instances.ts",
+      "sha256": "4852a7e6cdcfe0c17594bb8a7d65b34d368de431b49cb465375bf9e9b00d3e83"
+    },
+    {
+      "path": "packages/world/src/construction-interactions.test.ts",
+      "sha256": "2b4302573b2aebae5d68c70b0eae6002de965b9170cd8b72f75d8fe8da7eb2eb"
+    },
+    {
+      "path": "packages/world/src/construction-interactions.ts",
+      "sha256": "51d2c30a4a9f674e743504f4180e7c63850113bc98a0d9e49ac9d1cc38a28c12"
+    },
+    {
+      "path": "packages/world/src/construction-native-pressure-tables.ts",
+      "sha256": "d806c15030af06157e41957683cdd956ba31d047985bd4f5b8d70041cfa7d9c7"
+    },
+    {
+      "path": "packages/world/src/construction-native-pressure.test.ts",
+      "sha256": "1420811e54eac40da1eae6f02e177fe285f2dea30a63745e9775fd8e90873db1"
+    },
+    {
+      "path": "packages/world/src/construction-native-pressure.ts",
+      "sha256": "e5bf2615eab2fbeb3bac2a8e80395dd49dd4d4d359fb7c391da5b7f4af627208"
+    },
+    {
+      "path": "packages/world/src/construction-passenger-access.ts",
+      "sha256": "0ee621211ddd30f0ceb82de27e17f050b097cbe386cc0208bb14eaed7f72c1ce"
+    },
+    {
+      "path": "packages/world/src/construction-passenger-authority.test.ts",
+      "sha256": "25b0813d91c01cf0a0a4c351eec129e7c048513a5dd0f1209f6f21460688a275"
+    },
+    {
+      "path": "packages/world/src/construction-passenger-authority.ts",
+      "sha256": "f9d6806d27749e237fcfcdfe08db42a065f3b4a9d839ba6d9b919b6d790beb6d"
+    },
+    {
+      "path": "packages/world/src/construction-passenger-tables.ts",
+      "sha256": "2eae656ecd2aa1d7acd54b2529cad2bc76f9d3f6ff81c3edf37897e5f2ca0aab"
+    },
+    {
+      "path": "packages/world/src/construction-passenger-views.ts",
+      "sha256": "b02ce502f5d8b01020baa25e6a81a78adb18c5056ce03cfed4a9c21cb610fc3e"
+    },
+    {
+      "path": "packages/world/src/construction-pilot-authority.ts",
+      "sha256": "441af24b7623a1c739c44a13742754eee11b372b6dcd565bac918fc3f09e0307"
+    },
+    {
+      "path": "packages/world/src/construction-pilot-compilation.test.ts",
+      "sha256": "80c4f2588471dd7fb9dfa630e07d3eb4eb9267b3ff178ddc153556f9bbcbb85d"
+    },
+    {
+      "path": "packages/world/src/construction-pilot-tables.ts",
+      "sha256": "1bb7db3214d43cdcb266db0c33533653e881ccc4a6ea8cf7f9aa0fdeb373709f"
+    },
+    {
+      "path": "packages/world/src/construction-pilot.test.ts",
+      "sha256": "a2dcafc2497a75d4d9c7df55a45af4c28752d7b8376a43e50829fc5f988186a0"
+    },
+    {
+      "path": "packages/world/src/construction-pilot.ts",
+      "sha256": "20fe3a31ee65c73b9b9e9b773c2c9a26788c73beff6bef2f717021eeba5cf94c"
+    },
+    {
+      "path": "packages/world/src/construction-review-entry.test.ts",
+      "sha256": "17fc7588e0bb79e519b53e48bcc7c173fd630d516b959f94c1f62657a2ef1fb4"
+    },
+    {
+      "path": "packages/world/src/construction-review-entry.ts",
+      "sha256": "211424668884424ab62fa867ea2a97ef54550dd18ec83a6d6593d2940a778c70"
+    },
+    {
+      "path": "packages/world/src/construction-review-origin.test.ts",
+      "sha256": "f8c1be22e19bd2949008b6538b3a49e0240c61b99fa45f407ed13b655cef4538"
+    },
+    {
+      "path": "packages/world/src/construction-review-origin.ts",
+      "sha256": "2f200672c8e6e1e3c6abc8c1dcc4c8af1f8bda2de13aeecaaa9c5fcbfed29d84"
+    },
+    {
+      "path": "packages/world/src/construction-stairs-authority.test.ts",
+      "sha256": "db12693d43bed74008be039cd5b59ed518d75d93b6d07f69a9f4669dbbfcbbc7"
+    },
+    {
+      "path": "packages/world/src/construction-stairs-authority.ts",
+      "sha256": "f113f813d18542413ea361c85078bc3bac3c95bf89ac61bf5f3fe1571136c745"
+    },
+    {
+      "path": "packages/world/src/construction-stairs-tables.ts",
+      "sha256": "28629fa392d0779744d53c162434e08c896ab7fce521b527b50801582abe4549"
+    },
+    {
+      "path": "packages/world/src/construction-stairs-world-hooks.ts",
+      "sha256": "fae528dcec7efccb144cd55eab484af04a473f3fdedd92b8d0e71e9e2932bd91"
+    },
+    {
+      "path": "packages/world/src/construction-standing-support.test.ts",
+      "sha256": "ec593db695edef689a9d2bd151b3f6d0f93ff9fb16f9da083cec761c6864ba40"
+    },
+    {
+      "path": "packages/world/src/construction-standing-support.ts",
+      "sha256": "aa33bd505edf483268f3d47aa7ee9e536256dd3a1549580ebd82352b5c3eba55"
+    },
+    {
+      "path": "packages/world/src/construction-tables.ts",
+      "sha256": "d33f23d14d919604e955aa0982cd86ae95d5feeafd54415d27e1ecb2e69945d7"
+    },
+    {
+      "path": "packages/world/src/construction-traversal-registry.ts",
+      "sha256": "627fbf6ffa582bf61803dbfed979bec590be7992183651d0dee3d8af8d5e8e89"
+    },
+    {
+      "path": "packages/world/src/construction-traversal-tables.ts",
+      "sha256": "275dce13576a261d324003af30addbc3b0f362282dd170fb725d9eeb4a312d8b"
+    },
+    {
+      "path": "packages/world/src/construction-traversal.test.ts",
+      "sha256": "d8f7d9292d9a2606dd925368a24949f6db2d5b60b46846e308219ab856dc43b9"
+    },
+    {
+      "path": "packages/world/src/construction-traversal.ts",
+      "sha256": "8ebf22e75da5b7d6ad4b90bc773331345994a501de9afdbbc83358003a08804a"
+    },
+    {
+      "path": "packages/world/src/construction.test.ts",
+      "sha256": "4472e5ba071a11d8f1caa068eb6c441eb6f4c2d3db312eed0db529d0988e393f"
+    },
+    {
+      "path": "packages/world/src/construction.ts",
+      "sha256": "b7d6de82691d2d031b09dc7784a5b1f7b9b296c4f8c45fd4db1e368927fca48f"
+    },
+    {
+      "path": "packages/world/src/game-ship-access-authority.ts",
+      "sha256": "3cdf233ea486e22a153416e985cfd007dd6e40aa55d52638889a7ccd0866b562"
+    },
+    {
+      "path": "packages/world/src/index.ts",
+      "sha256": "dffddcd5d15aeb28b8501b57fb8f463609718969da315740ac36932f3944ba64"
+    },
+    {
+      "path": "packages/world/src/input-control-tables.ts",
+      "sha256": "bb33b3abb70e62bbd3f1f311275c6842479f5a3ffc649d1568896f78aff45fc8"
+    },
+    {
+      "path": "packages/world/src/input-control.test.ts",
+      "sha256": "971d1bd38dd10521a0b0aadbc6ab095ec629d3814fa5c2ee5f5c6837be479c80"
+    },
+    {
+      "path": "packages/world/src/input-control.ts",
+      "sha256": "8e0a715d08670245234ae096e027357b0fffce41ad21d5d58b60141e06743c5c"
+    },
+    {
+      "path": "packages/world/src/interaction-tables.ts",
+      "sha256": "1650b5dffe554e9953da44137eb5992e09d057bfa735ff35325932155af8080c"
+    },
+    {
+      "path": "packages/world/src/interactions.ts",
+      "sha256": "9129903448e92643f515f69c8de640ae3f5a8e4296d77e92cc266f3cb68ed0f5"
+    },
+    {
+      "path": "packages/world/src/inventory-ground-access.ts",
+      "sha256": "9160158242bf7de21fa7ac26cd0adea778862b464ee9ceb8e72761bf3a4c0af4"
+    },
+    {
+      "path": "packages/world/src/inventory-ground.ts",
+      "sha256": "8b8aef2866696cd71732e6fcb21f84e9637cdabbbd8ce4083322c143858424d9"
+    },
+    {
+      "path": "packages/world/src/inventory-operations.test.ts",
+      "sha256": "bdf1a4762a62fdeae32118e079c3bef038f5fd9f4da746d9516c84d4d7bbcf07"
+    },
+    {
+      "path": "packages/world/src/inventory-operations.ts",
+      "sha256": "5f814dbfb9305ba814547a5a67605bd110252bda8f970f0a2f63e909fa1cf77e"
+    },
+    {
+      "path": "packages/world/src/inventory-tables.ts",
+      "sha256": "26a8374a4c8fc549f19604ddd38b26df7634a359ca73a64757d029b3ebc6fa7e"
+    },
+    {
+      "path": "packages/world/src/inventory.ts",
+      "sha256": "21f521b1b95a4adc07ff71c1c760af841a2263768ec8a043a3d59d55ee2b6d34"
+    },
+    {
+      "path": "packages/world/src/lab-flight.ts",
+      "sha256": "924d3e86da08e673049d131a9eb4e34f2397d68bf4f7b8620e90c7dc3ddd7458"
+    },
+    {
+      "path": "packages/world/src/pilot-layout-tables.ts",
+      "sha256": "d57516ce8da7db02b97674d7ec6f482c5f191c81711affb7ff9c145a8397ec37"
+    },
+    {
+      "path": "packages/world/src/pilot-layout.test.ts",
+      "sha256": "c24dbb42c98102dc1767f985e92fde00ed640c1b505bfdaef2122c6834fdd8d4"
+    },
+    {
+      "path": "packages/world/src/pilot-layout.ts",
+      "sha256": "cd765f2166b7425128a13692b81664e34422b83284122f93691a135030fbcc31"
+    },
+    {
+      "path": "packages/world/src/presence.ts",
+      "sha256": "c99cced5a7da69a22d6dcb9b20f9e48c9c3ba5b53b14cba26c658a1543835e88"
+    },
+    {
+      "path": "packages/world/src/scoped-inventory-authority.test.ts",
+      "sha256": "29d9e44c5267a26dcc3986f3bdc6ebe2be987201deafb52660a34d4d45f13644"
+    },
+    {
+      "path": "packages/world/src/scoped-inventory-authority.ts",
+      "sha256": "fc5425be82a996c6ee0cb51acc8cab3d07e5ec246d0c71a3de42b8b4d2d0ac81"
+    },
+    {
+      "path": "packages/world/src/scoped-inventory-installation.ts",
+      "sha256": "973e3217cc8de2f1d5e3c8ff96d36f236b0b36df057eef74fc672b0efdb22ef7"
+    },
+    {
+      "path": "packages/world/src/scoped-inventory-migration.test.ts",
+      "sha256": "1fd7e7a7c7ece83dc6781c9c92349f3db6274fc09bd10949444150f942a82c7e"
+    },
+    {
+      "path": "packages/world/src/scoped-inventory-migration.ts",
+      "sha256": "acf4df2aa1a86f59af6b45ab78d3e168bcea4f0870dd84aaf97ea478c4e1ee6a"
+    },
+    {
+      "path": "packages/world/src/scoped-inventory-tables.ts",
+      "sha256": "5138182134a1b7c3feafd9d04e837478396533b83c8964592f16037f649b41f9"
+    },
+    {
+      "path": "packages/world/src/scoped-inventory-test-support.ts",
+      "sha256": "1585a0e6f0f299dcfce0b8a70b7f02589906d451da124e34d5c15d1eb7491110"
+    },
+    {
+      "path": "packages/world/src/scoped-inventory.test.ts",
+      "sha256": "4a64d01222cc2e505b7b41775b08ea13e1229419916e0b05eba2178586dfab3d"
+    },
+    {
+      "path": "packages/world/src/scoped-inventory.ts",
+      "sha256": "833f0e5b68e4f0d5320b79918f9b7c7182490880c149896e25b5d71075786add"
+    },
+    {
+      "path": "packages/world/src/shared-world-physics.test.ts",
+      "sha256": "a042529d60cda72ed559e7b17ffc4bfa80f3e5510f86524bae49178c7f9f1ce8"
+    },
+    {
+      "path": "packages/world/src/shared-world-physics.ts",
+      "sha256": "b9d1fd9432df58f2830c68471e3dc77cd9d6a9fc1eb8b38cd9ec3c35953310a9"
+    },
+    {
+      "path": "packages/world/src/shared-world-tables.ts",
+      "sha256": "33865de18360d2940341046278e82b8bbe21b4420aa09447fbf6b052671b0a0f"
+    },
+    {
+      "path": "packages/world/src/shared-world-test-fixture.ts",
+      "sha256": "5dec69e830a54bc7015d3cc4f12ebf2c7c2054510eb07ef0a0a10f9fc4318f44"
+    },
+    {
+      "path": "packages/world/src/shared-world-views.test.ts",
+      "sha256": "955013b12012c3e72b237846dd02ab40c59518002a10fb08f67e78e1bdcf2cc7"
+    },
+    {
+      "path": "packages/world/src/shared-world-views.ts",
+      "sha256": "18eafff4c395f00766fe0e9220226eddad4ef397f3f7c8f200f6730f8b358910"
+    },
+    {
+      "path": "packages/world/src/shared-world.test.ts",
+      "sha256": "c092534f833e881a23d1c9a4ba4b61745b7cad3a73b6b6914ae01a583b526e07"
+    },
+    {
+      "path": "packages/world/src/shared-world.ts",
+      "sha256": "fd08a7d7b4892f56f9eb2cd4971eceac1d64e32ac6cda81404352fc771dcf4ed"
+    },
+    {
+      "path": "packages/world/src/solar-system-migration.test.ts",
+      "sha256": "cfdaa0392601c6f357145f735e24d8654b1000a1f8362a443895bfee8d3d34c5"
+    },
+    {
+      "path": "packages/world/src/solar-system-migration.ts",
+      "sha256": "85ea5b0905d6eca906fdcfbcdc72b5a008cd12f4cec0d37c3c350b62f2f8b4f4"
+    },
+    {
+      "path": "packages/world/src/space.test.ts",
+      "sha256": "53ff9000f3c3a17610a69b20c860779c2f9c409acab13f1dab974d4113ffb49f"
+    },
+    {
+      "path": "packages/world/src/space.ts",
+      "sha256": "3d823424ce995fbaf52aec0491890c1e2b78b58f93d3b7860ed10d1173f1b0ef"
+    },
+    {
+      "path": "packages/world/src/storage-tables.ts",
+      "sha256": "d43887cd1230a88e418546c57c7b1ea7e1eb3b7f62054e41a6c3a9914547d7bb"
+    },
+    {
+      "path": "packages/world/src/storage.test.ts",
+      "sha256": "1cd63fed045b1d7bb7862b1546536cf190988c78369520e804b1cf6620c085b5"
+    },
+    {
+      "path": "packages/world/src/system-map-tables.ts",
+      "sha256": "49e0e0a08cc4bef5b80f9a61ea0a0392bb0abed17aa229f8600b3c87840ac582"
+    },
+    {
+      "path": "packages/world/src/system-map.test.ts",
+      "sha256": "6dcbb348a9d7eae762bad98d82aa544a7c4b2b5f611874758dbd1cf761a5255c"
+    },
+    {
+      "path": "packages/world/src/system-map.ts",
+      "sha256": "5ded248323e7fe7d6ec134735287bc86e4e11dfb9a8dfb41b1ba58c4c7af23e9"
+    },
+    {
+      "path": "packages/world/src/uniforms.test.ts",
+      "sha256": "bc0af16b57b45b07d4401b7b941c6a88ce34ccf03fbe985a6e5de4837ac1c1a9"
+    },
+    {
+      "path": "packages/world/src/view-keys.test.ts",
+      "sha256": "70a89bbbe159a52d6ca7552ed63d46b4acc86081a9dff22c356b88d3e6d86c76"
+    },
+    {
+      "path": "packages/world/src/wayfarer-liquid-transfer.ts",
+      "sha256": "dcea0aced70c3c3aef3c7007e6a10b20b2f74f6360985c755f61d63ddc5ff202"
+    },
+    {
+      "path": "packages/world/src/wayfarer-personal-kit.ts",
+      "sha256": "b995ce1bf59a74313b2ed3aa9808f88f8b2114a08c7164cd02680541873ff9f4"
+    },
+    {
+      "path": "packages/world/src/wayfarer-rebuild-installation.ts",
+      "sha256": "314a045db0052045962f9c7b09cd9bc22867994938fad10d1a389d83211d7e98"
+    },
+    {
+      "path": "packages/world/src/wayfarer-rebuild-refit.ts",
+      "sha256": "29a0aab34291999a3727f7fadb53b0bcf5e0f32f3b26e4ee403bcb01255a7e24"
+    },
+    {
+      "path": "packages/world/src/wayfarer-refit-authority.test.ts",
+      "sha256": "333c862af84c542293fc7201d6fb6afaa47700e02fa5cf91b0474e4450239588"
+    },
+    {
+      "path": "packages/world/src/wayfarer-refit-authority.ts",
+      "sha256": "293041a54bc126e4e6b91d1935646499ad5a58600d8927ac5b7e59718fb07024"
+    },
+    {
+      "path": "packages/world/src/wayfarer-refit-collision.ts",
+      "sha256": "3050e3646b18c9285f2eb44c152ce25b0c7b3b624b10989b892bee9504529954"
+    },
+    {
+      "path": "packages/world/src/wayfarer-refit-tables.ts",
+      "sha256": "10e25e8b2f6293b4947243e084c9f7d27c3502b1cbfd718a8ff6100951ff8d6c"
+    },
+    {
+      "path": "packages/world/src/wayfarer-replacement-flight.test.ts",
+      "sha256": "4e2f54c6b7465920ba952c6adbba02c313443e44cf0d589d2aa4c02b9fe27565"
+    },
+    {
+      "path": "packages/world/src/wayfarer-replacement-operator.ts",
+      "sha256": "1bf5b8221f59b2e5ecdd872a70cc81c3eb288e62448d24c206f34c9f7b5b116a"
+    },
+    {
+      "path": "packages/world/src/wayfarer-replacement.ts",
+      "sha256": "0cbccbcb302b1c4dcd0b929caccab3bcc94a204e033a09df6e16c03db0c559b2"
+    },
+    {
+      "path": "packages/world/src/wayfarer-starter-authority.test.ts",
+      "sha256": "cbde0347bdb71576aeafaae469a60a84b4c9a17c1b8803e44fb5d732ac3127c5"
+    },
+    {
+      "path": "packages/world/src/wayfarer-starter-authority.ts",
+      "sha256": "1c5452cbb9167368af14cac3b90dbec69c8dd368d7180e30c01e78112c20f2f2"
+    },
+    {
+      "path": "packages/world/src/wayfarer-starter-tables.ts",
+      "sha256": "83227c42f140f64f7df0c10ad013069dc376ebeacdc99d41785920b5aa488daf"
+    },
+    {
+      "path": "packages/world/src/wayfarer-starter.test.ts",
+      "sha256": "bc5af622e1ecf9b56bf586faac1437593fdd0bbeb9c4e5d48dba251266c3ed0a"
+    },
+    {
+      "path": "packages/world/src/wayfarer-starter.ts",
+      "sha256": "212cdd192807ce4271a921ec945dd1b317d1cc5d166149664bcb2a59f3f2c97f"
+    },
+    {
+      "path": "packages/world/src/zone-tables.ts",
+      "sha256": "8cdd48f4c9c3ae8a945865ea502bd5bfb83455ebb1a42f08b1e389121535874b"
+    },
+    {
+      "path": "packages/world/src/zones.test.ts",
+      "sha256": "c57ac343b673128c2ff4a3bf846d6f135357dca2445985efca92b8348b58f459"
+    },
+    {
+      "path": "packages/world/src/zones.ts",
+      "sha256": "6f15b48b339fe45db1d9bb2964ff3e92d093b55c0b8b847131f3a55b9a1e516e"
+    },
+    {
+      "path": "packages/world/tsconfig.json",
+      "sha256": "2bc3c92ca19caf1075e24c97bd0e586ab312acd70518021ba579d09d2cf1ed01"
+    },
+    {
+      "path": "scripts/airlock-smoke.ts",
+      "sha256": "85aba0b76b7c0fb6587286b4226351d3a710674b78146b23dc99b0c76f6e6d4c"
+    },
+    {
+      "path": "scripts/antialiasing-review.ts",
+      "sha256": "cea1562d518e62aa307480de43de0ab82f0dd6c29763a216d64ea092ffa4a357"
+    },
+    {
+      "path": "scripts/art_catalog.py",
+      "sha256": "ad7cf3d6f8922b3dabceb70ee73290533f40f3bf0c44b889beb0fceba3ad1bfb"
+    },
+    {
+      "path": "scripts/art_library/annotations.py",
+      "sha256": "45db514adcd24921fe79e31266910f53f2d04182fe2c1c4acbb6ce7ccfdb3a46"
+    },
+    {
+      "path": "scripts/art_library/build_airlock_inlet.py",
+      "sha256": "51138d305cd2ada1bb892652aaf7c6a2780460538d4759efdc6caa4b24611dbe"
+    },
+    {
+      "path": "scripts/art_library/build_cargo_carriers.py",
+      "sha256": "70fcf8bd8dd87759b07345c8e90eb81e7f2abcd2406bdf034d7c85cfa33afaf7"
+    },
+    {
+      "path": "scripts/art_library/build_cargo_handling_fixture.py",
+      "sha256": "c6b8363f3b7147395a7ecdb6718a6f02093e12d2de39b8ded4904f1a7aa852a9"
+    },
+    {
+      "path": "scripts/art_library/build_cargo_oversized_grid_variant.py",
+      "sha256": "7e368f7798ec90a0b88f0be0367a5d0fc703f763067272efc627a43fe30ac94f"
+    },
+    {
+      "path": "scripts/art_library/build_cargo_small_receivers.py",
+      "sha256": "4071628eefc17b94034618201e6cf52a341f19602d3db9334c2e80bbae8b352e"
+    },
+    {
+      "path": "scripts/art_library/build_roof_closure.py",
+      "sha256": "866c9a1558a17bae6da48412da8eb34af50a60f9e5b373c3ce963b199b805e04"
+    },
+    {
+      "path": "scripts/art_library/build_shoulder_structural_pocket.py",
+      "sha256": "d492f98873513c533746bccebd2982f1f96f6fbc9283c969f8261de33e9bb0f8"
+    },
+    {
+      "path": "scripts/art_library/build_usable_boundary_wall.py",
+      "sha256": "b6feb576cc634943a38579e2ec2359fca5c25860807cdeddad50fbea8a9eb2f0"
+    },
+    {
+      "path": "scripts/art_library/build_usable_wall_end_bays.py",
+      "sha256": "ccbfd958213764ae4ea6b9bd609e78d4c46cacafb63eab856e2d12a0ed3fee74"
+    },
+    {
+      "path": "scripts/art_library/build_usable_wall_side_bays.py",
+      "sha256": "b86963ae2af8f84b263053ef2a472756898a38027fc819b5a0b2600323968c82"
+    },
+    {
+      "path": "scripts/art_library/check_carrier_stack.ts",
+      "sha256": "982af99054f1d1e7be13cfe2ad36fb830b2831b8cb404d5fa10fb1dd24767307"
+    },
+    {
+      "path": "scripts/art_library/package_airlock_inlet.py",
+      "sha256": "7c77c8e670cd0d8518171e413c09ece4a9571afadc3f97fffe9218ca918b9129"
+    },
+    {
+      "path": "scripts/art_library/package_map_snapshots.py",
+      "sha256": "a229838cd3cafbc3f8f09551c27642c882136ccee266e6a390c5cc33562a92b0"
+    },
+    {
+      "path": "scripts/art_library/qualify_cargo_assembly_envelope.py",
+      "sha256": "d9eee0c149bb5f3ef7978b34689b41ca3efed8bd07beccfb79e9e8427b478fa8"
+    },
+    {
+      "path": "scripts/art_library/render_airlock_inlet_attachment.py",
+      "sha256": "6a0fc9224f8c7a13f9ec4daa5e99d4136fdba454bed076c9b91b6e33540c8484"
+    },
+    {
+      "path": "scripts/art_library/render_usable_wall_shoulder.py",
+      "sha256": "8c2df0802a75699f638a2ae25ae2ad4dd10f7111d2b1117fc9f25d03976a7677"
+    },
+    {
+      "path": "scripts/art_library/render_usable_wall_side_bays.py",
+      "sha256": "0442c70043bbec14cc632056f1296d2e631d0bf088c2f3ff78ef396820bc9385"
+    },
+    {
+      "path": "scripts/art_library/render_wall_closure.py",
+      "sha256": "c732bd4bbf3fca5511a515cbb95423c288ce82428ac9194c607aafe9f25951a6"
+    },
+    {
+      "path": "scripts/art_library/run_airlock_inlet.py",
+      "sha256": "9de0d0d297b9125646ca67e078a15ce1bdef9c7cd91c9b3df2fe9ab644710f14"
+    },
+    {
+      "path": "scripts/art_library/run_cargo_carriers.py",
+      "sha256": "cfdb1fc89bce811620f8295784ad048e02f19f352b705274b567e241b3c054c3"
+    },
+    {
+      "path": "scripts/art_library/run_roof_closure.py",
+      "sha256": "a42f1aeaa4072ac08139154db7e41acf1c60e73b0cca5f3265be53c0871ea3e9"
+    },
+    {
+      "path": "scripts/art_library/run_traversal.py",
+      "sha256": "613fc95e2c9aa547221c8730519d1f25684f9d534dd39e34609a9d016b9ff9c5"
+    },
+    {
+      "path": "scripts/art_library/run_usable_boundary_wall.py",
+      "sha256": "3cf43817e2d8b167fec1a62f58d9b9211d24099a2ee1e6a2dea4e467f275777f"
+    },
+    {
+      "path": "scripts/art_library/test_cargo_carriers.py",
+      "sha256": "6ef5a80e4ea5ac3cfa30cc4087a752237377a739d97338704af1546f6ea83f51"
+    },
+    {
+      "path": "scripts/art_library/validate_cargo_carriers.py",
+      "sha256": "2c0c9b77a51aa5e3fe57b9cd28debaf15b51c8f7848546eb67ce4fd1f618b3c2"
+    },
+    {
+      "path": "scripts/art_library/validate_cargo_oversized_grid_variant.py",
+      "sha256": "b948075c5581792bbe659e30e97cb44fa568384028d9d42cf74e1d2e45c48d08"
+    },
+    {
+      "path": "scripts/art_library/validate_cargo_small_receivers.py",
+      "sha256": "e4162f22cd5f0351b55c85ab4e52cdd44053272031ca8ec694b6c48c86c725cd"
+    },
+    {
+      "path": "scripts/art_library/validate_reserved_envelope.py",
+      "sha256": "1f092aacb730cf64b70cd0c3217bf98bb86ea1832f359d7696bd5e31429f85f5"
+    },
+    {
+      "path": "scripts/audit_cargo_grid.py",
+      "sha256": "5a39a66b757c6fa97b27e94ffc717ff4c69a6c8e82e1a63f820a726a21ea2cec"
+    },
+    {
+      "path": "scripts/audit_ship_construction.py",
+      "sha256": "82acfaf29e7c9675b3b69386d641995b44bb933f7c135fb07d1509f4ac58ba79"
+    },
+    {
+      "path": "scripts/auth-admission-smoke.ts",
+      "sha256": "4fb32fb6951f22a86682ac22fd7ddb30c415935ee30767f67ad5deebca4cc107"
+    },
+    {
+      "path": "scripts/auth_https.py",
+      "sha256": "ba7a813974c2aa76d92716b32aee174baba765bdee1e269e01735628af54ac32"
+    },
+    {
+      "path": "scripts/backpack-smoke.ts",
+      "sha256": "a2281f49ac38b658d70cd28ef98548fa2e577003eff96b426874d6acd0683b94"
+    },
+    {
+      "path": "scripts/benchmark_ifcs_allocator.ts",
+      "sha256": "95c9c00b568a98cbd4440629a0c942246c4b8bf5d77c5229d75544b81f1a3056"
+    },
+    {
+      "path": "scripts/benchmark_ship_contacts.ts",
+      "sha256": "09e70c54d59c2f04053c103156d30305d1b656ec8bf50e58fc1d38162545f5d3"
+    },
+    {
+      "path": "scripts/blender_mcp.py",
+      "sha256": "d8d32cf5a3fe1e80a75226b3d09498036c118f02b8ed1109ac9d2c2722609c25"
+    },
+    {
+      "path": "scripts/cargo-smoke.ts",
+      "sha256": "6d65f901955e297a7aaf956bb55db07b317efc869b217f37510604ed6fc2c480"
+    },
+    {
+      "path": "scripts/character-components-smoke.ts",
+      "sha256": "9f86c5f355c2f09f0225b21347cb42de220522a763b6b12a1b1e1d5f959ca524"
+    },
+    {
+      "path": "scripts/check_art.py",
+      "sha256": "9270d4c910b57e6302dbd96cbe961be69288b8c7220da84e00f5a8430c6b9915"
+    },
+    {
+      "path": "scripts/check_docs.py",
+      "sha256": "2d2266573498388e1d7c2ec20a85f10ee70e615c762491e741b88adb06bbe7bf"
+    },
+    {
+      "path": "scripts/check_published_hull.ts",
+      "sha256": "03e369c2737c710487e50f163d57147d5c19bda9fae08ea27674511191f51650"
+    },
+    {
+      "path": "scripts/combat-smoke.ts",
+      "sha256": "b05b91a34982ba6205c5533ba325aa72158c4ad1b57b795d276f19b79a52c317"
+    },
+    {
+      "path": "scripts/compress_recovery.py",
+      "sha256": "934944af49e3ef2892d7271803af66bcfa38d7721875089283ef6ba16026af71"
+    },
+    {
+      "path": "scripts/construction-flight-smoke.ts",
+      "sha256": "404ef56f151c0b70d7be896da71bd4d92376c0fc118af94826cea69f2f93f6e0"
+    },
+    {
+      "path": "scripts/construction-smoke.ts",
+      "sha256": "33792ba079d0e242f7fc19820a0c43fdbb517b2393bd76b69faf399a48dcf497"
+    },
+    {
+      "path": "scripts/dev.py",
+      "sha256": "c5796c51ecdf967cff602d6b94975f27fc439fab1159b142e6efb3ecc294f30b"
+    },
+    {
+      "path": "scripts/export_glb.py",
+      "sha256": "0c2d2ee7b2a27c269c489a5c2bd75a38bf1bc8d1062788e87998f62634169565"
+    },
+    {
+      "path": "scripts/fresh_smoke.py",
+      "sha256": "900992d8c67f2faeb0fbef18b04043116665f9eaf3e78a793e70b4e794cfe124"
+    },
+    {
+      "path": "scripts/generate_construction_floor_interfaces.ts",
+      "sha256": "643d5f73ec5f219c8c501757d39f7aed825eb2f34a2449245292f30944535e5c"
+    },
+    {
+      "path": "scripts/geometry_tests/requirements.txt",
+      "sha256": "cc93a70e75669abc0c8343e37fd27f7895d72d0f1979cad4173fff03a44548b9"
+    },
+    {
+      "path": "scripts/geometry_tests/test_authored_envelopes.py",
+      "sha256": "32ed2a80cb325bdb9dd4b64f82034972817e79b1caf4ba40cdf5245b885adf0e"
+    },
+    {
+      "path": "scripts/geometry_tests/test_native_inlet_geometry.py",
+      "sha256": "699e4edd1ff8f81e72d0aad642b7d4279caf521ee36f7f36cb2223ce29320a6f"
+    },
+    {
+      "path": "scripts/geometry_tests/test_reserved_envelope.py",
+      "sha256": "cbfc44007db5c88a19e01bd601e831873e89fb8212353fc5503058a42158d7e1"
+    },
+    {
+      "path": "scripts/geometry_tests/test_roof_closure.py",
+      "sha256": "b9e4ee4588b3df9926de0568e1eeb6e6b0ed5b818a38217c395397501ded9be8"
+    },
+    {
+      "path": "scripts/geometry_tests/test_shoulder_structural_pocket.py",
+      "sha256": "ece9fcb5dfd0abda219f6851075d8f915d7d40fc306d03af51573038fecdef23"
+    },
+    {
+      "path": "scripts/geometry_tests/test_usable_boundary_wall.py",
+      "sha256": "a93bc900f9066fe28241fa5d63ba5b26d5b5f9adcdd647e8e27a14cd7ef543ee"
+    },
+    {
+      "path": "scripts/geometry_tests/test_usable_wall_end_bays.py",
+      "sha256": "c079a6ff0762b9a28dc4ebcc1667916ced58dfe0ea4a22ae9f4caa3fbc516280"
+    },
+    {
+      "path": "scripts/geometry_tests/test_usable_wall_pairs.py",
+      "sha256": "41dc767b342a89b150e927e41f2de25f00107c13a334c8699389a29a8ef10df3"
+    },
+    {
+      "path": "scripts/geometry_tests/test_usable_wall_readiness.py",
+      "sha256": "37a92e54945a5ada04e8dadcba4d72bc8abfbdccf883c6da60ba5acbc79290ab"
+    },
+    {
+      "path": "scripts/geometry_tests/test_usable_wall_side_bays.py",
+      "sha256": "683a0408cf9d01b03180a9dcbc88d7a0c57e3fefeaac39dfa52b1d3b1b2255fc"
+    },
+    {
+      "path": "scripts/geometry_tests/test_wayfarer_airlock_attachment.py",
+      "sha256": "f7d8210551ad17f0b046b92b18c2bc343a978d28249e5466dd2b5e9ae2ab7ffa"
+    },
+    {
+      "path": "scripts/geometry_tests/test_wayfarer_refit_storage.py",
+      "sha256": "e3f8531a63080393fce4010035ffce928c6b90291b9fda07b9b7f70e2f3d781c"
+    },
+    {
+      "path": "scripts/glb_delivery.mjs",
+      "sha256": "d7342706c4ee1959ed52b2f9870784a3507b6bf87a3afc03cce306688431902b"
+    },
+    {
+      "path": "scripts/glb_delivery.test.mjs",
+      "sha256": "a5dff526dfb08bcc37b106d95d0e5a374760cda36d0082c4003c4d284f83984f"
+    },
+    {
+      "path": "scripts/hull_publication.ts",
+      "sha256": "86cf5d3f722fd46c0f4164a59d29447d6f433958b3298f9dba3dece791aa1281"
+    },
+    {
+      "path": "scripts/identity-link-smoke.ts",
+      "sha256": "3665015e1346208dfb90834de8095efb16b77bfdd0e31c444d07c33887aee49d"
+    },
+    {
+      "path": "scripts/ifcs-definition-smoke.ts",
+      "sha256": "8e9d297494fc1da38e5c022e7d8fb9da55d2e7f530cb996fd88713c06fda393f"
+    },
+    {
+      "path": "scripts/ifcs-passenger-smoke.ts",
+      "sha256": "929d7b8db777f9570389e5852856e6696dba2847d43833714a15385349c2e1de"
+    },
+    {
+      "path": "scripts/ifcs_smoke_module.py",
+      "sha256": "65390822e10b0293d399abafdb476369f487fa1004a30dac6901dac856886167"
+    },
+    {
+      "path": "scripts/inspect_usable_wall_authority.ts",
+      "sha256": "e60310c625527feeda0fa185b8f3b3fd972e46161e686665d50cfb287626c75d"
+    },
+    {
+      "path": "scripts/inspect_usable_wall_readiness.py",
+      "sha256": "ca971d3892965b96b584a3f8f23745fd488e0c712d7dffbb7ab4ecec6b6b1d98"
+    },
+    {
+      "path": "scripts/inspect_usable_wall_side_expansion.py",
+      "sha256": "8b793f2f80b1fef804a623694549e62083ad3cb55982f35d77290c23f887c59b"
+    },
+    {
+      "path": "scripts/inspect_wayfarer_canopy_sections.py",
+      "sha256": "b270acf710e27139a3745513100e1a0476db4487d2ff8accaf06dc1e166e866e"
+    },
+    {
+      "path": "scripts/inspect_wayfarer_closure_component_debug.py",
+      "sha256": "5151ccb175e2eee00038d8ced7f458b403aec449f8a2084038477a3946095471"
+    },
+    {
+      "path": "scripts/inspect_wayfarer_closure_offset_caps.py",
+      "sha256": "72b7439de6889b5f720ce0a069a06127fd1d4d63e16ce0786dc187232063f67a"
+    },
+    {
+      "path": "scripts/inspect_wayfarer_closure_paths.py",
+      "sha256": "2b606e7c54ac50b2b0cfe26fc602f5307ca9419f04b80e0a770bbbe307beb75d"
+    },
+    {
+      "path": "scripts/inspect_wayfarer_closure_positive_path.py",
+      "sha256": "c115691f592d028bdfd00407b58a32e8cb56a8eadd8ad775e0fe03db79ca0d07"
+    },
+    {
+      "path": "scripts/inspect_wayfarer_closure_regions.py",
+      "sha256": "c3e9da61b82b55b002026d9a98200a79a12c4b242610333a6303102d30a4aaf8"
+    },
+    {
+      "path": "scripts/inspect_wayfarer_closure_result_simplify.py",
+      "sha256": "57d7d8d5e620137d4f0ab85124442d1111a2d13481afd044cb0591b73c98d261"
+    },
+    {
+      "path": "scripts/inspect_wayfarer_closure_sections.py",
+      "sha256": "eaa2a2a821585bcceae016007e72147641484caf0186d3769efe2f436110c3af"
+    },
+    {
+      "path": "scripts/inspect_wayfarer_closure_surface_path.py",
+      "sha256": "05907a89abd9b100a2728b8e96281bbfef6cb8b31daebc96baf13735b75eaf7b"
+    },
+    {
+      "path": "scripts/inspect_wayfarer_closure_tolerance.py",
+      "sha256": "d8f288772a2827fdb4eaab6b6a35c40f2c8fdde3751af8cfe5fa6529a8eec26e"
+    },
+    {
+      "path": "scripts/inspect_wayfarer_closure_world_precision.py",
+      "sha256": "cac88356bdf4f68f5f2d5128bca0f6767706757b88e15a8301b5d4f7e8b4e610"
+    },
+    {
+      "path": "scripts/inspect_wayfarer_closure_zero_bridge.py",
+      "sha256": "98f11e45b70eb237ea1d58f372f644791aa76001af11c51af3dc3a494f6f5205"
+    },
+    {
+      "path": "scripts/inspect_wayfarer_closure_zero_faces.py",
+      "sha256": "95d6c6b1c078f04396aadcea61b35a954d175185f104136c2348fec693cbbbb9"
+    },
+    {
+      "path": "scripts/inspect_wayfarer_native_enclosure.py",
+      "sha256": "10983b0ff0cf95023322985c0fcd7042b0607a20211894453cb36876289c6ac1"
+    },
+    {
+      "path": "scripts/inspect_wayfarer_pressure_gaps.py",
+      "sha256": "4fa2a63e6f4c62080b59763015ec3d17202a07e74447df5e2f06fad776971f85"
+    },
+    {
+      "path": "scripts/inspect_wayfarer_whole_positive_path.py",
+      "sha256": "4fb7e75ab414d50b0f54246fc89690d0fedee72311765b8dd5f7ac32ba74a92e"
+    },
+    {
+      "path": "scripts/install_bridge_bed_fix.py",
+      "sha256": "5fb34aa44bc6b20974d9ab6f1341d22a7f791db7f97f6e9657e3436b101fc3e2"
+    },
+    {
+      "path": "scripts/install_construction_boundaries.py",
+      "sha256": "2bec52a6ae8c8cb4cdd136329acabf0ae8f1126cced1eec2a8db14582f54a992"
+    },
+    {
+      "path": "scripts/install_construction_boundary_family.py",
+      "sha256": "d10fdffe0e807412f024e5170210eba3bc57ae4a7adc187213072e67b5172d79"
+    },
+    {
+      "path": "scripts/install_construction_pressure_room.py",
+      "sha256": "230cd5939174625ec635993a43eb86505aacb531323a51a70b6603f05407d902"
+    },
+    {
+      "path": "scripts/install_construction_roofs.py",
+      "sha256": "66e97ec3fd3154b41172a52a82126dd9299e805bdad218bef75da01849096c10"
+    },
+    {
+      "path": "scripts/install_construction_stairs_runtime.py",
+      "sha256": "d19f660874c78a55a38244356034e103a8e7ca677d40a1343c24748d5842296c"
+    },
+    {
+      "path": "scripts/install_construction_traversal.py",
+      "sha256": "0483b10445cb32e75ac40004c8ee7184358a4b94ec5b3ec87e861a5fcac9d195"
+    },
+    {
+      "path": "scripts/install_construction_traversal_runtime.py",
+      "sha256": "b8ce36f5aa59255e07fa9592fc32437e91b98e7d7f618b71a8f54aea70ca9bd9"
+    },
+    {
+      "path": "scripts/install_equipment.py",
+      "sha256": "65140fdedc4c434a344be9c95d3b898f58be2abd95f3b699bdcc0a86b3f7f148"
+    },
+    {
+      "path": "scripts/install_hull.py",
+      "sha256": "4527927e7ce4e8145ca54a7a72b1ccb1bbbeebb24e1a369abe52afff280ef9d3"
+    },
+    {
+      "path": "scripts/install_release_candidate.py",
+      "sha256": "0d075e6a4b3bb180b19d259e5a973306bb78554e57de40660c738161a1c66022"
+    },
+    {
+      "path": "scripts/install_roof.py",
+      "sha256": "3eea1c3d92bf878899eb6638d8cf9cc4445fd821cc7e71d274700d7f83f05bec"
+    },
+    {
+      "path": "scripts/install_shared_exterior.ts",
+      "sha256": "d09183cbcfc320f98b3230d2507ac99d6e71fa19a460cdc3897f34ab8f638a79"
+    },
+    {
+      "path": "scripts/install_side_hull.py",
+      "sha256": "e0e8880dd296babdee887250a04b31ff7101f4924f5ced90bafd6b714cf43ac4"
+    },
+    {
+      "path": "scripts/interaction-smoke.ts",
+      "sha256": "e987642f4a644f1bef07a7d9455fa81fc2981c8152c507030e26029a6f3a2d36"
+    },
+    {
+      "path": "scripts/inventory-smoke.ts",
+      "sha256": "e654e23fdbda4bed0f85690bf203017b2fbdd7324407d54d7d06d5acd7e94b8f"
+    },
+    {
+      "path": "scripts/keycloak_service.py",
+      "sha256": "347e1c35f8aff14627765591d47065a9fdd67433a2cc97d817962ff16e481a27"
+    },
+    {
+      "path": "scripts/legacy-shared-upgrade-smoke.ts",
+      "sha256": "3289b186efae88a6a656543118073cfe114eb62ab3effea2c6a8e01ea11eba1f"
+    },
+    {
+      "path": "scripts/measure_native_wall_batches.ts",
+      "sha256": "a093243c8a0abce822e35ba3ae7569bdc08c2ab84e1634ecd402827f4a584fec"
+    },
+    {
+      "path": "scripts/native-pressure-review.ts",
+      "sha256": "9f85879554f1af082ba7c83e98a6996b316ad6417f298957149303c11a68f6c5"
+    },
+    {
+      "path": "scripts/native-starter-smoke.ts",
+      "sha256": "3bba522f03fab62b727d9d50786fff3296f2bac4ed9ecdedc465c0ff984dd7f8"
+    },
+    {
+      "path": "scripts/native-traversal-review.ts",
+      "sha256": "60a4a242fc8db499a0229aa653723f4d7df0050ee1356dd418c9f21ac4df0c5c"
+    },
+    {
+      "path": "scripts/native-wall-batching-review.ts",
+      "sha256": "eea8548863d0024967e2e6741332f4e92e2c2ed8546cb0d2a74d250061f6bc5f"
+    },
+    {
+      "path": "scripts/native_void_components.py",
+      "sha256": "5e875af7fa59a97b32ebb210593c7cd4dbfe5991f23e671726248e2d36188f36"
+    },
+    {
+      "path": "scripts/persistence-smoke.ts",
+      "sha256": "af8ac44ec16c0ba249925bebe70d77173b6063452bc7013fd6166a26dc6750fe"
+    },
+    {
+      "path": "scripts/plan_usable_wall_end_bays.py",
+      "sha256": "0c62f948627a430c30974ab64cf4ba73ce58fb6ba0be5d0ac8f0959bc2fe8416"
+    },
+    {
+      "path": "scripts/prepare_airlock_inlet_collision.py",
+      "sha256": "867b264f9ae6492e310a200993b6e260b6c9ed1fe9e65e426bcb571c0b0b9a37"
+    },
+    {
+      "path": "scripts/prepare_app.py",
+      "sha256": "282732e3c4468f3db5aa65d3de146be24792c83e811c1361aa24f35db09976d7"
+    },
+    {
+      "path": "scripts/prepare_wayfarer_airlock_candidate.ts",
+      "sha256": "095fa94c974748e901d9b4d10dac67ed799530ef84b383142336b809563c13d9"
+    },
+    {
+      "path": "scripts/prepare_wayfarer_conversion.ts",
+      "sha256": "5bb7804c31ac56881138664a86c6b68dd9fc6a9b0aea993bc5a92adc26776c7e"
+    },
+    {
+      "path": "scripts/public_client.py",
+      "sha256": "5977d42cf963b9376bcde0a98ec5c1aa6b4e87041de1eda909411e0b6a21ebbe"
+    },
+    {
+      "path": "scripts/public_client_preview.mjs",
+      "sha256": "14c2cdaf471ee5f296ebb93454646323f8ce5704dc2518ad38f7316cc88141ff"
+    },
+    {
+      "path": "scripts/public_config.py",
+      "sha256": "4e1d3baf0c3cce24bcc277f031e0de913b63d74979fa6ade9771ba825c7a104c"
+    },
+    {
+      "path": "scripts/public_delivery.py",
+      "sha256": "8affc715688413cbbaa25206bdbf9888a1b7f3c7717c13edea4ce94a03aaa0a3"
+    },
+    {
+      "path": "scripts/qualify_native_external_airlock.py",
+      "sha256": "c986ce5d5271c0dd9910cc0f0eb152f94575aed112419821d04dd8703bd074a2"
+    },
+    {
+      "path": "scripts/qualify_roof_closure.py",
+      "sha256": "e42b297b50d234919fb3dc579b0e6f020e2c0ada3ac005f1598ba059314c79fc"
+    },
+    {
+      "path": "scripts/qualify_shoulder_structural_pocket.py",
+      "sha256": "c4fc9ac52e58959148c6c4d9c229f22c335d2af1efa954e3d20e436515a0c79b"
+    },
+    {
+      "path": "scripts/qualify_usable_boundary_wall.py",
+      "sha256": "a4af508cfd7d37e3767328be15c306a0391d9190c8c0940067de21b45bdcd741"
+    },
+    {
+      "path": "scripts/qualify_usable_wall_combined_mapping.py",
+      "sha256": "4b4a2eadc6bc695c18bd0aaa4e2a3cfd20f9c112fce4eda19dc1f84db51468e9"
+    },
+    {
+      "path": "scripts/qualify_usable_wall_current_template.py",
+      "sha256": "3d8b8dd6f0b99f5114b50cffb19d2f6bd6eac01de36f58c9484aaae4aa0c0aac"
+    },
+    {
+      "path": "scripts/qualify_usable_wall_end_bays.py",
+      "sha256": "dc158680c2dfaaff8becd26f67b87001149a402c9935ba264368f16f22433438"
+    },
+    {
+      "path": "scripts/qualify_usable_wall_pairs.py",
+      "sha256": "749d3403a09e20a9fa8b80ea71efe0e2ec7d619c5a6135e05a5906b2df7442b5"
+    },
+    {
+      "path": "scripts/qualify_usable_wall_side_bays.py",
+      "sha256": "f8881cef5b6acdce3424001b0210ca2fb6305c5c5e95bacbde531a3043715cee"
+    },
+    {
+      "path": "scripts/qualify_wall_closure.py",
+      "sha256": "53ca6b2f2ec2de44b0c5933327fdd174778f31945bf501125178443f0fbe7171"
+    },
+    {
+      "path": "scripts/qualify_wayfarer_airlock_attachment.py",
+      "sha256": "ef1e5e56d40e88a368243f404007171c1d63cdedaa50737665bb8d2ac89fbb36"
+    },
+    {
+      "path": "scripts/qualify_wayfarer_airlock_inlet.py",
+      "sha256": "a6e5d80cd43e69aaef03a0af5ecbd2cde6abadc85e533079b2f280931dfe8686"
+    },
+    {
+      "path": "scripts/qualify_wayfarer_airlock_inlet_motion.py",
+      "sha256": "a246c239dcd901f82064bc508db2ffa1309b3fc3f5d56b3afa64a04a0da0a525"
+    },
+    {
+      "path": "scripts/qualify_wayfarer_airlock_walking.py",
+      "sha256": "2eb2acc9a7c70c1b3cc2351998ad84e0f52af1a91b04a268c9c91b9c67ae693f"
+    },
+    {
+      "path": "scripts/qualify_wayfarer_authored_envelopes.py",
+      "sha256": "9af8f7bbe4d8929d1f009d2b4e86018c2245eb1cb983c3e2f906e73b6ae0a84b"
+    },
+    {
+      "path": "scripts/qualify_wayfarer_cockpit_partitions.py",
+      "sha256": "edaee2e727d214eb2321d8cc63d712b36560e5a49388ab874252e01988340526"
+    },
+    {
+      "path": "scripts/qualify_wayfarer_placement_interfaces.py",
+      "sha256": "a3c931446fd8e640f0090df54f1906cebbd9d65e477251a5b2fa9ae4f6bf8b45"
+    },
+    {
+      "path": "scripts/qualify_wayfarer_refit_storage.py",
+      "sha256": "eca169f0f57a5a87125572d4bd02bc3ca9f6c9ebf8ada016f61824eb10ae7843"
+    },
+    {
+      "path": "scripts/qualify_wayfarer_threshold.py",
+      "sha256": "5240a81616c9b7874a704c2bace919afb4295e80734844ba9f6b4c5556217a33"
+    },
+    {
+      "path": "scripts/qualify_wayfarer_walking.py",
+      "sha256": "eb6b82459fe91bbffd65908d420abf6c784c39ddf5cfafa86186a08703b4c1ce"
+    },
+    {
+      "path": "scripts/quality-check.mjs",
+      "sha256": "a6f4af5164c07a1d8979a23c9cce86b73e67bb9073d51b93a1d7152ecb1c5c96"
+    },
+    {
+      "path": "scripts/quality-format-baseline.json",
+      "sha256": "b36d12da424beaa72f8e9d9b07fb821e7f77ef4dc48e5d37df456d8b9301ff78"
+    },
+    {
+      "path": "scripts/quality-lint-baseline.json",
+      "sha256": "146236d0e5fb8e54c218ad5d0335fa99837e5b92ec244cf63fe7e4f944983beb"
+    },
+    {
+      "path": "scripts/quality-rules.test.mjs",
+      "sha256": "f8183823bd60c81b6a0672caabc1db6bc84d43b3b57fded227be97534d218d04"
+    },
+    {
+      "path": "scripts/record_construction_checkpoint.py",
+      "sha256": "6f1799d5a81213980d7320a7c0d4136969a344262ae9a3323cc675f12079b3bd"
+    },
+    {
+      "path": "scripts/release_backup.py",
+      "sha256": "809518217338b8d445af03f362fa37cb4ff7019a220aee9d1e16a1080dfc9641"
+    },
+    {
+      "path": "scripts/remote-exterior-ibl.ts",
+      "sha256": "959643106005195d48a475fe92c34e367289d68b7fe496a74fd622fc7bf6524c"
+    },
+    {
+      "path": "scripts/remote-exterior-review.ts",
+      "sha256": "23b8bd07e7dcb54e37d2d1f37d2e84974c1873cb0834c37e3799a8b22aef8a87"
+    },
+    {
+      "path": "scripts/restore_review.py",
+      "sha256": "bbf2fc0426dae0a583710b0c08c7799f0cc95db0d79eee68ebb6ab88962f31f5"
+    },
+    {
+      "path": "scripts/review_module.py",
+      "sha256": "efe16f6721e7c51d4f7b4f3b48bd4a0ca8fbc1e2578a297b57a653ffeda5481c"
+    },
+    {
+      "path": "scripts/review_wayfarer_walking.ts",
+      "sha256": "28eb45cdb5895f1a3ecc800db4c3092e3fe095a0601dbe4cab5e3ae7c6229e6c"
+    },
+    {
+      "path": "scripts/run_python_tests.py",
+      "sha256": "2dd976d658310839c00bb89f751f4cbd184eb0be7aba13b12e98e0b26fac47d4"
+    },
+    {
+      "path": "scripts/setup_art.py",
+      "sha256": "2dc7353d3977d6637aae145e709d6a6021426512f6c4d13ef7d60e475fb9dedf"
+    },
+    {
+      "path": "scripts/shared-world-provider-smoke.ts",
+      "sha256": "03a8d77b8e71c5455fd5fcfe0d76e8d6692cdce59fbd4d28eaa1ab6b81e63eb8"
+    },
+    {
+      "path": "scripts/shared-world-smoke.ts",
+      "sha256": "f6ce9ea0dc4c115e53f4fd18d3549cb55a78a340b1d1a333d78868f7484fd957"
+    },
+    {
+      "path": "scripts/shared_world_provider_login.py",
+      "sha256": "d26bf092cbd665fdc5569ba120549bcbf9249fe6d1586033d1f3276ea11899e7"
+    },
+    {
+      "path": "scripts/smoke.ts",
+      "sha256": "0ce5abc58d3f311dd51297ecce4e2f3aef7ebdaa35fb32fc6f479d9cf7ff50da"
+    },
+    {
+      "path": "scripts/stage_airlock_integration.py",
+      "sha256": "7e24e971e88be358f1acaa6bfae7c99711e99864ee4e5340e8b6f65cdb82a197"
+    },
+    {
+      "path": "scripts/stage_cargo_carriers.py",
+      "sha256": "57d2140d11a5e23d235d7b1d52193170d2c51d8fc65ec9383bb2a66e48041dc3"
+    },
+    {
+      "path": "scripts/stage_construction_flight_patch.py",
+      "sha256": "2b30ce1ff172d726bd354eebd09ee726750d17656a53b11cfe2dc6e8cf9698a2"
+    },
+    {
+      "path": "scripts/stage_construction_stairs_runtime.py",
+      "sha256": "f811e217d76db2b2b32cf53904af7b113f583a37e44cb82bab54666fc60f286a"
+    },
+    {
+      "path": "scripts/stair-smoke.ts",
+      "sha256": "2af83ab76e3ac496c3be2396836ddf59598757c67901733d708993484f7bfa13"
+    },
+    {
+      "path": "scripts/system-map-smoke.ts",
+      "sha256": "c03670c5438e2095c132a7328d0f5e145e71fea8957eb3c40e0a8271024849f1"
+    },
+    {
+      "path": "scripts/test_art_revision_history.py",
+      "sha256": "76dab9fcd95b9374567ffaee69ef9c563d10642f6f9cbe6f18e3f73e382b0871"
+    },
+    {
+      "path": "scripts/test_audit_cargo_grid.py",
+      "sha256": "f2fef704fafdfdd8ea87c586c8ac9d80f4fe82548beb5c2cb65320ebbcd75640"
+    },
+    {
+      "path": "scripts/test_compress_recovery.py",
+      "sha256": "3d61b35f31dcf708ae532761f31ebf1807f301603d8c379fa4614aa7ae06b3af"
+    },
+    {
+      "path": "scripts/test_database_start_only.py",
+      "sha256": "1486fa846893e5cf37cc9c33a548b7be77305e261ff64e0659fac0eaad90de4f"
+    },
+    {
+      "path": "scripts/test_dev_review.py",
+      "sha256": "7b92f4463caa5d4552c9c48d3b626451074f773009606d6ff1a613071a6242b1"
+    },
+    {
+      "path": "scripts/test_fresh_smoke.py",
+      "sha256": "a266235d7d933692be717872cc3c155f836e45172db623aa1b4fb8f72daf66da"
+    },
+    {
+      "path": "scripts/test_prepare_app.py",
+      "sha256": "91c468f05fa82706f9fda5c08e6c8c7da60251a3ee4a99d9f28aba47fc063677"
+    },
+    {
+      "path": "scripts/test_public_client.py",
+      "sha256": "707ae759aefc799d8c8a15173376bb94fd92a2a3c77ea5b47930866668113515"
+    },
+    {
+      "path": "scripts/test_public_delivery.py",
+      "sha256": "21594dbbc11fdb14030bc8fb1cc13ea176cc9d8614ad9752e84fa7bc45be3753"
+    },
+    {
+      "path": "scripts/test_release_backup.py",
+      "sha256": "85f58dee21140e795895d74a084a43a66a7b30dd315ca71be9be2b0d683b28ce"
+    },
+    {
+      "path": "scripts/test_restore_review.py",
+      "sha256": "fccc5406bec42aad4b5ed3599f3f3524c95f28842afa46c1b6467e7c4141d028"
+    },
+    {
+      "path": "scripts/test_review_module.py",
+      "sha256": "e5392cf2e00db6379003d035fd8c628fb1a599566dfb326605641e8f8c24579e"
+    },
+    {
+      "path": "scripts/test_review_password_rotation.py",
+      "sha256": "496f14d277792fdc7285a0ced03289e083674092e32cf066c58be429ed61f463"
+    },
+    {
+      "path": "scripts/test_shared_world_provider_login.py",
+      "sha256": "f6e92df2b0f1f38faa9b8aba002d9ae1f20dfdfb11b75ea94e1e9ad9fdb39521"
+    },
+    {
+      "path": "scripts/test_wayfarer_airlock_inlet.py",
+      "sha256": "d5e6c87522198a3ba983513ebdea434a463ccce94d5bf0c7200f214c821a0c9a"
+    },
+    {
+      "path": "scripts/traversal-smoke.ts",
+      "sha256": "84eeec94ee0ad9013ee9bb40ff4cb42bc94d1d6f1a6dcf03ba2d2c767c9ad109"
+    },
+    {
+      "path": "scripts/validate_airlock_patch.ts",
+      "sha256": "d2a04678230359a8584bd548c0e9bc7c7b40de8ad82f54b424e37986207a31dc"
+    },
+    {
+      "path": "scripts/validate_airlock_spawn_patch.ts",
+      "sha256": "98a757a81e8abf0e4409a84afa908fc4d96def7a218969c4ed11d58ef0285e44"
+    },
+    {
+      "path": "scripts/validate_construction_flight_patch.ts",
+      "sha256": "a00a5012dcbfaf5ffd31998ef6e85d3a80a08bfb5d2850429b5dd570c865f955"
+    },
+    {
+      "path": "scripts/validate_installed_equipment.py",
+      "sha256": "35ea25d80e0699fdb83a0f3ae86ad768333ee47fd97526b23ea08428d1961b14"
+    },
+    {
+      "path": "scripts/validate_installed_hull.py",
+      "sha256": "b9d15ca4402eb922e1ec8df1795a56c378b035e9b20606c669aacbdf043316f3"
+    },
+    {
+      "path": "scripts/validate_native_planets.py",
+      "sha256": "248ac67971de3e1153ee3b0d9e103a65f91d24127b43ee424eb33029f37632fc"
+    },
+    {
+      "path": "scripts/validate_native_release.py",
+      "sha256": "412003d386e69a7182c5d887e3c0ea55d473402f8384d2661b498e98053ada78"
+    },
+    {
+      "path": "scripts/validate_pose_patch.ts",
+      "sha256": "377d1ee3054b95eaebeef567b5246c6bceecc8be4ab0aff716aa77649b6554da"
+    },
+    {
+      "path": "scripts/verify_glb_delivery.py",
+      "sha256": "044b2315047183ab3491415856f77452a9d1a9547090c397808fd7833a3d51e7"
+    },
+    {
+      "path": "scripts/verify_isolation.py",
+      "sha256": "168a26de138b40c835fdb06ac0b42b1763a140b3e82121ab4e683a10f55f23a3"
+    },
+    {
+      "path": "scripts/verify_mcp.py",
+      "sha256": "9fa43d12c561680f584948c4fed582304fa61e5ae70d6ec19972d4aeb9e81cea"
+    },
+    {
+      "path": "scripts/wayfarer-refit-provider-smoke.ts",
+      "sha256": "8b29714002c3f5966f7f8d60c9e431fa086d7550152a86cc3cb9426be8aded84"
+    },
+    {
+      "path": "scripts/wayfarer-smoke.ts",
+      "sha256": "a4d179a37665eb51a0832100e7edfc893dc0150955147b55ef3ece568be06b8d"
+    },
+    {
+      "path": "scripts/wayfarer-starter-provider-smoke.ts",
+      "sha256": "fced14360c4689cd2c2d9b89347dbe905e6cd0fed6e438f83129aedc8157b24a"
+    },
+    {
+      "path": "spacetime.json",
+      "sha256": "c9613baec1631f45b0fbb33b545cb4d93098887e884b6cbfc96d78454af88e81"
+    },
+    {
+      "path": "tsconfig.json",
+      "sha256": "446eadf531aec7136ffb8a3094bda92dd1e0b60619ed0e66e2c430e81b62222a"
+    },
+    {
+      "path": "vitest.config.ts",
+      "sha256": "c58e4a090d112d0e686dbecae1d319ad237a30ce0dd31e1aaeef7420a84520bf"
+    }
+  ]
+}

@@ -287,3 +287,103 @@ test("authorized background projection contains only presentation geometry and d
   });
   expect(admittedSystemScapes(f.ctx)).toEqual([]);
 });
+
+function genesisFixture() {
+  const f = fixture();
+  f.db.worldSystem.insert({ id: "system" });
+  const body = {
+    id: "planet",
+    systemId: "system",
+    authoredKey: "Planet",
+    kind: "planet",
+    radius: 20,
+    height: -100,
+    appearance: "desert-r014",
+    seed: 117,
+    massKg: 1234,
+    charted: true,
+  };
+  const motion = {
+    bodyId: "planet",
+    systemId: "system",
+    x: 2000,
+    y: 2000,
+    vx: 2,
+    vy: 3,
+    heading: 4,
+    serverTick: 5n,
+    cellX: 5n,
+    cellY: 5n,
+  };
+  f.db.systemBody.insert(body);
+  f.db.bodyWorldMotion.insert(motion);
+  const view = ownMaps(f.ctx)[0],
+    doc = JSON.parse(view.documentJson);
+  return {
+    ...f,
+    body,
+    motion,
+    doc,
+    args: {
+      ...f.args,
+      documentJson: JSON.stringify(doc),
+      sourceFingerprint: view.sourceFingerprint,
+    },
+  };
+}
+test("Genesis changes the same live native instance atomically and preserves motion/identity", () => {
+  const f = genesisFixture();
+  Object.assign(f.doc.bodies[0], {
+    radius: 30,
+    appearance: "ocean-r007",
+    seed: 912,
+    name: "Edited ocean",
+  });
+  const args = { ...f.args, documentJson: JSON.stringify(f.doc) };
+  applySystemMap(f.ctx, args);
+  applySystemMap(f.ctx, args);
+  expect(f.db.systemBody.id.find("planet")).toEqual({
+    ...f.body,
+    radius: 30,
+    appearance: "ocean-r007",
+    seed: 912,
+  });
+  expect(f.db.bodyWorldMotion.bodyId.find("planet")).toEqual(f.motion);
+  const view = ownMaps(f.ctx)[0];
+  expect(JSON.parse(view.documentJson).bodies[0]).toMatchObject({
+    id: "planet",
+    name: "Edited ocean",
+    radius: 30,
+    appearance: "ocean-r007",
+    seed: 912,
+  });
+  expect(view.sourceFingerprint).not.toBe(f.args.sourceFingerprint);
+  expect([...f.db.systemMapEdit.iter()]).toHaveLength(1);
+  expect(() =>
+    applySystemMap(f.ctx, { ...args, operationId: "stale-genesis" }),
+  ).toThrow("revision");
+});
+test("Genesis rejects unapproved/type-mismatched assets and radius growth into a ship before writes", () => {
+  for (const appearance of ["untrusted-asset", "yellow-main-sequence-r013"]) {
+    const f = genesisFixture();
+    f.doc.bodies[0].appearance = appearance;
+    expect(() =>
+      applySystemMap(f.ctx, { ...f.args, documentJson: JSON.stringify(f.doc) }),
+    ).toThrow(/Genesis/);
+    expect(f.db.systemBody.id.find("planet")).toEqual(f.body);
+    expect([...f.db.systemMapEdit.iter()]).toHaveLength(0);
+  }
+  const f = genesisFixture();
+  f.db.shipWorldMotion.insert({
+    shipId: "ship",
+    systemId: "system",
+    x: 2200,
+    y: 2000,
+  });
+  f.doc.bodies[0].radius = 300;
+  expect(() =>
+    applySystemMap(f.ctx, { ...f.args, documentJson: JSON.stringify(f.doc) }),
+  ).toThrow("safety");
+  expect(f.db.systemBody.id.find("planet")).toEqual(f.body);
+  expect(f.db.bodyWorldMotion.bodyId.find("planet")).toEqual(f.motion);
+});

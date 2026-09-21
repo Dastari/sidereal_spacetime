@@ -49,6 +49,24 @@ def command(action):
   print('Dedicated provider runtime cache directory repaired; no restart or account changes.')
  elif action=='status':
   owned();print(capture(['pct','status',str(CT)]).strip());print(capture(['pct','exec',str(CT),'--','hostname','-I']).strip());print(capture(['pct','exec',str(CT),'--','systemctl','is-active','keycloak']).strip());print('Issuer: https://auth.dastari.net/realms/dastari')
+ elif action in ('development-review-account', 'development-review-grant', 'development-review-revoke'):
+  owned();ssh(['mkdir','-p',REMOTE]);ssh(['chmod','700',REMOTE])
+  source=ROOT/'ops/keycloak/development-review-account.py'
+  subprocess.run(['scp','-q',str(source),f'{HOST}:{REMOTE}/{source.name}'],check=True)
+  remote='/root/dastari-keycloak/'+source.name
+  ssh(['pct','push',str(CT),f'{REMOTE}/{source.name}',remote,'--perms','0600'])
+  operation='ensure' if action.endswith('-account') else action.rsplit('-',1)[1]
+  ssh(['pct','exec',str(CT),'--','python3',remote,operation])
+  if operation=='ensure':
+   payload=capture(['pct','exec',str(CT),'--','cat','/root/dastari-keycloak/sidereal-development-review.json'])
+   import os,tempfile
+   directory=Path.home()/'.local/share/sidereal-review'
+   directory.mkdir(parents=True,exist_ok=True,mode=0o700);directory.chmod(0o700)
+   fd,tmp=tempfile.mkstemp(prefix='account-',dir=directory)
+   with os.fdopen(fd,'w') as stream:stream.write(payload)
+   destination=directory/'account.json'
+   os.replace(tmp,destination);destination.chmod(0o600)
+   print('Retained review credentials refreshed in private local account.json (0600); no values printed.')
  elif action == 'rotate-review-password':
   owned();ssh(['mkdir','-p',REMOTE]);ssh(['chmod','700',REMOTE])
   source=ROOT/'ops/keycloak/rotate-review-password.py'

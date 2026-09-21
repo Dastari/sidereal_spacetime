@@ -1,0 +1,275 @@
+{
+  "date": "2026-09-21",
+  "status": "prepared, not deployed",
+  "authorityBefore": "3d0d994add24b945d2db847767dae1edbf1640d872bb76f441c8d652a26d3bcc",
+  "authorityAfter": "f6dcf1aa58bc44f0e551326060370cd6191d379e403609bf0954c39119b28b7b",
+  "reviewAccount": "sidereal-development-review",
+  "publicGameClientChanged": false,
+  "components": {
+    "authority": {
+      "baseline": "/root/sidereal_spacetime/.runtime/worktrees/studio-authority-20260921",
+      "candidate": "/root/sidereal-live-map-authority-candidate",
+      "files": [
+        {
+          "path": "apps/client/package.json",
+          "before": "b05c0ce93226de0f96148dd6bc0edaa5d7e331f24831e5bf0d82292931882bf0",
+          "after": "a4cb0358431db1571db48a100bb6206b9c124699abf55f92b46926c6405b2461"
+        },
+        {
+          "path": "apps/dashboard/package.json",
+          "before": "881da88d788c5e149394715c88c460061353db4591a1182730e32ae187088b35",
+          "after": "40c5072909198839d6f5440003a4011583ce141cdc3b1ac5bec97d6c82b4897a"
+        },
+        {
+          "path": "package-lock.json",
+          "before": "df73ae938f65a1ef616ca074f4dfb848711423c4723c0cf677e3d6642c6f1fb7",
+          "after": "9d9d57f1a2319e32ac5554db67c1c3927330b57b486a99690ed82d324ca61003"
+        },
+        {
+          "path": "packages/canvas-ui/package.json",
+          "before": "6494ff871bb92887cecd1ae29bdb7333987720da81ec06d44efe219bf0359662",
+          "after": "94e1b3ab0edf5960b91b80922b72aa90de8672b52e4882399a12c4b50ab4e84d"
+        },
+        {
+          "path": "packages/content/package.json",
+          "before": "c279e90ad2bdfbe115db2fcd283991eff6562df17c768bec55f5df6a99a0eeec",
+          "after": "95b6ddf20972645d4fb99807113371267cba594b5a352218db13f6de22bdcc86"
+        },
+        {
+          "path": "packages/content/src/celestial-assets.ts",
+          "before": null,
+          "after": "d0fdc8b09d87a5263e9a62aa918ef3c150cbbf894379ae5f00cf82dc50aa9043"
+        },
+        {
+          "path": "packages/render/package.json",
+          "before": "fedcce5195347e2257039147749beaf2cbcc67cbad3d805d7b042966fbed8ff1",
+          "after": "e9c138107d6b5759e9c432434fb7890276c926535bc7516aa823af65b47db952"
+        },
+        {
+          "path": "packages/sim/package.json",
+          "before": "9427d37fcc796ce6155bff148c5811ba39c77e6e2e9cf44ca5392fa716314e8e",
+          "after": "4771518b1c4858ebb72f83b398c231a19ae1b21ec1210611ac268a74f29b9148"
+        },
+        {
+          "path": "packages/world/package.json",
+          "before": "d67f58829a68f7a18b5c3596c345f59ddc2f590ff7e7c5e687160850beb72bd5",
+          "after": "f01649e2881e690adb48856be52cb58a770fc8ff22c434c721639ebe3f3003f6"
+        },
+        {
+          "path": "packages/world/src/system-map.test.ts",
+          "before": "c68e09e78a8442fb8190119fb8396f9373aca66aaa313c1e8f3366483f4a7410",
+          "after": "6dcbb348a9d7eae762bad98d82aa544a7c4b2b5f611874758dbd1cf761a5255c"
+        },
+        {
+          "path": "packages/world/src/system-map.ts",
+          "before": "94edfd0eaa84c5c5c68026bda138b16b9d524c35d01e0f008103c7386f6bd02d",
+          "after": "5ded248323e7fe7d6ec134735287bc86e4e11dfb9a8dfb41b1ba58c4c7af23e9"
+        }
+      ],
+      "baselineSourceTree": {
+        "sha256": "9428284f73db7d03fa6c5d777d17b9b829dd0097acdb628508babaaced3cedc3",
+        "count": 1180
+      },
+      "candidateSourceTree": {
+        "sha256": "4d2947ee3d69296c42513fa81689483b4ac2355441fc11c38dc04fcd046afa5f",
+        "count": 1181
+      }
+    },
+    "studio": {
+      "baseline": "/root/sidereal-studio-dashboard-release",
+      "candidate": "/root/sidereal-live-map-dashboard-candidate",
+      "files": [
+        {
+          "path": "apps/client/package.json",
+          "before": "ce27f739f497b8b79d2eae244cbc7f6d2f39115fc7f2d41c0bd606ede28ba13c",
+          "after": "e255921e0809f317fc6eaf12e0be8a1268c7e0396f321f40122d15ba8c522c4b"
+        },
+        {
+          "path": "apps/dashboard/package.json",
+          "before": "11c02cea225f4d2fb5ae597f7aac93c20a1f554be87e617a735e11bd285b274c",
+          "after": "a3ba254a6b557a8dd7ac2635ee27829ef7ce8460e3864a451043cfe43c69d645"
+        },
+        {
+          "path": "apps/dashboard/src/App.tsx",
+          "before": "021ee3710ce137eae9e6b97d1a434caa81103c833a98ecb0c3da1dc6f3466b04",
+          "after": "48af32c80a9345bf17a701b31cd7a3a5be3d4d1bf742c71184d822f71d03a527"
+        },
+        {
+          "path": "apps/dashboard/src/authoring/StudioAuthGate.tsx",
+          "before": null,
+          "after": "77d60fdf71b8326b9864e0b9e8548b1d97a26423a1e83a966796e216a791c406"
+        },
+        {
+          "path": "apps/dashboard/src/authoring/auth.ts",
+          "before": "ff74d0ab5d1a4df8ea7d29f9522c467c96cce6459fd0c1d77aabbc920046d8d4",
+          "after": "49b2f8f685c64ab62185b621ff21c1672a44becbded9d7d0402cec68e0991d0d"
+        },
+        {
+          "path": "apps/dashboard/src/map-editor/MapBackground.tsx",
+          "before": "8f1795d316d814d06e25a91d3cd4e9e4b92e631c0f215f021483deb6ef376ba5",
+          "after": "476c633c71edeb9ce1717cf47a8b0ed8459f53eb623a9b941e38173740731bf7"
+        },
+        {
+          "path": "apps/dashboard/src/map-editor/MapCanvas.tsx",
+          "before": "759f274d8ccd3a7f66091a8106c35528ccfb46b49b61a32f10bdc24cbbb2d35b",
+          "after": "96b8f446a9d58fa9d139efb0314e4adc4f7f988fb474240408a129937250012e"
+        },
+        {
+          "path": "apps/dashboard/src/map-editor/MapEditor.tsx",
+          "before": "5d18bf1d79b9b5e23c9a0a238bb2b398e98c3e4bb6732c40be900bb92a279a68",
+          "after": "a252ebf68bed7577a9bc764d88c105a0e6a3ec99c7fa7777dee022c27e212f9f"
+        },
+        {
+          "path": "apps/dashboard/src/map-editor/MapInspector.tsx",
+          "before": "5af1ce26b1bfd76d6c2c8ad21867be7fec3b44c86abb74c73df2c03d0880da6d",
+          "after": "a3a1239499752d4730f837b0c907a70fd925c6d407d86d37fd0b887212bd83b5"
+        },
+        {
+          "path": "apps/dashboard/src/map-editor/ZoneProperties.tsx",
+          "before": "204e119d5aa5b44fcc16fc06e0d9f85376e8364a211318e50dcab962d44a41d1",
+          "after": "d6d2942f6d1d6fa495ad21251df9733a003626303e9909e203975093deae8fae"
+        },
+        {
+          "path": "apps/dashboard/src/map-editor/live-map-save.test.ts",
+          "before": null,
+          "after": "efd5f6d34ad92b491f35d2e5ede1e3053859b0a8ed9e1ba8be5ba5d1af1c3db8"
+        },
+        {
+          "path": "apps/dashboard/src/map-editor/live-map-save.ts",
+          "before": null,
+          "after": "f6dcc0939d5e290941c1c25cd693f2743111617b5abfe928ec24e930c962dcb2"
+        },
+        {
+          "path": "apps/dashboard/src/map-editor/map-editor.css",
+          "before": "5fad1852c045d17212becbbaa396efb98549df29007a5fe23b75c85186f17f49",
+          "after": "a1f17960034933ea06b9620ac39580b41088842769697a31211c26e0ef56b420"
+        },
+        {
+          "path": "apps/dashboard/src/map-editor/map-viewport.test.ts",
+          "before": null,
+          "after": "ae7bcc0f41c89406d61e61d4821e72240ac48e7629c57169a1df76ea1f847781"
+        },
+        {
+          "path": "apps/dashboard/src/map-editor/map-viewport.ts",
+          "before": null,
+          "after": "028f6dcace533bb0e3cdf8edd5a73e0cb66f6028d47ae87b2b1fe92bf016fb64"
+        },
+        {
+          "path": "apps/dashboard/src/planet-studio/LiveGenesis.tsx",
+          "before": null,
+          "after": "b72e9e3f7798930d1dd0f70bbc26279511b5341a5a17c9508b11dcc9cf9f7511"
+        },
+        {
+          "path": "apps/dashboard/src/planet-studio/PlanetStudio.tsx",
+          "before": "6b8a63e454a1b4a689b33018ba14ba987d4c3a5bd688e0671ba36cde99325771",
+          "after": "fb381426b2fc832d06e443588372c8b340d13e83b6705f8663fc5b8d194d7e51"
+        },
+        {
+          "path": "apps/dashboard/src/style.css",
+          "before": "f1f5ac8a0b5633a0467cecbedb02e4127348176cef60dcd99d22aca523816119",
+          "after": "98076404e0eab24f20a7a8f4944e8b3669d67c56c9fd686d0b7b972b9dfe0527"
+        },
+        {
+          "path": "package-lock.json",
+          "before": "c54940e61b4c9e726665aa0aaafb8f3a92da4e01a0a4cc9cdc3e6e1a27eac241",
+          "after": "2799c35b59d9bec781f3dd182041cd0c2ddde8767d715e4f3b6e7ae93d69127f"
+        },
+        {
+          "path": "packages/canvas-ui/package.json",
+          "before": "4d89463c3ea78af52eb024644574657801fa110a97644b3386010f197af98010",
+          "after": "197af8a760a1d3d8698076171579aa76104b6f81e6071642e6311c1a87868f26"
+        },
+        {
+          "path": "packages/content/package.json",
+          "before": "9fc803130138c4acabc0c3157a7e624973bd5d29b948b4b30b4df302ae242f9b",
+          "after": "18ab21d0c4e7e167a22c5f4428aa50ec224f263dfdd38e99b53405ee86a6e060"
+        },
+        {
+          "path": "packages/content/src/celestial-assets.ts",
+          "before": null,
+          "after": "d0fdc8b09d87a5263e9a62aa918ef3c150cbbf894379ae5f00cf82dc50aa9043"
+        },
+        {
+          "path": "packages/render/package.json",
+          "before": "41143ce7925e298e85cf15e55dfbec99bf05d80ffc25b47d26a436be62ea0fdd",
+          "after": "4619790ce2209385e5bee8800768469cca282dac0df78bed738cc04299b9d6ed"
+        },
+        {
+          "path": "packages/sim/package.json",
+          "before": "bf552a1e30418e92088db75e3fea35466170061fdfedc55911c6ee099cab55e6",
+          "after": "5eb427c9da579c9f1cecd89c23dcf65a196da669907078f0743fd040d9911fc1"
+        },
+        {
+          "path": "packages/ui/package.json",
+          "before": "42c115c6794959d21eeb6a94f87bfd84a2e83c2aca4af10c264285616bba4995",
+          "after": "8751d32b9c94f6ec72fd1635b4cfa4ed3b56bcbb5720b1849ed6d6fbdaee0996"
+        },
+        {
+          "path": "packages/ui/src/property-controls.tsx",
+          "before": "3e7490f66862f035126df879c56f6435656d9fa3e431f66bcfeb07c7648b6cfc",
+          "after": "fcf6c476f4fa6887a3290bbc1f0ae6c34fcfe14dd7f44eea9b3172b8e26c3ff9"
+        },
+        {
+          "path": "packages/world/package.json",
+          "before": "d67f58829a68f7a18b5c3596c345f59ddc2f590ff7e7c5e687160850beb72bd5",
+          "after": "605e7aeb98aea24e83aa1fd586900471445e57cd07bb8d30d1a2b32951980645"
+        }
+      ],
+      "baselineSourceTree": {
+        "sha256": "1e6905bdf8def890778429027351f2ca5a747ebe99f72c86ad505e90d9d1eb62",
+        "count": 2435
+      },
+      "candidateSourceTree": {
+        "sha256": "bcdf0b03d0deb2ee4409c9d698e34fe536d222ac8b475d4b7edd97bdac928d5e",
+        "count": 2442
+      },
+      "artifact": {
+        "path": "/root/sidereal-live-map-dashboard-candidate/apps/dashboard/dist",
+        "sha256": "d03123c4c8b3b711d20ed9aa5bfc9b6d6d68ad64a6ffff62b802294ff6284092",
+        "count": 3492,
+        "publicBuildConfig": {
+          "database": "sidereal-spacetime-dev",
+          "databaseUrl": "http://127.0.0.1:3100",
+          "clientPort": 5173,
+          "publicClientUrl": "https://sidereal.dastari.net",
+          "dashboardPort": 5174,
+          "allowedHosts": [
+            "sidereal.tail7a58a6.ts.net"
+          ],
+          "authoringClientId": "sidereal-shipyard",
+          "authIssuer": "https://auth.dastari.net/realms/dastari",
+          "authClientId": "sidereal-dashboard",
+          "authOrigin": "https://sidereal.tail7a58a6.ts.net:8445"
+        }
+      }
+    }
+  },
+  "validation": {
+    "schema": {
+      "equal": true,
+      "differentSections": [],
+      "tables": 91,
+      "reducers": 58,
+      "views": 57
+    },
+    "mainTests": {
+      "suites": 300,
+      "passed": 1505,
+      "skipped": 2
+    },
+    "composedAuthorityTests": {
+      "existingPassed": 364,
+      "genesisPassed": 7
+    },
+    "pythonReviewTests": 26,
+    "authenticatedIsolatedSaveReload": true,
+    "authenticatedGenesisSameUuid": true,
+    "replayStaleRevocationExpiry": true,
+    "accountRetained": true,
+    "temporaryAdminRemoved": true,
+    "fullBuild": true,
+    "composedStudioBuild": true,
+    "ci": "Inherited missing scripts/art_library/requirements.txt blocks CI setup; local docs gate has inherited missing links"
+  },
+  "inventoryAlgorithm": "SHA256 of sorted UTF-8 relative path + NUL + file SHA256 + newline. Source scope: apps, packages, scripts, docs/public, root JSON/JS/TS configs; excludes generated public/dist, dependencies, caches, private dev.toml. Inventories accompany manifest."
+}

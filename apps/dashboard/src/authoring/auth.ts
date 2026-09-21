@@ -20,9 +20,15 @@ export async function loadAuthoringAccount() {
     callback ??= authoringAuth().signinRedirectCallback();
     const user = await callback;
     const target = (user.state as { returnTo?: string } | undefined)?.returnTo;
-    if (target === "/map") {
-      location.replace("/map");
-    } else history.replaceState(null, "", "/shipyard");
+    const next = target?.startsWith("/")
+      ? new URL(target, location.origin)
+      : null;
+    if (
+      next?.origin === location.origin &&
+      ["/map", "/planets"].includes(next.pathname)
+    )
+      location.replace(next.pathname + next.search);
+    else history.replaceState(null, "", "/shipyard");
     return user;
   }
   // Panels can unmount while the account renews. Read current storage, not a cached old User.

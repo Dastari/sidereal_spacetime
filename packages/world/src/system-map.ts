@@ -1,3 +1,4 @@
+import { celestialAsset } from "@sidereal/content/celestial-assets";
 import { publishZones } from "./zones";
 import { spaceRegion } from "@sidereal/sim/space-background";
 import {
@@ -46,6 +47,8 @@ export const systemScapeProjection = t.row("SystemScapeProjection", {
   backgroundId: t.string(),
   regionsJson: t.string(),
 });
+// Views have no clock. expireGrants materializes revocation on each authority
+// tick; reducers additionally enforce exact expiry at command consumption.
 function canRead(ctx: ReadContext) {
   return [...ctx.db.constructionGrant.by_principal.filter(ctx.sender)].some(
     (g) =>
@@ -181,33 +184,40 @@ export function applySystemMap(
   if (
     bodies.length !== doc.bodies.length ||
     doc.bodies.some(
-      (b) =>
-        !bodies.some(
-          (old) =>
-            old.id === b.id &&
-            old.kind === b.kind &&
-            old.radius === b.radius &&
-            (b.appearance === undefined || old.appearance === b.appearance) &&
-            (b.seed === undefined || old.seed === b.seed),
-        ),
+      (b) => !bodies.some((old) => old.id === b.id && old.kind === b.kind),
     )
   )
     throw new SenderError(
-      "Celestial identity, type and radius must match the live chart",
+      "Celestial identity and type must match the live chart",
     );
   if (!system && [...ctx.db.worldSystem.iter()].length >= 32)
     throw new SenderError("System budget exceeded");
   const ships = [...ctx.db.shipWorldMotion.by_system.filter(doc.id)];
   for (const b of doc.bodies) {
     const prior = bodies.find((p) => p.id === b.id)!;
-    if (prior.x === b.x && prior.y === b.y && prior.height === b.height)
+    const appearance = b.appearance ?? prior.appearance;
+    const asset = appearance ? celestialAsset(appearance) : undefined;
+    if (appearance !== prior.appearance && !asset)
+      throw new SenderError("Choose an approved Genesis asset");
+    if (asset && (b.kind === "star") !== (asset.kind === "star"))
+      throw new SenderError("Genesis asset must match the celestial type");
+    if (asset?.kind === "star" && b.seed !== undefined && b.seed !== asset.seed)
+      throw new SenderError(
+        "The authored star uses its fixed composition seed",
+      );
+    if (
+      prior.x === b.x &&
+      prior.y === b.y &&
+      prior.height === b.height &&
+      b.radius <= prior.radius
+    )
       continue;
     if (
       ships.some(
         (s) => Math.hypot(s.x - b.x, s.y - b.y, b.height) < b.radius + 100,
       )
     )
-      throw new SenderError("Moved body overlaps a live ship safety area");
+      throw new SenderError("Celestial edit overlaps a live ship safety area");
   }
   if ([...ctx.db.systemMapEdit.by_system.filter(doc.id)].length >= 128)
     throw new SenderError(
@@ -236,7 +246,13 @@ export function applySystemMap(
     const row = ctx.db.systemBody.id.find(b.id)!,
       motion = ctx.db.bodyWorldMotion.bodyId.find(b.id)!,
       cell = spatialCell(b);
-    ctx.db.systemBody.id.update({ ...row, height: b.height });
+    ctx.db.systemBody.id.update({
+      ...row,
+      height: b.height,
+      radius: b.radius,
+      appearance: b.appearance ?? row.appearance,
+      seed: b.seed ?? row.seed,
+    });
     ctx.db.bodyWorldMotion.bodyId.update({
       ...motion,
       x: b.x,

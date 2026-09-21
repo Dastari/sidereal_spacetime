@@ -24,9 +24,8 @@ interface View {
   doc: SystemMapDocument;
   camera: Camera;
   ratio: number;
-  previewHeight: number;
 }
-/** Spatial preview samples the same membership/feather policy as the game. */
+/** Planar editor membership preview; feather is always 10% of projected size. */
 export function MapBackground(view: View) {
   const ref = useRef<HTMLCanvasElement>(null);
   const renderer = useRef<ReturnType<typeof createRenderer> | null>(null);
@@ -41,7 +40,7 @@ export function MapBackground(view: View) {
   }, []);
   useEffect(() => {
     renderer.current?.update(view);
-  }, [view.doc, view.camera, view.ratio, view.previewHeight]);
+  }, [view.doc, view.camera, view.ratio]);
   return <canvas ref={ref} className="map-space-preview" aria-hidden="true" />;
 }
 
@@ -58,9 +57,26 @@ function createRenderer(canvas: HTMLCanvasElement) {
   let platesKey = "";
   let platesPromise: Promise<Map<string, Uint8ClampedArray>>;
   const render = backgroundRenderer(
-    async ({ doc, camera, ratio, previewHeight }: View) => {
+    async ({ doc, camera, ratio }: View) => {
       if (doc !== cachedDoc) {
-        cachedRegion = spaceRegion(doc);
+        const source = spaceRegion(doc);
+        const planar = <
+          T extends { height: number; width: number; length: number },
+        >(
+          z: T,
+        ) => ({
+          ...z,
+          height: 0,
+          depth: Math.max(z.width, z.length) * 2,
+          feather: Math.min(z.width, z.length) * 0.1,
+        });
+        cachedRegion = {
+          ...source,
+          center: { ...source.center, height: 0 },
+          feather: source.radius * 0.2,
+          fields: source.fields.map(planar),
+          zones: source.zones?.map(planar),
+        };
         cachedDoc = doc;
       }
       const region = cachedRegion;
@@ -102,7 +118,7 @@ function createRenderer(canvas: HTMLCanvasElement) {
         width,
         height,
         ratio,
-        previewHeight,
+        previewHeight: 0,
         plates: await platesPromise,
       };
     },

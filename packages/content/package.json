@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/content",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -36,7 +36,8 @@
     "./pilot-layout": "./src/pilot-layout.ts",
     "./system-map": "./src/system-map.ts",
     "./environment": "./src/environment.ts",
-    "./zones": "./src/zones.ts"
+    "./zones": "./src/zones.ts",
+    "./celestial-assets": "./src/celestial-assets.ts"
   },
   "dependencies": {}
 }
