@@ -22,3 +22,45 @@ Owner response (2026-09-21): explicitly confirmed authored Blender visuals with
 editable live asset, seed, radius, name, XY and parent. PR19 already implements
 that scope; no code change needed. The separate temporary-test-account question
 remains unanswered, so authenticated acceptance and publication remain pending.
+
+## Retained reviewer — owner authorization implemented
+
+The owner superseded temporary-account deletion: created and retained
+`sidereal-development-review`, provider subject `cd533b9d-db67-4317-ad07-d75b679f6fd2`.
+See [review account runbook](../review_account.md). Credentials stay private;
+repeat ensure preserves ID/password. Managed provisioning and private-file CLI
+sign-in helpers are included. Temporary construction administration is active
+only while isolated acceptance runs; remove the role/grants afterward, keep the
+account. Signed-in candidate browser now connects to isolated3291 after granting
+loopback permission in that test browser context; genuine provider PKCE passes.
+
+
+## Authenticated acceptance and prepared release
+
+Genuine provider PKCE passed using the retained reviewer. Candidate browser
+routing uses isolated3291 (never the public database). The map saved Dunes I name,
+radius8.12 and seed118, reloaded those server values, then Genesis opened the same
+UUID and saved radius8.25. Native asset switch to ice-moon-1-r002 persisted.
+Exact replay succeeds without duplicate edit; stale revision is rejected. Revoked
+write access rejects the reducer and disables Save; a2-second read grant expires,
+removing the map/tree and all map projections. Height/position/parent remain
+unchanged. Evidence `/tmp/live-map-auth-save-proof.log` and
+`/tmp/live-map-auth-access-proof.log` contains no credentials.
+
+Cleanup: isolated read/write grants revoked/expired, temporary provider admin
+removed, genuine provider sign-out returned to the gated Studio. Account retained;
+repeat ensure verifies the same provider ID. Four new focused Python tests plus
+existing review tests pass (26 total); independent rereview found no blocker.
+
+Prepared composition: `/root/sidereal-live-map-authority-candidate` (existing IFCS
+baseline + four scoped files) and `/root/sidereal-live-map-dashboard-candidate`
+(existing live Studio +22 scoped files). Composed authority typecheck,364 existing
+plus7 Genesis tests pass; composed Studio build passes. Pinned old module→candidate
+upgrade passed without reset on `sidereal-studio-review-review-genesis-upgrade-20260921`.
+Normalized schemas retain all91 tables,58 reducers and57 views unchanged.
+Reviewable patches and hashes: `ops/releases/live-map-genesis-20260921/`.
+
+Latest full candidate check:300 suites/1505 tests,2 existing skips; build passes.
+The combined check still fails inherited missing-document links. GitHub CI fails
+before tests at the pre-existing missing `scripts/art_library/requirements.txt`.
+These failures are not introduced by this PR and are not claimed green.

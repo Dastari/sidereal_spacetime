@@ -2,6 +2,8 @@
 
 ## 2026-09-21 — Live map and Genesis (Studio 0.10.0)
 
+- Added the owner-retained `sidereal-development-review` game/Studio account workflow, private credential reuse, secret-free CLI arguments, temporary authoring-role management and a durable review-account runbook.
+
 - Keep map rendering bounded to visible arcs and bodies, coalesce wheel input, scale celestial portraits to physical size, and reveal moon orbit guides only at useful zoom levels.
 - Use fixed 10% planar editor background feather; remove height and feather controls. Show X/Y together with two decimal places and remove SVG focus rectangles and drawer instructions.
 - Draw fields and zones in the current viewport without camera jumps; preserve point editing, undo and deselection.
