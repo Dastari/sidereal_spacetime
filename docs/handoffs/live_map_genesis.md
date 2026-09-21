@@ -17,3 +17,8 @@ Public Studio snapshot `/root/sidereal-studio-dashboard-release` includes additi
 Delivery: draft [PR #19](https://github.com/Dastari/sidereal_spacetime/pull/19), implementation commit `695b07ef`. CI started and is pending at handoff; inherited full-repository lint/format/docs failures may remain. No merge or publication. Local `dev.toml` remains intentionally uncommitted with review-only ports. Resume here after the account-fixture approval response; reacquire narrow GrayLotus reservations and check inbox before editing. Do not recreate/rotate accounts while the question remains pending.
 
 Next actions: provision only an approved temporary dedicated review identity, genuine PKCE through the existing approved callback with candidate browser routing to isolated3291, short universe-map grants, Apply/reload and stale/revocation checks, then revoke/remove the fixture. Compose/rehearse authority and Studio against their preserved live baselines, record exact artifacts and retained UUID state, merge through GitHub and publish using managed lifecycle only. Existing native preview performance on software WebGL remains a separately recorded limitation.
+
+Owner response (2026-09-21): explicitly confirmed authored Blender visuals with
+editable live asset, seed, radius, name, XY and parent. PR19 already implements
+that scope; no code change needed. The separate temporary-test-account question
+remains unanswered, so authenticated acceptance and publication remain pending.

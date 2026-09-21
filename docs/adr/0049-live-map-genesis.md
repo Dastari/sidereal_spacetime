@@ -33,3 +33,8 @@ projection, then load its canonical document/revision/fingerprint. Preserve retr
 operation identity during delayed subscription delivery. The supported native
 instance properties are name, XY position, radius, native asset, composition seed
 and orbital parent; Blender mesh/material authoring remains its existing pipeline.
+
+Owner confirmation (2026-09-21): keep authored Blender visuals and edit live
+instance properties: asset, seed, radius, name, planar position and parent. Older
+procedural terrain/material controls are outside this live-editing scope. This
+confirms the implemented candidate direction; it is not approval of new art.
