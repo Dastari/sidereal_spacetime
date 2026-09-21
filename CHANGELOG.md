@@ -2,7 +2,7 @@
 
 ## 0.7.1 — 2026-09-21
 
-- Preserve live IFCS authored-frame zone traces when integrating Studio PR #15. Record separate authority, game and Studio release overlays and compatibility checks.
+- Published Studio PR #15 with existing IFCS, game and editor features preserved. Added authored-frame zone traces and recorded exact separate release overlays, non-reset migration checks and preserved player records.
 
 - Move workspace navigation to an accessible persistent left icon rail.
 - Add stars-only Deep space as the game default; share system/field background selection and feathering between editor and game, with sanitized actor-admitted geometry.

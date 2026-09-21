@@ -23,14 +23,21 @@ The one shared simulation extension permits accepted solver traces to follow a c
 - Isolated full smoke passed: `sidereal-studio-release-studio-live-r0002-smoke`, server 3291. Map read/apply and private zone subscriptions are denied to ungranted identities. r0001 failed before publication due to using the live server token against the isolated server; corrected tool identity, no database reset.
 - Pinned old module → candidate upgrade passed with `--delete-data=never` on `sidereal-studio-release-review-upgrade-20260921`, server 3291.
 - Expanded schema comparison confirms all 86 prior tables, 56 reducers and 52 views retain their definitions. Additions: five private tables, two reducers, five filtered views. Index-list ordering and generated type/view ordinals are normalized for semantic comparison.
-- Browser review uses the Playwright skill. Map/sidebar and Shipyard load without console errors after preserving local dependency/font serving. Remaining interaction and public checks are recorded below when complete.
+- Browser review uses the Playwright skill. Map/sidebar and Shipyard load without console errors after preserving local dependency/font serving. Interaction and public checks are recorded below.
 
 ## Activation
 
 Prepared module SHA-256: `3d0d994add24b945d2db847767dae1edbf1640d872bb76f441c8d652a26d3bcc`.
 Prepared game tree SHA-256: `1285899d78177c92813dc6f4f1bbf1a97d16212b0d618419407364ba42e08b73`.
 
-Status: staged; live activation and final verification pending. The preceding artifact remains active until the guarded activation step. Do not infer publication from PR merge or staging.
+Status: **published and verified** on 2026-09-21. Follow-up compatibility/source-audit PR: https://github.com/Dastari/sidereal_spacetime/pull/16.
+
+- Authority publish succeeded with `--delete-data=never`, preserving database identity. The rebuilt publish artifact exactly matches the rehearsed module SHA above.
+- Guarded public-client activation changed the previous pinned tree to the prepared hash above. Public URL: https://sidereal.dastari.net/ . HTTP 200 and browser login gate verified.
+- Studio now runs from `/root/sidereal-studio-dashboard-release` through its own `python3 scripts/dev.py up-dashboard`, on the existing port 5174 and HTTPS route https://sidereal.tail7a58a6.ts.net:8445/map . Canonical dashboard was stopped through its managed lifecycle; no sibling service was stopped. Manage this Studio process from the release snapshot, not the canonical dirty source. Temporary review port 5484 is stopped.
+- Exact before/after comparison: all three character ID/owner/ship references, all three full ship rows, all 21 full inventory rows and the existing grant set are preserved. No live template switch, map edit, solar migration or inventory mutation was invoked for verification.
+- Real Chromium review: live Studio sidebar/map and public game login load without console errors; local release browser verified zone creation/duplication/undo, template dialog, and focused-canvas V/H. The existing Studio Ctrl+D handler was reconciled with the shared duplicate command in Structure/Objects/Hull. Keyboard assertions wait for React updates; typing outside the focused editor remains ignored by design.
+- Screenshots, publish logs, schema comparison, immutable artifact hashes and private row comparisons are retained in canonical `.runtime/releases/studio-20260921/`. Signed-in production gameplay/template switching is not claimed; isolated authority tests and smoke provide that validation without altering player ships.
 
 ## Operational boundaries
 
