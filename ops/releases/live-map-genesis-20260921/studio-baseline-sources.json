@@ -1,5 +1,5 @@
 {
-  "sha256": "1e6905bdf8def890778429027351f2ca5a747ebe99f72c86ad505e90d9d1eb62",
+  "sha256": "a0a6fae58874f5dffbb7b05582010d9c68de7c3772bee3662f0cb46ca71a1419",
   "count": 2435,
   "files": [
     {
@@ -1807,16 +1807,16 @@
       "sha256": "57c53c36b5d51cc38897f1b8eeeca32193d267c7dd060b4982d3c617e9125e04"
     },
     {
+      "path": "packages/net/src/generated/types.ts",
+      "sha256": "6d9de73bd7daafe756cfb32044f85813339b72e81cb096a15d4f14e94fae8492"
+    },
+    {
       "path": "packages/net/src/generated/types/procedures.ts",
       "sha256": "e91691c4d61824f5a9e3ad46be93c1f741d29fdba976b6e11f43da0d8af52903"
     },
     {
       "path": "packages/net/src/generated/types/reducers.ts",
       "sha256": "1246d4cc364fb7989e921088a29a0d463bfe9f422601d56508ed86529aa0ff69"
-    },
-    {
-      "path": "packages/net/src/generated/types.ts",
-      "sha256": "6d9de73bd7daafe756cfb32044f85813339b72e81cb096a15d4f14e94fae8492"
     },
     {
       "path": "packages/net/src/generated/use_station_reducer.ts",
@@ -2511,6 +2511,30 @@
       "sha256": "fab053719c7998e945e01b316e464abce56c6065beaf3778531c547a426d96c3"
     },
     {
+      "path": "packages/render/src/environment/reviewed-native-planet-catalog.json",
+      "sha256": "c6625b986bb6d2cac712f23f5507e003bf44b02411e5cf31516b21548bd61c3e"
+    },
+    {
+      "path": "packages/render/src/environment/reviewed-native-planet-catalog.ts",
+      "sha256": "69640c335eb171fde42bbaffc3c170d1f148e3f208134edc550a0280c0642e64"
+    },
+    {
+      "path": "packages/render/src/environment/reviewed-native-planet-encoding.test.ts",
+      "sha256": "ff914546fe48db72d47eebf8e4db90d3697218484c48b7854a6db2324bea5c5a"
+    },
+    {
+      "path": "packages/render/src/environment/reviewed-native-planet-encoding.ts",
+      "sha256": "fe34d2af68559bffec64aa11700aa962aa565b4334897da9ae38a89370493fc9"
+    },
+    {
+      "path": "packages/render/src/environment/reviewed-native-preview.ts",
+      "sha256": "4ac9f03a866bf7c09d0bf2a3fa96485dcd7027fcd86f9ce8e66e6dccbdad9d93"
+    },
+    {
+      "path": "packages/render/src/environment/reviewed-native-selection.ts",
+      "sha256": "828631c570d484d4765b55b5927dfac27f8a3d4c4624de671cf6d4cecc516871"
+    },
+    {
       "path": "packages/render/src/environment/reviewed-native/build-reviewed-planet.ts",
       "sha256": "1e4d8dbda2217b5f673a49b8738114c6dd6fcde2db4ceb47fe02635e67bc38c2"
     },
@@ -2679,30 +2703,6 @@
       "sha256": "2d6fb9456388cd7953c4f83506d2123684823cbd7af0384574f5f9fb304f957e"
     },
     {
-      "path": "packages/render/src/environment/reviewed-native-planet-catalog.json",
-      "sha256": "c6625b986bb6d2cac712f23f5507e003bf44b02411e5cf31516b21548bd61c3e"
-    },
-    {
-      "path": "packages/render/src/environment/reviewed-native-planet-catalog.ts",
-      "sha256": "69640c335eb171fde42bbaffc3c170d1f148e3f208134edc550a0280c0642e64"
-    },
-    {
-      "path": "packages/render/src/environment/reviewed-native-planet-encoding.test.ts",
-      "sha256": "ff914546fe48db72d47eebf8e4db90d3697218484c48b7854a6db2324bea5c5a"
-    },
-    {
-      "path": "packages/render/src/environment/reviewed-native-planet-encoding.ts",
-      "sha256": "fe34d2af68559bffec64aa11700aa962aa565b4334897da9ae38a89370493fc9"
-    },
-    {
-      "path": "packages/render/src/environment/reviewed-native-preview.ts",
-      "sha256": "4ac9f03a866bf7c09d0bf2a3fa96485dcd7027fcd86f9ce8e66e6dccbdad9d93"
-    },
-    {
-      "path": "packages/render/src/environment/reviewed-native-selection.ts",
-      "sha256": "828631c570d484d4765b55b5927dfac27f8a3d4c4624de671cf6d4cecc516871"
-    },
-    {
       "path": "packages/render/src/environment/reviewed-preview-lighting.ts",
       "sha256": "40241c196ae2548d2a82e52023c83a12befb5ae0703bc35272b14a9fab288b79"
     },
@@ -2751,6 +2751,14 @@
       "sha256": "8258b07b9b2e1ae3726e3500ad51bb9415222ddf4547ad6756c507df2adb78f5"
     },
     {
+      "path": "packages/render/src/equipment-lighting.test.ts",
+      "sha256": "5f908941ea3890f483c4450064c31dcf994f97963a300a9a684f30cd51618140"
+    },
+    {
+      "path": "packages/render/src/equipment-lighting.ts",
+      "sha256": "f4adaaa517e3d461e070e76fe57b632ae8873981135d463f5b4329bc11642e1e"
+    },
+    {
       "path": "packages/render/src/equipment/anchors.test.ts",
       "sha256": "c09320a102df4de5957afbbcaf53f3299e45e20dc3235d8eaa314e51ab9e2713"
     },
@@ -2773,14 +2781,6 @@
     {
       "path": "packages/render/src/equipment/pose-anchors.ts",
       "sha256": "3a402b5bfd4fdd28f9c89078e09e0e0cd9201e381a077388368b4776906434dc"
-    },
-    {
-      "path": "packages/render/src/equipment-lighting.test.ts",
-      "sha256": "5f908941ea3890f483c4450064c31dcf994f97963a300a9a684f30cd51618140"
-    },
-    {
-      "path": "packages/render/src/equipment-lighting.ts",
-      "sha256": "f4adaaa517e3d461e070e76fe57b632ae8873981135d463f5b4329bc11642e1e"
     },
     {
       "path": "packages/render/src/fast-snapshot.test.ts",

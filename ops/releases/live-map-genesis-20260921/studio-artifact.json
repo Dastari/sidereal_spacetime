@@ -1,6 +1,6 @@
 {
-  "sha256": "d03123c4c8b3b711d20ed9aa5bfc9b6d6d68ad64a6ffff62b802294ff6284092",
-  "count": 3492,
+  "sha256": "48779bf9f82780ac9c64f49136f17ff6c601d6da6ce1c32625821dd6b3db0993",
+  "count": 3552,
   "files": [
     {
       "path": "assets/AssemblyEditor-Bw1qu4i7.js",
@@ -77,6 +77,18 @@
     {
       "path": "assets/animationGroup.pure-D3dW8DzE.js",
       "sha256": "080bc5560458af6acc070e157f357674e4463e1e272539f036cf066f55b54300"
+    },
+    {
+      "path": "assets/assembly-dID9G7nM.js",
+      "sha256": "5a494d0369ba1c784ced8668128223cfcc11947923f24317332df8ffa6221cbc"
+    },
+    {
+      "path": "assets/assembly-editor-BK7egNje.js",
+      "sha256": "3d7e295446b1d16aa4efeef6b9da54bc309e7e0f9abee45ba21e45357813f975"
+    },
+    {
+      "path": "assets/assembly/cargo-manifest.json",
+      "sha256": "3441819d90775fc83e2d165deba161ec485c308880c794fa064a10248ffe09d0"
     },
     {
       "path": "assets/assembly/cargo/part-091a05481726fc7ccac0/cutout.png",
@@ -663,10 +675,6 @@
       "sha256": "b08fd66f120a2bca68053a75cc4f295e2513ca0ad8bbfde41fd8a4e16926c0a2"
     },
     {
-      "path": "assets/assembly/cargo-manifest.json",
-      "sha256": "3441819d90775fc83e2d165deba161ec485c308880c794fa064a10248ffe09d0"
-    },
-    {
       "path": "assets/assembly/catalog-shipyard-r005.json",
       "sha256": "9fa3db94ed61a84f3e9d52b0d404d1433931747bbd268fceefe6a4e2a6ead237"
     },
@@ -677,6 +685,10 @@
     {
       "path": "assets/assembly/catalog.voxels.json",
       "sha256": "a1bffc15f9f735257c9f3522e1c3d4ecab9688fa9b001918ad58317dea569308"
+    },
+    {
+      "path": "assets/assembly/equipment-manifest.json",
+      "sha256": "649b0af2d73406dcea29f5954db3b88b9e910eb07ddadee10bf663fc67ee39f9"
     },
     {
       "path": "assets/assembly/equipment/part-0f14bf002f4c11854337/cutout.png",
@@ -767,8 +779,8 @@
       "sha256": "713d8a83c902d24bb59e278eb2436b087ebdf06fbbbbbd5daa7d2340fc782a49"
     },
     {
-      "path": "assets/assembly/equipment-manifest.json",
-      "sha256": "649b0af2d73406dcea29f5954db3b88b9e910eb07ddadee10bf663fc67ee39f9"
+      "path": "assets/assembly/floor-manifest.json",
+      "sha256": "b652b30b5ba1125798b6eaecf36e6281cced1cff8f0d7ca6fd6a95d05f720302"
     },
     {
       "path": "assets/assembly/floor/r002/corner-clipped/cutout.png",
@@ -823,8 +835,8 @@
       "sha256": "665bb9352e447e62723b51a440dc378fc96205cc8dc238345397c12d10eae5bd"
     },
     {
-      "path": "assets/assembly/floor-manifest.json",
-      "sha256": "b652b30b5ba1125798b6eaecf36e6281cced1cff8f0d7ca6fd6a95d05f720302"
+      "path": "assets/assembly/hull-manifest.json",
+      "sha256": "2e275052217da4b20a92ab40a9a9f098dc011557f7611b6b0c6f40f71ea22695"
     },
     {
       "path": "assets/assembly/hull/finish-r004/part-1d133c308abd8b172d95/clean.glb",
@@ -1319,10 +1331,6 @@
       "sha256": "3601930565529a15ba4e18262b23d2369680b16a53dc984df6f0415b409ad9fc"
     },
     {
-      "path": "assets/assembly/hull-manifest.json",
-      "sha256": "2e275052217da4b20a92ab40a9a9f098dc011557f7611b6b0c6f40f71ea22695"
-    },
-    {
       "path": "assets/assembly/manifest.json",
       "sha256": "956be8fe5c13d5f5c3ecda7f3963ba4943ba1b28631334e6d083a0d12bd61b77"
     },
@@ -1571,16 +1579,16 @@
       "sha256": "ac7fd03f059f92ca9092ffd1a6c69606537dbc79d2d885f545e69c64d41a6dcf"
     },
     {
-      "path": "assets/assembly/roof/r004/center-service/cutout.png",
-      "sha256": "86b1e00bd80f4863f3e24131331cc665d77f543ac85199f3ed153bd9be873524"
-    },
-    {
       "path": "assets/assembly/roof/r004/center-service-aft/cutout.png",
       "sha256": "07fcd1032c6fc0a1e1bd3504a10f043283196e8a523cff81471dd98166e0624e"
     },
     {
       "path": "assets/assembly/roof/r004/center-service-fore/cutout.png",
       "sha256": "3ea972f2a8b5e9d75ee7a58ef5b10c82de9e252fc4284af05b15a22c17b4b967"
+    },
+    {
+      "path": "assets/assembly/roof/r004/center-service/cutout.png",
+      "sha256": "86b1e00bd80f4863f3e24131331cc665d77f543ac85199f3ed153bd9be873524"
     },
     {
       "path": "assets/assembly/roof/r004/edge-long/cutout.png",
@@ -1615,12 +1623,12 @@
       "sha256": "8200504beb247f096aead275cd96ae4bd93edd783228679bc118165224c3f346"
     },
     {
-      "path": "assets/assembly/roof/r004/shoulder-vent/cutout.png",
-      "sha256": "834e8ddeb1874268ff381ff74accfed6d4c4dc14f2ed4039ce9d037ed158cad5"
-    },
-    {
       "path": "assets/assembly/roof/r004/shoulder-vent-fore-datum/cutout.png",
       "sha256": "be65709c46e07c4dea2deaf075589f3fb9b2750547259d0fc7ada532fa352261"
+    },
+    {
+      "path": "assets/assembly/roof/r004/shoulder-vent/cutout.png",
+      "sha256": "834e8ddeb1874268ff381ff74accfed6d4c4dc14f2ed4039ce9d037ed158cad5"
     },
     {
       "path": "assets/assembly/roof/r004/stern-strip/cutout.png",
@@ -3679,14 +3687,6 @@
       "sha256": "1f723510ac156089903fbd0d711a2f6adff1da35433e2ac02afde94fa4a00deb"
     },
     {
-      "path": "assets/assembly-dID9G7nM.js",
-      "sha256": "5a494d0369ba1c784ced8668128223cfcc11947923f24317332df8ffa6221cbc"
-    },
-    {
-      "path": "assets/assembly-editor-BK7egNje.js",
-      "sha256": "3d7e295446b1d16aa4efeef6b9da54bc309e7e0f9abee45ba21e45357813f975"
-    },
-    {
       "path": "assets/background.worker-geXTbH7Q.js",
       "sha256": "195838ac10115c4d9e54d7e79998b7172b2263badb89ff9bf9fea65152edcedb"
     },
@@ -3909,6 +3909,10 @@
     {
       "path": "assets/constants-DNxlZnxc.js",
       "sha256": "f42dded84619bccdad35d52815a16c7bc499632d8b2aad3a07279debd5319671"
+    },
+    {
+      "path": "assets/construction-transactions-DDpy30CX.js",
+      "sha256": "d9addb1c943b3fd01247e27e7d83993f155d993fa1743c986c1f9202e73a6f0e"
     },
     {
       "path": "assets/construction/boundary-r001/interfaces.json",
@@ -9375,10 +9379,6 @@
       "sha256": "cf008a583532494febff62ee58ce5cdb2e065d5095a08748efebca54d4ab8922"
     },
     {
-      "path": "assets/construction-transactions-DDpy30CX.js",
-      "sha256": "d9addb1c943b3fd01247e27e7d83993f155d993fa1743c986c1f9202e73a6f0e"
-    },
-    {
       "path": "assets/createLucideIcon-B8skYyg7.js",
       "sha256": "1f37db6e284ce20449c8412899f575a0e26dfc1f67b1bb20698b3f5610836276"
     },
@@ -12363,12 +12363,252 @@
       "sha256": "3fdecd59096a17e5fa0c092384f6df501b383d39c8e599a277faa3283c2329fa"
     },
     {
+      "path": "favicon.svg",
+      "sha256": "be8bf7e9b6406d0e29459b0cd99798f383080c0cea2b4031868ba02e51b4cb8e"
+    },
+    {
       "path": "help/shipyard.md",
       "sha256": "c3d8a9d589eb581a462e1ef0473dd7c163e1de36168ba4c6d1771b85c354e8c7"
     },
     {
       "path": "index.html",
       "sha256": "e6ccdf548b9dc0b5eb6b1e555d1f8c7385899d2f3a5419e71b363fcfd5a98cd8"
+    },
+    {
+      "path": "map-snapshots/crystal-moon-1-r010-alpha-v1.webp",
+      "sha256": "a064a433c8caa355ea2bdd3bc8f789aa04a418861a0769ef1dca6271a2e10e23"
+    },
+    {
+      "path": "map-snapshots/crystal-moon-1-r010.webp",
+      "sha256": "21058ede326130386cb99bdea2c29f2fa24236f67b4ba7993a87578165f5f5fb"
+    },
+    {
+      "path": "map-snapshots/crystal-moon-2-r010-alpha-v1.webp",
+      "sha256": "34f6fcf65625cdd50a3df365e304379dee4645a907b49ea3d20533ba56fc3aa6"
+    },
+    {
+      "path": "map-snapshots/crystal-moon-2-r010.webp",
+      "sha256": "bcc13477ca40748d3238984ef7f714a65d2824641e4a0c0762e62025681f54f0"
+    },
+    {
+      "path": "map-snapshots/crystal-r013-alpha-v1.webp",
+      "sha256": "449ba934b01d44f95e54756f49d80d4af3e4f7fcf59b61a2e4712becdac0e877"
+    },
+    {
+      "path": "map-snapshots/crystal-r013.webp",
+      "sha256": "66a76bcb90169d7bee90ec2c39e417486e0828f619c2c0b85f9865f462dfea8a"
+    },
+    {
+      "path": "map-snapshots/desert-moon-1-r001-alpha-v1.webp",
+      "sha256": "8a2f98a206a5ed40eba648d5bf494b635304e7064c299e52ecff490f3a3bc1d8"
+    },
+    {
+      "path": "map-snapshots/desert-moon-1-r001.webp",
+      "sha256": "430e154eaf382ae6dca9973f1731c077ecff214b77413f8a89bfb7ae51e5f04b"
+    },
+    {
+      "path": "map-snapshots/desert-moon-2-r001-alpha-v1.webp",
+      "sha256": "a633b200967b5d4eea709bd515ff8ea7ad6f1e3a629e076baab8288e6aef7687"
+    },
+    {
+      "path": "map-snapshots/desert-moon-2-r001.webp",
+      "sha256": "396e0c90e31fad6319ad440b26b9a2740932d18504e48c439bc691c264db3c2a"
+    },
+    {
+      "path": "map-snapshots/desert-r014-alpha-v1.webp",
+      "sha256": "8f70dee5f65012a307ec24c391bab182e51b5873fa9845bcf8e2ae5c1426d990"
+    },
+    {
+      "path": "map-snapshots/desert-r014.webp",
+      "sha256": "77e000496d1ec88030880fa65f439586615b3ea1fc313329165e35130ecf980a"
+    },
+    {
+      "path": "map-snapshots/gas-giant-moon-1-r005-alpha-v1.webp",
+      "sha256": "c4532fbb3b5eb2e0efadc5a19576ab625c868895547397b15bf1865f32a629ad"
+    },
+    {
+      "path": "map-snapshots/gas-giant-moon-1-r005.webp",
+      "sha256": "de15872c3961328a883803f93f90404cf483eb943e2e216c01efcb2dddd88a24"
+    },
+    {
+      "path": "map-snapshots/gas-giant-moon-2-r001-alpha-v1.webp",
+      "sha256": "49e3c12560e75aaf07e2e493a72b30cee0513ab1dda146df4131838dbee79d17"
+    },
+    {
+      "path": "map-snapshots/gas-giant-moon-2-r001.webp",
+      "sha256": "bad67de2aa83e7217b7330a55d840e8404411e308a3a49c947583f7bb0866ffc"
+    },
+    {
+      "path": "map-snapshots/gas-giant-moon-3-r005-alpha-v1.webp",
+      "sha256": "3556af8ec99a92f0ef82510dd67a6748aa26bcf28df10059b599f702bc1660c9"
+    },
+    {
+      "path": "map-snapshots/gas-giant-moon-3-r005.webp",
+      "sha256": "7eb2bddb0fb329005d3958dc3af7afd44b78c29ef17e238bd58cf5408fd4d7d8"
+    },
+    {
+      "path": "map-snapshots/gas-r005-alpha-v1.webp",
+      "sha256": "e2b14c4faa4d3ca672ab5d6fc5b04e81d6ff423e33b6dd8ec34d97ef9aa23361"
+    },
+    {
+      "path": "map-snapshots/gas-r005.webp",
+      "sha256": "d23d267ca3bb8c9a4a6087da3892b0b41fe960de30d56525756c77053b72af22"
+    },
+    {
+      "path": "map-snapshots/ice-moon-1-r002-alpha-v1.webp",
+      "sha256": "861446b29caecfc20d159d1f8429e16c760a4ba9e8df7e75e577571857ba449a"
+    },
+    {
+      "path": "map-snapshots/ice-moon-1-r002.webp",
+      "sha256": "d68913a4c373a2d0cf745bd1d8381f5843e6e392d12e7ba5e1b9a82d6f207ba6"
+    },
+    {
+      "path": "map-snapshots/ice-moon-2-r003-alpha-v1.webp",
+      "sha256": "2d1821bc8946abd654346c52992a321b45d3bc4636f84199839bdb7122e502c8"
+    },
+    {
+      "path": "map-snapshots/ice-moon-2-r003.webp",
+      "sha256": "e6e35fbe64983c6e2c220330a225879d0d3156cbe947cad53f8b6f66666658a0"
+    },
+    {
+      "path": "map-snapshots/ice-r026-alpha-v1.webp",
+      "sha256": "0e76cf131c57264c460e54cd8043a37d0f28b954d9141446a98e3f593ce0ab24"
+    },
+    {
+      "path": "map-snapshots/ice-r026.webp",
+      "sha256": "e1d91dc1ddaded7ebee933af7f133760b12205259b23fe138bcdef4477658ffa"
+    },
+    {
+      "path": "map-snapshots/manifest.json",
+      "sha256": "16f7d1659baeb3b56d77b0c8e20b05f509747230ae02cfddf96e2de5fb925477"
+    },
+    {
+      "path": "map-snapshots/ocean-moon-1-r001-alpha-v1.webp",
+      "sha256": "d584263fc613207a5fe389e33587ca68f649e7cf7e3bfc5b7eaa0296e5bcd83c"
+    },
+    {
+      "path": "map-snapshots/ocean-moon-1-r001.webp",
+      "sha256": "d04c6efb03755c26b8ce1758b160918497134d0afb9217a24acd91b30832f4b8"
+    },
+    {
+      "path": "map-snapshots/ocean-moon-2-r002-alpha-v1.webp",
+      "sha256": "3835280b3445539a3fd4fcac7e7e0b4248c1c0beaad41850fd2979c2344c2870"
+    },
+    {
+      "path": "map-snapshots/ocean-moon-2-r002.webp",
+      "sha256": "44cec75637f896d8879d99e22bd3320aa1b6884d584010994ddc0ceccffa5147"
+    },
+    {
+      "path": "map-snapshots/ocean-r007-alpha-v1.webp",
+      "sha256": "680674023592ea5ea348e7ba04674c90b0a43411e8b7d0e5700b12dd832fc542"
+    },
+    {
+      "path": "map-snapshots/ocean-r007.webp",
+      "sha256": "dbfd5a7f658dace9b8a1f8ed9521d1df95915c04dc3769e9658a160ff7c9e362"
+    },
+    {
+      "path": "map-snapshots/rocky-moon-2-r001-alpha-v1.webp",
+      "sha256": "9f4ae68495254d154df854f3789533746b323ef045330ade4a3318565913c77c"
+    },
+    {
+      "path": "map-snapshots/rocky-moon-2-r001.webp",
+      "sha256": "4e0da9324b7805144e10ac4f5d2f36fac9510e9e1ea3fd6d258480ce630a16b4"
+    },
+    {
+      "path": "map-snapshots/rocky-moon-r002-alpha-v1.webp",
+      "sha256": "c2c348f33b0402b8dc07ccf97246dc3f78724ea3092d14dd94b7237f2de83d8b"
+    },
+    {
+      "path": "map-snapshots/rocky-moon-r002.webp",
+      "sha256": "430e6e245292ad5c50802456242eac7695edf0f3d753de9a744cd103e269eb1b"
+    },
+    {
+      "path": "map-snapshots/rocky-r010-alpha-v1.webp",
+      "sha256": "ee85c8a4128aa09da6655dbff57bf4ecb8f06c0709b17ebf7c75c266a0e668a0"
+    },
+    {
+      "path": "map-snapshots/rocky-r010.webp",
+      "sha256": "9ad60abf63c56b0b311bc92d1d0b85ff0f3a0f8dfd9988e68f871e5bedf8e7ff"
+    },
+    {
+      "path": "map-snapshots/temperate-moon-1-r002-alpha-v1.webp",
+      "sha256": "d42e56b04c27c440f7dac8b5bbe4d83e4fab5c23dc8da2daef527bd79d5322ae"
+    },
+    {
+      "path": "map-snapshots/temperate-moon-1-r002.webp",
+      "sha256": "0632d2b3e1b8abed2a63fc7eee209a107be2171e4fb5ff34d5e691327e80a578"
+    },
+    {
+      "path": "map-snapshots/temperate-moon-2-r002-alpha-v1.webp",
+      "sha256": "df8895ac17b8019c7418e1c878eb64075882a2378b0817444a13f9a0251dea90"
+    },
+    {
+      "path": "map-snapshots/temperate-moon-2-r002.webp",
+      "sha256": "c00f444aae59fb747faf29f26dbca22d808c4f1d5bf5ab8eb4467c2184e4b262"
+    },
+    {
+      "path": "map-snapshots/temperate-r003-alpha-v1.webp",
+      "sha256": "657b635e9b21c00fa618ccecd7473ae93ef866729f495355153724c197c40a2a"
+    },
+    {
+      "path": "map-snapshots/temperate-r003.webp",
+      "sha256": "e858861852b87d3dcedb588672bdf0868461293a6b3548f27393666b7e64cc48"
+    },
+    {
+      "path": "map-snapshots/toxic-moon-1-r001-alpha-v1.webp",
+      "sha256": "e385354482ca53be7f92571a57fec972ea23976f981c8b4cdc50f8b2e11b1ae2"
+    },
+    {
+      "path": "map-snapshots/toxic-moon-1-r001.webp",
+      "sha256": "6e870c7caa11842b880943d57d80c91f6943bb10920678456a7a2cd9f3fbf80e"
+    },
+    {
+      "path": "map-snapshots/toxic-moon-2-r001-alpha-v1.webp",
+      "sha256": "88ef724ff59a26cb5c3649bb0a3b1c7e0f7b4fcfbe2d11ae5aef4c2ebba05b52"
+    },
+    {
+      "path": "map-snapshots/toxic-moon-2-r001.webp",
+      "sha256": "d535706276d3c5e1903692705113a955c0445f622dac2c51fa17a1de8176ae5d"
+    },
+    {
+      "path": "map-snapshots/toxic-r007-alpha-v1.webp",
+      "sha256": "02823c46629d502ea3393591b3b3bea7b05541fc19808043d7724671f1b48866"
+    },
+    {
+      "path": "map-snapshots/toxic-r007.webp",
+      "sha256": "1ece8eee30fecc2b377785916a5de4ad8c8f33df7334850b63fe564f56678169"
+    },
+    {
+      "path": "map-snapshots/volcanic-moon-1-r003-alpha-v1.webp",
+      "sha256": "f5afc0af2d3eecf0ec7818e1ca179ac61510a1b4e5643f577e42c5a737b328ac"
+    },
+    {
+      "path": "map-snapshots/volcanic-moon-1-r003.webp",
+      "sha256": "c57c53526b5884b692f193f8f2affd2f2cdbd91fe35b8ebc385813e4d12ec53d"
+    },
+    {
+      "path": "map-snapshots/volcanic-moon-2-r006-alpha-v1.webp",
+      "sha256": "5b437fe23e234abbaae93585084cf337234af93a108e691f153145196e8d1bba"
+    },
+    {
+      "path": "map-snapshots/volcanic-moon-2-r006.webp",
+      "sha256": "e0455f09d9031d47c545ff7b7759d7f6f02e0ae6165fd4e1e8354e9a81663bd0"
+    },
+    {
+      "path": "map-snapshots/volcanic-r023-alpha-v1.webp",
+      "sha256": "92ace291bd4e393c42ebf91000c469247b3097232edd55214e37c9d24cd3885d"
+    },
+    {
+      "path": "map-snapshots/volcanic-r023.webp",
+      "sha256": "9919c707cd22db2fbb42303a3093ad7444efde7bfd152dd097e898855a2ab6c8"
+    },
+    {
+      "path": "map-snapshots/yellow-main-sequence-r013-alpha-v1.webp",
+      "sha256": "436beb1a3e82747769d71ed279c15f5870d58c5fa184bb43ec8d0c8f6ad5013f"
+    },
+    {
+      "path": "map-snapshots/yellow-main-sequence-r013.webp",
+      "sha256": "14369e5be9054f6eb4739638f47e32e87ab2c0357cf9bad401a8cf17732c05a5"
     },
     {
       "path": "reviewed-planets/cloud-r002/kit.json",
