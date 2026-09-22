@@ -1,3 +1,9 @@
+# Render 0.8.1 — exterior shadow reuse (2026-09-21)
+
+- Reuse unchanged exterior ship depth maps with conservative camera/caster/light/material invalidation and dynamic-path fallbacks. Preserve authored geometry, shadow quality and animated local shadows.
+- Isolated hardware ship fixture: 1,211 to 630 draw calls per stationary frame, with identical pixels. See [validation and limits](docs/handoffs/render_optimization_20260921.md); no public FPS or deployment claim.
+- Align stale private simulation workspace dependency pins with the existing 0.4.1 package so clean installations work.
+
 ## 2026-09-21 — Studio 0.10.1
 
 - Remove the redundant global Studio footer and reclaim its reserved height in Map and Genesis; retain workspace-specific controls.

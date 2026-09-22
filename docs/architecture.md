@@ -65,6 +65,8 @@ Use the existing Keycloak provider as specified in [authentication](authenticati
 
 Planet reference tooling computes tight shadow envelopes in its body worker and qualifies fixed-detail caching against complete worker output, including weather. The shared planet shadow manager selects active semantic planet meshes and restores prior light/receiver state when changing bodies. See docs/planet_lod_authoring.md for authoring and acceptance constraints.
 
+Ship exterior sun maps reuse their depth texture while exact caster, camera, light and material inputs remain unchanged. Geometry edits, context restoration and depth-affecting changes invalidate before render-target selection. Unsupported dynamic/custom paths render every frame; local animated actor shadows retain their existing policy. See [exterior shadow cache validation](handoffs/render_optimization_20260921.md) for measured scope and fallback limits.
+
 
 ## Reviewed native planets in Genesis (2026-09-15)
 
