@@ -1,13 +1,14 @@
 {
   "name": "@sidereal/ui",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "type": "module",
   "exports": {
     ".": "./src/index.tsx",
     "./editor-controls": "./src/editor-controls.tsx",
     "./editor-commands": "./src/editor-commands.ts",
-    "./property-controls": "./src/property-controls.tsx"
+    "./property-controls": "./src/property-controls.tsx",
+    "./astronomical-units": "./src/astronomical-units.ts"
   },
   "dependencies": {
     "react": "19.2.8"

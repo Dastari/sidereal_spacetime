@@ -1,3 +1,9 @@
+## 2026-09-22 — Studio 0.11.0
+
+- Draw closed polygons and Bézier boundaries directly with a pen; close on the first anchor, double-click or Enter, retaining invalid drafts for correction.
+- Group map tools with hover/focus tooltips, add canvas/tree context menus, and support validated tree reparenting with undo.
+- Show selected orbit-guide parent distance and straight-line travel time at 30 gameplay m/s. Share one astronomical display conversion (1 gameplay metre = 100 km) across Map and live Genesis inputs, grid labels, distances and speeds; preserve stored geometry and actual ETA. UI package 0.5.0 exposes the presentation contract.
+
 # Render 0.8.1 — exterior shadow reuse (2026-09-21)
 
 - Reuse unchanged exterior ship depth maps with conservative camera/caster/light/material invalidation and dynamic-path fallbacks. Preserve authored geometry, shadow quality and animated local shadows.

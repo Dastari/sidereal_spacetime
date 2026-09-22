@@ -1,3 +1,5 @@
+import { formatAstronomicalDistance } from "@sidereal/ui/astronomical-units";
+import { MapDistanceField, MapScaleNote } from "./MapDistanceField";
 import { CELESTIAL_ASSETS } from "@sidereal/content/celestial-assets";
 import { NumberField, CoordinateFields } from "@sidereal/ui/property-controls";
 import { InspectorIdentity } from "./InspectorIdentity";
@@ -45,13 +47,14 @@ export default function MapInspector({
       <aside className="map-inspector">
         <InspectorIdentity doc={doc} id={ship.shipId} name={ship.name} />
         <p>Live ship · read only</p>
+        <MapScaleNote />
         <dl>
           <dt>X</dt>
-          <dd>{ship.x.toFixed(2)} m</dd>
+          <dd>{formatAstronomicalDistance(ship.x)}</dd>
           <dt>Heading</dt>
           <dd>{ship.heading.toFixed(2)} rad</dd>
           <dt>Y</dt>
-          <dd>{ship.y.toFixed(2)} m</dd>
+          <dd>{formatAstronomicalDistance(ship.y)}</dd>
         </dl>
       </aside>
     );
@@ -82,6 +85,7 @@ export default function MapInspector({
         }
       />
       <h2>{field ? "Asteroid field" : body ? "Celestial body" : "System"}</h2>
+      <MapScaleNote />
       {!field && !body && (
         <label>
           System color
@@ -97,11 +101,11 @@ export default function MapInspector({
           />
         </label>
       )}
-      <CoordinateFields>
+      <CoordinateFields label="Position (km)">
         {(["x", "y"] as const).map((k) => (
-          <NumberField
+          <MapDistanceField
             key={k}
-            label={`${k.toUpperCase()} (m)`}
+            label={`${k.toUpperCase()} (km)`}
             precision={2}
             step={0.01}
             value={(field ?? body ?? systemCenter(doc))[k]}
@@ -145,8 +149,8 @@ export default function MapInspector({
           >
             Open this instance in Genesis
           </a>
-          <NumberField
-            label="Radius (m)"
+          <MapDistanceField
+            label="Radius (km)"
             min={0.01}
             max={1e7}
             precision={2}
@@ -267,8 +271,8 @@ export default function MapInspector({
                 ))}
             </select>
           </label>
-          <NumberField
-            label="System radius (m)"
+          <MapDistanceField
+            label="System radius (km)"
             value={doc.radius}
             min={1}
             max={1e8}
@@ -315,9 +319,9 @@ export default function MapInspector({
           </p>
           {field.shape !== "polygon" &&
             (["width", "length"] as const).map((k) => (
-              <NumberField
+              <MapDistanceField
                 key={k}
-                label={`${k === "width" ? "Width" : "Length"} (m)`}
+                label={`${k === "width" ? "Width" : "Length"} (km)`}
                 min={1}
                 value={field[k]}
                 onChange={(n) => updateField({ [k]: n })}
@@ -351,7 +355,7 @@ export default function MapInspector({
             </>
           )}
           <NumberField
-            label="Density (asteroids/km³)"
+            label="Density (asteroids/gameplay km³)"
             min={0}
             step={0.1}
             value={field.density}
@@ -367,17 +371,17 @@ export default function MapInspector({
           />
           <div className="map-population">
             <strong>{fieldCount(field).toLocaleString()} asteroids</strong>
-            <span>{+(fieldVolume(field) / 1e9).toFixed(4)} km³</span>
+            <span>{+(fieldVolume(field) / 1e9).toFixed(4)} gameplay km³</span>
           </div>
           <NumberField
-            label="Minimum radius (m)"
+            label="Minimum asteroid radius (gameplay m)"
             min={0.1}
             step={0.1}
             value={field.minRadius}
             onChange={(n) => updateField({ minRadius: n })}
           />
           <NumberField
-            label="Maximum radius (m)"
+            label="Maximum asteroid radius (gameplay m)"
             min={0.1}
             step={0.1}
             value={field.maxRadius}

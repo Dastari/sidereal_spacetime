@@ -55,8 +55,8 @@ multi-document authority operation. Existing inspector parent selection remains
 the keyboard alternative.
 
 Selected/moving body orbit guides display parent centre distance and straight-line
-travel time at30m/s, never orbital period. Update during drag with descendant
-preview positions. Use m/km/Mm/Gm and s/min/h/d/y as appropriate. Keep labels
+travel time at 30 gameplay m/s, never orbital period. Update during drag with descendant
+preview positions. Use the fixed astronomical conversion from [the scale ADR](../adr/ADR-20260922-map-interaction-scale.md) for distances and speeds, and s/min/h/d/y for unchanged travel time. Inspector coordinates and celestial sizes edit displayed km and convert back to gameplay metres. Keep labels
 readable and viewport-bounded, with existing orbit LOD/culling intact.
 
 Acceptance: pure tests cover pen handle preservation/closure/limits, invalid

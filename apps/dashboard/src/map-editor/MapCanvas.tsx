@@ -1,5 +1,21 @@
+import {
+  formatAstronomicalSpeed,
+  REFERENCE_FLIGHT_SPEED,
+} from "@sidereal/ui/astronomical-units";
 import { portraitRadiusFraction } from "@sidereal/content/celestial-assets";
-import { diskVisible, visibleCirclePath, showOrbit } from "./map-viewport";
+import {
+  diskVisible,
+  visibleCirclePath,
+  showOrbit,
+  hundredth,
+} from "./map-viewport";
+import { drawingPath, penAnchor } from "./map-drawing";
+import {
+  formatDistance,
+  formatTravelTime,
+  orbitLabelPath,
+} from "./map-measurements";
+import type { ZoneAnchor } from "@sidereal/content/zones";
 import type { MapZone } from "@sidereal/content/zones";
 import { mapZones, subtree } from "./map-commands";
 import { cubicAt, setZoneHandle } from "@sidereal/sim/zone-path";
@@ -25,8 +41,7 @@ export interface Camera {
   y: number;
   span: number;
 }
-export const meters = (n: number) =>
-  Math.abs(n) >= 1000 ? `${+(n / 1000).toFixed(2)} km` : `${+n.toFixed(2)} m`;
+export const meters = formatDistance;
 export default function MapCanvas({
   doc,
   ships,
@@ -50,7 +65,16 @@ export default function MapCanvas({
   onDraw,
   creationShape,
   onCreateBounds,
+  onFinishDraw,
+  onContextMenu,
 }: {
+  onFinishDraw: () => void;
+  onContextMenu: (
+    x: number,
+    y: number,
+    id: string | null,
+    point?: number | null,
+  ) => void;
   creationShape: "box" | "ellipsoid" | null;
   onCreateBounds: (
     a: { x: number; y: number },
@@ -87,8 +111,8 @@ export default function MapCanvas({
     grid: boolean;
     orbits: boolean;
   };
-  drawing: { x: number; y: number }[] | null;
-  onDraw: (p: { x: number; y: number }) => void;
+  drawing: ZoneAnchor[] | null;
+  onDraw: (p: ZoneAnchor) => void;
 }) {
   const thumbnails = useCelestialSnapshots(doc.bodies);
   const svg = useRef<SVGSVGElement>(null),
@@ -107,9 +131,25 @@ export default function MapCanvas({
       original: { x: number; y: number };
       preview: { x: number; y: number };
     } | null>(null);
+  const lastPen = useRef<{ x: number; y: number; time: number } | null>(null),
+    lastFinish = useRef(0);
+  const finishDrawing = () => {
+    lastFinish.current = Date.now();
+    setDrag(null);
+    onFinishDraw();
+  };
+  const rightGesture = useRef<{
+    x: number;
+    y: number;
+    moved: boolean;
+    id: string | null;
+    point: number | null;
+  } | null>(null);
   const [space, setSpace] = useState(false);
   useEffect(() => {
     setDrag(null);
+    rightGesture.current = null;
+    lastPen.current = null;
   }, [cancelToken]);
   useEffect(() => {
     const up = () => setSpace(false);
@@ -227,6 +267,8 @@ export default function MapCanvas({
     drag &&
     drag.id !== "pan" &&
     drag.id !== "marquee" &&
+    drag.id !== "draw" &&
+    drag.id !== "create" &&
     drag.vertex === undefined &&
     (id === drag.id || moving.has(id))
       ? {
@@ -342,6 +384,13 @@ export default function MapCanvas({
       <MapBackground doc={doc} camera={camera} ratio={ratio} />
       <svg
         onContextMenu={(e) => e.preventDefault()}
+        onDoubleClickCapture={(e) => {
+          if (drawing || Date.now() - lastFinish.current < 600) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (drawing) finishDrawing();
+          }
+        }}
         ref={svg}
         data-gesture-active={!!drag}
         tabIndex={0}
@@ -357,8 +406,56 @@ export default function MapCanvas({
         onPointerDown={(e) => {
           e.currentTarget.focus();
           const p = point(e);
+          if (e.button === 2) {
+            const target = (e.target as Element).closest<SVGElement>(
+                "[data-map-id]",
+              ),
+              anchor = (e.target as Element).closest<SVGElement>(
+                "[data-anchor-index]",
+              );
+            rightGesture.current = {
+              x: e.clientX,
+              y: e.clientY,
+              moved: false,
+              id: target?.dataset.mapId ?? null,
+              point: anchor ? Number(anchor.dataset.anchorIndex) : null,
+            };
+          }
           if (drawing && !space && tool !== "pan" && e.button === 0) {
-            onDraw(p);
+            if (drawing.length >= 3) {
+              const first = drawing[0],
+                r = e.currentTarget.getBoundingClientRect();
+              if (
+                (Math.hypot(p.x - first.x, p.y - first.y) * r.width) /
+                  camera.span <=
+                9
+              ) {
+                finishDrawing();
+                return;
+              }
+            }
+            const previous = lastPen.current;
+            if (
+              previous &&
+              drawing.length >= 3 &&
+              Date.now() - previous.time < 600 &&
+              Math.hypot(e.clientX - previous.x, e.clientY - previous.y) < 6
+            ) {
+              finishDrawing();
+              return;
+            }
+            e.currentTarget.setPointerCapture(e.pointerId);
+            setDrag({
+              id: "draw",
+              pointer: e.pointerId,
+              additive: false,
+              independent: false,
+              screen: { x: e.clientX, y: e.clientY },
+              moved: false,
+              start: p,
+              original: p,
+              preview: p,
+            });
             return;
           }
           e.currentTarget.setPointerCapture(e.pointerId);
@@ -382,12 +479,21 @@ export default function MapCanvas({
         onPointerMove={(e) => {
           const p = point(e);
           setCursor(p);
+          if (
+            rightGesture.current &&
+            Math.hypot(
+              e.clientX - rightGesture.current.x,
+              e.clientY - rightGesture.current.y,
+            ) > 3
+          )
+            rightGesture.current.moved = true;
           if (drag && drag.pointer === e.pointerId) {
             const dx = p.x - drag.start.x,
               dy = p.y - drag.start.y;
-            if (drag.id === "pan")
-              setCamera({ ...camera, x: camera.x - dx, y: camera.y - dy });
-            else
+            if (drag.id === "pan") {
+              if (!rightGesture.current || rightGesture.current.moved)
+                setCamera({ ...camera, x: camera.x - dx, y: camera.y - dy });
+            } else
               setDrag({
                 ...drag,
                 moved:
@@ -397,21 +503,30 @@ export default function MapCanvas({
                     e.clientY - drag.screen.y,
                   ) > 3,
                 preview: {
-                  x:
-                    drag.id === "marquee" || drag.id === "create"
-                      ? p.x
-                      : Math.round(drag.original.x + dx),
-                  y:
-                    drag.id === "marquee" || drag.id === "create"
-                      ? p.y
-                      : Math.round(drag.original.y + dy),
+                  x: ["marquee", "create", "draw"].includes(drag.id)
+                    ? p.x
+                    : hundredth(drag.original.x + dx),
+                  y: ["marquee", "create", "draw"].includes(drag.id)
+                    ? p.y
+                    : hundredth(drag.original.y + dy),
                 },
               });
           }
         }}
         onPointerUp={(e) => {
           if (!drag || drag.pointer !== e.pointerId) return;
-          if (drag.id === "create") {
+          if (rightGesture.current) {
+            const right = rightGesture.current;
+            rightGesture.current = null;
+            if (!right.moved)
+              onContextMenu(e.clientX, e.clientY, right.id, right.point);
+          }
+          if (drag.id === "draw") {
+            lastPen.current = drag.moved
+              ? null
+              : { x: e.clientX, y: e.clientY, time: Date.now() };
+            onDraw(penAnchor(drag.start, drag.preview, drag.moved));
+          } else if (drag.id === "create") {
             if (drag.moved) onCreateBounds(drag.start, drag.preview);
           } else if (drag.id === "marquee") {
             const within = (p: { x: number; y: number }) =>
@@ -448,8 +563,15 @@ export default function MapCanvas({
           if (e.currentTarget.hasPointerCapture(e.pointerId))
             e.currentTarget.releasePointerCapture(e.pointerId);
         }}
-        onPointerCancel={() => setDrag(null)}
-        onLostPointerCapture={() => setDrag(null)}
+        onPointerCancel={() => {
+          lastPen.current = null;
+          setDrag(null);
+          rightGesture.current = null;
+        }}
+        onLostPointerCapture={() => {
+          setDrag(null);
+          rightGesture.current = null;
+        }}
       >
         <defs>
           <clipPath id="zone-root-clip">
@@ -522,6 +644,7 @@ export default function MapCanvas({
               key={f.id}
               clipPath={`url(#${f.parentId && f.parentId !== doc.id ? `zone-clip-${f.parentId}` : "zone-root-clip"})`}
               aria-label={f.name}
+              data-map-id={f.id}
               className={`map-field ${selections.includes(f.id) ? "selected" : ""}`}
               style={{
                 stroke: f.color ?? "#6ca6cb",
@@ -529,6 +652,7 @@ export default function MapCanvas({
               }}
               onDoubleClick={(e) => {
                 if (
+                  drawing ||
                   tool !== "direct" ||
                   f.shape !== "polygon" ||
                   f.vertices.length >= 64
@@ -604,14 +728,71 @@ export default function MapCanvas({
                 viewport,
               );
               if (!path) return null;
+              const distance = Math.hypot(q.x - p.x, q.y - p.y),
+                label = `${formatDistance(distance)} · ${formatTravelTime(distance)} at ${formatAstronomicalSpeed(REFERENCE_FLIGHT_SPEED)}`;
+              const labelId = `orbit-distance-${b.id}`;
+              const angle = Math.atan2(py(q.y) - py(p.y), px(q.x) - px(p.x));
+              const labelPath =
+                [-Math.PI / 2, Math.PI / 2, angle]
+                  .map((a) =>
+                    orbitLabelPath(px(p.x), py(p.y), radius, a, viewport),
+                  )
+                  .find(Boolean) ?? "";
               return (
-                <path
-                  key={b.id}
-                  d={path}
-                  className={
-                    parent.kind === "star" ? "planet-orbit" : "moon-orbit"
-                  }
-                />
+                <g key={b.id}>
+                  <path
+                    d={path}
+                    className={
+                      parent.kind === "star" ? "planet-orbit" : "moon-orbit"
+                    }
+                  />
+                  {b.id === selection &&
+                    diskVisible(px(q.x), py(q.y), 20, viewport) && (
+                      <g
+                        aria-label={`Planar centre distance to ${parent.name}: ${label}`}
+                      >
+                        <title>
+                          Planar centre distance; straight-line flight at
+                          constant{" "}
+                          {formatAstronomicalSpeed(REFERENCE_FLIGHT_SPEED)} (30
+                          gameplay m/s), not orbital period.
+                        </title>
+                        {labelPath ? (
+                          <>
+                            <path
+                              id={labelId}
+                              d={labelPath}
+                              fill="none"
+                              style={{ stroke: "none" }}
+                            />
+                            <text className="map-orbit-measure" dy={-7}>
+                              <textPath
+                                href={`#${labelId}`}
+                                startOffset="50%"
+                                textAnchor="middle"
+                              >
+                                {label}
+                              </textPath>
+                            </text>
+                          </>
+                        ) : (
+                          <text
+                            className="map-orbit-measure"
+                            x={Math.max(
+                              8,
+                              Math.min(1000 - label.length * 7, px(q.x) + 20),
+                            )}
+                            y={Math.max(
+                              24,
+                              Math.min(height - 12, py(q.y) - 24),
+                            )}
+                          >
+                            {label}
+                          </text>
+                        )}
+                      </g>
+                    )}
+                </g>
               );
             })}
           </g>
@@ -631,6 +812,7 @@ export default function MapCanvas({
                 key={b.id}
                 className={`map-body ${mapBodyRole(b, doc.bodies)} ${selections.includes(b.id) ? "selected" : ""}`}
                 aria-label={b.name}
+                data-map-id={b.id}
                 onPointerDown={(e) => start(e, b.id, { x: b.x, y: b.y })}
               >
                 <circle
@@ -674,7 +856,16 @@ export default function MapCanvas({
             <g
               key={s.shipId}
               className="map-ship"
+              data-map-id={s.shipId}
               onPointerDown={(e) => {
+                if (
+                  drawing ||
+                  creationShape ||
+                  space ||
+                  tool === "pan" ||
+                  e.button !== 0
+                )
+                  return;
                 e.stopPropagation();
                 onSelect(s.shipId);
               }}
@@ -700,7 +891,11 @@ export default function MapCanvas({
                     ? drag.preview
                     : { x: f.x + v.x, y: f.y + v.y };
                 return (
-                  <g key={`${f.id}:${i}`}>
+                  <g
+                    key={`${f.id}:${i}`}
+                    data-map-id={f.id}
+                    data-anchor-index={i}
+                  >
                     {i === pointIndex &&
                       (["in", "out"] as const).map((side) => {
                         const h = v[side];
@@ -754,18 +949,59 @@ export default function MapCanvas({
             pointerEvents="none"
           />
         )}
-        {drawing && (
-          <g className="map-drawing">
-            <polyline
-              points={[...drawing, cursor]
-                .map((p) => `${px(p.x)},${py(p.y)}`)
-                .join(" ")}
-            />
-            {drawing.map((p, i) => (
-              <circle key={i} cx={px(p.x)} cy={py(p.y)} r={4} />
-            ))}
-          </g>
-        )}
+        {drawing &&
+          (() => {
+            const active =
+              drag?.id === "draw"
+                ? penAnchor(drag.start, drag.preview, drag.moved)
+                : null;
+            const anchors = active ? [...drawing, active] : drawing;
+            const project = (p: { x: number; y: number }) => ({
+              x: px(p.x),
+              y: py(p.y),
+            });
+            return (
+              <g className="map-drawing">
+                <path
+                  d={drawingPath(
+                    [
+                      ...anchors,
+                      ...(!active && anchors.length ? [cursor] : []),
+                    ],
+                    project,
+                  )}
+                  fill="none"
+                />
+                {anchors.map((p, i) => (
+                  <g key={i}>
+                    {(["in", "out"] as const).map(
+                      (side) =>
+                        p[side] && (
+                          <g key={side} className="map-pen-handles">
+                            <line
+                              x1={px(p.x)}
+                              y1={py(p.y)}
+                              x2={px(p.x + p[side]!.x)}
+                              y2={py(p.y + p[side]!.y)}
+                            />
+                            <circle
+                              cx={px(p.x + p[side]!.x)}
+                              cy={py(p.y + p[side]!.y)}
+                              r={3}
+                            />
+                          </g>
+                        ),
+                    )}
+                    <circle cx={px(p.x)} cy={py(p.y)} r={i === 0 ? 7 : 4}>
+                      <title>
+                        {i === 0 ? "Click to close boundary" : "Anchor"}
+                      </title>
+                    </circle>
+                  </g>
+                ))}
+              </g>
+            );
+          })()}
       </svg>
       <div className="map-coordinates">
         X {meters(cursor.x)} · Y {meters(cursor.y)}{" "}
