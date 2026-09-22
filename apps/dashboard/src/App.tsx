@@ -1,3 +1,4 @@
+import { StudioAuthGate } from "./authoring/StudioAuthGate";
 import "@fontsource/barlow-condensed/500.css";
 import "@fontsource/barlow-condensed/600.css";
 import "@fontsource/barlow/400.css";
@@ -135,6 +136,13 @@ const currentRoute = (): Route =>
               ? "components"
               : "dashboard";
 export default function App() {
+  return (
+    <StudioAuthGate>
+      <StudioApp />
+    </StudioAuthGate>
+  );
+}
+function StudioApp() {
   const [route, setRoute] = useState<Route>(currentRoute);
   const [toolDetail, setToolDetail] = useState<(typeof tools)[number] | null>(
     null,
@@ -540,11 +548,6 @@ export default function App() {
           </Suspense>
         </WorkspaceBoundary>
       </div>
-      <footer className="app-footer">
-        <span>Sidereal Studio</span>
-        <span>Shipyard · System map · Genesis</span>
-        <span>Independent dashboard</span>
-      </footer>
     </div>
   );
 }

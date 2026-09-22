@@ -7,7 +7,8 @@ import {
   setZoneHandle,
 } from "@sidereal/sim/zone-path";
 import { mapZones, subtree, moveMapSelection } from "./map-commands";
-import { NumberField } from "./MapInspector";
+import { NumberField, CoordinateFields } from "@sidereal/ui/property-controls";
+import { InspectorIdentity } from "./InspectorIdentity";
 export function ZoneProperties({
   doc,
   zone,
@@ -31,6 +32,29 @@ export function ZoneProperties({
   return (
     <fieldset className="zone-properties">
       <legend>Zone boundary</legend>
+      <label>
+        Shape
+        <select
+          aria-label="Zone shape"
+          value={zone.shape}
+          onChange={(e) =>
+            update((z) => {
+              z.shape = e.target.value as MapZone["shape"];
+              if (z.shape === "polygon" && z.vertices.length < 3)
+                z.vertices = [
+                  { x: -z.width / 2, y: -z.length / 2 },
+                  { x: z.width / 2, y: -z.length / 2 },
+                  { x: z.width / 2, y: z.length / 2 },
+                  { x: -z.width / 2, y: z.length / 2 },
+                ];
+            })
+          }
+        >
+          <option value="box">Box</option>
+          <option value="ellipsoid">Ellipsoid</option>
+          <option value="polygon">Polygon / curved path</option>
+        </select>
+      </label>
       <label>
         Color
         <input
@@ -116,6 +140,22 @@ export function ZoneProperties({
           </button>
           {anchor && (
             <>
+              <CoordinateFields label="Anchor offset (m)">
+                {(["x", "y"] as const).map((k) => (
+                  <NumberField
+                    key={k}
+                    label={`Anchor ${k.toUpperCase()} (m)`}
+                    precision={2}
+                    step={0.01}
+                    value={anchor[k]}
+                    onChange={(n) =>
+                      update((z) => {
+                        z.vertices[point!][k] = n;
+                      })
+                    }
+                  />
+                ))}
+              </CoordinateFields>
               <label>
                 Handle coupling
                 <select
@@ -144,6 +184,9 @@ export function ZoneProperties({
                     </strong>
                     <NumberField
                       label={`${side} angle (°)`}
+                      min={-180}
+                      max={180}
+                      slider
                       value={h ? (Math.atan2(h.y, h.x) * 180) / Math.PI : 0}
                       onChange={(angle) =>
                         update((z) => {
@@ -204,35 +247,46 @@ export function GenericZoneInspector({
     });
   return (
     <aside className="map-inspector">
+      <InspectorIdentity
+        doc={doc}
+        id={zone.id}
+        name={zone.name}
+        onName={(name) => patch({ name })}
+      />
       <h2>Zone</h2>
-      <label>
-        Name
-        <input
-          aria-label="Name"
-          value={zone.name}
-          onChange={(e) => patch({ name: e.target.value })}
-        />
-      </label>
-      {(["x", "y", "height", "width", "length", "depth"] as const).map((k) => (
-        <NumberField
-          key={k}
-          label={`${k} (m)`}
-          value={zone[k]}
-          onChange={(n) =>
-            ["x", "y", "height"].includes(k)
-              ? edit((d) =>
-                  moveMapSelection(
-                    d,
-                    [zone.id],
-                    k === "x" ? n - zone.x : 0,
-                    k === "y" ? n - zone.y : 0,
-                    k === "height" ? n - zone.height : 0,
-                  ),
-                )
-              : patch({ [k]: n })
-          }
-        />
-      ))}
+      <CoordinateFields>
+        {(["x", "y"] as const).map((k) => (
+          <NumberField
+            key={k}
+            label={`${k.toUpperCase()} (m)`}
+            precision={2}
+            step={0.01}
+            value={zone[k]}
+            onChange={(n) =>
+              edit((d) =>
+                moveMapSelection(
+                  d,
+                  [zone.id],
+                  k === "x" ? n - zone.x : 0,
+                  k === "y" ? n - zone.y : 0,
+                  0,
+                ),
+              )
+            }
+          />
+        ))}
+      </CoordinateFields>
+      {(["width", "length"] as const)
+        .filter(() => zone.shape !== "polygon")
+        .map((k) => (
+          <NumberField
+            key={k}
+            label={`${k} (m)`}
+            min={1}
+            value={zone[k]}
+            onChange={(n) => patch({ [k]: n })}
+          />
+        ))}
       <label>
         Background
         <select
@@ -249,13 +303,8 @@ export function GenericZoneInspector({
         </select>
       </label>
       <NumberField
-        label="Feather (m)"
-        min={0}
-        value={zone.feather ?? 50}
-        onChange={(n) => patch({ feather: n })}
-      />
-      <NumberField
         label="Priority"
+        integer
         value={zone.priority ?? 0}
         onChange={(n) => patch({ priority: n })}
       />

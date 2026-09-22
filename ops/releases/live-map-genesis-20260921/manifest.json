@@ -1,0 +1,565 @@
+{
+  "date": "2026-09-21",
+  "status": "published and verified",
+  "authorityBefore": "3d0d994add24b945d2db847767dae1edbf1640d872bb76f441c8d652a26d3bcc",
+  "authorityAfter": "f6dcf1aa58bc44f0e551326060370cd6191d379e403609bf0954c39119b28b7b",
+  "reviewAccount": "sidereal-development-review",
+  "publicGameClientChanged": false,
+  "components": {
+    "authority": {
+      "baseline": "/root/sidereal_spacetime/.runtime/worktrees/studio-authority-20260921",
+      "candidate": "/root/sidereal-live-map-authority-candidate",
+      "files": [
+        {
+          "path": "apps/client/package.json",
+          "before": "b05c0ce93226de0f96148dd6bc0edaa5d7e331f24831e5bf0d82292931882bf0",
+          "after": "a4cb0358431db1571db48a100bb6206b9c124699abf55f92b46926c6405b2461"
+        },
+        {
+          "path": "apps/dashboard/package.json",
+          "before": "881da88d788c5e149394715c88c460061353db4591a1182730e32ae187088b35",
+          "after": "40c5072909198839d6f5440003a4011583ce141cdc3b1ac5bec97d6c82b4897a"
+        },
+        {
+          "path": "package-lock.json",
+          "before": "df73ae938f65a1ef616ca074f4dfb848711423c4723c0cf677e3d6642c6f1fb7",
+          "after": "9d9d57f1a2319e32ac5554db67c1c3927330b57b486a99690ed82d324ca61003"
+        },
+        {
+          "path": "packages/canvas-ui/package.json",
+          "before": "6494ff871bb92887cecd1ae29bdb7333987720da81ec06d44efe219bf0359662",
+          "after": "94e1b3ab0edf5960b91b80922b72aa90de8672b52e4882399a12c4b50ab4e84d"
+        },
+        {
+          "path": "packages/content/package.json",
+          "before": "c279e90ad2bdfbe115db2fcd283991eff6562df17c768bec55f5df6a99a0eeec",
+          "after": "95b6ddf20972645d4fb99807113371267cba594b5a352218db13f6de22bdcc86"
+        },
+        {
+          "path": "packages/content/src/celestial-assets.ts",
+          "before": null,
+          "after": "d0fdc8b09d87a5263e9a62aa918ef3c150cbbf894379ae5f00cf82dc50aa9043"
+        },
+        {
+          "path": "packages/render/package.json",
+          "before": "fedcce5195347e2257039147749beaf2cbcc67cbad3d805d7b042966fbed8ff1",
+          "after": "e9c138107d6b5759e9c432434fb7890276c926535bc7516aa823af65b47db952"
+        },
+        {
+          "path": "packages/sim/package.json",
+          "before": "9427d37fcc796ce6155bff148c5811ba39c77e6e2e9cf44ca5392fa716314e8e",
+          "after": "4771518b1c4858ebb72f83b398c231a19ae1b21ec1210611ac268a74f29b9148"
+        },
+        {
+          "path": "packages/world/package.json",
+          "before": "d67f58829a68f7a18b5c3596c345f59ddc2f590ff7e7c5e687160850beb72bd5",
+          "after": "f01649e2881e690adb48856be52cb58a770fc8ff22c434c721639ebe3f3003f6"
+        },
+        {
+          "path": "packages/world/src/system-map.test.ts",
+          "before": "c68e09e78a8442fb8190119fb8396f9373aca66aaa313c1e8f3366483f4a7410",
+          "after": "6dcbb348a9d7eae762bad98d82aa544a7c4b2b5f611874758dbd1cf761a5255c"
+        },
+        {
+          "path": "packages/world/src/system-map.ts",
+          "before": "94edfd0eaa84c5c5c68026bda138b16b9d524c35d01e0f008103c7386f6bd02d",
+          "after": "5ded248323e7fe7d6ec134735287bc86e4e11dfb9a8dfb41b1ba58c4c7af23e9"
+        }
+      ],
+      "baselineSourceTree": {
+        "sha256": "ffec3c28e1d210210e90b56ccb6a0fdf285042344acc447849925e8678e24bf6",
+        "count": 1180
+      },
+      "candidateSourceTree": {
+        "sha256": "9fc224fdd65d1c27de70955fd138f0f6c633c863cf6053293f8eb1210dce75f4",
+        "count": 1181
+      }
+    },
+    "studio": {
+      "baseline": "/root/sidereal-studio-dashboard-release",
+      "candidate": "/root/sidereal-live-map-dashboard-candidate",
+      "files": [
+        {
+          "path": "apps/client/package.json",
+          "before": "ce27f739f497b8b79d2eae244cbc7f6d2f39115fc7f2d41c0bd606ede28ba13c",
+          "after": "e255921e0809f317fc6eaf12e0be8a1268c7e0396f321f40122d15ba8c522c4b"
+        },
+        {
+          "path": "apps/dashboard/package.json",
+          "before": "11c02cea225f4d2fb5ae597f7aac93c20a1f554be87e617a735e11bd285b274c",
+          "after": "a3ba254a6b557a8dd7ac2635ee27829ef7ce8460e3864a451043cfe43c69d645"
+        },
+        {
+          "path": "apps/dashboard/src/App.tsx",
+          "before": "021ee3710ce137eae9e6b97d1a434caa81103c833a98ecb0c3da1dc6f3466b04",
+          "after": "48af32c80a9345bf17a701b31cd7a3a5be3d4d1bf742c71184d822f71d03a527"
+        },
+        {
+          "path": "apps/dashboard/src/authoring/StudioAuthGate.tsx",
+          "before": null,
+          "after": "77d60fdf71b8326b9864e0b9e8548b1d97a26423a1e83a966796e216a791c406"
+        },
+        {
+          "path": "apps/dashboard/src/authoring/auth.ts",
+          "before": "ff74d0ab5d1a4df8ea7d29f9522c467c96cce6459fd0c1d77aabbc920046d8d4",
+          "after": "49b2f8f685c64ab62185b621ff21c1672a44becbded9d7d0402cec68e0991d0d"
+        },
+        {
+          "path": "apps/dashboard/src/map-editor/MapBackground.tsx",
+          "before": "8f1795d316d814d06e25a91d3cd4e9e4b92e631c0f215f021483deb6ef376ba5",
+          "after": "476c633c71edeb9ce1717cf47a8b0ed8459f53eb623a9b941e38173740731bf7"
+        },
+        {
+          "path": "apps/dashboard/src/map-editor/MapCanvas.tsx",
+          "before": "759f274d8ccd3a7f66091a8106c35528ccfb46b49b61a32f10bdc24cbbb2d35b",
+          "after": "96b8f446a9d58fa9d139efb0314e4adc4f7f988fb474240408a129937250012e"
+        },
+        {
+          "path": "apps/dashboard/src/map-editor/MapEditor.tsx",
+          "before": "5d18bf1d79b9b5e23c9a0a238bb2b398e98c3e4bb6732c40be900bb92a279a68",
+          "after": "a252ebf68bed7577a9bc764d88c105a0e6a3ec99c7fa7777dee022c27e212f9f"
+        },
+        {
+          "path": "apps/dashboard/src/map-editor/MapInspector.tsx",
+          "before": "5af1ce26b1bfd76d6c2c8ad21867be7fec3b44c86abb74c73df2c03d0880da6d",
+          "after": "a3a1239499752d4730f837b0c907a70fd925c6d407d86d37fd0b887212bd83b5"
+        },
+        {
+          "path": "apps/dashboard/src/map-editor/ZoneProperties.tsx",
+          "before": "204e119d5aa5b44fcc16fc06e0d9f85376e8364a211318e50dcab962d44a41d1",
+          "after": "d6d2942f6d1d6fa495ad21251df9733a003626303e9909e203975093deae8fae"
+        },
+        {
+          "path": "apps/dashboard/src/map-editor/live-map-save.test.ts",
+          "before": null,
+          "after": "efd5f6d34ad92b491f35d2e5ede1e3053859b0a8ed9e1ba8be5ba5d1af1c3db8"
+        },
+        {
+          "path": "apps/dashboard/src/map-editor/live-map-save.ts",
+          "before": null,
+          "after": "f6dcc0939d5e290941c1c25cd693f2743111617b5abfe928ec24e930c962dcb2"
+        },
+        {
+          "path": "apps/dashboard/src/map-editor/map-editor.css",
+          "before": "5fad1852c045d17212becbbaa396efb98549df29007a5fe23b75c85186f17f49",
+          "after": "a1f17960034933ea06b9620ac39580b41088842769697a31211c26e0ef56b420"
+        },
+        {
+          "path": "apps/dashboard/src/map-editor/map-viewport.test.ts",
+          "before": null,
+          "after": "ae7bcc0f41c89406d61e61d4821e72240ac48e7629c57169a1df76ea1f847781"
+        },
+        {
+          "path": "apps/dashboard/src/map-editor/map-viewport.ts",
+          "before": null,
+          "after": "028f6dcace533bb0e3cdf8edd5a73e0cb66f6028d47ae87b2b1fe92bf016fb64"
+        },
+        {
+          "path": "apps/dashboard/src/planet-studio/LiveGenesis.tsx",
+          "before": null,
+          "after": "b72e9e3f7798930d1dd0f70bbc26279511b5341a5a17c9508b11dcc9cf9f7511"
+        },
+        {
+          "path": "apps/dashboard/src/planet-studio/PlanetStudio.tsx",
+          "before": "6b8a63e454a1b4a689b33018ba14ba987d4c3a5bd688e0671ba36cde99325771",
+          "after": "fb381426b2fc832d06e443588372c8b340d13e83b6705f8663fc5b8d194d7e51"
+        },
+        {
+          "path": "apps/dashboard/src/style.css",
+          "before": "f1f5ac8a0b5633a0467cecbedb02e4127348176cef60dcd99d22aca523816119",
+          "after": "98076404e0eab24f20a7a8f4944e8b3669d67c56c9fd686d0b7b972b9dfe0527"
+        },
+        {
+          "path": "package-lock.json",
+          "before": "c54940e61b4c9e726665aa0aaafb8f3a92da4e01a0a4cc9cdc3e6e1a27eac241",
+          "after": "2799c35b59d9bec781f3dd182041cd0c2ddde8767d715e4f3b6e7ae93d69127f"
+        },
+        {
+          "path": "packages/canvas-ui/package.json",
+          "before": "4d89463c3ea78af52eb024644574657801fa110a97644b3386010f197af98010",
+          "after": "197af8a760a1d3d8698076171579aa76104b6f81e6071642e6311c1a87868f26"
+        },
+        {
+          "path": "packages/content/package.json",
+          "before": "9fc803130138c4acabc0c3157a7e624973bd5d29b948b4b30b4df302ae242f9b",
+          "after": "18ab21d0c4e7e167a22c5f4428aa50ec224f263dfdd38e99b53405ee86a6e060"
+        },
+        {
+          "path": "packages/content/src/celestial-assets.ts",
+          "before": null,
+          "after": "d0fdc8b09d87a5263e9a62aa918ef3c150cbbf894379ae5f00cf82dc50aa9043"
+        },
+        {
+          "path": "packages/render/package.json",
+          "before": "41143ce7925e298e85cf15e55dfbec99bf05d80ffc25b47d26a436be62ea0fdd",
+          "after": "4619790ce2209385e5bee8800768469cca282dac0df78bed738cc04299b9d6ed"
+        },
+        {
+          "path": "packages/sim/package.json",
+          "before": "bf552a1e30418e92088db75e3fea35466170061fdfedc55911c6ee099cab55e6",
+          "after": "5eb427c9da579c9f1cecd89c23dcf65a196da669907078f0743fd040d9911fc1"
+        },
+        {
+          "path": "packages/ui/package.json",
+          "before": "42c115c6794959d21eeb6a94f87bfd84a2e83c2aca4af10c264285616bba4995",
+          "after": "8751d32b9c94f6ec72fd1635b4cfa4ed3b56bcbb5720b1849ed6d6fbdaee0996"
+        },
+        {
+          "path": "packages/ui/src/property-controls.tsx",
+          "before": "3e7490f66862f035126df879c56f6435656d9fa3e431f66bcfeb07c7648b6cfc",
+          "after": "fcf6c476f4fa6887a3290bbc1f0ae6c34fcfe14dd7f44eea9b3172b8e26c3ff9"
+        },
+        {
+          "path": "packages/world/package.json",
+          "before": "d67f58829a68f7a18b5c3596c345f59ddc2f590ff7e7c5e687160850beb72bd5",
+          "after": "605e7aeb98aea24e83aa1fd586900471445e57cd07bb8d30d1a2b32951980645"
+        }
+      ],
+      "baselineSourceTree": {
+        "sha256": "a0a6fae58874f5dffbb7b05582010d9c68de7c3772bee3662f0cb46ca71a1419",
+        "count": 2435
+      },
+      "candidateSourceTree": {
+        "sha256": "753bb628d7fa6342396f5f6e64e2dbf5c78d44ffee662cc8373ef4c28b827aa6",
+        "count": 2442
+      },
+      "artifact": {
+        "path": "/root/sidereal-live-map-dashboard-candidate/apps/dashboard/dist",
+        "sha256": "48779bf9f82780ac9c64f49136f17ff6c601d6da6ce1c32625821dd6b3db0993",
+        "count": 3552,
+        "publicBuildConfig": {
+          "database": "sidereal-spacetime-dev",
+          "databaseUrl": "http://127.0.0.1:3100",
+          "clientPort": 5173,
+          "publicClientUrl": "https://sidereal.dastari.net",
+          "dashboardPort": 5174,
+          "allowedHosts": [
+            "sidereal.tail7a58a6.ts.net"
+          ],
+          "authoringClientId": "sidereal-shipyard",
+          "authIssuer": "https://auth.dastari.net/realms/dastari",
+          "authClientId": "sidereal-dashboard",
+          "authOrigin": "https://sidereal.tail7a58a6.ts.net:8445"
+        }
+      },
+      "preservedPublicFiles": [
+        {
+          "path": "favicon.svg",
+          "sha256": "be8bf7e9b6406d0e29459b0cd99798f383080c0cea2b4031868ba02e51b4cb8e"
+        },
+        {
+          "path": "map-snapshots/gas-r005.webp",
+          "sha256": "d23d267ca3bb8c9a4a6087da3892b0b41fe960de30d56525756c77053b72af22"
+        },
+        {
+          "path": "map-snapshots/volcanic-moon-2-r006-alpha-v1.webp",
+          "sha256": "5b437fe23e234abbaae93585084cf337234af93a108e691f153145196e8d1bba"
+        },
+        {
+          "path": "map-snapshots/crystal-moon-2-r010.webp",
+          "sha256": "bcc13477ca40748d3238984ef7f714a65d2824641e4a0c0762e62025681f54f0"
+        },
+        {
+          "path": "map-snapshots/crystal-r013-alpha-v1.webp",
+          "sha256": "449ba934b01d44f95e54756f49d80d4af3e4f7fcf59b61a2e4712becdac0e877"
+        },
+        {
+          "path": "map-snapshots/toxic-moon-2-r001-alpha-v1.webp",
+          "sha256": "88ef724ff59a26cb5c3649bb0a3b1c7e0f7b4fcfbe2d11ae5aef4c2ebba05b52"
+        },
+        {
+          "path": "map-snapshots/crystal-moon-1-r010.webp",
+          "sha256": "21058ede326130386cb99bdea2c29f2fa24236f67b4ba7993a87578165f5f5fb"
+        },
+        {
+          "path": "map-snapshots/volcanic-r023.webp",
+          "sha256": "9919c707cd22db2fbb42303a3093ad7444efde7bfd152dd097e898855a2ab6c8"
+        },
+        {
+          "path": "map-snapshots/ice-moon-2-r003-alpha-v1.webp",
+          "sha256": "2d1821bc8946abd654346c52992a321b45d3bc4636f84199839bdb7122e502c8"
+        },
+        {
+          "path": "map-snapshots/ocean-moon-1-r001.webp",
+          "sha256": "d04c6efb03755c26b8ce1758b160918497134d0afb9217a24acd91b30832f4b8"
+        },
+        {
+          "path": "map-snapshots/toxic-r007-alpha-v1.webp",
+          "sha256": "02823c46629d502ea3393591b3b3bea7b05541fc19808043d7724671f1b48866"
+        },
+        {
+          "path": "map-snapshots/gas-giant-moon-2-r001-alpha-v1.webp",
+          "sha256": "49e3c12560e75aaf07e2e493a72b30cee0513ab1dda146df4131838dbee79d17"
+        },
+        {
+          "path": "map-snapshots/gas-giant-moon-3-r005-alpha-v1.webp",
+          "sha256": "3556af8ec99a92f0ef82510dd67a6748aa26bcf28df10059b599f702bc1660c9"
+        },
+        {
+          "path": "map-snapshots/desert-moon-1-r001-alpha-v1.webp",
+          "sha256": "8a2f98a206a5ed40eba648d5bf494b635304e7064c299e52ecff490f3a3bc1d8"
+        },
+        {
+          "path": "map-snapshots/rocky-moon-r002.webp",
+          "sha256": "430e6e245292ad5c50802456242eac7695edf0f3d753de9a744cd103e269eb1b"
+        },
+        {
+          "path": "map-snapshots/yellow-main-sequence-r013.webp",
+          "sha256": "14369e5be9054f6eb4739638f47e32e87ab2c0357cf9bad401a8cf17732c05a5"
+        },
+        {
+          "path": "map-snapshots/temperate-moon-1-r002-alpha-v1.webp",
+          "sha256": "d42e56b04c27c440f7dac8b5bbe4d83e4fab5c23dc8da2daef527bd79d5322ae"
+        },
+        {
+          "path": "map-snapshots/crystal-moon-2-r010-alpha-v1.webp",
+          "sha256": "34f6fcf65625cdd50a3df365e304379dee4645a907b49ea3d20533ba56fc3aa6"
+        },
+        {
+          "path": "map-snapshots/manifest.json",
+          "sha256": "16f7d1659baeb3b56d77b0c8e20b05f509747230ae02cfddf96e2de5fb925477"
+        },
+        {
+          "path": "map-snapshots/ocean-moon-2-r002-alpha-v1.webp",
+          "sha256": "3835280b3445539a3fd4fcac7e7e0b4248c1c0beaad41850fd2979c2344c2870"
+        },
+        {
+          "path": "map-snapshots/temperate-moon-1-r002.webp",
+          "sha256": "0632d2b3e1b8abed2a63fc7eee209a107be2171e4fb5ff34d5e691327e80a578"
+        },
+        {
+          "path": "map-snapshots/toxic-r007.webp",
+          "sha256": "1ece8eee30fecc2b377785916a5de4ad8c8f33df7334850b63fe564f56678169"
+        },
+        {
+          "path": "map-snapshots/rocky-r010.webp",
+          "sha256": "9ad60abf63c56b0b311bc92d1d0b85ff0f3a0f8dfd9988e68f871e5bedf8e7ff"
+        },
+        {
+          "path": "map-snapshots/desert-moon-1-r001.webp",
+          "sha256": "430e154eaf382ae6dca9973f1731c077ecff214b77413f8a89bfb7ae51e5f04b"
+        },
+        {
+          "path": "map-snapshots/ice-moon-1-r002-alpha-v1.webp",
+          "sha256": "861446b29caecfc20d159d1f8429e16c760a4ba9e8df7e75e577571857ba449a"
+        },
+        {
+          "path": "map-snapshots/desert-moon-2-r001.webp",
+          "sha256": "396e0c90e31fad6319ad440b26b9a2740932d18504e48c439bc691c264db3c2a"
+        },
+        {
+          "path": "map-snapshots/ice-r026-alpha-v1.webp",
+          "sha256": "0e76cf131c57264c460e54cd8043a37d0f28b954d9141446a98e3f593ce0ab24"
+        },
+        {
+          "path": "map-snapshots/gas-giant-moon-1-r005-alpha-v1.webp",
+          "sha256": "c4532fbb3b5eb2e0efadc5a19576ab625c868895547397b15bf1865f32a629ad"
+        },
+        {
+          "path": "map-snapshots/ocean-r007.webp",
+          "sha256": "dbfd5a7f658dace9b8a1f8ed9521d1df95915c04dc3769e9658a160ff7c9e362"
+        },
+        {
+          "path": "map-snapshots/ocean-moon-1-r001-alpha-v1.webp",
+          "sha256": "d584263fc613207a5fe389e33587ca68f649e7cf7e3bfc5b7eaa0296e5bcd83c"
+        },
+        {
+          "path": "map-snapshots/temperate-moon-2-r002.webp",
+          "sha256": "c00f444aae59fb747faf29f26dbca22d808c4f1d5bf5ab8eb4467c2184e4b262"
+        },
+        {
+          "path": "map-snapshots/toxic-moon-1-r001.webp",
+          "sha256": "6e870c7caa11842b880943d57d80c91f6943bb10920678456a7a2cd9f3fbf80e"
+        },
+        {
+          "path": "map-snapshots/ice-moon-1-r002.webp",
+          "sha256": "d68913a4c373a2d0cf745bd1d8381f5843e6e392d12e7ba5e1b9a82d6f207ba6"
+        },
+        {
+          "path": "map-snapshots/ocean-moon-2-r002.webp",
+          "sha256": "44cec75637f896d8879d99e22bd3320aa1b6884d584010994ddc0ceccffa5147"
+        },
+        {
+          "path": "map-snapshots/rocky-r010-alpha-v1.webp",
+          "sha256": "ee85c8a4128aa09da6655dbff57bf4ecb8f06c0709b17ebf7c75c266a0e668a0"
+        },
+        {
+          "path": "map-snapshots/desert-moon-2-r001-alpha-v1.webp",
+          "sha256": "a633b200967b5d4eea709bd515ff8ea7ad6f1e3a629e076baab8288e6aef7687"
+        },
+        {
+          "path": "map-snapshots/toxic-moon-2-r001.webp",
+          "sha256": "d535706276d3c5e1903692705113a955c0445f622dac2c51fa17a1de8176ae5d"
+        },
+        {
+          "path": "map-snapshots/temperate-r003-alpha-v1.webp",
+          "sha256": "657b635e9b21c00fa618ccecd7473ae93ef866729f495355153724c197c40a2a"
+        },
+        {
+          "path": "map-snapshots/toxic-moon-1-r001-alpha-v1.webp",
+          "sha256": "e385354482ca53be7f92571a57fec972ea23976f981c8b4cdc50f8b2e11b1ae2"
+        },
+        {
+          "path": "map-snapshots/gas-giant-moon-3-r005.webp",
+          "sha256": "7eb2bddb0fb329005d3958dc3af7afd44b78c29ef17e238bd58cf5408fd4d7d8"
+        },
+        {
+          "path": "map-snapshots/desert-r014-alpha-v1.webp",
+          "sha256": "8f70dee5f65012a307ec24c391bab182e51b5873fa9845bcf8e2ae5c1426d990"
+        },
+        {
+          "path": "map-snapshots/rocky-moon-2-r001-alpha-v1.webp",
+          "sha256": "9f4ae68495254d154df854f3789533746b323ef045330ade4a3318565913c77c"
+        },
+        {
+          "path": "map-snapshots/volcanic-moon-2-r006.webp",
+          "sha256": "e0455f09d9031d47c545ff7b7759d7f6f02e0ae6165fd4e1e8354e9a81663bd0"
+        },
+        {
+          "path": "map-snapshots/volcanic-moon-1-r003-alpha-v1.webp",
+          "sha256": "f5afc0af2d3eecf0ec7818e1ca179ac61510a1b4e5643f577e42c5a737b328ac"
+        },
+        {
+          "path": "map-snapshots/gas-giant-moon-2-r001.webp",
+          "sha256": "bad67de2aa83e7217b7330a55d840e8404411e308a3a49c947583f7bb0866ffc"
+        },
+        {
+          "path": "map-snapshots/gas-giant-moon-1-r005.webp",
+          "sha256": "de15872c3961328a883803f93f90404cf483eb943e2e216c01efcb2dddd88a24"
+        },
+        {
+          "path": "map-snapshots/gas-r005-alpha-v1.webp",
+          "sha256": "e2b14c4faa4d3ca672ab5d6fc5b04e81d6ff423e33b6dd8ec34d97ef9aa23361"
+        },
+        {
+          "path": "map-snapshots/temperate-r003.webp",
+          "sha256": "e858861852b87d3dcedb588672bdf0868461293a6b3548f27393666b7e64cc48"
+        },
+        {
+          "path": "map-snapshots/volcanic-r023-alpha-v1.webp",
+          "sha256": "92ace291bd4e393c42ebf91000c469247b3097232edd55214e37c9d24cd3885d"
+        },
+        {
+          "path": "map-snapshots/rocky-moon-r002-alpha-v1.webp",
+          "sha256": "c2c348f33b0402b8dc07ccf97246dc3f78724ea3092d14dd94b7237f2de83d8b"
+        },
+        {
+          "path": "map-snapshots/crystal-r013.webp",
+          "sha256": "66a76bcb90169d7bee90ec2c39e417486e0828f619c2c0b85f9865f462dfea8a"
+        },
+        {
+          "path": "map-snapshots/ice-r026.webp",
+          "sha256": "e1d91dc1ddaded7ebee933af7f133760b12205259b23fe138bcdef4477658ffa"
+        },
+        {
+          "path": "map-snapshots/volcanic-moon-1-r003.webp",
+          "sha256": "c57c53526b5884b692f193f8f2affd2f2cdbd91fe35b8ebc385813e4d12ec53d"
+        },
+        {
+          "path": "map-snapshots/temperate-moon-2-r002-alpha-v1.webp",
+          "sha256": "df8895ac17b8019c7418e1c878eb64075882a2378b0817444a13f9a0251dea90"
+        },
+        {
+          "path": "map-snapshots/rocky-moon-2-r001.webp",
+          "sha256": "4e0da9324b7805144e10ac4f5d2f36fac9510e9e1ea3fd6d258480ce630a16b4"
+        },
+        {
+          "path": "map-snapshots/desert-r014.webp",
+          "sha256": "77e000496d1ec88030880fa65f439586615b3ea1fc313329165e35130ecf980a"
+        },
+        {
+          "path": "map-snapshots/yellow-main-sequence-r013-alpha-v1.webp",
+          "sha256": "436beb1a3e82747769d71ed279c15f5870d58c5fa184bb43ec8d0c8f6ad5013f"
+        },
+        {
+          "path": "map-snapshots/ocean-r007-alpha-v1.webp",
+          "sha256": "680674023592ea5ea348e7ba04674c90b0a43411e8b7d0e5700b12dd832fc542"
+        },
+        {
+          "path": "map-snapshots/crystal-moon-1-r010-alpha-v1.webp",
+          "sha256": "a064a433c8caa355ea2bdd3bc8f789aa04a418861a0769ef1dca6271a2e10e23"
+        },
+        {
+          "path": "map-snapshots/ice-moon-2-r003.webp",
+          "sha256": "e6e35fbe64983c6e2c220330a225879d0d3156cbe947cad53f8b6f66666658a0"
+        }
+      ]
+    }
+  },
+  "validation": {
+    "schema": {
+      "equal": true,
+      "differentSections": [],
+      "tables": 91,
+      "reducers": 58,
+      "views": 57
+    },
+    "mainTests": {
+      "suites": 300,
+      "passed": 1505,
+      "skipped": 2
+    },
+    "composedAuthorityTests": {
+      "existingPassed": 364,
+      "genesisPassed": 7
+    },
+    "pythonReviewTests": 26,
+    "authenticatedIsolatedSaveReload": true,
+    "authenticatedGenesisSameUuid": true,
+    "replayStaleRevocationExpiry": true,
+    "accountRetained": true,
+    "temporaryAdminRemoved": true,
+    "fullBuild": true,
+    "composedStudioBuild": true,
+    "ci": "Inherited missing scripts/art_library/requirements.txt blocks CI setup; local docs gate has inherited missing links",
+    "statePreservation": {
+      "inventory_item": {
+        "equal": true,
+        "beforeRows": 21,
+        "afterRows": 21
+      },
+      "system_map_definition": {
+        "equal": true,
+        "beforeRows": 0,
+        "afterRows": 0
+      },
+      "construction_grant": {
+        "equal": true,
+        "beforeRows": 0,
+        "afterRows": 0
+      },
+      "character": {
+        "equal": true,
+        "beforeRows": 3,
+        "afterRows": 3
+      },
+      "ship": {
+        "equal": true,
+        "beforeRows": 3,
+        "afterRows": 3
+      },
+      "system_body": {
+        "equal": true,
+        "beforeRows": 33,
+        "afterRows": 33
+      }
+    },
+    "inventoryReview": "All five inventories independently verified using explicit UTF-8 byte lexical order. Final Studio inventory additionally preserves 60 unchanged public files; all candidate/live file bytes verified."
+  },
+  "inventoryAlgorithm": "SHA256 of UTF-8-byte-lexically sorted relative path + NUL + file SHA256 + newline. Source scope: apps, packages, scripts, docs/public, root JSON/JS/TS configs; excludes generated public/dist, dependencies, caches, private dev.toml. Inventories accompany manifest.",
+  "implementationPr": "https://github.com/Dastari/sidereal_spacetime/pull/19",
+  "mergeCommit": "a695c1062b3db53193bcfc9cbc71932f26a2eb70",
+  "deployment": {
+    "authoritySource": "/root/sidereal-live-map-authority-candidate",
+    "authorityDatabase": "sidereal-spacetime-dev",
+    "authorityDatabaseIdentity": "c2005c24147323197826efa22f24e30d2d99a93a5a5091949f2ad25fa2127572",
+    "deleteData": "never",
+    "artifactRebuiltHashVerified": true,
+    "studioSource": "/root/sidereal-studio-dashboard-release",
+    "studioOrigin": "https://sidereal.tail7a58a6.ts.net:8445",
+    "studioPort": 5174,
+    "sourceAndCompleteArtifactVerified": true,
+    "publicSignedOutGateVerified": true,
+    "publicGameHtmlUnchanged": true
+  }
+}
