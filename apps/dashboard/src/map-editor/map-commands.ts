@@ -1,5 +1,6 @@
 import {
   moveMapBody,
+  mapBodyRole,
   type SystemMapDocument,
 } from "@sidereal/content/system-map";
 export const mapZones = (doc: SystemMapDocument) => [
@@ -101,4 +102,44 @@ export function zoneOutline(doc: SystemMapDocument) {
     .forEach((z) => visit(z, 0));
   all.forEach((z) => visit(z, 0));
   return result;
+}
+
+/** Reparenting changes the relationship only; world transforms and IDs stay intact. */
+export function reparentMapObject(
+  doc: SystemMapDocument,
+  id: string,
+  parentId: string,
+) {
+  if (id === parentId) throw Error("An object cannot contain itself.");
+  const body = doc.bodies.find((b) => b.id === id);
+  if (body) {
+    if (body.kind === "star") throw Error("Stars remain at the system root.");
+    const parent = doc.bodies.find((b) => b.id === parentId);
+    if (
+      parentId !== doc.id &&
+      (!parent ||
+        mapBodyRole(parent, doc.bodies) === "moon" ||
+        (mapBodyRole(body, doc.bodies) === "moon" && parent.kind !== "planet"))
+    )
+      throw Error(
+        "Drop a planet on a star, or a moon on a planet in this system.",
+      );
+    const seen = new Set([id]);
+    let current = parent;
+    while (current) {
+      if (seen.has(current.id))
+        throw Error("An object cannot be moved into its own descendants.");
+      seen.add(current.id);
+      current = doc.bodies.find((b) => b.id === current?.parentId);
+    }
+    body.parentId = parent?.id ?? null;
+    return;
+  }
+  const zone = mapZones(doc).find((z) => z.id === id);
+  if (!zone) throw Error("Live ships cannot be reassigned in the editor.");
+  if (parentId !== doc.id && !mapZones(doc).some((z) => z.id === parentId))
+    throw Error("Drop a zone on a zone or its system.");
+  if (subtree(doc, [id]).has(parentId))
+    throw Error("A zone cannot contain its ancestor.");
+  zone.parentId = parentId;
 }

@@ -12,7 +12,7 @@ import {
   type SystemMapDocument,
 } from "@sidereal/content/system-map";
 import { readSystemMap } from "@sidereal/sim/system-map";
-import { mapZones } from "./map-commands";
+import { mapZones, reparentMapObject } from "./map-commands";
 import type { MapShip } from "./MapCanvas";
 
 type Node = {
@@ -34,6 +34,10 @@ export default function UniverseTree({
   onFrame,
   onLoad,
   busy,
+  writable,
+  onReparent,
+  onContextMenu,
+  onDropError,
 }: {
   doc: SystemMapDocument;
   maps: { id: string; documentJson: string }[];
@@ -44,8 +48,14 @@ export default function UniverseTree({
   onFrame: (id: string) => void;
   onLoad: (id: string, selectedId?: string) => void;
   busy: boolean;
+  writable: boolean;
+  onReparent: (id: string, parentId: string) => void;
+  onContextMenu: (x: number, y: number, id: string) => void;
+  onDropError: (message: string) => void;
 }) {
   const [closed, setClosed] = useState<Set<string>>(new Set());
+  const [dragged, setDragged] = useState<string | null>(null),
+    [over, setOver] = useState<string | null>(null);
   const query = search.trim().toLowerCase();
   const toggle = (id: string, collapse: boolean) =>
     setClosed((old) => {
@@ -143,6 +153,24 @@ export default function UniverseTree({
             : n.systemId !== doc.id
               ? Globe2
               : Circle;
+    let validDrop = false;
+    if (dragged && n.systemId === doc.id && writable && !busy) {
+      try {
+        reparentMapObject(
+          {
+            ...doc,
+            bodies: doc.bodies.map((b) => ({ ...b })),
+            fields: doc.fields.map((f) => ({ ...f })),
+            zones: doc.zones?.map((z) => ({ ...z })),
+          },
+          dragged,
+          n.id,
+        );
+        validDrop = true;
+      } catch {
+        /* Invalid targets retain their normal styling. */
+      }
+    }
     return (
       <li key={`${n.systemId}:${n.id}`} role="none">
         <div
@@ -151,6 +179,69 @@ export default function UniverseTree({
           aria-label={`${n.name} (${n.kind})`}
           aria-selected={selection.includes(n.id)}
           aria-expanded={n.children.length ? expanded : undefined}
+          draggable={
+            writable &&
+            !busy &&
+            n.systemId === doc.id &&
+            n.id !== doc.id &&
+            n.kind !== "Live ship" &&
+            n.kind !== "star"
+          }
+          data-drop-target={over === n.id && validDrop}
+          onDragStart={(e) => {
+            e.stopPropagation();
+            e.dataTransfer.setData(
+              "application/x-sidereal-map-object",
+              JSON.stringify({ id: n.id, systemId: n.systemId }),
+            );
+            e.dataTransfer.effectAllowed = "move";
+            setDragged(n.id);
+          }}
+          onDragEnd={() => {
+            setDragged(null);
+            setOver(null);
+          }}
+          onDragOver={(e) => {
+            if (
+              !e.dataTransfer.types.includes(
+                "application/x-sidereal-map-object",
+              )
+            )
+              return;
+            e.preventDefault();
+            e.stopPropagation();
+            e.dataTransfer.dropEffect = validDrop ? "move" : "none";
+            setOver(n.id);
+          }}
+          onDragLeave={() => setOver(null)}
+          onDrop={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setOver(null);
+            setDragged(null);
+            if (!writable || busy) return;
+            try {
+              const source = JSON.parse(
+                e.dataTransfer.getData("application/x-sidereal-map-object"),
+              );
+              if (source.systemId !== doc.id || n.systemId !== doc.id)
+                throw Error(
+                  "Move between parents inside the current system. Cross-system transfer is not supported.",
+                );
+              if (typeof source.id !== "string")
+                throw Error("Invalid dragged object.");
+              onReparent(source.id, n.id);
+            } catch (error) {
+              onDropError(String(error));
+            }
+          }}
+          onContextMenu={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            e.currentTarget.focus();
+            if (n.systemId === doc.id)
+              onContextMenu(e.clientX, e.clientY, n.id);
+          }}
           data-node-id={n.id}
           data-parent-id={n.parent ?? (depth ? n.systemId : "universe")}
           className="map-tree-row"
@@ -162,6 +253,15 @@ export default function UniverseTree({
           }}
           onDoubleClick={() => onFrame(n.id)}
           onKeyDown={(e) => {
+            if (e.key === "ContextMenu" || (e.shiftKey && e.key === "F10")) {
+              e.preventDefault();
+              e.stopPropagation();
+              if (n.systemId === doc.id) {
+                const r = e.currentTarget.getBoundingClientRect();
+                onContextMenu(r.left + 15, r.bottom, n.id);
+              }
+              return;
+            }
             if (
               [
                 "ArrowDown",

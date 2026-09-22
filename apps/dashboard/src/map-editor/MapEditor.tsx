@@ -20,7 +20,10 @@ import {
   X,
   Settings2,
 } from "lucide-react";
-import type { ReactNode } from "react";
+import { MapToolButton as IconButton } from "./MapToolButton";
+import { MapContextMenu, type MapMenuAction } from "./MapContextMenu";
+import { appendAnchor, drawnBoundary } from "./map-drawing";
+import type { ZoneAnchor } from "@sidereal/content/zones";
 import UniverseTree from "./UniverseTree";
 import { editorCommand, editorKeyTarget } from "@sidereal/ui/editor-commands";
 import { newMapZone } from "@sidereal/content/zones";
@@ -30,6 +33,7 @@ import {
   moveMapSelection,
   duplicateMapSelection,
   deleteMapSelection,
+  reparentMapObject,
 } from "./map-commands";
 import { GenericZoneInspector } from "./ZoneProperties";
 import { systemCenter } from "@sidereal/sim/space-background";
@@ -142,13 +146,13 @@ export function SystemMapWorkspace({
     [camera, setCamera] = useState<Camera>(() =>
       fit(readSystemMap(initialRow.documentJson)),
     ),
-    [drawing, setDrawing] = useState<{ x: number; y: number }[] | null>(null),
+    [drawing, setDrawing] = useState<ZoneAnchor[] | null>(null),
     [creation, setCreation] = useState<{
       kind: "zone" | "field";
       shape: "box" | "ellipsoid" | "polygon";
       parentId: string;
     } | null>(null),
-    [drawFuture, setDrawFuture] = useState<{ x: number; y: number }[]>([]),
+    [drawFuture, setDrawFuture] = useState<ZoneAnchor[]>([]),
     [layers, setLayers] = useState({
       bodies: true,
       ships: true,
@@ -160,6 +164,12 @@ export function SystemMapWorkspace({
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
     [saved, setSaved] = useState("");
+  const [menu, setMenu] = useState<{
+    x: number;
+    y: number;
+    id: string | null;
+    point: number | null;
+  } | null>(null);
   const selected = selection.at(-1) ?? "";
   const setSelected = (id: string, additive = false) => {
     setPointIndex(null);
@@ -330,6 +340,7 @@ export function SystemMapWorkspace({
     });
     setDrawing(shape === "polygon" ? [] : null);
     setDrawFuture([]);
+    setLayers((old) => ({ ...old, fields: true }));
     setTool("select");
   };
   const createBounds = (
@@ -337,6 +348,13 @@ export function SystemMapWorkspace({
     b: { x: number; y: number },
   ) => {
     if (!creation || creation.shape === "polygon") return;
+    if (!writable || live.status !== "ready" || busy) {
+      setError(
+        "Reconnect with write access to finish this boundary. Your unfinished path is retained.",
+      );
+      return;
+    }
+
     const z =
       creation.kind === "field"
         ? newAsteroidField(`field-${crypto.randomUUID()}`)
@@ -366,6 +384,13 @@ export function SystemMapWorkspace({
   };
   const finish = () => {
     if (!drawing || drawing.length < 3) return;
+    if (!writable || live.status !== "ready" || busy) {
+      setError(
+        "Reconnect with write access to finish this boundary. Your unfinished path is retained.",
+      );
+      return;
+    }
+
     const f =
       creation?.kind === "field"
         ? newAsteroidField(`field-${crypto.randomUUID()}`)
@@ -375,22 +400,33 @@ export function SystemMapWorkspace({
     f.height = parent?.height ?? 0;
     f.depth = parent?.depth ?? 500;
     f.shape = "polygon";
-    const xs = drawing.map((p) => p.x),
-      ys = drawing.map((p) => p.y);
-    f.x = (Math.min(...xs) + Math.max(...xs)) / 2;
-    f.y = (Math.min(...ys) + Math.max(...ys)) / 2;
-    f.width = Math.max(...xs) - Math.min(...xs);
-    f.length = Math.max(...ys) - Math.min(...ys);
-    f.vertices = drawing.map((p) => ({ x: p.x - f.x, y: p.y - f.y }));
-    if ("density" in f)
-      f.density = Math.min(
-        f.density as number,
-        128e9 / Math.max(1, fieldVolume(f as AsteroidField)),
-      );
-    edit((d) => {
-      if ("density" in f) d.fields.push(f as AsteroidField);
-      else (d.zones ??= []).push(f);
-    });
+    try {
+      Object.assign(f, drawnBoundary(drawing));
+    } catch (e) {
+      setError(String(e));
+      return;
+    }
+    try {
+      if ("density" in f)
+        f.density = Math.min(
+          f.density as number,
+          128e9 / Math.max(1, fieldVolume(f as AsteroidField)),
+        );
+    } catch (e) {
+      setError(String(e));
+      return;
+    }
+    const candidate = clone(doc);
+    if ("density" in f) candidate.fields.push(f as AsteroidField);
+    else (candidate.zones ??= []).push(f);
+    try {
+      validateSystemMap(candidate);
+    } catch (e) {
+      setError(`Boundary needs adjustment: ${String(e)}`);
+      return;
+    }
+    edit((d) => Object.assign(d, candidate));
+    setTool("direct");
     setSelected(f.id);
     setDrawing(null);
     setCreation(null);
@@ -443,6 +479,190 @@ export function SystemMapWorkspace({
     setSelection(ids);
     setPointIndex(null);
   };
+  const frame = (id: string) => {
+    if (id === doc.id) {
+      setCamera(fit(doc));
+      return;
+    }
+    const body = doc.bodies.find((b) => b.id === id),
+      zone = mapZones(doc).find((z) => z.id === id),
+      target = body ?? zone ?? ships.find((s) => s.shipId === id);
+    if (target)
+      setCamera({
+        x: target.x,
+        y: target.y,
+        span: body
+          ? Math.max(500, body.radius * 10)
+          : zone
+            ? Math.max(zone.width, zone.length, 1000) * 2
+            : 500,
+      });
+  };
+  const openMenu = (
+    x: number,
+    y: number,
+    id: string | null,
+    point: number | null = null,
+  ) => {
+    if (creation) return;
+    if (id && !selection.includes(id)) setSelected(id);
+    setPointIndex(point);
+    setMenu({ x, y, id, point });
+  };
+  const reparent = (id: string, parentId: string) => {
+    if (!writable || busy) return;
+    try {
+      const next = clone(doc);
+      reparentMapObject(next, id, parentId);
+      validateSystemMap(next);
+      edit((d) => Object.assign(d, next));
+      setSelected(id);
+    } catch (e) {
+      setError(String(e));
+    }
+  };
+  const menuZone = menu?.id
+    ? mapZones(doc).find((z) => z.id === menu.id)
+    : undefined;
+  const menuPoint = menu?.point ?? null;
+  const actions: MapMenuAction[] = menu?.id
+    ? [
+        { label: "Frame selection", action: () => frame(menu.id!) },
+        {
+          label: "Rename",
+          disabled:
+            !writable ||
+            busy ||
+            (!menuZone &&
+              !doc.bodies.some((b) => b.id === menu.id) &&
+              menu.id !== doc.id),
+          action: () => {
+            setSelected(menu.id!);
+            requestAnimationFrame(() => {
+              const input = document.querySelector<HTMLInputElement>(
+                '.map-inspector-identity input[aria-label="Name"]',
+              );
+              input?.focus();
+              input?.select();
+            });
+          },
+        },
+        ...(menuZone
+          ? [
+              {
+                label: "Edit boundary points",
+                action: () => {
+                  setSelected(menuZone.id);
+                  setTool("direct");
+                },
+              },
+              {
+                label: "Duplicate zone",
+                disabled: !writable || busy,
+                action: duplicate,
+              },
+              {
+                label: "Delete zone",
+                disabled: !writable || busy,
+                action: () => remove(true),
+              },
+            ]
+          : []),
+        ...(menuZone?.shape === "polygon" && menuPoint !== null
+          ? [
+              {
+                label: "Make point smooth",
+                disabled: !writable || busy,
+                action: () =>
+                  edit((d) => {
+                    const v = mapZones(d).find(
+                        (z) => z.id === menuZone.id,
+                      )!.vertices,
+                      i = menuPoint,
+                      a = v[i],
+                      before = v[(i + v.length - 1) % v.length],
+                      after = v[(i + 1) % v.length];
+                    a.mode = "mirrored";
+                    setZoneHandle(a, "out", {
+                      x: (after.x - before.x) / 6,
+                      y: (after.y - before.y) / 6,
+                    });
+                  }),
+              },
+              {
+                label: "Make point a corner",
+                disabled: !writable || busy,
+                action: () =>
+                  edit((d) => {
+                    const a = mapZones(d).find((z) => z.id === menuZone.id)!
+                      .vertices[menuPoint];
+                    delete a.in;
+                    delete a.out;
+                    a.mode = "corner";
+                  }),
+              },
+              {
+                label: "Insert point after",
+                disabled: !writable || busy || menuZone.vertices.length >= 64,
+                action: () => {
+                  edit((d) =>
+                    splitZoneEdge(
+                      mapZones(d).find((z) => z.id === menuZone.id)!.vertices,
+                      menuPoint,
+                    ),
+                  );
+                  setPointIndex(menuPoint + 1);
+                },
+              },
+              {
+                label: "Delete point",
+                disabled: !writable || busy || menuZone.vertices.length <= 3,
+                action: () => {
+                  edit((d) =>
+                    mapZones(d)
+                      .find((z) => z.id === menuZone.id)!
+                      .vertices.splice(menuPoint, 1),
+                  );
+                  setPointIndex(null);
+                },
+              },
+            ]
+          : []),
+        { label: "Deselect", action: () => setSelected("") },
+      ]
+    : [
+        {
+          label: "Draw polygon / curve zone",
+          disabled: !writable || busy,
+          action: () => beginDraw("zone", "polygon"),
+        },
+        {
+          label: "Draw polygon / curve field",
+          disabled: !writable || busy,
+          action: () => beginDraw("field", "polygon"),
+        },
+        {
+          label: "Draw box zone",
+          disabled: !writable || busy,
+          action: () => beginDraw("zone", "box"),
+        },
+        {
+          label: "Draw ellipse zone",
+          disabled: !writable || busy,
+          action: () => beginDraw("zone", "ellipsoid"),
+        },
+        {
+          label: "Draw ellipse field",
+          disabled: !writable || busy,
+          action: () => beginDraw("field", "ellipsoid"),
+        },
+        {
+          label: "Draw box field",
+          disabled: !writable || busy,
+          action: () => beginDraw("field", "box"),
+        },
+        { label: "Fit system", action: () => setCamera(fit(doc)) },
+      ];
   return (
     <main
       className="system-map-editor"
@@ -455,6 +675,12 @@ export function SystemMapWorkspace({
       }}
       onKeyDown={(e) => {
         if (editorKeyTarget(e.target) || busy) return;
+        if (e.key === "ContextMenu" || (e.shiftKey && e.key === "F10")) {
+          e.preventDefault();
+          const r = (e.target as Element).getBoundingClientRect();
+          openMenu(r.left + 20, r.top + 20, selected || null, pointIndex);
+          return;
+        }
         if (drawing && e.key === "Enter") {
           e.preventDefault();
           finish();
@@ -543,6 +769,14 @@ export function SystemMapWorkspace({
           });
       }}
     >
+      {menu && (
+        <MapContextMenu
+          x={menu.x}
+          y={menu.y}
+          actions={actions}
+          onClose={() => setMenu(null)}
+        />
+      )}
       {(error || live.error) && (
         <p role="alert" className="map-error">
           {error || live.error}
@@ -556,172 +790,213 @@ export function SystemMapWorkspace({
             role="toolbar"
             aria-label="Map commands"
           >
-            <IconButton
-              label="Undo (Ctrl+Z)"
-              disabled={!draft.past.length || busy}
-              onClick={() => undo()}
+            <div
+              className="map-tool-group"
+              role="group"
+              aria-label="Document and history"
             >
-              <Undo2 />
-            </IconButton>
-            <IconButton
-              label="Redo (Ctrl+Shift+Z)"
-              disabled={!draft.future.length || busy}
-              onClick={() => undo(true)}
-            >
-              <Redo2 />
-            </IconButton>
-            <IconButton
-              label="New system"
-              disabled={busy || !writable}
-              onClick={() => {
-                const d = newSystemMap(`system-${crypto.randomUUID()}`);
-                setDraft({
-                  doc: d,
-                  revision: "0",
-                  fingerprint: constructionHash("[]"),
-                  past: [],
-                  future: [],
-                });
-                setCamera(fit(d));
-                setSelected(d.id);
-              }}
-            >
-              <Plus />
-            </IconButton>
-            <IconButton
-              label="Save to world (Ctrl+S)"
-              disabled={!writable || busy || !!preview.error}
-              onClick={save}
-            >
-              <Save />
-            </IconButton>
-            <IconButton
-              label="Reload live map"
-              disabled={!active || busy}
-              onClick={() => load(doc.id)}
-            >
-              <RefreshCw />
-            </IconButton>
-            <IconButton
-              label="Select (V)"
-              pressed={tool === "select" && !drawing}
-              onClick={() => {
-                setTool("select");
-                setDrawing(null);
-                setCreation(null);
-              }}
-            >
-              <MousePointer2 />
-            </IconButton>
-            <IconButton
-              label="Points (A)"
-              pressed={tool === "direct" && !drawing}
-              onClick={() => {
-                setTool("direct");
-                setDrawing(null);
-                setCreation(null);
-              }}
-            >
-              <Spline />
-            </IconButton>
-            <IconButton
-              label="Pan (H)"
-              pressed={tool === "pan" && !drawing}
-              onClick={() => {
-                setTool("pan");
-                setDrawing(null);
-                setCreation(null);
-              }}
-            >
-              <Hand />
-            </IconButton>
-            <IconButton
-              label="Deselect (Esc)"
-              disabled={!selection.length && !creation}
-              onClick={() => {
-                setSelected("");
-                setDrawing(null);
-                setCreation(null);
-                setCancelToken((n) => n + 1);
-              }}
-            >
-              <X />
-            </IconButton>
-            <IconButton
-              label="Duplicate (Ctrl+D)"
-              disabled={!writable || busy || !selection.length || !!creation}
-              onClick={duplicate}
-            >
-              <Copy />
-            </IconButton>
-            <IconButton
-              label="Delete selection"
-              disabled={!writable || busy || !selection.length || !!creation}
-              onClick={() => remove(true)}
-            >
-              <Trash2 />
-            </IconButton>
-            <IconButton label="Fit system" onClick={() => setCamera(fit(doc))}>
-              <Scan />
-            </IconButton>
-            <IconButton
-              label="Zoom in"
-              onClick={() =>
-                setCamera((c) => ({ ...c, span: Math.max(10, c.span / 2) }))
-              }
-            >
-              <ZoomIn />
-            </IconButton>
-            <IconButton
-              label="Zoom out"
-              onClick={() =>
-                setCamera((c) => ({ ...c, span: Math.min(2e9, c.span * 2) }))
-              }
-            >
-              <ZoomOut />
-            </IconButton>
-            <IconButton
-              label="Draw box zone"
-              disabled={!writable || busy}
-              pressed={creation?.kind === "zone" && creation.shape === "box"}
-              onClick={() => {
-                beginDraw("zone", "box");
-              }}
-            >
-              <Square />
-            </IconButton>
-            <IconButton
-              label="Draw polygon zone (P)"
-              disabled={!writable || busy}
-              pressed={!!drawing}
-              onClick={() => {
-                beginDraw("zone", "polygon");
-              }}
-            >
-              <Pentagon />
-            </IconButton>
-            <details className="map-add-menu">
-              <summary
-                aria-label="Add asteroid field"
-                title="Add asteroid field"
+              <IconButton
+                label="Undo (Ctrl+Z)"
+                disabled={
+                  !(drawing ? drawing.length : draft.past.length) || busy
+                }
+                onClick={() => {
+                  if (drawing) {
+                    const last = drawing.at(-1);
+                    if (last) {
+                      setDrawing(drawing.slice(0, -1));
+                      setDrawFuture((old) => [...old, last]);
+                    }
+                  } else undo();
+                }}
               >
-                <Circle size={17} />
-              </summary>
-              <div>
-                <button onClick={() => beginDraw("field", "ellipsoid")}>
-                  Draw ellipsoid field
-                </button>
-                <button onClick={() => beginDraw("field", "box")}>
-                  Draw box field
-                </button>
-                <button onClick={() => beginDraw("field", "polygon")}>
-                  Draw polygon field
-                </button>
-                <button onClick={() => beginDraw("zone", "ellipsoid")}>
-                  Draw ellipsoid zone
-                </button>
-              </div>
-            </details>
+                <Undo2 />
+              </IconButton>
+              <IconButton
+                label="Redo (Ctrl+Shift+Z)"
+                disabled={
+                  !(drawing ? drawFuture.length : draft.future.length) || busy
+                }
+                onClick={() => {
+                  if (drawing) {
+                    const next = drawFuture.at(-1);
+                    if (next) {
+                      setDrawing([...drawing, next]);
+                      setDrawFuture(drawFuture.slice(0, -1));
+                    }
+                  } else undo(true);
+                }}
+              >
+                <Redo2 />
+              </IconButton>
+              <IconButton
+                label="New system"
+                disabled={busy || !writable}
+                onClick={() => {
+                  const d = newSystemMap(`system-${crypto.randomUUID()}`);
+                  setDraft({
+                    doc: d,
+                    revision: "0",
+                    fingerprint: constructionHash("[]"),
+                    past: [],
+                    future: [],
+                  });
+                  setCamera(fit(d));
+                  setSelected(d.id);
+                }}
+              >
+                <Plus />
+              </IconButton>
+              <IconButton
+                label="Save to world (Ctrl+S)"
+                disabled={!writable || busy || !!preview.error}
+                onClick={save}
+              >
+                <Save />
+              </IconButton>
+              <IconButton
+                label="Reload live map"
+                disabled={!active || busy}
+                onClick={() => load(doc.id)}
+              >
+                <RefreshCw />
+              </IconButton>
+            </div>
+            <div
+              className="map-tool-group"
+              role="group"
+              aria-label="Selection tools"
+            >
+              <IconButton
+                label="Select (V)"
+                help="Select and move objects. Shift-click adds to the selection."
+                pressed={tool === "select" && !creation}
+                onClick={() => {
+                  setTool("select");
+                  setDrawing(null);
+                  setCreation(null);
+                }}
+              >
+                <MousePointer2 />
+              </IconButton>
+              <IconButton
+                label="Points (A)"
+                help="Drag points and curve handles. Double-click an edge to add a point; Alt-drag breaks paired handles."
+                pressed={tool === "direct" && !drawing}
+                onClick={() => {
+                  setTool("direct");
+                  setDrawing(null);
+                  setCreation(null);
+                }}
+              >
+                <Spline />
+              </IconButton>
+              <IconButton
+                label="Pan (H)"
+                help="Drag the map. Space-drag or right-drag temporarily pans."
+                pressed={tool === "pan" && !drawing}
+                onClick={() => {
+                  setTool("pan");
+                  setDrawing(null);
+                  setCreation(null);
+                }}
+              >
+                <Hand />
+              </IconButton>
+              <IconButton
+                label="Deselect (Esc)"
+                disabled={!selection.length && !creation}
+                onClick={() => {
+                  setSelected("");
+                  setDrawing(null);
+                  setCreation(null);
+                  setCancelToken((n) => n + 1);
+                }}
+              >
+                <X />
+              </IconButton>
+              <IconButton
+                label="Duplicate (Ctrl+D)"
+                disabled={!writable || busy || !selection.length || !!creation}
+                onClick={duplicate}
+              >
+                <Copy />
+              </IconButton>
+              <IconButton
+                label="Delete selection"
+                disabled={!writable || busy || !selection.length || !!creation}
+                onClick={() => remove(true)}
+              >
+                <Trash2 />
+              </IconButton>
+            </div>
+            <div
+              className="map-tool-group"
+              role="group"
+              aria-label="View controls"
+            >
+              <IconButton
+                label="Fit system"
+                onClick={() => setCamera(fit(doc))}
+              >
+                <Scan />
+              </IconButton>
+              <IconButton
+                label="Zoom in"
+                onClick={() =>
+                  setCamera((c) => ({ ...c, span: Math.max(10, c.span / 2) }))
+                }
+              >
+                <ZoomIn />
+              </IconButton>
+              <IconButton
+                label="Zoom out"
+                onClick={() =>
+                  setCamera((c) => ({ ...c, span: Math.min(2e9, c.span * 2) }))
+                }
+              >
+                <ZoomOut />
+              </IconButton>
+            </div>
+            <div
+              className="map-tool-group"
+              role="group"
+              aria-label="Drawing tools"
+            >
+              <IconButton
+                label="Draw box zone"
+                help="Drag opposite corners in the current view."
+                disabled={!writable || busy}
+                pressed={creation?.kind === "zone" && creation.shape === "box"}
+                onClick={() => {
+                  beginDraw("zone", "box");
+                }}
+              >
+                <Square />
+              </IconButton>
+              <IconButton
+                label="Draw polygon / curve zone (P)"
+                help="Click corners; drag to curve. Click the first point or press Enter to close."
+                disabled={!writable || busy}
+                pressed={!!drawing}
+                onClick={() => {
+                  beginDraw("zone", "polygon");
+                }}
+              >
+                <Pentagon />
+              </IconButton>
+              <IconButton
+                label="More drawing tools"
+                help="Choose ellipse, box or curved asteroid fields and zones."
+                disabled={!writable || busy}
+                onClick={() => {
+                  const r = document.activeElement?.getBoundingClientRect();
+                  openMenu(r?.left ?? 20, r?.bottom ?? 180, null);
+                }}
+              >
+                <Circle />
+              </IconButton>
+            </div>
           </div>
           <input
             type="search"
@@ -741,6 +1016,10 @@ export function SystemMapWorkspace({
             onSelect={setSelected}
             onLoad={load}
             busy={busy}
+            writable={writable && !creation}
+            onReparent={reparent}
+            onContextMenu={(x, y, id) => openMenu(x, y, id)}
+            onDropError={setError}
             onFrame={(id) => {
               if (id === doc.id) {
                 setCamera(fit(doc));
@@ -799,7 +1078,10 @@ export function SystemMapWorkspace({
           )}
           {drawing && (
             <div className="map-draw-toolbar">
-              <span>Click vertices · {drawing.length} points</span>
+              <span>
+                Click corners · drag curves · click first point to close ·{" "}
+                {drawing.length}/64 points
+              </span>
               <button disabled={drawing.length < 3} onClick={finish}>
                 Finish zone
               </button>
@@ -818,6 +1100,8 @@ export function SystemMapWorkspace({
           ) : (
             <MapCanvas
               doc={doc}
+              onContextMenu={openMenu}
+              onFinishDraw={finish}
               ships={ships}
               asteroids={preview.rocks}
               selection={selected}
@@ -892,11 +1176,14 @@ export function SystemMapWorkspace({
               onCreateBounds={createBounds}
               drawing={drawing}
               onDraw={(p) => {
-                setDrawFuture([]);
-                setDrawing((v) => [
-                  ...(v ?? []),
-                  { x: Math.round(p.x), y: Math.round(p.y) },
-                ]);
+                try {
+                  setDrawing(
+                    appendAnchor(drawing ?? [], p, camera.span / 100000),
+                  );
+                  setDrawFuture([]);
+                } catch (e) {
+                  setError(String(e));
+                }
               }}
             />
           )}
@@ -929,32 +1216,5 @@ export function SystemMapWorkspace({
         )}
       </div>
     </main>
-  );
-}
-
-function IconButton({
-  label,
-  children,
-  onClick,
-  disabled,
-  pressed,
-}: {
-  label: string;
-  children: ReactNode;
-  onClick: () => void;
-  disabled?: boolean;
-  pressed?: boolean;
-}) {
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      title={label}
-      aria-pressed={pressed}
-      disabled={disabled}
-      onClick={onClick}
-    >
-      {children}
-    </button>
   );
 }

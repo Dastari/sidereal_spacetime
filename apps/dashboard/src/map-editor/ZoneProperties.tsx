@@ -1,3 +1,4 @@
+import { MapDistanceField, MapScaleNote } from "./MapDistanceField";
 import type { SystemMapDocument } from "@sidereal/content/system-map";
 import { MAP_BACKGROUNDS } from "@sidereal/content/system-map";
 import type { MapZone } from "@sidereal/content/zones";
@@ -140,11 +141,11 @@ export function ZoneProperties({
           </button>
           {anchor && (
             <>
-              <CoordinateFields label="Anchor offset (m)">
+              <CoordinateFields label="Anchor offset (km)">
                 {(["x", "y"] as const).map((k) => (
-                  <NumberField
+                  <MapDistanceField
                     key={k}
-                    label={`Anchor ${k.toUpperCase()} (m)`}
+                    label={`Anchor ${k.toUpperCase()} (km)`}
                     precision={2}
                     step={0.01}
                     value={anchor[k]}
@@ -199,8 +200,8 @@ export function ZoneProperties({
                         })
                       }
                     />
-                    <NumberField
-                      label={`${side} length (m)`}
+                    <MapDistanceField
+                      label={`${side} length (km)`}
                       min={0}
                       value={h ? Math.hypot(h.x, h.y) : 0}
                       onChange={(length) =>
@@ -254,11 +255,12 @@ export function GenericZoneInspector({
         onName={(name) => patch({ name })}
       />
       <h2>Zone</h2>
-      <CoordinateFields>
+      <MapScaleNote />
+      <CoordinateFields label="Position (km)">
         {(["x", "y"] as const).map((k) => (
-          <NumberField
+          <MapDistanceField
             key={k}
-            label={`${k.toUpperCase()} (m)`}
+            label={`${k.toUpperCase()} (km)`}
             precision={2}
             step={0.01}
             value={zone[k]}
@@ -279,9 +281,9 @@ export function GenericZoneInspector({
       {(["width", "length"] as const)
         .filter(() => zone.shape !== "polygon")
         .map((k) => (
-          <NumberField
+          <MapDistanceField
             key={k}
-            label={`${k} (m)`}
+            label={`${k} (km)`}
             min={1}
             value={zone[k]}
             onChange={(n) => patch({ [k]: n })}
