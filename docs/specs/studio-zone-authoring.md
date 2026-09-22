@@ -32,3 +32,36 @@ See [zone authority ADR](../adr/ADR-20260921-zone-authority.md). Two independent
 There are at most 48 volumes per document (including root and fields), eight ancestor levels, 64 authored anchors per polygon, 512 compiled edges per polygon and 8,192 total edges. Compiler v1 error tolerance is max(0.01 m, control extent / 16,384); subdivision depth is bounded at 16. Authoritative sweeps use a shared six-million-operation budget per scope tick and preserve pre-step motion on exhaustion. Definitions are indexed private rows; current membership and the newest 128 transitions share one private state row per ship to avoid separate journal/pruning writes. Public sequence bounds identify expired history. A stopped endpoint uses closed membership; tangent enter/exit pairs at contiguous drift joins within the tick are suppressed.
 
 During polygon creation, Backspace/Ctrl+Z removes the last drawn point, redo restores it and Enter finishes a valid three-point-or-more outline. Existing object history stays untouched until the polygon is committed.
+
+## 2026-09-22 interaction refinement
+
+Implement one pen tool (P): click anchors, click-drag mirrored Bézier handles,
+click the first anchor / double-click / Enter to close. Escape cancels; Ctrl+Z
+removes the last draft anchor. Keep handle data, reject duplicate/degenerate
+closures, cap64 anchors and preserve the camera. Closing selects the new boundary
+in point mode. Surface actionable validation failures without discarding drawing.
+
+Group drawer actions into document, selection, drawing and view sections; show
+accessible hover/focus tooltips with actions and shortcuts. Right-click opens a
+context menu; right-drag pans without opening it. Context menus support framing,
+renaming, zone duplication/deletion and anchor smooth/corner/split/delete actions;
+blank-map menus begin zones/fields. Keyboard menu key / Shift+F10 and Escape work.
+
+Tree dragging reparents existing bodies/zones within the current system as one
+undoable edit while preserving world positions, IDs and children. Reject cycles,
+self-parenting, ships, cross-system moves and incompatible parent kinds. Use
+existing validated map apply; cross-system transfer requires a separate atomic
+multi-document authority operation. Existing inspector parent selection remains
+the keyboard alternative.
+
+Selected/moving body orbit guides display parent centre distance and straight-line
+travel time at30m/s, never orbital period. Update during drag with descendant
+preview positions. Use m/km/Mm/Gm and s/min/h/d/y as appropriate. Keep labels
+readable and viewport-bounded, with existing orbit LOD/culling intact.
+
+Acceptance: pure tests cover pen handle preservation/closure/limits, invalid
+parenting and unchanged positions, distance/time boundaries and bounded orbit
+label paths. Browser checks exercise mixed straight/curved pen creation, finish,
+undo/redo, tooltips, context vs right-pan, valid/invalid tree drops and live drag
+measurements. Required check/build and existing save contract remain. No new
+schema, module publication or owner map mutation is needed for this UI pass.
