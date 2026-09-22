@@ -1,3 +1,7 @@
+## 2026-09-22 — Public exterior shadow optimization
+
+Published PR #17 on the preserved live game baseline. Verified exact public artifact bytes and browser sign-in, preserving all published art and the independent database/Studio/delivery services. See [release record](docs/handoffs/shadow_cache_release_20260922.md).
+
 # Render 0.8.1 — exterior shadow reuse (2026-09-21)
 
 - Reuse unchanged exterior ship depth maps with conservative camera/caster/light/material invalidation and dynamic-path fallbacks. Preserve authored geometry, shadow quality and animated local shadows.

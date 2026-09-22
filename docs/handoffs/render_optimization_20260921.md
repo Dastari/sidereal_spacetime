@@ -1,5 +1,9 @@
 # Exterior ship shadow reuse — 2026-09-21
 
+2026-09-22: PR #17 is merged and the live-baseline composition is deployed. See
+[verified release](shadow_cache_release_20260922.md). The remaining text records
+the original pre-release measurements and limits.
+
 Agent: GrayLotus. Branch: `perf/shadow-and-planet-work`, based on upstream
 `0ea05476`. Renderer candidate 0.7.1; no public deployment or merge.
 
