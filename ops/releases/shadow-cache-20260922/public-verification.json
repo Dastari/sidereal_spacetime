@@ -1,0 +1,21 @@
+{
+  "status": "published and HTTP verified",
+  "origin": "https://sidereal.dastari.net",
+  "sha256": "0c48930c709ab6eae5f856e4131de3e2081454f6a80114e93a9d094727db2558",
+  "release": "/root/sidereal_spacetime/.runtime/public-client/releases/20260922-113005-0c48930c709a",
+  "entry": "/assets/index-BFw94WOd.js",
+  "htmlStatus": 200,
+  "entryStatus": 200,
+  "htmlSha256": "f32816f25bda8849ca734489def23ab61d7cf83f6380b1fe247084163f2d4be3",
+  "entrySha256": "9e32af2c34bbb89afd0284786a5694ae61a3f1a559ca14e7ccc1dffa3ca993d6",
+  "databaseProcessUnchanged": true,
+  "dashboardProcessUnchanged": true,
+  "deliveryReleaseUnchanged": true,
+  "browser": {
+    "entry": "/assets/index-BFw94WOd.js",
+    "loginVisible": true,
+    "consoleErrors": 0,
+    "networkErrors": 0,
+    "authenticatedGameplayTested": false
+  }
+}

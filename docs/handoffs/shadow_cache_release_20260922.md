@@ -3,7 +3,7 @@
 Owner requested merge and deployment of PR #17. Agent Mail identity: GrayLotus.
 Implementation and browser evidence are in [the optimization handoff](render_optimization_20260921.md).
 
-## Prepared release
+## Released composition
 
 PR #17 was reconciled with `main` at `9d0c2ef6`; only changelog/package-version
 conflicts needed resolution. Render is now 0.8.1. The actual cache implementation
@@ -42,5 +42,29 @@ source files are preserved. No world module or dashboard is deployed.
   hashes. It restarts only the public-client service. No database commands, grants,
   player mutations, authentication changes or independent delivery release changes.
 
-This file records the prepared artifact before activation. Verified activation
-and public HTTP/browser results will be recorded in the release follow-up.
+## Published state
+
+PR #17 merged through GitHub as `3a768539fae69622b6382ef562d36e69dd8af7ec`.
+Guarded activation succeeded on 2026-09-22. Public client now serves the exact
+prepared hash above from immutable directory
+`/root/sidereal_spacetime/.runtime/public-client/releases/20260922-113005-0c48930c709a`.
+
+- Public HTTPS HTML and entry JavaScript return 200 and match the installed bytes
+  exactly. The entire installed tree rehashes to the pinned candidate digest.
+- Real Chromium loads the new entry and normal sign-in gate with zero console or
+  network errors. Authenticated production gameplay and FPS are not claimed.
+- Database and independent Studio process PID/start identities are unchanged.
+  Independent delivery metadata is byte-identical. No world publication occurred.
+- [Machine-readable public verification](../../ops/releases/shadow-cache-20260922/public-verification.json).
+  Private lifecycle/HTTP logs are in canonical `.runtime/releases/shadow-cache-20260922/`.
+- Main-derived implementation worktree: `/root/sidereal-render-performance`.
+  Live-compatible source: `/root/sidereal-shadow-release-20260922`. Future game
+  releases must preserve this live composition rather than deploy main wholesale.
+- Prior immutable client remains at
+  `/root/sidereal_spacetime/.runtime/public-client/releases/20260921-110505-1285899d7817`.
+  If explicitly rolling back, stage that exact old artifact with its recorded
+  SHA, then activate with expected live `0c48930c...` and staged `1285899d...` full
+  digests above through canonical `scripts/dev.py`. Never roll back the database.
+
+GrayLotus releases reservations at closeout. Review/development services were not
+started for this deployment; only the public client was restarted.

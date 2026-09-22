@@ -1,5 +1,5 @@
 {
-  "status": "prepared",
+  "status": "published and verified",
   "baselineClientSha256": "1285899d78177c92813dc6f4f1bbf1a97d16212b0d618419407364ba42e08b73",
   "candidateClientSha256": "0c48930c709ab6eae5f856e4131de3e2081454f6a80114e93a9d094727db2558",
   "sourceRoot": "/root/sidereal-shadow-release-20260922",
@@ -56,5 +56,7 @@
     "mergeBranchBuild": "passed",
     "releaseTypecheck": "passed",
     "releaseBuild": "passed"
-  }
+  },
+  "mergeCommit": "3a768539fae69622b6382ef562d36e69dd8af7ec",
+  "verification": "public-verification.json"
 }
