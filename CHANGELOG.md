@@ -1,3 +1,7 @@
+## Unreleased — Shipyard player builder design, 2026-09-25
+
+Recorded the owner's decisions on player ship building and voxel-destructible ship structure. Added a design for the construction rules, an agent-friendly author → voxelise → style pipeline, damage authority, efficiency budget, a shared editor core and a phased plan. Evidence comes from a deterministic headless Blender prototype, `scripts/art_library/voxel_style_prototype.py`, which outputs a Wayfarer-style section with slope/arc bow, styled voxels and impact damage. Documentation and prototype only; no runtime, authority or asset changes.
+
 # Changelog
 
 ## Unreleased — Wayfarer exterior armor native r004

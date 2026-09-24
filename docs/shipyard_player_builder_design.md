@@ -1,0 +1,306 @@
+# Shipyard player builder and voxel ship structure
+
+Status: **proposed design**. The owner decisions in §1 are recorded; nothing below is implemented unless it is marked *exists*.
+Date: 2026-09-25
+Evidence: `docs/shipyard_player_builder/*.jpg`, `scripts/art_library/voxel_style_prototype.py`
+
+The goal is Cosmoteer-style ship design in our 3D world. The same construction system serves developer prefab authoring (the dashboard Shipyard) and player modification in game. All floor, wall, hull and module pieces snap under one rule set. Hull and walls are voxel-destructible and look like the `reference/art` target (`3d-rpg-after.png`, `core-construction-blocks.png`, `editor-mockup-*.png`).
+
+## 1. Owner decisions, 2026-09-25
+
+| Topic | Decision |
+|---|---|
+| Structure art and damage | Hull and walls are **voxel-destructible** so repair can come later. Pick whichever approach lets an agent generate hull and wall assets without thinking about voxels, followed by a separate **voxelise process**. The earlier "preserve authored Blender surfaces in the visual export" rule may be reversed for ship structure. The priorities are the reference look, efficiency and voxel destructibility. |
+| In-game objects | Props, modules and equipment have **health and proper damage states**. They are not voxel-destructible. |
+| Grading | Game colour needs **gamma up, contrast down, saturation up** to match the reference's vibrancy. |
+| Build grid | **1 m × 1 m is the smallest placeable tile.** Shape tiles exist at that scale (for example a 1×1 triangle or a 2×1 triangle). Walls and objects may snap to much finer increments. |
+| Shapes | **More slopes, and curves** where possible, so outlines like `editor-mockup-3.png` can be built. |
+| Rooms | **Labels only** for now. |
+| Acquisition | **Both.** Developers author a range of prefab ships. Players may modify them, bounded by the ship's **blueprint size** (maximum extent) and by the engines they have access to. A big ship with small engines is slow. |
+| Decks | **Launch single-deck.** The data model and rules must carry multi-deck from day one. |
+
+## 2. Audit baseline: what exists
+
+Most of the audited code is on `main`. The R16 Shipyard rebuild commit (`9c58c077`) lives only on the `ifcs-update` branch (draft PR #1). That commit adds `docs/blender_asset_migration.md`, `scripts/voxelize_blender.py`, the Wayfarer-only flight qualification and the inset/complex-perimeter kits.
+
+**Editor (`apps/dashboard/src/shipyard`).**
+- One `LayoutDocument` is edited by two interaction systems plus the legacy `AssemblyEditor`:
+  - Structure/Systems is an SVG canvas.
+  - Objects/Hull is a Babylon workspace.
+- Structure mode has multi-select, a tiles-only marquee, select-all, 90° rotate, X/Y mirror, clone, and a clipboard that stores IDs rather than data.
+- Objects/Hull mode is single-select only, has its own clipboard and key handler, and snaps in metres.
+- Nowhere in the editor are there groups/prefabs, replace, an eyedropper, cross-deck paste, symmetry beyond floor stamps, or a red "invalid" ghost.
+- Undo is a 40-deep whole-document snapshot stack.
+- Bug found on the `ifcs-update` branch only: Hull snap values of 0.0625, 0.125 and 0.25 m persist as `view.grid` 2, 4 and 8. The checkpoint reader rejects those values, so the editor falls into recovery on reload. `main` offers only 0.03125/0.5/1/2 m and is not affected.
+
+**Rules (`packages/content`, `packages/sim`).**
+- The base units agree everywhere: a 1/32 m lattice, a 2 m module, floor top at 6 units, and the 3.5 m pitch the owner approved.
+- Everything above the base units diverges:
+  - five wall thickness/position models
+  - wall top at 96 units in some places and 102 in others
+  - `LayoutDeck.ceiling` measured from the floor bottom
+  - six rotation systems
+  - about seven bespoke per-family planners
+- The only declarative socket fitter, `fitTileset`, is used by floors alone.
+- Armor is a set of hand-drawn polygons.
+- Stairs and lifts are fixed, hash-pinned fixtures.
+- Pre-authoring every perimeter combination produced kits of 1,104 and 2,288 GLBs (on `ifcs-update`).
+
+**Authority (`packages/world`).**
+- The draft → blueprint → spawn path *exists*. Publishing re-runs the same pure compiler that the editor uses (`compileConstruction`).
+- The limits:
+  - Design rights are admin-granted per workspace.
+  - Publish compiles synchronously inside the reducer.
+  - There are no part costs, build time or construction jobs.
+  - On `ifcs-update`, flight is gated to three Wayfarer blueprint hashes.
+  - There is no in-game editor.
+
+**Voxel runtime (*exists*, on `main`).**
+- `packages/sim/src/voxels.ts`: 32³ chunks, `meshChunk`, `removeVoxels` and run-length encoding.
+- `packages/render/src/voxel-worker.ts`: remeshing.
+- `PartPlacement.removedCells` in `packages/content/src/assembly.ts`.
+- `constructionDamageMode` in `packages/content/src/tileset-interfaces.ts` already maps floor, roof, pressure-wall, partition, armor and external-system to `voxel`, and everything else to `entity-health` or `none`. That matches the §1 decision exactly.
+
+**Rendering.**
+- The frame is CPU-bound on draw calls: 4,920 in flight view and 7,304 in deck view (`docs/rendering_performance_plan.md`).
+- `packages/render/src/graphics-settings.ts` already exposes brightness, contrast, gamma and saturation, all defaulting to 1.
+
+## 3. Construction grammar: one rulebook
+
+A single versioned module, proposed as `packages/content/src/construction-grammar.v1.ts` plus JSON, is read by the editor, the sim validators, the voxel pipeline and the reducers. No kit restates these numbers.
+
+### 3.1 Units and datums
+
+| Quantity | Value |
+|---|---|
+| Lattice | 1/32 m (unchanged) |
+| **Build cell** | **1 m (32 u)**, the smallest placeable floor or hull tile |
+| Door/window module | 2 m frame spanning two cell edges; 1.25 m × 2.25 m clear door; 1.5 m × 1.5 m window |
+| Fine snap (props, wall fixtures, mounts) | 0.25 m default; 1/16 m minimum |
+| **Voxel** | **1/16 m (62.5 mm) = 2 lattice units**, 16 per build cell |
+| Deck profile | floor 0.1875 + clear 3.0 + roof 0.125 + service 0.1875 = **3.5 m pitch** (56 voxels). Wall top at 102 u everywhere; the 96-unit values are retired to explicit legacy profiles |
+| Exterior wall | 250 mm **inward** of the tile boundary (owner rule, 2026-09-11) |
+| Internal partition | 250 mm **centred** on a cell edge |
+| Hull/armor | Voxel cells **outside** the boundary. Thickness is a class: 0.5, 1 or 2 m |
+
+With inward walls a one-cell corridor leaves only 0.5 m clear, so the validator's minimum walkable corridor is 2 cells.
+
+### 3.2 Three lattices on one grid
+
+- **Cells** hold floor shape tiles, hull/armor classes, module footprints and cargo grids.
+- **Edges** hold walls, partitions, doors, windows and airlocks. The player paints edges; a door occupies two collinear edges.
+- **Vertices** hold junctions (end, straight, L, T, cross). These are **derived, never placed**. The derivation uses the 4-bit occupancy of the four edges meeting at the vertex, which gives six cases after symmetry, plus height variants.
+
+This replaces pre-authored perimeter combinations. A family needs a few rules, not thousands of GLBs.
+
+### 3.3 Shape tiles: slopes and curves as data
+
+A shape tile is a **polygon on the 1 m lattice**, not an asset. A ship footprint is the union of its shape tiles; the floor, walls and hull are all generated from that footprint.
+
+| Shape set | Tiles |
+|---|---|
+| Square | 1×1 |
+| Slopes (rise:run) | 1:1 in 1×1; 1:2 in 2×1 and 1×2; 1:3 in 3×1; 1:4 in 4×1. Each has a convex (triangle) and a concave (square minus triangle) form |
+| Arcs | Quarter circles of radius 1, 2, 3 and 4 m spanning r×r cells, convex and concave. The prototype uses r = 3 |
+| Compound corners | 45° chamfer of 1–2 cells |
+
+- Allowed boundary directions are axis, 1:1, 1:2, 1:3 and 1:4. The existing 32 rational directions in the complex-perimeter work already contain this set, apart from 1:3.
+- Arcs are exact circles, quantised only by the voxeliser. Sample 04 shows a stepped curve like the reference bow.
+- Adding a new shape tile means adding a polygon and a test, with no new art.
+- The vertical profile of the hull's top edge (square, 45° chamfer or round) is a per-segment parameter, handled the same way.
+
+### 3.4 Orientation and sockets
+
+- Placed parts use 4 yaws plus a mirror flag, with **one** field name (`reflected`) and one value set.
+- The shape set is closed under that group.
+- The 72-step yaw and the free-radian part rotation are retired for player content.
+- Every module declares:
+  - a cell footprint with a height class
+  - typed face sockets (structure, pressure seal, power, data, air, mount/hardpoint, cargo bearing), each with a normal and an interval
+  - a mates table
+- One generalised fitter (the current `fitTileset` semantics) checks every family. The per-family planners are retired.
+
+### 3.5 Multi-deck from day one
+
+- Voxel and cell coordinates are ship-global.
+- A deck is `{ index, elevation = index × pitch, profile }`. Launch validation enforces `decks.length === 1`.
+- Stairs, ladders and lifts are reserved as **shaft tiles**: 2×2-cell footprints with vertical sockets that carve floor and roof voxels on the decks they connect.
+- Hull thickness classes and style bands are expressed per deck, so stacking needs no new art rules.
+
+## 4. Structure art pipeline: author → sample → style → mesh
+
+![Rules sample](shipyard_player_builder/01_rules_source.jpg)
+
+*Sample 01: the proposed rules.*
+- 1 m cells, with the 2 m module lines drawn thicker.
+- The exterior wall sits 250 mm inside the boundary, and the partition is centred on its edge.
+- The door and window use the 2 m module.
+- Armor is 1 m cells outside the boundary, with a 45° corner.
+- Magenta dots are sockets.
+
+![Wayfarer-style section](shipyard_player_builder/04_wayfarer_section_voxel.jpg)
+
+*Sample 04: a 14 × 8 m Wayfarer-style section made from about 90 plain primitives by the prototype script.*
+- It has a 45° starboard bow slope, an r = 3 m port bow arc and cylinder engines.
+- It is voxelised at 62.5 mm and styled by the deterministic pass: panel seams, raised plates, vents, running lights, rim greebles, two-tone walls and floor grating.
+- The grade raises gamma and saturation and lowers contrast, with bloom.
+
+### 4.1 Authoring contract (agent-friendly)
+
+Structure is written as **ordered, role-tagged layers** of simple solids: boxes, footprint prisms, cylinders, or any closed mesh.
+- Later layers win.
+- The `void` role carves.
+- Roles select style rules (`hull`, `wall`, `partition`, `floor`, `doorframe`, light roles, and so on).
+- Glass and other optical surfaces are separate real meshes and are never voxelised.
+- Author detail at 2 or more voxels (≥125 mm), aligned to the 1/16 m grid. Sample 03 shows the failure mode: at 125 mm, off-grid detail slips and merges.
+
+The author does **not** model panels, seams or greebles, so an agent needs no voxel knowledge. For grammar-generated structure (floor, walls, hull wrap, doors) the layers come straight from §3 data. Blender is only needed for bespoke silhouettes and for props.
+
+![Resolution comparison](shipyard_player_builder/03_hull_source_vs_62mm_vs_125mm.jpg)
+
+*Sample 03: source, then 62.5 mm, then 125 mm. 62.5 mm keeps panel seams, vent slats and bolts; 125 mm loses them.*
+
+### 4.2 Sampling
+
+- Cell centres are sampled on the **global ship lattice**, so adjacent tiles always share one grid and mate seamlessly.
+- The only stored value per cell is a small role/material id.
+- The prototype uses scanline ray casts in Blender, which is the same technique as `scripts/voxelize_blender.py` on `ifcs-update`.
+- Production should do this in TypeScript directly from the layer JSON for grammar structure, and in Blender only for arbitrary meshes. Both produce the same cell format.
+
+### 4.3 Faction style kits
+
+The detail comes from a **deterministic style pass** parameterised by a style kit: palette weights, panel widths, band heights, and probabilities for seams, raised plates, vents and lights.
+- It is seeded by world cell coordinates and blueprint id, never by RNG state. Identical input always gives identical output, and panels continue across tile seams and around slopes and curves (via arc-length along the boundary).
+- Variants such as Frontier, Union, Karst, Virell and Dredge (`editor-mockup-2.png`) are just different kits over the same cells.
+- The pass must have **one implementation**. That should be TypeScript in `packages/sim`, run in a render worker. The server never needs it, because style is presentation.
+
+### 4.4 Props, modules and equipment
+
+- These stay authored meshes (Blender GLBs). For a consistent look they may be voxelised offline with the same sampler.
+- They use `entity-health` with authored damage-state variants: pristine, scuffed, damaged, destroyed (`editor-mockup-2.png`).
+- They are not cell-destructible.
+
+### 4.5 Grading
+
+- Change the `graphics-settings.ts` defaults toward gamma > 1, contrast < 1 and saturation > 1.
+- Add bloom on emissives.
+- The prototype grade (Blender compositor: saturation 1.3, contrast −4, gamma 1.06) is only a starting point. Final values need browser review against `3d-rpg-after.png`.
+
+## 5. Destructibility and authority
+
+![Damaged section](shipyard_player_builder/05_wayfarer_section_damaged.jpg)
+![Damage close-up](shipyard_player_builder/06_damage_closeup.jpg)
+
+*Samples 05 and 06: impacts remove cells. 13,048 cells are removed in four craters. The lip is scorched with sparse embers, while untouched panels keep their seams.*
+
+**Base volume.**
+- Each published blueprint compiles to an immutable base volume: role-id cells, run-length encoded (reusing `encodeVoxels`) and content-addressed.
+- Live ships reference the base volume and store only a **damage delta**: removed or repaired cells per 32³ chunk.
+- This extends the existing `removedCells` idea to a chunked bitset.
+
+**Damage.**
+- The server applies impacts deterministically, using integer cell math and a hashed jitter.
+- It checks permission, revision and resources before committing, as `AGENTS.md` already requires for runtime damage.
+- Clients rebuild **dirty chunks only after** the commit.
+- Derived gameplay is recomputed from surviving cells: integrity per 1 m cell, pressure breaches (a cell path through wall and hull), and mass changes.
+
+**Repair.**
+- Repair restores cells from the base volume as validated jobs that consume resources.
+- It is a new validated edit, never a rollback.
+
+**What is never stored per cell server-side.** Colours, styles and scorch are presentation, recomputed by clients from cells plus the style kit.
+
+## 6. Efficiency budget
+
+Prototype numbers for the section (14 × 8 m floor, 1 m hull, two 4.5 m engines):
+
+| Measure | Value |
+|---|---|
+| Solid cells | 1,117,161 (hull 551k, engines 179k, walls 101k, partitions 89k, floor 81k) |
+| Exposed quads, naive | 225,808 in **one material** |
+| Damaged (four craters) | 234,694 quads |
+| Headless prototype time (Python, Blender 4.3) | about 2 min including three renders |
+
+Runtime plan:
+- **Render batches of 4 m (64³ cells).** A Wayfarer-sized hull (about 36 × 14 × 3.5 m) is roughly 30–40 draw calls, compared with 4,920 for the whole frame today. One vertex-colour material, with emission in the same vertex stream.
+- **Greedy meshing** per chunk and per colour/role. Flat panels collapse strongly; the reduction is not yet measured and should be the P2 gate.
+- **No geometric bevel at runtime.** The Blender bevel modifier is offline evidence only. At runtime, use baked per-vertex ambient occlusion plus an edge-highlight term in the shader to get the molded-brick look.
+- **LOD:** 2× downsampled volumes (125 mm) for distant or flight views; meshes are cached per LOD.
+- **Damage:** remesh only dirty chunks in the existing voxel worker. Undamaged chunks of identical content can share GPU buffers.
+
+## 7. Editor core, shared by dashboard and game
+
+Build a new framework-light package, for example `packages/ship-editor`, containing the state machine, commands and validators. React panels go in `packages/ui`. `apps/dashboard` and `apps/client` each compose it; neither app imports the other.
+
+**Selection.** One model: a set of typed refs (cell, edge, part, deck, route) shared by every mode.
+- click
+- Shift/Ctrl add or toggle
+- marquee in 2D and 3D (frustum)
+- select all, invert, select similar, select connected/room
+- Esc and Ctrl+D deselect
+
+**Commands.** Every edit is an undoable command with an inverse patch: move, nudge, rotate (R/Shift+R), mirror (F/Shift+F), clone (Ctrl+Shift+D, Ctrl-drag), delete, replace, paint and fill.
+- This replaces snapshot undo.
+- The same commands carry operation IDs to the server.
+
+**Clipboard and prefabs.**
+- The clipboard holds serialised sub-documents with relative coordinates.
+- Paste works across decks and documents.
+- **Save selection as prefab**, for example a 3×3 crew-quarters pod, into a blueprint library.
+
+**Tools.**
+- Select
+- Paint cells, with drag fill and shape-tile picker
+- Wall line along edges
+- Room rectangle (floor, walls and door in one drag)
+- Place part
+- Erase
+- Eyedropper
+- Replace variant
+- Measure
+- Symmetry X/Y for every tool
+
+**Feedback.**
+- A live green/red ghost with the failing rule at the cursor, from an incremental validator call per hover.
+- Errors focus the offending geometry.
+
+**Keymap.** One module, with an in-editor overlay (`?`). PgUp/PgDn switches deck, and the deck below shows as a ghost.
+
+## 8. Player builder flow
+
+1. **Prefab ships.** Developers author them in the dashboard Shipyard and publish immutable blueprints. Each carries a **blueprint size class**: maximum cell extents, deck count and hull-thickness classes.
+2. **Acquisition.** A player acquires a ship instance. Modification happens at a shipyard: the player edits a private draft copy validated by the same grammar, bounded by the size class.
+3. **Performance.** Mass comes from cells and modules. Thrust and actuators come from installed engines. Flight compiles from part definitions, which removes the Wayfarer-hash gate from `ifcs-update`.
+4. **Applying changes.** The difference between live ship and draft becomes construction and refit jobs: cost, resources and time, with UUID-preserving refit through the existing identity planner.
+5. **Authority.**
+   - Designing uses auto-provisioned private workspaces and a `player.design` capability.
+   - Each player gets rate limits and size limits.
+   - Publish and compile run in a **queued job** processed a few per tick, like the flight dirty queue, not inside the request.
+
+## 9. Phased plan and acceptance gates
+
+| Phase | Scope | Gate |
+|---|---|---|
+| P0 | This design and the owner decision record. Fix the grid-persist bug on `ifcs-update` (PR #1) | Owner review |
+| P1 | Grammar module (datums, lattices, shape tiles, sockets, orientation) plus pure validator in `packages/sim` | Unit tests: union/offset of every shape tile, edge/vertex derivation, corridor minimum, multi-deck fields, 1-deck launch rule |
+| P2 | Structure pipeline: layer JSON → TS sampler → style kit v1 (Frontier) → greedy chunk mesher and vertex-colour shader; grading defaults | Browser evidence against `3d-rpg-after.png`; draw calls and ms for a Wayfarer-sized ship; deterministic hash of cells and meshes |
+| P3 | `packages/ship-editor` core adopted by the dashboard (tools in §7) | Playwright interaction tests for every tool; browser review |
+| P4 | Damage delta tables and reducers, repair jobs, dirty-chunk rebuild | `npm run smoke` on an isolated DB; permission, revision and replay tests |
+| P5 | Generic part-to-flight compile, size classes, costs | Flight parity with the current Wayfarer; big-ship/small-engine acceptance |
+| P6 | In-game shipyard builder in `apps/client`, prefab catalog | Player edit → refit job → fly |
+| P7 | Multi-deck enablement: shaft tiles, deck profiles | Traversal and pressure tests across decks |
+
+## 10. Supersessions, risks and non-goals
+
+**Supersessions.**
+- For **ship structure** (hull, armor, exterior walls, partitions, floors, roofs), this supersedes the 2026-09-08 direction to preserve authored Blender surfaces in the visual export (`AGENTS.md`, and `docs/blender_asset_migration.md` on `ifcs-update`).
+- Blender remains the authoring source for props, modules, equipment, characters and bespoke silhouettes.
+- Existing native kits (inset250, complex perimeter, armor r005, framed Wayfarer) and all live pins stay unchanged as history until an explicit migration.
+
+**Risks and constraints.**
+- The samples are proposals, not approved art. `assets/art-library` approval rules still apply to any production style kit.
+- The style pass needs one implementation. If Python (Blender) and TypeScript (runtime) both implement it, they will drift.
+- Runtime visual quality without geometric bevels is unproven; that is the P2 gate.
+- Voxel memory per ship must be budgeted. Base volumes are shared across instances of a blueprint; only deltas are per ship.
+
+**Non-goals now.** Functional rooms, six-degree-of-freedom simulation, and arbitrary vertical slopes in the hull cross-section beyond top-edge profiles.
