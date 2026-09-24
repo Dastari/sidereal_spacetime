@@ -57,6 +57,10 @@
 
 # Changelog
 
+## Unreleased — Shipyard player builder design, 2026-09-25
+
+Recorded the owner's decisions on player ship building and voxel-destructible ship structure. Added a design for the construction rules, an agent-friendly author → voxelise → style pipeline, damage authority, efficiency budget, a shared editor core and a phased plan. Evidence comes from a deterministic headless Blender prototype, `scripts/art_library/voxel_style_prototype.py`, which outputs a Wayfarer-style section with slope/arc bow, styled voxels and impact damage. Documentation and prototype only; no runtime, authority or asset changes.
+
 ## 2026-09-15 — Stellar Observe framing (render 0.5.1)
 
 Observe fits the enlarged stellar corona, including portrait viewports, while retaining authored physical radii and existing planet framing. Added two NullEngine projection tests. Final r013 solar migration passes isolated baseline/update/persistent-state verification and is now live with the compatible client. All live ship, character and inventory-item rows remain unchanged. Hardware performance acceptance remains unmeasured.
