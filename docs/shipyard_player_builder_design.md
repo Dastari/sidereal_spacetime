@@ -894,3 +894,73 @@ Owner direction, 2026-09-25: "Continue." This pass follows the r006 gap list and
 - The side sponson cannons from r006 have not had the new design pass.
 - Engines still lack visible support frames between bands.
 - Interiors are not started.
+
+### r008 (samples r008_*): interior architecture kit and a full deck
+
+Owner direction, 2026-09-25: "Continue with interiors." Interior **objects** (beds, consoles, sofas, crates …) are covered by the existing art-library review and design pipeline (`assets/art-library/designs/shipyard.equipment.*`, `cargo.*`, `pale-studless.*`). This pass therefore builds **architecture only**. Objects become reserved sockets carrying their art-library design id.
+
+**Interior kit** (all on the 1/16 m brick grid, themed through the nine material slots):
+
+| Family | Pieces |
+|---|---|
+| Floor tiles, 1×1 m | panel, reinforced, grated (reveals the utility trench), hazard, glass, carpet ×2, tread, corridor (centre light), hex |
+| Edge walls, 250 mm, centred on cell edges, both faces detailed | wall, panel, light (tall amber panel), screen, utility (pipe runs), reinforced (6 texels, bolted), glazed (half wall + glass to the ceiling), half (railing) |
+| Doors and hatches, 2 m module | standard, sliding, airlock, blast (hazard bands), force field; closed in the kit, open frames in deck view |
+| Junction posts | derived on the vertex lattice: end, L, T, X; never placed by hand |
+| Pipework | straight, corner, tee, junction; used by the utility layer and utility walls |
+| Fixtures | ceiling light, wall lamp, floor light strip |
+| Ceiling tiles | plain, vent, light |
+| Object sockets | art-library design id + footprint, rendered as translucent placeholders |
+
+**Deck-view cutaway.** Every edge piece and post has a `cut` variant capped at **1.75 m** with a thick dark cap. Posts and door jambs carry a small light block on top, as in `3d-rpg-after.png`. The exterior shell is cut at 2.5 m. Cutaway is presentation only. The runtime equivalent is a clip plane or variant swap, never an authority change.
+
+**Walls versus pressure** (§12.5), carried in the manifest as `edge_types_seal`:
+
+| Edge types | Seals |
+|---|---|
+| wall, panel, light, screen, utility, reinforced, glazed, door (closed), window | yes |
+| half, open | no; both sides form one compartment |
+
+The deck plan uses every type: glazed lounge and bridge partitions, a half wall between engineering and cargo, and five door kinds.
+
+**Deck generator** (`build_deck`). It takes a room plan (label, room type, cell rectangle), a door list and edge-type overrides, and derives:
+- floor tiles from the room type (partial bow cells get a generated slab)
+- 250 mm inward exterior walls along the hull footprint, with a generated stepped wall on the 45° bow faces
+- partitions on every cell edge shared by two rooms, with the variant chosen by room type
+- doors, and junction posts wherever walls meet non-collinearly
+- object sockets along each room's far wall
+- per-room lights and labels
+- the hull ring around it, cut at the deck view height, with the existing face cassettes, bow skins and engines
+
+For the corvette (11 rooms) that produces:
+
+| Output | Count |
+|---|---|
+| Floor tiles | 220 |
+| Exterior wall segments | 52 |
+| Partitions | 56 |
+| Doors | 10 |
+| Posts | 34 |
+| Object sockets | 13 |
+
+Socket placements and their design ids are listed in `kit_r008.json → deck_sockets`.
+
+**Room pod breakdown.** The reference "room pod" exploded view: hull base → utility layer → floor tiles → walls and door → object sockets → ceiling tiles.
+
+![r008 deck view](shipyard_player_builder/r008_deck_view.jpg)
+![r008 deck top-down](shipyard_player_builder/r008_deck_topdown.jpg)
+![r008 deck blueprint](shipyard_player_builder/r008_blueprint_deck.jpg)
+![r008 corridor](shipyard_player_builder/r008_deck_corridor.jpg)
+![r008 rooms](shipyard_player_builder/r008_deck_closeup.jpg)
+![r008 room pod](shipyard_player_builder/r008_room_pod_exploded.jpg)
+![r008 interior kit](shipyard_player_builder/r008_interior_kit.jpg)
+
+**Totals** (`kit_r008.json`): 287 kit pieces, 392 unique meshes and 2,391 placements across the whole scene; all kit pieces are voxel-aligned.
+
+**Remaining gaps.**
+- Objects are placeholders by design and wait on the art-library pipeline. The next step is to load the approved object GLBs into their sockets.
+- Wall faces need more small detail (vents, signage, cable trays) to approach the reference density.
+- The corridor reads as a long bright strip from above; it needs dimmer or segmented lighting.
+- Ceiling tiles only appear in the exploded view.
+- There are no stairs or ladders yet (multi-deck shaft tiles, §3.5).
+- The deck plan is hand-written data; an editor room tool would produce it (§7).

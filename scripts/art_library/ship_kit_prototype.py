@@ -36,7 +36,7 @@ import bpy
 import numpy as np
 from mathutils import Vector
 
-REVISION = "r007"
+REVISION = "r008"
 T = 1.0 / 16.0
 SLOTS = ["primary", "secondary", "accent", "trim", "metal", "dark", "emit_a", "emit_b", "glass"]
 SI = {s: i for i, s in enumerate(SLOTS)}
@@ -1514,6 +1514,564 @@ def scrap_ion(sz):
     return p
 
 
+# =========================================================================== r008: INTERIOR ARCHITECTURE KIT
+# Interiors are architecture only: floor tiles, edge walls, doors, derived junction posts, lighting fixtures,
+# pipework, the under-floor utility layer and interior roof panels. Interior OBJECTS (beds, consoles, sofas,
+# crates ...) are designed through the art-library review pipeline; here they are reserved PROP SOCKETS that
+# carry the art-library design id and a footprint, rendered as placeholders.
+FLOOR_T = 3                    # floor slab top (0.1875 m)
+WALL_TOP = 51                  # 3.1875 m
+DECK_CUT = 28                  # deck-view cutaway height for interior edges (1.75 m)
+EDGE_KINDS = {                 # edge type -> seals pressure
+    "wall": True, "panel": True, "light": True, "screen": True, "utility": True, "reinforced": True,
+    "glazed": True, "half": False, "door": True, "window": True, "open": False}
+
+
+def iwall(kind, cut=None, length=16):
+    """Interior edge segment: local X along the edge (length texels), Y = thickness (centred on 0 by the
+    placer), Z up from the floor top. Both faces are detailed. cut -> deck-view variant capped at that height."""
+    top = WALL_TOP - FLOOR_T if cut is None else cut
+    t = 6 if kind == "reinforced" else 4
+    L = length
+    p = Piece(f"int.edge.{kind}.l{L // 16}{'.cut' if cut else ''}", "interior-edge", "edge", (L, t, top + 1))
+
+    def both(x0, z0, x1, z1, d, slot):
+        p.b(x0, -d, z0, x1, 0, z1, slot)
+        p.b(x0, t, z0, x1, t + d, z1, slot)
+
+    if kind == "half":
+        p.b(0, 0, 0, L, t, 14, "primary").b(0, 0, 0, L, t, 2, "trim").b(-1 if False else 0, -1, 14, L, t + 1, 16, "secondary")
+        p.b(1, 1, 16, 2, t - 1, 24, "metal").b(L - 2, 1, 16, L - 1, t - 1, 24, "metal").b(0, 1, 24, L, t - 1, 25, "metal")
+        return p
+    if kind == "glazed":
+        p.b(0, 0, 0, L, t, 14, "primary").b(0, 0, 0, L, t, 2, "trim").b(0, -1, 14, L, t + 1, 16, "secondary")
+        gz = min(top, WALL_TOP - FLOOR_T - 2)
+        p.b(0, 0, 16, 1, t, gz, "secondary").b(L - 1, 0, 16, L, t, gz, "secondary")
+        p.b(1, 1, 16, L - 1, t - 1, gz, "glass")
+        if cut is None:
+            p.b(0, 0, gz, L, t, top, "secondary")
+        return p
+    # opaque walls: skirting, lower band, trim line, upper field
+    p.b(0, 0, 0, L, t, 3, "dark")
+    p.b(0, 0, 3, L, t, 14, "secondary")
+    p.b(0, 0, 14, L, t, 15, "trim")
+    p.b(0, 0, 15, L, t, top, "primary")
+    both(0, 3, L, 4, 1, "trim")                                      # kick rail
+    both(L // 2 - 1 if L > 16 else L - 1, 15, (L // 2 + 1) if L > 16 else L, top, 1, "secondary")   # panel seam
+    if kind == "panel":
+        both(2, 17, L - 3, min(top - 2, 40), 1, "primary")
+        both(L - 5, 7, L - 3, 9, 1, "emit_b")
+    elif kind == "light":                                            # tall amber light panel (corridors)
+        both(5, 16, 11, min(top - 1, 44), 1, "secondary")
+        both(6, 17, 10, min(top - 2, 43), 1, "emit_b")
+    elif kind == "screen":
+        both(2, 17, L - 2, min(top - 1, 38), 1, "dark")
+        both(3, 18, L - 3, min(top - 2, 37), 1, "emit_a")
+    elif kind == "utility":                                          # pipes on the room face (+Y side)
+        for n, z in enumerate((6, 10, 18)):
+            if z + 2 <= top:
+                p.b(0, t, z, L, t + 2, z + 2, ("metal", "accent", "trim")[n])
+        for x in (3, 11):
+            p.b(x, t, 5, x + 2, t + 3, min(top, 21), "trim")
+        p.b(6, t, 14, 9, t + 3, 17, "emit_b")
+    elif kind == "reinforced":
+        for x in range(1, L, 5):
+            for z in (5, 12, 20, 30):
+                if z + 1 < top:
+                    both(x, z, x + 1, z + 1, 1, "metal")
+        both(0, 15, L, 16, 1, "accent")
+    if cut is not None:
+        p.b(0, -1, top - 2, L, t + 1, top, "dark")                  # thick dark cap at the cut
+    else:
+        p.b(0, 0, top - 2, L, t, top, "trim")
+    return p
+
+
+def idoor(kind, cut=None):
+    """2 m door module on an interior edge: jambs + head + leaves (closed in the kit, open in deck view)."""
+    L, t = 32, 6
+    top = WALL_TOP - FLOOR_T if cut is None else cut
+    p = Piece(f"int.door.{kind}{'.cut' if cut else ''}", "door", "edge", (L, t, top + 1))
+    jw = 6
+    for x0 in (0, L - jw):
+        p.b(x0, -1, 0, x0 + jw, t + 1, top, "secondary")
+        p.b(x0 + 1, -2, 6, x0 + jw - 1, t + 2, min(top - 2, 34), "trim")
+        p.b(x0 + 2, -2, 22, x0 + jw - 2, t + 2, 26, "emit_a" if kind != "blast" else "emit_b")
+    p.b(jw, 0, 0, L - jw, t, 1, "trim")                              # threshold
+    p.b(jw + 1, -1, 0, L - jw - 1, t + 1, 1, "emit_b" if kind in ("blast", "airlock") else "emit_a")
+    if cut is not None:
+        p.b(0, -2, top - 2, jw, t + 2, top, "dark").b(L - jw, -2, top - 2, L, t + 2, top, "dark")
+        p.b(2, 1, top, jw - 2, t - 1, top + 1, "emit_a").b(L - jw + 2, 1, top, L - 2, t - 1, top + 1, "emit_a")
+        return p
+    hz = 38
+    p.b(jw, -1, hz, L - jw, t + 1, top, "secondary")                 # head
+    p.b(jw + 2, -2, hz + 2, L - jw - 2, t + 2, hz + 4, "emit_a")
+    if kind == "sliding":
+        p.b(jw, 1, 1, L // 2, t - 1, hz, "primary").b(L // 2, 1, 1, L - jw, t - 1, hz, "primary")
+        p.b(L // 2 - 1, 0, 1, L // 2 + 1, t, hz, "dark")
+        for x0 in (jw + 3, L // 2 + 3):
+            p.b(x0, 0, 16, x0 + 7, t, 30, "secondary")
+    elif kind == "standard":
+        p.b(jw, 1, 1, L - jw, t - 1, hz, "primary").b(jw + 3, 0, 5, L - jw - 3, t, hz - 4, "secondary")
+        p.b(L - jw - 4, -1, 18, L - jw - 2, t + 1, 22, "metal")
+    elif kind == "airlock":
+        p.b(jw, 1, 1, L - jw, t - 1, hz, "secondary")
+        p.disc("y", L // 2, 20, 9, -1, t + 1, "primary", rin=6).disc("y", L // 2, 20, 6, 0, t, "metal")
+        p.b(L // 2 - 1, -1, 12, L // 2 + 1, t + 1, 28, "dark")
+    elif kind == "blast":
+        p.b(jw, 0, 1, L - jw, t, hz, "metal")
+        for z in range(3, hz - 2, 6):
+            p.b(jw, -1, z, L - jw, t + 1, z + 2, "trim" if (z // 6) % 2 else "accent")
+    elif kind == "forcefield":
+        p.b(jw, 2, 1, L - jw, t - 2, hz, "glass")
+        p.b(jw, 2, 1, L - jw, t - 2, 2, "emit_a").b(jw, 2, hz - 1, L - jw, t - 2, hz, "emit_a")
+    return p
+
+
+def ipost(cut=None, lit=True):
+    """Derived junction post (vertex lattice): end / L / T / X junctions share one post."""
+    top = WALL_TOP - FLOOR_T if cut is None else cut
+    p = Piece(f"int.post{'.cut' if cut else ''}", "interior-post", "vertex", (6, 6, top + 2))
+    p.b(0, 0, 0, 6, 6, 3, "dark").b(0, 0, 3, 6, 6, top, "secondary").b(1, -1 + 1, 8, 5, 6, 10, "trim")
+    if cut is not None:
+        p.b(-1, -1, top, 7, 7, top + 1, "trim")
+        if lit:
+            p.b(2, 2, top + 1, 4, 4, top + 2, "emit_a")
+    return p
+
+
+FLOOR_KINDS = ["panel", "reinforced", "grated", "hazard", "glass", "carpet", "tread", "corridor", "hex"]
+
+
+def ifloor(kind):
+    """1 x 1 m floor tile, 0..3 texels (grated / glass cut into the utility trench below)."""
+    p = Piece(f"int.floor.{kind}", "floor", "plan", (16, 16, FLOOR_T))
+    base = "trim"
+    if kind == "panel":
+        p.b(0, 0, 0, 16, 16, 2, "dark")
+        for x, y in ((0, 0), (8, 0), (0, 8), (8, 8)):
+            p.b(x + 1, y + 1, 2, x + 8, y + 8, 3, base)
+        p.b(7, 7, 2, 9, 9, 3, "emit_b")
+    elif kind == "reinforced":
+        p.b(0, 0, 0, 16, 16, 2, "dark").b(1, 1, 2, 15, 15, 3, "metal")
+        for x in (2, 13):
+            for y in (2, 13):
+                p.b(x, y, 3, x + 1, y + 1, 4, "trim")
+    elif kind == "grated":
+        p.b(0, 0, 0, 16, 16, 1, "dark")
+        p.b(0, 0, 1, 16, 1, 3, base).b(0, 15, 1, 16, 16, 3, base).b(0, 1, 1, 1, 15, 3, base).b(15, 1, 1, 16, 15, 3, base)
+        p.b(1, 3, 1, 15, 5, 2, "accent").b(1, 9, 1, 15, 11, 2, "metal").b(5, 1, 1, 7, 15, 2, "emit_b")  # utility below
+        for x in range(1, 15, 2):
+            p.b(x, 1, 2, x + 1, 15, 3, "metal")
+    elif kind == "hazard":
+        p.b(0, 0, 0, 16, 16, 2, "dark").b(0, 0, 2, 16, 16, 3, base)
+        for i in range(0, 16, 4):
+            p.b(i, 0, 3, i + 2, 2, 4, "emit_b").b(i + 2, 0, 3, i + 4, 2, 4, "dark")
+            p.b(i, 14, 3, i + 2, 16, 4, "emit_b").b(i + 2, 14, 3, i + 4, 16, 4, "dark")
+    elif kind == "glass":
+        p.b(0, 0, 0, 16, 16, 3, "dark").b(7, 3, 2, 9, 13, 3, "emit_a")
+        for x, y in ((1, 1), (9, 1), (1, 9), (9, 9)):
+            p.b(x, y, 2, x + 6, y + 6, 3, "trim")
+        frame_top(p, 0, 0, 16, 16, 2, 3, 1, "secondary")
+    elif kind == "carpet":
+        p.b(0, 0, 0, 16, 16, 2, "dark").b(0, 0, 2, 16, 16, 3, "accent")
+    elif kind == "carpet2":
+        p.b(0, 0, 0, 16, 16, 2, "dark").b(0, 0, 2, 16, 16, 3, "secondary").b(0, 0, 3, 16, 1, 4, "trim")
+    elif kind == "tread":
+        p.b(0, 0, 0, 16, 16, 2, "dark").b(0, 0, 2, 16, 16, 3, "metal")
+        for y in range(1, 16, 3):
+            p.b(1, y, 3, 7, y + 1, 4, "trim").b(9, (y + 1) % 15, 3, 15, (y + 1) % 15 + 1, 4, "trim")
+    elif kind == "corridor":
+        p.b(0, 0, 0, 16, 16, 2, "dark").b(0, 1, 2, 16, 7, 3, base).b(0, 9, 2, 16, 15, 3, base)
+        p.b(0, 7, 2, 16, 9, 3, "secondary").b(3, 7, 2, 13, 9, 3, "emit_a")
+    elif kind == "hex":
+        p.b(0, 0, 0, 16, 16, 2, "dark")
+        for (x, y) in ((0, 0), (8, 4), (0, 8), (8, 12)):
+            p.b(x + 1, y, 2, x + 7, min(16, y + 7), 3, base)
+            if y + 7 > 16:
+                p.b(x + 1, 0, 2, x + 7, y + 7 - 16, 3, base)
+    return p
+
+
+def iceiling_light(cut=None):
+    p = Piece("int.fixture.ceiling-light", "fixture", "ceiling", (16, 16, 2))
+    p.b(3, 3, 0, 13, 13, 1, "secondary").b(4, 4, 0, 12, 12, 1, "emit_a")
+    return p
+
+
+def iwall_lamp():
+    p = Piece("int.fixture.wall-lamp", "fixture", "edge-face", (6, 3, 6))
+    p.b(0, 0, 0, 6, 1, 6, "secondary").b(1, 1, 1, 5, 3, 5, "trim").b(2, 2, 2, 4, 3, 4, "emit_b")
+    return p
+
+
+def ifloor_light():
+    p = Piece("int.fixture.floor-light", "fixture", "plan", (8, 2, 1))
+    p.b(0, 0, 0, 8, 2, 1, "emit_b")
+    return p
+
+
+def ipipe(kind):
+    """Wall/floor pipework run, 1 m, along +X at the given layer (for the utility layer and utility walls)."""
+    p = Piece(f"int.pipe.{kind}", "pipework", "utility", (16, 8, 4))
+    if kind == "straight":
+        p.b(0, 1, 0, 16, 3, 2, "accent").b(0, 5, 0, 16, 7, 2, "metal").b(7, 0, 0, 9, 8, 3, "trim")
+    elif kind == "corner":
+        p.b(0, 1, 0, 9, 3, 2, "accent").b(7, 1, 0, 9, 16, 2, "accent").b(6, 0, 0, 10, 4, 3, "trim")
+    elif kind == "tee":
+        p.b(0, 1, 0, 16, 3, 2, "accent").b(7, 3, 0, 9, 16, 2, "metal").b(6, 0, 0, 10, 4, 3, "trim")
+    elif kind == "junction":
+        p.b(0, 1, 0, 16, 3, 2, "accent").b(3, 0, 0, 13, 8, 4, "secondary").b(5, 2, 4, 11, 6, 5, "emit_b")
+    return p
+
+
+def iroof_panel(kind):
+    """Interior roof/ceiling tile seen from below (and in the exploded pod view)."""
+    p = Piece(f"int.roof.{kind}", "roof-interior", "plan", (16, 16, 2))
+    p.b(0, 0, 0, 16, 16, 2, "primary")
+    if kind == "vent":
+        p.b(3, 3, -1, 13, 13, 0, "dark")
+        for x in range(4, 12, 2):
+            p.b(x, 3, -1, x + 1, 13, 0, "metal")
+    elif kind == "light":
+        p.b(4, 4, -1, 12, 12, 0, "emit_a")
+    return p
+
+
+def prop_socket(design_id, w, d, h):
+    """Reserved object socket (art-library design id + footprint). Rendered as a placeholder."""
+    p = Piece(f"socket.{design_id}.{w}x{d}", "prop-socket", "plan", (w, d, h))
+    p.b(0, 0, 0, w, d, h, "glass")
+    frame_top(p, 0, 0, w, d, 0, 1, 1, "emit_a")
+    p.design_id = design_id
+    return p
+
+
+# ---- room plan: rooms (label, type, cells rect) + edges derived from room boundaries + doors
+ROOM_STYLE = {   # floor tile, dominant wall variants, placeholder sockets (design id, w, d, h texels, anchor)
+    "bridge": ("glass", ["screen", "panel"], [("shipyard.equipment.command-console", 24, 10, 16), ("shipyard.equipment.pilot-seat", 10, 10, 20),
+                                             ("shipyard.equipment.bridge-bank", 32, 8, 18)]),
+    "quarters": ("carpet", ["panel", "wall"], [("shipyard.equipment.crew-bunk", 32, 16, 20), ("shipyard.equipment.wall-locker", 12, 8, 32)]),
+    "lounge": ("carpet", ["screen", "panel"], [("shipyard.equipment.lounge-sofa", 40, 14, 14)]),
+    "galley": ("panel", ["panel", "utility"], [("pale-studless.table.standard", 24, 16, 12), ("pale-studless.kitchen.standard", 12, 36, 16)]),
+    "medbay": ("reinforced", ["screen", "panel"], [("shipyard.equipment.medical-bed", 30, 16, 14)]),
+    "hydro": ("grated", ["utility", "light"], [("shipyard.equipment.hydroponics", 44, 12, 12)]),
+    "engineering": ("grated", ["utility", "reinforced"], [("shipyard.equipment.reactor", 30, 30, 36)]),
+    "cargo": ("tread", ["reinforced", "utility"], [("cargo.standard.medium", 16, 16, 16), ("cargo.standard.medium", 16, 16, 16),
+                                                   ("cargo.fluid.medium", 16, 16, 20)]),
+    "workshop": ("hex", ["utility", "panel"], [("pale-studless.console.standard", 24, 10, 16)]),
+    "corridor": ("corridor", ["light", "wall"], []),
+    "airlock": ("hazard", ["reinforced"], []),
+}
+
+
+def corvette_interior():
+    """Room plan for the corvette interior (footprint BODY, 1 m cells). x forward."""
+    rooms = [
+        ("ENGINEERING", "engineering", (0, 1, 4, 11)),
+        ("CARGO", "cargo", (4, 1, 9, 5)),
+        ("WORKSHOP", "workshop", (9, 1, 13, 5)),
+        ("MEDBAY", "medbay", (13, 1, 17, 5)),
+        ("AIRLOCK", "airlock", (17, 1, 20, 5)),
+        ("CORRIDOR", "corridor", (4, 5, 20, 7)),
+        ("QUARTERS", "quarters", (4, 7, 8, 11)),
+        ("QUARTERS", "quarters", (8, 7, 12, 11)),
+        ("LOUNGE", "lounge", (12, 7, 17, 11)),
+        ("GALLEY", "galley", (17, 7, 20, 11)),
+        ("BRIDGE", "bridge", (20, 1, 24, 11)),
+    ]
+    doors = [((4, 5), (4, 7), "sliding"), ((6, 5), (8, 5), "standard"), ((10, 5), (12, 5), "sliding"), ((14, 5), (16, 5), "standard"),
+             ((17, 5), (19, 5), "airlock"), ((5, 7), (7, 7), "standard"), ((9, 7), (11, 7), "standard"), ((13, 7), (15, 7), "sliding"),
+             ((17, 7), (19, 7), "standard"), ((20, 5), (20, 7), "forcefield")]
+    special = {((12, 7), (17, 7)): "glazed", ((20, 1), (20, 5)): "glazed", ((20, 7), (20, 11)): "glazed", ((4, 1), (4, 5)): "half"}
+    return rooms, doors, special
+
+
+
+BODY = [(0, 1), (20, 1), (24, 5), (24, 7), (20, 11), (0, 11)]    # corvette interior floor footprint (1 m grid)
+
+
+def ring_offset(poly):
+    """Integer-vertex outer ring for the corvette body: 1 m outside axis faces, 45-degree faces follow."""
+    return [(-1, 0), (20, 0), (25, 5), (25, 7), (20, 12), (-1, 12)]
+
+
+def unit_edges(rect):
+    x0, y0, x1, y1 = rect
+    out = []
+    for x in range(x0, x1):
+        out += [((x, y0), (x + 1, y0)), ((x, y1), (x + 1, y1))]
+    for y in range(y0, y1):
+        out += [((x0, y), (x0, y + 1)), ((x1, y), (x1, y + 1))]
+    return out
+
+
+def seg_in(seg, span):
+    (a, b), (p, q) = seg, span
+    lo = (min(p[0], q[0]), min(p[1], q[1]))
+    hi = (max(p[0], q[0]), max(p[1], q[1]))
+    return all(lo[0] - 1e-6 <= c[0] <= hi[0] + 1e-6 and lo[1] - 1e-6 <= c[1] <= hi[1] + 1e-6 for c in (a, b)) and \
+        (abs(p[0] - q[0]) < 1e-6) == (abs(a[0] - b[0]) < 1e-6)
+
+
+def place_edge(piece, a, b, mats, coll, origin, centred=True, flip=False):
+    """Put an edge piece on segment a->b (local X along a->b, local Y = left normal). centred straddles the line."""
+    ox, oy = origin
+    d = (b[0] - a[0], b[1] - a[1])
+    L = math.hypot(*d)
+    d = (d[0] / L, d[1] / L)
+    if flip:
+        a, d = b, (-d[0], -d[1])
+    left = (-d[1], d[0])
+    t = piece.size[1] * T
+    off = -t / 2 if centred else 0.0
+    loc = (a[0] + left[0] * off + ox, a[1] + left[1] * off + oy, FLOOR_T * T)
+    return instance(piece, loc, math.degrees(math.atan2(d[1], d[0])), mats, coll)
+
+
+def build_deck(kit, mats, lab, coll, origin, cut=DECK_CUT, lights=None, labels=None):
+    """Corvette deck: hull ring (cut), floor tiles per room style, exterior walls, partitions, doors,
+    derived junction posts, prop sockets, room labels and lights. Returns stats."""
+    ox, oy = origin
+    rooms, doors, special = corvette_interior()
+    stats = {"floor": 0, "walls": 0, "partitions": 0, "doors": 0, "posts": 0, "sockets": 0}
+    # --- hull ring at the cut, with the rear engines
+    ring = dict(id="deckring", volumes=[dict(poly=ring_offset(BODY), holes=[BODY], z=(5, 40), kind="hull", logo=False)],
+                mounts=[("ion.LG", -1, 1.5, "face", 90, 5), ("ion.LG", -1, 7.5, "face", 90, 5), ("ion.MD", -1, 5, "face", 90, 13)])
+    dress(ring, kit, mats, {k: None for k in ("name", "emblem", "number", "emblem_small")}, "federation", coll, origin)
+    # --- floor: tiles on full cells, generated slab on the partial bow cells
+    cell_room = {}
+    for ri, (name, kind, rect) in enumerate(rooms):
+        x0, y0, x1, y1 = rect
+        for x in range(x0, x1):
+            for y in range(y0, y1):
+                cell_room[(x, y)] = ri
+    full = set()
+    for (x, y), ri in cell_room.items():
+        pts = [(x + a, y + b) for a in (0.02, 0.98) for b in (0.02, 0.98)]
+        if all(inside(BODY, *pt) for pt in pts):
+            full.add((x, y))
+            fk = ROOM_STYLE[rooms[ri][1]][0]
+            if rooms[ri][1] == "quarters":
+                fk = "carpet2"
+            instance(kit.get(("ifloor", fk), ifloor, fk), (x + ox, y + oy, 0), 0, mats, coll, bevel=0.006)
+            stats["floor"] += 1
+    part = Piece("gen.deck.floor-partial", "generated", "plan", (0, 0, 0))
+    for bx in raster_poly(BODY, [0, FLOOR_T], lambda cx, cy, bi: "trim"):
+        if (bx[0] // 16, bx[1] // 16) not in full:
+            part.b(*bx)
+    instance(part, (ox, oy, 0), 0, mats, coll, bevel=0.006)
+    # --- exterior walls (inward, 250 mm) along the body boundary
+    n = len(BODY)
+    body = ccw(BODY)
+    for i in range(n):
+        p, q = body[i], body[(i + 1) % n]
+        if abs(p[0] - q[0]) < 1e-6 or abs(p[1] - q[1]) < 1e-6:
+            L = int(round(math.hypot(q[0] - p[0], q[1] - p[1])))
+            d = ((q[0] - p[0]) / L, (q[1] - p[1]) / L)
+            for u in range(L):
+                a = (p[0] + d[0] * u, p[1] + d[1] * u)
+                b = (a[0] + d[0], a[1] + d[1])
+                mid = (a[0] + d[0] * 0.5 - d[1] * 0.5, a[1] + d[1] * 0.5 + d[0] * 0.5)
+                ri = cell_room.get((int(math.floor(mid[0])), int(math.floor(mid[1]))))
+                styles = ROOM_STYLE[rooms[ri][1]][1] if ri is not None else ["wall"]
+                kind = styles[int(H("ext", a[0], a[1]) * len(styles))] if H("ext2", a[0], a[1]) < 0.7 else "wall"
+                place_edge(kit.get(("iwall", kind, cut), iwall, kind, cut), a, b, mats, coll, origin, centred=False)
+                stats["walls"] += 1
+        else:                                                           # 45-degree bow wall, generated stepped
+            d = (q[0] - p[0], q[1] - p[1]); L = math.hypot(*d); left = (-d[1] / L, d[0] / L)
+            band = [p, q, (q[0] + left[0] * 0.25, q[1] + left[1] * 0.25), (p[0] + left[0] * 0.25, p[1] + left[1] * 0.25)]
+            wpc = Piece(f"gen.deck.bowwall.{i}", "generated", "edge", (0, 0, 0))
+            for bx in raster_poly(band, [FLOOR_T, FLOOR_T + 3, FLOOR_T + 14, FLOOR_T + cut - 2, FLOOR_T + cut],
+                                  lambda cx, cy, bi: ("dark", "secondary", "primary", "dark")[bi]):
+                wpc.b(*bx)
+            instance(wpc, (ox, oy, 0), 0, mats, coll, bevel=0.006)
+    # --- partitions between rooms (unit edges shared by two rooms, inside the body)
+    edge_rooms = {}
+    for ri, (name, kind, rect) in enumerate(rooms):
+        for e in unit_edges(rect):
+            key = tuple(sorted(e))
+            edge_rooms.setdefault(key, set()).add(ri)
+    door_spans = [(tuple(a), tuple(b), k) for a, b, k in doors]
+    vertex_dirs = {}
+    for key, rs in edge_rooms.items():
+        if len(rs) < 2:
+            continue
+        a, b = key
+        mid = ((a[0] + b[0]) / 2, (a[1] + b[1]) / 2)
+        if not inside(BODY, mid[0] + 0.01, mid[1] + 0.01) or not inside(BODY, mid[0] - 0.01, mid[1] - 0.01):
+            continue
+        if any(seg_in(key, (p, q)) for p, q, _ in door_spans):
+            for v in (a, b):
+                vertex_dirs.setdefault(v, []).append("door")
+            continue
+        kind = None
+        for (p, q), sk in special.items():
+            if seg_in(key, (p, q)):
+                kind = sk
+        rs_types = [rooms[r][1] for r in rs]
+        if kind is None:
+            host = [t for t in rs_types if t != "corridor"] or rs_types
+            styles = ROOM_STYLE[host[0]][1]
+            kind = styles[int(H("part", a[0], a[1]) * len(styles))]
+            if "corridor" in rs_types and H("cl", a[0], a[1]) < 0.35:
+                kind = "light"
+        place_edge(kit.get(("iwall", kind, cut), iwall, kind, cut), a, b, mats, coll, origin)
+        stats["partitions"] += 1
+        for v in (a, b):
+            vertex_dirs.setdefault(v, []).append("h" if a[1] == b[1] else "v")
+    for p, q, k in door_spans:
+        place_edge(kit.get(("idoor", k, cut), idoor, k, cut), p, q, mats, coll, origin)
+        stats["doors"] += 1
+    # --- derived junction posts: any vertex that is not a straight run between two collinear partitions
+    for v, dirs in vertex_dirs.items():
+        walls = [d for d in dirs if d != "door"]
+        if not walls:
+            continue
+        if len(dirs) == 2 and len(set(dirs)) == 1:
+            continue                                                    # straight run through the vertex
+        instance(kit.get(("ipost", cut), ipost, cut), (v[0] - 3 * T + ox, v[1] - 3 * T + oy, FLOOR_T * T), 0, mats, coll)
+        stats["posts"] += 1
+    # --- prop sockets (art-library objects) along each room's far wall, plus room lights and labels
+    light_col = {"bridge": (0.45, 0.75, 1.0), "quarters": (1.0, 0.75, 0.5), "lounge": (1.0, 0.5, 0.75), "galley": (1.0, 0.85, 0.65),
+                 "medbay": (0.8, 0.95, 1.0), "hydro": (0.75, 1.0, 0.6), "engineering": (0.5, 0.85, 1.0), "cargo": (1.0, 0.8, 0.55),
+                 "workshop": (1.0, 0.8, 0.6), "corridor": (0.6, 0.8, 1.0), "airlock": (1.0, 0.55, 0.3)}
+    sockets = []
+    for ri, (name, kind, rect) in enumerate(rooms):
+        x0, y0, x1, y1 = rect
+        if kind == "bridge":
+            x1 = 23
+        far_top = y0 >= 5
+        xc = x0 + 0.35
+        for did, w, d, h in ROOM_STYLE[kind][2]:
+            if xc + w * T > x1 - 0.3:
+                break
+            y = (y1 - 0.3 - d * T) if far_top else (y0 + 0.3)
+            if kind == "bridge":
+                y = (y0 + y1) / 2 - d * T / 2
+            if kind == "engineering":
+                y = (y0 + y1) / 2 - d * T / 2
+            pc = kit.get(("sock", did, w, d, h), prop_socket, did, w, d, h)
+            instance(pc, (xc + ox, y + oy, FLOOR_T * T), 0, mats, coll, bevel=0.0)
+            sockets.append({"design_id": did, "room": name, "cell": [round(xc, 3), round(y, 3)], "footprint_m": [w * T, d * T]})
+            stats["sockets"] += 1
+            xc += w * T + 0.3
+        if lights is not None:
+            pl = bpy.data.objects.new(f"deck_light_{ri}", bpy.data.lights.new(f"deck_light_{ri}", "POINT"))
+            coll.objects.link(pl)
+            area = (x1 - x0) * (y1 - y0)
+            pl.data.energy, pl.data.color, pl.data.shadow_soft_size = 14 * area, light_col[kind], 1.0
+            pl.data.use_shadow = False
+            pl.location = ((x0 + x1) / 2 + ox, (y0 + y1) / 2 + oy, 2.3)
+            lights.append(pl)
+        if labels is not None:
+            t = text(name, ((x0 + x1) / 2 - 0.13 * len(name) + ox, (y0 + y1) / 2 - 0.2 + oy, 2.6), 0.42, lab, labels)
+    stats["sockets_list"] = sockets
+    return stats
+
+
+def room_pod_exploded(kit, mats, lab, coll, origin):
+    """Reference 'room pod breakdown': a 3 x 4 crew quarters pod pulled apart into its layers."""
+    ox, oy = origin
+    gap = 1.25
+    W, D = 3, 4
+    names = []
+    z = 0.0
+    # hull base
+    hb = Piece("gen.pod.hull-base", "generated", "plan", (0, 0, 0))
+    hb.b(-4, -4, 0, W * 16 + 4, D * 16 + 4, 4, "secondary")
+    for x, y in ((-4, -4), (W * 16, -4), (-4, D * 16), (W * 16, D * 16)):
+        hb.b(x, y, 4, x + 4, y + 4, 6, "metal")
+    for x in range(0, W * 16, 8):
+        hb.b(x + 2, -5, 1, x + 6, -4, 3, "emit_b")
+    instance(hb, (ox, oy, z), 0, mats, coll)
+    names.append(("HULL BASE", z))
+    z += gap
+    # utility layer
+    for y in range(D):
+        kind = ("straight", "junction", "straight", "tee")[y]
+        instance(kit.get(("ipipe", kind), ipipe, kind), (ox + 0.5, oy + y + 0.25, z), 0, mats, coll)
+        instance(kit.get(("ipipe", "straight"), ipipe, "straight"), (ox + 1.5, oy + y + 0.25, z), 0, mats, coll)
+    names.append(("UTILITY LAYER  power / air / data", z))
+    z += gap
+    for x in range(W):
+        for y in range(D):
+            fk = "carpet2" if 0 < x < W and 0 < y < D - 1 else "panel"
+            instance(kit.get(("ifloor", fk), ifloor, fk), (ox + x, oy + y, z), 0, mats, coll)
+    names.append(("FLOOR TILES  1 x 1 m, snap to grid", z))
+    z += gap
+    # walls (full height): back wall with screen, side walls, front wall with door
+    zz = z - FLOOR_T * T
+    for x in range(W):
+        k = ("panel", "screen", "light")[x]
+        place_edge(kit.get(("iwall", k, None), iwall, k, None), (x + 1, D), (x, D), mats, coll, (ox, oy)).location.z = z
+    place_edge(kit.get(("iwall", "utility", None), iwall, "utility", None), (0, D), (0, D - 1), mats, coll, (ox, oy)).location.z = z
+    place_edge(kit.get(("idoor", "sliding", None), idoor, "sliding", None), (0, 2.75), (0, 0.75), mats, coll, (ox, oy)).location.z = z
+    for a, b in (((0, 0.75), (0, 0)),):
+        place_edge(kit.get(("iwall12", "wall"), iwall, "wall", None, 12), a, b, mats, coll, (ox, oy)).location.z = z
+    instance(kit.get(("ipost", None), ipost, None), (ox - 3 * T, oy + D - 3 * T, z), 0, mats, coll)
+    names.append(("WALL TILES  edge-based, 250 mm, window / decor", z))
+    z += 3.4 + gap * 0.4
+    # sockets
+    instance(kit.get(("sock", "shipyard.equipment.crew-bunk", 32, 16, 20), prop_socket, "shipyard.equipment.crew-bunk", 32, 16, 20),
+             (ox + 0.3, oy + 2.6, z), 0, mats, coll, bevel=0.0)
+    instance(kit.get(("sock", "shipyard.equipment.wall-locker", 12, 8, 32), prop_socket, "shipyard.equipment.wall-locker", 12, 8, 32),
+             (ox + 2.1, oy + 3.3, z), 0, mats, coll, bevel=0.0)
+    names.append(("OBJECT SOCKETS  art-library designs", z))
+    z += 2.3
+    for x in range(W):
+        for y in range(D):
+            k = "vent" if (x, y) == (1, 1) else ("light" if (x, y) == (1, 2) else "plain")
+            instance(kit.get(("iroof", k), iroof_panel, k), (ox + x, oy + y, z), 0, mats, coll)
+    names.append(("ROOF TILES  interior ceiling, vent / light", z))
+    for label, zl in names:
+        t = text(label, (ox + W + 1.0, oy + 0.5, zl + 0.1), 0.34, lab, coll)
+        t.rotation_euler = (math.radians(90), 0, math.radians(35))
+    return z
+
+
+def interior_sheet(kit, mats, lab, coll, origin):
+    ox, oy = origin
+    rows = [
+        ("FLOOR TILES", [kit.get(("ifloor", k), ifloor, k) for k in FLOOR_KINDS + ["carpet2"]], "plan"),
+        ("WALL MODULES  (seal)", [kit.get(("iwall", k, None), iwall, k, None) for k in ("wall", "panel", "light", "screen", "utility", "reinforced", "glazed")], "edge"),
+        ("NON-SEALING + CUTAWAY", [kit.get(("iwall", "half", None), iwall, "half", None)]
+         + [kit.get(("iwall", k, DECK_CUT), iwall, k, DECK_CUT) for k in ("wall", "light", "screen")] + [kit.get(("ipost", DECK_CUT), ipost, DECK_CUT)], "edge"),
+        ("DOORS + HATCHES", [kit.get(("idoor", k, None), idoor, k, None) for k in ("standard", "sliding", "airlock", "blast", "forcefield")]
+         + [kit.get(("idoor", "sliding", DECK_CUT), idoor, "sliding", DECK_CUT)], "edge"),
+        ("PIPEWORK + FIXTURES + CEILING", [kit.get(("ipipe", k), ipipe, k) for k in ("straight", "corner", "tee", "junction")]
+         + [kit.get("iceil", iceiling_light), kit.get("iwlamp", iwall_lamp), kit.get("iflamp", ifloor_light)]
+         + [kit.get(("iroof", k), iroof_panel, k) for k in ("plain", "vent", "light")], "plan"),
+    ]
+    y = oy
+    for title, pieces, mode in rows:
+        text(title, (ox - 7.5, y - 0.4, 0.02), 0.34, lab, coll)
+        x, rowd = ox, 0.0
+        for pc in pieces:
+            w, d, h = (v * T for v in pc.size)
+            if mode == "edge":
+                instance(pc, (x, y, 0.0), 0, mats, coll)
+                dep = 1.2
+            else:
+                instance(pc, (x, y - d, 0.0), 0, mats, coll)
+                dep = d
+            nm = pc.id.split(".", 1)[1]
+            text(nm, (x, y - max(dep, 0.4) - 0.35, 0.02), 0.16, lab, coll)
+            x += max(w, 0.16 * 0.62 * len(nm)) + 0.8
+            rowd = max(rowd, dep)
+        y -= max(rowd, 1.0) + (4.6 if mode == "edge" else 2.4)
+    return y
+
+
+def pressure_legend(lab, coll, origin):
+    ox, oy = origin
+    lines = ["EDGE TYPE -> PRESSURE", "wall / panel / light / screen / utility / reinforced : SEALS",
+             "glazed (half wall + glass to ceiling) : SEALS", "door (closed) / window / airlock : SEALS",
+             "half wall / railing / open : NO SEAL - one compartment", "deck-view cutaway at 1.75 m : presentation only"]
+    for i, s in enumerate(lines):
+        text(s, (ox, oy - i * 0.7, 0.02), 0.34 if i else 0.46, lab, coll)
+
+
 # =========================================================================== r005: GENERIC HULL DRESSER
 def signed_area(poly):
     return 0.5 * sum(poly[i][0] * poly[(i + 1) % len(poly)][1] - poly[(i + 1) % len(poly)][0] * poly[i][1] for i in range(len(poly)))
@@ -1546,7 +2104,19 @@ def spans(poly, yc):
 ROW = 4          # plan raster row height in texels (0.25 m)
 
 
-def raster_poly(poly, bands, colour):
+def spans_multi(rings, yc):
+    xs = []
+    for poly in rings:
+        n = len(poly)
+        for i in range(n):
+            (x0, y0), (x1, y1) = poly[i], poly[(i + 1) % n]
+            if (y0 <= yc < y1) or (y1 <= yc < y0):
+                xs.append(x0 + (yc - y0) * (x1 - x0) / (y1 - y0))
+    xs.sort()
+    return [(xs[k], xs[k + 1]) for k in range(0, len(xs) - 1, 2)]
+
+
+def raster_poly(poly, bands, colour, holes=()):
     """Even-odd scanline raster of any plan polygon into per-1 m-cell stepped boxes (2-texel rows)."""
     ys = [p[1] for p in poly]
     y0 = int(math.floor(min(ys) * 4)) * 4
@@ -1554,7 +2124,7 @@ def raster_poly(poly, bands, colour):
     cells = {}
     for yt in range(y0, y1, ROW):
         yc = (yt + ROW / 2) * T
-        for a, b in spans(poly, yc):
+        for a, b in spans_multi([poly] + list(holes), yc):
             xa, xb = int(round(a * 8)) * 2, int(round(b * 8)) * 2
             if xb <= xa:
                 continue
@@ -1695,7 +2265,7 @@ def dress(design, kit, mats, decals, theme, coll, origin):
         for w in vols:
             if w is v:
                 continue
-            if w["z"][0] < z1 and z0 < w["z"][1] and inside(w["poly"], x, y):
+            if w["z"][0] < z1 and z0 < w["z"][1] and inside(w["poly"], x, y) and not any(inside(h, x, y) for h in w.get("holes", ())):
                 return True
         return False
 
@@ -1723,7 +2293,7 @@ def dress(design, kit, mats, decals, theme, coll, origin):
                 h = H(cx, cy, vi, 44)
                 return "primary" if h < 0.62 else ("secondary" if h < 0.84 else "accent")
         body = Piece(f"gen.{design['id']}.v{vi}", "generated", "plan", (0, 0, 0))
-        for bx in raster_poly(v["poly"], bands, colour):
+        for bx in raster_poly(v["poly"], bands, colour, v.get("holes", ())):
             body.b(*bx)
         instance(body, (ox, oy, 0), 0, mats, coll, bevel=0.01)
         # ---- faces
@@ -1828,7 +2398,8 @@ def dress(design, kit, mats, decals, theme, coll, origin):
             for cx in range(int(math.floor(min(xs))), int(math.ceil(max(xs)))):
                 for cy in range(int(math.floor(min(ys))), int(math.ceil(max(ys)))):
                     pts = [(cx + a, cy + b) for a in (0.02, 0.98) for b in (0.02, 0.98)] + [(cx + 0.5, cy + 0.5)]
-                    if all(inside(poly, *pt) for pt in pts) and not any(other_covers(v, cx + 0.5, cy + 0.5, z1, z1 + 20) for _ in (0,)):
+                    if all(inside(poly, *pt) for pt in pts) and not any(other_covers(v, cx + 0.5, cy + 0.5, z1, z1 + 20) for _ in (0,)) \
+                            and not any(inside(h, cx + 0.5, cy + 0.5) for h in v.get("holes", ())):
                         cells.add((cx, cy))
             free = {c for c in cells if c not in top_taken}
             rimc = {c for c in free if any((c[0] + a, c[1] + b) not in cells for a in (-1, 0, 1) for b in (-1, 0, 1))}
@@ -2380,9 +2951,19 @@ def main():
     bottom = component_sheet(kit, theme_mats["federation"], sheet, (300, 0))
     engines, ex_mid = engine_showcase(kit, theme_mats, lab, sc)
     weapons = weapon_showcase(kit, theme_mats, lab, sc)
+    deck = bpy.data.collections.new("DECK"); sc.collection.children.link(deck)
+    decklabels = bpy.data.collections.new("DECK_LABELS"); sc.collection.children.link(decklabels)
+    deck_lights = []
+    deck_stats = build_deck(kit, theme_mats["federation"], lab, deck, (800.0, 0.0), lights=deck_lights, labels=decklabels)
+    pressure_legend(lab, decklabels, (800.0, -3.2))
+    pod = bpy.data.collections.new("POD"); sc.collection.children.link(pod)
+    pod_top = room_pod_exploded(kit, theme_mats["federation"], lab, pod, (850.0, 0.0))
+    isheet = bpy.data.collections.new("INTERIOR_KIT"); sc.collection.children.link(isheet)
+    isheet_bottom = interior_sheet(kit, theme_mats["federation"], lab, isheet, (880.0, 0.0))
     pieces = [p for p in kit.p.values() if isinstance(p, Piece)]
     manifest = {"revision": REVISION, "texel_m": T, "slots": SLOTS, "themes": list(THEMES),
-                "unique_meshes": len(MESHES), "placements": PLACEMENTS["count"], "designs": stats,
+                "unique_meshes": len(MESHES), "placements": PLACEMENTS["count"], "designs": stats, "deck": {k: v for k, v in deck_stats.items() if k != "sockets_list"},
+                "deck_sockets": deck_stats["sockets_list"], "deck_cut_texels": DECK_CUT, "edge_types_seal": EDGE_KINDS,
                 "hardpoint_cells": SIZE_CELLS, "ion_body_texels": ION_LEN,
                 "pieces": [{"id": p.id, "family": p.family, "mount": p.mount, "size_m": [v * T for v in p.size],
                             "slots": p.slots(), "boxes": len(p.boxes), "decal_sockets": [d[0] for d in p.decals],
@@ -2396,7 +2977,7 @@ def main():
         return
     cam = setup(sc, args.samples)
     labels = [c for c in sc.collection.children if c.name.startswith("L_")]
-    everything = [ships, shapes, sheet, engines, weapons] + labels
+    everything = [ships, shapes, sheet, engines, weapons, deck, decklabels, pod, isheet] + labels
 
     def shot(name, visible, res=(1672, 941)):
         if shots and name not in shots:
@@ -2425,6 +3006,18 @@ def main():
     shot("engines_lineup", [engines])
     look(cam, (ex_mid[0], ex_mid[1] + 2.0, ex_mid[2]), (9.0, -24, 12.0), 32)
     shot("engine_exploded", [engines])
+    look(cam, (812.0, 5.5, 0.0), (5.0, -17.0, 19.0), 30)
+    shot("deck_view", [deck])
+    look(cam, (812.5, 8.5, 0.6), (1.5, -7.5, 7.0), 32)
+    shot("deck_closeup", [deck])
+    look(cam, (818.0, 4.0, 0.6), (-2.5, -7.0, 6.5), 32)
+    shot("deck_corridor", [deck])
+    ortho_top(cam, 812.0, 5.5, 31.0)
+    shot("deck_topdown", [deck], (2400, 1100))
+    look(cam, (852.6, 2.0, 4.6), (9.0, -12.5, 5.5), 30)
+    shot("room_pod_exploded", [pod], (1400, 1500))
+    look(cam, (887.5, isheet_bottom / 2 + 0.8, 0.0), (0.0, -12.0, 36.0), 40)
+    shot("interior_kit", [isheet], (2400, 1900))
     look(cam, (613.5, -3.5, 0.6), (-2, -23, 16), 31)
     shot("weapons_catalog", [weapons])
     look(cam, (617, -21, 0.6), (-1, -15, 9), 36)
@@ -2443,7 +3036,10 @@ def main():
         blueprint_grid(ships, 36, 18, 80)
         blueprint_grid(shapes, shapes_cx, 0, 60)
         blueprint_grid(sheet, 322, bottom / 2, 60)
-        blueprint_mode(sc, [ships, shapes, sheet], bp)
+        blueprint_grid(deck, 812, 4, 30)
+        for pl in deck_lights:
+            pl.hide_render = True
+        blueprint_mode(sc, [ships, shapes, sheet, deck], bp)
         blueprint_lines(sc, False, 0.8)
         ortho_top(cam, 36, 16, 136)
         shot("blueprint_designs", [ships] + labels, (2400, 1350))
@@ -2452,6 +3048,9 @@ def main():
         shot("blueprint_shapes", [shapes], (2400, 900))
         ortho_top(cam, 318, bottom / 2 + 0.5, 64)
         shot("blueprint_components", [sheet], (2400, 2100))
+        blueprint_lines(sc, False, 0.8)
+        ortho_top(cam, 812.0, 2.6, 34.0)
+        shot("blueprint_deck", [deck, decklabels], (2400, 1400))
 
 
 main()

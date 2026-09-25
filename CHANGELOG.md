@@ -10,6 +10,8 @@ r006 adds size-class hardpoints (SM 1×1 to XL 4×4 m). Ion drives are segmented
 
 r007 adds modular mount assemblies (connector, rotation base, gimbal, head, payload) for 11 weapon and utility kinds in SM/MD/LG, with face-mount variants. The ion drive becomes round, with chunk blocks, a bolted cap and deeper nozzles, and a salvaged ion geometry variant is added. The ships are refitted.
 
+r008 adds an interior architecture kit: floor tiles, edge walls with pressure semantics, doors, derived junction posts, pipework, fixtures, ceiling tiles and 1.75 m cutaway variants. A deck generator builds a full 11-room corvette deck from a room plan. Interior objects are art-library design-id sockets, and a room pod exploded view is included.
+
 # Changelog
 
 ## Unreleased — Wayfarer exterior armor native r004
