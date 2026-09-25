@@ -66,6 +66,7 @@
     "art:library:floor:fit": "tsx scripts/art_library/check_floor_review.ts",
     "art:roof": "python3 scripts/art_library/run_roof.py",
     "art:side-hull": "python3 scripts/art_library/run_side_hull.py",
+    "art:ship-kit": "python3 scripts/art_library/run_ship_kit.py",
     "art:study:hull": "python3 scripts/art_library/run_hull_voxel_study.py",
     "format:check": "node scripts/quality-check.mjs format",
     "format:check:all": "prettier --check \"apps/**/*.{ts,tsx,css,json}\" \"packages/**/*.{ts,tsx,json}\" \"scripts/*.{ts,mjs}\"",

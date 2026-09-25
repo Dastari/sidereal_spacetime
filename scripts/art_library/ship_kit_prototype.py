@@ -3053,4 +3053,5 @@ def main():
         shot("blueprint_deck", [deck, decklabels], (2400, 1400))
 
 
-main()
+if __name__ == "__main__":   # `blender -b -P` runs this file as __main__; ship_kit_export imports it
+    main()
