@@ -90,9 +90,12 @@ describe("ship component catalog v1", () => {
     expect(block.propulsion!.thrustKn).toBeGreaterThan(ion.propulsion!.thrustKn);
     expect(block.fluids.fuelActiveLps).toBeGreaterThan(ion.fluids.fuelActiveLps * 4);
     expect(block.power.activeKw).toBeLessThan(ion.power.activeKw / 4);
-    // The salvaged variant shares the envelope and sockets but is weaker.
+    // The salvaged variant shares sockets and hardpoint cells (its bypass pipe
+    // stands slightly proud) but is weaker.
     const scrap = byId.get("ion-drive.salvaged.md")!;
-    expect(scrap.mount.envelopeM).toEqual(ion.mount.envelopeM);
+    expect(scrap.mount.cells).toEqual(ion.mount.cells);
+    expect(scrap.mount.sockets).toEqual(ion.mount.sockets);
+    expect(scrap.mount.envelopeM[0][1]).toBe(ion.mount.envelopeM[0][1]);
     expect(scrap.propulsion!.thrustKn).toBeLessThan(ion.propulsion!.thrustKn);
     // SM computer core matches the existing 500 W IFCS lab computer.
     expect(byId.get("computer-core.sm")!.power.activeKw * 1000).toBe(500);
