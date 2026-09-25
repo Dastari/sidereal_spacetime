@@ -7,6 +7,8 @@ import {
   type RedesignProposal,
 } from "./redesign-document";
 import type { HullEnvelope } from "@sidereal/content/layout-structure";
+import rebuiltWayfarer from "@sidereal/content/wayfarer-exterior-r005.json";
+import { resetLegacyLocalDrafts } from "./reset-local-drafts";
 import type { PartCatalog } from "@sidereal/content/assembly";
 import {
   createWayfarerTemplateDraft,
@@ -71,6 +73,7 @@ function boot() {
     identity =
       localStorage.getItem("sidereal.layout.local-profile.v1") ?? uuid();
     localStorage.setItem("sidereal.layout.local-profile.v1", identity);
+    resetLegacyLocalDrafts(localStorage, identity);
     const key = localStorage.getItem(`sidereal.layout.active.v1:${identity}`);
     raw = key ? localStorage.getItem(key) : null;
     if (key && !raw)
@@ -101,7 +104,7 @@ function boot() {
     const doc = createBlankLayout(
       "ship",
       "Untitled ship",
-      HULL_SIZE_CATALOG[0],
+      { ...HULL_SIZE_CATALOG[0], height: 112 },
       uuid(),
       uuid(),
     );
@@ -543,6 +546,19 @@ export function useLayout() {
         return adoptPreservingCurrent(
           createWayfarerFloorplanDraft(template, uuid(), hull),
         );
+      } catch (e) {
+        setError(String(e));
+        return false;
+      }
+    },
+    createRebuiltWayfarer: () => {
+      try {
+        const next = structuredClone(
+          rebuiltWayfarer.layout,
+        ) as unknown as LayoutDocument;
+        next.id = uuid();
+        next.name = "Wayfarer · rebuilt";
+        return adoptPreservingCurrent(next);
       } catch (e) {
         setError(String(e));
         return false;

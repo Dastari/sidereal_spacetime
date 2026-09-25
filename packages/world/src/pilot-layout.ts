@@ -1,4 +1,3 @@
-import { commitFlightCharacter } from "./construction-flight-dirty";
 import { SenderError, type ReducerCtx, type InferSchema } from "spacetimedb/server";
 import type world from "./index";
 import { PILOT_LAYOUT, repairLabDeckPosition } from "../../content/src/pilot-layout";
@@ -20,7 +19,7 @@ export function alignPilotLayout(ctx: Context, shipId: string) {
   for (const actor of ctx.db.character.by_owner.filter(ctx.sender)) {
     if (actor.shipId !== shipId) continue;
     const point = actor.id === occupant?.id ? PILOT_LAYOUT.station : repairLabDeckPosition(actor.localX, actor.localY);
-    commitFlightCharacter(ctx, { ...actor, localX: point.x, localY: point.y, sprinting: false }, row => ctx.db.character.id.update(row));
+    ctx.db.character.id.update({ ...actor, localX: point.x, localY: point.y, sprinting: false });
     const input = ctx.db.input.characterId.find(actor.id);
     if (input) ctx.db.input.characterId.update({ ...input, throttle: 0, turn: 0, dx: 0, dy: 0, sprint: false });
   }

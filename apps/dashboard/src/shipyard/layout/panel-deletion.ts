@@ -31,6 +31,11 @@ export function deleteInternalWall(
     boundaryIds: r.boundaryIds.filter((b) => b !== id),
   }));
   if (next.structure) delete next.structure.wallFaces[id];
+  if (next.structure?.schema === "sidereal.layout-structure.v2")
+    next.structure.boundaryTreatments =
+      next.structure.boundaryTreatments.filter(
+        (t) => t.source !== "partition" || t.sourceAnchorId !== id,
+      );
   return next;
 }
 

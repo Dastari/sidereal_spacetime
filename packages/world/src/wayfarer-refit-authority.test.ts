@@ -1,3 +1,4 @@
+import { WAYFARER_STARTER } from "../../content/src/wayfarer-starter";
 import { LAB_FLIGHT_ACTUATORS } from "@sidereal/content/flight";
 import { expect, test, vi } from "vitest";
 import { Identity } from "spacetimedb";
@@ -140,7 +141,7 @@ import { canOccupyDeck } from "@sidereal/sim/construction-collision";
 
 function legacyFixture() {
   const f = baseFixture(),
-    result = createWayfarerStarterAuthority(f.ctx, "Legacy");
+    result = createWayfarerStarterAuthority(f.ctx, "Legacy", WAYFARER_STARTER);
   const actor = f.db.character.id.find(result.actor.id),
     ship = f.db.ship.id.find(actor.shipId),
     station = f.db.station.shipId.find(ship.id),

@@ -5,9 +5,7 @@ import {
   WAYFARER_REACTOR_ASSET_ID,
   WAYFARER_REACTOR_SOURCE_ID,
 } from "@sidereal/content/device-services";
-import { WAYFARER_PHYSICAL_CATALOG } from "../../content/src/physical-definitions";
-import type { ActuatorDefinition } from "../../sim/src/flight-definition";
-import { markShipFlightDirty } from "./construction-flight-dirty";
+import { LAB_FLIGHT_ACTUATORS } from "@sidereal/content/flight";
 import type { ConstructionDocument } from "@sidereal/content/construction";
 import type { ConstructionInstanceMappings } from "@sidereal/sim/construction-instance";
 
@@ -84,24 +82,28 @@ export function setConstructionEnginePower(
     )
   )
     throw Error("Installed qualified reactor required");
-  const fittings = [];
-  for (const row of ctx.db.constructionFlightFitting.by_ship.filter(args.shipId)) {
-    if (fittings.length === 256) throw Error("Bounded qualified power installation required");
-    fittings.push(row);
-  }
-  if (new Set(fittings.map(f=>f.id)).size!==fittings.length || new Set(fittings.map(f=>f.placedObjectId)).size!==fittings.length || new Set(fittings.map(f=>f.sourceDeviceId)).size!==fittings.length || fittings.some(f=>f.shipId!==args.shipId))
-    throw Error("Unique qualified power fitting set required");
-  for (const fitting of fittings) {
-    if (!fitting.installed) continue;
-    const part = document.layout.assembly?.parts.find(p=>p.id===fitting.placedObjectId);
-    const physical = part && WAYFARER_PHYSICAL_CATALOG.definitions.find(d=>d.id==="physical:"+part.assetId && d.revision===fitting.definitionRevision);
-    if (!physical || physical.kind!==fitting.kind || !("fittingDefinitionId" in physical) || physical.fittingDefinitionId!==fitting.definitionId || !mappings.objects.some(m=>m.instanceId===fitting.placedObjectId))
-      throw Error("Definition-bound power fitting set required");
-  }
-  const engine = fittings.find(f=>f.placedObjectId===args.enginePlacedObjectId && f.kind==="actuator");
-  const placed = document.layout.assembly?.parts.find(p=>p.id===args.enginePlacedObjectId);
-  const source = placed && WAYFARER_PHYSICAL_CATALOG.definitions.find(d=>d.id==="physical:"+placed.assetId && d.revision===engine?.definitionRevision && d.kind==="actuator") as ActuatorDefinition | undefined;
-  if (!engine || !source || source.fittingDefinitionId!==engine.definitionId || !engine.installed || !mappings.objects.some(m=>m.sourceId===engine.sourceDeviceId && m.instanceId===engine.placedObjectId))
+  const fittings = [
+    ...ctx.db.constructionFlightFitting.by_ship.filter(args.shipId),
+  ];
+  if (fittings.length !== 10)
+    throw Error("Complete qualified power installation required");
+  const engine = fittings.find(
+    (f) =>
+      f.placedObjectId === args.enginePlacedObjectId && f.kind === "actuator",
+  );
+  const source = LAB_FLIGHT_ACTUATORS.find(
+    (a) => a.id === engine?.sourceDeviceId,
+  );
+  if (
+    !engine ||
+    !source ||
+    source.definitionId !== engine.definitionId ||
+    !engine.installed ||
+    !mappings.objects.some(
+      (m) => m.sourceId === source.id && m.instanceId === engine.placedObjectId,
+    ) ||
+    !document.layout.assembly?.parts.some((p) => p.id === engine.placedObjectId)
+  )
     throw Error("Installed qualified engine required");
   // Permission, stale revision, exact mappings and complete source checks precede writes.
   ctx.db.constructionFlightFitting.id.update({
@@ -122,5 +124,4 @@ export function setConstructionEnginePower(
     stationId: binding.stationId,
     revision: binding.revision + 1n,
   });
-  markShipFlightDirty(ctx, args.shipId);
 }

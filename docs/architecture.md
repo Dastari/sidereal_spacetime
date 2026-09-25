@@ -62,3 +62,39 @@ Provisional goals: 50 concurrent players, 100 stress clients; compare dispersed 
 `apps/client` owns gameplay presentation/input. `apps/dashboard` owns authoring navigation, editors and administration. They have separate manifests, TS entrypoints, Vite configs, ports, `dist` outputs and release lifecycles. Neither imports the other. Shared `packages/ui`, `render`, `content`, `net`, `sim` and `scripting` are libraries only. Rebuilding one application does not rebuild/restart the other or republish `packages/world`. Generated protocol changes require explicit compatible deployments, not an automatic dependency rebuild cascade.
 
 Use the existing Keycloak provider as specified in [authentication](authentication.md). Adopt the event/binding/state/capability model in [scripting lifecycle](scripting_lifecycle.md); full compiled TypeScript and live bounded behavior programs have different trust/deployment properties. Core authority and data privacy remain enforced for both.
+
+Planet reference tooling computes tight shadow envelopes in its body worker and qualifies fixed-detail caching against complete worker output, including weather. The shared planet shadow manager selects active semantic planet meshes and restores prior light/receiver state when changing bodies. See docs/planet_lod_authoring.md for authoring and acceptance constraints.
+
+
+## Reviewed native planets in Genesis (2026-09-15)
+
+Genesis defaults to the renderer-owned reviewed catalog: nine main planets and nineteen explicit moon variants. The dashboard supplies only catalog ID and local seed. One planet worker registers, hashes, validates and caches immutable payloads, then builds compact geometry buffers; one shared upload scheduler prepares retained levels. Materials, authored textures and refraction leases remain shared across a body’s LODs. The current planet remains visible until its replacement is prepared and committed in a render frame. Asset and placement identities remain distinct; triangle placement ranges carry body IDs.
+
+Reviewed payloads now live in shared versioned `assets/reviewed-celestials/`; each app independently stages its public reviewed-planet/star directories, separate from generated runtime assets. Source and runtime hashes plus lossless transport provenance accompany each revision. Procedural authoring remains an explicit separate mode. No world, simulation or generic-moon authority mapping changes. See [integration specification](genesis_native_planets_spec.md) and [decision](adr/ADR-genesis-reviewed-native.md).
+
+## Authored solar system and native stellar effects (2026-09-15)
+
+`packages/content` pins the complete celestial chart and reviewed appearance revisions; `packages/world` owns the guarded r001-to-r002 celestial-only migration and private audit receipt. Rendering consumes accepted body positions and never performs migration or simulation writes. The real-game environment reuses reviewed worker/preparation/retained-LOD lifetimes, admits bodies by camera projection (including Map Observe), and bounds retained native bodies to three. A small distant-star effect preserves visibility when the native star is unresolved.
+
+The star retains authored Blender PBR geometry/materials. Shared material plugins animate emission only; fixed native flare/ejecta actors and one additive turbulent corona quad animate without rebuilding topology. Native r010/plasma-r012 qualifies against the original reference through root/Astra working review, separate from owner final sign-off and hardware performance. See [solar-system specification](specs/yellow-star-solar-system.md) for migration/deployment status and evidence.
+
+
+2026-09-15 stellar rendering refinement: native r013 closed relief tiles carry shared tile-center UVs. A PBR material plugin supplies fixed-topology vertex displacement and evolving thermal/dark-complex fields, with permanently registered injection points before the base constructor collects them. Expanded CPU culling bounds cover shader travel. One bounded billboard field integrates the orange corona and rare eruptions; material precompile and ready-only publication retain the prior visible body. No simulation writes or per-frame CPU geometry generation. Genesis fits the expanded2.1-radius effect envelope. See docs/specs/yellow-star-solar-system.md and the r018 evidence for working visual qualification versus unmeasured hardware performance.
+
+## System map authoring (2026-09-15 candidate)
+
+Creator `/map` reads `own_system_maps` and `own_map_ships` through explicit `universe-map` workspace grants. Content defines the sphere/background/celestial/field document; sim validates and reproducibly generates bounded volumetric populations; world commits expected-revision edits with source fingerprints, receipts and before/after history. The top-down SVG chart subtracts the camera origin before screen projection. Ship motion is a read-only overlay.
+
+Generated field asteroids remain separate from the dynamic contact island. Admitted actors receive at most128 nearby visual records without private resource metadata; `admitted_system_scapes` selects the authored game background. Mining/depletion and physical activation are not implemented. See [system map specification](specs/system-map-editor.md) and [validation record](handoffs/system_map_20260915.md).
+
+## Spatial background and temporary test-ship contracts (2026-09-21 candidate)
+
+`admitted_system_scapes.regions_json` projects only system sphere/field geometry and presentation IDs to the connected admitted actor in that ship/system. It excludes celestial rosters, asteroid resources, population seeds and authoring history. The pure sim resolver blends Deep space → system → fields ordered by priority and stable ID. This presentation never grants discovery, control or movement authority.
+
+`switch_construction_review` validates the owned destination and current temporary visit, expected destination/visit revisions, current spawn grant, standing/no flight/no traversal, valid home and free destination entry. It updates actor/location and the native return target atomically, clears intent, and records an idempotency receipt. Original home and inventory are never copied or replaced. The existing validated native return rechecks home access and source state.
+
+### Geometric zones
+
+Systems, asteroid fields and generic nested volumes normalize to bounded compiled zones. Curves compile once to deterministic XY polylines; root spheres remain analytic. Ancestor volumes clip descendants. SpacetimeDB stores private `system_zone` rows indexed by simulation scope and private `ship_zone_state` rows keyed by ship. Each state row includes current membership and a bounded 128-event journal with monotonic sequence bounds; storing the tail in the same row makes each changed ship one atomic state write. `own_ship_zones` reuses authenticated admission checks and exposes only the actor's current ship.
+
+Accepted contact-solver drift traces are swept for zone transitions. Corrections reclassify endpoints, rejected substeps contribute no trace, and tangent-only visits at adjacent drift joins are suppressed. A six-million-operation geometry budget prepares all ship updates before writing them; exhaustion preserves pre-step motion. Zone-only commits stamp the simulation sample to prevent replay. Definitions, background projection and editor previews share geometry. Existing `systemId` continues to partition physics/admission; geometric root exit does not implement cross-partition travel. See [ADR](adr/ADR-20260921-zone-authority.md).

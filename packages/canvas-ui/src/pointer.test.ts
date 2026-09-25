@@ -12,6 +12,7 @@ vi.mock("@babylonjs/core/Layers/layer", () => ({
   },
 }));
 import { CanvasUI } from "./toolkit";
+import { COMBAT_CURSOR } from "./combat-cursor";
 afterEach(() => vi.unstubAllGlobals());
 function setup() {
   const handlers = new Map<string, Function>();
@@ -112,6 +113,22 @@ test("trackpad and Shift-wheel preserve the horizontal scroll axis", () => {
   expect(f.ui.scroll).toHaveBeenLastCalledWith(0, 20, 20, 48);
   f.wheel(0, 48);
   expect(f.ui.scroll).toHaveBeenLastCalledWith(48, 20, 20, 0);
+});
+
+test("combat reticle yields to controls and menus and resets without mouse movement", () => {
+  const f = setup();
+  f.pointer("pointermove", 400);
+  f.ui.setWorldCursor(COMBAT_CURSOR);
+  expect(f.ui.canvas.style.cursor).toBe(COMBAT_CURSOR);
+  f.pointer("pointermove", 30);
+  expect(f.ui.canvas.style.cursor).toBe("move");
+  f.pointer("pointermove", 400);
+  f.ui.modal = true;
+  f.ui.setWorldCursor(COMBAT_CURSOR);
+  expect(f.ui.canvas.style.cursor).toBe("default");
+  f.ui.modal = false;
+  f.ui.setWorldCursor("default");
+  expect(f.ui.canvas.style.cursor).toBe("default");
 });
 test("search typing accumulates before repaint and select-all clears or replaces the query", () => {
   const f = setup(),

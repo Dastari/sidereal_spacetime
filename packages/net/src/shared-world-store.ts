@@ -113,7 +113,7 @@ export class SharedWorldStore {
   private snapshot: SharedWorldSnapshot = this.empty();
   constructor(
     private readonly now: () => number = () => performance.now(),
-    private readonly limits = { ships: 64, bodies: 32, samples: 8 },
+    private readonly limits = { ships: 64, bodies: 64, samples: 8 },
   ) {
     if (
       ![limits.ships, limits.bodies, limits.samples].every(

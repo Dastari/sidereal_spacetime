@@ -1,9 +1,7 @@
-import { stepContacts, type RigidBody } from "./collision";
+import { stepContacts, type RigidBody, type MotionSegment } from "./collision";
 import { DT, type Intent } from "./index";
 import {
   pilotDesiredMotion,
-  deriveEnvelope,
-  type FlightEnvelope,
   desiredWrench,
   actuatorWrench,
   solveFlight,
@@ -38,13 +36,12 @@ export interface SystemFlightControl {
   intent: Intent;
   mass: MassProperties;
   actuators: readonly Actuator[];
-  /** Compiled availability envelope; derive once per tick for older callers. */
-  envelope?: FlightEnvelope;
   profile: FlightProfile;
   maxForwardSpeed: number;
   maxReverseSpeed: number;
 }
 export interface SystemSpaceStep {
+  trace: MotionSegment[];
   bodies: readonly RigidBody[];
   changedBodyIds: string[];
   commands: { bodyId: string; actuators: { id: string; throttle: number }[] }[];
@@ -72,9 +69,6 @@ function bodyValid(body: RigidBody): void {
       body.radius,
       body.halfLength,
       body.longitudinalOffset ?? 0,
-      body.lateralOffset ?? 0,
-      body.authoredMidpointX ?? 0,
-      body.authoredMidpointY ?? 0,
     ].every(Number.isFinite) ||
     Math.min(body.massKg, body.inertia, body.radius) <= 0 ||
     body.halfLength < 0 ||
@@ -86,9 +80,6 @@ function bodyValid(body: RigidBody): void {
       body.radius,
       body.halfLength,
       Math.abs(body.longitudinalOffset ?? 0),
-      Math.abs(body.lateralOffset ?? 0),
-      Math.abs(body.authoredMidpointX ?? 0),
-      Math.abs(body.authoredMidpointY ?? 0),
     ) > 1e6
   )
     throw new Error("Invalid bounded system body");
@@ -116,11 +107,13 @@ function motionChanged(a: RigidBody, b: RigidBody): boolean {
 export function stepSystemSpace(
   input: readonly RigidBody[],
   controls: readonly SystemFlightControl[] = [],
+  traceIds?: ReadonlySet<string>,
 ): SystemSpaceStep {
   const budgetResult = (
     reason: "body-budget" | "actuator-budget",
   ): SystemSpaceStep => ({
     bodies: input,
+    trace: [],
     changedBodyIds: [],
     commands: [],
     impacts: 0,
@@ -141,6 +134,7 @@ export function stepSystemSpace(
       SYSTEM_SPACE_LIMITS.totalActuators
   )
     return budgetResult("actuator-budget");
+  const trace: MotionSegment[] = [];
   const originals = new Map<string, RigidBody>();
   for (const body of input) {
     bodyValid(body);
@@ -154,12 +148,7 @@ export function stepSystemSpace(
       throw new Error("Missing or duplicate controlled body");
     if (
       control.mass.massKg !== body.massKg ||
-      control.mass.inertiaKgM2 !== body.inertia ||
-      (body.lateralOffset ?? 0) !==
-        (body.authoredMidpointX ?? 0) - control.mass.centerX ||
-      (body.longitudinalOffset ?? 0) !==
-        (body.authoredMidpointY ?? body.longitudinalOffset ?? 0) -
-          control.mass.centerY
+      control.mass.inertiaKgM2 !== body.inertia
     )
       throw new Error("Flight/contact inertial properties differ");
     // Exercise existing validation even when disabled: malformed trusted content
@@ -184,20 +173,15 @@ export function stepSystemSpace(
       actuatorIds.add(actuator.id);
       actuatorWrench(actuator, control.mass);
     }
-    controlMap.set(control.bodyId, {
-      ...control,
-      envelope:
-        control.envelope ?? deriveEnvelope(control.actuators, control.mass),
-    });
+    controlMap.set(control.bodyId, control);
   }
   let bodies = input.map((body) => ({ ...body })).sort(compareIds);
   let impacts = 0,
     completedSubsteps = 0;
   let reason: SystemSpaceStep["reason"];
-  let commandMap = new Map<string, { id: string; throttle: number }[]>();
+  const commandMap = new Map<string, { id: string; throttle: number }[]>();
   for (let step = 0; step < SYSTEM_SPACE_LIMITS.substeps; step++) {
     const beforeKick = bodies;
-    const beforeCommands = new Map(commandMap);
     const kicked = bodies.map((body) => {
       const control = controlMap.get(body.id);
       if (!control) return { ...body };
@@ -209,24 +193,18 @@ export function stepSystemSpace(
           control.maxForwardSpeed,
           control.maxReverseSpeed,
           control.profile.maxAngularSpeed,
-          control.envelope,
-          control.profile,
         ),
         control.mass,
         control.actuators,
         control.enabled,
         control.profile,
-        control.envelope,
-      );
-      const achievedCommands = new Map(
-        flight.commands.map((c) => [c.id, c.throttle]),
       );
       commandMap.set(
         body.id,
         control.actuators
           .map((a) => ({
             id: a.id,
-            throttle: achievedCommands.get(a.id) ?? 0,
+            throttle: flight.commands.find((c) => c.id === a.id)?.throttle ?? 0,
           }))
           .sort(compareIds),
       );
@@ -268,20 +246,19 @@ export function stepSystemSpace(
       }
     } catch {
       bodies = beforeKick;
-      commandMap = beforeCommands;
       reason = "coordinate-bound";
       break;
     }
-    const result = stepContacts(kicked, DT);
+    const result = stepContacts(kicked, DT, 0.2, traceIds);
     // Correction from an overlap can also move a body outside the admitted box.
     try {
       for (const body of result.bodies) bodyValid(body);
     } catch {
       bodies = beforeKick;
-      commandMap = beforeCommands;
       reason = "coordinate-bound";
       break;
     }
+    trace.push(...result.trace);
     bodies = result.bodies;
     impacts += result.impacts;
     if (result.exhausted) {
@@ -291,6 +268,7 @@ export function stepSystemSpace(
     completedSubsteps++;
   }
   return {
+    trace,
     bodies,
     changedBodyIds: bodies
       .filter((body) => motionChanged(originals.get(body.id)!, body))

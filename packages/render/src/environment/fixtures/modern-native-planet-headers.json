@@ -1,0 +1,3900 @@
+{
+  "scope": "Metadata prefix only, read at most 64KiB per source; geometry is not present or validated by these fixtures. SHA256 pins are copied from broader seed manifest, not recomputed here.",
+  "candidates": [
+    {
+      "revision": "desert-r014",
+      "sourceKitSha256": "f42546e33499b7727d1609c8a808fe52de880a10f630ebafeac33d68c9ef4e96",
+      "sourceBytes": 68398818,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "desert-geology",
+        "uvConvention": "glTF UV (Blender V flipped); invertY=false",
+        "materials": [
+          {
+            "name": "sand-cream",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.88,
+            "baseColorTexture": "desert-cap-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "sand-peach",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.9,
+            "baseColorTexture": "desert-wall-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "mesa-rust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.84,
+            "baseColorTexture": "desert-wall-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "canyon-burgundy",
+            "linearColor": [
+              0.18,
+              0.039,
+              0.04
+            ],
+            "roughness": 0.88
+          },
+          {
+            "name": "mesa-cap",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.83,
+            "baseColorTexture": "desert-cap-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "sandstone-light",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.85,
+            "baseColorTexture": "desert-cap-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          }
+        ]
+      }
+    },
+    {
+      "revision": "rocky-r010",
+      "sourceKitSha256": "fdb5964a2c4dcde7889fd821a0b4625664eae477be62130c7ea99794a5d98de2",
+      "sourceBytes": 16268031,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "rocky-crater-geology",
+        "materials": [
+          {
+            "name": "regolith-lilac",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-0-albedo.png",
+            "metallicRoughnessTexture": "rocky-0-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "sunlit-rim",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-1-albedo.png",
+            "metallicRoughnessTexture": "rocky-1-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "dark-cavity",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-2-albedo.png",
+            "metallicRoughnessTexture": "rocky-2-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "fractured-side",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-3-albedo.png",
+            "metallicRoughnessTexture": "rocky-3-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "warm-mineral",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-4-albedo.png",
+            "metallicRoughnessTexture": "rocky-4-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "pale-fracture",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-5-albedo.png",
+            "metallicRoughnessTexture": "rocky-5-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          }
+        ]
+      }
+    },
+    {
+      "revision": "ocean-r007",
+      "sourceKitSha256": "71c2918ae71f8d074bfb8a8d94bc76f7271dd94e8a20c2c1b1f323f30d057f22",
+      "sourceBytes": 20546174,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "ocean-island-geology",
+        "materials": [
+          {
+            "name": "deep-cobalt",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1.0,
+            "clearcoatFactor": 0.3,
+            "clearcoatRoughnessFactor": 0.22,
+            "baseColorTexture": "water-albedo.png",
+            "normalTexture": "water-normal.png",
+            "clearcoatNormalTexture": "water-normal.png",
+            "metallicRoughnessTexture": "water-orm.png",
+            "normalScale": 1,
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "metallic": 1
+          },
+          {
+            "name": "shelf-blue",
+            "linearColor": [
+              0.01,
+              0.26,
+              0.62
+            ],
+            "roughness": 0.3,
+            "clearcoatFactor": 0.3,
+            "clearcoatRoughnessFactor": 0.22
+          },
+          {
+            "name": "shallow-turquoise",
+            "linearColor": [
+              0.027,
+              0.66,
+              0.64
+            ],
+            "roughness": 0.32,
+            "clearcoatFactor": 0.3,
+            "clearcoatRoughnessFactor": 0.22
+          },
+          {
+            "name": "pale-beach",
+            "linearColor": [
+              0.82,
+              0.65,
+              0.35
+            ],
+            "roughness": 0.84
+          },
+          {
+            "name": "grey-coastal-rock",
+            "linearColor": [
+              0.25,
+              0.24,
+              0.28
+            ],
+            "roughness": 0.89
+          },
+          {
+            "name": "cliff-shadow",
+            "linearColor": [
+              0.085,
+              0.13,
+              0.16
+            ],
+            "roughness": 0.93
+          },
+          {
+            "name": "plateau-green",
+            "linearColor": [
+              0.17,
+              0.37,
+              0.033
+            ],
+            "roughness": 0.88
+          },
+          {
+            "name": "canopy-bright",
+            "linearColor": [
+              0.25,
+              0.51,
+              0.028
+            ],
+            "roughness": 0.87
+          },
+          {
+            "name": "canopy-dark",
+            "linearColor": [
+              0.046,
+              0.22,
+              0.017
+            ],
+            "roughness": 0.93
+          },
+          {
+            "name": "tree-bark",
+            "linearColor": [
+              0.14,
+              0.065,
+              0.023
+            ],
+            "roughness": 0.93
+          },
+          {
+            "name": "island-finish-shelf-blue",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "clearcoatFactor": 0.3,
+            "clearcoatRoughnessFactor": 0.22,
+            "baseColorTexture": "island-1-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "alpha": 1,
+            "alphaMode": "BLEND",
+            "useTextureAlpha": true,
+            "normalTexture": "island-1-normal.png",
+            "normalScale": 1,
+            "metallicRoughnessTexture": "island-1-orm.png",
+            "metallic": 1
+          },
+          {
+            "name": "island-finish-shallow-turquoise",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "clearcoatFactor": 0.3,
+            "clearcoatRoughnessFactor": 0.22,
+            "baseColorTexture": "island-2-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "alpha": 1,
+            "alphaMode": "BLEND",
+            "useTextureAlpha": true,
+            "normalTexture": "island-2-normal.png",
+            "normalScale": 1,
+            "metallicRoughnessTexture": "island-2-orm.png",
+            "metallic": 1
+          },
+          {
+            "name": "island-finish-pale-beach",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "island-3-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "normalTexture": "island-3-normal.png",
+            "normalScale": 1,
+            "metallicRoughnessTexture": "island-3-orm.png",
+            "metallic": 1
+          },
+          {
+            "name": "island-finish-grey-coastal-rock",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "island-4-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "normalTexture": "island-4-normal.png",
+            "normalScale": 1,
+            "metallicRoughnessTexture": "island-4-orm.png",
+            "metallic": 1
+          },
+          {
+            "name": "island-finish-cliff-shadow",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "island-5-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "normalTexture": "island-5-normal.png",
+            "normalScale": 1,
+            "metallicRoughnessTexture": "island-5-orm.png",
+            "metallic": 1
+          },
+          {
+            "name": "island-finish-plateau-green",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "island-6-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "normalTexture": "island-6-normal.png",
+            "normalScale": 1,
+            "metallicRoughnessTexture": "island-6-orm.png",
+            "metallic": 1
+          }
+        ]
+      }
+    },
+    {
+      "revision": "temperate-r003",
+      "sourceKitSha256": "c8c3470f41e85b53b9ce1e1f05b24446900bfad439a0522cfedce3c48eef01fc",
+      "sourceBytes": 10773353,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "temperate-native-continents",
+        "materials": [
+          {
+            "name": "deep-cobalt",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1.0,
+            "clearcoatFactor": 0.3,
+            "clearcoatRoughnessFactor": 0.22,
+            "baseColorTexture": "water-albedo.png",
+            "normalTexture": "water-normal.png",
+            "clearcoatNormalTexture": "water-normal.png",
+            "metallicRoughnessTexture": "water-orm.png",
+            "normalScale": 1,
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "metallic": 1
+          },
+          {
+            "name": "shelf-blue",
+            "linearColor": [
+              0.01,
+              0.26,
+              0.62
+            ],
+            "roughness": 0.3,
+            "clearcoatFactor": 0.3,
+            "clearcoatRoughnessFactor": 0.22
+          },
+          {
+            "name": "shallow-turquoise",
+            "linearColor": [
+              0.027,
+              0.66,
+              0.64
+            ],
+            "roughness": 0.32,
+            "clearcoatFactor": 0.3,
+            "clearcoatRoughnessFactor": 0.22
+          },
+          {
+            "name": "pale-beach",
+            "linearColor": [
+              0.82,
+              0.65,
+              0.35
+            ],
+            "roughness": 0.84
+          },
+          {
+            "name": "grey-coastal-rock",
+            "linearColor": [
+              0.25,
+              0.24,
+              0.28
+            ],
+            "roughness": 0.89
+          },
+          {
+            "name": "cliff-shadow",
+            "linearColor": [
+              0.085,
+              0.13,
+              0.16
+            ],
+            "roughness": 0.93
+          },
+          {
+            "name": "plateau-green",
+            "linearColor": [
+              0.17,
+              0.37,
+              0.033
+            ],
+            "roughness": 0.88
+          },
+          {
+            "name": "canopy-bright",
+            "linearColor": [
+              0.25,
+              0.51,
+              0.028
+            ],
+            "roughness": 0.87
+          },
+          {
+            "name": "canopy-dark",
+            "linearColor": [
+              0.046,
+              0.22,
+              0.017
+            ],
+            "roughness": 0.93
+          },
+          {
+            "name": "tree-bark",
+            "linearColor": [
+              0.14,
+              0.065,
+              0.023
+            ],
+            "roughness": 0.93
+          },
+          {
+            "name": "island-finish-shelf-blue",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "clearcoatFactor": 0.3,
+            "clearcoatRoughnessFactor": 0.22,
+            "baseColorTexture": "island-1-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "alpha": 1,
+            "alphaMode": "BLEND",
+            "useTextureAlpha": true,
+            "normalTexture": "island-1-normal.png",
+            "normalScale": 1,
+            "metallicRoughnessTexture": "island-1-orm.png",
+            "metallic": 1
+          },
+          {
+            "name": "island-finish-shallow-turquoise",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "clearcoatFactor": 0.3,
+            "clearcoatRoughnessFactor": 0.22,
+            "baseColorTexture": "island-2-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "alpha": 1,
+            "alphaMode": "BLEND",
+            "useTextureAlpha": true,
+            "normalTexture": "island-2-normal.png",
+            "normalScale": 1,
+            "metallicRoughnessTexture": "island-2-orm.png",
+            "metallic": 1
+          },
+          {
+            "name": "island-finish-pale-beach",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "island-3-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "normalTexture": "island-3-normal.png",
+            "normalScale": 1,
+            "metallicRoughnessTexture": "island-3-orm.png",
+            "metallic": 1
+          },
+          {
+            "name": "island-finish-grey-coastal-rock",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "island-4-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "normalTexture": "island-4-normal.png",
+            "normalScale": 1,
+            "metallicRoughnessTexture": "island-4-orm.png",
+            "metallic": 1
+          },
+          {
+            "name": "island-finish-cliff-shadow",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "island-5-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "normalTexture": "island-5-normal.png",
+            "normalScale": 1,
+            "metallicRoughnessTexture": "island-5-orm.png",
+            "metallic": 1
+          },
+          {
+            "name": "island-finish-plateau-green",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "island-6-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "normalTexture": "island-6-normal.png",
+            "normalScale": 1,
+            "metallicRoughnessTexture": "island-6-orm.png",
+            "metallic": 1
+          },
+          {
+            "name": "warm-coastal-stratum",
+            "linearColor": [
+              0.43,
+              0.28,
+              0.16
+            ],
+            "roughness": 0.89
+          },
+          {
+            "name": "sunlit-coastal-stratum",
+            "linearColor": [
+              0.6,
+              0.43,
+              0.25
+            ],
+            "roughness": 0.89
+          }
+        ]
+      }
+    },
+    {
+      "revision": "toxic-r007",
+      "sourceKitSha256": "df85fefbbb5b9474e810197333255819d33dcf3c911462f98dc49a111edfcb2c",
+      "sourceBytes": 69968891,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "connected-toxic-crust",
+        "uvConvention": "glTF corner UV; invertY=false",
+        "materials": [
+          {
+            "name": "toxic-dark-plateau",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "corrosion-0-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "normalTexture": "corrosion-0-normal.png",
+            "normalScale": 1,
+            "metallicRoughnessTexture": "corrosion-0-orm.png",
+            "metallic": 1
+          },
+          {
+            "name": "weathered-olive-rock",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "corrosion-1-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "normalTexture": "corrosion-1-normal.png",
+            "normalScale": 1,
+            "metallicRoughnessTexture": "corrosion-1-orm.png",
+            "metallic": 1
+          },
+          {
+            "name": "chimney-wall",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "corrosion-2-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "normalTexture": "corrosion-2-normal.png",
+            "normalScale": 1,
+            "metallicRoughnessTexture": "corrosion-2-orm.png",
+            "metallic": 1
+          },
+          {
+            "name": "deep-chemical-cleft",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "corrosion-3-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "normalTexture": "corrosion-3-normal.png",
+            "normalScale": 1,
+            "metallicRoughnessTexture": "corrosion-3-orm.png",
+            "metallic": 1
+          },
+          {
+            "name": "chimney-cap",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "corrosion-4-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "normalTexture": "corrosion-4-normal.png",
+            "normalScale": 1,
+            "metallicRoughnessTexture": "corrosion-4-orm.png",
+            "metallic": 1
+          },
+          {
+            "name": "chemical-crust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "corrosion-5-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "normalTexture": "corrosion-5-normal.png",
+            "normalScale": 1,
+            "metallicRoughnessTexture": "corrosion-5-orm.png",
+            "metallic": 1
+          },
+          {
+            "name": "chemical-liquid",
+            "linearColor": [
+              0.11,
+              0.24,
+              0.008
+            ],
+            "roughness": 0.28
+          },
+          {
+            "name": "chemical-shallow",
+            "linearColor": [
+              0.36,
+              0.62,
+              0.008
+            ],
+            "roughness": 0.26,
+            "emissiveColor": [
+              0.054,
+              0.099,
+              0.00045
+            ]
+          },
+          {
+            "name": "chemical-active",
+            "linearColor": [
+              0.78,
+              0.95,
+              0.006
+            ],
+            "roughness": 0.23,
+            "emissiveColor": [
+              0.054,
+              0.099,
+              0.00045
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "revision": "crystal-r013",
+      "sourceKitSha256": "f3798cc5e67d0dfbed1caf86001002906465021764839be9da0260615052e369",
+      "sourceBytes": 15403081,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "crystal-geology",
+        "materials": [
+          {
+            "name": "dark-lilac-crust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "material-0-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "metallic": 1,
+            "metallicRoughnessTexture": "material-0-orm.png"
+          },
+          {
+            "name": "fracture-shadow",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "material-1-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "metallic": 1,
+            "metallicRoughnessTexture": "material-1-orm.png"
+          },
+          {
+            "name": "cliff-edge",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "material-2-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "metallic": 1,
+            "metallicRoughnessTexture": "material-2-orm.png"
+          },
+          {
+            "name": "crystal-violet",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.17,
+            "ior": 1.48,
+            "baseColorTexture": "material-3-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "crystal-magenta",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.19,
+            "ior": 1.48,
+            "baseColorTexture": "material-4-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "crystal-dark-facet",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.22,
+            "ior": 1.48,
+            "baseColorTexture": "material-5-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "crystal-bright-edge",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.15,
+            "emissiveColor": [
+              1,
+              1,
+              1
+            ],
+            "emissiveStrength": 0.18,
+            "ior": 1.48,
+            "baseColorTexture": "material-6-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "emissiveTexture": "material-6-albedo.png"
+          },
+          {
+            "name": "crystal-core-plane",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.16,
+            "ior": 1.48,
+            "emissiveColor": [
+              1,
+              1,
+              1
+            ],
+            "emissiveStrength": 1.25,
+            "baseColorTexture": "material-7-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "emissiveTexture": "material-7-albedo.png"
+          },
+          {
+            "name": "geode-fracture-magenta",
+            "linearColor": [
+              0.25,
+              0.018,
+              0.23
+            ],
+            "roughness": 0.55,
+            "emissiveColor": [
+              0.2,
+              0.002,
+              0.16
+            ],
+            "emissiveStrength": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "revision": "volcanic-r023",
+      "sourceKitSha256": "e591d10cc0810958484bc058ec0b3d0307bde8acd8ff44d1a40d8c50116f3ecf",
+      "sourceBytes": 62662131,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "volcanic-regional-geology",
+        "materials": [
+          {
+            "name": "basalt-dark",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "basalt-0-albedo.png",
+            "metallicRoughnessTexture": "basalt-0-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "basalt-cliff",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "basalt-1-albedo.png",
+            "metallicRoughnessTexture": "basalt-1-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "basalt-top",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "basalt-2-albedo.png",
+            "metallicRoughnessTexture": "basalt-2-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "molten-core",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.42,
+            "metallic": 0,
+            "emissiveColor": [
+              1,
+              1,
+              1
+            ],
+            "baseColorTexture": "lava-flow.png",
+            "emissiveTexture": "lava-flow.png",
+            "emissiveStrength": 4,
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "sealed-rock",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "basalt-4-albedo.png",
+            "metallicRoughnessTexture": "basalt-4-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "hot-vent",
+            "linearColor": [
+              0.7,
+              0.08,
+              0.003
+            ],
+            "roughness": 0.42,
+            "metallic": 0,
+            "emissiveColor": [
+              4,
+              2.6,
+              0.4
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "revision": "ice-r026",
+      "sourceKitSha256": "cd6210c54b001bbaa7e753de0a5af3965b572a19d1d4913427ac4d7398cd3574",
+      "sourceBytes": 41197021,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "single-glacial-cut-diagnostic",
+        "uvConvention": "glTF corner UV, Blender V flipped; invertY=false",
+        "materials": [
+          {
+            "name": "powder-snow",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "ior": 1.31,
+            "metallic": 1,
+            "baseColorTexture": "ice-0-albedo.png",
+            "metallicRoughnessTexture": "ice-0-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "pale-ice-edge",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "ior": 1.31,
+            "metallic": 1,
+            "clearcoatFactor": 0.42,
+            "clearcoatRoughnessFactor": 0.1,
+            "baseColorTexture": "ice-1-albedo.png",
+            "metallicRoughnessTexture": "ice-1-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "cobalt-ice",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "ior": 1.31,
+            "metallic": 1,
+            "clearcoatFactor": 0.42,
+            "clearcoatRoughnessFactor": 0.1,
+            "baseColorTexture": "ice-2-albedo.png",
+            "metallicRoughnessTexture": "ice-2-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "cyan-ice-face",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "ior": 1.31,
+            "metallic": 1,
+            "clearcoatFactor": 0.42,
+            "clearcoatRoughnessFactor": 0.1,
+            "baseColorTexture": "ice-3-albedo.png",
+            "metallicRoughnessTexture": "ice-3-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "deep-ice",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "ior": 1.31,
+            "metallic": 1,
+            "clearcoatFactor": 0.42,
+            "clearcoatRoughnessFactor": 0.1,
+            "baseColorTexture": "ice-4-albedo.png",
+            "metallicRoughnessTexture": "ice-4-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "clear-glacial-shard",
+            "linearColor": [
+              0.42,
+              0.77,
+              0.94
+            ],
+            "roughness": 0.075,
+            "metallic": 0,
+            "ior": 1.31,
+            "transmissionFactor": 0.82,
+            "thicknessFactor": 0.16,
+            "attenuationColor": [
+              0.42,
+              0.72,
+              0.96
+            ],
+            "attenuationDistance": 1.8,
+            "clearcoatFactor": 0.18,
+            "clearcoatRoughnessFactor": 0.08,
+            "opticalRole": "transmissive-ice-shard"
+          },
+          {
+            "name": "blue-glacial-shard",
+            "linearColor": [
+              0.2,
+              0.56,
+              0.85
+            ],
+            "roughness": 0.11,
+            "metallic": 0,
+            "ior": 1.31,
+            "transmissionFactor": 0.68,
+            "thicknessFactor": 0.2,
+            "attenuationColor": [
+              0.42,
+              0.72,
+              0.96
+            ],
+            "attenuationDistance": 1.8,
+            "clearcoatFactor": 0.18,
+            "clearcoatRoughnessFactor": 0.08,
+            "opticalRole": "transmissive-ice-shard"
+          }
+        ]
+      }
+    },
+    {
+      "revision": "gas-r005",
+      "sourceKitSha256": "516f79ced2b76c0e82e2d3bc4399b306d137d901f281c1d34c466a76b1477130",
+      "sourceBytes": 8745362,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "gas-bands-and-rings",
+        "uvConvention": "glTF UV (Blender V flipped); invertY=false",
+        "materials": [
+          {
+            "name": "gas-authored-PBR",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.66,
+            "alpha": 1,
+            "alphaMode": "OPAQUE",
+            "metallic": 0,
+            "doubleSided": true,
+            "baseColorTexture": "gas-albedo-generated.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "ring-inner-dust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.86,
+            "alpha": 1,
+            "alphaMode": "BLEND",
+            "metallic": 0,
+            "doubleSided": true,
+            "baseColorTexture": "ring-dust-0.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "useTextureAlpha": true,
+            "emissiveColor": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "ring-main-lavender",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.86,
+            "alpha": 1,
+            "alphaMode": "BLEND",
+            "metallic": 0,
+            "doubleSided": true,
+            "baseColorTexture": "ring-dust-1.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "useTextureAlpha": true,
+            "emissiveColor": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "ring-outer-dust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.86,
+            "alpha": 1,
+            "alphaMode": "BLEND",
+            "metallic": 0,
+            "doubleSided": true,
+            "baseColorTexture": "ring-dust-2.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "useTextureAlpha": true,
+            "emissiveColor": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "ring-dark-fragment",
+            "linearColor": [
+              0.025,
+              0.012,
+              0.045
+            ],
+            "roughness": 0.83,
+            "alpha": 1,
+            "alphaMode": "OPAQUE",
+            "metallic": 0,
+            "doubleSided": true
+          },
+          {
+            "name": "ring-pale-fragment",
+            "linearColor": [
+              0.25,
+              0.12,
+              0.31
+            ],
+            "roughness": 0.85,
+            "alpha": 1,
+            "alphaMode": "OPAQUE",
+            "metallic": 0,
+            "doubleSided": true
+          }
+        ]
+      }
+    },
+    {
+      "revision": "rocky-moon-r002",
+      "sourceKitSha256": "bd22ee4e2b51a13bd09ee3b299c49e9f6c45e2955290c9afc21a15fc9df8b92d",
+      "sourceBytes": 16268035,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "rocky-crater-geology",
+        "materials": [
+          {
+            "name": "regolith-lilac",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-0-albedo.png",
+            "metallicRoughnessTexture": "rocky-0-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "sunlit-rim",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-1-albedo.png",
+            "metallicRoughnessTexture": "rocky-1-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "dark-cavity",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-2-albedo.png",
+            "metallicRoughnessTexture": "rocky-2-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "fractured-side",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-3-albedo.png",
+            "metallicRoughnessTexture": "rocky-3-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "cool-lunar-fault",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-4-albedo.png",
+            "metallicRoughnessTexture": "rocky-4-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "pale-fracture",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-5-albedo.png",
+            "metallicRoughnessTexture": "rocky-5-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          }
+        ]
+      }
+    },
+    {
+      "revision": "rocky-moon-2-r001",
+      "sourceKitSha256": "40f0b9a4cdc59d2de49d0edbcd0b1ad1438e366006edcdd28551b859204ed6db",
+      "sourceBytes": 16268349,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "solid-moon-craters",
+        "coveredReferenceIds": [
+          "planets--rocky-moon-2"
+        ],
+        "compositionRecipe": {
+          "referenceId": "planets--rocky-moon-2",
+          "layoutSeed": 203,
+          "scales": [
+            0.4,
+            0.38,
+            0.42,
+            0.37,
+            0.41,
+            0.39,
+            0.43,
+            0.38,
+            0.4,
+            0.37,
+            0.42,
+            0.39
+          ],
+          "variantOffset": 1
+        },
+        "materials": [
+          {
+            "name": "planets--rocky-moon-2-crust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-0-albedo.png",
+            "metallicRoughnessTexture": "rocky-0-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--rocky-moon-2-rim",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-1-albedo.png",
+            "metallicRoughnessTexture": "rocky-1-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--rocky-moon-2-cavity",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-2-albedo.png",
+            "metallicRoughnessTexture": "rocky-2-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--rocky-moon-2-fracture-wall",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-3-albedo.png",
+            "metallicRoughnessTexture": "rocky-3-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--rocky-moon-2-cool-fault",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-4-albedo.png",
+            "metallicRoughnessTexture": "rocky-4-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--rocky-moon-2-pale-fracture",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-5-albedo.png",
+            "metallicRoughnessTexture": "rocky-5-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          }
+        ]
+      }
+    },
+    {
+      "revision": "desert-moon-1-r001",
+      "sourceKitSha256": "83a1ceb44cf8a5f3b2a9a7473d1e9b9202a4119be05c49322cb5a22941fd3c20",
+      "sourceBytes": 16268357,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "solid-moon-craters",
+        "coveredReferenceIds": [
+          "planets--desert-moon-1"
+        ],
+        "compositionRecipe": {
+          "referenceId": "planets--desert-moon-1",
+          "layoutSeed": 307,
+          "scales": [
+            0.42,
+            0.39,
+            0.43,
+            0.4,
+            0.38,
+            0.41,
+            0.44,
+            0.39,
+            0.42,
+            0.4,
+            0.38,
+            0.43
+          ],
+          "variantOffset": 1
+        },
+        "materials": [
+          {
+            "name": "planets--desert-moon-1-crust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-0-albedo.png",
+            "metallicRoughnessTexture": "rocky-0-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--desert-moon-1-rim",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-1-albedo.png",
+            "metallicRoughnessTexture": "rocky-1-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--desert-moon-1-cavity",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-2-albedo.png",
+            "metallicRoughnessTexture": "rocky-2-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--desert-moon-1-fracture-wall",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-3-albedo.png",
+            "metallicRoughnessTexture": "rocky-3-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--desert-moon-1-cool-fault",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-4-albedo.png",
+            "metallicRoughnessTexture": "rocky-4-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--desert-moon-1-pale-fracture",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-5-albedo.png",
+            "metallicRoughnessTexture": "rocky-5-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          }
+        ]
+      }
+    },
+    {
+      "revision": "desert-moon-2-r001",
+      "sourceKitSha256": "4d4b1a295643ad05bb37012d517e75d05a41a63e7032ea9dc6e75b7bf5d375be",
+      "sourceBytes": 16268357,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "solid-moon-craters",
+        "coveredReferenceIds": [
+          "planets--desert-moon-2"
+        ],
+        "compositionRecipe": {
+          "referenceId": "planets--desert-moon-2",
+          "layoutSeed": 419,
+          "scales": [
+            0.39,
+            0.42,
+            0.38,
+            0.43,
+            0.4,
+            0.41,
+            0.39,
+            0.44,
+            0.38,
+            0.42,
+            0.4,
+            0.41
+          ],
+          "variantOffset": 1
+        },
+        "materials": [
+          {
+            "name": "planets--desert-moon-2-crust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-0-albedo.png",
+            "metallicRoughnessTexture": "rocky-0-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--desert-moon-2-rim",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-1-albedo.png",
+            "metallicRoughnessTexture": "rocky-1-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--desert-moon-2-cavity",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-2-albedo.png",
+            "metallicRoughnessTexture": "rocky-2-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--desert-moon-2-fracture-wall",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-3-albedo.png",
+            "metallicRoughnessTexture": "rocky-3-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--desert-moon-2-cool-fault",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-4-albedo.png",
+            "metallicRoughnessTexture": "rocky-4-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--desert-moon-2-pale-fracture",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-5-albedo.png",
+            "metallicRoughnessTexture": "rocky-5-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          }
+        ]
+      }
+    },
+    {
+      "revision": "gas-giant-moon-1-r005",
+      "sourceKitSha256": "6f5385ee9f65def88c0e33c9b2bed391bec75103ddab2de50cfb36f63f4f596e",
+      "sourceBytes": 16269055,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "solid-moon-craters",
+        "coveredReferenceIds": [
+          "planets--gas-giant-moon-1"
+        ],
+        "compositionRecipe": {
+          "referenceId": "planets--gas-giant-moon-1",
+          "layoutSeed": 523,
+          "scales": [
+            0.43,
+            0.38,
+            0.41,
+            0.4,
+            0.44,
+            0.39,
+            0.42,
+            0.37,
+            0.43,
+            0.4,
+            0.39,
+            0.41
+          ],
+          "variantOffset": 1
+        },
+        "materials": [
+          {
+            "name": "planets--gas-giant-moon-1-crust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-0-albedo.png",
+            "metallicRoughnessTexture": "rocky-0-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--gas-giant-moon-1-rim",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-1-albedo.png",
+            "metallicRoughnessTexture": "rocky-1-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--gas-giant-moon-1-cavity",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-2-albedo.png",
+            "metallicRoughnessTexture": "rocky-2-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--gas-giant-moon-1-fracture-wall",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-3-albedo.png",
+            "metallicRoughnessTexture": "rocky-3-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--gas-giant-moon-1-cool-fault",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-4-albedo.png",
+            "metallicRoughnessTexture": "rocky-4-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--gas-giant-moon-1-pale-fracture",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-5-albedo.png",
+            "metallicRoughnessTexture": "rocky-5-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "gas-giant-moon-1-violet-mineral",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-6-albedo.png",
+            "metallicRoughnessTexture": "rocky-6-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "ior": 2.2,
+            "clearcoatFactor": 1,
+            "clearcoatRoughnessFactor": 0.08,
+            "emissiveColor": [
+              0.42,
+              0.015,
+              0.9
+            ],
+            "emissiveStrength": 0.7
+          },
+          {
+            "name": "gas-giant-moon-1-pink-mineral",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-7-albedo.png",
+            "metallicRoughnessTexture": "rocky-7-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "ior": 2.2,
+            "clearcoatFactor": 1,
+            "clearcoatRoughnessFactor": 0.08,
+            "emissiveColor": [
+              1.0,
+              0.025,
+              0.44
+            ],
+            "emissiveStrength": 1.1
+          }
+        ]
+      }
+    },
+    {
+      "revision": "gas-giant-moon-2-r001",
+      "sourceKitSha256": "598a32d8f5b8ed67ddee6828ce9b1fa6082d83de7556c1c007542efc676f6fe5",
+      "sourceBytes": 16268381,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "solid-moon-craters",
+        "coveredReferenceIds": [
+          "planets--gas-giant-moon-2"
+        ],
+        "compositionRecipe": {
+          "referenceId": "planets--gas-giant-moon-2",
+          "layoutSeed": 631,
+          "scales": [
+            0.38,
+            0.4,
+            0.42,
+            0.37,
+            0.39,
+            0.41,
+            0.38,
+            0.43,
+            0.4,
+            0.37,
+            0.42,
+            0.39
+          ],
+          "variantOffset": 1
+        },
+        "materials": [
+          {
+            "name": "planets--gas-giant-moon-2-crust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-0-albedo.png",
+            "metallicRoughnessTexture": "rocky-0-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--gas-giant-moon-2-rim",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-1-albedo.png",
+            "metallicRoughnessTexture": "rocky-1-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--gas-giant-moon-2-cavity",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-2-albedo.png",
+            "metallicRoughnessTexture": "rocky-2-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--gas-giant-moon-2-fracture-wall",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-3-albedo.png",
+            "metallicRoughnessTexture": "rocky-3-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--gas-giant-moon-2-cool-fault",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-4-albedo.png",
+            "metallicRoughnessTexture": "rocky-4-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--gas-giant-moon-2-pale-fracture",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-5-albedo.png",
+            "metallicRoughnessTexture": "rocky-5-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          }
+        ]
+      }
+    },
+    {
+      "revision": "gas-giant-moon-3-r005",
+      "sourceKitSha256": "9391022b5a57b77b346a469fac91860164696c31bb46388a60bcb4d153f72e59",
+      "sourceBytes": 16269055,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "solid-moon-craters",
+        "coveredReferenceIds": [
+          "planets--gas-giant-moon-3"
+        ],
+        "compositionRecipe": {
+          "referenceId": "planets--gas-giant-moon-3",
+          "layoutSeed": 743,
+          "scales": [
+            0.44,
+            0.41,
+            0.39,
+            0.43,
+            0.4,
+            0.42,
+            0.38,
+            0.44,
+            0.41,
+            0.4,
+            0.43,
+            0.39
+          ],
+          "variantOffset": 1
+        },
+        "materials": [
+          {
+            "name": "planets--gas-giant-moon-3-crust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-0-albedo.png",
+            "metallicRoughnessTexture": "rocky-0-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--gas-giant-moon-3-rim",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-1-albedo.png",
+            "metallicRoughnessTexture": "rocky-1-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--gas-giant-moon-3-cavity",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-2-albedo.png",
+            "metallicRoughnessTexture": "rocky-2-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--gas-giant-moon-3-fracture-wall",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-3-albedo.png",
+            "metallicRoughnessTexture": "rocky-3-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--gas-giant-moon-3-cool-fault",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-4-albedo.png",
+            "metallicRoughnessTexture": "rocky-4-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--gas-giant-moon-3-pale-fracture",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-5-albedo.png",
+            "metallicRoughnessTexture": "rocky-5-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "gas-giant-moon-3-violet-mineral",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-6-albedo.png",
+            "metallicRoughnessTexture": "rocky-6-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "ior": 2.2,
+            "clearcoatFactor": 1,
+            "clearcoatRoughnessFactor": 0.08,
+            "emissiveColor": [
+              0.42,
+              0.015,
+              0.9
+            ],
+            "emissiveStrength": 0.7
+          },
+          {
+            "name": "gas-giant-moon-3-pink-mineral",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-7-albedo.png",
+            "metallicRoughnessTexture": "rocky-7-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "ior": 2.2,
+            "clearcoatFactor": 1,
+            "clearcoatRoughnessFactor": 0.08,
+            "emissiveColor": [
+              1.0,
+              0.025,
+              0.44
+            ],
+            "emissiveStrength": 1.1
+          }
+        ]
+      }
+    },
+    {
+      "revision": "ocean-moon-1-r001",
+      "sourceKitSha256": "ffb61918739465a4d34ccc82beab3201afbd1e707687e4519a4d94701a7cb3a8",
+      "sourceBytes": 16377882,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "hybrid-moon-craters",
+        "coveredReferenceIds": [
+          "planets--ocean-moon-1"
+        ],
+        "compositionRecipe": {
+          "referenceId": "planets--ocean-moon-1",
+          "layoutSeed": 1069,
+          "scales": [
+            0.4,
+            0.38,
+            0.42,
+            0.39,
+            0.41,
+            0.38,
+            0.43,
+            0.39,
+            0.4,
+            0.37,
+            0.42,
+            0.4
+          ],
+          "variantOffset": 1
+        },
+        "materials": [
+          {
+            "name": "planets--ocean-moon-1-crust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-0-albedo.png",
+            "metallicRoughnessTexture": "rocky-0-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--ocean-moon-1-rim",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-1-albedo.png",
+            "metallicRoughnessTexture": "rocky-1-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--ocean-moon-1-cavity",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-2-albedo.png",
+            "metallicRoughnessTexture": "rocky-2-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--ocean-moon-1-fracture-wall",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-3-albedo.png",
+            "metallicRoughnessTexture": "rocky-3-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--ocean-moon-1-cool-fault",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-4-albedo.png",
+            "metallicRoughnessTexture": "rocky-4-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--ocean-moon-1-pale-fracture",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-5-albedo.png",
+            "metallicRoughnessTexture": "rocky-5-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--ocean-moon-1-green-cap",
+            "linearColor": [
+              0.2,
+              0.4,
+              0.035
+            ],
+            "roughness": 0.9
+          },
+          {
+            "name": "planets--ocean-moon-1-sunlit-green-cap",
+            "linearColor": [
+              0.48,
+              0.6,
+              0.1
+            ],
+            "roughness": 0.88
+          },
+          {
+            "name": "planets--ocean-moon-1-blue-mineral-cover",
+            "linearColor": [
+              0.055,
+              0.3,
+              0.44
+            ],
+            "roughness": 0.88
+          },
+          {
+            "name": "tree-bark",
+            "linearColor": [
+              0.14000000059604645,
+              0.06499999761581421,
+              0.023000000044703484
+            ],
+            "roughness": 0.9300000071525574
+          },
+          {
+            "name": "canopy-bright",
+            "linearColor": [
+              0.25,
+              0.5099999904632568,
+              0.02800000086426735
+            ],
+            "roughness": 0.8700000047683716
+          },
+          {
+            "name": "canopy-dark",
+            "linearColor": [
+              0.04600000008940697,
+              0.2199999988079071,
+              0.017000000923871994
+            ],
+            "roughness": 0.9300000071525574
+          }
+        ]
+      }
+    },
+    {
+      "revision": "ocean-moon-2-r002",
+      "sourceKitSha256": "bc81bfb98f28fe4a37753bfea25db8b3c91acc2591837fe79bd3de54401a3347",
+      "sourceBytes": 15480289,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "hybrid-moon-craters",
+        "coveredReferenceIds": [
+          "planets--ocean-moon-2"
+        ],
+        "compositionRecipe": {
+          "referenceId": "planets--ocean-moon-2",
+          "layoutSeed": 1181,
+          "scales": [
+            0.4,
+            0.38,
+            0.42,
+            0.39,
+            0.41,
+            0.38,
+            0.43,
+            0.39,
+            0.4,
+            0.37,
+            0.42,
+            0.4
+          ],
+          "variantOffset": 1
+        },
+        "materials": [
+          {
+            "name": "planets--ocean-moon-2-crust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-0-albedo.png",
+            "metallicRoughnessTexture": "rocky-0-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--ocean-moon-2-rim",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-1-albedo.png",
+            "metallicRoughnessTexture": "rocky-1-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--ocean-moon-2-cavity",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-2-albedo.png",
+            "metallicRoughnessTexture": "rocky-2-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--ocean-moon-2-fracture-wall",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-3-albedo.png",
+            "metallicRoughnessTexture": "rocky-3-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--ocean-moon-2-cool-fault",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-4-albedo.png",
+            "metallicRoughnessTexture": "rocky-4-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--ocean-moon-2-pale-fracture",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-5-albedo.png",
+            "metallicRoughnessTexture": "rocky-5-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--ocean-moon-2-green-cap",
+            "linearColor": [
+              0.19,
+              0.4,
+              0.04
+            ],
+            "roughness": 0.9
+          },
+          {
+            "name": "planets--ocean-moon-2-sunlit-green-cap",
+            "linearColor": [
+              0.53,
+              0.7,
+              0.22
+            ],
+            "roughness": 0.88
+          },
+          {
+            "name": "planets--ocean-moon-2-blue-mineral-cover",
+            "linearColor": [
+              0.025,
+              0.37,
+              0.61
+            ],
+            "roughness": 0.88
+          },
+          {
+            "name": "pale-white-upper-district",
+            "linearColor": [
+              0.82,
+              0.91,
+              0.94
+            ],
+            "roughness": 0.86
+          }
+        ]
+      }
+    },
+    {
+      "revision": "temperate-moon-1-r002",
+      "sourceKitSha256": "b686cf85d77a2d116bd18602592a3dcada882fa2eb2a8d71ba7b92847368949d",
+      "sourceBytes": 18173364,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "hybrid-moon-craters",
+        "coveredReferenceIds": [
+          "planets--temperate-moon-1"
+        ],
+        "compositionRecipe": {
+          "referenceId": "planets--temperate-moon-1",
+          "layoutSeed": 857,
+          "scales": [
+            0.4,
+            0.38,
+            0.42,
+            0.39,
+            0.41,
+            0.38,
+            0.43,
+            0.39,
+            0.4,
+            0.37,
+            0.42,
+            0.4
+          ],
+          "variantOffset": 1
+        },
+        "materials": [
+          {
+            "name": "planets--temperate-moon-1-crust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-0-albedo.png",
+            "metallicRoughnessTexture": "rocky-0-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--temperate-moon-1-rim",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-1-albedo.png",
+            "metallicRoughnessTexture": "rocky-1-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--temperate-moon-1-cavity",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-2-albedo.png",
+            "metallicRoughnessTexture": "rocky-2-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--temperate-moon-1-fracture-wall",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-3-albedo.png",
+            "metallicRoughnessTexture": "rocky-3-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--temperate-moon-1-cool-fault",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-4-albedo.png",
+            "metallicRoughnessTexture": "rocky-4-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--temperate-moon-1-pale-fracture",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-5-albedo.png",
+            "metallicRoughnessTexture": "rocky-5-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--temperate-moon-1-green-cap",
+            "linearColor": [
+              0.24,
+              0.43,
+              0.035
+            ],
+            "roughness": 0.9
+          },
+          {
+            "name": "planets--temperate-moon-1-sunlit-green-cap",
+            "linearColor": [
+              0.48,
+              0.62,
+              0.075
+            ],
+            "roughness": 0.88
+          },
+          {
+            "name": "planets--temperate-moon-1-blue-mineral-cover",
+            "linearColor": [
+              0.045,
+              0.3,
+              0.45
+            ],
+            "roughness": 0.88
+          },
+          {
+            "name": "tree-bark",
+            "linearColor": [
+              0.14000000059604645,
+              0.06499999761581421,
+              0.023000000044703484
+            ],
+            "roughness": 0.9300000071525574
+          },
+          {
+            "name": "canopy-bright",
+            "linearColor": [
+              0.25,
+              0.5099999904632568,
+              0.02800000086426735
+            ],
+            "roughness": 0.8700000047683716
+          },
+          {
+            "name": "canopy-dark",
+            "linearColor": [
+              0.04600000008940697,
+              0.2199999988079071,
+              0.017000000923871994
+            ],
+            "roughness": 0.9300000071525574
+          }
+        ]
+      }
+    },
+    {
+      "revision": "temperate-moon-2-r002",
+      "sourceKitSha256": "a20ab21c8c121a87167ff1480add89b2d60fd65cb07c39377054824f79c47de8",
+      "sourceBytes": 17272685,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "hybrid-moon-craters",
+        "coveredReferenceIds": [
+          "planets--temperate-moon-2"
+        ],
+        "compositionRecipe": {
+          "referenceId": "planets--temperate-moon-2",
+          "layoutSeed": 967,
+          "scales": [
+            0.4,
+            0.38,
+            0.42,
+            0.39,
+            0.41,
+            0.38,
+            0.43,
+            0.39,
+            0.4,
+            0.37,
+            0.42,
+            0.4
+          ],
+          "variantOffset": 1
+        },
+        "materials": [
+          {
+            "name": "planets--temperate-moon-2-crust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-0-albedo.png",
+            "metallicRoughnessTexture": "rocky-0-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--temperate-moon-2-rim",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-1-albedo.png",
+            "metallicRoughnessTexture": "rocky-1-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--temperate-moon-2-cavity",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-2-albedo.png",
+            "metallicRoughnessTexture": "rocky-2-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--temperate-moon-2-fracture-wall",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-3-albedo.png",
+            "metallicRoughnessTexture": "rocky-3-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--temperate-moon-2-cool-fault",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-4-albedo.png",
+            "metallicRoughnessTexture": "rocky-4-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--temperate-moon-2-pale-fracture",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-5-albedo.png",
+            "metallicRoughnessTexture": "rocky-5-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--temperate-moon-2-green-cap",
+            "linearColor": [
+              0.19,
+              0.37,
+              0.025
+            ],
+            "roughness": 0.9
+          },
+          {
+            "name": "planets--temperate-moon-2-sunlit-green-cap",
+            "linearColor": [
+              0.43,
+              0.57,
+              0.065
+            ],
+            "roughness": 0.88
+          },
+          {
+            "name": "planets--temperate-moon-2-blue-mineral-cover",
+            "linearColor": [
+              0.033,
+              0.26,
+              0.37
+            ],
+            "roughness": 0.88
+          },
+          {
+            "name": "tree-bark",
+            "linearColor": [
+              0.14000000059604645,
+              0.06499999761581421,
+              0.023000000044703484
+            ],
+            "roughness": 0.9300000071525574
+          },
+          {
+            "name": "canopy-bright",
+            "linearColor": [
+              0.25,
+              0.5099999904632568,
+              0.02800000086426735
+            ],
+            "roughness": 0.8700000047683716
+          },
+          {
+            "name": "canopy-dark",
+            "linearColor": [
+              0.04600000008940697,
+              0.2199999988079071,
+              0.017000000923871994
+            ],
+            "roughness": 0.9300000071525574
+          }
+        ]
+      }
+    },
+    {
+      "revision": "toxic-moon-1-r001",
+      "sourceKitSha256": "b3d7eb42691d2bf24d2d7e6119180452d712f50e88ad80901dfc9a7a8993e213",
+      "sourceBytes": 16268394,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "toxic-moon-craters",
+        "coveredReferenceIds": [
+          "planets--toxic-moon-1"
+        ],
+        "compositionRecipe": {
+          "referenceId": "planets--toxic-moon-1",
+          "layoutSeed": 1747,
+          "scales": [
+            0.4,
+            0.38,
+            0.42,
+            0.39,
+            0.41,
+            0.38,
+            0.43,
+            0.39,
+            0.4,
+            0.37,
+            0.42,
+            0.4
+          ],
+          "variantOffset": 1,
+          "hero": 0
+        },
+        "materials": [
+          {
+            "name": "planets--toxic-moon-1-olive-crust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-0-albedo.png",
+            "metallicRoughnessTexture": "rocky-0-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--toxic-moon-1-acid-rim",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-1-albedo.png",
+            "metallicRoughnessTexture": "rocky-1-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--toxic-moon-1-dark-cavity",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-2-albedo.png",
+            "metallicRoughnessTexture": "rocky-2-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--toxic-moon-1-olive-fracture",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-3-albedo.png",
+            "metallicRoughnessTexture": "rocky-3-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--toxic-moon-1-wet-chemical-fault",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-4-albedo.png",
+            "metallicRoughnessTexture": "rocky-4-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--toxic-moon-1-yellow-green-upper-crust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-5-albedo.png",
+            "metallicRoughnessTexture": "rocky-5-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          }
+        ]
+      }
+    },
+    {
+      "revision": "toxic-moon-2-r001",
+      "sourceKitSha256": "d97fbcc129c4876fb4b217ecb81de63d7f9b4e62abe5f336984c9c5e2b5957fe",
+      "sourceBytes": 16268395,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "toxic-moon-craters",
+        "coveredReferenceIds": [
+          "planets--toxic-moon-2"
+        ],
+        "compositionRecipe": {
+          "referenceId": "planets--toxic-moon-2",
+          "layoutSeed": 1861,
+          "scales": [
+            0.43,
+            0.4,
+            0.44,
+            0.39,
+            0.42,
+            0.41,
+            0.43,
+            0.4,
+            0.42,
+            0.39,
+            0.44,
+            0.41
+          ],
+          "variantOffset": 1,
+          "hero": 0
+        },
+        "materials": [
+          {
+            "name": "planets--toxic-moon-2-olive-crust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-0-albedo.png",
+            "metallicRoughnessTexture": "rocky-0-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--toxic-moon-2-acid-rim",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-1-albedo.png",
+            "metallicRoughnessTexture": "rocky-1-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--toxic-moon-2-dark-cavity",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-2-albedo.png",
+            "metallicRoughnessTexture": "rocky-2-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--toxic-moon-2-olive-fracture",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-3-albedo.png",
+            "metallicRoughnessTexture": "rocky-3-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--toxic-moon-2-wet-chemical-fault",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-4-albedo.png",
+            "metallicRoughnessTexture": "rocky-4-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--toxic-moon-2-yellow-green-upper-crust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-5-albedo.png",
+            "metallicRoughnessTexture": "rocky-5-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          }
+        ]
+      }
+    },
+    {
+      "revision": "ice-moon-1-r002",
+      "sourceKitSha256": "dd192b60d46ad562bef442306a7ded75053647ea69a5ceca2fe05b70323a5fb8",
+      "sourceBytes": 95700105,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "ice-moon-glacial",
+        "coveredReferenceIds": [
+          "planets--ice-moon-1"
+        ],
+        "compositionRecipe": {
+          "referenceId": "planets--ice-moon-1",
+          "layoutSeed": 1297,
+          "scales": [
+            0.34,
+            0.29,
+            0.35,
+            0.3,
+            0.33,
+            0.28,
+            0.34,
+            0.31,
+            0.33,
+            0.3
+          ],
+          "variantOffset": 1
+        },
+        "uvConvention": "glTF corner UV, Blender V flipped; invertY=false",
+        "materials": [
+          {
+            "name": "powder-snow",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "ior": 1.31,
+            "metallic": 1,
+            "baseColorTexture": "ice-0-albedo.png",
+            "metallicRoughnessTexture": "ice-0-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "pale-ice-edge",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "ior": 1.31,
+            "metallic": 1,
+            "clearcoatFactor": 0.42,
+            "clearcoatRoughnessFactor": 0.1,
+            "baseColorTexture": "ice-1-albedo.png",
+            "metallicRoughnessTexture": "ice-1-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "cobalt-ice",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "ior": 1.31,
+            "metallic": 1,
+            "clearcoatFactor": 0.42,
+            "clearcoatRoughnessFactor": 0.1,
+            "baseColorTexture": "ice-2-albedo.png",
+            "metallicRoughnessTexture": "ice-2-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "cyan-ice-face",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "ior": 1.31,
+            "metallic": 1,
+            "clearcoatFactor": 0.42,
+            "clearcoatRoughnessFactor": 0.1,
+            "baseColorTexture": "ice-3-albedo.png",
+            "metallicRoughnessTexture": "ice-3-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "deep-ice",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "ior": 1.31,
+            "metallic": 1,
+            "clearcoatFactor": 0.42,
+            "clearcoatRoughnessFactor": 0.1,
+            "baseColorTexture": "ice-4-albedo.png",
+            "metallicRoughnessTexture": "ice-4-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          }
+        ]
+      }
+    },
+    {
+      "revision": "ice-moon-2-r003",
+      "sourceKitSha256": "f2f7bfd0a1cb706bdca20c11e1c53baec18fe7d1212f30115586cbceeaf7de3c",
+      "sourceBytes": 43040066,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "ice-moon-glacial",
+        "coveredReferenceIds": [
+          "planets--ice-moon-2"
+        ],
+        "compositionRecipe": {
+          "referenceId": "planets--ice-moon-2",
+          "layoutSeed": 1409,
+          "scales": [
+            0.34,
+            0.29,
+            0.32,
+            0.28,
+            0.33,
+            0.3,
+            0.32,
+            0.29
+          ],
+          "variantOffset": 1,
+          "additionalRegion": {
+            "normal": [
+              -0.86,
+              0.02,
+              0.51
+            ],
+            "scale": 0.36,
+            "angle": 0.6
+          }
+        },
+        "uvConvention": "glTF corner UV, Blender V flipped; invertY=false",
+        "materials": [
+          {
+            "name": "powder-snow",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "ior": 1.31,
+            "metallic": 1,
+            "baseColorTexture": "ice-0-albedo.png",
+            "metallicRoughnessTexture": "ice-0-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "pale-ice-edge",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "ior": 1.31,
+            "metallic": 1,
+            "clearcoatFactor": 0.42,
+            "clearcoatRoughnessFactor": 0.1,
+            "baseColorTexture": "ice-1-albedo.png",
+            "metallicRoughnessTexture": "ice-1-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "cobalt-ice",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "ior": 1.31,
+            "metallic": 1,
+            "clearcoatFactor": 0.42,
+            "clearcoatRoughnessFactor": 0.1,
+            "baseColorTexture": "ice-2-albedo.png",
+            "metallicRoughnessTexture": "ice-2-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "cyan-ice-face",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "ior": 1.31,
+            "metallic": 1,
+            "clearcoatFactor": 0.42,
+            "clearcoatRoughnessFactor": 0.1,
+            "baseColorTexture": "ice-3-albedo.png",
+            "metallicRoughnessTexture": "ice-3-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "deep-ice",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "ior": 1.31,
+            "metallic": 1,
+            "clearcoatFactor": 0.42,
+            "clearcoatRoughnessFactor": 0.1,
+            "baseColorTexture": "ice-4-albedo.png",
+            "metallicRoughnessTexture": "ice-4-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          }
+        ]
+      }
+    },
+    {
+      "revision": "volcanic-moon-1-r003",
+      "sourceKitSha256": "73ecf286225a9daf4d1be1d2479a691747f34614f8782ec21f8c7e732721d7fc",
+      "sourceBytes": 16871753,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "volcanic-moon-craters",
+        "coveredReferenceIds": [
+          "planets--volcanic-moon-1"
+        ],
+        "compositionRecipe": {
+          "referenceId": "planets--volcanic-moon-1",
+          "layoutSeed": 1523,
+          "scales": [
+            0.41,
+            0.38,
+            0.43,
+            0.39,
+            0.4,
+            0.38,
+            0.42,
+            0.39,
+            0.43,
+            0.37,
+            0.41,
+            0.4
+          ],
+          "variantOffset": 1
+        },
+        "materials": [
+          {
+            "name": "planets--volcanic-moon-1-charcoal-crust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-0-albedo.png",
+            "metallicRoughnessTexture": "rocky-0-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--volcanic-moon-1-purple-rim",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-1-albedo.png",
+            "metallicRoughnessTexture": "rocky-1-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--volcanic-moon-1-dark-cavity",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-2-albedo.png",
+            "metallicRoughnessTexture": "rocky-2-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--volcanic-moon-1-cooled-fracture",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-3-albedo.png",
+            "metallicRoughnessTexture": "rocky-3-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--volcanic-moon-1-molten-fault",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "emissiveColor": [
+              1,
+              0.095,
+              0.002
+            ],
+            "emissiveStrength": 2.2,
+            "metallic": 1,
+            "baseColorTexture": "rocky-4-albedo.png",
+            "metallicRoughnessTexture": "rocky-4-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--volcanic-moon-1-pale-purple-fracture",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-5-albedo.png",
+            "metallicRoughnessTexture": "rocky-5-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          }
+        ]
+      }
+    },
+    {
+      "revision": "volcanic-moon-2-r006",
+      "sourceKitSha256": "0feb7937c42e5e06f30fbdd1dec215ec5abd24e74897cad7636fbb44985ba9b4",
+      "sourceBytes": 23033904,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "volcanic-moon-craters",
+        "coveredReferenceIds": [
+          "planets--volcanic-moon-2"
+        ],
+        "compositionRecipe": {
+          "referenceId": "planets--volcanic-moon-2",
+          "layoutSeed": 1637,
+          "scales": [
+            0.38,
+            0.4,
+            0.39,
+            0.41,
+            0.37,
+            0.4,
+            0.38,
+            0.42,
+            0.39,
+            0.37,
+            0.41,
+            0.38
+          ],
+          "variantOffset": 1,
+          "warmEdgeRegions": [
+            2,
+            9
+          ]
+        },
+        "materials": [
+          {
+            "name": "planets--volcanic-moon-2-charcoal-crust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-0-albedo.png",
+            "metallicRoughnessTexture": "rocky-0-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--volcanic-moon-2-purple-rim",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-1-albedo.png",
+            "metallicRoughnessTexture": "rocky-1-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--volcanic-moon-2-dark-cavity",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-2-albedo.png",
+            "metallicRoughnessTexture": "rocky-2-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--volcanic-moon-2-cooled-fracture",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-3-albedo.png",
+            "metallicRoughnessTexture": "rocky-3-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--volcanic-moon-2-molten-fault",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "emissiveColor": [
+              1,
+              0.095,
+              0.002
+            ],
+            "emissiveStrength": 2.2,
+            "metallic": 1,
+            "baseColorTexture": "rocky-4-albedo.png",
+            "metallicRoughnessTexture": "rocky-4-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--volcanic-moon-2-pale-purple-fracture",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "metallic": 1,
+            "baseColorTexture": "rocky-5-albedo.png",
+            "metallicRoughnessTexture": "rocky-5-orm.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "planets--volcanic-moon-2-heated-shoulder",
+            "linearColor": [
+              0.62,
+              0.027,
+              0.003
+            ],
+            "roughness": 0.82,
+            "metallic": 0,
+            "emissiveColor": [
+              1,
+              0.04,
+              0.002
+            ],
+            "emissiveStrength": 0.65
+          }
+        ]
+      }
+    },
+    {
+      "revision": "crystal-moon-1-r010",
+      "sourceKitSha256": "808cf50f1a25e00d39cbd39cbabebf05a344cb0cf75ca7167d80a101f086c702",
+      "sourceBytes": 2604930,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "crystal-moon-native-body",
+        "coveredReferenceIds": [
+          "planets--crystal-moon-1"
+        ],
+        "compositionRecipe": {
+          "referenceId": "planets--crystal-moon-1",
+          "layoutSeed": 587,
+          "retainedAllLOD": true,
+          "bodyVariant": "connected-crystalline-body"
+        },
+        "materials": [
+          {
+            "name": "dark-lilac-crust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "material-0-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "metallic": 1,
+            "metallicRoughnessTexture": "material-0-orm.png"
+          },
+          {
+            "name": "fracture-shadow",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "material-1-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "metallic": 1,
+            "metallicRoughnessTexture": "material-1-orm.png"
+          },
+          {
+            "name": "cliff-edge",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "material-2-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "metallic": 1,
+            "metallicRoughnessTexture": "material-2-orm.png"
+          },
+          {
+            "name": "crystal-violet",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.17,
+            "ior": 1.48,
+            "baseColorTexture": "material-3-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "crystal-magenta",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.19,
+            "ior": 1.48,
+            "baseColorTexture": "material-4-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "crystal-dark-facet",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.22,
+            "ior": 1.48,
+            "baseColorTexture": "material-5-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "crystal-bright-edge",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.15,
+            "emissiveColor": [
+              1,
+              1,
+              1
+            ],
+            "emissiveStrength": 0.18,
+            "ior": 1.48,
+            "baseColorTexture": "material-6-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "emissiveTexture": "material-6-albedo.png"
+          },
+          {
+            "name": "crystal-core-plane",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.16,
+            "ior": 1.48,
+            "emissiveColor": [
+              1,
+              1,
+              1
+            ],
+            "emissiveStrength": 1.25,
+            "baseColorTexture": "material-7-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "emissiveTexture": "material-7-albedo.png"
+          },
+          {
+            "name": "geode-fracture-magenta",
+            "linearColor": [
+              0.25,
+              0.018,
+              0.23
+            ],
+            "roughness": 0.55,
+            "emissiveColor": [
+              0.2,
+              0.002,
+              0.16
+            ],
+            "emissiveStrength": 0.25
+          }
+        ]
+      }
+    },
+    {
+      "revision": "crystal-moon-2-r010",
+      "sourceKitSha256": "90ba1de6ecd0bfb4f5333c7010ff70764887d13d68cb1c072e2d2cc0648818e0",
+      "sourceBytes": 1136607,
+      "header": {
+        "schema": "sidereal.native-planet-kit.v1",
+        "layout": "crystal-moon-native-body",
+        "coveredReferenceIds": [
+          "planets--crystal-moon-2"
+        ],
+        "compositionRecipe": {
+          "referenceId": "planets--crystal-moon-2",
+          "layoutSeed": 601,
+          "retainedAllLOD": true,
+          "bodyVariant": "connected-crystalline-body"
+        },
+        "materials": [
+          {
+            "name": "dark-lilac-crust",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "material-0-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "metallic": 1,
+            "metallicRoughnessTexture": "material-0-orm.png"
+          },
+          {
+            "name": "fracture-shadow",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "material-1-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "metallic": 1,
+            "metallicRoughnessTexture": "material-1-orm.png"
+          },
+          {
+            "name": "cliff-edge",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 1,
+            "baseColorTexture": "material-2-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "metallic": 1,
+            "metallicRoughnessTexture": "material-2-orm.png"
+          },
+          {
+            "name": "crystal-violet",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.17,
+            "ior": 1.48,
+            "baseColorTexture": "material-3-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "crystal-magenta",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.19,
+            "ior": 1.48,
+            "baseColorTexture": "material-4-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "crystal-dark-facet",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.22,
+            "ior": 1.48,
+            "baseColorTexture": "material-5-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false
+          },
+          {
+            "name": "crystal-bright-edge",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.15,
+            "emissiveColor": [
+              1,
+              1,
+              1
+            ],
+            "emissiveStrength": 0.18,
+            "ior": 1.48,
+            "baseColorTexture": "material-6-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "emissiveTexture": "material-6-albedo.png"
+          },
+          {
+            "name": "crystal-core-plane",
+            "linearColor": [
+              1,
+              1,
+              1
+            ],
+            "roughness": 0.16,
+            "ior": 1.48,
+            "emissiveColor": [
+              1,
+              1,
+              1
+            ],
+            "emissiveStrength": 1.25,
+            "baseColorTexture": "material-7-albedo.png",
+            "textureColorSpace": "sRGB",
+            "invertY": false,
+            "emissiveTexture": "material-7-albedo.png"
+          },
+          {
+            "name": "geode-fracture-magenta",
+            "linearColor": [
+              0.25,
+              0.018,
+              0.23
+            ],
+            "roughness": 0.55,
+            "emissiveColor": [
+              0.2,
+              0.002,
+              0.16
+            ],
+            "emissiveStrength": 0.25
+          }
+        ]
+      }
+    }
+  ]
+}

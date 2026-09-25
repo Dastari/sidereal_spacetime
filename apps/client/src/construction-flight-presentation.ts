@@ -1,8 +1,12 @@
+import { isQualifiedWayfarerBlueprint } from "@sidereal/sim/wayfarer-walking-bindings";
 import { LAB_FLIGHT_ACTUATORS } from "@sidereal/content/flight";
 
 /** Display allowlist only; authority independently validates the full source. */
 export const QUALIFIED_FLIGHT_PREVIEW_SHA256 =
   "362f37217f63a44a470676f104c8368bd0973ca03f5e29eab190bc4d6df71340";
+
+/** Presentation only; game authority still checks the complete source and fittings. */
+export const supportsAuthoredFlightPresentation = isQualifiedWayfarerBlueprint;
 
 export interface AuthoredFlightStatus {
   shipId: string;

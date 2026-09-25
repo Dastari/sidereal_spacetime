@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "scope": "Pinned source/artifact hashes and GLB/compiled-stream topology counts; actual visual review recorded separately",
+  "planets": [
+    {
+      "revision": "ice-r015",
+      "files": 8,
+      "native_form_triangles": 388,
+      "manifest_sha256": "96a8a47e57dad07bec9c3bf3ab4e266a6b9860585dfc7ac086c4be0bfc97a512"
+    },
+    {
+      "revision": "volcanic-r018",
+      "files": 12,
+      "native_form_triangles": 3624,
+      "manifest_sha256": "ad17a4b33da1ccc257018ecca5e7eb79a3040a0023c7865ac9665bfc2df11924"
+    }
+  ]
+}

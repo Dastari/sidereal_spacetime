@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/sim",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -53,17 +53,27 @@
     "./construction-instance": "./src/construction-instance.ts",
     "./layout-structure": "./src/layout-structure.ts",
     "./layout-native-floor": "./src/layout-native-floor.ts",
+    "./system-map": "./src/system-map.ts",
+    "./space-background": "./src/space-background.ts",
+    "./zones": "./src/zones.ts",
+    "./zone-path": "./src/zone-path.ts",
+    "./layout-orientation-migration": "./src/layout-orientation-migration.ts",
+    "./tile-wall-reservation": "./src/tile-wall-reservation.ts",
+    "./tile-wall-fit": "./src/tile-wall-fit.ts",
     "./layout-inset-native-plan": "./src/layout-inset-native-plan.ts",
     "./construction-inset-boundaries": "./src/construction-inset-boundaries.ts",
     "./wayfarer-walking-bindings": "./src/wayfarer-walking-bindings.ts",
+    "./layout-complex-perimeter": "./src/layout-complex-perimeter.ts",
+    "./layout-hull-attachment": "./src/layout-hull-attachment.ts",
     "./wayfarer-exterior-qualification": "./src/wayfarer-exterior-qualification.ts",
     "./layout-opening-treatments": "./src/layout-opening-treatments.ts",
+    "./construction-doorway-motion": "./src/construction-doorway-motion.ts",
     "./wayfarer-rebuild-contract": "./src/wayfarer-rebuild-contract.ts",
     "./wayfarer-rebuild-game": "./src/wayfarer-rebuild-game.ts",
     "./wayfarer-conversion-candidate": "./src/wayfarer-conversion-candidate.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",
-    "@sidereal/content": "0.1.0"
+    "@sidereal/content": "0.5.0"
   }
 }

@@ -4,13 +4,13 @@ import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
-import { WAYFARER_CONVERSION_PIN as PIN } from "../../content/src/wayfarer-conversion-candidate";
+import { WAYFARER_CONVERSION_PIN as PIN } from "@sidereal/content/wayfarer-conversion-candidate";
 import {
   createWayfarerConversionCandidate,
   type WayfarerPinnedInputs,
-} from "../../sim/src/wayfarer-conversion-candidate";
-import { qualifiedWayfarerWalkingBindings } from "../../sim/src/wayfarer-walking-bindings";
-import { planConstructionInstance } from "../../sim/src/construction-instance";
+} from "@sidereal/sim/wayfarer-conversion-candidate";
+import { qualifiedWayfarerWalkingBindings } from "@sidereal/sim/wayfarer-walking-bindings";
+import { planConstructionInstance } from "@sidereal/sim/construction-instance";
 import { loadConstructionAuthoredAssembly } from "./construction-authored-assembly";
 afterEach(() => vi.unstubAllGlobals());
 const candidate = () =>
@@ -19,16 +19,16 @@ const candidate = () =>
       Object.keys(PIN.sources).map((p) => [p, readFileSync(p, "utf8")]),
     ) as WayfarerPinnedInputs,
   );
-test("all 211 authored objects load from 28 verified libraries with independent IDs, retained materials, roof cutaway and safe disposal", async () => {
+test("all 211 authored objects load from 24 verified libraries with independent IDs, retained materials, roof cutaway and safe disposal", async () => {
   const e = new NullEngine(),
     scene = new Scene(e);
   scene.useRightHandedSystem = true;
   const root = new TransformNode("instance", scene);
   const addedWhileBlocked: boolean[] = [];
   const addMesh = scene.addMesh.bind(scene);
-  vi.spyOn(scene,"addMesh").mockImplementation((mesh,recursive) => {
+  vi.spyOn(scene, "addMesh").mockImplementation((mesh, recursive) => {
     addedWhileBlocked.push(scene.blockMaterialDirtyMechanism);
-    return addMesh(mesh,recursive);
+    return addMesh(mesh, recursive);
   });
   const fetcher = vi.fn(async (url: string) => {
     expect(scene.blockMaterialDirtyMechanism).toBe(false);
@@ -77,7 +77,11 @@ test("all 211 authored objects load from 28 verified libraries with independent 
     expect(
       new Set(result!.placements.map((p) => p.node.metadata.partId)).size,
     ).toBe(211);
-    expect(fetcher).toHaveBeenCalledTimes(29);
+    // Shared native hull/engine kits preserve selectors with fewer fetches.
+    expect(fetcher).toHaveBeenCalledTimes(25);
+    expect(
+      result!.placements.filter((p) => p.category === "engine"),
+    ).toHaveLength(9);
     expect(result!.placements.some((p) => p.category === "floor")).toBe(false);
     for (const p of result!.placements) {
       expect(p.meshes.length).toBeGreaterThan(0);
@@ -87,6 +91,9 @@ test("all 211 authored objects load from 28 verified libraries with independent 
             !!m.material && m.isPickable && m.metadata.category === p.category,
         ),
       ).toBe(true);
+      for (const mesh of p.meshes)
+        for (const subMesh of mesh.subMeshes ?? [])
+          expect(scene.materials, mesh.name).toContain(subMesh.getMaterial());
       const original = a.document.layout.assembly!.parts.find(
         (o) => o.id === p.node.metadata.partId,
       )!;
@@ -104,11 +111,14 @@ test("all 211 authored objects load from 28 verified libraries with independent 
     expect(roofs.every((p) => p.node.isEnabled())).toBe(true);
     // All four orbit quadrants retain complete walls in deck view.
     const walls = result!.placements.filter((p) => p.category !== "roof");
-    for (const x of [-10, 10]) for (const z of [-10, 10]) {
-      result!.setView(new Vector3(x, 12, z), true);
-      expect(walls.every((p) => p.node.isEnabled())).toBe(true);
-      expect(walls.every((p) => p.meshes.every((m) => m.isEnabled()))).toBe(true);
-    }
+    for (const x of [-10, 10])
+      for (const z of [-10, 10]) {
+        result!.setView(new Vector3(x, 12, z), true);
+        expect(walls.every((p) => p.node.isEnabled())).toBe(true);
+        expect(walls.every((p) => p.meshes.every((m) => m.isEnabled()))).toBe(
+          true,
+        );
+      }
     const materials = result!.meshes.map((m) => m.material);
     expect(
       materials.some(
@@ -116,6 +126,9 @@ test("all 211 authored objects load from 28 verified libraries with independent 
       ),
     ).toBe(true);
     result!.dispose();
+    expect(
+      materials.every((material) => !scene.materials.includes(material!)),
+    ).toBe(true);
     expect(root.isDisposed()).toBe(false);
     expect(root.getChildMeshes()).toHaveLength(0);
   } finally {

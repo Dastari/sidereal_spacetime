@@ -1,6 +1,3 @@
-import { compileShipFlight } from "./construction-flight-compilation";
-import { readConstructionFlightInput } from "./construction-flight-input";
-import { commitFlightCharacter } from "./construction-flight-dirty";
 import {
   ownedGameShipAccess,
   GAME_OWNED_TEMPLATE_NAMESPACE,
@@ -46,7 +43,6 @@ const support = createConstructionStandingSupport();
 export function constructionPilotRepository(
   ctx: ConstructionPilotContext,
   characterId: string,
-  compilePendingForCommand = false,
 ): PilotRepository {
   const actorRow = () => ctx.db.character.id.find(characterId);
   const owner = actorRow()?.owner;
@@ -63,8 +59,6 @@ export function constructionPilotRepository(
         currentInstanceRevision: (id) =>
           ctx.db.constructionInstance.id.find(id)?.revision,
         fittings: (id) => ctx.db.constructionFlightFitting.by_ship.filter(id),
-            compiled: (id) => ctx.db.constructionFlightCompiled.shipId.find(id),
-            dirty: (id) => !!ctx.db.constructionFlightDirty.shipId.find(id),
       },
       shipId,
     );
@@ -182,12 +176,6 @@ export function constructionPilotRepository(
       return consumeInputControl(ctx, id);
     },
     hasOperationalFlight: (id) => {
-      // Entry/input recording already checked current actor/deck permission. Compile this one
-      // pending ship before checking the exact same operational computer gate;
-      // the final walking step must not cause a transient false power loss.
-      // Tick/recovery repositories never opt in and retain the scheduled budget.
-      if (compilePendingForCommand && ctx.db.constructionFlightDirty.shipId.find(id))
-        compileShipFlight(ctx.db, id, shipId => readConstructionFlightInput(ctx, shipId));
       const d = flight(id);
       return (
         d.status === "ready" &&
@@ -283,12 +271,12 @@ export function constructionPilotRepository(
       const a = ctx.db.character.id.find(id);
       if (!a) throw Error("Pilot actor missing");
       if (a.localX !== p.x || a.localY !== p.y || a.sprinting)
-        commitFlightCharacter(ctx, {
+        ctx.db.character.id.update({
           ...a,
           localX: p.x,
           localY: p.y,
           sprinting: false,
-        }, row => ctx.db.character.id.update(row));
+        });
     },
     clearInputAndAim: (id) => {
       const input = ctx.db.input.characterId.find(id);
@@ -314,13 +302,7 @@ export function enterConstructionPilotAuthority(
 ) {
   const a = [...ctx.db.character.by_owner.filter(ctx.sender)][0];
   if (!a) throw Error("Active character required");
-  return enterConstructionPilot(constructionPilotRepository(ctx, a.id, true), args);
-}
-/** Recording still uses every consumption validator. A current crew movement
- * may require one bounded physical refresh before that exact check; scheduled
- * consumption never compiles here and always uses its queue budget. */
-export function canRecordConstructionPilot(ctx: ConstructionPilotContext, characterId: string) {
-  return constructionPilotCanControl(constructionPilotRepository(ctx, characterId, true), characterId);
+  return enterConstructionPilot(constructionPilotRepository(ctx, a.id), args);
 }
 export function canConsumeConstructionPilot(
   ctx: ConstructionPilotContext,

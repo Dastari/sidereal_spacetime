@@ -3,6 +3,7 @@ import { MODULAR_CREW_ASSET_URL } from "@sidereal/content/character-components";
 import { createCombatPose } from "./combat-pose";
 import { createEquipmentPoseController } from "./equipment-pose";
 import { equipmentPoseArmorBulk } from "./equipment-pose-bulk";
+import { createCrewFaceMaterials } from "./face-materials";
 import type { EquipmentAimSource } from "../equipment/anchors";
 import { strideFrame, crewBlendDuration, blendProgress } from "./animation";
 import { Scene } from "@babylonjs/core/scene";
@@ -14,6 +15,7 @@ import "@babylonjs/loaders/glTF";
 
 import {
   resolveCrewAppearance,
+  mergeCrewAppearance,
   crewSlotVisible,
   type CrewAppearance,
 } from "./appearance";
@@ -110,17 +112,10 @@ export async function createCrewVisual(
   const combatPose = createCombatPose(scene, root, container.transformNodes);
   let equipmentPose:
     ReturnType<typeof createEquipmentPoseController> | undefined;
+  const faceMaterials = createCrewFaceMaterials(container.materials);
   const customize = (next: CrewAppearance) => {
     if (disposed) return;
-    // Selecting a new outfit resets its slots; skin/hair colors remain character choices.
-    if (next.outfit && next.outfit !== (appearance.outfit ?? "crew"))
-      appearance = {
-        ...(appearance.skin !== undefined ? { skin: appearance.skin } : {}),
-        ...(appearance.hair !== undefined ? { hair: appearance.hair } : {}),
-        weapon: resolved.weapon,
-        ...next,
-      };
-    else appearance = { ...appearance, ...next };
+    appearance = mergeCrewAppearance(appearance, next);
     resolved = resolveCrewAppearance(appearance);
     equipmentPose?.setArmorBulk(
       equipmentPoseArmorBulk(
@@ -132,7 +127,11 @@ export async function createCrewVisual(
       if (!(material instanceof PBRMaterial)) continue;
       material.maxSimultaneousLights = 8;
       // Per-item palettes stay authored; only shared base skin/hair roles accept cosmetics.
-      if (material.name.startsWith("component.")) continue;
+      if (
+        material.name.startsWith("component.") ||
+        material.name.startsWith("crew.face.")
+      )
+        continue;
       const role = material.name
         .replace(/^crew\./, "")
         .replace(/\.modular(?:\.\d+)?$/, "") as keyof typeof resolved;
@@ -148,6 +147,7 @@ export async function createCrewVisual(
         }
       }
     }
+    faceMaterials.apply(resolved);
     for (const mesh of container.meshes) {
       const slot =
         mesh.metadata?.gltf?.extras?.component_id ??
@@ -286,6 +286,7 @@ export async function createCrewVisual(
       scene.onBeforeRenderObservable.remove(blendObserver);
       combatPose.dispose();
       equipmentPose?.dispose();
+      faceMaterials.dispose();
       container.dispose();
       root.dispose();
     },

@@ -1,14 +1,14 @@
 {
   "name": "@sidereal/dashboard",
-  "version": "0.1.0",
+  "version": "0.8.0",
   "private": true,
   "type": "module",
   "dependencies": {
     "@fontsource/barlow": "5.3.0",
     "@fontsource/barlow-condensed": "5.3.0",
-    "@sidereal/content": "*",
-    "@sidereal/render": "*",
-    "@sidereal/sim": "*",
+    "@sidereal/content": "0.5.0",
+    "@sidereal/render": "0.8.1",
+    "@sidereal/sim": "0.4.0",
     "@sidereal/ui": "*",
     "lucide-react": "1.42.0",
     "oidc-client-ts": "3.4.1",

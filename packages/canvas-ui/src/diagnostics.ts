@@ -1,8 +1,8 @@
 import type { RenderDiagnostics } from "../../render/src/diagnostics";
+import type { DebugFeature } from "../../render/src/debug-features";
+export type { DebugFeature } from "../../render/src/debug-features";
 import { CanvasUI, palette } from "./toolkit";
 import { WindowStack } from "./windows";
-export type DebugFeature =
-  "lighting" | "equipment" | "shadows" | "glow" | "planets" | "characters";
 const features: readonly [DebugFeature, string][] = [
   ["lighting", "Lighting"],
   ["equipment", "Equipment"],
@@ -10,6 +10,12 @@ const features: readonly [DebugFeature, string][] = [
   ["glow", "Glow"],
   ["planets", "Planets"],
   ["characters", "Characters"],
+  ["globalIllumination", "Global illumination"],
+];
+const overlays: readonly [DebugFeature, string][] = [
+  ["skeleton", "Rig skeleton"],
+  ["lightBounds", "Light volumes"],
+  ["collision", "Collision"],
 ];
 
 /** Debug instrumentation is requested only while the movable F3 window is open. */
@@ -21,6 +27,7 @@ export function createDiagnosticsUI(
   const stack = new WindowStack();
   let refresh: ReturnType<typeof setInterval> | undefined;
   let enabled: Partial<Record<DebugFeature, boolean>> = {};
+  let tab: "metrics" | "visuals" = "metrics";
   const remember = (data: RenderDiagnostics | undefined) => {
     if (data?.debugFeatures) enabled = { ...data.debugFeatures };
   };
@@ -42,10 +49,10 @@ export function createDiagnosticsUI(
       else {
         refresh = setInterval(() => ui.invalidate(), 500);
         stack.open("diagnostics", {
-          x: Math.max(16, ui.width - 344),
+          x: Math.max(16, ui.width - 394),
           y: 75,
-          w: 326,
-          h: 520,
+          w: 376,
+          h: 580,
         });
         ui.invalidate();
       }
@@ -79,62 +86,28 @@ export function createDiagnosticsUI(
         },
         close,
       );
-      const controlsHeight = controls ? 187 : 0;
       if (controls) {
-        const top = r.y + r.h - controlsHeight;
-        const gap = 8,
-          width = (r.w - 32 - gap) / 2;
-        ui.text(
-          "LOCAL VISUAL COMPARISON",
-          r.x + 16,
-          top,
-          11,
-          palette.muted,
-          r.w - 32,
-        );
-        for (const [i, [key, label]] of features.entries()) {
+        for (const [i, value] of (["metrics", "visuals"] as const).entries()) {
           ui.button(
-            `diagnostics-${key}`,
-            `${label}: ${enabled[key] === false ? "Off" : "On"}`,
+            `diagnostics-tab-${value}`,
+            value === "metrics" ? "Performance" : "Visuals / debug",
             {
-              x: r.x + 16 + (i % 2) * (width + gap),
-              y: top + 23 + Math.floor(i / 2) * 34,
-              w: width,
-              h: 28,
+              x: r.x + 16 + (i * (r.w - 24)) / 2,
+              y: r.y + 53,
+              w: (r.w - 40) / 2,
+              h: 30,
             },
             () => {
-              controls.toggle?.(key);
-              remember(sample?.(true));
+              tab = value;
+              window.scroll = 0;
               ui.invalidate();
             },
-            {
-              disabled: !data || !controls.toggle,
-              accent: enabled[key] === false,
-            },
+            { selected: tab === value },
           );
         }
-        ui.button(
-          "diagnostics-reset",
-          "Reset visuals",
-          { x: r.x + 16, y: top + 128, w: r.w - 32, h: 28 },
-          () => {
-            controls.reset?.();
-            remember(sample?.(true));
-            ui.invalidate();
-          },
-          { disabled: !data || !controls.reset || disabled().length === 0 },
-        );
-        ui.text(
-          "Local presentation only · F3 keeps overrides",
-          r.x + 16,
-          top + 163,
-          10,
-          palette.muted,
-          r.w - 32,
-        );
       }
       if (!data) {
-        ui.text("Renderer starting", r.x + 16, r.y + 61, 15, palette.muted);
+        ui.text("Renderer starting", r.x + 16, r.y + 99, 15, palette.muted);
         return;
       }
       const rows: [string, string][] = [
@@ -168,15 +141,44 @@ export function createDiagnosticsUI(
         ["Active indices", data.activeIndices.toLocaleString()],
         ["Materials / textures", `${data.materials} / ${data.textures}`],
         ["Lit lights / eligible maps", `${data.lights} / ${data.shadowMaps}`],
-        ["Local light limit", data.localLightBudget ? String(data.localLightBudget.limit === 'all' ? 'All' : data.localLightBudget.limit) : "—"],
-        ["Local enabled / eligible", data.localLightBudget ? `${data.localLightBudget.enabledLights} / ${data.localLightBudget.eligibleLights}` : "—"],
-        ["Local shadow lights", data.localLightBudget ? String(data.localLightBudget.enabledShadowLights) : "—"],
+        [
+          "Local light limit",
+          data.localLightBudget
+            ? String(
+                data.localLightBudget.limit === "all"
+                  ? "All"
+                  : data.localLightBudget.limit,
+              )
+            : "—",
+        ],
+        [
+          "Local enabled / eligible",
+          data.localLightBudget
+            ? `${data.localLightBudget.enabledLights} / ${data.localLightBudget.eligibleLights}`
+            : "—",
+        ],
+        [
+          "Local shadow lights",
+          data.localLightBudget
+            ? String(data.localLightBudget.enabledShadowLights)
+            : "—",
+        ],
         ["Allocated shadow maps", String(data.allocatedShadowMaps ?? "—")],
         ["Transparent meshes", String(data.transparentMeshes ?? "—")],
         ["Render resolution", `${data.renderWidth} × ${data.renderHeight}`],
         ["Hardware scale", data.hardwareScale.toFixed(2)],
-        ["Scene IBL texture", data.environmentTexturePresent === undefined ? "—" : data.environmentTexturePresent ? "Present" : "None"],
-        ["Attached camera passes", String(data.cameraPostProcesses?.length ?? "—")],
+        [
+          "Scene IBL texture",
+          data.environmentTexturePresent === undefined
+            ? "—"
+            : data.environmentTexturePresent
+              ? "Present"
+              : "None",
+        ],
+        [
+          "Attached camera passes",
+          String(data.cameraPostProcesses?.length ?? "—"),
+        ],
         ["Camera pass names", data.cameraPostProcesses?.join(", ") || "None"],
         ["Scene capture", data.sceneCapture?.name ?? "None"],
         ["Renderer", data.renderBackend === "webgpu" ? "WebGPU" : "WebGL"],
@@ -186,47 +188,160 @@ export function createDiagnosticsUI(
           ? "Awaiting allocation"
           : `${data.sceneCapture.width} × ${data.sceneCapture.height} / ${data.sceneCapture.samples}×`],
         ["Custom targets", String(data.customRenderTargets ?? "—")],
-        ["Camera radius / elev", data.cameraRadius === undefined || data.cameraElevationDegrees === undefined ? "—" : `${data.cameraRadius.toFixed(1)} m / ${data.cameraElevationDegrees.toFixed(1)}°`],
+        [
+          "Camera radius / elev",
+          data.cameraRadius === undefined ||
+          data.cameraElevationDegrees === undefined
+            ? "—"
+            : `${data.cameraRadius.toFixed(1)} m / ${data.cameraElevationDegrees.toFixed(1)}°`,
+        ],
       ];
       const viewport = {
         x: r.x + 16,
-        y: r.y + 59,
-        w: r.w - 32,
-        h: Math.max(24, r.h - 77 - controlsHeight),
+        y: r.y + (controls ? 99 : 59),
+        w: r.w - 48,
+        h: Math.max(24, r.h - (controls ? 121 : 81)),
       };
-      window.limit = Math.max(0, rows.length * 30 + 44 - viewport.h);
+      const visualLines = [
+        "GI: environment, ambient and hemispheric fill.",
+        "Emissive / baked surface textures stay visible.",
+        "Unbounded lights use source/direction markers.",
+        ...(data.debugOverlays?.collisionScopes.length
+          ? data.debugOverlays.collisionScopes
+          : ["Collision: supplied simulation footprints only."]),
+        "Local presentation only · F3 keeps overrides.",
+      ];
+      const visualHeight =
+        343 +
+        visualLines.reduce(
+          (sum, line) =>
+            sum +
+            Math.max(
+              1,
+              Math.ceil(
+                line.length / Math.max(20, Math.floor(viewport.w / 5.8)),
+              ),
+            ) *
+              16,
+          0,
+        );
+      window.limit = Math.max(
+        0,
+        (controls && tab === "visuals" ? visualHeight : rows.length * 30 + 44) -
+          viewport.h,
+      );
       window.scroll = Math.min(window.scroll, window.limit);
       ui.ctx.save();
       ui.ctx.beginPath();
       ui.ctx.rect(viewport.x, viewport.y, viewport.w, viewport.h);
       ui.ctx.clip();
-      rows.forEach(([label, value], i) => {
-        const y = viewport.y + i * 30 - window.scroll;
-        ui.text(label, viewport.x, y, 13, palette.muted, viewport.w * 0.56);
+      if (controls && tab === "visuals") {
+        const width = (viewport.w - 8) / 2;
+        const top = viewport.y - window.scroll;
+        const drawGroup = (
+          entries: readonly [DebugFeature, string][],
+          title: string,
+          y: number,
+          overlay: boolean,
+        ) => {
+          ui.text(title, viewport.x, y, 11, palette.muted, viewport.w);
+          entries.forEach(([key, label], i) => {
+            const on = overlay ? enabled[key] === true : enabled[key] !== false;
+            const r = {
+              x: viewport.x + (i % 2) * (width + 8),
+              y: y + 22 + Math.floor(i / 2) * 34,
+              w:
+                i === entries.length - 1 && entries.length % 2
+                  ? viewport.w
+                  : width,
+              h: 28,
+            };
+            // Canvas clipping does not clip hit regions. Register only controls
+            // fully within the scroll viewport, including on compact screens.
+            if (r.y < viewport.y || r.y + r.h > viewport.y + viewport.h) return;
+            ui.button(
+              `diagnostics-${key}`,
+              `${label}: ${on ? "On" : "Off"}`,
+              r,
+              () => {
+                controls.toggle?.(key);
+                remember(sample?.(true));
+                ui.invalidate();
+              },
+              { disabled: !controls.toggle, accent: overlay ? on : !on },
+            );
+          });
+        };
+        drawGroup(features, "RENDER FEATURES", top, false);
+        drawGroup(overlays, "DEBUG OVERLAYS", top + 165, true);
+        const reset = { x: viewport.x, y: top + 269, w: viewport.w, h: 28 };
+        if (
+          reset.y >= viewport.y &&
+          reset.y + reset.h <= viewport.y + viewport.h
+        )
+          ui.button(
+            "diagnostics-reset",
+            "Reset visuals",
+            reset,
+            () => {
+              controls.reset?.();
+              remember(sample?.(true));
+              ui.invalidate();
+            },
+            {
+              disabled:
+                !controls.reset ||
+                (disabled().length === 0 &&
+                  !overlays.some(([key]) => enabled[key] === true)),
+            },
+          );
+        let y = top + 310;
+        for (const line of visualLines) {
+          const count = Math.max(20, Math.floor(viewport.w / 5.8));
+          const words = line.split(" ");
+          let current = "";
+          for (const word of words) {
+            if (current && (current + " " + word).length > count) {
+              ui.text(current, viewport.x, y, 10, palette.muted, viewport.w);
+              y += 16;
+              current = "";
+            }
+            current += (current ? " " : "") + word;
+          }
+          if (current) {
+            ui.text(current, viewport.x, y, 10, palette.muted, viewport.w);
+            y += 16;
+          }
+        }
+      } else {
+        rows.forEach(([label, value], i) => {
+          const y = viewport.y + i * 30 - window.scroll;
+          ui.text(label, viewport.x, y, 13, palette.muted, viewport.w * 0.56);
+          ui.text(
+            value,
+            viewport.x + viewport.w * 0.57,
+            y,
+            14,
+            i === 0 ? palette.blue : palette.text,
+            viewport.w * 0.43,
+          );
+        });
         ui.text(
-          value,
-          viewport.x + viewport.w * 0.57,
-          y,
-          14,
-          i === 0 ? palette.blue : palette.text,
-          viewport.w * 0.43,
+          "Measured locally · updated twice per second",
+          viewport.x,
+          viewport.y + rows.length * 30 + 14 - window.scroll,
+          11,
+          palette.muted,
+          viewport.w,
         );
-      });
-      ui.text(
-        "Measured locally · updated twice per second",
-        viewport.x,
-        viewport.y + rows.length * 30 + 14 - window.scroll,
-        11,
-        palette.muted,
-        viewport.w,
-      );
+      }
       ui.ctx.restore();
       if (window.limit) {
         const x = r.x + r.w - 23;
         ui.button(
           "diagnostics-up",
           "↑",
-          { x, y: r.y + 52, w: 18, h: 23 },
+          { x, y: viewport.y, w: 18, h: 23 },
           () => {
             window.scroll = Math.max(0, window.scroll - 90);
             ui.invalidate();

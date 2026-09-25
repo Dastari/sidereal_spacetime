@@ -22,38 +22,22 @@ const body = (id: string, x = 0, more: Partial<RigidBody> = {}): RigidBody => ({
 test("bounds contain complete rotating offset hull and translation at either coordinate extreme", () => {
   for (const x of [-1e9, 0, 1e9])
     for (const heading of [0, 0.3, Math.PI / 2, Math.PI])
-      for (const omega of [-400, -12, 0, 12, 400])
-        for (const lateralOffset of [-8, 0, 8]) {
-          const b = body("a", x, {
-            y: -x,
-            heading,
-            omega,
-            vx: 3000,
-            vy: -1500,
-            lateralOffset,
-          });
-          const dt = 1 / 60,
-            box = sweptCapsuleBounds(b, dt);
-          for (let i = 0; i <= 32; i++)
-            for (const s of [-1, 0, 1]) {
-              const t = (dt * i) / 32,
-                along = b.longitudinalOffset! + s * b.halfLength;
-              const px =
-                b.x +
-                b.vx * t -
-                Math.sin(heading + omega * t) * along +
-                Math.cos(heading + omega * t) * lateralOffset;
-              const py =
-                b.y +
-                b.vy * t +
-                Math.cos(heading + omega * t) * along +
-                Math.sin(heading + omega * t) * lateralOffset;
-              expect(px - b.radius).toBeGreaterThanOrEqual(box.minX);
-              expect(px + b.radius).toBeLessThanOrEqual(box.maxX);
-              expect(py - b.radius).toBeGreaterThanOrEqual(box.minY);
-              expect(py + b.radius).toBeLessThanOrEqual(box.maxY);
-            }
-        }
+      for (const omega of [-400, -12, 0, 12, 400]) {
+        const b = body("a", x, { y: -x, heading, omega, vx: 3000, vy: -1500 });
+        const dt = 1 / 60,
+          box = sweptCapsuleBounds(b, dt);
+        for (let i = 0; i <= 32; i++)
+          for (const s of [-1, 0, 1]) {
+            const t = (dt * i) / 32,
+              along = b.longitudinalOffset! + s * b.halfLength;
+            const px = b.x + b.vx * t - Math.sin(heading + omega * t) * along;
+            const py = b.y + b.vy * t + Math.cos(heading + omega * t) * along;
+            expect(px - b.radius).toBeGreaterThanOrEqual(box.minX);
+            expect(px + b.radius).toBeLessThanOrEqual(box.maxX);
+            expect(py - b.radius).toBeGreaterThanOrEqual(box.minY);
+            expect(py + b.radius).toBeLessThanOrEqual(box.maxY);
+          }
+      }
 });
 test("64 separated ships need zero narrow phase evaluations instead of 2016", () => {
   const ships = Array.from({ length: 64 }, (_, i) =>

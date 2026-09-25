@@ -1,10 +1,12 @@
+import { reconcileEditedFloorModels } from "./tile-geometry-edits";
+import { reconcileRoomTiles } from "./room-tiles";
+import { type FloorStamp, stampFloor } from "./floor-stamps";
 import {
   type LayoutDocument,
   type Point,
-  type Shape,
-  stampTile,
   transformPoint,
 } from "@sidereal/content/ship-layout";
+import { positiveOverlap } from "@sidereal/sim/layout-geometry";
 import { readLayout } from "@sidereal/sim/layout-validation";
 import {
   readStructuralTools,
@@ -18,7 +20,7 @@ export interface History {
 export interface ViewState {
   structuralTools?: StructuralToolSettings;
   deckId: string;
-  mode: "Structure" | "Rooms" | "Objects" | "Hull" | "Systems";
+  mode: "Structure" | "Objects" | "Hull" | "Systems";
   projection: "Top" | "Side" | "Front" | "3D";
   camera: { x: number; y: number; scale: number };
   grid: number;
@@ -151,6 +153,10 @@ export function readCheckpoint(raw: string): Checkpoint {
     ...v,
     view: {
       ...view,
+      mode: (view.mode as string) === "Rooms" ? "Structure" : view.mode,
+      projection: ["Structure", "Rooms"].includes(view.mode)
+        ? "Top"
+        : view.projection,
       layers: {
         ...view.layers,
         exteriorHull: view.layers.exteriorHull ?? true,
@@ -205,18 +211,23 @@ export function transformTiles(
       return [q[0] + pivot[0], q[1] + pivot[1]] as Point;
     }),
   }));
-  return {
-    ...doc,
-    tiles:
-      action === "copy"
-        ? [...doc.tiles, ...changed]
-        : doc.tiles.map((t) => changed.find((q) => q.id === t.id) ?? t),
-  };
+  return reconcileRoomTiles(
+    reconcileEditedFloorModels(
+      {
+        ...doc,
+        tiles:
+          action === "copy"
+            ? [...doc.tiles, ...changed]
+            : doc.tiles.map((t) => changed.find((q) => q.id === t.id) ?? t),
+      },
+      changed.map((t) => t.id),
+    ),
+  );
 }
 export function placeTiles(
   doc: LayoutDocument,
   at: Point[],
-  shape: Shape,
+  shape: FloorStamp,
   deckId: string,
   turns: number,
   mirrorX: boolean,
@@ -224,7 +235,7 @@ export function placeTiles(
   newId: () => string,
 ): LayoutDocument {
   const stamps = at.flatMap((p) => {
-    const base = stampTile(newId(), deckId, shape, p, turns),
+    const base = stampFloor(newId(), deckId, shape, p, turns),
       variants = [base];
     if (mirrorX)
       variants.push({
@@ -242,5 +253,11 @@ export function placeTiles(
       );
     return variants;
   });
-  return { ...doc, tiles: [...doc.tiles, ...stamps] };
+  // Never stamp over existing floor: the compiler would only flag the overlap
+  // and hide the native walls. Skipped stamps let the caller explain instead.
+  const existing = doc.tiles.filter((t) => t.deckId === deckId);
+  const accepted = stamps.filter(
+    (s) => !existing.some((t) => positiveOverlap(t.vertices, s.vertices)),
+  );
+  return { ...doc, tiles: [...doc.tiles, ...accepted] };
 }

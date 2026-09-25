@@ -8,6 +8,8 @@ export interface LayoutPreviewLayers {
   exteriorHull: boolean;
 }
 export interface LayoutPreviewPolicy {
+  /** Structure editing is fixed to the top orthographic working plane. */
+  lockTop?: boolean;
   layers?: Partial<LayoutPreviewLayers>;
   /** Schematic footprints/ports are drawn by the editor, not these solid meshes. */
   suppressEquipmentSolids?: boolean;

@@ -1,4 +1,3 @@
-import { markShipFlightDirty } from "./construction-flight-dirty";
 import {
   planQualifiedConstructionFlight,
   type ConstructionFlightPlan,
@@ -75,7 +74,6 @@ export function insertQualifiedFlightPlan(
     placedObjectId: c.placedObjectId,
     sourceDeviceId: c.sourceDeviceId,
     definitionId: c.definitionId,
-    definitionRevision: 1,
     kind: "computer",
     installed: c.installed,
     powered: c.powered,
@@ -89,7 +87,6 @@ export function insertQualifiedFlightPlan(
       placedObjectId: a.placedObjectId,
       sourceDeviceId: a.sourceDeviceId,
       definitionId: a.definitionId,
-      definitionRevision: 1,
       kind: "actuator",
       installed: true,
       powered: true,
@@ -109,5 +106,4 @@ export function insertQualifiedFlightPlan(
     lifecycle: plan.activation,
     revision: 1n,
   });
-  markShipFlightDirty(ctx, plan.ship.id);
 }

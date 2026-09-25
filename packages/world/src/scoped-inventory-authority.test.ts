@@ -103,7 +103,6 @@ function fixture() {
     uuid,
   );
   const db: any = {
-    constructionFlightBinding: {shipId:{find:()=>undefined}},
     constructionCargoAssembly: table("containerId", {
       by_instance: ["instanceId"],
     }),

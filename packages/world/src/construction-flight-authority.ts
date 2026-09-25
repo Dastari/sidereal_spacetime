@@ -1,4 +1,3 @@
-import { markShipFlightDirty } from "./construction-flight-dirty";
 import type { Infer, InferSchema, ReducerCtx } from "spacetimedb/server";
 import type world from "./index";
 import type * as tables from "./construction-flight-tables";
@@ -113,7 +112,6 @@ export function installConstructionFlightAuthority(
           placedObjectId: c.placedObjectId,
           sourceDeviceId: c.sourceDeviceId,
           definitionId: c.definitionId,
-          definitionRevision: 1,
           kind: "computer",
           installed: c.installed,
           powered: c.powered,
@@ -127,7 +125,6 @@ export function installConstructionFlightAuthority(
             placedObjectId: a.placedObjectId,
             sourceDeviceId: a.sourceDeviceId,
             definitionId: a.definitionId,
-            definitionRevision: 1,
             kind: "actuator",
             installed: true,
             powered: true,
@@ -149,7 +146,6 @@ export function installConstructionFlightAuthority(
           lifecycle: plan.activation,
           revision: 1n,
         });
-        markShipFlightDirty(ctx, plan.ship.id);
       },
       insertReceipt: (row) => {
         ctx.db.constructionFlightReceipt.insert({ ...row, owner: ctx.sender });

@@ -152,8 +152,6 @@ def main():
     parser.add_argument('--expected-staged-client-sha256', help='Exact reviewed staged digest; public-client-activate only')
     parser.add_argument('--module-artifact', help='Pinned compiled JS/WASM; publish-review only')
     parser.add_argument('--artifact-sha256', help='Required digest with --module-artifact')
-    parser.add_argument('--ifcs-definition', action='store_true', help='Run fixed server-event and invalid-definition smoke in an isolated module copy')
-    parser.add_argument('--ifcs-passenger', action='store_true', help='Run real IFCS two-client passenger evidence in a fresh isolated smoke database')
     parser.add_argument('--smoke-name', help='Separate named smoke database; additive publication, never reset')
     parser.add_argument('--fresh-smoke', action='store_true', help='Reserve an unused numbered fixture for a named smoke run; never reset')
     parser.add_argument('--archive', help='Private cold archive; restore-review-prepare only')
@@ -162,12 +160,6 @@ def main():
     command = args.command
     if (args.archive is not None or args.expected_sha256 is not None) and command != 'restore-review-prepare':
         parser.error('Recovery archive arguments are valid only for restore-review-prepare')
-    if args.ifcs_passenger and args.ifcs_definition:
-        parser.error('Choose one IFCS smoke variant')
-    if args.ifcs_definition and (command != 'smoke' or not args.fresh_smoke or not args.smoke_name):
-        parser.error('--ifcs-definition requires smoke --smoke-name LABEL --fresh-smoke')
-    if args.ifcs_passenger and (command != 'smoke' or not args.fresh_smoke or not args.smoke_name):
-        parser.error('--ifcs-passenger requires smoke --smoke-name LABEL --fresh-smoke')
     smoke_database = CFG['project']['database'] + '-smoke'
     if args.smoke_name is not None:
         import re
@@ -244,23 +236,16 @@ def main():
             evidence = evidence_directory(sys.modules[__name__], smoke_database)
             if evidence and command == 'smoke':
                 raise RuntimeError('Reserved fresh fixture already exists; use a new --fresh-smoke run or smoke-restart for persistence')
-        ifcs_bindings = None
         if command == 'smoke':
-            if args.ifcs_definition:
-                from ifcs_smoke_module import publish as publish_ifcs_smoke
-                ifcs_bindings = publish_ifcs_smoke(sys.modules[__name__], smoke_database, evidence)
-            else:
-                publish(smoke_database, reset=args.smoke_name is None)
+            publish(smoke_database, reset=args.smoke_name is None)
         env = os.environ.copy()
         env.update(SIDEREAL_SMOKE_URL=DB_URL, SIDEREAL_SMOKE_DATABASE=smoke_database)
         if evidence:
             env['SIDEREAL_SMOKE_EVIDENCE_DIR'] = evidence
         else:
             env.pop('SIDEREAL_SMOKE_EVIDENCE_DIR', None)
-        if ifcs_bindings:
-            env['SIDEREAL_IFCS_TEST_BINDINGS'] = ifcs_bindings
         arguments = ['--verify-restart'] if command == 'smoke-restart' else []
-        script = 'scripts/ifcs-definition-smoke.ts' if args.ifcs_definition else 'scripts/ifcs-passenger-smoke.ts' if args.ifcs_passenger else ('scripts/auth-admission-smoke.ts' if command == 'smoke-auth-admission' else 'scripts/smoke.ts')
+        script = 'scripts/auth-admission-smoke.ts' if command == 'smoke-auth-admission' else 'scripts/smoke.ts'
         run([str(ROOT/'node_modules/.bin/tsx'), script, *arguments], env=env)
     elif command == 'database-up':
         database_up(publish_module=False)

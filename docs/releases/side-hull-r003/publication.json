@@ -1,0 +1,14 @@
+{
+  "design_id": "shipyard.hull.side-armor",
+  "revision": 3,
+  "owner_quote": "Great make them live please.",
+  "kit_sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+  "editable_source": "assets/source/published-side-hull/r003/side-hull-kit.blend",
+  "source_sha256": "70c57b06a2c170c28840e0566f077d3561e0b40c4f5e978d36940273ceec1abd",
+  "placed_parts": 18,
+  "canonical_components": 7,
+  "triangles": 33648,
+  "decals": 2,
+  "preserved_non_side-hull_parts": 244,
+  "archive": "assets/source/archive/pre-side-hull-r003-2026-09-09"
+}

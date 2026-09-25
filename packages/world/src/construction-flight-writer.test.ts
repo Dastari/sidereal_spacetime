@@ -1,5 +1,4 @@
-vi.mock("spacetimedb/server",()=>({Range:class{}}));
-import { expect, test, vi } from "vitest";
+import { expect, test } from "vitest";
 import { Identity } from "spacetimedb";
 import { planWayfarerStarter } from "@sidereal/sim/wayfarer-starter";
 import { insertQualifiedFlightPlan } from "./construction-flight-writer";
@@ -37,7 +36,6 @@ function setup() {
       ["constructionFlightStation", "stationId"],
       ["constructionFlightFitting", "id"],
       ["constructionFlightBinding", "shipId"],
-      ["constructionFlightDirty", "shipId"],
       ["inventoryItem", "id"],
       ["inventoryContainer", "id"],
       ["interactionObject", "id"],
@@ -54,7 +52,7 @@ function setup() {
     name: plan.instance.document.layout.name,
   });
   return {
-    ctx: { sender, db, timestamp: {microsSinceUnixEpoch:1n} } as unknown as ConstructionFlightContext,
+    ctx: { sender, db } as unknown as ConstructionFlightContext,
     plan: plan.flight,
     rows,
   };

@@ -59,6 +59,17 @@ export class CanvasUI {
     moved?: boolean;
   };
   private pointer = { x: -1, y: -1 };
+  private worldCursor = "default";
+  setWorldCursor(cursor: string) {
+    this.worldCursor = cursor;
+    this.updateCursor();
+  }
+  private updateCursor() {
+    const hit = [...this.hits].reverse().find((h) => contains(h.rect, this.pointer.x, this.pointer.y));
+    this.canvas.style.cursor = hit?.disabled ? "not-allowed"
+      : hit?.edit ? "text" : hit?.drag ? "move" : hit ? "pointer"
+      : this.pointerBlocked() ? "default" : this.worldCursor;
+  }
   pointerPosition() {
     return this.pointer ?? { x: -1, y: -1 };
   }
@@ -183,15 +194,7 @@ export class CanvasUI {
       .reverse()
       .find((h) => contains(h.rect, this.pointer.x, this.pointer.y));
     this.hover = hit?.id ?? "";
-    this.canvas.style.cursor = hit?.disabled
-      ? "not-allowed"
-      : hit?.edit
-        ? "text"
-        : hit?.drag
-          ? "move"
-          : hit
-            ? "pointer"
-            : "default";
+    this.updateCursor();
     if (this.active) {
       e.preventDefault();
       e.stopImmediatePropagation();

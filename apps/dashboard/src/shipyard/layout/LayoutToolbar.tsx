@@ -79,40 +79,44 @@ export function LayoutToolbar({
         active={tool === "pan"}
       />
       <span className="layout-toolbar-divider" />
-      <Action
-        label="Rotate 90° (R)"
-        icon={RotateCw}
-        onClick={() => onAction("rotate")}
-        disabled={blocked}
-      />
-      <Action
-        label="Mirror X (F)"
-        icon={FlipHorizontal}
-        onClick={() => onAction("mirror-x")}
-        disabled={blocked || !hasSelection}
-      />
-      <Action
-        label="Mirror Y (Shift+F)"
-        icon={FlipVertical}
-        onClick={() => onAction("mirror-y")}
-        disabled={blocked || !hasSelection}
-      />
-      <Action
-        label="Copy (Ctrl+D)"
-        icon={Copy}
-        onClick={() => onAction("copy")}
-        disabled={blocked || !hasSelection}
-      />
-      <Action
-        label={
-          partitionSelected
-            ? "Delete partition and its openings"
-            : "Delete selection"
-        }
-        icon={Trash2}
-        onClick={() => onAction("remove")}
-        disabled={blocked || !hasSelection}
-      />
+      {hasSelection && (
+        <>
+          <Action
+            label="Rotate 90° (R)"
+            icon={RotateCw}
+            onClick={() => onAction("rotate")}
+            disabled={blocked}
+          />
+          <Action
+            label="Mirror X (F)"
+            icon={FlipHorizontal}
+            onClick={() => onAction("mirror-x")}
+            disabled={blocked || !hasSelection}
+          />
+          <Action
+            label="Mirror Y (Shift+F)"
+            icon={FlipVertical}
+            onClick={() => onAction("mirror-y")}
+            disabled={blocked || !hasSelection}
+          />
+          <Action
+            label="Copy (Ctrl+D)"
+            icon={Copy}
+            onClick={() => onAction("copy")}
+            disabled={blocked || !hasSelection}
+          />
+          <Action
+            label={
+              partitionSelected
+                ? "Delete partition and its openings"
+                : "Delete selection"
+            }
+            icon={Trash2}
+            onClick={() => onAction("remove")}
+            disabled={blocked || !hasSelection}
+          />
+        </>
+      )}
       <span className="layout-toolbar-divider" />
       <Action label="Fit floorplan" icon={Focus} onClick={onFit} />
       <button aria-label="Zoom out" onClick={() => onZoom("out")}>

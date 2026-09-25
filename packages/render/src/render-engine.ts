@@ -20,7 +20,7 @@ export async function chooseRenderEngine(requested: RenderBackend, factories: Re
 }
 export function createRenderEngine(canvas: HTMLCanvasElement, requested: RenderBackend) {
   return chooseRenderEngine(requested, {
-    webgl: () => new Engine(canvas, true, {preserveDrawingBuffer:true,stencil:true}),
+    webgl: () => new Engine(canvas, true, {preserveDrawingBuffer:true,stencil:true,useLargeWorldRendering:true}),
     webgpu: async () => (await import("./webgpu-backend")).createWebGPUEngine(canvas),
   });
 }

@@ -16,7 +16,7 @@ export function ShipSummary({
       <dl>
         <dt>Type</dt>
         <dd>{doc.kind === "station-module" ? "Station module" : "Ship"}</dd>
-        <dt>Authored decks</dt>
+        <dt>Decks</dt>
         <dd>{doc.decks.length}</dd>
         <dt>Floor modules</dt>
         <dd>{doc.tiles.length}</dd>
@@ -43,10 +43,6 @@ export function ShipSummary({
           : errors
             ? `${errors} design errors. Review in Structure → Validation.`
             : "No floor topology errors."}
-      </p>
-      <p className="layout-note">
-        Local design draft. System performance and live installation require
-        separate validation.
       </p>
     </section>
   );

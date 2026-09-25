@@ -35,8 +35,6 @@ export const constructionFlightFitting = table(
     powered: t.bool(),
     availability: t.f64(),
     revision: t.u64(),
-    // Appended with a default so existing installed rows migrate additively.
-    definitionRevision: t.u32().default(1),
   },
 );
 export const constructionFlightStation = table(
@@ -61,37 +59,4 @@ export const constructionFlightReceipt = table(
     stationId: t.string(),
     revision: t.u64(),
   },
-);
-
-/** Accepted physical inputs; these private aggregates never grant control. */
-export const constructionFlightCompiled = table(
-  { name: "construction_flight_compiled", public: false },
-  {
-    shipId: t.string().primaryKey(),
-    revision: t.u64(),
-    inputHash: t.string(),
-    definitionHash: t.string(),
-    massKg: t.f64(),
-    centerX: t.f64(),
-    centerY: t.f64(),
-    inertiaKgM2: t.f64(),
-    envelopeJson: t.string(),
-    actuatorsJson: t.string(),
-    computersJson: t.string(),
-    hullJson: t.string(),
-    contributionsJson: t.string(),
-    status: t.string(),
-    reason: t.string(),
-  },
-);
-/** First dirty revision is retained while pending, preventing starvation. */
-export const constructionFlightDirty = table(
-  {
-    name: "construction_flight_dirty",
-    public: false,
-    indexes: [
-      { accessor: "by_revision", algorithm: "btree", columns: ["revision"] },
-    ],
-  },
-  { shipId: t.string().primaryKey(), revision: t.u64() },
 );

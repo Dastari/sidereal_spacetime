@@ -1,15 +1,11 @@
-import physicalSource from "../../content/src/wayfarer-rebuild-r002.json";
-import { wayfarerFlightInput } from "../../content/src/wayfarer-flight-definition";
-import { compileFlightDefinition } from "../../sim/src/flight-definition";
 import { expect, test, vi } from "vitest";
-vi.mock("spacetimedb/server",()=>({Range:class{}}));
 vi.mock("./auth", () => ({
   requireGame: (ctx: { live: boolean }) => {
     if (!ctx.live) throw Error("Live game required");
   },
 }));
 import { setConstructionEnginePower } from "./construction-device-power";
-import { WAYFARER_REBUILD_SHA256 } from "../../sim/src/wayfarer-rebuild-contract";
+import { CURRENT_WAYFARER_STARTER } from "../../content/src/wayfarer-current-starter";
 import { LAB_FLIGHT_ACTUATORS } from "../../content/src/flight";
 import { resolveShipFlightDefinition } from "./construction-flight-resolver";
 import {
@@ -34,7 +30,7 @@ function fixture() {
     instanceRevision: 1n,
     revision: 1n,
     lifecycle: "active",
-    blueprintSha256: WAYFARER_REBUILD_SHA256,
+    blueprintSha256: CURRENT_WAYFARER_STARTER.sha256,
   };
   const fittings = LAB_FLIGHT_ACTUATORS.map((a) => ({
     id: a.id,
@@ -42,7 +38,6 @@ function fixture() {
     placedObjectId: `placed-${a.id}`,
     sourceDeviceId: a.id,
     definitionId: a.definitionId,
-    definitionRevision: 1,
     kind: "actuator",
     installed: true,
     powered: true,
@@ -55,26 +50,27 @@ function fixture() {
     placedObjectId: "computer",
     sourceDeviceId: LAB_FLIGHT_COMPUTER.id,
     definitionId: LAB_FLIGHT_COMPUTER.definitionId,
-    definitionRevision: 1,
     kind: "computer",
     installed: true,
     powered: true,
     availability: 1,
     revision: 1n,
   });
-  const physicalDocument=structuredClone(physicalSource);
-  for (const p of physicalDocument.layout.assembly.parts) {
-    const fitting=fittings.find(f=>f.sourceDeviceId===p.id);
-    if(fitting) p.id=fitting.placedObjectId;
-    if(p.assetId==="part-d9f37a5f7ea6e8d13254") p.id="computer";
-    if(p.assetId===WAYFARER_REACTOR_ASSET_ID) p.id="reactor";
-  }
   const instance = {
     id: "ship",
     owner,
     revision: 1n,
     blueprintSha256: binding.blueprintSha256,
-    documentJson: JSON.stringify(physicalDocument),
+    documentJson: JSON.stringify({
+      layout: {
+        assembly: {
+          parts: [
+            { id: "reactor", assetId: WAYFARER_REACTOR_ASSET_ID },
+            ...fittings.map((f) => ({ id: f.placedObjectId })),
+          ],
+        },
+      },
+    }),
     idMapJson: JSON.stringify({
       objects: [
         { sourceId: "room-engineering", instanceId: "reactor" },
@@ -88,10 +84,8 @@ function fixture() {
   const receipts = new Map<string, any>();
   const ctx: any = {
     sender: owner,
-    timestamp:{microsSinceUnixEpoch:1n},
     live: true,
     db: {
-      constructionFlightDirty:{shipId:{find:()=>undefined},insert:()=>{}},
       constructionFlightBinding: {
         shipId: {
           find: () => binding,
@@ -179,13 +173,6 @@ test("the normal flight resolver consumes the authoritative circuit gate", () =>
         constructionInstanceExists: () => true,
         currentInstanceRevision: () => 1n,
         fittings: () => f.fittings,
-        dirty: () => false,
-        compiled: () => {
-          const input=wayfarerFlightInput(JSON.parse(f.instance.documentJson),{variant:"r002"},{fittings:f.fittings.map(({id,placedObjectId,definitionId,definitionRevision,installed,powered,availability})=>({id,placedObjectId,definitionId,definitionRevision,installed,powered,availability}))});
-          const c=compileFlightDefinition(input);
-          if(c.status!=="ready")throw Error(c.reason);
-          return {shipId:"ship",revision:1n,inputHash:c.inputHash,definitionHash:c.definitionHash,...c.mass,envelopeJson:JSON.stringify(c.envelope),actuatorsJson:JSON.stringify(c.actuators),computersJson:JSON.stringify(c.computers),hullJson:JSON.stringify(c.hull),contributionsJson:JSON.stringify(c.contributions),status:"ready",reason:""};
-        },
       },
       "ship",
     );

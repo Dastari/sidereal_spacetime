@@ -1,7 +1,13 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import type { PartCatalog } from "@sidereal/content/assembly";
-import type { LayoutDocument } from "@sidereal/content/ship-layout";
+import {
+  emptyLayout,
+  transformPoint,
+  type LayoutDocument,
+  type Point,
+} from "@sidereal/content/ship-layout";
+import { canonicalPolygon } from "@sidereal/sim/layout-geometry";
 import { PINNED_FLOOR_KIT } from "@sidereal/sim/construction-transactions";
 import { layoutNativeFloors } from "./layout-native-floors";
 const catalog = JSON.parse(
@@ -17,6 +23,55 @@ const manifest = JSON.parse(
   readFileSync("assets/runtime/assembly/floor-manifest.json", "utf8"),
 );
 describe("native semantic floor preview", () => {
+  it("renders all catalogue footprints through every rotation and mirror without losing exact surface alignment", () => {
+    for (const shape of PINNED_FLOOR_KIT.parts)
+      for (const quarterTurns of shape.quarterTurns)
+        for (const mirrorX of [false, true])
+          for (const mirrorY of [false, true]) {
+            const d = emptyLayout("catalogue-review", "deck");
+            d.decks[0].elevation = 112;
+            const vertices = shape.footprint.map((point): Point => {
+              const [x, y] = transformPoint(point, quarterTurns);
+              return [96 + (mirrorX ? -x : x), -160 + (mirrorY ? -y : y)];
+            });
+            d.tiles.push({
+              id: shape.id,
+              deckId: "deck",
+              shape: "polygon",
+              revision: "lattice-shapes-2",
+              material: "native",
+              vertices,
+            });
+            const before = JSON.stringify(d);
+            const actual = layoutNativeFloors(d, catalog, "deck");
+            const label = `${shape.id} rotation ${quarterTurns} mirror ${mirrorX}/${mirrorY}`;
+            expect(actual.unmatched, label).toEqual([]);
+            expect(actual.parts, label).toHaveLength(1);
+            const placed = actual.parts[0];
+            const selected = PINNED_FLOOR_KIT.parts.find(
+              (p) => p.native.assetId === placed.assetId,
+            )!;
+            // These exact delivered floor sources use the nominal lattice frame.
+            expect(selected.native.sourceToNominal).toEqual({
+              translation: [0, 0, 0],
+              quarterTurns: 0,
+              reflected: false,
+            });
+            const rendered = selected.footprint.map((p): Point => {
+              const [x, y] = transformPoint(
+                p,
+                Math.round(placed.rotation / (Math.PI / 2)),
+                placed.flipped,
+              );
+              return [x + placed.position[0] * 32, y + placed.position[1] * 32];
+            });
+            expect(canonicalPolygon(rendered), label).toEqual(
+              canonicalPolygon(vertices),
+            );
+            expect(placed.position[2], label).toBe(3.5);
+            expect(JSON.stringify(d)).toBe(before);
+          }
+  });
   it("matches all 51 source placements including diagonal source offsets without mutating the draft", () => {
     const before = JSON.stringify(doc),
       actual = layoutNativeFloors(doc, catalog, doc.playableDeckId);

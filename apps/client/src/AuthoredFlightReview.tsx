@@ -1,4 +1,4 @@
-import { QUALIFIED_FLIGHT_PREVIEW_SHA256 } from "./construction-flight-presentation";
+import { supportsAuthoredFlightPresentation } from "./construction-flight-presentation";
 import type { DbConnection } from "@sidereal/net";
 import { createOperationId } from "./operation-id";
 
@@ -25,8 +25,9 @@ export function AuthoredFlightReview({
   const act = (action: () => Promise<unknown>) =>
     void action().catch((error) => onError(String(error)));
   // Display pin only. Installation independently reconstructs and validates it.
-  const qualified =
-    instance?.blueprintSha256 === QUALIFIED_FLIGHT_PREVIEW_SHA256;
+  const qualified = supportsAuthoredFlightPresentation(
+    instance?.blueprintSha256,
+  );
   if (!visit || (!flight && !qualified)) return null;
   return (
     <section aria-label="Authored ship flight review">

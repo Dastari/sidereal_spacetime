@@ -1,4 +1,13 @@
-import { setMeshRole } from './mesh-roles';
+import { planWayfarerExteriorGame, type WayfarerExteriorDocument } from "@sidereal/sim/wayfarer-exterior-qualification";
+import { planWayfarerRebuildGame } from "@sidereal/sim/wayfarer-rebuild-game";
+import { INSET_VISUAL_PARTS } from "./inset-visual-registry";
+import { createLayoutFloorSlabs } from "./layout-floor-slabs";
+import { CONSTRUCTION_INSET_VISUAL_PIN } from "@sidereal/content/construction-inset-visuals";
+import { planLayoutInsetVisuals } from "./layout-inset-visual-plan";
+import { loadInsetNativeVisuals } from "./inset-native-visuals";
+import { createInsetWallCutaway } from "./inset-wall-cutaway";
+import { createEquipmentLighting } from "./equipment-lighting";
+import { setMeshRole } from "./mesh-roles";
 import type { RefitAttachmentVisual } from "./construction-refit-attachments";
 import {
   bindNativeAirlockPlan,
@@ -126,7 +135,11 @@ export async function loadConstructionInstance(
   const catalog = (await response.json()) as {
     entries: { asset: PartAsset }[];
   };
-  const requested = document.floors.filter((p) => p.deckId === input.deckId);
+  const shapedFloors =
+    document.layout.structure?.schema === "sidereal.layout-structure.v2";
+  const requested = shapedFloors
+    ? []
+    : document.floors.filter((p) => p.deckId === input.deckId);
   const assets = requested.map((p) => {
     const nominal = PINNED_FLOOR_KIT.parts.find((n) => n.id === p.partId)!;
     const asset = catalog.entries.find(
@@ -186,6 +199,27 @@ export async function loadConstructionInstance(
     }
     return result;
   });
+  const slabs = shapedFloors ? createLayoutFloorSlabs(scene) : undefined;
+  const slabIssues =
+    slabs?.update({ document: document.layout, deckId: input.deckId }, true) ??
+    [];
+  if (slabIssues.length) {
+    slabs?.dispose();
+    throw Error(slabIssues.join("; "));
+  }
+  const slabPlacements = (slabs?.meshes ?? []).map((mesh) => {
+    mesh.parent = parent;
+    mesh.isPickable = true;
+    mesh.metadata = {
+      ...mesh.metadata,
+      instanceId: input.instanceId,
+      deckId: input.deckId,
+      category: "floor",
+    };
+    const lighting = createEquipmentLighting(scene, mesh, []);
+    lighting.setMeshes([mesh]);
+    return { node: mesh, meshes: [mesh], lighting };
+  });
   const authored = await loadConstructionAuthoredAssembly(
     scene,
     parent,
@@ -204,6 +238,71 @@ export async function loadConstructionInstance(
   const perimeter = compileLayout(document.layout).walls.filter(
     (w) => w.deckId === input.deckId && w.source === "perimeter",
   );
+  const isInset = document.boundaryKit?.id === CONSTRUCTION_INSET_VISUAL_PIN.id;
+  const rebuilt = document.wayfarerExterior
+    ? planWayfarerExteriorGame(document as WayfarerExteriorDocument, { shipId: input.instanceId })
+    : document.wayfarerRebuild
+    ? planWayfarerRebuildGame(document)
+    : undefined;
+  const insetPlan = rebuilt
+    ? {
+        requests: rebuilt.nativeVisualRequests,
+        issues: [] as { message: string }[],
+      }
+    : isInset
+      ? planLayoutInsetVisuals({
+          document: document.layout,
+          compiled: compileLayout(document.layout),
+          deckId: input.deckId,
+        })
+      : undefined;
+  if (insetPlan?.issues.length)
+    throw Error(insetPlan.issues.map((i) => i.message).join("; "));
+  const inset = insetPlan
+    ? await loadInsetNativeVisuals(
+        scene,
+        parent,
+        insetPlan.requests.filter(
+          (request) =>
+            !shapedFloors ||
+            INSET_VISUAL_PARTS.find((part) => part.key === request.key)
+              ?.kind !== "floor",
+        ),
+      )
+    : undefined;
+  const insetPlacements = (inset?.roots ?? []).map((node) => {
+    node.metadata = {
+      ...node.metadata,
+      instanceId: input.instanceId,
+      deckId: input.deckId,
+      authoringPreview: false,
+      category: node.metadata.role,
+      constructionBoundary: node.metadata.role === "wall",
+      damageReady: false,
+    };
+    const meshes = inset!.meshes.filter((m) => m.parent === node);
+    for (const mesh of meshes) {
+      mesh.metadata = { ...node.metadata };
+      mesh.isPickable = true;
+    }
+    const lighting = createEquipmentLighting(scene, node, []);
+    lighting.setMeshes(meshes);
+    return { node, meshes, lighting };
+  });
+  for (const mesh of inset?.meshes ?? []) {
+    if (!mesh.metadata?.nativeBatch) continue;
+    mesh.metadata = {
+      ...mesh.metadata,
+      instanceId: input.instanceId,
+      deckId: input.deckId,
+      category: mesh.metadata.role,
+      authoringPreview: false,
+    };
+    mesh.isPickable = true;
+  }
+  const insetCutaway = inset
+    ? createInsetWallCutaway(scene, parent, inset)
+    : undefined;
   const familyPlan =
     document.boundaryKit?.revision === "r004"
       ? planPinnedBoundaryFamily(document.layout, input.deckId)
@@ -240,7 +339,7 @@ export async function loadConstructionInstance(
           parts: CONSTRUCTION_BOUNDARY_FAMILY_INTERFACES.parts,
         },
       )
-    : document.boundaryKit
+    : document.boundaryKit && !isInset
       ? await loadConstructionBoundaries(
           scene,
           parent,
@@ -277,7 +376,7 @@ export async function loadConstructionInstance(
     perimeterHalfWidthM: 0,
     partitionHalfWidthM: 0,
   });
-  for (const wall of boundaries || authored
+  for (const wall of boundaries || authored || inset
     ? []
     : [...collision.walls, ...collision.openings]) {
     const height = deck.elevation / 32 + 0.21;
@@ -304,12 +403,16 @@ export async function loadConstructionInstance(
     },
     placements: [
       ...placements,
+      ...slabPlacements,
+      ...insetPlacements,
       ...(authored?.placements ?? []),
       ...(boundaries?.placements ?? []),
       ...(roofs?.placements ?? []),
     ],
     meshes: [
       ...placements.flatMap((p) => p.meshes),
+      ...(slabs?.meshes ?? []),
+      ...(inset?.meshes ?? []),
       ...(authored?.meshes ?? []),
       ...(boundaries?.meshes ?? []),
       ...(roofs?.meshes ?? []),
@@ -317,11 +420,18 @@ export async function loadConstructionInstance(
     setDoors: boundaries?.setDoors ?? (() => {}),
     setView(cameraPosition: Vector3, interior: boolean) {
       boundaries?.setView(cameraPosition, interior);
+      for (const node of inset?.roots ?? [])
+        if (node.metadata.role === "roof") node.setEnabled(!interior);
+      insetCutaway?.update(cameraPosition, interior);
       roofs?.setVisible(!interior);
       authored?.setView(cameraPosition, interior);
     },
     dispose() {
       authored?.dispose();
+      for (const p of slabPlacements) p.lighting.dispose();
+      slabs?.dispose();
+      for (const p of insetPlacements) p.lighting.dispose();
+      inset?.dispose();
     },
     walkingElevation:
       deck.elevation / 32 + PINNED_FLOOR_KIT.datums.floorTop / 32,

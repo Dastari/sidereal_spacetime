@@ -1,8 +1,10 @@
+import type { SpaceRegion } from "@sidereal/sim/space-background";
 import { GameLoadingScreen } from "./GameLoadingScreen";
+import { ShipSystemsPanel } from "./ShipSystemsPanel";
 import { ShipRefitPanel } from "./ShipRefitPanel";
 import { MountedFuelPanel } from "./MountedFuelPanel";
 import {
-  QUALIFIED_FLIGHT_PREVIEW_SHA256,
+  supportsAuthoredFlightPresentation,
   authoredFlightPresentation,
   authoredExhaustTelemetry,
 } from "./construction-flight-presentation";
@@ -20,6 +22,7 @@ import {
 } from "./shared-body-presentation";
 import { constructionInspectionCatalog } from "./construction-inspection";
 import { constructionPresentation } from "./construction-presentation";
+import { groundItemsForScene } from "./ground-items";
 import { createMovementControl } from "./movement-control";
 import { createIntentTransmitter } from "./intent-transmitter";
 import { LAB_STORAGE_FIXTURES } from "../../../packages/content/src/storage-fixtures";
@@ -105,9 +108,7 @@ export default function App({
     [error, setError] = useState("");
   const [revision, refresh] = useState(0),
     [interior, setInterior] = useState(true);
-  const [vistaId, setVistaId] = useState(
-    () => localStorage.getItem("sidereal.vista") ?? DEFAULT_SPACE_VISTA,
-  );
+  const [vistaId, setVistaId] = useState(() => DEFAULT_SPACE_VISTA);
   const [reducedMotion, setReducedMotion] = useState(
     () => matchMedia("(prefers-reduced-motion: reduce)").matches,
   );
@@ -196,6 +197,50 @@ export default function App({
     session.current?.authenticate(auth);
   }, [auth?.token]);
   const c = connection.current;
+  const systemScape = c
+    ? [...c.db.admittedSystemScapes.iter()].find(
+        (s) => s.id === sharedAdmission?.systemId,
+      )
+    : undefined;
+  useEffect(() => {
+    setVistaId(systemScape?.backgroundId ?? DEFAULT_SPACE_VISTA);
+  }, [systemScape?.backgroundId]);
+  const activeSpaceRegion: SpaceRegion | undefined = systemScape?.regionsJson
+    ? JSON.parse(systemScape.regionsJson)
+    : undefined;
+  const shipZones =
+    c && sharedAdmission
+      ? c.db.ownShipZones.shipId.find(sharedAdmission.shipId)
+      : undefined;
+  const zoneNames: string[] = shipZones
+    ? JSON.parse(shipZones.activeJson).map(
+        (id: string) =>
+          activeSpaceRegion?.zones?.find((z) => z.id === id)?.name ??
+          (id === sharedAdmission?.systemId ? "System" : id),
+      )
+    : [];
+  const fieldBodies = () =>
+    connection.current
+      ? [...connection.current.db.nearbyFieldAsteroids.iter()].map((r) => ({
+          id: r.id,
+          key: r.id,
+          shipId: "",
+          kind: "asteroid",
+          appearance: "stone",
+          x: r.x,
+          y: r.y,
+          height: r.height,
+          radius: r.radius,
+          seed: r.seed,
+          vx: 0,
+          vy: 0,
+          heading: 0,
+          omega: 0,
+          massKg: 0,
+          tick: 0n,
+        }))
+      : [];
+
   const ownedActors = c ? [...c.db.ownCharacters.iter()] : [];
   const actor = (
     sharedAdmission
@@ -744,7 +789,13 @@ export default function App({
                       ?.shipId ?? localShipId.current,
                   bodies: (nowMs) =>
                     sharedPresentation.store.getSnapshot().admission.length
-                      ? sharedBodyPresentation(sharedPresentation.store, nowMs)
+                      ? [
+                          ...sharedBodyPresentation(
+                            sharedPresentation.store,
+                            nowMs,
+                          ),
+                          ...fieldBodies(),
+                        ]
                       : undefined,
                 }
               : undefined,
@@ -754,9 +805,9 @@ export default function App({
                   attachments: refitAttachments,
                 }
               : undefined,
-            authoredFlightEffects:
-              constructionInstance?.blueprintSha256 ===
-              QUALIFIED_FLIGHT_PREVIEW_SHA256,
+            authoredFlightEffects: supportsAuthoredFlightPresentation(
+              constructionInstance?.blueprintSha256,
+            ),
             constructionEgress: constructionScene.egress,
             onScene(scene) {
               if (disposed) return;
@@ -1074,8 +1125,8 @@ export default function App({
     sceneState.current = {
       selectedObject,
       groundItems:
-        ready && c && !constructionScene.active
-          ? [...c.db.ownGroundItems.iter()]
+        ready && c
+          ? groundItemsForScene([...c.db.ownGroundItems.iter()], constructionScene)
           : [],
       combat: {
         active: combatEnabled && !!combat?.aimActive,
@@ -1162,7 +1213,8 @@ export default function App({
           ? (Math.sign((couch ?? constructionSeat)!.localX) * Math.PI) / 2
           : 0,
       sprinting: actor?.sprinting ?? false,
-      vistaId,
+      vistaId: systemScape ? DEFAULT_SPACE_VISTA : vistaId,
+      spaceRegion: activeSpaceRegion,
       reducedMotion,
       bodies: !staticConstruction ? navigationBodies : [],
     };
@@ -1170,6 +1222,7 @@ export default function App({
     gui.current?.update(uiState);
   }, [
     revision,
+    systemScape?.regionsJson,
     interior,
     seated,
     vistaId,
@@ -1403,8 +1456,25 @@ export default function App({
               : "Sidereal game. WASD moves. Tab changes view. E uses the control seat. Escape opens the console. F6 focuses interface controls."
           }
         />
+        {shipZones && (
+          <div
+            aria-label="Current zones"
+            style={{
+              position: "absolute",
+              top: 16,
+              left: "50%",
+              transform: "translateX(-50%)",
+              color: "#b8ccdc",
+              fontSize: 12,
+              pointerEvents: "none",
+            }}
+          >
+            {zoneNames.length ? zoneNames.join(" / ") : "Deep space"}
+          </div>
+        )}
         <ConstructionReview connection={c} onError={setError} />
         <ShipRefitPanel connection={c} onError={setError} />
+        <ShipSystemsPanel connection={c} onError={setError} />
         <MountedFuelPanel
           connection={c}
           selectedObject={selectedObject}

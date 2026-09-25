@@ -104,7 +104,6 @@ function database() {
       by_owner: "owner",
       by_instance: "instanceId",
     }),
-    constructionFlightBinding: table("shipId"),
     constructionTraversal: table("characterId", {
       by_owner: "owner",
       by_instance: "instanceId",

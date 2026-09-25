@@ -53,8 +53,9 @@ it("snaps pointer proposals to actual slots, resizes an existing door atomically
     );
   expect(opened.openings[0]).toMatchObject({
     id: "door",
-    a: [64, 80],
-    b: [64, 112],
+    a: [64, 76],
+    b: [64, 116],
+    setback: 12,
   });
   const resized = changeStructuralOpening(opened, "door", { width: 64 });
   expect(resized.openings[0]).toMatchObject({

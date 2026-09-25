@@ -1,11 +1,12 @@
 import { onboardingCopy } from "./onboarding-copy";
+import { COMBAT_CURSOR } from "./combat-cursor";
 import {
   drawSharedEntry,
   type SharedEntryState,
   type SharedEntryActions,
 } from "./shared-entry";
-import { drawAppearanceControls } from "./appearance-controls";
-import { drawGroundLoot } from "./ground-loot";
+import { appearanceControlsHeight, drawAppearanceControls } from "./appearance-controls";
+import { dismissGroundLootMenu, drawGroundLoot } from "./ground-loot";
 import type { GroundItemLabel } from "../../render/src/ground-items";
 import type { LocalLightLimit } from "../../render/src/local-light-budget";
 import { topHudLayout } from "./system-menu-layout";
@@ -34,6 +35,7 @@ import {
 export type { InventoryState, InventoryActions } from "./inventory";
 import {
   resolveCrewAppearance,
+  mergeCrewAppearance,
   CREW_OUTFITS,
   type CrewAppearance,
 } from "../../render/src/crew/appearance";
@@ -116,8 +118,7 @@ export type GameUIActions = {
   interact?: () => void;
   diagnostics?: (enabled: boolean) => RenderDiagnostics | undefined;
   diagnosticsToggle?: (
-    key:
-      "lighting" | "equipment" | "shadows" | "glow" | "planets" | "characters",
+    key: import("./diagnostics").DebugFeature,
   ) => void;
   diagnosticsReset?: () => void;
   view: () => void;
@@ -164,7 +165,9 @@ export function createGameUI(
         label: (preset) =>
           CREW_OUTFITS[preset as keyof typeof CREW_OUTFITS]?.name ?? preset,
         select: (preset) => {
-          appearance = { outfit: preset as CrewAppearance["outfit"] };
+          appearance = mergeCrewAppearance(appearance, {
+            outfit: preset as CrewAppearance["outfit"],
+          });
           customize();
         },
       })
@@ -273,7 +276,12 @@ export function createGameUI(
         actions.groundItems?.() ?? [],
         (id) => actions.inventory?.transferItem?.(id, ""),
         state.pending,
+        {
+          equip: actions.inventory?.equipItem,
+          backpackEquipped: state.inventory?.items.some((i) => i.equipmentSlot === "back"),
+        },
       );
+    else dismissGroundLootMenu(ui);
     const nav = [
       ...(actions.combat
         ? [
@@ -723,7 +731,7 @@ export function createGameUI(
         tab === "Graphics"
           ? GRAPHICS_MENU_HEIGHT
           : tab === "Crew"
-            ? 600
+            ? appearanceControlsHeight(viewport.w)
             : tab === "Controls"
               ? 330
               : 300;
@@ -996,6 +1004,11 @@ export function createGameUI(
         palette.gold,
         w - 36,
       );
+    ui.setWorldCursor(
+      state.combat?.enabled && state.interior && !state.seated && !menu &&
+        !inventory?.isOpen() && state.status === "ready"
+        ? COMBAT_CURSOR : "default",
+    );
   };
   return {
     update(next: GameUIState) {

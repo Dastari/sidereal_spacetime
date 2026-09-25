@@ -83,6 +83,16 @@ it("scopes recovery by local identity, document and original live revision, and 
   expect(
     readCheckpoint(JSON.stringify(legacyLayers)).view.layers.pressure,
   ).toBe(false);
+  legacyLayers.view.mode = "Rooms";
+  legacyLayers.view.projection = "3D";
+  const migrated = readCheckpoint(JSON.stringify(legacyLayers));
+  expect(migrated.view.mode).toBe("Structure");
+  expect(migrated.view.projection).toBe("Top");
+  expect(migrated.view.layers).toEqual({
+    ...legacyLayers.view.layers,
+    exteriorHull: true,
+  });
+  expect(migrated.history).toEqual(c.history);
   const stale = JSON.parse(raw);
   stale.history.present.compiler = "future";
   expect(() => readCheckpoint(JSON.stringify(stale))).toThrow("Unsupported");
@@ -113,4 +123,55 @@ it("legacy bytes survive migration, history, export and refresh without editing 
     id: "part",
     assetId: "missing",
   });
+});
+
+it("refuses to stamp floor over existing floor on the same deck", () => {
+  const doc = emptyLayout("overlap-draft", "deck");
+  let n = 0;
+  const id = () => `t${n++}`;
+  const first = placeTiles(
+    doc,
+    [[0, 0]],
+    "rectangle",
+    "deck",
+    0,
+    false,
+    false,
+    id,
+  );
+  expect(first.tiles).toHaveLength(1);
+  // Same cell again: skipped. Adjacent cell: accepted. Other deck: accepted.
+  const same = placeTiles(
+    first,
+    [[0, 0]],
+    "rectangle",
+    "deck",
+    0,
+    false,
+    false,
+    id,
+  );
+  expect(same.tiles).toHaveLength(1);
+  const adjacent = placeTiles(
+    first,
+    [[64, 0]],
+    "rectangle",
+    "deck",
+    0,
+    false,
+    false,
+    id,
+  );
+  expect(adjacent.tiles).toHaveLength(2);
+  const other = placeTiles(
+    first,
+    [[0, 0]],
+    "rectangle",
+    "upper",
+    0,
+    false,
+    false,
+    id,
+  );
+  expect(other.tiles).toHaveLength(2);
 });

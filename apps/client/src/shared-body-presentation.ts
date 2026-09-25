@@ -1,5 +1,11 @@
 import type { SharedWorldStore } from "@sidereal/net";
-import { SHARED_SYSTEM_SEED } from "@sidereal/content/shared-system";
+import {
+  SHARED_SYSTEM_SEED,
+  SOLAR_SYSTEM,
+} from "@sidereal/content/shared-system";
+const displayNames = new Map(
+  SOLAR_SYSTEM.bodies.map((body) => [body.id, body.name]),
+);
 const names = new Map<string, string>(
   SHARED_SYSTEM_SEED.bodies.map((body) => [body.id, body.key]),
 );
@@ -55,9 +61,11 @@ export function bodyDestinations(
       kind,
       x,
       y,
-      name: key
-        .split("-")
-        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(" "),
+      name:
+        displayNames.get(id) ??
+        key
+          .split("-")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" "),
     }));
 }

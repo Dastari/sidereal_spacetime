@@ -1,5 +1,3 @@
-import { acceptedPassengerAccess } from "./construction-passenger-access";
-import { commitFlightCharacter } from "./construction-flight-dirty";
 import {
   ownedGameShipAccess,
   GAME_OWNED_TEMPLATE_NAMESPACE,
@@ -368,12 +366,12 @@ export function releaseConstructionSeat(
     return { handled: true, released: false };
   }
   ctx.db.couchSeat.characterId.delete(characterId);
-  commitFlightCharacter(ctx, {
+  ctx.db.character.id.update({
     ...actor,
     localX: exit[0],
     localY: exit[1],
     sprinting: false,
-  }, row => ctx.db.character.id.update(row));
+  });
   ctx.db.interactionObject.id.update({
     ...q.object,
     revision: q.object.revision + 1n,
@@ -520,12 +518,12 @@ export function interactWithConstructionObject(
         characterId: actor.id,
         objectId: args.objectId,
       });
-      commitFlightCharacter(ctx, {
+      ctx.db.character.id.update({
         ...actor,
         localX: q.definition.seatX,
         localY: q.definition.seatY,
         sprinting: false,
-      }, row => ctx.db.character.id.update(row));
+      });
       ctx.db.interactionObject.id.update({
         ...q.object,
         revision: q.object.revision + 1n,
@@ -569,20 +567,19 @@ export function constructionInteractionView(ctx: ReadContext) {
     ...ctx.db.constructionGrant.by_principal.filter(ctx.sender),
   ].filter((g) => !g.revoked && g.workspaceId === instance.workspaceId);
   const gameAccess = ownedGameShipAccess(ctx, instance.id, visit.deckId);
-  const passenger = !instance.owner.isEqual(ctx.sender) && acceptedPassengerAccess(ctx,actor.id).readInterior;
   if (
     instance.workspaceId === GAME_OWNED_TEMPLATE_NAMESPACE &&
-    !gameAccess.readInterior && !passenger
+    !gameAccess.readInterior
   )
     return [];
   if (
-    !gameAccess.readInterior && !passenger &&
+    !gameAccess.readInterior &&
     !grants.some((g) => g.capability === "draft.read")
   )
     return [];
-  const canInteract = !passenger && (
+  const canInteract =
     gameAccess.useObjects ||
-    grants.some((g) => g.capability === "instance.spawn"));
+    grants.some((g) => g.capability === "instance.spawn");
   return [
     ...ctx.db.constructionInteractionBinding.by_instance.filter(instance.id),
   ].flatMap((binding) => {

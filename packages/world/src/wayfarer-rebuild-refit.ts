@@ -1,4 +1,3 @@
-import { markShipFlightDirty } from "./construction-flight-dirty";
 import type {
   ReducerCtx,
   ViewCtx,
@@ -598,6 +597,5 @@ export function refitWayfarerRebuild(
     resultId: args.shipId,
     revision,
   });
-  markShipFlightDirty(ctx, args.shipId);
   return { shipId: args.shipId, revision, replayed: false };
 }

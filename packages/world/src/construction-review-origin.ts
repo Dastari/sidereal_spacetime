@@ -1,4 +1,3 @@
-import { commitFlightCharacter } from "./construction-flight-dirty";
 import {
   table,
   t,
@@ -192,7 +191,7 @@ export function restoreNativeReviewOrigin(ctx: Context, characterId: string) {
     )
       throw new SenderError("Original return position occupied");
   }
-  commitFlightCharacter(ctx, candidate, row => ctx.db.character.id.update(row));
+  ctx.db.character.id.update(candidate);
   ctx.db.constructionLocation.characterId.update(location);
   ctx.db.constructionReviewOrigin.characterId.delete(characterId);
   return true;

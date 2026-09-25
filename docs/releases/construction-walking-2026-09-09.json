@@ -1,0 +1,56 @@
+{
+  "schema": "sidereal.release-checkpoint.v1",
+  "date": "2026-09-09",
+  "status": "intermediate construction walking; full rebuild incomplete",
+  "world": {
+    "path": "packages/world/dist/bundle.js",
+    "sha256": "66611f5e2b102e99eb670a3ca382583aebfa661e0f404ac7edc01c601e8c470f",
+    "publication": "managed normal development database, delete-data=never"
+  },
+  "client": {
+    "path": "apps/client/dist",
+    "files": 1728,
+    "treeSha256": "87966ee1865f5b509419e850981ee743527e59c316416c4904896d251cf7c41b"
+  },
+  "dashboard": {
+    "path": "apps/dashboard/dist",
+    "files": 1764,
+    "treeSha256": "35afdfaf6eb89e308ce18ce167ad367f69298efcca98e74cfa1d4417d60c084d"
+  },
+  "checks": {
+    "aggregate": "94 files / 415 tests, typecheck and71 documents pass",
+    "build": "pass; expected chunk-size warnings",
+    "art": "pass",
+    "authoritySmoke": "isolated full smoke pass"
+  },
+  "browser": [
+    "output/playwright/shipyard-two-deck-publication.png",
+    "output/playwright/construction-authored-floor-walking.png"
+  ],
+  "scope": [
+    "dedicated authoring PKCE and explicit workspace grants",
+    "recoverable drafts and immutable SHA-pinned blueprint publication",
+    "independent server instance/deck/placement IDs",
+    "native selected-deck floors and authoritative swept walking",
+    "explicit review transit/reconnect/return preserving original character inventory"
+  ],
+  "normalData": "zero construction instances and grants seeded; existing21 characters/21 ships/117 inventory items retained after additive publication",
+  "compatibility": [
+    "construction game review is opt-in ?constructionReview=1",
+    "normal game continues existing Wayfarer path",
+    "authoring requires explicitly assigned workspace capabilities",
+    "source identity linking with construction state requires further migration support"
+  ],
+  "limitations": [
+    "second spawned instance not entered before temporary grant expiry",
+    "page reload persistence proven; construction process-restart proof pending",
+    "native walls/roofs/doors, live pressure, deck transitions, cargo/services and damage integration pending",
+    "full Wayfarer template and complete independent playable spawns pending"
+  ],
+  "recovery": [
+    "leave review through return reducer before disabling its UI",
+    "retain additive private tables and UUIDs; no reset or schema rollback that discards state",
+    "rebuild client/dashboard independently; return to prior artifact only with compatible retained views"
+  ],
+  "authorization": "owner requested full construction implementation and authorized coordinated integrations; this checkpoint grants no final art approval"
+}

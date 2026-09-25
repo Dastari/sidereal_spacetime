@@ -1,4 +1,3 @@
-import { markShipFlightDirty } from "./construction-flight-dirty";
 import { requireQualifiedPreservedFuelMount } from "@sidereal/sim/wayfarer-refit-mount";
 import type {
   Infer,
@@ -476,7 +475,6 @@ export function refitExistingWayfarer(ctx: RefitContext, args: RefitRequest) {
       placedObjectId: fitting.placedObjectId,
       sourceDeviceId: fitting.sourceDeviceId,
       definitionId: fitting.definitionId,
-      definitionRevision: 1,
       kind: fitting === f.computer ? "computer" : "actuator",
       installed: true,
       powered: true,
@@ -542,7 +540,6 @@ export function refitExistingWayfarer(ctx: RefitContext, args: RefitRequest) {
     completedMicros: ctx.timestamp.microsSinceUnixEpoch,
   };
   ctx.db.wayfarerRefitReceipt.insert(result);
-  markShipFlightDirty(ctx, instance.id);
   return result;
 }
 export function ownWayfarerRefitAttachments(ctx: RefitReadContext) {

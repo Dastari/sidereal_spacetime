@@ -253,14 +253,15 @@ function acceptedOwnerFittings(ctx: FlightViewContext) {
   if (!a || !hasAcceptedAuthoredFlight(ctx, a)) return [];
   const rows = bounded(
     ctx.db.constructionFlightFitting.by_ship.filter(a.shipId),
-    256,
+    10,
   );
   if (
     !rows ||
+    rows.length !== 10 ||
     rows.some((r) => r.shipId !== a.shipId) ||
-    new Set(rows.map((r) => r.id)).size !== rows.length ||
-    new Set(rows.map((r) => r.sourceDeviceId)).size !== rows.length ||
-    new Set(rows.map((r) => r.placedObjectId)).size !== rows.length
+    new Set(rows.map((r) => r.id)).size !== 10 ||
+    new Set(rows.map((r) => r.sourceDeviceId)).size !== 10 ||
+    new Set(rows.map((r) => r.placedObjectId)).size !== 10
   )
     return [];
   return rows;
@@ -287,46 +288,4 @@ export function ownAuthoredFlightPowerFittings(ctx: FlightViewContext) {
       powered,
     }),
   );
-}
-
-
-import type { CompiledFlightRow } from "./construction-flight-compilation";
-import type { CompiledFlightActuator } from "../../sim/src/flight-definition";
-type PhysicalViewContext = FlightViewContext & {db:{
-  constructionFlightCompiled:{shipId:Find<CompiledFlightRow>};
-  constructionFlightDirty:{shipId:Find<{shipId:string}>};
-}};
-export const authoredFlightPhysicsProjection = t.row("AuthoredFlightPhysics", {
-  shipId:t.string().primaryKey(),revision:t.u64(),status:t.string(),reason:t.string(),
-  massKg:t.f64(),centerX:t.f64(),centerY:t.f64(),inertiaKgM2:t.f64(),envelopeJson:t.string(),definitionHash:t.string(),
-});
-/** Owner-visible even before successful admission, so invalid definitions have
- * a visible reason. This is not a passenger or exterior telemetry projection. */
-export function ownAuthoredFlightPhysics(ctx:PhysicalViewContext) {
-  if(!actor(ctx))return [];
-  const bindings=bounded(ctx.db.constructionFlightBinding.by_owner.filter(ctx.sender),64);
-  if(!bindings)return [];
-  return bindings.filter(b=>b.owner.isEqual(ctx.sender)).map(b=>{
-    const c=ctx.db.constructionFlightCompiled.shipId.find(b.shipId),pending=!!ctx.db.constructionFlightDirty.shipId.find(b.shipId);
-    return {shipId:b.shipId,revision:c?.revision??0n,status:pending?"pending":c?.status??"pending",reason:pending||!c?"flight-compilation-pending":c.reason,massKg:c?.massKg??0,centerX:c?.centerX??0,centerY:c?.centerY??0,inertiaKgM2:c?.inertiaKgM2??0,envelopeJson:c?.envelopeJson??"null",definitionHash:c?.definitionHash??""};
-  });
-}
-export const authoredFlightActuatorProjection=t.row("AuthoredFlightActuator",{
-  id:t.string().primaryKey(),shipId:t.string(),placedObjectId:t.string(),
-  x:t.f64(),y:t.f64(),nozzleX:t.f64(),nozzleY:t.f64(),height:t.f64(),exhaustX:t.f64(),exhaustY:t.f64(),throttle:t.f64(),
-});
-export function ownAuthoredFlightActuators(ctx:PhysicalViewContext & {db:{actuatorOutput:{id:Find<{throttle:number}>}}}) {
-  const a=actor(ctx);
-  if(!a || !hasAcceptedAuthoredFlight(ctx,a) || ctx.db.constructionFlightDirty.shipId.find(a.shipId))return [];
-  const c=ctx.db.constructionFlightCompiled.shipId.find(a.shipId);
-  if(c?.status!=="ready")return [];
-  let actuators:CompiledFlightActuator[];
-  try{actuators=JSON.parse(c.actuatorsJson);}catch{return [];}
-  if(!Array.isArray(actuators)||actuators.length>256)return [];
-  const fittings=new Map(acceptedOwnerFittings(ctx).map(f=>[f.id,f]));
-  return actuators.filter(a=>fittings.get(a.id)?.installed).map(device=>({
-    id:device.id,shipId:a.shipId,placedObjectId:device.placedObjectId,
-    x:device.x,y:device.y,nozzleX:device.nozzleX,nozzleY:device.nozzleY,height:device.height,exhaustX:device.exhaustX,exhaustY:device.exhaustY,
-    throttle:ctx.db.actuatorOutput.id.find(a.shipId+":"+device.id)?.throttle??0,
-  }));
 }

@@ -51,7 +51,7 @@ it("rejects malformed saved tool values before replacing the existing draft", ()
     ).toThrow("Unsupported structural");
   const tools = structuralTools();
   tools.doorWidth = 64;
-  expect(DEFAULT_STRUCTURAL_TOOLS.doorWidth).toBe(32);
+  expect(DEFAULT_STRUCTURAL_TOOLS.doorWidth).toBe(40);
 });
 it("defaults the new exterior layer on for old checkpoints while rejecting malformed saved flags", () => {
   const document = emptyLayout("draft", "deck"),

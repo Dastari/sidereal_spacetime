@@ -103,7 +103,6 @@ function fixture() {
     worldAdmission: table("characterId"),
     constructionInstance: table(),
     constructionFlightBinding: table("shipId"),
-    constructionFlightDirty: table("shipId"),
     constructionFlightReview: table("characterId"),
     constructionFlightReceipt: table(),
     constructionReceipt: table(),
@@ -193,7 +192,6 @@ function fixture() {
     db,
     sender: owner,
     live: true,
-    timestamp: {microsSinceUnixEpoch:1n},
     grants: new Set(["draft.read", "instance.spawn"]),
   };
   const args = {

@@ -1,5 +1,3 @@
-import { compileShipFlight } from "./construction-flight-compilation";
-import { wayfarerFlightInput } from "../../content/src/wayfarer-flight-definition";
 import { readFileSync } from "node:fs";
 import { expect, test, vi } from "vitest";
 import { Identity } from "spacetimedb";
@@ -54,7 +52,6 @@ function table(primary = "id") {
     },
     [primary]: {
       find: (id: string) => rows.get(id),
-      delete: (id: string) => rows.delete(id),
       update: (row: any) => {
         if (!rows.has(row[primary])) throw Error("Missing row");
         rows.set(row[primary], { ...row });
@@ -100,8 +97,6 @@ function fixture() {
   );
   const db: any = {
     constructionCargoAssembly: table("containerId"),
-    instanceInventoryBinding: table("placedObjectId"),
-    character: table(),
     wayfarerRefitAttachment: table(),
     constructionInstance: table(),
     ship: table(),
@@ -111,8 +106,6 @@ function fixture() {
     inventoryContainer: table(),
     interactionObject: table(),
     constructionFlightBinding: table("shipId"),
-    constructionFlightCompiled: table("shipId"),
-    constructionFlightDirty: table("shipId"),
     constructionFlightFitting: table(),
     constructionFlightStation: table("stationId"),
     constructionFlightReceipt: table(),
@@ -133,7 +126,6 @@ function fixture() {
   const ctx: any = {
     db,
     sender: owner,
-    timestamp: {microsSinceUnixEpoch: 1n},
     newUuidV4: () => ({ toString: uuid }),
     live: true,
     grants: new Set(["draft.read", "instance.spawn"]),
@@ -153,12 +145,6 @@ function fixture() {
     currentInstanceRevision: (id: string) =>
       db.constructionInstance.id.find(id)?.revision,
     fittings: (id: string) => db.constructionFlightFitting.by_ship.filter(id),
-    compiled: (id: string) => {
-      if (!db.constructionFlightBinding.shipId.find(id)) return undefined;
-      compileShipFlight(db,id,()=>wayfarerFlightInput(p.document,{variant:"r001",identities:Object.fromEntries(Object.values(p.mappings).flatMap(rows=>rows.map((row:{sourceId:string;instanceId:string})=>[row.sourceId,row.instanceId])))},{fittings:db.constructionFlightFitting.by_ship.filter(id).map(({id,placedObjectId,definitionId,definitionRevision,installed,powered,availability}:any)=>({id,placedObjectId,definitionId,definitionRevision,installed,powered,availability}))}));
-      return db.constructionFlightCompiled.shipId.find(id);
-    },
-    dirty: () => false,
   };
   return { ctx, db, p, args, hooks, reader };
 }
@@ -197,7 +183,9 @@ test("resolver fails closed on missing bound instances and holds dormant install
   expect(resolveShipFlightDefinition(f.reader, f.p.instanceId).status).toBe(
     "invalid",
   );
-  expect(resolveShipFlightDefinition(f.reader, "original").status).toBe("invalid");
+  expect(resolveShipFlightDefinition(f.reader, "original").status).toBe(
+    "ready",
+  );
   installConstructionFlightAuthority(f.ctx, f.args, f.hooks);
   expect(resolveShipFlightDefinition(f.reader, f.p.instanceId).status).toBe(
     "dormant",
@@ -215,9 +203,8 @@ test("active resolver feeds exact approved force definitions with fresh runtime 
   expect(result.actuators).toHaveLength(9);
   result.actuators.forEach((a, i) => {
     expect(a.id).not.toBe(LAB_FLIGHT_ACTUATORS[i].id);
-    const fixture = LAB_FLIGHT_ACTUATORS.find(source=>source.id===a.sourceDeviceId)!;
-    expect(a.maxThrustN).toBe(fixture.maxThrustN);
-    expect(a.x).toBeCloseTo(fixture.x,10);
+    expect(a.maxThrustN).toBe(LAB_FLIGHT_ACTUATORS[i].maxThrustN);
+    expect(a.x).toBe(LAB_FLIGHT_ACTUATORS[i].x);
   });
   const first = result.actuators[0];
   f.db.constructionFlightFitting.id.find(first.id).powered = false;
@@ -238,6 +225,10 @@ test("refit, changed definition, missing or extra fittings never fall back to st
         f.p.instanceId,
       ).definitionSha256 = "bad"),
     (f: ReturnType<typeof fixture>) =>
+      f.db.constructionFlightFitting.rows.delete(
+        [...f.db.constructionFlightFitting.rows.keys()][0],
+      ),
+    (f: ReturnType<typeof fixture>) =>
       f.db.constructionFlightFitting.insert({
         ...f.db.constructionFlightFitting.rows.values().next().value,
         id: "extra",
@@ -251,9 +242,9 @@ test("refit, changed definition, missing or extra fittings never fall back to st
     f.db.constructionFlightBinding.shipId.find(f.p.instanceId).lifecycle =
       "active";
     mutate(f);
-    const failed=resolveShipFlightDefinition(f.reader,f.p.instanceId);
-    expect(failed.status).not.toBe("ready");
-    if(failed.status!=="invalid") expect(failed.actuators).toEqual([]);
+    expect(resolveShipFlightDefinition(f.reader, f.p.instanceId).status).toBe(
+      "invalid",
+    );
   }
 });
 
@@ -266,7 +257,6 @@ test("resolved fitting IDs drive existing IFCS solver and disabled authority pro
   const d = resolveShipFlightDefinition(f.reader, f.p.instanceId);
   if (d.status !== "ready") throw Error("Unavailable definition");
   const body = {
-    ...d.hull,
     id: f.p.instanceId,
     x: 0,
     y: 0,
@@ -276,6 +266,7 @@ test("resolved fitting IDs drive existing IFCS solver and disabled authority pro
     omega: 0,
     massKg: d.mass.massKg,
     inertia: d.mass.inertiaKgM2,
+    ...d.hull,
   };
   const control = {
     bodyId: body.id,
@@ -309,7 +300,6 @@ test("dormant installed ships retain their physical definition and cannot stall 
   expect(d.status).toBe("dormant");
   expect(d.computer.powered).toBe(false);
   const a = {
-    ...d.hull,
     id: f.p.instanceId,
     x: 0,
     y: 0,
@@ -319,6 +309,7 @@ test("dormant installed ships retain their physical definition and cannot stall 
     omega: 0,
     massKg: d.mass.massKg,
     inertia: d.mass.inertiaKgM2,
+    ...d.hull,
   };
   const b = { ...a, id: "another", x: 100, vx: 1 };
   const step = stepSystemSpace([a, b]);

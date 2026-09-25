@@ -138,9 +138,7 @@ function fixture() {
     timestamp: { microsSinceUnixEpoch: 1n },
     newUuidV4: () => `uuid-${++n}`,
     db: {
-      constructionFlightBinding: {shipId:{find:()=>undefined}},
       character: {
-        id: {find:(id:string)=>id===actor.id?actor:undefined},
         by_owner: {
           filter: (owner: string) => (owner === "owner" ? [actor] : []),
         },

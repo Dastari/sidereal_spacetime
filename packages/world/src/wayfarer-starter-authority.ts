@@ -1,6 +1,3 @@
-import { commitFlightCharacter, markShipFlightDirty } from "./construction-flight-dirty";
-import { compileShipFlight } from "./construction-flight-compilation";
-import { readConstructionFlightInput } from "./construction-flight-input";
 import {
   CURRENT_WAYFARER_STARTER,
   type WayfarerStarterTemplate,
@@ -193,7 +190,6 @@ function installStarter(
           binding.deckId !== p.instance.spawn.deckId
         )
           throw Error("Complete empty dormant starter flight required");
-        compileShipFlight(ctx.db, i.id, id => readConstructionFlightInput(ctx, id));
         const definition = resolveShipFlightDefinition(
           {
             binding: () => b,
@@ -201,13 +197,11 @@ function installStarter(
             currentInstanceRevision: () => i.revision,
             fittings: (id) =>
               ctx.db.constructionFlightFitting.by_ship.filter(id),
-            compiled: (id) => ctx.db.constructionFlightCompiled.shipId.find(id),
-            dirty: (id) => !!ctx.db.constructionFlightDirty.shipId.find(id),
           },
           i.id,
         );
         if (definition.status !== "dormant")
-          throw Error("Qualified starter flight definition required: " + definition.reason);
+          throw Error("Qualified starter flight definition required");
         qualifyPilotGeometry({
           instance: i,
           frame: constructionCollision(ctx, i, b.deckId),
@@ -234,9 +228,8 @@ function installStarter(
           connected: true,
           sprinting: false,
         };
-        if (replacement) commitFlightCharacter(ctx, characterRow, row => ctx.db.character.id.update(row));
+        if (replacement) ctx.db.character.id.update(characterRow);
         else ctx.db.character.insert(characterRow);
-        markShipFlightDirty(ctx, characterRow.shipId);
         // Permanent owned location has no review-return destination. Ownership
         // policy identifies it; a future transfer must supply real departure rules.
         ctx.db.constructionLocation.insert({

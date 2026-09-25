@@ -55,10 +55,6 @@ export const REPLACED_SHIP_TABLES = [
   "constructionFlightBinding",
   "constructionFlightFitting",
   "constructionFlightStation",
-  "constructionFlightCompiled",
-  "constructionFlightDirty",
-  "constructionFlightDamageEvent",
-  "constructionPassengerGrant",
   "wayfarerRefitAttachment",
   "constructionCargoAssembly",
   "constructionCargoGrid",
@@ -174,17 +170,6 @@ export function replacePlayerWayfarer(
     ctx.db.constructionFlightReview.characterId.find(actor.id)
   )
     throw Error("Finish temporary construction review before replacement");
-  let passengerVisits = 0;
-  for (const visit of ctx.db.constructionPassengerVisit.iter()) {
-    if (++passengerVisits > 128)
-      throw Error("Passenger replacement check budget exceeded");
-    if (
-      visit.characterId === actor.id ||
-      visit.shipId === ship.id ||
-      visit.sourceShipId === ship.id
-    )
-      throw Error("Finish passenger return before replacement");
-  }
   const entries: { table: (typeof REPLACED_SHIP_TABLES)[number]; row: Row }[] =
     [];
   for (const table of REPLACED_SHIP_TABLES) {

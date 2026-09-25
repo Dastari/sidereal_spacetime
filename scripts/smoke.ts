@@ -1,6 +1,9 @@
-import { toCenterOfMassMotion } from "../packages/sim/src/flight-frame";
-import { WAYFARER_FLIGHT_SPEED } from "../packages/content/src/physical-definitions";
 import { CURRENT_WAYFARER_STARTER } from "../packages/content/src/wayfarer-current-starter";
+import { systemMapDenialSmoke } from "./system-map-smoke";
+import {
+  LEGACY_SYSTEM_SEED,
+  solarBodyForLegacyKey,
+} from "@sidereal/content/shared-system";
 import {
   acquireNativePilot,
   nextSequence,
@@ -63,7 +66,6 @@ async function client(token?: string) {
           tables.ownStations,
           tables.ownAuthoredFlights,
           tables.ownAuthoredFlightFittings,
-          tables.ownAuthoredFlightPhysics,
           tables.ownGameShipAccess,
           tables.ownConstructionLocation,
           tables.ownEditReceipts,
@@ -292,12 +294,16 @@ if (restore) {
     const celestial = sharedBodies(a).filter((r) => r.kind === "planet");
     assert.equal(
       celestial.length,
-      11,
-      "all ten planet families plus a mixed world are admitted for observation",
+      SHARED_SYSTEM_SEED.bodies.filter((b) => b.kind === "planet").length,
+      "the current authored planet and moon chart is admitted for observation",
     );
     assert(
-      celestial.some((r) => r.appearance === "temperate-volcanic"),
-      "mixed terrain/effect preset is server-authored",
+      celestial.every((r) =>
+        SHARED_SYSTEM_SEED.bodies.some(
+          (b) => b.id === r.id && b.appearance === r.appearance,
+        ),
+      ),
+      "every celestial appearance matches its server-authored pin",
     );
     assert(
       celestial.filter((r) => Math.hypot(r.x, r.y) > 1000).length >= 8,
@@ -376,13 +382,9 @@ if (restore) {
       };
       for (let i = 0; i < 6; i++) await commandFlight(1, 1);
       const moving = [...flight.db.ownShips.iter()][0];
-      const physics = [...flight.db.ownAuthoredFlightPhysics.iter()].find(p=>p.shipId===moving.id)!;
-      assert.equal(physics.status,"ready","live physical compilation is ready");
-      const envelope = JSON.parse(physics.envelopeJson);
-      const turnLimit = Math.min(envelope.left,envelope.right) / WAYFARER_FLIGHT_SPEED.forward;
       assert(
-        Math.hypot(moving.vx, moving.vy) > 0.5 && moving.omega > turnLimit * 0.5 && moving.omega <= turnLimit + 1e-6,
-        "available engines accelerate and turn within the derived envelope",
+        Math.hypot(moving.vx, moving.vy) > 0.5 && moving.omega > 0.1,
+        "available engines accelerate and turn",
       );
       for (let i = 0; i < 45; i++) await commandFlight(0, 0);
       assert(
@@ -414,10 +416,12 @@ if (restore) {
       const expired = [...flight.db.ownShips.iter()][0];
       await new Promise((r) => setTimeout(r, 300));
       const coast = [...flight.db.ownShips.iter()][0];
-      const expiredCOM = toCenterOfMassMotion(expired, physics);
-      const coastCOM = toCenterOfMassMotion(coast, physics);
-      assert(Math.abs(coastCOM.vx-expiredCOM.vx)<1e-10, "expired control preserves COM velocity X");
-      assert(Math.abs(coastCOM.vy-expiredCOM.vy)<1e-10, "expired control preserves COM velocity Y");
+      assert.equal(
+        coast.vx,
+        expired.vx,
+        "expired control cannot continue assisted thrust",
+      );
+      assert.equal(coast.vy, expired.vy, "expired control coasts");
       assert.equal(
         coast.omega,
         expired.omega,
@@ -763,6 +767,7 @@ if (restore) {
       combatReconnect.connection.disconnect();
     }
     summary.combat_authority_energy_aim_cooldown_retry_persistence = true;
+    summary.system_map_denial = await systemMapDenialSmoke(a);
     summary.construction_authority_denials = await constructionDenialSmoke(
       a,
       b,

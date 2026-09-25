@@ -22,7 +22,6 @@ import {
 } from "./shared-world-views";
 function setup() {
   const f = fixture();
-  f.db.constructionPassengerVisit = { characterId: { find: () => undefined } };
   joinSharedSystem(f.ctx(), f.args());
   joinSharedSystem(f.ctx(2, other), f.args(2));
   const view = (sender = owner): SharedViewContext => ({ db: f.db, sender });

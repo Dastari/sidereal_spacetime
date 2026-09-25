@@ -209,23 +209,3 @@ it("tiny unassisted contacts still conserve the pair's linear momentum", () => {
   ).toBeCloseTo(a.massKg * a.vx, 15);
   expect(result.bodies.some((v) => v.vx !== 0)).toBe(true);
 });
-
-it("rolls back output telemetry together with a rejected force kick", () => {
-  const ship = body("ship", 1e9, { vx: 10 });
-  const result = stepSystemSpace([ship], [control("ship")]);
-  expect(result.reason).toBe("coordinate-bound");
-  expect(result.completedSubsteps).toBe(0);
-  expect(result.bodies).toEqual([ship]);
-  expect(result.commands).toEqual([]);
-});
-
-it("retains the last completed command sample when a later kick is rolled back", () => {
-  const ship = body("ship", 1e9 - .2, { vx: 10 });
-  const result = stepSystemSpace([ship], [control("ship", { intent: { throttle: .01, turn: 0 } })]);
-  expect(result.reason).toBe("coordinate-bound");
-  expect(result.completedSubsteps).toBe(1);
-  // One 1000 N engine on 1000 kg: committed delta-v / DT equals throttle.
-  // A later uncommitted feedback kick differs as forward speed rises.
-  expect(result.commands[0].actuators[0].throttle).toBeGreaterThan(0);
-  expect(result.commands[0].actuators[0].throttle).toBeCloseTo(result.bodies[0].vy * 60, 10);
-});

@@ -1,4 +1,4 @@
-import { setMeshRole } from './mesh-roles';
+import { setMeshRole } from "./mesh-roles";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { Matrix, Vector3, Quaternion } from "@babylonjs/core/Maths/math.vector";
@@ -22,6 +22,10 @@ import {
 import { extractStockAftBoundary } from "./remote-aft-boundary";
 import { cloneOpaqueRemoteGlass } from "./remote-exterior-glass";
 import type { Material } from "@babylonjs/core/Materials/material";
+import {
+  framedStockWayfarerPlacements,
+  FRAMED_STOCK_WAYFARER_PRESENTATION_ID,
+} from "./framed-wayfarer-stock";
 
 /** Pinned existing public stock artifacts, never a player's private assembly. */
 export const STOCK_EXTERIOR_SOURCE_PINS = Object.freeze({
@@ -57,9 +61,12 @@ export const STOCK_EXTERIOR_BASE_MESHES = Object.freeze([
 /** Legacy backing contains cabin linings and fixture geometry. Native exterior
  * panels supply the remote silhouette; never instantiate the mixed backing. */
 export const REMOTE_EXTERIOR_BASE_MESHES = STOCK_EXTERIOR_BASE_MESHES.filter(
-  (name) => name !== "GEO-walls" && !name.startsWith("GEO-cutaway-"),
+  (name) =>
+    name !== "GEO-walls" &&
+    !name.startsWith("GEO-cutaway-") &&
+    !name.startsWith("GEO-drives-"),
 );
-interface ExteriorPlacement {
+export interface ExteriorPlacement {
   id: string;
   url: string;
   sha256: string;
@@ -196,6 +203,7 @@ export async function loadRemoteShipPrototype(
   expectedAssetId: string,
 ): Promise<RemoteShipPrototype> {
   validateStockExteriorManifest(manifest, expectedAssetId);
+  const placements = framedStockWayfarerPlacements(manifest);
   if (!scene.useRightHandedSystem)
     throw Error("Remote exterior requires right-handed scene");
   const imports: ISceneLoaderAsyncResult[] = [],
@@ -221,7 +229,7 @@ export async function loadRemoteShipPrototype(
     const pins = new Map<string, string>([
       [manifest.payload.base.url, manifest.payload.base.sha256],
     ]);
-    for (const p of manifest.payload.placements) {
+    for (const p of placements) {
       if (pins.has(p.url) && pins.get(p.url) !== p.sha256)
         throw Error("Conflicting exterior source hashes");
       pins.set(p.url, p.sha256);
@@ -248,9 +256,11 @@ export async function loadRemoteShipPrototype(
       for (const light of loaded.lights ?? []) light.dispose();
       for (const group of loaded.animationGroups ?? []) group.dispose();
       for (const skeleton of loaded.skeletons ?? []) skeleton.dispose();
-      const meshes = loaded.meshes.map(m => setMeshRole(m, "remote")).filter(
-        (m): m is Mesh => m instanceof Mesh && m.getTotalVertices() > 0,
-      );
+      const meshes = loaded.meshes
+        .map((m) => setMeshRole(m, "remote"))
+        .filter(
+          (m): m is Mesh => m instanceof Mesh && m.getTotalVertices() > 0,
+        );
       for (const mesh of meshes) {
         // Babylon instances inherit this material/shadow flag from their source.
         mesh.receiveShadows = true;
@@ -287,7 +297,7 @@ export async function loadRemoteShipPrototype(
       matrices.set(boundary, matrices.get(source)!);
       base.push(boundary);
     }
-    const groups = manifest.payload.placements.map((p) => {
+    const groups = placements.map((p) => {
       const selected = sources
         .get(p.url)!
         .filter((m) => !p.nodePrefix || selector(m.name, p.nodePrefix));
@@ -324,8 +334,9 @@ export async function loadRemoteShipPrototype(
         const root = new TransformNode("remote-ship-" + shipId, scene);
         root.metadata = {
           remoteShipId: shipId,
-              role: 'remote',
+          role: "remote",
           publishedExteriorAssetId: manifest.assetId,
+          cosmeticPresentationId: FRAMED_STOCK_WAYFARER_PRESENTATION_ID,
         };
         try {
           for (const { source, matrix, placementIds } of batched.primitives) {
@@ -340,7 +351,7 @@ export async function loadRemoteShipPrototype(
             mesh.isPickable = false;
             mesh.metadata = {
               remoteShipId: shipId,
-              role: 'remote',
+              role: "remote",
               publishedExteriorAssetId: manifest.assetId,
               sourcePlacementIds: placementIds,
             };
@@ -363,7 +374,11 @@ export async function loadRemoteShipPrototype(
               p.flipped,
             )) {
               mesh.isPickable = false;
-              mesh.metadata = { ...mesh.metadata, remoteShipId: shipId, role: 'remote' };
+              mesh.metadata = {
+                ...mesh.metadata,
+                remoteShipId: shipId,
+                role: "remote",
+              };
             }
           }
           return root;

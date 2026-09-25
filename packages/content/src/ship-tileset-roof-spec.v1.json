@@ -1,0 +1,404 @@
+{
+  "schema": "sidereal.tileset-roof-request.v1",
+  "wallConvention": "sidereal.tileset-wall-convention.v1",
+  "latticePerMeter": 32,
+  "moduleUnits": 64,
+  "standardDeck": {
+    "floorThicknessUnits": 6,
+    "clearHeightUnits": 96,
+    "roofThicknessUnits": 4,
+    "serviceVoidUnits": 6,
+    "pitchUnits": 112
+  },
+  "sourceFloorInterfaces": {
+    "path": "packages/content/src/construction-floor-interfaces.json",
+    "sha256": "76f3f46c8e479106059945be0bfe23000d235d7c1731ad3d91524c3d894e1d16"
+  },
+  "sourceFrame": "Blender XY floor plane, Z up; metres; applied transforms",
+  "modelOrigin": "floor footprint origin at roof underside; no inherited legacy roof elevation",
+  "placementUndersideUnits": 102,
+  "reservationHeightUnits": 4,
+  "profiles": {
+    "bearing": "inset250-wall-cap-v1",
+    "edge": "roof-flat-4-v1",
+    "top": "roof-service-reservation-v1"
+  },
+  "exportToleranceMeters": 0.000001,
+  "tolerancePurpose": "float encoding only; exact nominal seams",
+  "shapes": [
+    {
+      "id": "square-2m",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          64,
+          64
+        ],
+        [
+          0,
+          64
+        ]
+      ],
+      "reservationZUnits": [
+        0,
+        4
+      ],
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "requires-export-validation"
+    },
+    {
+      "id": "half-2x1",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          64,
+          32
+        ],
+        [
+          0,
+          32
+        ]
+      ],
+      "reservationZUnits": [
+        0,
+        4
+      ],
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "requires-export-validation"
+    },
+    {
+      "id": "quarter-1m",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          32,
+          0
+        ],
+        [
+          32,
+          32
+        ],
+        [
+          0,
+          32
+        ]
+      ],
+      "reservationZUnits": [
+        0,
+        4
+      ],
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "requires-export-validation"
+    },
+    {
+      "id": "strip-4x1",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          128,
+          32
+        ],
+        [
+          0,
+          32
+        ]
+      ],
+      "reservationZUnits": [
+        0,
+        4
+      ],
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "requires-export-validation"
+    },
+    {
+      "id": "triangle-45",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          0,
+          64
+        ]
+      ],
+      "reservationZUnits": [
+        0,
+        4
+      ],
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "requires-export-validation"
+    },
+    {
+      "id": "triangle-long-left",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          0,
+          64
+        ]
+      ],
+      "reservationZUnits": [
+        0,
+        4
+      ],
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "requires-export-validation"
+    },
+    {
+      "id": "triangle-long-right",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          128,
+          64
+        ]
+      ],
+      "reservationZUnits": [
+        0,
+        4
+      ],
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "requires-export-validation"
+    },
+    {
+      "id": "triangle-slim-left",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          0,
+          32
+        ]
+      ],
+      "reservationZUnits": [
+        0,
+        4
+      ],
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "requires-export-validation"
+    },
+    {
+      "id": "triangle-slim-right",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          128,
+          0
+        ],
+        [
+          128,
+          32
+        ]
+      ],
+      "reservationZUnits": [
+        0,
+        4
+      ],
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "requires-export-validation"
+    },
+    {
+      "id": "corner-clipped",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          64,
+          32
+        ],
+        [
+          32,
+          64
+        ],
+        [
+          0,
+          64
+        ]
+      ],
+      "reservationZUnits": [
+        0,
+        4
+      ],
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "requires-export-validation"
+    },
+    {
+      "id": "taper-4m",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          48,
+          128
+        ],
+        [
+          16,
+          128
+        ]
+      ],
+      "reservationZUnits": [
+        0,
+        4
+      ],
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "requires-export-validation"
+    },
+    {
+      "id": "triangle-1m",
+      "footprintUnits": [
+        [
+          0,
+          0
+        ],
+        [
+          32,
+          0
+        ],
+        [
+          0,
+          32
+        ]
+      ],
+      "reservationZUnits": [
+        0,
+        4
+      ],
+      "allowedQuarterTurns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reflection": "requires-export-validation"
+    }
+  ],
+  "requirements": [
+    "All visible trim, lights, backing and underside within polygon extrusion, including reimported GLB nodes",
+    "Continuous backing across declared roof coverage; adjacent native mating planes meet without scaling or nudges",
+    "Every contact, seal, collision, damage and service role remains separate and unqualified until assembled proof",
+    "Editable native Blender source, material-preserving GLB, all-node containment, exact source/spec/export hashes",
+    "Actual opaque-background top, underside, each shape and assembled square/diagonal/taper seam captures",
+    "Preserve existing roof r001 and floor r002; no catalogs, live pins or releases changed"
+  ],
+  "approval": "unapproved",
+  "gameplayQualification": "pending"
+}

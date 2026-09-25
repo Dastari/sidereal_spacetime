@@ -1,91 +1,23 @@
-# Wayfarer flight computer implementation
+# Wayfarer fixture flight computer
 
-Status: Compiled authority verified through phase 3 in isolation; shared publication awaits owner check-in; resource gating, presentation and cleanup remain planned
-Last updated: 2026-09-14
+Implemented 2026-09-08. This extends the lab; modular fitting and resource networks remain M2/M4 work.
 
-The implementation follows the [IFCS integration contract](ifcs_integration.md)
-and [phased update plan](handoffs/ifcs_update_plan_20260914.md). Exact commands,
-measurements, phase commits and publication state are in the
-[progress ledger](handoffs/ifcs_update_progress_20260914.md).
+The preserved `/root/sidereal/crates/sidereal-game/src/flight.rs` maps pilot local translation to bounded velocity and turn input to angular rate, then calls the controller and allocator in `ifcs.rs`. Releasing input requests zero velocity/rate and keeps the flight computer active while residual motion exists. The new authoritative lab now follows that control pipeline. W/S request forward/reverse velocity (30/12 m/s); A/D request up to 0.65 rad/s. Released controls use actual opposing nozzles to decelerate and cancel rotation. A heading controller also exists and is tested, but no heading-selection UI/reducer is advertised.
 
-## Controls and physical integration
+`packages/content/src/flight.ts` defines stable placed-device IDs and versioned definitions for three main engines, four lateral maneuver nozzles, two retro nozzles and an installed powered flight computer. The allocator respects mount position, force direction, maximum thrust and availability; absent/disabled actuators supply no force. The fixture uses a provisional aggregate 12,000 kg mass and centered rectangular inertia including its equipment. These are authored fixture definitions, not persisted arbitrary installed-part rows. Static availability and computer power represent the supplied lab fixture; they do not claim a connected power/fuel simulation, resource consumption, spool model, damage, cargo mass or live refits.
 
-W/S request forward/reverse velocity ceilings of 30/12 m/s. A/D request angular
-rate bounded by the compiled envelope, profile and default speed-preserving turn
-limit. Fresh released controls use actual opposing actuators to brake velocity
-and rotation. Heading capture is tested but has no heading-selection UI/reducer.
-The shared 50 ms schedule runs three 60 Hz controller/contact steps. Collision
-owns drift; forces/torque alter COM velocities. The authority adapter converts
-COM state back to the unchanged authored frame. There is no passive velocity
-multiplier or client-authored force/transform.
+Each scheduled 50 ms update runs three 60 Hz controller/allocator kicks. Collision stepping alone owns position and heading drift. Motion follows achieved force and torque; no passive velocity multiplier, velocity snap or direct angular damping is used. A bounded private `actuator_output` table records each nozzle’s achieved final-substep throttle. The owner-scoped `own_actuator_outputs` view exposes only device ID, ship ID, throttle and tick; disabled assistance clears output. It contains no resource or authority internals.
 
-The resolver requires actual compiled state. Its mass, inertia, actuator mounts,
-axes and thrust come from versioned physical definitions and placed transforms.
-Crew, equipment, stored items, liquid and cargo contribute once. Inventory unit
-masses/liquid densities have explicit physical v1 snapshots, independent of later
-inventory presentation metadata edits. The empty r002 calibration is 12,000 kg /
-636,480 kg·m²; the measured initial occupied starter was 12,089.7 kg.
+Station occupancy, operability, actor connection and ship association are rechecked on every scheduled consumption. Inputs expire after 300 ms. A fresh seated zero command brakes; stale inputs, exiting, disconnecting and losing a station cut all actuation and assistance, leaving contact physics/coasting. This explicitly preserves the new project's no-owner-autopilot authority boundary. The original's unrestricted residual-assistance behavior is not an authorization grant here.
 
-Controller requests never exceed the derived envelope. The bounded allocator
-minimizes expended newtons for reachable requests, balances only within the optimum
-face, and uses physical ordering independent of actuator labels. An 18,000 N
-forward or lateral request spends 18,000 N; a pure 18,000 N·m couple spends
-2,769.230769 N. Effort penalty is dimensionless. The baseline full turn preserves
-30 m/s within the documented tolerance; raw behaviour requires a profile flag.
+The schema adds only the private output table and its view. Scheduled lazy initialization creates nine rows for each existing fixture; generated clients subscribe to the view. Existing fixture ships acquire this behavior on a non-destructive module publish; old aggregate thrust fields remain for binding compatibility but do not drive the live solver. No destructive database reset or legacy service operation is needed.
 
-## Authority and availability
+Pure tests cover heading capture with counter-torque, zero-input rotation/velocity braking, absent engines, asymmetric layouts, authority loss and collision drift ownership. The isolated smoke additionally exercises real reducer input, scheduled braking, expiry and station exit. Full M2/M4 completion still requires persistent installation/resource state and the broader cases in `ifcs_integration.md`.
 
-Actual station occupancy, current ship/deck admission, connection lease, computer
-installation/power and input freshness are checked at consumption. Inputs expire
-after 300 ms. Expired or lost control coasts with zero output; tests measure COM
-velocity because authored-origin velocity changes as an offset hull rotates.
-A pending physical update can be compiled once during explicit pilot entry/input
-recording before the unchanged validators; normal scheduled work remains two ships
-per tick. This prevents walking crew from causing transient false power-loss denials.
+## Achieved exhaust presentation
 
-Dirty producers cover physical crew/inventory movement, fitting installation,
-refit, removal, detachment, power and server damage events. Removal changes the
-compiled actuator list and mass. Detachment/damage retain hardware mass. The engine
-power validator accepts bounded unique actual installed definition-bound fittings,
-preserving its other authority checks. Invalid definitions expose a reason and no
-actuation; previously valid inertia permits coasting. Initial invalid admission
-has no invented stock fallback. The old fixture schedule no longer runs.
+`packages/render/src/flight-effects.ts` supplies bounded engine effects from subscribed actuator outputs. Each of the nine authored mounts has three merged, stepped emissive color bands: a pale hot throat, cyan middle and blue tail. Their exhaust axis is opposite the actuator force axis in the shared ship frame. Throttle changes width/length; missing, invalid or zero telemetry disables the corresponding plume immediately. Unknown IDs create no geometry. The effects never inspect keyboard input or generate propulsion.
 
-Passenger admission is explicit, owner-issued, expiring/revocable and separate from
-pilot access. Passengers consent to boarding and receive walking/interior membership
-only. Validated return changes actor membership/pose with increasing revisions,
-never rolls back ship motion or inventory. Revoked access remains denied if return
-is obstructed; the retained physical body has bounded recovery retries.
+The module uses 27 meshes and three shared unlit materials, adds no lights/shadow maps/particle systems, and exposes its meshes for the existing glow layer. It has no independent flicker animation and therefore respects reduced motion. Unit checks exercise mount/direction conversion and actual Babylon mesh enable/clear/disposal behavior with no additional lights. Browser integration and visual review belong to the composed client validation.
 
-## Telemetry and presentation boundary
-
-Private compiled rows store the physical contribution ledger and hashes. Owner
-physics projections expose readiness/rejection and compiled values. Compiled actuator
-projections supply placed identity, mount/nozzle, exhaust axis and achieved throttle.
-Passenger projections expose current interior membership and flight rejection reason
-without account identities or private ratings. Removed/rejected/dormant devices
-cannot leave stale firing output rows behind.
-
-The composed client and `packages/render/src/flight-effects.ts` have not yet completed
-the phase 5 presentation switch. Their current fixture mounts and authored-review
-ratings remain historical presentation, not physical authority. Phase 5 must consume
-compiled projections and demonstrate forward burn without retro plume, turning and
-removed-thruster disappearance in a real browser. No new browser sign-off is claimed.
-
-## Verified and planned
-
-Phases 0–2 are committed with full check/build gates; phase 1 also passed isolated
-smoke. Phase 3 standard smoke and a fresh two-client cargo/passenger smoke pass.
-The passenger test removed 203.917043 kg of actual side-engine hardware, exercised
-asymmetric turning while another client walked, cut power to all remaining engines,
-and restored the passenger on revocation without changing inventory UUIDs.
-The isolated fixed server damage event reduced measured acceleration from 2.977741
-to 2.398736 m/s². Detachment retained mass; invalid definition injection produced a
-visible rejection and uncontrolled coasting. Test-only event triggers live solely
-in a copied isolated module. Weapon hit detection is not implemented.
-
-Populated non-destructive migration preserved the captured ship/item UUIDs and fitting
-rows; all ten existing ships compiled ready. The new fitting revision defaults to 1.
-Shared publication awaits the required owner check-in. Phase 4 resource hooks and
-computer-power producer, phase 5 client/browser work and phase 6 dead-code/projection
-cleanup remain pending. Dead ship base columns remain by explicit owner decision.
+Final isolated `npm run smoke` passed on 2026-09-08 at 06:01 UTC against `sidereal-spacetime-dev-smoke`: IFCS rotation/velocity braking, achieved-output privacy, expiry clearing/coasting, station authorization, server asteroid contact, revision idempotency and walk/sprint/room collision checks all passed. This run did not restart the actual development database; restart persistence remains a separately coordinated check. The client telemetry producer also clears outputs whenever subscription status is not ready and filters rows to the displayed ship, preventing cached firing effects after disconnect or subscription failure.

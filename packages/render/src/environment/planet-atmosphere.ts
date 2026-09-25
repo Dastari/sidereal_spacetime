@@ -11,7 +11,7 @@ export function createPlanetAtmosphere(scene:Scene,name:string,radius:number,col
  const mesh=CreatePlane(name+"-atmosphere-glow",{size:radius*2.54},scene);
  setMeshRole(mesh, "planet");
  mesh.billboardMode=Mesh.BILLBOARDMODE_ALL;mesh.isPickable=false;
- const material=new ShaderMaterial(name+"-atmosphere-material",scene,{vertexSource:surfaceVertex,fragmentSource:planetHaloFragment},{attributes:["position","normal","uv"],uniforms:["world","worldViewProjection","primary","strength"],needAlphaBlending:true});
+ const material=new ShaderMaterial(name+"-atmosphere-material",scene,{vertexSource:surfaceVertex,fragmentSource:planetHaloFragment},{attributes:["position","normal","uv"],uniforms:["world","viewProjection","primary","strength"],needAlphaBlending:true});
  material.alphaMode=Constants.ALPHA_ADD;material.backFaceCulling=false;material.disableDepthWrite=true;
  material.setColor3("primary",color);material.setFloat("strength",strength);mesh.material=material;
  return {mesh,material};

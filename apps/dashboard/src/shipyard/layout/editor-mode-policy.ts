@@ -1,52 +1,34 @@
 import type { ViewState } from "./state";
 
-/** Defaults apply on a mode transition, never on a document edit or camera move. */
+/** Modes choose editing tools. Visibility belongs to the document's shared view. */
 export function enterEditorMode(
   view: ViewState,
   mode: ViewState["mode"],
 ): ViewState {
-  if (view.mode === mode) return view;
-  const schematic =
-    mode === "Structure" || mode === "Rooms" || mode === "Systems";
+  if (view.mode === mode && (mode !== "Structure" || view.projection === "Top"))
+    return view;
   return {
     ...view,
     mode,
-    projection: schematic ? "Top" : view.projection,
-    layers: {
-      ...view.layers,
-      floor: true,
-      walls: true,
-      roof: false,
-      labels: true,
-      routes: mode === "Systems",
-      objects: !schematic || mode === "Systems",
-      exteriorHull: !schematic,
-    },
+    projection:
+      mode === "Structure" || mode === "Systems" ? "Top" : view.projection,
   };
 }
 
-/** Entering a structural tool also restores its working plane after manual orbit. */
+/** Structural tools always use the top working plane and preserve visible context. */
 export function enterStructuralTool(view: ViewState): ViewState {
   return {
     ...view,
     projection: "Top",
-    layers: {
-      ...view.layers,
-      floor: true,
-      walls: true,
-      roof: false,
-      objects: false,
-      routes: false,
-      exteriorHull: false,
-    },
   };
 }
 
 export function layoutPreviewPolicy(view: ViewState) {
   return {
+    lockTop: view.mode === "Structure",
     layers: {
-      floors: view.layers.floor && view.mode !== "Systems",
-      walls: view.layers.walls && view.mode !== "Systems",
+      floors: view.layers.floor,
+      walls: view.layers.walls,
       roof: view.layers.roof,
       objects: view.layers.objects,
       exteriorHull: view.layers.exteriorHull !== false,

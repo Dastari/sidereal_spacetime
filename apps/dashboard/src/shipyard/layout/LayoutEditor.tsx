@@ -1,3 +1,4 @@
+import { type FloorStamp } from "./floor-stamps";
 import { deleteLayoutSelection } from "./selection-deletion";
 import type { PartAsset, PartCatalog } from "@sidereal/content/assembly";
 import { assemblyMismatches } from "@sidereal/content/layout-assembly";
@@ -5,11 +6,10 @@ import {
   type LayoutDocument,
   type Point,
   type ServiceChannel,
-  type Shape,
 } from "@sidereal/content/ship-layout";
+import { positiveOverlap } from "@sidereal/sim/layout-geometry";
 import { assertHullEnvelopeFits } from "@sidereal/sim/layout-structure";
 import { ModeTabs, PanelResizeHandle } from "@sidereal/ui/editor-controls";
-import { Box, Search } from "lucide-react";
 import {
   lazy,
   Suspense,
@@ -30,6 +30,7 @@ import {
   type LayoutPanelContext,
 } from "./LayoutPanels";
 import { LayoutToolbar } from "./LayoutToolbar";
+import { LayerVisibility } from "./LayerVisibility";
 import { NewLayoutDialog } from "./NewLayoutDialog";
 import { transformTiles, type ViewState } from "./state";
 import wayfarerTemplate from "./templates/wayfarer-r001.json";
@@ -42,7 +43,7 @@ import {
 } from "./wayfarer-template";
 import "./workbench.css";
 const HullWorkspace = lazy(() => import("./HullWorkspace"));
-const modes = ["Structure", "Rooms", "Objects", "Hull", "Systems"] as const;
+const modes = ["Structure", "Objects", "Hull", "Systems"] as const;
 const projections = ["Top", "Side", "Front", "3D"] as const;
 export default function LayoutEditor() {
   const {
@@ -55,7 +56,7 @@ export default function LayoutEditor() {
     { doc, history, view, setView, result } = editor;
   const [selection, select] = useState<string[]>([]),
     [tool, setTool] = useState<Tool>("select"),
-    [shape, setShape] = useState<Shape>("rectangle"),
+    [shape, setShape] = useState<FloorStamp>("native:square-2m"),
     [turns, setTurns] = useState(0),
     [mirrorX, setMirrorX] = useState(false),
     [mirrorY, setMirrorY] = useState(false),
@@ -65,7 +66,7 @@ export default function LayoutEditor() {
     [asset, setAsset] = useState<PartAsset>(),
     [catalog, setCatalog] = useState<PartCatalog>(),
     [catalogError, setCatalogError] = useState(""),
-    [inspector, setInspector] = useState<"Inspector" | "Layers" | "Validation">(
+    [inspector, setInspector] = useState<"Inspector" | "Validation">(
       "Inspector",
     ),
     [newDialog, setNewDialog] = useState(false),
@@ -120,14 +121,6 @@ export default function LayoutEditor() {
       ...v,
       mode: "Structure",
       projection: "Top",
-      layers: {
-        ...v.layers,
-        floor: true,
-        walls: true,
-        roof: false,
-        objects: false,
-        exteriorHull: false,
-      },
     }));
   }
   function redesignCurrent() {
@@ -137,7 +130,7 @@ export default function LayoutEditor() {
   const shell = useRef<HTMLElement>(null);
   useEffect(() => {
     let cancelled = false;
-    fetch("/assets/assembly/catalog.json")
+    fetch("/assets/assembly/catalog-shipyard-r005.json")
       .then((r) => {
         if (!r.ok) throw new Error("Catalog unavailable");
         return r.json();
@@ -179,16 +172,77 @@ export default function LayoutEditor() {
     selectedOpening = doc?.openings.find((t) => selection.includes(t.id)),
     selectedFitting = doc?.fittings.find((t) => selection.includes(t.id)),
     selectedRoute = doc?.routes.find((t) => selection.includes(t.id));
+  /** Design-tool clipboard: Ctrl+C remembers entity IDs, Ctrl+V duplicates them. */
+  const clipboard = useRef<string[]>([]);
+  /** Every entity on the active deck, for Select All. */
+  function deckEntityIds(): string[] {
+    if (!doc) return [];
+    const onDeck = (e: { id: string; deckId: string }) =>
+      e.deckId === view.deckId;
+    if (view.mode === "Structure")
+      return [
+        ...doc.tiles.filter(onDeck),
+        ...doc.partitions.filter(onDeck),
+        ...doc.openings.filter(onDeck),
+        ...doc.rooms.filter(onDeck),
+      ].map((entity) => entity.id);
+    if (view.mode === "Systems")
+      return doc.routes.filter(onDeck).map((route) => route.id);
+    return [
+      ...doc.tiles.filter(onDeck),
+      ...doc.partitions.filter(onDeck),
+      ...doc.openings.filter(onDeck),
+      ...doc.fittings.filter(onDeck),
+      ...doc.routes.filter(onDeck),
+      ...doc.rooms.filter(onDeck),
+    ].map((e) => e.id);
+  }
   function transform(
     action: "rotate" | "mirror-x" | "mirror-y" | "copy" | "move",
     delta: Point = [0, 0],
+    times = 1,
+    ids: string[] = selection,
   ) {
+    if (!ids.length) return;
+    let created: string[] = [];
+    if (action === "copy" && doc) {
+      // Land the duplicate on free floor: the first offset whose copied tiles
+      // clear every other tile on the deck, so a duplicate never starts invalid.
+      const chosen = doc.tiles.filter((t) => ids.includes(t.id));
+      const others = doc.tiles.filter(
+        (t) => !ids.includes(t.id) && chosen.some((c) => c.deckId === t.deckId),
+      );
+      const candidates: Point[] = [
+        delta,
+        [0, 64],
+        [-64, 0],
+        [0, -64],
+        [128, 0],
+        [0, 128],
+      ];
+      const clear = candidates.find(
+        ([dx, dy]) =>
+          !chosen.some((c) =>
+            others.some(
+              (t) =>
+                t.deckId === c.deckId &&
+                positiveOverlap(
+                  t.vertices,
+                  c.vertices.map(([x, y]) => [x + dx, y + dy] as Point),
+                ),
+            ),
+          ),
+      );
+      if (clear) delta = clear;
+    }
     commit((d) => {
-      const next = transformTiles(d, selection, action, delta, uuid);
+      let next = d;
+      for (let i = 0; i < times; i++)
+        next = transformTiles(next, ids, action, delta, uuid);
       next.fittings = next.fittings.flatMap((f) => {
-        if (!selection.includes(f.id)) return [f];
+        if (!ids.includes(f.id)) return [f];
         const q = { ...f };
-        if (action === "rotate") q.quarterTurns = (q.quarterTurns + 1) % 4;
+        if (action === "rotate") q.quarterTurns = (q.quarterTurns + times) % 4;
         if (action === "mirror-x") q.reflected = !q.reflected;
         if (action === "mirror-y") {
           q.reflected = !q.reflected;
@@ -202,8 +256,26 @@ export default function LayoutEditor() {
         }
         return [q];
       });
+      if (action === "copy") {
+        const before = new Set(
+          [...d.tiles, ...d.partitions, ...d.openings, ...d.fittings].map(
+            (e) => e.id,
+          ),
+        );
+        created = [
+          ...next.tiles,
+          ...next.partitions,
+          ...next.openings,
+          ...next.fittings,
+        ]
+          .map((e) => e.id)
+          .filter((id) => !before.has(id));
+      }
       return next;
     });
+    // Like other design tools, a duplicate becomes the new selection so it can
+    // be nudged into place immediately.
+    if (action === "copy" && created.length) select(created);
   }
   function remove() {
     if (blocked || !selection.length) return;
@@ -265,13 +337,29 @@ export default function LayoutEditor() {
       } else if (e.key === "Delete" || e.key === "Backspace") {
         e.preventDefault();
         remove();
+      } else if (mod && e.key.toLowerCase() === "a") {
+        e.preventDefault();
+        select(deckEntityIds());
+      } else if (mod && e.key.toLowerCase() === "d") {
+        // Ctrl+D deselects (owner convention); Ctrl+Shift+D duplicates.
+        e.preventDefault();
+        if (e.shiftKey) transform("copy", [64, 0]);
+        else select([]);
+      } else if (mod && e.key.toLowerCase() === "c") {
+        if (!selection.length) return;
+        e.preventDefault();
+        clipboard.current = [...selection];
+      } else if (mod && e.key.toLowerCase() === "v") {
+        e.preventDefault();
+        transform("copy", [64, 0], 1, clipboard.current);
       } else if (e.key.toLowerCase() === "r") {
-        selection.length ? transform("rotate") : setTurns((t) => (t + 1) % 4);
+        // R turns clockwise, Shift+R counter-clockwise.
+        const step = e.shiftKey ? 3 : 1;
+        selection.length
+          ? transform("rotate", [0, 0], step)
+          : setTurns((t) => (t + step) % 4);
       } else if (e.key.toLowerCase() === "f") {
         transform(e.shiftKey ? "mirror-y" : "mirror-x");
-      } else if (mod && e.key.toLowerCase() === "d") {
-        e.preventDefault();
-        transform("copy", [64, 0]);
       } else if (
         ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)
       ) {
@@ -365,7 +453,7 @@ export default function LayoutEditor() {
     setShape,
     tool,
     setTool: (next) => {
-      if (["stamp", "fill", "partition", "door", "hole"].includes(next))
+      if (["stamp", "fill", "partition", "door", "hole", "room"].includes(next))
         setView((current) => enterStructuralTool(current));
       setTool(next);
     },
@@ -427,57 +515,43 @@ export default function LayoutEditor() {
           value={view.mode}
           onChange={mode}
         />
-        <details className="layout-source-context">
-          <summary>
-            {fromCurrentWayfarer
-              ? "Wayfarer template · editable local copy"
-              : "Templates and source"}{" "}
-            <span>Local draft · saved game is unchanged</span>
-          </summary>
-          <div className="layout-legacy">
-            <button
-              onClick={inspectWayfarer}
-              disabled={editor.blocked}
-              title={
-                editor.blocked
-                  ? "Resolve or export the current recovery/conflict first"
-                  : "Preserve this draft and open a separate editable copy of the current game source template"
-              }
-            >
-              <Search size={16} /> Inspect current Wayfarer template
-            </button>
-            <span>
-              {fromCurrentWayfarer
-                ? `Source: Wayfarer template r001 · ${WAYFARER_TEMPLATE_HASH.slice(0, 12)}. Separate editable local draft.`
-                : "Open the current game source template in Objects/3D; your current draft is preserved."}{" "}
-              This is not a live ship capture. Saved game changes and additional
-              fuel attachments are not included.
-            </span>
-          </div>
-        </details>
         <div className="layout-projection">
-          <ModeTabs
-            label="Projection"
-            values={projections}
-            value={view.projection}
-            onChange={(projection) => {
-              updateView({ projection });
-              cancel();
-            }}
-          />
+          {view.mode === "Structure" ? (
+            <span
+              className="layout-projection-lock"
+              title="Structure editing uses a fixed top-down orthographic working plane"
+            >
+              Top · orthographic
+            </span>
+          ) : (
+            <ModeTabs
+              label="Projection"
+              values={projections}
+              value={view.projection}
+              onChange={(projection) => {
+                updateView({ projection });
+                cancel();
+              }}
+            />
+          )}
         </div>
       </div>
-      {!!doc?.assembly?.parts.length && (
-        <div className="layout-model-notice">
-          <span>
-            This draft includes the old assembled ship. Its walls are separate
-            from the floorplan.
-          </span>
-          <button disabled={blocked} onClick={redesignCurrent}>
-            Redesign this floorplan
-          </button>
-        </div>
-      )}
+      <LayerVisibility
+        layers={view.layers}
+        onChange={(layers) => updateView({ layers })}
+      />
+      {!!doc?.assembly?.parts.length &&
+        doc.structure?.schema !== "sidereal.layout-structure.v2" && (
+          <div className="layout-model-notice">
+            <span>
+              This draft includes the old assembled ship. Its walls are separate
+              from the floorplan.
+            </span>
+            <button disabled={blocked} onClick={redesignCurrent}>
+              Redesign this floorplan
+            </button>
+          </div>
+        )}
       {(editor.error || editor.recovery || editor.conflict) && (
         <div className="layout-alert" role="alert">
           <span>{editor.error}</span>
@@ -514,7 +588,6 @@ export default function LayoutEditor() {
               Migrate as visual references
             </button>
             <button onClick={editor.exportLegacy}>Export original</button>
-            <a href="/shipyard?assembly=legacy">Open assembly editor</a>
           </div>
         </details>
       )}
@@ -669,37 +742,6 @@ export default function LayoutEditor() {
         >
           {canvasOnly ? "Exit focus" : "Focus canvas"}
         </button>
-        <span>
-          {doc?.name ?? "Recovery"} <b>Local draft</b>
-        </span>
-        <span>
-          {componentMode ? (
-            "3D components · Ctrl/Cmd-C copies · Ctrl/Cmd-V pastes"
-          ) : (
-            <>
-              {view.grid / 32} m snap ·{" "}
-              {tool === "select"
-                ? "Click selects · Shift extends · drag moves"
-                : tool === "partition"
-                  ? "Drag along shared tile edges"
-                  : tool === "room"
-                    ? "Click inside a tile to name its region"
-                    : tool === "route"
-                      ? "Drag to route · explicit endpoints only"
-                      : tool === "stamp"
-                        ? "Click or drag a palette tile to place"
-                        : tool === "door"
-                          ? "Click a partition to reserve an opening"
-                          : tool === "fill"
-                            ? "Drag to stamp a bounded area"
-                            : tool === "hole"
-                              ? "Click inside an enclosed empty void"
-                              : tool === "object"
-                                ? "Click to place the selected visual reference"
-                                : "Middle drag / Space to pan"}
-            </>
-          )}
-        </span>
         <button
           onClick={() => {
             if (componentMode) return;
@@ -711,18 +753,10 @@ export default function LayoutEditor() {
             `${(doc?.assembly?.parts.length ?? 0) + (doc?.fittings.length ?? 0)} visual components`
           ) : (
             <>
-              {editor.busy ? "Validating…" : `${errors} errors`} ·{" "}
+              {editor.busy ? "Validating…" : `${errors} layout errors`} ·{" "}
               {doc?.tiles.length ?? 0} tiles
             </>
           )}
-        </button>
-        <button
-          onClick={() =>
-            updateView({ projection: view.projection === "3D" ? "Top" : "3D" })
-          }
-        >
-          <Box size={15} />{" "}
-          {view.projection === "3D" ? "Floorplan" : "3D preview"}
         </button>
       </footer>
       {newDialog && (

@@ -35,14 +35,18 @@ export async function persistenceSmoke(client:Client,wait:Wait):Promise<Persiste
    await c.reducers.enterLab({name:`Persistence ${i}`});await c.reducers.claimStarterKit({});
    await wait(()=>c.db.ownAppearance.count()===1n&&c.db.ownInventoryState.count()===1n,'initial persistence state');
    assert.equal([...c.db.ownAppearance.iter()][0].revision,0n);
-   const appearanceJson=JSON.stringify({outfit:i?'explorer':'medic',bodyStyle:'uniform',armor:'medical',helmet:'closed',hairStyle:'crest',backpackStyle:'field',suit:'#AABBCC',accent:'#223344',trim:'#334455',insignia:'#445566',visor:'#556677',light:'#667788',skin:'#778899',hair:'#8899AA'});
+   const appearanceJson=JSON.stringify({outfit:i?'explorer':'medic',bodyStyle:'uniform',armor:'medical',helmet:'closed',bodyType:i?'female':'male',hairStyle:'crest',backpackStyle:'field',suit:'#AABBCC',accent:'#223344',trim:'#334455',insignia:'#445566',visor:'#556677',light:'#667788',skin:'#778899',hair:i?'#FF2497':'#2864FF',eyes:i?'#29D9EF':'#C88A2B',expression:i?'wink':'determined',faceDetail:i?'freckles':'scar',facialHair:i?'none':'handlebar',faceAge:i?'young':'elder'});
    const op={appearanceJson,expectedRevision:0n,operationId:'same-id-separate-accounts'};
    await c.reducers.setCharacterAppearance(op);await c.reducers.setCharacterAppearance(op);
    assert.equal([...c.db.ownAppearance.iter()][0].revision,1n,'retry exactly once');
+   const acceptedAppearance={...JSON.parse(appearanceJson),suit:'#aabbcc',hair:i?'#ff2497':'#2864ff',eyes:i?'#29d9ef':'#c88a2b'};
+   assert.deepEqual(JSON.parse([...c.db.ownAppearance.iter()][0].appearanceJson),acceptedAppearance,'both body types and face choices are persisted with canonical RGB values');
    await assert.rejects(c.reducers.setCharacterAppearance({...op,appearanceJson:'{}'}));
    await assert.rejects(c.reducers.setCharacterAppearance({...op,operationId:'stale'}));
-   for(const malformed of ['{','[]','{"weapon":"rifle"}','{"skin":"bad"}','{"outfit":"missing"}'])
+   for(const malformed of ['{','[]','{"weapon":"rifle"}','{"skin":"bad"}','{"outfit":"missing"}','{"eyes":"#12"}','{"eyes":null}','{"expression":"missing"}','{"faceDetail":"missing"}','{"facialHair":"missing"}','{"faceAge":"missing"}','{"bodyType":"missing"}'])
     await assert.rejects(c.reducers.setCharacterAppearance({appearanceJson:malformed,expectedRevision:1n,operationId:crypto.randomUUID()}));
+   assert.equal([...c.db.ownAppearance.iter()][0].revision,1n,'invalid face choices do not consume an appearance revision');
+   assert.deepEqual(JSON.parse([...c.db.ownAppearance.iter()][0].appearanceJson),acceptedAppearance,'rejected documents preserve the accepted complete appearance');
    for(const table of ['character_appearance','appearance_receipt','connection_presence','auth_session','retired_identity','identity_link']) {
     let denied=false;c.subscriptionBuilder().onError(()=>{denied=true}).subscribe(`SELECT * FROM ${table}`);await wait(()=>denied,'private persistence table rejection');
    }

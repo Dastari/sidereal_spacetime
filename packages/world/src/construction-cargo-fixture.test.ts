@@ -100,7 +100,6 @@ function fixture() {
       uuid,
     );
   const db = {
-    constructionFlightBinding: table("shipId"),
     constructionInstance: table(),
     constructionGrant: table("id", { by_principal: "principal" }),
     constructionReceipt: table("id", { by_principal: "principal" }),

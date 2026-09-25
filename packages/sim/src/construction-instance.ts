@@ -3,6 +3,8 @@ import {
   type WayfarerExteriorDocument,
 } from "./wayfarer-exterior-qualification";
 import { planWayfarerRebuildGame } from "./wayfarer-rebuild-game";
+import { CONSTRUCTION_INSET_VISUAL_PIN } from "@sidereal/content/construction-inset-visuals";
+import { planPinnedInsetBoundaries } from "./construction-inset-boundaries";
 import {
   nativeAirlockCollision,
   readNativeAirlockDocument,
@@ -263,7 +265,9 @@ export function planConstructionInstance(
             ? planWayfarerExteriorGame(source as WayfarerExteriorDocument)
             : planWayfarerRebuildGame(source)
           ).sourceObstacles.filter((o) => o.id.startsWith("rebuild-"))
-        : source.stairRoom
+        : source.boundaryKit?.id === CONSTRUCTION_INSET_VISUAL_PIN.id
+          ? planPinnedInsetBoundaries(source, request.sourceDeckId).obstacles
+          : source.stairRoom
             ? nativeStairRoomCollision(source, request.sourceDeckId)
             : source.traversalRoom
               ? nativeTraversalRoomCollision(source, request.sourceDeckId)

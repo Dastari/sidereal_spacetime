@@ -1,7 +1,16 @@
+import { LayoutContextOverlay } from "./LayoutContextOverlay";
 import { WallFitNotes } from "./WallFitNotes";
 import { mountEditorCanvas } from "../../editor/mountEditorCanvas";
 import { useEditorPanels } from "../../editor/useEditorPanels";
-import { layoutNativeFloors } from "@sidereal/render/layout-native-floors";
+import {
+  isExteriorAsset,
+  isInteriorAsset,
+} from "@sidereal/content/layout-asset-scope";
+import { upgradeWayfarerHullLayout } from "@sidereal/content/upgrade-wayfarer-hull-layout";
+import {
+  hullAttachmentProfile,
+  snapHullAttachment,
+} from "@sidereal/sim/layout-hull-attachment";
 import { PINNED_FLOOR_KIT } from "@sidereal/sim/construction-transactions";
 import {
   Box,
@@ -17,7 +26,7 @@ import {
   Trash2,
 } from "lucide-react";
 import type { RefObject } from "react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   PART_CATEGORIES,
   type PartCatalog,
@@ -117,7 +126,8 @@ export default function HullWorkspace(props: Props) {
           ),
         ),
       );
-  }, [props.mode]);
+  }, [props.mode, props.layers]);
+  const contextOverlay = useRef<() => void>(() => {});
   const canvasHost = useRef<HTMLDivElement>(null),
     canvas = useRef<HTMLCanvasElement | null>(null),
     viewport = useRef<Handle | null>(null),
@@ -154,42 +164,35 @@ export default function HullWorkspace(props: Props) {
     move: (_id: string, _p: [number, number, number], _copy: boolean) => {},
     place: (_id: string, _p: [number, number, number]) => {},
   });
-  const nativeFloors = useMemo(
-    () =>
-      catalog
-        ? layoutNativeFloors(doc, catalog, props.deckId, visible.has("floor"))
-        : { parts: [], unmatched: [] },
-    [doc, catalog, props.deckId, visible],
-  );
-  const structural = (id: string) => {
-    const category = catalog?.assets.find((a) => a.id === id)?.category;
-    return category === "floor" || category === "wall" || category === "roof";
+  const editable = (id: string) => {
+    const asset = catalog?.assets.find((a) => a.id === id);
+    return (
+      !!asset &&
+      (props.mode === "Hull" ? isExteriorAsset(asset) : isInteriorAsset(asset))
+    );
   };
-  const contextOnly = new Set([
-    ...nativeFloors.parts.map((p) => p.id),
-    ...parts.filter((p) => structural(p.assetId)).map((p) => p.id),
-  ]);
-  const previewParts = [...parts, ...nativeFloors.parts];
-  const unmatched = new Set(nativeFloors.unmatched);
+  const structural = (id: string) => !editable(id);
+  const contextOnly = new Set(
+    parts.filter((p) => !editable(p.assetId)).map((p) => p.id),
+  );
+  const previewParts = parts;
   const floorGuide = props.result
     ? {
         ...props.result,
-        fingerprint: `${props.result.fingerprint}:${props.deckId}:${visible.has("floor")}:${nativeFloors.unmatched.join(",")}`,
-        tiles: props.result.tiles.filter(
-          (t) => t.deckId === props.deckId && unmatched.has(t.id),
-        ),
+        tiles: props.result.tiles.filter((t) => t.deckId === props.deckId),
       }
     : undefined;
   useEffect(() => {
     setHeight(
       ((doc.decks.find((d) => d.id === props.deckId)?.elevation ?? 0) +
-        (props.mode === "Objects" ? PINNED_FLOOR_KIT.datums.floorTop : 0)) /
+        PINNED_FLOOR_KIT.datums.floorTop) /
         32,
     );
   }, [props.deckId, props.mode]);
   const state = useRef<HullViewState>({
     parts: previewParts,
     contextOnly,
+    resolvePlacement: resolveAttachment,
     selected: selection,
     visible,
     tool,
@@ -200,6 +203,11 @@ export default function HullWorkspace(props: Props) {
     projection: props.projection,
     showGrid: true,
     floor: floorGuide,
+    floorSlabs: { document: doc, deckId: props.deckId },
+    insetPreview:
+      doc.structure?.schema === "sidereal.layout-structure.v2" && props.result
+        ? { document: doc, compiled: props.result, deckId: props.deckId }
+        : undefined,
     suppressNativeWalls:
       !doc.structure &&
       parts.some(
@@ -220,6 +228,7 @@ export default function HullWorkspace(props: Props) {
   state.current = {
     parts: previewParts,
     contextOnly,
+    resolvePlacement: resolveAttachment,
     selected: selection,
     visible,
     tool,
@@ -230,6 +239,11 @@ export default function HullWorkspace(props: Props) {
     projection: props.projection,
     showGrid: true,
     floor: floorGuide,
+    floorSlabs: { document: doc, deckId: props.deckId },
+    insetPreview:
+      doc.structure?.schema === "sidereal.layout-structure.v2" && props.result
+        ? { document: doc, compiled: props.result, deckId: props.deckId }
+        : undefined,
     suppressNativeWalls:
       !doc.structure &&
       parts.some(
@@ -247,9 +261,28 @@ export default function HullWorkspace(props: Props) {
         }
       : undefined,
   };
+  function resolveAttachment(part: PartPlacement): PartPlacement | null {
+    const asset = catalog?.assets.find((a) => a.id === part.assetId);
+    if (props.mode !== "Hull" || !asset || !hullAttachmentProfile(asset))
+      return part;
+    if (!props.result) return null;
+    return (
+      snapHullAttachment(part, asset, doc, props.result, props.deckId)?.part ??
+      null
+    );
+  }
+  function attached(part: PartPlacement): PartPlacement | null {
+    const result = resolveAttachment(part);
+    if (!result)
+      props.error(
+        "Move this hull panel within 2 m of an exterior wall with enough space for its attachment frame.",
+      );
+    return result;
+  }
   function mutate(part: PartPlacement) {
     if (blocked || !catalog || structural(part.assetId)) return;
-    commit((d) => editVisualPart(d, part, catalog));
+    const resolved = attached(part);
+    if (resolved) commit((d) => editVisualPart(d, resolved, catalog));
   }
   function add(id: string, p: [number, number, number]) {
     if (
@@ -259,14 +292,15 @@ export default function HullWorkspace(props: Props) {
       !catalog.assets.some((a) => a.id === id)
     )
       return;
-    const placement: PartPlacement = {
+    const placement = attached({
       id: uuid(),
       assetId: id,
       position: p,
       rotation: 0,
       flipped: false,
       removedCells: [],
-    };
+    });
+    if (!placement) return;
     commit((d) => {
       d.assembly ??= {
         schema: "sidereal.layout-assembly.v1",
@@ -290,7 +324,8 @@ export default function HullWorkspace(props: Props) {
   ) {
     if (blocked || !catalog) return;
     if (structural(part.assetId)) return;
-    const copy = { ...structuredClone(part), id: uuid(), position };
+    const copy = attached({ ...structuredClone(part), id: uuid(), position });
+    if (!copy) return;
     commit((d) => {
       const existing = d.fittings.find((f) => f.id === part.id);
       if (existing) {
@@ -331,7 +366,7 @@ export default function HullWorkspace(props: Props) {
     const saved = clipboard.current;
     if (structural(saved.part.assetId)) return;
     saved.count++;
-    const copy = {
+    const copy = attached({
       ...structuredClone(saved.part),
       id: uuid(),
       position: [
@@ -339,7 +374,8 @@ export default function HullWorkspace(props: Props) {
         saved.part.position[1],
         saved.part.position[2],
       ] as [number, number, number],
-    };
+    });
+    if (!copy) return;
     commit((d) => {
       if (saved.fitting) {
         d.fittings.push({ ...structuredClone(saved.fitting), id: copy.id });
@@ -372,6 +408,10 @@ export default function HullWorkspace(props: Props) {
       if (d.assembly)
         d.assembly.parts = d.assembly.parts.filter((p) => p.id !== selection);
       d.fittings = d.fittings.filter((p) => p.id !== selection);
+      if (d.serviceConnections)
+        d.serviceConnections = d.serviceConnections.filter(
+          (c) => c.fromDeviceId !== selection && c.toDeviceId !== selection,
+        );
       return d;
     });
     select("");
@@ -408,6 +448,7 @@ export default function HullWorkspace(props: Props) {
             status: setStatus,
             wallFit: setWallNotes,
             viewChanged: () => {
+              contextOverlay.current();
               if (viewport.current && props.sharedViewport) {
                 props.sharedViewport.current.documentId = latest.current.doc.id;
                 props.sharedViewport.current.camera =
@@ -504,6 +545,14 @@ export default function HullWorkspace(props: Props) {
         paste();
         return;
       }
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "d") {
+        // Ctrl+D deselects (owner convention); Ctrl+Shift+D duplicates.
+        e.preventDefault();
+        if (!e.shiftKey) {
+          select("");
+          return;
+        }
+      }
       if (
         blocked ||
         canvas.current?.dataset.gestureActive === "true" ||
@@ -511,7 +560,6 @@ export default function HullWorkspace(props: Props) {
       )
         return;
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "d") {
-        e.preventDefault();
         duplicate(selected);
       } else if (e.key === "Delete" || e.key === "Backspace") {
         e.preventDefault();
@@ -550,6 +598,9 @@ export default function HullWorkspace(props: Props) {
         (a) =>
           !structural(a.id) &&
           (category === "all" || a.category === category) &&
+          (library === "all" ||
+            a.visual?.designId !== "shipyard.hull.side-armor" ||
+            a.visual.revision >= 5) &&
           a.label.toLowerCase().includes(search.toLowerCase()) &&
           (library === "all" || currentIds.has(a.id) || !!a.visual),
       )
@@ -572,8 +623,8 @@ export default function HullWorkspace(props: Props) {
       >
         <h2>
           {props.mode === "Objects"
-            ? "Objects & equipment"
-            : "Ship building blocks"}
+            ? "Internal objects"
+            : "Exterior hull & engines"}
         </h2>
         {doc.legacy && (
           <button
@@ -616,8 +667,8 @@ export default function HullWorkspace(props: Props) {
             onChange={(e) => setCategory(e.target.value as typeof category)}
           >
             <option value="all">All components</option>
-            {PART_CATEGORIES.filter(
-              (c) => !["floor", "wall", "roof"].includes(c),
+            {PART_CATEGORIES.filter((c) =>
+              catalog?.assets.some((a) => a.category === c && editable(a.id)),
             ).map((c) => (
               <option key={c} value={c}>
                 {c}
@@ -667,7 +718,6 @@ export default function HullWorkspace(props: Props) {
                   .replace(/^(equipment|room) /i, "")
                   .replace(/(?: -?\d+(?:\.\d+)?)+$/, "")}
               </span>
-              <small>{a.visual ? "Blender mesh" : "Retained part"}</small>
             </button>
           ))}
         </div>
@@ -746,7 +796,7 @@ export default function HullWorkspace(props: Props) {
                 props.onGridChange?.(value);
               }}
             >
-              {[0.03125, 0.5, 1, 2].map((n) => (
+              {[0.03125, 0.0625, 0.125, 0.25, 0.5, 1, 2].map((n) => (
                 <option value={n} key={n}>
                   {n} m
                 </option>
@@ -780,15 +830,16 @@ export default function HullWorkspace(props: Props) {
           }}
         >
           <div className="editor-gpu-surface" ref={canvasHost} />
+          <LayoutContextOverlay
+            doc={doc}
+            result={props.result}
+            deckId={props.deckId}
+            catalog={catalog}
+            layers={props.layers}
+            viewport={viewport}
+            refresh={contextOverlay}
+          />
           {visible.has("wall") && <WallFitNotes notes={wallNotes} />}
-          <div className="hull-caption">
-            <strong>{doc.name}</strong>
-            <span>
-              {tool === "place"
-                ? `Place ${asset?.label ?? "component"} · click on build plane`
-                : "Middle drag or Orbit to rotate · right drag to pan · wheel to zoom"}
-            </span>
-          </div>
           {tool === "place" && (
             <button className="hull-cancel" onClick={() => setTool("select")}>
               Cancel placement · Esc
@@ -798,7 +849,6 @@ export default function HullWorkspace(props: Props) {
         <div className="hull-render-status" role="status">
           {copiedLabel && <span>Copied: {copiedLabel}</span>}
           {status}
-          <span>{parts.length} placements · shared local history</span>
         </div>
       </section>
       <aside
@@ -811,7 +861,7 @@ export default function HullWorkspace(props: Props) {
           role="group"
           aria-label="Component inspector sections"
         >
-          {["Properties", "Layers", "Overview"].map((tab) => (
+          {["Properties", "Overview"].map((tab) => (
             <button
               key={tab}
               aria-pressed={inspectorTab === tab}
@@ -832,6 +882,13 @@ export default function HullWorkspace(props: Props) {
           {selected ? (
             <>
               <h3>{selectedAsset?.label ?? selected.assetId}</h3>
+              {props.mode === "Hull" && selectedAsset && (
+                <p className="layout-note">
+                  {hullAttachmentProfile(selectedAsset)
+                    ? "Attached to structural wall · outward face"
+                    : "Grid placement · mounting interface pending"}
+                </p>
+              )}
               <p className="hull-id">{selected.id}</p>
               {!fitting && (
                 <HullDecalPanel
@@ -876,7 +933,10 @@ export default function HullWorkspace(props: Props) {
                   aria-label="Component yaw"
                   type="number"
                   step="90"
-                  disabled={blocked}
+                  disabled={
+                    blocked ||
+                    !!(selectedAsset && hullAttachmentProfile(selectedAsset))
+                  }
                   value={
                     Math.round(((selected.rotation * 180) / Math.PI) * 1000) /
                     1000
@@ -893,7 +953,10 @@ export default function HullWorkspace(props: Props) {
                 <button
                   title="Rotate component"
                   aria-label="Rotate component"
-                  disabled={blocked}
+                  disabled={
+                    blocked ||
+                    !!(selectedAsset && hullAttachmentProfile(selectedAsset))
+                  }
                   onClick={() =>
                     mutate({
                       ...selected,
@@ -943,12 +1006,6 @@ export default function HullWorkspace(props: Props) {
                   Focus
                 </button>
               </div>
-              <p className="layout-note">
-                {selectedAsset?.visual
-                  ? "Existing Blender surface and materials."
-                  : "Existing retained part-library surface."}{" "}
-                Changes affect this placement only.
-              </p>
               {!!selected.removedCells.length && (
                 <p className="layout-note">
                   Preserved damage proposal: {selected.removedCells.length}{" "}
@@ -959,26 +1016,35 @@ export default function HullWorkspace(props: Props) {
           ) : (
             <>
               <ShipSummary doc={doc} result={props.result} />
-              <p className="layout-note">
-                Select equipment, engines or exterior armor in the viewport or
-                component list. Drag to move; Ctrl-drag to duplicate.
-              </p>
             </>
           )}
+          {props.mode === "Hull" &&
+            catalog &&
+            parts.some(
+              (p) =>
+                catalog.assets.find((a) => a.id === p.assetId)?.visual
+                  ?.designId === "shipyard.hull.side-armor" &&
+                catalog.assets.find((a) => a.id === p.assetId)?.visual
+                  ?.revision === 3,
+            ) && (
+              <button
+                disabled={blocked}
+                onClick={() =>
+                  commit((d) => upgradeWayfarerHullLayout(d, catalog))
+                }
+              >
+                Use standard hull attachments
+              </button>
+            )}
           {props.mode === "Hull" && (
-            <aside className="hull-mount-note">
-              <strong>Free placement · origin-to-grid</strong>
+            <details className="editor-disclosure">
+              <summary>Placement limits</summary>
               <p>
-                Grid snapping aligns the part origin, not its attachment face.
-                Height is set separately. Wall contact and armor clearance are
-                not validated.
+                Hull panels with attachment frames snap to the outside wall
+                face. Other exterior parts use the placement grid until their
+                mounting interfaces are qualified.
               </p>
-              <p>
-                Visible r004 walls: 125 mm envelope centred on the boundary; 3 m
-                authored top. Exterior walls ultimately need outward-only
-                thickness.
-              </p>
-            </aside>
+            </details>
           )}
           {asset && (
             <button
@@ -990,31 +1056,6 @@ export default function HullWorkspace(props: Props) {
               Add chosen part at origin
             </button>
           )}
-        </div>
-        <div hidden={inspectorTab !== "Layers"}>
-          <h3>Visibility</h3>
-          <div className="hull-layers">
-            {PART_CATEGORIES.map((c) => (
-              <label key={c}>
-                <input
-                  type="checkbox"
-                  aria-label={`Show ${c} components`}
-                  checked={visible.has(c)}
-                  onChange={() => {
-                    const next = new Set(visible);
-                    next.has(c) ? next.delete(c) : next.add(c);
-                    setVisible(next);
-                    if (props.layers)
-                      props.onLayersChange?.({
-                        ...props.layers,
-                        [categoryLayer[c]]: next.has(c),
-                      });
-                  }}
-                />
-                {c}
-              </label>
-            ))}
-          </div>
         </div>
         <div hidden={inspectorTab !== "Overview"}>
           <h3>

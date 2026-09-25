@@ -16,10 +16,7 @@ export function sweptCapsuleBounds(body: RigidBody, dt: number): SweptBounds {
   const offset = body.longitudinalOffset ?? 0;
   const a = offset - body.halfLength,
     b = offset + body.halfLength;
-  const lateral = body.lateralOffset ?? 0;
-  const reach = Math.hypot(lateral, Math.max(Math.abs(a), Math.abs(b)));
-  const centerX = body.x + uy * lateral,
-    centerY = body.y - ux * lateral;
+  const reach = Math.max(Math.abs(a), Math.abs(b));
   const rotation = Math.min(2, Math.abs(body.omega) * dt) * reach;
   // Same contact tolerance as narrow phase, plus a few f64 ULPs at admitted
   // world coordinates. Conservative inflation never authorizes a contact.
@@ -31,10 +28,10 @@ export function sweptCapsuleBounds(body: RigidBody, dt: number): SweptBounds {
   const dx = body.vx * dt,
     dy = body.vy * dt;
   return {
-    minX: centerX + Math.min(ux * a, ux * b) + Math.min(0, dx) - pad,
-    maxX: centerX + Math.max(ux * a, ux * b) + Math.max(0, dx) + pad,
-    minY: centerY + Math.min(uy * a, uy * b) + Math.min(0, dy) - pad,
-    maxY: centerY + Math.max(uy * a, uy * b) + Math.max(0, dy) + pad,
+    minX: body.x + Math.min(ux * a, ux * b) + Math.min(0, dx) - pad,
+    maxX: body.x + Math.max(ux * a, ux * b) + Math.max(0, dx) + pad,
+    minY: body.y + Math.min(uy * a, uy * b) + Math.min(0, dy) - pad,
+    maxY: body.y + Math.max(uy * a, uy * b) + Math.max(0, dy) + pad,
   };
 }
 /** Sweep-and-prune, rebuilt after each impulse because velocities can change.

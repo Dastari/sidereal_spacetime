@@ -188,7 +188,6 @@ export interface StairReadContext {
   db: StairReadTables;
 }
 export interface StairAuthorityHooks {
-  physicalChanged(instanceId: string): void;
   /** Auth admission AND a currently valid input-control lease at consumption. */
   mayConsumeMovement(owner: Identity, characterId: string): boolean;
   /** Server-held input connection epoch; client sequences restart on a new lease. */
@@ -577,7 +576,6 @@ function commitExit(
     localY: s.positionM[1],
     sprinting: false,
   });
-  h.physicalChanged(row.instanceId);
   ctx.db.constructionLocation.characterId.update({
     ...v,
     deckId,
@@ -819,7 +817,6 @@ export function stepConstructionStairs(
       writes++;
     } else if (pendingUpdate) {
       ctx.db.constructionStairWalk.characterId.update(pendingUpdate);
-      if (pendingUpdate.acceptedX !== row.acceptedX || pendingUpdate.acceptedY !== row.acceptedY) h.physicalChanged(row.instanceId);
       writes++;
     }
   }

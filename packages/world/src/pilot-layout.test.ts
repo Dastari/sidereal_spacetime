@@ -10,7 +10,6 @@ function fixture(occupied = true) {
   let input = { characterId: "crew", sequence: 25n, throttle: 1, turn: 1, dx: 1, dy: 1, sprint: true };
   let receipt: unknown;
   const ctx = { sender: owner, timestamp: { microsSinceUnixEpoch: 100n }, db: {
-    constructionFlightBinding: {shipId:{find:()=>undefined}},
     ship: { id: { find: () => ({ id: "ship", owner }) } },
     station: { shipId: { find: () => station }, id: { update: (v: typeof station) => { station = v; } } },
     character: { by_owner: { filter: () => [actor] }, id: { find: () => actor, update: (v: typeof actor) => { actor = v; } } },

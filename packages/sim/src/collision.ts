@@ -1,4 +1,3 @@
-import { wrapFlightHeading } from "./flight-angle";
 import { sweptContactCandidates } from "./collision-broadphase";
 /** Planar rigid capsule/circle contacts. All positions and impulse math stay f64.
  * Multiple capsules (ships) and circles (movable asteroids). No render mesh
@@ -19,11 +18,6 @@ export interface RigidBody {
   halfLength: number;
   /** Capsule midpoint offset along local +Y; x/y remain the physical COM. */
   longitudinalOffset?: number;
-  /** Capsule midpoint offset along local +X, relative to the physical COM. */
-  lateralOffset?: number;
-  /** Pinned capsule midpoint in authored coordinates; compiled bodies carry both. */
-  authoredMidpointX?: number;
-  authoredMidpointY?: number;
 }
 const EPS = 1e-5;
 /** Closest points of two finite planar capsule spines. Parallel overlapping
@@ -34,14 +28,8 @@ function capsuleContact(a: RigidBody, b: RigidBody) {
       uy = Math.cos(body.heading);
     const offset = body.longitudinalOffset ?? 0;
     return {
-      x:
-        body.x +
-        Math.cos(body.heading) * (body.lateralOffset ?? 0) +
-        ux * (offset - body.halfLength),
-      y:
-        body.y +
-        Math.sin(body.heading) * (body.lateralOffset ?? 0) +
-        uy * (offset - body.halfLength),
+      x: body.x + ux * (offset - body.halfLength),
+      y: body.y + uy * (offset - body.halfLength),
       dx: ux * 2 * body.halfLength,
       dy: uy * 2 * body.halfLength,
     };
@@ -144,26 +132,15 @@ function contact(a: RigidBody, b: RigidBody) {
   }
   const ux = -Math.sin(a.heading),
     uy = Math.cos(a.heading);
-  const center = (body: RigidBody) => ({
-    x:
-      body.x +
-      Math.cos(body.heading) * (body.lateralOffset ?? 0) -
-      Math.sin(body.heading) * (body.longitudinalOffset ?? 0),
-    y:
-      body.y +
-      Math.sin(body.heading) * (body.lateralOffset ?? 0) +
-      Math.cos(body.heading) * (body.longitudinalOffset ?? 0),
-  });
-  const ac = center(a),
-    bc = center(b);
+  const offset = a.longitudinalOffset ?? 0;
   const t = Math.max(
-    -a.halfLength,
-    Math.min(a.halfLength, (bc.x - ac.x) * ux + (bc.y - ac.y) * uy),
+    offset - a.halfLength,
+    Math.min(offset + a.halfLength, (b.x - a.x) * ux + (b.y - a.y) * uy),
   );
-  const ax = ac.x + ux * t,
-    ay = ac.y + uy * t,
-    dx = bc.x - ax,
-    dy = bc.y - ay,
+  const ax = a.x + ux * t,
+    ay = a.y + uy * t,
+    dx = b.x - ax,
+    dy = b.y - ay,
     d = Math.hypot(dx, dy);
   const nx = d > EPS ? dx / d : uy,
     ny = d > EPS ? dy / d : -ux;
@@ -180,7 +157,7 @@ function advance(body: RigidBody, dt: number) {
     ...body,
     x: body.x + body.vx * dt,
     y: body.y + body.vy * dt,
-    heading: wrapFlightHeading(body.heading + body.omega * dt),
+    heading: body.heading + body.omega * dt,
   };
 }
 export interface ContactWork {
@@ -193,16 +170,8 @@ export interface ContactWork {
 function impactTime(a: RigidBody, b: RigidBody, dt: number, work: ContactWork) {
   const bound =
     Math.hypot(b.vx - a.vx, b.vy - a.vy) +
-    Math.abs(a.omega) *
-      Math.hypot(
-        a.lateralOffset ?? 0,
-        a.halfLength + Math.abs(a.longitudinalOffset ?? 0),
-      ) +
-    Math.abs(b.omega) *
-      Math.hypot(
-        b.lateralOffset ?? 0,
-        b.halfLength + Math.abs(b.longitudinalOffset ?? 0),
-      );
+    Math.abs(a.omega) * (a.halfLength + Math.abs(a.longitudinalOffset ?? 0)) +
+    Math.abs(b.omega) * (b.halfLength + Math.abs(b.longitudinalOffset ?? 0));
   let t = 0;
   for (let i = 0; i < 64; i++) {
     work.conservativeIterations++;
@@ -247,10 +216,17 @@ function impulse(a: RigidBody, b: RigidBody, restitution: number) {
   b.y += (correction * c.ny) / b.massKg;
   return j;
 }
+export interface MotionSegment {
+  bodyId: string;
+  from: { x: number; y: number };
+  to: { x: number; y: number };
+  kind: "drift" | "correction";
+}
 export function stepContacts(
   input: readonly RigidBody[],
   dt: number,
   restitution = 0.2,
+  traceIds?: ReadonlySet<string>,
 ) {
   if (
     !Number.isFinite(dt) ||
@@ -268,7 +244,7 @@ export function stepContacts(
     throw new Error("Invalid contact body set");
   const bodies = input
     .map((b) => ({ ...b }))
-    .sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+    .sort((a, b) => a.id.localeCompare(b.id));
   for (const b of bodies)
     if (
       ![
@@ -283,14 +259,26 @@ export function stepContacts(
         b.radius,
         b.halfLength,
         b.longitudinalOffset ?? 0,
-        b.lateralOffset ?? 0,
-        b.authoredMidpointX ?? 0,
-        b.authoredMidpointY ?? 0,
       ].every(Number.isFinite) ||
       Math.min(b.massKg, b.inertia, b.radius) <= 0 ||
       b.halfLength < 0
     )
       throw new Error("Invalid collider");
+  const trace: MotionSegment[] = [];
+  const record = (a: RigidBody, b: RigidBody, kind: MotionSegment["kind"]) => {
+    if (traceIds?.has(a.id) && (a.x !== b.x || a.y !== b.y))
+      trace.push({
+        bodyId: a.id,
+        from: { x: a.x, y: a.y },
+        to: { x: b.x, y: b.y },
+        kind,
+      });
+  };
+  const drift = (i: number, duration: number) => {
+    const before = bodies[i];
+    bodies[i] = advance(before, duration);
+    record(before, bodies[i], "drift");
+  };
   let remaining = dt,
     impacts = 0;
   const work: ContactWork = {
@@ -318,17 +306,19 @@ export function stepContacts(
       }
     }
     if (!pair || first > remaining) {
-      for (let i = 0; i < bodies.length; i++)
-        bodies[i] = advance(bodies[i], remaining);
+      for (let i = 0; i < bodies.length; i++) drift(i, remaining);
       remaining = 0;
       break;
     }
-    for (let i = 0; i < bodies.length; i++)
-      bodies[i] = advance(bodies[i], first);
+    for (let i = 0; i < bodies.length; i++) drift(i, first);
     remaining -= first;
-    if (!confirmed) return { bodies, impacts, exhausted: true, work };
+    if (!confirmed) return { bodies, impacts, exhausted: true, work, trace };
     const [a, b] = pair;
+    const beforeA = { ...bodies[a] },
+      beforeB = { ...bodies[b] };
     if (impulse(bodies[a], bodies[b], restitution) > EPS) impacts++;
+    record(beforeA, bodies[a], "correction");
+    record(beforeB, bodies[b], "correction");
   }
-  return { bodies, impacts, exhausted: remaining > 1e-9, work };
+  return { bodies, impacts, exhausted: remaining > 1e-9, work, trace };
 }

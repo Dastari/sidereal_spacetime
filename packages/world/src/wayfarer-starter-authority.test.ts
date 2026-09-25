@@ -44,8 +44,6 @@ function fixture() {
     bodyWorldMotion: "bodyId",
     worldAdmission: "characterId",
     constructionFlightBinding: "shipId",
-    constructionFlightCompiled: "shipId",
-    constructionFlightDirty: "shipId",
     constructionFlightStation: "stationId",
     constructionLocation: "characterId",
     input: "characterId",
@@ -59,7 +57,6 @@ function fixture() {
     by_owner: "owner",
     by_system: "systemId",
     by_ship: "shipId",
-    by_root: "rootContainerId",
     by_deck: "deckId",
     by_instance: "instanceId",
     by_character: "characterId",
@@ -430,7 +427,6 @@ test("failed replacement installation rolls deletions back with the enclosing tr
   // Prepare every adapter table before taking the mock transaction snapshot.
   for (const name of REPLACED_SHIP_TABLES) void f.db[name];
   void f.db.constructionReceipt;
-  void f.db.constructionPassengerVisit;
   const args = {
     characterId: old.actor.id,
     expectedShipId: old.actor.shipId,

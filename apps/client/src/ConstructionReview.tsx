@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { NativeAirlockPanel } from "./NativeAirlockPanel";
 import { AuthoredFlightReview } from "./AuthoredFlightReview";
 import type { DbConnection } from "@sidereal/net";
@@ -10,6 +11,8 @@ export function ConstructionReview({
   connection: DbConnection | null;
   onError: (error: string) => void;
 }) {
+  const [expanded, setExpanded] = useState(false);
+  const [busy, setBusy] = useState(false);
   if (!connection) return null;
   const actor = [...connection.db.ownCharacters.iter()][0],
     currentLocation = [...connection.db.ownConstructionLocation.iter()].find(
@@ -46,17 +49,6 @@ export function ConstructionReview({
         visitId={currentLocation.visitId}
         onError={onError}
       />
-    ) : null;
-  // Gameplay mechanisms do not require a review query. Permanent membership
-  // never exposes authoring transit or a fabricated return destination.
-  if (!new URLSearchParams(location.search).has("constructionReview"))
-    return airlockPanel ? (
-      <aside
-        className="construction-review-controls"
-        aria-label="Airlock controls"
-      >
-        {airlockPanel}
-      </aside>
     ) : null;
   const stair = [...connection.db.ownConstructionStairWalks.iter()].find(
     (s) =>
@@ -103,22 +95,53 @@ export function ConstructionReview({
     [...connection.db.ownConstructionNativePressure.iter()].find(
       (p) => p.instanceId === visit.instanceId && p.deckId === visit.deckId,
     );
-  const act = (fn: () => Promise<unknown>) =>
-    void fn().catch((e) => onError(String(e)));
+  const act = (fn: () => Promise<unknown>) => {
+    if (busy) return;
+    setBusy(true);
+    void fn()
+      .catch((e) => onError(String(e)))
+      .finally(() => setBusy(false));
+  };
+  if (!expanded && !visit)
+    return (
+      <aside
+        className="construction-review-controls"
+        aria-label="Shipyard test ships"
+      >
+        <button onClick={() => setExpanded(true)}>
+          Test ships (
+          {
+            instances.filter(
+              (i) =>
+                i.id !== actor.shipId &&
+                i.workspaceId !== "trusted-starter-templates",
+            ).length
+          }
+          )
+        </button>
+        {airlockPanel}
+      </aside>
+    );
   return (
     <aside
       className="construction-review-controls"
-      aria-label="Construction walking review"
+      aria-label="Shipyard test ships"
     >
-      <strong>Shipyard walking review</strong>
+      <strong>Shipyard test ships</strong>
+      {!visit && (
+        <button onClick={() => setExpanded(false)}>Close test ships</button>
+      )}
       <small>
-        Authored rooms, stairs and ladders. Qualified ships can enter an
-        explicit flight review. Airlocks use nearby manual service.
+        Your normal ship and inventory stay preserved. Choose an independent
+        saved test ship; qualified ships also support flight testing.
       </small>
       {visit ? (
         <button
           disabled={
-            !!traversal || !!stair || (!!flight && flight.seatState !== "none")
+            busy ||
+            !!traversal ||
+            !!stair ||
+            (!!flight && flight.seatState !== "none")
           }
           onClick={() =>
             act(() =>
@@ -141,11 +164,16 @@ export function ConstructionReview({
         </button>
       ) : (
         instances
-          .filter((i) => i.id !== actor.shipId)
+          .filter(
+            (i) =>
+              i.id !== actor.shipId &&
+              i.workspaceId !== "trusted-starter-templates",
+          )
           .map((i) => (
             <button
               key={i.id}
               disabled={
+                busy ||
                 !grants.some(
                   (g) =>
                     g.workspaceId === i.workspaceId &&
@@ -163,9 +191,50 @@ export function ConstructionReview({
                 )
               }
             >
-              Walk {i.name} · {i.id.slice(0, 8)}
+              Test {i.name}
             </button>
           ))
+      )}
+      {visit && (
+        <section aria-label="Switch test ship">
+          <strong>Switch test ship</strong>
+          {instances
+            .filter(
+              (i) =>
+                i.id !== actor.shipId &&
+                i.workspaceId !== "trusted-starter-templates",
+            )
+            .map((i) => (
+              <button
+                key={i.id}
+                disabled={
+                  busy ||
+                  !!traversal ||
+                  !!stair ||
+                  !!flight?.flightAdmitted ||
+                  !grants.some(
+                    (g) =>
+                      g.workspaceId === i.workspaceId &&
+                      g.capability === "instance.spawn" &&
+                      !g.revoked,
+                  )
+                }
+                onClick={() =>
+                  act(() =>
+                    connection.reducers.switchConstructionReview({
+                      instanceId: i.id,
+                      expectedInstanceRevision: i.revision,
+                      expectedVisitId: visit.visitId,
+                      expectedRevision: visit.revision,
+                      operationId: createOperationId(),
+                    }),
+                  )
+                }
+              >
+                Switch to {i.name}
+              </button>
+            ))}
+        </section>
       )}
       {visit && (
         <AuthoredFlightReview
