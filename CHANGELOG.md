@@ -67,6 +67,8 @@ r005 adds denser face and roof pieces (176 kit pieces), stepped slope and curve 
 
 r006 adds size-class hardpoints (SM 1×1 to XL 4×4 m). Ion drives are segmented octagonal pods with flange, housing, conduit and nozzle sub-parts plus presentation plumes; thrust blocks, RCS thrusters, turrets and cannons also come in size classes. It also adds 0.25 m slope stepping and five more shape tiles.
 
+r007 adds modular mount assemblies (connector, rotation base, gimbal, head, payload) for 11 weapon and utility kinds in SM/MD/LG, with face-mount variants. The ion drive becomes round, with chunk blocks, a bolted cap and deeper nozzles, and a salvaged ion geometry variant is added. The ships are refitted.
+
 ## 2026-09-15 — Stellar Observe framing (render 0.5.1)
 
 Observe fits the enlarged stellar corona, including portrait viewports, while retaining authored physical radii and existing planet framing. Added two NullEngine projection tests. Final r013 solar migration passes isolated baseline/update/persistent-state verification and is now live with the compatible client. All live ship, character and inventory-item rows remain unchanged. Hardware performance acceptance remains unmeasured.

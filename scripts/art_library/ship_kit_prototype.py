@@ -36,7 +36,7 @@ import bpy
 import numpy as np
 from mathutils import Vector
 
-REVISION = "r006"
+REVISION = "r007"
 T = 1.0 / 16.0
 SLOTS = ["primary", "secondary", "accent", "trim", "metal", "dark", "emit_a", "emit_b", "glass"]
 SI = {s: i for i, s in enumerate(SLOTS)}
@@ -1010,17 +1010,24 @@ def ion_parts(sz):
         y0, y1 = y, y + seg
         slot = pattern[(i + SIZE_CELLS[sz]) % len(pattern)]
         gap = "emit_a" if i == n // 2 else "dark"                      # reactor ring glows mid-body
-        tube(ho, cx, cz, r - 1, ch, y0, y1, gap)                        # recessed gap ring shows between bands
-        tube(ho, cx, cz, r, ch, y0 + 1, y1 - 1, slot)
-        pw = max(2, r - ch)                                             # raised armour plates on the flats
+        extrude(ho, "y", cx, cz, section_rows(r - 1, round_=True), y0, y1, gap)   # recessed gap ring between bands
+        extrude(ho, "y", cx, cz, section_rows(r, round_=True), y0 + 1, y1 - 1, slot)
+        cs = max(2, r // 4)                                             # chunky blocks on the diagonals
+        for s1 in (-1, 1):
+            for s2 in (-1, 1):
+                bx0, bz0 = cx + s1 * int(r * 0.62), cz + s2 * int(r * 0.62)
+                if H(sz, i, s1, s2, 9) < 0.75:
+                    ho.b(bx0 - cs // 2, y0 + 2, bz0 - cs // 2, bx0 + cs - cs // 2, y1 - 2, bz0 + cs - cs // 2,
+                         "secondary" if (i + s1 + s2) % 3 else "primary")
+        pw = max(2, int(r * 0.42))                                      # raised armour plates on the flats
         dep = 1 + int(H(sz, i, 3) * 2)
         pslot = "secondary" if slot != "secondary" else "primary"
         if H(sz, i, 1) < 0.7:
-            ho.b(cx - pw, y0 + 2, cz + r, cx + pw, y1 - 2, cz + r + dep, pslot)          # top
-            ho.b(cx - pw, y0 + 2, cz - r - dep, cx + pw, y1 - 2, cz - r, pslot)          # bottom
+            ho.b(cx - pw, y0 + 2, cz + int(r * 0.85), cx + pw, y1 - 2, cz + r + dep, pslot)   # top
+            ho.b(cx - pw, y0 + 2, cz - r - dep, cx + pw, y1 - 2, cz - int(r * 0.85), pslot)   # bottom
         if H(sz, i, 2) < 0.6:
-            ho.b(cx + r, y0 + 2, cz - pw, cx + r + dep, y1 - 2, cz + pw, pslot)          # sides
-            ho.b(cx - r - dep, y0 + 2, cz - pw, cx - r, y1 - 2, cz + pw, pslot)
+            ho.b(cx + int(r * 0.85), y0 + 2, cz - pw, cx + r + dep, y1 - 2, cz + pw, pslot)   # sides
+            ho.b(cx - r - dep, y0 + 2, cz - pw, cx - int(r * 0.85), y1 - 2, cz + pw, pslot)
         h = H(sz, i, 5)
         if h < 0.35 and seg >= 10:                                     # amber status lights
             ho.b(cx + r, y0 + 3, cz + 1, cx + r + 1, y0 + 5, cz + 3, "emit_b")
@@ -1031,6 +1038,11 @@ def ion_parts(sz):
                 ho.b(cx - r - 1, y0 + 2, zz, cx - r, y1 - 2, zz + 1, "dark")
         y = y1
     body_end = y
+    extrude(fl, "y", cx, cz, section_rows(r + 1, rin=r - 2, round_=True), 5, 7, "metal")    # bolted front cap
+    for a in range(8):
+        ang = a * math.pi / 4 + math.pi / 8
+        bx0, bz0 = cx + int(round((r - 0.5) * math.cos(ang))), cz + int(round((r - 0.5) * math.sin(ang)))
+        fl.b(bx0 - 1, 7, bz0 - 1, bx0 + 1, 8, bz0 + 1, "trim")
     # conduit layer: fuel / power pipes along the chamfers with clamps and a power coupling
     pr = max(1, r // 8)
     off = r - ch // 2 - pr
@@ -1041,8 +1053,8 @@ def ion_parts(sz):
             co.b(px - pr - 1, yy, pz - pr - 1, px + pr + 1, yy + 2, pz + pr + 1, "trim")
     co.b(cx - 2, body_end - 6, cz + r, cx + 2, body_end - 3, cz + r + 2, "emit_a")
     # nozzle: collar, stepped bell (dark ribbed), inner cavity and glowing core
-    tube(no, cx, cz, r + 1, ch, body_end, body_end + 3, "secondary")
-    steps = 3 + SIZE_CELLS[sz]
+    extrude(no, "y", cx, cz, section_rows(r + 1, round_=True), body_end, body_end + 3, "secondary")
+    steps = 4 + 2 * SIZE_CELLS[sz]
     yb = body_end + 3
     for k in range(steps):
         rb = int(r * 0.72 + (r * 0.34) * k / max(1, steps - 1))
@@ -1220,6 +1232,286 @@ def attach_plumes(piece, ob, theme_mats, coll):
         pl.location = (cx * T, y_exit * T, cz * T)
         pl.material_slots[0].link = pl.material_slots[1].link = "OBJECT"
         pl.material_slots[0].material, pl.material_slots[1].material = theme_mats["plume_outer"], theme_mats["plume_core"]
+
+
+# =========================================================================== r007: MODULAR MOUNT ASSEMBLIES
+# Every weapon / utility mount follows the reference 'ship mounted systems' stack:
+#   hardpoint connector -> rotation base -> gimbal (yoke) -> head (housing) -> payload (barrels / emitter / pod)
+# Parts are separate pieces (swappable, exploded view) and form one assembled piece. Barrels point +X.
+MOUNT_KINDS = ["pd", "autocannon", "laser", "railgun", "missile", "flak", "shield", "tractor", "sensor", "clamp", "beacon"]
+MOUNT_LABEL = {"pd": "POINT DEFENSE", "autocannon": "TWIN AUTOCANNON", "laser": "LASER CANNON", "railgun": "RAILGUN",
+               "missile": "MISSILE POD", "flak": "FLAK TURRET", "shield": "SHIELD EMITTER", "tractor": "TRACTOR PROJECTOR",
+               "sensor": "SENSOR DISH", "clamp": "DOCKING CLAMP", "beacon": "RELAY BEACON"}
+
+
+def section_rows(r, ch=0, rin=0, chin=0, round_=False):
+    rows = []
+    for k in range(-r, r):
+        q = abs(k + 0.5)
+        if round_:
+            half = int(math.floor(math.sqrt(max(0.0, r * r - q * q)) + 0.5))
+        else:
+            half = r if q <= r - ch else int(round(r - (q - (r - ch))))
+        hin = 0
+        if rin and q < rin:
+            if round_:
+                hin = int(math.floor(math.sqrt(max(0.0, rin * rin - q * q)) + 0.5))
+            else:
+                hin = rin if q <= rin - chin else max(0, int(round(rin - (q - (rin - chin)))))
+        rows.append((k, half, hin))
+    return rows
+
+
+def extrude(p, axis, c1, c2, rows, a0, a1, slot):
+    """Extrude a section (rows along the second in-plane axis) along axis x|y|z."""
+    start = 0
+    for n in range(1, len(rows) + 1):
+        if n == len(rows) or rows[n][1:] != rows[start][1:]:
+            k0, k1, half, hin = rows[start][0], rows[n - 1][0] + 1, rows[start][1], rows[start][2]
+            spans = [(c1 - half, c1 + half)] if not hin else [(c1 - half, c1 - hin), (c1 + hin, c1 + half)]
+            for u0, u1 in spans:
+                if axis == "y":
+                    p.b(u0, a0, c2 + k0, u1, a1, c2 + k1, slot)
+                elif axis == "z":
+                    p.b(u0, c2 + k0, a0, u1, c2 + k1, a1, slot)
+                else:
+                    p.b(a0, u0, c2 + k0, a1, u1, c2 + k1, slot)
+            start = n
+    return p
+
+
+def housing(p, x0, x1, y0, y1, z0, z1, slot, ch=1, top="secondary"):
+    """Chunky box with a chamfered (stepped) top edge in a contrasting slot."""
+    p.b(x0, y0, z0, x1, y1, z1 - ch, slot)
+    p.b(x0 + ch, y0 + ch, z1 - ch, x1 - ch, y1 - ch, z1, top)
+    return p
+
+
+def mount_parts(kind, sz):
+    n = SIZE_CELLS[sz]
+    W = 16 * n
+    c = W // 2
+    k = n
+    base = f"mount.{kind}.{sz}"
+    con, bas, gim, hed, pay = (Piece(f"{base}.{part}", "mount-part", "top", (W, W, 0))
+                               for part in ("connector", "base", "gimbal", "head", "payload"))
+    # ---- hardpoint connector (shared by every mount of this size)
+    t = 2 * k
+    con.b(0, 0, 0, W, W, t, "trim")
+    con.b(2, 2, t, W - 2, W - 2, t + 1, "secondary")
+    frame_top(con, 3, 3, W - 3, W - 3, t + 1, t + 2, 1, "emit_a")
+    for x, y in ((0, 0), (W - 2, 0), (0, W - 2), (W - 2, W - 2)):
+        con.b(x, y, t, x + 2, y + 2, t + 2, "metal")
+    z = t + 1
+    # ---- rotation base: stepped octagonal pedestal with status lights
+    r1, r2 = int(W * 0.40), int(W * 0.31)
+    h1 = h2 = 2 * k
+    extrude(bas, "z", c, c, section_rows(r1, max(1, r1 // 3)), z, z + h1, "secondary")
+    extrude(bas, "z", c, c, section_rows(r2, max(1, r2 // 3)), z + h1, z + h1 + h2, "primary")
+    lz = z + max(1, h1 // 2)
+    for (x0, y0, x1, y1) in ((c + r1, c - 1, c + r1 + 1, c + 1), (c - r1 - 1, c - 1, c - r1, c + 1),
+                             (c - 1, c + r1, c + 1, c + r1 + 1), (c - 1, c - r1 - 1, c + 1, c - r1)):
+        bas.b(x0, y0, z, x1, y1, lz, "emit_a")
+    z += h1 + h2
+    top_of_base = z
+    gy = int(W * 0.32)
+    hy = gy - 1
+    head_z0 = z + 2
+    turret_kinds = ("pd", "autocannon", "laser", "railgun", "missile", "flak", "tractor")
+    if kind in turret_kinds:
+        # ---- gimbal: turntable ring + two yoke cheeks + axle
+        extrude(gim, "z", c, c, section_rows(r2 - 1, max(1, r2 // 3)), z, z + 1, "trim")
+        gt, gh, gx = max(1, k), 2 * k + 3, max(2, int(W * 0.12))
+        gim.b(c - gx, c - gy - gt, z + 1, c + gx, c - gy, z + 1 + gh, "secondary")
+        gim.b(c - gx, c + gy, z + 1, c + gx, c + gy + gt, z + 1 + gh, "secondary")
+        gim.b(c - 1, c - gy - gt - 1, z + gh // 2, c + 1, c + gy + gt + 1, z + gh // 2 + 2, "metal")
+    # ---- head + payload per kind
+    if kind == "pd":
+        hh = max(5, int(W * 0.38))
+        housing(hed, c - int(W * 0.22), c + int(W * 0.18), c - hy, c + hy, head_z0, head_z0 + hh, "primary")
+        hed.b(c - int(W * 0.16), c - hy - 1, head_z0 + 1, c + int(W * 0.10), c - hy, head_z0 + hh - 2, "accent")
+        lr = max(1, int(W * 0.07))
+        pay.disc("x", c + hy // 2, head_z0 + hh - lr - 1, lr, c + int(W * 0.18), c + int(W * 0.18) + 2, "emit_a")
+        bw = max(1, int(1.5 * k))
+        bz = head_z0 + hh // 2 - bw
+        pay.b(c + int(W * 0.18), c - hy // 2 - bw, bz, c + int(W * 0.66), c - hy // 2 + bw, bz + 2 * bw, "metal")
+        pay.b(c + int(W * 0.60), c - hy // 2 - bw - 1, bz - 1, c + int(W * 0.68), c - hy // 2 + bw + 1, bz + 2 * bw + 1, "trim")
+    elif kind == "autocannon":
+        hh = max(6, int(W * 0.44))
+        housing(hed, c - int(W * 0.30), c + int(W * 0.22), c - hy, c + hy, head_z0, head_z0 + hh, "primary")
+        hed.b(c - int(W * 0.24), c - hy - 1, head_z0 + 1, c + int(W * 0.14), c - hy, head_z0 + hh - 2, "accent")
+        hed.b(c - int(W * 0.24), c + hy, head_z0 + 1, c + int(W * 0.14), c + hy + 1, head_z0 + hh - 2, "secondary")
+        hed.disc("y", c - int(W * 0.12), head_z0 + hh, max(2, int(W * 0.12)), c - hy + 1, c + hy - 1, "trim")   # ammo drum
+        hed.b(c + int(W * 0.10), c - 2, head_z0 + hh, c + int(W * 0.18), c + 2, head_z0 + hh + 2, "emit_b")  # targeting light
+        bw = max(1, int(1.5 * k))
+        bz = head_z0 + hh // 2 - bw
+        for by in (c - int(W * 0.11), c + int(W * 0.11)):
+            pay.b(c + int(W * 0.22), by - bw - 1, bz - 1, c + int(W * 0.40), by + bw + 1, bz + 2 * bw + 1, "secondary")   # recoil sleeve
+            pay.b(c + int(W * 0.40), by - bw, bz, c + int(W * 0.86), by + bw, bz + 2 * bw, "metal")
+            pay.b(c + int(W * 0.80), by - bw - 1, bz - 1, c + int(W * 0.90), by + bw + 1, bz + 2 * bw + 1, "trim")  # muzzle brake
+    elif kind == "laser":
+        hh = max(6, int(W * 0.40))
+        x0, x1 = c - int(W * 0.30), c + int(W * 0.30)
+        housing(hed, x0, x1, c - hy, c + hy, head_z0, head_z0 + hh, "primary")
+        hed.b(c - 2 * k, c - hy - 1, head_z0, c + 2 * k, c + hy + 1, head_z0 + hh, "accent")                  # crimson band
+        for x in range(x0 + 2, c - 2 * k - 1, 2):                                                            # cooling fins
+            hed.b(x, c - hy + 1, head_z0 + hh, x + 1, c + hy - 1, head_z0 + hh + 1 + k // 2, "metal")
+        er = max(2, int(W * 0.16))
+        ez = head_z0 + hh // 2
+        pay.disc("x", c, ez, er + 1, x1, x1 + 2 * k + 2, "secondary")                                        # emitter housing
+        pay.disc("x", c, ez, er, x1 + 2 * k + 2, x1 + 2 * k + 3, "trim", rin=max(1, er - 1))               # focus ring
+        pay.disc("x", c, ez, max(1, er - 1), x1 + 2 * k + 1, x1 + 2 * k + 3, "emit_a")                      # lens
+        hed.b(x0 + 1, c + hy, head_z0 + hh - 3, x0 + 3, c + hy + 1, head_z0 + hh - 1, "emit_a")
+    elif kind == "railgun":
+        hh = max(6, int(W * 0.36))
+        housing(hed, c - int(W * 0.28), c + int(W * 0.12), c - hy, c + hy, head_z0, head_z0 + hh, "primary")
+        hed.b(c - int(W * 0.22), c - hy - 1, head_z0 + 1, c + int(W * 0.06), c - hy, head_z0 + hh - 1, "secondary")
+        rz0, rz1 = head_z0 + hh // 2 - max(2, k * 2), head_z0 + hh // 2 + max(2, k * 2)
+        gap = max(1, k)
+        x0, x1 = c + int(W * 0.12), c + int(W * 1.10)
+        pay.b(x0, c - gap - max(1, k), rz0, x1, c - gap, rz1, "metal")
+        pay.b(x0, c + gap, rz0, x1, c + gap + max(1, k), rz1, "metal")
+        for x in range(x0 + 2 * k, x1 - 3 * k, max(4, int(W * 0.18))):
+            pay.b(x, c - gap - max(1, k) - 1, rz0 - 1, x + max(1, k), c + gap + max(1, k) + 1, rz1 + 1, "emit_a")   # coils
+        pay.b(x1 - 2 * k, c - gap - max(1, k) - 1, rz0 - 1, x1, c + gap + max(1, k) + 1, rz1 + 1, "trim")
+    elif kind == "missile":
+        hh = max(8, int(W * 0.58))
+        x0, x1 = c - int(W * 0.30), c + int(W * 0.30)
+        housing(hed, x0, x1, c - hy, c + hy, head_z0, head_z0 + hh, "primary", ch=max(1, k))
+        hed.b(x0 + 1, c - hy + 1, head_z0 + hh, x1 - 1, c + hy - 1, head_z0 + hh + 1, "secondary")          # pod cover
+        cols = {1: 2, 2: 3, 3: 3}[n]
+        rows_ = {1: 2, 2: 2, 3: 3}[n]
+        cw = (2 * hy - 2) // cols
+        chh = (hh - 2) // rows_
+        for i in range(cols):
+            for j in range(rows_):
+                ya, za = c - hy + 1 + i * cw, head_z0 + 1 + j * chh
+                pay.b(x1, ya, za, x1 + 1, ya + cw - 1, za + chh - 1, "dark")
+                pay.b(x1, ya + 1, za + 1, x1 + 2, ya + cw - 2, za + chh - 2, "accent")                      # tube caps
+        hed.b(x0 - 2, c - 2, head_z0 + 2, x0, c + 2, head_z0 + 2 + max(2, hh // 3), "secondary")           # control module
+    elif kind == "flak":
+        hh = max(6, int(W * 0.44))
+        housing(hed, c - int(W * 0.24), c + int(W * 0.20), c - hy, c + hy, head_z0, head_z0 + hh, "primary")
+        hed.disc("y", c - int(W * 0.08), head_z0 + hh // 2, max(2, int(W * 0.16)), c + hy, c + hy + max(2, 2 * k), "trim")  # ammo drum
+        bw = max(1, k // 2 + (1 if k > 1 else 0))
+        for i in (-1, 0, 1):
+            for j in (0, 1):
+                by, bz = c + i * (2 * bw + 1), head_z0 + 2 + j * (2 * bw + 1)
+                pay.b(c + int(W * 0.20), by - bw, bz, c + int(W * 0.62), by + bw, bz + 2 * bw, "metal")
+        pay.b(c + int(W * 0.58), c - 3 * bw - 2, head_z0 + 1, c + int(W * 0.64), c + 3 * bw + 2, head_z0 + 4 * bw + 4, "trim")
+    elif kind == "tractor":
+        hh = max(6, int(W * 0.38))
+        housing(hed, c - int(W * 0.22), c + int(W * 0.10), c - hy, c + hy, head_z0, head_z0 + hh, "primary")
+        er = max(3, int(W * 0.30))
+        ez = head_z0 + hh // 2 + 1
+        x1 = c + int(W * 0.10)
+        pay.disc("x", c, ez, er, x1, x1 + 2 * k, "accent", rin=max(1, er - 2 * k))
+        pay.disc("x", c, ez, max(1, er - 2 * k), x1, x1 + 1, "emit_a")
+        pay.disc("x", c, ez, max(1, er - 3 * k), x1 + 1, x1 + 2, "emit_a")
+    elif kind == "shield":
+        cr = int(W * 0.30)
+        hh = int(W * 0.50)
+        extrude(hed, "z", c, c, section_rows(cr, max(1, cr // 3)), z, z + hh, "primary")
+        for j in range(3):                                                                                # field coils
+            zz = z + 2 + j * (hh - 4) // 2
+            extrude(hed, "z", c, c, section_rows(cr + 1, max(1, cr // 3)), zz, zz + max(1, k), "emit_a")
+        for (x0, y0, x1, y1) in ((c + cr, c - 2, c + cr + 2, c + 2), (c - cr - 2, c - 2, c - cr, c + 2),
+                                 (c - 2, c + cr, c + 2, c + cr + 2), (c - 2, c - cr - 2, c + 2, c - cr)):
+            hed.b(x0, y0, z + 2, x1, y1, z + hh - 2, "secondary")
+        extrude(pay, "z", c, c, section_rows(cr - 1, max(1, cr // 3)), z + hh, z + hh + 2, "secondary")  # shield cap
+        extrude(pay, "z", c, c, section_rows(max(1, cr // 2), max(1, cr // 6)), z + hh + 2, z + hh + 3, "emit_a")
+    elif kind == "sensor":
+        hed.b(c - 1 - k // 2, c - 1 - k // 2, z, c + 1 + k // 2, c + 1 + k // 2, z + 4 * k, "metal")          # mast
+        hed.b(c - 2, c - 2, z + 2 * k, c + 2, c + 2, z + 3 * k, "emit_b")
+        dz = z + 4 * k
+        rr = int(W * 0.46)
+        for i in range(4):                                                                                 # stepped bowl
+            ro = max(2, int(rr * (0.45 + 0.18 * i)))
+            pay.disc("z", c, c, ro, dz + i * max(1, k), dz + (i + 1) * max(1, k), "primary", rin=max(1, ro - 2 * k) if i else 0)
+        pay.b(c - 1, c - 1, dz, c + 1, c + 1, dz + 6 * k, "metal").b(c - 2, c - 2, dz + 6 * k, c + 2, c + 2, dz + 6 * k + 2, "emit_a")
+    elif kind == "clamp":
+        hed.b(c - int(W * 0.18), c - int(W * 0.18), z, c + int(W * 0.18), c + int(W * 0.18), z + 3 * k, "secondary")  # actuator
+        jz = z + 3 * k
+        jw = max(2, int(W * 0.10))
+        for s in (-1, 1):
+            y0 = c - int(W * 0.30) if s < 0 else c + int(W * 0.30) - jw
+            pay.b(c - jw, y0, jz, c + jw, y0 + jw, jz + int(W * 0.50), "primary")                          # jaw arm
+            pay.b(c - jw, y0 + (jw if s < 0 else -jw), jz + int(W * 0.40), c + jw, y0 + (2 * jw if s < 0 else 0), jz + int(W * 0.50), "primary")
+            for m in range(0, int(W * 0.40), 2 * max(1, k)):                                               # hazard stripes
+                pay.b(c + jw, y0, jz + m, c + jw + 1, y0 + jw, jz + m + max(1, k), "trim")
+        pay.b(c - 2, c - 2, jz, c + 2, c + 2, jz + 2, "emit_b")
+    elif kind == "beacon":
+        mh = int(W * 0.9)
+        hed.b(c - 2 * k, c - 2 * k, z, c + 2 * k, c + 2 * k, z + 4 * k, "secondary")
+        hed.b(c - k, c - k, z + 4 * k, c + k, c + k, z + mh, "metal")
+        for j, zz in enumerate(range(z + 5 * k, z + mh - 2, max(3, 3 * k))):
+            s = max(1, k) + j % 2
+            hed.b(c - k - s, c - k - s, zz, c + k + s, c + k + s, zz + max(1, k), "primary")
+        for dx in (-1, 1):
+            pay.b(c + dx * 3 * k - k, c - k, z + mh - 4 * k, c + dx * 3 * k + k, c + k, z + mh, "metal")
+            pay.b(c + dx * 3 * k - k, c - k, z + mh, c + dx * 3 * k + k, c + k, z + mh + max(1, k), "emit_b")
+        pay.b(c - k, c - k, z + mh, c + k, c + k, z + mh + 2 * k, "emit_a")
+    parts = [con, bas, gim, hed, pay]
+    top = max((bx[5] for pc in parts for bx in pc.boxes), default=W)
+    for pc in parts:
+        pc.size = (W, W, top)
+    return parts
+
+
+def mount_union(kind, sz):
+    parts = mount_parts(kind, sz)
+    p = Piece(f"mount.{kind}.{sz}", "mount", "top", parts[0].size)
+    for q in parts:
+        p.boxes += q.boxes
+    return p
+
+
+def face_variant(piece):
+    """Same mount on a hull face: top-frame up (z) becomes face-frame outward (y); barrels stay along X."""
+    p = Piece(piece.id + ".face", piece.family, "face", (piece.size[0], piece.size[2], piece.size[1]))
+    p.boxes = [(x0, z0, y0, x1, z1, y1, s) for (x0, y0, z0, x1, y1, z1, s) in piece.boxes]
+    return p
+
+
+def scrap_ion(sz):
+    """Riftjack salvaged ion drive: same sockets and envelope, but exposed frame bands, offset patch
+    plates, a hazard-striped patch and an external bypass pipe (geometry variant, not just a theme)."""
+    parts, meta = ion_parts(sz)
+    W, total = meta["W"], meta["total"]
+    r = W // 2 - 2
+    cx = cz = W // 2
+    p = Piece(f"mount.engine.ion.{sz}.scrap", "mount", "face", (W, total, W))
+    seg = max(8, (W // 3) & ~1)
+    cut = []
+    for i, y0 in enumerate(range(5, total, seg)):
+        if H("scrap", sz, i) < 0.35 and 0 < i < (total - 5) // seg - 2:
+            cut.append((y0 + 1, y0 + seg - 1))
+    for bx in parts[0].boxes + parts[2].boxes + parts[3].boxes:
+        p.boxes.append(bx)
+    for bx in parts[1].boxes:
+        if any(a <= bx[1] and bx[4] <= b for a, b in cut) and bx[6] != "dark":
+            continue                                                            # stripped band
+        p.boxes.append(bx)
+    for a, b in cut:                                                            # exposed cage over the stripped band
+        for sx, sz_ in ((1, 1), (-1, 1), (1, -1), (-1, -1)):
+            px, pz = cx + sx * int(r * 0.7), cz + sz_ * int(r * 0.7)
+            p.b(px - 1, a, pz - 1, px + 1, b, pz + 1, "trim")
+        p.b(cx - r + 2, a + 1, cz - 1, cx + r - 2, a + 2, cz + 1, "metal")
+    for i in range(4):                                                          # offset patch plates
+        y0 = 5 + int(H("patch", sz, i) * (total - 20))
+        side = i % 2
+        w = max(3, int(r * (0.4 + 0.3 * H("pw", sz, i))))
+        zc = cz + int((H("pz", sz, i) - 0.5) * r)
+        if side:
+            p.b(cx + r, y0, zc - w // 2, cx + r + 2, y0 + w + 2, zc + w // 2, "accent" if i < 2 else "primary")
+        else:
+            p.b(cx - w // 2 + 2, y0, cz + r, cx + w // 2 + 2, y0 + w, cz + r + 2, "primary")
+    y0 = 5 + seg
+    for m in range(0, max(4, r), 2):                                            # hazard-striped patch
+        p.b(cx - r - 2, y0 + m, cz - r // 2, cx - r, y0 + m + 1, cz + r // 2, "trim" if m % 4 == 0 else "dark")
+    p.b(cx - r - 3, 6, cz + r // 2, cx - r - 1, total - 8, cz + r // 2 + 2, "metal")   # external bypass pipe
+    p.plumes = meta["plumes"]
+    return p
 
 
 # =========================================================================== r005: GENERIC HULL DRESSER
@@ -1656,6 +1948,13 @@ def kit_piece(kit, key):
     }
     if key in table:
         return table[key]()
+    if key.startswith("ion.") and key.endswith(".scrap"):
+        sz = key.split(".")[1]
+        return kit.get(("ionscrap", sz), scrap_ion, sz)
+    if key.startswith(("wpn.", "wf.")):
+        _, kind, sz = key.split(".")
+        pc = kit.get(("wpn", kind, sz), mount_union, kind, sz)
+        return pc if key.startswith("wpn.") else kit.get(("wf", kind, sz), face_variant, pc)
     fam, _, sz = key.partition(".")
     sized = {"ion": ion_engine, "block": block_engine, "turret": turret, "cannon": cannon, "rcs": rcs}
     if fam in sized and sz in SIZE_CELLS:
@@ -1704,7 +2003,8 @@ def designs():
         mounts=[("ion.LG", 0, 1.5, "face", 90, 5), ("ion.LG", 0, 7.5, "face", 90, 5), ("ion.MD", 0, 5, "face", 90, 13),
                 ("cannon.MD", 5, 14, "face", 0, 13), ("cannon.MD", 7, -2, "face", 180, 13), ("rcs.MD", 4, 12.25, "face", 90, 15),
                 ("rcs.MD", 4, -1.75, "face", 90, 15), ("cargo", 16, 1, "face", 180, 6), ("airlock", 14, 11, "face", 0, 8),
-                ("turret.MD", 6, 2, "top", 0, 0), ("turret.MD", 13, 8, "top", 0, 0), ("sky.32.32", 20, 5, "top", 0, 0), ("dish", 2, 7, "top", 0, 0)]))
+                ("wpn.autocannon.MD", 6, 2, "top", 0, 0), ("wpn.laser.MD", 13, 8, "top", 0, 0), ("sky.32.32", 20, 5, "top", 0, 0),
+                ("wpn.sensor.MD", 2, 7, "top", 0, 0), ("wpn.pd.SM", 17, 3, "top", 0, 0)]))
     D.append(dict(id="frigate", name="ORION CREST  frigate", theme="federation", size="42 x 16 m", volumes=[
         dict(poly=[(0, 0), (30, 0), (36, 3), (36, 7), (30, 10), (0, 10)], z=full(), kind="hull", spine=True),
         dict(poly=[(8, -3), (21, -3), (24, 0), (8, 0)], z=(9, 50), kind="hull", logo=False),
@@ -1713,19 +2013,21 @@ def designs():
         dict(poly=[(24, 10), (30, 10), (28, 12), (24, 12)], z=(14, 30), kind="plate")],
         mounts=[("ion.XL", 0, 0.5, "face", 90, -3), ("ion.XL", 0, 5.5, "face", 90, -3),
                 ("block.MD", 8, -2.5, "face", 90, 13), ("block.MD", 8, 10.5, "face", 90, 13),
-                ("turret.LG", 4, 0.5, "top", 0, 0), ("turret.LG", 4, 6.5, "top", 0, 0), ("turret.MD", 26, 1, "top", 0, 0), ("turret.MD", 26, 7, "top", 0, 0),
-                ("turret.MD", 12, -2.5, "top", 0, 0), ("turret.MD", 12, 10.5, "top", 0, 0), ("dish", 17, 10.5, "top", 0, 0),
+                ("wpn.railgun.LG", 4, 0.5, "top", 0, 0), ("wpn.railgun.LG", 4, 6.5, "top", 0, 0), ("wpn.missile.MD", 26, 1, "top", 0, 0), ("wpn.missile.MD", 26, 7, "top", 0, 0),
+                ("wpn.flak.MD", 12, -2.5, "top", 0, 0), ("wpn.pd.MD", 12, 10.5, "top", 0, 0), ("wpn.sensor.MD", 17, 10.5, "top", 0, 0),
+                ("wpn.shield.MD", 15, 4, "top", 0, 0), ("wpn.beacon.SM", 20, 1, "top", 0, 0),
                 ("cannon.LG", 21, -3, "face", 180, 20), ("cannon.LG", 17, 13, "face", 0, 20),
-                ("sky.48.32", 31, 4, "top", 0, 0), ("tractor", 34, 4, "top", 0, 0),
+                ("sky.48.32", 31, 4, "top", 0, 0), ("wpn.tractor.MD", 34, 4, "top", 0, 0),
                 ("cargo", 18, -3, "face", 180, 9), ("cargo", 12, 13, "face", 0, 9), ("airlock", 29, 0, "face", 180, 12)]))
     D.append(dict(id="marauder", name="RIFTJACK MARAUDER  raider", theme="riftjack", size="28 x 12 m", volumes=[
         dict(poly=[(0, 0), (18, 0), (22, 2), (22, 4), (18, 6), (0, 6)], z=full(), kind="hull", spine=True),
         dict(poly=[(4, 6), (15, 6), (12, 9), (4, 9)], z=(5, 50), kind="hull", logo=False),
         dict(poly=[(6, -2), (10, -2), (12, 0), (6, 0)], z=(12, 30), kind="plate"),
         dict(poly=[(22, 2), (24, 3), (22, 4)], z=(16, 28), kind="plate")],
-        mounts=[("block.LG", 0, 0, "face", 90, 5), ("ion.MD", 0, 3.5, "face", 90, 13), ("ion.SM", 4, 7, "face", 90, 19),
+        mounts=[("block.LG", 0, 0, "face", 90, 5), ("ion.MD.scrap", 0, 3.5, "face", 90, 13), ("ion.SM.scrap", 4, 7, "face", 90, 19),
                 ("cannon.MD", 7, -2, "face", 180, 13), ("cannon.MD", 9, -2, "face", 180, 13), ("cannon.LG", 4, 9, "face", 0, 16),
-                ("turret.MD", 10, 6.75, "top", 0, 0), ("turret.LG", 5, 1.5, "top", 0, 0), ("turret.SM", 14, 2.5, "top", 0, 0),
+                ("wpn.missile.MD", 10, 6.75, "top", 0, 0), ("wpn.autocannon.LG", 5, 1.5, "top", 0, 0), ("wpn.flak.SM", 14, 2.5, "top", 0, 0),
+                ("wpn.clamp.MD", 16, 1.5, "top", 0, 0),
                 ("cargo", 8, 9, "face", 0, 6)]))
     pod = arc(6, 0, 3, -180, 180, 24)[:-1]
     D.append(dict(id="crescent", name="AURELIAN CRESCENT  explorer", theme="aurelian", size="20 x 18 m", volumes=[
@@ -1741,7 +2043,8 @@ def designs():
     D.append(dict(id="station", name="HUB STATION  module", theme="federation", size="20 x 20 m", volumes=[
         dict(poly=hub, z=full(), kind="hull", face_style="windows", logo=False)] + [dict(poly=a, z=(9, 46), kind="hull", logo=False) for a in arms],
         mounts=[("airlock", 10, 1, "face", -90, 8), ("airlock", -10, -1, "face", 90, 8), ("airlock", -1, 10, "face", 0, 8),
-                ("airlock", 1, -10, "face", 180, 8), ("dish", -1, -1, "top", 0, 0), ("turret.SM", 6, -0.5, "top", 0, 0), ("turret.SM", -7, -0.5, "top", 0, 0),
+                ("airlock", 1, -10, "face", 180, 8), ("wpn.sensor.MD", -1, -1, "top", 0, 0), ("wpn.pd.SM", 6, -0.5, "top", 0, 0), ("wpn.pd.SM", -7, -0.5, "top", 0, 0),
+                ("wpn.shield.MD", -3, 1, "top", 0, 0), ("wpn.beacon.MD", 1, 1, "top", 0, 0), ("wpn.clamp.SM", -0.5, 7, "top", 0, 0),
                 ("rcs.SM", 10, -0.9, "face", -90, 20), ("rcs.SM", -10, 0.9, "face", 90, 20)]))
     return D
 
@@ -1877,8 +2180,9 @@ def component_sheet(kit, mats, coll, origin):
          + [kit.get(("rim", k), roof_rim, k) for k in ("plain", "bump", "lit", "vent")]),
         ("ENGINES  SM / MD / LG / XL", [kit_piece(kit, f"ion.{z}") for z in SIZE_CELLS] + [kit_piece(kit, f"block.{z}") for z in SIZE_CELLS]
                                          + [kit_piece(kit, "rcs.SM"), kit_piece(kit, "rcs.MD")]),
-        ("WEAPONS + UTILITY", [kit_piece(kit, f"turret.{z}") for z in ("SM", "MD", "LG")] + [kit_piece(kit, f"cannon.{z}") for z in ("SM", "MD", "LG")]
-                              + [kit_piece(kit, "tractor"), kit_piece(kit, "dish"), kit_piece(kit, "cargo"), kit_piece(kit, "airlock")]),
+        ("WEAPONS  (MD)", [kit_piece(kit, f"wpn.{k}.MD") for k in MOUNT_KINDS[:6]] + [kit_piece(kit, f"cannon.{z}") for z in ("SM", "MD", "LG")]),
+        ("UTILITY  (MD)", [kit_piece(kit, f"wpn.{k}.MD") for k in MOUNT_KINDS[6:]] + [kit_piece(kit, "cargo"), kit_piece(kit, "airlock"),
+                                                                                    kit_piece(kit, "ion.LG.scrap")]),
         ("INTERIOR EDGES + DECORATORS", [kit.get("wfull", edge_wall, "full"), kit.get("wglazed", edge_wall, "glazed"), kit.get("whalf", edge_wall, "half"),
                                          kit.get("door", edge_door), kit.get("floor", floor_tile), kit.get("spike", decorator, "spike"),
                                          kit.get("crystal", decorator, "crystal"), kit.get("antenna", decorator, "antenna")]),
@@ -1899,7 +2203,7 @@ def component_sheet(kit, mats, coll, origin):
                 ext, dep = w, d
             else:
                 instance(pc, (x, y - d, 0), 0, mats, coll)
-                ext, dep = w, d
+                ext, dep = max(w, max(bx[3] for bx in pc.boxes) * T), d
             text(pc.id.split(".", 1)[1], (x, y - dep - 0.6, 0.02), 0.36, lab, coll)
             x += max(ext, 1.2, 0.2 * len(pc.id)) + 1.0
             rowd = max(rowd, dep)
@@ -1964,12 +2268,12 @@ def engine_showcase(kit, theme_mats, lab, sc):
     coll = bpy.data.collections.new("ENGINES"); sc.collection.children.link(coll)
     fm = theme_mats["federation"]
     y = 0.0
-    for fam in ("ion", "block"):
+    for fam in ("ion", "block", "scrap"):
         for sz in SIZE_CELLS:
-            pc = kit_piece(kit, f"{fam}.{sz}")
+            pc = kit_piece(kit, f"{fam}.{sz}" if fam != "scrap" else f"ion.{sz}.scrap")
             W = pc.size[0] * T
             y += W
-            instance(pc, (500.0, y, 0.0), -90, fm, coll)           # local X -> world -y, outward -> +x
+            instance(pc, (500.0, y, 0.0), -90, fm if fam != "scrap" else theme_mats["riftjack"], coll)   # outward -> +x
             text(f"{fam} {sz}", (497.2, y - W / 2 - 0.25, 0.02), 0.5, lab, coll)
             y += 1.3
         y += 2.0
@@ -1991,18 +2295,44 @@ def engine_showcase(kit, theme_mats, lab, sc):
     instance(kit_piece(kit, "ion.XL"), (x0, y0 + 7.0, 0.0), -90, fm, coll)
     t = text("ASSEMBLED  ION DRIVE XL  (4 x 4 m hardpoint)", (x0 - 1.0, y0 + 3.0 - 0.3, W + 0.5), 0.5, lab, coll)
     t.rotation_euler = (math.radians(90), 0, 0)
-    wx = 500.0
-    for key in ("turret.SM", "turret.MD", "turret.LG"):
-        pc = kit_piece(kit, key)
-        instance(pc, (wx, -10.0, 0.0), -90, fm, coll)
-        text(key, (wx, -12.4, 0.02), 0.45, lab, coll)
-        wx += pc.size[0] * T + 2.4
-    for key in ("cannon.SM", "cannon.MD", "cannon.LG", "rcs.SM", "rcs.MD"):
-        pc = kit_piece(kit, key)
-        instance(pc, (wx + pc.size[0] * T, -6.0, 0.0), 180, fm, coll)
-        text(key, (wx, -12.4, 0.02), 0.45, lab, coll)
-        wx += pc.size[0] * T + 1.8
     return coll, (x0 + meta["total"] * T / 2, y0, 2.5)
+
+
+def weapon_showcase(kit, theme_mats, lab, sc):
+    """Mount catalog (every kind at MD), size ladder (SM / MD / LG) + one mount in three themes,
+    and an exploded LG autocannon: connector / base / gimbal / head / payload."""
+    coll = bpy.data.collections.new("WEAPONS"); sc.collection.children.link(coll)
+    fm = theme_mats["federation"]
+    for i, kind in enumerate(MOUNT_KINDS):
+        x, y = 600.0 + (i % 6) * 5.0, 0.0 - (i // 6) * 6.0
+        instance(kit_piece(kit, f"wpn.{kind}.MD"), (x + 0.3, y + 1.8, 0.0), -55, fm, coll)
+        text(MOUNT_LABEL[kind], (x - 0.4, y - 1.2, 0.02), 0.34, lab, coll)
+    x = 600.0
+    for kind in ("autocannon", "missile", "laser"):
+        for sz in ("SM", "MD", "LG"):
+            pc = kit_piece(kit, f"wpn.{kind}.{sz}")
+            instance(pc, (x, -22.0 + pc.size[0] * T * 0.8, 0.0), -55, fm, coll)
+            text(f"{kind} {sz}", (x - 0.2, -23.3, 0.02), 0.3, lab, coll)
+            x += max(bx[3] for bx in pc.boxes) * T + 1.2
+        x += 1.0
+    for j, tn in enumerate(THEMES):
+        instance(kit_piece(kit, "wpn.autocannon.MD"), (x + j * 3.6, -20.4, 0.0), -55, theme_mats[tn], coll)
+        text(tn, (x + j * 3.6, -23.3, 0.02), 0.3, lab, coll)
+    parts = kit.get(("wpnparts", "autocannon", "LG"), mount_parts, "autocannon", "LG")
+    ex, ey = 690.0, 0.0
+    names = ["HARDPOINT CONNECTOR", "ROTATION BASE", "GIMBAL / ELEVATION", "HEAD / AMMO DRUM", "BARRELS"]
+    for kk, pc in enumerate(parts):
+        dz = kk * 1.5
+        instance(pc, (ex, ey, dz), 0, fm, coll)
+        zc = min(bx[2] for bx in pc.boxes) * T + dz
+        t = text(names[kk], (ex + 5.2, ey + 1.5, zc + 0.1), 0.4, lab, coll)
+        t.rotation_euler = (math.radians(90), 0, 0)
+    instance(kit_piece(kit, "wpn.autocannon.LG"), (ex - 6.0, ey, 0.0), 0, fm, coll)
+    t = text("COMPLETE", (ex - 5.4, ey + 1.5, 3.0), 0.45, lab, coll)
+    t.rotation_euler = (math.radians(90), 0, 0)
+    t = text("EXPLODED  (twin autocannon LG, 3 x 3 m hardpoint)", (ex - 1.0, ey + 1.5, 9.2), 0.45, lab, coll)
+    t.rotation_euler = (math.radians(90), 0, 0)
+    return coll
 
 
 def main():
@@ -2049,6 +2379,7 @@ def main():
     sheet = bpy.data.collections.new("COMPONENTS"); sc.collection.children.link(sheet)
     bottom = component_sheet(kit, theme_mats["federation"], sheet, (300, 0))
     engines, ex_mid = engine_showcase(kit, theme_mats, lab, sc)
+    weapons = weapon_showcase(kit, theme_mats, lab, sc)
     pieces = [p for p in kit.p.values() if isinstance(p, Piece)]
     manifest = {"revision": REVISION, "texel_m": T, "slots": SLOTS, "themes": list(THEMES),
                 "unique_meshes": len(MESHES), "placements": PLACEMENTS["count"], "designs": stats,
@@ -2065,7 +2396,7 @@ def main():
         return
     cam = setup(sc, args.samples)
     labels = [c for c in sc.collection.children if c.name.startswith("L_")]
-    everything = [ships, shapes, sheet, engines] + labels
+    everything = [ships, shapes, sheet, engines, weapons] + labels
 
     def shot(name, visible, res=(1672, 941)):
         if shots and name not in shots:
@@ -2094,8 +2425,12 @@ def main():
     shot("engines_lineup", [engines])
     look(cam, (ex_mid[0], ex_mid[1] + 2.0, ex_mid[2]), (9.0, -24, 12.0), 32)
     shot("engine_exploded", [engines])
-    look(cam, (510, -9, 0.8), (-2, -17, 11), 32)
-    shot("weapons_lineup", [engines])
+    look(cam, (613.5, -3.5, 0.6), (-2, -23, 16), 31)
+    shot("weapons_catalog", [weapons])
+    look(cam, (617, -21, 0.6), (-1, -15, 9), 36)
+    shot("weapon_sizes_themes", [weapons])
+    look(cam, (691.0, 1.5, 3.8), (2, -21, 4.0), 34)
+    shot("weapon_exploded", [weapons])
     look(cam, (12, 46.5, 1.0), (4, -12, 9), 32)
     shot("razor_courier", [ships])
     look(cam, (shapes_cx, 1.5, 1.0), (-4, -38, 26), 28)
@@ -2115,8 +2450,8 @@ def main():
         blueprint_lines(sc, True, 0.9)
         ortho_top(cam, shapes_cx, 1.0, (shapes_cx - 150) * 2 + 8)
         shot("blueprint_shapes", [shapes], (2400, 900))
-        ortho_top(cam, 318, bottom / 2 + 0.5, 60)
-        shot("blueprint_components", [sheet], (2400, 1500))
+        ortho_top(cam, 318, bottom / 2 + 0.5, 64)
+        shot("blueprint_components", [sheet], (2400, 2100))
 
 
 main()
