@@ -4,13 +4,14 @@
  */
 import type { ShipPrefabDocumentV1 } from "../ship-prefab";
 import { AU_CATHEDRAL, AU_CRESCENT, AU_LUMEN } from "./aurelian";
-import { FED_BASTION, FED_CREST, FED_WREN } from "./federation";
+import { FED_BASTION, FED_CREST, FED_MERIDIAN, FED_WREN } from "./federation";
 import { CRY_SHARD, IND_MULE } from "./frontier";
 import { RJ_JACKAL, RJ_MARAUDER, RJ_MAW } from "./riftjack";
 
 export const PREFAB_SHIPS: readonly ShipPrefabDocumentV1[] = [
   FED_WREN,
   FED_CREST,
+  FED_MERIDIAN,
   FED_BASTION,
   RJ_JACKAL,
   RJ_MARAUDER,
