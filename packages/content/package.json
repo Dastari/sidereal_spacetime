@@ -65,7 +65,16 @@
     "./wayfarer-current-starter": "./src/wayfarer-current-starter.ts",
     "./wayfarer-flight-definition": "./src/wayfarer-flight-definition.ts",
     "./interior": "./src/interior.ts",
-    "./wayfarer-rebuild-removals.json": "./src/wayfarer-rebuild-removals.json"
+    "./wayfarer-rebuild-removals.json": "./src/wayfarer-rebuild-removals.json",
+    "./construction-grammar": "./src/construction-grammar.ts",
+    "./construction-grammar.v1.json": "./src/construction-grammar.v1.json",
+    "./ship-prefab": "./src/ship-prefab.ts",
+    "./ship-prefab-components": "./src/ship-prefab-components.ts",
+    "./ship-prefab-catalog": "./src/ship-prefab-catalog.ts",
+    "./ship-kit": "./src/ship-kit.ts",
+    "./ship-kit-pieces.v1.json": "./src/ship-kit-pieces.v1.json",
+    "./ship-themes": "./src/ship-themes.ts",
+    "./prefabs": "./src/prefabs/index.ts"
   },
   "dependencies": {}
 }

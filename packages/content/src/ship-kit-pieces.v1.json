@@ -1,0 +1,2213 @@
+{
+ "schema": "sidereal.ship-kit-pieces.v1",
+ "revision": "r001",
+ "slots": [
+  "primary",
+  "secondary",
+  "accent",
+  "trim",
+  "metal",
+  "dark",
+  "emit_a",
+  "emit_b",
+  "glass"
+ ],
+ "texelsPerMeter": 16,
+ "pieces": [
+  {
+   "id": "cas.grille.w1.h24",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_grille",
+   "args": [
+    16,
+    24
+   ]
+  },
+  {
+   "id": "cas.light.w1.h24",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_light",
+   "args": [
+    16,
+    24
+   ]
+  },
+  {
+   "id": "cas.stack.w1.h24",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_stack",
+   "args": [
+    16,
+    24
+   ]
+  },
+  {
+   "id": "cas.module.w1.h24",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_module",
+   "args": [
+    16,
+    24
+   ]
+  },
+  {
+   "id": "cas.pipes.w1.h24",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_pipes",
+   "args": [
+    16,
+    24
+   ]
+  },
+  {
+   "id": "cas.beacon.w1.h24",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_beacon",
+   "args": [
+    16,
+    24
+   ]
+  },
+  {
+   "id": "cas.armor.w1.h24",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_armor",
+   "args": [
+    16,
+    24
+   ]
+  },
+  {
+   "id": "cas.panel.w2.h24",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_panel",
+   "args": [
+    32,
+    24
+   ]
+  },
+  {
+   "id": "cas.split.w2.h24",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_split",
+   "args": [
+    32,
+    24
+   ]
+  },
+  {
+   "id": "cas.hatch.w2.h24",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_hatch",
+   "args": [
+    32,
+    24
+   ]
+  },
+  {
+   "id": "cas.armor.w2.h24",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_armor",
+   "args": [
+    32,
+    24
+   ]
+  },
+  {
+   "id": "cas.module.w2.h24",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_module",
+   "args": [
+    32,
+    24
+   ]
+  },
+  {
+   "id": "cas.pipes.w2.h24",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_pipes",
+   "args": [
+    32,
+    24
+   ]
+  },
+  {
+   "id": "cas.armor.w3.h24",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_armor",
+   "args": [
+    48,
+    24
+   ]
+  },
+  {
+   "id": "cas.panel.w3.h24",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_panel",
+   "args": [
+    48,
+    24
+   ]
+  },
+  {
+   "id": "cas.split.w3.h24",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_split",
+   "args": [
+    48,
+    24
+   ]
+  },
+  {
+   "id": "cas.pipes.w3.h24",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_pipes",
+   "args": [
+    48,
+    24
+   ]
+  },
+  {
+   "id": "cas.grille.w1.h12",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_grille",
+   "args": [
+    16,
+    12
+   ]
+  },
+  {
+   "id": "cas.light.w1.h12",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_light",
+   "args": [
+    16,
+    12
+   ]
+  },
+  {
+   "id": "cas.pipes.w1.h12",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_pipes",
+   "args": [
+    16,
+    12
+   ]
+  },
+  {
+   "id": "cas.module.w1.h12",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_module",
+   "args": [
+    16,
+    12
+   ]
+  },
+  {
+   "id": "cas.stack.w1.h12",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_stack",
+   "args": [
+    16,
+    12
+   ]
+  },
+  {
+   "id": "cas.beacon.w1.h12",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_beacon",
+   "args": [
+    16,
+    12
+   ]
+  },
+  {
+   "id": "cas.grille.w2.h12",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_grille",
+   "args": [
+    32,
+    12
+   ]
+  },
+  {
+   "id": "cas.light.w2.h12",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_light",
+   "args": [
+    32,
+    12
+   ]
+  },
+  {
+   "id": "cas.pipes.w2.h12",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_pipes",
+   "args": [
+    32,
+    12
+   ]
+  },
+  {
+   "id": "cas.module.w2.h12",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_module",
+   "args": [
+    32,
+    12
+   ]
+  },
+  {
+   "id": "cas.stack.w2.h12",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_stack",
+   "args": [
+    32,
+    12
+   ]
+  },
+  {
+   "id": "cas.beacon.w2.h12",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_beacon",
+   "args": [
+    32,
+    12
+   ]
+  },
+  {
+   "id": "cas.grille.w1.h20",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_grille",
+   "args": [
+    16,
+    20
+   ]
+  },
+  {
+   "id": "cas.light.w1.h20",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_light",
+   "args": [
+    16,
+    20
+   ]
+  },
+  {
+   "id": "cas.stack.w1.h20",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_stack",
+   "args": [
+    16,
+    20
+   ]
+  },
+  {
+   "id": "cas.module.w1.h20",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_module",
+   "args": [
+    16,
+    20
+   ]
+  },
+  {
+   "id": "cas.pipes.w1.h20",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_pipes",
+   "args": [
+    16,
+    20
+   ]
+  },
+  {
+   "id": "cas.beacon.w1.h20",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_beacon",
+   "args": [
+    16,
+    20
+   ]
+  },
+  {
+   "id": "win.port.w1.h20",
+   "family": "glazing",
+   "mount": "face",
+   "builder": "cas_port",
+   "args": [
+    16,
+    20
+   ]
+  },
+  {
+   "id": "cas.panel.w2.h20",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_panel",
+   "args": [
+    32,
+    20
+   ]
+  },
+  {
+   "id": "cas.split.w2.h20",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_split",
+   "args": [
+    32,
+    20
+   ]
+  },
+  {
+   "id": "cas.hatch.w2.h20",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_hatch",
+   "args": [
+    32,
+    20
+   ]
+  },
+  {
+   "id": "cas.armor.w2.h20",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_armor",
+   "args": [
+    32,
+    20
+   ]
+  },
+  {
+   "id": "cas.module.w2.h20",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_module",
+   "args": [
+    32,
+    20
+   ]
+  },
+  {
+   "id": "cas.pipes.w2.h20",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_pipes",
+   "args": [
+    32,
+    20
+   ]
+  },
+  {
+   "id": "win.band.w2.h20",
+   "family": "glazing",
+   "mount": "face",
+   "builder": "cas_window",
+   "args": [
+    32,
+    20,
+    "band"
+   ]
+  },
+  {
+   "id": "win.full.w2.h20",
+   "family": "glazing",
+   "mount": "face",
+   "builder": "cas_window",
+   "args": [
+    32,
+    20,
+    "full"
+   ]
+  },
+  {
+   "id": "cas.armor.w3.h20",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_armor",
+   "args": [
+    48,
+    20
+   ]
+  },
+  {
+   "id": "cas.panel.w3.h20",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_panel",
+   "args": [
+    48,
+    20
+   ]
+  },
+  {
+   "id": "cas.split.w3.h20",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_split",
+   "args": [
+    48,
+    20
+   ]
+  },
+  {
+   "id": "cas.pipes.w3.h20",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_pipes",
+   "args": [
+    48,
+    20
+   ]
+  },
+  {
+   "id": "win.full.w3.h20",
+   "family": "glazing",
+   "mount": "face",
+   "builder": "cas_window",
+   "args": [
+    48,
+    20,
+    "full"
+   ]
+  },
+  {
+   "id": "cas.logo.w3.h20",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_logo",
+   "args": [
+    48,
+    20
+   ]
+  },
+  {
+   "id": "cas.grille.w1.h10",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_grille",
+   "args": [
+    16,
+    10
+   ]
+  },
+  {
+   "id": "cas.light.w1.h10",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_light",
+   "args": [
+    16,
+    10
+   ]
+  },
+  {
+   "id": "cas.pipes.w1.h10",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_pipes",
+   "args": [
+    16,
+    10
+   ]
+  },
+  {
+   "id": "cas.module.w1.h10",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_module",
+   "args": [
+    16,
+    10
+   ]
+  },
+  {
+   "id": "cas.stack.w1.h10",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_stack",
+   "args": [
+    16,
+    10
+   ]
+  },
+  {
+   "id": "cas.beacon.w1.h10",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_beacon",
+   "args": [
+    16,
+    10
+   ]
+  },
+  {
+   "id": "cas.grille.w2.h10",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_grille",
+   "args": [
+    32,
+    10
+   ]
+  },
+  {
+   "id": "cas.light.w2.h10",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_light",
+   "args": [
+    32,
+    10
+   ]
+  },
+  {
+   "id": "cas.pipes.w2.h10",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_pipes",
+   "args": [
+    32,
+    10
+   ]
+  },
+  {
+   "id": "cas.module.w2.h10",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_module",
+   "args": [
+    32,
+    10
+   ]
+  },
+  {
+   "id": "cas.stack.w2.h10",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_stack",
+   "args": [
+    32,
+    10
+   ]
+  },
+  {
+   "id": "cas.beacon.w2.h10",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_beacon",
+   "args": [
+    32,
+    10
+   ]
+  },
+  {
+   "id": "win.port.w1.h12",
+   "family": "glazing",
+   "mount": "face",
+   "builder": "cas_port",
+   "args": [
+    16,
+    12
+   ]
+  },
+  {
+   "id": "cas.panel.w2.h12",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_panel",
+   "args": [
+    32,
+    12
+   ]
+  },
+  {
+   "id": "cas.split.w2.h12",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_split",
+   "args": [
+    32,
+    12
+   ]
+  },
+  {
+   "id": "cas.hatch.w2.h12",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_hatch",
+   "args": [
+    32,
+    12
+   ]
+  },
+  {
+   "id": "cas.armor.w2.h12",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_armor",
+   "args": [
+    32,
+    12
+   ]
+  },
+  {
+   "id": "win.band.w2.h12",
+   "family": "glazing",
+   "mount": "face",
+   "builder": "cas_window",
+   "args": [
+    32,
+    12,
+    "band"
+   ]
+  },
+  {
+   "id": "win.full.w2.h12",
+   "family": "glazing",
+   "mount": "face",
+   "builder": "cas_window",
+   "args": [
+    32,
+    12,
+    "full"
+   ]
+  },
+  {
+   "id": "cas.armor.w3.h12",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_armor",
+   "args": [
+    48,
+    12
+   ]
+  },
+  {
+   "id": "cas.panel.w3.h12",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_panel",
+   "args": [
+    48,
+    12
+   ]
+  },
+  {
+   "id": "cas.split.w3.h12",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_split",
+   "args": [
+    48,
+    12
+   ]
+  },
+  {
+   "id": "cas.pipes.w3.h12",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_pipes",
+   "args": [
+    48,
+    12
+   ]
+  },
+  {
+   "id": "win.full.w3.h12",
+   "family": "glazing",
+   "mount": "face",
+   "builder": "cas_window",
+   "args": [
+    48,
+    12,
+    "full"
+   ]
+  },
+  {
+   "id": "cas.logo.w3.h12",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_logo",
+   "args": [
+    48,
+    12
+   ]
+  },
+  {
+   "id": "cas.grille.w1.h22",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_grille",
+   "args": [
+    16,
+    22
+   ]
+  },
+  {
+   "id": "cas.light.w1.h22",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_light",
+   "args": [
+    16,
+    22
+   ]
+  },
+  {
+   "id": "cas.stack.w1.h22",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_stack",
+   "args": [
+    16,
+    22
+   ]
+  },
+  {
+   "id": "cas.module.w1.h22",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_module",
+   "args": [
+    16,
+    22
+   ]
+  },
+  {
+   "id": "cas.pipes.w1.h22",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_pipes",
+   "args": [
+    16,
+    22
+   ]
+  },
+  {
+   "id": "cas.beacon.w1.h22",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_beacon",
+   "args": [
+    16,
+    22
+   ]
+  },
+  {
+   "id": "cas.armor.w1.h22",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_armor",
+   "args": [
+    16,
+    22
+   ]
+  },
+  {
+   "id": "cas.panel.w2.h22",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_panel",
+   "args": [
+    32,
+    22
+   ]
+  },
+  {
+   "id": "cas.split.w2.h22",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_split",
+   "args": [
+    32,
+    22
+   ]
+  },
+  {
+   "id": "cas.hatch.w2.h22",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_hatch",
+   "args": [
+    32,
+    22
+   ]
+  },
+  {
+   "id": "cas.armor.w2.h22",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_armor",
+   "args": [
+    32,
+    22
+   ]
+  },
+  {
+   "id": "cas.module.w2.h22",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_module",
+   "args": [
+    32,
+    22
+   ]
+  },
+  {
+   "id": "cas.pipes.w2.h22",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_pipes",
+   "args": [
+    32,
+    22
+   ]
+  },
+  {
+   "id": "cas.armor.w3.h22",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_armor",
+   "args": [
+    48,
+    22
+   ]
+  },
+  {
+   "id": "cas.panel.w3.h22",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_panel",
+   "args": [
+    48,
+    22
+   ]
+  },
+  {
+   "id": "cas.split.w3.h22",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_split",
+   "args": [
+    48,
+    22
+   ]
+  },
+  {
+   "id": "cas.pipes.w3.h22",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_pipes",
+   "args": [
+    48,
+    22
+   ]
+  },
+  {
+   "id": "cas.grille.w1.h11",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_grille",
+   "args": [
+    16,
+    11
+   ]
+  },
+  {
+   "id": "cas.light.w1.h11",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_light",
+   "args": [
+    16,
+    11
+   ]
+  },
+  {
+   "id": "cas.pipes.w1.h11",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_pipes",
+   "args": [
+    16,
+    11
+   ]
+  },
+  {
+   "id": "cas.module.w1.h11",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_module",
+   "args": [
+    16,
+    11
+   ]
+  },
+  {
+   "id": "cas.stack.w1.h11",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_stack",
+   "args": [
+    16,
+    11
+   ]
+  },
+  {
+   "id": "cas.beacon.w1.h11",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_beacon",
+   "args": [
+    16,
+    11
+   ]
+  },
+  {
+   "id": "cas.grille.w2.h11",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_grille",
+   "args": [
+    32,
+    11
+   ]
+  },
+  {
+   "id": "cas.light.w2.h11",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_light",
+   "args": [
+    32,
+    11
+   ]
+  },
+  {
+   "id": "cas.pipes.w2.h11",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_pipes",
+   "args": [
+    32,
+    11
+   ]
+  },
+  {
+   "id": "cas.module.w2.h11",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_module",
+   "args": [
+    32,
+    11
+   ]
+  },
+  {
+   "id": "cas.stack.w2.h11",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_stack",
+   "args": [
+    32,
+    11
+   ]
+  },
+  {
+   "id": "cas.beacon.w2.h11",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_beacon",
+   "args": [
+    32,
+    11
+   ]
+  },
+  {
+   "id": "cas.grille.w1.h14",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_grille",
+   "args": [
+    16,
+    14
+   ]
+  },
+  {
+   "id": "cas.light.w1.h14",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_light",
+   "args": [
+    16,
+    14
+   ]
+  },
+  {
+   "id": "cas.stack.w1.h14",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_stack",
+   "args": [
+    16,
+    14
+   ]
+  },
+  {
+   "id": "cas.module.w1.h14",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_module",
+   "args": [
+    16,
+    14
+   ]
+  },
+  {
+   "id": "cas.pipes.w1.h14",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_pipes",
+   "args": [
+    16,
+    14
+   ]
+  },
+  {
+   "id": "cas.beacon.w1.h14",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_beacon",
+   "args": [
+    16,
+    14
+   ]
+  },
+  {
+   "id": "cas.armor.w1.h14",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_armor",
+   "args": [
+    16,
+    14
+   ]
+  },
+  {
+   "id": "cas.panel.w2.h14",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_panel",
+   "args": [
+    32,
+    14
+   ]
+  },
+  {
+   "id": "cas.split.w2.h14",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_split",
+   "args": [
+    32,
+    14
+   ]
+  },
+  {
+   "id": "cas.hatch.w2.h14",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_hatch",
+   "args": [
+    32,
+    14
+   ]
+  },
+  {
+   "id": "cas.armor.w2.h14",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_armor",
+   "args": [
+    32,
+    14
+   ]
+  },
+  {
+   "id": "cas.module.w2.h14",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_module",
+   "args": [
+    32,
+    14
+   ]
+  },
+  {
+   "id": "cas.pipes.w2.h14",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_pipes",
+   "args": [
+    32,
+    14
+   ]
+  },
+  {
+   "id": "cas.armor.w3.h14",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_armor",
+   "args": [
+    48,
+    14
+   ]
+  },
+  {
+   "id": "cas.panel.w3.h14",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_panel",
+   "args": [
+    48,
+    14
+   ]
+  },
+  {
+   "id": "cas.split.w3.h14",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_split",
+   "args": [
+    48,
+    14
+   ]
+  },
+  {
+   "id": "cas.pipes.w3.h14",
+   "family": "cassette",
+   "mount": "face",
+   "builder": "cas_pipes",
+   "args": [
+    48,
+    14
+   ]
+  },
+  {
+   "id": "rim.h4",
+   "family": "rim",
+   "mount": "face",
+   "builder": "cas_rim",
+   "args": [
+    16,
+    4,
+    false
+   ]
+  },
+  {
+   "id": "rim.h4.lit",
+   "family": "rim",
+   "mount": "face",
+   "builder": "cas_rim",
+   "args": [
+    16,
+    4,
+    true
+   ]
+  },
+  {
+   "id": "rim.h5",
+   "family": "rim",
+   "mount": "face",
+   "builder": "cas_rim",
+   "args": [
+    16,
+    5,
+    false
+   ]
+  },
+  {
+   "id": "rim.h5.lit",
+   "family": "rim",
+   "mount": "face",
+   "builder": "cas_rim",
+   "args": [
+    16,
+    5,
+    true
+   ]
+  },
+  {
+   "id": "roof.box.w3.d2",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    48,
+    32,
+    "box"
+   ]
+  },
+  {
+   "id": "roof.vent.w3.d2",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    48,
+    32,
+    "vent"
+   ]
+  },
+  {
+   "id": "roof.hatch.w3.d2",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    48,
+    32,
+    "hatch"
+   ]
+  },
+  {
+   "id": "roof.greeble.w3.d2",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    48,
+    32,
+    "greeble"
+   ]
+  },
+  {
+   "id": "roof.pipes.w3.d2",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    48,
+    32,
+    "pipes"
+   ]
+  },
+  {
+   "id": "roof.radiator.w3.d2",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    48,
+    32,
+    "radiator"
+   ]
+  },
+  {
+   "id": "roof.tanks.w3.d2",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    48,
+    32,
+    "tanks"
+   ]
+  },
+  {
+   "id": "roof.cargo.w3.d2",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    48,
+    32,
+    "cargo"
+   ]
+  },
+  {
+   "id": "roof.box.w2.d3",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    32,
+    48,
+    "box"
+   ]
+  },
+  {
+   "id": "roof.vent.w2.d3",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    32,
+    48,
+    "vent"
+   ]
+  },
+  {
+   "id": "roof.hatch.w2.d3",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    32,
+    48,
+    "hatch"
+   ]
+  },
+  {
+   "id": "roof.greeble.w2.d3",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    32,
+    48,
+    "greeble"
+   ]
+  },
+  {
+   "id": "roof.pipes.w2.d3",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    32,
+    48,
+    "pipes"
+   ]
+  },
+  {
+   "id": "roof.radiator.w2.d3",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    32,
+    48,
+    "radiator"
+   ]
+  },
+  {
+   "id": "roof.tanks.w2.d3",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    32,
+    48,
+    "tanks"
+   ]
+  },
+  {
+   "id": "roof.cargo.w2.d3",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    32,
+    48,
+    "cargo"
+   ]
+  },
+  {
+   "id": "roof.box.w2.d2",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    32,
+    32,
+    "box"
+   ]
+  },
+  {
+   "id": "roof.vent.w2.d2",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    32,
+    32,
+    "vent"
+   ]
+  },
+  {
+   "id": "roof.hatch.w2.d2",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    32,
+    32,
+    "hatch"
+   ]
+  },
+  {
+   "id": "roof.greeble.w2.d2",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    32,
+    32,
+    "greeble"
+   ]
+  },
+  {
+   "id": "roof.pipes.w2.d2",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    32,
+    32,
+    "pipes"
+   ]
+  },
+  {
+   "id": "roof.radiator.w2.d2",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    32,
+    32,
+    "radiator"
+   ]
+  },
+  {
+   "id": "roof.tanks.w2.d2",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    32,
+    32,
+    "tanks"
+   ]
+  },
+  {
+   "id": "roof.cargo.w2.d2",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    32,
+    32,
+    "cargo"
+   ]
+  },
+  {
+   "id": "roof.pipes.w2.d1",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    32,
+    16,
+    "pipes"
+   ]
+  },
+  {
+   "id": "roof.vent.w2.d1",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    32,
+    16,
+    "vent"
+   ]
+  },
+  {
+   "id": "roof.radiator.w2.d1",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    32,
+    16,
+    "radiator"
+   ]
+  },
+  {
+   "id": "roof.box.w2.d1",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    32,
+    16,
+    "box"
+   ]
+  },
+  {
+   "id": "roof.pipes.w1.d2",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    16,
+    32,
+    "pipes"
+   ]
+  },
+  {
+   "id": "roof.vent.w1.d2",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    16,
+    32,
+    "vent"
+   ]
+  },
+  {
+   "id": "roof.radiator.w1.d2",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    16,
+    32,
+    "radiator"
+   ]
+  },
+  {
+   "id": "roof.box.w1.d2",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    16,
+    32,
+    "box"
+   ]
+  },
+  {
+   "id": "roof.spine.w2.d2",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_module",
+   "args": [
+    32,
+    32,
+    "spine"
+   ]
+  },
+  {
+   "id": "roof.logo.w4.d2",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_logo",
+   "args": [
+    64,
+    32
+   ]
+  },
+  {
+   "id": "roof.small.box",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_small",
+   "args": [
+    "box"
+   ]
+  },
+  {
+   "id": "roof.small.vent",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_small",
+   "args": [
+    "vent"
+   ]
+  },
+  {
+   "id": "roof.small.fan",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_small",
+   "args": [
+    "fan"
+   ]
+  },
+  {
+   "id": "roof.small.sensor",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_small",
+   "args": [
+    "sensor"
+   ]
+  },
+  {
+   "id": "roof.small.hatch",
+   "family": "roof",
+   "mount": "top",
+   "builder": "roof_small",
+   "args": [
+    "hatch"
+   ]
+  },
+  {
+   "id": "roof.rim.plain",
+   "family": "roof-rim",
+   "mount": "top",
+   "builder": "roof_rim",
+   "args": [
+    "plain"
+   ]
+  },
+  {
+   "id": "roof.rim.bump",
+   "family": "roof-rim",
+   "mount": "top",
+   "builder": "roof_rim",
+   "args": [
+    "bump"
+   ]
+  },
+  {
+   "id": "roof.rim.lit",
+   "family": "roof-rim",
+   "mount": "top",
+   "builder": "roof_rim",
+   "args": [
+    "lit"
+   ]
+  },
+  {
+   "id": "roof.rim.vent",
+   "family": "roof-rim",
+   "mount": "top",
+   "builder": "roof_rim",
+   "args": [
+    "vent"
+   ]
+  },
+  {
+   "id": "roof.skylight.w2.d2",
+   "family": "glazing",
+   "mount": "top",
+   "builder": "roof_skylight",
+   "args": [
+    32,
+    32
+   ]
+  },
+  {
+   "id": "roof.skylight.w2.d3",
+   "family": "glazing",
+   "mount": "top",
+   "builder": "roof_skylight",
+   "args": [
+    32,
+    48
+   ]
+  },
+  {
+   "id": "roof.skylight.w3.d2",
+   "family": "glazing",
+   "mount": "top",
+   "builder": "roof_skylight",
+   "args": [
+    48,
+    32
+   ]
+  },
+  {
+   "id": "roof.skylight.w3.d3",
+   "family": "glazing",
+   "mount": "top",
+   "builder": "roof_skylight",
+   "args": [
+    48,
+    48
+   ]
+  },
+  {
+   "id": "deco.antenna",
+   "family": "decorator",
+   "mount": "top",
+   "builder": "decorator",
+   "args": [
+    "antenna"
+   ]
+  },
+  {
+   "id": "deco.spike",
+   "family": "decorator",
+   "mount": "top",
+   "builder": "decorator",
+   "args": [
+    "spike"
+   ]
+  },
+  {
+   "id": "deco.crystal",
+   "family": "decorator",
+   "mount": "top",
+   "builder": "decorator",
+   "args": [
+    "crystal"
+   ]
+  },
+  {
+   "id": "int.floor.panel",
+   "family": "floor",
+   "mount": "plan",
+   "builder": "ifloor",
+   "args": [
+    "panel"
+   ]
+  },
+  {
+   "id": "int.floor.reinforced",
+   "family": "floor",
+   "mount": "plan",
+   "builder": "ifloor",
+   "args": [
+    "reinforced"
+   ]
+  },
+  {
+   "id": "int.floor.grated",
+   "family": "floor",
+   "mount": "plan",
+   "builder": "ifloor",
+   "args": [
+    "grated"
+   ]
+  },
+  {
+   "id": "int.floor.hazard",
+   "family": "floor",
+   "mount": "plan",
+   "builder": "ifloor",
+   "args": [
+    "hazard"
+   ]
+  },
+  {
+   "id": "int.floor.glass",
+   "family": "floor",
+   "mount": "plan",
+   "builder": "ifloor",
+   "args": [
+    "glass"
+   ]
+  },
+  {
+   "id": "int.floor.carpet",
+   "family": "floor",
+   "mount": "plan",
+   "builder": "ifloor",
+   "args": [
+    "carpet"
+   ]
+  },
+  {
+   "id": "int.floor.carpet2",
+   "family": "floor",
+   "mount": "plan",
+   "builder": "ifloor",
+   "args": [
+    "carpet2"
+   ]
+  },
+  {
+   "id": "int.floor.tread",
+   "family": "floor",
+   "mount": "plan",
+   "builder": "ifloor",
+   "args": [
+    "tread"
+   ]
+  },
+  {
+   "id": "int.floor.corridor",
+   "family": "floor",
+   "mount": "plan",
+   "builder": "ifloor",
+   "args": [
+    "corridor"
+   ]
+  },
+  {
+   "id": "int.floor.hex",
+   "family": "floor",
+   "mount": "plan",
+   "builder": "ifloor",
+   "args": [
+    "hex"
+   ]
+  },
+  {
+   "id": "int.edge.wall",
+   "family": "interior-edge",
+   "mount": "edge",
+   "builder": "iwall",
+   "args": [
+    "wall",
+    null,
+    16
+   ]
+  },
+  {
+   "id": "int.edge.wall.cut",
+   "family": "interior-edge",
+   "mount": "edge",
+   "builder": "iwall",
+   "args": [
+    "wall",
+    28,
+    16
+   ]
+  },
+  {
+   "id": "int.edge.panel",
+   "family": "interior-edge",
+   "mount": "edge",
+   "builder": "iwall",
+   "args": [
+    "panel",
+    null,
+    16
+   ]
+  },
+  {
+   "id": "int.edge.panel.cut",
+   "family": "interior-edge",
+   "mount": "edge",
+   "builder": "iwall",
+   "args": [
+    "panel",
+    28,
+    16
+   ]
+  },
+  {
+   "id": "int.edge.light",
+   "family": "interior-edge",
+   "mount": "edge",
+   "builder": "iwall",
+   "args": [
+    "light",
+    null,
+    16
+   ]
+  },
+  {
+   "id": "int.edge.light.cut",
+   "family": "interior-edge",
+   "mount": "edge",
+   "builder": "iwall",
+   "args": [
+    "light",
+    28,
+    16
+   ]
+  },
+  {
+   "id": "int.edge.screen",
+   "family": "interior-edge",
+   "mount": "edge",
+   "builder": "iwall",
+   "args": [
+    "screen",
+    null,
+    16
+   ]
+  },
+  {
+   "id": "int.edge.screen.cut",
+   "family": "interior-edge",
+   "mount": "edge",
+   "builder": "iwall",
+   "args": [
+    "screen",
+    28,
+    16
+   ]
+  },
+  {
+   "id": "int.edge.utility",
+   "family": "interior-edge",
+   "mount": "edge",
+   "builder": "iwall",
+   "args": [
+    "utility",
+    null,
+    16
+   ]
+  },
+  {
+   "id": "int.edge.utility.cut",
+   "family": "interior-edge",
+   "mount": "edge",
+   "builder": "iwall",
+   "args": [
+    "utility",
+    28,
+    16
+   ]
+  },
+  {
+   "id": "int.edge.reinforced",
+   "family": "interior-edge",
+   "mount": "edge",
+   "builder": "iwall",
+   "args": [
+    "reinforced",
+    null,
+    16
+   ]
+  },
+  {
+   "id": "int.edge.reinforced.cut",
+   "family": "interior-edge",
+   "mount": "edge",
+   "builder": "iwall",
+   "args": [
+    "reinforced",
+    28,
+    16
+   ]
+  },
+  {
+   "id": "int.edge.glazed",
+   "family": "interior-edge",
+   "mount": "edge",
+   "builder": "iwall",
+   "args": [
+    "glazed",
+    null,
+    16
+   ]
+  },
+  {
+   "id": "int.edge.glazed.cut",
+   "family": "interior-edge",
+   "mount": "edge",
+   "builder": "iwall",
+   "args": [
+    "glazed",
+    28,
+    16
+   ]
+  },
+  {
+   "id": "int.edge.half",
+   "family": "interior-edge",
+   "mount": "edge",
+   "builder": "iwall",
+   "args": [
+    "half",
+    null,
+    16
+   ]
+  },
+  {
+   "id": "int.edge.half.cut",
+   "family": "interior-edge",
+   "mount": "edge",
+   "builder": "iwall",
+   "args": [
+    "half",
+    28,
+    16
+   ]
+  },
+  {
+   "id": "int.door.standard",
+   "family": "door",
+   "mount": "edge",
+   "builder": "idoor",
+   "args": [
+    "standard",
+    null
+   ]
+  },
+  {
+   "id": "int.door.standard.cut",
+   "family": "door",
+   "mount": "edge",
+   "builder": "idoor",
+   "args": [
+    "standard",
+    28
+   ]
+  },
+  {
+   "id": "int.door.sliding",
+   "family": "door",
+   "mount": "edge",
+   "builder": "idoor",
+   "args": [
+    "sliding",
+    null
+   ]
+  },
+  {
+   "id": "int.door.sliding.cut",
+   "family": "door",
+   "mount": "edge",
+   "builder": "idoor",
+   "args": [
+    "sliding",
+    28
+   ]
+  },
+  {
+   "id": "int.door.airlock",
+   "family": "door",
+   "mount": "edge",
+   "builder": "idoor",
+   "args": [
+    "airlock",
+    null
+   ]
+  },
+  {
+   "id": "int.door.airlock.cut",
+   "family": "door",
+   "mount": "edge",
+   "builder": "idoor",
+   "args": [
+    "airlock",
+    28
+   ]
+  },
+  {
+   "id": "int.door.blast",
+   "family": "door",
+   "mount": "edge",
+   "builder": "idoor",
+   "args": [
+    "blast",
+    null
+   ]
+  },
+  {
+   "id": "int.door.blast.cut",
+   "family": "door",
+   "mount": "edge",
+   "builder": "idoor",
+   "args": [
+    "blast",
+    28
+   ]
+  },
+  {
+   "id": "int.door.forcefield",
+   "family": "door",
+   "mount": "edge",
+   "builder": "idoor",
+   "args": [
+    "forcefield",
+    null
+   ]
+  },
+  {
+   "id": "int.door.forcefield.cut",
+   "family": "door",
+   "mount": "edge",
+   "builder": "idoor",
+   "args": [
+    "forcefield",
+    28
+   ]
+  },
+  {
+   "id": "int.post",
+   "family": "post",
+   "mount": "vertex",
+   "builder": "ipost",
+   "args": [
+    null,
+    true
+   ]
+  },
+  {
+   "id": "int.post.cut",
+   "family": "post",
+   "mount": "vertex",
+   "builder": "ipost",
+   "args": [
+    28,
+    true
+   ]
+  },
+  {
+   "id": "int.fixture.ceiling-light",
+   "family": "fixture",
+   "mount": "ceiling",
+   "builder": "iceiling_light",
+   "args": []
+  },
+  {
+   "id": "int.fixture.wall-lamp",
+   "family": "fixture",
+   "mount": "edge",
+   "builder": "iwall_lamp",
+   "args": []
+  },
+  {
+   "id": "int.fixture.floor-light",
+   "family": "fixture",
+   "mount": "plan",
+   "builder": "ifloor_light",
+   "args": []
+  },
+  {
+   "id": "ext.airlock",
+   "family": "exterior",
+   "mount": "face",
+   "builder": "airlock",
+   "args": []
+  }
+ ]
+}
