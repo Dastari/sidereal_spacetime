@@ -4,6 +4,8 @@ Recorded the owner's decisions on player ship building and voxel-destructible sh
 
 r004 adds a reusable component kit prototype, `scripts/art_library/ship_kit_prototype.py`. It has 59 voxel-aligned pieces covering hull shapes, face cassettes, glazing, roof modules, external mounts, interior edge types and decorators. The pieces use nine material slots, so three faction themes render on the same meshes, and it adds tiling detail bump, mask decals and theme decorators. The design gains §12: kit contract, theming, decals, wall and pressure edge types, glazing families, hull shapes, mounts and faction strategy.
 
+r005 adds denser face and roof pieces (176 kit pieces), stepped slope and curve skins, a general hull rasteriser and a data-driven dresser. Seven combined designs (fighter, shuttle, corvette, frigate, pirate raider, alien explorer, station) and three blueprint sheets (components, shape tiles, designs) are rendered from the same kit.
+
 # Changelog
 
 ## Unreleased — Wayfarer exterior armor native r004
