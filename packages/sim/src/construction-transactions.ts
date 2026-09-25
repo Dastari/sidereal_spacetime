@@ -39,6 +39,9 @@ import {
   compareText,
 } from "./layout-geometry";
 import { fitTileset } from "./tileset-fit";
+import { readShipPrefab } from "@sidereal/content/ship-prefab";
+import { prefabComponentCatalogFor } from "./prefab-catalog";
+import { prefabConstructionDocument } from "./prefab-construction";
 export const PINNED_FLOOR_KIT = floorKitJson as unknown as TilesetInterface;
 export const constructionHash = (text: string | Uint8Array) =>
   bytesToHex(
@@ -95,7 +98,10 @@ export function constructionOperation(
   return { request: canonical, replay: null };
 }
 /** Pure server/client shared compiler. Input admission precedes any quadratic fit work. */
-export function readConstructionDraft(raw: string): {
+export function readConstructionDraft(
+  raw: string,
+  options: { prefabDerivation?: boolean } = {},
+): {
   canonical: string;
   sha256: string;
 } {
@@ -122,6 +128,7 @@ export function readConstructionDraft(raw: string): {
           "airlockRoom",
           "wayfarerRebuild",
           "wayfarerExterior",
+          "prefab",
         ].includes(k),
     )
   )
@@ -235,6 +242,24 @@ export function readConstructionDraft(raw: string): {
   if (normalized.wayfarerExterior)
     verifyQualifiedWayfarerExterior(normalized as WayfarerExteriorDocument);
   const canonical = stableStringify(normalized);
+  if (input.prefab !== undefined && !options.prefabDerivation) {
+    // Prefab ships: the walkable layout and floor bindings must equal their grammar
+    // derivation exactly (after the same normalisation), and nothing else may ride along.
+    const binding = input.prefab as Record<string, unknown>;
+    if (
+      !record(binding) ||
+      Object.keys(binding).sort().join(",") !== "catalog,document,revision,schema" ||
+      typeof binding.catalog !== "string"
+    )
+      throw Error("Unsupported prefab binding");
+    const catalog = prefabComponentCatalogFor(binding.catalog);
+    const expected = prefabConstructionDocument(readShipPrefab(binding.document), catalog);
+    if (stableStringify(expected.prefab) !== stableStringify(binding))
+      throw Error("Prefab binding is not canonical");
+    const derived = readConstructionDraft(JSON.stringify(expected), { prefabDerivation: true });
+    if (derived.canonical !== canonical)
+      throw Error("Prefab layout differs from its grammar derivation");
+  }
   return { canonical, sha256: constructionHash(canonical) };
 }
 export function compileConstruction(raw: string): ConstructionSnapshot {

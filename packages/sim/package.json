@@ -5,6 +5,10 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
+    "./ship-dresser": "./src/ship-dresser.ts",
+    "./prefab-flight": "./src/prefab-flight.ts",
+    "./prefab-construction": "./src/prefab-construction.ts",
+    "./prefab-catalog": "./src/prefab-catalog.ts",
     "./construction-transactions": "./src/construction-transactions.ts",
     "./construction-boundaries": "./src/construction-boundaries.ts",
     "./construction-roofs": "./src/construction-roofs.ts",
