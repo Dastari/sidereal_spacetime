@@ -36,7 +36,7 @@ import bpy
 import numpy as np
 from mathutils import Vector
 
-REVISION = "r004"
+REVISION = "r005"
 T = 1.0 / 16.0
 SLOTS = ["primary", "secondary", "accent", "trim", "metal", "dark", "emit_a", "emit_b", "glass"]
 SI = {s: i for i, s in enumerate(SLOTS)}
@@ -743,10 +743,6 @@ def top_decal(name, mat, x0, y0, x1, y1, z, coll):
 
 
 # =========================================================================== SHIP BLUEPRINT (grammar output)
-BODY = [(0, 1), (20, 1), (24, 5), (24, 7), (20, 11), (0, 11)]
-WING_S = [(4, 11), (12, 11), (9, 14), (4, 14)]
-WING_P = [(4, -2), (9, -2), (12, 1), (4, 1)]
-
 
 class Kit:
     def __init__(self):
@@ -758,66 +754,6 @@ class Kit:
         return self.p[key]
 
 
-def ship_structure_pieces(kit):
-    """The generated structure (hull cells) is itself a Piece shared by every theme copy."""
-    body = Piece("gen.body.corvette", "generated", "plan", (384, 192, 54))
-
-    def body_col(cx, cy, b):
-        return ("trim", "secondary", "primary", "primary")[b]
-    for bx in raster_cells(BODY, [0, 5, 29, 49, 54], body_col):
-        if bx[2] == 0:        # skirt inset by 1/4 m
-            x0, y0, z0, x1, y1, z1, s = bx
-            if y0 < 16 + 4 or y1 > 176 - 4:
-                continue
-            bx = (max(x0, 4), y0, z0, x1 - 4, y1, z1, s)
-        body.b(*bx)
-    wings = Piece("gen.wings.corvette", "generated", "plan", (192, 256, 30))
-
-    def wing_col(cx, cy, b):
-        h = H(cx, cy, 44)
-        if cy in (13, -2):
-            return "secondary"
-        return "primary" if h < 0.62 else ("secondary" if h < 0.82 else "accent")
-    for poly in (WING_S, WING_P):
-        for bx in raster_cells(poly, [12, 30], wing_col):
-            wings.b(*bx)
-    return body, wings
-
-
-def face_edges():
-    """Straight hull faces that take cassettes: (start, dir, length, z_tiers, reservations {tier: [(u0,u1)]}, fixed)."""
-    t2 = [(BODY_Z[0], BODY_Z[1]), (BODY_Z[1], BODY_Z[2])]
-    return [
-        ("port", (0, 1), (1, 0), 20, t2, {0: [(4, 12), (12, 16)], 1: [(12, 16), (17, 20)]}, {1: [(17, 20, "logo")]}),
-        ("stbd", (20, 11), (-1, 0), 20, t2, {0: [(4, 6), (8, 16)], 1: [(4, 6), (0, 3)]}, {1: [(0, 3, "logo")]}),
-        ("rear", (0, 11), (0, -1), 10, t2, {0: [(1, 9)], 1: [(1, 9)]}, {}),
-        ("bow", (24, 5), (0, 1), 2, t2, {}, {0: [(0, 2, "panel")], 1: [(0, 2, "window")]}),
-        ("wingS", (9, 14), (-1, 0), 5, [(12, 30)], {0: [(3, 4)]}, {}),
-        ("wingP", (4, -2), (1, 0), 5, [(12, 30)], {0: [(2, 3)]}, {}),
-        ("wingSr", (4, 14), (0, -1), 3, [(12, 30)], {0: [(1, 2)]}, {}),
-        ("wingPr", (4, 1), (0, -1), 3, [(12, 30)], {0: [(1, 2)]}, {}),
-    ]
-
-
-def cassette_for(kit, kind, wm, h):
-    w = wm * 16
-    makers = {"panel": cas_panel, "split": cas_split, "grille": cas_grille, "hatch": cas_hatch, "light": cas_light,
-              "stack": cas_stack, "logo": cas_logo}
-    if kind == "window":
-        return kit.get(("win", w, h), cas_window, w, h, "band")
-    if kind == "port":
-        return kit.get(("port", w, h), cas_port, w, h)
-    return kit.get((kind, w, h), makers[kind], w, h)
-
-
-def choose(kind_seed, wm, tier, upper):
-    h = H(*kind_seed)
-    if wm == 1:
-        return ("grille", "light", "stack", "port" if upper else "grille")[int(h * 4)]
-    if wm == 2:
-        return ("panel", "split", "hatch", "window" if upper else "panel", "split")[int(h * 5)]
-    return ("panel", "split")[int(h * 2)]
-
 
 def pack(interval, seed):
     a, b = interval
@@ -827,6 +763,7 @@ def pack(interval, seed):
         out.append((u, wm))
         u += wm
     return out
+
 
 
 def subtract(a, b, holes):
@@ -845,133 +782,6 @@ def subtract(a, b, holes):
     return segs
 
 
-def build_ship(kit, theme, off, mats, decals, coll):
-    ox, oy = off
-    body, wings = kit.get("body", ship_structure_pieces, kit)
-    for pc in (body, wings):
-        instance(pc, (ox, oy, 0), 0, mats, coll, bevel=0.01)
-    # --- face cassettes on straight faces
-    for name, start, d, length, tiers, holes, fixed in face_edges():
-        rot = math.degrees(math.atan2(d[1], d[0])) + 180
-        for ti, (z0, z1) in enumerate(tiers):
-            h = z1 - z0
-            items = [(u0, u1 - u0, k) for (u0, u1, k) in fixed.get(ti, [])]
-            for seg in subtract(0, length, holes.get(ti, [])):
-                for u, wm in pack(seg, sum(map(ord, name)) + ti * 13):
-                    items.append((u, wm, choose((name, ti, u, 5), wm, ti, ti == 1)))
-            for u, wm, kind in items:
-                pc = cassette_for(kit, kind, wm, h)
-                org = (start[0] + d[0] * (u + wm) + ox, start[1] + d[1] * (u + wm) + oy, z0 * T)
-                instance(pc, org, rot, mats, coll)
-                for sock in pc.decals:
-                    decal_quad(f"decal.{name}.{u}", pc, sock, decals["name"], org, rot, coll, 4.0)
-        if len(tiers) == 2:                       # rim band on body faces
-            for u in range(length):
-                pc = kit.get(("rim", u % 3 == 1), cas_rim, 16, BODY_Z[3] - BODY_Z[2], u % 3 == 1)
-                org = (start[0] + d[0] * (u + 1) + ox, start[1] + d[1] * (u + 1) + oy, BODY_Z[2] * T)
-                instance(pc, org, rot, mats, coll)
-    # --- roof: rim plates, grid modules, spine, bow
-    zt = BODY_Z[3] * T
-    rim_cells = [(x, 1) for x in range(20)] + [(x, 10) for x in range(20)] + [(0, y) for y in range(2, 10)] + [(19, y) for y in range(2, 10)]
-    for x, y in rim_cells:
-        kind = ("plain", "bump", "lit", "vent", "plain")[int(H(x, y, 3) * 5)]
-        instance(kit.get(("rim", kind), roof_rim, kind), (x + ox, y + oy, zt), 0, mats, coll)
-    for col in range(1, 19, 2):
-        for y0, dm in ((2, 3), (7, 3)):
-            if col == 1 and y0 == 2:
-                instance(kit.get("dish", dish), (col + ox, y0 + 0.5 + oy, zt), 0, mats, coll)
-                continue
-            kind = "vent" if col == 1 else ("box", "vent", "hatch", "greeble", "box")[int(H(col, y0, 9) * 5)]
-            pc = {"box": lambda: kit.get(("rbox", 32, 48), roof_box, 32, 48), "vent": lambda: kit.get(("rvent", 32, 48), roof_vent, 32, 48),
-                  "hatch": lambda: kit.get(("rhatch", 32, 48), roof_hatch, 32, 48),
-                  "greeble": lambda: kit.get(("rgreeble", col % 3), roof_greeble, 32, 48, col % 3)}[kind]()
-            instance(pc, (col + ox, y0 + oy, zt), 0, mats, coll)
-            if kind == "greeble":
-                deco_at(kit, theme, (col + 0.5 + ox, y0 + 1.2 + oy, zt + 2 * T), mats, coll)
-        if col in (5, 13):
-            instance(kit.get("turret", turret_top), (col + ox, 5 + oy, zt), 0, mats, coll)
-        elif col == 9:
-            pc = kit.get("rlogo", roof_logo, 64, 32)
-            instance(pc, (col + ox, 5 + oy, zt), 0, mats, coll)
-            decal_quad("decal.roof.emblem", pc, pc.decals[0], decals["emblem"], (col + ox, 5 + oy, zt), 0, coll, 1.0)
-        elif col != 11:
-            instance(kit.get("rspine", roof_spine, 32, 32), (col + ox, 5 + oy, zt), 0, mats, coll)
-    instance(kit.get("sky", roof_skylight, 32, 48), (20 + ox, 4.5 + oy, zt), 0, mats, coll)
-    instance(kit.get("tractor", tractor), (22 + ox, 5 + oy, zt), 0, mats, coll)
-    # --- mounts: engines, cannons, thrusters, cargo door, airlock
-    for y0, w, h, L, z in ((2, 48, 36, 64, 9), (7, 48, 36, 64, 9)):
-        instance(kit.get(("eng", w), engine, f"mount.engine.w{w // 16}", w, h, L), (ox, y0 + oy, z * T), 90, mats, coll)
-    instance(kit.get(("eng", 32), engine, "mount.engine.w2", 32, 26, 48), (ox, 5 + oy, 14 * T), 90, mats, coll)
-    instance(kit.get("cannon", side_cannon), (5 + ox, 14 + oy, 14 * T), 0, mats, coll)
-    instance(kit.get("cannon", side_cannon), (7 + ox, -2 + oy, 14 * T), 180, mats, coll)
-    for y in (12, -1):
-        instance(kit.get("thr", thruster), (4 + ox, y + oy, 15 * T), 90, mats, coll)
-    instance(kit.get("cargo", cargo_door), (16 + ox, 1 + oy, 6 * T), 180, mats, coll)
-    instance(kit.get("airlock", airlock), (14 + ox, 11 + oy, 8 * T), 0, mats, coll)
-    # --- wing decals and wing-tip decorators
-    top_decal("decal.wing.number", decals["number"], 4.6 + ox, 12.2 + oy, 8.6 + ox, 13.2 + oy, 30 * T + 0.003, coll)
-    top_decal("decal.wing.emblem", decals["emblem_small"], 5.2 + ox, -1.6 + oy, 6.8 + ox, 0.0 + oy, 30 * T + 0.003, coll)
-    if theme == "riftjack":
-        for x, y in rim_cells[::3]:
-            instance(kit.get("spike", decorator, "spike"), (x + 0.3 + ox, y + 0.3 + oy, zt + 2 * T), 0, mats, coll)
-        for x in (5, 7):
-            instance(kit.get("spike", decorator, "spike"), (x + ox, 13.3 + oy, 30 * T), 0, mats, coll)
-            instance(kit.get("spike", decorator, "spike"), (x + ox, -1.7 + oy, 30 * T), 0, mats, coll)
-    elif theme == "aurelian":
-        for x in (5, 7):
-            instance(kit.get("crystal", decorator, "crystal"), (x + ox, 13.3 + oy, 30 * T), 0, mats, coll)
-            instance(kit.get("crystal", decorator, "crystal"), (x + ox, -1.7 + oy, 30 * T), 0, mats, coll)
-
-
-def deco_at(kit, theme, loc, mats, coll):
-    kind = {"federation": "antenna", "riftjack": "spike", "aurelian": "crystal"}[theme]
-    instance(kit.get(kind, decorator, kind), loc, 0, mats, coll)
-
-
-# =========================================================================== KIT SHEET
-def build_sheet(kit, mats, coll, origin):
-    ox, oy = origin
-    rows = [
-        ("HULL SHAPES", [kit.get("h.block", hull_tile, "block.1x1", [(0, 0), (1, 0), (1, 1), (0, 1)]),
-                         kit.get("h.s11", hull_tile, "slope.1-1", [(0, 0), (1, 0), (0, 1)]),
-                         kit.get("h.s12", hull_tile, "slope.1-2", [(0, 0), (2, 0), (0, 1)]),
-                         kit.get("h.arc", hull_tile, "arc.r2", [(0, 0)] + [(2 * math.cos(a), 2 * math.sin(a)) for a in [i * math.pi / 16 for i in range(9)]]),
-                         kit.get("floor", floor_tile)]),
-        ("FACE CASSETTES", [cassette_for(kit, k, w, 24) for k, w in (("panel", 2), ("split", 2), ("hatch", 2), ("logo", 3), ("grille", 1), ("light", 1), ("stack", 1))]),
-        ("GLAZING", [kit.get(("win", 32, 20), cas_window, 32, 20, "band"), kit.get(("winfull", 48, 44), cas_window, 48, 44, "full"),
-                     kit.get(("port", 16, 20), cas_port, 16, 20), kit.get("sky", roof_skylight, 32, 48)]),
-        ("ROOF MODULES", [kit.get(("rbox", 32, 48), roof_box, 32, 48), kit.get(("rvent", 32, 48), roof_vent, 32, 48),
-                          kit.get(("rhatch", 32, 48), roof_hatch, 32, 48), kit.get(("rgreeble", 1), roof_greeble, 32, 48, 1),
-                          kit.get("rspine", roof_spine, 32, 32)]),
-        ("EXTERNAL MOUNTS", [kit.get("turret", turret_top), kit.get("cannon", side_cannon), kit.get(("eng", 48), engine, "mount.engine.w3", 48, 36, 64),
-                             kit.get("thr", thruster), kit.get("tractor", tractor), kit.get("dish", dish), kit.get("cargo", cargo_door), kit.get("airlock", airlock)]),
-        ("INTERIOR EDGES + DECORATORS", [kit.get("wfull", edge_wall, "full"), kit.get("wglazed", edge_wall, "glazed"), kit.get("whalf", edge_wall, "half"),
-                                         kit.get("door", edge_door), kit.get("spike", decorator, "spike"), kit.get("crystal", decorator, "crystal"),
-                                         kit.get("antenna", decorator, "antenna")]),
-    ]
-    lab = label_material()
-    y = oy
-    for title, pieces in rows:
-        x = ox
-        text(title, (ox - 7.5, y - 1.0, 0.01), 0.42, lab, coll)
-        depth = 0
-        for pc in pieces:
-            w, d, h = (v * T for v in pc.size)
-            if pc.mount == "face":            # stands on the ground, outward toward the camera (-y)
-                instance(pc, (x + w, y, 0), 180, mats, coll)
-                depth = max(depth, d)
-                ext = w
-            elif pc.id.startswith("mount.engine"):
-                instance(pc, (x, y, 0), 0, mats, coll)
-                ext = w
-            else:
-                instance(pc, (x, y - d, 0), 0, mats, coll)
-                depth = max(depth, d)
-                ext = w
-            text(pc.id, (x, y - max(d, 0.4) - 0.55, 0.01), 0.16, lab, coll)
-            x += ext + 1.0
-        y -= max(depth, 1.5) + 2.6
-
 
 def label_material():
     m = bpy.data.materials.get("label") or bpy.data.materials.new("label")
@@ -982,6 +792,7 @@ def label_material():
     return m
 
 
+
 def text(body, loc, size, mat, coll):
     cu = bpy.data.curves.new("lbl", "FONT"); cu.body, cu.size = body, size
     cu.materials.append(mat)
@@ -989,7 +800,7 @@ def text(body, loc, size, mat, coll):
     return ob
 
 
-# =========================================================================== SCENE
+
 def world(sc):
     w = sc.world or bpy.data.worlds.new("World")
     sc.world = w
@@ -1011,6 +822,806 @@ def world(sc):
     nt.links.new(mul.outputs[0], add.inputs[7]); nt.links.new(add.outputs[2], bg.inputs["Color"]); nt.links.new(bg.outputs[0], wo.inputs[0])
 
 
+
+
+# =========================================================================== r005: DENSER PIECES
+def cas_armor(w, h):
+    p = Piece(f"cas.armor.w{w // 16}.h{h}", "cassette", "face", (w, 4, h))
+    p.b(0, 0, 0, w, 1, h, "trim").b(1, 0, 1, w - 1, 2, h - 1, "primary")
+    p.b(2, 2, 2, (w * 2) // 3, 3, h // 2, "primary").b(w // 2, 2, h // 2, w - 2, 3, h - 2, "secondary")
+    p.b(3, 3, 3, w // 3, 4, h // 2 - 2, "primary")
+    for x in range(3, w - 2, 5):
+        p.b(x, 2, h - 3, x + 1, 3, h - 2, "metal").b(x, 2, 1, x + 1, 3, 2, "metal")
+    p.b(w - 6, 3, h // 2 + 2, w - 4, 4, h // 2 + 4, "emit_b")
+    return p
+
+
+def cas_pipes(w, h):
+    p = Piece(f"cas.pipes.w{w // 16}.h{h}", "cassette", "face", (w, 4, h))
+    p.b(0, 0, 0, w, 1, h, "secondary")
+    rows = [z for z in (3, 7, 11, 15, 19) if z + 2 < h - 1]
+    for n, z in enumerate(rows):
+        p.b(0, 1, z, w, 3, z + 2, "metal" if n % 2 == 0 else "trim")
+    for x in range(2, w, 6):
+        p.b(x, 1, 1, x + 1, 4, h - 1, "trim")
+    if w >= 16:
+        p.b(w // 2 - 2, 2, rows[0] - 1 if rows else 2, w // 2 + 2, 4, (rows[0] + 3) if rows else 5, "accent")
+    p.b(w - 4, 1, h - 3, w - 2, 2, h - 2, "emit_a")
+    return p
+
+
+def cas_module(w, h):
+    p = Piece(f"cas.module.w{w // 16}.h{h}", "cassette", "face", (w, 5, h))
+    p.b(0, 0, 0, w, 1, h, "dark")
+    cw, ch = w // 2, h // 2
+    kinds = [("primary", 3), ("metal", 2), ("secondary", 2), ("primary", 4)]
+    for n, (x0, z0) in enumerate(((0, 0), (cw, 0), (0, ch), (cw, ch))):
+        slot, dep = kinds[(n + w + h) % 4]
+        p.b(x0 + 1, 1, z0 + 1, x0 + cw - 1, dep, z0 + ch - 1, slot)
+    for z in range(ch + 2, h - 2, 2):
+        p.b(cw + 2, 2, z, w - 2, 3, z + 1, "dark")
+    p.b(2, 3, 2, 4, 4, 4, "emit_b").b(cw - 3, 3, h - 4, cw - 1, 5, h - 2, "metal")
+    return p
+
+
+def cas_beacon(w, h):
+    p = Piece(f"cas.beacon.w{w // 16}.h{h}", "cassette", "face", (w, 6, h))
+    p.b(0, 0, 0, w, 2, h, "secondary").b(2, 2, 2, w - 2, 4, h - 6, "primary")
+    p.b(w // 2 - 3, 2, h - 6, w // 2 + 3, 5, h - 2, "trim").b(w // 2 - 2, 5, h - 5, w // 2 + 2, 6, h - 3, "emit_b")
+    p.b(3, 4, 3, 5, 5, 5, "metal").b(w - 5, 4, 3, w - 3, 5, 5, "metal")
+    return p
+
+
+def roof_pipes(w, d):
+    p = Piece(f"roof.pipes.{w // 16}x{d // 16}", "roof", "top", (w, d, 6))
+    p.b(0, 0, 0, w, d, 1, "secondary")
+    for n, y in enumerate(range(3, d - 3, 5)):
+        p.b(0, y, 1, w, y + 3, 4 if n % 2 == 0 else 3, "metal" if n % 2 == 0 else "trim")
+    for x in range(2, w, 8):
+        p.b(x, 1, 1, x + 2, d - 1, 5, "trim")
+    p.b(w // 2 - 3, d // 2 - 3, 1, w // 2 + 3, d // 2 + 3, 6, "accent").b(1, 1, 1, 3, 3, 3, "emit_b")
+    return p
+
+
+def roof_radiator(w, d):
+    p = Piece(f"roof.radiator.{w // 16}x{d // 16}", "roof", "top", (w, d, 6))
+    p.b(0, 0, 0, w, d, 1, "trim")
+    frame_top(p, 0, 0, w, d, 1, 3, 1, "secondary")
+    for y in range(2, d - 2, 2):
+        p.b(2, y, 1, w - 2, y + 1, 5, "primary")
+    p.b(w - 4, 1, 3, w - 2, 3, 4, "emit_a")
+    return p
+
+
+def roof_tanks(w, d):
+    p = Piece(f"roof.tanks.{w // 16}x{d // 16}", "roof", "top", (w, d, 12))
+    p.b(0, 0, 0, w, d, 1, "secondary")
+    n = max(1, d // 12)
+    r = min(d // (2 * n) - 1, 7)
+    for k in range(n):
+        cy = (2 * k + 1) * d // (2 * n)
+        p.disc("x", cy, r + 1, r, 2, w - 2, "primary")
+        p.b(1, cy - r + 1, 1, 3, cy + r - 1, 2 * r, "trim").b(w - 3, cy - r + 1, 1, w - 1, cy + r - 1, 2 * r, "trim")
+        p.b(w // 2 - 1, cy - r - 1, 1, w // 2 + 1, cy + r + 1, 2 * r + 1, "accent")
+    p.b(2, 1, 1, 4, 3, 3, "emit_b")
+    return p
+
+
+def roof_cargo(w, d):
+    p = Piece(f"roof.cargo.{w // 16}x{d // 16}", "roof", "top", (w, d, 10))
+    p.b(0, 0, 0, w, d, 1, "trim")
+    slots = ("accent", "primary", "secondary", "primary")
+    for i, x in enumerate(range(1, w - 6, 8)):
+        for j, y in enumerate(range(1, d - 6, 8)):
+            hgt = 4 + (i + j) % 2 * 4
+            p.b(x, y, 1, x + 7, y + 7, 1 + hgt, slots[(i + 2 * j) % 4])
+            p.b(x, y + 3, 1 + hgt - 1, x + 7, y + 4, 1 + hgt, "metal")
+    return p
+
+
+def roof_small(kind):
+    """1x1 dense fillers."""
+    p = Piece(f"roof.s.{kind}", "roof", "top", (16, 16, 8))
+    p.b(0, 0, 0, 16, 16, 2, "primary")
+    if kind == "box":
+        p.b(3, 3, 2, 13, 13, 5, "primary").b(5, 5, 5, 11, 11, 6, "metal").b(12, 2, 2, 14, 4, 4, "emit_b")
+    elif kind == "vent":
+        p.b(2, 2, 2, 14, 14, 3, "dark")
+        for y in range(3, 13, 2):
+            p.b(2, y, 3, 14, y + 1, 4, "metal")
+    elif kind == "fan":
+        p.disc("z", 8, 8, 6, 2, 3, "dark").disc("z", 8, 8, 7, 2, 4, "trim", rin=6).b(7, 2, 3, 9, 14, 4, "metal").b(2, 7, 3, 14, 9, 4, "metal")
+    elif kind == "sensor":
+        p.b(5, 5, 2, 11, 11, 4, "secondary").b(7, 7, 4, 9, 9, 8, "metal").b(6, 6, 8, 10, 10, 9, "emit_a")
+    elif kind == "hatch":
+        p.b(2, 2, 2, 14, 14, 4, "accent").b(6, 7, 4, 10, 9, 5, "metal")
+    return p
+
+
+def roof_module(w, d, kind):
+    makers = {"box": roof_box, "vent": roof_vent, "hatch": roof_hatch, "pipes": roof_pipes, "radiator": roof_radiator,
+              "tanks": roof_tanks, "cargo": roof_cargo, "spine": roof_spine}
+    if kind == "greeble":
+        return roof_greeble(w, d, (w + d) % 3)
+    return makers[kind](w, d)
+
+
+def skylight(w, d):
+    return roof_skylight(w, d)
+
+
+# =========================================================================== r005: GENERIC HULL DRESSER
+def signed_area(poly):
+    return 0.5 * sum(poly[i][0] * poly[(i + 1) % len(poly)][1] - poly[(i + 1) % len(poly)][0] * poly[i][1] for i in range(len(poly)))
+
+
+def ccw(poly):
+    return poly if signed_area(poly) > 0 else list(reversed(poly))
+
+
+def inside(poly, x, y):
+    c, n = False, len(poly)
+    for i in range(n):
+        (x0, y0), (x1, y1) = poly[i], poly[(i + 1) % n]
+        if (y0 > y) != (y1 > y) and x < x0 + (y - y0) * (x1 - x0) / (y1 - y0):
+            c = not c
+    return c
+
+
+def spans(poly, yc):
+    xs = []
+    n = len(poly)
+    for i in range(n):
+        (x0, y0), (x1, y1) = poly[i], poly[(i + 1) % n]
+        if (y0 <= yc < y1) or (y1 <= yc < y0):
+            xs.append(x0 + (yc - y0) * (x1 - x0) / (y1 - y0))
+    xs.sort()
+    return [(xs[k], xs[k + 1]) for k in range(0, len(xs) - 1, 2)]
+
+
+def raster_poly(poly, bands, colour):
+    """Even-odd scanline raster of any plan polygon into per-1 m-cell stepped boxes (2-texel rows)."""
+    ys = [p[1] for p in poly]
+    y0 = int(math.floor(min(ys) * 8)) * 2
+    y1 = int(math.ceil(max(ys) * 8)) * 2
+    cells = {}
+    for yt in range(y0, y1, 2):
+        yc = (yt + 1) * T
+        for a, b in spans(poly, yc):
+            xa, xb = int(round(a * 8)) * 2, int(round(b * 8)) * 2
+            if xb <= xa:
+                continue
+            for cx in range(xa // 16, (xb - 1) // 16 + 1):
+                sa, sb = max(xa, cx * 16), min(xb, cx * 16 + 16)
+                if sb > sa:
+                    cells.setdefault((cx, yt // 16), {}).setdefault(yt, []).append((sa, sb))
+    boxes = []
+    for (cx, cy), rows in cells.items():
+        open_runs = {}
+        for yt in range(cy * 16, cy * 16 + 16, 2):
+            segs = set(rows.get(yt, []))
+            for seg in list(open_runs):
+                if seg not in segs:
+                    ya = open_runs.pop(seg)
+                    for bi in range(len(bands) - 1):
+                        boxes.append((seg[0], ya, bands[bi], seg[1], yt, bands[bi + 1], colour(cx, cy, bi)))
+            for seg in segs:
+                open_runs.setdefault(seg, yt)
+        for seg, ya in open_runs.items():
+            for bi in range(len(bands) - 1):
+                boxes.append((seg[0], ya, bands[bi], seg[1], cy * 16 + 16, bands[bi + 1], colour(cx, cy, bi)))
+    return boxes
+
+
+def vol_tiers(v):
+    z0, z1 = v["z"]
+    h = z1 - z0
+    if h >= 40:
+        return [(z0, z0 + 24), (z0 + 24, z1 - 5)], (z1 - 5, z1)
+    if h >= 16:
+        return [(z0, z1 - 4)], (z1 - 4, z1)
+    return [(z0, z1)], None
+
+
+def skin_piece(name, chain, v, seed):
+    """Stepped panel skin following a chain of non-axis edges (slopes or arcs). Panels run along the chain's
+    arc length, each tier gets a plate/vent/light treatment, and the depth is 2-4 texels outward."""
+    tiers, rim = vol_tiers(v)
+    segs, acc = [], 0.0
+    for p, q in chain:
+        dx, dy = q[0] - p[0], q[1] - p[1]
+        L = math.hypot(dx, dy)
+        segs.append((p, (dx / L, dy / L), (dy / L, -dx / L), L, acc))
+        acc += L
+    breaks, s = [], 0.0
+    while s < acc + 2:
+        breaks.append(s)
+        s += (0.75, 1.0, 1.0, 1.25, 1.5)[int(H(seed, int(s * 8)) * 5)]
+    D = 5
+    xs = [c for p, q in chain for c in (p[0], q[0])]; ys = [c for p, q in chain for c in (p[1], q[1])]
+    xa0, xb0 = int(math.floor((min(xs) - 0.5) * 8)) * 2, int(math.ceil((max(xs) + 0.5) * 8)) * 2
+    ya0, yb0 = int(math.floor((min(ys) - 0.5) * 8)) * 2, int(math.ceil((max(ys) + 0.5) * 8)) * 2
+    cols = {}                                              # (yt) -> list of (xt, panel, dist_texels)
+    for yt in range(ya0, yb0, 2):
+        for xt in range(xa0, xb0, 2):
+            cx, cy = (xt + 1) * T, (yt + 1) * T
+            best = None
+            for p, dh, n, L, a0 in segs:
+                rx, ry = cx - p[0], cy - p[1]
+                t = rx * dh[0] + ry * dh[1]
+                if -0.01 <= t <= L + 0.01:
+                    dist = rx * n[0] + ry * n[1]
+                    if 0 <= dist * 16 < D and (best is None or dist < best[1]):
+                        best = (a0 + t, dist)
+            if best is None or inside(v["poly"], cx, cy):
+                continue
+            panel = max(0, __import__("bisect").bisect_right(breaks, best[0]) - 1)
+            cols.setdefault(yt, []).append((xt, panel, best[1] * 16))
+    layers = []                                            # (panel, z0, z1, slot, depth)
+
+    def plan(panel):
+        out = []
+        for ti, (t0, t1) in enumerate(tiers):
+            h = H(seed, panel, ti, 3)
+            dep = 2 + int(H(seed, panel, ti, 4) * 3)
+            if h < 0.16 and t1 - t0 >= 10:                # vent
+                for z in range(t0 + 1, t1 - 1):
+                    out.append((z, z + 1, "metal" if z % 2 else "dark", dep - (0 if z % 2 else 1)))
+                out.append((t0, t0 + 1, "trim", dep)); out.append((t1 - 1, t1, "trim", dep))
+            else:
+                slot = ("primary", "primary", "secondary", "accent", "primary")[int(H(seed, panel, ti, 5) * 5)]
+                if ti == 0 and len(tiers) > 1 and slot == "primary":
+                    slot = "secondary"
+                out.append((t0 + 1, t1 - 1, slot, dep))
+                if H(seed, panel, ti, 6) < 0.3 and t1 - t0 >= 10:
+                    out.append((t1 - 5, t1 - 4, "emit_a" if H(seed, panel, 7) < 0.5 else "emit_b", dep + 1))
+                if H(seed, panel, ti, 8) < 0.35:
+                    out.append((t0 + 2, t0 + 4, "metal", dep + 1))
+        if rim:
+            out.append((rim[0], rim[1], "secondary", 3))
+        return out
+
+    plans = {}
+    runs = {}
+    p = Piece(name, "generated.skin", "plan", (0, 0, 0))
+
+    def emit(key, ya, yb):
+        panel, li, xa, xb = key
+        z0, z1, slot, dep = plans[panel][li]
+        p.b(xa, ya, z0, xb, yb, z1, slot)
+
+    for yt in range(ya0, yb0 + 2, 2):
+        cur = set()
+        row = sorted(cols.get(yt, []))
+        for panel in {c[1] for c in row}:
+            plans.setdefault(panel, plan(panel))
+            for li, (z0, z1, slot, dep) in enumerate(plans[panel]):
+                xs_in = [c[0] for c in row if c[1] == panel and c[2] < dep]
+                if not xs_in:
+                    continue
+                start = prev = xs_in[0]
+                for xt in xs_in[1:] + [None]:
+                    if xt is not None and xt == prev + 2:
+                        prev = xt
+                        continue
+                    cur.add((panel, li, start, prev + 2))
+                    if xt is not None:
+                        start = prev = xt
+        for key in list(runs):
+            if key not in cur:
+                emit(key, runs.pop(key), yt)
+        for key in cur:
+            runs.setdefault(key, yt)
+    return p
+
+
+def dress(design, kit, mats, decals, theme, coll, origin):
+    """Turn a grammar-level design (volumes + mounts) into kit placements."""
+    ox, oy = origin
+    vols = design["volumes"]
+    for v in vols:
+        v["poly"] = ccw(v["poly"])
+    mounts = design.get("mounts", [])
+    stats = {"cassettes": 0, "roof": 0, "skins": 0}
+
+    def other_covers(v, x, y, z0, z1):
+        for w in vols:
+            if w is v:
+                continue
+            if w["z"][0] < z1 and z0 < w["z"][1] and inside(w["poly"], x, y):
+                return True
+        return False
+
+    top_taken = {}
+    for m in mounts:
+        if m[3] == "top":
+            key, x, y = m[0], m[1], m[2]
+            pc = kit_piece(kit, key)
+            for cx in range(int(math.floor(x)), int(math.ceil(x + pc.size[0] * T))):
+                for cy in range(int(math.floor(y)), int(math.ceil(y + pc.size[1] * T))):
+                    top_taken[(cx, cy)] = True
+    for vi, v in enumerate(vols):
+        tiers, rim = vol_tiers(v)
+        z0, z1 = v["z"]
+        if v["kind"] == "hull":
+            bands = [max(0, z0 - 5), z0] + [t[1] for t in tiers] + ([rim[1]] if rim else [])
+            bands = sorted(set(bands))
+
+            def colour(cx, cy, bi, nb=len(bands)):
+                return "trim" if bi == 0 else ("secondary" if bi == 1 and nb > 3 else "primary")
+        else:
+            bands = [z0, z1]
+
+            def colour(cx, cy, bi, vi=vi):
+                h = H(cx, cy, vi, 44)
+                return "primary" if h < 0.62 else ("secondary" if h < 0.84 else "accent")
+        body = Piece(f"gen.{design['id']}.v{vi}", "generated", "plan", (0, 0, 0))
+        for bx in raster_poly(v["poly"], bands, colour):
+            body.b(*bx)
+        instance(body, (ox, oy, 0), 0, mats, coll, bevel=0.01)
+        # ---- faces
+        poly = v["poly"]
+        n = len(poly)
+        chain, chains = [], []
+        axis_edges = []
+        for i in range(n):
+            p, q = poly[i], poly[(i + 1) % n]
+            if abs(p[0] - q[0]) < 1e-6 or abs(p[1] - q[1]) < 1e-6:
+                if chain:
+                    chains.append(chain); chain = []
+                axis_edges.append((p, q))
+            else:
+                chain.append((p, q))
+        if chain:
+            if chains and chains[0][0][0] == chain[-1][1]:
+                chains[0] = chain + chains[0]
+            else:
+                chains.append(chain)
+        for ci, ch in enumerate(chains):
+            sk = skin_piece(f"gen.{design['id']}.v{vi}.skin{ci}", ch, v, H(design["id"], vi, ci) * 1e5)
+            if sk.boxes:
+                instance(sk, (ox, oy, 0), 0, mats, coll, bevel=0.008)
+                stats["skins"] += 1
+        long_axis = sorted(axis_edges, key=lambda e: -math.hypot(e[1][0] - e[0][0], e[1][1] - e[0][1]))[:2]
+        for p, q in axis_edges:
+            L = int(round(math.hypot(q[0] - p[0], q[1] - p[1])))
+            if L < 1 or abs(p[0] - round(p[0])) > 1e-6 or abs(p[1] - round(p[1])) > 1e-6:
+                continue
+            d = ((q[0] - p[0]) / L, (q[1] - p[1]) / L)
+            nrm = (d[1], -d[0])
+            rot = math.degrees(math.atan2(d[1], d[0])) + 180
+            logo = v["kind"] == "hull" and len(tiers) == 2 and (p, q) in long_axis and L >= 6 and v.get("logo", True)
+            for ti, (t0, t1) in enumerate(tiers):
+                h = t1 - t0
+                if h < 10:
+                    continue
+                holes = []
+                for u in range(L):
+                    px, py = p[0] + d[0] * (u + 0.5) + nrm[0] * 0.3, p[1] + d[1] * (u + 0.5) + nrm[1] * 0.3
+                    if other_covers(v, px, py, t0, t1):
+                        holes.append((u, u + 1))
+                for m in mounts:
+                    if m[3] != "face":
+                        continue
+                    key, mx, my, _, rotm, mz = m[:6]
+                    pc = kit_piece(kit, key)
+                    r = math.radians(rotm)
+                    out_n = (-math.sin(r), math.cos(r))
+                    if abs(out_n[0] - nrm[0]) > 1e-3 or abs(out_n[1] - nrm[1]) > 1e-3:
+                        continue
+                    if abs((mx - p[0]) * nrm[0] + (my - p[1]) * nrm[1]) > 0.05:
+                        continue
+                    if not (mz < t1 and t0 < mz + pc.size[2]):
+                        continue
+                    xdir = (math.cos(r), math.sin(r))
+                    ua = (mx - p[0]) * d[0] + (my - p[1]) * d[1]
+                    ub = (mx + xdir[0] * pc.size[0] * T - p[0]) * d[0] + (my + xdir[1] * pc.size[0] * T - p[1]) * d[1]
+                    holes.append((math.floor(min(ua, ub) + 1e-6), math.ceil(max(ua, ub) - 1e-6)))
+                items = []
+                if logo and ti == 1:
+                    for lu in sorted(range(0, L - 2), key=lambda u: abs(u + 1.5 - L / 2)):
+                        if not any(a < lu + 3 and lu < b for a, b in holes):
+                            items.append((lu, 3, "logo"))
+                            holes.append((lu, lu + 3))
+                            break
+                for seg in subtract(0, L, holes):
+                    for u, wm in pack(seg, sum(map(ord, design["id"])) + vi * 7 + ti * 13 + int(p[0] * 3 + p[1] * 5)):
+                        items.append((u, wm, None))
+                for u, wm, kind in items:
+                    org = (p[0] + d[0] * (u + wm) + ox, p[1] + d[1] * (u + wm) + oy, t0 * T)
+                    seed = (design["id"], vi, int(p[0]), int(p[1]), ti, u)
+                    if kind is None and wm <= 2 and h >= 20 and H(*seed, 91) < 0.4:
+                        h1 = h // 2
+                        for k, (za, hh) in enumerate(((t0, h1), (t0 + h1, h - h1))):
+                            kk = pick_small(seed + (k,), v)
+                            pc = kit.get(("cas", kk, wm, hh), CAS[kk], wm * 16, hh)
+                            instance(pc, (org[0], org[1], za * T), rot, mats, coll)
+                            stats["cassettes"] += 1
+                        continue
+                    kind = kind or pick_face(seed, wm, ti == len(tiers) - 1 and len(tiers) > 1, v)
+                    pc = kit.get(("cas", kind, wm, h), CAS[kind], wm * 16, h) if kind not in ("window", "full", "port") else \
+                        kit.get(("win", kind, wm, h), WIN[kind], wm * 16, h)
+                    instance(pc, org, rot, mats, coll)
+                    stats["cassettes"] += 1
+                    for sock in pc.decals:
+                        decal_quad(f"decal.{design['id']}.{vi}.{u}", pc, sock, decals["name"], org, rot, coll, 4.0)
+            if rim:
+                for u in range(L):
+                    px, py = p[0] + d[0] * (u + 0.5) + nrm[0] * 0.3, p[1] + d[1] * (u + 0.5) + nrm[1] * 0.3
+                    if other_covers(v, px, py, rim[0], rim[1]):
+                        continue
+                    lit = H(design["id"], vi, u, int(p[0] + p[1]), 5) < 0.3
+                    pc = kit.get(("rim", rim[1] - rim[0], lit), cas_rim, 16, rim[1] - rim[0], lit)
+                    instance(pc, (p[0] + d[0] * (u + 1) + ox, p[1] + d[1] * (u + 1) + oy, rim[0] * T), rot, mats, coll)
+        # ---- roof
+        zt = z1 * T
+        if v["kind"] == "hull":
+            cells = set()
+            xs = [pt[0] for pt in poly]; ys = [pt[1] for pt in poly]
+            for cx in range(int(math.floor(min(xs))), int(math.ceil(max(xs)))):
+                for cy in range(int(math.floor(min(ys))), int(math.ceil(max(ys)))):
+                    pts = [(cx + a, cy + b) for a in (0.02, 0.98) for b in (0.02, 0.98)] + [(cx + 0.5, cy + 0.5)]
+                    if all(inside(poly, *pt) for pt in pts) and not any(other_covers(v, cx + 0.5, cy + 0.5, z1, z1 + 20) for _ in (0,)):
+                        cells.add((cx, cy))
+            free = {c for c in cells if c not in top_taken}
+            rimc = {c for c in free if any((c[0] + a, c[1] + b) not in cells for a in (-1, 0, 1) for b in (-1, 0, 1))}
+            interior = free - rimc
+            placed = []
+            if v.get("spine") and interior:
+                cyv = [c[1] for c in interior]
+                mid = int(round((min(cyv) + max(cyv) + 1) / 2)) - 1
+                sp = sorted(c for c in interior if c[1] in (mid, mid + 1))
+                xs_sp = sorted({c[0] for c in sp})
+                logo_x = None
+                if len(xs_sp) >= 8:
+                    logo_x = xs_sp[len(xs_sp) // 2 - 2]
+                x = xs_sp[0] if xs_sp else 0
+                while xs_sp and x <= xs_sp[-1]:
+                    if logo_x is not None and x == logo_x and all((x + a, mid + b) in interior for a in range(4) for b in (0, 1)):
+                        pc = kit.get("rlogo", roof_logo, 64, 32)
+                        instance(pc, (x + ox, mid + oy, zt), 0, mats, coll)
+                        decal_quad(f"decal.{design['id']}.emblem", pc, pc.decals[0], decals["emblem"], (x + ox, mid + oy, zt), 0, coll, 1.0)
+                        for a in range(4):
+                            interior.discard((x + a, mid)); interior.discard((x + a, mid + 1))
+                        x += 4
+                        continue
+                    if all((x + a, mid + b) in interior for a in (0, 1) for b in (0, 1)):
+                        instance(kit.get(("roof", "spine", 32, 32), roof_module, 32, 32, "spine"), (x + ox, mid + oy, zt), 0, mats, coll)
+                        for a in (0, 1):
+                            interior.discard((x + a, mid)); interior.discard((x + a, mid + 1))
+                        x += 2
+                    else:
+                        x += 1
+            for c in sorted(interior):
+                if c not in interior:
+                    continue
+                order = [(3, 2), (2, 3), (2, 2), (2, 1), (1, 2)]
+                k0 = int(H(design["id"], vi, c[0], c[1], 17) * len(order))
+                order = order[k0:] + order[:k0]
+                for w_, d_ in order + [(1, 1)]:
+                    cover = [(c[0] + a, c[1] + b) for a in range(w_) for b in range(d_)]
+                    if all(cc in interior for cc in cover):
+                        break
+                for cc in cover:
+                    interior.discard(cc)
+                if (w_, d_) == (1, 1):
+                    kind = ("box", "vent", "fan", "sensor", "hatch", "box")[int(H(design["id"], c[0], c[1], 19) * 6)]
+                    pc = kit.get(("rs", kind), roof_small, kind)
+                else:
+                    big = ("box", "vent", "hatch", "greeble", "pipes", "radiator", "tanks", "cargo")
+                    thin = ("pipes", "vent", "radiator", "box")
+                    pool = big if min(w_, d_) >= 2 else thin
+                    kind = pool[int(H(design["id"], c[0], c[1], 23) * len(pool))]
+                    pc = kit.get(("roof", kind, w_ * 16, d_ * 16), roof_module, w_ * 16, d_ * 16, kind)
+                    if kind == "greeble":
+                        deco_at(kit, theme, (c[0] + 0.4 + ox, c[1] + 0.4 + oy, zt + 2 * T), mats, coll)
+                instance(pc, (c[0] + ox, c[1] + oy, zt), 0, mats, coll)
+                stats["roof"] += 1
+            for k, c in enumerate(sorted(rimc)):
+                kind = ("plain", "bump", "lit", "vent", "plain")[int(H(design["id"], c[0], c[1], 3) * 5)]
+                instance(kit.get(("rim", kind), roof_rim, kind), (c[0] + ox, c[1] + oy, zt), 0, mats, coll)
+                if theme == "riftjack" and k % 3 == 0:
+                    instance(kit.get("spike", decorator, "spike"), (c[0] + 0.3 + ox, c[1] + 0.3 + oy, zt + 2 * T), 0, mats, coll)
+        else:
+            xs = [pt[0] for pt in poly]; ys = [pt[1] for pt in poly]
+            if theme == "aurelian":
+                for k in range(0, len(poly), max(1, len(poly) // 3)):
+                    x, y = poly[k]
+                    cx, cy = sum(xs) / len(xs), sum(ys) / len(ys)
+                    px, py = x + (cx - x) * 0.25, y + (cy - y) * 0.25
+                    instance(kit.get("crystal", decorator, "crystal"), (px + ox, py + oy, zt), 0, mats, coll)
+    # ---- mounts
+    for m in mounts:
+        key, x, y, kind, rot, z = m[:6]
+        zz = z if kind == "face" else None
+        if kind == "top":
+            host = max((w["z"][1] for w in vols if inside(w["poly"], x + 0.5, y + 0.5)), default=54)
+            zz = host
+        instance(kit_piece(kit, key), (x + ox, y + oy, zz * T), rot, mats, coll)
+    # ---- plate decals
+    plates = [w for w in vols if w["kind"] == "plate"]
+    for k, w in enumerate(plates[:2]):
+        xs = [pt[0] for pt in w["poly"]]; ys = [pt[1] for pt in w["poly"]]
+        cx, cy = sum(xs) / len(xs), sum(ys) / len(ys)
+        span_x, span_y = (max(xs) - min(xs)) * 0.45, (max(ys) - min(ys)) * 0.35
+        mat = decals["number"] if k == 0 else decals["emblem_small"]
+        hw = min(span_x, span_y * 3.5) if k == 0 else min(span_x, span_y)
+        hh = hw / 3.5 if k == 0 else hw
+        if hw > 0.3:
+            top_decal(f"decal.{design['id']}.plate{k}", mat, cx - hw + ox, cy - hh + oy, cx + hw + ox, cy + hh + oy, w["z"][1] * T + 0.003, coll)
+    return stats
+
+
+CAS = {"panel": cas_panel, "split": cas_split, "grille": cas_grille, "hatch": cas_hatch, "light": cas_light, "stack": cas_stack,
+       "logo": cas_logo, "armor": cas_armor, "pipes": cas_pipes, "module": cas_module, "beacon": cas_beacon}
+WIN = {"window": lambda w, h: cas_window(w, h, "band"), "full": lambda w, h: cas_window(w, h, "full"), "port": cas_port}
+
+
+def pick_face(seed, wm, upper, v):
+    h = H(*seed, 1)
+    if v.get("face_style") == "windows" and upper:
+        return "full" if wm >= 2 else "port"
+    if wm == 1:
+        return ("grille", "light", "stack", "module", "pipes", "beacon", "port" if upper else "armor")[int(h * 7)]
+    if wm == 2:
+        return ("panel", "split", "hatch", "armor", "module", "pipes", "window" if upper else "panel")[int(h * 7)]
+    return ("armor", "panel", "split", "pipes")[int(h * 4)]
+
+
+def pick_small(seed, v):
+    return ("grille", "light", "pipes", "module", "stack", "beacon")[int(H(*seed, 2) * 6)]
+
+
+def kit_piece(kit, key):
+    table = {
+        "turret": lambda: kit.get("turret", turret_top), "cannon": lambda: kit.get("cannon", side_cannon),
+        "thruster": lambda: kit.get("thr", thruster), "tractor": lambda: kit.get("tractor", tractor),
+        "dish": lambda: kit.get("dish", dish), "cargo": lambda: kit.get("cargo", cargo_door),
+        "airlock": lambda: kit.get("airlock", airlock),
+    }
+    if key in table:
+        return table[key]()
+    if key.startswith("engine"):                     # engine.W.H.L in texels
+        _, w, h, L = key.split(".")
+        return kit.get(("eng", w, h, L), engine, f"mount.engine.w{w}.h{h}", int(w), int(h), int(L))
+    if key.startswith("sky"):                        # sky.W.D texels
+        _, w, d = key.split(".")
+        return kit.get(("sky", w, d), roof_skylight, int(w), int(d))
+    raise KeyError(key)
+
+
+def deco_at(kit, theme, loc, mats, coll):
+    kind = {"federation": "antenna", "riftjack": "spike", "aurelian": "crystal"}[theme]
+    instance(kit.get(kind, decorator, kind), loc, 0, mats, coll)
+
+
+def arc(cx, cy, r, a0, a1, n):
+    return [(cx + r * math.cos(math.radians(a0 + (a1 - a0) * i / n)), cy + r * math.sin(math.radians(a0 + (a1 - a0) * i / n))) for i in range(n + 1)]
+
+
+def full(z0=5):
+    return (z0, 54)
+
+
+# ---- designs: grammar data only (volumes on the 1 m grid, mounts on sockets). x is forward.
+def designs():
+    D = []
+    D.append(dict(id="razor", name="RAZOR  fighter", theme="federation", size="9 x 7 m", volumes=[
+        dict(poly=[(0, 0), (6, 0), (8, 1), (8, 2), (6, 3), (0, 3)], z=(6, 32), kind="hull", logo=False),
+        dict(poly=[(1, -2), (2, -2), (4, 0), (1, 0)], z=(10, 16), kind="plate"),
+        dict(poly=[(1, 3), (4, 3), (2, 5), (1, 5)], z=(10, 16), kind="plate")],
+        mounts=[("engine.20.18.32", 0, 0.25, "face", 90, 8), ("engine.20.18.32", 0, 1.5, "face", 90, 8),
+                ("cannon", 2, -2, "face", 180, 10 - 4), ("cannon", 1, 5, "face", 0, 10 - 4), ("sky.32.16", 5, 1, "top", 0, 0)]))
+    D.append(dict(id="courier", name="COURIER  shuttle", theme="federation", size="14 x 5 m", volumes=[
+        dict(poly=[(0, 0), (8, 0)] + arc(8, 2, 2, -90, 0, 8)[1:] + arc(8, 3, 2, 0, 90, 8) + [(0, 5)], z=(5, 46), kind="hull")],
+        mounts=[("engine.24.22.40", 0, 0.5, "face", 90, 10), ("engine.24.22.40", 0, 3.0, "face", 90, 10),
+                ("cargo", 7, 0, "face", 180, 5), ("airlock", 4, 5, "face", 0, 6), ("sky.32.48", 7, 1, "top", 0, 0)]))
+    D.append(dict(id="corvette", name="WAYFARER  corvette", theme="federation", size="30 x 16 m", volumes=[
+        dict(poly=[(0, 1), (20, 1), (24, 5), (24, 7), (20, 11), (0, 11)], z=full(), kind="hull", spine=True),
+        dict(poly=[(4, 11), (12, 11), (9, 14), (4, 14)], z=(12, 30), kind="plate"),
+        dict(poly=[(4, -2), (9, -2), (12, 1), (4, 1)], z=(12, 30), kind="plate")],
+        mounts=[("engine.48.36.64", 0, 2, "face", 90, 9), ("engine.48.36.64", 0, 7, "face", 90, 9), ("engine.32.26.48", 0, 5, "face", 90, 14),
+                ("cannon", 5, 14, "face", 0, 14), ("cannon", 7, -2, "face", 180, 14), ("thruster", 4, 12, "face", 90, 15),
+                ("thruster", 4, -1, "face", 90, 15), ("cargo", 16, 1, "face", 180, 6), ("airlock", 14, 11, "face", 0, 8),
+                ("turret", 6, 2, "top", 0, 0), ("turret", 13, 8, "top", 0, 0), ("sky.32.32", 20, 5, "top", 0, 0), ("dish", 2, 7, "top", 0, 0)]))
+    D.append(dict(id="frigate", name="ORION CREST  frigate", theme="federation", size="42 x 16 m", volumes=[
+        dict(poly=[(0, 0), (30, 0), (36, 3), (36, 7), (30, 10), (0, 10)], z=full(), kind="hull", spine=True),
+        dict(poly=[(8, -3), (21, -3), (24, 0), (8, 0)], z=(9, 50), kind="hull", logo=False),
+        dict(poly=[(8, 10), (24, 10), (21, 13), (8, 13)], z=(9, 50), kind="hull", logo=False),
+        dict(poly=[(24, -2), (28, -2), (30, 0), (24, 0)], z=(14, 30), kind="plate"),
+        dict(poly=[(24, 10), (30, 10), (28, 12), (24, 12)], z=(14, 30), kind="plate")],
+        mounts=[("engine.40.36.64", 0, 0, "face", 90, 9), ("engine.40.36.64", 0, 2.5, "face", 90, 9),
+                ("engine.40.36.64", 0, 5, "face", 90, 9), ("engine.40.36.64", 0, 7.5, "face", 90, 9),
+                ("engine.32.30.48", 8, -2.5, "face", 90, 14), ("engine.32.30.48", 8, 10.5, "face", 90, 14),
+                ("turret", 4, 1, "top", 0, 0), ("turret", 4, 7, "top", 0, 0), ("turret", 26, 1, "top", 0, 0), ("turret", 26, 7, "top", 0, 0),
+                ("turret", 12, -2.5, "top", 0, 0), ("turret", 12, 10.5, "top", 0, 0), ("dish", 17, 10.5, "top", 0, 0),
+                ("sky.48.32", 31, 4, "top", 0, 0), ("tractor", 34, 4, "top", 0, 0),
+                ("cargo", 18, -3, "face", 180, 9), ("cargo", 12, 13, "face", 0, 9), ("airlock", 29, 0, "face", 180, 12)]))
+    D.append(dict(id="marauder", name="RIFTJACK MARAUDER  raider", theme="riftjack", size="28 x 12 m", volumes=[
+        dict(poly=[(0, 0), (18, 0), (22, 2), (22, 4), (18, 6), (0, 6)], z=full(), kind="hull", spine=True),
+        dict(poly=[(4, 6), (15, 6), (12, 9), (4, 9)], z=(5, 50), kind="hull", logo=False),
+        dict(poly=[(6, -2), (10, -2), (12, 0), (6, 0)], z=(12, 30), kind="plate"),
+        dict(poly=[(22, 2), (24, 3), (22, 4)], z=(16, 28), kind="plate")],
+        mounts=[("engine.48.36.64", 0, 0.5, "face", 90, 9), ("engine.32.30.48", 0, 3.75, "face", 90, 14),
+                ("engine.24.22.40", 4, 6.5, "face", 90, 14), ("cannon", 7, -2, "face", 180, 14), ("cannon", 9, -2, "face", 180, 14),
+                ("turret", 10, 6.75, "top", 0, 0), ("turret", 14, 2, "top", 0, 0), ("cargo", 8, 9, "face", 0, 6)]))
+    pod = arc(6, 0, 3, -180, 180, 24)[:-1]
+    D.append(dict(id="crescent", name="AURELIAN CRESCENT  explorer", theme="aurelian", size="20 x 18 m", volumes=[
+        dict(poly=pod, z=(5, 46), kind="hull", spine=False, logo=False),
+        dict(poly=[(1, -2), (4, -2), (4, 2), (1, 2)], z=(9, 40), kind="hull", logo=False),
+        dict(poly=arc(6, 0, 8, 95, 175, 12) + arc(6, 0, 5.5, 175, 95, 10), z=(10, 32), kind="plate"),
+        dict(poly=arc(6, 0, 8, -175, -95, 12) + arc(6, 0, 5.5, -95, -175, 10), z=(10, 32), kind="plate"),
+        dict(poly=[(8.8, -1), (12, 0), (8.8, 1)], z=(20, 30), kind="plate")],
+        mounts=[("engine.24.22.40", 1, -1.75, "face", 90, 12), ("engine.24.22.40", 1, 0.25, "face", 90, 12), ("sky.32.32", 5, -1, "top", 0, 0)]))
+    hub = [(-2, -4), (2, -4), (4, -2), (4, 2), (2, 4), (-2, 4), (-4, 2), (-4, -2)]
+    arms = [[(4, -1), (10, -1), (10, 1), (4, 1)], [(-10, -1), (-4, -1), (-4, 1), (-10, 1)],
+            [(-1, 4), (1, 4), (1, 10), (-1, 10)], [(-1, -10), (1, -10), (1, -4), (-1, -4)]]
+    D.append(dict(id="station", name="HUB STATION  module", theme="federation", size="20 x 20 m", volumes=[
+        dict(poly=hub, z=full(), kind="hull", face_style="windows", logo=False)] + [dict(poly=a, z=(9, 46), kind="hull", logo=False) for a in arms],
+        mounts=[("airlock", 10, 1, "face", -90, 8), ("airlock", -10, -1, "face", 90, 8), ("airlock", -1, 10, "face", 0, 8),
+                ("airlock", 1, -10, "face", 180, 8), ("dish", -1, -1, "top", 0, 0), ("turret", 6, -1, "top", 0, 0), ("turret", -8, -1, "top", 0, 0)]))
+    return D
+
+
+# ---- shape-tile library (slopes and curves, dressed)
+def shape_library():
+    L = []
+    L.append(("square 1x1", [(0, 0), (2, 0), (2, 2), (0, 2)]))
+    for k in (1, 2, 3, 4):
+        L.append((f"slope 1:{k}", [(0, 0), (k * 2, 0), (0, 2)]))
+    for r in (2, 3, 4):
+        L.append((f"arc r{r}", [(0, 0)] + arc(0, 0, r, 0, 90, 4 * r)))
+    L.append(("concave r2", [(0, 0), (3, 0)] + arc(3, 3, 2, 270, 180, 8) + [(0, 3)]))
+    return L
+
+
+# =========================================================================== BLUEPRINT
+def blueprint_material():
+    m = bpy.data.materials.new("blueprint_fill")
+    m.use_nodes = True
+    nt = m.node_tree; nt.nodes.clear()
+    geo = nt.nodes.new("ShaderNodeNewGeometry")
+    sep = nt.nodes.new("ShaderNodeSeparateXYZ"); nt.links.new(geo.outputs["Position"], sep.inputs[0])
+    mr = nt.nodes.new("ShaderNodeMapRange")
+    mr.inputs["From Min"].default_value, mr.inputs["From Max"].default_value = 0.0, 4.0
+    mr.inputs["To Min"].default_value, mr.inputs["To Max"].default_value = 0.0, 1.0
+    nt.links.new(sep.outputs["Z"], mr.inputs["Value"])
+    ramp = nt.nodes.new("ShaderNodeValToRGB")
+    ramp.color_ramp.elements[0].color = (0.010, 0.045, 0.14, 1)
+    ramp.color_ramp.elements[1].color = (0.05, 0.22, 0.48, 1)
+    nt.links.new(mr.outputs[0], ramp.inputs["Fac"])
+    e = nt.nodes.new("ShaderNodeEmission"); nt.links.new(ramp.outputs["Color"], e.inputs["Color"])
+    o = nt.nodes.new("ShaderNodeOutputMaterial"); nt.links.new(e.outputs[0], o.inputs[0])
+    return m
+
+
+def blueprint_grid(coll, cx, cy, size):
+    me = bpy.data.meshes.new("bp_grid")
+    me.from_pydata([(cx - size, cy - size, -0.05), (cx + size, cy - size, -0.05), (cx + size, cy + size, -0.05), (cx - size, cy + size, -0.05)], [], [(0, 1, 2, 3)])
+    m = bpy.data.materials.new("bp_grid")
+    m.use_nodes = True
+    nt = m.node_tree; nt.nodes.clear()
+    tc = nt.nodes.new("ShaderNodeTexCoord")
+    sep = nt.nodes.new("ShaderNodeSeparateXYZ"); nt.links.new(tc.outputs["Object"], sep.inputs[0])
+    acc = None
+    for axis in ("X", "Y"):
+        for period, width, weight in ((1.0, 0.025, 0.35), (5.0, 0.05, 1.0)):
+            md = nt.nodes.new("ShaderNodeMath"); md.operation = "PINGPONG"; md.inputs[1].default_value = period / 2
+            nt.links.new(sep.outputs[axis], md.inputs[0])
+            lt = nt.nodes.new("ShaderNodeMath"); lt.operation = "LESS_THAN"; lt.inputs[1].default_value = width
+            nt.links.new(md.outputs[0], lt.inputs[0])
+            mul = nt.nodes.new("ShaderNodeMath"); mul.operation = "MULTIPLY"; mul.inputs[1].default_value = weight
+            nt.links.new(lt.outputs[0], mul.inputs[0])
+            if acc is None:
+                acc = mul.outputs[0]
+            else:
+                mx = nt.nodes.new("ShaderNodeMath"); mx.operation = "MAXIMUM"
+                nt.links.new(acc, mx.inputs[0]); nt.links.new(mul.outputs[0], mx.inputs[1]); acc = mx.outputs[0]
+    mix = nt.nodes.new("ShaderNodeMix"); mix.data_type = "RGBA"
+    nt.links.new(acc, mix.inputs["Factor"])
+    mix.inputs[6].default_value = (0.004, 0.018, 0.06, 1); mix.inputs[7].default_value = (0.06, 0.20, 0.42, 1)
+    e = nt.nodes.new("ShaderNodeEmission"); nt.links.new(mix.outputs[2], e.inputs["Color"])
+    o = nt.nodes.new("ShaderNodeOutputMaterial"); nt.links.new(e.outputs[0], o.inputs[0])
+    me.materials.append(m)
+    ob = bpy.data.objects.new("bp_grid", me)
+    coll.objects.link(ob)
+    return ob
+
+
+def blueprint_lines(sc, crease, thickness):
+    ls = sc.view_layers[0].freestyle_settings.linesets[0]
+    ls.select_crease = crease
+    sc.render.line_thickness = thickness
+
+
+def blueprint_mode(sc, colls, bp_mat):
+    """Swap every placed piece to the flat blueprint fill, drop bevels/decals, enable Freestyle lines."""
+    objs = [ob for c in colls for ob in list(c.all_objects)]   # snapshot: editing invalidates the live iterator
+    for ob in objs:
+        if True:
+            if ob.type != "MESH" or ob.name.startswith("bp_grid"):
+                continue
+            if ob.name.startswith("decal"):
+                ob.hide_render = True
+                continue
+            for s in ob.material_slots:
+                s.link = "OBJECT"
+                s.material = bp_mat
+            for md in ob.modifiers:
+                md.show_render = False
+    sc.render.use_freestyle = True
+    sc.render.line_thickness_mode = "ABSOLUTE"
+    sc.render.line_thickness = 1.1
+    vl = sc.view_layers[0]
+    vl.use_freestyle = True
+    fs = vl.freestyle_settings
+    fs.crease_angle = math.radians(134)
+    ls = fs.linesets[0] if len(fs.linesets) else fs.linesets.new("bp")
+    ls.select_by_visibility = True
+    ls.select_silhouette = ls.select_border = ls.select_crease = True
+    ls.linestyle = ls.linestyle or bpy.data.linestyles.new("bp")
+    ls.linestyle.color = (0.75, 0.93, 1.0)
+    sc.view_settings.view_transform, sc.view_settings.look = "Standard", "None"
+    sc.view_settings.exposure, sc.view_settings.gamma = 0.0, 1.0
+    sc.node_tree.nodes.clear()
+    rl = sc.node_tree.nodes.new("CompositorNodeRLayers"); comp = sc.node_tree.nodes.new("CompositorNodeComposite")
+    sc.node_tree.links.new(rl.outputs["Image"], comp.inputs["Image"])
+    w = sc.world
+    w.node_tree.nodes.clear()
+    bg = w.node_tree.nodes.new("ShaderNodeBackground"); bg.inputs[0].default_value = (0.004, 0.018, 0.06, 1)
+    wo = w.node_tree.nodes.new("ShaderNodeOutputWorld"); w.node_tree.links.new(bg.outputs[0], wo.inputs[0])
+
+
+# =========================================================================== SHEETS
+def component_sheet(kit, mats, coll, origin):
+    """Every kit piece laid out in plan (face pieces lie on their backs so their face reads from above)."""
+    ox, oy = origin
+    lab = label_material()
+    rows = [
+        ("FACE CASSETTES", [cassette_for_sheet(kit, k, w, 24) for k, w in (("panel", 2), ("split", 2), ("hatch", 2), ("armor", 2), ("module", 2),
+                                                                             ("pipes", 2), ("logo", 3), ("grille", 1), ("light", 1), ("stack", 1),
+                                                                             ("beacon", 1), ("module", 1), ("pipes", 1))]),
+        ("GLAZING", [kit.get(("win", "window", 2, 20), WIN["window"], 32, 20), kit.get(("win", "full", 3, 44), WIN["full"], 48, 44),
+                     kit.get(("win", "port", 1, 20), WIN["port"], 16, 20), kit_piece(kit, "sky.32.32"), kit_piece(kit, "sky.48.32"), kit_piece(kit, "sky.32.48")]),
+        ("ROOF MODULES", [kit.get(("roof", k, 32, 48), roof_module, 32, 48, k) for k in ("box", "vent", "hatch", "greeble", "pipes", "radiator", "tanks", "cargo")]
+         + [kit.get(("roof", "spine", 32, 32), roof_module, 32, 32, "spine"), kit.get("rlogo", roof_logo, 64, 32)]),
+        ("ROOF FILLERS + RIM", [kit.get(("rs", k), roof_small, k) for k in ("box", "vent", "fan", "sensor", "hatch")]
+         + [kit.get(("rim", k), roof_rim, k) for k in ("plain", "bump", "lit", "vent")]),
+        ("MOUNTS", [kit_piece(kit, "turret"), kit_piece(kit, "cannon"), kit_piece(kit, "engine.48.36.64"), kit_piece(kit, "engine.32.26.48"),
+                    kit_piece(kit, "engine.20.18.32"), kit_piece(kit, "thruster"), kit_piece(kit, "tractor"), kit_piece(kit, "dish"),
+                    kit_piece(kit, "cargo"), kit_piece(kit, "airlock")]),
+        ("INTERIOR EDGES + DECORATORS", [kit.get("wfull", edge_wall, "full"), kit.get("wglazed", edge_wall, "glazed"), kit.get("whalf", edge_wall, "half"),
+                                         kit.get("door", edge_door), kit.get("floor", floor_tile), kit.get("spike", decorator, "spike"),
+                                         kit.get("crystal", decorator, "crystal"), kit.get("antenna", decorator, "antenna")]),
+    ]
+    y = oy
+    for title, pieces in rows:
+        text(title, (ox - 10.0, y - 1.2, 0.02), 0.6, lab, coll)
+        x, rowd = ox, 0
+        for pc in pieces:
+            w, d, h = (v * T for v in pc.size)
+            if pc.mount == "face" and not pc.id.startswith("mount.engine") and pc.id != "mount.cannon.side.1x1":
+                ob = instance(pc, (x, y, 0.0), 0, mats, coll)
+                ob.rotation_euler = (math.radians(90), 0, 0)
+                ext, dep = w, h
+            elif pc.id.startswith("mount.engine") or pc.id == "mount.cannon.side.1x1":
+                instance(pc, (x, y - d, 0), 0, mats, coll)
+                ext, dep = w, d
+            else:
+                instance(pc, (x, y - d, 0), 0, mats, coll)
+                ext, dep = w, d
+            text(pc.id.split(".", 1)[1], (x, y - dep - 0.55, 0.02), 0.3, lab, coll)
+            x += max(ext, 1.2, 0.17 * len(pc.id)) + 1.0
+            rowd = max(rowd, dep)
+        y -= rowd + 2.2
+    return y
+
+
+def cassette_for_sheet(kit, kind, wm, h):
+    return kit.get(("cas", kind, wm, h), CAS[kind], wm * 16, h)
+
+
+# =========================================================================== SCENE / MAIN
 def setup(sc, samples):
     sc.render.engine = "BLENDER_EEVEE_NEXT"
     sc.render.resolution_x, sc.render.resolution_y = 1672, 941
@@ -1041,16 +1652,20 @@ def setup(sc, samples):
 
 
 def look(cam, target, offset, lens):
+    cam.data.type = "PERSP"
     cam.data.lens = lens
     cam.location = Vector(target) + Vector(offset)
     cam.rotation_euler = (Vector(target) - cam.location).to_track_quat("-Z", "Y").to_euler()
 
 
-def overhead(cam, target, tilt, heading, dist, lens):
-    cam.data.lens = lens
-    cam.rotation_euler = (math.radians(tilt), 0.0, math.radians(-heading))
-    fwd = cam.rotation_euler.to_matrix() @ Vector((0, 0, -1))
-    cam.location = Vector(target) - fwd * dist
+def ortho_top(cam, cx, cy, scale):
+    cam.data.type, cam.data.ortho_scale = "ORTHO", scale
+    cam.location, cam.rotation_euler = (cx, cy, 80), (0, 0, 0)
+
+
+# layout of the design sheet: (design id) -> world origin
+LAYOUT = {"razor": (0, 44), "courier": (14, 45), "crescent": (40, 44), "station": (68, 44),
+          "corvette": (0, 16), "marauder": (36, 18), "frigate": (0, -14)}
 
 
 def main():
@@ -1061,64 +1676,98 @@ def main():
     out = args.out.rstrip("/")
     detail = detail_height(f"{out}/{REVISION}_detail_height.png")
     kit = Kit()
-    ships, sheet = {}, bpy.data.collections.new("KIT_SHEET")
-    sc.collection.children.link(sheet)
-    theme_mats = {}
+    theme_mats = {tn: {s: slot_material(tn, s, th, detail) for s in SLOTS} for tn, th in THEMES.items()}
+    decal_sets = {}
     for tn, th in THEMES.items():
-        theme_mats[tn] = {s: slot_material(tn, s, th, detail) for s in SLOTS}
-    for n, (tn, th) in enumerate(THEMES.items()):
         name_img = text_mask(th["name"], f"{out}/{REVISION}_decal_{th['name'].lower()}.png")
         num_img = text_mask(th["number"], f"{out}/{REVISION}_decal_{th['number'].lower()}.png")
         emb_img = emblem_mask(th["emblem"], f"{out}/{REVISION}_emblem_{th['emblem']}.png")
-        dec = {"name": decal_material(f"{tn}.decal.name", name_img, th["on_dark"]),
-               "number": decal_material(f"{tn}.decal.number", num_img, th["on_light"]),
-               "emblem": decal_material(f"{tn}.decal.emblem", emb_img, th["on_dark"]),
-               "emblem_small": decal_material(f"{tn}.decal.emblem2", emb_img, th["on_light"])}
-        coll = bpy.data.collections.new(f"SHIP_{tn}")
-        sc.collection.children.link(coll)
-        build_ship(kit, tn, (0, n * 20), theme_mats[tn], dec, coll)
-        ships[tn] = coll
-    build_sheet(kit, theme_mats["federation"], sheet, (100, 0))
+        decal_sets[tn] = {"name": decal_material(f"{tn}.decal.name", name_img, th["on_dark"]),
+                          "number": decal_material(f"{tn}.decal.number", num_img, th["on_light"]),
+                          "emblem": decal_material(f"{tn}.decal.emblem", emb_img, th["on_dark"]),
+                          "emblem_small": decal_material(f"{tn}.decal.emblem2", emb_img, th["on_light"])}
+    lab = label_material()
+    ships = bpy.data.collections.new("DESIGNS"); sc.collection.children.link(ships)
+    stats = {}
+    for dsg in designs():
+        ox, oy = LAYOUT[dsg["id"]]
+        c = bpy.data.collections.new(f"D_{dsg['id']}"); ships.children.link(c)
+        stats[dsg["id"]] = dress(dsg, kit, theme_mats[dsg["theme"]], decal_sets[dsg["theme"]], dsg["theme"], c, (ox, oy))
+        ys = [p[1] for v in dsg["volumes"] for p in v["poly"]]
+        xs = [p[0] for v in dsg["volumes"] for p in v["poly"]]
+        lbl = bpy.data.collections.new(f"L_{dsg['id']}"); sc.collection.children.link(lbl)
+        text(dsg["name"], (ox + min(xs) - 6, oy + min(ys) - 2.6, 0.02), 1.5, lab, lbl)
+        text(f"{dsg['size']}  |  {dsg['theme']}", (ox + min(xs) - 6, oy + min(ys) - 4.2, 0.02), 1.0, lab, lbl)
+    shapes = bpy.data.collections.new("SHAPES"); sc.collection.children.link(shapes)
+    x0 = 150.0
+    for k, (nm, poly) in enumerate(shape_library()):
+        x0 += 0 if k == 0 else 0
+        dress(dict(id=f"shape{k}", volumes=[dict(poly=poly, z=full(), kind="hull", logo=False)], mounts=[]), kit,
+              theme_mats["federation"], decal_sets["federation"], "federation", shapes, (x0, 0))
+        text(nm, (x0, -1.8, 0.02), 0.6, lab, shapes)
+        x0 += max(p[0] for p in poly) + 3.5
+    shapes_cx = (150.0 + x0 - 3.5) / 2
+    sheet = bpy.data.collections.new("COMPONENTS"); sc.collection.children.link(sheet)
+    bottom = component_sheet(kit, theme_mats["federation"], sheet, (300, 0))
     pieces = [p for p in kit.p.values() if isinstance(p, Piece)]
     manifest = {"revision": REVISION, "texel_m": T, "slots": SLOTS, "themes": list(THEMES),
-                "unique_meshes": len(MESHES), "placements": PLACEMENTS["count"],
+                "unique_meshes": len(MESHES), "placements": PLACEMENTS["count"], "designs": stats,
                 "pieces": [{"id": p.id, "family": p.family, "mount": p.mount, "size_m": [v * T for v in p.size],
                             "slots": p.slots(), "boxes": len(p.boxes), "decal_sockets": [d[0] for d in p.decals],
                             "voxel_aligned": p.aligned()} for p in sorted(pieces, key=lambda q: (q.family, q.id))]}
     with open(f"{out}/kit_{REVISION}.json", "w") as fh:
         json.dump(manifest, fh, indent=1)
-    tris = sum(len(me.polygons) * 2 for me in MESHES.values())
-    print(f"ship_kit_prototype {REVISION}: pieces={len(pieces)} unique_meshes={len(MESHES)} placements={PLACEMENTS['count']} "
-          f"unique_tris={tris} all_voxel_aligned={all(p.aligned() for p in pieces)}", flush=True)
+    gen = [m for k, m in MESHES.items() if k.startswith("gen.")]
+    print(f"ship_kit_prototype {REVISION}: kit_pieces={len(pieces)} unique_meshes={len(MESHES)} (generated={len(gen)}) "
+          f"placements={PLACEMENTS['count']} all_kit_voxel_aligned={all(p.aligned() for p in pieces)} designs={stats}", flush=True)
     if args.no_render:
         return
     cam = setup(sc, args.samples)
+    labels = [c for c in sc.collection.children if c.name.startswith("L_")]
+    everything = [ships, shapes, sheet] + labels
 
-    def shot(name, visible):
+    def shot(name, visible, res=(1672, 941)):
         if shots and name not in shots:
             return
-        for c in list(ships.values()) + [sheet]:
+        for c in everything:
             c.hide_render = c not in visible
+        sc.render.resolution_x, sc.render.resolution_y = res
         sc.render.filepath = f"{out}/{REVISION}_{name}.png"
         bpy.ops.render.render(write_still=True)
         print(f"rendered {name}", flush=True)
 
-    allships = list(ships.values())
-    overhead(cam, (9.5, 22.0, 1.5), 10, 90, 92, 50)
-    shot("themes_topdown", allships)
-    look(cam, (10.0, 5.0, 1.2), (17.0, -24.0, 18.0), 42)
-    shot("federation_hero", [ships["federation"]])
-    look(cam, (10.0, 25.0, 1.2), (14.0, -30.0, 22.0), 26)
-    shot("themes_lineup", allships)
-    look(cam, (14.5, 0.6, 1.6), (2.5, -8.5, 2.2), 32)
-    shot("detail_closeup", [ships["federation"]])
-    look(cam, (11.0, 21.0, 1.8), (6.0, -10.0, 6.0), 32)
-    shot("riftjack_closeup", [ships["riftjack"]])
-    look(cam, (8.0, 45.0, 2.5), (-9.0, 8.0, 7.0), 36)
-    shot("aurelian_closeup", [ships["aurelian"]])
-    sc.render.resolution_x, sc.render.resolution_y = 2400, 1350
-    look(cam, (107.0, -15.0, 0.0), (0.0, -16.0, 44.0), 30)
-    shot("kit_sheet", [sheet])
+    # ---- colour renders
+    ortho_top(cam, 36, 18, 136)
+    shot("designs_topdown", [ships], (2400, 1350))
+    look(cam, (36, 18, 0), (-6, -70, 50), 28)
+    shot("designs_lineup", [ships], (2400, 1350))
+    look(cam, (18, -9, 1.5), (26, -24, 20), 35)
+    shot("frigate_hero", [ships])
+    look(cam, (33.5, -9, 1.8), (6, -9, 4.5), 30)
+    shot("frigate_bow_slopes", [ships])
+    look(cam, (46, 44, 1.2), (10, -14, 11), 32)
+    shot("crescent_curves", [ships])
+    look(cam, (12, 46.5, 1.0), (4, -12, 9), 32)
+    shot("razor_courier", [ships])
+    look(cam, (shapes_cx, 1.5, 1.0), (-4, -38, 26), 28)
+    shot("shape_tiles", [shapes])
+    look(cam, (12, 17, 1.5), (4, -10, 4), 32)
+    shot("corvette_side_density", [ships])
+    # ---- blueprints
+    bp = blueprint_material()
+    if not shots or any(s.startswith("blueprint") for s in shots):
+        blueprint_grid(ships, 36, 18, 80)
+        blueprint_grid(shapes, shapes_cx, 0, 60)
+        blueprint_grid(sheet, 322, bottom / 2, 60)
+        blueprint_mode(sc, [ships, shapes, sheet], bp)
+        blueprint_lines(sc, False, 0.8)
+        ortho_top(cam, 36, 16, 136)
+        shot("blueprint_designs", [ships] + labels, (2400, 1350))
+        blueprint_lines(sc, True, 0.9)
+        ortho_top(cam, shapes_cx, 1.0, (shapes_cx - 150) * 2 + 8)
+        shot("blueprint_shapes", [shapes], (2400, 900))
+        ortho_top(cam, 318, bottom / 2 + 0.5, 60)
+        shot("blueprint_components", [sheet], (2400, 1500))
 
 
 main()

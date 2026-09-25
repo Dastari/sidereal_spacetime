@@ -677,3 +677,81 @@ Detail texture and decal masks: `r004_detail_height.png`, `r004_emblem_*.png`.
 - Cockpit canopies from r003 are not yet kit pieces.
 - Interiors are not included in r004.
 - Runtime proof in Babylon is still gate P2.
+
+### r005 (samples r005_*): density, slope/curve skins, blueprints and combinations
+
+Owner direction, 2026-09-25, after r004:
+- "More panel density/slot and curved panels."
+- Keep iterating on slopes and curves.
+- Add a blueprint view of every component's top-down shape, and many ways to combine them into small and large ships.
+
+**Changes** (`scripts/art_library/ship_kit_prototype.py`, r005):
+- **Face density.**
+  - New cassettes: `armor` (layered plates with rivet rows), `pipes` (conduit runs with clamps), `module` (four-cell stacked sub-modules) and `beacon`.
+  - On tall faces, 1–2 m slots are randomly split into two half-height stacked cassettes.
+  - Every straight face packs 1/2/3 m cassettes in two tiers plus a lit rim band.
+- **Roof density.**
+  - New modules: `pipes`, `radiator`, `tanks` (stepped cylinders) and `cargo` (stacked containers).
+  - 1×1 fillers: box, vent, fan, sensor and hatch.
+  - Roof cells are packed greedily with 3×2 / 2×3 / 2×2 / 2×1 / 1×2 / 1×1 modules, around top mounts and a logo spine.
+- **Slope and curve skins.**
+  - Any run of non-axis edges (1:1–1:4 slopes, arcs, concave arcs) gets a generated **stepped skin**: panels laid out along the arc length.
+  - Each panel has 2–4 texels of relief, a vent, plate or light treatment per tier, and a rim band.
+  - The skin is generated per design as a piece, is brick-aligned, and uses the same material slots.
+- **General hull rasteriser.** Even-odd scanline over any plan polygon, including concave and curved shapes. Every volume carries a height band, so plates, wings and pods mix with full-height hull.
+- **Generic dresser.**
+  - A design is only grammar data: volumes (plan polygon plus z band plus kind) and mounts (piece, position, face or top, rotation).
+  - The dresser places cassettes, skins, roof modules, rims, mounts, decorators and decals automatically.
+  - Faces covered by adjacent volumes and reserved by face mounts are skipped.
+- **Seven combined designs** from the same kit, across three themes:
+
+| Design | Size | Theme |
+|---|---|---|
+| Razor fighter | 9 × 7 m | Federation |
+| Courier shuttle (rounded nose) | 14 × 5 m | Federation |
+| Wayfarer corvette | 30 × 16 m | Federation |
+| Orion Crest frigate (side hull pods, six turrets, six engines) | 42 × 16 m | Federation |
+| Riftjack Marauder raider (asymmetric hull) | 28 × 12 m | Riftjack |
+| Aurelian Crescent explorer (round pod, curved crescent wings) | 20 × 18 m | Aurelian |
+| Hub station (octagon plus four arms, viewport glazing, four airlocks) | 20 × 20 m | Federation |
+
+- **Blueprints** use orthographic top-down Freestyle linework on a 1 m / 5 m grid:
+  - `r005_blueprint_components`: every kit piece in plan. Face pieces are laid flat so their faces read.
+  - `r005_blueprint_shapes`: the shape-tile library (square, slopes 1:1–1:4, arcs r2–r4, concave r2), dressed.
+  - `r005_blueprint_designs`: all seven designs.
+
+![r005 blueprint designs](shipyard_player_builder/r005_blueprint_designs.jpg)
+![r005 blueprint components](shipyard_player_builder/r005_blueprint_components.jpg)
+![r005 blueprint shapes](shipyard_player_builder/r005_blueprint_shapes.jpg)
+![r005 designs top-down](shipyard_player_builder/r005_designs_topdown.jpg)
+![r005 lineup](shipyard_player_builder/r005_designs_lineup.jpg)
+![r005 frigate](shipyard_player_builder/r005_frigate_hero.jpg)
+![r005 frigate bow slopes](shipyard_player_builder/r005_frigate_bow_slopes.jpg)
+![r005 crescent curves](shipyard_player_builder/r005_crescent_curves.jpg)
+![r005 small craft](shipyard_player_builder/r005_razor_courier.jpg)
+![r005 shape tiles](shipyard_player_builder/r005_shape_tiles.jpg)
+![r005 corvette side](shipyard_player_builder/r005_corvette_side_density.jpg)
+
+**Numbers** (`kit_r005.json`):
+
+| Measure | Value |
+|---|---|
+| Reusable kit pieces | 176, all voxel-aligned |
+| Unique meshes | 248, of which 72 are per-design generated hull bodies and skins |
+| Placements | 1,552 |
+| Build, no render | 5 s |
+
+**Assessment.**
+- Density on straight faces and roofs is now close to the reference's kitbash read, and slopes and curves no longer show bare steps.
+- The same kit plus grammar data produces fighters, shuttles, frigates, stations, pirates and alien ships.
+
+**Remaining gaps:**
+- Slope skins read as vertical fins at shallow angles. Longer, flatter step panels would improve 1:3 and 1:4.
+- The concave-arc skin is only lightly tested.
+- Crescent wings are thin plates with sparse face detail.
+- Aurelian needs its own shape-pack pieces: organic ribs and spires.
+- Roof modules on very narrow volumes fall back to rim plates.
+- Station arms need end caps.
+- Blueprint labels are small at full-sheet scale.
+- No interiors in the kit yet.
+- Runtime (Babylon) proof is still gate P2.
