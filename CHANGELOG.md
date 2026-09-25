@@ -6,6 +6,8 @@ r004 adds a reusable component kit prototype, `scripts/art_library/ship_kit_prot
 
 r005 adds denser face and roof pieces (176 kit pieces), stepped slope and curve skins, a general hull rasteriser and a data-driven dresser. Seven combined designs (fighter, shuttle, corvette, frigate, pirate raider, alien explorer, station) and three blueprint sheets (components, shape tiles, designs) are rendered from the same kit.
 
+r006 adds size-class hardpoints (SM 1×1 to XL 4×4 m). Ion drives are segmented octagonal pods with flange, housing, conduit and nozzle sub-parts plus presentation plumes; thrust blocks, RCS thrusters, turrets and cannons also come in size classes. It also adds 0.25 m slope stepping and five more shape tiles.
+
 # Changelog
 
 ## Unreleased — Wayfarer exterior armor native r004
