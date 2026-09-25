@@ -57,6 +57,20 @@
 
 # Changelog
 
+## Unreleased — Shipyard player builder design, 2026-09-25
+
+Recorded the owner's decisions on player ship building and voxel-destructible ship structure. Added a design for the construction rules, an agent-friendly author → voxelise → style pipeline, damage authority, efficiency budget, a shared editor core and a phased plan. Evidence comes from a deterministic headless Blender prototype, `scripts/art_library/voxel_style_prototype.py`, which outputs a Wayfarer-style section with slope/arc bow, styled voxels and impact damage. Documentation and prototype only; no runtime, authority or asset changes.
+
+r004 adds a reusable component kit prototype, `scripts/art_library/ship_kit_prototype.py`. It has 59 voxel-aligned pieces covering hull shapes, face cassettes, glazing, roof modules, external mounts, interior edge types and decorators. The pieces use nine material slots, so three faction themes render on the same meshes, and it adds tiling detail bump, mask decals and theme decorators. The design gains §12: kit contract, theming, decals, wall and pressure edge types, glazing families, hull shapes, mounts and faction strategy.
+
+r005 adds denser face and roof pieces (176 kit pieces), stepped slope and curve skins, a general hull rasteriser and a data-driven dresser. Seven combined designs (fighter, shuttle, corvette, frigate, pirate raider, alien explorer, station) and three blueprint sheets (components, shape tiles, designs) are rendered from the same kit.
+
+r006 adds size-class hardpoints (SM 1×1 to XL 4×4 m). Ion drives are segmented octagonal pods with flange, housing, conduit and nozzle sub-parts plus presentation plumes; thrust blocks, RCS thrusters, turrets and cannons also come in size classes. It also adds 0.25 m slope stepping and five more shape tiles.
+
+r007 adds modular mount assemblies (connector, rotation base, gimbal, head, payload) for 11 weapon and utility kinds in SM/MD/LG, with face-mount variants. The ion drive becomes round, with chunk blocks, a bolted cap and deeper nozzles, and a salvaged ion geometry variant is added. The ships are refitted.
+
+r008 adds an interior architecture kit: floor tiles, edge walls with pressure semantics, doors, derived junction posts, pipework, fixtures, ceiling tiles and 1.75 m cutaway variants. A deck generator builds a full 11-room corvette deck from a room plan. Interior objects are art-library design-id sockets, and a room pod exploded view is included.
+
 ## 2026-09-15 — Stellar Observe framing (render 0.5.1)
 
 Observe fits the enlarged stellar corona, including portrait viewports, while retaining authored physical radii and existing planet framing. Added two NullEngine projection tests. Final r013 solar migration passes isolated baseline/update/persistent-state verification and is now live with the compatible client. All live ship, character and inventory-item rows remain unchanged. Hardware performance acceptance remains unmeasured.
