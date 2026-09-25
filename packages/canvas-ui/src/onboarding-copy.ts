@@ -3,8 +3,8 @@ export function onboardingCopy(accountKind?: "oidc" | "development") {
     title: "Enter the universe",
     description:
       accountKind === "development"
-        ? "Create a persistent development character and ship in the shared system."
-        : "Create your persistent character and ship in the shared system.",
+        ? "Create a persistent development character in the shared system."
+        : "Create your persistent character in the shared system.",
     action: "Enter universe",
     identity:
       accountKind === "oidc"
