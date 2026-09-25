@@ -304,3 +304,55 @@ Build a new framework-light package, for example `packages/ship-editor`, contain
 - Voxel memory per ship must be budgeted. Base volumes are shared across instances of a blueprint; only deltas are per ship.
 
 **Non-goals now.** Functional rooms, six-degree-of-freedom simulation, and arbitrary vertical slopes in the hull cross-section beyond top-edge profiles.
+
+## 11. Prototype iteration log
+
+### r001 (samples 01–06)
+Owner feedback, 2026-09-25, comparing `3d-rpg-after.png`, the current game, and sample 04: "I don't think we're close to being there yet, but I think you've made progress."
+
+Gap analysis against crops of the reference:
+
+1. Every block is its own rounded brick. The bevel highlights and grooves between blocks are the signature of the look; r001 painted seams onto flat panels.
+2. The hull has deep relief: 3+ layers of protruding plates, recessed slatted vents, light boxes, framed hatches and a stepped skirt. r001 was nearly flat.
+3. The palette is warm light grey, charcoal navy and muted crimson; r001 used toy primaries.
+4. Partitions are cut away with thick dark caps, and door jambs are pillars with light tops.
+5. Engines are boxy segmented modules, not striped cylinders.
+6. Room light pools, ambient occlusion and a purple nebula.
+7. Props are dense and multi-part.
+
+### r002 (samples r002_*)
+
+![r002 overview](shipyard_player_builder/r002_overview.jpg)
+![r002 hull close-up](shipyard_player_builder/r002_hull_closeup.jpg)
+
+**Changes, all in the same author → sample → style → mesh pipeline:**
+- **Brick meshing.** The style kit assigns every surface cell a brick id. The mesher emits brick-boundary faces on the surface skin and never shares vertices across bricks, so the offline bevel rounds every brick edge. At runtime this is meant to become a brick-edge shader term (brick-local UV distance to edge) rather than extra geometry.
+- **Hull modules.** Plates with 0–2 voxels of relief, inset groove panels and greebles, slatted vents, framed crimson hatches, protruding light boxes, recesses, a stepped skirt, and a rim with raised caps and lights.
+- **Deck-view cut-away.** Shell at about 2.5 m, partitions at about 1.9 m. Walls have charcoal caps and wainscot bands, and derived junction/jamb pillars carry light strips.
+- **Other.** Boxy engines, multi-part props, the reference palette, per-room lights, a nebula backdrop and the grading note.
+
+**Numbers:**
+
+| Measure | Value |
+|---|---|
+| Authored objects | 164 |
+| Sampled cells | 1,135,629 |
+| Bricks | 1,701 |
+| Surface faces (before the offline bevel) | 285,824 |
+| Headless build, no render | 15 s |
+| Four renders | about 8 min |
+
+**Assessment.** The hull close-up is the first result that reads like the reference's kitbash hull. The overview and interior are still well short, for these reasons:
+
+1. **Props dominate the reference interior.** They are authored Blender models, not structure. Box stand-ins cannot close that gap; a real prop library in the reference style is needed (§4.4 and the `modular-spaceship-design-2` / `internal-components-2` sheets).
+2. **The hull rim is too broad and plain from above.** The reference rim is a busy strip of small blocks and trim.
+3. **Too many pillars.** Junction pillars make the interior read as a colonnade; the reference mainly lights door jambs.
+4. **Scale and composition.** The reference ship is about 34 m with many small rooms; this section is 14 m.
+5. **Offline lighting does not transfer to the game.** The look has to be proven in the Babylon renderer (gate P2) before more Blender tuning is worthwhile.
+
+**Next options:**
+- **(a)** Author a 10–15 piece prop set in the reference style and voxelise it through the same sampler.
+- **(b)** Port the style kit and brick-edge shader to TypeScript and evaluate in-game on the real Wayfarer footprint.
+- **(c)** Continue offline rim and interior-wall density passes.
+
+(b) gives the most information per effort.
