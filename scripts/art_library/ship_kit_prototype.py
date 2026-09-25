@@ -36,7 +36,7 @@ import bpy
 import numpy as np
 from mathutils import Vector
 
-REVISION = "r005"
+REVISION = "r006"
 T = 1.0 / 16.0
 SLOTS = ["primary", "secondary", "accent", "trim", "metal", "dark", "emit_a", "emit_b", "glass"]
 SI = {s: i for i, s in enumerate(SLOTS)}
@@ -701,6 +701,8 @@ def instance(piece, loc, rot_deg, theme_mats, coll, bevel=0.012):
     md.width, md.segments, md.limit_method, md.angle_limit = bevel, 2, "ANGLE", math.radians(30)
     md.harden_normals, md.use_clamp_overlap = True, True
     PLACEMENTS["count"] += 1
+    if getattr(piece, "plumes", None) and "plume_outer" in theme_mats:
+        attach_plumes(piece, ob, theme_mats, coll)
     return ob
 
 
@@ -950,6 +952,276 @@ def skylight(w, d):
     return roof_skylight(w, d)
 
 
+# =========================================================================== r006: SIZE-CLASS MOUNTS
+# Hardpoint footprints are whole cells so the grammar can reserve them: SM 1x1, MD 2x2, LG 3x3, XL 4x4 (metres).
+# A 3.5 m deck face hosts up to LG; XL is rear-only and may overhang the hull height (vertically centred).
+SIZE_CELLS = {"SM": 1, "MD": 2, "LG": 3, "XL": 4}
+ION_LEN = {"SM": 34, "MD": 56, "LG": 80, "XL": 112}       # body length in texels (2.1 / 3.5 / 5 / 7 m)
+
+
+def oct_rows(r, ch, rin=0, chin=0):
+    """Rows (k, half, hin) of a chamfered-square (octagonal) section of half-size r, chamfer ch."""
+    rows = []
+    for k in range(-r, r):
+        q = abs(k + 0.5)
+        half = r if q <= r - ch else int(round(r - (q - (r - ch))))
+        hin = 0
+        if rin and q < rin:
+            hin = rin if q <= rin - chin else max(0, int(round(rin - (q - (rin - chin)))))
+        rows.append((k, half, hin))
+    return rows
+
+
+def tube(p, cx, cz, r, ch, y0, y1, slot, rin=0, chin=0):
+    """Octagonal tube along +Y centred on (cx, cz); merged rows. rin > 0 makes it hollow."""
+    rows = oct_rows(r, ch, rin, chin)
+    start = 0
+    for n in range(1, len(rows) + 1):
+        if n == len(rows) or rows[n][1:] != rows[start][1:]:
+            k0, k1, half, hin = rows[start][0], rows[n - 1][0] + 1, rows[start][1], rows[start][2]
+            spans = [(cx - half, cx + half)] if not hin else [(cx - half, cx - hin), (cx + hin, cx + half)]
+            for u0, u1 in spans:
+                p.b(u0, y0, cz + k0, u1, y1, cz + k1, slot)
+            start = n
+    return p
+
+
+def ion_parts(sz):
+    """Round, segmented ion-drive pod (reference 'Engine Assembly'): flange, housing bands with raised
+    plates, conduit layer, stepped nozzle bell with a glowing core. Returns ordered parts + metadata."""
+    W = 16 * SIZE_CELLS[sz]
+    L = ION_LEN[sz]
+    r = W // 2 - 2
+    ch = max(2, int(r * 0.5))
+    cx = cz = W // 2
+    base = f"mount.engine.ion.{sz}"
+    fl, ho, co, no = (Piece(f"{base}.{k}", "engine-part", "face", (W, 0, W)) for k in ("flange", "housing", "conduit", "nozzle"))
+    # mounting flange: square plate + bolt ring, sized to the hardpoint
+    fl.b(0, 0, 0, W, 2, W, "trim")
+    tube(fl, cx, cz, r + 1, ch, 2, 5, "secondary")
+    for x, z in ((1, 1), (W - 3, 1), (1, W - 3), (W - 3, W - 3)):
+        fl.b(x, 2, z, x + 2, 3, z + 2, "metal")
+    # housing: segmented bands; slot pattern echoes the reference (navy / white / crimson / white ...)
+    seg = max(8, (W // 3) & ~1)
+    n = max(3, (L - 6) // seg)
+    pattern = ["secondary", "primary", "primary", "accent", "primary", "secondary", "primary", "accent"]
+    y = 5
+    for i in range(n):
+        y0, y1 = y, y + seg
+        slot = pattern[(i + SIZE_CELLS[sz]) % len(pattern)]
+        gap = "emit_a" if i == n // 2 else "dark"                      # reactor ring glows mid-body
+        tube(ho, cx, cz, r - 1, ch, y0, y1, gap)                        # recessed gap ring shows between bands
+        tube(ho, cx, cz, r, ch, y0 + 1, y1 - 1, slot)
+        pw = max(2, r - ch)                                             # raised armour plates on the flats
+        dep = 1 + int(H(sz, i, 3) * 2)
+        pslot = "secondary" if slot != "secondary" else "primary"
+        if H(sz, i, 1) < 0.7:
+            ho.b(cx - pw, y0 + 2, cz + r, cx + pw, y1 - 2, cz + r + dep, pslot)          # top
+            ho.b(cx - pw, y0 + 2, cz - r - dep, cx + pw, y1 - 2, cz - r, pslot)          # bottom
+        if H(sz, i, 2) < 0.6:
+            ho.b(cx + r, y0 + 2, cz - pw, cx + r + dep, y1 - 2, cz + pw, pslot)          # sides
+            ho.b(cx - r - dep, y0 + 2, cz - pw, cx - r, y1 - 2, cz + pw, pslot)
+        h = H(sz, i, 5)
+        if h < 0.35 and seg >= 10:                                     # amber status lights
+            ho.b(cx + r, y0 + 3, cz + 1, cx + r + 1, y0 + 5, cz + 3, "emit_b")
+            ho.b(cx - r - 1, y0 + 3, cz + 1, cx - r, y0 + 5, cz + 3, "emit_b")
+        elif h < 0.6 and pw >= 3:                                      # side vents
+            for zz in range(cz - pw + 1, cz + pw - 1, 2):
+                ho.b(cx + r, y0 + 2, zz, cx + r + 1, y1 - 2, zz + 1, "dark")
+                ho.b(cx - r - 1, y0 + 2, zz, cx - r, y1 - 2, zz + 1, "dark")
+        y = y1
+    body_end = y
+    # conduit layer: fuel / power pipes along the chamfers with clamps and a power coupling
+    pr = max(1, r // 8)
+    off = r - ch // 2 - pr
+    for sx, slot in ((1, "metal"), (-1, "accent")):                  # two pipes on the upper chamfers
+        px, pz = cx + sx * off, cz + off
+        co.b(px - pr, 6, pz - pr, px + pr, body_end - 2, pz + pr, slot)
+        for yy in range(5 + seg, body_end - 4, seg * 2):
+            co.b(px - pr - 1, yy, pz - pr - 1, px + pr + 1, yy + 2, pz + pr + 1, "trim")
+    co.b(cx - 2, body_end - 6, cz + r, cx + 2, body_end - 3, cz + r + 2, "emit_a")
+    # nozzle: collar, stepped bell (dark ribbed), inner cavity and glowing core
+    tube(no, cx, cz, r + 1, ch, body_end, body_end + 3, "secondary")
+    steps = 3 + SIZE_CELLS[sz]
+    yb = body_end + 3
+    for k in range(steps):
+        rb = int(r * 0.72 + (r * 0.34) * k / max(1, steps - 1))
+        slot = "metal" if k % 2 == 0 else "trim"
+        no.disc("y", cx, cz, rb, yb, yb + 2, slot, rin=max(1, rb - 2))
+        yb += 2
+    no.disc("y", cx, cz, int(r * 0.72), body_end + 3, body_end + 4, "dark")
+    no.disc("y", cx, cz, int(r * 0.55), body_end + 4, body_end + 6, "emit_a")
+    total = yb
+    for pc in (fl, ho, co, no):
+        pc.size = (W, total, W)
+    meta = {"W": W, "total": total, "plumes": [(cx, cz, int(r * 0.62), body_end + 5, W)]}
+    return [fl, ho, co, no], meta
+
+
+def block_engine(sz):
+    """Boxy thrust block (industrial): louvred top in an amber frame, crimson band, collar,
+    one nozzle (SM-LG) or twin nozzles (XL)."""
+    W = 16 * SIZE_CELLS[sz]
+    Hh = max(12, int(W * 0.78)) & ~1
+    L = {"SM": 30, "MD": 48, "LG": 64, "XL": 80}[sz]
+    p = Piece(f"mount.engine.block.{sz}", "mount", "face", (W, L + 8, Hh))
+    e = max(2, W // 8)
+    z0 = (W - Hh) // 2
+    zt = z0 + Hh
+    p.b(0, 0, z0, W, L // 2, zt, "primary").b(0, L // 2, z0, W, L - 4, zt, "primary")
+    p.b(-1, L // 2 - 3, z0 - 1, W + 1, L // 2 + 3, zt + 1, "accent")
+    for ya, yb in ((3, L // 2 - 3), (L // 2 + 4, L - 6)):
+        p.b(e, ya, zt, W - e, yb, zt + 1, "dark")
+        for yy in range(ya + 1, yb - 1, 2):
+            p.b(e + 1, yy, zt + 1, W - e - 1, yy + 1, zt + 2, "metal")
+        p.b(e - 1, ya - 1, zt, e, yb + 1, zt + 2, "emit_b").b(W - e, ya - 1, zt, W - e + 1, yb + 1, zt + 2, "emit_b")
+    for side in (-1, W):
+        p.b(side, 4, z0 + 2, side + 1, L // 2 - 4, z0 + Hh // 3, "secondary")
+        p.b(side, L - 12, z0 + Hh // 2 - 2, side + 1, L - 8, z0 + Hh // 2 + 2, "emit_b")
+    p.b(-2, L - 4, z0 - 2, W + 2, L, zt + 2, "secondary")
+    nozzles = [W // 2] if sz != "XL" else [W // 4, 3 * W // 4]
+    r = (min(W // len(nozzles), Hh) // 2) - 2
+    plumes = []
+    for nx in nozzles:
+        p.disc("y", nx, z0 + Hh // 2, r, L, L + 6, "metal")
+        p.disc("y", nx, z0 + Hh // 2, r - 2, L + 5, L + 7, "dark")
+        p.disc("y", nx, z0 + Hh // 2, max(2, r - 4), L + 6, L + 8, "emit_a")
+        plumes.append((nx, z0 + Hh // 2, max(2, r - 3), L + 8, W))
+    p.size = (W, L + 8, W)
+    p.plumes = plumes
+    return p
+
+
+def ion_engine(sz):
+    parts, meta = ion_parts(sz)
+    p = Piece(f"mount.engine.ion.{sz}", "mount", "face", (meta["W"], meta["total"], meta["W"]))
+    for q in parts:
+        p.boxes += q.boxes
+    p.plumes = meta["plumes"]
+    return p
+
+
+def rcs(sz):
+    k = {"SM": 1, "MD": 2}[sz]
+    p = Piece(f"mount.rcs.{sz}", "mount", "face", (8 * k + 4, 8 * k, 8 * k + 4))
+    c = 4 * k + 2
+    p.b(0, 0, 0, 8 * k + 4, 3, 8 * k + 4, "secondary").b(1, 3, 1, 8 * k + 3, 4 * k + 2, 8 * k + 3, "primary")
+    p.disc("y", c, c, 3 * k, 4 * k + 2, 8 * k, "metal").disc("y", c, c, 2 * k, 8 * k - 1, 8 * k, "emit_a")
+    p.plumes = [(c, c, max(1, 2 * k - 1), 8 * k, 8 * k)]
+    return p
+
+
+def turret(sz):
+    """Top turret: SM single barrel on a 1x1 ring, MD twin on 2x2, LG armoured triple on 3x3."""
+    n = SIZE_CELLS[sz]
+    W = 16 * n
+    c = W // 2
+    p = Piece(f"mount.turret.{sz}", "mount", "top", (W, W, 8 + 5 * n))
+    p.disc("z", c, c, c - 1, 0, 2, "trim").disc("z", c, c, c - 3, 2, 4, "secondary")
+    hw, hd = int(W * 0.30), int(W * 0.26)
+    top = 4 + 4 * n
+    p.b(c - hw, c - hd, 4, c + hw, c + hd, top, "primary")
+    p.b(c + hw - 2 * n, c - hd - 1, 4, c + hw + 1, c + hd + 1, top - 1, "accent")
+    p.b(c - hw + 2, c - hd + 2, top, c + hw - 3, c + hd - 2, top + 1, "primary")
+    barrels = {1: [0], 2: [-3, 3], 3: [-6, 0, 6]}[n]
+    blen = 10 + 12 * n
+    bw = 1 + n // 2
+    for off in barrels:
+        z = 4 + 2 * n
+        p.b(c + hw, c + off - bw, z, c + hw + blen, c + off + bw, z + 2 * bw, "metal")
+        p.b(c + hw + blen - 3, c + off - bw - 1, z - 1, c + hw + blen, c + off + bw + 1, z + 2 * bw + 1, "trim")
+    p.b(c - hw + 2, c + hd - 4, top, c - hw + 5, c + hd - 1, top + 2, "secondary")
+    p.b(c - hw + 3, c + hd - 3, top + 2, c - hw + 4, c + hd - 2, top + 3, "emit_a")
+    if n == 3:                                                          # armoured shield plates
+        p.b(c - hw - 2, c - hd - 2, 4, c + hw - 4, c - hd, top - 2, "secondary")
+        p.b(c - hw - 2, c + hd, 4, c + hw - 4, c + hd + 2, top - 2, "secondary")
+    return p
+
+
+def cannon(sz):
+    """Side sponson cannon: SM 1 cell, MD 1 cell heavy, LG 2 cells twin."""
+    n = {"SM": 1, "MD": 1, "LG": 2}[sz]
+    k = {"SM": 1, "MD": 1.5, "LG": 2}[sz]
+    W = 16 * n
+    Hh = int(10 * k) // 2 * 2
+    p = Piece(f"mount.cannon.{sz}", "mount", "face", (W, int(34 * k), Hh + 4))
+    p.b(0, 0, 0, W, int(6 * k), Hh + 4, "secondary").b(1, int(6 * k), 1, W - 1, int(9 * k), Hh + 3, "primary")
+    p.b(2, int(9 * k), 2, W - 2, int(14 * k), Hh + 2, "accent")
+    bar = [W // 2] if n == 1 else [W // 4, 3 * W // 4]
+    bw = max(1, int(2 * k))
+    for bx in bar:
+        p.b(bx - bw, int(14 * k), Hh // 2 + 2 - bw, bx + bw, int(32 * k), Hh // 2 + 2 + bw, "metal")
+        p.b(bx - bw - 1, int(30 * k), Hh // 2 + 1 - bw, bx + bw + 1, int(34 * k), Hh // 2 + 3 + bw, "trim")
+    p.b(2, int(9 * k), Hh + 2, 4, int(11 * k), Hh + 4, "emit_b")
+    return p
+
+
+def crew_figure():
+    p = Piece("ref.crew.1m8", "reference", "top", (8, 5, 29))
+    p.b(1, 1, 0, 3, 4, 13, "secondary").b(5, 1, 0, 7, 4, 13, "secondary")
+    p.b(0, 0, 13, 8, 5, 23, "primary").b(0, 0, 18, 8, 5, 20, "accent")
+    p.b(-2, 1, 14, 0, 4, 22, "primary").b(8, 1, 14, 10, 4, 22, "primary")
+    p.b(1, 0, 23, 7, 5, 29, "primary").b(2, -1, 25, 6, 0, 28, "emit_a")
+    return p
+
+
+def plume_mesh(key, r, length):
+    """Stepped exhaust plume along +Y (presentation only): outer sleeve + bright core."""
+    me = MESHES.get(("plume",) + key)
+    if me is not None:
+        return me
+    verts, faces, mats = [], [], []
+    steps = 6
+    for layer, (rad0, slot) in enumerate(((r * 1.0, 0), (r * 0.55, 1))):
+        for s in range(steps):
+            rr = rad0 * (1 - s / steps) ** 1.3
+            y0, y1 = length * s / steps, length * (s + 1) / steps
+            rr = max(rr, 0.5) * T
+            o = len(verts)
+            for y in (y0 * T, y1 * T):
+                for a in range(8):
+                    ang = math.pi / 8 + a * math.pi / 4
+                    verts.append((rr * math.cos(ang), y, rr * math.sin(ang)))
+            for a in range(8):
+                b = (a + 1) % 8
+                faces.append((o + a, o + b, o + 8 + b, o + 8 + a)); mats.append(slot)
+            faces.append(tuple(o + 8 + a for a in range(8))); mats.append(slot)
+    me = bpy.data.meshes.new(f"plume.{key}")
+    me.from_pydata(verts, [], faces)
+    me.materials.append(None); me.materials.append(None)
+    me.polygons.foreach_set("material_index", mats)
+    MESHES[("plume",) + key] = me
+    return me
+
+
+def plume_materials(theme_name, th):
+    col, _ = th["emit_a"]
+    out = []
+    for name, strength, alpha in (("outer", 3.0, 0.16), ("core", 7.0, 0.5)):
+        m = bpy.data.materials.new(f"{theme_name}.plume.{name}")
+        m.use_nodes = True
+        nt = m.node_tree; nt.nodes.clear()
+        e = nt.nodes.new("ShaderNodeEmission"); e.inputs["Color"].default_value = (*col, 1); e.inputs["Strength"].default_value = strength
+        tr = nt.nodes.new("ShaderNodeBsdfTransparent")
+        mix = nt.nodes.new("ShaderNodeMixShader"); mix.inputs[0].default_value = alpha
+        o = nt.nodes.new("ShaderNodeOutputMaterial")
+        nt.links.new(tr.outputs[0], mix.inputs[1]); nt.links.new(e.outputs[0], mix.inputs[2]); nt.links.new(mix.outputs[0], o.inputs[0])
+        m.surface_render_method = "BLENDED"
+        out.append(m)
+    return out
+
+
+def attach_plumes(piece, ob, theme_mats, coll):
+    for n, (cx, cz, r, y_exit, W) in enumerate(getattr(piece, "plumes", [])):
+        length = int(W * 1.6)
+        pl = bpy.data.objects.new(f"plume.{piece.id}.{n}", plume_mesh((r, length), r, length))
+        coll.objects.link(pl)
+        pl.parent = ob
+        pl.location = (cx * T, y_exit * T, cz * T)
+        pl.material_slots[0].link = pl.material_slots[1].link = "OBJECT"
+        pl.material_slots[0].material, pl.material_slots[1].material = theme_mats["plume_outer"], theme_mats["plume_core"]
+
+
 # =========================================================================== r005: GENERIC HULL DRESSER
 def signed_area(poly):
     return 0.5 * sum(poly[i][0] * poly[(i + 1) % len(poly)][1] - poly[(i + 1) % len(poly)][0] * poly[i][1] for i in range(len(poly)))
@@ -979,14 +1251,17 @@ def spans(poly, yc):
     return [(xs[k], xs[k + 1]) for k in range(0, len(xs) - 1, 2)]
 
 
+ROW = 4          # plan raster row height in texels (0.25 m)
+
+
 def raster_poly(poly, bands, colour):
     """Even-odd scanline raster of any plan polygon into per-1 m-cell stepped boxes (2-texel rows)."""
     ys = [p[1] for p in poly]
-    y0 = int(math.floor(min(ys) * 8)) * 2
-    y1 = int(math.ceil(max(ys) * 8)) * 2
+    y0 = int(math.floor(min(ys) * 4)) * 4
+    y1 = int(math.ceil(max(ys) * 4)) * 4
     cells = {}
-    for yt in range(y0, y1, 2):
-        yc = (yt + 1) * T
+    for yt in range(y0, y1, ROW):
+        yc = (yt + ROW / 2) * T
         for a, b in spans(poly, yc):
             xa, xb = int(round(a * 8)) * 2, int(round(b * 8)) * 2
             if xb <= xa:
@@ -998,7 +1273,7 @@ def raster_poly(poly, bands, colour):
     boxes = []
     for (cx, cy), rows in cells.items():
         open_runs = {}
-        for yt in range(cy * 16, cy * 16 + 16, 2):
+        for yt in range(cy * 16, cy * 16 + 16, ROW):
             segs = set(rows.get(yt, []))
             for seg in list(open_runs):
                 if seg not in segs:
@@ -1040,11 +1315,11 @@ def skin_piece(name, chain, v, seed):
     D = 5
     xs = [c for p, q in chain for c in (p[0], q[0])]; ys = [c for p, q in chain for c in (p[1], q[1])]
     xa0, xb0 = int(math.floor((min(xs) - 0.5) * 8)) * 2, int(math.ceil((max(xs) + 0.5) * 8)) * 2
-    ya0, yb0 = int(math.floor((min(ys) - 0.5) * 8)) * 2, int(math.ceil((max(ys) + 0.5) * 8)) * 2
+    ya0, yb0 = int(math.floor((min(ys) - 0.5) * 4)) * 4, int(math.ceil((max(ys) + 0.5) * 4)) * 4
     cols = {}                                              # (yt) -> list of (xt, panel, dist_texels)
-    for yt in range(ya0, yb0, 2):
+    for yt in range(ya0, yb0, ROW):
         for xt in range(xa0, xb0, 2):
-            cx, cy = (xt + 1) * T, (yt + 1) * T
+            cx, cy = (xt + 1) * T, (yt + ROW / 2) * T
             best = None
             for p, dh, n, L, a0 in segs:
                 rx, ry = cx - p[0], cy - p[1]
@@ -1090,7 +1365,7 @@ def skin_piece(name, chain, v, seed):
         z0, z1, slot, dep = plans[panel][li]
         p.b(xa, ya, z0, xb, yb, z1, slot)
 
-    for yt in range(ya0, yb0 + 2, 2):
+    for yt in range(ya0, yb0 + ROW, ROW):
         cur = set()
         row = sorted(cols.get(yt, []))
         for panel in {c[1] for c in row}:
@@ -1381,6 +1656,12 @@ def kit_piece(kit, key):
     }
     if key in table:
         return table[key]()
+    fam, _, sz = key.partition(".")
+    sized = {"ion": ion_engine, "block": block_engine, "turret": turret, "cannon": cannon, "rcs": rcs}
+    if fam in sized and sz in SIZE_CELLS:
+        return kit.get((fam, sz), sized[fam], sz)
+    if key == "crew":
+        return kit.get("crew", crew_figure)
     if key.startswith("engine"):                     # engine.W.H.L in texels
         _, w, h, L = key.split(".")
         return kit.get(("eng", w, h, L), engine, f"mount.engine.w{w}.h{h}", int(w), int(h), int(L))
@@ -1410,31 +1691,31 @@ def designs():
         dict(poly=[(0, 0), (6, 0), (8, 1), (8, 2), (6, 3), (0, 3)], z=(6, 32), kind="hull", logo=False),
         dict(poly=[(1, -2), (2, -2), (4, 0), (1, 0)], z=(10, 16), kind="plate"),
         dict(poly=[(1, 3), (4, 3), (2, 5), (1, 5)], z=(10, 16), kind="plate")],
-        mounts=[("engine.20.18.32", 0, 0.25, "face", 90, 8), ("engine.20.18.32", 0, 1.5, "face", 90, 8),
-                ("cannon", 2, -2, "face", 180, 10 - 4), ("cannon", 1, 5, "face", 0, 10 - 4), ("sky.32.16", 5, 1, "top", 0, 0)]))
+        mounts=[("ion.SM", 0, 0.5, "face", 90, 11), ("ion.SM", 0, 1.5, "face", 90, 11),
+                ("cannon.SM", 2, -2, "face", 180, 7), ("cannon.SM", 1, 5, "face", 0, 7), ("sky.32.16", 5, 1, "top", 0, 0)]))
     D.append(dict(id="courier", name="COURIER  shuttle", theme="federation", size="14 x 5 m", volumes=[
         dict(poly=[(0, 0), (8, 0)] + arc(8, 2, 2, -90, 0, 8)[1:] + arc(8, 3, 2, 0, 90, 8) + [(0, 5)], z=(5, 46), kind="hull")],
-        mounts=[("engine.24.22.40", 0, 0.5, "face", 90, 10), ("engine.24.22.40", 0, 3.0, "face", 90, 10),
+        mounts=[("block.MD", 0, 0.5, "face", 90, 9), ("block.MD", 0, 2.5, "face", 90, 9),
                 ("cargo", 7, 0, "face", 180, 5), ("airlock", 4, 5, "face", 0, 6), ("sky.32.48", 7, 1, "top", 0, 0)]))
     D.append(dict(id="corvette", name="WAYFARER  corvette", theme="federation", size="30 x 16 m", volumes=[
         dict(poly=[(0, 1), (20, 1), (24, 5), (24, 7), (20, 11), (0, 11)], z=full(), kind="hull", spine=True),
         dict(poly=[(4, 11), (12, 11), (9, 14), (4, 14)], z=(12, 30), kind="plate"),
         dict(poly=[(4, -2), (9, -2), (12, 1), (4, 1)], z=(12, 30), kind="plate")],
-        mounts=[("engine.48.36.64", 0, 2, "face", 90, 9), ("engine.48.36.64", 0, 7, "face", 90, 9), ("engine.32.26.48", 0, 5, "face", 90, 14),
-                ("cannon", 5, 14, "face", 0, 14), ("cannon", 7, -2, "face", 180, 14), ("thruster", 4, 12, "face", 90, 15),
-                ("thruster", 4, -1, "face", 90, 15), ("cargo", 16, 1, "face", 180, 6), ("airlock", 14, 11, "face", 0, 8),
-                ("turret", 6, 2, "top", 0, 0), ("turret", 13, 8, "top", 0, 0), ("sky.32.32", 20, 5, "top", 0, 0), ("dish", 2, 7, "top", 0, 0)]))
+        mounts=[("ion.LG", 0, 1.5, "face", 90, 5), ("ion.LG", 0, 7.5, "face", 90, 5), ("ion.MD", 0, 5, "face", 90, 13),
+                ("cannon.MD", 5, 14, "face", 0, 13), ("cannon.MD", 7, -2, "face", 180, 13), ("rcs.MD", 4, 12.25, "face", 90, 15),
+                ("rcs.MD", 4, -1.75, "face", 90, 15), ("cargo", 16, 1, "face", 180, 6), ("airlock", 14, 11, "face", 0, 8),
+                ("turret.MD", 6, 2, "top", 0, 0), ("turret.MD", 13, 8, "top", 0, 0), ("sky.32.32", 20, 5, "top", 0, 0), ("dish", 2, 7, "top", 0, 0)]))
     D.append(dict(id="frigate", name="ORION CREST  frigate", theme="federation", size="42 x 16 m", volumes=[
         dict(poly=[(0, 0), (30, 0), (36, 3), (36, 7), (30, 10), (0, 10)], z=full(), kind="hull", spine=True),
         dict(poly=[(8, -3), (21, -3), (24, 0), (8, 0)], z=(9, 50), kind="hull", logo=False),
         dict(poly=[(8, 10), (24, 10), (21, 13), (8, 13)], z=(9, 50), kind="hull", logo=False),
         dict(poly=[(24, -2), (28, -2), (30, 0), (24, 0)], z=(14, 30), kind="plate"),
         dict(poly=[(24, 10), (30, 10), (28, 12), (24, 12)], z=(14, 30), kind="plate")],
-        mounts=[("engine.40.36.64", 0, 0, "face", 90, 9), ("engine.40.36.64", 0, 2.5, "face", 90, 9),
-                ("engine.40.36.64", 0, 5, "face", 90, 9), ("engine.40.36.64", 0, 7.5, "face", 90, 9),
-                ("engine.32.30.48", 8, -2.5, "face", 90, 14), ("engine.32.30.48", 8, 10.5, "face", 90, 14),
-                ("turret", 4, 1, "top", 0, 0), ("turret", 4, 7, "top", 0, 0), ("turret", 26, 1, "top", 0, 0), ("turret", 26, 7, "top", 0, 0),
-                ("turret", 12, -2.5, "top", 0, 0), ("turret", 12, 10.5, "top", 0, 0), ("dish", 17, 10.5, "top", 0, 0),
+        mounts=[("ion.XL", 0, 0.5, "face", 90, -3), ("ion.XL", 0, 5.5, "face", 90, -3),
+                ("block.MD", 8, -2.5, "face", 90, 13), ("block.MD", 8, 10.5, "face", 90, 13),
+                ("turret.LG", 4, 0.5, "top", 0, 0), ("turret.LG", 4, 6.5, "top", 0, 0), ("turret.MD", 26, 1, "top", 0, 0), ("turret.MD", 26, 7, "top", 0, 0),
+                ("turret.MD", 12, -2.5, "top", 0, 0), ("turret.MD", 12, 10.5, "top", 0, 0), ("dish", 17, 10.5, "top", 0, 0),
+                ("cannon.LG", 21, -3, "face", 180, 20), ("cannon.LG", 17, 13, "face", 0, 20),
                 ("sky.48.32", 31, 4, "top", 0, 0), ("tractor", 34, 4, "top", 0, 0),
                 ("cargo", 18, -3, "face", 180, 9), ("cargo", 12, 13, "face", 0, 9), ("airlock", 29, 0, "face", 180, 12)]))
     D.append(dict(id="marauder", name="RIFTJACK MARAUDER  raider", theme="riftjack", size="28 x 12 m", volumes=[
@@ -1442,9 +1723,10 @@ def designs():
         dict(poly=[(4, 6), (15, 6), (12, 9), (4, 9)], z=(5, 50), kind="hull", logo=False),
         dict(poly=[(6, -2), (10, -2), (12, 0), (6, 0)], z=(12, 30), kind="plate"),
         dict(poly=[(22, 2), (24, 3), (22, 4)], z=(16, 28), kind="plate")],
-        mounts=[("engine.48.36.64", 0, 0.5, "face", 90, 9), ("engine.32.30.48", 0, 3.75, "face", 90, 14),
-                ("engine.24.22.40", 4, 6.5, "face", 90, 14), ("cannon", 7, -2, "face", 180, 14), ("cannon", 9, -2, "face", 180, 14),
-                ("turret", 10, 6.75, "top", 0, 0), ("turret", 14, 2, "top", 0, 0), ("cargo", 8, 9, "face", 0, 6)]))
+        mounts=[("block.LG", 0, 0, "face", 90, 5), ("ion.MD", 0, 3.5, "face", 90, 13), ("ion.SM", 4, 7, "face", 90, 19),
+                ("cannon.MD", 7, -2, "face", 180, 13), ("cannon.MD", 9, -2, "face", 180, 13), ("cannon.LG", 4, 9, "face", 0, 16),
+                ("turret.MD", 10, 6.75, "top", 0, 0), ("turret.LG", 5, 1.5, "top", 0, 0), ("turret.SM", 14, 2.5, "top", 0, 0),
+                ("cargo", 8, 9, "face", 0, 6)]))
     pod = arc(6, 0, 3, -180, 180, 24)[:-1]
     D.append(dict(id="crescent", name="AURELIAN CRESCENT  explorer", theme="aurelian", size="20 x 18 m", volumes=[
         dict(poly=pod, z=(5, 46), kind="hull", spine=False, logo=False),
@@ -1452,14 +1734,15 @@ def designs():
         dict(poly=arc(6, 0, 8, 95, 175, 12) + arc(6, 0, 5.5, 175, 95, 10), z=(10, 32), kind="plate"),
         dict(poly=arc(6, 0, 8, -175, -95, 12) + arc(6, 0, 5.5, -95, -175, 10), z=(10, 32), kind="plate"),
         dict(poly=[(8.8, -1), (12, 0), (8.8, 1)], z=(20, 30), kind="plate")],
-        mounts=[("engine.24.22.40", 1, -1.75, "face", 90, 12), ("engine.24.22.40", 1, 0.25, "face", 90, 12), ("sky.32.32", 5, -1, "top", 0, 0)]))
+        mounts=[("ion.SM", 1, -1.5, "face", 90, 16), ("ion.SM", 1, 0.5, "face", 90, 16), ("sky.32.32", 5, -1, "top", 0, 0)]))
     hub = [(-2, -4), (2, -4), (4, -2), (4, 2), (2, 4), (-2, 4), (-4, 2), (-4, -2)]
     arms = [[(4, -1), (10, -1), (10, 1), (4, 1)], [(-10, -1), (-4, -1), (-4, 1), (-10, 1)],
             [(-1, 4), (1, 4), (1, 10), (-1, 10)], [(-1, -10), (1, -10), (1, -4), (-1, -4)]]
     D.append(dict(id="station", name="HUB STATION  module", theme="federation", size="20 x 20 m", volumes=[
         dict(poly=hub, z=full(), kind="hull", face_style="windows", logo=False)] + [dict(poly=a, z=(9, 46), kind="hull", logo=False) for a in arms],
         mounts=[("airlock", 10, 1, "face", -90, 8), ("airlock", -10, -1, "face", 90, 8), ("airlock", -1, 10, "face", 0, 8),
-                ("airlock", 1, -10, "face", 180, 8), ("dish", -1, -1, "top", 0, 0), ("turret", 6, -1, "top", 0, 0), ("turret", -8, -1, "top", 0, 0)]))
+                ("airlock", 1, -10, "face", 180, 8), ("dish", -1, -1, "top", 0, 0), ("turret.SM", 6, -0.5, "top", 0, 0), ("turret.SM", -7, -0.5, "top", 0, 0),
+                ("rcs.SM", 10, -0.9, "face", -90, 20), ("rcs.SM", -10, 0.9, "face", 90, 20)]))
     return D
 
 
@@ -1472,6 +1755,11 @@ def shape_library():
     for r in (2, 3, 4):
         L.append((f"arc r{r}", [(0, 0)] + arc(0, 0, r, 0, 90, 4 * r)))
     L.append(("concave r2", [(0, 0), (3, 0)] + arc(3, 3, 2, 270, 180, 8) + [(0, 3)]))
+    L.append(("chamfer 1", [(0, 0), (3, 0), (3, 1), (2, 2), (0, 2)]))
+    L.append(("nose 1:2", [(0, 0), (2, 0), (4, 1), (2, 2), (0, 2)]))
+    L.append(("round nose", [(0, 0), (1, 0)] + arc(1, 1.5, 1.5, -90, 90, 10) + [(0, 3)]))
+    L.append(("swept wing", [(0, 0), (2, 0), (4, 2), (4, 3), (0, 3)]))
+    L.append(("notch", [(0, 0), (3, 0), (3, 1), (2, 1), (2, 2), (3, 2), (3, 3), (0, 3)]))
     return L
 
 
@@ -1541,7 +1829,7 @@ def blueprint_mode(sc, colls, bp_mat):
         if True:
             if ob.type != "MESH" or ob.name.startswith("bp_grid"):
                 continue
-            if ob.name.startswith("decal"):
+            if ob.name.startswith(("decal", "plume")):
                 ob.hide_render = True
                 continue
             for s in ob.material_slots:
@@ -1587,9 +1875,10 @@ def component_sheet(kit, mats, coll, origin):
          + [kit.get(("roof", "spine", 32, 32), roof_module, 32, 32, "spine"), kit.get("rlogo", roof_logo, 64, 32)]),
         ("ROOF FILLERS + RIM", [kit.get(("rs", k), roof_small, k) for k in ("box", "vent", "fan", "sensor", "hatch")]
          + [kit.get(("rim", k), roof_rim, k) for k in ("plain", "bump", "lit", "vent")]),
-        ("MOUNTS", [kit_piece(kit, "turret"), kit_piece(kit, "cannon"), kit_piece(kit, "engine.48.36.64"), kit_piece(kit, "engine.32.26.48"),
-                    kit_piece(kit, "engine.20.18.32"), kit_piece(kit, "thruster"), kit_piece(kit, "tractor"), kit_piece(kit, "dish"),
-                    kit_piece(kit, "cargo"), kit_piece(kit, "airlock")]),
+        ("ENGINES  SM / MD / LG / XL", [kit_piece(kit, f"ion.{z}") for z in SIZE_CELLS] + [kit_piece(kit, f"block.{z}") for z in SIZE_CELLS]
+                                         + [kit_piece(kit, "rcs.SM"), kit_piece(kit, "rcs.MD")]),
+        ("WEAPONS + UTILITY", [kit_piece(kit, f"turret.{z}") for z in ("SM", "MD", "LG")] + [kit_piece(kit, f"cannon.{z}") for z in ("SM", "MD", "LG")]
+                              + [kit_piece(kit, "tractor"), kit_piece(kit, "dish"), kit_piece(kit, "cargo"), kit_piece(kit, "airlock")]),
         ("INTERIOR EDGES + DECORATORS", [kit.get("wfull", edge_wall, "full"), kit.get("wglazed", edge_wall, "glazed"), kit.get("whalf", edge_wall, "half"),
                                          kit.get("door", edge_door), kit.get("floor", floor_tile), kit.get("spike", decorator, "spike"),
                                          kit.get("crystal", decorator, "crystal"), kit.get("antenna", decorator, "antenna")]),
@@ -1600,18 +1889,19 @@ def component_sheet(kit, mats, coll, origin):
         x, rowd = ox, 0
         for pc in pieces:
             w, d, h = (v * T for v in pc.size)
-            if pc.mount == "face" and not pc.id.startswith("mount.engine") and pc.id != "mount.cannon.side.1x1":
+            laid = pc.id.startswith(("mount.engine", "mount.cannon", "mount.rcs"))
+            if pc.mount == "face" and not laid:
                 ob = instance(pc, (x, y, 0.0), 0, mats, coll)
                 ob.rotation_euler = (math.radians(90), 0, 0)
                 ext, dep = w, h
-            elif pc.id.startswith("mount.engine") or pc.id == "mount.cannon.side.1x1":
+            elif laid:
                 instance(pc, (x, y - d, 0), 0, mats, coll)
                 ext, dep = w, d
             else:
                 instance(pc, (x, y - d, 0), 0, mats, coll)
                 ext, dep = w, d
-            text(pc.id.split(".", 1)[1], (x, y - dep - 0.55, 0.02), 0.3, lab, coll)
-            x += max(ext, 1.2, 0.17 * len(pc.id)) + 1.0
+            text(pc.id.split(".", 1)[1], (x, y - dep - 0.6, 0.02), 0.36, lab, coll)
+            x += max(ext, 1.2, 0.2 * len(pc.id)) + 1.0
             rowd = max(rowd, dep)
         y -= rowd + 2.2
     return y
@@ -1668,6 +1958,53 @@ LAYOUT = {"razor": (0, 44), "courier": (14, 45), "crescent": (40, 44), "station"
           "corvette": (0, 16), "marauder": (36, 18), "frigate": (0, -14)}
 
 
+def engine_showcase(kit, theme_mats, lab, sc):
+    """Engine size classes side by side (nozzles toward +x) with a crew figure for scale, an exploded
+    XL ion drive (flange / conduits / housing / nozzle) and a weapons row."""
+    coll = bpy.data.collections.new("ENGINES"); sc.collection.children.link(coll)
+    fm = theme_mats["federation"]
+    y = 0.0
+    for fam in ("ion", "block"):
+        for sz in SIZE_CELLS:
+            pc = kit_piece(kit, f"{fam}.{sz}")
+            W = pc.size[0] * T
+            y += W
+            instance(pc, (500.0, y, 0.0), -90, fm, coll)           # local X -> world -y, outward -> +x
+            text(f"{fam} {sz}", (497.2, y - W / 2 - 0.25, 0.02), 0.5, lab, coll)
+            y += 1.3
+        y += 2.0
+    instance(kit_piece(kit, "crew"), (498.2, -1.4, 0.0), 0, fm, coll)
+    text("crew 1.8 m", (496.8, -2.4, 0.02), 0.4, lab, coll)
+    parts, meta = kit.get(("ionparts", "XL"), ion_parts, "XL")
+    x0, y0 = 530.0, 6.0
+    names = {"nozzle": "THRUSTER NOZZLE", "housing": "ENGINE HOUSING", "conduit": "CONDUIT LAYER", "flange": "MOUNT FLANGE"}
+    W = meta["W"] * T
+    place = {"flange": (-5.0, 0.0), "housing": (0.0, 0.0), "conduit": (0.0, 5.2), "nozzle": (4.5, 0.0)}
+    label_at = {"flange": (-6.2, 4.6), "housing": (1.0, -1.1), "conduit": (1.0, 6.2), "nozzle": (9.2, 4.6)}
+    for pc in parts:
+        k = pc.id.rsplit(".", 1)[1]
+        dx, dz = place[k]
+        instance(pc, (x0 + dx, y0, dz), -90, fm, coll)
+        lx, lz = label_at[k]
+        t = text(names[k], (x0 + lx, y0 - W - 0.3, lz), 0.55, lab, coll)
+        t.rotation_euler = (math.radians(90), 0, 0)
+    instance(kit_piece(kit, "ion.XL"), (x0, y0 + 7.0, 0.0), -90, fm, coll)
+    t = text("ASSEMBLED  ION DRIVE XL  (4 x 4 m hardpoint)", (x0 - 1.0, y0 + 3.0 - 0.3, W + 0.5), 0.5, lab, coll)
+    t.rotation_euler = (math.radians(90), 0, 0)
+    wx = 500.0
+    for key in ("turret.SM", "turret.MD", "turret.LG"):
+        pc = kit_piece(kit, key)
+        instance(pc, (wx, -10.0, 0.0), -90, fm, coll)
+        text(key, (wx, -12.4, 0.02), 0.45, lab, coll)
+        wx += pc.size[0] * T + 2.4
+    for key in ("cannon.SM", "cannon.MD", "cannon.LG", "rcs.SM", "rcs.MD"):
+        pc = kit_piece(kit, key)
+        instance(pc, (wx + pc.size[0] * T, -6.0, 0.0), 180, fm, coll)
+        text(key, (wx, -12.4, 0.02), 0.45, lab, coll)
+        wx += pc.size[0] * T + 1.8
+    return coll, (x0 + meta["total"] * T / 2, y0, 2.5)
+
+
 def main():
     args = parse_args()
     shots = {s for s in args.shots.split(",") if s}
@@ -1677,6 +2014,8 @@ def main():
     detail = detail_height(f"{out}/{REVISION}_detail_height.png")
     kit = Kit()
     theme_mats = {tn: {s: slot_material(tn, s, th, detail) for s in SLOTS} for tn, th in THEMES.items()}
+    for tn, th in THEMES.items():
+        theme_mats[tn]["plume_outer"], theme_mats[tn]["plume_core"] = plume_materials(tn, th)
     decal_sets = {}
     for tn, th in THEMES.items():
         name_img = text_mask(th["name"], f"{out}/{REVISION}_decal_{th['name'].lower()}.png")
@@ -1709,22 +2048,24 @@ def main():
     shapes_cx = (150.0 + x0 - 3.5) / 2
     sheet = bpy.data.collections.new("COMPONENTS"); sc.collection.children.link(sheet)
     bottom = component_sheet(kit, theme_mats["federation"], sheet, (300, 0))
+    engines, ex_mid = engine_showcase(kit, theme_mats, lab, sc)
     pieces = [p for p in kit.p.values() if isinstance(p, Piece)]
     manifest = {"revision": REVISION, "texel_m": T, "slots": SLOTS, "themes": list(THEMES),
                 "unique_meshes": len(MESHES), "placements": PLACEMENTS["count"], "designs": stats,
+                "hardpoint_cells": SIZE_CELLS, "ion_body_texels": ION_LEN,
                 "pieces": [{"id": p.id, "family": p.family, "mount": p.mount, "size_m": [v * T for v in p.size],
                             "slots": p.slots(), "boxes": len(p.boxes), "decal_sockets": [d[0] for d in p.decals],
                             "voxel_aligned": p.aligned()} for p in sorted(pieces, key=lambda q: (q.family, q.id))]}
     with open(f"{out}/kit_{REVISION}.json", "w") as fh:
         json.dump(manifest, fh, indent=1)
-    gen = [m for k, m in MESHES.items() if k.startswith("gen.")]
+    gen = [m for k, m in MESHES.items() if isinstance(k, str) and k.startswith("gen.")]
     print(f"ship_kit_prototype {REVISION}: kit_pieces={len(pieces)} unique_meshes={len(MESHES)} (generated={len(gen)}) "
           f"placements={PLACEMENTS['count']} all_kit_voxel_aligned={all(p.aligned() for p in pieces)} designs={stats}", flush=True)
     if args.no_render:
         return
     cam = setup(sc, args.samples)
     labels = [c for c in sc.collection.children if c.name.startswith("L_")]
-    everything = [ships, shapes, sheet] + labels
+    everything = [ships, shapes, sheet, engines] + labels
 
     def shot(name, visible, res=(1672, 941)):
         if shots and name not in shots:
@@ -1745,8 +2086,16 @@ def main():
     shot("frigate_hero", [ships])
     look(cam, (33.5, -9, 1.8), (6, -9, 4.5), 30)
     shot("frigate_bow_slopes", [ships])
-    look(cam, (46, 44, 1.2), (10, -14, 11), 32)
-    shot("crescent_curves", [ships])
+    look(cam, (1.5, -9, 1.5), (-16, -15, 9), 30)
+    shot("frigate_rear_engines", [ships])
+    look(cam, (38, 21, 1.5), (-13, -11, 7), 30)
+    shot("marauder_rear", [ships])
+    look(cam, (507, 17, 1.2), (21, -26, 17), 34)
+    shot("engines_lineup", [engines])
+    look(cam, (ex_mid[0], ex_mid[1] + 2.0, ex_mid[2]), (9.0, -24, 12.0), 32)
+    shot("engine_exploded", [engines])
+    look(cam, (510, -9, 0.8), (-2, -17, 11), 32)
+    shot("weapons_lineup", [engines])
     look(cam, (12, 46.5, 1.0), (4, -12, 9), 32)
     shot("razor_courier", [ships])
     look(cam, (shapes_cx, 1.5, 1.0), (-4, -38, 26), 28)
