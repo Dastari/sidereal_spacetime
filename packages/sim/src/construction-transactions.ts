@@ -41,7 +41,13 @@ import {
 import { fitTileset } from "./tileset-fit";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
 import { prefabComponentCatalogFor } from "./prefab-catalog";
-import { prefabConstructionDocument } from "./prefab-construction";
+import {
+  prefabConstructionDocument,
+  restorePrefabSourceIdentities,
+  type PrefabConstructionDocument,
+} from "./prefab-construction";
+/** Pure memo of prefab canonicals already proven equal to their grammar derivation. */
+const VERIFIED_PREFAB_CANONICALS = new Set<string>();
 export const PINNED_FLOOR_KIT = floorKitJson as unknown as TilesetInterface;
 export const constructionHash = (text: string | Uint8Array) =>
   bytesToHex(
@@ -245,20 +251,42 @@ export function readConstructionDraft(
   if (input.prefab !== undefined && !options.prefabDerivation) {
     // Prefab ships: the walkable layout and floor bindings must equal their grammar
     // derivation exactly (after the same normalisation), and nothing else may ride along.
-    const binding = input.prefab as Record<string, unknown>;
-    if (
-      !record(binding) ||
-      Object.keys(binding).sort().join(",") !== "catalog,document,revision,schema" ||
-      typeof binding.catalog !== "string"
-    )
-      throw Error("Unsupported prefab binding");
-    const catalog = prefabComponentCatalogFor(binding.catalog);
-    const expected = prefabConstructionDocument(readShipPrefab(binding.document), catalog);
-    if (stableStringify(expected.prefab) !== stableStringify(binding))
-      throw Error("Prefab binding is not canonical");
-    const derived = readConstructionDraft(JSON.stringify(expected), { prefabDerivation: true });
-    if (derived.canonical !== canonical)
-      throw Error("Prefab layout differs from its grammar derivation");
+    // Spawned instances carry an injective identity map back to the source ids.
+    const verifiedKey = constructionHash(canonical);
+    if (!VERIFIED_PREFAB_CANONICALS.has(verifiedKey)) {
+      const binding = input.prefab as Record<string, unknown>;
+      const keys = Object.keys(binding ?? {}).sort().join(",");
+      if (
+        !record(binding) ||
+        (keys !== "catalog,document,revision,schema" &&
+          keys !== "catalog,document,identities,revision,schema") ||
+        typeof binding.catalog !== "string"
+      )
+        throw Error("Unsupported prefab binding");
+      const catalog = prefabComponentCatalogFor(binding.catalog);
+      const expected = prefabConstructionDocument(readShipPrefab(binding.document), catalog);
+      const { identities, ...sourceBinding } = binding;
+      if (stableStringify(expected.prefab) !== stableStringify(sourceBinding))
+        throw Error("Prefab binding is not canonical");
+      const source =
+        identities === undefined
+          ? (normalized as unknown as PrefabConstructionDocument)
+          : restorePrefabSourceIdentities(
+              JSON.parse(canonical) as PrefabConstructionDocument,
+              identities,
+            );
+      if (identities === undefined && normalized.layout.source !== null)
+        throw Error("Spawned prefab instance requires an identity map");
+      const derived = readConstructionDraft(JSON.stringify(expected), { prefabDerivation: true });
+      const actual =
+        identities === undefined
+          ? canonical
+          : readConstructionDraft(JSON.stringify(source), { prefabDerivation: true }).canonical;
+      if (derived.canonical !== actual)
+        throw Error("Prefab layout differs from its grammar derivation");
+      if (VERIFIED_PREFAB_CANONICALS.size >= 64) VERIFIED_PREFAB_CANONICALS.clear();
+      VERIFIED_PREFAB_CANONICALS.add(verifiedKey);
+    }
   }
   return { canonical, sha256: constructionHash(canonical) };
 }

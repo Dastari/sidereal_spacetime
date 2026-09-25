@@ -182,7 +182,10 @@ export function prefabLayout(doc: ShipPrefabDocumentV1, catalog?: PrefabComponen
           return [[p[0] + dx, p[1] + dy], [q[0] - dx, q[1] - dy]];
         };
         const [oa, ob] = inset(pa, pb);
-        openings.push({ id: `opening-${doorId}`, deckId, partitionId: id, a: oa, b: ob, kind: d.kind, clearance: 16, sill: 0 });
+        // Passages until prefab door leaves have game-player door state; the sealed-door
+        // intent stays in the prefab document for the pressure compiler.
+        void d.kind;
+        openings.push({ id: `opening-${doorId}`, deckId, partitionId: id, a: oa, b: ob, kind: "passage", clearance: 16, sill: 0 });
       }
       run = [];
     };
@@ -269,4 +272,53 @@ export function verifyPrefabConstruction(input: ConstructionDocument & { prefab?
   const otherKeys = Object.keys(input).filter((k) => !["schema", "compiler", "layout", "floorKit", "floors", "prefab"].includes(k));
   if (!layoutOk || !floorsOk || otherKeys.length) throw Error("Prefab layout differs from its grammar derivation");
   return expected.prefab.document;
+}
+
+/**
+ * Invert a spawned instance's identity map (source id -> instance id) so admission can
+ * compare the instance against its grammar derivation. The map must be injective and
+ * cover every remapped id; `layout.source` returns to null as in the source document.
+ */
+export function restorePrefabSourceIdentities(doc: PrefabConstructionDocument, identities: unknown): PrefabConstructionDocument {
+  if (!identities || typeof identities !== "object" || Array.isArray(identities)) throw Error("Invalid prefab identity map");
+  const entries = Object.entries(identities as Record<string, unknown>);
+  if (entries.length > 16384) throw Error("Prefab identity map exceeds budget");
+  const back = new Map<string, string>();
+  for (const [source, instance] of entries) {
+    if (typeof instance !== "string" || back.has(instance)) throw Error("Prefab identity map must be injective");
+    back.set(instance, source);
+  }
+  const src = (id: string) => {
+    const v = back.get(id);
+    if (v === undefined) throw Error("Prefab instance id without a source identity");
+    return v;
+  };
+  const { identities: _drop, ...binding } = doc.prefab as PrefabConstructionBinding & { identities?: unknown };
+  const layout = doc.layout;
+  if (layout.source === null) throw Error("Prefab identity map only applies to spawned instances");
+  const restored: PrefabConstructionDocument = {
+    ...doc,
+    prefab: binding,
+    layout: {
+      ...layout,
+      id: src(layout.id),
+      source: null,
+      playableDeckId: src(layout.playableDeckId),
+      decks: layout.decks.map((d) => ({ ...d, id: src(d.id), holes: d.holes.map((h) => ({ ...h, id: src(h.id) })) })),
+      tiles: layout.tiles.map((t) => ({ ...t, id: src(t.id), deckId: src(t.deckId) })),
+      partitions: layout.partitions.map((p) => ({ ...p, id: src(p.id), deckId: src(p.deckId) })),
+      openings: layout.openings.map((o) => ({ ...o, id: src(o.id), deckId: src(o.deckId), partitionId: src(o.partitionId) })),
+      rooms: layout.rooms.map((r) => ({
+        ...r,
+        id: src(r.id),
+        deckId: src(r.deckId),
+        boundaryIds: r.boundaryIds.map(src),
+        ...(r.tileIds ? { tileIds: r.tileIds.map(src) } : {}),
+      })),
+    },
+    floors: doc.floors.map((f) => ({ ...f, id: src(f.id), deckId: src(f.deckId) })),
+  };
+  if (layout.fittings.length || layout.nodes.length || layout.routes.length || layout.assembly || layout.structure)
+    throw Error("Prefab instances carry no fittings, routes or assemblies");
+  return restored;
 }
