@@ -1,0 +1,3473 @@
+{
+ "revision": "r005",
+ "texel_m": 0.0625,
+ "slots": [
+  "primary",
+  "secondary",
+  "accent",
+  "trim",
+  "metal",
+  "dark",
+  "emit_a",
+  "emit_b",
+  "glass"
+ ],
+ "themes": [
+  "federation",
+  "riftjack",
+  "aurelian"
+ ],
+ "unique_meshes": 248,
+ "placements": 1552,
+ "designs": {
+  "razor": {
+   "cassettes": 6,
+   "roof": 2,
+   "skins": 4
+  },
+  "courier": {
+   "cassettes": 20,
+   "roof": 6,
+   "skins": 2
+  },
+  "corvette": {
+   "cassettes": 48,
+   "roof": 40,
+   "skins": 4
+  },
+  "frigate": {
+   "cassettes": 63,
+   "roof": 73,
+   "skins": 6
+  },
+  "marauder": {
+   "cassettes": 41,
+   "roof": 21,
+   "skins": 5
+  },
+  "crescent": {
+   "cassettes": 4,
+   "roof": 0,
+   "skins": 4
+  },
+  "station": {
+   "cassettes": 53,
+   "roof": 10,
+   "skins": 4
+  }
+ },
+ "pieces": [
+  {
+   "id": "cas.armor.w1.h14",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.25,
+    0.875
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 12,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.armor.w1.h22",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.25,
+    1.375
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 12,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.armor.w1.h24",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.25,
+    1.5
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 12,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.armor.w1.h33",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.25,
+    2.0625
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 12,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.armor.w2.h12",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.25,
+    0.75
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 18,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.armor.w2.h14",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.25,
+    0.875
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 18,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.armor.w2.h24",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.25,
+    1.5
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 18,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.armor.w3.h20",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    3.0,
+    0.25,
+    1.25
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 24,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.armor.w3.h24",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    3.0,
+    0.25,
+    1.5
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 24,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.armor.w3.h27",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    3.0,
+    0.25,
+    1.6875
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 24,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.armor.w3.h33",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    3.0,
+    0.25,
+    2.0625
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 24,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.beacon.w1.h10",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.375,
+    0.625
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 6,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.beacon.w1.h11",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.375,
+    0.6875
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 6,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.beacon.w1.h12",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.375,
+    0.75
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 6,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.beacon.w1.h14",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.375,
+    0.875
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 6,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.beacon.w1.h16",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.375,
+    1.0
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 6,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.beacon.w1.h24",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.375,
+    1.5
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 6,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.beacon.w1.h33",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.375,
+    2.0625
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 6,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.beacon.w2.h10",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.375,
+    0.625
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 6,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.beacon.w2.h12",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.375,
+    0.75
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 6,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.beacon.w2.h16",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.375,
+    1.0
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 6,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.grille.w1.h10",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.1875,
+    0.625
+   ],
+   "slots": [
+    "primary",
+    "metal",
+    "dark"
+   ],
+   "boxes": 7,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.grille.w1.h12",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.1875,
+    0.75
+   ],
+   "slots": [
+    "primary",
+    "metal",
+    "dark"
+   ],
+   "boxes": 8,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.grille.w1.h14",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.1875,
+    0.875
+   ],
+   "slots": [
+    "primary",
+    "metal",
+    "dark"
+   ],
+   "boxes": 9,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.grille.w1.h16",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.1875,
+    1.0
+   ],
+   "slots": [
+    "primary",
+    "metal",
+    "dark"
+   ],
+   "boxes": 10,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.grille.w1.h17",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.1875,
+    1.0625
+   ],
+   "slots": [
+    "primary",
+    "metal",
+    "dark"
+   ],
+   "boxes": 11,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.grille.w1.h20",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.1875,
+    1.25
+   ],
+   "slots": [
+    "primary",
+    "metal",
+    "dark"
+   ],
+   "boxes": 12,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.grille.w1.h24",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.1875,
+    1.5
+   ],
+   "slots": [
+    "primary",
+    "metal",
+    "dark"
+   ],
+   "boxes": 14,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.grille.w2.h10",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.1875,
+    0.625
+   ],
+   "slots": [
+    "primary",
+    "metal",
+    "dark"
+   ],
+   "boxes": 7,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.grille.w2.h12",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.1875,
+    0.75
+   ],
+   "slots": [
+    "primary",
+    "metal",
+    "dark"
+   ],
+   "boxes": 8,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.hatch.w2.h12",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.375,
+    0.75
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 12,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.hatch.w2.h20",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.375,
+    1.25
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 12,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.hatch.w2.h24",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.375,
+    1.5
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 12,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.light.w1.h10",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.3125,
+    0.625
+   ],
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 5,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.light.w1.h12",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.3125,
+    0.75
+   ],
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 5,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.light.w1.h14",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.3125,
+    0.875
+   ],
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 5,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.light.w1.h16",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.3125,
+    1.0
+   ],
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 5,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.light.w1.h17",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.3125,
+    1.0625
+   ],
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 5,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.light.w1.h20",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.3125,
+    1.25
+   ],
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 5,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.light.w1.h24",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.3125,
+    1.5
+   ],
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 5,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.light.w2.h10",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.3125,
+    0.625
+   ],
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 5,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.light.w2.h12",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.3125,
+    0.75
+   ],
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 5,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.light.w2.h16",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.3125,
+    1.0
+   ],
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 5,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.light.w2.h17",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.3125,
+    1.0625
+   ],
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 5,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.logo.w3.h12",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    3.0,
+    0.1875,
+    0.75
+   ],
+   "slots": [
+    "secondary",
+    "trim"
+   ],
+   "boxes": 5,
+   "decal_sockets": [
+    "name"
+   ],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.logo.w3.h20",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    3.0,
+    0.1875,
+    1.25
+   ],
+   "slots": [
+    "secondary",
+    "trim"
+   ],
+   "boxes": 5,
+   "decal_sockets": [
+    "name"
+   ],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.logo.w3.h24",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    3.0,
+    0.1875,
+    1.5
+   ],
+   "slots": [
+    "secondary",
+    "trim"
+   ],
+   "boxes": 5,
+   "decal_sockets": [
+    "name"
+   ],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.module.w1.h10",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.3125,
+    0.625
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "boxes": 8,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.module.w1.h12",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.3125,
+    0.75
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "boxes": 8,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.module.w1.h14",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.3125,
+    0.875
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "boxes": 9,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.module.w1.h17",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.3125,
+    1.0625
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "boxes": 10,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.module.w1.h24",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.3125,
+    1.5
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "boxes": 11,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.module.w2.h10",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.3125,
+    0.625
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "boxes": 8,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.module.w2.h12",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.3125,
+    0.75
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "boxes": 8,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.module.w2.h14",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.3125,
+    0.875
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "boxes": 9,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.module.w2.h16",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.3125,
+    1.0
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "boxes": 9,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.module.w2.h20",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.3125,
+    1.25
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "boxes": 10,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.module.w2.h24",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.3125,
+    1.5
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "boxes": 11,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.module.w2.h33",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.3125,
+    2.0625
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "boxes": 14,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.panel.w2.h12",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.25,
+    0.75
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 8,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.panel.w2.h14",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.25,
+    0.875
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 8,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.panel.w2.h20",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.25,
+    1.25
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 9,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.panel.w2.h24",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.25,
+    1.5
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 9,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.panel.w2.h27",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.25,
+    1.6875
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 9,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.panel.w2.h33",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.25,
+    2.0625
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 9,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.panel.w3.h20",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    3.0,
+    0.25,
+    1.25
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 9,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.panel.w3.h24",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    3.0,
+    0.25,
+    1.5
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 9,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.panel.w3.h33",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    3.0,
+    0.25,
+    2.0625
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 9,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.pipes.w1.h10",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.25,
+    0.625
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 7,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.pipes.w1.h12",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.25,
+    0.75
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 8,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.pipes.w1.h13",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.25,
+    0.8125
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 8,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.pipes.w1.h14",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.25,
+    0.875
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 8,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.pipes.w1.h16",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.25,
+    1.0
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 9,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.pipes.w1.h17",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.25,
+    1.0625
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 9,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.pipes.w1.h20",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.25,
+    1.25
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 10,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.pipes.w1.h22",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.25,
+    1.375
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 10,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.pipes.w1.h24",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.25,
+    1.5
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 11,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.pipes.w2.h10",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.25,
+    0.625
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 9,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.pipes.w2.h12",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.25,
+    0.75
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 10,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.pipes.w2.h17",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.25,
+    1.0625
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 11,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.pipes.w2.h20",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.25,
+    1.25
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 12,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.pipes.w2.h22",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.25,
+    1.375
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 12,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.pipes.w2.h24",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.25,
+    1.5
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 13,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.pipes.w2.h33",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.25,
+    2.0625
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 13,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.pipes.w3.h24",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    3.0,
+    0.25,
+    1.5
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 16,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.pipes.w3.h33",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    3.0,
+    0.25,
+    2.0625
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 16,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.rim.w1.h4",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.1875,
+    0.25
+   ],
+   "slots": [
+    "secondary",
+    "metal"
+   ],
+   "boxes": 2,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.rim.w1.h4.lit",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.1875,
+    0.25
+   ],
+   "slots": [
+    "secondary",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 3,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.rim.w1.h5",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.1875,
+    0.3125
+   ],
+   "slots": [
+    "secondary",
+    "metal"
+   ],
+   "boxes": 2,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.rim.w1.h5.lit",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.1875,
+    0.3125
+   ],
+   "slots": [
+    "secondary",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 3,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.split.w2.h12",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.25,
+    0.75
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "boxes": 5,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.split.w2.h20",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.25,
+    1.25
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "boxes": 6,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.split.w2.h22",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.25,
+    1.375
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "boxes": 6,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.split.w2.h24",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.25,
+    1.5
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "boxes": 7,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.split.w3.h12",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    3.0,
+    0.25,
+    0.75
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "boxes": 5,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.split.w3.h20",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    3.0,
+    0.25,
+    1.25
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "boxes": 6,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.split.w3.h24",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    3.0,
+    0.25,
+    1.5
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "boxes": 7,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.split.w3.h33",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    3.0,
+    0.25,
+    2.0625
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "boxes": 7,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.stack.w1.h10",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.375,
+    0.625
+   ],
+   "slots": [
+    "primary",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 4,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.stack.w1.h11",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.375,
+    0.6875
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 5,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.stack.w1.h12",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.375,
+    0.75
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 5,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.stack.w1.h14",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.375,
+    0.875
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 5,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.stack.w1.h16",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.375,
+    1.0
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 5,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.stack.w1.h20",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.375,
+    1.25
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 6,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.stack.w1.h24",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.375,
+    1.5
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 7,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.stack.w1.h33",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.375,
+    2.0625
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 7,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.stack.w2.h10",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.375,
+    0.625
+   ],
+   "slots": [
+    "primary",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 4,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.stack.w2.h12",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.375,
+    0.75
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 5,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.stack.w2.h16",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.375,
+    1.0
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 5,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.stack.w2.h17",
+   "family": "cassette",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.375,
+    1.0625
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 6,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "deco.antenna",
+   "family": "decorator",
+   "mount": "top",
+   "size_m": [
+    0.25,
+    0.25,
+    1.125
+   ],
+   "slots": [
+    "secondary",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 3,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "deco.crystal",
+   "family": "decorator",
+   "mount": "top",
+   "size_m": [
+    0.375,
+    0.375,
+    1.25
+   ],
+   "slots": [
+    "trim",
+    "emit_a"
+   ],
+   "boxes": 3,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "deco.spike",
+   "family": "decorator",
+   "mount": "top",
+   "size_m": [
+    0.375,
+    0.375,
+    0.875
+   ],
+   "slots": [
+    "trim",
+    "metal"
+   ],
+   "boxes": 3,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.window.band.w2.h20",
+   "family": "glazing",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.25,
+    1.25
+   ],
+   "slots": [
+    "secondary",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "boxes": 8,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.window.full.w3.h44",
+   "family": "glazing",
+   "mount": "face",
+   "size_m": [
+    3.0,
+    0.25,
+    2.75
+   ],
+   "slots": [
+    "secondary",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "boxes": 10,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.window.port.w1.h12",
+   "family": "glazing",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.25,
+    0.75
+   ],
+   "slots": [
+    "secondary",
+    "trim",
+    "glass"
+   ],
+   "boxes": 20,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "cas.window.port.w1.h20",
+   "family": "glazing",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    0.25,
+    1.25
+   ],
+   "slots": [
+    "secondary",
+    "trim",
+    "glass"
+   ],
+   "boxes": 20,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.skylight.2x1",
+   "family": "glazing",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    1.0,
+    0.25
+   ],
+   "slots": [
+    "secondary",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "boxes": 10,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.skylight.2x2",
+   "family": "glazing",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    2.0,
+    0.25
+   ],
+   "slots": [
+    "secondary",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "boxes": 10,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.skylight.2x3",
+   "family": "glazing",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    3.0,
+    0.25
+   ],
+   "slots": [
+    "secondary",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "boxes": 10,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.skylight.3x2",
+   "family": "glazing",
+   "mount": "top",
+   "size_m": [
+    3.0,
+    2.0,
+    0.25
+   ],
+   "slots": [
+    "secondary",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "boxes": 10,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "plan.floor.1x1",
+   "family": "hull-shape",
+   "mount": "plan",
+   "size_m": [
+    1.0,
+    1.0,
+    0.1875
+   ],
+   "slots": [
+    "secondary",
+    "trim"
+   ],
+   "boxes": 5,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "edge.door.2m",
+   "family": "interior-edge",
+   "mount": "edge",
+   "size_m": [
+    2.0,
+    0.25,
+    3.0
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 6,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "edge.wall.full",
+   "family": "interior-edge",
+   "mount": "edge",
+   "size_m": [
+    1.0,
+    0.25,
+    3.0
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "emit_a"
+   ],
+   "boxes": 5,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "edge.wall.glazed",
+   "family": "interior-edge",
+   "mount": "edge",
+   "size_m": [
+    1.0,
+    0.25,
+    3.0
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "glass"
+   ],
+   "boxes": 6,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "edge.wall.half",
+   "family": "interior-edge",
+   "mount": "edge",
+   "size_m": [
+    1.0,
+    0.25,
+    3.0
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "metal"
+   ],
+   "boxes": 5,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "edge.airlock.2m",
+   "family": "mount",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    0.4375,
+    2.5
+   ],
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "boxes": 52,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "edge.cargo-door.4m",
+   "family": "mount",
+   "mount": "face",
+   "size_m": [
+    4.0,
+    0.25,
+    2.5
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 23,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "mount.cannon.side.1x1",
+   "family": "mount",
+   "mount": "face",
+   "size_m": [
+    1.0,
+    2.125,
+    0.875
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 6,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "mount.dish.2x2",
+   "family": "mount",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    2.0,
+    1.4375
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 107,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "mount.engine.w20.h18",
+   "family": "mount",
+   "mount": "face",
+   "size_m": [
+    1.25,
+    2.5,
+    1.125
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "boxes": 35,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "mount.engine.w24.h22",
+   "family": "mount",
+   "mount": "face",
+   "size_m": [
+    1.5,
+    3.0,
+    1.375
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "boxes": 45,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "mount.engine.w32.h26",
+   "family": "mount",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    3.5,
+    1.625
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "boxes": 55,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "mount.engine.w32.h30",
+   "family": "mount",
+   "mount": "face",
+   "size_m": [
+    2.0,
+    3.5,
+    1.875
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "boxes": 61,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "mount.engine.w40.h36",
+   "family": "mount",
+   "mount": "face",
+   "size_m": [
+    2.5,
+    4.5,
+    2.25
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "boxes": 81,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "mount.engine.w48.h36",
+   "family": "mount",
+   "mount": "face",
+   "size_m": [
+    3.0,
+    4.5,
+    2.25
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "boxes": 81,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "mount.thruster.s",
+   "family": "mount",
+   "mount": "face",
+   "size_m": [
+    0.75,
+    0.5625,
+    0.75
+   ],
+   "slots": [
+    "secondary",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 9,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "mount.tractor.2x2",
+   "family": "mount",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    2.0,
+    0.6875
+   ],
+   "slots": [
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 43,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "mount.turret.top.2x2",
+   "family": "mount",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    2.0,
+    0.9375
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 41,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.box.1x2",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    1.0,
+    2.0,
+    0.4375
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "boxes": 14,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.box.2x1",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    1.0,
+    0.4375
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "boxes": 10,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.box.2x2",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    2.0,
+    0.4375
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "boxes": 14,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.box.2x3",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    3.0,
+    0.4375
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "boxes": 18,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.cargo.2x2",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    2.0,
+    0.625
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal"
+   ],
+   "boxes": 33,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.cargo.2x3",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    3.0,
+    0.625
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal"
+   ],
+   "boxes": 49,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.cargo.3x2",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    3.0,
+    2.0,
+    0.625
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal"
+   ],
+   "boxes": 49,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.greeble.2x3.s2",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    3.0,
+    0.625
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 11,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.hatch.2x2",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    2.0,
+    0.5625
+   ],
+   "slots": [
+    "primary",
+    "accent",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 6,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.hatch.2x3",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    3.0,
+    0.5625
+   ],
+   "slots": [
+    "primary",
+    "accent",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 6,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.logo.4x2",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    4.0,
+    2.0,
+    0.1875
+   ],
+   "slots": [
+    "secondary",
+    "trim"
+   ],
+   "boxes": 5,
+   "decal_sockets": [
+    "emblem"
+   ],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.pipes.1x2",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    1.0,
+    2.0,
+    0.375
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 11,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.pipes.2x1",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    1.0,
+    0.375
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 9,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.pipes.2x2",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    2.0,
+    0.375
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 13,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.pipes.2x3",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    3.0,
+    0.375
+   ],
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 16,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.radiator.1x2",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    1.0,
+    2.0,
+    0.375
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "emit_a"
+   ],
+   "boxes": 20,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.radiator.2x1",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    1.0,
+    0.375
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "emit_a"
+   ],
+   "boxes": 12,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.radiator.2x2",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    2.0,
+    0.375
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "emit_a"
+   ],
+   "boxes": 20,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.radiator.2x3",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    3.0,
+    0.375
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "emit_a"
+   ],
+   "boxes": 28,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.rim.bump",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    1.0,
+    1.0,
+    0.25
+   ],
+   "slots": [
+    "primary",
+    "metal"
+   ],
+   "boxes": 2,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.rim.lit",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    1.0,
+    1.0,
+    0.25
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "emit_b"
+   ],
+   "boxes": 3,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.rim.plain",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    1.0,
+    1.0,
+    0.25
+   ],
+   "slots": [
+    "primary"
+   ],
+   "boxes": 1,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.rim.vent",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    1.0,
+    1.0,
+    0.25
+   ],
+   "slots": [
+    "primary",
+    "metal",
+    "dark"
+   ],
+   "boxes": 6,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.s.box",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    1.0,
+    1.0,
+    0.5
+   ],
+   "slots": [
+    "primary",
+    "metal",
+    "emit_b"
+   ],
+   "boxes": 4,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.s.fan",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    1.0,
+    1.0,
+    0.5
+   ],
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "dark"
+   ],
+   "boxes": 30,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.s.hatch",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    1.0,
+    1.0,
+    0.5
+   ],
+   "slots": [
+    "primary",
+    "accent",
+    "metal"
+   ],
+   "boxes": 3,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.s.sensor",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    1.0,
+    1.0,
+    0.5
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "emit_a"
+   ],
+   "boxes": 4,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.s.vent",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    1.0,
+    1.0,
+    0.5
+   ],
+   "slots": [
+    "primary",
+    "metal",
+    "dark"
+   ],
+   "boxes": 7,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.spine.2x2",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    2.0,
+    0.1875
+   ],
+   "slots": [
+    "secondary",
+    "trim",
+    "emit_a"
+   ],
+   "boxes": 15,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.tanks.2x2",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    2.0,
+    0.75
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "emit_b"
+   ],
+   "boxes": 26,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.tanks.2x3",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    3.0,
+    0.75
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "emit_b"
+   ],
+   "boxes": 34,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.tanks.3x2",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    3.0,
+    2.0,
+    0.75
+   ],
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "emit_b"
+   ],
+   "boxes": 26,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.vent.1x2",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    1.0,
+    2.0,
+    0.25
+   ],
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "boxes": 19,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.vent.2x1",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    1.0,
+    0.25
+   ],
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "boxes": 11,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.vent.2x2",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    2.0,
+    0.25
+   ],
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "boxes": 19,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.vent.2x3",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    2.0,
+    3.0,
+    0.25
+   ],
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "boxes": 27,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  },
+  {
+   "id": "roof.vent.3x2",
+   "family": "roof",
+   "mount": "top",
+   "size_m": [
+    3.0,
+    2.0,
+    0.25
+   ],
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "boxes": 19,
+   "decal_sockets": [],
+   "voxel_aligned": true
+  }
+ ]
+}

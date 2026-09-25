@@ -63,6 +63,8 @@ Recorded the owner's decisions on player ship building and voxel-destructible sh
 
 r004 adds a reusable component kit prototype, `scripts/art_library/ship_kit_prototype.py`. It has 59 voxel-aligned pieces covering hull shapes, face cassettes, glazing, roof modules, external mounts, interior edge types and decorators. The pieces use nine material slots, so three faction themes render on the same meshes, and it adds tiling detail bump, mask decals and theme decorators. The design gains §12: kit contract, theming, decals, wall and pressure edge types, glazing families, hull shapes, mounts and faction strategy.
 
+r005 adds denser face and roof pieces (176 kit pieces), stepped slope and curve skins, a general hull rasteriser and a data-driven dresser. Seven combined designs (fighter, shuttle, corvette, frigate, pirate raider, alien explorer, station) and three blueprint sheets (components, shape tiles, designs) are rendered from the same kit.
+
 ## 2026-09-15 — Stellar Observe framing (render 0.5.1)
 
 Observe fits the enlarged stellar corona, including portrait viewports, while retaining authored physical radii and existing planet framing. Added two NullEngine projection tests. Final r013 solar migration passes isolated baseline/update/persistent-state verification and is now live with the compatible client. All live ship, character and inventory-item rows remain unchanged. Hardware performance acceptance remains unmeasured.
