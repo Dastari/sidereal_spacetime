@@ -755,3 +755,73 @@ Owner direction, 2026-09-25, after r004:
 - Blueprint labels are small at full-sheet scale.
 - No interiors in the kit yet.
 - Runtime (Babylon) proof is still gate P2.
+
+### r006 (samples r006_*): size-class engines and mounts, chunkier slopes, more shapes
+
+Owner direction, 2026-09-25, after r005: "Keep refining." Engines and other attached components must be **separate components in size classes (SM / MD / LG / XL)** and look closer to the references, specifically the `modular-spaceship-design.png` "Engine Assembly" and the Orion Crest and Razor pods.
+
+**Hardpoint size classes.**
+- Footprints are whole cells: **SM 1×1, MD 2×2, LG 3×3, XL 4×4 m**.
+- A 3.5 m deck face hosts up to LG.
+- XL is a rear-only hardpoint that may overhang the hull height, vertically centred. That is a grammar rule, not an art accident.
+- The manifest records `hardpoint_cells`.
+
+**Engines.**
+- **Ion drive** (`mount.engine.ion.{SM,MD,LG,XL}`) follows the reference assembly. It is an octagonal segmented pod:
+  - **mount flange**: hardpoint plate and bolt ring
+  - **engine housing**: navy / white / crimson bands separated by recessed gap rings, a glowing reactor ring mid-body, raised armour plates on the flats, amber status lights and side vents
+  - **conduit layer**: fuel and power pipes with clamps and a power coupling
+  - **thruster nozzle**: collar, stepped ribbed bell and a glowing core
+
+  Body length scales with size: 2.1 / 3.5 / 5 / 7 m. The four sub-parts are separate pieces (exploded view) and also form one assembled piece used on ships.
+- **Thrust block** (`mount.engine.block.{SM..XL}`): boxy industrial housing with louvred top, amber frame and crimson band. XL has twin nozzles.
+- **RCS** (`mount.rcs.{SM,MD}`).
+- **Exhaust plumes** are presentation-only stepped translucent emissive cones, parented to the engine, coloured by the theme's `emit_a`. They are not part of occupancy or destruction and are hidden in blueprints.
+
+**Weapons.**
+- `mount.turret.{SM,MD,LG}`: single, twin and armoured triple barrel on 1×1 / 2×2 / 3×3 top hardpoints.
+- `mount.cannon.{SM,MD,LG}`: side sponsons, with twin barrels at LG.
+- Weapon art is still basic compared with the engines.
+
+**Ships re-fitted with size classes:**
+
+| Ship | Engines | Weapons |
+|---|---|---|
+| Razor | 2× ion SM | 2× cannon SM |
+| Courier | 2× block MD | |
+| Corvette | 2× ion LG + ion MD, 2× RCS MD | 2× turret MD, 2× cannon MD |
+| Frigate | 2× ion XL rear, 2× block MD on pods | 2× turret LG, 4× turret MD, 2× cannon LG |
+| Marauder (mismatched pirate fit) | block LG + ion MD + ion SM | cannon LG / MD, turret LG / MD / SM |
+| Crescent | 2× ion SM | |
+| Station | RCS | turret SM |
+
+**Slopes.** The hull raster and slope skins now step at 0.25 m instead of 0.125 m. Shallow slopes read as stepped plates rather than thin fins; see `r006_frigate_bow_slopes`.
+
+**More shapes.** Chamfer, pointed nose 1:2, round nose, swept wing and notch, in addition to the square, slope 1:1–1:4, arc r2–r4 and concave shapes.
+
+![r006 engine sizes](shipyard_player_builder/r006_engines_lineup.jpg)
+![r006 exploded ion XL](shipyard_player_builder/r006_engine_exploded.jpg)
+![r006 frigate rear](shipyard_player_builder/r006_frigate_rear_engines.jpg)
+![r006 marauder rear](shipyard_player_builder/r006_marauder_rear.jpg)
+![r006 frigate](shipyard_player_builder/r006_frigate_hero.jpg)
+![r006 bow slopes](shipyard_player_builder/r006_frigate_bow_slopes.jpg)
+![r006 lineup](shipyard_player_builder/r006_designs_lineup.jpg)
+![r006 blueprint components](shipyard_player_builder/r006_blueprint_components.jpg)
+![r006 blueprint shapes](shipyard_player_builder/r006_blueprint_shapes.jpg)
+![r006 blueprint designs](shipyard_player_builder/r006_blueprint_designs.jpg)
+
+**Numbers** (`kit_r006.json`):
+
+| Measure | Value |
+|---|---|
+| Kit pieces | 188, all voxel-aligned |
+| Unique meshes | 281 |
+| Placements | 1,732 |
+| Build, no render | 14 s |
+
+**Remaining gaps.**
+- The engine housing reads octagonal, but the reference is rounder and chunkier, with bolted end caps and more greebles per band.
+- Nozzles are shallow at SM/MD.
+- Weapons need a design pass: barrels, mantlets, ammo feeds.
+- The Riftjack "salvaged" engine variant is only a theme, not distinct geometry.
+- Missing mount types: missile pods, shield emitters, mining lasers, docking clamps.
