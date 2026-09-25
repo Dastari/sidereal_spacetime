@@ -38,6 +38,8 @@
     "smoke:restart": "python3 scripts/dev.py smoke-restart",
     "art:voxels": "python3 scripts/dev.py export-voxels",
     "art:check": "python3 scripts/check_art.py",
+    "ship-components:export": "tsx scripts/ship-components-export.ts",
+    "art:ship-components": "python3 scripts/art_library/run_ship_components.py",
     "art:engine": "python3 scripts/dev.py export-engine",
     "art:assembly": "python3 scripts/dev.py export-assembly",
     "art:bulkheads": "python3 scripts/dev.py export-bulkheads",
