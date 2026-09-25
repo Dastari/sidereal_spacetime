@@ -1,4 +1,4 @@
-import { stepContacts, type RigidBody } from "./collision";
+import { stepContacts, type RigidBody, type MotionSegment } from "./collision";
 import { DT, type Intent } from "./index";
 import {
   pilotDesiredMotion,
@@ -45,6 +45,7 @@ export interface SystemFlightControl {
   maxReverseSpeed: number;
 }
 export interface SystemSpaceStep {
+  trace: MotionSegment[];
   bodies: readonly RigidBody[];
   changedBodyIds: string[];
   commands: { bodyId: string; actuators: { id: string; throttle: number }[] }[];
@@ -116,11 +117,14 @@ function motionChanged(a: RigidBody, b: RigidBody): boolean {
 export function stepSystemSpace(
   input: readonly RigidBody[],
   controls: readonly SystemFlightControl[] = [],
+  traceIds?: ReadonlySet<string>,
+  tracePoint?: (body: RigidBody) => { x: number; y: number },
 ): SystemSpaceStep {
   const budgetResult = (
     reason: "body-budget" | "actuator-budget",
   ): SystemSpaceStep => ({
     bodies: input,
+    trace: [],
     changedBodyIds: [],
     commands: [],
     impacts: 0,
@@ -141,6 +145,7 @@ export function stepSystemSpace(
       SYSTEM_SPACE_LIMITS.totalActuators
   )
     return budgetResult("actuator-budget");
+  const trace: MotionSegment[] = [];
   const originals = new Map<string, RigidBody>();
   for (const body of input) {
     bodyValid(body);
@@ -272,7 +277,7 @@ export function stepSystemSpace(
       reason = "coordinate-bound";
       break;
     }
-    const result = stepContacts(kicked, DT);
+    const result = stepContacts(kicked, DT, 0.2, traceIds, tracePoint);
     // Correction from an overlap can also move a body outside the admitted box.
     try {
       for (const body of result.bodies) bodyValid(body);
@@ -282,6 +287,7 @@ export function stepSystemSpace(
       reason = "coordinate-bound";
       break;
     }
+    trace.push(...result.trace);
     bodies = result.bodies;
     impacts += result.impacts;
     if (result.exhausted) {
@@ -291,6 +297,7 @@ export function stepSystemSpace(
     completedSubsteps++;
   }
   return {
+    trace,
     bodies,
     changedBodyIds: bodies
       .filter((body) => motionChanged(originals.get(body.id)!, body))

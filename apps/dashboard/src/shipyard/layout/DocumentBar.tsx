@@ -1,6 +1,7 @@
+import { PublicationDialog } from "./PublicationDialog";
 import type { LayoutDocument } from "@sidereal/content/ship-layout";
 import { Download, Plus, Redo2, Save, Ship, Undo2, Upload } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import type { useLayout } from "./useLayout";
 export function DocumentBar({
   editor,
@@ -13,6 +14,7 @@ export function DocumentBar({
   commit: (change: (doc: LayoutDocument) => LayoutDocument) => void;
   onNew: () => void;
 }) {
+  const [publishing, setPublishing] = useState(false);
   const input = useRef<HTMLInputElement>(null);
   return (
     <header className="layout-document-bar">
@@ -58,7 +60,14 @@ export function DocumentBar({
           <Save size={16} />
           Save draft
         </button>
-        <button className="layout-primary" onClick={editor.exportDraft}>
+        <button
+          className="layout-primary"
+          disabled={blocked}
+          onClick={() => setPublishing(true)}
+        >
+          Templates
+        </button>
+        <button onClick={editor.exportDraft}>
           <Download size={16} />
           Export
         </button>
@@ -73,6 +82,12 @@ export function DocumentBar({
           }}
         />
       </div>
+      {publishing && (
+        <PublicationDialog
+          editor={editor}
+          onClose={() => setPublishing(false)}
+        />
+      )}
     </header>
   );
 }

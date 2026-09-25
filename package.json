@@ -1,6 +1,6 @@
 {
   "name": "sidereal-spacetime",
-  "version": "0.1.0",
+  "version": "0.7.0",
   "private": true,
   "type": "module",
   "workspaces": [
@@ -17,7 +17,7 @@
     "status": "python3 scripts/dev.py status",
     "build": "npm run world:build && npm run world:generate && npm run build:client && npm run build:dashboard",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run",
+    "test": "vitest run --maxWorkers=2",
     "check": "npm run typecheck && npm test && python3 scripts/check_docs.py",
     "world:build": "python3 scripts/dev.py build-world",
     "world:generate": "python3 scripts/dev.py generate",
@@ -70,7 +70,11 @@
     "lint": "node scripts/quality-check.mjs lint",
     "lint:all": "eslint \"apps/**/*.{ts,tsx}\" \"packages/**/*.{ts,tsx}\"",
     "test:python": "python3 scripts/run_python_tests.py",
-    "art:character-components": "python3 scripts/character_components/run.py"
+    "art:character-components": "python3 scripts/character_components/run.py",
+    "art:reference:check": "python3 scripts/art_library/run_reference_checks.py",
+    "art:yellow-star": "python3 scripts/art_library/run_yellow_star.py",
+    "art:yellow-star:review": "python3 scripts/art_library/run_star_review.py",
+    "agent-mail": "python3 scripts/agent_mail.py"
   },
   "devDependencies": {
     "@types/node": "26.5.0",

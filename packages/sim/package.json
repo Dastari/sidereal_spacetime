@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/sim",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -53,6 +53,10 @@
     "./construction-instance": "./src/construction-instance.ts",
     "./layout-structure": "./src/layout-structure.ts",
     "./layout-native-floor": "./src/layout-native-floor.ts",
+    "./system-map": "./src/system-map.ts",
+    "./space-background": "./src/space-background.ts",
+    "./zones": "./src/zones.ts",
+    "./zone-path": "./src/zone-path.ts",
     "./layout-inset-native-plan": "./src/layout-inset-native-plan.ts",
     "./construction-inset-boundaries": "./src/construction-inset-boundaries.ts",
     "./wayfarer-walking-bindings": "./src/wayfarer-walking-bindings.ts",
@@ -64,6 +68,6 @@
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",
-    "@sidereal/content": "0.1.0"
+    "@sidereal/content": "0.6.0"
   }
 }

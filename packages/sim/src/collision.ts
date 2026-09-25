@@ -247,10 +247,18 @@ function impulse(a: RigidBody, b: RigidBody, restitution: number) {
   b.y += (correction * c.ny) / b.massKg;
   return j;
 }
+export interface MotionSegment {
+  bodyId: string;
+  from: { x: number; y: number };
+  to: { x: number; y: number };
+  kind: "drift" | "correction";
+}
 export function stepContacts(
   input: readonly RigidBody[],
   dt: number,
   restitution = 0.2,
+  traceIds?: ReadonlySet<string>,
+  tracePoint: (body: RigidBody) => { x: number; y: number } = body => body,
 ) {
   if (
     !Number.isFinite(dt) ||
@@ -291,6 +299,23 @@ export function stepContacts(
       b.halfLength < 0
     )
       throw new Error("Invalid collider");
+  const trace: MotionSegment[] = [];
+  const record = (a: RigidBody, b: RigidBody, kind: MotionSegment["kind"]) => {
+    if (!traceIds?.has(a.id)) return;
+    const from = tracePoint(a), to = tracePoint(b);
+    if (from.x !== to.x || from.y !== to.y)
+      trace.push({
+        bodyId: a.id,
+        from: { x: from.x, y: from.y },
+        to: { x: to.x, y: to.y },
+        kind,
+      });
+  };
+  const drift = (i: number, duration: number) => {
+    const before = bodies[i];
+    bodies[i] = advance(before, duration);
+    record(before, bodies[i], "drift");
+  };
   let remaining = dt,
     impacts = 0;
   const work: ContactWork = {
@@ -318,17 +343,19 @@ export function stepContacts(
       }
     }
     if (!pair || first > remaining) {
-      for (let i = 0; i < bodies.length; i++)
-        bodies[i] = advance(bodies[i], remaining);
+      for (let i = 0; i < bodies.length; i++) drift(i, remaining);
       remaining = 0;
       break;
     }
-    for (let i = 0; i < bodies.length; i++)
-      bodies[i] = advance(bodies[i], first);
+    for (let i = 0; i < bodies.length; i++) drift(i, first);
     remaining -= first;
-    if (!confirmed) return { bodies, impacts, exhausted: true, work };
+    if (!confirmed) return { bodies, impacts, exhausted: true, work, trace };
     const [a, b] = pair;
+    const beforeA = { ...bodies[a] },
+      beforeB = { ...bodies[b] };
     if (impulse(bodies[a], bodies[b], restitution) > EPS) impacts++;
+    record(beforeA, bodies[a], "correction");
+    record(beforeB, bodies[b], "correction");
   }
-  return { bodies, impacts, exhausted: remaining > 1e-9, work };
+  return { bodies, impacts, exhausted: remaining > 1e-9, work, trace };
 }

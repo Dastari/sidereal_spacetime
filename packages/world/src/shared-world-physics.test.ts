@@ -1,3 +1,5 @@
+import { resolveShipFlightDefinition } from "./construction-flight-resolver";
+import { ZoneBudgetError } from "@sidereal/sim/zones";
 import { describe, expect, it, vi } from "vitest";
 vi.mock("spacetimedb/server", () => ({ SenderError: class extends Error {} }));
 import { joinSharedSystem, ensureCanonicalSystem } from "./shared-world";
@@ -327,4 +329,60 @@ it("initial invalid definitions reject the island and erase stale burn telemetry
   expect(result).toMatchObject({status:"exhausted",reason:"missing-physical-definition",changedOutputs:1,changedMotions:0});
   expect(f.db.actuatorOutput.rows.size).toBe(0);
   expect(f.db.shipWorldMotion.shipId.find("ship1")).toEqual(before);
+});
+
+it("zone-only commits stamp the sample and cannot replay at the same tick", () => {
+  const f = setup();
+  rest(f);
+  stepSharedWorld(f.physics());
+  const zones = vi.fn(() => true),
+    ctx = { ...f.physics(), timestamp: { microsSinceUnixEpoch: 150000n } },
+    hooks = {
+      definitionForShip: () => asymmetricDefinition(0),
+      compileDirty: () => {},
+      canPilot: () => false,
+      zones,
+    };
+  expect(stepCompiledSharedWorld(ctx, undefined, hooks).changedMotions).toBe(0);
+  expect(zones).toHaveBeenCalledOnce();
+  expect(stepCompiledSharedWorld(ctx, undefined, hooks).reason).toBe(
+    "sample-already-applied",
+  );
+  expect(zones).toHaveBeenCalledOnce();
+});
+
+it("zone work exhaustion preserves pre-step motions", () => {
+  const f = setup(),
+    before = [...f.db.shipWorldMotion.rows.values()].map((r) => ({ ...r })),
+    report = stepCompiledSharedWorld(f.physics(), undefined, {
+      definitionForShip: () => asymmetricDefinition(0),
+      compileDirty: () => {},
+      canPilot: () => false,
+      zones: () => {
+        throw new ZoneBudgetError();
+      },
+    });
+  expect(report.reason).toBe("zone-work-budget");
+  expect(report.status).toBe("exhausted");
+  expect([...f.db.shipWorldMotion.rows.values()]).toEqual(before);
+});
+
+it("zone traces follow the authored ship origin through asymmetric COM motion", () => {
+  const f = setup(); rest(f);
+  const definition = asymmetricDefinition(3);
+  const row = f.db.shipWorldMotion.shipId.find("ship1");
+  f.db.shipWorldMotion.shipId.update({...row, vx: 3, vy: -2, omega: 0.2, heading: 0.3});
+  const before = {...f.db.shipWorldMotion.shipId.find("ship1")};
+  const zones = vi.fn(() => false);
+  const result = stepCompiledSharedWorld(f.physics(), undefined, {
+    compileDirty: () => {}, canPilot: () => false, definitionForShip: () => definition, zones,
+  });
+  expect(result.reason).toBeUndefined();
+  const trace = (zones.mock.calls[0] as unknown as [string, unknown[], {bodyId:string;from:{x:number;y:number};to:{x:number;y:number}}[]])[2].filter(s => s.bodyId === "ship1");
+  expect(trace.length).toBeGreaterThan(0);
+  expect(trace[0].from.x).toBeCloseTo(before.x, 10);
+  expect(trace[0].from.y).toBeCloseTo(before.y, 10);
+  const after = f.db.shipWorldMotion.shipId.find("ship1");
+  expect(trace.at(-1)!.to.x).toBeCloseTo(after.x, 10);
+  expect(trace.at(-1)!.to.y).toBeCloseTo(after.y, 10);
 });

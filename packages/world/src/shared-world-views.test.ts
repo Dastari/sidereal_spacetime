@@ -132,7 +132,7 @@ describe("authorized shared spatial projections", () => {
     move(f, "ship1", 100000, 100000);
     const bodies = visibleBodyDescriptions(f.view());
     expect(bodies.every((b) => b.kind !== "asteroid")).toBe(true);
-    expect(bodies).toHaveLength(12);
+    expect(bodies).toHaveLength(SHARED_SYSTEM_SEED.bodies.filter(b=>b.kind!=="asteroid").length);
     expect(visibleBodyMotion(f.view()).map((b) => b.bodyId)).toEqual(
       bodies.map((b) => b.bodyId),
     );

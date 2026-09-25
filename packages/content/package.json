@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/content",
-  "version": "0.1.0",
+  "version": "0.6.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -34,6 +34,9 @@
     "./layout-assembly": "./src/layout-assembly.ts",
     "./tileset-interfaces": "./src/tileset-interfaces.ts",
     "./pilot-layout": "./src/pilot-layout.ts",
+    "./system-map": "./src/system-map.ts",
+    "./environment": "./src/environment.ts",
+    "./zones": "./src/zones.ts",
     "./wayfarer-rebuild-r002.json": "./src/wayfarer-rebuild-r002.json",
     "./layout-boundary-treatments": "./src/layout-boundary-treatments.ts",
     "./construction-inset-visuals": "./src/construction-inset-visuals.ts",
@@ -45,7 +48,8 @@
     "./wayfarer-exterior-r005.json": "./src/wayfarer-exterior-r005.json",
     "./wayfarer-hull-r005-proof.json": "./src/wayfarer-hull-r005-proof.json",
     "./wayfarer-conversion-candidate": "./src/wayfarer-conversion-candidate.ts",
-    "./wayfarer-walking-proof.json": "./src/wayfarer-walking-proof.json"
+    "./wayfarer-walking-proof.json": "./src/wayfarer-walking-proof.json",
+    "./celestial-assets": "./src/celestial-assets.ts"
   },
   "dependencies": {}
 }
