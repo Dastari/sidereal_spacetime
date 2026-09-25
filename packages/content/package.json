@@ -65,7 +65,11 @@
     "./wayfarer-current-starter": "./src/wayfarer-current-starter.ts",
     "./wayfarer-flight-definition": "./src/wayfarer-flight-definition.ts",
     "./interior": "./src/interior.ts",
-    "./wayfarer-rebuild-removals.json": "./src/wayfarer-rebuild-removals.json"
+    "./wayfarer-rebuild-removals.json": "./src/wayfarer-rebuild-removals.json",
+    "./ship-components": "./src/ship-components.ts",
+    "./ship-components-source": "./src/ship-components-source.ts",
+    "./ship-components.v1.json": "./src/ship-components.v1.json",
+    "./ship-components-reference-fits": "./src/ship-components-reference-fits.ts"
   },
   "dependencies": {}
 }
