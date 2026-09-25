@@ -957,9 +957,12 @@ export function validateMount(
     if (!place.host) err("mount.off-face", `${spec.label} must sit fully on one straight hull face`);
     else {
       const g = geoms.find((v) => v.volume.id === place.host)!;
-      const overhang = place.z[0] < g.z[0] || place.z[1] > g.z[1];
-      if (overhang && !(rear && spec.sizeClass === "XL"))
-        err("mount.face-height", `${spec.label} is taller than the ${g.volume.height} face (only XL rear mounts may overhang)`);
+      const overhang = Math.max(0, g.z[0] - place.z[0]) + Math.max(0, place.z[1] - g.z[1]);
+      // Grammar rule (design r006): XL rear mounts may overhang freely, other rear drives by
+      // at most 0.5 m in total; side and fore face mounts must fit the face band.
+      const allowed = rear && spec.sizeClass === "XL" ? Infinity : rear ? 8 : 0;
+      if (overhang > allowed)
+        err("mount.face-height", `${spec.label} is taller than the ${g.volume.height} face (only rear drives may overhang, XL freely, others by 0.5 m)`);
       // The face must be exposed: nothing else occupies the strip just outside it.
       const [nx, ny] = NORMAL_VECTOR[mount.normal!];
       const mid: Pt = [mount.at[0] + nx * 0.3, mount.at[1] + ny * 0.3];
