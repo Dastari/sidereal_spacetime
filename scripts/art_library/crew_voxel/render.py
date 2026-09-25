@@ -117,6 +117,134 @@ def tile(paths, cols, out, label=None):
     return out
 
 
+FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+
+
+def label(img, text, out, size=22):
+    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", img, "-vf",
+                    f"drawtext=fontfile={FONT}:text='{text}':x=12:y=10:fontsize={size}:fontcolor=0x9fd8ff",
+                    out], check=True)
+    return out
+
+
+def review_props(arm, mats):
+    """Review-only proxies (NOT exported): rifle / pistol / tool on socket.hand.R, crate, seat, ladder."""
+    import voxkit
+    props = {}
+
+    def make(name, vol, parent=None, loc=(0, 0, 0)):
+        me = voxkit.mesh_volume(vol, name, mats=mats)
+        ob = bpy.data.objects.new(name, me)
+        bpy.context.scene.collection.objects.link(ob)
+        if parent:
+            ob.parent = bpy.data.objects[parent]
+            ob.matrix_parent_inverse.identity()
+        ob.location = loc
+        ob.hide_render = True
+        props[name] = ob
+        return ob
+
+    # grip frame: x along barrel, y left, z up; origin at grip centre. Voxels -> the Vol is authored in
+    # that frame directly because the socket empty carries the frame.
+    r = voxkit.Vol()
+    r.box(-7, -1, 1, 16, 1, 4, "dark").box(-7, -1, -1, -3, 1, 2, "dark")        # body + stock
+    r.box(16, 0, 2, 22, 1, 3, "metal").box(2, -1, 4, 8, 1, 5, "metal")          # barrel + sight rail
+    r.box(-1, -1, -3, 1, 1, 1, "dark").box(3, -1, -3, 5, 1, 1, "suit_secondary")  # grip + magazine
+    r.box(8, -1, -1, 11, 1, 1, "dark").box(10, -1, 1, 16, 1, 2, "accent").box(12, -1, 3, 13, 1, 4, "emit")
+    make("prop.rifle", r, "socket.hand.R")
+    p = voxkit.Vol()
+    p.box(-2, -1, 1, 7, 1, 3, "metal").box(-1, -1, -3, 1, 1, 1, "dark").box(5, -1, 3, 6, 1, 4, "emit")
+    p.box(0, -1, 3, 4, 1, 4, "accent")
+    make("prop.pistol", p, "socket.hand.R")
+    t = voxkit.Vol()
+    t.box(-1, -1, -2, 1, 1, 2, "dark").box(1, -1, 0, 9, 1, 2, "metal").box(9, -2, -1, 11, 2, 3, "accent")
+    t.box(10, -1, 3, 11, 1, 4, "emit")
+    make("prop.tool", t, "socket.hand.R")
+    c = voxkit.Vol()
+    c.box(-6, -5, -5, 6, 5, 5, "suit_secondary").paint(-6, -5, -1, 6, 5, 1, "accent")
+    make("prop.crate", c)
+    s = voxkit.Vol()
+    s.box(-8, -14, 0, 8, 2, 11, "dark").box(-8, -14, 11, 8, 2, 13, "suit_secondary").box(-8, -15, 13, 8, -12, 40, "suit_secondary")
+    make("prop.seat", s)
+    lad = voxkit.Vol()
+    lad.box(-9, 8, 0, -7, 10, 72, "metal").box(7, 8, 0, 9, 10, 72, "metal")
+    for z in range(4, 72, 10):
+        lad.box(-7, 8, z, 7, 10, z + 1, "dark")
+    make("prop.ladder", lad)
+    return props
+
+
+PROP_FOR = {"rifle": ["prop.rifle"], "pistol": ["prop.pistol"], "one_hand": ["prop.tool"]}
+
+
+def props_for(meta):
+    name = meta["name"]
+    if name in ("carry_idle", "carry_walk"):
+        return ["prop.crate"]
+    if name in ("sit", "sit_idle"):
+        return ["prop.seat"]
+    if name == "climb_ladder":
+        return ["prop.ladder"]
+    if name in ("melee_swing",):
+        return ["prop.tool"]
+    return PROP_FOR.get(meta.get("grip"), [])
+
+
+def contact_sheets(out, arm, bodies, actions, mats, args, variant="male", per_sheet=6, nframes=6,
+                   views=(("3/4", 35, 12), ("side", 90, 6))):
+    sc = bpy.context.scene
+    cam = sc.camera or setup(sc, samples=8, res=(300, 420))
+    sc.render.resolution_x, sc.render.resolution_y = 300, 420
+    sc.eevee.taa_render_samples = max(8, min(args.samples, 16))
+    props = review_props(arm, mats)
+    everything = [o for o in sc.objects if o.type == "MESH" and o.name.startswith("GEO-")]
+    show_only(list(bodies[variant]["meshes"].values()) + [bodies[variant]["hair"]], everything)
+    rd = f"{out}/renders/anim"
+    os.makedirs(rd, exist_ok=True)
+    rows = []
+    for meta in actions:
+        act = bpy.data.actions[meta["name"]]
+        arm.animation_data.action = act
+        f0, f1 = int(act.frame_range[0]), int(act.frame_range[1])
+        span = (f1 - f0) if meta["loop"] else (f1 - f0)
+        n = nframes
+        frames = [f0 + round(span * i / (n if meta["loop"] else n - 1)) for i in range(n)]
+        vis = props_for(meta)
+        for pn, po in props.items():
+            po.hide_render = pn not in vis
+        crate = props["prop.crate"]
+        for vname, az, el in views:
+            imgs = []
+            for f in frames:
+                sc.frame_set(f)
+                if "prop.crate" in vis:
+                    hr = arm.pose.bones["hand.R"].matrix
+                    hl = arm.pose.bones["hand.L"].matrix
+                    crate.location = (hr.translation + hl.translation) / 2 + Vector((0, 0, -0.03))
+                    crate.rotation_euler = (0, 0, 0)
+                target = (0, 0, 0.8)
+                if meta.get("lying") or meta.get("endsLying") or meta.get("startsLying"):
+                    target = (0, -0.2, 0.6)
+                aim(cam, az, elev=el, dist=8, target=target, ortho=2.5)
+                p = f"{rd}/{meta['name']}_{vname.replace('/', '')}_{f:03d}.png"
+                still(p)
+                imgs.append(p)
+            row = f"{rd}/{meta['name']}_{vname.replace('/', '')}_row.png"
+            tile(imgs, len(imgs), row)
+            lab = "{}  ({} f{}{})  {}".format(meta["name"].upper(), meta["frames"], ", loop" if meta["loop"] else "",
+                                              ", extra" if meta.get("extra") else "", vname)
+            rows.append(label(row, lab.replace(":", ""), row.replace("_row.png", "_row_l.png")))
+    arm.animation_data.action = None
+    sheets = []
+    per = per_sheet * len(views)
+    for i in range(0, len(rows), per):
+        chunk = rows[i:i + per]
+        pth = f"{out}/anim_sheet_{i // per + 1:02d}.png"
+        tile(chunk, 1, pth)
+        sheets.append(pth)
+    return sheets
+
+
 def turnaround(out, arm, bodies, args):
     sc = bpy.context.scene
     cam = setup(sc, samples=args.samples)
@@ -128,8 +256,8 @@ def turnaround(out, arm, bodies, args):
     rd = f"{out}/renders"
     os.makedirs(rd, exist_ok=True)
     sheet = []
-    for variant, (ob, hob, parts, hair) in bodies.items():
-        show_only([ob, hob], everything)
+    for variant, b in bodies.items():
+        show_only(list(b["meshes"].values()) + [b["hair"]], everything)
         row = []
         for view in ("front", "front-right", "right", "back", "back-left"):
             aim(cam, VIEWS[view])

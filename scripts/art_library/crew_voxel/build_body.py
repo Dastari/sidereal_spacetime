@@ -23,6 +23,7 @@ import bpy
 from mathutils import Matrix, Vector
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import anims  # noqa: E402
 import body  # noqa: E402
 import rig  # noqa: E402
 import voxkit  # noqa: E402
@@ -37,7 +38,9 @@ def parse_args():
     p.add_argument("--no-render", action="store_true")
     p.add_argument("--spec", default="")
     p.add_argument("--samples", type=int, default=32)
-    p.add_argument("--shots", default="")
+    p.add_argument("--shots", default="", help="comma list: turnaround,anim")
+    p.add_argument("--only", default="", help="comma list of action names to build (iteration)")
+    p.add_argument("--no-export", action="store_true")
     return p.parse_args(argv)
 
 
@@ -98,21 +101,41 @@ def skin(ob, arm):
     md.object = arm
 
 
+REGIONS = {  # separate meshes so heads / gloves / boots can hide the base segment they replace
+    "head": ["head"],
+    "hands": ["hand.L", "hand.R"],
+    "feet": ["foot.L", "foot.R", "toe.L", "toe.R"],
+}
+
+
+def region_of(bone):
+    for r, bones in REGIONS.items():
+        if bone in bones:
+            return r
+    return "body"
+
+
 def build_bodies(arm, mats, coll):
     bodies, stats = {}, {}
     for variant in body.VARIANTS:
         parts, hair = body.build(variant)
-        objs = [part_object(f"{variant}.{bone}", vol, bone, coll, mats) for bone, vol in parts.items()]
-        ob = join(objs, f"GEO-crew-body-{variant}")
-        voxkit.assign_materials(ob, mats)
-        skin(ob, arm)
-        ob["crew_part"] = f"body.{variant}"
+        meshes = {}
+        for region in ("body", "head", "hands", "feet"):
+            objs = [part_object(f"{variant}.{bone}", vol, bone, coll, mats)
+                    for bone, vol in parts.items() if region_of(bone) == region]
+            ob = join(objs, f"GEO-crew-{region}-{variant}")
+            voxkit.assign_materials(ob, mats)
+            skin(ob, arm)
+            ob["crew_part"] = f"{region}.{variant}"
+            meshes[region] = ob
         hob = part_object(f"GEO-crew-hair-default-{variant}", hair, "head", coll, mats)
         voxkit.assign_materials(hob, mats)
         skin(hob, arm)
         hob["crew_part"] = f"hair.default.{variant}"
-        bodies[variant] = (ob, hob, parts, hair)
-        stats[variant] = {"tris": voxkit.tri_count(ob.data), "hairTris": voxkit.tri_count(hob.data),
+        bodies[variant] = {"meshes": meshes, "hair": hob, "parts": parts, "hairVol": hair}
+        stats[variant] = {"tris": sum(voxkit.tri_count(o.data) for o in meshes.values()),
+                          "trisByRegion": {r: voxkit.tri_count(o.data) for r, o in meshes.items()},
+                          "hairTris": voxkit.tri_count(hob.data),
                           "voxels": sum(len(v.c) for v in parts.values()), "hairVoxels": len(hair.c)}
     return bodies, stats
 
@@ -143,10 +166,11 @@ def build_sockets(arm, coll):
 
 def segment_bounds(bodies):
     seg = {}
-    for variant, (ob, hob, parts, hair) in bodies.items():
+    for variant, b in bodies.items():
+        parts, hair = b["parts"], b["hairVol"]
         for bone, vol in parts.items():
             lo, hi = vol.bounds()
-            seg.setdefault(bone, {})[variant] = {"minVox": lo, "maxVox": hi,
+            seg.setdefault(bone, {})[variant] = {"region": region_of(bone), "minVox": lo, "maxVox": hi,
                                                  "min": rig.m(lo), "max": rig.m(hi)}
         lo, hi = hair.bounds()
         seg.setdefault("hair.default", {})[variant] = {"bone": "head", "minVox": lo, "maxVox": hi,
@@ -205,7 +229,25 @@ def spec_json(arm, socks, seg, stats, actions):
         "sockets": sk,
         "socketConvention": "local -Y = outward/forward direction of the socket; hand sockets: origin = grip centre, +X along the barrel, +Z toward the top of the weapon. Author parts in rest-pose world space and parent with keep-transform, or place them at socket-local coordinates using matrixWorld.",
         "segments": seg,
+        "headSpace": {
+            "originVox": [0, 0, 44], "note": "head bone rest head (neck/skull joint); axes = armature axes (x right, y forward, z up)",
+            "skullVox": {"min": [-7, -6, 0], "max": [7, 6, 14]}, "faceFrontYVox": 6, "noseVox": {"min": [-1, 6, 4], "max": [1, 7, 6]},
+            "eyesVox": {"L": {"min": [-5, 5, 5], "max": [-3, 6, 8]}, "R": {"min": [3, 5, 5], "max": [5, 6, 8]}}, "eyeLineVox": 6.5,
+            "mouthVox": {"min": [-2, 5, 2], "max": [2, 6, 3]}, "earsVox": {"L": {"min": [-8, -1, 4], "max": [-7, 2, 8]}, "R": {"min": [7, -1, 4], "max": [8, 2, 8]}},
+            "hairMaxZVox": 17, "helmetEnvelopeVox": {"min": [-9, -8, -1], "max": [9, 9, 18]},
+        },
+        "hand": {"fistVox": {"min": [8, -2, 20], "max": [12, 2, 24]}, "thumbVox": {"min": [8, 2, 21], "max": [10, 3, 23]},
+                 "gripThicknessVox": 2, "note": ".R values; .L mirrors x. Grip passes through the fist centre (socket.hand.R)."},
+        "itemFrame": {
+            "charWeapons": "item-local (Blender): origin = primary grip centre, +Y barrel/forward, +Z up, +X right",
+            "toHandSocket": "item-local -> socket.hand.R local = rotation of -90 deg about socket Z (item +Y -> socket +X)",
+            "runtime": "voxel-crew exposes itemSockets.R/L: children of socket.hand.* carrying this adapter; parent item roots there",
+        },
         "segmentGroups": rig.SEGMENTS,
+        "bodyMeshRegions": {"body": "GEO-crew-body-<variant>", "head": "GEO-crew-head-<variant>",
+                            "hands": "GEO-crew-hands-<variant>", "feet": "GEO-crew-feet-<variant>",
+                            "hair": "GEO-crew-hair-default-<variant>",
+                            "note": "armour/heads declare hidesBodyRegions from {head, hands, feet, hair}; the core body mesh is never hidden, so shells stay >= 1 vox proud"},
         "equipmentSlots": rig.EQUIPMENT_SLOTS,
         "materialSlots": SLOTS,
         "defaultTheme": {k: [round(c, 4) for c in v] for k, v in voxkit.DEFAULT_THEME.items()},
@@ -214,6 +256,7 @@ def spec_json(arm, socks, seg, stats, actions):
         "stats": stats,
         "animations": actions,
         "animationsPlanned": rig.ACTIONS,
+        "gripProfiles": anims.GRIP_PROFILES,
         "animationConvention": "Blender actions on crew_rig, 24 fps, names exact; weapon actions assume the item follows socket.hand.R and the support hand sits on the item's support grip (hand.L).",
         "reuse": "scripts/art_library/crew_voxel/{voxkit,rig,body}.py on the CHAR-BODY branch: voxkit.Vol + mesh_volume + slot_materials build parts on the same grid/material contract.",
     }
@@ -234,8 +277,8 @@ def main():
     socks = build_sockets(arm, coll)
     actions = []
     if not args.no_anim:
-        import anims
-        actions = anims.build_actions(arm, sc)
+
+        actions = anims.build_actions(arm, sc, only=set(a for a in args.only.split(",") if a) or None)
     seg = segment_bounds(bodies)
     spec = spec_json(arm, socks, seg, stats, actions)
     with open(f"{out}/body-spec.json", "w") as f:
@@ -243,14 +286,20 @@ def main():
     if args.spec:
         with open(args.spec, "w") as f:
             json.dump(spec, f, indent=1)
-    bpy.ops.wm.save_as_mainfile(filepath=f"{out}/crew-body.blend")
-    import export
-    manifest = export.export_all(out, arm, bodies, socks, actions, stats)
-    with open(f"{out}/manifest.json", "w") as f:
-        json.dump(manifest, f, indent=1)
+    if not args.no_export:
+        bpy.ops.wm.save_as_mainfile(filepath=f"{out}/crew-body.blend")
+        import export
+        manifest = export.export_all(out, arm, bodies, socks, actions, stats)
+        manifest["gripProfiles"] = spec.get("gripProfiles")
+        with open(f"{out}/manifest.json", "w") as f:
+            json.dump(manifest, f, indent=1)
     if not args.no_render:
         import render
-        render.turnaround(out, arm, bodies, args)
+        shots = set(s for s in args.shots.split(",") if s) or {"turnaround", "anim"}
+        if "turnaround" in shots:
+            render.turnaround(out, arm, bodies, args)
+        if "anim" in shots and actions:
+            render.contact_sheets(out, arm, bodies, actions, mats, args)
     print("CREW_BODY_DONE", json.dumps(stats))
 
 

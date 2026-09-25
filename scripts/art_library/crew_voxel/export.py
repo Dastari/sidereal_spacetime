@@ -36,19 +36,22 @@ def export_all(out, arm, bodies, socks, actions, stats):
     sock_objs = [bpy.data.objects[n] for n in socks]
     files = {}
     all_objs = [arm] + sock_objs
-    for variant, (ob, hob, parts, hair) in bodies.items():
+    for variant, b in bodies.items():
+        objs = list(b["meshes"].values()) + [b["hair"]]
         path = f"{out}/crew-body-{variant}.glb"
-        _export(path, [arm, ob, hob] + sock_objs, bool(actions))
+        _export(path, [arm] + objs + sock_objs, bool(actions))
         files[os.path.basename(path)] = {"sha256": _sha(path), "bytes": os.path.getsize(path), "variant": variant}
-        all_objs += [ob, hob]
+        all_objs += objs
     path = f"{out}/crew-body.glb"
     _export(path, all_objs, bool(actions))
     files["crew-body.glb"] = {"sha256": _sha(path), "bytes": os.path.getsize(path), "variant": "all"}
     parts = []
-    for variant, (ob, hob, p, hair) in bodies.items():
+    for variant, b in bodies.items():
+        p, hair, hob = b["parts"], b["hairVol"], b["hair"]
         lo = [min(v.bounds()[0][i] for v in p.values()) for i in range(3)]
         hi = [max(v.bounds()[1][i] for v in p.values()) for i in range(3)]
-        parts.append({"id": f"body.{variant}", "mesh": ob.name, "tris": stats[variant]["tris"],
+        parts.append({"id": f"body.{variant}", "meshes": {r: o.name for r, o in b["meshes"].items()},
+                      "tris": stats[variant]["tris"], "trisByRegion": stats[variant]["trisByRegion"],
                       "slots": sorted({s for v in p.values() for s in v.slots()}, key=voxkit.SI.get),
                       "boundsVox": [lo, hi], "bounds": [rig.m(lo), rig.m(hi)]})
         hlo, hhi = hair.bounds()

@@ -13,6 +13,7 @@
     "./construction-boundary-interfaces.json": "./src/construction-boundary-interfaces.json",
     "./construction-floor-interfaces.json": "./src/construction-floor-interfaces.json",
     "./character-components": "./src/character-components.ts",
+    "./crew-voxel-bundle": "./src/crew-voxel-bundle.ts",
     "./appearance": "./src/appearance.ts",
     "./inventory": "./src/inventory.ts",
     "./storage-fixtures": "./src/storage-fixtures.ts",
