@@ -2,6 +2,8 @@
 
 Recorded the owner's decisions on player ship building and voxel-destructible ship structure. Added a design for the construction rules, an agent-friendly author → voxelise → style pipeline, damage authority, efficiency budget, a shared editor core and a phased plan. Evidence comes from a deterministic headless Blender prototype, `scripts/art_library/voxel_style_prototype.py`, which outputs a Wayfarer-style section with slope/arc bow, styled voxels and impact damage. Documentation and prototype only; no runtime, authority or asset changes.
 
+r004 adds a reusable component kit prototype, `scripts/art_library/ship_kit_prototype.py`. It has 59 voxel-aligned pieces covering hull shapes, face cassettes, glazing, roof modules, external mounts, interior edge types and decorators. The pieces use nine material slots, so three faction themes render on the same meshes, and it adds tiling detail bump, mask decals and theme decorators. The design gains §12: kit contract, theming, decals, wall and pressure edge types, glazing families, hull shapes, mounts and faction strategy.
+
 # Changelog
 
 ## Unreleased — Wayfarer exterior armor native r004
