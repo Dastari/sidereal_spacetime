@@ -91,8 +91,10 @@ export const SHIP_THEMES: Record<ShipThemeId, ShipTheme> = {
     "federation",
     "Federation (Orion Crest)",
     {
-      primary: [0.62, 0.61, 0.6], secondary: [0.035, 0.04, 0.07], accent: [0.42, 0.02, 0.045], trim: [0.075, 0.08, 0.1],
-      metal: [0.36, 0.37, 0.4], dark: [0.008, 0.008, 0.012], emitA: [0.1, 0.55, 1.0], emitAStrength: 8, emitB: [1.0, 0.45, 0.08], emitBStrength: 7,
+      // Reference palette (VERIFY rubric, measured from 3d-rpg-after): lavender-tinted warm grey
+      // #c8bcd8/#a78db6, charcoal navy #343652/#16182a, crimson #95233c, cyan #3fb8ff, amber #ffb14c.
+      primary: [0.55, 0.49, 0.64], secondary: [0.034, 0.037, 0.085], accent: [0.3, 0.017, 0.045], trim: [0.1, 0.075, 0.16],
+      metal: [0.38, 0.36, 0.46], dark: [0.008, 0.009, 0.024], emitA: [0.05, 0.48, 1.0], emitAStrength: 8, emitB: [1.0, 0.44, 0.07], emitBStrength: 7,
       glass: [0.3, 0.65, 1.0],
     },
     { wear: 0, wearColour: [0.05, 0.045, 0.04], inkOnDark: [0.85, 0.84, 0.8], inkOnLight: [0.05, 0.05, 0.08], defaultEmblem: "planet", plume: [0.35, 0.7, 1.0] },
