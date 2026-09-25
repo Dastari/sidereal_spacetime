@@ -3,6 +3,15 @@ import * as passengers from "./construction-passenger-authority";
 import { commitFlightCharacter } from "./construction-flight-dirty";
 import { setConstructionEnginePower as setEnginePower } from "./construction-device-power";
 import { replacePlayerWayfarer } from "./wayfarer-replacement";
+import { shipPolicy, shipOperatorOperation, shipWipeArchive } from "./ship-operator-tables";
+import { wipePlayerShips } from "./ship-wipe";
+import { assignPrefabShip } from "./ship-assign";
+import {
+  createShiplessCharacter,
+  isAwaitingShip,
+  setStarterShipPolicy,
+  starterShipsEnabled,
+} from "./ship-policy";
 import * as rebuiltWayfarer from "./wayfarer-rebuild-installation";
 import { systemZone, shipZoneState, shipZoneProjection } from "./zone-tables";
 import { stepZones, ownShipZones as readOwnShipZones } from "./zones";
@@ -377,6 +386,9 @@ const db = schema({
   movementTimer,
   spaceBody,
   actuatorOutput,
+  shipPolicy,
+  shipOperatorOperation,
+  shipWipeArchive,
 });
 export default db;
 export const ownAppearance = db.view(
@@ -498,6 +510,12 @@ export const enterLab = db.reducer({ name: t.string() }, (ctx, { name }) => {
         });
   };
   if (existing) {
+    // Awaiting-ship characters (after an operator wipe, or created while starter
+    // ships are disabled) have no frame to seed; they only come online.
+    if (isAwaitingShip(existing)) {
+      ctx.db.character.id.update({ ...existing, connected: true });
+      return;
+    }
     if (ctx.db.constructionLocation.characterId.find(existing.id)) {
       ctx.db.character.id.update({ ...existing, connected: true });
       return;
@@ -511,6 +529,10 @@ export const enterLab = db.reducer({ name: t.string() }, (ctx, { name }) => {
       ...ctx.db.character.id.find(existing.id)!,
       connected: true,
     });
+    return;
+  }
+  if (!starterShipsEnabled(ctx)) {
+    createShiplessCharacter(ctx, clean);
     return;
   }
   createWayfarerStarterAuthority(ctx, clean);
@@ -855,6 +877,10 @@ export const storeAllInventoryItems = db.reducer(
 );
 export const claimStarterKit = db.reducer(
   auth.gameAction((ctx) => {
+    const actor = [...ctx.db.character.by_owner.filter(ctx.sender)][0];
+    // Awaiting-ship characters already hold their personal kit; legacy lab
+    // storage would otherwise be minted on a ship that does not exist.
+    if (actor && isAwaitingShip(actor)) return;
     if (!preserveWayfarerStarterKit(ctx)) inventory.claimKit(ctx);
   }, true),
 );
@@ -1385,6 +1411,33 @@ export const moveCargoCarrier = db.reducer(
       ],
     });
   }, true),
+);
+
+/** Operator-only ship maintenance (deployment identity). See
+ * docs/operations/ship_wipe_runbook.md. Never invoked automatically. */
+export const operatorSetStarterShips = db.reducer(
+  { operationId: t.string(), enabled: t.bool() },
+  setStarterShipPolicy,
+);
+export const operatorWipePlayerShips = db.reducer(
+  {
+    operationId: t.string(),
+    dryRun: t.bool(),
+    expectedShips: t.u32(),
+    expectedInstances: t.u32(),
+    expectedCharacters: t.u32(),
+  },
+  wipePlayerShips,
+);
+export const operatorAssignPrefabShip = db.reducer(
+  {
+    operationId: t.string(),
+    characterId: t.string(),
+    prefabId: t.string(),
+    expectedCharacterShipId: t.string(),
+    allowLegacy: t.bool(),
+  },
+  assignPrefabShip,
 );
 
 /** Explicit deployment maintenance; ordinary game identities cannot invoke it. */
