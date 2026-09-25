@@ -46,6 +46,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "face",
         "sockets": ["rear","face"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-2.75,-0.5],[0.5,0,0.5]],
@@ -154,6 +155,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "face",
         "sockets": ["rear","face"],
         "cells": [2,2],
         "envelopeM": [[-1,-4.625,-1],[1,0,1]],
@@ -262,6 +264,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "face",
         "sockets": ["rear","face"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-5.75,-1.5],[1.5,0,1.5]],
@@ -370,6 +373,7 @@
       "faction": "common",
       "sizeClass": "XL",
       "mount": {
+        "frame": "face",
         "sockets": ["rear"],
         "cells": [4,4],
         "envelopeM": [[-2,-8.25,-2],[2,0,2]],
@@ -478,6 +482,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "face",
         "sockets": ["rear","face"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-2.375,-0.375],[0.5,0,0.375]],
@@ -586,6 +591,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "face",
         "sockets": ["rear","face"],
         "cells": [2,2],
         "envelopeM": [[-1,-3.5,-0.75],[1,0,0.75]],
@@ -694,6 +700,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "face",
         "sockets": ["rear","face"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-4.5,-1.125],[1.5,0,1.125]],
@@ -802,6 +809,7 @@
       "faction": "common",
       "sizeClass": "XL",
       "mount": {
+        "frame": "face",
         "sockets": ["rear"],
         "cells": [4,4],
         "envelopeM": [[-2,-5.5,-1.5],[2,0,1.5]],
@@ -910,6 +918,7 @@
       "faction": "riftjack",
       "sizeClass": "SM",
       "mount": {
+        "frame": "face",
         "sockets": ["rear","face"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-2.75,-0.5],[0.5,0,0.5]],
@@ -1018,6 +1027,7 @@
       "faction": "riftjack",
       "sizeClass": "MD",
       "mount": {
+        "frame": "face",
         "sockets": ["rear","face"],
         "cells": [2,2],
         "envelopeM": [[-1,-4.625,-1],[1,0,1]],
@@ -1126,6 +1136,7 @@
       "faction": "riftjack",
       "sizeClass": "LG",
       "mount": {
+        "frame": "face",
         "sockets": ["rear","face"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-5.75,-1.5],[1.5,0,1.5]],
@@ -1234,6 +1245,7 @@
       "faction": "riftjack",
       "sizeClass": "XL",
       "mount": {
+        "frame": "face",
         "sockets": ["rear"],
         "cells": [4,4],
         "envelopeM": [[-2,-8.25,-2],[2,0,2]],
@@ -1342,6 +1354,7 @@
       "faction": "aurelian",
       "sizeClass": "SM",
       "mount": {
+        "frame": "face",
         "sockets": ["rear","face"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-2.3375,-0.5],[0.5,0,0.5]],
@@ -1440,6 +1453,7 @@
       "faction": "aurelian",
       "sizeClass": "MD",
       "mount": {
+        "frame": "face",
         "sockets": ["rear","face"],
         "cells": [2,2],
         "envelopeM": [[-1,-3.93125,-1],[1,0,1]],
@@ -1538,6 +1552,7 @@
       "faction": "aurelian",
       "sizeClass": "LG",
       "mount": {
+        "frame": "face",
         "sockets": ["rear","face"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-4.8875,-1.5],[1.5,0,1.5]],
@@ -1636,7 +1651,8 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
-        "sockets": ["face","rear","top","bottom"],
+        "frame": "face",
+        "sockets": ["face","rear"],
         "cells": [1,1],
         "envelopeM": [[-0.375,-0.5,-0.375],[0.375,0,0.375]],
         "clearance": {"kind":"plume","lengthM":1.5,"arcDeg":20},
@@ -1734,7 +1750,8 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
-        "sockets": ["face","rear","top","bottom"],
+        "frame": "face",
+        "sockets": ["face","rear"],
         "cells": [1,1],
         "envelopeM": [[-0.625,-1,-0.625],[0.625,0,0.625]],
         "clearance": {"kind":"plume","lengthM":2.5,"arcDeg":20},
@@ -1832,6 +1849,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "top",
         "sockets": ["bottom"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,0.6]],
@@ -1939,7 +1957,14 @@
       "variant": "standard",
       "faction": "common",
       "sizeClass": "MD",
-      "mount": {"sockets":["bottom"],"cells":[2,2],"envelopeM":[[-1,-1,0],[1,1,1.2]],"clearance":null,"rearOnly":false},
+      "mount": {
+        "frame": "top",
+        "sockets": ["bottom"],
+        "cells": [2,2],
+        "envelopeM": [[-1,-1,0],[1,1,1.2]],
+        "clearance": null,
+        "rearOnly": false
+      },
       "massKg": 620,
       "integrity": {"hp":260,"armor":0,"destroyedEffect":"none","explosionDamage":0},
       "crew": {"operators":0,"station":"pilot","automation":"computer","berths":0},
@@ -2042,6 +2067,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [3,4],
         "envelopeM": [[-1.5,-2,0],[1.5,2,2.6]],
@@ -2133,6 +2159,7 @@
       "faction": "common",
       "sizeClass": "XL",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [4,5],
         "envelopeM": [[-2,-2.5,0],[2,2.5,3.2]],
@@ -2224,6 +2251,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [2,2],
         "envelopeM": [[-0.9,-0.9,0],[0.9,0.9,1.9]],
@@ -2335,6 +2363,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [3,3],
         "envelopeM": [[-1.4,-1.4,0],[1.4,1.4,2.6]],
@@ -2446,6 +2475,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [4,4],
         "envelopeM": [[-1.9,-1.9,0],[1.9,1.9,3.2]],
@@ -2557,6 +2587,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [1,1],
         "envelopeM": [[-0.45,-0.45,0],[0.45,0.45,1.4]],
@@ -2648,6 +2679,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [1,2],
         "envelopeM": [[-0.45,-0.9,0],[0.45,0.9,1.6]],
@@ -2749,6 +2781,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [2,2],
         "envelopeM": [[-0.9,-0.9,0],[0.9,0.9,1.8]],
@@ -2850,6 +2883,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [1,1],
         "envelopeM": [[-0.4,-0.4,0],[0.4,0.4,1]],
@@ -2941,6 +2975,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [1,1],
         "envelopeM": [[-0.45,-0.45,0],[0.45,0.45,1.6]],
@@ -3042,6 +3077,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [2,1],
         "envelopeM": [[-0.9,-0.45,0],[0.9,0.45,1.6]],
@@ -3143,6 +3179,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [1,1],
         "envelopeM": [[-0.45,-0.45,0],[0.45,0.45,1.3]],
@@ -3206,6 +3243,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [2,2],
         "envelopeM": [[-0.95,-0.95,0],[0.95,0.95,1.3]],
@@ -3269,6 +3307,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [3,3],
         "envelopeM": [[-1.45,-1.45,0],[1.45,1.45,1.5]],
@@ -3332,6 +3371,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,0.5]],
@@ -3395,6 +3435,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,1,0.5]],
@@ -3458,6 +3499,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [1,1],
         "envelopeM": [[-0.45,-0.45,0],[0.45,0.45,1.4]],
@@ -3569,6 +3611,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,0.6]],
@@ -3632,6 +3675,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,1,0.9]],
@@ -3695,6 +3739,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-1.5,0],[1.5,1.5,1.2]],
@@ -3758,6 +3803,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [1,1],
         "envelopeM": [[-0.4,-0.4,0],[0.4,0.4,0.9]],
@@ -3859,6 +3905,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [1,1],
         "envelopeM": [[-0.45,-0.45,0],[0.45,0.45,1.2]],
@@ -3960,6 +4007,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [2,1],
         "envelopeM": [[-0.9,-0.45,0],[0.9,0.45,1.4]],
@@ -4061,6 +4109,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [1,1],
         "envelopeM": [[-0.45,-0.45,0],[0.45,0.45,1.2]],
@@ -4124,6 +4173,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [2,1],
         "envelopeM": [[-0.9,-0.45,0],[0.9,0.45,1.4]],
@@ -4187,6 +4237,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,1.1,0.8]],
@@ -4294,6 +4345,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,2.2,1.6]],
@@ -4411,6 +4463,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,1.1,0.85]],
@@ -4518,6 +4571,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,2.2,1.7]],
@@ -4635,6 +4689,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-1.5,0],[1.5,3.3,2.55]],
@@ -4752,6 +4807,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,1.1,0.85]],
@@ -4859,6 +4915,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,2.2,1.7]],
@@ -4966,6 +5023,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-1.5,0],[1.5,3.3,2.55]],
@@ -5073,6 +5131,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,3.2,1.7]],
@@ -5190,6 +5249,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-1.5,0],[1.5,4.8,2.55]],
@@ -5307,6 +5367,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,0.7,0.9]],
@@ -5414,6 +5475,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,1.4,1.8]],
@@ -5521,6 +5583,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-1.5,0],[1.5,2.1,2.7]],
@@ -5638,6 +5701,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "face",
         "sockets": ["face","top"],
         "cells": [2,2],
         "envelopeM": [[-1,-4.2,-0.9],[1,0,0.9]],
@@ -5745,6 +5809,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "face",
         "sockets": ["face","top"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-6.300000000000001,-1.35],[1.5,0,1.35]],
@@ -5862,6 +5927,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,1.1,0.85]],
@@ -5961,6 +6027,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,2.2,1.7]],
@@ -6078,6 +6145,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-1.5,0],[1.5,3.3,2.55]],
@@ -6195,6 +6263,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,2.2,1.9]],
@@ -6302,6 +6371,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-1.5,0],[1.5,3.3,2.85]],
@@ -6409,6 +6479,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "face",
         "sockets": ["face"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-2.1,-0.45],[0.5,0,0.45]],
@@ -6516,6 +6587,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "face",
         "sockets": ["face"],
         "cells": [2,2],
         "envelopeM": [[-1,-4.2,-0.9],[1,0,0.9]],
@@ -6615,6 +6687,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "face",
         "sockets": ["face"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-6.300000000000001,-1.35],[1.5,0,1.35]],
@@ -6732,6 +6805,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [1,1],
         "envelopeM": [[-0.45,-0.45,0],[0.45,0.45,1.2]],
@@ -6827,6 +6901,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [2,1],
         "envelopeM": [[-0.9,-0.45,0],[0.9,0.45,1.4]],
@@ -6922,6 +6997,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [2,2],
         "envelopeM": [[-0.9,-0.9,0],[0.9,0.9,1.6]],
@@ -7017,6 +7093,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [2,1],
         "envelopeM": [[-0.9,-0.45,0],[0.9,0.45,1.4]],
@@ -7108,6 +7185,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [3,2],
         "envelopeM": [[-1.4,-0.9,0],[1.4,0.9,1.8]],
@@ -7199,6 +7277,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [3,2],
         "envelopeM": [[-1.4,-0.9,0],[1.4,0.9,1.8]],
@@ -7290,6 +7369,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [1,1],
         "envelopeM": [[-0.45,-0.45,0],[0.45,0.45,1.4]],
@@ -7381,6 +7461,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [2,2],
         "envelopeM": [[-0.9,-0.9,0],[0.9,0.9,1.9]],
@@ -7472,6 +7553,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [3,3],
         "envelopeM": [[-1.4,-1.4,0],[1.4,1.4,2.4]],
@@ -7563,6 +7645,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,0.9]],
@@ -7636,6 +7719,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,1,1.8]],
@@ -7717,6 +7801,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-1.5,0],[1.5,1.5,2.7]],
@@ -7808,6 +7893,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "face",
         "sockets": ["face","top","bottom","rear"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.125,-0.5],[0.5,0,0.5]],
@@ -7861,6 +7947,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "face",
         "sockets": ["face","top","bottom","rear"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.1875,-0.5],[0.5,0,0.5]],
@@ -7914,6 +8001,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "face",
         "sockets": ["face","top","bottom","rear"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.25,-0.5],[0.5,0,0.5]],
@@ -7967,6 +8055,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "face",
         "sockets": ["face","top","bottom","rear"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.25,-0.5],[0.5,0,0.5]],
@@ -8020,6 +8109,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,1.1]],
@@ -8101,6 +8191,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,1,2.2]],
@@ -8192,6 +8283,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-1.5,0],[1.5,1.5,3.3]],
@@ -8283,6 +8375,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "top",
         "sockets": ["top","bottom"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,1,1.8]],
@@ -8374,6 +8467,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "top",
         "sockets": ["top","bottom"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-1.5,0],[1.5,1.5,2.7]],
@@ -8465,6 +8559,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,1.8]],
@@ -8546,6 +8641,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,1,3.6]],
@@ -8637,6 +8733,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "top",
         "sockets": ["top"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,2]],
@@ -8717,7 +8814,14 @@
       "variant": "standard",
       "faction": "common",
       "sizeClass": "MD",
-      "mount": {"sockets":["top"],"cells":[2,2],"envelopeM":[[-1,-1,0],[1,1,4]],"clearance":null,"rearOnly":false},
+      "mount": {
+        "frame": "top",
+        "sockets": ["top"],
+        "cells": [2,2],
+        "envelopeM": [[-1,-1,0],[1,1,4]],
+        "clearance": null,
+        "rearOnly": false
+      },
       "massKg": 180,
       "integrity": {"hp":90,"armor":0,"destroyedEffect":"none","explosionDamage":0},
       "crew": {"operators":0,"station":null,"automation":"computer","berths":0},
@@ -8793,6 +8897,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,0.8,0.85]],
@@ -8884,6 +8989,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,1.6,1.7]],
@@ -8975,6 +9081,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-1.5,0],[1.5,2.4,2.55]],
@@ -9066,6 +9173,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "face",
         "sockets": ["face","top"],
         "cells": [2,2],
         "envelopeM": [[-1,-3.6,-1],[1,0,1]],
@@ -9157,6 +9265,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "face",
         "sockets": ["face","top"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-5.4,-1.5],[1.5,0,1.5]],
@@ -9248,6 +9357,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,1,1.8]],
@@ -9329,6 +9439,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-1.5,0],[1.5,1.5,2.7]],
@@ -9410,6 +9521,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,1.2,0.85]],
@@ -9501,6 +9613,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,2.4,1.7]],
@@ -9592,6 +9705,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-1.5,0],[1.5,3.6,2.55]],
@@ -9683,6 +9797,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "top",
         "sockets": ["top","bottom"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,1,1.2]],
@@ -9764,6 +9879,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "top",
         "sockets": ["top","bottom"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-1.5,0],[1.5,1.5,1.8]],
@@ -9855,6 +9971,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "face",
         "sockets": ["edge"],
         "cells": [2,1],
         "envelopeM": [[-1,-0.25,0],[1,0.25,2.75]],
@@ -9944,6 +10061,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "face",
         "sockets": ["edge"],
         "cells": [4,1],
         "envelopeM": [[-2,-0.25,0],[2,0.25,3.25]],
@@ -10033,6 +10151,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "face",
         "sockets": ["edge"],
         "cells": [6,1],
         "envelopeM": [[-3,-0.25,0],[3,0.25,3.375]],
@@ -10122,6 +10241,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "face",
         "sockets": ["edge"],
         "cells": [2,1],
         "envelopeM": [[-1,-0.5,0],[1,0.5,2.75]],
@@ -10221,6 +10341,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "face",
         "sockets": ["edge"],
         "cells": [2,1],
         "envelopeM": [[-1,-0.25,0],[1,0.25,2.75]],
@@ -10310,7 +10431,8 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
-        "sockets": ["interior","top","bottom"],
+        "frame": "interior",
+        "sockets": ["interior"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,0.3]],
         "clearance": null,
@@ -10389,6 +10511,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "top",
         "sockets": ["top","bottom"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,0.35]],
@@ -10468,6 +10591,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "face",
         "sockets": ["edge","top"],
         "cells": [2,1],
         "envelopeM": [[-1,-0.6,0],[1,0.6,2.75]],
@@ -10597,6 +10721,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "face",
         "sockets": ["edge","top"],
         "cells": [3,1],
         "envelopeM": [[-1.5,-0.8,0],[1.5,0.8,3.25]],
@@ -10726,6 +10851,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [1,1],
         "envelopeM": [[-0.45,-0.45,0],[0.45,0.45,1.8]],
@@ -10817,6 +10943,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [2,1],
         "envelopeM": [[-0.9,-0.45,0],[0.9,0.45,2]],
@@ -10918,6 +11045,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [2,2],
         "envelopeM": [[-0.9,-0.9,0],[0.9,0.9,2.2]],
@@ -11019,6 +11147,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [1,1],
         "envelopeM": [[-0.45,-0.45,0],[0.45,0.45,1.2]],
@@ -11110,6 +11239,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [1,1],
         "envelopeM": [[-0.45,-0.45,0],[0.45,0.45,1.8]],
@@ -11193,6 +11323,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [1,1],
         "envelopeM": [[-0.45,-0.45,0],[0.45,0.45,1.6]],
@@ -11256,6 +11387,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [2,1],
         "envelopeM": [[-0.9,-0.45,0],[0.9,0.45,1.8]],
@@ -11319,6 +11451,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [2,1],
         "envelopeM": [[-0.9,-0.45,0],[0.9,0.45,1.9]],
@@ -11400,6 +11533,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [2,2],
         "envelopeM": [[-0.9,-0.9,0],[0.9,0.9,1.6]],
@@ -11491,6 +11625,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [3,3],
         "envelopeM": [[-1.4,-1.4,0],[1.4,1.4,2]],
@@ -11582,6 +11717,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [1,1],
         "envelopeM": [[-0.45,-0.45,0],[0.45,0.45,1.2]],
@@ -11663,6 +11799,7 @@
       "faction": "common",
       "sizeClass": "MD",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [1,1],
         "envelopeM": [[-0.45,-0.45,0],[0.45,0.45,1.9]],
@@ -11744,6 +11881,7 @@
       "faction": "common",
       "sizeClass": "LG",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [2,1],
         "envelopeM": [[-0.9,-0.45,0],[0.9,0.45,2.1]],
@@ -11825,6 +11963,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,1.3]],
@@ -11906,6 +12045,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,1.3]],
@@ -11987,6 +12127,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,1.3]],
@@ -12068,6 +12209,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,1.3]],
@@ -12149,6 +12291,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,1.3]],
@@ -12230,6 +12373,7 @@
       "faction": "common",
       "sizeClass": "SM",
       "mount": {
+        "frame": "interior",
         "sockets": ["interior"],
         "cells": [2,1],
         "envelopeM": [[-1,-0.5,0],[1,0.5,1.6]],

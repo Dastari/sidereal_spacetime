@@ -20,7 +20,9 @@ import {
   SHIP_CHANNEL_TO_SERVICE_RATE,
   SHIP_SIZE_CELLS,
   SHIP_THERMAL_MODEL,
+  shipMountRotation,
   shipSizeRank,
+  type ShipMountSocket,
   type ShipComponentCatalog,
   type ShipComponentChannel,
   type ShipComponentConnection,
@@ -215,19 +217,35 @@ export function orientShipVector(
     s = [0, 1, 0, -1][q];
   return [c * x - s * v[1], s * x + c * v[1], v[2]];
 }
-/** A port's ship-frame position and normal for a placement. */
+const mul = (m: readonly (readonly number[])[], v: ShipVec3): ShipVec3 => [
+  m[0][0] * v[0] + m[0][1] * v[1] + m[0][2] * v[2],
+  m[1][0] * v[0] + m[1][1] * v[1] + m[1][2] * v[2],
+  m[2][0] * v[0] + m[2][1] * v[1] + m[2][2] * v[2],
+];
+/** Part-local vector to ship frame: re-mount rotation for the socket class
+ * (identity when omitted or native), then mirror/yaw, then (for points) translate. */
+export function shipPartToShip(
+  placement: ShipComponentPlacement,
+  v: ShipVec3,
+  mount?: { definition: ShipComponentDefinition; socket: ShipMountSocket },
+  point = true,
+): [number, number, number] {
+  const m = mount ? mul(shipMountRotation(mount.definition.mount.frame, mount.socket), v) : v;
+  const r = orientShipVector(m, placement.quarterTurns, placement.reflected);
+  return point
+    ? [r[0] + placement.position[0], r[1] + placement.position[1], r[2] + placement.position[2]]
+    : r;
+}
+/** A port's ship-frame position and normal for a placement. Pass `mount`
+ * when the component sits on a socket class other than its authored frame. */
 export function placedShipPort(
   placement: ShipComponentPlacement,
   port: ShipComponentPort,
+  mount?: { definition: ShipComponentDefinition; socket: ShipMountSocket },
 ): { position: [number, number, number]; normal: [number, number, number] } {
-  const p = orientShipVector(port.position, placement.quarterTurns, placement.reflected);
   return {
-    position: [
-      p[0] + placement.position[0],
-      p[1] + placement.position[1],
-      p[2] + placement.position[2],
-    ],
-    normal: orientShipVector(port.normal, placement.quarterTurns, placement.reflected),
+    position: shipPartToShip(placement, port.position, mount),
+    normal: shipPartToShip(placement, port.normal, mount, false),
   };
 }
 
@@ -930,14 +948,30 @@ export function shipComponentFlightInput(
   const cargo: FlightCargoMass[] = [];
   const fuelFraction = Math.min(1, Math.max(0, input.fuelFraction ?? 1));
   const ammoFraction = Math.min(1, Math.max(0, input.ammoFraction ?? 1));
+  const sockets = new Map(input.hull.hardpoints.map((h) => [h.id, h.socket]));
   for (const p of [...input.components].sort((a, b) => order(a.id, b.id))) {
     const d = defs.get(p.componentId);
     if (!d || d.status === "future") continue;
+    // Re-mounted components (e.g. a top turret on a hull face) keep one flight
+    // definition; shift the placement so the centroid lands where it really is.
+    const socket = p.hardpointId ? sockets.get(p.hardpointId) : undefined;
+    let position: [number, number, number] = [...p.position];
+    const remounted =
+      socket !== undefined &&
+      shipMountRotation(d.mount.frame, socket).some((row, i) => row[i] !== 1);
+    if (remounted) {
+      const [cx, cy] = envelopeCentre(d);
+      const [lo, hi] = d.mount.envelopeM;
+      const c: ShipVec3 = [cx, cy, (lo[2] + hi[2]) / 2];
+      const actual = shipPartToShip(p, c, { definition: d, socket });
+      const naive = shipPartToShip(p, c);
+      position = [p.position[0] + actual[0] - naive[0], p.position[1] + actual[1] - naive[1], p.position[2]];
+    }
     parts.push({
       id: p.id,
       definitionId: shipComponentFlightId(d.id),
       revision: d.revision,
-      position: [...p.position],
+      position,
       rotation: (p.quarterTurns * Math.PI) / 2,
       flipped: p.reflected,
     });
@@ -980,13 +1014,17 @@ export function shipComponentFlightInput(
 export function shipComponentServicePorts(
   placement: ShipComponentPlacement,
   definition: ShipComponentDefinition,
-  location: { regionId: string; deckId: string },
+  location: { regionId: string; deckId: string; socket?: ShipMountSocket },
 ): ServicePort[] {
   const out: ServicePort[] = [];
   for (const port of definition.ports) {
     const rate = SHIP_CHANNEL_TO_SERVICE_RATE[port.channel];
     if (rate === null || port.channel === "ammo") continue;
-    const { position } = placedShipPort(placement, port);
+    const { position } = placedShipPort(
+      placement,
+      port,
+      location.socket ? { definition, socket: location.socket } : undefined,
+    );
     out.push({
       id: `${placement.id}:${port.id}`,
       kind: "port",

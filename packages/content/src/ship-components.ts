@@ -130,7 +130,65 @@ export interface ShipComponentClearance {
   /** Full cone/sector angle in degrees; 0 for a straight cylinder. */
   arcDeg: number;
 }
+/** Frame the component (and its GLB and ports) is authored in:
+ * `top` (origin on the roof plane, +Z outward, working direction +Y),
+ * `face` (origin on the hull face, outward -Y, +X along the face, +Z up),
+ * `interior` (origin on the deck floor, +Z up, access side +Y).
+ * Sockets of another class re-mount the component with `shipMountRotation`. */
+export type ShipMountFrame = "top" | "face" | "interior";
+export const shipMountFrameOf = (socket: ShipMountSocket): ShipMountFrame =>
+  socket === "top" || socket === "bottom"
+    ? "top"
+    : socket === "interior"
+      ? "interior"
+      : "face";
+/** Rotation (row-major 3x3) from the authored frame into the frame of the
+ * socket class the component is mounted on, before the placement yaw:
+ * - top-authored on bottom: roll 180 degrees about +Y (outward becomes -Z);
+ * - top-authored on face/rear/edge: outward +Z becomes -Y, the working
+ *   direction +Y runs along the face (+X);
+ * - face-authored on top/bottom: outward -Y becomes +Z (or -Z).
+ * Identity when the socket class matches the authored frame. */
+export function shipMountRotation(
+  frame: ShipMountFrame,
+  socket: ShipMountSocket,
+): readonly [ShipVec3, ShipVec3, ShipVec3] {
+  const I: [ShipVec3, ShipVec3, ShipVec3] = [
+    [1, 0, 0],
+    [0, 1, 0],
+    [0, 0, 1],
+  ];
+  if (frame === "top" && socket === "bottom")
+    return [
+      [-1, 0, 0],
+      [0, 1, 0],
+      [0, 0, -1],
+    ];
+  if (frame === "top" && (socket === "face" || socket === "rear" || socket === "edge"))
+    // (x, y, z) -> (y, -z, -x)
+    return [
+      [0, 1, 0],
+      [0, 0, -1],
+      [-1, 0, 0],
+    ];
+  if (frame === "face" && socket === "top")
+    // (x, y, z) -> (x, z, -y)
+    return [
+      [1, 0, 0],
+      [0, 0, 1],
+      [0, -1, 0],
+    ];
+  if (frame === "face" && socket === "bottom")
+    // (x, y, z) -> (x, -z, y)
+    return [
+      [1, 0, 0],
+      [0, 0, -1],
+      [0, 1, 0],
+    ];
+  return I;
+}
 export interface ShipComponentMount {
+  frame: ShipMountFrame;
   sockets: readonly ShipMountSocket[];
   /** Hardpoint (external) or floor (interior) footprint in whole 1 m cells, [x, y]. */
   cells: readonly [number, number];
@@ -407,6 +465,8 @@ export function validateShipComponentCatalog(
     if (!isVec3(lo) || !isVec3(hi) || lo.some((v, i) => v >= hi[i]))
       bad(id, "envelope");
     if (!c.mount.sockets.length) bad(id, "no sockets");
+    else if (c.mount.frame !== shipMountFrameOf(c.mount.sockets[0]))
+      bad(id, "frame must match the first socket");
     if (c.mount.rearOnly && c.mount.sockets.some((s) => s !== "rear"))
       bad(id, "rear-only component lists non-rear sockets");
     const portIds = new Set<string>();

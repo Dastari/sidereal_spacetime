@@ -164,6 +164,20 @@ describe("ports and networks", () => {
     expect(placed.position[1]).toBeCloseTo(-5);
   });
 
+  it("re-mounts top-authored components on faces and bottoms", () => {
+    const gun = def.get("autocannon.md")!;
+    expect(gun.mount.frame).toBe("top");
+    const port = gun.ports[0];
+    const starboard = { ...inside("g", gun.id), position: [5, 0, 1.75] as const, quarterTurns: 1 as const };
+    // Authored into-roof normal (-Z) becomes into-hull (-X) on a starboard face.
+    expect(placedShipPort(starboard, port, { definition: gun, socket: "face" }).normal.map((v) => v + 0)).toEqual([-1, 0, 0]);
+    // On a bottom hardpoint the connector points up into the hull.
+    expect(placedShipPort(inside("b", gun.id), port, { definition: gun, socket: "bottom" }).normal.map((v) => v + 0)).toEqual([0, 0, 1]);
+    // A face-authored docking port on the roof points its connector down.
+    const dock = def.get("docking-port.md")!;
+    expect(placedShipPort(inside("d", dock.id), dock.ports[0], { definition: dock, socket: "top" }).normal.map((v) => v + 0)).toEqual([0, 0, -1]);
+  });
+
   it("isolates explicit power networks and flags unconnected consumers", () => {
     const hull = { ...REFERENCE_FIT_SM_FIGHTER.hull, hardpoints: [] };
     const components = [
