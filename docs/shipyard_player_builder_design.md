@@ -127,6 +127,33 @@ A shape tile is a **polygon on the 1 m lattice**, not an asset. A ship footprint
 - Stairs, ladders and lifts are reserved as **shaft tiles**: 2×2-cell footprints with vertical sockets that carve floor and roof voxels on the decks they connect.
 - Hull thickness classes and style bands are expressed per deck, so stacking needs no new art rules.
 
+### 3.6 Bow, cockpit and hero modules
+
+Generic grammar produces floor, walls, the wall ring and the roof. Silhouette-defining parts are **authored modules** that snap to grammar sockets. They are never generated.
+
+- **Bow socket.** The footprint's forward facets are a socket class, such as `bow.facet3` (a 45°/flat/45° three-facet nose) or `bow.point`.
+- **Cockpit module.** A module for that socket carries:
+  - a `shellvoid` volume that cuts the canopy aperture through the ring and roof
+  - optical glass meshes (never voxelised)
+  - posts, mullions, sill and head, as authored voxel parts
+  - an optional glazed roof
+  - the pilot-seat/console station socket
+  - its own interior layout
+
+  Cockpits are swapped per socket class and per faction, so the nose can change without touching the rest of the ship.
+- **Rear and side hardpoints.** Engine, thruster, turret and pod modules sit on these. Size classes bound what a blueprint size class may mount.
+- **Glass under damage.** Glass is presentation with entity health. When its frame cells are destroyed, the pane shatters to an open aperture and the pressure boundary breaks.
+
+### 3.7 Two presentation views from one ship
+
+**Flight view** (top-down, the view players spend most time in) shows the full roof cap. The roof is part of structure and is voxel-destructible like the hull. Its cassette layout follows the room plan beneath it:
+- a charcoal spine over the corridor, with the logo and hazard rows
+- roofboxes, vents, crimson hatches and greebles over the rooms
+- a louvred roof over engineering
+- a glazed skylight over the bridge
+
+**Deck view** (walking) is the same cells with the roof removed and the shell and partitions cut away at render time. The cut is presentation only: authority never changes cells because of the camera. Flight and deck share one geometry and frame, as `AGENTS.md` requires. Each deck view is generated per deck.
+
 ## 4. Structure art pipeline: author → sample → style → mesh
 
 ![Rules sample](shipyard_player_builder/01_rules_source.jpg)
@@ -356,3 +383,42 @@ Gap analysis against crops of the reference:
 - **(c)** Continue offline rim and interior-wall density passes.
 
 (b) gives the most information per effort.
+
+### r003 (samples r003_*)
+
+Owner feedback on r002, 2026-09-25: "I don't really see it". It also had no plan for the front of the ship or cockpits, and none for the top-down flight view.
+
+![r003 flight top-down](shipyard_player_builder/r003_flight_topdown.jpg)
+![r003 deck view](shipyard_player_builder/r003_deck_view.jpg)
+![r003 cockpit](shipyard_player_builder/r003_cockpit.jpg)
+![r003 hull side](shipyard_player_builder/r003_hull_side.jpg)
+![r003 engines](shipyard_player_builder/r003_engines.jpg)
+
+**Changes:**
+- **Layer stack.** Follows `modular-spaceship-design.png`: hull base, floor grid, interior walls, wall ring and roof cap.
+- **Wayfarer-scale section.** 25 × 10 m floor, 36 × 12 m with engines, ten rooms and a central corridor.
+- **Designed cassettes instead of noise.** Wall-ring cassettes (panel, grille, crimson hatch, light bar, stacked box, logo plate, dark) are packed along the perimeter in two staggered tiers. Roof cassettes (spine, logo, roofbox, crimson hatch, greeble, vent) are laid out over the room plan.
+- **Cockpit nose module (§3.6).** Faceted canopy glass with posts and mullions, a lit sill, a glazed skylight and a bridge interior.
+- **Engine modules.** Louvred tops in orange frames, crimson bands and stepped nozzles.
+- **Two views (§3.7).** Flight (roofed) and deck (cut-away).
+
+**Numbers:**
+
+| Measure | Value |
+|---|---|
+| Authored objects | 284 |
+| Sampled cells | 2.20 M |
+| Flight mesh | 3,032 bricks, 847 k faces |
+| Deck mesh | 2,126 bricks, 523 k faces |
+| Build, no render | 30 s |
+
+**Assessment.**
+- The top-down composition now reads as the reference archetype: light/charcoal/crimson blocks, logo spine and engine pods.
+- It is still visibly flatter than the reference. Reference roof modules are stacked 2–4 tiers high with bevelled edges and dense small greebles. Here they are single slabs with sparse detail.
+- The hull side still lacks the reference's large logo panels and label decals.
+- Props remain box stand-ins.
+
+**Next.**
+1. Taller multi-tier roof and ring cassettes, with the cassette library authored in Blender rather than hand-coded.
+2. A decal layer for names and logos.
+3. The in-engine (Babylon) test described in the r002 notes.
