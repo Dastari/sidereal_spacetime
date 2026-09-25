@@ -332,6 +332,217 @@ Build a new framework-light package, for example `packages/ship-editor`, contain
 
 **Non-goals now.** Functional rooms, six-degree-of-freedom simulation, and arbitrary vertical slopes in the hull cross-section beyond top-edge profiles.
 
+## 12. Reusable component kit, theming, decals and detail maps
+
+This section records owner direction from 2026-09-25:
+- Build pieces in Blender with more detail.
+- Theme them through swappable materials.
+- Support decals for wording and logos.
+- Use bump/normal detail for metal and rivets.
+- Everything snaps together under rotations and sizes.
+- The kit must cover Cosmoteer-style hull shapes, external mounts, stations, fighters and shuttles, pirate variants and alien ships.
+
+**Evidence.**
+- Script: `scripts/art_library/ship_kit_prototype.py` (r004).
+- Manifest: `shipyard_player_builder/kit_r004.json`.
+- Renders: `shipyard_player_builder/r004_*`.
+
+### 12.1 Piece contract
+
+Every piece is authored once and reused everywhere. A piece declares:
+
+| Field | Meaning |
+|---|---|
+| `id`, `family` | For example `cas.hatch.w2.h24` in the `cassette` family |
+| `mount` | Which socket class it plugs into: `plan` (hull cell), `face` (exterior face), `top` (roof cell), `edge` (interior cell edge), `rear`/`face` hardpoint |
+| `size` | Footprint in 1 m cells plus height, in 1/16 m texels |
+| `boxes` | Geometry: boxes on the 1/16 m brick grid. `voxel_aligned: true` means voxelising the piece for destruction is lossless |
+| `slots` | Material slots used (§12.2) |
+| `decal_sockets` | Rectangles that accept decals (`name`, `emblem`, `number`) |
+| `decorator_sockets` | Points that accept theme decorators (§12.7) |
+
+**Local frames.**
+- Face pieces: +X runs along the face, +Y points outward and +Z points up.
+- Plan and roof pieces: +X/+Y in plan and +Z up.
+
+**Placement and orientation.**
+- A placement is a socket plus a transform: 4 yaw turns and a mirror flag, with the socket normal fixing the remaining axes.
+- A side cannon on a port face and a starboard face is the same piece; the socket normal decides which way it faces.
+- The r004 corvette places 657 instances (per-theme generated hull body included) using **61 unique meshes (22.5 k triangles in total)**. All 59 kit pieces pass the voxel-alignment check.
+
+**Runtime rendering.**
+- **Intact pieces** render as GPU instances of the authored mesh. This is cheap and batched by piece id.
+- **Damaged pieces** switch to their voxel remesh (§5), which shows the holes. Because pieces are brick-aligned, the swap is visually lossless.
+
+### 12.2 Material slots and themes
+
+**Nine slots:** `primary`, `secondary`, `accent`, `trim`, `metal`, `dark`, `emit_a`, `emit_b` and `glass`.
+
+**A theme is only a slot → material table.** Each material has albedo, roughness, metalness, detail-bump strength, emission, and a wear/grime/rust parameter.
+
+The r004 renders show three themes on the **same mesh datablocks**, using object-level material overrides:
+- **Federation:** warm white, navy and crimson; cyan and amber lights.
+- **Riftjack:** rusted brown, black, blood red and hazard yellow; orange and red lights; heavy wear.
+- **Aurelian:** lavender, violet and gold; magenta and cyan lights.
+
+**Player paint** (the existing local primary/secondary component-paint work) becomes per-placement overrides of `primary`/`secondary`/`accent` on top of the theme.
+
+**Runtime.** One PBR material per theme and slot. Slot ids travel in the mesh (material index) and in voxel cells (the cell material id), so damaged remeshes keep their colours.
+
+### 12.3 Detail normal maps
+
+- A tiling 1 m detail height map (`r004_detail_height.png`) contains 0.5 m panel seams, rivet rows beside them, fine noise and light scratches.
+- It is box-projected in piece-object space, so seams line up with piece edges.
+- It drives bump, with strength set per slot (`metal` low, `primary`/`accent` higher).
+- Wear is a noise-masked colour and roughness mix controlled by the theme.
+
+**Production.**
+- Bake the height into a tangent-space normal map plus a packed ORM texture.
+- Offer a small detail set: plate/rivet, tread, grate and brushed.
+- Select the set per slot per theme.
+- At runtime, use triplanar or brick-UV sampling on the voxel remesh.
+
+**Cost.** One or two shared 512² textures in total, not per piece.
+
+### 12.4 Decals
+
+The data model already exists: `HullDecal` has kinds `text` / `frontier-planet`, faces `top`, `front`, `right` and `left`, a limit of 4 per part and 128 per assembly, and a shared canvas texture (`docs/hull_markings.md`). The kit adds:
+
+- **Decal sockets on pieces.** For example, the logo cassette has a `name` rectangle, the roof logo module has an `emblem` square, and wing tops have a `number` strip. Theme decals auto-fill sockets, and players can override the text and colour.
+- **Masks, not colours.** A decal is an alpha mask multiplied by a theme or player colour: rendered text, or emblems such as the planet, skull and crystal. One mask therefore serves every theme.
+- **Damage.** Decals are presentation. They are clipped by the damage mask of the underlying piece and removed with destroyed cells.
+- **To extend.** More emblem kinds, faction emblem sets and decal sockets on sloped faces (currently flat faces only).
+
+### 12.5 Walls, half-height walls and pressure
+
+Every interior cell edge has exactly one **edge type**. The pressure compiler uses edge types, never the rendered height:
+
+| Edge type | Seals pressure | Looks like | Use |
+|---|---|---|---|
+| `wall.full` | yes | full-height wall | normal rooms |
+| `wall.glazed` | yes | half-height wall with glass up to the ceiling | the half-wall look with a working pressure boundary (bridges, labs, observation) |
+| `wall.half` | **no** | true half wall or railing | lounges, cargo decks, balconies; both sides are one compartment |
+| `door.*` | yes when closed | door module | as now |
+| `window.*` | yes | exterior or interior glazing | §12.6 |
+| `open` | no | nothing | open-plan areas |
+
+**Deck-view cutaway.** Separately, deck view renders every full wall cut at about 1.9 m. That is the "assume it extends to the ceiling" presentation: seen from above it looks like a half wall, but it seals.
+
+**What the three choices mean in practice:**
+1. The **cutaway** is automatic and presentation-only.
+2. `wall.glazed` is the authored half-wall look that still seals.
+3. `wall.half` is the honest non-sealing half wall.
+
+**Validation.**
+- A room label spanning a `wall.half` or `open` edge is one compartment.
+- If the player intended two sealed rooms, the editor warns.
+
+### 12.6 Glazing families
+
+Glazing covers exterior faces, roofs and interior edges. Every variant uses the same frame/glass/mullion slots, with glass kept optical (§4):
+
+| Family | Sizes | Notes |
+|---|---|---|
+| Porthole | 1 m | round stepped ring |
+| Band window | 1–4 m wide, upper tier | mullion every 1 m |
+| Full-height viewport | 2–4 m wide, floor to ceiling | transom at mid-height |
+| Corner window | derived at a vertex where two glazed faces meet | vertex rule (§3.2) |
+| Faceted canopy | per bow socket class | cockpit modules (§3.6) |
+| Skylight | 2×2, 2×3 and 3×3 roof modules | |
+| Observation dome | 3×3 and 4×4 roof modules | stepped dome |
+| Curtain wall | a run of full-height viewports along a face | stations and large ships, with a vertex rule for corners |
+
+**Glass under damage.** Each pane has entity health. The frame cells are voxels. When a pane breaks, the pressure boundary on that edge opens.
+
+### 12.7 Hull shapes (Cosmoteer-style)
+
+Hull cells are painted independently of the floor, as in Cosmoteer. Wings, fins and armour belts are hull cells with no floor beneath them, at any of the height classes (full deck, 1.125 m wing, 0.5 m plate).
+
+- **Shape tiles** are data polygons (§3.3): square; 1:1, 1:2, 1:3 and 1:4 slopes (convex and concave); quarter arcs of radius 1–4 m; and chamfers.
+- **Stepping.** Tiles rasterise to stepped 1/8 m bricks, so slopes and curves read as stepped voxel edges, as in the reference Aurelian curves.
+- **Faces take cassettes by face class:**
+  - Straight faces take the cassette packing.
+  - Slope faces take a **slope skin** matched to the slope ratio (one per ratio).
+  - Arc faces take an arc skin per radius.
+
+  Only these common patterns are supported. Unsupported face combinations fall back to plain plating with trim, never a broken seam.
+
+**Cassette packing.**
+- Cassettes pack deterministically along each straight face in two tiers plus a rim band.
+- Packing respects reservations for mounts, doors, airlocks and logo plates.
+
+### 12.8 External mounts
+
+Every external object is a mount piece on a typed hardpoint socket. Each socket declares:
+- a face class: `top`, `side`, `rear`, `bottom` or `edge`
+- a footprint of 1×1, 2×2, 3×3 or 4×2 m
+- a size class (S, M, L)
+- service ports: power, ammo, data
+- a **clearance volume**: fire arc, thrust plume, dish sweep or door swing, which must be unobstructed
+
+The r004 kit includes:
+- a top turret (2×2, twin barrel)
+- a side cannon (1×1 sponson)
+- engines (3 m and 2 m, with louvred housings and stepped nozzles)
+- a small thruster
+- a tractor emitter
+- a sensor dish
+- a 4 m cargo bay door (an `edge` module that also forms a pressure boundary)
+- a 2 m airlock
+
+Also in scope: shield emitters, missile pods, docking clamps, mining lasers, antennas and more engine sizes. Size classes are bounded by the blueprint size class (§8).
+
+### 12.9 Faction and variant strategy
+
+The geometry is shared, and silhouette and character come from three cheap layers:
+
+1. **Theme** (§12.2): colour, material, wear and lights.
+2. **Decorators.** Small pieces on decorator sockets, chosen by theme: Riftjack spikes, patch plates, chains and exposed frames; Aurelian crystal spires and fins; Federation antennas and sensor masts. r004 places spikes on rim plates and wing tips (Riftjack) and crystals on roof modules and wing tips (Aurelian) without touching base geometry.
+3. **Faction shape packs.** A few faction-only pieces on the *same sockets*:
+   - Aurelian: curved hull arcs, crescent wing segments, spires and domes.
+   - Riftjack: asymmetric scrap plates and cage frames.
+   - Federation: cylindrical habitat modules and big engine blocks.
+
+**Scale classes** reuse the same kit:
+- **Fighters and shuttles** use a small-craft deck profile (roughly a 2 m pitch, cockpit-only interior), 1 m hull cells and S mounts.
+- **Frigates and stations** add multi-deck stacks, curtain-wall glazing and L/XL mounts.
+
+### 12.10 Authoring workflow (agent-friendly)
+
+**Build each piece with the Blender kit builder**, a script or add-on:
+1. Use boxes and stepped discs on the 1/16 m grid, one slot name per box.
+2. Declare decal and decorator sockets.
+3. Run the checks:
+   - voxel alignment
+   - slot names valid
+   - footprint and sockets within size
+   - triangle budget
+   - no unsupported glass
+4. Export the GLB with the 9 material slots in fixed order, plus a JSON manifest entry.
+
+**Agents author pieces, not ships.**
+- Ships and prefabs are grammar data (cells, edges, sockets and placements) that the editor and server validate.
+- Themes and decals are data.
+- Adding a faction means adding a theme table, decorators and optionally a small shape pack.
+
+### 12.11 r004 assessment and next steps
+
+**What r004 demonstrates:**
+- the piece contract
+- instancing (61 meshes for 657 placements)
+- three-theme re-skinning on identical geometry
+- tiling detail bump
+- decal sockets with mask decals
+- theme decorators
+- external mounts and interior edge types
+- lossless voxel alignment
+
+**Next steps:**
+1. Refine cassette and roof designs toward the reference density, especially the upper-tier stacks and roof greebles.
+2. Add slope and arc skins and the corner-window vertex rule.
+3. Add a faction shape pack, starting with Aurelian curves.
+4. Export the kit as GLB plus manifest and load it in the Babylon Shipyard with instancing and the slot materials (gate P2).
+
 ## 11. Prototype iteration log
 
 ### r001 (samples 01–06)
@@ -422,3 +633,47 @@ Owner feedback on r002, 2026-09-25: "I don't really see it". It also had no plan
 1. Taller multi-tier roof and ring cassettes, with the cassette library authored in Blender rather than hand-coded.
 2. A decal layer for names and logos.
 3. The in-engine (Babylon) test described in the r002 notes.
+
+### r004 (samples r004_*): reusable themed component kit
+
+Owner direction, 2026-09-25, after r003:
+- "Yes build them in blender, give them more detail."
+- Pieces must be swappable-material themeable, with decals and bump maps.
+- Answer half-height walls against pressure.
+- Add glazing variants.
+- Everything must snap under rotations and sizes.
+- Cover Cosmoteer hull shapes, external mounts, faction/pirate/alien ships, fighters and shuttles.
+
+Design answers are in §12.
+
+![r004 three themes top-down](shipyard_player_builder/r004_themes_topdown.jpg)
+![r004 lineup](shipyard_player_builder/r004_themes_lineup.jpg)
+![r004 federation](shipyard_player_builder/r004_federation_hero.jpg)
+![r004 detail](shipyard_player_builder/r004_detail_closeup.jpg)
+![r004 riftjack](shipyard_player_builder/r004_riftjack_closeup.jpg)
+![r004 aurelian](shipyard_player_builder/r004_aurelian_closeup.jpg)
+![r004 kit sheet](shipyard_player_builder/r004_kit_sheet.jpg)
+
+**Numbers** (`kit_r004.json`):
+
+| Measure | Value |
+|---|---|
+| Kit pieces | 59 |
+| Unique meshes | 61 (22.5 k triangles) |
+| Placements | 657 (three themed corvettes plus the kit sheet) |
+| Voxel-aligned | all pieces |
+| Build, no render | 8 s |
+
+Detail texture and decal masks: `r004_detail_height.png`, `r004_emblem_*.png`.
+
+**Assessment.**
+- The piece contract, material-slot theming, decal sockets, detail bump and decorator variation all work on shared geometry.
+- The corvette is recognisably the same hull in three factions.
+
+**Still short of the references:**
+- Cassette density: fewer large flat panels, more stacked sub-modules.
+- Slope and arc skins, so slopes are not bare steps.
+- A curved Aurelian shape pack.
+- Cockpit canopies from r003 are not yet kit pieces.
+- Interiors are not included in r004.
+- Runtime proof in Babylon is still gate P2.
