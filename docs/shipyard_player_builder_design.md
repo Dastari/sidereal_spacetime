@@ -825,3 +825,72 @@ Owner direction, 2026-09-25, after r005: "Keep refining." Engines and other atta
 - Weapons need a design pass: barrels, mantlets, ammo feeds.
 - The Riftjack "salvaged" engine variant is only a theme, not distinct geometry.
 - Missing mount types: missile pods, shield emitters, mining lasers, docking clamps.
+
+### r007 (samples r007_*): modular mount assemblies, rounder engines, salvaged variant
+
+Owner direction, 2026-09-25: "Continue." This pass follows the r006 gap list and the reference sheets `weapons-turrets.png` ("Ship Mounted Systems") and `more-turrents-missiles-guns.png`.
+
+**Modular mount contract.** Every weapon or utility mount is the same five-part stack, and each part is a separate, swappable piece:
+
+| Part | Content |
+|---|---|
+| Hardpoint connector | Square plate with a glowing lock ring and corner bolts, sized to the hardpoint |
+| Rotation base | Stepped octagonal pedestal with status lights |
+| Gimbal / elevation | Turntable ring, two navy yoke cheeks and an axle |
+| Head | Chunky housing with a chamfered navy top, crimson or navy side panels, sensor lights |
+| Payload | Barrels, emitter, pod or dish |
+
+- **Weapons:** point defense, twin autocannon (ammo drum, recoil sleeves, muzzle brakes), laser cannon (crimson band, cooling fins, emitter and lens), railgun (twin rails with glowing coils), missile pod (2×2 / 3×2 / 3×3 tube caps and a pod cover), flak (six-barrel cluster with ammo drum).
+- **Utilities:** shield emitter (octagonal core with field coils and cap), tractor projector (ring emitter), sensor dish (stepped bowl with receiver), docking clamp (actuator and jaws with hazard stripes), relay beacon (mast, comm arrays and emitters).
+- **Sizes and placement.** Each comes in SM / MD / LG on 1×1 / 2×2 / 3×3 hardpoints. `face_variant()` re-maps any mount onto a hull face (top-frame up becomes face-frame outward), so one design serves top and side sockets.
+- **Themes.** The same geometry takes any theme (Federation, Riftjack, Aurelian).
+- **Keys.** `wpn.<kind>.<size>` for top mounts, `wf.<kind>.<size>` for face mounts.
+
+**Engines.**
+- The ion-drive housing is now round and stepped instead of octagonal.
+- Each band carries chunky diagonal blocks, flush raised armour plates and a bolted front cap.
+- Nozzle bells are deeper: 0.75–1.4 m.
+- **Salvaged ion drive** (`ion.<size>.scrap`) is a geometry variant with the same sockets and envelope:
+  - stripped bands with an exposed trim cage
+  - offset patch plates
+  - a hazard-striped patch
+  - an external bypass pipe
+
+  The Riftjack Marauder uses it.
+
+**Ships re-fitted:**
+
+| Ship | New fit |
+|---|---|
+| Corvette | Autocannon MD, laser MD, sensor MD, point defense SM |
+| Frigate | 2× railgun LG, 2× missile MD, flak MD, point defense MD, sensor MD, shield MD, beacon SM, tractor MD |
+| Marauder | Autocannon LG, missile MD, flak SM, clamp MD, salvaged ion drives |
+| Station | 2× point defense SM, sensor, shield, beacon, clamp |
+
+![r007 weapons catalog](shipyard_player_builder/r007_weapons_catalog.jpg)
+![r007 sizes and themes](shipyard_player_builder/r007_weapon_sizes_themes.jpg)
+![r007 exploded autocannon](shipyard_player_builder/r007_weapon_exploded.jpg)
+![r007 engines](shipyard_player_builder/r007_engines_lineup.jpg)
+![r007 frigate](shipyard_player_builder/r007_frigate_hero.jpg)
+![r007 marauder](shipyard_player_builder/r007_marauder_rear.jpg)
+![r007 frigate rear](shipyard_player_builder/r007_frigate_rear_engines.jpg)
+![r007 lineup](shipyard_player_builder/r007_designs_lineup.jpg)
+![r007 blueprint components](shipyard_player_builder/r007_blueprint_components.jpg)
+![r007 blueprint designs](shipyard_player_builder/r007_blueprint_designs.jpg)
+
+**Numbers** (`kit_r007.json`):
+
+| Measure | Value |
+|---|---|
+| Kit pieces | 209, all voxel-aligned |
+| Unique meshes | 307 |
+| Placements | 1,760 |
+| Build, no render | 6 s |
+
+**Remaining gaps.**
+- Mount heads are still simpler than the reference: fewer sub-panels, no visible recoil blocks or cable runs.
+- The reference variants per weapon (colour and trim sets) are only themes.
+- Missile ordnance, mines and drones are not modelled.
+- The side sponson cannons from r006 have not had the new design pass.
+- Engines still lack visible support frames between bands.
+- Interiors are not started.
