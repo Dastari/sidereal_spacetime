@@ -25,6 +25,7 @@ import { QUALIFIED_PILOT_POSITION } from "../packages/sim/src/construction-pilot
 import { SHARED_SYSTEM_SEED } from "../packages/content/src/shared-system";
 import assert from "node:assert/strict";
 import { readFileSync, writeFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { join } from "node:path";
 import { DbConnection, tables } from "../packages/net/src/generated";
 function requiredEnv(name: string): string {
@@ -231,6 +232,20 @@ if (restore) {
     a.disconnect();
   }
 } else {
+  // New characters wait for a ship unless an operator configures a starter.
+  // This legacy regression suite deliberately opts its isolated -smoke
+  // database into the legacy Wayfarer starter (never done on live).
+  execFileSync(
+    ".tools/spacetime/spacetime",
+    [
+      "--root-dir=.tools/spacetime", "call", "--server", host, "--yes", "--no-config",
+      database, "operator_set_starter_prefab",
+      JSON.stringify(`smoke-legacy-starter-${Date.now()}`),
+      JSON.stringify("legacy-wayfarer-r002"), JSON.stringify("legacy-wayfarer"), "true",
+    ],
+    { stdio: "inherit" },
+  );
+  summary.legacy_regression_starter = "operator opt-in on isolated database";
   const first = await client(),
     second = await client();
   const a = first.connection,

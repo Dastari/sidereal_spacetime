@@ -1579,6 +1579,34 @@ export const Ship = __t.object("Ship", {
 });
 export type Ship = __Infer<typeof Ship>;
 
+export const ShipOperatorOperation = __t.object("ShipOperatorOperation", {
+  operationId: __t.string(),
+  principal: __t.identity(),
+  kind: __t.string(),
+  request: __t.string(),
+  summaryJson: __t.string(),
+  createdMicros: __t.u64(),
+});
+export type ShipOperatorOperation = __Infer<typeof ShipOperatorOperation>;
+
+export const ShipPolicy = __t.object("ShipPolicy", {
+  id: __t.string(),
+  starterPrefabId: __t.string(),
+  revision: __t.u64(),
+  operationId: __t.string(),
+  updatedMicros: __t.u64(),
+});
+export type ShipPolicy = __Infer<typeof ShipPolicy>;
+
+export const ShipWipeArchive = __t.object("ShipWipeArchive", {
+  id: __t.string(),
+  operationId: __t.string(),
+  tableName: __t.string(),
+  action: __t.string(),
+  rowJson: __t.string(),
+});
+export type ShipWipeArchive = __Infer<typeof ShipWipeArchive>;
+
 export const ShipWorldMotion = __t.object("ShipWorldMotion", {
   shipId: __t.string(),
   systemId: __t.string(),

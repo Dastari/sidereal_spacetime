@@ -1,3 +1,9 @@
+# Unreleased — operator ship wipe and prefab assignment (2026-09-25)
+
+- Add operator-only, operation-ID-guarded ship maintenance on the live authority composition: starter-ship policy, full player-ship wipe with dry-run, archive and map-preservation checks, and prefab assignment through a spawner registry. Publishing changes nothing until the operator acts.
+- Add `scripts/ship_wipe.py` (private pre-wipe export, policy, dry-run, apply, verify, assign) and the isolated `npm run smoke:ship-wipe` rehearsal (live-baseline seed, in-place upgrade, runbook, player-view invariants).
+- Candidate only: nothing executed on live. See docs/handoffs/ship_asset_removal_plan.md and docs/handoffs/ship_wipe_runbook.md.
+
 # 0.6.0 — Studio spatial and test-ship workflows (2026-09-21)
 
 - Move workspace navigation to an accessible persistent left icon rail.

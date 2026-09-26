@@ -63,6 +63,9 @@ import LeaveAuthoredPilotReducer from "./leave_authored_pilot_reducer";
 import LeaveConstructionReviewReducer from "./leave_construction_review_reducer";
 import MoveCargoCarrierReducer from "./move_cargo_carrier_reducer";
 import MoveInventoryItemReducer from "./move_inventory_item_reducer";
+import OperatorAssignPrefabShipReducer from "./operator_assign_prefab_ship_reducer";
+import OperatorSetStarterPrefabReducer from "./operator_set_starter_prefab_reducer";
+import OperatorWipePlayerShipsReducer from "./operator_wipe_player_ships_reducer";
 import PublishConstructionBlueprintReducer from "./publish_construction_blueprint_reducer";
 import RefitExistingWayfarerReducer from "./refit_existing_wayfarer_reducer";
 import RefitRebuiltWayfarerReducer from "./refit_rebuilt_wayfarer_reducer";
@@ -586,6 +589,9 @@ const reducersSchema = __reducers(
   __reducerSchema("leave_construction_review", LeaveConstructionReviewReducer),
   __reducerSchema("move_cargo_carrier", MoveCargoCarrierReducer),
   __reducerSchema("move_inventory_item", MoveInventoryItemReducer),
+  __reducerSchema("operator_assign_prefab_ship", OperatorAssignPrefabShipReducer),
+  __reducerSchema("operator_set_starter_prefab", OperatorSetStarterPrefabReducer),
+  __reducerSchema("operator_wipe_player_ships", OperatorWipePlayerShipsReducer),
   __reducerSchema("publish_construction_blueprint", PublishConstructionBlueprintReducer),
   __reducerSchema("refit_existing_wayfarer", RefitExistingWayfarerReducer),
   __reducerSchema("refit_rebuilt_wayfarer", RefitRebuiltWayfarerReducer),
