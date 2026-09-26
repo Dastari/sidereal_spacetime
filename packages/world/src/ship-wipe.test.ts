@@ -533,6 +533,7 @@ test("a spawner that ignores the requested pose is rolled back by the reducer ch
 });
 
 test("operator assigns the owner-picked Wren prefab: owned ship, active access, boarded, personal kit intact", async () => {
+  await import("./prefab-ship-spawners");
   const { OWNER_STARTER_PREFAB_ID, prefabShipSpawner } = await import("./ship-assign");
   const { f, a, personalA } = seeded();
   f.as(SHIP_OPERATOR);

@@ -6,6 +6,7 @@ import {
   setConstructionComputerPower as setComputerPower,
 } from "./construction-device-power";
 import { replacePlayerWayfarer } from "./wayfarer-replacement";
+import "./prefab-ship-spawners";
 import { shipPolicy, shipOperatorOperation, shipWipeArchive } from "./ship-operator-tables";
 import { wipePlayerShips } from "./ship-wipe";
 import { assignPrefabShip } from "./ship-assign";
