@@ -148,7 +148,7 @@ def tile(coll, cx, cz, w, h, label=None, sub=None):
 
 
 # Items whose feature face is +Y (emitter front) turn it toward the camera in sheets.
-DISPLAY_YAW = {"shield-emitter": 35}
+DISPLAY_YAW = {"shield-emitter": 150}
 
 
 def view_rotation(yaw=-58, tilt=TILT, roll=0):
@@ -440,7 +440,7 @@ def run(o, items, fxs, data):
     want = set(o.sheets.split(",")) if o.sheets != "all" else {"panel", "catalog", "variants", "fx", "lineup", "anims", "icons", "held"}
     from .items import REFERENCE_PANEL
     if "panel" in want:
-        sheet_panel(o, items, by_id, REFERENCE_PANEL, "weapons_tools_panel", "WEAPONS & TOOLS", "SIMPLE. SWAPPABLE. CREW-READY.  (r001 voxel proposal)")
+        sheet_panel(o, items, by_id, REFERENCE_PANEL, "weapons_tools_panel", "WEAPONS & TOOLS", "SIMPLE. SWAPPABLE. CREW-READY.  (r002 voxel proposal)")
         compose_comparison(o, None)
     if "catalog" in want:
         sheet_catalog(o, items, by_id)

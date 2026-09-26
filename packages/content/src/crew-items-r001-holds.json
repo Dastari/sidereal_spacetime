@@ -1,0 +1,721 @@
+{
+ "schema": "sidereal.crew.item-holds/1",
+ "revision": "r001",
+ "bodySpec": "CHAR-BODY r001",
+ "frame": "character body frame, Blender axes (+Y facing, +Z up), metres; item origin = grip",
+ "method": "analytic two-bone reach search around nominal HOLD_POSES (scripts/art_library/crew_items/held.py)",
+ "poses": {
+  "aim_rifle": {
+   "yaw": -38,
+   "anchor": "stock",
+   "at": [
+    0.05,
+    0.13,
+    1.21
+   ],
+   "forward": [
+    -0.616,
+    0.788,
+    0.0
+   ],
+   "up": [
+    0,
+    0,
+    1
+   ],
+   "support": true,
+   "clip": "aim_rifle"
+  },
+  "hip_heavy": {
+   "yaw": -30,
+   "anchor": "grip",
+   "at": [
+    0.17,
+    0.3,
+    0.88
+   ],
+   "forward": [
+    -0.5,
+    0.866,
+    0.05
+   ],
+   "up": [
+    0,
+    0,
+    1
+   ],
+   "support": true,
+   "clip": "aim_rifle"
+  },
+  "aim_pistol": {
+   "yaw": -10,
+   "anchor": "grip",
+   "at": [
+    0.12,
+    0.47,
+    1.2
+   ],
+   "forward": [
+    0.17,
+    0.985,
+    0.0
+   ],
+   "up": [
+    0,
+    0,
+    1
+   ],
+   "support": false,
+   "clip": "aim_pistol"
+  },
+  "repair_loop": {
+   "yaw": 0,
+   "anchor": "grip",
+   "at": [
+    0.16,
+    0.4,
+    1.0
+   ],
+   "forward": [
+    0.0,
+    0.94,
+    -0.34
+   ],
+   "up": [
+    0,
+    0.34,
+    0.94
+   ],
+   "support": false,
+   "clip": "repair_loop"
+  },
+  "use_device": {
+   "yaw": 0,
+   "anchor": "grip",
+   "at": [
+    0.16,
+    0.34,
+    1.06
+   ],
+   "forward": [
+    0.0,
+    0.5,
+    0.866
+   ],
+   "up": [
+    0,
+    -0.866,
+    0.5
+   ],
+   "support": false,
+   "clip": "use_interact"
+  },
+  "melee_ready": {
+   "yaw": 0,
+   "anchor": "grip",
+   "at": [
+    0.32,
+    0.3,
+    1.05
+   ],
+   "forward": [
+    0.15,
+    0.35,
+    0.92
+   ],
+   "up": [
+    0,
+    -0.92,
+    0.35
+   ],
+   "support": false,
+   "clip": "melee_swing"
+  },
+  "throw_windup": {
+   "yaw": 0,
+   "anchor": "grip",
+   "at": [
+    0.36,
+    -0.22,
+    1.62
+   ],
+   "forward": [
+    0,
+    1,
+    0
+   ],
+   "up": [
+    0,
+    0,
+    1
+   ],
+   "support": false,
+   "clip": "throw"
+  },
+  "carry_box": {
+   "yaw": 0,
+   "anchor": "centre",
+   "at": [
+    0.0,
+    0.36,
+    0.86
+   ],
+   "forward": [
+    0,
+    1,
+    0
+   ],
+   "up": [
+    0,
+    0,
+    1
+   ],
+   "support": true,
+   "clip": "carry_idle"
+  },
+  "carry_case": {
+   "yaw": 0,
+   "anchor": "grip",
+   "at": [
+    0.31,
+    0.02,
+    0.7
+   ],
+   "forward": [
+    0,
+    1,
+    0
+   ],
+   "up": [
+    0,
+    0,
+    1
+   ],
+   "support": false,
+   "clip": "carry_idle"
+  }
+ },
+ "items": {
+  "pistol": {
+   "pose": "aim_pistol",
+   "characterClip": "aim_pistol",
+   "stanceYawDeg": -10,
+   "gripPosition": [
+    0.1998,
+    0.442,
+    1.2
+   ],
+   "rotationWXYZ": [
+    0.985121,
+    0.0,
+    0.0,
+    -0.171862
+   ],
+   "reachDeficitM": {
+    "R": 0.0
+   }
+  },
+  "smg": {
+   "pose": "aim_pistol",
+   "characterClip": "aim_pistol",
+   "stanceYawDeg": -10,
+   "gripPosition": [
+    0.1998,
+    0.442,
+    1.2
+   ],
+   "rotationWXYZ": [
+    0.985121,
+    0.0,
+    0.0,
+    -0.171862
+   ],
+   "reachDeficitM": {
+    "R": 0.0
+   }
+  },
+  "compact-carbine": {
+   "pose": "aim_rifle",
+   "characterClip": "aim_rifle",
+   "stanceYawDeg": -38,
+   "gripPosition": [
+    0.0781,
+    0.2798,
+    1.0838
+   ],
+   "rotationWXYZ": [
+    0.996183,
+    0.0,
+    0.0,
+    0.087292
+   ],
+   "reachDeficitM": {
+    "R": 0.0,
+    "L": 0.0
+   }
+  },
+  "rifle": {
+   "pose": "aim_rifle",
+   "characterClip": "aim_rifle",
+   "stanceYawDeg": -38,
+   "gripPosition": [
+    0.0779,
+    0.2685,
+    1.0538
+   ],
+   "rotationWXYZ": [
+    0.996183,
+    0.0,
+    0.0,
+    0.087292
+   ],
+   "reachDeficitM": {
+    "R": 0.0,
+    "L": 0.0
+   }
+  },
+  "shotgun": {
+   "pose": "aim_rifle",
+   "characterClip": "aim_rifle",
+   "stanceYawDeg": -38,
+   "gripPosition": [
+    0.1021,
+    0.2727,
+    1.0694
+   ],
+   "rotationWXYZ": [
+    0.996183,
+    0.0,
+    0.0,
+    0.087292
+   ],
+   "reachDeficitM": {
+    "R": 0.0,
+    "L": 0.0
+   }
+  },
+  "heavy-gun": {
+   "pose": "hip_heavy",
+   "characterClip": "aim_rifle",
+   "stanceYawDeg": -30,
+   "gripPosition": [
+    0.2672,
+    0.1228,
+    0.94
+   ],
+   "rotationWXYZ": [
+    0.965623,
+    0.024126,
+    0.006465,
+    0.258744
+   ],
+   "reachDeficitM": {
+    "R": 0.0,
+    "L": 0.0
+   }
+  },
+  "beam-rifle": {
+   "pose": "aim_rifle",
+   "characterClip": "aim_rifle",
+   "stanceYawDeg": -38,
+   "gripPosition": [
+    0.0838,
+    0.2604,
+    1.0538
+   ],
+   "rotationWXYZ": [
+    0.996183,
+    0.0,
+    0.0,
+    0.087292
+   ],
+   "reachDeficitM": {
+    "R": 0.0,
+    "L": 0.0
+   }
+  },
+  "rail-rifle": {
+   "pose": "aim_rifle",
+   "characterClip": "aim_rifle",
+   "stanceYawDeg": -38,
+   "gripPosition": [
+    0.0964,
+    0.2921,
+    1.0994
+   ],
+   "rotationWXYZ": [
+    0.996183,
+    0.0,
+    0.0,
+    0.087292
+   ],
+   "reachDeficitM": {
+    "R": 0.0,
+    "L": 0.0
+   }
+  },
+  "stun-gun": {
+   "pose": "aim_pistol",
+   "characterClip": "aim_pistol",
+   "stanceYawDeg": -10,
+   "gripPosition": [
+    0.1998,
+    0.442,
+    1.2
+   ],
+   "rotationWXYZ": [
+    0.985121,
+    0.0,
+    0.0,
+    -0.171862
+   ],
+   "reachDeficitM": {
+    "R": 0.0
+   }
+  },
+  "baton": {
+   "pose": "melee_ready",
+   "characterClip": "melee_swing",
+   "stanceYawDeg": 0,
+   "gripPosition": [
+    0.32,
+    0.3,
+    1.05
+   ],
+   "rotationWXYZ": [
+    0.820926,
+    0.566017,
+    0.04288,
+    -0.062191
+   ],
+   "reachDeficitM": {
+    "R": 0.0
+   }
+  },
+  "grenade": {
+   "pose": "throw_windup",
+   "characterClip": "throw",
+   "stanceYawDeg": 0,
+   "gripPosition": [
+    0.36,
+    -0.22,
+    1.62
+   ],
+   "rotationWXYZ": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reachDeficitM": {
+    "R": 0.0
+   }
+  },
+  "medgun": {
+   "pose": "aim_pistol",
+   "characterClip": "aim_pistol",
+   "stanceYawDeg": -10,
+   "gripPosition": [
+    0.1998,
+    0.442,
+    1.2
+   ],
+   "rotationWXYZ": [
+    0.985121,
+    0.0,
+    0.0,
+    -0.171862
+   ],
+   "reachDeficitM": {
+    "R": 0.0
+   }
+  },
+  "medkit": {
+   "pose": "carry_case",
+   "characterClip": "carry_idle",
+   "stanceYawDeg": 0,
+   "gripPosition": [
+    0.31,
+    0.02,
+    0.7
+   ],
+   "rotationWXYZ": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reachDeficitM": {
+    "R": 0.0
+   }
+  },
+  "utility-cutter": {
+   "pose": "melee_ready",
+   "characterClip": "melee_swing",
+   "stanceYawDeg": 0,
+   "gripPosition": [
+    0.32,
+    0.3,
+    1.05
+   ],
+   "rotationWXYZ": [
+    0.820926,
+    0.566017,
+    0.04288,
+    -0.062191
+   ],
+   "reachDeficitM": {
+    "R": 0.0
+   }
+  },
+  "repair-tool": {
+   "pose": "repair_loop",
+   "characterClip": "repair_loop",
+   "stanceYawDeg": 0,
+   "gripPosition": [
+    0.16,
+    0.4,
+    1.0
+   ],
+   "rotationWXYZ": [
+    0.984981,
+    -0.172661,
+    0.0,
+    0.0
+   ],
+   "reachDeficitM": {
+    "R": 0.0
+   }
+  },
+  "welder": {
+   "pose": "repair_loop",
+   "characterClip": "repair_loop",
+   "stanceYawDeg": 0,
+   "gripPosition": [
+    0.16,
+    0.4,
+    1.0
+   ],
+   "rotationWXYZ": [
+    0.984981,
+    -0.172661,
+    0.0,
+    0.0
+   ],
+   "reachDeficitM": {
+    "R": 0.0
+   }
+  },
+  "multi-tool": {
+   "pose": "repair_loop",
+   "characterClip": "repair_loop",
+   "stanceYawDeg": 0,
+   "gripPosition": [
+    0.16,
+    0.4,
+    1.0
+   ],
+   "rotationWXYZ": [
+    0.984981,
+    -0.172661,
+    0.0,
+    0.0
+   ],
+   "reachDeficitM": {
+    "R": 0.0
+   }
+  },
+  "mining-drill": {
+   "pose": "hip_heavy",
+   "characterClip": "aim_rifle",
+   "stanceYawDeg": -30,
+   "gripPosition": [
+    0.2303,
+    0.1788,
+    0.88
+   ],
+   "rotationWXYZ": [
+    0.999688,
+    0.024977,
+    0.0,
+    6e-06
+   ],
+   "reachDeficitM": {
+    "R": 0.0,
+    "L": 0.0
+   }
+  },
+  "wrench": {
+   "pose": "melee_ready",
+   "characterClip": "melee_swing",
+   "stanceYawDeg": 0,
+   "gripPosition": [
+    0.32,
+    0.3,
+    1.05
+   ],
+   "rotationWXYZ": [
+    0.820926,
+    0.566017,
+    0.04288,
+    -0.062191
+   ],
+   "reachDeficitM": {
+    "R": 0.0
+   }
+  },
+  "scanner": {
+   "pose": "use_device",
+   "characterClip": "use_interact",
+   "stanceYawDeg": 0,
+   "gripPosition": [
+    0.16,
+    0.34,
+    1.06
+   ],
+   "rotationWXYZ": [
+    0.866029,
+    0.499995,
+    0.0,
+    0.0
+   ],
+   "reachDeficitM": {
+    "R": 0.0
+   }
+  },
+  "sample-scanner": {
+   "pose": "repair_loop",
+   "characterClip": "repair_loop",
+   "stanceYawDeg": 0,
+   "gripPosition": [
+    0.16,
+    0.4,
+    1.0
+   ],
+   "rotationWXYZ": [
+    0.984981,
+    -0.172661,
+    0.0,
+    0.0
+   ],
+   "reachDeficitM": {
+    "R": 0.0
+   }
+  },
+  "data-pad": {
+   "pose": "use_device",
+   "characterClip": "use_interact",
+   "stanceYawDeg": 0,
+   "gripPosition": [
+    0.16,
+    0.34,
+    1.06
+   ],
+   "rotationWXYZ": [
+    0.866029,
+    0.499995,
+    0.0,
+    0.0
+   ],
+   "reachDeficitM": {
+    "R": 0.0
+   }
+  },
+  "shield-emitter": {
+   "pose": "use_device",
+   "characterClip": "use_interact",
+   "stanceYawDeg": 0,
+   "gripPosition": [
+    0.16,
+    0.34,
+    1.06
+   ],
+   "rotationWXYZ": [
+    0.866029,
+    0.499995,
+    0.0,
+    0.0
+   ],
+   "reachDeficitM": {
+    "R": 0.0
+   }
+  },
+  "flashlight": {
+   "pose": "repair_loop",
+   "characterClip": "repair_loop",
+   "stanceYawDeg": 0,
+   "gripPosition": [
+    0.16,
+    0.4,
+    1.0
+   ],
+   "rotationWXYZ": [
+    0.984981,
+    -0.172661,
+    0.0,
+    0.0
+   ],
+   "reachDeficitM": {
+    "R": 0.0
+   }
+  },
+  "grapple": {
+   "pose": "aim_pistol",
+   "characterClip": "aim_pistol",
+   "stanceYawDeg": -10,
+   "gripPosition": [
+    0.1998,
+    0.442,
+    1.2
+   ],
+   "rotationWXYZ": [
+    0.985121,
+    0.0,
+    0.0,
+    -0.171862
+   ],
+   "reachDeficitM": {
+    "R": 0.0
+   }
+  },
+  "drone": {
+   "pose": "throw_windup",
+   "characterClip": "throw",
+   "stanceYawDeg": 0,
+   "gripPosition": [
+    0.36,
+    -0.22,
+    1.62
+   ],
+   "rotationWXYZ": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reachDeficitM": {
+    "R": 0.0
+   }
+  },
+  "cargo-box": {
+   "pose": "carry_box",
+   "characterClip": "carry_idle",
+   "stanceYawDeg": 0,
+   "gripPosition": [
+    0.25,
+    0.36,
+    0.9225
+   ],
+   "rotationWXYZ": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "reachDeficitM": {
+    "R": 0.0,
+    "L": 0.0
+   }
+  }
+ }
+}

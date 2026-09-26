@@ -9,9 +9,9 @@
    "files": {
     "lod0": {
      "file": "pistol.glb",
-     "sha256": "5a08277a05df8811e938adb0accd43e44cc52cc980ff5a0cd453e68d6973b459",
-     "bytes": 78928,
-     "triangles": 1936,
+     "sha256": "196c39db2185a9cfa7ff1d0303986d752490c48649851810b6ebe82a7212744f",
+     "bytes": 254848,
+     "triangles": 6872,
      "primitives": 12,
      "nodes": [
       "item.pistol",
@@ -43,9 +43,9 @@
     },
     "lod1": {
      "file": "pistol.lod1.glb",
-     "sha256": "9cbbcaf7ac06bc23a4039ebdf7818a2377e8fadf77c0c9d6b3042384b53c4ea7",
-     "bytes": 38836,
-     "triangles": 528,
+     "sha256": "f6799abe804e92d3f18c1c9e4efbf8bbaff5122e75eeafa9d523108803f4c1c7",
+     "bytes": 77860,
+     "triangles": 1800,
      "primitives": 12,
      "nodes": [
       "item.pistol",
@@ -82,9 +82,9 @@
    "files": {
     "lod0": {
      "file": "smg.glb",
-     "sha256": "702ffee17103a26fc77dbb3022ff1257b6f03e1f052b9c5e276d5bd5cd97ab6e",
-     "bytes": 115860,
-     "triangles": 2992,
+     "sha256": "e7246898a0b12299abfe322e803d80c137412b7c83e71967beb3558d35b90be0",
+     "bytes": 340512,
+     "triangles": 9412,
      "primitives": 12,
      "nodes": [
       "item.smg",
@@ -117,9 +117,9 @@
     },
     "lod1": {
      "file": "smg.lod1.glb",
-     "sha256": "7408b1a6c1b2a539489560b4d4859e8557fd9e6fb4c04ff4da862a203b286187",
-     "bytes": 54948,
-     "triangles": 816,
+     "sha256": "8262db9ba561bef8de2e6e6816884dfcb4e56e079d19003039fb714960b8e5e9",
+     "bytes": 100340,
+     "triangles": 2468,
      "primitives": 12,
      "nodes": [
       "item.smg",
@@ -157,9 +157,9 @@
    "files": {
     "lod0": {
      "file": "compact-carbine.glb",
-     "sha256": "c7727e23448698a11f9e872513c0997ad47552a5565e17805c7f78d13043ac39",
-     "bytes": 132396,
-     "triangles": 3432,
+     "sha256": "9901282395f9c0fe62996648784846646aaa803f2e7483edcb163208493e8a6b",
+     "bytes": 413372,
+     "triangles": 11364,
      "primitives": 11,
      "nodes": [
       "compact-carbine.body",
@@ -194,9 +194,9 @@
     },
     "lod1": {
      "file": "compact-carbine.lod1.glb",
-     "sha256": "4725dacb978c418e52ef0d3878064c61b1b178af3dd01de202598a582c84aaab",
-     "bytes": 61508,
-     "triangles": 936,
+     "sha256": "49485c04e6c053a09819e6e6f70c5e5c64abbd6d71e929b21b0999c900c260fe",
+     "bytes": 124428,
+     "triangles": 3128,
      "primitives": 11,
      "nodes": [
       "compact-carbine.body",
@@ -236,9 +236,9 @@
    "files": {
     "lod0": {
      "file": "rifle.glb",
-     "sha256": "5a738c03112ace54327b43d63e319bc890a2eb47660cd651c7bc90bb44ea3c62",
-     "bytes": 138200,
-     "triangles": 3564,
+     "sha256": "8a27911d7d6c730735194b8e9177f010587b1a1e1117b9ea1be0a882e3375d6c",
+     "bytes": 438488,
+     "triangles": 11984,
      "primitives": 12,
      "nodes": [
       "item.rifle",
@@ -273,9 +273,9 @@
     },
     "lod1": {
      "file": "rifle.lod1.glb",
-     "sha256": "4f9cbfeff401b65a2b098b91943a5f1a99813806a36176140031dffa1a081dd0",
-     "bytes": 62752,
-     "triangles": 972,
+     "sha256": "b63d265cb2f396fb5b2b3ce6a5222638dbed612007f253c39af00eb5b285ff5b",
+     "bytes": 130080,
+     "triangles": 3224,
      "primitives": 12,
      "nodes": [
       "item.rifle",
@@ -315,9 +315,9 @@
    "files": {
     "lod0": {
      "file": "shotgun.glb",
-     "sha256": "73295ec8cabb82de09971b9ecac1d653ccbb6a1ca085ace9546176c5698c6820",
-     "bytes": 138040,
-     "triangles": 3608,
+     "sha256": "a31e363dadc89bbad60b209364a53a07d7228b9fc74b5cc99e8e0a158673b108",
+     "bytes": 451508,
+     "triangles": 12688,
      "primitives": 9,
      "nodes": [
       "item.shotgun",
@@ -349,9 +349,9 @@
     },
     "lod1": {
      "file": "shotgun.lod1.glb",
-     "sha256": "404d1ec06f2dfb071cba371f983902624c0178dc2b29bf2321dd105f1749ff1b",
-     "bytes": 61928,
-     "triangles": 984,
+     "sha256": "3695fcbbe332f4d18c2d5b76189e960d501570ca821e962a3208b9d4831612f1",
+     "bytes": 138376,
+     "triangles": 3704,
      "primitives": 9,
      "nodes": [
       "item.shotgun",
@@ -388,9 +388,9 @@
    "files": {
     "lod0": {
      "file": "heavy-gun.glb",
-     "sha256": "9f87c4ddbe2eb02f59ff1ecf67c0f1dd62377a2f47008de07aa20bc2cd459361",
-     "bytes": 149540,
-     "triangles": 3872,
+     "sha256": "cded1a0cf0819e6a23cdcb94cb4baea8392a0b6e1edb3e3e54e452eff0e796ab",
+     "bytes": 489676,
+     "triangles": 14440,
      "primitives": 15,
      "nodes": [
       "heavy-gun.body",
@@ -424,9 +424,9 @@
     },
     "lod1": {
      "file": "heavy-gun.lod1.glb",
-     "sha256": "dc736105386dc9dc118ff3c5193651dd40132442c0aefe7a54c222ac34778e15",
-     "bytes": 69536,
-     "triangles": 1056,
+     "sha256": "2ab330a21430c41edc7dc9f4c65eca55cf3f9e029b42a44e73c2046296702a99",
+     "bytes": 177940,
+     "triangles": 5040,
      "primitives": 15,
      "nodes": [
       "heavy-gun.body",
@@ -465,10 +465,10 @@
    "files": {
     "lod0": {
      "file": "beam-rifle.glb",
-     "sha256": "6892e849ec38959b62b5a8c993dd2fc2b7a961312f114264935a5c45ec5f1899",
-     "bytes": 91604,
-     "triangles": 2332,
-     "primitives": 8,
+     "sha256": "449c584f3b06a031b446fecc08c1671285405f5a097dc1203e12b0f7379767d5",
+     "bytes": 355556,
+     "triangles": 10112,
+     "primitives": 9,
      "nodes": [
       "beam-rifle.body",
       "item.beam-rifle",
@@ -484,6 +484,7 @@
       "slot:accent@orion",
       "slot:dark@orion",
       "slot:emit_a@orion",
+      "slot:glass@orion",
       "slot:grip@orion",
       "slot:metal@orion",
       "slot:primary@orion",
@@ -498,10 +499,10 @@
     },
     "lod1": {
      "file": "beam-rifle.lod1.glb",
-     "sha256": "bd770adc525b434ff837bf4f4cdb85724926c51d32ffbd9bc6b518e509233c78",
-     "bytes": 42316,
-     "triangles": 636,
-     "primitives": 8,
+     "sha256": "6c0826bdd16c1028cf52dbcd059d8134a84217b27fe8f8b0ed75e3c8b124834d",
+     "bytes": 119108,
+     "triangles": 3240,
+     "primitives": 9,
      "nodes": [
       "beam-rifle.body",
       "item.beam-rifle",
@@ -517,6 +518,7 @@
       "slot:accent@orion",
       "slot:dark@orion",
       "slot:emit_a@orion",
+      "slot:glass@orion",
       "slot:grip@orion",
       "slot:metal@orion",
       "slot:primary@orion",
@@ -536,9 +538,9 @@
    "files": {
     "lod0": {
      "file": "rail-rifle.glb",
-     "sha256": "465a8b7ef2574b5c09d94c781ea723b82213b5a49c733ecd688dfd5694d001e7",
-     "bytes": 86160,
-     "triangles": 2156,
+     "sha256": "b1b7003bc367e06330aa717955f12e19357ffe05409c228180fef0ca6731c278",
+     "bytes": 338156,
+     "triangles": 9492,
      "primitives": 10,
      "nodes": [
       "item.rail-rifle",
@@ -570,9 +572,9 @@
     },
     "lod1": {
      "file": "rail-rifle.lod1.glb",
-     "sha256": "3e20434fad758a2620935ab637b10ddf0e1c4f79012293350461e6a7cdca1496",
-     "bytes": 41556,
-     "triangles": 588,
+     "sha256": "ed002c7b812ac468f60d1888011a5c7bd3c79906abe9fcbbc794e9569101dbdc",
+     "bytes": 112096,
+     "triangles": 2988,
      "primitives": 10,
      "nodes": [
       "item.rail-rifle",
@@ -609,9 +611,9 @@
    "files": {
     "lod0": {
      "file": "stun-gun.glb",
-     "sha256": "fa1e94dba041fd1b9ed84d4be103cf2aed9a636b26e17b02848eda3089cfb84b",
-     "bytes": 72584,
-     "triangles": 1848,
+     "sha256": "8eda0696ab47bb50f2c65e117907a28f842b3e7a91e6ebb9e64ef30351fe9116",
+     "bytes": 217436,
+     "triangles": 6096,
      "primitives": 7,
      "nodes": [
       "item.stun-gun",
@@ -636,9 +638,9 @@
     },
     "lod1": {
      "file": "stun-gun.lod1.glb",
-     "sha256": "63384f78b1412ac54cda50b43263e500fd75eb8dd3c23be87ef74abd7f26e476",
-     "bytes": 34244,
-     "triangles": 504,
+     "sha256": "1c7d6f3a21c05c7b9a0d06f416c3c17e4eb3a441a78c26e4e8c0e4d705beda94",
+     "bytes": 66756,
+     "triangles": 1720,
      "primitives": 7,
      "nodes": [
       "item.stun-gun",
@@ -668,9 +670,9 @@
    "files": {
     "lod0": {
      "file": "baton.glb",
-     "sha256": "d269d7ba6585d826b3adea3362c51121e489c466d0e61e512b2d80e31c7b8751",
-     "bytes": 25560,
-     "triangles": 528,
+     "sha256": "115329242874bb55a93070697b937eb8ba647b41afad8876a99351b91dcf1d2d",
+     "bytes": 103580,
+     "triangles": 2776,
      "primitives": 9,
      "nodes": [
       "baton.body",
@@ -697,9 +699,9 @@
     },
     "lod1": {
      "file": "baton.lod1.glb",
-     "sha256": "178da70d72322db82bba62d5fc8202b47ac31c103dd70075daba6c6106bb7673",
-     "bytes": 15344,
-     "triangles": 144,
+     "sha256": "1fab123f25d7ccab5afa0d167c4af4b6abd56ff2b3bf6b1f8d736f66c8d60150",
+     "bytes": 35108,
+     "triangles": 808,
      "primitives": 9,
      "nodes": [
       "baton.body",
@@ -731,9 +733,9 @@
    "files": {
     "lod0": {
      "file": "grenade.glb",
-     "sha256": "a049bec80f8b771f341b26d7a5291e56f512f1191d7047752871bebe9e8960b5",
-     "bytes": 51776,
-     "triangles": 1276,
+     "sha256": "9b76c0c7ecab548761cc132e788c1b2dc6fadccc60b41aa3ba2432837175754f",
+     "bytes": 141828,
+     "triangles": 3392,
      "primitives": 6,
      "nodes": [
       "grenade.body",
@@ -758,9 +760,9 @@
     },
     "lod1": {
      "file": "grenade.lod1.glb",
-     "sha256": "39814bbbba574f2fd55bddeab22a4edaaadbdb1ea5bef4f8b291d52983f77b24",
-     "bytes": 25116,
-     "triangles": 348,
+     "sha256": "41aca8edc3fc0e581b7628f8d78791597fb3fd09ac780ab37039e07865ca2721",
+     "bytes": 30896,
+     "triangles": 584,
      "primitives": 6,
      "nodes": [
       "grenade.body",
@@ -790,9 +792,9 @@
    "files": {
     "lod0": {
      "file": "medgun.glb",
-     "sha256": "59428013140ad9383e82951d0e5f39cd8d3a6bba933c3188adb1ef9345534240",
-     "bytes": 79172,
-     "triangles": 1980,
+     "sha256": "bf67b02e7bb55603c2c69ab80b100b0137b7761d195b3c8488c5a14b5a30abf2",
+     "bytes": 253044,
+     "triangles": 6976,
      "primitives": 10,
      "nodes": [
       "item.medgun",
@@ -821,9 +823,9 @@
     },
     "lod1": {
      "file": "medgun.lod1.glb",
-     "sha256": "ae2e3977f7cbcd0625e0b49597d1abeb4794294492560eff6ae860372693f579",
-     "bytes": 38684,
-     "triangles": 540,
+     "sha256": "e39018d0d159f8aaa1b39342a1414bcaea3281b67179d8c45357caa543ca4cc4",
+     "bytes": 79068,
+     "triangles": 2072,
      "primitives": 10,
      "nodes": [
       "item.medgun",
@@ -857,9 +859,9 @@
    "files": {
     "lod0": {
      "file": "medkit.glb",
-     "sha256": "db87a9f116f8865cdb34aff9fa486177314b69884061f7999197c27148c91347",
-     "bytes": 54052,
-     "triangles": 1408,
+     "sha256": "dddd639550212a8b61449f50d30ec2d8491566760b3e9eab3d19a4f4833f5875",
+     "bytes": 182420,
+     "triangles": 5240,
      "primitives": 4,
      "nodes": [
       "item.medkit",
@@ -878,9 +880,9 @@
     },
     "lod1": {
      "file": "medkit.lod1.glb",
-     "sha256": "e6303a618ff775fa209d2cbbcf70ffce2e9ca1b8ab13da5e4ad106f7c161a59c",
-     "bytes": 24580,
-     "triangles": 384,
+     "sha256": "3ff26c21570055aef27253957f94621b8ed101e0406efa6809bdcf2c52dfb192",
+     "bytes": 56272,
+     "triangles": 1560,
      "primitives": 4,
      "nodes": [
       "item.medkit",
@@ -904,10 +906,10 @@
    "files": {
     "lod0": {
      "file": "utility-cutter.glb",
-     "sha256": "71bb257fb1235cf1ffac6813ca7e17873410ccce8f826368d771e6aeaeb67068",
-     "bytes": 46956,
-     "triangles": 1100,
-     "primitives": 9,
+     "sha256": "747c2420e108473cb3be96d926de7c832ac395837b23cc8c769941d6f63550b9",
+     "bytes": 232324,
+     "triangles": 6764,
+     "primitives": 8,
      "nodes": [
       "item.utility-cutter",
       "part.blade.001",
@@ -917,9 +919,8 @@
      ],
      "materials": [
       "slot:dark@engineer",
-      "slot:emit_a@engineer",
       "slot:emit_b@engineer",
-      "slot:grip@engineer",
+      "slot:glass@engineer",
       "slot:metal@engineer",
       "slot:primary@engineer",
       "slot:secondary@engineer",
@@ -934,10 +935,10 @@
     },
     "lod1": {
      "file": "utility-cutter.lod1.glb",
-     "sha256": "c69916d72b1646f3df40cd417978b2ca11bba78d344e1f209834e981036ee977",
-     "bytes": 24180,
-     "triangles": 300,
-     "primitives": 9,
+     "sha256": "c4cb2745e76f69a116fe3fbfd33aa586396b6ae2fc793432b407d2d9577a6d03",
+     "bytes": 75564,
+     "triangles": 2068,
+     "primitives": 8,
      "nodes": [
       "item.utility-cutter",
       "part.blade.001",
@@ -947,9 +948,8 @@
      ],
      "materials": [
       "slot:dark@engineer",
-      "slot:emit_a@engineer",
       "slot:emit_b@engineer",
-      "slot:grip@engineer",
+      "slot:glass@engineer",
       "slot:metal@engineer",
       "slot:primary@engineer",
       "slot:secondary@engineer",
@@ -969,9 +969,9 @@
    "files": {
     "lod0": {
      "file": "repair-tool.glb",
-     "sha256": "4953497d0174de3213fb601fdb0df8868f5e509a619a725617f03085431a281f",
-     "bytes": 71776,
-     "triangles": 1804,
+     "sha256": "ac4d15646070ed2673a85399ecf2a9f654ba3fcfab8946bec27a57a4dc507088",
+     "bytes": 215784,
+     "triangles": 5980,
      "primitives": 8,
      "nodes": [
       "item.repair-tool",
@@ -999,9 +999,9 @@
     },
     "lod1": {
      "file": "repair-tool.lod1.glb",
-     "sha256": "00ea3a6b395b15a80a3a60c07aa6bd83285a710668ea06baa200712489e3baa9",
-     "bytes": 34740,
-     "triangles": 492,
+     "sha256": "d30801d32b0cfac8029def3e83840bc197f3f9866250ad6cc9d4715a0e7d6f28",
+     "bytes": 68092,
+     "triangles": 1788,
      "primitives": 8,
      "nodes": [
       "item.repair-tool",
@@ -1034,9 +1034,9 @@
    "files": {
     "lod0": {
      "file": "welder.glb",
-     "sha256": "dce12e81d4b09139a215ee4c689e7d6f2a62f6e5dd940c17feb12503244bee14",
-     "bytes": 45216,
-     "triangles": 1100,
+     "sha256": "2f8c79fccfbad8cf759d86df9421d4d355690f4620d144d35ba5b3223ffc030d",
+     "bytes": 202268,
+     "triangles": 5724,
      "primitives": 6,
      "nodes": [
       "item.welder",
@@ -1060,9 +1060,9 @@
     },
     "lod1": {
      "file": "welder.lod1.glb",
-     "sha256": "d9ce3f1de72fa7ecb6a5ae22f11c9adc433df001036d0469a19d81fcdb78dd30",
-     "bytes": 21892,
-     "triangles": 300,
+     "sha256": "516b5f68598b452a0c5cd50ee2b575e39f155b62d2f5a55857c621207389261e",
+     "bytes": 63184,
+     "triangles": 1704,
      "primitives": 6,
      "nodes": [
       "item.welder",
@@ -1091,9 +1091,9 @@
    "files": {
     "lod0": {
      "file": "multi-tool.glb",
-     "sha256": "f63c2d2d48fcaf6796fee8bfa6e7257169e94241d7edb40c263e6ed1225d9f99",
-     "bytes": 61344,
-     "triangles": 1496,
+     "sha256": "21e68afa7280448a068df894febdebf64eccae4b1b888b9fec230cbfcc65478f",
+     "bytes": 213540,
+     "triangles": 5792,
      "primitives": 8,
      "nodes": [
       "item.multi-tool",
@@ -1120,9 +1120,9 @@
     },
     "lod1": {
      "file": "multi-tool.lod1.glb",
-     "sha256": "8c922131ac73b56efdd5cad4e51f17eb714c5e6d6b8e9c8c71fc27035864df98",
-     "bytes": 29248,
-     "triangles": 408,
+     "sha256": "7763b9f9a7b6edc2a8f508abac3e804de1372624f12b2772536bce5a4976c74d",
+     "bytes": 67812,
+     "triangles": 1648,
      "primitives": 8,
      "nodes": [
       "item.multi-tool",
@@ -1154,9 +1154,9 @@
    "files": {
     "lod0": {
      "file": "mining-drill.glb",
-     "sha256": "723d52d4140ed31d95c1c9bcbbc167d2addf30426226f31fdcc5aab067a0c9ef",
-     "bytes": 92848,
-     "triangles": 2332,
+     "sha256": "aba6643dbe00644aee8974cda0b2422cc49d3ec970007ccc047d1b786a1eb364",
+     "bytes": 349236,
+     "triangles": 10312,
      "primitives": 11,
      "nodes": [
       "item.mining-drill",
@@ -1188,9 +1188,9 @@
     },
     "lod1": {
      "file": "mining-drill.lod1.glb",
-     "sha256": "473fa42d35c55a713c4928818527d850005a6f17f200a4fadb0866665394ef15",
-     "bytes": 43736,
-     "triangles": 636,
+     "sha256": "10d531f9cca2070bb9b8b4cf9cfe04d27572ef46da7fa6d9fb52e63e27835b9f",
+     "bytes": 113652,
+     "triangles": 3184,
      "primitives": 11,
      "nodes": [
       "item.mining-drill",
@@ -1227,9 +1227,9 @@
    "files": {
     "lod0": {
      "file": "wrench.glb",
-     "sha256": "44802d7a8dcff21ad7e9978af46cd21152a098d3860c1162b722bba5102a1bd6",
-     "bytes": 34724,
-     "triangles": 836,
+     "sha256": "8900416843a99b42b0ca9afa8e766a6ec126de6239fdc233d1651760fcbfd8ee",
+     "bytes": 125260,
+     "triangles": 3352,
      "primitives": 7,
      "nodes": [
       "item.wrench",
@@ -1253,9 +1253,9 @@
     },
     "lod1": {
      "file": "wrench.lod1.glb",
-     "sha256": "e46b61215a7c3f6066e784271b2872142727da11abc1e0231d864e7887f5aee1",
-     "bytes": 18520,
-     "triangles": 228,
+     "sha256": "65943b1459243eedfa8eb16225ebf746c6c9d25c99af531b9c341d1f115353a2",
+     "bytes": 40272,
+     "triangles": 920,
      "primitives": 7,
      "nodes": [
       "item.wrench",
@@ -1284,9 +1284,9 @@
    "files": {
     "lod0": {
      "file": "scanner.glb",
-     "sha256": "8b1b23cdb58499f0e164b21640750bbd272d0ee548697e9e16c2b872ca6dcc5e",
-     "bytes": 45728,
-     "triangles": 1144,
+     "sha256": "18fd7cba5c3e2040fc6ab9b5728b883d5ae778d4b2f8df959fe65e7e0650324b",
+     "bytes": 131288,
+     "triangles": 3678,
      "primitives": 7,
      "nodes": [
       "item.scanner",
@@ -1311,9 +1311,9 @@
     },
     "lod1": {
      "file": "scanner.lod1.glb",
-     "sha256": "5bc4879baa4b26a77c998cbb1f854677f04ab1c616cc97a00f12cc520a312329",
-     "bytes": 22936,
-     "triangles": 312,
+     "sha256": "17c3f41446bfa4f59b318d969aca30e0581a26ca8ca4b73ecea231752c95dfb0",
+     "bytes": 42032,
+     "triangles": 1028,
      "primitives": 7,
      "nodes": [
       "item.scanner",
@@ -1343,9 +1343,9 @@
    "files": {
     "lod0": {
      "file": "sample-scanner.glb",
-     "sha256": "4d8fa500d25343f3084a6b0419d39a7e495d4d893ce347ce8e17964eab5aca03",
-     "bytes": 41288,
-     "triangles": 1012,
+     "sha256": "e974d268d7802a4c63b2b53384e08e849340493b720b6444f3cb0c1493b6c5f4",
+     "bytes": 138136,
+     "triangles": 3888,
      "primitives": 6,
      "nodes": [
       "item.sample-scanner",
@@ -1369,9 +1369,9 @@
     },
     "lod1": {
      "file": "sample-scanner.lod1.glb",
-     "sha256": "e5f5e1fbdca9aaf92233b8595b0e757cb7533ed28b8fe58b4b8d4a94ce9fbeed",
-     "bytes": 20076,
-     "triangles": 276,
+     "sha256": "63693474fbf8353ff08dffbd5514d2e374b19250ce2b0233867e5b774260f607",
+     "bytes": 46220,
+     "triangles": 1144,
      "primitives": 6,
      "nodes": [
       "item.sample-scanner",
@@ -1400,9 +1400,9 @@
    "files": {
     "lod0": {
      "file": "data-pad.glb",
-     "sha256": "a37f32253ab3969dea369a2130338ddb5702ec9c67e839b6746de37291a43dda",
-     "bytes": 43812,
-     "triangles": 1100,
+     "sha256": "b0d735882c911d4642b0632647e2c65aafc5d09061e89d97342e224bd3b1117d",
+     "bytes": 134344,
+     "triangles": 3484,
      "primitives": 5,
      "nodes": [
       "data-pad.body",
@@ -1425,9 +1425,9 @@
     },
     "lod1": {
      "file": "data-pad.lod1.glb",
-     "sha256": "f59f4dabbef992f29c42a5ee0008ae012de4b57b0132c347e91ca73455b06802",
-     "bytes": 21188,
-     "triangles": 300,
+     "sha256": "84553dca9321cd84033433bb91bbe30bf0ac3cc85a4770dfd43748bd17847f1d",
+     "bytes": 38336,
+     "triangles": 956,
      "primitives": 5,
      "nodes": [
       "data-pad.body",
@@ -1455,10 +1455,10 @@
    "files": {
     "lod0": {
      "file": "shield-emitter.glb",
-     "sha256": "da25a69104eb046fadb91b9a64286febf15f733ff08a447571444d6fdbc52d17",
-     "bytes": 54872,
-     "triangles": 1364,
-     "primitives": 7,
+     "sha256": "24603a25f38fb9346335f941e45aa10dfaf11e11825e3f4b6f5be44eb0602744",
+     "bytes": 219660,
+     "triangles": 6440,
+     "primitives": 9,
      "nodes": [
       "item.shield-emitter",
       "part.ring",
@@ -1471,7 +1471,8 @@
       "slot:emit_a@orion",
       "slot:grip@orion",
       "slot:primary@orion",
-      "slot:secondary@orion"
+      "slot:secondary@orion",
+      "slot:trim@orion"
      ],
      "animations": [
       "use"
@@ -1482,10 +1483,10 @@
     },
     "lod1": {
      "file": "shield-emitter.lod1.glb",
-     "sha256": "7f9b2d7732c113317434787efcb53a6127e514b720b9804ec4b8f5237bb07c4b",
-     "bytes": 26968,
-     "triangles": 372,
-     "primitives": 7,
+     "sha256": "527dad1f977bf880c7435156e3385ceec7dafed1b67b4cdec3b80706b1ea6839",
+     "bytes": 73152,
+     "triangles": 1896,
+     "primitives": 9,
      "nodes": [
       "item.shield-emitter",
       "part.ring",
@@ -1498,7 +1499,8 @@
       "slot:emit_a@orion",
       "slot:grip@orion",
       "slot:primary@orion",
-      "slot:secondary@orion"
+      "slot:secondary@orion",
+      "slot:trim@orion"
      ],
      "animations": [
       "use"
@@ -1514,9 +1516,9 @@
    "files": {
     "lod0": {
      "file": "flashlight.glb",
-     "sha256": "9444c4ae263164a304b4a1e00c62ab26e868b87783b45c7fc1bfe17276dc33e3",
-     "bytes": 26628,
-     "triangles": 616,
+     "sha256": "6b85196527ddc1437630c2c3a90fd9807c8eeef841806c918734999257b46127",
+     "bytes": 74276,
+     "triangles": 2012,
      "primitives": 5,
      "nodes": [
       "flashlight.body",
@@ -1538,9 +1540,9 @@
     },
     "lod1": {
      "file": "flashlight.lod1.glb",
-     "sha256": "9d54297b602a39a8560e81b9b84f8038628770c0f296a85cb8d74de5d4e329b9",
-     "bytes": 14016,
-     "triangles": 168,
+     "sha256": "18bb2feceaa87111205f0773d59ccf3048597076fa9ded14be00b9dfcd8ac8e2",
+     "bytes": 22448,
+     "triangles": 476,
      "primitives": 5,
      "nodes": [
       "flashlight.body",
@@ -1567,9 +1569,9 @@
    "files": {
     "lod0": {
      "file": "grapple.glb",
-     "sha256": "94e6e3b8b115cbadfb4618b8e4b6f54407b2616dd3ab1d2b2a8c044496581bd5",
-     "bytes": 44356,
-     "triangles": 1012,
+     "sha256": "1a11ea2710a6174a3a6f3cd55eb7238b8aea2da03b82a3f4590fc35d437c6ba0",
+     "bytes": 164208,
+     "triangles": 4508,
      "primitives": 10,
      "nodes": [
       "grapple.body",
@@ -1597,9 +1599,9 @@
     },
     "lod1": {
      "file": "grapple.lod1.glb",
-     "sha256": "e095acf91cb108ad7909ed669b9e356da2a8247fd2a98c8ac7abe3e562d645c3",
-     "bytes": 23476,
-     "triangles": 276,
+     "sha256": "fa4e6d4f126f0e7142065e4cf16df650ee8ec5d84af9fcf86156e84190fb91da",
+     "bytes": 59560,
+     "triangles": 1420,
      "primitives": 10,
      "nodes": [
       "grapple.body",
@@ -1632,9 +1634,9 @@
    "files": {
     "lod0": {
      "file": "drone.glb",
-     "sha256": "d154f3f7b18c0c08a7b9b3cc44e729029199e186f139164f43a12d6b05fd36c5",
-     "bytes": 33516,
-     "triangles": 704,
+     "sha256": "447b851ac89906abe822389440b754697d38b095bf5f9868c4629686969bcc52",
+     "bytes": 123656,
+     "triangles": 3328,
      "primitives": 10,
      "nodes": [
       "drone.body",
@@ -1662,9 +1664,9 @@
     },
     "lod1": {
      "file": "drone.lod1.glb",
-     "sha256": "bf59bc64bc0c41ac4a7ac75355e627650a040ebd3f96c26916e9344cd8be3dad",
-     "bytes": 18820,
-     "triangles": 192,
+     "sha256": "64792a048f6d259d2b060ff0e5c0df34a0d0720403ca6159713b1fd5ddfe5881",
+     "bytes": 41344,
+     "triangles": 880,
      "primitives": 10,
      "nodes": [
       "drone.body",
@@ -1697,9 +1699,9 @@
    "files": {
     "lod0": {
      "file": "cargo-box.glb",
-     "sha256": "ea5da206838928feec36bbfd758efcf090c68b297ef6f93f1fb58a1b17a53719",
-     "bytes": 59584,
-     "triangles": 1540,
+     "sha256": "cc936ff7a5ac3f6e3b0c4f7e8a173096e8f4983fbbb3e06fe7610d9833a05c51",
+     "bytes": 416744,
+     "triangles": 12176,
      "primitives": 5,
      "nodes": [
       "cargo-box.body",
@@ -1719,9 +1721,9 @@
     },
     "lod1": {
      "file": "cargo-box.lod1.glb",
-     "sha256": "e4afdefcb05b0bc14f89a2cb6aef4e8943b26316b7aef0c16c9167fa87784068",
-     "bytes": 27640,
-     "triangles": 420,
+     "sha256": "c8773083f8e6edb3bb327d657fa14635b1bf7fbcede220defd61eee24b2a35f1",
+     "bytes": 160860,
+     "triangles": 5024,
      "primitives": 5,
      "nodes": [
       "cargo-box.body",
@@ -1746,9 +1748,9 @@
    "files": {
     "lod0": {
      "file": "shield-pack.glb",
-     "sha256": "e222c475c16d384c304ee5346c3e5370d636dcbd5f213c8f3457ebd5dafd18f2",
-     "bytes": 68612,
-     "triangles": 1804,
+     "sha256": "0e6e59a7aed17aeceb253cb1d921e8d187da97e133854328ae9319b3cc3b941e",
+     "bytes": 229652,
+     "triangles": 6652,
      "primitives": 5,
      "nodes": [
       "item.shield-pack",
@@ -1770,9 +1772,9 @@
     },
     "lod1": {
      "file": "shield-pack.lod1.glb",
-     "sha256": "3317b58f0094616869821cb2c5613b338906f489a22bd306af2ea7b90569dd1c",
-     "bytes": 31404,
-     "triangles": 492,
+     "sha256": "746098c109b62f67754d266af7238a6603de3675a301673b653677bb66a44924",
+     "bytes": 78436,
+     "triangles": 2332,
      "primitives": 5,
      "nodes": [
       "item.shield-pack",
@@ -1799,8 +1801,8 @@
   {
    "id": "muzzle-flash",
    "file": "fx/muzzle-flash.glb",
-   "sha256": "c1a56fecfc893a8bfa22aa787764b75b196917dbaa46ecfee049bb6642f427d6",
-   "bytes": 11940,
+   "sha256": "c8811b138ba26ef90a16b5d931245970f34b2389191a2b5e7198ff79733cda5c",
+   "bytes": 11972,
    "triangles": 168,
    "primitives": 2,
    "nodes": [
@@ -1820,8 +1822,8 @@
   {
    "id": "laser-bolt",
    "file": "fx/laser-bolt.glb",
-   "sha256": "f099ecb656ab112868af6fff0c2f2e49103411de893b869eed9e10761c2533d8",
-   "bytes": 5440,
+   "sha256": "d27567f6f48f842724d6e69ec06299423bd2a82b8c44914c1830189733562361",
+   "bytes": 5472,
    "triangles": 48,
    "primitives": 2,
    "nodes": [
@@ -1841,9 +1843,9 @@
   {
    "id": "plasma-bolt",
    "file": "fx/plasma-bolt.glb",
-   "sha256": "7c6f16dee1423145ab23418a1285127b5acf3ef08fec747675bb2059d6efed25",
-   "bytes": 13828,
-   "triangles": 180,
+   "sha256": "198b3fbb26a8eb0a4c66a666b5897ee9ef584504c50bdcc757a259a6cba5fb66",
+   "bytes": 11944,
+   "triangles": 144,
    "primitives": 3,
    "nodes": [
     "fx.plasma-bolt",
@@ -1864,8 +1866,8 @@
   {
    "id": "healing-beam",
    "file": "fx/healing-beam.glb",
-   "sha256": "4528ec0e89c663f934db754ed4b46bbe8f0ba8ec3f38f47f818d2d4cfea7b4a8",
-   "bytes": 9968,
+   "sha256": "adfae105f667f5174734144d71267af8dbf9d341e588be00302ad4f93b83a9b9",
+   "bytes": 10004,
    "triangles": 132,
    "primitives": 2,
    "nodes": [
@@ -1885,8 +1887,8 @@
   {
    "id": "scan-pulse",
    "file": "fx/scan-pulse.glb",
-   "sha256": "04e10fb0f25237ce396b6c76c13599686328b365d0e29c5845eeeec8142f6070",
-   "bytes": 44980,
+   "sha256": "8d2f3919e69827f6591caf14ea78c38044a1ee7cbfb756d13af5e08daabbb5b8",
+   "bytes": 44968,
    "triangles": 780,
    "primitives": 2,
    "nodes": [
@@ -1906,9 +1908,9 @@
   {
    "id": "shield-bubble",
    "file": "fx/shield-bubble.glb",
-   "sha256": "22d8467229ce0810a1be8e6c2d71f222a866064b9abf54aeae30d1b6fa23eddb",
-   "bytes": 192132,
-   "triangles": 3504,
+   "sha256": "67234b8b48318f45b735f738416bfcee91aafe8b0ccd19230ea4295ec0c92791",
+   "bytes": 149352,
+   "triangles": 2712,
    "primitives": 2,
    "nodes": [
     "fx.shield-bubble",
@@ -1927,8 +1929,8 @@
   {
    "id": "impact-spark",
    "file": "fx/impact-spark.glb",
-   "sha256": "92e9e71980c25a07a3eb3c596aba3bc20843adb9f51dfb6a82e72b7541571217",
-   "bytes": 22940,
+   "sha256": "82b0a7e0c5ed352edd2bf087fc10576aae61be9f54d6061368054b9993069041",
+   "bytes": 22972,
    "triangles": 372,
    "primitives": 2,
    "nodes": [
@@ -1948,7 +1950,7 @@
   {
    "id": "smoke-puff",
    "file": "fx/smoke-puff.glb",
-   "sha256": "12d6d53a822a438f4ed6e6747a5ca17714e5ba4e51c07cb82c3d1bb9c65992c4",
+   "sha256": "fb6277aa7ac4e8f6b0b4481cd17b014660a82b2871847b79605e872e959017c1",
    "bytes": 11036,
    "triangles": 156,
    "primitives": 2,
@@ -1967,9 +1969,9 @@
   {
    "id": "thruster-glow",
    "file": "fx/thruster-glow.glb",
-   "sha256": "796724cb39872218b3f4552f022ecbbc8971f06a6796f398acca4896072ba357",
-   "bytes": 6112,
-   "triangles": 60,
+   "sha256": "df2872e1c2b002e48e3cf7a800c6e98f9d862bb755f1ce707ac5b9a033c86cf8",
+   "bytes": 5220,
+   "triangles": 48,
    "primitives": 2,
    "nodes": [
     "fx.thruster-glow",
@@ -1988,8 +1990,8 @@
   {
    "id": "pickup-glow",
    "file": "fx/pickup-glow.glb",
-   "sha256": "99890ca8ed62643179dd70bfef89a9979c17cac13d5b8ef0cea52c5befea98cb",
-   "bytes": 15160,
+   "sha256": "5ed0c0a9ca789c33119cada2c80bcdc0bbd0e6660eaafb8a3e0407d3f208a4cd",
+   "bytes": 15116,
    "triangles": 228,
    "primitives": 2,
    "nodes": [
@@ -2009,8 +2011,8 @@
   {
    "id": "repair-sparks",
    "file": "fx/repair-sparks.glb",
-   "sha256": "81f2905b23d53f37eec2151389f7ddede7eb7c4ca63b1f6cf0b016a734cfedb5",
-   "bytes": 18908,
+   "sha256": "0a98e6df018bdbfbcc3ef04882190e8d6775beaa2596f32d5d2392e512d93990",
+   "bytes": 18956,
    "triangles": 276,
    "primitives": 3,
    "nodes": [
@@ -2032,8 +2034,8 @@
   {
    "id": "teleport",
    "file": "fx/teleport.glb",
-   "sha256": "eefb34ca3effa072339b3158b725af2cfa4665e9ce7a94d3dc244534b147e5f1",
-   "bytes": 44304,
+   "sha256": "ecda586cea65fe8bf8a6f03f4bb8b0c0f841d5cdea462ce7da813bf6877ac7eb",
+   "bytes": 44264,
    "triangles": 744,
    "primitives": 3,
    "nodes": [
@@ -2055,8 +2057,8 @@
   {
    "id": "tracer",
    "file": "fx/tracer.glb",
-   "sha256": "17d62579251bc533860089c3770853953f039b0a3c3fc08a5d41609913036f62",
-   "bytes": 5412,
+   "sha256": "6f80afe4e91c773f7b992266cc4a80d5480f285ca15a46dd3641bf9a7483b1cc",
+   "bytes": 5444,
    "triangles": 48,
    "primitives": 2,
    "nodes": [
@@ -2076,8 +2078,8 @@
   {
    "id": "beam-lance",
    "file": "fx/beam-lance.glb",
-   "sha256": "7ffa396732ca7f1ecb523e1df9cfd9ac186b8a4e222661d0e6cc0b8eae23745c",
-   "bytes": 8676,
+   "sha256": "7152e8e5294f5d7e47aa9f5b7078938b07c398a386f3358d33cdfd47d4cabb78",
+   "bytes": 8712,
    "triangles": 108,
    "primitives": 2,
    "nodes": [
@@ -2097,8 +2099,8 @@
   {
    "id": "stun-arc",
    "file": "fx/stun-arc.glb",
-   "sha256": "a82e5fe9a8eec5ff403f0816ed2c8e1960abfc6f489ae8762f1295c080e60cf7",
-   "bytes": 17084,
+   "sha256": "9861e179f919a68f7a9558b973b8c69e63c6626cbc09d9aca4dcc752e0359386",
+   "bytes": 17148,
    "triangles": 264,
    "primitives": 2,
    "nodes": [
@@ -2119,12 +2121,12 @@
  "totals": {
   "items": 28,
   "fx": 15,
-  "lod0Triangles": 49896,
-  "lod1Triangles": 13608,
-  "fxTriangles": 7068,
-  "bytes": 3363240
+  "lod0Triangles": 194934,
+  "lod1Triangles": 58804,
+  "fxTriangles": 6228,
+  "bytes": 9572672
  },
  "content": "packages/content/src/crew-items-r001.json",
  "referenceCrops": "scripts/art_library/crew_items_reference_crops.json",
- "contentSha256": "d5da3d0b3dc84f79254c2041505711191ad0d2364d0e25225c9115cf1b3a62b1"
+ "contentSha256": "bb1adb405e30fc6cecee0b19a05617f84c032e9487f6c890848446a0b47ea331"
 }
