@@ -119,6 +119,9 @@ LOOPS = [
     # rifle class: hold -> aim -> 3 shots -> reload -> aim (support hand IK-baked onto the foregrip)
     ("rifle_set", [("idle_armed", 24), ("aim_rifle", 20), ("shoot_rifle", 6), ("shoot_rifle", 6),
                    ("shoot_rifle", 6), ("reload", 38), ("aim_rifle", 16)], None, "prop.rifle", 1, False),
+    ("pistol_set", [("draw_pistol", 18), ("aim_pistol", 14), ("shoot_pistol", 9), ("shoot_pistol", 9),
+                    ("aim_pistol", 8), ("holster_pistol", 21)], None, "prop.pistol", 1, False),
+    ("rifle_draw", [("draw_rifle", 24), ("idle_armed", 24), ("holster_rifle", 26)], None, "prop.rifle", 1, False),
     # face on the actual head: blink, talk loop (visemes), expression change
     ("face_talk", "idle", None, None, 1, False),
 ]
