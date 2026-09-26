@@ -42,6 +42,7 @@ def main():
     parser.add_argument('--label', required=True, help='new lowercase smoke label, e.g. wipe-r003')
     parser.add_argument('--stage', choices=['all', 'seed', 'wipe'], default='all')
     parser.add_argument('--full-seed', action='store_true', help='also run the full standard smoke before seeding')
+    parser.add_argument('--keep-baseline', action='store_true', help='keep the scratch baseline copy after the wipe stage')
     parser.add_argument('--accounts', default='Owner Main,Crew Two,Crew Three',
                         help='comma-separated live-shaped seed account names')
     args = parser.parse_args()
@@ -62,7 +63,10 @@ def main():
             raise SystemExit(f'{evidence} exists; choose a new label')
         evidence.mkdir(parents=True)
         os.chmod(evidence, 0o700)
-        baseline = Path('/tmp') / f'sidereal-ship-wipe-baseline-{args.label}'
+        # Disk-backed scratch (never /tmp: it is RAM-backed on the shared host).
+        scratch = Path(os.environ.get('SIDEREAL_SCRATCH', Path.home() / 'sidereal-scratch/ships-removal'))
+        scratch.mkdir(parents=True, exist_ok=True)
+        baseline = scratch / f'ship-wipe-baseline-{args.label}'
         if baseline.exists():
             raise SystemExit(f'{baseline} exists; choose a new label')
         baseline.mkdir()
@@ -88,6 +92,11 @@ def main():
         run([sys.executable, 'scripts/dev.py', 'smoke-update', '--smoke-name', args.label], ROOT)
         run([str(ROOT / 'node_modules/.bin/tsx'), 'scripts/ship-wipe-smoke.ts'], ROOT, env)
         print(f'Ship wipe rehearsal passed: {database} on {url}; evidence {evidence}/ship-wipe-smoke.json')
+        scratch = Path(os.environ.get('SIDEREAL_SCRATCH', Path.home() / 'sidereal-scratch/ships-removal'))
+        baseline = scratch / f'ship-wipe-baseline-{args.label}'
+        if baseline.exists() and not args.keep_baseline:
+            shutil.rmtree(baseline)
+            print(f'Removed scratch baseline copy {baseline}')
 
 
 if __name__ == '__main__':
