@@ -73,7 +73,8 @@
     "./construction-doorway-motion": "./src/construction-doorway-motion.ts",
     "./wayfarer-rebuild-contract": "./src/wayfarer-rebuild-contract.ts",
     "./wayfarer-rebuild-game": "./src/wayfarer-rebuild-game.ts",
-    "./wayfarer-conversion-candidate": "./src/wayfarer-conversion-candidate.ts"
+    "./wayfarer-conversion-candidate": "./src/wayfarer-conversion-candidate.ts",
+    "./ship-dresser": "./src/ship-dresser.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",

@@ -88,6 +88,10 @@ import { HDRCubeTexture } from "@babylonjs/core/Materials/Textures/hdrCubeTextur
 import { DynamicTexture } from "@babylonjs/core/Materials/Textures/dynamicTexture";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { CABIN_ROOMS } from "../../content/src/interior";
+import {
+  loadPrefabShipPresentation,
+  type PrefabShipViewHandle,
+} from "./prefab-ship-presentation";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { CreateTorus } from "@babylonjs/core/Meshes/Builders/torusBuilder";
 import { Material } from "@babylonjs/core/Materials/material";
@@ -328,6 +332,9 @@ async function buildWorld(
       ) => ReturnType<typeof resolveConstructionTraversalFrame>)
     | undefined;
   let disposeConstruction: (() => void) | undefined;
+  // Trusted prefab ships (SHIPS-PREFABS): the dressed voxel ship replaces the
+  // native floor-plate presentation; collision and walking stay authoritative.
+  let prefabView: PrefabShipViewHandle | undefined;
   let lastStairPosition: [number, number] | undefined;
   let stairTravelHeading: number | undefined;
   const engineStudy = options.source?.startsWith("engine-") ?? false;
@@ -375,6 +382,15 @@ async function buildWorld(
             accepted && "destinationDeckId" in accepted ? accepted : undefined,
           );
       if ("dispose" in loaded) disposeConstruction = loaded.dispose;
+      if (options.construction) {
+        prefabView = await loadPrefabShipPresentation(
+          scene,
+          shipRoot,
+          options.construction.documentJson,
+        );
+        if (prefabView)
+          for (const mesh of imported.meshes) mesh.setEnabled(false);
+      }
     } else if (options.vessel === "none") {
       imported = { meshes: [] };
       installed = [];
@@ -1009,6 +1025,7 @@ async function buildWorld(
     camera.minZ = Math.max(0.1, camera.radius * 0.02);
     camera.maxZ = Math.max(1600, camera.radius + 1600);
     updateConstructionView?.(camera.position, state.interior);
+    prefabView?.setInterior(state.interior);
     camera.getViewMatrix(true);
     environment.update({
       id: state.vistaId ?? DEFAULT_SPACE_VISTA,
@@ -1345,6 +1362,7 @@ async function buildWorld(
       diagnostics.dispose();
       debugFeatures.dispose();
       disposeConstruction?.();
+      prefabView?.dispose();
       disposeConstruction = undefined;
       scene.dispose();
       engine.dispose();
