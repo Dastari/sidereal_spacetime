@@ -89,3 +89,63 @@ export function priorOperation(
     );
   return true;
 }
+
+type ArchiveDb = {
+  shipWipeArchive: {
+    insert(row: {
+      id: string;
+      operationId: string;
+      tableName: string;
+      action: string;
+      rowJson: string;
+    }): unknown;
+  };
+};
+
+/** Records a before-image in the private archive under a per-operation sequence. */
+export function archiveRow(
+  db: ArchiveDb,
+  operationId: string,
+  sequence: { next: number },
+  table: string,
+  action: "deleted" | "updated",
+  row: unknown,
+) {
+  db.shipWipeArchive.insert({
+    id: `${operationId}:${String(sequence.next++).padStart(7, "0")}`,
+    operationId,
+    tableName: table,
+    action,
+    rowJson: archiveJson(row),
+  });
+}
+
+/** Map/system/Genesis state. Never written by ship maintenance; counted before
+ * and after every mutating operation so evidence shows it unchanged. */
+export const PRESERVED_MAP_TABLES = [
+  "worldSystem",
+  "systemBody",
+  "bodyWorldMotion",
+  "celestialMigrationReceipt",
+  "systemZone",
+  "systemMapDefinition",
+  "fieldAsteroid",
+  "systemMapEdit",
+] as const;
+
+export function countRows(db: unknown, table: string) {
+  let count = 0;
+  for (const _ of (
+    (db as Record<string, { iter(): Iterable<unknown> }>)[table] as {
+      iter(): Iterable<unknown>;
+    }
+  ).iter())
+    count++;
+  return count;
+}
+
+export function mapRowCounts(db: unknown) {
+  const counts: Record<string, number> = {};
+  for (const table of PRESERVED_MAP_TABLES) counts[table] = countRows(db, table);
+  return counts;
+}

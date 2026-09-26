@@ -14,6 +14,8 @@ export default {
   operationId: __t.string(),
   characterId: __t.string(),
   prefabId: __t.string(),
+  expectedCatalogRevision: __t.string(),
+  spawnPoseJson: __t.string(),
   expectedCharacterShipId: __t.string(),
   allowLegacy: __t.bool(),
 };

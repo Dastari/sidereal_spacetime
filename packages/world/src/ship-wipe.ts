@@ -3,10 +3,14 @@ import type { InferSchema, ReducerCtx } from "spacetimedb/server";
 import type world from "./index";
 import {
   archiveJson,
+  archiveRow,
+  countRows,
+  mapRowCounts,
+  PRESERVED_MAP_TABLES,
   priorOperation,
   requireShipOperator,
 } from "./ship-operator";
-import { starterShipsEnabled } from "./ship-policy";
+import { legacyStarterConfigured, starterPrefabId } from "./ship-policy";
 import {
   legacyInventorySnapshot,
   synchronizeLegacyInventory,
@@ -73,18 +77,7 @@ export const WIPED_SHIP_TABLES = [
   "input",
 ] as const satisfies readonly (keyof Db)[];
 
-/** Map/system/Genesis state. Never written by ship maintenance; counted in every
- * summary so dry-run/apply evidence shows them unchanged. */
-export const PRESERVED_MAP_TABLES = [
-  "worldSystem",
-  "systemBody",
-  "bodyWorldMotion",
-  "celestialMigrationReceipt",
-  "systemZone",
-  "systemMapDefinition",
-  "fieldAsteroid",
-  "systemMapEdit",
-] as const satisfies readonly (keyof Db)[];
+export { PRESERVED_MAP_TABLES };
 
 const ROW_BUDGET = 200_000;
 
@@ -97,11 +90,6 @@ function iterRows(db: Db, table: keyof Db): Row[] {
   return rows;
 }
 
-export function countRows(db: Db, table: keyof Db) {
-  let count = 0;
-  for (const _ of (db[table] as unknown as { iter(): Iterable<unknown> }).iter()) count++;
-  return count;
-}
 
 /** Personal inventory = everything whose containment root is the character's
  * carried pockets (including equipped items and nested bags/liquids). All other
@@ -194,9 +182,47 @@ export function planShipWipe(ctx: Context) {
     blueprintSha256: i.blueprintSha256,
     hasShipRow: !!ctx.db.ship.id.find(i.id),
   }));
-  const preservedMapRows: Record<string, number> = {};
-  for (const table of PRESERVED_MAP_TABLES)
-    preservedMapRows[table] = countRows(ctx.db, table);
+  const preservedMapRows = mapRowCounts(ctx.db);
+  // Per-row manifest of every inventory item the apply step archives and
+  // deletes, with the reason it is ship-held rather than personal.
+  const bindings = [...ctx.db.storageBinding.iter()];
+  const archivedInventory = [...ctx.db.inventoryItem.iter()]
+    .filter((i) => inventory.shipHeldItems.has(i.id))
+    .map((i) => {
+      let reason = "ship-held";
+      const seen = new Set<string>();
+      let containerId = i.containerId;
+      while (containerId && !seen.has(containerId)) {
+        seen.add(containerId);
+        const container = ctx.db.inventoryContainer.id.find(containerId);
+        if (!container) break;
+        const binding = bindings.find((b) => b.containerId === container.id);
+        if (binding?.placementId.startsWith("ground:")) {
+          reason = "ground-drop-on-ship-deck";
+          break;
+        }
+        if (!container.parentItemId) {
+          reason =
+            container.characterId === ""
+              ? "ship-cargo-container"
+              : binding
+                ? "ship-deck-storage"
+                : container.carried
+                  ? "unclassified"
+                  : "ship-deck-container";
+          break;
+        }
+        containerId =
+          ctx.db.inventoryItem.id.find(container.parentItemId)?.containerId ?? "";
+      }
+      return {
+        itemId: i.id,
+        definitionId: i.definitionId,
+        characterId: i.characterId,
+        containerId: i.containerId,
+        reason,
+      };
+    });
   return {
     inventory,
     summary: {
@@ -211,8 +237,10 @@ export function planShipWipe(ctx: Context) {
       instances,
       characters,
       deleteRows: { ...tables, ...derived },
+      archivedInventory,
       preservedMapRows,
-      starterShipsEnabled: starterShipsEnabled(ctx),
+      starterPrefabId: starterPrefabId(ctx),
+      legacyStarterConfigured: legacyStarterConfigured(ctx),
     },
   };
 }
@@ -224,32 +252,20 @@ function archiveDelete(
   table: string,
   row: Row,
 ) {
-  ctx.db.shipWipeArchive.insert({
-    id: `${operationId}:${String(sequence.next++).padStart(7, "0")}`,
-    operationId,
-    tableName: table,
-    action: "deleted",
-    rowJson: archiveJson(row),
-  });
+  archiveRow(ctx.db, operationId, sequence, table, "deleted", row);
   (ctx.db[table as keyof Db] as unknown as { delete(row: Row): boolean }).delete(
     row,
   );
 }
 
-export function archiveUpdate(
+function archiveUpdate(
   ctx: Context,
   operationId: string,
   sequence: { next: number },
   table: string,
   before: Row,
 ) {
-  ctx.db.shipWipeArchive.insert({
-    id: `${operationId}:${String(sequence.next++).padStart(7, "0")}`,
-    operationId,
-    tableName: table,
-    action: "updated",
-    rowJson: archiveJson(before),
-  });
+  archiveRow(ctx.db, operationId, sequence, table, "updated", before);
 }
 
 /** Operator-only, all-or-nothing wipe of every player ship and construction
@@ -289,9 +305,9 @@ export function wipePlayerShips(ctx: Context, args: ShipWipeArgs) {
     throw new SenderError(
       `Ship wipe expected ${args.expectedShips} ships/${args.expectedInstances} instances/${args.expectedCharacters} characters but found ${summary.counts.ships}/${summary.counts.instances}/${summary.counts.characters}; run a new dry-run`,
     );
-  if (summary.starterShipsEnabled)
+  if (summary.legacyStarterConfigured)
     throw new SenderError(
-      "Disable starter ships (operator_set_starter_ships false) before wiping",
+      "A legacy starter is configured; clear it (operator_set_starter_prefab with an empty prefab) before wiping",
     );
   const sequence = { next: 0 };
   const op = args.operationId;
@@ -348,8 +364,7 @@ export function wipePlayerShips(ctx: Context, args: ShipWipeArgs) {
     }
   }
 
-  const after: Record<string, number> = {};
-  for (const table of PRESERVED_MAP_TABLES) after[table] = countRows(ctx.db, table);
+  const after = mapRowCounts(ctx.db);
   if (archiveJson(after) !== archiveJson(summary.preservedMapRows))
     throw new SenderError("Ship wipe would change map state; aborted");
   record({ archivedRows: sequence.next });

@@ -1,13 +1,14 @@
 import { table, t } from "spacetimedb/server";
 
-/** Private singleton policy row (id "global"). Absent row means the historical
- * behaviour: new characters receive the legacy starter Wayfarer. Only the
+/** Private singleton policy row (id "global"). Absent row, or an empty
+ * starterPrefabId, means new characters never receive a ship: they are created
+ * with their personal kit and wait for an operator assignment. Only the
  * deployment operator changes it, through an explicit audited reducer. */
 export const shipPolicy = table(
   { name: "ship_policy" },
   {
     id: t.string().primaryKey(),
-    starterShipsEnabled: t.bool(),
+    starterPrefabId: t.string(),
     revision: t.u64(),
     operationId: t.string(),
     updatedMicros: t.u64(),

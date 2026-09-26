@@ -12,5 +12,7 @@ import {
 
 export default {
   operationId: __t.string(),
-  enabled: __t.bool(),
+  prefabId: __t.string(),
+  expectedCatalogRevision: __t.string(),
+  allowLegacy: __t.bool(),
 };
