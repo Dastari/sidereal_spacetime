@@ -13,7 +13,6 @@ import {
   installReplacementWayfarer,
   type WayfarerStarterContext,
 } from "./wayfarer-starter-authority";
-import { prefabSpawnerFor } from "./prefab-ship-authority";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 export type CharacterRow = NonNullable<
@@ -97,7 +96,7 @@ registerPrefabShipSpawner({
 /** Owner-selected starter ship (2026-09-26): the SHIPS-PREFABS Wren, installed
  * from its grammar prefab through the trusted prefab path (no Wayfarer pins). */
 export const OWNER_STARTER_PREFAB_ID = "fed.s.wren";
-registerPrefabShipSpawner(prefabSpawnerFor(OWNER_STARTER_PREFAB_ID));
+// Registered with pinned blueprint/flight hashes in ./prefab-ship-spawners.
 
 export function parseSpawnPose(json: string): PrefabSpawnPose {
   if (!json) return { kind: "berth" };

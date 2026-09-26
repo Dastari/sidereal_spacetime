@@ -3,6 +3,7 @@ import * as passengers from "./construction-passenger-authority";
 import { commitFlightCharacter } from "./construction-flight-dirty";
 import { setConstructionEnginePower as setEnginePower } from "./construction-device-power";
 import { replacePlayerWayfarer } from "./wayfarer-replacement";
+import "./prefab-ship-spawners";
 import { shipPolicy, shipOperatorOperation, shipWipeArchive } from "./ship-operator-tables";
 import { wipePlayerShips } from "./ship-wipe";
 import { assignPrefabShip } from "./ship-assign";
