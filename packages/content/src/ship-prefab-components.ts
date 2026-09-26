@@ -55,6 +55,7 @@ export function prefabSpecFromComponent(c: ShipComponentLike, visual?: Component
     heightTexels: Math.max(1, Math.round(heightM * TEXELS_PER_M)),
     massKg: c.massKg,
     thrustN: c.propulsion && c.propulsion.role === "main" ? c.propulsion.thrustKn * 1000 : undefined,
+    maneuverThrustN: c.propulsion && c.propulsion.role === "maneuver" ? c.propulsion.thrustKn * 1000 : undefined,
     powerGenerationW: c.power.generationKw * 1000,
     powerDrawW: c.power.activeKw * 1000,
     heatW: c.heat.activeKw * 1000,

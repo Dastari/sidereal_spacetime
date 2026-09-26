@@ -25,8 +25,12 @@ describe("prefab flight compile", () => {
       if (compiled.status !== "ready") throw Error(compiled.reason);
       const stats = prefabStats(prefab, catalog);
       expect(compiled.mass.massKg).toBeCloseTo(stats.massKg, -1);
-      const aft = compiled.actuators.filter((a) => Math.abs(a.rotation) < 1e-9);
-      expect(aft.reduce((s, a) => s + a.maxThrustN, 0)).toBeCloseTo(stats.thrustN, 3);
+      const main = compiled.actuators.filter((a) => !a.definitionId.endsWith("#nozzle"));
+      expect(main.every((a) => Math.abs(a.rotation) < 1e-9)).toBe(true);
+      expect(main.reduce((s, a) => s + a.maxThrustN, 0)).toBeCloseTo(stats.thrustN, 3);
+      // RCS clusters give braking and lateral authority.
+      if (prefab.mounts.some((m) => m.component.startsWith("rcs.")))
+        expect(compiled.envelope.reverse).toBeGreaterThan(0);
       expect(compiled.computers.length).toBeGreaterThan(0);
       expect(model.station).not.toBeNull();
       // Pilot station sits fore of the centre of mass on the ship centre line (bridge at the bow).

@@ -38,6 +38,8 @@ import type {
 import { prefabToShipMetres } from "./prefab-construction";
 
 export const PREFAB_FLIGHT_CATALOG_ID = "prefab-physical-v1";
+/** RCS nozzle push directions as game-frame quarter turns (0 pushes fore). */
+const RCS_DIRECTIONS: [string, number][] = [["fore", 0], ["port", 1], ["aft", 2], ["starboard", 3]];
 export const PREFAB_FLIGHT_REVISION = 1;
 const FLOOR_KG_PER_M2 = 40;
 const WALL_KG_PER_M = 60;
@@ -54,9 +56,10 @@ export const prefabPartSourceId = {
   mount: (mountId: string) => `mount-${mountId}`,
 };
 
-type Role = "actuator" | "computer" | "mass";
+type Role = "actuator" | "computer" | "mass" | "rcs";
 export function componentFlightRole(spec: PrefabComponentSpec, attach: string): Role {
   if (spec.category === "propulsion" && (spec.thrustN ?? 0) > 0 && attach === "face") return "actuator";
+  if (spec.category === "propulsion" && (spec.maneuverThrustN ?? 0) > 0) return "rcs";
   if (spec.id.startsWith("computer-core.")) return "computer";
   return "mass";
 }
@@ -66,7 +69,7 @@ function componentDefinition(spec: PrefabComponentSpec, role: Role): FlightPhysi
   const base: PhysicalPartDefinition = {
     id: prefabComponentDefinitionId(spec.id),
     revision: PREFAB_FLIGHT_REVISION,
-    kind: role === "mass" ? "component" : role,
+    kind: role === "mass" || role === "rcs" ? "component" : role,
     massKg: spec.massKg,
     centroid: [0, 0],
     inertiaKgM2: (spec.massKg * size * size) / 6,
@@ -161,7 +164,32 @@ export function prefabFlightModel(doc: ShipPrefabDocumentV1, components: PrefabC
     const [sx, sy] = toShip(mp.anchor);
     const sourceId = prefabPartSourceId.mount(m.id);
     parts.push({ sourceId, id: sourceId, definitionId: def.id, revision: PREFAB_FLIGHT_REVISION, position: [sx, sy, (mp.anchorZ / 16)], rotation: (mp.quarterTurns * Math.PI) / 2, flipped: false });
-    if (role !== "mass") fittings.push({ sourceId, definitionId: prefabFittingDefinitionId(spec.id), definitionRevision: PREFAB_FLIGHT_REVISION, role });
+    if (role === "actuator" || role === "computer")
+      fittings.push({ sourceId, definitionId: prefabFittingDefinitionId(spec.id), definitionRevision: PREFAB_FLIGHT_REVISION, role });
+    if (role === "rcs") {
+      // Four massless nozzles (fore, port, aft, starboard) on the cluster; the cluster part
+      // above carries the mass. Each nozzle is its own placed part and fitting row.
+      const nozzle: ActuatorDefinition = {
+        id: `${prefabComponentDefinitionId(spec.id)}#nozzle`,
+        revision: PREFAB_FLIGHT_REVISION,
+        kind: "actuator",
+        massKg: 0,
+        centroid: [0, 0],
+        inertiaKgM2: 0,
+        fittingDefinitionId: `${prefabFittingDefinitionId(spec.id)}#nozzle`,
+        maxThrustN: spec.maneuverThrustN!,
+        forceAxis: [0, 1],
+        mountOffset: [0, 0],
+        nozzleOffset: [0, -0.3],
+        nozzleHeight: 0,
+      };
+      defs.set(nozzle.id, nozzle);
+      RCS_DIRECTIONS.forEach(([name, quarter]) => {
+        const id = `${sourceId}#${name}`;
+        parts.push({ sourceId: id, id, definitionId: nozzle.id, revision: PREFAB_FLIGHT_REVISION, position: [sx, sy, mp.anchorZ / 16], rotation: (quarter * Math.PI) / 2, flipped: false });
+        fittings.push({ sourceId: id, definitionId: nozzle.fittingDefinitionId, definitionRevision: PREFAB_FLIGHT_REVISION, role: "actuator" });
+      });
+    }
   }
   const [x0, y0, x1, y1] = prefabBounds(geoms);
   const beam = y1 - y0;

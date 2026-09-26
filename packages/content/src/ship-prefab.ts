@@ -166,6 +166,8 @@ export interface PrefabComponentSpec {
   massKg: number;
   /** Main thrust (N) along the component's forward axis; rear-mounted engines push the ship fore. */
   thrustN?: number;
+  /** Manoeuvring (RCS) thrust per direction (N); RCS clusters push in four plan directions. */
+  maneuverThrustN?: number;
   powerGenerationW?: number;
   powerDrawW?: number;
   heatW?: number;
