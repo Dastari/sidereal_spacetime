@@ -33,6 +33,34 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+_ARCHIVED = None
+
+
+def archived():
+    """Reference/review media moved out of git (assets/art-library/ARCHIVED.json): relative path -> record."""
+    global _ARCHIVED
+    if _ARCHIVED is None:
+        path = LIB / "ARCHIVED.json"
+        _ARCHIVED = json.loads(path.read_text()) if path.exists() else {"files": {}}
+    return _ARCHIVED
+
+
+def present(path, sha256):
+    """True when `path` exists with `sha256`, or it was archived out of git with that exact hash.
+    If the archive is mounted locally (ARCHIVED.json archive_root), the archived copy is verified too."""
+    if path.exists():
+        return digest(path) == sha256
+    try:
+        rel = str(path.resolve().relative_to(LIB.resolve()))
+    except ValueError:
+        return False
+    record = archived()["files"].get(rel)
+    if not record or record["sha256"] != sha256:
+        return False
+    copy = Path(os.environ.get("SIDEREAL_ART_ARCHIVE", archived().get("archive_root", ""))) / "sidereal_spacetime/assets/art-library" / rel
+    return digest(copy) == sha256 if copy.is_file() else True
+
+
 def valid_revision_history(design):
     """Reference extraction starts at r000; new native companions may begin at r001.
 
@@ -310,7 +338,7 @@ def refresh():
             a=refs[key];lines.append(f"| [{a['name']}](../../{a['crop_path']}) | {a['kind']} | [Scale, stats, recreation](../../{a['brief']}) |")
         (folder/"DESIGN.md").write_text("\n".join(lines)+"\n")
     stats=state_summary();write(LIB/"status.json",stats)
-    lines=["# Sidereal living art library", "", "Start here for asset work and progress reviews. Read [WORKFLOW.md](WORKFLOW.md) before changing a design. The JSON ledgers are authoritative; regenerate this index after every edit with `python3 scripts/art_catalog.py index`.","",f"**{stats['source_count']} source files visually inspected; {stats['reference_count']} exact reference crops; {stats['design_count']} proposed shared design queues; {stats['owner_signed_off']} current revisions signed off by the owner.**", "", "[Browse visual library](index.html) · [Source audit](SOURCE_AUDIT.md) · [Style, scale and pipeline](STYLE_AND_PIPELINE.md) · [Current status](status.json) · [Individual character components](character-components/INDEX.md)","", "## Honest current scope", "", "Every registered source was opened individually. Cataloged references have initial manually authored rectangles, contact sheets and item briefs. Sources added during cargo work are explicitly marked as pending detailed crop annotation in the source audit. Dense crops may retain adjacent/occluded pieces and need visual refinement. Reference crops are not reconstructed cutouts. Shared design queues are provisional; variant compatibility and individual silhouettes must be resolved before implementation. Production cutouts, Blender assets and actual runtime evidence exist only where listed in the revision ledger. Nothing is implicitly final or published.", "", "## Resume prompt", "", "> Read assets/art-library/INDEX.md and WORKFLOW.md. Inspect status.json and the current design ledger. Work through unsigned assets in priority order, preserving every revision and crop. Resolve a specific reference/variant, implement the next feedback-driven improvement, validate and capture Blender and actual in-game evidence. Update the ledger, feedback and this index after each iteration. Request owner feedback when evidence is ready; never infer approval or loop indefinitely without new evidence. Continue other unblocked unsigned designs while waiting.","", "## Design queues", "", "| Priority | Design | References | Revision | State | Owner final sign-off |", "| --- | --- | --- | --- | --- | --- |"]
+    lines=["# Sidereal living art library", "", "Start here for asset work and progress reviews. Read [WORKFLOW.md](WORKFLOW.md) before changing a design. The JSON ledgers are authoritative; regenerate this index after every edit with `python3 scripts/art_catalog.py index`.","","**Reference and review media are not in git.** Exact reference crops, boards, renders, comparison sheets and revision screenshots moved out on 2026-09-26: web-sized copies with each design's ledger text are in the Sidereal wiki (https://wiki.sidereal.dastari.net/Art/Library), exact originals are in `/root/sidereal-art-archive/` (verify with `sha256sum -c MANIFEST.sha256`), and [ARCHIVED.json](ARCHIVED.json) lists every moved file and hash. Put new review media there, not in git; keep model sources, textures and runtime inputs here.","",f"**{stats['source_count']} source files visually inspected; {stats['reference_count']} exact reference crops; {stats['design_count']} proposed shared design queues; {stats['owner_signed_off']} current revisions signed off by the owner.**", "", "[Browse visual library](index.html) · [Source audit](SOURCE_AUDIT.md) · [Style, scale and pipeline](STYLE_AND_PIPELINE.md) · [Current status](status.json) · [Individual character components](character-components/INDEX.md)","", "## Honest current scope", "", "Every registered source was opened individually. Cataloged references have initial manually authored rectangles, contact sheets and item briefs. Sources added during cargo work are explicitly marked as pending detailed crop annotation in the source audit. Dense crops may retain adjacent/occluded pieces and need visual refinement. Reference crops are not reconstructed cutouts. Shared design queues are provisional; variant compatibility and individual silhouettes must be resolved before implementation. Production cutouts, Blender assets and actual runtime evidence exist only where listed in the revision ledger. Nothing is implicitly final or published.", "", "## Resume prompt", "", "> Read assets/art-library/INDEX.md and WORKFLOW.md. Inspect status.json and the current design ledger. Work through unsigned assets in priority order, preserving every revision and crop. Resolve a specific reference/variant, implement the next feedback-driven improvement, validate and capture Blender and actual in-game evidence. Update the ledger, feedback and this index after each iteration. Request owner feedback when evidence is ready; never infer approval or loop indefinitely without new evidence. Continue other unblocked unsigned designs while waiting.","", "## Design queues", "", "| Priority | Design | References | Revision | State | Owner final sign-off |", "| --- | --- | --- | --- | --- | --- |"]
     lines[2:2]=["**Owner model direction:** TypeScript voxel-solid art is being phased out in favor of Blender-authored models, meshes and materials. Preserve authored surfaces in the visual export; any required occupancy/collision/damage representation is separate. Read [Blender model migration](../../docs/blender_asset_migration.md).", "", "[Redesign current equipment — agent prompt](prompts/REDESIGN_CURRENT_EQUIPMENT.md) · [Equipment inventory and work queue](CURRENT_EQUIPMENT.md) · [Cargo collection and size matrix](CARGO_COLLECTION.md) · [Mapped ship floor kit](shipyard-floor/README.md)", "", f"Saved current reconstruction evidence: **{stats['current_cutout_designs']} design cutouts, {stats['current_blender_designs']} Blender sources and {stats['current_runtime_pairs']} runtime view pairs**, covering {stats['references_with_current_cutout']} source appearances. Other reference entries still require reconstruction. Saved evidence does not imply owner acceptance.", ""]
     for d in sorted(ds,key=lambda d:(d["priority"],d["id"])):
         approved=d["owner_final_signoff"] and d["owner_final_signoff"]["revision"]==d["current_revision"]
@@ -435,8 +463,8 @@ def ready(d,r):
     if not r["review"] or r["review"].get("outcome")!="pass":errors.append("Agent review has not passed")
     for e in r["evidence"]:
         p=within(LIB/e["path"])
-        if not p.exists() or digest(p)!=e["sha256"]:errors.append("Missing/changed evidence: "+e["path"])
-        elif e["role"]=="cutout" and not png_alpha(p):errors.append("Cutout lacks an alpha channel: "+e["path"])
+        if not present(p,e["sha256"]):errors.append("Missing/changed evidence: "+e["path"])
+        elif e["role"]=="cutout" and p.exists() and not png_alpha(p):errors.append("Cutout lacks an alpha channel: "+e["path"])
         if e["role"].startswith("runtime") or e["role"].startswith("ui-"):
             if not e.get("capture_context"):errors.append("Runtime/UI evidence lacks capture context")
     return errors
@@ -452,12 +480,12 @@ def check(deep=False):
     for ref in catalog["references"]:
         if ref["id"] in ids:errors.append("Duplicate reference ID: "+ref["id"])
         ids.add(ref["id"]);meta=read(LIB/"assets"/ref["id"]/"reference.json");p=within(LIB/meta["crop_path"])
-        if not p.exists() or digest(p)!=meta["crop_sha256"]:errors.append("Crop changed: "+ref["id"])
+        if not present(p,meta["crop_sha256"]):errors.append("Crop changed: "+ref["id"])
         if not (LIB/ref["brief"]).exists():errors.append("Missing brief: "+ref["id"])
         history=meta.get("reference_history",[])
         for previous in history:
             prior=within(LIB/previous["crop_path"])
-            if not prior.exists() or digest(prior)!=previous["crop_sha256"]:errors.append("Historical crop changed: "+str(prior))
+            if not present(prior,previous["crop_sha256"]):errors.append("Historical crop changed: "+str(prior))
         if ref["crop_path"]!=meta["crop_path"] or ref["design_id"]!=meta["design_id"]:errors.append("Catalog/reference pointer mismatch: "+ref["id"])
         if deep:
             from PIL import Image
@@ -465,6 +493,7 @@ def check(deep=False):
                 with Image.open(ROOT/"reference/art"/meta["source"]) as im:original_images[meta["source"]]=im.copy()
             original=original_images[meta["source"]]
             for version in [*history,meta]:
+                if not (LIB/version["crop_path"]).exists():continue  # archived out of git; hash verified above
                 with Image.open(LIB/version["crop_path"]) as crop:
                     expected_crop=original.crop(version["box"])
                     if expected_crop.size!=crop.size or expected_crop.mode!=crop.mode or expected_crop.tobytes()!=crop.tobytes():errors.append("Crop pixels not exact: "+ref["id"])
@@ -478,7 +507,7 @@ def check(deep=False):
             if not set(r["covered_reference_ids"])<=set(d["reference_ids"]):errors.append("Invalid coverage: "+d["id"])
             for e in r["evidence"]:
                 p=within(LIB/e["path"])
-                if not p.exists() or digest(p)!=e["sha256"]:errors.append("Evidence changed: "+e["path"])
+                if not present(p,e["sha256"]):errors.append("Evidence changed: "+e["path"])
         approval=d["owner_final_signoff"]
         for accepted in d["approvals"]:
             if accepted.get("scope")!="final-design-only; no runtime publication implied":continue
