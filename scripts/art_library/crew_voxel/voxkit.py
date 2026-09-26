@@ -409,7 +409,7 @@ def face_uv(me, skull):
     fine voxel. u = (x1 - x) / width (column 0 = character's right, i.e. viewer's left), v = (z - z0) / height."""
     x1, z0 = skull["x1"] * VOXEL, skull["z0"] * VOXEL
     wdt, hgt = (skull["x1"] - skull["x0"]) * VOXEL, (skull["z1"] - skull["z0"]) * VOXEL
-    uv = me.uv_layers["UVMap"]
+    uv = me.uv_layers.get("UVMap") or me.uv_layers.new(name="UVMap")
     fi = SI["face"]
     for p in me.polygons:
         if p.material_index != fi:

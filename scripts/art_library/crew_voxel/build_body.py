@@ -76,8 +76,12 @@ def build_armature(coll):
 
 
 def part_object(name, part, bone, coll, mats):
+    hair = "hair" in name
     me = voxkit.mesh_part(part, name, mats=mats, seed=sum(map(ord, name)),
-                          jitter=0.06 if "hair" in name else 0.025)
+                          jitter=0.06 if hair else 0.025, segments=1 if hair else 2)
+    if ".head." not in name:            # only the face canvas needs UVs; keeps the runtime GLB small
+        for uv in list(me.uv_layers):
+            me.uv_layers.remove(uv)
     ob = bpy.data.objects.new(name, me)
     coll.objects.link(ob)
     voxkit.soften(ob)

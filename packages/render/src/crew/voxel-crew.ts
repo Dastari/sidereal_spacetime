@@ -291,6 +291,9 @@ export async function createVoxelCrewVisual(
     refreshRegions(hairHidden);
   };
   const hiddenRegions = new Set<VoxelCrewBodyRegion>();
+  // the runtime bundle ships masculine + feminine meshes; neutral renders the masculine build
+  const hasNeutral = container.meshes.some((m) => m.name.includes("-neutral"));
+  const meshVariant = () => (variant === "neutral" && !hasNeutral ? "male" : variant);
   let hairHiddenByLook = false;
   const refreshRegions = (hairHidden = hairHiddenByLook) => {
     hairHiddenByLook = hairHidden;
@@ -303,7 +306,7 @@ export async function createVoxelCrewVisual(
         byOutfit.has(region) ||
         hiddenRegions.has(region) ||
         (region === "hair" && (hairHidden || hiddenRegions.has("head")));
-      mesh.setEnabled(match[2] === variant && !hidden);
+      mesh.setEnabled(match[2] === meshVariant() && !hidden);
     }
   };
   // face: the driving clip's expression track each frame, plus the blink timer

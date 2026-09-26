@@ -41,10 +41,12 @@ def export_all(out, arm, bodies, socks, actions, stats):
         path = f"{out}/crew-body-{variant}.glb"
         _export(path, [arm] + objs + sock_objs, bool(actions))
         files[os.path.basename(path)] = {"sha256": _sha(path), "bytes": os.path.getsize(path), "variant": variant}
-        all_objs += objs
+        if variant != "neutral":          # runtime bundle: neutral uses the masculine build (same geometry)
+            all_objs += objs
     path = f"{out}/crew-body.glb"
     _export(path, all_objs, bool(actions))
-    files["crew-body.glb"] = {"sha256": _sha(path), "bytes": os.path.getsize(path), "variant": "all"}
+    files["crew-body.glb"] = {"sha256": _sha(path), "bytes": os.path.getsize(path), "variant": "male+female",
+                              "note": "runtime bundle; bodyType neutral renders the masculine meshes"}
     parts = []
     for variant, b in bodies.items():
         p, hair, hob = b["parts"], b["hairVol"], b["hair"]

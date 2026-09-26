@@ -45,7 +45,7 @@
     "suit": "GEO-crew-suit-male",
     "gear": "GEO-crew-gear-male"
    },
-   "trisDefaultLook": 20028,
+   "trisDefaultLook": 14742,
    "trisByRegion": {
     "base": 3036,
     "hands": 544,
@@ -87,7 +87,7 @@
   {
    "id": "hair.default.male",
    "mesh": "GEO-crew-hair-default-male",
-   "tris": 9238,
+   "tris": 3952,
    "bone": "head",
    "slots": [
     "hair"
@@ -126,7 +126,7 @@
     "suit": "GEO-crew-suit-female",
     "gear": "GEO-crew-gear-female"
    },
-   "trisDefaultLook": 23606,
+   "trisDefaultLook": 16162,
    "trisByRegion": {
     "base": 3152,
     "hands": 544,
@@ -168,7 +168,7 @@
   {
    "id": "hair.default.female",
    "mesh": "GEO-crew-hair-default-female",
-   "tris": 12980,
+   "tris": 5536,
    "bone": "head",
    "slots": [
     "hair",
@@ -208,7 +208,7 @@
     "suit": "GEO-crew-suit-neutral",
     "gear": "GEO-crew-gear-neutral"
    },
-   "trisDefaultLook": 20028,
+   "trisDefaultLook": 14742,
    "trisByRegion": {
     "base": 3036,
     "hands": 544,
@@ -250,7 +250,7 @@
   {
    "id": "hair.default.neutral",
    "mesh": "GEO-crew-hair-default-neutral",
-   "tris": 9238,
+   "tris": 3952,
    "bone": "head",
    "slots": [
     "hair"
@@ -983,24 +983,25 @@
  ],
  "files": {
   "crew-body-male.glb": {
-   "sha256": "a5a91cb6029e611125aabbec87ae951c39e28ee810531f12e6af19cbf8966866",
-   "bytes": 2391712,
+   "sha256": "e0494e79b2ac2d5cc5b6296bf3343cce4be83d09b55d5e7f09a83c11235b4587",
+   "bytes": 1611844,
    "variant": "male"
   },
   "crew-body-female.glb": {
-   "sha256": "3ab6ba85c4a65fe2a3569fb72d045336fd0da3d5983ef362caaf5257f9668126",
-   "bytes": 2602204,
+   "sha256": "01310701d6ddaa46424ae36e6cbaf1219f71ee0e46dcf7ea2b0aea2bafcd5724",
+   "bytes": 1672396,
    "variant": "female"
   },
   "crew-body-neutral.glb": {
-   "sha256": "3438418f26b46748d5bae2b1fca0f2d1fd9b0157a0d0e7d9aabfa4bdac422f56",
-   "bytes": 2391768,
+   "sha256": "3068457a986c96ce2055293ff51068432f3193f3e4c430138752c6d354eef28a",
+   "bytes": 1611896,
    "variant": "neutral"
   },
   "crew-body.glb": {
-   "sha256": "009918f6319650b6ae127cf8039da8a34a44de4f390b847652469843f344fceb",
-   "bytes": 5330764,
-   "variant": "all"
+   "sha256": "f88d4144e6b2d06139bde55fa2a4d42d0329026620947d5491dbd9b693b1ce60",
+   "bytes": 2311376,
+   "variant": "male+female",
+   "note": "runtime bundle; bodyType neutral renders the masculine meshes"
   }
  },
  "textures": {
